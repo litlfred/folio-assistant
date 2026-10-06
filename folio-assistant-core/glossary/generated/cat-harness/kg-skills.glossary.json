@@ -1216,6 +1216,14 @@
       "status": "candidate"
     },
     {
+      "id": "rendered-impact",
+      "prefLabel": "rendered-impact",
+      "definition": "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency cone, before any build; a build diff then confirms the prediction. Use when opening or reviewing a Change Set PR, when asked \"which pages does this change\", when a prediction and a build disagree, or when adding a renderer.",
+      "notation": "rendered-impact",
+      "source": "cat-harness/skills/sdlc/sdlc-core/rendered-impact.md",
+      "status": "candidate"
+    },
+    {
       "id": "rendered-verification",
       "prefLabel": "rendered-verification",
       "definition": "Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it. Use whenever a change touches CSS, a Liquid/HTML template, a generated page, the navbar, a board, a sticky or any rendered surface — before claiming it works, and before asking the author to review it. Covers building the site locally, taking the REAL CI build off `gh-pages` when the question is theme chrome or layout, driving it with Playwright in this environment, measuring computed style rather than reading the stylesheet, hit-testing a control's centre because visible is not usable, asserting the conditions so a check cannot pass over an unstyled page, and the defect classes that are invisible to a green gate set.",

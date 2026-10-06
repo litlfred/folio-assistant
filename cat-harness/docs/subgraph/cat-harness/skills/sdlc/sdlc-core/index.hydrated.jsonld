@@ -51,6 +51,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
@@ -906,6 +907,25 @@
         "sha256": "296f22828e9b27417e7db1c8af923dd2dabe05a065488d68f502a2acb41a686d"
       },
       "title": "Related work: find it, sort it, ask"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency cone, before any build; a build diff then confirms the prediction. Use when opening or reviewing a Change Set PR, when asked \"which pages does this change\", when a prediction and a build disagree, or when adding a renderer.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 116,
+      "instructionsPath": "skills/sdlc/sdlc-core/rendered-impact.md",
+      "name": "rendered-impact",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7e6a20175320f7881bc6f0d5e901af66f3c965917f8bdbd7a81e2504e2a2f6b4",
+        "bytes": 5901,
+        "sha256": "7e6a20175320f7881bc6f0d5e901af66f3c965917f8bdbd7a81e2504e2a2f6b4"
+      },
+      "title": "Rendered impact — which rendered files a Change Set changes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",

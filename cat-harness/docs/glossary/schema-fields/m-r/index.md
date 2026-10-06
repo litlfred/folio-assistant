@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1869 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1878 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 538 terms and is 303 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 546 terms and is 307 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2162</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2162</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">538</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">546</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -1611,6 +1611,27 @@ precisionScalar.value <span class="fa-gloss-status">candidate, extracted</span>
 <p>Signed decimal: optional <code>-</code>, integer part, optional <code>.&lt;frac&gt;</code>, optional <code>[eE][+-]?&lt;int&gt;</code> exponent. Includes uppercase <code>E</code> and explicit positive sign on the exponent — both produced by various MPFR / mpmath formatting paths.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/precision-scalar.ts"><code>cat-harness/schemas/precision-scalar.ts#precisionScalar.value</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.predictioncheck.confirmed" data-fa-state="extracted" data-fa-gloss="">
+PredictionCheck.confirmed <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Predicted and measured.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#PredictionCheck.confirmed</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.predictioncheck.missed" data-fa-state="extracted" data-fa-gloss="">
+PredictionCheck.missed <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Measured to change but not predicted: a cone defect, never a pass.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#PredictionCheck.missed</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.predictioncheck.unconfirmed" data-fa-state="extracted" data-fa-gloss="">
+PredictionCheck.unconfirmed <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Predicted, not measured: expected for content pages that load their data (rule 3), suspicious otherwise.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#PredictionCheck.unconfirmed</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--theme.printgeometryschema.fontscale" data-fa-state="extracted" data-fa-gloss="">
 PrintGeometrySchema.fontScale <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2885,6 +2906,41 @@ RenderedAsset.url <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>URL or relative path to the rendered file.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#RenderedAsset.url</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.renderedfileschema.path" data-fa-state="extracted" data-fa-gloss="">
+RenderedFileSchema.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Path in the BUILT site, relative to its root, e.g. <code>ast/artifact/PlanDefinition-X.html</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.renderedfileschema.via" data-fa-state="extracted" data-fa-gloss="">
+RenderedFileSchema.via <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How the change reached this file: the changed input first, then each node the cone went through, e.g. <code>[&quot;input/fsh/x.fsh&quot;, &quot;IMMZD18SBCG&quot;, &quot;PlanDefinition/IMMZD18SBCG&quot;]</code>. Empty for a build diff, which measures that a file changed and cannot say why.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.via</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.renderedimpactschema.inputs" data-fa-state="extracted" data-fa-gloss="">
+RenderedImpactSchema.inputs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The changed input files the renderer was given, relative to its source root.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.inputs</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.renderedimpactschema.renderer" data-fa-state="extracted" data-fa-gloss="">
+RenderedImpactSchema.renderer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The renderer, by its Tool id or script, e.g. <code>fhir-ig-ast-pages</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.renderer</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.renderedimpactschema.site" data-fa-state="extracted" data-fa-gloss="">
+RenderedImpactSchema.site <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The site the paths are relative to, as a reader finds it (an instance, a URL path).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.site</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--contributions.renderercontribution.adapters" data-fa-state="extracted" data-fa-gloss="">
 RendererContribution.adapters <span class="fa-gloss-status">candidate, extracted</span>

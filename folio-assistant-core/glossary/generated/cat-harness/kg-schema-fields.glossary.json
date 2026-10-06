@@ -8631,6 +8631,69 @@
       "status": "candidate"
     },
     {
+      "id": "rendered-impact.predictioncheck.confirmed",
+      "prefLabel": "PredictionCheck.confirmed",
+      "definition": "Predicted and measured.",
+      "source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.confirmed",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.predictioncheck.missed",
+      "prefLabel": "PredictionCheck.missed",
+      "definition": "Measured to change but not predicted: a cone defect, never a pass.",
+      "source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.missed",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.predictioncheck.unconfirmed",
+      "prefLabel": "PredictionCheck.unconfirmed",
+      "definition": "Predicted, not measured: expected for content pages that load their data (rule 3), suspicious otherwise.",
+      "source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.unconfirmed",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedfileschema.path",
+      "prefLabel": "RenderedFileSchema.path",
+      "definition": "Path in the BUILT site, relative to its root, e.g. `ast/artifact/PlanDefinition-X.html`.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedfileschema.via",
+      "prefLabel": "RenderedFileSchema.via",
+      "definition": "How the change reached this file: the changed input first, then each node the cone went through, e.g. `[\"input/fsh/x.fsh\", \"IMMZD18SBCG\", \"PlanDefinition/IMMZD18SBCG\"]`. Empty for a build diff, which measures that a file changed and cannot say why.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.via",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedimpactschema.inputs",
+      "prefLabel": "RenderedImpactSchema.inputs",
+      "definition": "The changed input files the renderer was given, relative to its source root.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.inputs",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedimpactschema.renderer",
+      "prefLabel": "RenderedImpactSchema.renderer",
+      "definition": "The renderer, by its Tool id or script, e.g. `fhir-ig-ast-pages`.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.renderer",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedimpactschema.site",
+      "prefLabel": "RenderedImpactSchema.site",
+      "definition": "The site the paths are relative to, as a reader finds it (an instance, a URL path).",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.site",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.undeterminedschema.scope",
+      "prefLabel": "UndeterminedSchema.scope",
+      "definition": "`all`: the input can re-render anything (a site config, a shared include).",
+      "source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.scope",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.actordef.roles",
       "prefLabel": "ActorDef.roles",
       "definition": "Roles this actor is eligible to take on. Advisory, not a permission system: it says who is expected in a lane, and the audit uses it to report a role no actor can fill. Empty means \"unconstrained\", not \"none\".",
