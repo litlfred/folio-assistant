@@ -4,11 +4,22 @@
  * real-folio acceptance case is recorded in the bean: litlfred/smart-ra, one
  * block sentence plus one chapter title, predicted 2 / measured 2 / 0 missed.
  */
-import { describe, expect, test } from "bun:test";
+import { afterAll, describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import { reviewList } from "../../cat-harness/schemas/rendered-impact.js";
 import { CHANGESET_SCHEMA, type ChangeSet } from "../schemas/changeset.js";
-import { documentRenderedImpact, DOCUMENT_RENDERER, PUBLIC_COMMENT_RENDERER } from "./document-rendered-impact.js";
+import {
+  documentRenderedImpact,
+  DOCUMENT_RENDERER,
+  PUBLIC_COMMENT_RENDERER,
+  buildSteps,
+  siteMayRead,
+  siteReadsOf,
+  type SiteReads,
+} from "./document-rendered-impact.js";
 
 const at = (file: string) => ({ file, kind: "prose", section: "doc/ch1::s1", index: 0 });
 const changeset: ChangeSet = {
@@ -64,5 +75,80 @@ describe("documentRenderedImpact — files the ChangeSet does not name", () => {
     const [doc] = run(["dpi-h-ra.config.json", "folio-assistant"]);
     expect(doc.files).toEqual([]);
     expect(doc.undetermined.map((u) => [u.input, u.scope])).toEqual([["dpi-h-ra.config.json", "all"], ["folio-assistant", "all"]]);
+  });
+});
+
+describe("documentRenderedImpact — a file no builder of the site reads (bean ehh6)", () => {
+  // smart-ra#26, the first real run: the branch's bean was "may change any
+  // page", and an undetermined input holds the coverage gate shut.
+  const reads: SiteReads = { reads: ["folio/", "library/", "review/public-comment/"], submodules: ["folio-assistant"] };
+  const changed = ["beans/dpi-h-ra-7ss8--verify.md", "README.md", "input/fsh/x.fsh", "folio-assistant", "dpi-h-ra.json", "library/a.pdf", ".github/workflows/staging.yml"];
+
+  test("an undeclared directory or a root Markdown note is an input that reaches no page", () => {
+    const [doc] = documentRenderedImpact({ changed, changeset, outline, reads });
+    expect(doc.inputs).toEqual([...changed].sort());
+    expect(doc.files).toEqual([]);
+    expect(doc.undetermined.map((u) => u.input).sort()).toEqual([".github/workflows/staging.yml", "dpi-h-ra.json", "folio-assistant", "library/a.pdf"]);
+  });
+
+  test("the platform, a declared graph, the build definition and a root config stay any page", () => {
+    for (const f of ["folio-assistant", "folio-assistant/cat-harness/x.ts", "library/a.pdf", ".github/x.yml", "package.json", "bun.lock"]) expect(siteMayRead(f, reads)).toBe(true);
+    for (const f of ["beans/x.md", "AGENTS.md", "test/results/block-qa/x.json"]) expect(siteMayRead(f, reads)).toBe(false);
+  });
+
+  test("with nothing declared to read, nothing is excluded: doubt carries", () => {
+    expect(siteMayRead("beans/x.md", undefined)).toBe(true);
+    expect(documentRenderedImpact({ changed: ["beans/x.md"], changeset, outline })[0].undetermined.map((u) => u.input)).toEqual(["beans/x.md"]);
+  });
+
+  describe("siteReadsOf: what the build command's builders say they read", () => {
+    // smart-ra#26's second run: it DECLARED beans/ and todos/, so "declared"
+    // read as "read", yet the site renders todos and never beans.
+    const T = mkdtempSync(join(tmpdir(), "site-reads-"));
+    afterAll(() => rmSync(T, { recursive: true, force: true }));
+    const repo = (name: string, builders: Record<string, string> = {}) => {
+      const r = join(T, name);
+      mkdirSync(join(r, "b"), { recursive: true });
+      writeFileSync(join(r, "x.json"), JSON.stringify({ name: "x", directories: [{ id: "folio", path: "folio/", graphTypologies: ["folio"] }, { id: "beans", path: "beans/", graphTypologies: ["bean-defs"] }] }));
+      writeFileSync(join(r, ".gitmodules"), '[submodule "folio-assistant"]\n\tpath = folio-assistant\n\turl = https://example.invalid/fa.git\n');
+      for (const [f, body] of Object.entries(builders)) writeFileSync(join(r, "b", f), body);
+      return r;
+    };
+
+    test("each step's script and its arguments; a step that runs no script is undefined", () => {
+      expect(buildSteps("bun run a/x.ts --out _site && bun run y.ts --root . ; jekyll build")).toEqual([
+        { script: "a/x.ts", args: ["--out", "_site"] },
+        { script: "y.ts", args: ["--root", "."] },
+        undefined,
+      ]);
+    });
+
+    test("with a command: the union of its builders' reads, and a declared directory no builder reads is not read", async () => {
+      const r = repo("a", {
+        "doc.ts": "export const siteReads = () => ['folio'];",
+        "todo.ts": "export const siteReads = async (_r, args) => (args.includes('--todos') ? ['todos/items'] : []);",
+      });
+      const got = await siteReadsOf(r, "bun run b/doc.ts --out _site && bun run b/todo.ts --todos");
+      expect(got).toEqual({ reads: ["folio", "todos/items"], submodules: ["folio-assistant"] });
+      expect(siteMayRead("beans/x.md", got)).toBe(false);
+      expect(siteMayRead("todos/items/a.md", got)).toBe(true);
+    });
+
+    test("a step that is not a builder exporting siteReads, or a missing script: nothing excluded", async () => {
+      const r = repo("b", { "dumb.ts": "export const x = 1;", "doc.ts": "export const siteReads = () => ['folio'];" });
+      expect(await siteReadsOf(r, "bun run b/doc.ts && bun run b/dumb.ts")).toBeUndefined();
+      expect(await siteReadsOf(r, "bun run b/doc.ts && jekyll build")).toBeUndefined();
+      expect(await siteReadsOf(r, "bun run b/gone.ts")).toBeUndefined();
+    });
+
+    test("no command: the declared directories stand in", async () => {
+      expect(await siteReadsOf(repo("c"))).toEqual({ reads: ["folio/", "beans/"], submodules: ["folio-assistant"] });
+    });
+
+    test("no declaration: undefined, so nothing is excluded", async () => {
+      const r = join(T, "none");
+      mkdirSync(r);
+      expect(await siteReadsOf(r, "bun run x.ts")).toBeUndefined();
+    });
   });
 });
