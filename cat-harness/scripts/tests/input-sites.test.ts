@@ -10,9 +10,15 @@
  * and `scripts` annotations in this repository make to the data they depend on.
  */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative } from "node:path";
+import { join, relative, resolve } from "node:path";
+
+import { instanceDirectoriesForGraph } from "../../schemas/cat-harness.ts";
+import { declaredDirectories } from "../../schemas/declared-nodes.ts";
+import { orderedDependencies } from "../../schemas/harness-config.ts";
+import { instanceRootsIn } from "../../schemas/instance-roots.ts";
+import { INSTANCE_THEMES_MODULE, THEMES_GRAPH_TYPOLOGY } from "../../schemas/theme-by-ref.ts";
 
 import { blankSource, auditClosure, mainBlockLines, parseVerdicts, scanSource, SiteMemo, statementPin } from "../input-sites.ts";
 import { checkFingerprint, entryFiles, FileDigests, TRACKED, type Fingerprint } from "../input-hash.ts";
@@ -322,51 +328,69 @@ describe("annotations hold to the data that chooses their targets", () => {
   const repo = join(import.meta.dir, "..", "..", "..");
   const globMatch = (glob: string, rel: string) => new Bun.Glob(glob).match(rel);
 
-  // Over every file on disk, ignored ones included: a mounted checkout under
-  // an ignored directory can hold an instance the loaders find. None found is
-  // a pass — standalone, a computed load with no data loads nothing.
-  const onDisk = (glob: string) =>
-    [...new Bun.Glob(glob).scanSync({ cwd: repo, onlyFiles: true, dot: false })].filter((f) => !/(^|\/)node_modules\//.test(f));
+  // The loaders reach an instance only through `instanceRootsIn` (one level
+  // below the checkout) and its declared dependencies, so the claim is held
+  // over exactly those roots. None found is a pass — standalone, a computed
+  // load with no data loads nothing.
+  const roots = () => {
+    const out = new Set(instanceRootsIn(repo).map((r) => resolve(r)));
+    for (const r of [...out]) for (const d of orderedDependencies(r)) out.add(resolve(d.rootPath));
+    return [...out];
+  };
   const annotated = (file: string, glob: string) =>
     scanSource(file, readFileSync(join(repo, file), "utf-8")).some(
       (s) => Array.isArray(s.verdicts) && s.verdicts.some((v) => v.kind === "imports" && v.globs.includes(glob)),
     );
+  const relTo = (abs: string) => relative(repo, abs);
+
+  test("every instance a loader can reach is one level below the checkout, where the `*/` globs look", () => {
+    for (const r of roots()) {
+      const rel = relTo(r);
+      expect(rel === "" || (!rel.startsWith("..") && !rel.includes("/")), `${r} is not a top-level instance of ${repo}`).toBe(true);
+    }
+  });
 
   test("every qa-checker and pipeline-plugin ref lies under harness-config's `imports` globs", () => {
-    const globs = ["**/content/pipeline/plugin-slots.ts", "**/content/pipeline/qa-checkers-*.ts"];
-    for (const node of onDisk("**/{qa-checkers,pipeline-plugins}/*.json")) {
-      const raw = JSON.parse(readFileSync(join(repo, node), "utf-8")) as { check?: string; implementation?: string };
-      const ref = raw.check ?? raw.implementation;
-      if (typeof ref !== "string" || !ref.includes("#")) continue;
-      // The ref is relative to the instance root, which holds the graph directory.
-      const target = relative(repo, join(repo, node, "..", "..", ref.split("#")[0]!));
-      expect(globs.some((g) => globMatch(g, target)), `${node}: ${target} is outside ${globs.join(", ")}`).toBe(true);
+    const globs = ["*/content/pipeline/plugin-slots.ts", "*/content/pipeline/qa-checkers-*.ts"];
+    const all = roots();
+    // A ref is relative to the instance that owns the node: the deepest root holding it.
+    const ownerOf = (dir: string) => all.filter((r) => dir.startsWith(`${r}/`)).sort((a, b) => b.length - a.length)[0]!;
+    {
+      for (const graph of ["qa-checkers", "pipeline-plugins"]) {
+        for (const dir of declaredDirectories(repo, graph)) {
+          if (!existsSync(dir)) continue;
+          const root = ownerOf(resolve(dir));
+          for (const f of readdirSync(dir).filter((n) => n.endsWith(".json"))) {
+            const raw = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { check?: string; implementation?: string };
+            const ref = raw.check ?? raw.implementation;
+            if (typeof ref !== "string" || !ref.includes("#")) continue;
+            const target = relTo(resolve(root, ref.split("#")[0]!));
+            expect(globs.some((g) => globMatch(g, target)), `${dir}/${f}: ${target} is outside ${globs.join(", ")}`).toBe(true);
+          }
+        }
+      }
     }
     for (const g of globs) expect(annotated("cat-harness/schemas/harness-config.ts", g), g).toBe(true);
   });
 
-  test("no instance declares a `contributes` module outside `**/contributes.ts`", () => {
-    for (const decl of onDisk("**/*.{config.json,json}")) {
-      if (decl.split("/").length > 4 || decl.startsWith("cat-harness/docs/") || decl === "package.json") continue;
-      let spec: unknown;
-      try {
-        spec = (JSON.parse(readFileSync(join(repo, decl), "utf-8")) as { contributes?: unknown }).contributes;
-      } catch {
-        continue;
-      }
-      if (typeof spec === "string" && spec !== "") {
-        expect(globMatch("**/contributes.ts", relative(repo, join(repo, decl, "..", spec))), `${decl}: contributes ${spec}`).toBe(true);
+  test("every declared `contributes` module lies under `*/contributes.ts`", () => {
+    for (const root of roots()) {
+      for (const d of orderedDependencies(root)) {
+        const spec = d.config?.contributes;
+        if (spec) expect(globMatch("*/contributes.ts", relTo(resolve(d.rootPath, spec))), `${d.rootPath}: ${spec}`).toBe(true);
       }
     }
-    expect(annotated("cat-harness/schemas/harness-config.ts", "**/contributes.ts")).toBe(true);
+    expect(annotated("cat-harness/schemas/harness-config.ts", "*/contributes.ts")).toBe(true);
   });
 
   test("every instance themes module lies under theme-by-ref's `imports` glob", () => {
-    for (const f of onDisk("**/themes.ts")) {
-      if (/\/tests?\//.test(f) || f === "cat-harness/schemas/themes.ts") continue;
-      expect(globMatch("**/themes/themes.ts", f), `${f} would be loaded by theme-by-ref but is outside its glob`).toBe(true);
+    for (const root of roots()) {
+      for (const dir of instanceDirectoriesForGraph(root, THEMES_GRAPH_TYPOLOGY)) {
+        const f = join(dir, INSTANCE_THEMES_MODULE);
+        if (existsSync(f)) expect(globMatch("*/themes/themes.ts", relTo(f)), `${relTo(f)} is outside the glob`).toBe(true);
+      }
     }
-    expect(annotated("cat-harness/schemas/theme-by-ref.ts", "**/themes/themes.ts")).toBe(true);
+    expect(annotated("cat-harness/schemas/theme-by-ref.ts", "*/themes/themes.ts")).toBe(true);
   });
 
   test("skill-register's `scripts` annotation names exactly the verify half of its STEPS", async () => {
