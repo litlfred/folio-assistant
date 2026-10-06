@@ -23,7 +23,7 @@ import {
 } from "../changed-paths.ts";
 import { TRACKED, expandGlobs } from "../input-hash.ts";
 import { regenArgs } from "../merge-base.ts";
-import { regenToFixpoint, type Pair, type Runner } from "../regen-after-merge.ts";
+import { exitCodeFor, regenToFixpoint, type Pair, type Runner } from "../regen-after-merge.ts";
 import { TASK_IO, pairIO } from "../task-io.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
 
@@ -380,6 +380,82 @@ describe("the fixpoint with --changed and narrowing", () => {
       if (key === "cIn" || key === "cOut") expect(w.f.cOut).toBe(5);
       else expect(w.asked).not.toContain("c:check");
     }
+  });
+
+  // ── A BARREN pass settles (bean `xpcu`, 2026-10-06) ──────────────────
+  // Measured: `fsh-guts:viz` exits non-zero on every pass, and the run went to
+  // the pass cap re-asking every undeclared pair, then recorded no hash.
+  describe("a pass whose writers repaired nothing and changed nothing settles", () => {
+    /** `d:check` always fails; its writer is broken. `touch` says whether the broken writer edits a file anyway. */
+    function broken(w: ReturnType<typeof world>, opts: { exits: boolean; touch?: boolean }): Runner {
+      return (s) => {
+        if (s === "d:check") return (w.asked.push(s), false);
+        if (s === "d") {
+          w.asked.push(s);
+          if (opts.touch) w.f.cIn += 1; // a partial write before failing
+          return opts.exits;
+        }
+        return w.runner(s);
+      };
+    }
+    // `d` reads everything, like an undeclared pair: always re-asked.
+    const withD: Pair[] = [...pairs, { check: "d:check", writer: "d" }];
+    const narrowAll = (w: ReturnType<typeof world>) => ({
+      begin: w.narrow.begin,
+      affects: (p: Pair, ch: ReadonlySet<string> | undefined) =>
+        p.check === "d:check" ? { affected: true, why: "undeclared" } : w.narrow.affects(p, ch),
+    });
+
+    test("a writer that FAILS and changes nothing: settled at the first barren pass, verdict kept", async () => {
+      const w = world();
+      let barren = 0;
+      const r = await regenToFixpoint(withD, broken(w, { exits: false }), 6, {
+        narrow: narrowAll(w),
+        onBarren: () => barren++,
+      });
+      expect(r.settled).toBe(true);
+      expect(barren).toBe(1);
+      // Pass 1 repairs b and a; pass 2 repairs a; pass 3 is barren (only d).
+      expect(r.passes).toBeLessThan(6);
+      expect(r.results[3]!.outcome).toBe("writer-failed");
+      expect(exitCodeFor({ results: r.results, settled: r.settled }).code).toBe(1); // never a clean exit
+    });
+
+    test("an UNREPAIRED writer (exits 0, check still red) that changes nothing settles too", async () => {
+      const w = world();
+      const r = await regenToFixpoint(withD, broken(w, { exits: true }), 6, { narrow: narrowAll(w) });
+      expect(r.settled).toBe(true);
+      expect(r.results[3]!.outcome).toBe("unrepaired");
+    });
+
+    test("FALSIFIER: a failing writer that CHANGES the tree is not barren — the run goes on", async () => {
+      const w = world();
+      const r = await regenToFixpoint(withD, broken(w, { exits: false, touch: true }), 4, { narrow: narrowAll(w) });
+      expect(r.settled).toBe(false);
+      expect(r.passes).toBe(4);
+    });
+
+    test("FALSIFIER: an unmeasurable change set never settles a pass that ran a writer", async () => {
+      const w = world();
+      const r = await regenToFixpoint(withD, broken(w, { exits: false }), 4, {
+        narrow: { begin: () => () => undefined, affects: () => ({ affected: true, why: "unmeasured" }) },
+      });
+      expect(r.settled).toBe(false);
+    });
+
+    test("FALSIFIER: a pass that REPAIRED something is never barren, even with no measured change", async () => {
+      // A writer whose effect the snapshot cannot see (an ignored file) yet
+      // turned its check green: the next pass must still run.
+      const f = { fixed: false };
+      let asks = 0;
+      const runner: Runner = (s) => (s === "p:check" ? (asks++, f.fixed) : ((f.fixed = true), true));
+      const r = await regenToFixpoint([{ check: "p:check", writer: "p" }], runner, 6, {
+        narrow: { begin: () => () => new Set<string>(), affects: () => ({ affected: true, why: "x" }) },
+      });
+      expect(r.settled).toBe(true);
+      expect(r.passes).toBe(2); // pass 1 regenerated; pass 2 ran no writer
+      expect(asks).toBe(3);
+    });
   });
 
   test("without hooks every pass asks every pair — the old behaviour", async () => {
