@@ -207,6 +207,14 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
+        # be current in a commit, so it is never committed: one state:push
+        # made a committed copy stale on main and every open PR (2026-10-05).
+        # check:derived-from names them; this runs each one's declared writer
+        # against the mount above, sources before consumers.
+        run: bun run derive:publish
+
       - name: Determine staging slug
         id: slug
         # `head.ref` is ATTACKER-CONTROLLED on a fork PR: a branch may be named
@@ -625,7 +633,9 @@ jobs:
           REPO_NAME: ${{ github.event.repository.name }}
         run: |
           BASE="/${REPO_NAME}/STAGING/${STAGING_SLUG}"
-          curl -sSfL -o /tmp/plantuml.jar \
+          # Retried: Maven Central answers 429 under load, and one unretried
+          # 429 failed a whole preview build on 2026-10-05 (#2238).
+          curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o /tmp/plantuml.jar \
             https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
           CF=(); [ -f "$RUNNER_TEMP/pr-files.txt" ] && CF=(--changed-files "$RUNNER_TEMP/pr-files.txt")
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "$BASE" \

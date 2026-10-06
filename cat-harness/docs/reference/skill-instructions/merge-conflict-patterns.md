@@ -383,12 +383,16 @@ scripts/state-visualizer.ts". **`docs/uploads/index.html` is the viewer OF
 `**/uploads/**` caught it, and #1764 refused on it. First match wins, so the
 viewer entries sit above the refusal.
 
-And `docs/fsh-guts/index.md`, written whole by `fsh-guts:viz`
-(`gen-fsh-guts-viz.ts`, checked by `fsh-guts:viz:check`) from everything under
-`fsh-guts/`. Any PR that archives an upload rewrites it, so two such PRs always
-collide; #1766 refused on it alone on 2026-10-03. Only that one page is
-declared: the archive it renders (`fsh-guts/**`) is kept content and stays
-refused.
+`docs/fsh-guts/index.md` USED to be here: any PR that archived an upload
+rewrote it, so two such PRs always collided (#1766, 2026-10-03). It is no
+longer committed at all. It is derived from `fsh-guts/`, which is kept on a
+branch, so it is built at publish by `derive:publish` (bean `0b8c`, #2230),
+and a merge cannot meet it. That is the general answer for any derived page
+whose input lives on a branch — see
+[`directory-conventions`](directory-conventions.md)
+§"The storage clock" — and is better than a take-base pattern, which only
+makes the collision cheap. The archive itself (`fsh-guts/**`) is kept content
+and stays refused.
 
 ### `viewer-namespace` — take the base, regenerate
 

@@ -195,8 +195,11 @@ describe("classify", () => {
     expect(classify("cat-harness/docs/processes/merge-base.md").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/translation-status/index.html").pattern?.id).toBe("viewer-pages");
     expect(classify("cat-harness/docs/methodologies/index.md").pattern?.id).toBe("viewer-pages");
-    expect(classify("cat-harness/docs/fsh-guts/index.md").pattern?.id).toBe("viewer-pages");
-    // ...but not the archive it renders: fsh-guts/ holds authored, kept content.
+    // The fsh-guts viewer is no longer committed (built at publish, bean 0b8c),
+    // so no pattern takes it: a merge cannot meet it, and if one ever did the
+    // file would be a tracked copy check:derived-from refuses.
+    expect(classify("cat-harness/docs/fsh-guts/index.md").pattern).toBeUndefined();
+    // ...and not the archive it renders: fsh-guts/ holds authored, kept content.
     expect(classify("fsh-guts/uploads/Home-_-folio-assistant.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/fsh-guts/other.md").strategy).toBe("refuse");
     expect(classify("cat-harness/docs/cat-harness/published-graphs.md").pattern?.id).toBe("handler-index");

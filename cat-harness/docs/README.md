@@ -30,11 +30,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`bootstrap/`](bootstrap/) | _nothing declares what this holds_ | |
 | [`cat-harness/`](cat-harness/) | _nothing declares what this holds_ | |
 | [`concepts/`](concepts/README.md) | Concepts: what the harness, the knowledge graph and their parts are. | |
+| [`en/`](en/) | _nothing declares what this holds_ | |
 | [`es/`](es/) | _nothing declares what this holds_ | |
 | [`external-schemas/`](external-schemas/) | _nothing declares what this holds_ | |
 | [`fhir/`](fhir/README.md) | FHIR: FHIR content and the IG Publisher. | |
 | [`fr/`](fr/) | _nothing declares what this holds_ | |
-| [`fsh-guts/`](fsh-guts/) | _nothing declares what this holds_ | |
 | [`glossary/`](glossary/) | _nothing declares what this holds_ | |
 | [`guides/`](guides/README.md) | Authoring guides: how to do a task with the harness, one guide per task. | |
 | [`health/`](health/) | _nothing declares what this holds_ | |

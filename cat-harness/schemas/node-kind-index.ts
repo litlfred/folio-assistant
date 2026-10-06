@@ -49,6 +49,10 @@ import { isNodeKind, nodeKind, type NodeKind } from "./node-kind.js";
 export interface NodeKindEntry {
   /** `nodeKind()`'s id — a `$schema` tag for a tagged kind, a name for a mixin. */
   id: string;
+  /** SemVer, for a kind whose nodes are files; absent for a mixin. */
+  version?: string;
+  /** `<id>/<version>`: the `$schema` a current node carries. */
+  tag?: string;
   /** Direct parents, by id, in declared order. */
   parents: string[];
   /** Direct subclasses, by id, sorted: the kinds that name this one as a parent. */
@@ -91,6 +95,8 @@ export interface NodeKindIndex {
 export const NodeKindIndexFileKind = nodeKind("node-kind-index/1.0.0", [], {
   kinds: z.array(z.object({
     id: z.string().min(1),
+    version: z.string().optional(),
+    tag: z.string().optional(),
     parents: z.array(z.string()),
     subclasses: z.array(z.string()),
     declaredBy: z.string().optional(),
@@ -132,7 +138,7 @@ export async function nodeKindIndex(
       if (declared && !prior.entry.module) Object.assign(prior.entry, declared);
       return prior.entry;
     }
-    const entry: NodeKindEntry = { id: kind.id, parents: kind.parents.map((p) => p.id), subclasses: [], ...declared, holdings: [] };
+    const entry: NodeKindEntry = { id: kind.id, ...(kind.version ? { version: kind.version, tag: kind.tag } : {}), parents: kind.parents.map((p) => p.id), subclasses: [], ...declared, holdings: [] };
     byId.set(kind.id, { kind, entry });
     // Ancestors are kinds too, though no typology may name them directly.
     for (const p of kind.parents) add(p);
