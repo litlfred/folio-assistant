@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_Lifecycle` · strict · 8 step(s)
 
-folio-assistant — the content lifecycle end to end, one cycle of a folio.
+One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities. folio-assistant — the content lifecycle end to end, one cycle of a folio.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
 by `bun run render:bpmn` — never hand-edit the SVG.
@@ -25,7 +25,7 @@ work plan in beans/.
 
 - **Called by:** no call activity names this process
 - **Calls:** [Editing and HCI validation](editing-hci-validation.html), [Draft, review and publish](draft-to-publication.html)
-- **Presented on:** [Content types — The content lifecycle](../content-types.html#the-content-lifecycle), [Publication workflow — Content lifecycle overview](../publication-workflow.html#content-lifecycle-overview)
+- **Presented on:** [Content types — The content lifecycle](../concepts/content-types.html#the-content-lifecycle), [Publication workflow — Content lifecycle overview](../process/publication-workflow.html#content-lifecycle-overview)
 
 ## Lanes — who acts
 

@@ -50,6 +50,7 @@ import { basename, dirname, join, posix, relative, resolve, sep } from "path";
 
 import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
+import { embed as pdfViewer } from "../../cat-harness/scripts/pdf-viewer.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
 import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
@@ -143,7 +144,7 @@ const declNameOf = (root: string, fallback: string): string =>
 const HANDLER = declNameOf(HARNESS_ROOT, "cat-harness");
 const SUBJECT = declNameOf(INSTANCE, "who-iris");
 /**
- * The graph kind this viewer renders, taken from the declaration entry that
+ * The graph typology this viewer renders, taken from the declaration entry that
  * declares it rather than written down again.
  *
  * `who-iris.json`'s `who-iris-catalogue` entry is the one place that says this
@@ -155,10 +156,10 @@ const SUBJECT = declNameOf(INSTANCE, "who-iris");
 const CATALOGUE_KIND = ((): string => {
   const dirs = readDeclaration(INSTANCE)?.directories ?? [];
   const entry = dirs.find((d) => d.id === "who-iris-catalogue");
-  const kind = (entry?.graphKinds ?? [])[0];
+  const kind = (entry?.graphTypologies ?? [])[0];
   if (kind === undefined) {
     throw new Error(
-      "who-iris.json declares no graphKinds on `who-iris-catalogue`, so the catalogue " +
+      "who-iris.json declares no graphTypologies on `who-iris-catalogue`, so the catalogue " +
         "viewer has no conventional route to be published at. Declare the kind, or " +
         "this generator is publishing to a path no tile will look at (bean `ha78`).",
     );
@@ -764,7 +765,7 @@ function page(
    */
   side: "site" | "docs" | "harness",
   /**
-   * The graph kinds this page documents, as `<meta name="documents">` — the
+   * The graph typologies this page documents, as `<meta name="documents">` — the
    * page names what it is about, so the directory need not name the page
    * (#1168 B7c). Only the docs index carries one.
    */
@@ -962,16 +963,75 @@ function page(
   .searchbar input {
     flex: 1; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: inherit;
     border: 1px solid var(--iris-edge); border-right: none; border-radius: 4px 0 0 4px;
-    background: #fff; color: var(--iris-muted);
+    background: #fff; color: var(--iris-ink);
   }
   .searchbar button {
     padding: 0.7rem 1.4rem; font-size: 1rem; font-family: inherit; font-weight: 600;
     border: 1px solid var(--iris-accent); border-radius: 0 4px 4px 0;
-    background: var(--iris-accent); color: #fff;
+    background: var(--iris-accent); color: #fff; cursor: pointer;
   }
-  /* The disabled attribute already communicates this to a pointer; the cursor
-     says it to a reader who hovers before clicking. */
-  .searchbar input[disabled], .searchbar button[disabled] { cursor: not-allowed; opacity: 1; }
+  .searchbar button:hover, .searchbar button:focus {
+    background: var(--iris-dark);
+  }
+  .search-results-panel {
+    margin: 1rem 0 1.5rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-surface);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1rem;
+  }
+  .search-results-panel h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.05rem;
+    color: var(--iris-dark);
+  }
+  .search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .search-result-item {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--iris-edge);
+    border-radius: 4px;
+    background: var(--iris-wash);
+  }
+  .search-result-item a {
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  .search-result-meta {
+    font-size: 0.88rem;
+    color: var(--iris-muted);
+    margin-top: 0.25rem;
+  }
+  .search-result-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    background: var(--iris-accent);
+    color: #fff;
+    margin-right: 0.5rem;
+  }
+  .search-remote-box {
+    border-top: 1px solid var(--iris-edge);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+  }
+  mark.search-mark {
+    background: #ffeb3b;
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
   .searchnote { font-size: 0.88rem; color: var(--iris-muted); margin: 0.4rem 0 2rem; }
   .ordering { font-size: 0.88rem; color: var(--iris-muted); margin: 0.2rem 0 1.4rem; }
 
@@ -1469,7 +1529,7 @@ const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
 /** The replica's route from the site root (no slashes), as `withRoutes` gives it. */
 const REPLICA_ROUTE = (() => {
   const declared = (readDeclaration(INSTANCE)?.directories ?? []).flatMap((d) =>
-    (d.graphKinds ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
+    (d.graphTypologies ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
   );
   const { candidates } = withRoutes(declared);
   const root = candidates.find((c) => c.instanceRoot && c.route === SUBJECT);
@@ -1727,6 +1787,29 @@ ${rows}
 `;
 }
 
+/**
+ * The held PDF, readable in place — or nothing (bean `folio-assistant-5ea6`).
+ *
+ * Gated by the SAME decision as the download link: {@link linkOrWithheld}
+ * refuses to link bytes whose publication gates block, and an embedded viewer
+ * is a link that also renders. So a withheld item gets no viewer, and its page
+ * says nothing more than the "held here, not published" the Files row already
+ * says. Only PDFs: the viewer is pdf.js, and a held `.docx` in a PDF frame is
+ * an error page.
+ *
+ * The CDN URL rather than the raw one, for the reason the page already offers
+ * it — it is the one that serves the bytes with a cache in front.
+ * `FOLIO_ROUTE` finds the site root for the same reason it does for the folio
+ * mount: one page, several depths.
+ */
+function readHere(n: Node, a: ReturnType<typeof assetHref>): string {
+  if (!a || a.withheld.length > 0 || !/\.pdf$/i.test(a.name)) return "";
+  return `<h2>Read it here</h2>
+${pdfViewer({ src: a.cdn, title: n.title, route: FOLIO_ROUTE })}
+
+`;
+}
+
 /** An item page — where both links land on the real thing. */
 function itemPage(n: Node, all: Node[]): string {
   const a = assetHref(n);
@@ -1763,7 +1846,7 @@ ${bits}
 </tbody>
 </table>
 
-<h3>Both links, as asked for</h3>
+${readHere(n, a)}<h3>Both links, as asked for</h3>
 <table class="items">
 <thead><tr><th>Where</th><th>Link</th></tr></thead>
 <tbody>
@@ -1846,13 +1929,14 @@ ${
  * the file. The publication's TITLE is untouched where it contains "WHO" —
  * that names the work and is not branding this page wears.
  *
- * ## The numbers are real and the search box is not
+ * ## Search across held items and referenced identifier lookup
  *
  * The placeholder reads `Search through the repository's 273559 items`,
  * transcribed from the capture, because that is the sentence IRIS shows and it
- * is where this repository's item count came from at all. The form does
- * nothing: there is no index behind it, and a box that looks like it searches
- * and silently returns nothing is worse than one that says it is a replica.
+ * is where this repository's item count came from at all. The form actively
+ * searches across the held catalogue items, collections and communities, and
+ * links onward to the prefix-sharded identifier lookup for referenced nodes
+ * (`id-lookup`).
  */
 function landingPage(all: Node[]): string {
   const items = all.filter((n) => n.flavour === "item");
@@ -1865,6 +1949,45 @@ function landingPage(all: Node[]): string {
 
   const itemsUpstream = cat.totalItemsUpstream;
   const filesUpstream = cat.totalFilesUpstream;
+
+  const searchEntries = all
+    .map((n) => {
+      if (n.flavour === "item") {
+        const authors = dc(n, "contributor", "author");
+        const issued = day(dc(n, "date", "issued")[0]);
+        const abstract = dc(n, "description", "abstract")[0] ?? "";
+        const cite = dc(n, "identifier", "citation")[0] ?? dc(n, "identifier", "govdoc")[0] ?? "";
+        const meta = [authors.join("; "), cite, issued].filter(Boolean).join(" · ");
+        const text = [n.title, n.id, n.libraryId ?? "", authors.join(" "), cite, issued, abstract].join(" ").toLowerCase();
+        return {
+          title: n.title,
+          href: `item-${slug(n.id)}.html`,
+          badge: "Item",
+          meta,
+          abstract: abstract.slice(0, 240),
+          text,
+        };
+      }
+      if (n.flavour === "collection") {
+        return {
+          title: n.title,
+          href: `collection-${slug(n.id)}.html`,
+          badge: "Collection",
+          meta: n.id,
+          abstract: n.materialization?.note ?? "",
+          text: [n.title, n.id, n.materialization?.note ?? ""].join(" ").toLowerCase(),
+        };
+      }
+      return {
+        title: n.title,
+        href: "community-list.html",
+        badge: "Community",
+        meta: n.id,
+        abstract: "",
+        text: [n.title, n.id].join(" ").toLowerCase(),
+      };
+    })
+    .sort((a, b) => a.title.localeCompare(b.title, "en"));
 
   return `
 <section class="hero">
@@ -1881,17 +2004,20 @@ function landingPage(all: Node[]): string {
   from the <code>iris-web</code> theme measured off the site&rsquo;s own stylesheet.</p>
 </section>
 
-<div class="searchbar">
-  <input type="text" disabled
+<form class="searchbar" id="iris-search-form" action="../id-lookup/" method="get">
+  <input type="hidden" name="index" value="who-iris/">
+  <input type="text" id="iris-search-input" name="q"
     placeholder="Search through the repository&rsquo;s ${itemsUpstream !== undefined ? itemsUpstream.toLocaleString("en-US").replace(/,/g, "") : "?"} items"
-    aria-label="Search (disabled in this replica)">
-  <button type="button" disabled>Search</button>
-</div>
-<p class="searchnote">Disabled. ${itemsUpstream !== undefined ? `<strong>${itemsUpstream.toLocaleString("en-US")}</strong> items` : "The item count"}${
+    aria-label="Search through the repository items and referenced identifier lookup"
+    autocomplete="off" spellcheck="false">
+  <button type="submit" id="iris-search-btn">Search</button>
+</form>
+<div id="iris-search-results" class="search-results-panel" role="region" aria-live="polite" style="display:none"></div>
+<p class="searchnote" id="iris-search-note">Search across <strong>${held.length}</strong> items held by value and referenced communities/collections.
+To look up any of the <strong>10</strong> referenced nodes by identifier, search here or open the <a href="../id-lookup/?index=who-iris/">identifier lookup</a>.
+Upstream IRIS reports ${itemsUpstream !== undefined ? `<strong>${itemsUpstream.toLocaleString("en-US")}</strong> items` : "items"}${
     filesUpstream !== undefined ? ` across <strong>${filesUpstream.toLocaleString("en-US")}</strong> files` : ""
-  } is what IRIS reports; this catalogue holds <strong>${items.length}</strong> of them by
-reference and <strong>${held.length}</strong> by value. There is no index behind the box,
-and a box that returned nothing quietly would be worse than one that says so.</p>
+  }.</p>
 
 <h2>Recent Submissions</h2>
 <p class="ordering">Ordered by <code>dc.date.accessioned</code>, latest first &mdash; the key
@@ -1922,6 +2048,107 @@ ${collections
   instantiates a directory gets a visualiser mounted under that directory&rsquo;s
   kind: <code>/library/who-iris/</code>, <code>/docs/who-iris/</code>, and so on.</p>
 </div>
+
+<script>
+(function() {
+  var index = ${JSON.stringify(searchEntries)};
+  var form = document.getElementById("iris-search-form");
+  var input = document.getElementById("iris-search-input");
+  var results = document.getElementById("iris-search-results");
+  if (!form || !input || !results) return;
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function highlight(text, terms) {
+    if (!terms.length) return escapeHtml(text);
+    var escaped = escapeHtml(text);
+    for (var i = 0; i < terms.length; i++) {
+      var t = terms[i];
+      if (!t) continue;
+      var regex = new RegExp("(" + t.replace(/[.*+?^\${}()|[\\]\\\\]/g, "\\\\$&") + ")", "gi");
+      escaped = escaped.replace(regex, "<mark class=\\"search-mark\\">$1</mark>");
+    }
+    return escaped;
+  }
+
+  function update() {
+    var raw = input.value.trim();
+    if (!raw) {
+      results.style.display = "none";
+      results.replaceChildren();
+      return;
+    }
+    var terms = raw.toLowerCase().split(/\\s+/).filter(Boolean);
+    var matches = [];
+    for (var i = 0; i < index.length; i++) {
+      var entry = index[i];
+      var ok = true;
+      for (var t = 0; t < terms.length; t++) {
+        if (entry.text.indexOf(terms[t]) < 0) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok) matches.push(entry);
+    }
+
+    var lookupUrl = "../id-lookup/?index=who-iris/&q=" + encodeURIComponent(raw);
+    var html = "";
+
+    if (matches.length > 0) {
+      html += "<h3 style=\\"margin:0 0 0.8rem;font-size:1.05rem;color:var(--iris-dark);\\">Matching catalogue nodes (" + matches.length + "):</h3>";
+      html += "<ul class=\\"search-results-list\\" style=\\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\\">";
+      for (var m = 0; m < matches.length; m++) {
+        var it = matches[m];
+        html += "<li class=\\"search-result-item\\" style=\\"padding:0.6rem 0.8rem;border:1px solid var(--iris-edge);border-radius:4px;background:var(--iris-wash);\\">";
+        html += "<div><span class=\\"search-result-badge\\" style=\\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-right:0.5rem;\\">" + escapeHtml(it.badge) + "</span>";
+        html += "<a href=\\"" + it.href + "\\" style=\\"font-weight:600;font-size:1.02rem;\\">" + highlight(it.title, terms) + "</a></div>";
+        if (it.meta) {
+          html += "<div class=\\"search-result-meta\\" style=\\"font-size:0.88rem;color:var(--iris-muted);margin-top:0.25rem;\\">" + highlight(it.meta, terms) + "</div>";
+        }
+        if (it.abstract) {
+          var snip = it.abstract.length > 180 ? it.abstract.slice(0, 180) + "…" : it.abstract;
+          html += "<div class=\\"search-result-meta\\" style=\\"font-size:0.88rem;color:var(--iris-ink);margin-top:0.35rem;\\">" + highlight(snip, terms) + "</div>";
+        }
+        html += "</li>";
+      }
+      html += "</ul>";
+      html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
+      html += "Also search identifier lookup: <a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\">Look up &ldquo;" + escapeHtml(raw) + "&rdquo; in referenced nodes &rarr;</a>";
+      html += "</div>";
+    } else {
+      html += "<p style=\\"margin:0 0 0.5rem;\\">No materialized items or collections matched &ldquo;<strong>" + escapeHtml(raw) + "</strong>&rdquo;.</p>";
+      html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
+      html += "<a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\" style=\\"font-weight:600;\\">Search for &ldquo;" + escapeHtml(raw) + "&rdquo; in the referenced identifier lookup (10 nodes) &rarr;</a>";
+      html += "</div>";
+    }
+
+    results.innerHTML = html;
+    results.style.display = "block";
+  }
+
+  input.addEventListener("input", update);
+  form.addEventListener("submit", function(e) {
+    var raw = input.value.trim();
+    if (!raw) { e.preventDefault(); return; }
+    var hasLocal = results.querySelector(".search-result-item");
+    var firstLink = results.querySelector(".search-result-item a");
+    if (hasLocal && firstLink) {
+      e.preventDefault();
+      firstLink.focus();
+    }
+  });
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var initQ = urlParams.get("q");
+  if (initQ) {
+    input.value = initQ;
+    update();
+  }
+})();
+</script>
 `;
 }
 
@@ -2265,6 +2492,147 @@ for the drawing above:</p>
   be expressed for a GDHCN-aware verifier at all &mdash; the envelope specified in that IG is for
   health certificates, and nothing there covers arbitrary files.</p>
 </div>
+
+<h2>Publishing a large graph: skeleton, payloads, one SQLite file per slice</h2>
+
+<p>A corpus the size of IRIS can only be searched on the client if the client never
+downloads the whole graph. The platform&rsquo;s answer is <strong>late
+materialization</strong>. The graph is published as three things:</p>
+
+<ol class="kids" style="margin-left:0">
+  <li><strong>The skeleton, as JSON-LD.</strong> Each named subgraph &mdash; a directory of a
+      declared graph &mdash; is published at <code>/subgraph/&lt;harness&gt;/&lt;path&gt;/</code> as
+      <code>index.jsonld</code> (pointers to its members and child subgraphs) and
+      <code>index.hydrated.jsonld</code> (every member inline, with metadata only). The root
+      has the pointer file only, so no single file is ever the whole graph.</li>
+  <li><strong>Payloads, by content address.</strong> Heavy content &mdash; a body, a PDF, a page
+      of sections &mdash; lives at <code>/payload/sha256/&lt;hex&gt;</code>, named by the hash of its
+      bytes, with a <code>&lt;hex&gt;.json</code> sidecar giving its media type. A node carries a
+      <code>payload</code> link with <code>sha256</code> and <code>bytes</code>, so a consumer can
+      decide whether to fetch before it fetches.</li>
+  <li><strong>Per-slice SQLite.</strong> CI flattens one slice into a relational schema:
+      one table per node type, one table per relation, and a contentless FTS5 index. It
+      publishes the result as <code>&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, named by the
+      hash of its bytes, with a <code>&lt;slice&gt;.sqlite3.json</code> manifest at a fixed path
+      beside it that names the file. A row holds only the payload
+      pointer, never the payload. The browser downloads the file, checks its sha256 against the
+      manifest, imports it into the Origin Private File System, and opens it with the official
+      SQLite WASM build. Nothing is parsed.</li>
+</ol>
+
+<p>The contract is in the <code>kg-export</code> skill, under &ldquo;Named subgraphs&rdquo;,
+&ldquo;Payloads&rdquo; and &ldquo;Per-slice SQLite&rdquo;. The procedure is the
+<code>slice-sqlite-publish</code> process. This page does not restate that contract&rsquo;s
+rules; where the two differ, the skill is right.</p>
+
+<h3>Measured: the four pilots</h3>
+
+<p class="ordering">These are the platform&rsquo;s own slices, not this catalogue&rsquo;s. They
+were measured on 2026-10-03 (bean <code>q8ar</code>). The first open was measured in Chromium
+on loopback against a plain static server with no COOP/COEP headers, and includes the download
+and the sha256 check.</p>
+
+<table class="reqs">
+  <thead><tr><th>slice</th><th>file</th><th>source as published</th><th>first open</th></tr></thead>
+  <tbody>
+    <tr><th class="rid">beans</th><td>2.83 MB</td><td>4.82 MB of bean files</td><td>~190 ms</td></tr>
+    <tr><th class="rid">todos</th><td>0.07 MB</td><td>18 KB of JSON</td><td>~110 ms</td></tr>
+    <tr><th class="rid">library</th><td>2.48 MB</td><td>3.59 MB of JSON</td><td>~165 ms</td></tr>
+    <tr><th class="rid">kg</th><td>3.40 MB</td><td>3.03 MB of JSON-LD (the whole-repo graph, without bodies)</td><td>~180 ms</td></tr>
+  </tbody>
+</table>
+
+<p>The VFS is <code>opfs-sahpool</code>, running in a Worker. It needs neither
+SharedArrayBuffer nor COOP/COEP, which GitHub Pages cannot send. Reopening from OPFS took about
+85&nbsp;ms, with no download. Without a Worker or OPFS, the verified bytes are opened in memory
+instead, and the page reports which mode it used.</p>
+
+<div class="caveat">
+  <p><strong>No who-iris slice is built, and none of these numbers is a who-iris
+  number.</strong> Nothing here was measured against a CDN, either: <code>cdn.jsdelivr.net</code>
+  is egress-blocked from the container that generates this page.</p>
+</div>
+
+<h3>The slice budget, and what to do above it</h3>
+
+<p><strong>As built:</strong> the budget is about 5&nbsp;MB per file
+(<code>SIZE_BUDGET_BYTES</code>). It is reported in the manifest as <code>overBudget</code>
+and is not gated. The process says what to do over budget: try the no-body variant first, then
+stop and report the measurement. All four pilots are under it.</p>
+
+<p><strong>Why IRIS will not fit one slice.</strong> This is arithmetic on the pilots, not a
+measurement. The pilots hold between ${(3.40 * 1024 / 3121).toFixed(1)}&nbsp;KB per node
+(<code>kg</code>, 3,121 nodes) and ${(2.83 * 1024 / 723).toFixed(1)}&nbsp;KB per row
+(<code>beans</code>, 723 rows). At those rates, ${cat.totalItemsUpstream ? `the ${cat.totalItemsUpstream.toLocaleString("en-US")} upstream items would make one file of roughly ${Math.round(cat.totalItemsUpstream * 3.40 / 3121)} to ${Math.round(cat.totalItemsUpstream * 2.83 / 723)}&nbsp;MB, before any per-bitstream row. That is about ${Math.round(cat.totalItemsUpstream * 3.40 / 3121 / 5)} to ${Math.round(cat.totalItemsUpstream * 2.83 / 723 / 5)} times the budget.`: "no size can be estimated, because the upstream item count is unknown."}</p>
+
+<p><strong>Recommended, not built: split by subgraph.</strong> A slice is one
+<code>SliceDef</code>, and nothing in the builder requires a slice to be a whole graph. A
+DSpace community or collection is already a directory-shaped subgraph, so the natural cut is
+one slice per community or collection. If one of those is still over budget, split it at the
+next level down. Do not split by row count: a slice should match a subgraph IRI a reader can
+name. Each split slice keeps the full contract, with its own manifest, row digest and
+determinism check. A small <strong>routing slice</strong> would let one search span all of IRIS.
+It would hold only titles, identifiers and the subgraph each item belongs to, so the client can
+then open the one slice that has the rows. That is the skeleton pattern again, one level up.</p>
+
+<h3>CDN caching</h3>
+
+<table class="reqs">
+  <thead><tr><th>file</th><th>as built</th><th>recommended behind a CDN</th></tr></thead>
+  <tbody>
+    <tr><th class="rid">payload</th><td>named by its sha256, so its bytes never change</td><td class="why">cache forever (<code>immutable</code>); a new body is a new URL</td></tr>
+    <tr><th class="rid">subgraph JSON-LD</th><td>a stable IRI whose content changes when the graph does</td><td class="why">short TTL; a long one serves an old skeleton whose payload links may have been removed as orphans since</td></tr>
+    <tr><th class="rid">slice manifest</th><td><code>&lt;slice&gt;.sqlite3.json</code> at a <strong>fixed</strong> path; it names the slice file; the client fetches it with <code>no-store</code></td><td class="why">short TTL or none; it is the one file that says which build is current</td></tr>
+    <tr><th class="rid">slice file</th><td><code>&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, named by its sha256, so its bytes never change; OPFS keys its copy by the same sha256</td><td class="why">cache forever (<code>immutable</code>); a new build is a new URL</td></tr>
+  </tbody>
+</table>
+
+<div class="caveat">
+  <p><strong>This section has been corrected twice.</strong> It first said that only the
+  manifest needs a short TTL, because the client keys its copy by sha256. That held for the
+  browser&rsquo;s OPFS copy, not for a CDN: the slice file was then published at the same path
+  every build, so a CDN could serve old bytes against a new manifest, the client would refuse
+  them on the sha256 check, and search was down until the cache expired. That is now fixed
+  (bean <code>wixl</code>). The slice file is published at
+  <code>assets/slices/&lt;slice&gt;.&lt;sha256&gt;.sqlite3</code>, and the manifest&rsquo;s
+  <code>file</code> names it. A fresh manifest names a file no cache has seen. A stale one names
+  an older file that still matches it.</p>
+  <p><strong>Why not under <code>/payload/sha256/</code>:</strong> a payload is a node&rsquo;s
+  body, linked from that node and removed once nothing links to it. A slice file is linked from
+  no node, so the payload tree would treat it as an orphan. It takes the payload rule that
+  matters, immutable bytes at a hash-named address, without joining that tree.</p>
+  <p><strong>What a CDN can still hold, as built:</strong> for one manifest TTL, a stale
+  manifest together with the older file it names, which is a consistent pair. It can also hold
+  an older file that nothing names until that file expires, or a stale manifest whose file the
+  origin has stopped serving. The page reports that last case as a 404 and asks for a reload. A
+  manifest that names a file with a different sha256 is <strong>refused</strong> with a visible
+  message, never opened. Each deploy writes only the current file. Old ones do not pile up on
+  the host. GitHub Pages sends <code>max-age=600</code> for every file and cannot be told to send
+  anything else, so on Pages the manifest&rsquo;s short TTL is ten minutes.</p>
+</div>
+
+<p>No CDN layer has been chosen (bean <code>l9v6</code>, still <em>proposed</em>). Whichever
+one is chosen stands <em>in front of</em> the publication host, as above. The slice files and
+payloads go out through the same publish-to-CDN step as every other page (bean
+<code>7dek</code>, <code>Process_RenderKgToCdn</code>), behind the same four gates (bean
+<code>xies</code>). The URL-layout check that <code>xies</code> asks for must therefore cover
+<code>/payload/sha256/</code> and <code>assets/slices/</code> too.</p>
+
+<h3>How a client picks a slice</h3>
+
+<p><strong>As built:</strong> <code>assets/slices/index.json</code>
+(<code>folio-slice-index/v1</code>) lists every slice built into the site. The one search page,
+<code>slices/search.html?slice=&lt;name&gt;</code>, lists them when no slice is named. Given a
+name, it reads everything else it needs from the <code>search</code> block of that
+slice&rsquo;s manifest. The reader picks. The page checks the name against a pattern before
+using it in a path.</p>
+
+<p><strong>Recommended for who-iris, not built:</strong> keep the reader&rsquo;s choice, and
+make the choices follow the catalogue&rsquo;s community and collection tree. A reader browsing
+a community opens that community&rsquo;s slice, named in its <code>index.jsonld</code>. A
+reader searching all of IRIS opens the routing slice first. Several slices can be open at once,
+because each is its own file in the pool. What that costs on a phone has not been
+measured.</p>
 
 <h2>What is deliberately not decided</h2>
 

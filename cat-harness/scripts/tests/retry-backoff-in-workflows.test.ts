@@ -60,12 +60,17 @@ function code(text: string): string {
     .join("\n");
 }
 
-/** One entry per `for attempt …` retry loop, with the body up to its `done`. */
+/**
+ * One entry per retry loop — `for attempt …`, or `while … attempt …` (the
+ * stage job's since #1956, whose lost races spend no attempt) — with the body
+ * up to its `done`. Both shapes are discovered so a loop cannot leave this
+ * check by changing keyword.
+ */
 function retryLoops(text: string): string[] {
   const out: string[] = [];
   const lines = code(text).split("\n");
   for (let i = 0; i < lines.length; i++) {
-    const m = lines[i]!.match(/^(\s*)for\s+attempt\s+in\b/);
+    const m = lines[i]!.match(/^(\s*)(?:for\s+attempt\s+in\b|while\b[^\n]*\$\{?attempt\b)/);
     if (!m) continue;
     const indent = m[1]!.length;
     const body: string[] = [];

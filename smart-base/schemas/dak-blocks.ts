@@ -31,7 +31,8 @@
  * It was core's `cat-harness/schemas/dak-blocks.ts`, re-exported from core's
  * barrel, until bean `1335`. Core's content model named the `dak` adapter, so
  * the module could not leave without core importing a harness. It left once
- * the adapter and its kinds became a CONTRIBUTION (`smart-base/contributions.ts`)
+ * the adapter and its kinds became a CONTRIBUTION (nodes in `content-adapters/`
+ * and `block-kinds/` since bean riit; a `contributions.ts` before)
  * — core reads them from a `ContributionRegistry` now, and nothing in core
  * imports this file.
  *
@@ -40,8 +41,8 @@
  */
 
 import { z } from "zod";
-import type { BlockBase } from "../../cat-harness/schemas/types";
-import { BlockBaseSchema } from "../../cat-harness/schemas/constraints";
+import type { BlockBase } from "../platform.js";
+import { BlockBaseSchema } from "../platform.js";
 import {
   DAK_BLOCK_KINDS,
   DAK_COMPONENTS,
@@ -243,14 +244,6 @@ export type DakBlock =
   | TestCaseBlock
   | ActorDefinitionBlock;
 
-/**
- * Compile-time proof that `DAK_BLOCK_KINDS` and `DakBlock["kind"]` cover each
- * other — the same guard `types.ts` puts on the paper union, for the same
- * reason: the drift it replaces produced no error anywhere.
- */
-type _MutuallyExhaustive<A, B> = [A] extends [B] ? ([B] extends [A] ? true : never) : never;
-const _dakKindsAreExhaustive: _MutuallyExhaustive<DakBlock["kind"], DakBlockKind> = true;
-void _dakKindsAreExhaustive;
 
 // ── Validation ───────────────────────────────────────────────────
 

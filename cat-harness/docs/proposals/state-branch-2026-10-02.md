@@ -63,7 +63,7 @@ dependency ref, or a page path.
 
 ### 2.2 The state graphs on `main`
 
-Kinds whose `holds` is `state` (`graph-kind-registry.ts`), and where the
+Kinds whose `holds` is `state` (`graph-typology-registry.ts`), and where the
 directories declaring them live:
 
 | graph | path | declared in |
@@ -135,15 +135,15 @@ So the intended declarations (bean `2h76`) are:
 
 ```jsonc
 // folio-assistant.json (the root instance declares both) — beans, one live copy at the tip of its own branch
-{ "id": "beans", "path": "beans/", "graphKinds": ["beans"],
+{ "id": "beans", "path": "beans/", "graphTypologies": ["beans"],
   "storage": { "branch": "cat/cat-harness/beans", "keyedBy": "tip" } }
 
 // todos — likewise
-{ "id": "todos", "path": "todos/", "graphKinds": ["todos"],
+{ "id": "todos", "path": "todos/", "graphTypologies": ["todos"],
   "storage": { "branch": "cat/cat-harness/todos", "keyedBy": "tip" } }
 
 // test/results — 3fva, unchanged
-{ "id": "qa", "path": "test/results", "graphKinds": ["qa"],
+{ "id": "qa", "path": "test/results", "graphTypologies": ["qa"],
   "storage": { "branch": "cat/cat-harness/qa-reports", "keyedBy": "commit" } }
 ```
 
@@ -167,7 +167,7 @@ then a one-line change per directory: add the `storage` member shown above.
   is a sub-graph linking to the primary content graph", made a field. The
   deploy's `build.json` (bean `r6es`, this PR) is the first instance: the docs
   site now says which `main` commit it is a rendering of, and how far behind.
-- `within` (already on `GraphKindDef`) names the primary graph a sub-graph
+- `within` (already on `GraphTypologyDef`) names the primary graph a sub-graph
   belongs to. `gh-pages` gets a declaration for the first time, `within` the
   `folio` graph it renders.
 - `folio_init` writes the same declarations, so a folio inherits the layout.
@@ -236,25 +236,34 @@ reports `unknown`, never a pass — the same rule as 3fva §2.3.
 
 ## 4. What would need to change
 
-Inventory, every reader and writer found (Explore sweep, 2026-10-02):
+Inventory, every reader and writer found (Explore sweep, 2026-10-02).
 
-| area | file | change |
-|---|---|---|
-| schema | `schemas/cat-harness.ts` (`DirectoryStorageSchema`, from #1764), `schemas/bean-graph.ts` | widen `keyedBy` to `commit \| tip` — **shared with 3fva**; no new field |
-| schema | `graph-kind-registry.ts` | `holds: state` ⇒ default `storage.keyedBy: tip`; a check that a declared `state` dir on `main` is a finding once migrated |
-| beans CLI | `.beans.yml` | `path: state/beans/defs` |
-| engine | `cat-harness/src/workflow/store.ts` `WORKFLOW_DIR` | resolve from the declaration, not a constant |
-| claim | `cat-harness/scripts/claim-bean.ts` | push to `state`, not `main` |
-| fallback | `cat-harness/scripts/beans-fallback.ts` | read the mount; fix its stale `beans/*.md` header |
-| landed | `cat-harness/scripts/beans-landed.ts` | read `Closes-bean:` from merges |
-| session start | `.claude/settings.json` hook, `session-start-coord-sweep.sh` | fetch + mount `state/`; report "could not mount" as a finding |
-| site | `gen-docs-pages.ts` (`assets/beans/index.json`), `state-visualizer.ts` | read from the branch at build; `docs-site.yml` also triggers on push to `state` |
-| gates | `code-quality-gates.yml` (9 bean gates, `check:harness-dirs`, `check:harness-state`, `kg:audit`, `audit:coverage`) | read `storage`; bean gates move to a `state`-branch workflow |
-| health | `test/health/run.ts` | write results through the library |
-| todos | `scripts/todos.ts`, `render-pipeline.ts` | write through the library |
-| issue marks | `scan-repo-content.ts`, `merge-conflict-patterns.ts`, `harness-tiles.ts` | read through the library |
-| scaffold | `folio_init` templates | write the declarations and the hook |
-| docs | `AGENTS.md` (beans section), onboarding guide | pointers only |
+> **The `status` column is maintained; the `change` column is the 2026-10-02
+> text and is NOT.** Two rows' `change` has since been measured wrong, and a
+> worklist carrying a wrong instruction is worse than one carrying none — so
+> each is struck where it is dead rather than quietly rewritten, with the
+> measurement named beside it. The bean notes are
+> `beans/notes/folio-assistant-9ofm--2026-10-03--claude-9ofm-cutover-prereqs.md`
+> (the ordering A–D) and `…--2026-10-04--claude-beans-off-main-9ofm.md` (the
+> two open measurements and the exact cutover commit).
+
+| area | file | change | status |
+|---|---|---|---|
+| schema | `schemas/cat-harness.ts` (`DirectoryStorageSchema`, from #1764), `schemas/bean-graph.ts` | widen `keyedBy` to `commit \| tip` — **shared with 3fva**; no new field | **done** #1937; `source: { kind: "branch" }` superseded `storage` in #1987 |
+| schema | `graph-typology-registry.ts` | `holds: state` ⇒ default `storage.keyedBy: tip`; a check that a declared `state` dir on `main` is a finding once migrated | **done** as `tipPresence` + `check:declared-dirs` (row B) |
+| beans CLI | `.beans.yml` | `path: state/beans/defs` | ~~as written~~ — **no change needed**, measured: under D4 (b) a mount lands at the DECLARED path, so `beans/defs` still resolves, and the CLI read and wrote a store in a directory under no version control at all |
+| engine | `cat-harness/src/workflow/store.ts` `WORKFLOW_DIR` | resolve from the declaration, not a constant | **done** #2052 — and the constant stays as the checked default |
+| claim | `cat-harness/scripts/claim-bean.ts` | push to `state`, not `main` | #2042 — a **hard prerequisite** of the cutover |
+| fallback | `cat-harness/scripts/beans-fallback.ts` | read the mount; fix its stale `beans/*.md` header | **done** #2036 |
+| landed | `cat-harness/scripts/beans-landed.ts` | read `Closes-bean:` from merges | **done** by inheritance — it reads through `beans-fallback`'s `listBeans` |
+| session start | `.claude/settings.json` hook, `session-start-coord-sweep.sh` | fetch + mount `state/`; report "could not mount" as a finding | **done** #2001, and §3.5/3.6 of the sweep |
+| site | `gen-docs-pages.ts` (`assets/beans/index.json`), `state-visualizer.ts` | read from the branch at build; `docs-site.yml` also triggers on push to `state` | readers **done** #2036; the build-time mount **done** #2052; the trigger is bean `fwtz` and needs an explicit `ref: main` |
+| gates | `code-quality-gates.yml` (9 bean gates, `check:harness-dirs`, `check:harness-state`, `kg:audit`, `audit:coverage`) | read `storage`; bean gates move to a `state`-branch workflow | the mount and a `check:workflows` rule holding it **done** #2052; moving them to a branch workflow is `0tg5` |
+| health | `test/health/run.ts` | write results through the library | open; its branch is not seeded |
+| todos | `scripts/todos.ts`, `render-pipeline.ts` | write through the library | #2042 |
+| issue marks | `scan-repo-content.ts`, `merge-conflict-patterns.ts`, `harness-tiles.ts` | read through the library | #2042 |
+| scaffold | `folio_init` templates | write the declarations and the hook | ~~the declarations~~ — a fresh folio has no seeded branch, so a branch declaration would make its first `state:mount` fail loudly; it wants `kind: "directory"` and a cutover of its own |
+| docs | `AGENTS.md` (beans section), onboarding guide | pointers only | P5, bean `89cl` |
 
 ### 4.1 Skills and processes to adjust
 

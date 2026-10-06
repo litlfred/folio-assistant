@@ -10,12 +10,18 @@
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs (bean `t3n8`). `name` stays the machine identifier that filenames and `needs` edges resolve against.",
   "title": "C@T Harness Tools",
   "description": "What implements the harness's Tool definitions: the MCP servers, their tool registrars and routes. Definitions stay in cat-harness; this layer runs them.",
+  "avatar": {
+    "glyph": "M14.5 5.5a4 4 0 005 5L11 19a2.1 2.1 0 01-3-3l8.5-8.5a4 4 0 01-2-2zM8.5 16.5h.01",
+    "tone": 268,
+    "reads": "a wrench, in cat-harness's colour — the code that implements its tools"
+  },
+  "_avatar_comment": "A wrench — what implements the harness's tool definitions. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.",
   "directories": [
     {
       "id": "cat-harness-tools-adapters",
       "path": "adapters/",
       "description": "The standalone MCP server (`adapters/mcp-server/`): its tool registrars, the declared tool groups that load them, and the Dockerfile that packages it. Moved from `cat-harness/adapters/mcp-server/` (bean `w2gr`, step 3a) because it is a server, and the owner ruled that tool implementations live here while their definitions stay in cat-harness.",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ]
     },
@@ -23,7 +29,7 @@
       "id": "cat-harness-tools-schemas",
       "path": "schemas/",
       "description": "Tests of cat-harness's schemas that exercise tools code: the sixteen `cat-harness/schemas/*.test.ts` files that imported `scripts/`, `src/`, `content/pipeline/` or `test/support/`, moved first (bean `70lx`, batch B0) so that no later batch of the code move leaves a harness file importing into this layer. The Zod sources they test stay in cat-harness and follow in stage 1b (bean `8lcl`). `code`, not `schemas`: nothing here is a schema definition.",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ]
     },
@@ -31,7 +37,7 @@
       "id": "cat-harness-tools-scripts",
       "path": "scripts/",
       "description": "Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ],
       "coverage": {
@@ -42,7 +48,7 @@
       "id": "cat-harness-tools-id-lookup",
       "path": "id-lookup/",
       "description": "The identifier-lookup CLIENT a reader's browser runs: `lookup.js` (plain ES module, no dependencies) with its hand-written `lookup.d.ts`, and a one-form `index.html` told which index to open by `?index=<directory>`. The indexes themselves are generated output hosted by the instance each is about (`who-iris/id-lookup/`), never here. JavaScript, so it never sits under the plain docs pipeline. Moved from large-datasets (bean `j7ql`).",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ],
       "coverage": {
@@ -53,7 +59,15 @@
       "id": "cat-harness-tools-tests",
       "path": "test/",
       "description": "Tests of the code this layer holds, moved with their subjects so the harness keeps no test importing upward into this layer: `composition-roots` (the declared tool groups and route mounting) and `mcp-graph-tools`.",
-      "graphKinds": [
+      "graphTypologies": [
+        "code"
+      ]
+    },
+    {
+      "id": "cat-harness-tools-src",
+      "path": "src/",
+      "description": "The MCP and HTTP server — what `bun run start` and `.mcp.json` start, from `src/index.ts`: the composition roots (`server.ts`, `route-groups.ts`, `tool-groups.ts`), the plug-in contract `types.ts`, the MCP tool registrars (`tools/`), the harness's own routes (`routes/branches.ts`, `routes/chat.ts`), authentication (`auth/`, `core/github-auth.ts`), access control (`core/rbac.ts`), the MCP projection (`mcp/`) and the no-content adapter. Moved from `cat-harness/src/` in stage 1a's first batch (bean `70lx`, B1). The Tool nodes it serves stay DECLARED in `cat-harness/tools/` with their original `src/tools/*` paths, and the loader finds each module here through `needs` (owner ruling \"Trap 1\"); the content routes (feedback, glossary, relevance) went UP to the content layer that owns their content instead, and the route loader finds them the same way (owner, 2026-10-04).",
+      "graphTypologies": [
         "code"
       ]
     }
@@ -75,6 +89,9 @@
     }
   ],
   "_needs_comment": "The layers this instance sits on: cat-harness, whose Tool DEFINITIONS it implements, and bootstrap-tools, the tool layer one level down. Owner ruling C1 (2026-10-01, epic 7x5n, bean rmi6): this layer sits BELOW the content core -- the order is bootstrap, bootstrap-tools, cat-harness, this layer, then the content layers. It declared the content core as its one need until then, for the document adapter's server wrapper; the placement audit measured 0 of this layer's 27 files importing the core, so the edge was declared and never used. The core now needs THIS layer, and the reverse edge -- anything here importing a layer above -- is wrong-direction, which `check:import-direction` enforces from the declared `needs` lists rather than from any table. The layer above is deliberately not named here: a lower layer naming a higher one is the wrong direction `check:reference-direction` grades.",
+  "seedsWith": [
+    "cat-harness"
+  ],
   "needs": [
     "cat-harness",
     "bootstrap-tools"

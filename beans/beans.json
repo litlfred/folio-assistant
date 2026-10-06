@@ -1,11 +1,11 @@
 {
-  "_comment": "The bean graph. `beans/` is a graph whose DIRECTORIES are declared here — the same shape as `cat-harness.json`, reusing `ContentDirectorySchema` and the same open graph-kind registry rather than a parallel vocabulary. `graphs` is an array because a directory is a place to look and may hold more than one part of the graph; it does NOT say how to tell the contents apart, because the files declare what they are (a bean's front matter, a workflow instance's `$schema`). Paths resolve against THIS file's directory, so the whole graph relocates by moving one folder. Schema: schemas/bean-graph.ts. NOTE: `.beans.yml` still carries the defs path because the `beans` binary is third-party; `bun run check:harness-dirs` fails when they disagree.",
+  "_comment": "The bean graph. `beans/` is a graph whose DIRECTORIES are declared here — the same shape as `cat-harness.json`, reusing `ContentDirectorySchema` and the same open graph-typology registry rather than a parallel vocabulary. `graphs` is an array because a directory is a place to look and may hold more than one part of the graph; it does NOT say how to tell the contents apart, because the files declare what they are (a bean's front matter, a workflow instance's `$schema`). Paths resolve against THIS file's directory, so the whole graph relocates by moving one folder. Schema: schemas/bean-graph.ts. NOTE: `.beans.yml` still carries the defs path because the `beans` binary is third-party; `bun run check:harness-dirs` fails when they disagree.",
   "name": "folio-assistant",
   "directories": [
     {
       "id": "defs",
       "path": "defs",
-      "graphKinds": [
+      "graphTypologies": [
         "bean-defs"
       ],
       "description": "Work items — one Markdown file each, in the layout the `beans` CLI reads."
@@ -13,7 +13,7 @@
     {
       "id": "archive",
       "path": "defs/archive",
-      "graphKinds": [
+      "graphTypologies": [
         "bean-defs"
       ],
       "description": "The same kind as `defs`, moved aside. Bean `e8m3`: the owner ruled 2026-09-26 that archiving is a VIEW rather than a terminal state, so an archived bean keeps its status and is still part of the store. Declared because it holds 631 bean-defs and nothing declared it — a present-but-undeclared directory, which the directory checks cannot see because they compare declarations against disk and not the reverse. `check:bean-archive` holds the invariant the ruling implies: every bean in here is terminal, because a non-terminal one is open work invisible to every count."
@@ -21,7 +21,7 @@
     {
       "id": "notes",
       "path": "notes",
-      "graphKinds": [
+      "graphTypologies": [
         "bean-notes"
       ],
       "description": "One pull request's addendum to a bean, in a file of its own: `<bean>--<date>--<branch>.md`, so two pull requests adding to one bean never write one path. `README.md` is the generated index (`bun run beans:notes`). Bean `m61r`, issue #1853."
@@ -29,7 +29,7 @@
     {
       "id": "workflows",
       "path": "workflows",
-      "graphKinds": [
+      "graphTypologies": [
         "workflow-state"
       ],
       "description": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`."
@@ -37,13 +37,7 @@
     {
       "id": "queue",
       "path": "queue",
-      "subgraph": true,
-      "source": {
-        "kind": "branch",
-        "branch": "cat/cat-harness/merge-queue",
-        "keyedBy": "tip"
-      },
-      "graphKinds": [
+      "graphTypologies": [
         "merge-queue"
       ],
       "description": "A merge steward's decisions about open pull requests — one JSON file each, carrying `\"$schema\": \"folio-merge-queue-entry/v1\"`. Beside `workflows/` deliberately: this holds the DECISIONS (priority, hold, ejection, the train joined, each with its reason), and a finished train run under `workflows/` holds the EVIDENCE those decisions met. A reader asking why one pull request went into a given train needs both, and should look in one store. It records no fact GitHub owns — CI, mergeability, labels and the head SHA are read live at decision time and refused by name in the schema, because a stored copy is a second answer that goes stale on the next push. Bean `hfag`."
@@ -51,7 +45,7 @@
     {
       "id": "surveys",
       "path": "surveys",
-      "graphKinds": [
+      "graphTypologies": [
         "session-survey"
       ],
       "description": "Published surveys of commit windows. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each file records the window's TWO EDGE COMMITS, so a later session computes the uncovered delta rather than re-deriving the whole range — staleness decidable, not guessed."

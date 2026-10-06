@@ -1,10 +1,5 @@
 classDiagram
   direction LR
-  namespace smart_immunizations__smart_immunizations_docs {
-    class n_smart_immunizations_smart_immunizations_docs_docs["docs: no node schema"] {
-      <<could not determine>>
-    }
-  }
   namespace smart_immunizations__smart_immunizations_artifact_index {
     class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context["Context"] {
       <<json: FhirArtifactIndexSchema>>
@@ -55,6 +50,26 @@ classDiagram
       sidecarsUnbound [0..*] SidecarsUnbound[]
       count [1] integer
       artifacts [0..*] Artifact[]
+    }
+    class smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item["Item"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [1] string
+    }
+    class smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group["Group"] {
+      <<json: IgMenuSchema>>
+      label [1] string
+      href [0..1] string
+      items [0..*] Item[]
+    }
+    class smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1["folio-ig-menu/v1"] {
+      <<json: IgMenuSchema>>
+      $schema [1] 'folio-ig-menu/v1'
+      id [1] string
+      canonical [1] string~uri~
+      version [0..1] string
+      source [1] object
+      groups [0..*] Group[]
     }
     class smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_C4_Create_client_record_schema_json_IMMZ_C4_Create_client_record["IMMZ.C4.Create client record"] {
       <<schema: dak/StructureDefinition-IMMZ_C4_Create_client_record.schema.json>>
@@ -1172,6 +1187,14 @@ classDiagram
       dak/ValueSet-IMMZD5DTYellowFeverContraindicationsVS [1] enum(704) of string
     }
   }
+  namespace smart_immunizations__smart_immunizations_docs {
+    class n_smart_immunizations_smart_immunizations_docs_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+    class n_smart_immunizations_smart_immunizations_docs_ig_pages["ig-pages: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace smart_immunizations__qa {
     class smart_immunizations_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
@@ -1189,15 +1212,18 @@ classDiagram
       auditor [1] object
     }
   }
-  cssClass "n_smart_immunizations_smart_immunizations_docs_docs" fa_uml_kind_docs
-  cssClass "n_smart_immunizations_smart_immunizations_docs_docs" fa_uml_undetermined
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact : artifacts
+  smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item : items
+  smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group : groups
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Context" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_Artifact" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Item" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_Group" fa_uml_kind_fhir_artifact_index
+  cssClass "smart_immunizations_smart_immunizations_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_C4_Create_client_record_schema_json_IMMZ_C4_Create_client_record" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_D13_Update_client_record_schema_json_IMMZ_D13_Update_client_record" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_StructureDefinition_IMMZ_D17_Report_AEFI_schema_json_IMMZ_D17_Report_AEFI" fa_uml_kind_fhir_artifact_index
@@ -1397,5 +1423,9 @@ classDiagram
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_ValueSet_IMMZD5DTVaricellaContraindicationsVS_displays_json_IMMZD5DTVaricellaContraindications_ValueSet_for_Decision_Table_Display_Values" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_ValueSet_IMMZD5DTYellowFeverContraindicationsVS_displays_json_IMMZD5DTYellowFeverContraindications_ValueSet_for_Decision_Table_Display_Values" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_https___json_schema_org_draft_2020_12_schema_listed" fa_uml_kind_fhir_artifact_index
+  cssClass "n_smart_immunizations_smart_immunizations_docs_docs" fa_uml_kind_docs
+  cssClass "n_smart_immunizations_smart_immunizations_docs_docs" fa_uml_undetermined
+  cssClass "n_smart_immunizations_smart_immunizations_docs_ig_pages" fa_uml_kind_ig_pages
+  cssClass "n_smart_immunizations_smart_immunizations_docs_ig_pages" fa_uml_undetermined
   cssClass "smart_immunizations_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "smart_immunizations_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa

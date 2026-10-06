@@ -7,7 +7,7 @@
  *
  * ## Why this exists
  *
- * `schemas/` is a declared graph kind holding **content** (`BASE_GRAPH_KINDS`:
+ * `schemas/` is a declared graph typology holding **content** (`BASE_GRAPH_TYPOLOGIES`:
  * *"a shape is the subject matter of the schema graph"*), and it is
  * `renderable: false` — so 100 modules carrying 199 exported schemas had no
  * way to be looked at. Bean `xgd8`.
@@ -74,7 +74,7 @@ import { basename, join, relative } from "node:path";
 
 import ts from "typescript";
 
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { checkoutRootFor } from "../schemas/cat-harness.js";
 import { corpusDirectoriesForGraph, rootInstanceName } from "../schemas/harness-config.js";
 
 /**
@@ -770,7 +770,8 @@ function readModule(
 export function readSchemaGraph(root: string): SchemaGraph | null {
   const dirs = schemaRoots(root);
   if (dirs.length === 0) return null;
-  const repoRoot = repoRootFor(root);
+  // `kg-audit` passes the ROOT instance here; `dirname` of it is outside the checkout (g43f).
+  const repoRoot = checkoutRootFor(root);
   const rel = (p: string): string => relative(repoRoot, p).split("\\").join("/");
 
   const modules: SchemaGraphModule[] = [];

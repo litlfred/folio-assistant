@@ -89,8 +89,13 @@
  * - **unmounted** — cut over, and nothing mounted here, so every reader of
  *   the path sees an EMPTY graph rather than an unreachable one.
  *
- * A **commit**-keyed directory is still skipped, because for that keying the
- * checkout copy really is an artefact of whether `qa:fetch` ran. The
+ * A **route**-keyed directory gets the FIRST of those two and not the second:
+ * two copies is still two copies, but there is no route-keyed mount for
+ * `unmounted` to be about. {@link routePresence} carries why, and which gate asks
+ * the question this one declines.
+ *
+ * A **commit**-keyed directory is still skipped entirely, because for that keying
+ * the checkout copy really is an artefact of whether `qa:fetch` ran. The
  * distinction, and the measurements behind it, are in {@link tipPresence}.
  *
  * Exit codes: 0 clean · 1 any finding.
@@ -100,7 +105,7 @@ import { existsSync, statSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
 
 import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.js";
-import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import { defaultGraphTypologies } from "../schemas/graph-typology-registry.js";
 import {
   contentIsOffCheckout,
   resolveSubgraphSource,
@@ -112,11 +117,11 @@ import {
 // would drift the first time the marker moved — which it already did once,
 // from `--git-common-dir` to the per-worktree git dir (review on #1957).
 import { readMarker } from "./branch-store.ts";
-// The `folio` graph kind is registered by CORE as a load-time side effect, so
+// The `folio` graph typology is registered by CORE as a load-time side effect, so
 // the harness alone does not know it exists and `readDeclaration` throws on a
 // perfectly valid declaration that uses it. Same import, same reason, as
 // `check-declared-assets.ts` and `kg-export.ts` carry.
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 
 export interface DirFinding {
   instance: string;
@@ -230,6 +235,62 @@ export function tipPresence(
       `is cut over to \`${loc.branch}\` and ${marker ? `its marker points at ${marker.into}, which is gone` : "nothing is mounted here"}, ` +
       `so every reader of this path sees an EMPTY graph rather than an unreachable one. ` +
       `Mount it (\`bun run state:mount\`); "no content" and "could not reach the content" are different answers.`,
+  };
+}
+
+/**
+ * What this checkout can say about a directory kept per published ROUTE.
+ *
+ * **Two answers, not three**, and the missing one is the whole point of having a
+ * separate function rather than a `keyedBy` branch inside {@link tipPresence}:
+ *
+ * - **`not-cut-over`** — identical to the tip case, and for an identical reason.
+ *   The declaration names a branch, the checkout still tracks files at the path,
+ *   so the graph has two copies and nothing says which is authoritative. Bean
+ *   `9ofm`'s guard is about TWO COPIES, and route-keying does not change how many
+ *   there are.
+ * - **`off-checkout`** — the files are not tracked here. **Not a finding**, and
+ *   not a pass dressed as one either: it is this gate declining a question it
+ *   cannot ask. There is nothing further to measure locally, because…
+ *
+ * ## …there is no `unmounted` for a route store, and that is not a gap
+ *
+ * `tipPresence`'s third state reads the mount MARKER. A route store has no
+ * mount: `tipLocations` defaults to `keyedBy: "tip"` and `state-mount.ts` takes
+ * that default, so a route entry is never a mount candidate, and `mountTip`
+ * itself reads no `keyedBy` at all — pointed at a route branch it opens a
+ * tip-keyed store and `verifiedTip` answers **`corrupt`** (measured against the
+ * seeded `cat/cat-harness/uml-overview`, whose manifest is route-keyed). So "cut
+ * over and nothing mounted here" is not a state a route store can be in;
+ * reporting it would be a finding against a mechanism that does not exist, and
+ * one nobody could ever clear.
+ *
+ * **What replaces it is a different gate, not a missing branch here.** Whether
+ * the branch actually carries the routes is answered by the route's own
+ * generator `--check` — `route-authority.ts`'s `compareRoute`, which reports
+ * `unknown` and refuses to pass when it cannot fetch. That question needs the
+ * network. This gate is deliberately offline (`tipPresence`: *"it cannot go red
+ * for a network reason and cannot be made green by a fetch"*), so answering it
+ * here would mean giving this gate a second posture. Two gates, one each.
+ */
+export function routePresence(
+  loc: { id: string; branch: string; keyedBy: string },
+  abs: string,
+  repoRoot: string,
+): { state: "off-checkout" } | { state: "not-cut-over"; detail: string } {
+  const rel = relative(repoRoot, abs).split(sep).join("/") || ".";
+  const tracked = spawnSync("git", ["ls-files", "--", rel], { cwd: repoRoot, encoding: "utf-8" });
+  if (!(tracked.status === 0 && tracked.stdout.trim())) return { state: "off-checkout" };
+  const n = tracked.stdout.trim().split("\n").length;
+  return {
+    state: "not-cut-over",
+    detail:
+      `declares \`storage.branch: "${loc.branch}"\` (keyed by route) and the checkout still tracks ` +
+      `${n} file(s) here, so the graph has two copies and nothing says which is authoritative. ` +
+      `For a ROUTE store that is worse than ambiguous: the site build serves whichever copy its path ` +
+      `resolves to, and the generator's \`--check\` compares against the BRANCH, so the two disagree ` +
+      `silently. Flipping the declaration and removing the files are ONE change (bean \`9ofm\`): land ` +
+      `both, or neither.`,
   };
 }
 
@@ -352,10 +413,10 @@ export function auditInstance(
  * it** — this module's own docblock opens by saying a declaration into thin air
  * makes every consumer "report a clean run over nothing", and five entries in
  * `cat-harness/docs/docs.json` were exactly that: `proposals`, `requirements`,
- * `docs-auto` and the two uml routes (bean `xsrv`).
+ * `auto-docs` and the two uml routes (bean `xsrv`).
  *
  * It also explains a thing reported on #2022 as a quirk: `audit:coverage` calls
- * `docs-auto` `no-directory` because nothing resolved a nested path for
+ * `auto-docs` `no-directory` because nothing resolved a nested path for
  * presence.
  *
  * `nestedDirectories` walks to any depth and guards a declaration naming its
@@ -379,7 +440,7 @@ function auditNestedCount(
  * `assets/img/uml/` — a directory holding no declaration at all. Measured on
  * the first version of this function, whose finding sent a reader to exactly
  * that path. `declarationFile` on the kind is the one place that fact lives
- * (`graph-kind-registry.ts`), which is why it is asked rather than assumed.
+ * (`graph-typology-registry.ts`), which is why it is asked rather than assumed.
  *
  * Returns the parent's directory alone when the parent's kind names no
  * `declarationFile` — nothing else is known, and naming a file that may not
@@ -387,12 +448,12 @@ function auditNestedCount(
  */
 function declaringFile(
   parentId: string,
-  byId: ReadonlyMap<string, { path: string; graphKinds: readonly string[] }>,
+  byId: ReadonlyMap<string, { path: string; graphTypologies: readonly string[] }>,
 ): string {
   const parent = byId.get(parentId);
   if (!parent) return "(the declaration naming it)";
   const dir = `${parent.path.replace(/\/+$/, "")}/`;
-  const file = parent.graphKinds.map((g) => defaultGraphKinds.get(g)?.declarationFile).find((f) => typeof f === "string");
+  const file = parent.graphTypologies.map((g) => defaultGraphTypologies.get(g)?.declarationFile).find((f) => typeof f === "string");
   return file === undefined ? dir : `${dir}${file}`;
 }
 
@@ -418,12 +479,19 @@ function declaringFile(
  * this path sees nothing, and "no content" and "could not reach the content"
  * would be indistinguishable from here. See {@link tipPresence}.
  *
- * **`route` is skipped too, and that is a decision rather than an omission.**
- * There is no route-keyed mount: `branch-store.ts`'s mount/marker pair is
- * tip-keyed, so this checkout has no local presence to compare and `unmounted`
- * would be a verdict about a mechanism that does not exist. It becomes a real
- * question when `xsrv` cuts a reader over — and at that point this is the one
- * place to add it, rather than two.
+ * **`route` is HALF of the tip question, and only half.** This paragraph said
+ * "skipped too, and that is a decision rather than an omission", with the right
+ * reason for the wrong scope: there is no route-keyed mount — `tipLocations`
+ * defaults to `tip` and `state-mount.ts:168` takes that default, so a route entry
+ * is never a mount candidate — and `unmounted` really would be a verdict about a
+ * mechanism that does not exist. But `not-cut-over` is not about a mount. It is
+ * about TWO COPIES, and a route-keyed declaration whose files are still tracked
+ * here has exactly two, the same as a tip-keyed one. Skipping the keying skipped
+ * both halves and only one of them was meant to go.
+ *
+ * That paragraph also said the question arrives "when `xsrv` cuts a reader over —
+ * and at that point this is the one place to add it". This is that point, and
+ * this is that place. See {@link routePresence}.
  */
 function offCheckoutFindings(
   e: { id: string; path: string; absent?: { reason: string } },
@@ -465,7 +533,16 @@ function offCheckoutFindings(
     // `unmounted` is the honest state: nothing read this path.
     return [{ instance: instanceRoot, id: e.id, path: e.path, kind: "unmounted", detail: (err as Error).message }];
   }
-  if (src.kind !== "branch" || src.keyedBy !== "tip") return [];
+  // A FAMILY (bean `lehh`) is on its branches by declaration and mounted one
+  // member at a time, so an absent path is the expected state, not a finding —
+  // fsh-guts' precedent, without a single tip to compare against.
+  if (src.kind === "family") return [];
+  if (src.kind !== "branch") return [];
+  if (src.keyedBy === "route") {
+    const r = routePresence(src, abs, repoRoot);
+    return r.state === "off-checkout" ? [] : [{ instance: instanceRoot, id: e.id, path: e.path, kind: r.state, detail: r.detail }];
+  }
+  if (src.keyedBy !== "tip") return [];
   if (mountId === null) {
     return [
       {
@@ -490,7 +567,7 @@ function offCheckoutFindings(
 export function auditNested(
   instanceRoot: string,
   repoRoot: string,
-  decl: { directories?: ReadonlyArray<{ id: string; path: string; graphKinds?: readonly string[] }> } | undefined,
+  decl: { directories?: ReadonlyArray<{ id: string; path: string; graphTypologies?: readonly string[] }> } | undefined,
 ): DirFinding[] {
   const findings: DirFinding[] = [];
   // `nestedDirectories` wants the whole declaration shape; only `directories`
@@ -499,9 +576,9 @@ export function auditNested(
   const nested = nestedDirectories(instanceRoot, decl as Parameters<typeof nestedDirectories>[1]);
   // Every entry a parent id can name: the instance's own, then the nested ones
   // (`walkNested` goes to any depth, so a parent may itself be nested).
-  const byId = new Map<string, { path: string; graphKinds: readonly string[] }>();
-  for (const d of decl?.directories ?? []) byId.set(d.id, { path: d.path, graphKinds: d.graphKinds ?? [] });
-  for (const n of nested) byId.set(n.id, { path: n.path, graphKinds: n.graphKinds });
+  const byId = new Map<string, { path: string; graphTypologies: readonly string[] }>();
+  for (const d of decl?.directories ?? []) byId.set(d.id, { path: d.path, graphTypologies: d.graphTypologies ?? [] });
+  for (const n of nested) byId.set(n.id, { path: n.path, graphTypologies: n.graphTypologies });
   for (const n of nested) {
     const e = n as typeof n & { absent?: { reason: string }; storage?: { branch: string }; source?: SubgraphSource };
     const abs = join(instanceRoot, n.path);

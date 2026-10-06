@@ -94,13 +94,21 @@ first minutes reading it.
 
 ## Core Directives for Sessions
 
-1. **Every session is a Bean:** At the start of your session, you MUST create a parent bean (`--type milestone` or `--epic`) that represents the session and its goals.
-   `beans create "Session: <Branch/Goal>" --type milestone`
-2. **Every todo is a Child Bean:** All tasks, probes, and action items planned for the session MUST be created as child beans (`--type task`) and linked to the session bean.
-   `beans create "<Task Title>" --type task`
-   `beans update <child-id> --parent <session-id>`
+1. **A session is a LOG, never an epic or a milestone.** Do **not** create a
+   `Session: …` bean. What one sitting did is recorded in two places that
+   already exist and are already read: the **PR body** (`## Intent` /
+   `## Session results`, [`session-intent`](session-intent.md)) and a **bean
+   note** on each bean you worked — `bun run beans:note <id> --title "…"`,
+   written to the declared `notes` directory of `beans/beans.json` and keyed by
+   branch, so it is one file per session per bean by construction
+   ([`bean-coordination`](bean-coordination.md) §"Adding to a bean"). See
+   §"A session is a log, not a parent" below for why, and what it cost.
+2. **Every todo is a bean, parented by SUBJECT.** Each task, probe or action
+   item is a bean (`--type task`) under the epic whose subject it is —
+   §"WHICH parent" — not under anything representing the session.
+   `beans create "<Task Title>" --type task --parent <subject-epic-id>`
 3. **No manual `.md` checklists:** Never use `session-beans.md` or raw Markdown `- [ ]` checklists to track global tasks. Always use the `beans` CLI to prevent namespace pollution and maintain the official project tracking.
-4. **Check before you create:** `beans create` is **not** idempotent. Run the existence check below before every `beans create` — no exceptions, including the session milestone.
+4. **Check before you create:** `beans create` is **not** idempotent. Run the existence check below before every `beans create` — no exceptions.
 5. **Brief before you work:** claiming a bean records *which* item is taken; the opening brief records what it is taken **for**. Write it before the first tool call, in the chat. See §"Opening brief" below.
 
 ## Check before you create — `beans create` is not idempotent (STRICT)
@@ -150,6 +158,26 @@ print(f"{len(m)} exact match(es)")
   reworded title for the known duplicate pair `3ozg`/`rmcf` found both at
   0.72–0.75. The score proposes; whether a hit IS the same work is your call
   (method [`lsi`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/lsi.md), refusal 3).
+- **A bean ABOUT ONE OBJECT is keyed on the object, not the title.** When the
+  work targets a single named thing (a Lean declaration, a block label, a
+  file), titles drift: "Prove Foo.bar", "PROVE(lean): Foo.bar", "close sorry
+  in Foo.bar". Neither check above is guaranteed to pair them. **Measured in
+  `qou` 2026-10-04: most of its 141 duplicate groups were generator re-runs
+  filing one Lean declaration under a new title** (bean `yr93`). So write the
+  key into the bean as a line of its own, `Target: lean:Foo.bar` (or
+  `block:<label>`, `file:<path>`), and before creating search the WHOLE store
+  for that line, archive included, because a completed bean is often the
+  answer:
+
+  ```bash
+  grep -rlF "Target: lean:Foo.bar" beans/defs/   # the archive is beans/defs/archive/
+  ```
+
+  A hit is the same work: claim it, reopen it with a note, or link to it.
+  **A generator that files beans MUST write the key and run this check**,
+  since a re-run is exactly the case the title checks miss. The typed field
+  this line stands in for (`targets:` validated against the content graph)
+  is bean `f227`.
 - **Still new** → `beans create "$T" --type task`, under the epic `lsi:near`
   printed if it fits (§"WHICH parent — the criterion nobody wrote down" below).
 
@@ -255,14 +283,50 @@ wrong one, so the criterion has to live here or nowhere.**
    read alongside it**, and say in the body why the other was not chosen — a
    parent is a claim about where somebody should go looking.
 
-### This conflicts with "every session is a Bean", and the conflict is real
+### A session is a log, not a parent
 
-Core Directive 1 above says to create a session milestone and parent children
-to it. That is filing by SESSION; the repository is organised by SUBJECT, in
-thematic epics that outlive any session. **Where they disagree, file by
-subject** — a session bean is a useful record of what one sitting did, and it
-is not where the next person looks for the work. If you keep a session
-milestone, it is a sibling record, not the parent of topical work.
+Until 2026-10-04 Core Directive 1 read *"Every session is a Bean … you MUST
+create a parent bean (`--type milestone` or `--epic`)"*, with
+`beans create "Session: <Branch/Goal>" --type milestone`, and this section
+said the opposite — file by subject — and called the conflict "real". Agents
+followed the directive, because a numbered MUST outranks a paragraph that
+disagrees with it three screens down. **Measured in the `qou` folio
+2026-10-04: 292 of its 353 `type: epic` beans were session logs** (bean
+`8unf`, issue #2106). The roadmap's top level — the thing `beans roadmap`
+exists to show — was mostly a diary.
+
+What that costs is not clutter alone:
+
+- **An epic is a claim about where to look for a SUBJECT.** A session epic
+  points at one sitting, which ended; nobody looks there for the work, so its
+  children are lost to the next agent filing by subject.
+- **It defeats the guards.** `check-bean-parents` passes a task parented to a
+  session epic, because the parent exists and is an epic. The wrong parent is
+  textually clean.
+- **Its status lies.** A session epic stays `in-progress` after its session
+  ends, so it is a stale claim from birth, and the quiet-claim findings fill
+  with logs.
+
+**Where the log goes instead** — each already declared, already read:
+
+| what the session wants to keep | where |
+|---|---|
+| what it intended and what it got done | the PR body, `## Intent` / `## Session results` ([`session-intent`](session-intent.md)) |
+| what it found about a bean | a note: `bun run beans:note <id>` → `beans/notes/<bean>--<date>--<branch>.md` |
+| a survey of a commit window it read | `beans/surveys/` (`session-survey`) — only if it surveyed one |
+| a handover to whoever comes next | a note on the bean being handed over, plus [`handover-report`](handover-report.md) |
+
+**A handover is the same case.** A `Handoff: …` or `Handover: …` bean typed
+`epic` or `milestone` is a session log with a different title.
+
+**`bun run health` reports it** — the `bean-store` check's
+`bean-session-log-roots` finding names every OPEN bean whose title starts
+`Session`, `Handoff` or `Handover` and whose type is `epic` or `milestone`.
+Report-only: the remedy is a person's (or a reviewed
+[`work-plan-restructure`](work-plan-restructure.md) plan's) — re-parent the
+children by subject, move the narrative into a note, then set the log to
+`completed` or `scrapped` with a pointer. **Never `beans delete` it**: other
+beans, commits and PRs cite its id.
 
 ## A GOAL is a `milestone` bean, and an epic joins one by parenting to it
 
@@ -546,13 +610,17 @@ owner's word and `beans archive`, run deliberately. Note the CLI prints
 
 ## Status Display Format
 
-When the user asks "status" or "show beans", run `beans list` and display the hierarchy:
+When the user asks "status" or "show beans", run `beans list` and display the
+beans this session touched **under their subject epics** — the epic is the
+heading because it is where the work lives; the session is a filter, not a
+node:
 
 ```
-## Session Beans
-- [epic-123] Session: <branch-name> (in-progress)
+## Beans this session touched (branch <branch-name>)
+- [abcd] PROCESS: how an agent decides what it is doing (epic)
   - [task-124] Task A (completed)
   - [task-125] Task B (in-progress)
+- [efgh] QA: verdicts, sidecars and the audited review record (epic)
   - [task-126] Task C (todo)
 ```
 
@@ -598,11 +666,10 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 
 | process | step(s) that name it |
 |---|---|
-| [Is the incremental IG AST what a full build would have produced?](../../processes/ig-ast-delta-review.html) | Note the missed coupling on the bean |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Record the gap as a bean |
 | [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Phase 5: Create beans |
 | [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Check before you create (exact-title search); Create the bean (agent CLI, not an engine op); Work, keeping the body current (this is 'edit'); Complete (no unchecked todos left); Scrap with reasons NEVER delete |
 | [Code change and review](../../processes/code-change-review.html) | Record what was done, and close |
+| [Is the incremental IG AST what a full build would have produced?](../../processes/ig-ast-delta-review.html) | Note the missed coupling on the bean |
 | [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
 | [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
 | [Getting started](../../processes/getting-started.html) | Seed the work plan |
@@ -612,6 +679,7 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Open or claim the release bean; Open beans for the change requests; Close the release beans |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Claim or open the bean; Log findings on the bean; Resolve or re-open the bean |
 | [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Open a bean for the unverified citation; Record the evidence gap |
+| [L1 document ingestion — a document to the L1 source knowledge graph](../../processes/l1-document-ingestion.html) | Record the gap as a bean |
 | [Authoring a paper](../../processes/authoring-a-paper.html) | 2 · Seed the work plan |
 | [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
 

@@ -1,5 +1,56 @@
 classDiagram
   direction LR
+  namespace fhir_harness__fhir_harness_translations {
+    class fhir_harness_fhir_harness_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  namespace fhir_harness__fhir_harness_validators {
+    class fhir_harness_fhir_harness_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      <<json: ValidatorNodeSchema>>
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      pages [0..1] string
+      rationale [0..1] string
+    }
+  }
+  namespace fhir_harness__fhir_harness_typologies {
+    class fhir_harness_fhir_harness_typologies_folio_graph_typology_v1_folio_graph_typology_v1["folio-graph-typology/v1"] {
+      <<json: GraphTypologyNodeSchema>>
+      $schema [1] 'folio-graph-typology/v1'
+      kind [1] string
+      title [0..1] string
+      layer [0..1] 'core'
+      perInstance [0..1] true
+      renderable [1] boolean
+      recordsWork [0..1] boolean
+      holds [1] content | context | state | derived
+      summary [1] string
+      schema [0..1] string
+      validator [0..1] string
+      validatorNotApplicable [0..1] string
+      nodeSchemas [0..1] map~object~
+      declarationFile [0..1] string
+      concernGroups [0..1] true
+      within [0..1] string
+      avatar [0..1] object
+      tileIcon [0..1] string
+      published [0..1] false
+      skillBearing [0..1] true
+      kgContent [0..1] true
+      description [0..1] string
+      renderableNote [0..1] string
+      anyLayer [0..1] true
+      rationale [0..1] string
+    }
+  }
   namespace fhir_harness__library {
     class fhir_harness_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
       <<json: ImagesSidecarSchema>>
@@ -54,7 +105,6 @@ classDiagram
       bpmn:exclusiveGateway [0..*] element
       bpmn:extensionElements [0..*] element
       bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
       bpmn:incoming [0..*] element
       bpmn:lane [0..*] element
       bpmn:laneSet [0..*] element
@@ -87,6 +137,9 @@ classDiagram
       auditor [1] object
     }
   }
+  cssClass "fhir_harness_fhir_harness_translations_TranslationConfig" fa_uml_kind_translation_sources
+  cssClass "fhir_harness_fhir_harness_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
+  cssClass "fhir_harness_fhir_harness_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
   cssClass "fhir_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_kind_skills
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_undetermined

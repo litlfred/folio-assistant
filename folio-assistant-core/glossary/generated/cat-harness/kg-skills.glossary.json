@@ -30,6 +30,14 @@
       "status": "candidate"
     },
     {
+      "id": "agent-handoff",
+      "prefLabel": "agent-handoff",
+      "definition": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent.",
+      "notation": "agent-handoff",
+      "source": "cat-harness/skills/sdlc/sdlc-core/agent-handoff.md",
+      "status": "candidate"
+    },
+    {
       "id": "agent-memory",
       "prefLabel": "agent-memory",
       "definition": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
@@ -38,19 +46,11 @@
       "status": "candidate"
     },
     {
-      "id": "archiving-arxiv",
-      "prefLabel": "archiving-arxiv",
-      "definition": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
-      "notation": "archiving-arxiv",
-      "source": "cat-harness/skills/library/library-core/archiving-arxiv.md",
-      "status": "candidate"
-    },
-    {
-      "id": "archiving-web-pages",
-      "prefLabel": "archiving-web-pages",
-      "definition": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
-      "notation": "archiving-web-pages",
-      "source": "cat-harness/skills/library/library-core/archiving-web-pages.md",
+      "id": "artefact-reachability",
+      "prefLabel": "artefact-reachability",
+      "definition": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.",
+      "notation": "artefact-reachability",
+      "source": "cat-harness/skills/kg/kg-core/artefact-reachability.md",
       "status": "candidate"
     },
     {
@@ -78,6 +78,14 @@
       "status": "candidate"
     },
     {
+      "id": "auto-docs",
+      "prefLabel": "auto-docs",
+      "definition": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
+      "notation": "auto-docs",
+      "source": "cat-harness/skills/ui/ui-core/auto-docs.md",
+      "status": "candidate"
+    },
+    {
       "id": "bean-blocking",
       "prefLabel": "bean-blocking",
       "definition": "Default to non-blocking when updating a bean's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
@@ -99,30 +107,6 @@
       "definition": "Make a reviewer-facing BEFORE/AFTER preview of a change to anything that is rendered — a docs site, a paper's PDF, a FHIR IG, a slide deck, a website — and put it where the review and feedback processes expect it. Covers one build with one variable, stable capture, pairing every picture with a measured count and its method, the viewports and colour schemes to shoot, an honest status line, publishing with alt text, a section per content type naming this repository's own build and render tools, and how reviewer feedback on the preview becomes beans. Use before asking anyone to review a rendered change, at the HCI validation gate, and whenever a reviewer asks \"what did it look like before\".",
       "notation": "before-after-preview",
       "source": "cat-harness/skills/sdlc/sdlc-core/before-after-preview.md",
-      "status": "candidate"
-    },
-    {
-      "id": "bib-human-review",
-      "prefLabel": "bib-human-review",
-      "definition": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue.",
-      "notation": "bib-human-review",
-      "source": "cat-harness/skills/library/library-core/bib-human-review.md",
-      "status": "candidate"
-    },
-    {
-      "id": "bib-photo-ingestion-watcher",
-      "prefLabel": "bib-photo-ingestion-watcher",
-      "definition": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
-      "notation": "bib-photo-ingestion-watcher",
-      "source": "cat-harness/skills/library/library-core/bib-photo-ingestion-watcher.md",
-      "status": "candidate"
-    },
-    {
-      "id": "bib-qa",
-      "prefLabel": "bib-qa",
-      "definition": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence. Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
-      "notation": "bib-qa",
-      "source": "cat-harness/skills/library/library-core/bib-qa.md",
       "status": "candidate"
     },
     {
@@ -162,6 +146,14 @@
       "definition": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
       "notation": "bpmn-processes",
       "source": "cat-harness/skills/process/workflow/bpmn-processes.md",
+      "status": "candidate"
+    },
+    {
+      "id": "branch-archaeology",
+      "prefLabel": "branch-archaeology",
+      "definition": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\".",
+      "notation": "branch-archaeology",
+      "source": "cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md",
       "status": "candidate"
     },
     {
@@ -545,14 +537,6 @@
       "status": "candidate"
     },
     {
-      "id": "docs-auto",
-      "prefLabel": "docs-auto",
-      "definition": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
-      "notation": "docs-auto",
-      "source": "cat-harness/skills/ui/ui-core/docs-auto.md",
-      "status": "candidate"
-    },
-    {
       "id": "docs-generation",
       "prefLabel": "docs-generation",
       "definition": "Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.",
@@ -615,14 +599,6 @@
       "status": "candidate"
     },
     {
-      "id": "filing-dublin-core",
-      "prefLabel": "filing-dublin-core",
-      "definition": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
-      "notation": "filing-dublin-core",
-      "source": "cat-harness/skills/library/library-core/filing-dublin-core.md",
-      "status": "candidate"
-    },
-    {
       "id": "flushable-containers",
       "prefLabel": "flushable-containers",
       "definition": "A flushable container is a named store that accumulates by design — a trash you can recover from, a review preview, a console log. It declares a buffer limit, badges when over it, and offers three flush actions: flush all, trim to limit, and select to prune. What \"flush\" means, and which end of the order is expendable, are declared per container and differ.",
@@ -663,13 +639,6 @@
       "status": "candidate"
     },
     {
-      "id": "glossary-build",
-      "prefLabel": "glossary-build",
-      "notation": "glossary-build",
-      "source": "cat-harness/skills/library/library-core/glossary-build.md",
-      "status": "candidate"
-    },
-    {
       "id": "glossary-terms",
       "prefLabel": "glossary-terms",
       "definition": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
@@ -696,7 +665,7 @@
     {
       "id": "graph-rendering",
       "prefLabel": "graph-rendering",
-      "definition": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.",
+      "definition": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them.",
       "notation": "graph-rendering",
       "source": "cat-harness/skills/kg/graph-management/graph-rendering.md",
       "status": "candidate"
@@ -712,7 +681,7 @@
     {
       "id": "harness-requirements",
       "prefLabel": "harness-requirements",
-      "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
+      "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph typology, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
       "notation": "harness-requirements",
       "source": "cat-harness/skills/kg/kg-core/harness-requirements.md",
       "status": "candidate"
@@ -743,7 +712,7 @@
     {
       "id": "incremental-render",
       "prefLabel": "incremental-render",
-      "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
+      "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH TYPOLOGIES rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
       "notation": "incremental-render",
       "source": "cat-harness/skills/ui/ui-core/incremental-render.md",
       "status": "candidate"
@@ -759,7 +728,7 @@
     {
       "id": "instance-kinds",
       "prefLabel": "instance-kinds",
-      "definition": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+      "definition": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
       "notation": "instance-kinds",
       "source": "cat-harness/skills/kg/kg-core/instance-kinds.md",
       "status": "candidate"
@@ -767,7 +736,7 @@
     {
       "id": "instance-publication",
       "prefLabel": "instance-publication",
-      "definition": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "definition": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft. Also the one home for which graph each instance publishes, where, under which IRI and schema, and what is stripped from it.",
       "notation": "instance-publication",
       "source": "cat-harness/skills/kg/kg-core/instance-publication.md",
       "status": "candidate"
@@ -879,7 +848,7 @@
     {
       "id": "library-ingestion",
       "prefLabel": "library-ingestion",
-      "definition": "Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed. One entry point: `bun run ingest`.",
+      "definition": "The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in `library/<slug>/` if it is materialized. The two entry points (a drop in `uploads/`, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: `bun run ingest`.",
       "notation": "library-ingestion",
       "source": "cat-harness/skills/library/library-core/library-ingestion.md",
       "status": "candidate"
@@ -973,7 +942,7 @@
     {
       "id": "merge-queue",
       "prefLabel": "merge-queue",
-      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Use for \"merge the ready PRs\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+      "definition": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
       "notation": "merge-queue",
       "source": "cat-harness/skills/sdlc/sdlc-core/merge-queue.md",
       "status": "candidate"
@@ -1026,14 +995,6 @@
       "status": "candidate"
     },
     {
-      "id": "ontologist",
-      "prefLabel": "ontologist",
-      "definition": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds.",
-      "notation": "ontologist",
-      "source": "cat-harness/skills/library/library-core/ontologist.md",
-      "status": "candidate"
-    },
-    {
       "id": "opening-brief",
       "prefLabel": "opening-brief",
       "definition": "Brief a bean or a topic BEFORE touching anything: what you are doing and why it is worth doing, what you already know and with what provenance, how you plan to do it and what would falsify the approach. Scales with irreversibility, not line count.",
@@ -1055,6 +1016,14 @@
       "definition": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
       "notation": "path-containment",
       "source": "cat-harness/skills/conduct/security/path-containment.md",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-inline-viewer",
+      "prefLabel": "pdf-inline-viewer",
+      "definition": "Show a published PDF inside a generated page — search, scroll, jump to page, print and download — with the pinned pdf.js viewer the site build installs. Which two Tools do it, the publication-gate rule that decides whether a page may embed a document at all, why the viewer opens only allowlisted hosts, and the three pdf.js behaviours that were measured rather than assumed. Read before putting a PDF on a page, before bumping the pdf.js pin, and when an embedded viewer shows an empty frame.",
+      "notation": "pdf-inline-viewer",
+      "source": "cat-harness/skills/ui/ui-core/pdf-inline-viewer.md",
       "status": "candidate"
     },
     {
@@ -1192,6 +1161,14 @@
       "status": "candidate"
     },
     {
+      "id": "ref-stewardship",
+      "prefLabel": "ref-stewardship",
+      "definition": "Steward a WATCHED REF — a long-lived branch many processes write and one consumer serialises. Covers what makes a ref need a steward at all, why a coalescing window is a different object from a hold, the four durable fields a window needs so a handover cannot double-push, and the rule that a steward stores decisions and reads facts live. Use for \"gh-pages is cancelling its own deployments\", \"two sessions pushed the same store branch\", \"who owns writes to this branch\", \"coalesce these pushes\", and before giving any ref a concurrency policy.",
+      "notation": "ref-stewardship",
+      "source": "cat-harness/skills/sdlc/sdlc-core/ref-stewardship.md",
+      "status": "candidate"
+    },
+    {
       "id": "related-work-coordination",
       "prefLabel": "related-work-coordination",
       "definition": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/sdlc/related-work.bpmn.",
@@ -1265,7 +1242,7 @@
     {
       "id": "review-comments",
       "prefLabel": "review-comments",
-      "definition": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-review-comment/v1` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+      "definition": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
       "notation": "review-comments",
       "source": "cat-harness/skills/authoring/authoring-core/review-comments.md",
       "status": "candidate"
@@ -1449,14 +1426,6 @@
       "definition": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",
       "notation": "symbiotic-interaction",
       "source": "cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md",
-      "status": "candidate"
-    },
-    {
-      "id": "tabular-metadata",
-      "prefLabel": "tabular-metadata",
-      "definition": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
-      "notation": "tabular-metadata",
-      "source": "cat-harness/skills/library/library-core/tabular-metadata.md",
       "status": "candidate"
     },
     {
@@ -1743,6 +1712,14 @@
       "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/ui/wireframe-design-review.bpmn.",
       "notation": "wireframe-design-review",
       "source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "work-plan-restructure",
+      "prefLabel": "work-plan-restructure",
+      "definition": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.",
+      "notation": "work-plan-restructure",
+      "source": "cat-harness/skills/sdlc/sdlc-core/work-plan-restructure.md",
       "status": "candidate"
     },
     {

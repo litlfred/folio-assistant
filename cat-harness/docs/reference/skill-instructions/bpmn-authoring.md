@@ -59,6 +59,14 @@ is not enabled**. That has consequences for how you author:
   `scenarios/roles.json`. Lane names are free text and sixty of them once
   spelled two dozen positions; an explicit ref is the join that does not depend
   on spelling.
+- **The process's own `bpmn:documentation` opens with what it is for.** Its
+  first sentence is the diagram's row on the publication-workflow page.
+  `kg-export` carries it on the `Process` node as `summary` (the whole text as
+  `description`), the page reads it from the published named-subgraph JSON-LD
+  (`bun run subgraph:jsonld`) rather than from anything written by hand, and
+  `check:process-index` fails when a declared diagram's node has none. So that sentence says what the process does or answers
+  — not who asked for it, which bean or issue it came from, or where the work
+  got to. Those belong later in the documentation, or in the bean.
 - **A gateway may be computed rather than chosen** — see `dmn-authoring`.
 - **Policy is declared on the process.** `<cat-harness.processes:policy enforcement="strict"/>`
   means `workflow_gate` refuses a step that is not enabled; absent policy means
@@ -68,7 +76,7 @@ is not enabled**. That has consequences for how you author:
 
 Not a Mermaid fence. Mermaid stays for the things that are *not* processes —
 component maps, lattices, navigation graphs. The audit of which is which is in
-`docs/publication-workflow.md`.
+`docs/process/publication-workflow.md`.
 
 ## Why a DAK section sits in a platform package
 

@@ -164,7 +164,7 @@ PROV-O already has every piece the log needs:
 
 ## 3. Why this fits both BPMN engines
 
-See [BPMN execution: one skill, two engines](../agentic-harness.html#bpmn-execution).
+See [BPMN execution: one skill, two engines](../concepts/agentic-harness.html#bpmn-execution).
 
 - **The deterministic engine** reads the ODRL policy **before** each task and
   refuses one that no permission covers. It writes the `prov:Activity` as it
@@ -259,7 +259,7 @@ actions and constraints it is written in.
 ## 7. Open questions for the owner
 
 1. **Where policies live.** `policies/` at the instance root, or a declared
-   directory with its own graph kind? A graph kind is recommended, because it
+   directory with its own graph typology? A graph typology is recommended, because it
    is how everything else gets a viewer and QA.
 2. **Default for an unauthenticated reader.** `cat-harness:visualize` and
    `cat-harness:render` only, or nothing?

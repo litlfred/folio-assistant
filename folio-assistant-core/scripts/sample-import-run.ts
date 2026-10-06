@@ -36,8 +36,9 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { registerWorkflowTools } from "../../cat-harness/src/tools/workflow.ts";
+import { registerWorkflowTools } from "../../cat-harness-tools/src/tools/workflow.ts";
 import { fshGutsDirectory } from "../../cat-harness/schemas/fsh-guts.ts";
+import { contentAt } from "../../cat-harness/scripts/branch-store.ts";
 import { positionOf } from "../../cat-harness/src/workflow/instance.ts";
 import { WORKFLOW_DIR, instanceId, loadInstance } from "../../cat-harness/src/workflow/store.ts";
 import { CatalogueNodeSchema, type CatalogueNode } from "../schemas/catalogue.js";
@@ -238,7 +239,11 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
         note = "trial, per the scope";
         break;
       case "Task_Trial": {
-        // Through the declaration, never `fsh-guts/` spelled (bean 9c7h).
+        // Through the declaration, never `fsh-guts/` spelled (bean 9c7h). Once
+        // the trashcan is kept on its branch, a trial written to an unmounted
+        // path would land in no store at all, so refuse rather than write it.
+        const kept = contentAt("fsh-guts", root);
+        if (kept.state === "not-mounted") throw new Error(`sample-import trial: ${kept.reason}`);
         const dir = join(fshGutsDirectory(root), "samples");
         mkdirSync(dir, { recursive: true });
         trialPath = join(dir, `${opts.subject}.md`);

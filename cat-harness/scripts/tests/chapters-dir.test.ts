@@ -20,13 +20,13 @@
  * a subprocess launched from inside a folio — which is what this does.
  */
 import { describe, test, expect, afterAll } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, symlinkSync } from "fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, symlinkSync, realpathSync } from "fs";
 import { join, resolve } from "path";
 import { tmpdir } from "os";
 import { spawnSync } from "child_process";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
-const DIR = mkdtempSync(join(tmpdir(), "chapters-dir-"));
+const DIR = realpathSync(mkdtempSync(join(tmpdir(), "chapters-dir-")));
 afterAll(() => {
   try {
     rmSync(DIR, { recursive: true, force: true });

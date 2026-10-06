@@ -61,8 +61,9 @@ import { publishedTodoFiles } from "./todo-source.js";
 import { declaredSubgraphNode } from "./kg-export.ts";
 import { TODO_GRAPH_SITE_PATH, serialiseJsonld, todoDocument, todoGraphDocument, todoPageSitePath, todoSitePath } from "./todo-graph.ts";
 import { isTodoPage, todoPageHtml } from "./todo-page.ts";
-import { beanDefsDir, beanFindings, blockedBy, readBeans } from "./beans.js";
+import { beanDefsDir, beanFindings, blockEdges, blockedBy, blocksOf, readBeans } from "./beans.js";
 import { milestoneRollup } from "./milestone-rollup.js";
+import { missingTopLevelKeys } from "./lib/json-shape.ts";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -76,7 +77,9 @@ import {
 } from "../schemas/cat-harness.ts";
 import { isQaGraphUnknown, projectQaGraph } from "../content/pipeline/qa-graph-index.ts";
 import { tileCounts } from "../schemas/tile-count.js";
+import { OPEN_STATUSES as OPEN_BEAN_STATUSES } from "./bean-store-read.js";
 import { qaStorageOf } from "./qa-results.ts";
+import { qaResultLinkFor, siteLinkKey } from "./qa-result-link.ts";
 
 const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -377,6 +380,19 @@ const GENERATED_INCLUDE_BANNER =
 const BEANS_ASSET = join(OUT_DIR, "assets", "beans", "index.json");
 
 /**
+ * THE NAVBAR'S BADGES — owner, 2026-10-05: *"why no count on beans and todos
+ * on LHS top navbar as badges like fsh-guts has?"* (bean `gkv6`).
+ *
+ * A file of its own beside each index because the row is drawn on every page
+ * and the bean index is ~900 KB: fetching it for one number is the megabyte
+ * the note above refuses to put on a page. Same `tile` shape as the indexes.
+ * Beans count OPEN work — `todo`, `in-progress` and `draft`, the owner's
+ * choice ("Open beans: 525") — so the badge reads as what is waiting.
+ */
+const TODO_COUNT_ASSET = join(OUT_DIR, "assets", "todos", "count.json");
+const BEANS_COUNT_ASSET = join(OUT_DIR, "assets", "beans", "count.json");
+
+/**
  * How much of a bean's body the projection carries.
  *
  * Enough for a sticky's preview and no more. A reader who wants the argument
@@ -606,7 +622,7 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
         // the corpus sweep took the set from 35 files to 134. Indentation was 32%
         // of 2.9 MB — a third of what every reader of the site would download for
         // whitespace nobody looks at.
-        emitWitness(abs, JSON.stringify(doc) + "\n");
+        emitWitness(abs, JSON.stringify(withSidecarLinks(doc)) + "\n");
         qaIndex[key] = { state: doc.state, counts: doc.counts };
       }
       // A sidecar that exists but will not project — malformed JSON, or a
@@ -673,7 +689,7 @@ function pageQaIcons(page: WebPage): string {
       qaUnswept.push(key);
     } else {
       const abs = join(QA_ASSET_DIR, slug, `${key}.json`);
-      emitWitness(abs, JSON.stringify(doc) + "\n");
+      emitWitness(abs, JSON.stringify(withSidecarLinks(doc)) + "\n");
       qaIndex[key] = { state: doc.state, counts: doc.counts };
     }
   }
@@ -958,6 +974,18 @@ function emit(path: string, content: string, kind: "page" | "data" | "verdict" |
       if (!present) {
         console.error(`  ✗ ${path} is missing`);
         stale++;
+        return;
+      }
+      // Content moving is news, but a SHAPE that moved is an omission: the
+      // generator now writes a top-level field the committed copy lacks.
+      // Measured on #1955, 2026-10-04 (bean `324x`): a main merge took main's
+      // `assets/beans/index.json` (no `edges`, bean `vhqq`) by the site-data
+      // pattern, `check:kind-validators` went red, and this check said
+      // current — so regen, the merge bot's included, never rewrote it.
+      const missing = missingTopLevelKeys(current, content);
+      if (missing.length) {
+        console.error(`  ✗ ${path} is stale: lacks ${missing.map((k) => `\`${k}\``).join(", ")}, which the generator now writes`);
+        stale++;
       } else {
         refreshed++;
       }
@@ -987,6 +1015,27 @@ function emitWitness(path: string, content: string): void {
   if (!check) mkdirSync(dirname(path), { recursive: true });
   emit(path, content, QA_ASSETS_STORED ? "stored" : "verdict");
   emittedQa.add(path);
+}
+
+/**
+ * The key of the `qa-reports` entry this build's evidence came from, read once
+ * from the `qa-site-assets` fetch state. `undefined` in a local build, where
+ * the links fall back to the branch tip.
+ */
+const QA_LINK_KEY = siteLinkKey();
+
+/**
+ * A witness projection with every sidecar's address stamped in: bean `bejf`,
+ * issue #2217. The browser renders `sidecarLinks` and composes no URL itself.
+ * It used to do so as `blob/main/` + an instance-relative path, which was
+ * wrong in both halves. The address comes from `qa-result-link.ts`, the one
+ * place that reads the store's declaration.
+ */
+function withSidecarLinks(doc: QaWitnessDoc): QaWitnessDoc {
+  const sidecarLinks = doc.sidecars.map((p) =>
+    qaResultLinkFor(resolve(INSTANCE_ROOT, p), { repoRoot: repoRootFor(INSTANCE_ROOT), repoWeb: REPO_WEB, key: QA_LINK_KEY }),
+  );
+  return { ...doc, sidecarLinks };
 }
 
 if (!existsSync(SRC_DIR)) {
@@ -1508,6 +1557,8 @@ function processHierarchy(): Record<string, string[]> {
     );
   }
 
+  emit(TODO_COUNT_ASSET, JSON.stringify(tileCounts({ todos: [items.length, "todos"] }), null, 2) + "\n", "data");
+
   // THE THRESHOLDS, when this folio has declared any. `readSemanticZoom`
   // returns `undefined` for a folio that has not, and that absence is carried
   // through rather than filled in: nothing is written, and the board reports
@@ -1547,7 +1598,12 @@ function processHierarchy(): Record<string, string[]> {
   if (beans === null) {
     console.log(`  · assets/beans/index.json — no bean store`);
   } else {
+    // ONE edge set over both declarations (bean `vhqq`): until then this read
+    // `blocking:` only and published 7 of the store's 83 edges, because 60
+    // beans declare the block from the blocked end with `blocked_by:`.
+    const { edges, dangling } = blockEdges(beans);
     const blockers = blockedBy(beans);
+    const blocks = blocksOf(beans);
     const items = beans.map((b) => ({
       id: b.id,
       title: b.title,
@@ -1557,8 +1613,9 @@ function processHierarchy(): Record<string, string[]> {
       parent: b.parent,
       // Both directions, resolved once. A client given only `blocking` would
       // have to invert the whole set to answer "what is holding THIS bean up",
-      // which is the question a board is actually asked.
-      blocking: b.blocking,
+      // which is the question a board is actually asked. Both from the edge
+      // set, so a block declared at EITHER end appears at both.
+      blocking: blocks.get(b.id) ?? [],
       blockedBy: blockers.get(b.id) ?? [],
       createdAt: b.createdAt,
       // Published as a FACT, with no age computed from it. See `beanFindings`.
@@ -1589,6 +1646,10 @@ function processHierarchy(): Record<string, string[]> {
         // reason `editHref` is composed here, one level further on.
         repoWeb: REPO_WEB,
         items,
+        // The edges themselves, `blocker → blocked`, with the key(s) that
+        // declared each. A dangling edge stays here AND is a
+        // `blocking-unknown` finding: reported, never dropped.
+        edges,
         findings: beanFindings(beans),
         // The milestone rollup, COMPUTED HERE so the board renders a number
         // it does not derive. The board already loads every bean's `parent`,
@@ -1631,7 +1692,17 @@ function processHierarchy(): Record<string, string[]> {
       // publishing so what a reader fetches is current regardless.
       "verdict",
     );
-    console.log(`  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s))`);
+    // Existence-gated for the same reason as the index: every session moves it.
+    const open = beans.filter((b) => OPEN_BEAN_STATUSES.has(b.status)).length;
+    emit(BEANS_COUNT_ASSET, JSON.stringify(tileCounts({ beans: [open, "open beans"] }), null, 2) + "\n", "verdict");
+    const both = edges.filter((e) => e.declaredOn.length > 1).length;
+    console.log(
+      `  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s), ${edges.length} block edge(s), ` +
+        `${both} declared both ways, ${dangling.length} dangling)`,
+    );
+    for (const d of dangling) {
+      console.log(`    · dangling: ${d.blocker} → ${d.blocked} (${d.missing.join(" and ")} not in the store)`);
+    }
   }
 }
 
@@ -1759,7 +1830,7 @@ function publishAuthoredPageTranslationQa(): void {
       const slug = relative(siteDir, p).replace(/\.md$/, "").replace(/\//g, "-");
       const key = `page.translation`;
       const abs2 = join(QA_ASSET_DIR, slug, `${key}.json`);
-      emitWitness(abs2, JSON.stringify(doc) + "\n");
+      emitWitness(abs2, JSON.stringify(withSidecarLinks(doc)) + "\n");
 
       emitWitness(
         join(QA_ASSET_DIR, slug, QA_INDEX_FILE),

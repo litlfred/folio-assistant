@@ -14,8 +14,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { asRecord, census, coverage, coversIn, gateCoverage, kindUniverse, scriptsFor } from "../audit-coverage.js";
-import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS } from "../../schemas/kg-qa.js";
-import { defaultGraphKinds } from "../../schemas/cat-harness.js";
+import { KG_CRITERIA, KG_SUBJECT_GRAPH_TYPOLOGIES } from "../../schemas/kg-qa.js";
+import { defaultGraphTypologies } from "../../schemas/cat-harness.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const INSTANCE = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
@@ -33,7 +33,7 @@ describe("coversIn — the declaration a gate makes about itself", () => {
   test("an em-dash reason is not mistaken for a kind", () => {
     // The reason is the part a reader needs most and the part a naive split
     // would turn into four invented kinds.
-    expect(coversIn("/**\n * @covers none — .github/workflows/ is not a declared graph kind\n */")).toEqual(["none"]);
+    expect(coversIn("/**\n * @covers none — .github/workflows/ is not a declared graph typology\n */")).toEqual(["none"]);
   });
 
   test("a wrapped reason contributes nothing", () => {
@@ -147,7 +147,7 @@ describe("the report over this repository", () => {
     // `check:kind-validators` parses their nodes. They looked unreached only
     // because the gate that types them declares `@covers computed`.
     for (const r of rows) {
-      const def = defaultGraphKinds.get(r.kind);
+      const def = defaultGraphTypologies.get(r.kind);
       expect(r.typed).toBe(Boolean(def?.validator) || Boolean(def?.nodeSchemas));
       if (r.state === "typed-only") {
         expect(r.typed).toBe(true);
@@ -203,13 +203,15 @@ describe("the report over this repository", () => {
     }
   });
 
-  test("a nested kind reads as no-directory, not as a gap", () => {
+  test("a nested kind resolves its own directory and is judged, not a gap", () => {
     // `bean-defs` is declared in `beans/beans.json`, one level inside the
-    // `beans` graph, so no INSTANCE declares a directory of it. That must not
-    // read as an unaudited kind — and it is the case that proves the first
-    // state earns its name.
+    // `beans` graph. Until #2094 a nested declaration resolved only through the
+    // skills-only `subgraph: true`, so this kind read `no-directory`. It now
+    // resolves `beans/defs` itself, and must read as JUDGED by the gates that
+    // audit the bean store, never as `unaudited` or `typed-only`.
     const beanDefs = rows.find((r) => r.kind === "bean-defs");
-    expect(beanDefs?.state).toBe("no-directory");
+    expect(beanDefs?.state).toBe("covered");
+    expect(beanDefs?.directories.some((d) => d.endsWith("beans/defs"))).toBe(true);
     expect(beanDefs?.gates.length).toBeGreaterThan(0);
   });
 
@@ -225,9 +227,9 @@ describe("the report over this repository", () => {
 
   test("criteria are attributed through the declared bridge, not guessed", () => {
     // Each kind's criterion count must be exactly the criteria whose `applies`
-    // maps here through `KG_SUBJECT_GRAPH_KINDS`.
+    // maps here through `KG_SUBJECT_GRAPH_TYPOLOGIES`.
     for (const r of rows) {
-      const expected = KG_CRITERIA.filter((c) => c.applies.some((s) => KG_SUBJECT_GRAPH_KINDS[s] === r.kind));
+      const expected = KG_CRITERIA.filter((c) => c.applies.some((s) => KG_SUBJECT_GRAPH_TYPOLOGIES[s] === r.kind));
       expect(r.criteria.sort()).toEqual([...new Set(expected.map((c) => c.id))].sort());
     }
   });

@@ -635,6 +635,12 @@ function drawLangs() {
   const box = el("langs");
   const was = el("langs-why");
   const keepOpen = Boolean(was && was.open);
+  // The switcher is drawn twice -- before the document arrives and again
+  // after -- so a key pressed between the two lands on a node the redraw
+  // throws away. Remember what had focus by id or locale and give it back.
+  const had = box.contains(document.activeElement) ? document.activeElement : null;
+  const hadId = had && had.id;
+  const hadLang = had && had.classList.contains("lang") ? had.getAttribute("lang") : null;
   box.innerHTML = "";
   if (LOCALES.length < 2 && PLANNED.length === 0) { box.hidden = true; return; }
   box.hidden = false;
@@ -649,7 +655,7 @@ function drawLangs() {
     b.onclick = () => setLocale(l.locale);
     box.appendChild(b);
   }
-  if (PLANNED.length === 0) return;
+  if (PLANNED.length === 0) { restoreFocus(box, hadId, hadLang); return; }
   for (const l of PLANNED) {
     const b = document.createElement("button");
     b.className = "lang planned";
@@ -684,6 +690,13 @@ function drawLangs() {
   why.appendChild(s);
   why.appendChild(p);
   box.appendChild(why);
+  restoreFocus(box, hadId, hadLang);
+}
+
+function restoreFocus(box, id, lang) {
+  const target = id ? document.getElementById(id)
+    : lang ? box.querySelector('.lang[lang="' + lang + '"]') : null;
+  if (target && box.contains(target)) target.focus();
 }
 
 fetch(DOC)
@@ -704,7 +717,10 @@ renderAll();
 
 function init(doc) {
   loaded = doc;
-  G = doc["@graph"] ?? [];
+  // A TOMBSTONE is a forwarding address, not a node (bean \`4ak5\` item 2,
+  // for one release): it has no type, and the export leaves it out of
+  // \`counts\` for the same reason it is left out here.
+  G = (doc["@graph"] ?? []).filter((n) => n.deprecated !== true);
   const ctx = doc["@context"] ?? {};
   declared = new Set(Object.keys(ctx).filter((k) => !k.startsWith("@")));
   for (const [k, v] of Object.entries(ctx)) {

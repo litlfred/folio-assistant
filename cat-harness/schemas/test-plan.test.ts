@@ -5,7 +5,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { defaultGraphKinds, graphLayer, isRenderable, processMayWrite } from "./cat-harness";
+import { defaultGraphTypologies, graphLayer, isRenderable, processMayWrite } from "./cat-harness";
 import { TEST_PLAN_SCHEMA_ID, TestDataRefSchema, TestPlanSchema, isEvidence, type TestPlan } from "./test-plan";
 
 /** Plan #1 of the dogfood order (§3.3): `crdm-detect`, as a plan. */
@@ -154,9 +154,9 @@ describe("structural rules", () => {
   });
 });
 
-describe("the graph kind it is held under", () => {
+describe("the graph typology it is held under", () => {
   test("registered, not renderable, and `content` — a process reads a plan and never writes it", () => {
-    expect(defaultGraphKinds.get("test-plan")).toBeDefined();
+    expect(defaultGraphTypologies.get("test-plan")).toBeDefined();
     expect(isRenderable("test-plan")).toBe(false);
     expect(graphLayer("test-plan")).toBe("content");
     expect(processMayWrite("test-plan")).toBe(false);

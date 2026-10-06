@@ -17,7 +17,7 @@ import {
 import type { Block } from "./types.js";
 // Leaf module — importing the kind list from `types.js` would be a runtime
 // cycle, and `appliesTo` is built at module init, exactly when that bites.
-import { BLOCK_KINDS } from "./block-kinds.js";
+import { BLOCK_KIND_NODES, BLOCK_KINDS } from "./block-kinds.js";
 import { NarrativeSchema } from "./narrative.ts";
 
 
@@ -33,25 +33,17 @@ export * from "./skill-package.js";
 /**
  * Every recognised BUILT-IN label prefix, with its colon.
  *
- * The paper and structural prefixes, written out; their agreement with
+ * The block kinds' prefixes, read off their discovered nodes (bean riit,
+ * step 2), plus the structural ones; their agreement with
  * `KIND_PREFIXES` in `jsonld.ts` is asserted by `assertPrefixesInSync`. The
  * `dak` adapter's prefixes were spread in here until bean `1335`: they are a
  * contributed adapter's now, carried as `labelPrefix` on each contributed kind
  * (`ContributionRegistry.contributedLabelPrefixes()`).
  */
 export const KNOWN_LABEL_PREFIXES: readonly string[] = [
-  "def:", "thm:", "lem:", "prop:", "cor:", "rem:", "ex:", "conj:",
-  "prf:", "sim:", "eq:", "fig:", "tbl:",
-  // `alg:` and `prose:` were missing until 2026-08-26. `LABEL_PREFIXES` maps
-  // `algorithm -> "alg:"`, so 16 algorithm blocks and 18 prose blocks in qou
-  // carried labels this list did not recognise — which made
-  // `isCrossPaperRef("alg:markov-trace")` return true for a block's own
-  // same-paper label. The consequence was silent and user-visible:
-  // `render-latex.ts` emits cross-paper references as plain text rather than
-  // `\hyperref`, so 9 in-paper links lost their hyperlink in the PDF, and
-  // `build.ts` excluded them from its undefined-reference warning, so a
-  // dangling link to an algorithm would never have been reported.
-  "alg:", "prose:",
+  ...new Set(BLOCK_KIND_NODES.map((n) => `${n.labelPrefix}:`)),
+  // Structural prefixes: a section, chapter, appendix or bibliography entry
+  // is not a block kind, so no node carries these.
   "sec:", "chap:", "app:", "bib:",
 ];
 
@@ -80,27 +72,9 @@ export function isCrossPaperRef(label: string, contributedPrefixes: readonly str
  * how `alg:` came to be missing from `KNOWN_LABEL_PREFIXES` for as long as it
  * was.
  */
-export const LABEL_PREFIXES: Record<string, string> = {
-  definition: "def:",
-  theorem: "thm:",
-  lemma: "lem:",
-  proposition: "prop:",
-  corollary: "cor:",
-  algorithm: "alg:",
-  conjecture: "conj:",
-  example: "ex:",
-  remark: "rem:",
-  proof: "prf:",
-  simulator: "sim:",
-  equation: "eq:",
-  diagram: "fig:",
-  table: "tbl:",
-  // Shares `fig:` with `diagram` on purpose. The prefix names what a reader
-  // CITES — "see fig:3" — and a reader does not care whether the figure was
-  // drawn in tikzcd or lifted out of a PDF. The two kinds differ in how they
-  // are produced and stored, not in how they are referred to.
-  figure: "fig:",
-};
+export const LABEL_PREFIXES: Record<string, string> = Object.fromEntries(
+  BLOCK_KIND_NODES.filter((n) => n.prefixEnforced).map((n) => [n.kind, `${n.labelPrefix}:`]),
+);
 
 /**
  * Provable-label prefixes — used by AlgorithmSchema to enforce that
@@ -109,14 +83,9 @@ export const LABEL_PREFIXES: Record<string, string> = {
  * a citation to a definition / proposition / theorem / lemma /
  * corollary / conjecture cannot be justified.
  */
-const PROVABLE_LABEL_PREFIXES = [
-  "def:",
-  "prop:",
-  "thm:",
-  "lem:",
-  "cor:",
-  "conj:",
-] as const;
+const PROVABLE_LABEL_PREFIXES: readonly string[] = [
+  ...new Set(BLOCK_KIND_NODES.filter((n) => n.provable).map((n) => `${n.labelPrefix}:`)),
+];
 
 function labelForKind(kind: string) {
   const prefix = LABEL_PREFIXES[kind];
@@ -198,7 +167,7 @@ export const TodoItemSchema = z.object({
    *
    * ## Why a bare string rather than an enum of theme ids
    *
-   * Same reason `GraphNodeDirectorySchema.graphKinds` is an open string checked
+   * Same reason `GraphNodeDirectorySchema.graphTypologies` is an open string checked
    * against the registry later: a closed enum has to be built at module load,
    * and this module is the CONTENT model — importing the theme table here
    * would drag rendering into the content schema and give every consumer of a
@@ -560,6 +529,7 @@ export const SectionSchema = z.object({
   title: z.string().min(1),
   label: z.string().optional(),
   blocks: z.array(z.string().min(1)),
+  lead: z.boolean().optional(),
 }).passthrough();
 
 export const SectionRefSchema = z.object({
@@ -970,3 +940,13 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
   },
 ];
 
+/**
+ * The `kind` literal of each member of {@link BlockSchema}'s union: the block
+ * kinds the CODE types. Block kinds themselves are discovered from nodes (bean
+ * riit, step 2), so `check:kind-validators` and `block-kind-nodes.test.ts`
+ * compare this against the discovered set in both directions.
+ */
+export function typedBlockKinds(): string[] {
+  const options = (BlockSchema as unknown as { options: { shape: { kind: { value: string } } }[] }).options;
+  return options.map((o) => o.shape.kind.value);
+}

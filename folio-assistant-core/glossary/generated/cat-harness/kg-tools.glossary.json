@@ -7,6 +7,14 @@
   "source": "Tools of cat-harness",
   "terms": [
     {
+      "id": "auto-docs-viewer",
+      "prefLabel": "Generated index pages",
+      "definition": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
+      "notation": "auto-docs-viewer",
+      "source": "cat-harness/tools/viewers.ts#auto-docs-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "avatars-css",
       "prefLabel": "Avatar stylesheet",
       "definition": "Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves.",
@@ -71,6 +79,14 @@
       "status": "candidate"
     },
     {
+      "id": "compose-docs",
+      "prefLabel": "Compose the site's documentation tree from its declared docs layers",
+      "definition": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).",
+      "notation": "compose-docs",
+      "source": "cat-harness/tools/index.ts#compose-docs",
+      "status": "candidate"
+    },
+    {
       "id": "content-context",
       "prefLabel": "Content JSON-LD context",
       "definition": "Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept.",
@@ -124,14 +140,6 @@
       "definition": "Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds.",
       "notation": "discuss",
       "source": "cat-harness/tools/index.ts#discuss",
-      "status": "candidate"
-    },
-    {
-      "id": "docs-auto-viewer",
-      "prefLabel": "Generated index pages",
-      "definition": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
-      "notation": "docs-auto-viewer",
-      "source": "cat-harness/tools/viewers.ts#docs-auto-viewer",
       "status": "candidate"
     },
     {
@@ -281,7 +289,7 @@
     {
       "id": "kg-validate",
       "prefLabel": "Validate a node in the graph",
-      "definition": "Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+      "definition": "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
       "notation": "kg-validate",
       "source": "cat-harness/tools/index.ts#kg-validate",
       "status": "candidate"
@@ -439,6 +447,22 @@
       "status": "candidate"
     },
     {
+      "id": "navbar-include",
+      "prefLabel": "Write the site sidebar's harness navbar include",
+      "definition": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
+      "notation": "navbar-include",
+      "source": "cat-harness/tools/index.ts#navbar-include",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-pages",
+      "prefLabel": "Node kind pages",
+      "definition": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+      "notation": "node-kind-pages",
+      "source": "cat-harness/tools/viewers.ts#node-kind-pages",
+      "status": "candidate"
+    },
+    {
       "id": "ns-vocabulary",
       "prefLabel": "Namespace vocabulary",
       "definition": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
@@ -503,6 +527,22 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-viewer-embed",
+      "prefLabel": "Embed a PDF inline in a page",
+      "definition": "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.",
+      "notation": "pdf-viewer-embed",
+      "source": "cat-harness/tools/index.ts#pdf-viewer-embed",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-viewer-install",
+      "prefLabel": "Install the inline PDF viewer into a built site",
+      "definition": "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.",
+      "notation": "pdf-viewer-install",
+      "source": "cat-harness/tools/index.ts#pdf-viewer-install",
+      "status": "candidate"
+    },
+    {
       "id": "pin-spdx-license-list",
       "prefLabel": "Snapshot the SPDX License List at its pinned version",
       "definition": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",
@@ -548,6 +588,14 @@
       "definition": "Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish \"never checked\" from \"checked and clean\".",
       "notation": "qa-sweep",
       "source": "cat-harness/tools/index.ts#qa-sweep",
+      "status": "candidate"
+    },
+    {
+      "id": "rail-standalone-pages",
+      "prefLabel": "Give every page Jekyll did not lay out the folio-assistant navbar",
+      "definition": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      "notation": "rail-standalone-pages",
+      "source": "cat-harness/tools/index.ts#rail-standalone-pages",
       "status": "candidate"
     },
     {
@@ -663,6 +711,14 @@
       "status": "candidate"
     },
     {
+      "id": "slice-sqlite",
+      "prefLabel": "Per-slice SQLite builder",
+      "definition": "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.",
+      "notation": "slice-sqlite",
+      "source": "cat-harness/tools/index.ts#slice-sqlite",
+      "status": "candidate"
+    },
+    {
       "id": "stakeholder-map",
       "prefLabel": "Stakeholder map",
       "definition": "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
@@ -681,7 +737,7 @@
     {
       "id": "subgraph-readmes",
       "prefLabel": "Directory READMEs from the Knowledge Graph",
-      "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+      "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       "notation": "subgraph-readmes",
       "source": "cat-harness/tools/index.ts#subgraph-readmes",
       "status": "candidate"
@@ -689,7 +745,7 @@
     {
       "id": "subgraph-resolve",
       "prefLabel": "Resolve a declared subgraph's content source",
-      "definition": "Say where a declared subgraph gets its content — the checkout's own directory, or a declared repository branch (with its keying and its `special-branches.json` row) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      "definition": "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
       "notation": "subgraph-resolve",
       "source": "cat-harness/tools/index.ts#subgraph-resolve",
       "status": "candidate"
@@ -857,7 +913,7 @@
     {
       "id": "uml-overview",
       "prefLabel": "UML overview per named sub-graph",
-      "definition": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+      "definition": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       "notation": "uml-overview",
       "source": "cat-harness/tools/index.ts#uml-overview",
       "status": "candidate"
@@ -916,6 +972,22 @@
       "definition": "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
       "notation": "wireframe-check",
       "source": "cat-harness/tools/index.ts#wireframe-check",
+      "status": "candidate"
+    },
+    {
+      "id": "witness-conformance",
+      "prefLabel": "Witness conformance report",
+      "definition": "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
+      "notation": "witness-conformance",
+      "source": "cat-harness/tools/index.ts#witness-conformance",
+      "status": "candidate"
+    },
+    {
+      "id": "witness-parity",
+      "prefLabel": "Witness reproduction check",
+      "definition": "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
+      "notation": "witness-parity",
+      "source": "cat-harness/tools/index.ts#witness-parity",
       "status": "candidate"
     },
     {

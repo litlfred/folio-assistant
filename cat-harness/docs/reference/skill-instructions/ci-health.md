@@ -183,6 +183,31 @@ complementary failure — a workflow that never fires at all — is not visible 
 this check, because a workflow with no runs and a workflow with no failures look
 identical in the run history. Both are "could not check", and the first rule
 applies.
+
+## A superseded PR run is cancelled — and only a PR's
+
+A run on a PR head that a newer push replaced judges a commit nobody will
+merge, and it still waits for and holds a runner. On 2026-10-05, 16 of the 53
+runs queued in this repository were such runs, and the queue they lengthened
+held back the fix main's publish was blocked on (#2233). So a workflow that
+runs on `pull_request` declares
+
+```yaml
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+```
+
+Two halves, and the second matters as much as the first. A PR's runs share
+one group, so the newer cancels the older. **Every other event is grouped by
+its own sha and never cancelled**: a push to `main` keeps its verdict, so
+this report's history of `main` is not thinned by cancellations, and a
+`cancelled` on `main` keeps meaning contention rather than housekeeping
+(the third state above).
+
+A `cancelled` run on a PR's OLDER head is therefore expected and is not a
+finding. The merge guard judges the head, and the head's run is never the
+one cancelled.
 {% endraw %}
 
 ## Processes that run this skill
@@ -191,6 +216,7 @@ applies.
 |---|---|
 | [Is CI actually working on the default branch?](../../processes/ci-health-watch.html) | Run check:ci-health, WRITING the report file; Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue |
 | [Code change and review](../../processes/code-change-review.html) | Root-cause the failure |
+| [Merge the base branch in](../../processes/merge-base.html) | Report what the run found, once |
 | [A merge train](../../processes/merge-train.html) | Find members with no CI on their head (calls a sub-process); Retry a declared-flaky gate once |
 | [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min; Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue |
 | [Is the repository itself healthy?](../../processes/repository-health-watch.html) | Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue |

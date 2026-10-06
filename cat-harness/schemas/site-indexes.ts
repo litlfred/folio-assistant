@@ -1,6 +1,6 @@
 /**
  * The published index files the site's viewers read — each `$schema` family
- * typed, so the graph-kind registry names a validator instead of the script
+ * typed, so the graph-typology registry names a validator instead of the script
  * that writes it (#1168 B6b, bean `dv8v`).
  *
  * Until then each family was registered as `writtenBy: "scripts/…"`: the
@@ -77,6 +77,22 @@ export const BeanIndexSchema = z
     ...envelope("folio-bean-index/v1"),
     repoWeb: z.string().min(1),
     items: z.array(BeanIndexItemSchema),
+    /**
+     * The block graph as ONE edge set, `blocker → blocked`, over both
+     * front-matter declarations (`blocking:` on the blocker, `blocked_by:` on
+     * the blocked), deduplicated — `blockEdges` in `scripts/beans.ts`, bean
+     * `vhqq`. An end may name no bean in `items`: that edge is kept here and
+     * reported as a `blocking-unknown` finding, never dropped.
+     */
+    edges: z.array(
+      z
+        .object({
+          blocker: BeanIdSchema,
+          blocked: BeanIdSchema,
+          declaredOn: z.array(z.enum(["blocked_by", "blocking"])).min(1).max(2),
+        })
+        .strict(),
+    ),
     findings: z.array(
       z
         .object({

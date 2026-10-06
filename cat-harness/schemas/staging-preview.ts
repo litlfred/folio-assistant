@@ -8,7 +8,7 @@
  *
  * A staging preview is SDLC churn by definition: it exists for one review and
  * is meant to die. `fsh-guts` is the declared non-renderable graph for exactly
- * that (bean `t0i3`), and `UNPUBLISHED_GRAPH_KINDS` keeps it out of every other
+ * that (bean `t0i3`), and `UNPUBLISHED_GRAPH_TYPOLOGIES` keeps it out of every other
  * published artefact while `<base>/fsh-guts.jsonld` stays reachable BY NAME.
  * So these records are addressable without a crawler ever arriving at one by
  * following an edge — which is the property you want for something whose whole

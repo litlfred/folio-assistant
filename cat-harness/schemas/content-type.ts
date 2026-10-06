@@ -33,12 +33,12 @@
  * **each type declares its own filename** — recorded in
  * `skills/kg/kg-core/directory-conventions.md`.
  *
- * ## Deliberately the same shape as `GraphKindRegistry`
+ * ## Deliberately the same shape as `GraphTypologyRegistry`
  *
  * Open, seeded with a base table, `register` refusing a conflicting redefinition
  * and tolerating an identical one (a diamond reaches the same type twice). A
  * layer that owns a type registers it at load time, exactly as
- * `folio-graph-kind.ts` registers `folio` rather than the harness declaring a
+ * `folio-graph-typology.ts` registers `folio` rather than the harness declaring a
  * kind it cannot serve.
  *
  * A second registry shape would be a second set of rules about redefinition,

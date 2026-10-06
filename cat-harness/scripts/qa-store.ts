@@ -77,7 +77,7 @@ import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
 // `readDeclaration` throws on the `folio` kind unless core has registered it —
 // the same side-effect import `check-declared-dirs.ts` carries, same reason.
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 import { waitFor } from "../src/core/retry.js";
 import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
 import { TreeStore } from "./branch-store.js";
@@ -257,7 +257,7 @@ export function resolveQaLocation(repoRoot: string = gitTopLevel()): QaLocation 
   const seen = new Set<string>();
   for (const inst of instanceRootsIn(repoRoot)) {
     for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
-      if (!d.graphKinds.includes("qa" as never) || seen.has(d.absPath)) continue;
+      if (!d.graphTypologies.includes("qa" as never) || seen.has(d.absPath)) continue;
       seen.add(d.absPath);
       const storage = d.storage;
       directories.push({
@@ -271,7 +271,8 @@ export function resolveQaLocation(repoRoot: string = gitTopLevel()): QaLocation 
     }
   }
   directories.sort((a, b) => a.path.localeCompare(b.path));
-  const branches = [...new Set(directories.flatMap((d) => (d.storage ? [d.storage.branch] : [])))];
+  // A qa directory is keyed by commit, so its storage is one branch; the resolver refuses a family.
+  const branches = [...new Set(directories.flatMap((d) => (d.storage && "branch" in d.storage ? [d.storage.branch] : [])))];
   if (branches.length > 1) {
     throw new QaUsageError(`qa directories declare ${branches.length} storage branches (${branches.join(", ")}); one store per checkout`);
   }
@@ -1148,7 +1149,7 @@ export function main(argv: string[]): number {
       const loc = resolveQaLocation(opts.repoRoot);
       say(loc, [
         `qa store: branch ${loc.branch} (${loc.declared ? "declared" : "default — no qa directory declares storage yet"}), keyed by ${loc.keyedBy}`,
-        ...loc.directories.map((d) => `  ${d.present ? "present" : "absent "} ${d.path}${d.storage ? `  → ${d.storage.branch}` : ""}`),
+        ...loc.directories.map((d) => `  ${d.present ? "present" : "absent "} ${d.path}${d.storage && "branch" in d.storage ? `  → ${d.storage.branch}` : ""}`),
       ].join("\n"));
       return 0;
     }

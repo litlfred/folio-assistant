@@ -20,12 +20,23 @@
  * discouraged, which means it must be **declared and checked**, not forbidden
  * and not free. So a literal naming a declared directory is allowed when:
  *
- *  - **it names a FILE that exists.** Authored prose naming one specific
- *    artefact — `source: "processes/crdm-requirements.bpmn"` in a docs
- *    page — is not discovery and no declaration would answer it. Eighteen of
- *    these are correct and must stay. They are **checked to resolve**, which
- *    closes the `blv9` defect class (a link-shaped value that does not
- *    dereference) over the same corpus for free.
+ *  - **it names a FILE that exists, and the witness list records it.**
+ *    Authored prose naming one specific artefact —
+ *    `source: "processes/crdm-requirements.bpmn"` in a docs page — is not
+ *    discovery and no declaration would answer it. Eighteen of these are
+ *    correct and must stay. They are **checked to resolve**, which closes the
+ *    `blv9` defect class (a link-shaped value that does not dereference) over
+ *    the same corpus for free.
+ *
+ *    **An existing file is not a stable one** (bean `gz47`, owner ruling
+ *    2026-10-04). Under the content-source ruling of 2026-10-03 a declared
+ *    subgraph's source may move — directory, branch, graph store — so a file
+ *    that exists today names nothing after the move, as `fsh-guts/` did.
+ *    The owner chose a one-way baseline over fixing every site now or
+ *    exempting them for good: the witnesses recorded on 2026-10-04 stay, a
+ *    NEW literal naming an existing file fails, and `--update` may drop a
+ *    witness but never adds one. Four had crept in unseen since the list was
+ *    first written.
  *  - **it carries `declared-path-literal: <reason>`** in a comment on its own
  *    line or the line above. The base cases are here: the module that supplies
  *    the defaults, the scaffolder that CREATES the layout, the partition plan
@@ -209,8 +220,8 @@ function declaredPrefixes(root: string): string[] {
  * discoverable half is the access pattern that needs guarding, and a directory
  * is a place to look that may hold more than one part of a graph.
  */
-export function isAddressedByPath(d: { graphKinds?: readonly string[] }): boolean {
-  const kinds = d.graphKinds ?? [];
+export function isAddressedByPath(d: { graphTypologies?: readonly string[] }): boolean {
+  const kinds = d.graphTypologies ?? [];
   return kinds.length > 0 && kinds.every((k) => k === "code");
 }
 
@@ -228,7 +239,7 @@ const RESULT_KINDS = new Set(["qa", "health"]);
  */
 export function absentResultDirs(root: string): string[] {
   return resolveDirectories([{ name: "(local)", root, own: true }])
-    .filter((d) => (d.graphKinds ?? []).some((k) => RESULT_KINDS.has(k)))
+    .filter((d) => (d.graphTypologies ?? []).some((k) => RESULT_KINDS.has(k)))
     .map((d) => d.absPath)
     .filter((abs) => !existsSync(abs));
 }
@@ -555,6 +566,21 @@ export function witnessesOf(scan: Scan): string[] {
   return [...new Set(scan.artefacts.map((a) => `${a.file}::${a.literal}`))].sort();
 }
 
+/**
+ * The witnesses the baseline does not record: a literal that names a file
+ * existing TODAY, added since the list was written. Bean `gz47`, owner ruling
+ * 2026-10-04 (see §"An existing file is not a stable one" in the header).
+ *
+ * The witness list was a relocation alarm only, so a new literal naming an
+ * existing file passed in silence — four had, between 2026-09-20 and the
+ * ruling. Under the content-source ruling a declared subgraph may leave its
+ * directory, so existing today says nothing about existing after the move.
+ */
+export function newWitnesses(recorded: readonly string[], current: readonly string[]): string[] {
+  const known = new Set(recorded);
+  return current.filter((w) => !known.has(w));
+}
+
 if (import.meta.main) {
   const { prefixes, artefacts, marked, refused } = scanDeclaredPaths(root);
 
@@ -585,6 +611,7 @@ if (import.meta.main) {
   const witnesses = witnessesOf({ prefixes, artefacts, marked, refused });
   const held = new Set(witnesses);
   const lost = (prior.resolves ?? []).filter((w) => !held.has(w) && !unverifiableKeys.has(w));
+  const added = newWitnesses(prior.resolves ?? [], witnesses);
 
   const over: Array<{ file: string; was: number; now: number }> = [];
   for (const [file, n] of Object.entries(current)) {
@@ -605,8 +632,8 @@ if (import.meta.main) {
   );
 
   console.log(
-    `  ${lost.length ? "✗" : "✓"} ${String(artefacts.length).padStart(3)}  ` +
-      `name a file that exists — ${witnesses.length} witnessed, ${lost.length} lost` +
+    `  ${lost.length || added.length ? "✗" : "✓"} ${String(artefacts.length).padStart(3)}  ` +
+      `name a file that exists — ${witnesses.length} witnessed, ${lost.length} lost, ${added.length} new` +
       (unverifiable.length ? `, ${unverifiable.length} could not be checked` : ""),
   );
   console.log(`  · ${String(marked.length).padStart(3)}  declared base cases, each with a reason`);
@@ -639,6 +666,26 @@ if (import.meta.main) {
     console.log(
       "\nPoint it at where the artefact went. If it was deliberately deleted, re-run\n" +
         "with --update: dropping a witness is a diff somebody reviews.",
+    );
+  }
+
+  if (added.length) {
+    console.log(
+      "\nNEW LITERAL NAMING AN EXISTING FILE — not in the recorded witness list.\n" +
+        "Existing today is not stable: a declared subgraph's source may move to a\n" +
+        "branch or a graph store (owner ruling 2026-10-04, bean `gz47`).",
+    );
+    for (const w of added) {
+      const [file, literal] = w.split("::");
+      const site = artefacts.find((a) => a.file === file && a.literal === literal);
+      console.log(`  ✗ ${file}${site ? `:${site.line}` : ""}  →  "${literal}"`);
+      const helper = site ? HELPERS[site.prefix] : undefined;
+      if (helper !== undefined) console.log(`      ask: ${helper}`);
+    }
+    console.log(
+      "\nRead the path from the declaration, or mark the line\n" +
+        "`declared-path-literal: <why this one cannot be read>`. `--update` does not\n" +
+        "admit a new witness: the list only shrinks.",
     );
   }
 
@@ -676,6 +723,13 @@ if (import.meta.main) {
       );
       process.exit(2);
     }
+    if (added.length) {
+      console.log(
+        `\nRefusing --update: ${added.length} new witness(es) above. The list only shrinks ` +
+          "(bean `gz47`); read the declaration or mark the line, then re-run.",
+      );
+      process.exit(1);
+    }
     const next: Baseline = {
       // The text the committed baseline already carried. It described only
       // `files` here while the JSON described BOTH records, because the better
@@ -694,7 +748,9 @@ if (import.meta.main) {
         "files, which may only go DOWN. `resolves`: the WITNESS list — every " +
         "literal that resolves to a real artefact today, as `<file>::<literal>`. " +
         "A witness that stops resolving means the artefact moved and the code " +
-        "naming it did not follow; that fails the gate. *.test.ts files appear " +
+        "naming it did not follow; that fails the gate. The list only SHRINKS: a " +
+        "new literal naming an existing file fails too, and `--update` never adds " +
+        "one (bean gz47, owner ruling 2026-10-04). *.test.ts files appear " +
         "ONLY in `resolves`, never in `files`: a test that builds a mkdtemp " +
         "fixture names declared directories by necessity, so counting its " +
         "unresolved literals would fire on every new test (measured 2026-09-20 " +
@@ -716,8 +772,9 @@ if (import.meta.main) {
     process.exit(0);
   }
 
-  if (lost.length) {
-    console.log(`\n${lost.length} witnessed literal(s) no longer resolve.`);
+  if (lost.length || added.length) {
+    if (lost.length) console.log(`\n${lost.length} witnessed literal(s) no longer resolve.`);
+    if (added.length) console.log(`\n${added.length} new literal(s) name an existing file.`);
     process.exit(1);
   }
 

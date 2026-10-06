@@ -4,7 +4,7 @@
  * The rule is data-modelling step 8: when two nodes are related, the one that
  * depends on the other holds the pointer, and the general node names none of
  * its dependents. #1168 flipped the arrows that broke it — lanes, voices,
- * stories, scripts, `satisfiedBy`, a graph kind's skill, a test's subject.
+ * stories, scripts, `satisfiedBy`, a graph typology's skill, a test's subject.
  * This is what stops the next one being written (B5).
  *
  * Which nodes are general is a MODELLING DECISION, so it is declared, never

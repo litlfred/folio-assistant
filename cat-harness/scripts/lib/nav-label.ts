@@ -42,7 +42,7 @@
  * generated surface it can read statically and fails when one destination
  * carries two base labels.
  */
-import { kindTitle } from "../../schemas/graph-kind-registry.js";
+import { kindTitle } from "../../schemas/graph-typology-registry.js";
 
 export { kindTitle };
 
@@ -89,14 +89,14 @@ export function stripQualifier(title: string, harnessNames: readonly string[] = 
  *   made up (the directory id was that fallback, and produced `root-docs`).
  */
 export function tileLabel(
-  dir: { id: string; graphKinds?: readonly string[] },
+  dir: { id: string; graphTypologies?: readonly string[] },
   declaredTitle: string | undefined,
   harnessNames: readonly string[] = [],
 ): string {
   if (declaredTitle !== undefined && declaredTitle.trim() !== "") {
     return stripQualifier(declaredTitle, harnessNames);
   }
-  const first = dir.graphKinds?.[0];
+  const first = dir.graphTypologies?.[0];
   return first ? kindTitle(first) : dir.id;
 }
 
@@ -116,12 +116,12 @@ export function tileLabel(
  */
 export function labelVisualisations<V extends { kind: string; path?: string | null; label?: string; sameAs?: string }>(
   rows: V[],
-  dirs: readonly { graphKinds?: readonly string[] }[],
+  dirs: readonly { graphTypologies?: readonly string[] }[],
 ): V[] {
   const rank = (kind: string): number => {
     let best = Number.POSITIVE_INFINITY;
     dirs.forEach((d, i) => {
-      const at = (d.graphKinds ?? []).indexOf(kind);
+      const at = (d.graphTypologies ?? []).indexOf(kind);
       if (at !== -1) best = Math.min(best, i * 1000 + at);
     });
     return best;

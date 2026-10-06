@@ -50,8 +50,8 @@ function fixture(): { root: string } {
       name: "probe",
       description: "one content directory and one retired one",
       directories: [
-        { id: "folio", path: "folio/", graphKinds: ["folio"] },
-        { id: "fsh-guts", path: "fsh-guts/", graphKinds: ["fsh-guts"] },
+        { id: "folio", path: "folio/", graphTypologies: ["folio"] },
+        { id: "fsh-guts", path: "fsh-guts/", graphTypologies: ["fsh-guts"] },
       ],
     }));
   for (const d of ["folio", "fsh-guts"]) {
@@ -93,7 +93,7 @@ describe("a sweep walks content and skips what is declared retired", () => {
     writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "an entry with no graphs",
-        directories: [{ id: "odd", path: "odd/", graphKinds: [] }],
+        directories: [{ id: "odd", path: "odd/", graphTypologies: [] }],
       }));
     mkdirSync(join(root, "odd"), { recursive: true });
     writeFileSync(join(root, "odd", "probe.ts"), MANIFEST);
@@ -114,7 +114,7 @@ describe("a sweep walks content and skips what is declared retired", () => {
 });
 
 describe("why the skip needs no 'unknown layer' arm", () => {
-  test("an unknown graph kind THROWS in readDeclaration, so it never reaches the filter", async () => {
+  test("an unknown graph typology THROWS in readDeclaration, so it never reaches the filter", async () => {
     // The first draft of the skip carried `l !== undefined` for the case of a
     // kind `graphLayer` cannot place. That case cannot arise, and this is the
     // measurement rather than the argument: an unknown kind is refused at the
@@ -126,9 +126,9 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",
-        directories: [{ id: "x", path: "x/", graphKinds: ["totally-made-up"] }],
+        directories: [{ id: "x", path: "x/", graphTypologies: ["totally-made-up"] }],
       }));
-    expect(() => readDeclaration(root)).toThrow(/unknown graph kind/);
+    expect(() => readDeclaration(root)).toThrow(/unknown graph typology/);
   });
 
   test("...and such a repo is WALKED, not silently emptied", () => {
@@ -139,7 +139,7 @@ describe("why the skip needs no 'unknown layer' arm", () => {
     writeDeclaration(root, JSON.stringify({
         name: "probe",
         description: "names a kind nothing registers",
-        directories: [{ id: "x", path: "x/", graphKinds: ["totally-made-up"] }],
+        directories: [{ id: "x", path: "x/", graphTypologies: ["totally-made-up"] }],
       }));
     mkdirSync(join(root, "x"), { recursive: true });
     writeFileSync(join(root, "x", "probe.ts"), MANIFEST);

@@ -94,8 +94,13 @@ describe("a staging deploy is one commit — bean `bm6d`", () => {
     // the commit carries rotation REMOVALS decided against one read of the
     // branch; replaying it by rebase would push a stale removal. Same shape
     // as `publish-gh-pages.sh`.
+    //
+    // A `while` since the rate limit (#1956): a push rejected because the tip
+    // MOVED is a lost race, sent back to the gate without spending an attempt,
+    // which a `for` over a fixed list cannot express.
     const [writer] = ghPagesWriters(stage);
-    expect(writer).toMatch(/for attempt in 1 2 3; do/);
+    expect(writer).toMatch(/while \[ "\$attempt" -le 3 \]; do/);
+    expect(writer).toMatch(/attempt=\$\(\(attempt \+ 1\)\)/);
     expect(writer).toMatch(/git -C pages fetch --depth=1 origin gh-pages/);
     expect(writer).toMatch(/git -C pages reset --hard FETCH_HEAD/);
     expect(writer).not.toMatch(/pull\s+--rebase|git\s+(-C\s+\S+\s+)?rebase/);

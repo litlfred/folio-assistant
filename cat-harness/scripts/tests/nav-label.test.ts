@@ -25,7 +25,7 @@ import {
   stripQualifier,
   tileLabel,
 } from "../lib/nav-label.js";
-import { GraphKindRegistry } from "../../schemas/graph-kind-registry.js";
+import { GraphTypologyRegistry } from "../../schemas/graph-typology-registry.js";
 import { subjectSection } from "../viewer-page.js";
 
 describe("a kind is called by its display name, never its kind word", () => {
@@ -37,7 +37,7 @@ describe("a kind is called by its display name, never its kind word", () => {
   });
 
   test("a kind with no title is capitalised, with hyphens read as spaces", () => {
-    const reg = new GraphKindRegistry();
+    const reg = new GraphTypologyRegistry();
     reg.register("probe-kind", { renderable: false, holds: "content", summary: "x" });
     expect(kindTitle("probe-kind", reg)).toBe("Probe kind");
     expect(kindTitle("never-registered", reg)).toBe("Never registered");
@@ -72,12 +72,12 @@ describe("the harness is a qualifier, not part of the base name", () => {
 describe("a tile's label", () => {
   test("an undeclared title takes the directory's first kind, NEVER the directory id", () => {
     // `root-docs` was the tile's title on the glass while the rail said `docs`.
-    expect(tileLabel({ id: "root-docs", graphKinds: ["docs"] }, undefined)).toBe("Docs");
+    expect(tileLabel({ id: "root-docs", graphTypologies: ["docs"] }, undefined)).toBe("Docs");
   });
 
   test("a declared title wins, with any harness suffix stripped", () => {
-    expect(tileLabel({ id: "qa", graphKinds: ["qa"] }, "Latent semantic indexes")).toBe("Latent semantic indexes");
-    expect(tileLabel({ id: "docs", graphKinds: ["docs"] }, "Docs — cat-harness", ["cat-harness"])).toBe("Docs");
+    expect(tileLabel({ id: "qa", graphTypologies: ["qa"] }, "Latent semantic indexes")).toBe("Latent semantic indexes");
+    expect(tileLabel({ id: "docs", graphTypologies: ["docs"] }, "Docs — cat-harness", ["cat-harness"])).toBe("Docs");
   });
 });
 
@@ -89,14 +89,14 @@ describe("two kinds on one page share one name", () => {
       { kind: "schemas", path: "/cat-harness/schemas/cat-harness/" },
       { kind: "code" },
     ];
-    labelVisualisations(rows, [{ graphKinds: ["docs"] }, { graphKinds: ["schemas", "cat-harness"] }, { graphKinds: ["code"] }]);
+    labelVisualisations(rows, [{ graphTypologies: ["docs"] }, { graphTypologies: ["schemas", "cat-harness"] }, { graphTypologies: ["code"] }]);
     expect(rows.map((r) => r.label)).toEqual(["Schemas", "Docs", "Schemas", "Code"]);
     expect(rows.map((r) => r.sameAs)).toEqual(["schemas", undefined, undefined, undefined]);
   });
 
   test("a row with no page is named for its own kind", () => {
     const rows: { kind: string; path?: string; label?: string }[] = [{ kind: "waiver" }, { kind: "memory" }];
-    labelVisualisations(rows, [{ graphKinds: ["memory", "waiver"] }]);
+    labelVisualisations(rows, [{ graphTypologies: ["memory", "waiver"] }]);
     expect(rows.map((r) => r.label)).toEqual(["Waivers", "Memory"]);
   });
 });
@@ -108,11 +108,11 @@ describe("a viewer at the instance's own root is the harness's page", () => {
   // row and "FHIR artefact index" on the next.
   test("the row takes the harness's name and is listed once", () => {
     const rows: { kind: string; path?: string; label?: string; sameAs?: string }[] = [
-      { kind: "docs", path: "/cat-harness/docs-auto/index/docs/smart-base-docs/" },
+      { kind: "docs", path: "/cat-harness/auto-docs/index/docs/smart-base-docs/" },
       { kind: "fhir-artifact-index", path: "/smart-base/" },
       { kind: "qa" },
     ];
-    labelVisualisations(rows, [{ graphKinds: ["docs"] }, { graphKinds: ["fhir-artifact-index"] }, { graphKinds: ["qa"] }]);
+    labelVisualisations(rows, [{ graphTypologies: ["docs"] }, { graphTypologies: ["fhir-artifact-index"] }, { graphTypologies: ["qa"] }]);
     expect(rows[1]!.label).toBe("FHIR artefact index");
     nameInstanceRoot(rows, "/smart-base/", { name: "smart-base", title: "SMART Base" });
     expect(rows.map((r) => r.label)).toEqual(["Docs", "SMART Base", "QA"]);

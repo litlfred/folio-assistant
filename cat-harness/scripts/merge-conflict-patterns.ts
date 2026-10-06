@@ -20,11 +20,12 @@
  * progress. `refuse` entries exist only to say WHY a common path is not
  * automatic (so the next agent does not add it on a hunch).
  *
- * ## The four strategies
+ * ## The five strategies
  *
  * | strategy | resolution | safe because |
  * |---|---|---|
  * | `take-base` | the base's copy, then regenerate | the file is wholly generated; the gate set regenerates it from the merged inputs |
+ * | `owned-tree` | the base's COMMITTED copy, else the branch's; removed only when neither side has it; then regenerate | one writer (`prunedBy`) owns the whole directory and deletes every file it did not write, so a kept orphan is pruned by regen, and the resolution never drops a path (beans `vsv7`, `8j9e`) |
  * | `generated-regions` | each hunk takes the base's side, then regenerate | EVERY hunk lies inside a `<!-- x:begin -->`…`<!-- x:end -->` region, which the generator rewrites; a hunk in authored text refuses |
  * | `qa-sidecar` | `qa:resolve-conflicts` | that command reads git's stages and refuses a sidecar carrying an agent's attestation |
  * | `refuse` | none | authored, or carries judgement a generator cannot reproduce |
@@ -35,7 +36,7 @@
  * purpose — a hand-kept list of check names is the list that rots.
  */
 
-export type ConflictStrategy = "take-base" | "generated-regions" | "qa-sidecar" | "refuse";
+export type ConflictStrategy = "take-base" | "owned-tree" | "generated-regions" | "qa-sidecar" | "refuse";
 
 export interface ConflictPattern {
   /** Stable id; the skill's section anchor. */
@@ -45,6 +46,14 @@ export interface ConflictPattern {
   strategy: ConflictStrategy;
   /** Why it churns (or, for `refuse`, why it is not automatic). */
   why: string;
+  /**
+   * `owned-tree` only: the `package.json` script that writes the directory
+   * WHOLE and deletes what it did not write. The strategy keeps a file that
+   * only one side has, so it is sound only when this writer prunes the
+   * orphans. It names a writer, not a check: `regen` still finds the check
+   * from the CI workflow.
+   */
+  prunedBy?: string;
 }
 
 /**
@@ -80,11 +89,14 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "**/test/results/tool-runs/**",
     ],
     strategy: "take-base",
-    why: "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them.",
+    why:
+      "LSI indexes, detangle sidecars and tool-run records (56 + 71 + 15). Recomputed from the whole corpus, so any concurrent skill or schema change touches them. " +
+      "The LSI half is UNTRACKED on `main` since bean `tqjj` and these globs are kept for the branches still carrying it: a branch that edited the sidecar meets a base that deleted it, and `take-base` is the right answer to that too. " +
+      "It is also the measured limit of what a declaration buys. These paths carried this entry all along and still conflicted on seven open pull requests each, because the strategy settles HOW a conflict is resolved and never whether one arises — `.gitattributes` says the same thing in its own words: \"Removing these conflicts, rather than tidying them, needs the files off `main` altogether.\"",
   },
   {
-    id: "docs-auto",
-    globs: ["**/docs-auto/**"],
+    id: "auto-docs",
+    globs: ["**/auto-docs/**"],
     strategy: "take-base",
     why: "the generated docs index pages (352). Marked -merge in .gitattributes; one page per directory, so every new file anywhere changes one.",
   },
@@ -113,7 +125,9 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "glossary",
     globs: ["cat-harness/docs/glossary/**", "cat-harness/docs/lsi/**"],
     strategy: "take-base",
-    why: "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide.",
+    why:
+      "the generated glossary and LSI pages (173 + 34). Whole-corpus aggregates; concurrent term additions always collide. " +
+      "The LSI page still conflicts but much less often since bean `tqjj`: its per-index detail — the half a one-sentence skill edit moved — is added by the docs-site build rather than committed, and what is left is a function of the tree. The glossary page has no equivalent split: every number on it is a term count over the whole corpus, and there is no half that only the tree moves.",
   },
   {
     id: "translated-glossary",
@@ -134,13 +148,21 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // scripts/state-visualizer.ts. Do not hand-edit". docs/uploads/index.html
       // is the VIEWER of uploads/, not an upload: it must match here, before
       // the `uploads` refusal below catches it. Found 2026-10-01 on #1764.
-      "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads}/index.html",
-      // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
-      // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
-      "cat-harness/docs/fsh-guts/index.md",
+      "cat-harness/docs/{beans,todos,health,issue-marks,swimlane-glossary,uploads,attestations}/index.html",
+      // document-kinds:viz writes these pages whole from the declared document
+      // kinds: the index and one page per instance. The index and attestations/
+      // above refused a merge of #2082 on 2026-10-04 with "no declared
+      // pattern"; the per-instance smart-base page refused the next one.
+      "cat-harness/docs/cat-harness/document-kinds/**/index.html",
+      // node-kind:pages writes these whole from the node-kind index and the
+      // nodes the typologies' directories hold (#2195): /<locale>/<declaring>/<kind>/.
+      "cat-harness/docs/en/**/index.html",
+      // NOT cat-harness/docs/fsh-guts/index.md any more: it is derived from a
+      // graph kept on a branch, so it is built at publish and never committed
+      // (bean 0b8c, #2230), and a merge can no longer meet it.
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, document-kinds:viz, node-kind:pages), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
   },
   {
     id: "viewer-namespace",
@@ -196,11 +218,15 @@ export const PATTERNS: readonly ConflictPattern[] = [
     // authored prose. A page added to `content/docs/` is refused until it is
     // named here, which is the safe direction to be wrong in.
     globs: [
-      "cat-harness/docs/{agentic-harness,beans-and-todos,content-types,crdm-methodology,document-ingestion,evidence,fhir-content,harness,harnessed-kg-overview,ig-publisher,knowledge-graph,managing-agent-context,publication-workflow}.md",
-      "cat-harness/docs/guides/{who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+      // In the docs graph's named groups since bean `xka5`: the same 17 pages,
+      // each under the folder its slug names.
+      "cat-harness/docs/concepts/{agentic-harness,content-types,harness,harnessed-kg-overview,knowledge-graph}.md",
+      "cat-harness/docs/guides/{beans-and-todos,document-ingestion,managing-agent-context,who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+      "cat-harness/docs/process/{crdm-methodology,evidence,publication-workflow}.md",
+      "cat-harness/docs/fhir/{fhir-content,ig-publisher}.md",
     ],
     strategy: "take-base",
-    why: "the 17 whole-file docs pages gen-docs-pages.ts writes from the authored blocks under cat-harness/content/docs/<slug>/ (`docs:pages`, gated by `docs:pages:check`), each carrying `generated: scripts/gen-docs-pages.ts — do not hand-edit` in its own front matter. Bean `8c6v`: all 17 were named by NO pattern, so merge:main refused them and handed back for hand-editing the files that forbid it — docs/publication-workflow.md was one of the 2 refusals that blocked #1888 after 53 of its 55 conflicts resolved. Safe because `emit()` is compare-or-write and the only read of a prior page is inside its `--check` branch, so nothing is carried forward; and the `page` kind is gated on EXACT content, which makes regeneration the verifiable resolution. The AUTHORED SOURCES under cat-harness/content/docs/** are the neighbour and stay refused.",
+    why: "the 17 whole-file docs pages gen-docs-pages.ts writes from the authored blocks under cat-harness/content/docs/<slug>/ (`docs:pages`, gated by `docs:pages:check`), each carrying `generated: scripts/gen-docs-pages.ts — do not hand-edit` in its own front matter. Bean `8c6v`: all 17 were named by NO pattern, so merge:main refused them and handed back for hand-editing the files that forbid it — docs/process/publication-workflow.md was one of the 2 refusals that blocked #1888 after 53 of its 55 conflicts resolved. Safe because `emit()` is compare-or-write and the only read of a prior page is inside its `--check` branch, so nothing is carried forward; and the `page` kind is gated on EXACT content, which makes regeneration the verifiable resolution. The AUTHORED SOURCES under cat-harness/content/docs/** are the neighbour and stay refused.",
   },
   {
     id: "health-report",
@@ -227,10 +253,39 @@ export const PATTERNS: readonly ConflictPattern[] = [
     why: "generated site data indexes (23 + 13). Rewritten from the graph on every regeneration.",
   },
   {
+    id: "subgraph-index",
+    // Instance-agnostic, like `prov-qaqc`: `subgraphOutDir` is `<docs>/subgraph`
+    // under whichever instance runs the writer.
+    globs: ["**/docs/subgraph/**"],
+    strategy: "owned-tree",
+    prunedBy: "subgraph:jsonld",
+    why:
+      "the subgraph JSON-LD indexes, written WHOLE by `subgraph:jsonld` (gen-subgraph-jsonld.ts, `subgraph:jsonld:check` in CI), which also deletes every file under the directory that it did not write. " +
+      "Any skill, schema or declaration edit rewrites one, so every merge of main into a PR that edits a skill conflicted here and was refused (#2176, 2026-10-05). " +
+      "It is `owned-tree` rather than `take-base` because a subgraph that only the branch has can meet a rename on the base, and `take-base` would `git rm` it. `droppedInMerge` refuses that drop.",
+  },
+  {
+    id: "subgraph-payload",
+    globs: ["**/docs/payload/sha256/**"],
+    strategy: "owned-tree",
+    prunedBy: "subgraph:jsonld",
+    why:
+      "content-addressed payloads (f233): `<hex>` is the sha256 of its bytes and sits beside its `<hex>.json` sidecar. The same `subgraph:jsonld` writes them, and deletes every payload no node links to. " +
+      "When both sides change one node's payload, git reads it as a RENAME/RENAME (base hex to branch hex, and base hex to main hex). It leaves the old name at stage 1 only, the branch's at stage 2 only and main's at stage 3 only. Both new stages hold git's merge of the two bodies WITH conflict markers (measured 2026-10-05, #2176). " +
+      "So `take-base` fails twice. It `git rm`s the branch's new payload, a path the branch ADDED, which `droppedInMerge` refuses. And `checkout --theirs` writes marked bytes under a name that is the hash of other bytes. " +
+      "`owned-tree` takes each side's COMMITTED blob instead, so every kept name holds the bytes it hashes. The writer then deletes the orphan, which is the deletion the `staged` checkpoint allows.",
+  },
+  {
     id: "readme-generated-regions",
     globs: ["**/README.md"],
     strategy: "generated-regions",
     why: "directory READMEs (209). Their generated regions carry file counts and listings that every concurrent addition changes; the prose around them is authored, so only a hunk INSIDE a region resolves.",
+  },
+  {
+    id: "standalone-baseline",
+    globs: ["**/scripts/standalone-baseline.json"],
+    strategy: "take-base",
+    why: "check:standalone's accepted failure list (bean `ho66`, #1977). It conflicts only when BOTH sides changed the list. Take the base's copy and regenerate NOTHING: it is a ratchet, and re-measuring after a merge would write any new standalone failure into the list unreviewed — the thing the gate exists to stop. Fail-closed instead: if this side's change was a new failure, its CI goes red until its author runs `bun run standalone:baseline` deliberately; if it was a fix, nothing is lost but a shorter list, which the check reports.",
   },
   {
     id: "beans",

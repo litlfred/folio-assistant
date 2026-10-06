@@ -41,8 +41,17 @@ export const SUBSTRATE_SNAPSHOT_SCHEMA = "folio-substrate-snapshot/v1";
  */
 export const KG_PART_RECORD_SCHEMA = "folio-kg-materialization/v1";
 
-/** The graph kind of the directory an instance keeps its snapshots in. Found through the declaration, never by path. */
-export const SNAPSHOT_GRAPH_KIND = "substrate-snapshot";
+/**
+ * The tag on a METADATA-MODE record (`kg:materialize --nodes`, bean `c1m4`):
+ * one subgraph's `index.hydrated.jsonld`, fetched at the pin, with its sha256.
+ * Full schema: `KgNodesRecordSchema` in
+ * `folio-assistant-core/schemas/kg-materialization.ts`; the tag lives here for
+ * the same reason as {@link KG_PART_RECORD_SCHEMA}.
+ */
+export const KG_NODES_RECORD_SCHEMA = "folio-kg-nodes/v1";
+
+/** The graph typology of the directory an instance keeps its snapshots in. Found through the declaration, never by path. */
+export const SNAPSHOT_GRAPH_TYPOLOGY = "substrate-snapshot";
 
 /** A snapshot's filename: `<subscription id>.substrate.json`. */
 export const SNAPSHOT_SUFFIX = ".substrate.json";
@@ -66,7 +75,7 @@ export const SubstrateSnapshotSchema = z
         name: z.string().min(1),
         title: z.string().optional(),
         version: z.string().optional(),
-        subgraphs: z.array(z.object({ id: z.string().min(1), graphKinds: z.array(z.string().min(1)) }).strict()),
+        subgraphs: z.array(z.object({ id: z.string().min(1), graphTypologies: z.array(z.string().min(1)) }).strict()),
         harnesses: z.array(z.string().min(1)).min(1),
       })
       .strict(),

@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_L2Dak` · advisory · 10 step(s)
 
-folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.
+How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
 by `bun run render:bpmn` — never hand-edit the SVG.
@@ -26,7 +26,7 @@ work plan in beans/.
 - **Called by:** no call activity names this process
 - **Calls:** none
 - **Names the `l2-dak-authoring` skill without calling this process:** [L3 FHIR IG pipeline](l3-fhir-pipeline.html) — `activity-calls-skill-process` asks whether each should be a call activity.
-- **Presented on:** [Content types — WHO SMART Guidelines DAKs (L2)](../content-types.html#who-smart-guidelines-daks-l2), [Authoring a WHO SMART DAK (L2) — The L2 artifacts](../guides/who-smart-dak.html#the-l2-artifacts)
+- **Presented on:** [Content types — WHO SMART Guidelines DAKs (L2)](../concepts/content-types.html#who-smart-guidelines-daks-l2), [Authoring a WHO SMART DAK (L2) — The L2 artifacts](../guides/who-smart-dak.html#the-l2-artifacts)
 - **Skill:** [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html)
 
 ## Lanes — who acts

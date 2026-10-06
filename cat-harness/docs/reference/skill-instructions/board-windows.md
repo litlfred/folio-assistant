@@ -265,7 +265,7 @@ A thing on that glass can be closed. **What closing does is the rule:**
 says *"materialized should live in folio"*, and the folio is the reader's
 REPOSITORY, of which `library/` and `uploads/` are already declared parts —
 both carry `dependents: "reproduce"`, which is the schema saying *this is the
-reader's own copy*. `folio/` is a different graph kind: **renderable** authored
+reader's own copy*. `folio/` is a different graph typology: **renderable** authored
 content.
 
 Reading it as the directory would break a consumer that exists.
@@ -292,6 +292,29 @@ screen looks wrong: the inverse of **close** must be reachable, and here it is
 reachable from a **different surface** than the one that closed it. When you
 implement close, the thing to check is that the library offers the way back —
 not that the glass does.
+
+**So close says where the way back is, at the moment of closing** (issue
+#1900, owner 2026-10-02: *"[x] should confirm returning back to library and
+tell them which library in case they need again"*). The glass's `[x]` opens a
+confirm that names the instance's library and links it, Escape and Cancel
+leave the card where it is, and only the confirm shelves it — after which the
+glass says, with the same link, where the asset went. Naming the library is
+not politeness: a reader holding assets from several libraries otherwise has
+to remember which one each came from to get it back.
+
+**The place is the card's own, so there are three.** A library card goes back
+to its instance's library, a todo to the Todos board, and a landing sticky
+pinned to the glass to the page it was pinned from. Calling a sticky "your
+Todos" sends the reader to a list it was never on. One function answers
+"where does this card go back to", and the confirm, the status after it and
+the `[x]` button's own label all read it, so the three cannot disagree. The
+confirm is the page's one confirm dialog, shared with sending a sticky to
+fsh-guts, so focus-on-Cancel and Escape-cancels are stated once.
+
+A card's other controls follow the floor below. Opening a library card goes to
+the asset's visualizer when its index entry declares one, else to its entry
+page; resizing is a corner drag, with `+`/`−` in move mode and the move bar's
+buttons as the non-drag path, so the drag is never the only way in.
 
 ## Two settings panels, two names, each points to the other
 

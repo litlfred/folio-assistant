@@ -33,7 +33,7 @@ the one recipe.
 ## `fsh-guts` must not reach publication
 
 Before a branch that touches the knowledge graph ships, the published export
-must contain no reference to `fsh-guts` — not the graph kind, not the
+must contain no reference to `fsh-guts` — not the graph typology, not the
 declared directory, not the skill that documents it, and not an edge naming
 any of them. Owner's rule, 2026-09-19.
 
@@ -64,7 +64,13 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
 
    **And after EVERY base merge, conflicted or not, run `bun run regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
-   §"A clean merge can produce a wrong artefact" below.
+   §"A clean merge can produce a wrong artefact" below. **If you merged with
+   `bun run merge:main`, its regen already was that run — do not run a second
+   one.** For a merge whose conflicts were all generated, the round is
+   [`merge-conflict-patterns`](merge-conflict-patterns.md) §"A merge round —
+   run each check ONCE": targeted checks and a push, with CI's sharded run as
+   the full gate set in place of a local `bun run gates` or `check:merged`.
+   An authored conflict, or a merge that touched code, still owes both.
 4. **Prove it merges cleanly** (no assumptions):
    - `git merge-base --is-ancestor origin/<base> HEAD` → success means a clean
      fast-forward: git fast-forwards without running a merge, so conflicts are
@@ -272,7 +278,9 @@ dependencies rather than borrowing them.
 ## A clean merge can produce a wrong artefact (STRICT)
 
 **`bun run regen` after every base merge.** Not only after a conflicted one —
-after every one.
+after every one. `bun run merge:main` runs it as part of the merge, so after
+`merge:main` it has already happened once and a second run re-asks the same
+tree (4–5 min, measured 2026-10-04).
 
 Measured on `main` at `3341108a`, 2026-09-22, bean `lxpq`. Two branches changed
 one committed generated file in NON-OVERLAPPING places:
@@ -300,15 +308,30 @@ So the rule is not "resolve conflicts carefully". It is:
 artefacts the merge actually broke rather than a wholesale rewrite:
 
 ```sh
-bun run regen             # repair what is stale in the fast gate set
-bun run regen --all       # ...including the browser workflows' gates
-bun run regen --dry-run   # report what is stale, change nothing
+bun run regen                   # repair what is stale in the whole gate set
+bun run regen --fast            # ...only the jobs that install no browser
+bun run regen --dry-run         # report what is stale, change nothing
+bun run regen --changed <base>  # ask only the pairs whose inputs changed since <base>
+bun run regen --explain         # say, per pair, why it was asked or not
 ```
 
 It reports four states, and **`unrepaired` is the one to read**: a check that
 still fails after its writer ran is a real defect, not staleness, and the
 command exits non-zero rather than claiming a repair it did not make. So is a
 check with **no writer**.
+
+**`--changed` asks less, and says what it assumed** (bean `94zs`). A pair whose
+declared inputs, script sources and commands meet none of the paths changed
+since `<base>` (plus the working tree) is **not asked**: its answer is its
+answer at `<base>`. Undeclared and `{tracked}` pairs are always asked, as is
+any pair whose inputs cannot be determined. `bun run merge:main` passes the
+merge's **fork point**, so a skipped pair is one NEITHER side touched, and it is
+current if the fork point, the branch tip or the base tip was current.
+`merge:main -- --full-regen` asks every pair. Separately, every pass after
+the first asks only the pairs whose inputs the previous pass actually changed
+(measured from `git`, not declared). Both cuts are only as good as the
+`task-io.ts` declarations. The whole-tree pairs (`kg:audit:all:check`,
+`skill:register:check`, `kg:audit:check`) still run after every merge.
 
 ### Submodules: check the pointers BEFORE you stage the merge (STRICT)
 
@@ -432,6 +455,13 @@ what would wave through the one that is not.
 needs a `git config` step in every clone and CI runner, and the people hitting
 these conflicts are mostly agents in fresh containers — where a setup step
 nobody ran is a driver that is not there, failing open and silently.
+
+## Shipping is not merging — hand over on the PR itself
+
+When the branch is green and pushed, it reaches the Merge Steward only by its
+own state: label `ready-to-merge`, a signed `ready: <head sha>` comment, and no
+`needs-merge-human`. [`merge-queue`](merge-queue.md) §"Handing a PR to the
+queue" has the six points, and when NOT to spend CI keeping up while far back. Never post the handover anywhere but the PR.
 
 ## Opening the PR (only when asked)
 

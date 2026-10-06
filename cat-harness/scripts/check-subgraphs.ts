@@ -71,8 +71,9 @@ import { Glob } from "bun";
 import { gitCorpus } from "../schemas/git-corpus.ts";
 
 import {
+  defaultGraphTypologies,
   isDerivedGraph,
-  isPublishedGraphKind,
+  isPublishedGraphTypology,
   isRenderable,
   owningDirectory,
   resolveDirectories,
@@ -136,9 +137,9 @@ export interface SubgraphReport {
    * superseded, and its links pointing at what moved is EXPECTED; that is a
    * decision, and a decision should be readable.
    *
-   * Keyed on the declared graph kind rather than a new field, because
-   * `isPublishedGraphKind` already answers exactly this question and the
-   * directory already declares `graphKinds: ["fsh-guts"]`. Same shape as the
+   * Keyed on the declared graph typology rather than a new field, because
+   * `isPublishedGraphTypology` already answers exactly this question and the
+   * directory already declares `graphTypologies: ["fsh-guts"]`. Same shape as the
    * `published: false` a skill now carries: the thing says what it is.
    */
   exempt: string[];
@@ -148,8 +149,8 @@ export interface SubgraphReport {
    * DIFFERENT from `exempt`, which drops a retired directory wholesale. This
    * keeps the directory in scope and routes one class of link out of
    * `dangling`: a renderable graph addresses the PUBLISHED tree, so
-   * `docs/architecture.md -> api/` names a directory the docs build
-   * generates and `docs/skills.md -> ...migration.html` names a page Jekyll
+   * `docs/concepts/architecture.md -> api/` names a directory the docs build
+   * generates and `docs/concepts/skills.md -> ...migration.html` names a page Jekyll
    * renders. Neither is a file here and neither is broken.
    *
    * **Counted and printed, never asserted, and the number is why.** Declaring
@@ -271,7 +272,7 @@ function linkTargets(raw: string): string[] {
  * Resolve a link target in the SOURCE tree, or `undefined`.
  *
  * A `.html` target is a RENDERED PAGE, not a file here: jekyll builds
- * `docs/skills.html` from `docs/skills.md`. Testing the `.html` on disk
+ * `docs/skills.html` from `docs/concepts/skills.md`. Testing the `.html` on disk
  * reports every correct site link as broken, and the first triage (bean
  * `rl3h`) hit exactly that. Resolving to the source tells a page with a
  * source apart from one that genuinely does not exist; skipping `.html`
@@ -284,6 +285,12 @@ function linkTargets(raw: string): string[] {
  * measuring something other than what the scan measured.
  */
 /** A link destination as a path: percent-decoded, or unchanged if the escapes are malformed. */
+/** A typology whose pages a renderable PARENT publishes — `within` a renderable one. */
+function publishedByParent(g: string): boolean {
+  const parent = defaultGraphTypologies.get(g)?.within;
+  return parent !== undefined && isRenderable(parent);
+}
+
 export function decodeLinkTarget(target: string): string {
   try {
     return decodeURIComponent(target);
@@ -377,7 +384,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   // Declared directories that are absent and allowed to be: a link into one
   // cannot be judged from this checkout.
   const absentOffMain = dirs
-    .filter((d) => mayLeaveMain(d as { graphKinds?: string[]; storage?: unknown }))
+    .filter((d) => mayLeaveMain(d as { graphTypologies?: string[]; storage?: unknown }))
     .map((d) => resolve(d.absPath ?? join(root, d.path)))
     .filter((a) => !existsSync(a));
   const derivedLinks: SubgraphReport["derivedLinks"] = [];
@@ -391,7 +398,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
     const abs = dir.absPath ?? join(root, dir.path);
     if (!existsSync(abs) || !statSync(abs).isDirectory()) continue;
     // Retired content is not held to link resolution — see `exempt`.
-    if (dir.graphKinds.length > 0 && dir.graphKinds.every((g) => !isPublishedGraphKind(g))) {
+    if (dir.graphTypologies.length > 0 && dir.graphTypologies.every((g) => !isPublishedGraphTypology(g))) {
       exempt.push(`${label(dir)} (${dir.path})`);
       continue;
     }
@@ -437,13 +444,17 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         }
         if (resolved === undefined) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
-          const renderable = owner.graphKinds.some((g) => isRenderable(g));
+          // A typology `within` a renderable one is published BY it — the
+          // docs graph's named groups (bean `xka5`), `proposals` and
+          // `requirements` are not sites of their own, but their pages are docs
+          // pages on the docs site, so their links address the same tree.
+          const renderable = owner.graphTypologies.some((g) => isRenderable(g) || publishedByParent(g));
           // A DERIVED graph's links came from the SOURCE document rather than
           // from an author here — see `derivedLinks`. Tested after
           // `renderable` only because no kind is currently both; if one ever
           // is, addressing the published tree is the more specific claim and
           // should win.
-          const derived = owner.graphKinds.some((g) => isDerivedGraph(g));
+          const derived = owner.graphTypologies.some((g) => isDerivedGraph(g));
           const bucket = renderable ? siteResolved : derived ? derivedLinks : dangling;
           bucket.push({
             from: relative(root, file),
@@ -585,7 +596,7 @@ if (import.meta.main) {
 
   if (exempt.length > 0) {
     console.log(`\nEXEMPT BY DECLARATION — ${exempt.length} directory(ies) hold only`);
-    console.log("unpublished graph kinds, so their links are not held to resolution:\n");
+    console.log("unpublished graph typologies, so their links are not held to resolution:\n");
     for (const d of exempt) console.log(`  · ${d}`);
     console.log(
       "\nRetired content is superseded by definition, so a link of its pointing at\n" +

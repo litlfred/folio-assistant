@@ -113,9 +113,10 @@ for (const width of [1280, 390]) {
       const b = (await p.boundingBox())!;
       expect(b.height).toBeGreaterThanOrEqual(24);
       expect(b.width).toBeGreaterThanOrEqual(24);
-      // At the TOP of the display panel, at its inline end.
+      // At the TOP of the display panel, at its inline end — in the band's
+      // row since #2201, which pads the row by 2px.
       const wrap = (await page.locator(".main-content-wrap").boundingBox())!;
-      expect(Math.abs(b.y - wrap.y)).toBeLessThanOrEqual(1);
+      expect(Math.abs(b.y - wrap.y)).toBeLessThanOrEqual(4);
       expect(b.x + b.width).toBeGreaterThan(wrap.x + wrap.width * 0.75);
       // No vertical cost: the heading starts where it would with no search.
       const cost = await page.evaluate(() => {
@@ -129,7 +130,10 @@ for (const width of [1280, 390]) {
       expect(cost).toBe(0);
     });
 
-    test("open spans the display panel — field AND results", async ({ page }) => {
+    test("open spans the rest of the band — field AND results — with the magnifier still at the end", async ({ page }) => {
+      // #2201: the band's row holds the locale selector at the inline-start,
+      // so the field spans from there to the panel's end, and the magnifier
+      // STAYS at the end rather than moving to the field's leading edge.
       await page.locator(peek).click();
       await expect(page.locator(home)).toHaveAttribute("data-open", "true");
       await expect(page.locator(peek)).toHaveAttribute("aria-expanded", "true");
@@ -140,26 +144,29 @@ for (const width of [1280, 390]) {
         return { left: r.left + parseFloat(cs.paddingLeft), right: r.right - parseFloat(cs.paddingRight) };
       });
       const row = (await page.locator(home).boundingBox())!;
-      expect(Math.abs(row.x - wrap.left)).toBeLessThanOrEqual(1);
+      const lang = (await page.locator(".fa-page-lang-bar").boundingBox())!;
+      expect(row.x).toBeGreaterThanOrEqual(lang.x + lang.width);
       expect(Math.abs(row.x + row.width - wrap.right)).toBeLessThanOrEqual(1);
-      // One row: the magnifier attached to the field, the same height.
+      // One row: the field, then the magnifier at the end, the same height.
       const pb = (await page.locator(peek).boundingBox())!;
       const ib = (await page.locator(input).boundingBox())!;
       expect(Math.abs(pb.y - ib.y)).toBeLessThanOrEqual(1);
       expect(Math.abs(pb.height - ib.height)).toBeLessThanOrEqual(1);
-      expect(Math.abs(pb.x + pb.width - ib.x)).toBeLessThanOrEqual(1);
-      expect(Math.abs(ib.x + ib.width - wrap.right)).toBeLessThanOrEqual(1);
-      // Results take the row's full width. Shown here the way the theme shows
-      // them (`search-active` on <html>) with one hit, since this page loads
-      // no index.
+      expect(ib.x + ib.width).toBeLessThanOrEqual(pb.x);
+      expect(Math.abs(pb.x + pb.width - wrap.right)).toBeLessThanOrEqual(1);
+      // The field takes most of what is left.
+      expect(ib.width).toBeGreaterThan((wrap.right - (lang.x + lang.width)) * 0.6);
+      // Results take the field's width, below it. Shown here the way the
+      // theme shows them (`search-active` on <html>) with one hit, since this
+      // page loads no index.
       await page.evaluate(() => {
         document.documentElement.classList.add("search-active");
         document.getElementById("search-results")!.innerHTML =
           '<ul class="search-results-list"><li class="search-results-list-item"><a class="search-result" href="#">A hit</a></li></ul>';
       });
       const rb = (await page.locator("#search-results").boundingBox())!;
-      expect(Math.abs(rb.x - row.x)).toBeLessThanOrEqual(1);
-      expect(Math.abs(rb.width - row.width)).toBeLessThanOrEqual(2);
+      expect(Math.abs(rb.x - ib.x)).toBeLessThanOrEqual(1);
+      expect(Math.abs(rb.width - ib.width)).toBeLessThanOrEqual(2);
       expect(rb.y).toBeGreaterThanOrEqual(ib.y + ib.height - 1);
     });
 
@@ -186,27 +193,27 @@ for (const width of [1280, 390]) {
       await expect(p).toBeFocused();
     });
 
-    test("the open/closed choice persists per viewer, and the way back is always the magnifier", async ({ page }) => {
+    test("every page arrives with search closed, even after it was left open", async ({ page }) => {
+      // Owner, 2026-10-05: "start with search bar closed". The open state
+      // used to be remembered per viewer and restored on the next page.
       await page.locator(peek).click();
-      await page.reload();
-      await page.waitForSelector(home);
       await expect(page.locator(home)).toHaveAttribute("data-open", "true");
-      await expect(page.locator(input)).toBeVisible();
-      // Restored open is not a focus grab: nothing typed into by surprise.
-      await expect(page.locator(input)).not.toBeFocused();
-      expect(await pressable(page, peek)).toBe("yes");
-      await page.locator(peek).click();
       await page.reload();
       await page.waitForSelector(home);
       await expect(page.locator(home)).toHaveAttribute("data-open", "false");
+      await expect(page.locator(input)).toBeHidden();
+      expect(await pressable(page, peek)).toBe("yes");
     });
 
     test("never overlaps the Folio handle, closed or open, at rest or scrolled", async ({ page }) => {
       await page.waitForSelector(".fa-glass-handle", { state: "attached" });
       expect(await overlaps(page, peek, ".fa-glass-handle")).toBe(false);
+      // Open, the field spans the band's centre, so the handle steps aside
+      // (#2201) rather than sitting on it — hidden, and back once closed.
       await page.locator(peek).click();
-      expect(await overlaps(page, home, ".fa-glass-handle")).toBe(false);
+      await expect(page.locator(".fa-glass-handle")).toBeHidden();
       await page.locator(peek).click();
+      await expect(page.locator(".fa-glass-handle")).toBeVisible();
       // Scrolled, the magnifier goes with the content; the handle stays fixed
       // at the top centre, and the one never lands on the other's box while
       // the other is still pressable.

@@ -51,7 +51,7 @@ function world(status = "todo"): { repo: string; url: string; storeDir: string }
   git(base, "clone", "-q", url, work);
   writeFileSync(join(work, "manifest.json"), JSON.stringify({ $schema: "state-manifest/v1", status: "store", authoritative: true, keyedBy: "tip" }, null, 2) + "\n");
   mkdirSync(join(work, "beans", "defs"), { recursive: true });
-  writeFileSync(join(work, "beans", "beans.json"), JSON.stringify({ name: "f", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }));
+  writeFileSync(join(work, "beans", "beans.json"), JSON.stringify({ name: "f", directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }] }));
   writeFileSync(join(work, "beans", "defs", FILE), BEAN.replace("status: todo", `status: ${status}`));
   git(work, "add", "-A");
   git(work, "commit", "-qm", "seed");
@@ -66,7 +66,7 @@ function world(status = "todo"): { repo: string; url: string; storeDir: string }
   git(repo, "remote", "add", "origin", url);
   writeFileSync(
     join(repo, "fixture.json"),
-    JSON.stringify({ $schema: "folio-harness/v1", name: "fixture", directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: { branch: BRANCH, keyedBy: "tip" } }] }, null, 2),
+    JSON.stringify({ $schema: "folio-harness/v1", name: "fixture", directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: { branch: BRANCH, keyedBy: "tip" } }] }, null, 2),
   );
   return { repo, url, storeDir: join(base, "store.git") };
 }
@@ -80,6 +80,9 @@ function tipText(w: ReturnType<typeof world>): string {
 
 /** Timestamps differ by construction; everything else must match exactly. */
 const normalise = (t: string): string => t.replace(/\d{4}-\d{2}-\d{2}T[\d:.]+Z?/g, "<T>").replace(/_\d[^_]*_/g, "_<T>_");
+
+/** Budget for a test that drives two clones of one remote (see below). */
+const GIT_HEAVY_MS = 30_000;
 
 describe("claiming on the branch store", () => {
   test("a clean claim lands on the tip, in-progress, with the claim note", () => {
@@ -104,6 +107,11 @@ describe("claiming on the branch store", () => {
     expect(normalise(tipText(w))).toBe(normalise(expected));
   });
 
+  // These two open a SECOND clone of the remote and push from both sides:
+  // real git, several processes each. Locally they finish well inside bun's
+  // 5 s default; on a loaded CI runner the second took 6.1-6.5 s and timed
+  // out (main, 2026-10-04, runs 37186849743 and 37187288682). The limit is a
+  // budget for real I/O, not a retry: the assertions are unchanged.
   test("A SIBLING THAT WROTE FIRST IS A CONFLICT, caught on the first attempt — bean 35nj", () => {
     const w = world();
 
@@ -123,7 +131,7 @@ describe("claiming on the branch store", () => {
     // And the sibling's claim is intact: no lost write.
     expect(tipText(w)).toContain("Claimed by their-branch");
     expect(tipText(w)).not.toContain("Claimed by my-branch");
-  });
+  }, GIT_HEAVY_MS);
 
   test("THE REAL CONFLICT: a sibling writes BETWEEN our read and our write — `expect` catches it", () => {
     const w = world();
@@ -157,7 +165,7 @@ describe("claiming on the branch store", () => {
     const after = tipText(w);
     expect(after).toContain("Claimed by their-branch");
     expect(after).not.toContain("Claimed by my-branch");
-  });
+  }, GIT_HEAVY_MS);
 
   test("already in-progress with no readable holder is `held-unknown`, never a silent pass", () => {
     const w = world("in-progress");

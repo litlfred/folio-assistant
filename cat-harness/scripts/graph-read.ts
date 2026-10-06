@@ -22,12 +22,17 @@
  *
  * ## It REFUSES rather than returning a plausible empty directory
  *
- * The three states come from {@link tipPresence} (row B), and each maps onto
- * exactly one read decision:
+ * The states come from {@link tipPresence} and {@link routePresence} (row B), and
+ * each maps onto exactly one read decision. The first row read *"not tip-keyed |
+ * the checkout | nothing moved"* until `route` existed, and that was the whole
+ * bug: a route-keyed entry is not tip-keyed, so it took the "nothing moved" arm
+ * while its files had moved to a branch.
  *
  * | state | read from | why |
  * |---|---|---|
- * | not tip-keyed | the checkout | nothing moved |
+ * | not branch-keyed, or `commit`-keyed | the checkout | nothing moved |
+ * | `route`-keyed, files still tracked | the checkout | pre-cutover: **here** is the store |
+ * | `route`-keyed, cut over | **refused** | no route store is mounted, so there is no local path to give |
  * | `not-cut-over` | the checkout | the declaration points at a branch and the files are still tracked here, so **here** is the store |
  * | `mounted` | the marker's `into` | the cutover happened and the mount is the store |
  * | `unmounted` | **refused** | cut over, nothing mounted: the only honest answer is not a path |
@@ -58,9 +63,9 @@
 import { relative, sep } from "node:path";
 
 import { instanceRootsIn, resolveDirectories } from "../schemas/cat-harness.js";
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 import { resolveSubgraphSource, type ResolvedSubgraphSource } from "../schemas/subgraph-source.js";
-import { tipPresence } from "./check-declared-dirs.ts";
+import { routePresence, tipPresence } from "./check-declared-dirs.ts";
 
 export type GraphReadFrom = "checkout" | "mount";
 
@@ -157,6 +162,38 @@ export function graphReadPath(id: string, repoRoot: string): GraphRead {
   }
   const { absPath, resolved } = found;
   const declaredPath = relative(repoRoot, absPath).split(sep).join("/");
+  if (resolved.kind === "branch" && resolved.keyedBy === "route") {
+    const r = routePresence({ id, branch: resolved.branch, keyedBy: resolved.keyedBy }, absPath, repoRoot);
+    // Same answer as `not-cut-over` below, and for the same reason: the files are
+    // still tracked here, so HERE is the store.
+    if (r.state === "not-cut-over") return { state: "ok", at: absPath, from: "checkout", id, path: declaredPath, notCutOver: true };
+    return {
+      state: "refused",
+      id,
+      path: declaredPath,
+      reason:
+        `${declaredPath} is kept per ROUTE on \`${resolved.branch}\` and is not tracked in this checkout, ` +
+        `and a route store has no mount — \`state:mount\` only walks tip-keyed entries, so there is no local ` +
+        `copy for this to resolve to. The branch is read by the route's own generator \`--check\`, which ` +
+        `fetches; this resolver is offline. Returning the declared path would hand you an EMPTY directory and ` +
+        `a clean run over nothing (bean \`dh4f\`), which is the one answer this module exists to refuse.`,
+    };
+  }
+  if (resolved.kind === "family") {
+    // A FAMILY (bean `lehh`) is one branch per key, and nothing here says which
+    // key the caller means. The declared path would be an empty directory read
+    // as a clean graph (bean `dh4f`) — the else-arm below is exactly that
+    // answer, which is why this arm comes first.
+    return {
+      state: "refused",
+      id,
+      path: declaredPath,
+      reason:
+        `"${id}" is a FAMILY of branches (\`${resolved.branchPrefix}<key>\`, one per ${resolved.keyFrom}), ` +
+        `not one branch, so there is no single graph at ${declaredPath} to read. Name the member you mean ` +
+        `and read that branch.`,
+    };
+  }
   if (resolved.kind !== "branch" || resolved.keyedBy !== "tip") {
     return { state: "ok", at: absPath, from: "checkout", id, path: declaredPath };
   }

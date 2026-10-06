@@ -110,6 +110,10 @@ export const PRIORITY_CLASSES = [
   "ci-not-green",
 ] as const;
 export const PriorityClassSchema = z.enum(PRIORITY_CLASSES);
+
+/** The values of {@link MemberFactsSchema}`.readiness`, in the order a PR moves through them. */
+export const READINESS = ["ready", "draft", "not-main", "no-marker", "foreign-marker", "stale-marker"] as const;
+export type Readiness = (typeof READINESS)[number];
 export type PriorityClass = z.infer<typeof PriorityClassSchema>;
 
 /**
@@ -135,6 +139,10 @@ export const FORBIDDEN_FACT_KEYS = [
   "mergeable_state", // read live only: bean `fx5r` measured it serving a pre-merge view
   "labels",
   "draft",
+  "baseRef",
+  "readySha",
+  "readyBy",
+  "readiness", // bean `uoob`: a comment can be edited and a PR re-drafted at any time
   "authoredPaths",
   "authored_paths",
   "touchesShared",
@@ -319,6 +327,32 @@ export function releaseCovers(
   return { ok: true };
 }
 
+/**
+ * Where the steward believes the PR stands, as a DECISION it records rather
+ * than a GitHub fact. Owner, 2026-10-04: *"review all open PRs.... anything
+ * not in merge queue? put in as status unknown any found. then try to figure
+ * out where they are, what's stale"*.
+ *
+ * - `unknown`: the steward found the PR open and not in the queue; triage pending.
+ * - `active`: its author pushed or commented within the stale window.
+ * - `waiting-on-author`: handed back with a named ask, author not yet back.
+ * - `blocked`: waits on another PR, bean or ruling, named in `reason`.
+ * - `stale`: no push and no human comment for longer than the stale window.
+ * - `approval-void`: the owner approved it, then its scope changed.
+ * - `landed`: merged; the entry is kept as history, not deleted.
+ */
+export const QUEUE_STATUSES = [
+  "unknown",
+  "active",
+  "waiting-on-author",
+  "blocked",
+  "stale",
+  "approval-void",
+  "landed",
+] as const;
+export const QueueStatusSchema = z.enum(QUEUE_STATUSES);
+export type QueueStatus = z.infer<typeof QueueStatusSchema>;
+
 const EntryObjectSchema = z
   .object({
     $schema: z.literal(MERGE_QUEUE_ENTRY_TAG),
@@ -337,6 +371,8 @@ const EntryObjectSchema = z
     ejection: EjectionSchema.optional(),
     /** A person's decision to merge, or not — {@link ReleaseSchema}. */
     release: ReleaseSchema.optional(),
+    /** The steward's triage verdict (see {@link QUEUE_STATUSES}). Absent on entries written before it existed. */
+    status: QueueStatusSchema.optional(),
     /** Beans and epics this PR serves. Epics are beans, so one list. */
     beans: z.array(BeanIdSchema).default([]),
   })
@@ -480,6 +516,27 @@ export const MemberFactsSchema = z
     ownCi: z.enum(["green", "red", "missing-required", "none", "unknown"]),
     /** Did CI run on the head that would be merged (T2; bean `u7be` item 3). */
     headShaMatchesCi: z.boolean(),
+    /**
+     * Has the OWNING session signalled this PR is finished, against `main`?
+     * Bean `uoob` (merge gate (f)), read by `Rule_NotReady`. `ready` is the
+     * only admitting value, and the others stay apart because each has a
+     * different remedy:
+     *
+     * | value | means | real case, 2026-10-03 |
+     * |---|---|---|
+     * | `ready` | not a draft, on `main`, and a `ready: <sha>` signed by the PR's own session names the head | — |
+     * | `draft` | still a draft | — |
+     * | `not-main` | based on another branch | #1937, on #1764's head after #1764 merged |
+     * | `no-marker` | no `ready:` comment | #1960, #1957 |
+     * | `foreign-marker` | the marker is unsigned, or signed by another session | #1937's was unsigned |
+     * | `stale-marker` | the head moved past the marker | #1937 |
+     *
+     * Coarser than `merge:guard` on purpose: it cannot see that the commits
+     * after a stale marker are merge-main bot merges, so it hands those back
+     * where the guard would pass them. The guard is the gate; this keeps an
+     * unfinished PR out of a train.
+     */
+    readiness: z.enum(READINESS),
   })
   .strict();
 export type MemberFacts = z.infer<typeof MemberFactsSchema>;

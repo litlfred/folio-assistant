@@ -14,13 +14,10 @@ import {
   contentSourceJsonLd,
   forgeTreeUrl,
   resolveSubgraphSource,
-  specialBranchFor,
-  specialBranches,
-  type SpecialBranchRow,
 } from "./subgraph-source";
 
 const REPO = resolve(import.meta.dir, "..", "..");
-const ENTRY = { id: "todos", path: "todos/", graphKinds: ["todos"] };
+const ENTRY = { id: "todos", path: "todos/", graphTypologies: ["todos"] };
 const BRANCH = { kind: "branch", branch: "cat/cat-harness/todos", keyedBy: "tip" } as const;
 
 describe("the union", () => {
@@ -63,7 +60,7 @@ describe("precedence — config, then source, then legacy storage, then director
     expect(() => resolveSubgraphSource({ ...ENTRY, source: BRANCH, storage: { branch: "x", keyedBy: "tip" } })).toThrow(/both/);
   });
   test("a qa subgraph keyed by tip is refused (#1937's rule, whichever field says it)", () => {
-    expect(() => resolveSubgraphSource({ id: "qa", path: "qa/", graphKinds: ["qa"], source: { ...BRANCH, branch: "cat/cat-harness/qa-reports" } })).toThrow(/qa/);
+    expect(() => resolveSubgraphSource({ id: "qa", path: "qa/", graphTypologies: ["qa"], source: { ...BRANCH, branch: "cat/cat-harness/qa-reports" } })).toThrow(/qa/);
   });
 });
 
@@ -76,24 +73,6 @@ describe("the presence checks ask one question of either spelling", () => {
   });
 });
 
-describe("special-branches.json stays the one declaration of branch names", () => {
-  const rows = specialBranches();
-  test("every row is found by its own name, and by each legacy name", () => {
-    for (const r of rows) {
-      const probe = r.shape === "family" ? `${r.name}x` : r.name;
-      expect(specialBranchFor(probe, rows)?.id).toBe(r.id);
-      for (const l of r.legacy) expect(specialBranchFor(r.shape === "family" ? `${l}x` : l, rows)?.id).toBe(r.id);
-    }
-  });
-  test("a branch source names its row; an undeclared branch names none", () => {
-    expect((resolveSubgraphSource({ ...ENTRY, source: BRANCH }) as { special?: SpecialBranchRow }).special?.id).toBe("todos");
-    expect((resolveSubgraphSource({ ...ENTRY, source: { ...BRANCH, branch: "nobody/declared/this" } }) as { special?: SpecialBranchRow }).special).toBeUndefined();
-  });
-  test("a family's bare prefix is not a member of itself", () => {
-    const fam = rows.find((r) => r.shape === "family")!;
-    expect(specialBranchFor(fam.name.replace(/\/$/, ""), rows)).toBeUndefined();
-  });
-});
 
 describe("the JSON-LD form", () => {
   test("a branch on GitHub dereferences to its tree; a directory is a blank node", () => {
@@ -122,19 +101,61 @@ describe("THE GATE — every declared subgraph in this checkout resolves", () =>
   test("the checkout declares subgraphs to check", () => {
     expect(ids.length).toBeGreaterThan(0);
   });
-  test("each resolves, and each branch source is declared in special-branches.json", () => {
+  test("each resolves (a branch source needs no table row: the declaration is the authority, bean rva2)", () => {
     const findings: string[] = [];
     for (const id of ids) {
       try {
         const d = declaredSubgraph(REPO, id);
-        if (d?.source.kind === "branch" && d.source.special === undefined) {
-          findings.push(`${id}: branch ${d.source.branch} is not declared in special-branches.json`);
-        }
+        if (d === undefined) findings.push(`${id}: declared, but resolves to nothing`);
       } catch (e) {
         if (e instanceof Error && /declared by \d+ instances/.test(e.message)) continue; // ambiguous ids are asked per instance
         findings.push(`${id}: ${e instanceof Error ? e.message : String(e)}`);
       }
     }
     expect(findings).toEqual([]);
+  });
+});
+
+describe("a branch FAMILY (bean lehh)", () => {
+  const FAMILY_ENTRY = { id: "ig-ast", path: "ig-ast/", graphTypologies: ["ig-ast"] };
+  test("the storage spelling resolves to kind family, never to one branch", () => {
+    const r = resolveSubgraphSource(
+      { ...FAMILY_ENTRY, storage: { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "the IG's package id" } },
+    );
+    expect(r).toMatchObject({ kind: "family", branchPrefix: "cat/fhir-harness/fhir-ast/", keyFrom: "the IG's package id", declaredIn: "storage" });
+  });
+  test("the source spelling resolves the same way", () => {
+    const r = resolveSubgraphSource({ ...FAMILY_ENTRY, source: { kind: "family", branchPrefix: "cat/x/y/", keyFrom: "k" } });
+    expect(r).toMatchObject({ kind: "family", declaredIn: "declaration" });
+  });
+  test("a prefix must end in /, and a family keying names no single branch", () => {
+    expect(SubgraphSourceSchema.safeParse({ kind: "family", branchPrefix: "cat/x/y", keyFrom: "k" }).success).toBe(false);
+    expect(() => resolveSubgraphSource({ ...FAMILY_ENTRY, storage: { branch: "cat/x/y", keyedBy: "family", keyFrom: "k" } })).toThrow();
+  });
+  test("a qa subgraph cannot be a family", () => {
+    expect(() =>
+      resolveSubgraphSource({ id: "qa", path: "test/results/", graphTypologies: ["qa"], source: { kind: "family", branchPrefix: "cat/x/", keyFrom: "k" } }),
+    ).toThrow(/qa/);
+  });
+  test("is off the checkout, and its JSON-LD names the prefix and the key", () => {
+    expect(contentIsOffCheckout({ storage: { branchPrefix: "cat/x/", keyedBy: "family", keyFrom: "k" } })).toBe(true);
+    const r = resolveSubgraphSource({ ...FAMILY_ENTRY, source: { kind: "family", branchPrefix: "cat/x/", keyFrom: "k" } });
+    expect(contentSourceJsonLd(r)).toEqual({ kind: "family", branch: "cat/x/", keyFrom: "k", declaredIn: "declaration" });
+  });
+});
+
+describe("a branch FAMILY's repository (owner: read remote, or materialise locally)", () => {
+  const E = { id: "ig-ast", path: "fhir-ast/", graphTypologies: ["ig-ast"] };
+  test("absent means this repository; present names the remote, through both spellings and the JSON-LD", () => {
+    const local = resolveSubgraphSource({ ...E, storage: { branchPrefix: "cat/x/", keyedBy: "family", keyFrom: "k" } });
+    expect(local.kind === "family" && local.repository).toBe(undefined);
+    const remote = resolveSubgraphSource(
+      { ...E, storage: { branchPrefix: "cat/x/", keyedBy: "family", keyFrom: "k", repository: "litlfred/smart-trust" } },
+    );
+    expect(remote).toMatchObject({ kind: "family", repository: "litlfred/smart-trust" });
+    expect(contentSourceJsonLd(remote)).toMatchObject({ familyRepository: "litlfred/smart-trust" });
+  });
+  test("a repository is owner/repo, not a URL", () => {
+    expect(SubgraphSourceSchema.safeParse({ kind: "family", branchPrefix: "cat/x/", keyFrom: "k", repository: "https://github.com/a/b" }).success).toBe(false);
   });
 });

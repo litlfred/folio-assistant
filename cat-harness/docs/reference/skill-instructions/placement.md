@@ -206,7 +206,7 @@ sharing a role. Resolution rules, how to bind a lane, and how to add a role:
 skill.** The audit walks that directory recursively; declaration beats location,
 the same contract `part-of:` carries.
 
-**Adding a *graph kind* is a registry change, not a new top-level directory.**
+**Adding a *graph typology* is a registry change, not a new top-level directory.**
 If nothing in the open vocabulary fits, that is a decision to hand over
 (Step 5), not one to settle by creating a folder.
 

@@ -14,7 +14,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { renderFrom, type IndexesRead } from "../gen-lsi-viz.ts";
+import { renderCommitted, renderFrom, type IndexesRead } from "../gen-lsi-viz.ts";
 import { INDEX_DIR, proseGraphs, sourceFromFiles, type LsiSidecar } from "../lsi.ts";
 
 const REPO = resolve(import.meta.dir, "../../..");
@@ -58,6 +58,11 @@ const drawn = renderFrom(read);
 const page = drawn.state === "hit" ? drawn.page : "";
 
 describe("the LSI viewer page", () => {
+  // `renderCommitted` walks every declared prose graph (~2-4 s on a CI
+  // runner), so it is rendered ONCE here and reused; only the determinism
+  // test below renders it a second time, and carries a timeout for that.
+  let committedOnce: string | undefined;
+  const committedPage = (): string => (committedOnce ??= renderCommitted());
   test("a miss is returned with its reason, never drawn as an empty page", () => {
     const miss = renderFrom({ state: "miss", reason: "no lsi/ in this entry" });
     expect(miss).toEqual({ state: "miss", reason: "no lsi/ in this entry" });
@@ -70,8 +75,39 @@ describe("the LSI viewer page", () => {
 
   test("has a section for every index it read", () => {
     expect(page).toContain("## " + FIXTURE.instance + " / " + FIXTURE.graph);
-    // The stat tile counts what was READ, not what is committed.
-    expect(page).toContain("<b>1</b><span>committed indexes</span>");
+  });
+
+  // Bean `tqjj`. The "committed indexes" and "units indexed" tiles are GONE:
+  // both moved whenever any file was added to any indexed graph, which is the
+  // `y7b3` class and cost 319 of the last 400 commits on `main`. What is
+  // asserted instead is the property that replaced them — the committed page
+  // is a function of the TREE, so it reads the same with and without an index
+  // to hand, and only `--detail` adds anything that an index's content moves.
+  test("the committed page carries no value an index's content moves", () => {
+    const committed = committedPage();
+    for (const n of [FIXTURE.units, FIXTURE.terms].map(String)) {
+      expect(committed).not.toContain("<b>" + n + "</b>");
+    }
+    expect(committed).not.toContain("committed indexes");
+    expect(committed).not.toContain("units indexed");
+    expect(committed).not.toContain("## " + FIXTURE.instance + " / " + FIXTURE.graph);
+    expect(committed).not.toContain(FIXTURE.fingerprint);
+  }, 30_000);
+
+  test("the committed page is the same whether or not an index is to hand", () => {
+    // `renderCommitted` takes no source, which is the point: there is no
+    // argument by which a container holding a working copy could get a
+    // different page from a fresh CI checkout (module docblock, bean `in5a`).
+    // Two independent renders, compared: one cached, one fresh.
+    const fresh = renderCommitted();
+    expect(fresh).toBe(committedPage());
+    expect(fresh.length).toBeLessThan(page.length);
+  }, 30_000);
+
+  test("the freshness column exists only with --detail", () => {
+    expect(page).toContain("| graph | needs one | verdict | detail |");
+    expect(committedPage()).toContain("| graph | needs one |");
+    expect(committedPage()).not.toContain("| verdict |");
   });
 
   test("has a verdict row for every declared prose graph", () => {

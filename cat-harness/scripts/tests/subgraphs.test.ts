@@ -30,6 +30,12 @@ import { checkoutDirectories } from "../../schemas/harness-config.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
+// The real corpus, scanned ONCE at module scope (bean sff8's remedy, as in
+// instance-render.test.ts). Four tests read it; two scanned it again inside
+// the test body, where a whole-repo walk (~6 s measured 2026-10-05) ran
+// against bun's 5 s per-test limit and timed out in CI. Nothing in this file
+// writes to the tree, so one scan answers every test exactly as four did.
+const REAL = scanSubgraphs(ROOT);
 
 describe("subgraph containment is derived from declared paths", () => {
   test("the declaration was read — otherwise nothing below holds", () => {
@@ -81,8 +87,8 @@ describe("subgraph containment is derived from declared paths", () => {
   // because this instance stopped nesting would retire a guard for a defect
   // that is still reachable.
   const NESTED = [
-    { id: "outer", path: "outer/", absPath: `${ROOT}/outer`, graphKinds: ["cat-harness"] },
-    { id: "inner", path: "outer/inner/", absPath: `${ROOT}/outer/inner`, graphKinds: ["cat-harness"] },
+    { id: "outer", path: "outer/", absPath: `${ROOT}/outer`, graphTypologies: ["cat-harness"] },
+    { id: "inner", path: "outer/inner/", absPath: `${ROOT}/outer/inner`, graphTypologies: ["cat-harness"] },
   ];
 
   test("a node belongs to its DEEPEST subgraph, not to the outer one", () => {
@@ -108,7 +114,7 @@ describe("subgraph containment is derived from declared paths", () => {
 });
 
 describe("the entanglement report", () => {
-  const report = scanSubgraphs(ROOT);
+  const report = REAL;
 
   test("it attributed files — a report over nothing is not a clean corpus", () => {
     expect(report.scanned, "no markdown attributed to any declared directory").toBeGreaterThan(100);
@@ -123,7 +129,7 @@ describe("the entanglement report", () => {
     // What it should pin is that the category is COMPUTED. A synthetic file
     // with a link to nothing must be reported, whatever the real corpus
     // happens to contain today.
-    const probe = scanSubgraphs(ROOT).dangling;
+    const probe = REAL.dangling;
     expect(Array.isArray(probe), "the category is absent, not merely empty").toBe(true);
     // And the corpus itself is clean — stated as its own assertion so that
     // "clean" and "not computed" can never be the same passing test.
@@ -154,7 +160,7 @@ describe("the entanglement report", () => {
     // a foreign directory labelled `<member>/<id>`, as the report labels it.
     const dirs = checkoutDirectories(ROOT, { stackedOn: ROOT });
     const derivedIds = new Set(
-      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).flatMap((d) => [d.id, `${d.member}/${d.id}`]),
+      dirs.filter((d) => d.graphTypologies.some((g) => isDerivedGraph(g))).flatMap((d) => [d.id, `${d.member}/${d.id}`]),
     );
     expect(derivedIds.size, "no derived directory is declared, so this proves nothing").toBeGreaterThan(0);
 
@@ -199,7 +205,7 @@ describe("the entanglement report", () => {
  * implausibly.
  */
 describe("repository-scoped directories are attributed", () => {
-  const report = scanSubgraphs(ROOT);
+  const report = REAL;
 
   test("attribution reaches well past this instance's own tree", () => {
     // 636 before the fix, ~1139 after. A floor rather than the number,
@@ -296,7 +302,7 @@ describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
     // Falsifier for `mi97`, which said the count must fall to zero once the
     // 27 were repaired. It is checkable ONLY because the number is live.
     expect(existsSync(siteDir), `${siteDir} must exist or this asserts nothing`).toBe(true);
-    const { siteResolved } = scanSubgraphs(ROOT);
+    const { siteResolved } = REAL;
     expect(overDeepLinks(ROOT, siteResolved).map((l) => `${l.from} -> ${l.target}`)).toEqual([]);
   });
 });

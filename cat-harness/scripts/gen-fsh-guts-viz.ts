@@ -55,11 +55,13 @@ import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { fshGutsDirectory } from "../schemas/fsh-guts.js";
+import { exitUnlessMounted } from "./branch-store.js";
 import { baseDocsDir } from "./compose-docs.js";
+import { publishPlan } from "./derive-at-publish.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const TAG = "folio-fsh-guts/v1";
-/** The graph kind this renders — the one literal, and it is a KIND, not a path. */
+/** The graph typology this renders — the one literal, and it is a KIND, not a path. */
 const KIND = "fsh-guts";
 
 /** How a file meets — or fails — the graph's self-declaration contract. */
@@ -117,12 +119,12 @@ export function pageRelPath(repo = REPO): string | undefined {
     if (!declPath || !existsSync(declPath)) return [];
     return (
       JSON.parse(readFileSync(declPath, "utf-8")) as {
-        directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
+        directories?: { graphTypologies?: string[]; coverage?: { visualiser?: unknown } }[];
       }
     ).directories ?? [];
   });
   for (const e of entries) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
+    if (!(e.graphTypologies ?? []).includes(KIND)) continue;
     const v = e.coverage?.visualiser;
     for (const one of Array.isArray(v) ? v : [v]) {
       const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
@@ -313,12 +315,13 @@ export function page(files: GutsFile[], blobBase: string): string {
  */
 
 if (import.meta.main) {
+  exitUnlessMounted("fsh-guts", "gen-fsh-guts-viz", REPO);
   const check = process.argv.includes("--check");
   const dir = gutsDir();
   if (dir === undefined || !existsSync(dir)) {
     // A declared graph with no directory is the `dh4f` shape: scanning nothing
     // and reporting a clean run. Refuse rather than write an empty page.
-    console.error("::error::gen-fsh-guts-viz: no directory declared for graph kind 'fsh-guts'");
+    console.error("::error::gen-fsh-guts-viz: no directory declared for graph typology 'fsh-guts'");
     process.exit(1);
   }
   const files = gutsFiles(dir);
@@ -332,12 +335,20 @@ if (import.meta.main) {
   if (PAGE === undefined) {
     // No declared visualiser means no withholding either, so writing a page
     // here would publish it. Refuse rather than choose a path.
-    console.error(`::error::gen-fsh-guts-viz: no visualiser declared for graph kind '${KIND}'`);
+    console.error(`::error::gen-fsh-guts-viz: no visualiser declared for graph typology '${KIND}'`);
     process.exit(1);
   }
   const out = join(baseDocsDir(REPO), PAGE);
 
-  if (check) {
+  if (check && publishPlan(REPO).some((a) => join(REPO, a.artefact) === out)) {
+    // Built at publish (bean 0b8c, #2230): the page is derived from a graph
+    // kept on a branch, so there is no committed copy to compare against —
+    // a comparison would go red on main and every PR the moment somebody
+    // writes to the branch, which is exactly what happened on 2026-10-05.
+    // What is left to judge is that the graph renders: mounted, declared,
+    // non-empty, and the page built without error (all checked above).
+    console.log(`✓ fsh-guts viewer renders — ${files.length} file(s); built at publish by \`derive:publish\`, never committed`);
+  } else if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
     if (current !== rendered) {
       console.error(`::error::gen-fsh-guts-viz: ${PAGE} is stale — run \`bun run fsh-guts:viz\``);

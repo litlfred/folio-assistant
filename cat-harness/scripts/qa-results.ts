@@ -233,7 +233,7 @@ export function qaResultsFile(root: string, rel: string): string {
 }
 
 /**
- * The graph kinds the `qa-reports` arc moves off `main` — proposal
+ * The graph typologies the `qa-reports` arc moves off `main` — proposal
  * `qa-reports-branch-and-test-process` §2.1: every DERIVED `qa` verdict, and
  * the `health` report. Attestations stay (D2) but live in their own
  * directory, so they are not a reason to expect a `qa` directory here.
@@ -248,9 +248,9 @@ export const OFF_MAIN_KINDS: readonly string[] = ["qa", "health"];
  * the results moved aside, `readme:subgraphs` counted all 15 such directories
  * as `absent-directory` findings.
  */
-export function mayLeaveMain(dir: { graphKinds?: readonly string[]; storage?: unknown }): boolean {
+export function mayLeaveMain(dir: { graphTypologies?: readonly string[]; storage?: unknown }): boolean {
   if (dir.storage) return true;
-  const kinds = dir.graphKinds ?? [];
+  const kinds = dir.graphTypologies ?? [];
   return kinds.length > 0 && kinds.every((k) => OFF_MAIN_KINDS.includes(k));
 }
 
@@ -314,7 +314,9 @@ function storedOn(absPath: string, repoRoot?: string): string | undefined {
   try {
     const loc = resolveQaLocation(repoRoot);
     const abs = resolve(absPath);
-    return loc.directories.find((x) => x.storage && (abs === x.absPath || abs.startsWith(x.absPath + sep)))?.storage?.branch;
+    const s = loc.directories.find((x) => x.storage && (abs === x.absPath || abs.startsWith(x.absPath + sep)))?.storage;
+    // A qa directory is keyed by commit, so its storage is a single branch; the resolver refuses a family.
+    return s && "branch" in s ? s.branch : undefined;
   } catch {
     // Not inside a checkout (a test's temp directory), or the declarations do
     // not resolve: nothing here is stored, which is the pre-move default.
@@ -330,6 +332,66 @@ function storedOn(absPath: string, repoRoot?: string): string | undefined {
  */
 export function qaStorageOf(absPath: string, repoRoot?: string): string | undefined {
   return storedOn(absPath, repoRoot);
+}
+
+/**
+ * DECLARED SUBJECT MOVES — where a sidecar's baseline lived before its subject
+ * moved. Bean `xka5` moved the docs graph's pages into named groups, so a
+ * chapter's sidecars went from `content/docs/<name>/` to
+ * `content/docs/<group>-<name>/` and a page's from `docs/<name>.<loc>`
+ * to `docs/<group>/<name>.<loc>`. The baseline on `qa-reports` is
+ * keyed by PATH, so without this every finding on a moved subject read as NEW
+ * — an inherited defect reported as a regression. Consulted only on a MISS at
+ * the current path; once `qa-reports` holds the new paths, nothing reaches it.
+ * Each entry is `[now, before]`, substrings of the sidecar path.
+ */
+export const MOVED_QA_SUBJECTS: ReadonlyArray<readonly [string, string]> = [
+  ["/content/docs/concepts-agentic-harness/", "/content/docs/agentic-harness/"],
+  ["/content/docs/guides-beans-and-todos/", "/content/docs/beans-and-todos/"],
+  ["/content/docs/concepts-content-types/", "/content/docs/content-types/"],
+  ["/content/docs/process-crdm-methodology/", "/content/docs/crdm-methodology/"],
+  ["/content/docs/guides-document-ingestion/", "/content/docs/document-ingestion/"],
+  ["/content/docs/process-evidence/", "/content/docs/evidence/"],
+  ["/content/docs/fhir-fhir-content/", "/content/docs/fhir-content/"],
+  ["/content/docs/concepts-harness/", "/content/docs/harness/"],
+  ["/content/docs/concepts-harnessed-kg-overview/", "/content/docs/harnessed-kg-overview/"],
+  ["/content/docs/fhir-ig-publisher/", "/content/docs/ig-publisher/"],
+  ["/content/docs/concepts-knowledge-graph/", "/content/docs/knowledge-graph/"],
+  ["/content/docs/guides-managing-agent-context/", "/content/docs/managing-agent-context/"],
+  ["/content/docs/process-publication-workflow/", "/content/docs/publication-workflow/"],
+  ["/translation-qa/docs/start/accessibility.", "/translation-qa/docs/accessibility."],
+  ["/translation-qa/docs/concepts/agentic-harness.", "/translation-qa/docs/agentic-harness."],
+  ["/translation-qa/docs/concepts/architecture.", "/translation-qa/docs/architecture."],
+  ["/translation-qa/docs/guides/beans-and-todos.", "/translation-qa/docs/beans-and-todos."],
+  ["/translation-qa/docs/concepts/content-types.", "/translation-qa/docs/content-types."],
+  ["/translation-qa/docs/start/contributing.", "/translation-qa/docs/contributing."],
+  ["/translation-qa/docs/process/crdm-methodology.", "/translation-qa/docs/crdm-methodology."],
+  ["/translation-qa/docs/guides/detangle.", "/translation-qa/docs/detangle."],
+  ["/translation-qa/docs/guides/document-ingestion.", "/translation-qa/docs/document-ingestion."],
+  ["/translation-qa/docs/process/evidence.", "/translation-qa/docs/evidence."],
+  ["/translation-qa/docs/fhir/fhir-content.", "/translation-qa/docs/fhir-content."],
+  ["/translation-qa/docs/start/getting-started.", "/translation-qa/docs/getting-started."],
+  ["/translation-qa/docs/concepts/harness.", "/translation-qa/docs/harness."],
+  ["/translation-qa/docs/concepts/harnessed-kg-overview.", "/translation-qa/docs/harnessed-kg-overview."],
+  ["/translation-qa/docs/fhir/ig-publisher.", "/translation-qa/docs/ig-publisher."],
+  ["/translation-qa/docs/start/installation.", "/translation-qa/docs/installation."],
+  ["/translation-qa/docs/concepts/kg-navigation.", "/translation-qa/docs/kg-navigation."],
+  ["/translation-qa/docs/concepts/knowledge-graph.", "/translation-qa/docs/knowledge-graph."],
+  ["/translation-qa/docs/guides/managing-agent-context.", "/translation-qa/docs/managing-agent-context."],
+  ["/translation-qa/docs/process/publication-workflow.", "/translation-qa/docs/publication-workflow."],
+  ["/translation-qa/docs/concepts/skills.", "/translation-qa/docs/skills."],
+  ["/translation-qa/docs/concepts/subgraph-viewers.", "/translation-qa/docs/subgraph-viewers."],
+  ["/translation-qa/docs/guides/swarm-management.", "/translation-qa/docs/swarm-management."],
+  ["/translation-qa/docs/concepts/tool-graph.", "/translation-qa/docs/tool-graph."],
+  ["/translation-qa/docs/guides/translation-support.", "/translation-qa/docs/translation-support."],
+];
+
+/** The path a sidecar's baseline had before its subject moved, if it moved. */
+export function movedFrom(path: string): string | undefined {
+  for (const [now, before] of MOVED_QA_SUBJECTS) {
+    if (path.includes(now)) return path.replace(now, before);
+  }
+  return undefined;
 }
 
 /**
@@ -708,10 +770,27 @@ export function judgeQaResult(args: {
   show?: number;
 }): QaVerdict {
   const failOn = [...(args.failOn ?? [])];
-  const failOnNew = (args.failOnNew ?? []).filter((f) => !failOn.includes(f));
+  let failOnNew = (args.failOnNew ?? []).filter((f) => !failOn.includes(f));
   const { root, stem, writer, against, store } = args.baseline;
   const read = readQaResultFrom(qaResultPath(root, stem), { against, store });
   const unknowns = [...(args.unknowns ?? [])];
+  // A `failOnNew` family the baseline does not carry AT ALL was never
+  // recorded there, so "new against it" has no subject: every entry would read
+  // as new, which is "every subject is new" — the reading this module refuses
+  // for a missing entry. It is UNKNOWN for that family and not gated, the same
+  // as a missing baseline. An EMPTY family is recorded and is graded. Measured
+  // when `check:reference-direction` gained its A.10 `wrong-direction` family
+  // (bean `1bvx`): the `main` entry predating it would have failed ~1,000 pairs.
+  if (read.state === "hit") {
+    const absent = failOnNew.filter((f) => read.result.families?.[f] === undefined && args.fresh.families[f] !== undefined);
+    for (const f of absent) {
+      unknowns.push(
+        `the baseline (${read.from}) carries no \`${f}\` family, so NEW cannot be told from inherited there. ` +
+          `Not "no new findings" — the comparison was not made for it. Not gated.`,
+      );
+    }
+    failOnNew = failOnNew.filter((f) => !absent.includes(f));
+  }
   const count = (fams: readonly string[]) => fams.reduce((n, f) => n + (args.fresh.families[f]?.count ?? 0), 0);
 
   let failing: number;
@@ -880,7 +959,13 @@ export function judgeSidecarTree(args: {
   for (const s of args.fresh) {
     let before: unknown[] | undefined;
     if (entry.state === "hit") {
-      const b = readBaseline(s.path, { against: args.against, store: args.store });
+      let b = readBaseline(s.path, { against: args.against, store: args.store });
+      // A MOVED subject's baseline is at its old path (bean ).
+      const was = b.state === "miss" ? movedFrom(s.path) : undefined;
+      if (was !== undefined) {
+        const prev = readBaseline(was, { against: args.against, store: args.store });
+        if (prev.state === "hit") b = prev;
+      }
       if (b.state === "hit") {
         before = args.findingsOf(b.text);
         if (before === undefined) unknowns.push(`${label(s.path)} at ${b.from} is not a readable sidecar`);

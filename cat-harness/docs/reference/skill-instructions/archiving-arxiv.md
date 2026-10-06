@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/library/library-core/archiving-arxiv.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/archiving-arxiv.md) — do not edit here.
+> Generated from [`folio-assistant-core/skills/library/cataloguing/archiving-arxiv.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/archiving-arxiv.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/archiving-arxiv.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/archiving-arxiv.md){: .fa-edit-source }
 
 {% raw %}
 # Materializing from arXiv
@@ -159,7 +159,7 @@ be sitting in `uploads/` today. Three samples agreeing proves nothing about
 the fourth.
 
 This is the rule
-[`how-much-of-this-does-dublin-core-carry.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md)
+[`how-much-of-this-does-dublin-core-carry.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/guides-document-ingestion/how-much-of-this-does-dublin-core-carry.md)
 states for vocabularies, applied to an API: *settled against the published
 specifications rather than from memory.*
 
@@ -168,7 +168,7 @@ specifications rather than from memory.*
 A materialized paper is a **queued unit**, not corpus. It arrives in
 `uploads/` with its capture record and waits, exactly like anything else —
 the badge on the uploads view counts it as waiting until
-`library-ingestion` has made an L1 entry from it.
+[`l1-document-ingestion`](l1-document-ingestion.md) has made an L1 entry from it.
 
 Resisting the temptation to write straight into `library/` matters: the
 completeness gate is what decides an entry is finished, and a source that

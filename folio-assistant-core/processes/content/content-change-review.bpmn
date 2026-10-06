@@ -163,7 +163,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_DetectScope" name="Detect change scope &amp; impact">
       <bpmn:extensionElements>
-        <bootstrap.processes:skill ref="semantic-review-scoping"/>
+        <cat-harness.processes:no-skill reason="No skill at this layer computes a change&apos;s scope generically. Content-type layers supply one through the role-graph overlay rather than a binding here: folio-assistant-sci extends authoring-agent, this lane&apos;s role, with semantic-review-scoping for papers. This task bound that skill directly until bean mlux (owner, 2026-10-03, &quot;Drop from core; sci adds it&quot;), which was an upward edge from core to sci."/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -317,7 +317,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 
     <bpmn:task id="Task_IngestComments" name="Ingest tagged review comments&#10;[folio-review-comments]">
-      <bpmn:documentation>Every PR conversation comment that starts with `block: &lt;label&gt;` becomes a `folio-review-comment/v1` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.</bpmn:documentation>
+      <bpmn:documentation>Every PR conversation comment that starts with `block: &lt;label&gt;` becomes a `review-comment/1.0.0` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="review-comments" />
       </bpmn:extensionElements>

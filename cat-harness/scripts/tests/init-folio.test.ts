@@ -23,6 +23,7 @@ import {
   enclosingRepoRoot,
   folioTemplates,
   initFolio,
+  initInstance,
   isValidSlug,
   renderTemplate,
   slugify,
@@ -31,6 +32,8 @@ import {
   type InitFolioOptions,
 } from "../init-folio";
 import { instanceConfigFilename } from "../../schemas/harness-config.js";
+import { instanceDeclarationFilename, readDeclaration } from "../../schemas/cat-harness.js";
+import { declarationChain, resolveSkillDirs } from "../../schemas/harness-config.js";
 import { nodeOfKind, parseTodoGraph } from "../../schemas/todo-graph.js";
 
 /**
@@ -495,5 +498,176 @@ describe("the scaffolded folio actually builds", () => {
     expect(r.declaredBy).toContain(SCAFFOLD_CONFIG);
     expect(r.blocksChecked).toBe(1);
     expect(r.violations).toEqual([]);
+  });
+});
+
+/**
+ * Bean `mer2`, owner's ruling 2026-10-01: split the operation. An instance-init
+ * writes the instance-level artefacts with NO content type, and `initFolio` is
+ * that plus the adapter's scaffold. This is what makes the MVP the owner ruled
+ * in `tndo` expressible for a layer that carries no adapter.
+ */
+describe("a contentless instance (mer2)", () => {
+  const instanceOpts = (dir: string) => ({
+    targetDir: dir,
+    slug: SLUG,
+    title: "Cold Chain Guidance",
+    link: "submodule" as const,
+    skipVcs: true,
+  });
+
+  // The instance-level set the ruling lists, hardcoded rather than derived from
+  // the scaffolder, so the test fails if initiation stops writing any of them.
+  const INSTANCE_LEVEL = [
+    instanceDeclarationFilename(SLUG),
+    SCAFFOLD_CONFIG,
+    ".mcp.json",
+    ".claude/settings.json",
+    ".gitignore",
+    ".beans.yml",
+    "beans/.gitkeep",
+    "todos/todos.json",
+    "todos/items/.gitkeep",
+    "todos/feedback/.gitkeep",
+    "todos/verdicts/.gitkeep",
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+  ];
+
+  test("writes every instance-level artefact, and nothing an adapter owns", () => {
+    const d = tmp();
+    const r = initInstance(instanceOpts(d));
+    for (const f of INSTANCE_LEVEL) {
+      expect(r.created).toContain(f);
+      expect(existsSync(join(d, f))).toBe(true);
+    }
+    // declared-path-literal: asserting the scaffold did NOT create the folio layout.
+    for (const absent of ["folio", "uploads", "library", ".github"]) {
+      expect(existsSync(join(d, absent))).toBe(false);
+    }
+    expect(r.created.some((f) => f.startsWith("folio/"))).toBe(false);
+  });
+
+  test("the config names no adapter and the declaration no folio directory", () => {
+    const d = tmp();
+    initInstance(instanceOpts(d));
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.contentType).toBeUndefined();
+    expect(config.adapter).toBeUndefined();
+    expect(config.adapterModule).toBeUndefined();
+    const decl = readDeclaration(d);
+    expect(decl?.name).toBe(SLUG);
+    expect(decl?.directories).toEqual([]);
+  });
+
+  test("a folio's instance half is the instance's — the two cannot drift", () => {
+    const bare = tmp();
+    const folio = tmp();
+    initInstance(instanceOpts(bare));
+    const r = initFolio(opts(folio));
+    for (const f of INSTANCE_LEVEL) expect(r.created).toContain(f);
+    // The files with no content-type dependence are byte-identical.
+    for (const f of [".mcp.json", ".claude/settings.json", ".beans.yml", "todos/todos.json"]) {
+      expect(readFileSync(join(folio, f), "utf-8")).toBe(readFileSync(join(bare, f), "utf-8"));
+    }
+  });
+
+  // Done-when 3: assert what was PRODUCED — a declaration that loads and
+  // graphs that resolve — rather than inferring success from no throw.
+  for (const [label, run] of [
+    ["instance", (d: string) => initInstance(instanceOpts(d))],
+    ["document folio", (d: string) => initFolio(opts(d))],
+    ["paper folio", (d: string) => initFolio(opts(d, { contentType: "paper" }))],
+  ] as const) {
+    test(`probe — the ${label}'s declaration loads and every declared directory exists`, () => {
+      const d = tmp();
+      run(d);
+      const decl = readDeclaration(d);
+      expect(decl).toBeDefined();
+      for (const dir of decl!.directories) expect(existsSync(join(d, dir.path))).toBe(true);
+    });
+  }
+
+  test("a folio's probe sees the content type it asked for, not a fallback", () => {
+    const d = tmp();
+    initFolio(opts(d, { contentType: "paper" }));
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.contentType).toBe("paper");
+    expect(config.adapter).toBe("paper");
+  });
+
+  test("the CLI scaffolds an instance with no --type and no --author", () => {
+    const d = tmp();
+    const r = spawnSync(
+      "bun",
+      ["run", join(REPO_ROOT, "cat-harness/scripts/init-folio.ts"), "--instance", "--dir", d, "--title", "Cold Chain Guidance", "--skip-vcs"],
+      { encoding: "utf-8" },
+    );
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain("no content type");
+    expect(existsSync(join(d, instanceDeclarationFilename(SLUG)))).toBe(true);
+    // declared-path-literal: asserting the scaffold did NOT create the folio layout.
+    expect(existsSync(join(d, "folio"))).toBe(false);
+  });
+
+  test("the CLI refuses --instance with a --type, rather than silently dropping it", () => {
+    const d = tmp();
+    const r = spawnSync(
+      "bun",
+      ["run", join(REPO_ROOT, "cat-harness/scripts/init-folio.ts"), "--instance", "--type", "paper", "--dir", d, "--title", "X", "--skip-vcs"],
+      { encoding: "utf-8" },
+    );
+    expect(r.status).toBe(1);
+    expect(r.stderr).toContain("--instance takes no --type");
+  });
+});
+
+/**
+ * Bean `zmdo`, measured 2026-10-04: a scaffolded instance's declaration chain
+ * was the instance ALONE — 0 skill directories reachable, for a contentless
+ * instance and a document folio alike — because neither scaffold said what it
+ * stands on. The config now names one layer and the layers' own `needs` carry
+ * the rest.
+ */
+describe("a scaffold says what it stands on (zmdo)", () => {
+  const chainNames = (d: string) => declarationChain(d).map((c) => c.name);
+  const skillRoots = (d: string) => resolveSkillDirs(d).map((x) => x.split("/").slice(-2).join("/"));
+
+  test("a contentless instance stands on cat-harness, and reaches its skills through the stack", () => {
+    const d = tmp();
+    initInstance({ targetDir: d, slug: SLUG, title: "Cold Chain Guidance", link: "submodule", skipVcs: true });
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.dependencies).toEqual({ folioAssistant: [{ name: "cat-harness", path: "folio-assistant/cat-harness" }] });
+    symlinkSync(REPO_ROOT, join(d, "folio-assistant"));
+    const chain = chainNames(d);
+    expect(chain).toContain("cat-harness");
+    expect(chain).toContain("bootstrap");
+    expect(chain).not.toContain("folio-assistant-core");
+    expect(skillRoots(d)).toContain("cat-harness/skills");
+  });
+
+  test("a document folio stands on its adapter's instance, folio-assistant-core", () => {
+    const d = tmp();
+    initFolio(opts(d));
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.dependencies).toEqual({
+      folioAssistant: [{ name: "folio-assistant-core", path: "folio-assistant/folio-assistant-core" }],
+    });
+    symlinkSync(REPO_ROOT, join(d, "folio-assistant"));
+    const chain = chainNames(d);
+    expect(chain).toContain("folio-assistant-core");
+    expect(chain).toContain("cat-harness");
+    expect(skillRoots(d)).toContain("folio-assistant-core/skills");
+  });
+
+  test("a paper folio stands on folio-assistant-sci; a sibling link path is honoured", () => {
+    const d = tmp();
+    initFolio(opts(d, { contentType: "paper", link: "sibling", assistantPath: "../platform" }));
+    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
+    expect(config.dependencies).toEqual({
+      folioAssistant: [{ name: "folio-assistant-sci", path: "../platform/folio-assistant-sci" }],
+    });
   });
 });

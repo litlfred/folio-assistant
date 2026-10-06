@@ -14,11 +14,14 @@
  * right.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
-import { render, type Harness } from "../gen-navbar-include.js";
+import { instanceView, render, type Harness } from "../gen-navbar-include.js";
+import { harnessTiles } from "../harness-tiles.js";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 // The site root is ASKED FOR here too. `site-dir-single-answer` scans test
@@ -159,6 +162,9 @@ describe("the writer is a fixpoint over the real data", () => {
     const r = Bun.spawnSync({
       cmd: ["bun", "run", join(ROOT, "cat-harness", "scripts", "gen-navbar-include.ts"), "--check"],
       cwd: ROOT,
+      // `env` explicitly: a child does not inherit variables set at runtime,
+      // and standalone the test preload sets FOLIO_FIXTURE_CHECKOUT.
+      env: { ...process.env },
       stdout: "pipe",
       stderr: "pipe",
     });
@@ -188,6 +194,42 @@ describe("one navbar section per instantiated harness (bean `nvbr`)", () => {
     expect(sections(out)).toEqual([]);
     expect(out).not.toContain(">Harnesses<");
   });
+  // GOAL 2 box 3 (bean `p5wm`), measured from a SCANNED root rather than from
+  // hand-made `Harness` rows: the two tests above feed `render()` directly, so
+  // nothing tied "two instantiated harnesses" to what `harnessTiles` actually
+  // finds in a repository. This runs the real pipeline the docs sync runs —
+  // scan → `harness.json` (a JSON round trip) → render.
+  const scanned = (repo: string, host: string, names: string[]): Harness[] =>
+    JSON.parse(JSON.stringify(harnessTiles(repo, host, names))) as Harness[];
+
+  test("a SCANNED root with two instantiated harnesses renders exactly their two sections", () => {
+    const repo = mkdtempSync(join(tmpdir(), "navbar-two-"));
+    const decl = (name: string) => {
+      mkdirSync(join(repo, name), { recursive: true });
+      writeDeclaration(join(repo, name), JSON.stringify({ name, directories: [] }, null, 2));
+    };
+    decl("host");
+    decl("alpha");
+    decl("beta");
+    decl("gamma");
+    // Instantiated means a `<name>.config.json` at the repository root; gamma
+    // is declared and NOT instantiated, so it must not get a section.
+    for (const n of ["alpha", "beta"]) writeFileSync(join(repo, `${n}.config.json`), "{}\n");
+    const out = variants(render(scanned(repo, join(repo, "host"), ["host", "alpha", "beta", "gamma"]), "T"));
+    for (const v of [out.canonical, out.staging]) expect(sections(v).sort()).toEqual(["alpha", "beta"]);
+  });
+
+  test("a SCANNED root with no declaration at all yields no tiles and still renders", () => {
+    // `siteDirFor` throws on a directory with no declaration; `harnessTiles`
+    // must answer with no tiles rather than take the whole sync down.
+    const repo = mkdtempSync(join(tmpdir(), "navbar-zero-"));
+    const harnesses = scanned(repo, repo, []);
+    expect(harnesses).toEqual([]);
+    const out = render(harnesses, "T");
+    expect(out).toContain('class="fa-nav-top"');
+    expect(sections(out)).toEqual([]);
+    expect(out).not.toContain(">Harnesses<");
+  });
 });
 
 describe("a graph row says the destination's ONE name (bean `ob3m` finding 6)", () => {
@@ -212,5 +254,30 @@ describe("a graph row says the destination's ONE name (bean `ob3m` finding 6)", 
 
   test("a kind whose page is another kind's row is listed once", () => {
     expect(out.match(/<span class="fa-nav-label">Schemas/g)?.length).toBe(1);
+  });
+});
+
+// #2235 F1: the navbar of an IG repository's OWN site.
+describe("instanceView — an instance's own site", () => {
+  const rows: Harness[] = [
+    { name: "core", href: "/core/", instantiated: true, visualisations: [{ kind: "docs", path: "/core/docs/" }] },
+    { name: "ig", href: "/ig/", instantiated: true, needs: ["base"], visualisations: [{ kind: "docs", path: "/ig/artifacts.html" }] },
+    { name: "base", href: "/base/", instantiated: false, needs: ["core"] },
+    { name: "other", href: "/other/", instantiated: true },
+  ];
+  const v = instanceView(rows, "ig", "https://main.example/site/");
+  test("the instance first, then only what it needs, transitively", () => {
+    // After the instance, the rows keep harness.json's order (the main navbar's).
+    expect(v.map((h) => h.name)).toEqual(["ig", "core", "base"]);
+  });
+  test("the instance's own pages move to this site's root; every other link is the main site's", () => {
+    expect(v[0]!.href).toBe("/");
+    expect(v[0]!.visualisations![0]!.path).toBe("/artifacts.html");
+    expect(v.find((h) => h.name === "core")!.href).toBe("https://main.example/site/core/");
+    expect(v.find((h) => h.name === "core")!.visualisations![0]!.path).toBe("https://main.example/site/core/docs/");
+  });
+  test("every row it shows is rendered — a dependency here is reachable on the main site", () => {
+    expect(v.every((h) => h.instantiated === true)).toBe(true);
+    expect(render(v, "IG")).toContain("https://main.example/site/core/");
   });
 });

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * READ AND WRITE THE MERGE QUEUE — the steward's decisions, on their branch.
+ * READ AND WRITE THE MERGE QUEUE — the steward's decisions, wherever they are declared.
  *
  * @module cat-harness/scripts/merge-queue-store
  * @covers none — a reader and writer over the `merge-queue` graph, run by a
@@ -9,7 +9,7 @@
  *   (`audit:coverage`'s own thesis): claiming coverage here would let the gate
  *   that judges the kind be removed without the census noticing.
  *
- * ## Why the queue is not on `main`, and why that needed a module
+ * ## Why the queue is to come off `main`, and why that needed a module
  *
  * `beans/queue/` held **no entry at all** for the two days after it was
  * declared, and the reason was structural rather than neglect. `main` is
@@ -20,12 +20,19 @@
  * actor whose decisions this graph records was the one actor that could not
  * write to it.
  *
- * The graph is therefore cut over to `cat/cat-harness/merge-queue`, declared by
- * the `queue` entry in `beans/beans.json` (`source: { kind: "branch", keyedBy:
- * "tip" }`), and a write here is a splice onto that tip — no pull request, no
- * commit on `main`, and a sibling steward's write to the same entry is a
- * CONFLICT rather than an overwrite. Bean `najo`, under the merge-pipeline epic
- * `hfag`; the mechanism is arc `fs43`'s.
+ * The graph is to be cut over to `cat/cat-harness/merge-queue` by giving the
+ * `queue` entry in `beans/beans.json` a `source: { kind: "branch", keyedBy:
+ * "tip" }`, after which a write here is a splice onto that tip — no pull
+ * request, no commit on `main`, and a sibling steward's write to the same entry
+ * is a CONFLICT rather than an overwrite. Bean `najo`, under the merge-pipeline
+ * epic `hfag`; the mechanism is arc `fs43`'s.
+ *
+ * **Not cut over yet** (owner, 2026-10-05: *"Land code now, switch later"*).
+ * Until bean `ugxd` lands, the declaration has no `source`, so READS come from
+ * the checkout's `beans/queue/` and {@link recordDecision} REFUSES — a write
+ * there would be a commit on this branch, which is the pull request this
+ * module exists to avoid. Stewards keep committing entries to `main` until
+ * then.
  *
  * ## Four read states, and a miss is never empty-clean
  *
@@ -51,7 +58,7 @@
  *
  * ## It never spells the directory's path
  *
- * The id is resolved from the declared GRAPH KIND and the path from
+ * The id is resolved from the declared GRAPH TYPOLOGY and the path from
  * `graphReadPath`, so this module knows neither `beans/queue` nor the branch
  * name (bean `gz47`, `check:declared-paths`). Relocating the graph — or
  * mounting it with `--into` — moves this reader with it.
@@ -60,12 +67,12 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { directoryEntriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
-import "../schemas/folio-graph-kind.js";
+import "../schemas/folio-graph-typology.js";
 import { MergeQueueEntrySchema, type MergeQueueEntry } from "../schemas/merge-queue.ts";
 import { RESERVED, pushMount, readMarker, type BranchStoreOptions, type PushResult } from "./branch-store.ts";
 import { graphReadPath } from "./graph-read.ts";
 
-/** The graph kind whose directory holds the queue. The declaration says where. */
+/** The graph typology whose directory holds the queue. The declaration says where. */
 export const QUEUE_KIND = "merge-queue";
 
 /** One entry, as it sits on the branch. */

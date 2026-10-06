@@ -17,10 +17,10 @@ import { dirname, join } from "node:path";
 import { judgeDeclaration, partRecordsIn, SNAPSHOT_SUFFIX, treeDigest } from "../../cat-harness/scripts/kg-subscribe.ts";
 import { partState, render, subscriptionCards } from "../../cat-harness/scripts/subscriptions-viz.ts";
 import { SUBSTRATE_SNAPSHOT_SCHEMA } from "../../cat-harness/schemas/substrate-snapshot.ts";
-import { KgMaterializationRecordSchema, type KgDecisions } from "../schemas/kg-materialization.ts";
+import { KgMaterializationRecordSchema, KgNodesRecordSchema, type KgDecisions } from "../schemas/kg-materialization.ts";
 import { MaterializationSchema } from "../schemas/materialization.ts";
 import { run as fixityRun } from "./check-materialized-fixity.ts";
-import { checkMaterializations, materialize, sizeGate, type FetchedPart, type PartFetcher } from "./kg-materialize.ts";
+import { checkMaterializations, materialize, materializeNodes, sizeGate, type FetchedPart, type PartFetcher } from "./kg-materialize.ts";
 
 const SHA = "0123456789abcdef0123456789abcdef01234567";
 const SHA2 = "89abcdef0123456789abcdef0123456789abcdef";
@@ -39,9 +39,9 @@ const SUBSTRATE = {
   name: "ihris-kb",
   title: "iHRIS Knowledge Base",
   directories: [
-    { id: "kb", path: "kb/", graphKinds: ["folio"] },
-    { id: "kb-skills", path: "skills/", graphKinds: ["skills"] },
-    { id: "library", path: "library/", graphKinds: ["library"] },
+    { id: "kb", path: "kb/", graphTypologies: ["folio"] },
+    { id: "kb-skills", path: "skills/", graphTypologies: ["skills"] },
+    { id: "library", path: "library/", graphTypologies: ["library"] },
   ],
 };
 
@@ -94,7 +94,7 @@ interface Sub {
 }
 
 /** A checkout holding one subscriber instance, with a cached snapshot at the pin. */
-function checkout(sub: Sub = {}, opts: { snapshotRef?: string } = {}): { repo: string; inst: string; snapDir: string; decl: string } {
+function checkout(sub: Sub = {}, opts: { snapshotRef?: string; substrate?: { file: string; raw: string } } = {}): { repo: string; inst: string; snapDir: string; decl: string } {
   const repo = tmp("kg-mat-repo-");
   const inst = join(repo, "example");
   mkdirSync(inst);
@@ -106,7 +106,7 @@ function checkout(sub: Sub = {}, opts: { snapshotRef?: string } = {}): { repo: s
       {
         name: "example",
         livesAt: { repository: "litlfred/example", path: "." },
-        directories: [{ id: "subscriptions", path: "subscriptions/", dependents: "skip", graphKinds: ["substrate-snapshot"] }],
+        directories: [{ id: "subscriptions", path: "subscriptions/", dependents: "skip", graphTypologies: ["substrate-snapshot"] }],
         subscriptions: [entry],
       },
       null,
@@ -115,8 +115,9 @@ function checkout(sub: Sub = {}, opts: { snapshotRef?: string } = {}): { repo: s
   );
   const snapDir = join(inst, "subscriptions");
   mkdirSync(snapDir);
-  const raw = UPSTREAM["ihris-kb.json"]!;
-  const v = judgeDeclaration("ihris-kb.json", raw);
+  const substrateFile = opts.substrate?.file ?? "ihris-kb.json";
+  const raw = opts.substrate?.raw ?? UPSTREAM["ihris-kb.json"]!;
+  const v = judgeDeclaration(substrateFile, raw);
   if (v.state !== "substrate") throw new Error("fixture substrate does not judge");
   writeFileSync(
     join(snapDir, `${entry.id}${SNAPSHOT_SUFFIX}`),
@@ -126,7 +127,7 @@ function checkout(sub: Sub = {}, opts: { snapshotRef?: string } = {}): { repo: s
         subscription: entry.id,
         repository: entry.repository,
         ref: opts.snapshotRef ?? entry.ref,
-        file: "ihris-kb.json",
+        file: substrateFile,
         raw,
         fixity: { algorithm: "sha256", digest: createHash("sha256").update(raw).digest("hex") },
         summary: v.summary,
@@ -349,7 +350,7 @@ describe("slice 5: a chosen subgraph, materialised", () => {
   test("the check is clean after a materialise, and counts what is chosen and not held", async () => {
     const { inst } = checkout({ subgraphs: ["kb", "kb-skills"] });
     await materialize({ instance: inst, subscription: "ihris-kb", subgraph: "kb", decisions: DECISIONS, fetch: fixture(), now: NOW });
-    expect(checkMaterializations(inst)).toEqual({ findings: [], held: 1, stayedReferenced: 0, chosenNotHeld: 1 });
+    expect(checkMaterializations(inst)).toEqual({ findings: [], held: 1, stayedReferenced: 0, chosenNotHeld: 1, nodesHeld: 0 });
   });
 
   test("re-running at the same pin with the same decisions writes nothing", async () => {
@@ -454,5 +455,175 @@ describe("the subscriptions page draws a part from its record", () => {
     mkdirSync(join(snapDir, "ihris-kb", "subgraphs", "kb"), { recursive: true });
     writeFileSync(join(snapDir, "ihris-kb", "subgraphs", "kb", "materialization.json"), "{not json");
     expect(render([], subscriptionCards(repo))).toMatch(/\| subgraph `kb` \| ✓ \| \? record unreadable: not readable as JSON/);
+  });
+});
+
+// ── Metadata mode: `--nodes` (bean `c1m4`) ──────────────────────────────────
+
+/**
+ * A substrate that publishes subgraph files. Named `cat-harness` so the hit
+ * can be served THIS repository's own generated `skills/sdlc` hydrated file —
+ * the consumer is tested against what the producer actually writes, not
+ * against a hand-made imitation of it.
+ */
+const NODES_SUBSTRATE = {
+  name: "cat-harness",
+  title: "C@T Harness",
+  directories: [
+    { id: "skills", path: "skills/", graphTypologies: ["skills"] },
+    { id: "docs", path: "docs/", graphTypologies: ["docs"] },
+  ],
+};
+const SDLC_HYDRATED_PATH = "docs/subgraph/cat-harness/skills/sdlc/index.hydrated.jsonld";
+const SDLC_HYDRATED = readFileSync(join(import.meta.dir, "..", "..", "cat-harness", SDLC_HYDRATED_PATH), "utf8");
+const NODES_UPSTREAM: Record<string, string> = {
+  "cat-harness.json": JSON.stringify(NODES_SUBSTRATE),
+  [SDLC_HYDRATED_PATH]: SDLC_HYDRATED,
+  "docs/subgraph/cat-harness/index.jsonld": JSON.stringify({ "@context": "https://example.org/ns/subgraph/v1.jsonld", "@id": "https://example.org/subgraph/cat-harness/" }),
+  "skills/sdlc/sdlc-core/todo-manager.md": "# the bytes metadata mode never fetches\n",
+};
+const nodesCheckout = (opts: { snapshotRef?: string } = {}) =>
+  checkout({ id: "cat", subgraphs: [] }, { ...opts, substrate: { file: "cat-harness.json", raw: NODES_UPSTREAM["cat-harness.json"]! } });
+/** A fetcher that records which paths it was asked for. */
+function nodesFixture(files: Record<string, string> = NODES_UPSTREAM): PartFetcher & { calls: number; paths: string[] } {
+  const inner = fixture(files);
+  const paths: string[] = [];
+  const f = Object.assign(
+    (repo: string, ref: string, path: string) => {
+      paths.push(path);
+      f.calls++;
+      return inner(repo, ref, path);
+    },
+    { calls: 0, paths },
+  );
+  return f;
+}
+
+describe("kg:materialize --nodes — one subgraph's index.hydrated.jsonld, metadata only", () => {
+  test("a hit: the file lands beside a sha256 record, and --check holds it", async () => {
+    const { inst, snapDir } = nodesCheckout();
+    const f = nodesFixture();
+    const r = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", fetch: f, now: NOW });
+    expect(r.state).toBe("materialized");
+    if (r.state !== "materialized") return;
+    // One file asked for, at the declared docs path: never the subgraph's own bytes.
+    expect(f.paths).toEqual([SDLC_HYDRATED_PATH]);
+    const dir = join(snapDir, "cat", "nodes", "skills", "sdlc");
+    expect(readFileSync(join(dir, "index.hydrated.jsonld"), "utf8")).toBe(SDLC_HYDRATED);
+    const rec = KgNodesRecordSchema.parse(JSON.parse(readFileSync(join(dir, "nodes.json"), "utf8")));
+    expect(rec.ref).toBe(SHA);
+    expect(rec.subgraph.iri).toMatch(/\/subgraph\/cat-harness\/skills\/sdlc\/$/);
+    expect(rec.file!.fixity.digest).toBe(createHash("sha256").update(SDLC_HYDRATED).digest("hex"));
+    expect(rec.file!.upstream).toBe(`https://github.com/litlfred/ihris-kb/blob/${SHA}/${SDLC_HYDRATED_PATH}`);
+    expect(rec.size.verdict).toBe("permitted");
+    expect(rec.members).toBeGreaterThan(0);
+    // No byte-copy artefacts: no tree/, no materialization.json, no licence.
+    expect(existsSync(join(dir, "tree"))).toBe(false);
+    expect(existsSync(join(dir, "materialization.json"))).toBe(false);
+    const report = checkMaterializations(inst);
+    expect(report.findings).toEqual([]);
+    expect(report.nodesHeld).toBe(1);
+    expect(partRecordsIn(snapDir, "cat").strays).toEqual([]);
+    // Idempotent at the same pin.
+    const again = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc/", fetch: nodesFixture(), now: NOW });
+    expect(again.state === "materialized" && again.changed).toBe(false);
+  });
+
+  test("the root is REFUSED, pointing at index.jsonld — never read as an empty subgraph", async () => {
+    const { inst, snapDir } = nodesCheckout();
+    for (const path of ["", ".", "/"]) {
+      const f = nodesFixture();
+      const r = await materializeNodes({ instance: inst, subscription: "cat", path, fetch: f });
+      expect(r.state).toBe("refused");
+      expect(r.state === "refused" && r.reason).toMatch(/root of `cat-harness` publishes `docs\/subgraph\/cat-harness\/index\.jsonld` only, by design/);
+      expect(f.calls).toBe(0);
+    }
+    expect(existsSync(join(snapDir, "cat"))).toBe(false);
+  });
+
+  test("a missing file is refused, and nothing is written", async () => {
+    const { inst, snapDir } = nodesCheckout();
+    const r = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/nope", fetch: nodesFixture() });
+    expect(r.state).toBe("refused");
+    expect(r.state === "refused" && r.reason).toMatch(/publishes no `docs\/subgraph\/cat-harness\/skills\/nope\/index\.hydrated\.jsonld`/);
+    expect(existsSync(join(snapDir, "cat"))).toBe(false);
+  });
+
+  test("a path outside every declared directory is refused before the fetch", async () => {
+    const { inst } = nodesCheckout();
+    const f = nodesFixture();
+    const r = await materializeNodes({ instance: inst, subscription: "cat", path: "elsewhere/x", fetch: f });
+    expect(r.state === "refused" && r.reason).toMatch(/outside every directory the snapshot declares/);
+    expect(f.calls).toBe(0);
+  });
+
+  test("a schema-invalid file is refused, and nothing is written", async () => {
+    const { inst, snapDir } = nodesCheckout();
+    const bad = JSON.parse(SDLC_HYDRATED) as Record<string, unknown>;
+    bad["@context"] = { inlined: "https://example.org/" }; // the contract: the context is never inlined
+    const r = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", fetch: nodesFixture({ ...NODES_UPSTREAM, [SDLC_HYDRATED_PATH]: JSON.stringify(bad) }) });
+    expect(r.state).toBe("refused");
+    expect(r.state === "refused" && r.reason).toMatch(/not a valid hydrated subgraph file: @context/);
+    const notJson = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", fetch: nodesFixture({ ...NODES_UPSTREAM, [SDLC_HYDRATED_PATH]: "{oops" }) });
+    expect(notJson.state === "refused" && notJson.reason).toMatch(/is not JSON/);
+    // Valid, but published under the wrong path: it names another subgraph.
+    const elsewhere = { ...JSON.parse(SDLC_HYDRATED), "@id": "https://example.org/subgraph/cat-harness/skills/other/" };
+    const wrong = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", fetch: nodesFixture({ ...NODES_UPSTREAM, [SDLC_HYDRATED_PATH]: JSON.stringify(elsewhere) }) });
+    expect(wrong.state === "refused" && wrong.reason).toMatch(/not the subgraph `…\/subgraph\/cat-harness\/skills\/sdlc\/`/);
+    expect(existsSync(join(snapDir, "cat"))).toBe(false);
+  });
+
+  test("the pin: a snapshot at another pin, a copy held at another pin, and a remote serving another commit", async () => {
+    const stale = nodesCheckout({ snapshotRef: SHA2 });
+    const f = nodesFixture();
+    const r1 = await materializeNodes({ instance: stale.inst, subscription: "cat", path: "skills/sdlc", fetch: f });
+    expect(r1.state === "refused" && r1.reason).toMatch(/re-subscribe/);
+    expect(f.calls).toBe(0);
+
+    const { inst, decl, snapDir } = nodesCheckout();
+    await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", fetch: nodesFixture(), now: NOW });
+    // Move the pin under the held copy (and the snapshot with it): moving is refresh-materialized.
+    setSubscription(decl, { ref: SHA2 });
+    const snapFile = join(snapDir, `cat${SNAPSHOT_SUFFIX}`);
+    writeFileSync(snapFile, readFileSync(snapFile, "utf8").replace(SHA, SHA2));
+    const r2 = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", fetch: nodesFixture() });
+    expect(r2.state === "refused" && r2.reason).toMatch(/held at 0123456789ab .* `refresh-materialized`/);
+    expect(checkMaterializations(inst).findings.some((x) => /held at 0123456789ab, and the subscription pins 89abcdef0123/.test(x))).toBe(true);
+
+    // The real fetcher throws when FETCH_HEAD is not the pin: could-not-determine, nothing written.
+    const fresh = nodesCheckout();
+    const r3 = await materializeNodes({
+      instance: fresh.inst,
+      subscription: "cat",
+      path: "skills/sdlc",
+      fetch: () => {
+        throw new Error(`the remote served ${SHA2} for ${SHA}`);
+      },
+    });
+    expect(r3.state).toBe("could-not-determine");
+    expect(existsSync(join(fresh.snapDir, "cat"))).toBe(false);
+  });
+
+  test("the size cap: over maxBytes stays referenced, with a record and no file", async () => {
+    const { inst, snapDir } = nodesCheckout();
+    const r = await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", maxBytes: 1024, fetch: nodesFixture(), now: NOW });
+    expect(r.state).toBe("stayed-referenced");
+    const dir = join(snapDir, "cat", "nodes", "skills", "sdlc");
+    expect(existsSync(join(dir, "index.hydrated.jsonld"))).toBe(false);
+    const rec = KgNodesRecordSchema.parse(JSON.parse(readFileSync(join(dir, "nodes.json"), "utf8")));
+    expect(rec.state).toBe("referenced");
+    expect(rec.size.verdict).toBe("refused");
+    expect(checkMaterializations(inst).findings).toEqual([]);
+  });
+
+  test("--check: an edit in place, and a file no record accounts for, are findings", async () => {
+    const { inst, snapDir } = nodesCheckout();
+    await materializeNodes({ instance: inst, subscription: "cat", path: "skills/sdlc", fetch: nodesFixture(), now: NOW });
+    const dir = join(snapDir, "cat", "nodes", "skills", "sdlc");
+    appendFileSync(join(dir, "index.hydrated.jsonld"), " ");
+    writeFileSync(join(dir, "extra.txt"), "x");
+    const findings = checkMaterializations(inst).findings;
+    expect(findings.some((x) => /does not hash to its record/.test(x))).toBe(true);
+    expect(findings.some((x) => /nodes\/skills\/sdlc\/extra\.txt` is in the subscription's directory with no record/.test(x))).toBe(true);
   });
 });

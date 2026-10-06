@@ -3,8 +3,8 @@ title: "IMMZD18SMeaslesSupplementaryDose ValueSet for Decision Table — WHO SMA
 description: "ValueSet/IMMZD18SMeaslesSupplementaryDoseVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/immunizations">http://smart.who.int/immunizations</a>.</p>
 </div>
 
-[← all 748 artefacts](../)
+[← all 748 artefacts](../artifacts.html)
 
 ## IMMZD18SMeaslesSupplementaryDose ValueSet for Decision Table
 
@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.schema.json` · [view](ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.jsonld` · [view](ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SMeaslesSupplementaryDoseVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SMeaslesOngoingTransmissionVS.html" data-next="ValueSet-IMMZD18SMeningococcalMenAConjugateVaccine1DoseVS.html" class="st-ig"></footer>
-<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

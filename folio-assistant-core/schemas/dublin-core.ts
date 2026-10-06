@@ -14,7 +14,7 @@
  * legacy handle kept alive after a server merge — and that lives in the
  * `who-iris` instance's skill, beside the three records themselves.
  *
- * The line is the one {@link module:schemas/folio-graph-kind} already draws:
+ * The line is the one {@link module:schemas/folio-graph-typology} already draws:
  * the layer that owns a vocabulary is the layer that can serve it to anybody.
  *
  * ## Qualified, repeatable, language-tagged — and all three are load-bearing

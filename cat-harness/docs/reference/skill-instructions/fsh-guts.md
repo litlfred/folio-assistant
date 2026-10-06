@@ -28,7 +28,7 @@ Owner, 2026-09-19:
 
 ## What makes it different from every other non-renderable graph
 
-The declaration declares nine graph kinds and none of them renders. That makes
+The declaration declares nine graph typologies and none of them renders. That makes
 `renderable: false` look like a weak signal, and for the others it is: `tools`,
 `schemas`, `beans` and the rest are graphs a **tool** reads, and there was
 never a page to make of them.
@@ -56,12 +56,56 @@ unenforceable principle into a move.
 
 1. Work that is wanted but wrong → fix it.
 2. Work that is not wanted → **move it to `fsh-guts/`**, with a note saying
-   what superseded it.
+   what superseded it. Since 2026-10-04 that means the MOUNTED copy, pushed
+   to its branch — see §"Where it lives", below.
 3. Actual deletion → **only on explicit confirmation from the owner**, asked
    for as a question, never inferred from "this is obviously dead".
 
 A thing in `fsh-guts/` can be read, cited and restored. A thing that is gone
 cannot be told from a thing that was never there.
+
+## Where it lives — its own branch, mounted at `fsh-guts/` (bean `9c7h`)
+
+Owner, 2026-10-02: *"fsh-guts content gets its own named branch,
+cat/cat-harness/fsh-guts, and the contents of fsh-guts/ dir goes there."*
+Since the 2026-10-04 cutover the trashcan is **not on `main`**. Its
+declaration says `source: { kind: "branch", branch: "cat/cat-harness/fsh-guts",
+keyedBy: "tip" }`, and `main` ignores the directory (`/fsh-guts/**`).
+
+**To relocate something into it:**
+
+```sh
+bun run state:mount                      # the session-start hook already runs this
+mv <file> fsh-guts/<where>/              # a plain mv, NOT git mv; then add the front matter below
+git rm --cached -q <file>                # stage the removal from main (a no-op if it was never tracked)
+bun run state:push -m "fsh-guts: <what moved, and what superseded it>"
+```
+
+A plain `mv`, because `git mv` would stage the NEW path, and that adds the
+file to `main` underneath the ignore rule. `state:push` splices only what
+changed onto the branch tip. A sibling's edit to the same file is reported as
+a `conflict` and nothing is pushed, so it never silently overwrites anything.
+The staged removal takes the file off `main` in your PR; the push puts it on
+the branch. A relocation is both halves.
+
+**Three things that are easy to get wrong:**
+
+- **Never `git add -f` anything under `fsh-guts/` to `main`.** That makes a
+  second copy that diverges from the branch. The ignore rule is there to stop
+  `git add -A` from doing it by accident.
+- **An unmounted `fsh-guts/` is not an empty trashcan.** Every reader (the
+  export, the visualiser, `check:uploads-retired`, `check:retired-front-matter`)
+  asks `contentAt("fsh-guts")` and exits 2, "could not determine", instead of
+  reporting a clean, empty corpus. CI mounts before it reads.
+- **`fsh-guts/logs/` stays local scratch.** It is never pushed, and logs
+  written before the first mount do not block the mount.
+- **There is no viewer page to commit after a relocation.** The page
+  `cat-harness/docs/fsh-guts/index.md` is derived from this branch, so it is
+  built at publish by `derive:publish` and gitignored (bean `0b8c`, #2230).
+  Before that it was committed, and one relocation made it stale on main and
+  on every open PR at once (2026-10-05). `fsh-guts:viz:check` now judges that
+  the mounted graph renders. The rule is general:
+  [`directory-conventions`](directory-conventions.md) §"The storage clock".
 
 ## Files declare themselves
 
@@ -117,7 +161,9 @@ shipped and then corrected the same day.
 A consumer may fetch `fsh-guts.jsonld` deliberately. It must never **arrive**
 there by following an edge. Mechanism and the three emitters that had to be
 filtered: [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published
-graph".
+graph". Where this sits among everything else the site publishes, and what
+else is never published: [`instance-publication`](instance-publication.md)
+§"What each instance publishes".
 
 Reaching it as a human is the dead-fish icon under settings, with a node
 counter and a select dialog. Bean `folio-assistant-7vhe`; until that exists,
@@ -150,7 +196,8 @@ It arrives the way every other non-markdown node does: the bytes, plus a
 same-basename `.md` sidecar with `kind: source`, whose `movedFrom` is the
 `uploads/` path and whose `summary` names the library entry it was ingested
 into. The full lifecycle is in
-[`library-ingestion`](library-ingestion.md) §"What happens to the upload after
+[`library-ingestion`](library-ingestion.md), in its detail
+[`uploads-retirement`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/library-ingestion/uploads-retirement.md) §"What happens to the upload after
 it is ingested", and that skill is the one to change if the rule moves.
 
 **`fsh-guts/uploads/` is the proposed sub-directory**, beside `retired/` and

@@ -18,7 +18,7 @@ import {
   serialiseAttestations,
   type KgAttestations,
 } from "./qa-attestations";
-import { defaultGraphKinds } from "./cat-harness";
+import { defaultGraphTypologies } from "./cat-harness";
 import { KgQaReportSchema } from "./kg-qa";
 
 const pair = {
@@ -64,12 +64,12 @@ describe("qa-attestations/v1", () => {
   });
 
   test("the family is one of the shared list: kg-qa (bean 2gst), block-qa and translation-qa (bean 8wj1)", () => {
-    expect([...ATTESTATION_FAMILIES]).toEqual(["kg-qa", "block-qa", "translation-qa"]);
+    expect([...ATTESTATION_FAMILIES]).toEqual(["kg-qa", "block-qa", "translation-qa", "bib-verification", "bib-human-review"]);
     expect(QaAttestationsSchema.safeParse({ ...file(), family: "lsi" }).success).toBe(false);
   });
 
-  test("the graph kind is registered, as state, with this validator", () => {
-    const kind = defaultGraphKinds.get("attestations");
+  test("the graph typology is registered, as state, with this validator", () => {
+    const kind = defaultGraphTypologies.get("attestations");
     expect(kind?.holds).toBe("state");
     expect(kind?.validator).toBe("schemas/qa-attestations.ts#QaAttestationsSchema");
   });

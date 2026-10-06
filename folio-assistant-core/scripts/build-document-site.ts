@@ -24,6 +24,7 @@
  *
  *   <out>/index.html          every document in the folio, linked
  *   <out>/<slug>/index.html   one page per document, block anchors intact
+ *   <out>/<slug>/media/       the document's images, copied from folio/<slug>/media/
  *   <out>/review/index.html   what changed from main, read from the preview's
  *                             changeset.json when opened (bean txut)
  *   <out>/outline.json        every document's chapters, sections and blocks
@@ -50,21 +51,26 @@
  * the folio's own workflow, which is the same trust the build command already
  * has.
  */
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { remark } from "remark";
+import remarkDirective from "remark-directive";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
+import remarkMath from "remark-math";
+import { visit } from "unist-util-visit";
 
 import { folioDir } from "../../cat-harness/schemas/cat-harness.js";
+import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
 import type { Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
 import { buildDocumentMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
 import { reviewPageHtml } from "../../cat-harness/scripts/gen-review-page.js";
+import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
 /** A readable page shell. Light and dark follow the reader's system setting. */
-function page(title: string, body: string): string {
+function page(title: string, body: string, math?: MathOptions): string {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -73,14 +79,23 @@ function page(title: string, body: string): string {
 <title>${esc(title)}</title>
 <style>
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; }
-  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; } }
-  body { margin: 0 auto; max-width: 46rem; padding: 2rem 1rem 4rem; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  ${darkRules(`:root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; }`)}
+  body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  /* The column and its gutters belong to main, not body: the harness rail sets
+     body padding-left to clear its strip, which replaced a body's own gutter and
+     put the text flush against the rail (owner, 2026-10-05). No tag names in
+     this comment: the rail injector finds the page's first body and main tags
+     by text. */
+  main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
   a { color: var(--link); }
   a:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   h1, h2, h3 { line-height: 1.25; }
   table { border-collapse: collapse; } th, td { border: 1px solid var(--muted); padding: .3rem .5rem; }
   :target { scroll-margin-top: 1rem; }
-</style>
+  .katex-display { overflow-x: auto; overflow-y: hidden; }
+  dfn.defterm { font-style: normal; font-weight: 600; }
+  .cite { color: var(--muted); }
+</style>${math ? mathHead(math) : ""}
 </head>
 <body>
 <main>
@@ -89,6 +104,199 @@ ${body}
 </body>
 </html>
 `;
+}
+
+
+// ── Math, glossary directives and citations (bean dsm1, owner 2026-10-05) ──
+//
+// A PAPER folio's blocks carry TeX: `$…$`, `$$…$$`, `:defterm[…]{#slug}` /
+// `:refterm[…]{#slug}` and `\cite{key}`. Rendered as plain Markdown they reach
+// a reader as raw source — and worse than raw, because Markdown reads `_` and
+// `*` inside an equation as emphasis and corrupts it. So, when math is on:
+//
+// - `remark-math` claims the math BEFORE emphasis is parsed, and emits it as
+//   `code.math-inline` / `pre > code.math-display`. KaTeX renders those in the
+//   browser — the same KaTeX 0.16.11, from the same CDN, with the same
+//   `\name -> tex` macro table, that the viewer already uses, built from the
+//   paper manifest's `macros`.
+// - Math is OPT-IN. A document folio writes "$5 million" in prose, and
+//   `remark-math` would turn the text between two dollar signs into an
+//   equation. It is on by default only for a `contentType: "paper"` instance;
+//   `--math` / `--no-math` override.
+//
+// Directives and citations are handled whatever the content type, because
+// they are unambiguous: a `:defterm` becomes a `dfn` with its slug as the id, a
+// `:refterm` links to that id, and a directive of any OTHER name is put back
+// as the text it was written as (prose like "note:x" must not vanish).
+// `\cite{a,b}` becomes a muted `[a, b]` carrying the keys; linking it to a
+// bibliography needs the folio's reference registry, which this command does
+// not load.
+
+export interface MathOptions {
+  /** `\name` -> TeX, as KaTeX's `macros` option takes it. */
+  macros: Record<string, string>;
+}
+
+const KATEX = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist";
+
+function mathHead(math: MathOptions): string {
+  const macros = JSON.stringify(math.macros).replace(/</g, "\\u003c");
+  return `
+<link rel="stylesheet" href="${KATEX}/katex.min.css">
+<script defer src="${KATEX}/katex.min.js"></script>
+<script>
+addEventListener("DOMContentLoaded", () => {
+  // Rendered as each equation nears the viewport, not all at once: a paper
+  // page can hold ~80,000 equations, and rendering them up front measured 78 s
+  // before the page was usable (qou, 2026-10-05).
+  const macros = ${macros};
+  const render = (el) => {
+    const display = el.classList.contains("math-display");
+    const out = document.createElement(display ? "div" : "span");
+    try { katex.render(el.textContent, out, { throwOnError: false, displayMode: display, macros }); }
+    catch { return; }
+    const host = display && el.parentElement && el.parentElement.tagName === "PRE" ? el.parentElement : el;
+    host.replaceWith(out);
+  };
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { io.unobserve(e.target); render(e.target); }
+  }, { rootMargin: "1500px 0px" });
+  for (const el of document.querySelectorAll("code.math-inline, code.math-display")) io.observe(el);
+});
+</script>`;
+}
+
+/** The viewer's macro table (`buildKatexMacros` in cat-harness/viewer/index.html), from a paper manifest. */
+export function katexMacros(paperMacros: Record<string, { tex: string }> | undefined): Record<string, string> {
+  const m: Record<string, string> = { "\\bigbowtie": "\\bowtie", "\\smallmatrix": "\\begin{smallmatrix}", "\\qed": "\\square" };
+  for (const [name, def] of Object.entries(paperMacros ?? {})) m["\\" + name] = def.tex;
+  return m;
+}
+
+/** `\cite{a,b}` -> a muted `[a, b]`, outside fenced code. */
+export function citationsToHtml(markdown: string): string {
+  // Per fenced/unfenced run rather than per line: a `\cite{a,\n b}` wrapped by
+  // the author's line breaks is one citation (qou notation-collisions, found
+  // by the rendered-content QA as visible raw TeX).
+  const runs: { lines: string[]; fenced: boolean }[] = [];
+  let run = { lines: [] as string[], fenced: false };
+  for (const line of markdown.split("\n")) {
+    const fence = /^\s*(```|~~~)/.test(line);
+    if (fence && !run.fenced) {
+      runs.push(run);
+      run = { lines: [line], fenced: true };
+    } else if (fence) {
+      run.lines.push(line);
+      runs.push(run);
+      run = { lines: [], fenced: false };
+    } else run.lines.push(line);
+  }
+  runs.push(run);
+  return runs
+    .filter((r) => r.lines.length > 0)
+    .map((r) => (r.fenced ? r.lines.join("\n") : cite(r.lines.join("\n"))))
+    .join("\n");
+
+  function cite(text: string): string {
+    return text.replace(/\\cite[pt]?\{([^}]+)\}/g, (_m, keys: string) => {
+      const list = keys.split(",").map((k) => k.trim()).filter(Boolean);
+      return `<span class="cite" data-keys="${esc(list.join(" "))}">[${esc(list.join(", "))}]</span>`;
+    });
+  }
+}
+
+/** The slice of an mdast node this plugin reads; the directive fields come from `remark-directive`. */
+interface MdNode {
+  type: string;
+  name?: string;
+  value?: string;
+  attributes?: Record<string, string | null | undefined>;
+  children?: MdNode[];
+  position?: { start: { offset?: number }; end: { offset?: number } };
+  data?: { hName?: string; hProperties?: Record<string, unknown> };
+}
+
+/** `:defterm` / `:refterm` -> a definition and its link; any other directive back to its source text. */
+function glossaryDirectives(source: string) {
+  return () => (tree: MdNode) => {
+    visit(tree as Parameters<typeof visit>[0], (raw, index, rawParent) => {
+      const node = raw as unknown as MdNode;
+      const parent = rawParent as unknown as MdNode | undefined;
+      if (!["textDirective", "leafDirective", "containerDirective"].includes(node.type)) return;
+      const label = (node.children ?? []).map((c) => c.value ?? "").join("");
+      const slug = (node.attributes?.id ?? label).toString().trim().toLowerCase().replace(/\s+/g, "-");
+      if (node.type === "textDirective" && node.name === "defterm") {
+        node.data = { hName: "dfn", hProperties: { className: ["defterm"], id: `term-${slug}` } };
+      } else if (node.type === "textDirective" && node.name === "refterm") {
+        node.data = { hName: "a", hProperties: { className: ["refterm"], href: `#term-${slug}` } };
+      } else if (parent?.children && typeof index === "number" && node.position) {
+        const text = source.slice(node.position.start.offset, node.position.end.offset);
+        parent.children.splice(index, 1, { type: "text", value: text });
+      }
+    });
+  };
+}
+
+/**
+ * A line that is ONLY `$$…$$` is display math as its author meant it, but
+ * `remark-math` reads `$$x$$` on one line as inline. Split it onto three lines,
+ * outside fenced code, so it renders as a display.
+ */
+export function displayMathLines(markdown: string): string {
+  let fenced = false;
+  return markdown
+    .split("\n")
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) fenced = !fenced;
+      const m = fenced ? null : /^(\s*)\$\$(.+)\$\$\s*$/.exec(line);
+      return m && !m[2].includes("$$") ? `${m[1]}$$\n${m[1]}${m[2]}\n${m[1]}$$` : line;
+    })
+    .join("\n");
+}
+
+
+/**
+ * Four ways valid TeX in a Markdown block is misread before KaTeX sees it,
+ * each found by the rendered-content QA on qou (folio-site-qa.ts), and each
+ * fixed here by rewriting to an equivalent KaTeX accepts. Outside fenced code.
+ *
+ * - `\text{$n$-body}` inside math: the inner `$` ends the outer equation.
+ *   Rewritten to `\text{\(n\)-body}`, which KaTeX reads the same way.
+ * - `|` inside math in a GFM table row: the table splits the cell on it.
+ *   Rewritten to `\vert `.
+ * - `$a$$b$` — two inline equations with nothing between them reads as `$$`.
+ *   A space is put between them.
+ * - `\ref{x}` / `\eqref{x}` in prose: a link to the label's anchor.
+ * - `psmallmatrix` (mathtools), which KaTeX lacks: `\left(` `smallmatrix` `\right)`.
+ */
+export function texInMarkdown(markdown: string): string {
+  let fenced = false;
+  return markdown
+    .split("\n")
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) fenced = !fenced;
+      if (fenced) return line;
+      let out = line.replace(/\\text\{([^{}]*)\}/g, (m, body: string) => {
+        if (!body.includes("$")) return m;
+        let open = true;
+        return `\\text{${body.replace(/\$/g, () => ((open = !open) ? "\\)" : "\\("))}}`;
+      });
+      if (/^\s*\|/.test(out)) out = out.replace(/\$([^$\n]+)\$/g, (_m, tex: string) => `$${tex.replace(/(?<!\\)\|/g, "\\vert ")}$`);
+      if (!/^\s*\$\$/.test(out)) out = out.replace(/([^$\s\\])\$\$([^$\s])/g, "$1$ $$$2");
+      // mathtools' `psmallmatrix` is not a KaTeX environment; `smallmatrix` in parentheses is the same matrix.
+      out = out.replace(/\\begin\{psmallmatrix\}/g, "\\left(\\begin{smallmatrix}").replace(/\\end\{psmallmatrix\}/g, "\\end{smallmatrix}\\right)");
+      out = out.replace(/\\(?:eq)?ref\{([^}]+)\}/g, (_m, label: string) => `<a href="#${esc(label)}">${esc(label)}</a>`);
+      return out;
+    })
+    .join("\n");
+}
+
+/** One document's Markdown to HTML. */
+export async function renderDocumentHtml(markdown: string, opts: { math: boolean }): Promise<string> {
+  const source = citationsToHtml(opts.math ? texInMarkdown(displayMathLines(markdown)) : markdown);
+  const base = opts.math ? remark().use(remarkMath) : remark();
+  const proc = base.use(remarkGfm).use(remarkDirective).use(glossaryDirectives(source)).use(remarkHtml, { sanitize: false });
+  return String(await proc.process(source));
 }
 
 /** Every document in the folio: `folio/<slug>/<slug>.ts`, as the adapter resolves them. */
@@ -163,7 +371,13 @@ export interface SiteBuildResult {
   errors: string[];
 }
 
-export async function buildDocumentSite(repoRoot: string, outDir: string): Promise<SiteBuildResult> {
+export async function buildDocumentSite(
+  repoRoot: string,
+  outDir: string,
+  opts: { math?: boolean } = {},
+): Promise<SiteBuildResult> {
+  // Math defaults on only for a paper instance; see the note on renderDocumentHtml.
+  const math = opts.math ?? readHarnessConfig(repoRoot)?.contentType === "paper";
   const docs = documentManifests(repoRoot);
   const result: SiteBuildResult = { documents: [], errors: [] };
   if (docs.length === 0) {
@@ -174,10 +388,19 @@ export async function buildDocumentSite(repoRoot: string, outDir: string): Promi
   for (const d of docs) {
     const built = await buildDocumentMarkdown(d.path);
     for (const i of built.issues) if (i.level === "error") result.errors.push(`${d.slug}: ${i.message}`);
-    const html = String(await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(built.markdown));
+    const html = await renderDocumentHtml(built.markdown, { math });
+    const manifest = (await import(d.path)).default as Paper;
     const dir = join(outDir, d.slug);
     mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, "index.html"), page(d.slug, html));
+    writeFileSync(
+      join(dir, "index.html"),
+      page(manifest.title ?? d.slug, html, math ? { macros: katexMacros(manifest.macros) } : undefined),
+    );
+    // A document's images live in `folio/<slug>/media/` and its blocks link
+    // them as `media/<file>`, relative to the document's page. Copied, so a
+    // figure in the preview is the figure in the folio.
+    const media = join(dirname(d.path), "media");
+    if (existsSync(media)) cpSync(media, join(dir, "media"), { recursive: true });
     result.documents.push({ slug: d.slug, blocks: built.blockCount, page: `${d.slug}/index.html` });
   }
   const list = result.documents
@@ -202,12 +425,15 @@ if (import.meta.main) {
     return i >= 0 ? args[i + 1] : undefined;
   };
   if (args.includes("--help")) {
-    console.log("usage: bun run folio-assistant-core/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site]");
+    console.log(
+      "usage: bun run folio-assistant-core/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site] [--math | --no-math]",
+    );
     process.exit(0);
   }
   const repo = resolve(opt("repo") ?? process.cwd());
   const out = resolve(repo, opt("out") ?? "_site");
-  const r = await buildDocumentSite(repo, out);
+  const math = args.includes("--math") ? true : args.includes("--no-math") ? false : undefined;
+  const r = await buildDocumentSite(repo, out, { math });
   for (const d of r.documents) console.error(`  ${d.page}  ${d.blocks} block(s)`);
   if (r.errors.length > 0) {
     for (const e of r.errors) console.error(`✗ ${e}`);

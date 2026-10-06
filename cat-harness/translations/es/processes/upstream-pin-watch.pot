@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: upstream-pin-watch\n"
-"POT-Creation-Date: 2026-10-02T14:45:26.874Z\n"
+"POT-Creation-Date: 2026-10-03T09:58:08.412Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -79,6 +79,11 @@ msgstr ""
 msgid "Every pin current"
 msgstr ""
 
+#: processes/sdlc/upstream-pin-watch.bpmn:14
+#. Diagram element documentation
+msgid "Has a pinned upstream dependency fallen behind a release: check each pin, keep one tracking issue, and enter the adoption subprocess for each dependency that is behind. THE WATCHER'S DISPATCH POINT, drawn rather than described. Bean `29ij` records the rule this follows: a watcher fires on specific events, and those events are process events — they belong in a diagram, not in prose that no tool reads. Everything up to the tracking issue is MECHANICAL and sits in a system lane: read the registry, list upstream's releases, compare, and maintain ONE issue. No step here exercises judgement, which is what makes `build-pipeline` the correct lane rather than a convenient one. Three outcomes and the middle one is the point. Current closes the issue; behind opens or edits it; COULD NOT TELL leaves the issue exactly as it is and fails the job, because a watchdog that has gone blind must not read as good news — `check-ci-health.ts`'s rule, and the reason this repository has a watchdog at all. The adoption itself is a call activity, so the judgement half lives in its own reusable process and this one stays free of it."
+msgstr ""
+
 #: processes/sdlc/upstream-pin-watch.bpmn:51
 #. Diagram label
 msgid "List upstream releases and compare to the pin"
@@ -127,11 +132,6 @@ msgstr ""
 #: processes/sdlc/upstream-pin-watch.bpmn:79
 #. Diagram element documentation
 msgid "The reusable subprocess. Every pinned dependency enters it the same way, so a new tenant is a registry row and a call — never a second diagram saying the same thing in different words."
-msgstr ""
-
-#: processes/sdlc/upstream-pin-watch.bpmn:14
-#. Diagram element documentation
-msgid "THE WATCHER'S DISPATCH POINT, drawn rather than described. Bean `29ij` records the rule this follows: a watcher fires on specific events, and those events are process events — they belong in a diagram, not in prose that no tool reads. Everything up to the tracking issue is MECHANICAL and sits in a system lane: read the registry, list upstream's releases, compare, and maintain ONE issue. No step here exercises judgement, which is what makes `build-pipeline` the correct lane rather than a convenient one. Three outcomes and the middle one is the point. Current closes the issue; behind opens or edits it; COULD NOT TELL leaves the issue exactly as it is and fails the job, because a watchdog that has gone blind must not read as good news — `check-ci-health.ts`'s rule, and the reason this repository has a watchdog at all. The adoption itself is a call activity, so the judgement half lives in its own reusable process and this one stays free of it."
 msgstr ""
 
 #: processes/sdlc/upstream-pin-watch.bpmn:58

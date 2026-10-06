@@ -198,7 +198,7 @@ function projection(
  *
  * **This is a resolution, not a composition, and the difference is not
  * cosmetic.** The first draft of this function composed `<owner>/<kind>` from
- * the rendering instance's name and the graph kind. That gives the right
+ * the rendering instance's name and the graph typology. That gives the right
  * answer for `cat-harness/schemas/` by coincidence — the directory happens to
  * sit at owner/kind — and the WRONG one for every directory that does not:
  * `who-iris/library/` would have been addressed as `cat-harness/library`,
@@ -218,7 +218,7 @@ export function viewerPlacement(
   site: string,
   /** The handled directory's repo-relative path, e.g. `cat-harness/schemas`. */
   dirPath: string,
-  /** The graph kind, which names the projection's own directory. */
+  /** The graph typology, which names the projection's own directory. */
   kind: string,
 ): { pageDir: string; dataDir: string; dataHref: string } {
   const pageDir = join(site, ...dirPath.split("/"));
@@ -232,12 +232,12 @@ export function viewerPlacement(
  * It was the third of four selectors answering "did this generator write this
  * page, here?", and the bean's finding was that the multiplicity is the
  * defect. It is re-exported from here because `gen-library-viz.ts`,
- * `gen-docs-auto.ts` and the tests already import it from this module, and a
+ * `gen-auto-docs.ts` and the tests already import it from this module, and a
  * re-export keeps that a one-line change rather than a sweep.
  *
  * The leaf also exists so `state-visualizer.ts` can be a call site WITHOUT
  * importing this module, which is a 1200-line page generator whose whole body
- * is one template literal. Same move #840 made for the graph-kind registry,
+ * is one template literal. Same move #840 made for the graph-typology registry,
  * and for the same reason: a consumer should not have to load a page builder
  * to ask an ownership question. */
 import { orphanSubjectPages } from "./orphan-pages.ts";

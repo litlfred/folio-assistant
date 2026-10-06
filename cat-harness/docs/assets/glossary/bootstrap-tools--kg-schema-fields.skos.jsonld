@@ -544,6 +544,63 @@
       ],
       "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.requirement",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/subgraph-export.subgraphnodebase.holdsgraph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphNodeBase.holdsGraph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The graph typologies it holds, as bootstrap's graph-typology individuals."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.holdsGraph",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/subgraph-export.subgraphnodebase.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphNodeBase.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The repository's or harness's name at the two top levels; the instance-relative path below them."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/subgraph-export.subgraphnodebase.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphNodeBase.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Instance-relative, ending in `/`; `./` at the two top levels."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.path",
+      "skos:note": "candidate"
     }
   ]
 }

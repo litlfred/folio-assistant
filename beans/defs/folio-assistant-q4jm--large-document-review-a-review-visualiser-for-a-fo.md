@@ -5,7 +5,8 @@ status: todo
 type: epic
 priority: high
 created_at: 2026-09-22T21:02:29Z
-updated_at: 2026-09-22T21:44:56Z
+updated_at: 2026-10-05T04:57:14Z
+parent: folio-assistant-rwmf
 ---
 
 ## What this is

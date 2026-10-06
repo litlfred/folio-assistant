@@ -12,18 +12,16 @@
  * @module content/pipeline/export-bibtex
  */
 
-import { folioDirDeferred } from "../../schemas/cat-harness.js";
-import { writeFileSync, readFileSync, existsSync } from "fs";
+import { writeFileSync } from "fs";
 import { resolve, join } from "path";
 import type { Data as CSLData, Person as CSLPerson } from "csl-json";
 import { references } from "./references-registry-di";
 import { findContentRepoRoot } from "./repo-root";
+import { readSourceLedger } from "../../schemas/bib-attestations";
 
 // Content repo root (was import-relative, which pointed at
 // folio-assistant and made every content path below miss).
 const REPO_ROOT = findContentRepoRoot();
-// Content repo's content/, not folio-assistant's — see qa-checkers-extended.
-const folioDirOf = folioDirDeferred(findContentRepoRoot(), import.meta.url);
 const args = process.argv.slice(2);
 const outIdx = args.indexOf("--out");
 const outPath = outIdx >= 0 ? resolve(args[outIdx + 1]) : join(REPO_ROOT, "references.bib");
@@ -48,12 +46,13 @@ interface VerifEntry {
   note?: string;
 }
 
-const verifPath = join(folioDirOf(), "bib-qa-verifications.json");
-let verifMap: Map<string, VerifEntry> = new Map();
-if (existsSync(verifPath)) {
-  const raw = JSON.parse(readFileSync(verifPath, "utf-8"));
-  verifMap = new Map((raw.entries as VerifEntry[]).map((e) => [e.id, e]));
-}
+// The ONE reader of the source ledger (store, or the legacy file while the
+// store has no `bib-verification` family); it says which on stderr.
+const verifRead = readSourceLedger(REPO_ROOT);
+console.error(verifRead.note);
+const verifMap: Map<string, VerifEntry> = new Map(
+  (verifRead.ledger.entries as unknown as VerifEntry[]).map((e) => [e.id, e]),
+);
 
 function verificationAnnotation(id: string): string | null {
   const v = verifMap.get(id);

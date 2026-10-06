@@ -11,7 +11,7 @@
  * Owner, 2026-09-21: **"keep tools and skills separate!"**
  *
  * They were not. `cat-harness.json`'s `tools` entry declared
- * `coverage.docs: "cat-harness/docs/skills.md"` — a page titled *"Skills &
+ * `coverage.docs: "cat-harness/docs/concepts/skills.md"` — a page titled *"Skills &
  * roles"* whose headings are Skills, Roles, Capabilities, with no tools
  * section anywhere in it. The tools graph had no documentation of its own and
  * pointed at a page about something else.
@@ -58,7 +58,7 @@ import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./
 const VIEWER_TOOL = "tools-viewer";
 
 const REPO = resolve(import.meta.dir, "..", "..");
-/** The graph kind this renders. A KIND, never a path. */
+/** The graph typology this renders. A KIND, never a path. */
 const KIND = "tools";
 
 /** One Tool, reduced to what the page shows. */
@@ -132,12 +132,12 @@ export function skillIds(repo = REPO): Set<string> {
   // and it would go stale the first time an instance is added.
   for (const declPath of instanceDeclarations(repo)) {
     const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-      directories?: { path?: string; scope?: string; graphKinds?: string[] }[];
+      directories?: { path?: string; scope?: string; graphTypologies?: string[] }[];
     };
     const instanceRoot = join(declPath, "..");
     for (const entry of d.directories ?? []) {
       if (!entry.path) continue;
-      const kinds = entry.graphKinds ?? [];
+      const kinds = entry.graphTypologies ?? [];
       if (!kinds.includes("skills") && !kinds.includes("kg") && !kinds.includes("methodology")) continue;
       walk(join(entry.scope === "repository" ? repo : instanceRoot, entry.path));
     }
@@ -368,7 +368,7 @@ if (import.meta.main) {
   }
   const PAGE = pageRelPath(REPO);
   if (PAGE === undefined) {
-    console.error(`::error::gen-tools-viz: no visualiser declared for graph kind '${KIND}'`);
+    console.error(`::error::gen-tools-viz: no visualiser declared for graph typology '${KIND}'`);
     process.exit(1);
   }
   const rendered = publishedPage(rows, skillIds(REPO));

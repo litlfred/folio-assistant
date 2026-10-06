@@ -10,7 +10,7 @@
  * ## Generated is read from the declaration, never listed here
  *
  * The generated paths are the ones `merge-conflict-patterns.ts` declares a
- * resolving strategy for: `take-base` and `qa-sidecar` are wholly generated,
+ * resolving strategy for: `take-base`, `owned-tree` and `qa-sidecar` are wholly generated,
  * and `generated-regions` is authored prose with generator-owned regions.
  * Everything else, including a path no pattern names, is AUTHORED. A second
  * list here would be a second answer to "what is generated", free to drift
@@ -43,7 +43,7 @@ export function pathClass(path: string, patterns?: readonly ConflictPattern[]): 
   const c = patterns ? classify(path, patterns) : classify(path);
   const pattern = c.pattern?.id;
   const cls: PathClass =
-    c.strategy === "take-base" || c.strategy === "qa-sidecar"
+    c.strategy === "take-base" || c.strategy === "owned-tree" || c.strategy === "qa-sidecar"
       ? "generated"
       : c.strategy === "generated-regions"
         ? "generated-regions"
@@ -74,7 +74,7 @@ export const SHARED_DECLARATIONS: readonly SharedDeclaration[] = [
     id: "instance-declaration",
     globs: [],
     match: isInstanceDeclaration,
-    why: "an instance's `<instance>.json`: every declared directory, graph kind and tile, so two PRs adding entries interact even when their hunks do not overlap",
+    why: "an instance's `<instance>.json`: every declared directory, graph typology and tile, so two PRs adding entries interact even when their hunks do not overlap",
   },
   {
     id: "roles",

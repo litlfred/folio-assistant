@@ -1,5 +1,5 @@
 /**
- * The viewer generators as Tool nodes — each says which graph kinds it renders
+ * The viewer generators as Tool nodes — each says which graph typologies it renders
  * (#1168 B7a, bean `w91p`).
  *
  * Until then a directory named its viewer page (`coverage.visualiser`): the
@@ -17,7 +17,7 @@
  *
  * **`gen-fsh-guts-viz.ts` is deliberately not here.** Tool nodes are
  * published in the tools graph, and the owner's rule is that no published
- * artefact carries a path to fsh-guts (`UNPUBLISHED_GRAPH_KINDS`). A Tool
+ * artefact carries a path to fsh-guts (`UNPUBLISHED_GRAPH_TYPOLOGIES`). A Tool
  * whose `renders` named it would be that path.
  *
  * @module tools/viewers
@@ -115,6 +115,13 @@ const VIEWERS: Viewer[] = [
     renders: ["document-kinds"],
   },
   {
+    id: "node-kind-pages",
+    title: "Node kind pages",
+    description: "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+    script: "node-kind:pages",
+    renders: ["todo-items"],
+  },
+  {
     id: "state-viewer",
     title: "State graph viewer",
     description: "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.",
@@ -129,10 +136,10 @@ const VIEWERS: Viewer[] = [
     renders: ["translation-sources"],
   },
   {
-    id: "docs-auto-viewer",
+    id: "auto-docs-viewer",
     title: "Generated index pages",
     description: "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
-    script: "docs:auto",
+    script: "auto:docs",
     renders: ["skills", "docs", "swimlane-glossary"],
   },
 ];

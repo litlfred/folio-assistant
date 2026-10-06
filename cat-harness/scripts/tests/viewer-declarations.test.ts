@@ -10,7 +10,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
-import { declarationPathIn, instanceRootsIn } from "../../schemas/cat-harness.js";
+import { declarationPathIn, instanceRootsIn, visualisationResolves } from "../../schemas/cat-harness.js";
 import { tools } from "../../tools/discover.js";
 import {
   metaRenders,
@@ -74,12 +74,12 @@ describe("writing and reading the declaration", () => {
 describe("choosing the page a directory's tile opens", () => {
   const kinds = new Map<string, readonly string[]>([
     ["library-viewer", ["library"]],
-    ["docs-auto-viewer", ["skills"]],
+    ["auto-docs-viewer", ["skills"]],
   ]);
   const pages = [
     { page: "site/library/index.html", renders: ["a/library", "b/library"], renderedBy: "library-viewer" },
     { page: "site/library/a/index.html", renders: ["a/library"], renderedBy: "library-viewer" },
-    { page: "site/index/library/a/index.html", renders: ["a/library"], renderedBy: "docs-auto-viewer" },
+    { page: "site/index/library/a/index.html", renders: ["a/library"], renderedBy: "auto-docs-viewer" },
     { page: "site/unsigned/index.html", renders: ["a/library"] },
   ];
 
@@ -152,17 +152,19 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
     // `who-iris-library` was cat-harness's MIRROR of who-iris's own entry; the
     // mirror is gone (placement PR0) and the owner's entry resolves the same page.
     expect(resolveFor("who-iris", "library")).toBe("cat-harness/docs/cat-harness/library/who-iris/index.html");
-    expect(resolveFor("cat-harness", "skills")).toBe("cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html");
+    expect(resolveFor("cat-harness", "skills")).toBe("cat-harness/docs/cat-harness/auto-docs/index/skills/skills/index.html");
     expect(resolveFor("folio-assistant", "beans")).toBe("cat-harness/docs/beans/index.html");
     // An index page that merely LISTS a directory is not its viewer: the
-    // docs-auto processes pages draw `cat-harness/processes` too, and lose.
+    // auto-docs processes pages draw `cat-harness/processes` too, and lose.
     expect(resolveFor("folio-assistant", "fsh-guts")).toBe("cat-harness/docs/fsh-guts/index.md");
   });
 
-  test("every resolved page exists", () => {
+  // "Exists" includes a page BUILT AT PUBLISH (bean 0b8c): never committed,
+  // so it resolves by its declared writer rather than by the disk.
+  test("every resolved page exists, or is built at publish by a writer that exists", () => {
     const missing = dirs.flatMap(({ root, instance, dir }) =>
       viewersOf(dir, root, REPO)
-        .filter((v) => !existsSync(join(REPO, v.ref)))
+        .filter((v) => !visualisationResolves(v, (p) => existsSync(join(REPO, p))))
         .map((v) => `${instance}/${dir.id} → ${v.ref}`),
     );
     expect(missing).toEqual([]);

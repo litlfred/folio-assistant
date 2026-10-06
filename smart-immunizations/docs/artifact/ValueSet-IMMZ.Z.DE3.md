@@ -3,8 +3,8 @@ title: "IMMZ.Z.DE3 ValueSet for Diphtheria-containing vaccines — WHO SMART Imm
 description: "ValueSet/IMMZ.Z.DE3 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
 ---
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-immunizations/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/immunizations">smart.who.int.immunizations</a></div>
@@ -14,7 +14,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/immunizations">http://smart.who.int/immunizations</a>.</p>
 </div>
 
-[← all 748 artefacts](../)
+[← all 748 artefacts](../artifacts.html)
 
 ## IMMZ.Z.DE3 ValueSet for Diphtheria-containing vaccines
 
@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE3.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.schema.json` · [view](ValueSet-IMMZ.Z.DE3.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE3.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE3.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE3.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.DE3.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.jsonld` · [view](ValueSet-IMMZ.Z.DE3.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.DE3.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZ.Z.DE29.html" data-next="ValueSet-IMMZ.Z.DE30.html" class="st-ig"></footer>
-<script src="{{ '/smart-immunizations/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

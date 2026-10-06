@@ -20,6 +20,10 @@ _site/
 # `:pages:check` could pass locally and fail on a clean checkout.
 !fhir-harness/scripts/templates/ig-pages/*.js
 !/*/docs/assets/*.js
+# ...and the rail's SHARED data (bean `lnoy`): generated, content-named, and
+# named by committed pages — untracked, every railed page's rail failed to
+# load on a clean checkout (the 404s the e2e and `*:viz:check` caught).
+!/*/docs/assets/navbar/*.js
 # ...and the OpenAPI harness's one loader (bean `s4ta`), for the same reason:
 # its template, and the copy `gen-openapi-pages` publishes into each
 # instance's openapi graph (`<instance>/<graph>/assets/openapi.js`) — by
@@ -27,6 +31,8 @@ _site/
 # still tracked. Left untracked once: the pages check passed locally and
 # failed on the runner's clean checkout.
 !cat-openapi/scripts/templates/*.js
+# build-folio-site's browser loader is a shipped asset, not compiler output.
+!folio-assistant-core/scripts/folio-site-assets/*.js
 !/*/*/assets/openapi.js
 .env
 .env.*
@@ -225,9 +231,17 @@ cat-harness/docs/vendor/
 # it wants kept (`git add -f`), so opting in is a deliberate act at the point
 # of capture rather than a global switch somebody forgets is flipped.
 #
-# NOT `fsh-guts/` wholesale: the rest of the trashcan is committed on purpose
-# — that is what makes the never-delete rule a relocation rather than a
-# disappearance.
+# The rest of the trashcan is kept on purpose — that is what makes the
+# never-delete rule a relocation rather than a disappearance — but since bean
+# `9c7h` it is kept on its own branch, `cat/cat-harness/fsh-guts`, not on
+# main. `bun run state:mount` puts it at `fsh-guts/`, and `bun run state:push`
+# splices edits back. So the WHOLE directory is ignored here: a mounted copy
+# committed to main would be a second, diverging copy. branch-store reads
+# this root rule as "the mount itself" and still pushes the files under it,
+# while `fsh-guts/logs/` below stays local scratch that is never pushed.
+# `/**` and NOT `/fsh-guts/`: a directory rule stops git at the directory, so
+# it would be reported for the logs too and the logs rule would never be seen.
+/fsh-guts/**
 fsh-guts/logs/
 
 # Transient ingest staging — the arms write here, `check:l1-complete` gates it
@@ -243,6 +257,10 @@ cat-harness/ingest-staging/
 # The composed documentation tree (`compose-docs.ts`). A build output: the
 # BASE is `cat-harness/docs/` and the overlay is the root `docs/`, both tracked.
 _docs/
+# The IG staging work tree and its build list (stage-ig-sites --work ./_ig,
+# docs-site.yml): a local production-style build writes both here (#2235).
+/_ig/
+/_ig-list.txt
 
 # The WORKING COPY of every declared `qa` directory (bean `5hox`, arc `3fva`,
 # owner ruling D4). Each of these declares `storage: { branch: qa-reports }`:
@@ -265,18 +283,25 @@ smart-trust/test/results/
 who-iris/test/results/
 who-style-guide/test/results/
 
-# The merge queue's mount (bean `najo`). `beans/queue/` is CUT OVER to
-# `cat/cat-harness/merge-queue` — the one state graph whose branch is already
-# authoritative, because the steward that writes it may not open a pull request
-# to `main`. `bun run state:mount` puts the branch's files here; a write goes
-# back through `branch-store`'s splice (`bun run state:push --id queue`), never
-# as a commit on this branch. Ignored for the reason every mount is: a mounted
-# file staged here would be a second copy of the graph, which is the state
-# `check:declared-dirs` reports as `not-cut-over`.
-/beans/queue/
-
 # The state-branch mount (bean `2h76` part 4). A git worktree of the `state`
 # branch, put here by `bun run state:mount` so the third-party `beans` CLI can
 # read `beans/defs` off a disk. It is a READ SURFACE and never a commit on this
 # branch: writes go through `state-store.ts`'s splice-write.
 state/
+
+# Per-slice SQLite (bean `q8ar`). BUILT AT DEPLOY into `_site/assets/slices/`
+# by `bun run slice:sqlite`, never committed: every session writes `beans/`, so
+# a committed binary would be stale against every merge ref and would grow the
+# clone on every bean edit. A local `bun run slice:sqlite` lands here.
+cat-harness/docs/assets/slices/
+
+# paper_preferences (cat-harness-tools/src/tools/preferences.ts)
+.folio-prefs.json
+
+# The fsh-guts viewer is DERIVED from `fsh-guts/`, which is kept on a branch
+# (above), so it cannot be current in a commit: one `state:push` would make a
+# committed copy stale on main and on every open PR at once (2026-10-05).
+# `bun run derive:publish` builds it at site-build time from the mount, after
+# `state:mount`. `check:derived-from` refuses it if it is ever tracked again.
+# Bean `0b8c`, #2230.
+/cat-harness/docs/fsh-guts/index.md

@@ -77,14 +77,16 @@ import {
   readDeclaration,
   siteDirFor,
   visualisationsOf,
-  defaultGraphKinds,
+  visualisationResolves,
+  defaultGraphTypologies,
   instanceDirectories,
   nestedDirectories,
 } from "../schemas/cat-harness.js";
 import { withViewers } from "./viewer-declarations.js";
 import { subscribedHarnesses, subscribedTile } from "./subscribed-harnesses.js";
 import { labelVisualisations, nameInstanceRoot } from "./lib/nav-label.js";
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+import type { HarnessMark } from "./lib/harness-mark.js";
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because
@@ -110,7 +112,7 @@ export type HarnessStat = {
 
 /** One viewer a tile can open, or one it cannot. */
 export type HarnessVisualisation = {
-  /** The declared graph kind this shows. */
+  /** The declared graph typology this shows. */
   kind: string;
   /**
    * What every surface CALLS this row — set by `labelVisualisations` in
@@ -241,12 +243,21 @@ export type HarnessTile = {
    */
   navbarIcons?: NavbarIcon[];
   /**
-   * The mark the navbar renders: the theme avatar if there is one, else the
-   * instance's own icon, with its crop solved. Absent when neither exists —
-   * and the navbar then draws an INITIAL, which is a different answer from a
-   * broken image and from a placeholder glyph.
+   * The mark the navbar renders — THE one answer every navbar surface reads
+   * (bean `2vpn`): the theme avatar if there is one, else the instance's own
+   * icon, else its glyph from the avatar registry. An image carries `src` (and
+   * its crop, both declared and solved); a glyph carries `glyph`, SVG path data
+   * in a 24×24 box. Absent only when an instance has none of the three — and
+   * the navbar then draws an INITIAL, which is a different answer from a broken
+   * image and from a placeholder glyph.
+   *
+   * Until 2026-10-04 the glyph was not a candidate, and the mounted and viewer
+   * pages read `icon` rather than this field, so who-iris — whose mark is a
+   * glyph since the owner removed its emblem — drew the letter "W" on every
+   * page while declaring a mark. Consumers turn this into a navbar item with
+   * `navMarkFields` (`lib/harness-mark.ts`) and nothing else.
    */
-  mark?: { src: string; title: string; crop?: { width: number; height: number; left: number; top: number } };
+  mark?: HarnessMark;
   /**
    * Hue angle — the tile's theme. From the instance's own theme accent when it
    * resolves one, else from the avatar registry; {@link toneFrom} says which.
@@ -349,18 +360,18 @@ export type HarnessSubgraph =
  */
 export function subgraphsOf(
   decl: Pick<CatHarnessDeclaration, "remoteGraphs" | "subscriptions">,
-  dirs: readonly { id: string; path: string; graphKinds?: readonly string[] }[],
+  dirs: readonly { id: string; path: string; graphTypologies?: readonly string[] }[],
 ): HarnessSubgraph[] {
   const local: HarnessSubgraph[] = dirs.map((d) => ({
     id: d.id,
-    kinds: [...(d.graphKinds ?? [])],
+    kinds: [...(d.graphTypologies ?? [])],
     where: "local" as const,
     path: d.path,
   }));
   const remote: HarnessSubgraph[] = [
     ...(decl.remoteGraphs ?? []).map((g) => ({
       id: g.id,
-      kinds: [...g.graphKinds],
+      kinds: [...g.graphTypologies],
       where: "remote" as const,
       url: g.url,
       via: "remote-graph" as const,
@@ -471,7 +482,7 @@ function siteDirMount(
   const entry = (decl.directories ?? []).find(
     (d) => (d.path ?? "").replace(/\/$/, "") === site,
   );
-  const kind = entry?.graphKinds?.[0];
+  const kind = entry?.graphTypologies?.[0];
   return kind === undefined ? undefined : `/${kind}/${decl.name}/`;
 }
 
@@ -615,9 +626,9 @@ function tileFor(
   // kind is the second thing.
   const byId = new Map((decl.directories ?? []).map((d) => [d.id, d]));
   const listedSubgraphs = nestedDirectories(instanceDir, decl).filter((n) => {
-    const parentKinds = byId.get(n.parentId)?.graphKinds ?? [];
-    return n.graphKinds.some((g) => {
-      const w = defaultGraphKinds.get(g)?.within;
+    const parentKinds = byId.get(n.parentId)?.graphTypologies ?? [];
+    return n.graphTypologies.some((g) => {
+      const w = defaultGraphTypologies.get(g)?.within;
       return w !== undefined && parentKinds.includes(w);
     });
   });
@@ -633,7 +644,7 @@ function tileFor(
   for (const d of instanceDirectories(instanceDir, decl)) {
     if (!dirs.some((x) => x.id === d.id)) dirs.push(d as Dir);
   }
-  const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
+  const kinds = [...new Set(dirs.flatMap((d) => d.graphTypologies ?? []))].sort();
   const findings: string[] = [];
 
   // WHERE THE SITE IS, repo-relative, computed once. `siteDir` arrives
@@ -675,7 +686,8 @@ function tileFor(
   // names. #1767, stage C3.
   const instanceRel = relative(repoRoot, instanceDir).split(sep).join("/");
   const composedPrefixes = (decl.directories ?? [])
-    .filter((d) => (d as { composed?: boolean }).composed === true && typeof d.path === "string")
+    // An `igSite` directory is served at the same `/<name>/` route, inside the IG's own site (bean `mftp`).
+    .filter((d) => ((d as { composed?: boolean }).composed === true || (d as { igSite?: boolean }).igSite === true) && typeof d.path === "string")
     .map((d) => `${instanceRel}/${d.path!.replace(/^\.?\/+/, "").replace(/\/*$/, "/")}`);
   const publishedRefOf = (ref: string): string | undefined => {
     if (ref.startsWith(sitePrefix)) return publishedUrlOf(ref.slice(sitePrefix.length));
@@ -686,10 +698,12 @@ function tileFor(
   const declared = new Map<string, string>();
   for (const d of dirs) {
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(repoRoot, v.ref))) continue;
+      // Built at publish (bean 0b8c) counts as present: its page is never
+      // committed, and the answer must not depend on a local copy.
+      if (!visualisationResolves(v, (p) => existsSync(join(repoRoot, p)))) continue;
       const page = publishedRefOf(v.ref);
       if (page === undefined) continue;
-      for (const kind of d.graphKinds ?? []) {
+      for (const kind of d.graphTypologies ?? []) {
         if (!declared.has(kind)) declared.set(kind, page);
       }
     }
@@ -714,7 +728,7 @@ function tileFor(
    */
   const readOnlyFor = (kind: string): boolean | undefined => {
     const said = dirs
-      .filter((d) => (d.graphKinds ?? []).includes(kind))
+      .filter((d) => (d.graphTypologies ?? []).includes(kind))
       .map((d) => d.readOnly)
       .filter((v): v is boolean => v !== undefined);
     if (said.length === 0) return undefined;
@@ -730,7 +744,7 @@ function tileFor(
     // `ownsSite` alone rendered that tile "no viewer yet".
     // …but `/<kind>/` is the SITE OWNER's whenever it declares that kind too:
     // the root's `uploads` would otherwise open cat-harness's `/uploads/`.
-    const ownerHolds = (owner?.decl.directories ?? []).some((d) => (d.graphKinds ?? []).includes(kind));
+    const ownerHolds = (owner?.decl.directories ?? []).some((d) => (d.graphTypologies ?? []).includes(kind));
     const candidates = ownsSite || (isRepoRoot && !ownerHolds)
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
@@ -760,10 +774,10 @@ function tileFor(
     // `HarnessVisualisation.stagingOnly` for what its absence cost.
     const withheld = dirs.some(
       (d) =>
-        (d.graphKinds ?? []).includes(kind) &&
+        (d.graphTypologies ?? []).includes(kind) &&
         visualisationsOf(d.coverage, d.id).some((v) => v.publish === "staging-only"),
     );
-    const within = defaultGraphKinds.get(kind)?.within;
+    const within = defaultGraphTypologies.get(kind)?.within;
     visualisations.push({
       kind,
       ...(within ? { within } : {}),
@@ -801,10 +815,10 @@ function tileFor(
   // and tells whoever does the routing work which gap they are closing.
   const declaredFor = (kind: string, stagingOnly: boolean): string | undefined => {
     for (const d of dirs) {
-      if (!(d.graphKinds ?? []).includes(kind)) continue;
+      if (!(d.graphTypologies ?? []).includes(kind)) continue;
       for (const v of visualisationsOf(d.coverage, d.id)) {
         if ((v.publish === "staging-only") !== stagingOnly) continue;
-        if (existsSync(join(siteDir, "..", "..", v.ref))) return v.ref;
+        if (visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) return v.ref;
       }
     }
     return undefined;
@@ -935,7 +949,7 @@ function tileFor(
     // then has a title)"* — and checking only the first would report a clean
     // directory whose second viewer is missing.
     for (const v of visualisationsOf(d.coverage, d.id)) {
-      if (!existsSync(join(siteDir, "..", "..", v.ref))) {
+      if (!visualisationResolves(v, (p) => existsSync(join(siteDir, "..", "..", p)))) {
         findings.push(
           `${decl.name}/${d.id}: declares visualiser "${v.title}" at "${v.ref}", ` +
             `which does not resolve on disk.`,
@@ -963,8 +977,11 @@ function tileFor(
     }
   }
 
-  const own = hasAvatar(decl.name);
-  const avatar = own ? avatarFor(decl.name) : GENERIC;
+  // The declaration's own `avatar` first (sod4 #4), so a tile is drawn from
+  // the instance it describes; the table by name covers the instances below
+  // the harness that carry none.
+  const own = decl.avatar !== undefined || hasAvatar(decl.name);
+  const avatar = decl.avatar ?? (own ? avatarFor(decl.name) : GENERIC);
   if (!own) {
     findings.push(`${decl.name}: no avatar declared for this instance — showing the generic mark.`);
   }
@@ -1161,15 +1178,22 @@ function tileFor(
 
   // Resolved after both candidates exist. `icon` keeps its own field for
   // `mount-instance-docs.ts`, which builds a NavItem rather than reading this.
-  const iconMark =
+  const iconMark: HarnessMark | undefined =
     iconSrc === undefined
       ? undefined
       : {
           src: iconSrc,
           title: icon?.title ?? "",
-          ...(icon?.avatarRegion ? { crop: solveCrop(icon.avatarRegion) } : {}),
+          ...(icon?.avatarRegion ? { region: icon.avatarRegion, crop: solveCrop(icon.avatarRegion) } : {}),
         };
-  const navMark = themeAvatar ?? iconMark;
+  // The registry glyph is the THIRD candidate, not a separate mechanism: an
+  // instance with its own avatar entry (never the generic one, which is a
+  // fallback rather than a mark) still has a mark when it declares no image.
+  const glyphMark: HarnessMark | undefined = own ? { glyph: avatar.glyph, title: avatar.reads } : undefined;
+  // The order is the owner's (*"use theme avatar not the purply thing"*,
+  // 2026-09-22) and the Jekyll `.site-title` follows it too
+  // (`_includes/title.html`), so every surface draws the same mark.
+  const navMark = themeAvatar ?? iconMark ?? glyphMark;
 
   // A FOLIO AT THE SITE ROOT IS THE LANDING PAGE, which every harness row is
   // already beside: `ob3m` finding 2 measured Folio Assistant and C@T Harness
@@ -1253,7 +1277,8 @@ function tileFor(
      * THE MARK THE NAVBAR SHOWS, resolved once here rather than branched on in
      * a template.
      *
-     * Theme avatar first, the instance's own `icon` second. The precedence is
+     * Theme avatar first, the instance's own `icon` second, its registry
+     * glyph third (bean `2vpn`). The precedence is
      * the owner's — *"use theme avatar not the purply thing"* — and it is
      * decided HERE because the alternative is five branches of Liquid
      * (`avatar` with a crop, `avatar` without, `icon` with a crop, `icon`
@@ -1286,7 +1311,7 @@ function tileFor(
         }),
     stats: [
       { id: "directories", label: "declared directories", value: dirs.length },
-      { id: "kinds", label: "declared graph kinds", value: kinds.length },
+      { id: "kinds", label: "declared graph typologies", value: kinds.length },
       { id: "views", label: "visualisations you can open", value: visualisations.filter((v) => v.path).length },
     ],
     visualisations,
@@ -1427,7 +1452,7 @@ export function harnessTiles(
  * | source | served at | measured |
  * |---|---|---|
  * | `processes/index.md` | `/processes/` | 200 |
- * | `tool-graph.md` | `/tool-graph.html` | 200 |
+ * | `tool-graph.md` | `/concepts/tool-graph.html` | 200 |
  * | `tool-graph.md` | ~~`/tool-graph/`~~ | **404** |
  *
  * So an `index` leaf addresses as its directory and every other page addresses

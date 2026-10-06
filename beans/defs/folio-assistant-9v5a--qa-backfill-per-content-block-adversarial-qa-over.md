@@ -5,7 +5,8 @@ status: todo
 type: epic
 priority: normal
 created_at: 2026-10-02T22:27:08Z
-updated_at: 2026-10-02T22:27:08Z
+updated_at: 2026-10-04T15:12:21Z
+parent: folio-assistant-rwmf
 ---
 
 Owner, 2026-10-02: *"Split into TWO epics: gates, and QA backfill"*. This is the

@@ -9,7 +9,7 @@ import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkS
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { buildDocumentSite, documentManifests, type Outline } from "./build-document-site.js";
+import { buildDocumentSite, citationsToHtml, documentManifests, katexMacros, renderDocumentHtml, type Outline } from "./build-document-site.js";
 import { readPositions } from "../schemas/changeset.js";
 import { initFolio } from "../../cat-harness/scripts/init-folio.js";
 
@@ -75,5 +75,59 @@ describe("build-document-site", () => {
     const r = await buildDocumentSite(d, join(d, "_site"));
     expect(r.errors[0]).toContain("no document manifest");
     expect(existsSync(join(d, "_site", "index.html"))).toBe(false);
+  });
+});
+
+describe("the harness rail lands in the page, not in its stylesheet (owner, 2026-10-05)", () => {
+  test("every page's first <body and <main are the real tags, after the style", async () => {
+    // The rail injector finds a page's first body and main tags BY TEXT. A
+    // CSS comment that named them put the whole navigation inside <style>,
+    // and the published page lost both its rail and its gutters.
+    const d = scaffold();
+    const out = join(d, "_site");
+    await buildDocumentSite(d, out);
+    for (const f of [join(out, "index.html"), join(out, "handbook", "index.html"), join(out, "review", "index.html")]) {
+      const html = readFileSync(f, "utf-8");
+      const styleEnd = html.indexOf("</style>");
+      expect({ f, body: html.indexOf("<body") > styleEnd, main: html.indexOf("<main") > styleEnd }).toEqual({ f, body: true, main: true });
+    }
+  });
+});
+
+describe("paper content: math, glossary directives and citations (owner, 2026-10-05)", () => {
+  test("with math on, an equation is claimed before emphasis and marked for KaTeX", async () => {
+    const html = await renderDocumentHtml("Let $a_i * b_j$ hold, and\n\n$$\\sum_i x_i$$\n", { math: true });
+    expect(html).toContain('class="language-math math-inline">a_i * b_j</code>');
+    expect(html).toContain("math-display");
+    expect(html).not.toContain("<em>");
+  });
+
+  test("with math off, a document's dollar amounts stay prose", async () => {
+    const html = await renderDocumentHtml("It cost $5 million and $3 more.", { math: false });
+    expect(html).not.toContain("math-inline");
+    expect(html).toContain("$5 million and $3 more.");
+  });
+
+  test(":defterm becomes a definition with an id, :refterm links to it", async () => {
+    const html = await renderDocumentHtml("A :defterm[braid]{#braid-group} is here; see :refterm[braids]{#braid-group}.", { math: false });
+    expect(html).toContain('<dfn class="defterm" id="term-braid-group">braid</dfn>');
+    expect(html).toContain('<a class="refterm" href="#term-braid-group">braids</a>');
+  });
+
+  test("a directive of any other name is put back as the text it was written as", async () => {
+    const html = await renderDocumentHtml("Ratio note:alpha stays.", { math: false });
+    expect(html).toContain("note:alpha stays.");
+  });
+
+  test("\\cite becomes a citation label, but not inside fenced code", () => {
+    const md = "As in \\cite{a, b}.\n```tex\n\\cite{c}\n```\n";
+    const out = citationsToHtml(md);
+    expect(out).toContain('<span class="cite" data-keys="a b">[a, b]</span>');
+    expect(out).toContain("\\cite{c}");
+  });
+
+  test("the macro table is the viewer's: \\name -> tex from the paper manifest", () => {
+    expect(katexMacros({ qou: { tex: "\\mathbf{Q}" } })["\\qou"]).toBe("\\mathbf{Q}");
+    expect(katexMacros(undefined)["\\bigbowtie"]).toBe("\\bowtie");
   });
 });

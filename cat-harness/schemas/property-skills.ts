@@ -31,6 +31,8 @@ export const PROPERTY_SKILLS = {
   // section on the landing page (bean `ob3m` findings 4–5).
   summary: { skills: ["harness-tiles"] },
   alsoWritten: { skills: ["harness-tiles"] },
+  // The instance's own avatar, moved off the table in avatars.ts (sod4 #4).
+  avatar: { skills: ["harness-tiles"] },
   images: { skills: ["theme-declaration", "harness-tiles"] },
   assets: { skills: ["directory-conventions"] },
   icon: { skills: ["theme-declaration", "harness-tiles"] },
@@ -45,6 +47,9 @@ export const PROPERTY_SKILLS = {
   // Content or tools half of the split (bean eayu); a content instance holding
   // code is a failing kg:audit finding.
   separation: { skills: ["kg-separation"] },
+  // Instances seeded in the same step (owner, 2026-10-04); seed:ready does not
+  // count a path into one as upward.
+  seedsWith: { skills: ["kg-separation"] },
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },

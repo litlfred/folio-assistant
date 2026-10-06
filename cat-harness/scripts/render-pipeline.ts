@@ -79,7 +79,7 @@ interface RenderStep extends OrderedStep {
    */
   inputs?: readonly string[];
   /**
-   * Graph KINDS this step reads, resolved from `harness.json`.
+   * Graph TYPOLOGIES this step reads, resolved from `harness.json`.
    *
    * Preferred over `inputs`: `check:declared-paths` rejected the first draft
    * for spelling nine declared directories as literals, and it was right —
@@ -158,8 +158,8 @@ export function pipeline(scratch: string): RenderStep[] {
       needs: ["readme"],
       fatal: false,
       inputGraphs: ["beans", "todos"],
-      // declared-path-literal: the `folio` graph kind is CORE's — registered
-      // by `schemas/folio-graph-kind.ts`, which this layer may not import
+      // declared-path-literal: the `folio` graph typology is CORE's — registered
+      // by `schemas/folio-graph-typology.ts`, which this layer may not import
       // ("a layer that cannot render must not own the renderable kind"). So
       // asking the resolver for it throws, and the authored pages would
       // otherwise go undeclared — which under-declares, the direction bean
@@ -169,12 +169,12 @@ export function pipeline(scratch: string): RenderStep[] {
       run: ["bun", "run", "cat-harness/scripts/gen-docs-pages.ts"],
     },
     { id: "bpmn", needs: ["readme"], fatal: false, inputGraphs: ["cat-harness"], label: "BPMN workflow diagrams", run: ["bun", "run", "render:bpmn"] },
-    // `needs: ["skill-docs"]` is a real edge and not alphabetical: docs-auto
+    // `needs: ["skill-docs"]` is a real edge and not alphabetical: auto-docs
     // indexes the skill markdown, and a run that raced the generator writing
     // it would index a directory mid-write. It is NOT fatal — a missing index
     // costs one rendering, and the authored pages that reference it are what
     // carry the meaning (bean `06e3`).
-    { id: "docs-auto", needs: ["skill-docs", "bpmn"], fatal: false, inputGraphs: ["cat-harness"], label: "derived sub-graph indexes", run: ["bun", "run", "docs:auto"] },
+    { id: "auto-docs", needs: ["skill-docs", "bpmn"], fatal: false, inputGraphs: ["cat-harness"], label: "derived sub-graph indexes", run: ["bun", "run", "auto:docs"] },
     // `needs: ["docs-pages"]`, and it is a REAL dependency rather than a
     // tidy-looking one: the state visualiser decides each graph's state by
     // asking whether `assets/<id>/index.json` is on disk, and `docs-pages` is
@@ -273,7 +273,7 @@ export function runPipeline(
     // the same by returning every step.
     const seed = opts.seedManifest === undefined ? undefined : readManifest(opts.seedManifest);
     const seedMissing = opts.seedManifest !== undefined && seed === undefined;
-    // The resolver turns a declared GRAPH KIND into the directories that hold
+    // The resolver turns a declared GRAPH TYPOLOGY into the directories that hold
     // it, so no step spells a declared path (`check:declared-paths`).
     //
     // **It can fail, and failing is a real state rather than a crash.**
@@ -293,7 +293,7 @@ export function runPipeline(
     // one asked for, and this repository declares a `folio` directory whose
     // kind is core's. So the harness layer cannot resolve any kind in-process
     // without importing core, which `check:partition` rejects and which the
-    // argument on `folio-graph-kind.ts` forbids. One subprocess answers it
+    // argument on `folio-graph-typology.ts` forbids. One subprocess answers it
     // without moving either boundary.
     //
     // A failure is REPORTED and turns every graph-declared step undeclared,
@@ -385,7 +385,7 @@ export function runPipeline(
     );
     if (resolveFailure !== undefined) {
       out.push(
-        `Graph kinds could not be resolved here, so every step that declared only graphs re-rendered: ${resolveFailure}`,
+        `Graph typologies could not be resolved here, so every step that declared only graphs re-rendered: ${resolveFailure}`,
       );
     }
     if (seedMissing) {

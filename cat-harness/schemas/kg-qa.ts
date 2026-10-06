@@ -55,7 +55,7 @@ import { isAbsolute, join, relative, resolve, sep } from "node:path";
 
 import { z } from "zod";
 
-import { KG_GRAPH_KIND } from "./cat-harness";
+import { KG_GRAPH_TYPOLOGY } from "./cat-harness";
 import { portableSegment } from "./portable-path";
 
 /** Marker value carried by every sidecar written by `scripts/kg-audit.ts`. */
@@ -428,13 +428,13 @@ export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
 
 /**
- * Which declared GRAPH KIND a subject of each kind lives in.
+ * Which declared GRAPH TYPOLOGY a subject of each kind lives in.
  *
  * Two vocabularies meet here and they are not the same axis. `KG_SUBJECT_KINDS`
- * above says what this audit judges — a process, a role, a skill. The graph-kind
- * registry (`BASE_GRAPH_KINDS`) says what an instance DECLARES a directory of.
+ * above says what this audit judges — a process, a role, a skill. The graph-typology
+ * registry (`BASE_GRAPH_TYPOLOGIES`) says what an instance DECLARES a directory of.
  * A `skill` subject inhabits a `skills` graph; a `tool` subject inhabits a
- * `tools` graph; nothing named `skill` or `tool` is a graph kind.
+ * `tools` graph; nothing named `skill` or `tool` is a graph typology.
  *
  * ## Why this is declared and not derived
  *
@@ -445,20 +445,20 @@ export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
  * constants means re-deriving a mapping from the shape of the code that uses
  * it, which is a guess dressed as a lookup: `DECISION_DIR` is
  * `join(WORKFLOW_DIR, "decisions")`, so a deriver sees a path and has to decide
- * whether that is its own kind. It is not — there is no `decisions` graph kind,
+ * whether that is its own kind. It is not — there is no `decisions` graph typology,
  * and a DMN file sits inside the `processes` graph.
  *
  * So the subject kind states which graph it inhabits, once, here. Every entry
- * must name a registered graph kind, and `kg-qa.test.ts` checks that against
+ * must name a registered graph typology, and `kg-qa.test.ts` checks that against
  * the registry — a name that stops being a kind fails at the keyboard rather
  * than becoming a coverage row about a graph that does not exist.
  *
  * `Record<KgSubjectKind, string>` and not a partial map, so adding a subject
  * kind without saying where it lives does not compile. That is the
- * `GraphKindDef.holds` discipline: a required field makes "did not say"
+ * `GraphTypologyDef.holds` discipline: a required field makes "did not say"
  * impossible, where an optional one makes it indistinguishable from a default.
  */
-export const KG_SUBJECT_GRAPH_KINDS: Readonly<Record<KgSubjectKind, string>> = {
+export const KG_SUBJECT_GRAPH_TYPOLOGIES: Readonly<Record<KgSubjectKind, string>> = {
   // A `.bpmn` file in the `processes` graph.
   process: "processes",
   // A `.dmn` file in `processes/decisions/` — INSIDE the processes graph, and
@@ -473,7 +473,7 @@ export const KG_SUBJECT_GRAPH_KINDS: Readonly<Record<KgSubjectKind, string>> = {
   // The knowledge graph AS A WHOLE — the `graph` subject's findings are about
   // the joins between nodes rather than about any one node, so its home is the
   // kg graph itself rather than the directory its sidecar happens to sit in.
-  graph: KG_GRAPH_KIND,
+  graph: KG_GRAPH_TYPOLOGY,
   tool: "tools",
 };
 
@@ -515,7 +515,7 @@ export interface KgCriterionDefinition {
    * one instance's diagrams.
    *
    * **Required, deliberately.** A criterion that has not decided its scope does
-   * not compile, for the same reason a graph kind must declare `renderable` and
+   * not compile, for the same reason a graph typology must declare `renderable` and
    * `holds`: the default would be silent and wrong half the time.
    *
    * Added 2026-09-26 (bean `bjzs`) after `kg:audit --instance ./bootstrap`
@@ -668,7 +668,10 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["process"],
     scope: "instance",
     severity: "critical",
-    summary: "An activity names a skill that does not exist, so an agent handed the step cannot open it.",
+    summary:
+      "An activity names a skill that does not exist, so an agent handed the step cannot open it. EXISTENCE ONLY: " +
+      "whether this process may bind that skill (its instance reaching the skill's, through `needs`) is " +
+      "`check:process-bindings`, and a pass here says nothing about direction (owner, 2026-10-04, bean mlux).",
   },
   {
     id: "decision-ref-resolves",
@@ -1449,12 +1452,12 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "declared, so the thing it claims to discharge cannot be opened.",
   },
   {
-    id: "skill-graph-kinds-resolve",
+    id: "skill-graph-typologies-resolve",
     applies: ["graph"],
     scope: "instance",
     severity: "major",
     summary:
-      "A skill's front matter names, under `graph-kinds:`, a graph kind the registry does not declare — it " +
+      "A skill's front matter names, under `graph-typologies:`, a graph typology the registry does not declare — it " +
       "claims to say how to read a kind of graph that does not exist.",
   },
   {

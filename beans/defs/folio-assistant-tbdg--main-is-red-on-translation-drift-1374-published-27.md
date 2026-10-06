@@ -108,7 +108,7 @@ Recorded and left `todo`. The session that found it was fixing the unrelated
 [chromium] cat-harness/test/nav-locale.e2e.ts:228
   the navbar shows the selected locale > a page with no translation falls back
   to the source language
-    waiting for locator('.site-nav a[href="/getting-started.html"]')
+    waiting for locator('.site-nav a[href="/start/getting-started.html"]')
     Error: element(s) not found
   698 passed, 1 failed
 ```

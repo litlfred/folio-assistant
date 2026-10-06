@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-03T09:07:44Z
+updated_at: 2026-10-04T12:41:46Z
 parent: folio-assistant-uhkv
 ---
 
@@ -43,8 +43,10 @@ which is the only kind of evidence that a split is doing work.
 - [x] the instance exists, declaring only directories that exist (`dh4f`)
 - [x] `ig-build-pipeline` states the run and the refusal list
 - [x] `ig-render-jekyll` states the three render contracts
-- [ ] the two Library strippers are actually placed here, not just described
+- [x] the two Library strippers are actually placed here, not just described
 - [ ] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
+- [x] gates green
+- [x] the base is shown running for a non-WHO IG — `nsbb`'s open criterion
 - [ ] gates green
 
 
@@ -62,3 +64,14 @@ Session https://claude.ai/code/session_015Q15h1fg2Hh9MJXfAqr4h7. `check:fhir-har
 **The premise "the layer is clean today" was measured false:** 20 graded hits in 9 file×rule pairs, plus 65 prose mentions. Owner ruling: baseline the hits and ratchet now, and clear them in a second stream: bean `veiu`, session https://claude.ai/code/session_01PpaL9j6AhiTfvqnkF7BiaG.
 
 The unexpected one: `fhir-harness/tools/index.ts` declares Tools for DAK post-processing steps 3-5, which smart-base's table assigns to the WHO layer. Owner ruled the same day: they STAY in fhir-harness (generic — they only transform existing metadata); recorded in the gate's MOVED_DOWN.
+
+## Progress 2026-10-04 (wm63 session): the Library strippers are placed
+
+- `fhir-harness/scripts/library-strip/` holds `strip_library_binaries.py` and `strip_library_content.py`, byte-identical to WorldHealthOrganization/smart-base `input/scripts/` at 5891a220 (CC-BY-3.0-IGO, attributed). The README records commit, licence and sha256.
+- The Tools `strip-library-binaries` and `strip-library-content` now invoke the copies here instead of an IG repo's `input/scripts/`.
+- `library-strip.test.ts` runs both on a non-WHO IG's output (an example.org Library carrying inline CQL and ELM) and checks the copies against the recorded hashes.
+- Remaining: the non-WHO IG demo (blocked on network access to packages.fhir.org) and gates green.
+
+## 2026-10-04
+
+#2062 merged 2026-10-04 with every gating check green on 572f7c2 (17 success, 2 skipped). That includes the Library strippers placed in fhir-harness/scripts/library-strip/ and izx8's baseline entries cleared. One item remains: the non-WHO IG demo, which is directed to the owner's local agent because the cloud container cannot reach packages.fhir.org.

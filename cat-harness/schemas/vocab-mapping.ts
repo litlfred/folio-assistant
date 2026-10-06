@@ -474,7 +474,7 @@ export function loadVocabMappings(dirs: readonly string[]): Map<string, VocabMap
  */
 export function vocabMappingDirs(instanceRoot: string): string[] {
   return ownDirectories({ name: "(root)", root: resolve(instanceRoot), own: true })
-    .filter((d) => d.graphKinds.includes("vocab-mapping"))
+    .filter((d) => d.graphTypologies.includes("vocab-mapping"))
     .map((d) => d.absPath);
 }
 
