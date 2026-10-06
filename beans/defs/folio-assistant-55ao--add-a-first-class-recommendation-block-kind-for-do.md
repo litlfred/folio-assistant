@@ -101,6 +101,12 @@ Put as one question each while going through the open beans:
 - **expires:** 14 days, then re-ask the owner whether the discussion has happened.
 - **handoff:** Q1 and Q2 are settled above. When Q3 is answered, build in this order: code-list scheme for strength, the block kind (about 30 files, listed above), the skill, then the BPMN step. Also update `content-profiles.md`, which says "deliberately no `recommendation` kind".
 
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
 ## Owner ruling 2026-10-06 on Q3: LINK, don't merge
 
 Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): link without merging; one vocabulary; still waiting on stakeholders. **The owner chose "Link, don't merge".**

@@ -34,6 +34,27 @@ edge. The executable form is `processes/library/l1-document-ingestion.bpmn`,
 which calls the harness's basic `Process_Ingestion` first and then the four
 `ingest-*` phases beside it.
 
+## The whole path is two commands (bean `apui`)
+
+```sh
+bun run ingest uploads/FILE.pdf --library <lib>            # rung + every derived arm, into ingest-staging/
+bun run ingest uploads/FILE.pdf --library <lib> --promote  # the L1 gate, then into <lib>/<slug>/
+```
+
+Staging prints the second line for you, built from **your own arguments** — it
+used to recompose the path relative to the instance root, which is "not there"
+from where `bun run` runs, and to drop `--library`.
+
+**`--promote` writes the entry's JSON-LD nodes**, for that entry only, with the
+same `buildEntryNodes` the corpus generator uses. They are minted for the
+**destination**, not for staging: an entry's instance is read off where it sits,
+and `ingest-staging/` belongs to whichever instance holds it. Before this, an
+entry promoted into a sibling library named the wrong instance in its manifest
+`@id`, and `gen-library-jsonld --check` failed on it until somebody ran the
+corpus-wide generator by hand. You do **not** need `gen-library-jsonld` or
+`check:l1-complete --write` after promoting — the first is done, and the
+second's verdicts live on the `qa-reports` branch rather than on `main`.
+
 ## Which rung, and why there is more than one
 
 | rung | when | what it produces |

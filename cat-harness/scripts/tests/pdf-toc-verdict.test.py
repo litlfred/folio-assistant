@@ -281,8 +281,63 @@ def main() -> int:
             except OSError:
                 pass
 
+    print("\n8. a contents page does not shadow the chapters it lists — shape two")
+    # Measured on WHO_PUB_TPS_93.1.pdf: the OCR put the contents page's page
+    # numbers in a column of their own, so the trailing-number skip never
+    # fired, the listing came first, and first-occurrence dedupe kept it — so
+    # every chapter boundary landed on pages 2-4.
+    body = "Body text of the chapter. " * 8
+    doc = [
+        "WHO Style\n",
+        "Contents\n1. Introduction\n2. Spelling\n3. Punctuation\n4. Italics\n\n4\n9\n13\n",
+        "Preface prose that is not a heading.\n" + body,
+        "1. Introduction\n" + body,
+        "2. Spelling\n" + body,
+        body,
+        "3. Punctuation\n" + body,
+        "4. Italics\n" + body,
+    ]
+    pages_of = {e.title: e.page for e in pdf.infer_headings(doc)}
+    check(f"chapters start where the BODY states them (got {pages_of})",
+          pages_of == {"Introduction": 4, "Spelling": 5, "Punctuation": 7, "Italics": 8})
+    check("the contents page is identified as a listing", pdf.listing_pages(
+        [[pdf.TocEntry(1, t, p, "inferred", n) for (n, t, p) in rows] for rows in [
+            [("1", "Introduction", 1), ("2", "Spelling", 1)],
+            [("1", "Introduction", 2)],
+            [("2", "Spelling", 3)],
+        ]]) == {1})
+
+    # The negatives the rule must not fire on. A running header recurs on the
+    # NEXT page, so two headers recur on ONE page; a single heading proves
+    # nothing; a page that opens one chapter keeps it.
+    running = [
+        "1. Introduction\n2. Scope\n" + body,
+        "1. Introduction\n2. Scope\n" + body,
+        "3. Methods\n" + body,
+    ]
+    got = {e.title: e.page for e in pdf.infer_headings(running)}
+    check(f"running headers on the next page are not a listing (got {got})",
+          got.get("Introduction") == 1 and got.get("Scope") == 1)
+    single = ["2. Spelling\n" + body, "2. Spelling\n" + body, "3. Punctuation\n" + body]
+    got = {e.title: e.page for e in pdf.infer_headings(single)}
+    check(f"one recurring heading is not a listing (got {got})", got.get("Spelling") == 1)
+    out_of_order = [
+        "1. Alpha\n2. Beta\n" + body, "2. Beta\n" + body, "1. Alpha\n" + body,
+    ]
+    got = {e.title: e.page for e in pdf.infer_headings(out_of_order)}
+    check(f"recurrences in a DIFFERENT order are not a listing of them (got {got})",
+          got.get("Alpha") == 1 and got.get("Beta") == 1)
+
     print("\n7. and the real handbook, end to end — the falsifier this was built against")
-    handbook = os.path.join(ROOT, "uploads", "9789241548960_eng.pdf")
+    # The upload moved to who-iris's own queue (one directory per document),
+    # and this arm then reported "absent" on every run while still exiting 0 —
+    # the falsifier stopped running and nothing said so louder than a NOTE.
+    # Measured 2026-10-06 (bean `6xaz`). Every place it has lived is tried.
+    candidates = [
+        os.path.join(ROOT, "uploads", "9789241548960_eng.pdf"),
+        os.path.join(ROOT, "..", "who-iris", "uploads", "9789241548960-eng", "9789241548960_eng.pdf"),
+    ]
+    handbook = next((c for c in candidates if os.path.exists(c)), candidates[0])
     if os.path.exists(handbook):
         artefact, sections = pdf.process(handbook, backend="auto")
         check(f"the handbook still reports 'outline' (got {artefact['toc_source']!r})",
