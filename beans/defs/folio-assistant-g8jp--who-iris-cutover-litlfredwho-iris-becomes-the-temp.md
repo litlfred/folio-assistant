@@ -3,8 +3,9 @@
 title: 'who-iris cutover: litlfred/who-iris becomes the (temporary) authoritative source; folio-assistant reads it by remote subscription'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-06T19:12:02Z
-updated_at: 2026-10-06T19:12:02Z
+updated_at: 2026-10-06T19:12:13Z
 parent: folio-assistant-7x5n
 ---
 
@@ -21,3 +22,6 @@ Owner rulings 2026-10-06: 'go ahead and move who-iris/ repo over to litlfred/who
 
 ## Done when
 litlfred/who-iris builds and checks green on its own; folio-assistant has no who-iris/ directory, reads it through a committed subscription, and its site still serves /docs/who-iris/.
+
+
+**Owner 2026-10-06: who-iris depends on folio-assistant-core** (its declared `needs`), never on cat-harness directly. So the 7 direct climbs into cat-harness (platform.ts re-exports of cat-harness schemas/scripts, themes/themes.ts + themes.test.ts, scripts/tests/catalogue-links.test.ts, gen-iris-pages.test.ts) are re-routed through folio-assistant-core's own surface (core re-exports what a downstream content instance may use; cat-harness reached transitively), and the pinned package the who-iris repo depends on is folio-assistant-core — the monorepo at a SHA until litlfred/folio-assistant-core is seeded. A check that who-iris imports nothing outside who-iris/ and core's surface is part of this bean.
