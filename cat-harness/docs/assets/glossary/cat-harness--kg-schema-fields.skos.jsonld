@@ -17019,6 +17019,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-typology-registry.graphtypologydef.newinstancesource",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyDef.newInstanceSource"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a NEW instance's own graph of this kind lives, when `folio_init` scaffolds it — `perInstance`'s companion: that field says a dependent HAS its own; this one says where the new one is kept. Bean `hp54`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.newInstanceSource",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-typology-registry.graphtypologydef.nodeschemas",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -19010,6 +19010,12 @@
           "array": false
         },
         {
+          "name": "newInstanceSource",
+          "type": "NewInstanceSourceSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "renderable",
           "type": "z.boolean()",
           "optional": false,
@@ -19140,7 +19146,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/graph-typology-node.ts#KindAvatarSchema",
-        "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema"
+        "cat-harness/schemas/graph-typology-node.ts#NodeSchemaRefSchema",
+        "cat-harness/schemas/subgraph-source.ts#NewInstanceSourceSchema"
       ],
       "unresolved": [],
       "external": [
@@ -19263,6 +19270,13 @@
           "optional": true,
           "array": false,
           "doc": "Does every instance have ITS OWN graph of this kind — so an instance that"
+        },
+        {
+          "name": "newInstanceSource",
+          "type": "NewInstanceSource",
+          "optional": true,
+          "array": false,
+          "doc": "Where a NEW instance's own graph of this kind lives, when `folio_init`"
         },
         {
           "name": "renderable",
@@ -19408,7 +19422,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
-        "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef"
+        "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef",
+        "cat-harness/schemas/subgraph-source.ts#NewInstanceSource"
       ],
       "unresolved": [],
       "external": [],
@@ -36361,6 +36376,50 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#NewInstanceSource",
+      "name": "NewInstanceSource",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/subgraph-source.ts#NewInstanceSourceSchema",
+      "name": "NewInstanceSourceSchema",
+      "module": "cat-harness/schemas/subgraph-source.ts",
+      "kind": "zod-object",
+      "doc": "Where a NEW instance's graph of a kind lives — the scaffold default a graph",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.literal(\"branch\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "keyedBy",
+          "type": "KeyedBySchema.extract([\"tip\"])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/subgraph-source.ts#KeyedBySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/subgraph-source.ts#ResolvedSubgraphSource",
@@ -59506,6 +59565,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/graph-typology-node.ts#GraphTypologyNodeSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#NewInstanceSourceSchema",
+      "via": "newInstanceSource",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
       "to": "cat-harness/schemas/graph-typology-registry.ts#GraphLayer",
       "via": "holds",
@@ -59517,6 +59584,14 @@
       "from": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
       "to": "cat-harness/schemas/graph-typology-registry.ts#NodeSchemaRef",
       "via": "nodeSchemas",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef",
+      "to": "cat-harness/schemas/subgraph-source.ts#NewInstanceSource",
+      "via": "newInstanceSource",
       "kind": "field",
       "optional": true,
       "array": false
@@ -62293,6 +62368,14 @@
       "from": "cat-harness/schemas/subgraph-source.ts#FamilySourceSchema",
       "to": "cat-harness/schemas/subgraph-source.ts#BranchPrefixSchema",
       "via": "branchPrefix",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/subgraph-source.ts#NewInstanceSourceSchema",
+      "to": "cat-harness/schemas/subgraph-source.ts#KeyedBySchema",
+      "via": "keyedBy",
       "kind": "field",
       "optional": false,
       "array": false
