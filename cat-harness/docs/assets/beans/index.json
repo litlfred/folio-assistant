@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 951,
+      "count": 958,
       "unit": "beans"
     }
   },
@@ -302,7 +302,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:42:34Z",
-      "updatedAt": "2026-10-06T14:54:31Z",
+      "updatedAt": "2026-10-06T15:38:49Z",
       "preview": "Owner, 2026-10-06, verbatim: *\"do content split propoerly across repos\"*, *\"that needs to be done before F\"*, and *\"not a race to separate.   do it properly.\"* Placement rule: *\"folio-asst-core focused on content authroiung, review pubilcation.   cat-harness on SDLC, tooling, decision making, general methdologies, basic common infra/state mgmt\"*.\n\nStory `rfuq` (S4, direction and placement) owns th",
       "file": "beans/defs/folio-assistant-0r7u--content-split-2026-10-06-authoring-review-and-publ.md"
     },
@@ -591,14 +591,14 @@
     {
       "id": "folio-assistant-1bvx",
       "title": "check:reference-direction fails on main and is in NO workflow — nothing catches it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:13:49Z",
-      "updatedAt": "2026-10-01T17:45:55Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "Measured on `main` `25bff68c4f3`, 2026-09-30.\n\n```\n$ bun run check:reference-direction\n✗ 1 PENDING entr(y/ies) no longer qualify — delete them\n✗ 91 file(s) name several instances above them and are not in PENDING\nexit 1\n```\n\n```\n$ grep -q \"bun run check:reference-direction\" .github/workflows/*.yml\nnot in any workflow\n```\n\n**Red on the default branch, and run by nothing.** That is `1xhc` in its\npur",
       "file": "beans/defs/folio-assistant-1bvx--checkreference-direction-fails-on-main-and-is-in-n.md"
     },
@@ -719,15 +719,15 @@
     {
       "id": "folio-assistant-1q4b",
       "title": "Re-draw the navbar wireframe after ob3m's 12 findings landed",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T05:55:48Z",
-      "updatedAt": "2026-10-06T05:55:48Z",
-      "preview": "ob3m's closing step, split out when ob3m closed on 2026-10-06: 'When fixed, re-draw cat-harness/docs/wireframes/navbar/ and re-run wireframe:check and check:wireframes.' intent.md's Observed and Findings sections still describe main with #1010/#1022 (before #1762, #1804, #1805, #1807, #1808 and #1819), so the wireframe documents a navbar that no longer exists.\n\n## Done when\n- [ ] as-is.html and in",
+      "updatedAt": "2026-10-06T18:30:00Z",
+      "preview": "ob3m's closing step, split out when ob3m closed on 2026-10-06: 'When fixed, re-draw cat-harness/docs/wireframes/navbar/ and re-run wireframe:check and check:wireframes.' intent.md's Observed and Findings sections still describe main with #1010/#1022 (before #1762, #1804, #1805, #1807, #1808 and #1819), so the wireframe documents a navbar that no longer exists.\n\n## Done when\n- [x] as-is.html and in",
       "file": "beans/defs/folio-assistant-1q4b--re-draw-the-navbar-wireframe-after-ob3ms-12-findin.md"
     },
     {
@@ -1408,6 +1408,20 @@
       "file": "beans/defs/folio-assistant-3hk4--qa-publish-must-publish-real-results-once-main-hol.md"
     },
     {
+      "id": "folio-assistant-3ka9",
+      "title": "fhir-cache-seed-npm: follow transitive dependencies, and mirror smart-base's 4 missing packages",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T16:04:40Z",
+      "updatedAt": "2026-10-06T16:04:40Z",
+      "preview": "Split from 6mk7 on 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92).\n\nSUSHI on smart-base still fails here, because 4 TRANSITIVE packages are not in the cache: crmi#2.0.0, cql#2.0.0, sdc#4.0.0 and terminology#7.3.0. The seeder reads only the IG's own `dependencies:`, so it never lists them. That means `--missing-out` never asks fhir-package-mirror for them either.\n\n## D",
+      "file": "beans/defs/folio-assistant-3ka9--fhir-cache-seed-npm-follow-transitive-dependencies.md"
+    },
+    {
       "id": "folio-assistant-3lbz",
       "title": "TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis",
       "status": "todo",
@@ -1931,14 +1945,14 @@
     {
       "id": "folio-assistant-4tel",
       "title": "merge:main has no conflict pattern for translation-qa results, so it aborts",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T18:25:31Z",
-      "updatedAt": "2026-10-04T18:25:31Z",
+      "updatedAt": "2026-10-06T18:57:18Z",
       "preview": "Measured 2026-10-04 ~18:15Z merging main into `claude/gracious-mendel-du6nn8` after #2105: `merge:main` ABORTED on five conflicts it classified `[no declared pattern]` — `cat-harness/test/results/translation-qa/docs/installation.{ar,es,fr,ru,zh}.translation-qa.json`. Both sides had only regenerated them (55+/55- each side). Resolved by hand by taking main's copy, then regen-after-merge proved the ",
       "file": "beans/defs/folio-assistant-4tel--mergemain-has-no-conflict-pattern-for-translation.md"
     },
@@ -2015,14 +2029,14 @@
     {
       "id": "folio-assistant-4z5o",
       "title": "Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T09:08:59Z",
-      "updatedAt": "2026-10-04T09:08:59Z",
+      "updatedAt": "2026-10-06T19:50:00Z",
       "preview": "Generated pages compose GitHub URLs by joining an instance-relative path that leaves the instance root, producing links with `/main/../` in them:\n\n    https://github.com/litlfred/folio-assistant/edit/main/../folio-assistant-core/processes/library/l1-document-ingestion.bpmn\n    https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/...   (the blob form is correct)\n\nThe `edit/` f",
       "file": "beans/defs/folio-assistant-4z5o--generated-github-edit-source-urls-escape-the-repo-.md"
     },
@@ -2113,7 +2127,7 @@
     {
       "id": "folio-assistant-58ro",
       "title": "Merge refused: #1977 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-7x5n",
@@ -2122,7 +2136,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:42Z",
-      "updatedAt": "2026-10-04T14:30:42Z",
+      "updatedAt": "2026-10-06T19:03:39Z",
       "preview": "PR #1977, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--1977.json`, status `active`): STATUS UNKNOWN on t",
       "file": "beans/defs/folio-assistant-58ro--merge-refused-1977-owed-ci-not-green-on-its-head.md"
     },
@@ -2681,28 +2695,28 @@
     {
       "id": "folio-assistant-6lre",
       "title": "CI WATCH READS A PARTIAL CHECK SET AS GREEN: 1 of 13 registered, verdict PASS — ask the check SUITES, not only the runs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T16:15:00Z",
-      "updatedAt": "2026-09-30T18:43:38Z",
+      "updatedAt": "2026-10-06T14:57:00Z",
       "preview": "Found while using the tool, not while reading it. Sibling of `2c2b`, which\nshipped `ci:watch` for issue #1624.\n\n## The defect, measured\n\n`bun run ci:watch 29b10a68923` at 16:13:58:\n\n```\n16:13:58  29b10a68923  PASS — 1 check(s) completed clean\n```\n\nexit **0**. At that instant `get_check_runs` on the same commit returned\n`total_count: 1` — the `.jsonld siblings` job — and **nothing else had been\ncre",
       "file": "beans/defs/folio-assistant-6lre--ci-watch-reads-a-partial-check-set-as-green-1-of-1.md"
     },
     {
       "id": "folio-assistant-6mk7",
       "title": "A refused packages.fhir.org did not lead the agent to fhir-cache-seed-npm: symptom-to-Tool lookup is missing, and the mirror the skill names does not exist",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:31:37Z",
-      "updatedAt": "2026-10-06T09:02:29Z",
+      "updatedAt": "2026-10-06T16:00:00Z",
       "preview": "Owner, 2026-10-06: *\"why didnt you know about the tool already? what KG process broke down?\"*\n\n## What happened\nSession https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 needed SUSHI clean on three IG repositories (owner preference). SUSHI failed: packages.fhir.org is refused by the egress proxy. The agent told the owner \"SUSHI can't run in this container\" and moved on. The owner pointed at ",
       "file": "beans/defs/folio-assistant-6mk7--a-refused-packagesfhirorg-did-not-lead-the-agent-t.md"
     },
@@ -3019,14 +3033,14 @@
     {
       "id": "folio-assistant-7how",
       "title": "REGEN READS A STALE QA TREE: generators that read gitignored */test/results write wrong pages unless qa:working-copy ran first",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T09:15:31Z",
-      "updatedAt": "2026-10-06T11:19:19Z",
+      "updatedAt": "2026-10-06T19:05:28Z",
       "preview": "Measured 2026-10-06 on #2267 (coordinator) and reported independently by session A, from #2268.\n\n**What happens.** Since #2080 (5hox), the QA results tree is computed and not committed. Some generators read it from disk, at least `uml:overview` and `readme:subgraphs`. A container's local copy can be partial or stale. On #2267 only `kg-qa` was present, so `bun run regen` rewrote the QA overview wit",
       "file": "beans/defs/folio-assistant-7how--regen-reads-a-stale-qa-tree-generators-that-read-g.md"
     },
@@ -3047,15 +3061,15 @@
     {
       "id": "folio-assistant-7ji4",
       "title": "id-lookup page has no rail: find why and fix",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T15:23:55Z",
-      "updatedAt": "2026-10-05T15:23:55Z",
-      "preview": "Left over from lnoy (#2185): of the 95 navbar-less pages, id-lookup is the one not covered by the thin-page linked rail. Not investigated.",
+      "updatedAt": "2026-10-06T19:13:41Z",
+      "preview": "Left over from lnoy (#2185): of the 95 navbar-less pages, id-lookup is the one not covered by the thin-page linked rail. Not investigated.\n\n_2026-10-06T19:13:41Z_ — Claimed by claude/7ji4-id-lookup-rail — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).",
       "file": "beans/defs/folio-assistant-7ji4--id-lookup-page-has-no-rail-find-why-and-fix.md"
     },
     {
@@ -3915,14 +3929,14 @@
     {
       "id": "folio-assistant-9hfi",
       "title": "smart-immunizations codings.html: CodeSystems and ValueSets show 'not rendered: list-simple-*.xhtml'",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T05:56:52Z",
-      "updatedAt": "2026-10-06T06:01:00Z",
+      "updatedAt": "2026-10-06T18:30:00Z",
       "preview": "Owner, 2026-10-06: on https://litlfred.github.io/smart-immunizations/codings.html both lists render as placeholders:\n\n    CodeSystems ✎ 📣\n    ⟦not rendered: list-simple-codesystems.xhtml⟧ — the IG Publisher renders it from a source this build does not hold; no renderer was given to this build.\n    ValueSets ✎ 📣\n    ⟦not rendered: list-simple-valuesets.xhtml⟧ — (same)\n\nThe owner asked \"what to do",
       "file": "beans/defs/folio-assistant-9hfi--smart-immunizations-codingshtml-codesystems-and-va.md"
     },
@@ -4760,14 +4774,14 @@
     {
       "id": "folio-assistant-bnjs",
       "title": "RENDERED IMPACT: a Change Set lists the rendered files it changes — each renderer maps changed inputs to changed outputs through its dependency cone, and review approves against that list",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T07:13:23Z",
-      "updatedAt": "2026-10-06T07:13:23Z",
+      "updatedAt": "2026-10-06T16:54:17Z",
       "preview": "Owner, 2026-10-06 (#971): \"for a Change Set (generalize/apply concept from Ref Arch) and Issue -> create PR with change set. see a list of rendered justthedocs files (fhir IG, whatever) that changed due to the described changeset. use that as part of review process of changeset PR approval. updates skills and processes.\" Then: \"each renderer should be able to give you from list of input changed fi",
       "file": "beans/defs/folio-assistant-bnjs--rendered-impact-a-change-set-lists-the-rendered-fi.md"
     },
@@ -5693,6 +5707,20 @@
       "file": "beans/defs/folio-assistant-edx7--navbar-is-a-common-fixture-0-of-47-generated-viewe.md"
     },
     {
+      "id": "folio-assistant-ehh6",
+      "title": "RENDERED IMPACT, measured on smart-ra#26: a dispatched staging run finds its PR; a file the site reads nothing from reaches no page; the review page shows the measurement",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T18:25:34Z",
+      "updatedAt": "2026-10-06T18:34:34Z",
+      "preview": "Found by the real staging run on litlfred/smart-ra#26 (run 37507489070, bean dpi-h-ra-7ss8).\n\nA. folio-staging.yml reads the PR only from a pull_request event. smart-ra runs staging by dispatch only (owner decision 2026-10-06), so PR=n/a, no bot comment, no review-comment ingestion, no qa-reports fetch, though GitHub lists the run under #26.\nB. document-rendered-impact.ts puts every unplaced file ",
+      "file": "beans/defs/folio-assistant-ehh6--rendered-impact-measured-on-smart-ra26-a-dispatche.md"
+    },
+    {
       "id": "folio-assistant-ei4q",
       "title": "LHS NAVBAR OVERLAPS CONTENT ON DESKTOP: opening the rail should shrink the content width, not cover it",
       "status": "todo",
@@ -5879,14 +5907,14 @@
     {
       "id": "folio-assistant-f017",
       "title": "SPEED-UP 1: input-hash skip — a check whose declared inputs are unchanged since its last green run is skipped and says so",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:23Z",
-      "updatedAt": "2026-10-06T10:47:48Z",
+      "updatedAt": "2026-10-06T19:02:53Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 1 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: parallel checks, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.\n\n## What\nEach verify/write pair that `bun run regen` / `bun run gates` runs records a hash of its declared INPUTS (the files it reads plus its own script)",
       "file": "beans/defs/folio-assistant-f017--speed-up-1-input-hash-skip-a-check-whose-declared.md"
     },
@@ -6170,14 +6198,14 @@
     {
       "id": "folio-assistant-foaq",
       "title": "fsh-guts:viz renders untracked local mount files, so a regen from a dirty mount stales CI",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T18:00:42Z",
-      "updatedAt": "2026-10-04T18:00:42Z",
+      "updatedAt": "2026-10-06T19:05:07Z",
       "preview": "Measured 2026-10-04 on #2103 (e33c7280eb): `merge:main`'s regen ran `fsh-guts:viz` against the LOCAL fsh-guts mount, which held workflow-engine logs written \"capture undetermined, so local only\" (`fsh-guts/logs/*.json` from `workflow_complete`). The viewer page `cat-harness/docs/fsh-guts/index.md` gained 43 lines for those files; CI's clean mount (147 files) saw it as stale and `fsh-guts:viz:check",
       "file": "beans/defs/folio-assistant-foaq--fsh-gutsviz-renders-untracked-local-mount-files-so.md"
     },
@@ -6394,7 +6422,7 @@
     {
       "id": "folio-assistant-ga6u",
       "title": "S3 drain in-flight PRs: #1756, #1747, #1753, #1581, #1735",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
@@ -6403,7 +6431,7 @@
         "folio-assistant-hx65"
       ],
       "createdAt": "2026-10-01T08:14:33Z",
-      "updatedAt": "2026-10-01T17:41:33Z",
+      "updatedAt": "2026-10-06T19:03:20Z",
       "preview": "## Done when\n- [x] #1756 merged (fnx4 slices 5+6)  — merged 2026-10-02T23:12:43Z, merge commit\n  `edc167d24a`. Its head carried 20 check runs: 14 success, 6 skipped, **0 failure**.\n- [ ] #1747 merged (cmsl step 3)\n- [x] #1753 merged (i2kp)  — merged 2026-10-01T19:34:35Z, merge commit `b5f83541a4`.\n  Its head carried 16 check runs, one of them a FAILURE: `cleanup`, which is\n  housekeeping rather th",
       "file": "beans/defs/folio-assistant-ga6u--s3-drain-in-flight-prs-1756-1747-1753-1581-1735.md"
     },
@@ -6438,14 +6466,14 @@
     {
       "id": "folio-assistant-giiw",
       "title": "ARABIC (RTL) DISPLAY: the unverified-translation notice is English set right-to-left — reordered and clipped; audit the rest of the chrome under dir=rtl",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T07:58:59Z",
-      "updatedAt": "2026-10-06T14:10:58Z",
+      "updatedAt": "2026-10-06T16:54:18Z",
       "preview": "Owner, 2026-10-06, from a screenshot of the staging preview of #2261 (Arabic selected): \"note bean up arabic display issues\".\n\n## Observed (screenshot, AR active in the language selector)\n- The one-line notice reads \"…matically and has — **Unverified translation** ⚠\": the English sentence is laid out right-to-left, so its start ('⚠ Unverified translation —') sits at the RIGHT end, and the one-line",
       "file": "beans/defs/folio-assistant-giiw--arabic-rtl-display-the-unverified-translation-noti.md"
     },
@@ -6924,6 +6952,20 @@
       "file": "beans/defs/folio-assistant-ho66--separation-stage-2-rehearse-cat-harness-cat-harnes.md"
     },
     {
+      "id": "folio-assistant-hp54",
+      "title": "FOLIO_INIT STATE SOURCE: folio_init resolves each state graph's declared source — branch-mounted beans/todos by default, declared either way; audit present-but-undeclared state dirs",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T17:07:20Z",
+      "updatedAt": "2026-10-06T17:07:43Z",
+      "preview": "Measured 2026-10-06: litlfred/smart-ra got beans/ and todos/ as plain in-checkout dirs on main from its install commit 79fcb9d, written by init-folio.ts, which never consults a declared subgraph source; the folio's instance json declares neither, and the directory checks compare declarations to disk, not the reverse. Owner chose 'fix the process'.\n\n## Done when\n- folio_init resolves each state gra",
+      "file": "beans/defs/folio-assistant-hp54--folio-init-state-source-folio-init-resolves-each-s.md"
+    },
+    {
       "id": "folio-assistant-hs08",
       "title": "MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio",
       "status": "in-progress",
@@ -7002,6 +7044,20 @@
       "updatedAt": "2026-10-01T18:34:23Z",
       "preview": "Found 2026-10-01 while merging `yhjr` into PR #1764.\n\n`bun run regen` reported `translate-bpmn:bootstrap:check STILL fails after bun run translate-bpmn:bootstrap — a real defect, not staleness`. It was staleness: `translate-bpmn:bootstrap` (`translate-bpmn.ts --instance ./bootstrap`) prints *\"Nothing to do. Pass --extract, --check, or --inject\"* and writes nothing. Running `translate-bpmn.ts --ins",
       "file": "beans/defs/folio-assistant-i1q7--regen-blind-spot-regen-after-merge-repairs-transla.md"
+    },
+    {
+      "id": "folio-assistant-i2cx",
+      "title": "merge-guard: separation of ready-marker and merging session applies only while a Merge Manager is active",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T17:00:01Z",
+      "updatedAt": "2026-10-06T18:32:53Z",
+      "preview": "Owner ruling 2026-10-06: the merge guard's same-session separation (check 2) applies only if a Merge Manager is active; none is now; durable, not per session. Add --no-merge-manager to merge-guard.ts, tests, and merge-queue skill section incl. the cloud fallback (read the merge-guard commit status on the exact head when gh cannot run).\n\n## Summary of Changes\n\nLanded in #2306 (`0f462dd`), issue #23",
+      "file": "beans/defs/folio-assistant-i2cx--merge-guard-separation-of-ready-marker-and-merging.md"
     },
     {
       "id": "folio-assistant-i2kp",
@@ -7198,6 +7254,22 @@
       "file": "beans/defs/folio-assistant-iwtn--bootstrap-self-definitional-130-mentions-of-harnes.md"
     },
     {
+      "id": "folio-assistant-ixmq",
+      "title": "MERGE RELEASE: capture a person's merge decision on the queue entry, bound to the SHA, and read it back at landing",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-najo"
+      ],
+      "createdAt": "2026-10-04T13:21:37Z",
+      "updatedAt": "2026-10-04T13:21:37Z",
+      "preview": "The PR's own agent records a PERSON's merge decision on the PR's queue entry, bound to the commit it was given for, and the merge path reads it back.\n\nRequested by the owner 2026-10-04 (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi): *\"fill in gaps in merge process and send to Merge Manager. Agent working on PR should be able to capture human merge decision and associate it to me",
+      "file": "beans/defs/folio-assistant-ixmq--merge-release-capture-a-persons-merge-decision-on.md"
+    },
+    {
       "id": "folio-assistant-iym1",
       "title": "VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty",
       "status": "in-progress",
@@ -7284,14 +7356,14 @@
     {
       "id": "folio-assistant-j27s",
       "title": "PAGES CANCELLATION: batch staging-preview pushes to gh-pages so the main-site Pages build is not cancelled (#1868 option 1)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:07:15Z",
-      "updatedAt": "2026-10-03T09:30:00Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "Issue #1868, second problem (comment 2026-10-02T18:10Z): GitHub's pages-build keeps only the newest run and staging pushes land every few minutes, so main-site deploys are cancelled. Owner ruling 2026-10-03 (this session): option 1, push staging previews to gh-pages less often (batch / rate-limit).\n\n## Done when\n- [x] tracking issue for option 1 opened and linked from #1868 — done as #1956\n- [x] f",
       "file": "beans/defs/folio-assistant-j27s--pages-cancellation-batch-staging-preview-pushes-to.md"
     },
@@ -8735,7 +8807,9 @@
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
-      "blocking": [],
+      "blocking": [
+        "folio-assistant-ixmq"
+      ],
       "blockedBy": [],
       "createdAt": "2026-10-04T08:20:32Z",
       "updatedAt": "2026-10-04T08:21:20Z",
@@ -9370,6 +9444,20 @@
       "updatedAt": "2026-10-04T07:23:15Z",
       "preview": "deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.\n\n## Done when\n- [ ] owner's go recorded\n- [ ] files removed; beans/README.md count-line churn (y7b3) gone\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md\n\n_2026-10-04T06:10:27Z_ — Claimed by claude/beans-off-main-9ofm — pushed to main so sibling sessions see it before this branch h",
       "file": "beans/defs/folio-assistant-p3ny--state-branch-p6-remove-the-moved-state-files-from.md"
+    },
+    {
+      "id": "folio-assistant-p3yl",
+      "title": "IG repo onboarding asks two owner questions: disable automatic gh-pages builds? just-the-docs site (default yes)?",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T16:21:43Z",
+      "updatedAt": "2026-10-06T16:21:43Z",
+      "preview": "Owner, 2026-10-06: \"make this part of the process/skill. if gh-pages is being populated, ask use if disable. ask use if they want justthedocs rendering (default is yes)\". Follows #2291 (folio-site template manual-only) and #1901. Rule lives in fhir-harness ig-build-pipeline; fhir-ig-create and ig-render-jekyll point to it.\n\n## Done when\n- [ ] the rule is in one skill with detect / ask-disable / as",
+      "file": "beans/defs/folio-assistant-p3yl--ig-repo-onboarding-asks-two-owner-questions-disabl.md"
     },
     {
       "id": "folio-assistant-p3zo",
@@ -10817,6 +10905,20 @@
       "file": "beans/defs/folio-assistant-supn--harness-cards-become-todos-outstanding-work-a-next.md"
     },
     {
+      "id": "folio-assistant-sxft",
+      "title": "Re-seed the smart-trust FHIR AST cache from main 644bfda (needs FHIR network)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T15:06:56Z",
+      "updatedAt": "2026-10-06T16:37:45Z",
+      "preview": "## Brief\n\nYou are the EXECUTOR for this bean. A cloud Claude session (the coordinator)\nhanded it to you because it cannot reach `packages.fhir.org`, and you can.\nYou were sent here by one sentence:\n`Do bean sxft on branch claude/smart-trust-ast-rehand of repo litlfred/folio-assistant.`\n\nWHERE\n- Repo:     litlfred/folio-assistant\n- Checkout: `~/space_cats/folio-assistant` (NOT `~/space_cats/folio-a",
+      "file": "beans/defs/folio-assistant-sxft--re-seed-the-smart-trust-fhir-ast-cache-from-main-6.md"
+    },
+    {
       "id": "folio-assistant-syiq",
       "title": "S4-a: cat-harness sci-subject skills move or split to folio-assistant-sci (watchers, editorial graph, Milnor; ~48 rows)",
       "status": "todo",
@@ -11049,14 +11151,14 @@
     {
       "id": "folio-assistant-tdi0",
       "title": "latex-known-macros.json lacks \\phantom and \\lessgtr: preflight false positives on a real paper",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T18:57:25Z",
-      "updatedAt": "2026-10-04T19:02:51Z",
+      "updatedAt": "2026-10-06T18:53:18Z",
       "preview": "Found 2026-10-04 running paper-feature-build on litlfred/qou (PR #2118). The LaTeX preflight that build.ts runs reports two undefined-macro findings, and both are standard commands:\n- \\phantom is LaTeX core (first use qou chapters/mass-theory.tex:7091);\n- \\lessgtr is amssymb, which the paper print template loads (chapters/knots-particles-confinement.tex:179).\ncat-harness/content/pipeline/latex-kno",
       "file": "beans/defs/folio-assistant-tdi0--latex-known-macrosjson-lacks-phantom-and-lessgtr-p.md"
     },
@@ -11557,14 +11659,14 @@
     {
       "id": "folio-assistant-uvt0",
       "title": "who-iris replica: the locale band shifts the page 52px; make it an overlay (owner: no shift)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T08:56:44Z",
-      "updatedAt": "2026-10-06T12:30:00Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "**Owner ruling, 2026-10-06** (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92), option 1 of 3: *\"Overlay, no shift\"*. The language band must not move the replica.\n\n## The defect\nWhen a who-iris replica page carries a `fa-translation-meta` block, `docs-ui.js` puts the locale globe in a band inside the page flow, between `.crumbs` and `<main>`. The band is 40 px tall and pushes `<mai",
       "file": "beans/defs/folio-assistant-uvt0--who-iris-replica-the-locale-band-shifts-the-page-5.md"
     },
@@ -11643,14 +11745,14 @@
     {
       "id": "folio-assistant-v3nf",
       "title": "SPEED-UP 2: parallel checks — regen and gates run independent --check scripts concurrently, writers stay ordered",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:24Z",
-      "updatedAt": "2026-10-06T10:47:48Z",
+      "updatedAt": "2026-10-06T19:00:41Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 2 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.\n\n## What\n`bun run regen` asks its ~82 verify/write pairs one at a time, and `bun run gates` runs its fast set serially. Run independent checks in parallel",
       "file": "beans/defs/folio-assistant-v3nf--speed-up-2-parallel-checks-regen-and-gates-run-ind.md"
     },
@@ -11931,14 +12033,14 @@
     {
       "id": "folio-assistant-vq2g",
       "title": "Two bean FILES share one id, and no gate catches it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T02:40:59Z",
-      "updatedAt": "2026-10-03T02:40:59Z",
+      "updatedAt": "2026-10-06T19:44:02Z",
       "preview": "Found 2026-10-03 by the first run of `milestone-rollup.ts`, not by looking for\nit: the module reported `openTotal - orphanOpen = 149` while the sum of the\nper-milestone bars was 148, and the board was about to render both.\n\n## The measurement\n\n```\nbeans: 675 files · distinct ids: 674 · duplicated ids: 1\n  folio-assistant-t3n8 -> beans/defs/folio-assistant-t3n8--harness-display-names-every-instance",
       "file": "beans/defs/folio-assistant-vq2g--two-bean-files-share-one-id-and-no-gate-catches-it.md"
     },
@@ -12071,14 +12173,14 @@
     {
       "id": "folio-assistant-vzo5",
       "title": "check:reference-direction runs in NO workflow, so its PENDING guard — the half its docblock calls enforced — fires nowhere",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T22:16:35Z",
-      "updatedAt": "2026-10-01T17:46:56Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "Found by a goal-review sweep, 2026-09-29, on `origin/main` @ `35402147f55`.\n\n`zhg2` shipped `check:reference-direction` (PR #1222, merged 2026-09-26) and\nregistered it in `gates.ts` as `kind: \"report\"` — advisory, deliberately,\nbecause the wrong-direction count is 574 and *\"a gate that fails on a backlog\nis a gate somebody switches off\"*. That reasoning is sound and is not what\nthis bean disputes.",
       "file": "beans/defs/folio-assistant-vzo5--checkreference-direction-runs-in-no-workflow-so-it.md"
     },
@@ -12577,14 +12679,14 @@
     {
       "id": "folio-assistant-x78e",
       "title": "smart-immunizations landing: Summary heading has a wrong feedback link and no section edit link",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T05:56:52Z",
-      "updatedAt": "2026-10-06T05:56:52Z",
+      "updatedAt": "2026-10-06T18:30:00Z",
       "preview": "Owner, 2026-10-06, on https://litlfred.github.io/smart-immunizations/ : \"was bad feedback/shout link. there is no edit link\" — and: \"there is one at the very bottom of the page, but no context aware edit link\". So the page-level edit link exists in the footer; what is missing is the per-heading ✎.\n\nThe \"Summary\" heading shows only 📣, and its link is:\n\n    https://github.com/litlfred/smart-immuniz",
       "file": "beans/defs/folio-assistant-x78e--smart-immunizations-landing-summary-heading-has-a.md"
     },
@@ -13488,7 +13590,7 @@
     {
       "id": "folio-assistant-z9hh",
       "title": "Merge refused: #2093 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-7x5n",
@@ -13497,7 +13599,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-04T14:30:43Z",
+      "updatedAt": "2026-10-06T19:04:02Z",
       "preview": "PR #2093, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2093.json`, status `active`): ACK: Owner-approved",
       "file": "beans/defs/folio-assistant-z9hh--merge-refused-2093-owed-ci-not-green-on-its-head.md"
     },
@@ -14239,6 +14341,13 @@
       ]
     },
     {
+      "blocker": "folio-assistant-najo",
+      "blocked": "folio-assistant-ixmq",
+      "declaredOn": [
+        "blocked_by"
+      ]
+    },
+    {
       "blocker": "folio-assistant-nama",
       "blocked": "folio-assistant-4j86",
       "declaredOn": [
@@ -14715,6 +14824,12 @@
     },
     {
       "kind": "blocked-without-expiry",
+      "bean": "folio-assistant-najo",
+      "blocks": "folio-assistant-ixmq",
+      "detail": "blocks `folio-assistant-ixmq` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-nama",
       "blocks": "folio-assistant-4j86",
       "detail": "blocks `folio-assistant-4j86` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
@@ -14945,7 +15060,7 @@
       "kind": "blocker-closed",
       "bean": "folio-assistant-hx65",
       "blocks": "folio-assistant-ga6u",
-      "detail": "is completed but still blocks `folio-assistant-ga6u`, which is todo"
+      "detail": "is completed but still blocks `folio-assistant-ga6u`, which is in-progress"
     },
     {
       "kind": "blocker-closed",
@@ -15058,14 +15173,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 568,
-        "closed": 223,
-        "open": 345,
-        "inProgress": 123,
-        "todo": 221,
+        "total": 573,
+        "closed": 233,
+        "open": 340,
+        "inProgress": 124,
+        "todo": 215,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3926056338028169
+        "share": 0.40663176265270506
       },
       {
         "id": "folio-assistant-vuip",
@@ -15073,14 +15188,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 257,
-        "closed": 99,
-        "open": 158,
-        "inProgress": 89,
-        "todo": 68,
+        "total": 259,
+        "closed": 102,
+        "open": 157,
+        "inProgress": 96,
+        "todo": 60,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3852140077821012
+        "share": 0.3938223938223938
       },
       {
         "id": "folio-assistant-yg29",
@@ -15099,8 +15214,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 542,
-    "coveredOpen": 539,
+    "openTotal": 536,
+    "coveredOpen": 533,
     "duplicateIds": 0
   }
 }

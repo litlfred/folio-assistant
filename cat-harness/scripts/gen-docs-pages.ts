@@ -146,8 +146,8 @@ const EDIT_BASE = `${REPO_WEB}/edit/main`;
  * in the generated JSON. Bean `pb04`; found by resolving the link rather than
  * by reading it.
  */
-function repoRelative(p: string): string {
-  return relative(repoRootFor(INSTANCE_ROOT), resolve(INSTANCE_ROOT, p));
+export function repoRelative(p: string): string {
+  return relative(repoRootFor(INSTANCE_ROOT), resolve(INSTANCE_ROOT, p)).replace(/\\/g, "/");
 }
 
 const REPO_URL = detectRepoUrl(repoRootFor(INSTANCE_ROOT));
@@ -227,8 +227,11 @@ let storedAbsent = 0;
  * the rendered artefact. A narrative node resolves to its `.md`. A node with
  * neither is a bare heading and has nothing to edit.
  */
-function editTarget(page: WebPage, node: WebPageNode): string | null {
-  if (node.asset) return node.asset.source;
+export function editTarget(page: WebPage, node: WebPageNode): string | null {
+  if (node.asset) {
+    const src = node.asset.source;
+    return src.startsWith("../") ? repoRelative(src) : src;
+  }
   const narrative = node.block ?? node.lead;
   if (narrative) return `content/docs/${page.slug.replace(/\//g, "-")}/${narrative}.md`;
   return null;
