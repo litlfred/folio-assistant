@@ -1,0 +1,65 @@
+{
+  "$ref": "#/definitions/Anchor",
+  "definitions": {
+    "Anchor": {
+      "type": "object",
+      "properties": {
+        "targetLabel": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "page-line",
+            "page",
+            "caption",
+            "section",
+            "quote",
+            "manual",
+            "unplaced"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "candidates": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "targetLabel",
+        "method",
+        "confidence"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bold-brahmagupta-c8eoku/folio-assistant-core/schema/zod/public-comment/AnchorSchema.schema.json",
+  "title": "AnchorSchema",
+  "description": "Generated from `AnchorSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/bold-brahmagupta-c8eoku",
+    "sha": "c375045d762e05eac363e46493d5cf35c028ce3c",
+    "pr": "2316/merge",
+    "run": "37534674336"
+  }
+}
