@@ -570,10 +570,35 @@ describe("the replica in the six UN languages — issue #2228", () => {
     // The records are WHO's data. Translating the interface around them must
     // not touch them: the same title appears verbatim on every copy.
     const item = english.find((f) => f.startsWith("item-"))!;
-    const title = /<h1>([^<]*)<\/h1>/.exec(readFileSync(join(SITE, item), "utf-8"))![1]!;
+    const title = /<h1[^>]*>([^<]*)<\/h1>/.exec(readFileSync(join(SITE, item), "utf-8"))![1]!;
+    expect(title.length).toBeGreaterThan(0);
     for (const loc of SITE_LOCALES) {
-      expect(readFileSync(join(SITE, loc, item), "utf-8")).toContain(`<h1>${title}</h1>`);
+      expect(readFileSync(join(SITE, loc, item), "utf-8")).toContain(`>${title}</h1>`);
     }
+  });
+
+  it("record data is direction-isolated from the translated interface (bean lffo)", () => {
+    // Measured before the fix on the ar home page: the WPRO citation line
+    // rendered as `(12-05-2020 :تاريخ النشر ,WPR/RDO/2020/003)`, because the
+    // English run and the Arabic label shared one bidi context.
+    const item = english.find((f) => f.startsWith("item-"))!;
+    const ar = readFileSync(join(SITE, "ar", item), "utf-8");
+    const en = readFileSync(join(SITE, item), "utf-8");
+    // A whole-block title aligns by its own text, and says which language it is in…
+    expect(ar).toMatch(/<h1 dir="auto" lang="en">[^<]+<\/h1>/);
+    // …but only where that differs from the page: the English page gains no `lang` noise.
+    expect(en).toMatch(/<h1 dir="auto">[^<]+<\/h1>/);
+    // The record-data crumb is isolated; the interface crumb ("Home") is not.
+    expect(ar).toMatch(/<span class="here"><bdi lang="en">[^<]+<\/bdi><\/span>/);
+
+    const home = readFileSync(join(SITE, "ar", "index.html"), "utf-8");
+    // Every value interpolated into the translated byline is its own isolate.
+    expect(home).toContain(`(<bdi lang="en">WPR/RDO/2020/003</bdi>, `);
+    expect(home).toMatch(/: <bdi>2020-05-12<\/bdi>\)/);
+    // Abstracts and titles are block-level data: `dir="auto"`, never `ltr`.
+    expect(home).toMatch(/<p class="sub-abs" dir="auto" lang="en">/);
+    expect(home).toMatch(/<a class="sub-title" dir="auto" lang="en" /);
+    expect(home).not.toContain(`dir="ltr"`);
   });
 
   it("the interface is translated — no page in a translation carries the English chrome", () => {
