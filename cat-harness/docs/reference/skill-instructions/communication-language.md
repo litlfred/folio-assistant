@@ -47,7 +47,7 @@ every question that follows; this is the same argument one step further.
 
 | rank | input | where it lives |
 |---|---|---|
-| 1 | the person's **stated preference** | `interaction/interaction.json`, per user |
+| 1 | the person's **stated preference** | `cat-harness/memory/interaction.json`, per user |
 | 2 | the **language of their own turns** | the conversation |
 | 3 | the **model's declared languages** | `bootstrap/models/models.json` |
 | 4 | the instance's **`defaultLocale`** | `harness.config.json` → `translation.defaultLocale` |
@@ -93,7 +93,7 @@ obeying the letter of a rule that never meant it.
 
 ## Record it where a sibling session reads it
 
-`interaction/interaction.json`, in the user's entry, beside `profiles`:
+`cat-harness/memory/interaction.json`, in the user's entry, beside `profiles`:
 
 ```jsonc
 "someone@example.org": {

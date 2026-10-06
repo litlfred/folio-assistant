@@ -6890,8 +6890,15 @@
     {
       "id": "interaction.interactionnodeschema.users",
       "prefLabel": "InteractionNodeSchema.users",
-      "definition": "Keyed by the identity the agent can resolve — an email today.",
+      "definition": "Keyed by GitHub handle (owner 2026-10-06); other identities go in each entry's `aliases`. An email key from before still parses, and still matches when it is the session's login.",
       "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.users",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.aliases",
+      "prefLabel": "InteractionProfileSchema.aliases",
+      "definition": "Other identities this person CHOOSES to publish — a login email, a second handle. The entry's key is the GitHub handle (owner 2026-10-06: one person may hold more than one Claude account, so no login email is an identity).",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.aliases",
       "status": "candidate"
     },
     {

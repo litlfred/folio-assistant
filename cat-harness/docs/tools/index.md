@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>129</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>71</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>107</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>130</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>72</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>108</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 107 |
+| <span class="tg-tag tg-shell">shell</span> | 108 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 120 |
+| `none` | 121 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **71** skills named across **129** tools resolve to a
+Yes — all **72** skills named across **130** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -68,6 +68,7 @@ tool advertising a capability the graph cannot locate.
 
 | tool | what it does | invoked | satisfies | i/o |
 |---|---|---|---|---|
+| `agent-memory`<br>Agent memory assembler | Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated. | <span class="tg-tag tg-shell">shell</span> | [`agent-memory`](../reference/skill-instructions/agent-memory.html) | 0 in / 1 out |
 | `auto-docs-viewer`<br>Generated index pages | Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `avatars-css`<br>Avatar stylesheet | Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves. | <span class="tg-tag tg-shell">shell</span> | [`site-presentation-assets`](../reference/skill-instructions/site-presentation-assets.html) | 1 in / 1 out |
 | `beans-cli`<br>beans CLI | Read and write the work plan with the `beans` binary. The normal mechanism when it is installed. | <span class="tg-tag tg-shell">shell</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html)<br>[`continual-progress`](../reference/skill-instructions/continual-progress.html)<br>[`idle-backlog`](../reference/skill-instructions/idle-backlog.html)<br>[`pending-show`](../reference/skill-instructions/pending-show.html)<br>[`session-intent`](../reference/skill-instructions/session-intent.html)<br>[`todo-manager`](../reference/skill-instructions/todo-manager.html) | 3 in / 1 out |

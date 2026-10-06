@@ -74,6 +74,16 @@
       "name": "health"
     },
     {
+      "@id": "cat-harness:graphTypology/interaction",
+      "@type": "bootstrap:GraphTypology",
+      "name": "interaction"
+    },
+    {
+      "@id": "cat-harness:graphTypology/memory",
+      "@type": "bootstrap:GraphTypology",
+      "name": "memory"
+    },
+    {
       "@id": "cat-harness:graphTypology/methodology",
       "@type": "bootstrap:GraphTypology",
       "name": "methodology"
@@ -132,6 +142,11 @@
       "@id": "cat-harness:graphTypology/vocab-mapping",
       "@type": "bootstrap:GraphTypology",
       "name": "vocab-mapping"
+    },
+    {
+      "@id": "cat-harness:graphTypology/waiver",
+      "@type": "bootstrap:GraphTypology",
+      "name": "waiver"
     },
     {
       "@id": "folio-assistant-core:graphTypology/folio",
@@ -580,6 +595,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/library",
       "@type": "bootstrap:Subgraph",
       "name": "library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/memory",
+      "@type": "bootstrap:Subgraph",
+      "name": "memory"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/methodologies",
@@ -1956,6 +1976,12 @@
       "@type": "cat-harness:Schema",
       "name": "withheld",
       "title": "withheld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/agent-memory",
+      "@type": "cat-harness:Tool",
+      "name": "agent-memory",
+      "title": "Agent memory assembler"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/auto-docs-viewer",

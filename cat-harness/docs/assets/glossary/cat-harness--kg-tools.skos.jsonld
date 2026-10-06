@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/agent-memory",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Agent memory assembler"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated."
+        }
+      ],
+      "skos:notation": "agent-memory",
+      "dcterms:source": "cat-harness/tools/index.ts#agent-memory",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/auto-docs-viewer",
       "@type": "skos:Concept",
       "skos:inScheme": {

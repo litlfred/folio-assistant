@@ -19968,7 +19968,7 @@
       "fields": [
         {
           "name": "interaction",
-          "type": "z.string().default(\"interaction/interaction.json\")",
+          "type": "z.string().default(\"cat-harness/memory/interaction.json\")",
           "optional": true,
           "array": false
         }
@@ -21134,7 +21134,7 @@
           "type": "z.record(z.string(), InteractionProfileSchema)",
           "optional": false,
           "array": false,
-          "doc": "Keyed by the identity the agent can resolve — an email today."
+          "doc": "Keyed by GitHub handle (owner 2026-10-06); other identities go in each"
         },
         {
           "name": "default",
@@ -21176,6 +21176,13 @@
       "kind": "zod-object",
       "doc": "One person's preferences, or the fallback for somebody with no entry.",
       "fields": [
+        {
+          "name": "aliases",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Other identities this person CHOOSES to publish — a login email, a second"
+        },
         {
           "name": "profiles",
           "type": "z.array(z.string())",

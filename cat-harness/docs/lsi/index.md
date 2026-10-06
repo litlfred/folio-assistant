@@ -44,6 +44,7 @@ it, drawn from the evidence that build fetched.
 | `cat-harness/docs` | **yes** |
 | `cat-harness/folio` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `cat-harness/library` | **yes** |
+| `cat-harness/memory` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `cat-harness/methodologies` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `cat-harness/policies` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `cat-harness/skills` | **yes** |
@@ -55,12 +56,11 @@ it, drawn from the evidence that build fetched.
 | `folio-assistant-core/folio-assistant-core-docs` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-core/folios` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-core/glossary` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
+| `folio-assistant-core/memory` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-sci/library` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-sci/sci-methodologies` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant-sci/skills` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `folio-assistant/beans` | <span class="lv-na">state graph — indexed on demand, never committed</span> |
-| `folio-assistant/memory` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
-| `folio-assistant/root-docs` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `smart-base/library` | **yes** |
 | `smart-base/methodologies` | <span class="lv-na">below the need-an-index threshold — not judged</span> |
 | `smart-base/smart-base-docs` | **yes** |

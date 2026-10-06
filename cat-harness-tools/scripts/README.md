@@ -10,6 +10,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 
 | file | what it is | used by |
 |---|---|---|
+| [`auth-login.ts`](auth-login.ts) | a file |  |
 | [`bean-notes.ts`](bean-notes.ts) | a file |  |
 | [`bean-rollover.ts`](bean-rollover.ts) | a file |  |
 | [`bench-id-lookup.ts`](bench-id-lookup.ts) | a file |  |

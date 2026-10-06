@@ -18703,10 +18703,29 @@
       ],
       "skos:definition": [
         {
-          "@value": "Keyed by the identity the agent can resolve — an email today."
+          "@value": "Keyed by GitHub handle (owner 2026-10-06); other identities go in each entry's `aliases`. An email key from before still parses, and still matches when it is the session's login."
         }
       ],
       "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.users",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/interaction.interactionprofileschema.aliases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InteractionProfileSchema.aliases"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Other identities this person CHOOSES to publish — a login email, a second handle. The entry's key is the GitHub handle (owner 2026-10-06: one person may hold more than one Claude account, so no login email is an identity)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.aliases",
       "skos:note": "candidate"
     },
     {
