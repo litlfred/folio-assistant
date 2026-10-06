@@ -273,6 +273,12 @@ export const RULES: Rule[] = [
       // surface that draws a harness's mark calls it, so a folio owning it
       // would let one instance decide how every other instance's mark is read.
       "scripts/lib/harness-mark.ts",
+      // What that chrome's data says on a FOLIO's own site (#2263): its tiles,
+      // icon row and rail scopes scoped to the folio, the platform's graphs
+      // re-based onto the platform. HARNESS beside `harness-rail.ts`: it is the
+      // platform deciding how its own chrome reads elsewhere, and a folio
+      // owning it would let one instance decide what every other shows.
+      "scripts/lib/foreign-site-scope.ts",
       // How a GRAPH-TYPOLOGY row in that navbar is marked and named (bean `yag0`):
       // the kind's avatar glyph and hue, and the head of its registered
       // summary as the accessible name. HARNESS beside `navbar.ts` for the

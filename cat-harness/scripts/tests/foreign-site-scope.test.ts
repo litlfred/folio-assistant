@@ -22,6 +22,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+import { siteDirFor } from "../../schemas/cat-harness.js";
 import { compose } from "../compose-docs.ts";
 import {
   foreignScopeFor,
@@ -37,7 +38,9 @@ import { railStandalonePages } from "../mount-instance-docs.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const BASE = "https://litlfred.github.io/folio-assistant";
-const PLATFORM_DATA = join(REPO, "cat-harness", "docs", "_data", "harness.json");
+const CAT_HARNESS = join(REPO, "cat-harness");
+/** The platform's own harness data, at its declared site directory (`siteDirFor`), never a literal. */
+const PLATFORM_DATA = join(CAT_HARNESS, siteDirFor(CAT_HARNESS), "_data", "harness.json");
 
 /** A scope over a made-up declaration set, so the rule matrix is stated rather than inherited. */
 function fakeScope(over: Partial<ForeignScope> = {}): ForeignScope {
