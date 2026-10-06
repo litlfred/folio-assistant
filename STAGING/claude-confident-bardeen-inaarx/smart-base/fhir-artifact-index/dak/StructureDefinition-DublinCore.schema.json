@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-DublinCore.schema.json",
+  "title": "Dublin Core Metadata Element Set",
+  "description": "Logical Model representing Dublin Core metadata elements as defined at https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "DublinCore",
+      "description": "Resource type identifier for DublinCore logical model"
+    },
+    "title": {
+      "type": "string",
+      "description": "A name given to the resource"
+    },
+    "creator": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An entity responsible for making the resource"
+    },
+    "subject": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The topic of the resource"
+    },
+    "description": {
+      "type": "string",
+      "description": "An account of the resource"
+    },
+    "publisher": {
+      "type": "string",
+      "description": "An entity responsible for making the resource available"
+    },
+    "contributor": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An entity responsible for making contributions to the resource"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "A point or period of time associated with an event in the lifecycle of the resource"
+    },
+    "type": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The nature or genre of the resource"
+    },
+    "format": {
+      "type": "string",
+      "description": "The file format, physical medium, or dimensions of the resource"
+    },
+    "identifier": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An unambiguous reference to the resource within a given context"
+    },
+    "source": {
+      "type": "string",
+      "description": "A related resource from which the described resource is derived"
+    },
+    "language": {
+      "type": "string",
+      "description": "A language of the resource"
+    },
+    "relation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A related resource"
+    },
+    "coverage": {
+      "type": "string",
+      "description": "The spatial or temporal topic of the resource"
+    },
+    "rights": {
+      "type": "string",
+      "description": "Information about rights held in and over the resource"
+    }
+  },
+  "required": [
+    "resourceType"
+  ],
+  "resourceDefinition": "http://smart.who.int/base/StructureDefinition/DublinCore",
+  "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+}
