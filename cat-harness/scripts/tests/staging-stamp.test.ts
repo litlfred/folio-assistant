@@ -6,18 +6,17 @@
  * vanishes the moment a JSON-LD processor touches the document — the `ovkk`
  * defect, which is why `context-declares-staging` below asserts against the
  * exported `@context` rather than against the writer.
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/feature-staging.yml`) live in
+ * `cat-harness-tools/scripts/tests/staging-stamp-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
 
 import { stagingStamp, stagingFields, STAGING_KEY } from "../staging-stamp.js";
 import { buildDeclarationSchema, buildToolSchema, buildToolTypes } from "../harness-schema-export.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
 import { buildExport } from "../kg-export.js";
-
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 /**
  * The export, built ONCE at module scope.
@@ -75,16 +74,6 @@ describe("the JSON-LD export declares the stamp it carries", () => {
       expect(term["@context"]?.[f]).toBeTypeOf("string");
       expect(ctx["@context"][f]).toBeUndefined();
     }
-  });
-});
-
-describe("the workflow no longer stamps out of band", () => {
-  it("feature-staging.yml does not rewrite the export after writing it", () => {
-    const wf = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", "feature-staging.yml"), "utf-8");
-    // The inline rewrite reached the JSON-LD and nothing else. If it comes
-    // back, the schema documents go unstamped again and the two stamps can
-    // disagree.
-    expect(wf).not.toMatch(/d\.staging\s*=/);
   });
 });
 

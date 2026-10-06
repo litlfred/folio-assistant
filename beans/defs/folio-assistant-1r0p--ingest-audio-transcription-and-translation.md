@@ -120,6 +120,12 @@ from the shape a sidecar usually takes.
 
 `r279` closed on the owner's ruling. The backend options are Tool nodes (`transcribe-whisper-cpp`, `transcribe-faster-whisper`, `transcribe-vosk`), declared but not installed. When the first recording arrives, this bean's first step is to pick one by its `selection` record, install it, declare it in `schemas/python-deps.ts` if it is Python, and re-measure the CI install cost. Until then there is still nothing to transcribe.
 
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
 ## Owner ruling 2026-10-06: defer until real audio exists
 
 Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): defer until audio exists; faster-whisper (local); hosted API. **The owner chose "Defer until audio exists".**

@@ -1492,6 +1492,14 @@ export const DirectoryStorageSchema = z
      * for lean cache").
      */
     repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
+    /**
+     * The declared Tool that puts content on this store, or mounts it from
+     * there: `gh-pages` deploys a site, `ig-cache` restores an AST family
+     * (bean j9cs, owner 2026-10-04: *"there should not be a central registry
+     * for declaring mount tools"*). A Tool node's `id`, which
+     * `check:storage-tools` resolves against every declared `tools` graph.
+     */
+    tool: z.string().regex(/^[a-z0-9][a-z0-9-]*$/, "a Tool node id").optional(),
   })
   .strict()
   // ONE object carrying the ONE enum (`route-member.test.ts` checks identity),

@@ -19,8 +19,15 @@ const ROOT = join(import.meta.dir, "..", "..");
 const CTX = loadAccessContext(ROOT);
 const GITHUB: Principal = { actor: "collaborator", authenticatedBy: "github", account: "octo" };
 
+/**
+ * The first step of a diagram whose lane binds a role. Any such diagram
+ * serves; this one is cat-harness's OWN (`crdm-requirements`), so the engine's
+ * record is tested where the engine lives. It read `getting-started.bpmn`
+ * until 2026-10-06, which folio-assistant-core owns, so standing alone the
+ * harness had nothing to run these on (bean `ho66`).
+ */
 async function firstRoledStep() {
-  const model = await loadProcessModel(workflowFile(ROOT, "getting-started.bpmn"));
+  const model = await loadProcessModel(workflowFile(ROOT, "crdm-requirements.bpmn"));
   const state = startInstance(model, { id: "t", subject: "s" });
   const e = enabled(model, state).find((x) => x.kind === "activity" && model.nodes.get(x.node)?.roleRef);
   return { model, state, node: model.nodes.get(e!.node)! };
@@ -38,7 +45,7 @@ describe("complete() writes the activity as it records the step", () => {
     expect(entry.prov!["prov:qualifiedAssociation"]).toEqual({
       "prov:agent": "collaborator",
       "prov:hadRole": node.roleRef!,
-      "prov:hadPlan": `getting-started#${node.id}`,
+      "prov:hadPlan": `crdm-requirements#${node.id}`,
     });
     expect(entry.prov!["prov:used"]).toEqual(["block-1"]);
     // Every policy in force, because decide() evaluated every one.

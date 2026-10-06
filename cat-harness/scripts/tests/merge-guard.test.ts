@@ -14,6 +14,11 @@
  * test names the check it is about and asserts that check's status; the
  * variants that isolate one reason (a signed marker, a re-timed question) say
  * what they changed from the real record and why.
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`feature-staging.yml`, `merge-main.yml`) live in
+ * `cat-harness-tools/scripts/tests/merge-guard-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -26,7 +31,6 @@ import {
   getAll,
   isBotMerge,
   openQuestions,
-  parseMergeMainDispatches,
   readyMarkers,
   sameRepoNext,
   signingSession,
@@ -357,14 +361,6 @@ describe("check 5 — a held run on a bot-merged head is judged by its dispatch"
     expect(c.detail).toContain("Code-quality gates: failure");
     expect(c.detail).not.toContain("judged by its green");
     expect(status(real(1957), "ci").status).toBe("pass");
-  });
-
-  test("parseMergeMainDispatches reads today's merge-main.yml, and refuses a line it cannot read", () => {
-    const yml = readFileSync(join(import.meta.dir, "..", "..", "..", ".github", "workflows", "merge-main.yml"), "utf8");
-    expect(parseMergeMainDispatches(yml)).toEqual([...DISPATCHED]);
-    expect(parseMergeMainDispatches('for wf in a.yml b.yml; do\n  gh workflow run "$wf" --ref x\ndone')).toEqual(["a.yml", "b.yml"]);
-    expect(parseMergeMainDispatches('for wf in $WORKFLOWS; do gh workflow run "$wf"; done')).toBeUndefined();
-    expect(parseMergeMainDispatches("gh workflow run code-quality-gates.yml")).toBeUndefined();
   });
 });
 
