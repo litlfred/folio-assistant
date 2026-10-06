@@ -59,7 +59,11 @@ jobs:
       - name: The main site's chrome, with this instance's navbar
         working-directory: folio-assistant
         run: |
-          bun run cat-harness/scripts/compose-docs.ts --out "$RUNNER_TEMP/docs" --shell
+          # --instance/--title/--link-root scope the shell's harness data to THIS
+          # IG (#2263): its tiles, icon row, rail scope and title, with the
+          # main site's graphs linked there and none of its counts shown here.
+          bun run cat-harness/scripts/compose-docs.ts --out "$RUNNER_TEMP/docs" --shell \
+            --instance "$INSTANCE" --title "$LABEL" --link-root "$MAIN_SITE"
           bun run cat-harness/scripts/gen-navbar-include.ts --instance "$INSTANCE" \
             --link-root "$MAIN_SITE" --title "$LABEL" \
             --out "$RUNNER_TEMP/docs/_includes/generated/navbar-footer.html"

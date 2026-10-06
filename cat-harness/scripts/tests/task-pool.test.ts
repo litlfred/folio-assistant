@@ -34,7 +34,7 @@ import {
 } from "../input-hash.ts";
 import { cacheKey, hashesToRecord, regenPass, regenToFixpoint, type Pair, type Runner } from "../regen-after-merge.ts";
 import { gateSegments, type Gate } from "../gates.ts";
-import { TASK_IO, pairIO, gateReadsOnly } from "../task-io.ts";
+import { TASK_IO, collectTaskIo, pairIO, gateReadsOnly } from "../task-io.ts";
 
 const tick = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -447,5 +447,41 @@ describe("task-io declarations", () => {
     for (const [name, io] of Object.entries(TASK_IO)) {
       if (io.outputs !== undefined) expect(io.outputs, `${name} declares outputs; only [] is supported`).toEqual([]);
     }
+  });
+});
+
+describe("task-io: each instance declares its own tasks (bean 0r7u)", () => {
+  let root: string;
+  const writeInstance = (name: string, taskIo?: Record<string, unknown>) => {
+    mkdirSync(join(root, name), { recursive: true });
+    writeFileSync(
+      join(root, name, `${name}.json`),
+      JSON.stringify({ name, version: "0.1.0", directories: [], ...(taskIo === undefined ? {} : { taskIo }) }),
+    );
+  };
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), "task-io-"));
+  });
+  afterEach(() => rmSync(root, { recursive: true, force: true }));
+
+  test("standalone, with no instance above, the result is the own rows alone", () => {
+    writeInstance("acme");
+    expect(collectTaskIo(root, { "own:check": { outputs: [] } })).toEqual({ "own:check": { outputs: [] } });
+  });
+
+  test("a declared row is collected from the instance that owns it", () => {
+    writeInstance("acme", { "acme:check": { inputs: ["{tracked}"], outputs: [], because: "read for writes" } });
+    expect(collectTaskIo(root, {})).toEqual({ "acme:check": { inputs: ["{tracked}"], outputs: [] } });
+  });
+
+  test("a task declared by two owners is refused, not silently resolved", () => {
+    writeInstance("acme", { "x:check": { outputs: [] } });
+    expect(() => collectTaskIo(root, { "x:check": { outputs: [] } })).toThrow(/one task, one owner/);
+  });
+
+  test("no instance above cat-harness-tools is named in the own table", () => {
+    const upper = /^(smart-|iris:|ig-ast:|p2:|check:(glossary|catalogue|voices|artifact-index|materialized-fixity)$)/;
+    const own = collectTaskIo(join(root, "absent"));
+    for (const k of Object.keys(own)) expect(upper.test(k), `${k} belongs in its owner's declaration`).toBe(false);
   });
 });

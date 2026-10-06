@@ -1,0 +1,22 @@
+{%- comment -%}
+The IG Publisher's page footer on the IG site's own pages (#1901): the <prev | top | next> row, the band naming
+the IG's publisher, package, FHIR version and build date, and the "Links:" row.
+Reads `site.data.fhir.footer` (`igSiteFooter` in `ig-footer.ts`: every value from the IG's own package and
+`sushi-config.yaml`, and `links` already narrowed to targets this site holds) and the page's `ig_prev` /
+`ig_next` (`build-ig-site.ts`, in the IG's table-of-contents order). A value the data does not carry is left
+out of the sentence, never filled in. The markup matches the artefact pages' footer (`ig-footer.js`), so one
+stylesheet (`assets/ig-pages.css`) draws both.
+{%- endcomment -%}
+{%- assign f = site.data.fhir.footer -%}
+{%- for css in f.stylesheets %}<link rel="stylesheet" href="{{ css }}">{% endfor %}
+<footer id="ig-footer"{% if f.scope %} class="{{ f.scope }}"{% endif %}>
+<p class="ig-footer-nav">{% if page.ig_prev %}<a href="{{ page.ig_prev }}">&lt;prev</a> | {% endif %}<a href="#">top</a>{% if page.ig_next %} | <a href="{{ page.ig_next }}">next&gt;</a>{% endif %}</p>
+<p class="ig-footer-band">
+{%- if f.publisher %}IG ©{% if f.copyrightYear %} {{ f.copyrightYear | escape }}{% endif %} {% if f.publisherUrl %}<a href="{{ f.publisherUrl }}" rel="external">{{ f.publisher | escape }}</a>{% else %}{{ f.publisher | escape }}{% endif %}. {% endif -%}
+{%- if f.packageId %}Package <code>{{ f.packageId | escape }}{% if f.version %}#{{ f.version | escape }}{% endif %}</code>{% if f.fhirVersion %} based on {% if f.fhirUrl %}<a href="{{ f.fhirUrl }}" rel="external">FHIR {{ f.fhirVersion | escape }}</a>{% else %}FHIR {{ f.fhirVersion | escape }}{% endif %}{% endif %}. {% endif -%}
+{%- if f.generated %}Generated {{ f.generated | escape }}{% endif -%}
+</p>
+{%- if f.links.first %}
+<p class="ig-footer-links">Links: {% for l in f.links %}{% unless forloop.first %} | {% endunless %}<a href="{{ l.href }}"{% if l.external %} rel="external"{% endif %}>{{ l.label | escape }}</a>{% endfor %}</p>
+{%- endif %}
+</footer>

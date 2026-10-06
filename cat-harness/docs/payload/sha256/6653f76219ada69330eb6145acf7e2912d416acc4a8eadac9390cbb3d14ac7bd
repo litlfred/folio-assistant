@@ -455,6 +455,72 @@ derived, so no tile can be authored legible in one mode and invisible in the
 other. A per-instance palette would be a second colour vocabulary beside
 `theme.ts` — the drift that file exists to have ended.
 
+## On a folio's own site, a tile describes the FOLIO (issue #2263)
+
+Owner, 2026-10-06, on https://litlfred.github.io/smart-trust/, verbatim:
+
+> the beans and todos badges seems to be countts from folio-assistant and not
+> litlfred/smart-trust as expected. links to beans and todos dont work. why
+> not? fix process and skills.
+
+**A page's tiles describe the instance whose site the page is on.** A folio's
+own Pages site (an IG repository's `folio-site.yml`, a document folio's
+`folio-staging.yml`) wears the platform's chrome, and the platform's
+`_data/harness.json` came with it: the platform's tiles with the platform's
+counts baked in (beans 916, todos 3), its icon row, its rail scopes and its
+title, every path root-relative to the **platform's** site. The icon row's
+badges fetched `assets/beans/count.json` from the page's own site, where the
+shell had copied the platform's. So smart-trust showed folio-assistant's 537
+open beans, and 109 rail and tile links on one page resolved to 404s.
+
+`cat-harness/scripts/lib/foreign-site-scope.ts` applies the rule to the data,
+once, for both passes (`compose-docs --shell --instance`, and
+`rail-standalone-pages --foreign-site`):
+
+| the link points at | on a folio's site it | count |
+|---|---|---|
+| the folio's own root (`/<instance>/…`) | resolves inside the folio's baseurl | kept |
+| another instance's **`state`** graph (beans, todos, QA, health, uploads …) | **is not linked**; the icon says why in words | **none** |
+| a platform content, context or derived graph (skills, processes, tools, schemas, docs …) | is re-based, absolute, onto `DOCS_SITE_BASE`, with its qualifier shown | **none** |
+| a kind nothing classifies | is treated as state | none |
+
+**Why the state row is unlinked rather than shown at zero or re-based.**
+`schemas/tile-count.ts` and §"A TILE IS ONE OF TWO KINDS" already settle it:
+absent is a third state, never `0`. A folio that declares no `beans` graph has
+not said it has no beans; it has said nothing. Showing `0` would be a claim,
+and showing the platform's number, or a link to the platform's work plan
+under a bare "Beans" icon, answers *"where are smart-trust's beans"* with
+somebody else's. The icon keeps its place and its accessible name says
+*"smart-trust declares no beans graph"*, per §"An inert row SAYS why".
+
+**Ownership is decided by where the link points, never by a kind of the same
+name.** smart-trust declares a `qa` directory; the platform's QA tile
+(`/lsi/`, 1,002 items) is still the platform's QA, and borrowing it because
+the word matched would put the platform's number back on the folio's page.
+
+**A count beside a borrowed link is dropped too.** "Library · C@T Harness 42"
+linking to the platform is accurate as a link, but the number still sits on
+the folio's page next to the folio's own. The qualifier is shown instead, so
+the tile reads as the platform's.
+
+**The host's count projections are not chrome.** `compose-docs --shell` now
+leaves out every `assets/**.json` that declares a headline `tile` count, the
+same way it already blanked `_includes/generated/` (#2235 F1). A badge whose
+file 404s renders as ABSENT, with no number, which is the honest answer.
+
+**The pinned rail reserves its width.** On the same page the open rail covered
+the IG's breadcrumb, menu bar and heading (*"…s Requirements"*). Hover and
+focus still open the bar over the page, because they are a peek. Pinning is a
+choice to keep it open, so `.main` moves over (`docs-ui.css`).
+
+**The gate is `foreign-site-scope.test.ts`.** It runs both foreign-site passes
+over a folio and asserts (a) no tile carries another instance's count or
+links its state graph, and (b) no href is left root-relative unless it is
+the folio's own path. Nothing caught this earlier because every check ran on
+the platform's own site, where the platform's tiles are right by
+construction. **A check of a page's chrome has to run on a site that is not
+the platform's.**
+
 ## The glass strip — pinned first, and "+N more" counts the rest
 
 **No tile may be silently off-screen.** That is the rule, and the owner's
