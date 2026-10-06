@@ -168,7 +168,7 @@ import {
   type SubstrateSnapshot,
   subscriptionKindOf,
 } from "../schemas/substrate-snapshot.js";
-import { NODES_DIR, NODES_RECORD_FILE, PART_RECORD_FILE, type PartView, viewOf } from "./kg-parts.js";
+import { NODES_DIR, NODES_RECORD_FILE, PART_RECORD_FILE, type PartView, safeRelPath, viewOf } from "./kg-parts.js";
 import { git, pinnedRef, shallowFetch } from "./sync-remote-skills.js";
 
 const INSTANCE = join(import.meta.dir, "..");
