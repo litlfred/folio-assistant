@@ -96,10 +96,13 @@ facts (`data-src`, optional `data-repo`, `data-line`, `data-block`,
 `data-sec`) or leave a GitHub `blob`/`edit` href, which the runtime reads the
 facts from. Generators that write Markdown use `markdownEditLink`.
 
-Two pages keep their own link on purpose: the public-comment dashboard's
-**Discuss** (it opens a change-set discussion, not feedback on a block) and
-the bootstrap site's **Improve this page** (`bootstrap-tools` may import
-nothing outside itself).
+Three places keep their own link on purpose: the public-comment dashboard's
+**Discuss** (it opens a change-set discussion, not feedback on a block), the
+bootstrap site's **Improve this page** (`bootstrap-tools` may import nothing
+outside itself), and an IG page's per-**section** ✎ / 📣 (`SOURCE_LINKS_JS`
+in `build-ig-site.ts`): a section's heading can live in an included file
+(bean `x78e`), and its issue is titled after the section with the page apart.
+The IG page's own *Edit this page* link does use the recipe.
 
 **Any page that shows edit or feedback links uses these,** not a URL of its
 own: one recipe, so a change to the issue form or the branch reaches every

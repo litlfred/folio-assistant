@@ -17,7 +17,7 @@
  *
  * The tests here that read the aggregate repository's own root
  * (`feature-staging.yml`, `merge-main.yml`) live in
- * `cat-harness-tools/scripts/tests/merge-guard-workflows.test.ts` (bean
+ * `test/merge-guard-workflows.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
@@ -160,6 +160,26 @@ describe("check 2 — ready for review", () => {
     const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
     s.comments.push(signed(2, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
     expect(status(s, "ready-for-review", { mergingSession: STEWARD }).status).toBe("pass");
+  });
+
+  test("no Merge Manager active: the PR's OWN session may mark it ready and merge it", () => {
+    const s = real(1957);
+    const own = signingSession(s.pr.body)!;
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(3, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
+    expect(status(s, "ready-for-review", { mergingSession: own }).status).toBe("refuse");
+    const c = status(s, "ready-for-review", { mergingSession: own, noMergeManager: true });
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain("no Merge Manager is active");
+  });
+
+  test("no Merge Manager active still refuses a ready flip nobody from the PR's own session signed", () => {
+    const s = real(1957);
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(4, shift(ev.created_at!, 60_000), STEWARD, "Marking ready and labelling."));
+    const c = status(s, "ready-for-review", { mergingSession: STEWARD, noMergeManager: true });
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain("cannot be attributed to the PR's own session");
   });
 
   test("never a draft: nothing to attribute, passes", () => {

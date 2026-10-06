@@ -36,7 +36,15 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from "fs";
 import { instanceConfigFilename } from "../schemas/harness-config";
 import { instanceDeclarationFilename, resolveDirectories } from "../schemas/cat-harness";
-import { materialiseDeclaredDirectories } from "../schemas/harness-config";
+import { declaredSubgraph, materialiseDeclaredDirectories, subgraphSourceOverrides } from "../schemas/harness-config";
+import { defaultGraphTypologies } from "../schemas/graph-typology-registry";
+import {
+  instanceStateBranch,
+  resolveSubgraphSource,
+  type ResolvedSubgraphSource,
+  type SubgraphSource,
+  type SubgraphSourceOverrides,
+} from "../schemas/subgraph-source";
 import { relative, dirname, join, resolve, sep } from "path";
 import { spawnSync } from "child_process";
 import { BUILTIN_ADAPTERS } from "../src/builtin-adapters";
@@ -110,6 +118,25 @@ export interface InitFolioResult {
   skipped: string[];
   /** Anything the caller needs to act on — a failed submodule add, a next step. */
   notes: string[];
+  /**
+   * Each STATE graph the instance holds (its work plan and its todos), with
+   * the source the one resolver gave it and what the scaffold therefore did:
+   * `written` into the checkout, or `branch` — declared, not written, and
+   * kept on `branch` (bean `hp54`). `seed` is the command that creates that
+   * branch, because no platform command creates a new state branch.
+   */
+  stateGraphs: StateGraphOutcome[];
+}
+
+/** What `folio_init` did with one state graph (bean `hp54`). */
+export interface StateGraphOutcome {
+  id: string;
+  path: string;
+  source: ResolvedSubgraphSource;
+  /** Where the answer came from: the declaration this scaffold wrote (or found), or only the entry it computed. */
+  declared: boolean;
+  /** For a branch source: the shell that seeds the branch, run once from the new repository. */
+  seed?: string;
 }
 
 /** A slug that is safe as a directory name, a TS module name and a URL path. */
@@ -222,6 +249,119 @@ function standsOn(assistant: string, contentType: InitFolioOptions["contentType"
   return at < 0 ? harness : { name: declared.instance, path: segments.slice(0, at + 1).join("/") };
 }
 
+// ── State graphs (bean `hp54`) ───────────────────────────────────
+
+/**
+ * The STATE graphs every instance scaffolds — `holds: "state"` kinds it gives
+ * a directory of its own: the work plan and the todos. Listed rather than
+ * derived from the registry because the scaffold writes their CONTENT
+ * (`.beans.yml`'s store, `todos/todos.json`), and a kind added to the registry
+ * brings no content with it. `init-folio.test.ts` pins that every registry
+ * kind carrying `newInstanceSource` is in this list, so the two cannot drift.
+ */
+export const INSTANCE_STATE_GRAPHS = [
+  {
+    id: "beans",
+    // declared-path-literal: the scaffolder CREATES the layout; there is no declaration to read in a repo that does not exist yet.
+    path: "beans/",
+    kind: "beans",
+    description: "This instance's work plan — one Markdown file per bean, managed with the `beans` CLI (`.beans.yml`).",
+  },
+  {
+    id: "todos",
+    // declared-path-literal: as above.
+    path: "todos/",
+    kind: "todos",
+    description: "People's outstanding items and the feedback raised against blocks; its inner directories are declared by `todos/todos.json`.",
+  },
+] as const;
+type StateGraphDef = (typeof INSTANCE_STATE_GRAPHS)[number];
+
+/**
+ * The declaration entry for one state graph. Its `source` comes from the
+ * kind's `newInstanceSource` with the branch composed by
+ * {@link instanceStateBranch} — `cat/<instance>/<id>` — and is written out in
+ * full, so the new instance's declaration is the one place that answers
+ * afterwards. A kind with no `newInstanceSource` gets no `source`: the
+ * resolver's `directory` default.
+ */
+function stateEntry(slug: string, g: StateGraphDef): {
+  id: string; path: string; graphTypologies: string[]; source?: SubgraphSource; description: string;
+} {
+  const nis = defaultGraphTypologies.get(g.kind)?.newInstanceSource;
+  return {
+    id: g.id,
+    path: g.path,
+    graphTypologies: [g.kind],
+    ...(nis ? { source: { kind: "branch" as const, branch: instanceStateBranch(slug, g.id), keyedBy: nis.keyedBy } } : {}),
+    description: g.description,
+  };
+}
+
+/**
+ * The files a state graph starts with — in the checkout for a `directory`
+ * source, on the branch (via the seed command) for a `branch` one. One list,
+ * so the two placements cannot start from different content.
+ */
+function stateGraphFiles(slug: string, g: StateGraphDef): Record<string, string> {
+  // Composed from the graph's OWN entry path, never spelled whole: the paths
+  // below are relative to whatever directory the entry names.
+  const at = (rel: string): string => `${g.path.replace(/\/+$/, "")}/${rel}`;
+  // `beans.json` is the bean graph's own declaration, and it is not optional
+  // once the graph is on a branch: `beans:claim` reads it FROM THE BRANCH to
+  // find the \`bean-defs\` directory and refuses to guess (measured end to end
+  // on a fresh repository, 2026-10-06). Same layout as the platform's own: the
+  // CLI's store at \`defs/\`.
+  if (g.id === "beans") return { [at("beans.json")]: beansGraph(slug), [at("defs/.gitkeep")]: "" };
+  return {
+    [at("todos.json")]: todosGraph(slug),
+    [at("items/.gitkeep")]: "",
+    [at("feedback/.gitkeep")]: "",
+    [at("verdicts/.gitkeep")]: "",
+  };
+}
+
+/**
+ * The shell that creates a NEW tip-keyed state branch holding `files` and the
+ * `state-manifest/v1` manifest `branch-store` verifies on every read.
+ *
+ * Emitted, not run: `branch-store` refuses to create a branch ("seeding
+ * carries the manifest and is a steward act, so no writer creates one") and
+ * `state:seed` only REFRESHES an existing seed. So the scaffold says exactly
+ * what to run instead of inventing a second writer. Content travels base64-
+ * encoded so no quoting in it can break the command; a throwaway index keeps
+ * the checkout's own index untouched. `authoritative: true` because for a new
+ * instance there is no `main` copy — the branch is the store from its first
+ * commit.
+ */
+export function stateSeedCommand(branch: string, id: string, files: Record<string, string>): string {
+  const manifest = JSON.stringify({
+    $schema: "state-manifest/v1",
+    authoritative: true,
+    subgraph: id,
+    keyedBy: "tip",
+    graphs: [{ path: id }],
+    note: `The ${id} subgraph of this instance, kept off main from its first commit (folio_init, bean hp54).`,
+  }, null, 2) + "\n";
+  const readme =
+    `# ${branch}\n\nThe \`${id}\` state subgraph of this repository's instance, kept OFF \`main\`. ` +
+    `Paths mirror the checkout; \`manifest.json\` is what makes this a state branch. ` +
+    `Never merge it. Mount it with \`state:mount\`; write it with \`branch-store push --id ${id}\`.\n`;
+  const all: Record<string, string> = { "manifest.json": manifest, "README.md": readme, ...files };
+  const b64 = (t: string) => Buffer.from(t, "utf-8").toString("base64");
+  const adds = Object.entries(all).map(([path, text]) =>
+    `  git update-index --add --cacheinfo "100644,$(printf %s '${b64(text)}' | base64 -d | git hash-object -w --stdin),${path}"`);
+  return [
+    "(",
+    "  set -e",
+    '  export GIT_INDEX_FILE="$(mktemp -u)"',
+    ...adds,
+    `  git push origin "$(git commit-tree "$(git write-tree)" -m 'Seed ${branch}')":refs/heads/${branch}`,
+    '  rm -f "$GIT_INDEX_FILE"',
+    ")",
+  ].join("\n");
+}
+
 // ── Templates ────────────────────────────────────────────────────
 
 /**
@@ -267,6 +407,11 @@ function standsOn(assistant: string, contentType: InitFolioOptions["contentType"
  * the filename stem must equal it — `findDeclarationFile` checks exactly that.
  */
 function instanceDeclaration(o: MaybeFolio): string {
+  // The state graphs are DECLARED whichever way they are kept (bean `hp54`).
+  // Before, the scaffold wrote `beans/` and `todos/` and declared neither — a
+  // present-but-undeclared directory no directory check can see, because they
+  // compare declarations to disk and not the reverse.
+  const state = INSTANCE_STATE_GRAPHS.map((g) => stateEntry(o.slug, g));
   return JSON.stringify(
     {
       name: o.slug,
@@ -274,7 +419,7 @@ function instanceDeclaration(o: MaybeFolio): string {
       // A contentless instance declares no `folio` directory: declaring one it
       // does not hold would be the `dh4f` defect (a consumer scans nothing and
       // reports a clean run). Bean `mer2`.
-      directories: o.contentType === undefined ? [] : [
+      directories: o.contentType === undefined ? state : [
         {
           id: "folio",
           // declared-path-literal: THE BASE CASE, same as `DEFAULT_DIRECTORIES`.
@@ -284,6 +429,7 @@ function instanceDeclaration(o: MaybeFolio): string {
           graphTypologies: ["folio"],
           description: `The content of ${o.title} — its document, chapters and blocks.`,
         },
+        ...state,
       ],
     },
     null,
@@ -510,7 +656,8 @@ test/results/block-qa/     QA verdicts, one per block, mirroring folio/ (machine
 library/                   ingested source documents (read-only reference)
 uploads/                   source PDFs, for offline citation verification
 ${assistant}/              the platform
-beans/                    the work plan
+beans/                    the work plan (mounted from its declared branch)
+todos/                    people's outstanding items (mounted likewise)
 \`\`\`
 
 ## Commands
@@ -538,8 +685,12 @@ sweep; they stay unaudited until an agent records them.
 
 ## Work plan — use \`beans\`
 
-\`beans/\` is committed, so the plan survives a fresh container and a sibling
-session sees it. Claim before you work; never resolve a sibling's bean.
+\`beans/\` and \`todos/\` are this folio's STATE. Where each is kept is declared
+in \`${instanceDeclarationFilename(o.slug)}\` — by default on its own branch,
+\`cat/${o.slug}/beans\` and \`cat/${o.slug}/todos\`, mounted at those paths by the
+session-start hook (\`state:mount\`) and never committed to \`main\`. Either way
+the plan survives a fresh container and a sibling session sees it. Claim before
+you work; never resolve a sibling's bean.
 
 \`\`\`sh
 ${platformDir(assistant)}/scripts/install-beans.sh
@@ -606,8 +757,13 @@ function claudeSettings(assistant: string): string {
   ) + "\n";
 }
 
-function gitignore(o: MaybeFolio): string {
-  return `# Build output
+function gitignore(o: MaybeFolio, mounted: readonly string[] = []): string {
+  // A graph kept on a branch is MOUNTED at its declared path (`state:mount`),
+  // and the mount must never be committed to main — `/fsh-guts/**` in the
+  // platform's own .gitignore is the precedent, `/**` for the reason given there.
+  const mounts = mounted.length === 0 ? "" :
+    `# State graphs kept on their own branches, mounted here by state:mount (never committed to main)\n${mounted.map((p) => `/${p.replace(/\/$/, "")}/**`).join("\n")}\n\n`;
+  return `${mounts}# Build output
 build/
 _site/
 .folio-feedback/
@@ -893,9 +1049,28 @@ function todosGraph(slug: string): string {
   ) + "\n";
 }
 
+/** The bean graph's declaration, `beans/beans.json` — the shape `schemas/bean-graph.ts` reads. */
+function beansGraph(slug: string): string {
+  return JSON.stringify(
+    {
+      name: slug,
+      directories: [
+        {
+          id: "defs",
+          path: "defs",
+          graphTypologies: ["bean-defs"],
+          description: "Work items — one Markdown file each, in the layout the `beans` CLI reads (`.beans.yml`).",
+        },
+      ],
+    },
+    null,
+    2,
+  ) + "\n";
+}
+
 function beansYml(slug: string): string {
   return `beans:
-    path: beans
+    path: beans/defs
     prefix: ${slug}-
     id_length: 4
     default_status: todo
@@ -1084,7 +1259,7 @@ function checkSlug(slug: string): void {
 }
 
 function startScaffold(o: MaybeFolio): Scaffold {
-  const result: InitFolioResult = { created: [], skipped: [], notes: [] };
+  const result: InitFolioResult = { created: [], skipped: [], notes: [], stateGraphs: [] };
   const root = resolve(o.targetDir);
   const assistant = o.assistantPath ?? defaultAssistantPath(o.link);
 
@@ -1105,6 +1280,51 @@ function startScaffold(o: MaybeFolio): Scaffold {
 }
 
 /**
+ * Resolve one state graph's source through the ONE resolver (bean `hp54`).
+ *
+ * `declaredSubgraph` first — THE lookup the publishers and `branch-store`
+ * use — reading the declaration this scaffold just wrote (or found, when a
+ * re-run left an existing one alone) and the instance config's
+ * `subgraphSources` override. A dry run has nothing on disk, and a directory
+ * outside any checkout can make the checkout walk refuse; both fall back to
+ * `resolveSubgraphSource` over the entry this scaffold would write, with
+ * whatever overrides can be read. Never `entry.source` read directly.
+ */
+function resolveStateGraph(s: Scaffold, g: StateGraphDef): StateGraphOutcome {
+  const entry = stateEntry(s.o.slug, g);
+  if (!s.o.dryRun) {
+    let found: ReturnType<typeof declaredSubgraph>;
+    try {
+      found = declaredSubgraph(s.root, g.id);
+    } catch {
+      found = undefined;
+    }
+    if (found && resolve(found.instanceRoot) === s.root) {
+      return { id: g.id, path: g.path, source: found.source, declared: true };
+    }
+  }
+  let overrides: SubgraphSourceOverrides = {};
+  try {
+    overrides = subgraphSourceOverrides(s.root);
+  } catch {
+    // An unreadable config is `check:harness-dirs`'s to report; the entry's own source still answers.
+  }
+  // Whether the id is DECLARED is a presence question, asked of the file —
+  // its source is never read from here. A dry run reports what WOULD be declared.
+  const declFile = join(s.root, instanceDeclarationFilename(s.o.slug));
+  let declared = s.o.dryRun === true || !existsSync(declFile);
+  if (!declared) {
+    try {
+      const dirs = (JSON.parse(readFileSync(declFile, "utf-8")) as { directories?: Array<{ id?: string }> }).directories ?? [];
+      declared = dirs.some((d) => d.id === g.id);
+    } catch {
+      declared = false;
+    }
+  }
+  return { id: g.id, path: g.path, source: resolveSubgraphSource(entry, overrides), declared };
+}
+
+/**
  * The instance-level writes — everything that needs no content type (bean
  * `mer2`). Shared by `initInstance` and `initFolio`, so a folio's instance half
  * cannot drift from a bare instance's.
@@ -1121,19 +1341,38 @@ function writeInstanceFiles(s: Scaffold): void {
   write(instanceConfigFilename(o.slug), instanceConfig(o, assistant));
   write(".mcp.json", mcpJson(assistant));
   write(".claude/settings.json", claudeSettings(assistant));
-  write(".gitignore", gitignore(o));
+  // Each state graph's source, through the ONE resolver, now that the
+  // declaration and config it reads are written (bean `hp54`).
+  const state = INSTANCE_STATE_GRAPHS.map((g) => resolveStateGraph(s, g));
+  const mounted = state.filter((g) => g.source.kind !== "directory").map((g) => g.path);
+  write(".gitignore", gitignore(o, mounted));
   write(".beans.yml", beansYml(o.slug));
-  // declared-path-literal: the scaffolder CREATES the layout. There is no
-  // declaration to read in a repo that does not exist yet — this is the
-  // write that makes one possible.
-  write("beans/.gitkeep", "");
-  // The todos graph, and both directories it declares: declaring a directory
-  // that does not exist is the `dh4f` defect (a consumer scans nothing and
-  // reports a clean run). declared-path-literal: scaffolding the layout, as above.
-  write("todos/todos.json", todosGraph(o.slug));
-  write("todos/items/.gitkeep", "");
-  write("todos/feedback/.gitkeep", "");
-  write("todos/verdicts/.gitkeep", "");
+  for (const g of state) {
+    if (g.source.kind === "directory") {
+      // The todos graph and every directory it declares: declaring a directory
+      // that does not exist is the `dh4f` defect (a consumer scans nothing and
+      // reports a clean run).
+      for (const [path, text] of Object.entries(stateGraphFiles(o.slug, INSTANCE_STATE_GRAPHS.find((d) => d.id === g.id)!))) write(path, text);
+      continue;
+    }
+    if (g.source.kind === "branch") {
+      g.seed = stateSeedCommand(g.source.branch, g.id, stateGraphFiles(o.slug, INSTANCE_STATE_GRAPHS.find((d) => d.id === g.id)!));
+      s.result.notes.push(
+        `${g.path} is declared on branch ${g.source.branch} (keyedBy ${g.source.keyedBy}) and was NOT written into the checkout. ` +
+          `No platform command creates a new state branch, so seed it once, from this repository, with:\n${g.seed}\n` +
+          `then mount it: bun run ${platformDir(assistant)}/scripts/state-mount.ts`,
+      );
+    } else {
+      s.result.notes.push(`${g.path} resolves to a ${g.source.kind} source and was NOT written into the checkout.`);
+    }
+    if (!g.declared) {
+      s.result.notes.push(
+        `${instanceDeclarationFilename(o.slug)} already existed and does not declare "${g.id}" — add this entry to its \`directories\`: ` +
+          JSON.stringify(stateEntry(o.slug, INSTANCE_STATE_GRAPHS.find((d) => d.id === g.id)!)),
+      );
+    }
+  }
+  s.result.stateGraphs.push(...state);
   write("CLAUDE.md", `# CLAUDE.md\n\nThis ${o.contentType ? "folio" : "instance"}'s agent guidance is maintained agent-generically in \`AGENTS.md\`.\n\n@AGENTS.md\n`);
   write("GEMINI.md", `# GEMINI.md\n\nThis ${o.contentType ? "folio" : "instance"}'s agent guidance is maintained agent-generically in \`AGENTS.md\`.\n\nSee [AGENTS.md](./AGENTS.md).\n`);
 }
@@ -1485,6 +1724,139 @@ export function formatInitResult(result: InitFolioResult, o: InitFolioOptions | 
   return lines.join("\n");
 }
 
+// ── Staged sub-KG (bean 3tza, owner ruling 1, 2026-10-06) ────────
+
+/**
+ * A sub-KG staged INSIDE a harnessed repository, ahead of (maybe) leaving it.
+ *
+ * Stage 1 of `sub-kg-lifecycle`. `initInstance` scaffolds a whole REPOSITORY —
+ * `AGENTS.md`, `.mcp.json`, a beans store, a session hook, fifteen files
+ * (measured with `--dry-run`, 2026-10-06) — which is right for a new
+ * repository and wrong inside an existing one, where every one of those files
+ * already exists at the host's root and a second copy in a subdirectory is
+ * noise nothing reads. So this writes exactly two files, both under the staged
+ * path, and nothing anywhere else:
+ *
+ * - `<path>/<slug>.json`: the declaration, with `repository` (the PLANNED
+ *   home) different from `livesAt.repository` (the host). That difference is
+ *   what makes it a staged instance: the separation guard and `seed:ready`
+ *   read it, and nothing lists staged instances by hand.
+ * - `<path>/platform.ts`: the import seam, empty. Every platform symbol the
+ *   sub-KG later uses is re-exported from here, so re-pointing the platform on
+ *   separation is a one-file edit (`instance-separation-imports.test.ts`).
+ *
+ * `directories` is `[]` on purpose: declare a directory with its files, in
+ * one commit (bean `dh4f`), never ahead of them.
+ */
+export interface InitStagedOptions {
+  /** The HOST repository's root. */
+  hostDir: string;
+  /** Where the sub-KG sits, relative to the host root. Becomes `livesAt.path`. */
+  path: string;
+  slug: string;
+  title: string;
+  /** The planned home, `owner/name`. */
+  repository: string;
+  /** The host, `owner/name`. Derived from the host's `origin` remote when absent. */
+  hostRepository?: string;
+  /** The instances it stands on. At least one: a staged sub-KG instantiates some harness. */
+  needs: string[];
+  force?: boolean;
+  dryRun?: boolean;
+}
+
+const REPO_FULL_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+function stagedPlatformSeam(o: InitStagedOptions): string {
+  return `/**
+ * The ONE file in ${o.slug} that names where the platform lives.
+ *
+ * ${o.slug} is staged here ahead of becoming its own repository
+ * (\`${o.repository}\`). Every platform symbol it uses is re-exported from this
+ * file, and no other file in the directory imports from outside it, so on the
+ * day it leaves, re-pointing the platform is a one-file edit.
+ * \`instance-separation-imports.test.ts\` holds the rule. Lifecycle:
+ * \`sub-kg-lifecycle\`.
+ *
+ * @module ${o.slug}/platform
+ */
+export {};
+`;
+}
+
+/** Scaffold a staged sub-KG's declaration and import seam, and nothing else. */
+export function initStaged(options: InitStagedOptions): InitFolioResult {
+  const o = options;
+  checkSlug(o.slug);
+  const host = resolve(o.hostDir);
+  const root = resolve(host, o.path);
+  const rel = relative(host, root).split(sep).join("/");
+  if (rel === "" || rel.startsWith("..")) {
+    throw new Error(`--staged path must be a directory INSIDE the host, got '${o.path}'`);
+  }
+  if (!REPO_FULL_NAME.test(o.repository)) throw new Error(`--repository must be owner/name, got '${o.repository}'`);
+  if (o.needs.length === 0) throw new Error("--needs is required: a staged sub-KG instantiates some harness");
+  let hostRepository = o.hostRepository;
+  if (hostRepository === undefined) {
+    const r = spawnSync("git", ["remote", "get-url", "origin"], { cwd: host, stdio: "pipe" });
+    if (r.status !== 0) throw new Error("cannot read the host's origin remote; pass --host-repository owner/name");
+    hostRepository = repoSlug(r.stdout.toString().trim());
+  }
+  if (!REPO_FULL_NAME.test(hostRepository)) throw new Error(`--host-repository must be owner/name, got '${hostRepository}'`);
+  if (hostRepository === o.repository) {
+    throw new Error("the planned --repository is the host: a sub-KG that stays in its host is not staged, it is just a directory");
+  }
+
+  const declaration = {
+    name: o.slug,
+    title: o.title,
+    repository: o.repository,
+    livesAt: { repository: hostRepository, path: rel },
+    version: "0.1.0",
+    needs: o.needs,
+    directories: [],
+  };
+  const files: Array<[string, string]> = [
+    [join(rel, instanceDeclarationFilename(o.slug)), JSON.stringify(declaration, null, 2) + "\n"],
+    [join(rel, "platform.ts"), stagedPlatformSeam(o)],
+  ];
+  const result: InitFolioResult = { created: [], skipped: [], notes: [], stateGraphs: [] };
+  for (const [relPath, content] of files) {
+    const full = join(host, relPath);
+    if (existsSync(full) && !o.force) {
+      result.skipped.push(relPath);
+      continue;
+    }
+    if (!o.dryRun) {
+      mkdirSync(dirname(full), { recursive: true });
+      writeFileSync(full, content, "utf-8");
+    }
+    result.created.push(relPath);
+  }
+  result.notes.push(
+    "Declare each graph directory in the same commit as its first files (bean dh4f).",
+    "Route every import from outside the directory through platform.ts.",
+    "Next stages: sub-kg-lifecycle (skill) / sub-kg-lifecycle.bpmn.",
+  );
+  return result;
+}
+
+/** The report for `--staged`: what was written, under one directory only. */
+export function formatStagedResult(result: InitFolioResult, o: InitStagedOptions): string {
+  const lines = [
+    `Staged sub-KG ${o.slug} (planned home ${o.repository}) at ${o.path}  ·  ${result.created.length} file(s) written`,
+    "",
+  ];
+  for (const f of result.created) lines.push(`  + ${f}`);
+  if (result.skipped.length) {
+    lines.push("", "Left alone (already present — pass --force to overwrite):");
+    for (const f of result.skipped) lines.push(`  = ${f}`);
+  }
+  lines.push("", "Notes:");
+  for (const n of result.notes) lines.push(`  · ${n}`);
+  return lines.join("\n");
+}
+
 // ── CLI ──────────────────────────────────────────────────────────
 
 const USAGE = `init-folio — scaffold a new folio repository
@@ -1505,6 +1877,13 @@ Options:
   --force             Overwrite files that already exist
   --dry-run           Report what would be written
   --skip-vcs          Do not run git init / git submodule add
+  --staged <path>     A sub-KG staged INSIDE the host repo at --dir: writes
+                      only <path>/<slug>.json and <path>/platform.ts
+                      (bean 3tza). Needs --repository and --needs; the slug
+                      defaults to the path's last segment
+  --repository <o/n>  With --staged: the planned home, owner/name
+  --host-repository <o/n>  With --staged: the host (default: origin remote)
+  --needs <name>      With --staged: an instance it stands on. Repeatable
   --help
 `;
 
@@ -1518,7 +1897,8 @@ export function slugify(title: string): string {
 
 type ParsedArgs =
   | { kind: "folio"; options: InitFolioOptions }
-  | { kind: "instance"; options: InitInstanceOptions };
+  | { kind: "instance"; options: InitInstanceOptions }
+  | { kind: "staged"; options: InitStagedOptions };
 
 function parseArgs(argv: string[]): ParsedArgs | "help" {
   const authors: string[] = [];
@@ -1533,6 +1913,10 @@ function parseArgs(argv: string[]): ParsedArgs | "help" {
   let skipVcs = false;
   let instance = false;
   let typeGiven = false;
+  let staged: string | undefined;
+  let repository: string | undefined;
+  let hostRepository: string | undefined;
+  const needs: string[] = [];
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -1565,11 +1949,31 @@ function parseArgs(argv: string[]): ParsedArgs | "help" {
       case "--force": force = true; break;
       case "--dry-run": dryRun = true; break;
       case "--skip-vcs": skipVcs = true; break;
+      case "--staged": staged = next(); break;
+      case "--repository": repository = next(); break;
+      case "--host-repository": hostRepository = next(); break;
+      case "--needs": needs.push(next()); break;
       default: throw new Error(`Unknown option: ${a}`);
     }
   }
 
   if (!title) throw new Error("--title is required");
+  if (staged !== undefined) {
+    // Refused rather than ignored: each of these writes repository-level
+    // files, which is exactly what a staged sub-KG must not get.
+    if (instance || typeGiven || authors.length > 0) {
+      throw new Error("--staged takes no --instance, --type or --author: it writes a declaration and a seam, not a repository or a folio");
+    }
+    if (!repository) throw new Error("--staged needs --repository owner/name (the planned home)");
+    const last = staged.split(/[\\/]/).filter(Boolean).pop() ?? "";
+    return {
+      kind: "staged",
+      options: { hostDir: dir, path: staged, slug: slug ?? last, title, repository, hostRepository, needs, force, dryRun },
+    };
+  }
+  if (repository !== undefined || hostRepository !== undefined || needs.length > 0) {
+    throw new Error("--repository, --host-repository and --needs go with --staged");
+  }
   const common = { targetDir: dir, slug: slug ?? slugify(title), title, link, assistantPath, force, dryRun, skipVcs };
   if (instance) {
     // Refused rather than ignored: a content type passed to a contentless
@@ -1587,6 +1991,11 @@ if (import.meta.main) {
     const parsed = parseArgs(process.argv.slice(2));
     if (parsed === "help") {
       console.log(USAGE);
+      process.exit(0);
+    }
+    if (parsed.kind === "staged") {
+      const result = initStaged(parsed.options);
+      console.log(formatStagedResult(result, parsed.options));
       process.exit(0);
     }
     const result = parsed.kind === "instance" ? initInstance(parsed.options) : initFolio(parsed.options);

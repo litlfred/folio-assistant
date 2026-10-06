@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: l2-dak-authoring\n"
-"POT-Creation-Date: 2026-10-03T09:58:08.479Z\n"
+"POT-Creation-Date: 2026-10-06T09:42:31.753Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -19,39 +19,44 @@ msgstr ""
 msgid "A single claim made once, right after scoping and before the parallel fork. Unlike the per-edit lifecycle in editing-hci-validation, this diagram seeds one bean for the whole DAK and never returns here to log or resolve it, so tracking any one track's own progress is not this lane's concern."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:182
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:191
 #. Diagram label
 msgid "Assemble and validate the DAK [content-validate]"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:183
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:192
 #. Diagram element documentation
 msgid "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:144
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:153
 #. Diagram element documentation
 msgid "Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:120
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:129
 #. Diagram element documentation
 msgid "Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:112
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:121
 #. Diagram element documentation
 msgid "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:136
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:145
 #. Diagram element documentation
 msgid "Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:128
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:137
 #. Diagram element documentation
 msgid "Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset."
+msgstr ""
+
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:89
+#. Diagram label
+msgid "Build the L1 library from Component 1 [dak-l1-library]"
 msgstr ""
 
 #: ../smart-base/processes/content/l2-dak-authoring.bpmn:51
@@ -59,47 +64,47 @@ msgstr ""
 msgid "Business analyst"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:119
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:128
 #. Diagram label
 msgid "Business processes · BPMN 2.0 [bpmn-authoring]"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:211
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:221
 #. Diagram label
 msgid "changes needed"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:70
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:71
 #. Diagram label
 msgid "Clinical SME"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:168
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:177
 #. Diagram label
 msgid "Clinical validation [content-review]"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:176
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:185
 #. Diagram label
 msgid "Clinically accurate?"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:135
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:144
 #. Diagram label
 msgid "Data dictionary and core data elements [l2-dak-authoring]"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:127
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:136
 #. Diagram label
 msgid "Decision logic · DMN tables [dmn-authoring]"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:81
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:82
 #. Diagram element documentation
 msgid "Enumerate the processes, decisions and data elements the guideline implies; identify the actors."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:169
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:178
 #. Diagram element documentation
 msgid "Ground truth: does the DAK say what the guideline says?"
 msgstr ""
@@ -109,14 +114,19 @@ msgstr ""
 msgid "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:152
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:161
 #. Diagram element documentation
 msgid "ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:143
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:152
 #. Diagram label
 msgid "Indicators and requirements [l2-dak-authoring]"
+msgstr ""
+
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:90
+#. Diagram element documentation
+msgid "Ingest the DAK and every source its Component 1 cites into the library, and extract the L1 graph that records them: §1.1's interventions, §1.2's citations, each resolved by its printed number to a publication. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts, and validate with both smart-kg validate.mjs and the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically."
 msgstr ""
 
 #: ../smart-base/processes/content/l2-dak-authoring.bpmn:26
@@ -124,22 +134,22 @@ msgstr ""
 msgid "L2 DAK authoring"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:190
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:199
 #. Diagram label
 msgid "L2 DAK ready for L3"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:66
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:67
 #. Diagram element documentation
 msgid "One parallel branch of the fork, producing bindings the other five tracks cite rather than author themselves. Kept a separate lane rather than folded into the analyst's because governance of a code binding is deliberately independent of the artefact that cites it."
 msgstr ""
 
 #: ../smart-base/processes/content/l2-dak-authoring.bpmn:52
 #. Diagram element documentation
-msgid "Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds."
+msgid "Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds. Before any of that, and before the work plan is seeded, builds the DAK's L1 library from what its Component 1 cites, so every track starts with the guidance it operationalises already in the library and in the L1 graph."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:111
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:120
 #. Diagram label
 msgid "Personas and scenarios [l2-dak-authoring]"
 msgstr ""
@@ -149,12 +159,12 @@ msgstr ""
 msgid "Programme manager / technical officer"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:80
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:81
 #. Diagram label
 msgid "Scope the DAK [content-plan]"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:88
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:97
 #. Diagram label
 msgid "Seed the work plan [todo-manager]"
 msgstr ""
@@ -164,37 +174,37 @@ msgstr ""
 msgid "Sets the scope once, before the fork into six parallel authoring tracks. The actors and processes enumerated here are what everything downstream, including the terminology and clinical lanes, is scoped against, and nothing later in this diagram revisits that boundary."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:65
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:66
 #. Diagram label
 msgid "Terminologist"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:151
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:160
 #. Diagram label
 msgid "Terminology bindings [terminology-management]"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:177
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:186
 #. Diagram element documentation
 msgid "The clinical validator's result. `changes needed` goes back to the author; `validated` goes on to assemble and validate the DAK."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:71
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:72
 #. Diagram element documentation
 msgid "The one gate every authored track must clear before assembly: a \"no\" here does not return to the specific task that erred but loops back through Gateway_AuthorMerge into the fork itself, so this lane's judgement — not the analyst's — decides whether personas, BPMN, DMN, data dictionary and indicators all get revisited together."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:89
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:98
 #. Diagram element documentation
 msgid "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan."
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:212
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:222
 #. Diagram label
 msgid "validated"
 msgstr ""
 
-#: ../smart-base/processes/content/l2-dak-authoring.bpmn:77
+#: ../smart-base/processes/content/l2-dak-authoring.bpmn:78
 #. Diagram label
 msgid "WHO guideline / recommendations"
 msgstr ""

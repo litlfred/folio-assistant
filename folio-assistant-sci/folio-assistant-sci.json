@@ -179,5 +179,32 @@
         "attestations"
       ]
     }
+  ],
+  "contentTranslations": [
+    {
+      "contentType": "paper",
+      "name": "Scientific papers & books",
+      "formats": [
+        {
+          "id": "markdown",
+          "name": "Markdown",
+          "extensions": [
+            ".md"
+          ],
+          "extractModule": "content/pipeline/pot-extract.ts",
+          "injectModule": "content/pipeline/po-inject.ts"
+        },
+        {
+          "id": "latex",
+          "name": "LaTeX",
+          "extensions": [
+            ".tex"
+          ],
+          "notes": "Lean 4 terms and formal math stay in English. Only prose sections are translated."
+        }
+      ],
+      "rtlSupported": false,
+      "notes": "LaTeX translation is manual — the pipeline extracts prose from \\section{}, \\paragraph{}, and \\text{} commands but leaves math and Lean terms untouched."
+    }
   ]
 }

@@ -102,6 +102,7 @@ import { DIFF_RENDERERS } from "../schemas/diff-renderers.js";
 import { cleanRendered, renderInline, renderSideBySide, renderVisual, renderWordDiff } from "./review-renderers.js";
 import { computeHeat, heatBucket, renderHeat } from "./review-heat.js";
 import { crumbFor, renderMinimap, renderOutline } from "./review-nav.js";
+import { measuredModel, renderedModel, renderMeasured, renderRendered } from "./review-rendered.js";
 import { wordDiff } from "./word-diff.js";
 import { darkRules } from "./lib/scheme-css.ts";
 
@@ -385,6 +386,22 @@ const SCRIPT = `
     return fetch(url).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
   }
 
+  // The rendered list (bean bnjs): fetched on its own, so a preview with a
+  // ChangeSet but no rendered impact still shows its blocks, and says why
+  // the page list is missing rather than showing an empty one.
+  var renderedBox = document.getElementById("rendered");
+  // The build diff under it (bean ehh6): a missing file is "not measured", said.
+  Promise.all([
+    get("../rendered-impact.json"),
+    get("../staging.json").catch(function () { return {}; }),
+    get("../rendered-measured.json").catch(function () { return null; }),
+  ]).then(function (r) {
+    renderRendered(renderedBox, renderedModel(r[0], r[1].mainSite));
+    renderMeasured(renderedBox, measuredModel(r[2]));
+  }).catch(function () {
+    renderedBox.textContent = "This build published no rendered-impact.json, so which rendered pages the change alters is not known (which is not the same as none).";
+  });
+
   get("../changeset.json").then(function (cs) {
     return Promise.all([
       get("../staging.json").catch(function () { return {}; }),
@@ -610,6 +627,7 @@ export function reviewPageHtml(): string {
   <a href="../index.html">All documents</a>
 </div>
 <div class="viewrow"><label for="view">Show every change as</label> <select id="view"></select></div>
+<section aria-labelledby="rendered-h"><h2 id="rendered-h">Rendered pages this change alters</h2><div id="rendered" class="muted">Loading the rendered impact…</div></section>
 <div id="heat" class="heatwrap" tabindex="0" role="region" aria-label="Heat map: where to look first"></div>
 <div id="changes"></div>
 </main>
@@ -628,6 +646,10 @@ var renderHeat = ${renderHeat.toString()};
 var crumbFor = ${crumbFor.toString()};
 var renderOutline = ${renderOutline.toString()};
 var renderMinimap = ${renderMinimap.toString()};
+var renderedModel = ${renderedModel.toString()};
+var renderRendered = ${renderRendered.toString()};
+var measuredModel = ${measuredModel.toString()};
+var renderMeasured = ${renderMeasured.toString()};
 </script>
 <script>${SCRIPT}</script>
 </body>

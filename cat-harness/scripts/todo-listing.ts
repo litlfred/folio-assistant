@@ -212,8 +212,11 @@ export function renderTodoListing(
   opts: TodoListingOptions = {},
 ): string {
   const out: string[] = [];
+  // `lang="en" dir="ltr"` (bean `giiw`): one English listing is included on
+  // every locale's pages, so on an Arabic page it is English laid out as
+  // English, not inheriting `dir="rtl"` from <html>.
   out.push(
-    `<section class="fa-todo-listing" id="fa-todo-listing" ` +
+    `<section class="fa-todo-listing" id="fa-todo-listing" lang="en" dir="ltr" ` +
       `aria-labelledby="fa-todo-listing-heading" data-fa-todo-count="${items.length}">`,
   );
   out.push(

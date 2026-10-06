@@ -181,6 +181,10 @@ export const RULES: Rule[] = [
       "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
       "scripts/review-heat.ts",          // the review page heat map, embedded by toString (bean `qbfi`)
       "scripts/review-nav.ts",           // the review page outline, breadcrumb and minimap, embedded by toString (bean `eb4l`)
+      "scripts/review-rendered.ts",      // the review page's rendered-pages list, embedded by toString (bean `bnjs`)
+      "scripts/measure-rendered-impact.ts", // a staging build diffed against main's published site; what the prediction missed (bean `bnjs`)
+      "scripts/docs-rendered-impact.ts",    // the docs site's renderer: changed files to pages of the composed just-the-docs site (bean `bnjs`)
+      "scripts/git-blobs.ts",               // each input's blob at a ref: what every renderer pins a page to (bean `bnjs`)
       "scripts/publish-block-qa.ts",     // a folio's QA verdicts summarised for the heat map (bean `qbfi`)
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
@@ -349,6 +353,7 @@ export const RULES: Rule[] = [
       // needs a folio to have anything to do.
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
+      "scripts/tool-remedy.ts",              // a refused host → the Tool that works without it (bean `6mk7`)
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
       "scripts/gen-subgraph-jsonld.ts",      // that graph framed per named subgraph (bean `c1m4`)
       // Harness by subject: the slice is the platform's own work plan, and the

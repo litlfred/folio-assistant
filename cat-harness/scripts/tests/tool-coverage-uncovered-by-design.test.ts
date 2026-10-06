@@ -12,6 +12,11 @@
  * discriminates, so a green real-corpus run is not green by vacuity.
  *
  * @module scripts/tests/tool-coverage-uncovered-by-design
+ *
+ * The tests of this file that read the whole checkout (triages the skills of
+ * every instance in the checkout) live in
+ * `test/tool-coverage-uncovered-by-design-checkout.test.ts` (bean `7zz1`):
+ * standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 
@@ -19,7 +24,6 @@ import {
   UNCOVERED_BY_DESIGN,
   type SkillTriage,
   staleAnnotations,
-  triage,
   uncoveredByDesign,
 } from "../tool-coverage.js";
 
@@ -85,31 +89,5 @@ describe("uncoveredByDesign", () => {
       UNCOVERED_BY_DESIGN[0].state,
     );
     expect(uncoveredByDesign("a-skill-that-does-not-exist")).toBeUndefined();
-  });
-});
-
-describe("the real corpus", () => {
-  test("no annotation is stale", async () => {
-    const stale = staleAnnotations(await triage());
-    expect(stale.map((s) => `${s.entry.skill}: ${s.why}`)).toEqual([]);
-  });
-
-  /**
-   * The vacuity guard. If `triage()` returned nothing the test above would pass
-   * while checking nothing, which is the zero-subject trap this repository has
-   * paid for more than once. A floor rather than a count, because a count in a
-   * test goes stale exactly as a count in prose does.
-   */
-  test("the triage found skills — otherwise the check above proves nothing", async () => {
-    const rows = await triage();
-    expect(rows.length).toBeGreaterThan(20);
-    expect(rows.filter((r) => r.tier === "A").length).toBeGreaterThan(5);
-  });
-
-  test("every annotated skill really is in tier A right now", async () => {
-    const rows = await triage();
-    for (const u of UNCOVERED_BY_DESIGN) {
-      expect(rows.find((r) => r.skill === u.skill)?.tier).toBe("A");
-    }
   });
 });

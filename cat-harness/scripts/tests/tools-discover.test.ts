@@ -1,13 +1,18 @@
 /**
  * Tool auto-discovery (bean p0za): every declared `tools` graph is loaded, and
  * every way loading can go wrong is REPORTED — never read as "no tools".
+ *
+ * The tests of this file that read the whole checkout (discovers the Tools
+ * every instance in the checkout declares, smart-base's among them) live in
+ * `test/tools-discover-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { discoverTools, tools, toolsOf } from "../../tools/discover.js";
+import { discoverTools } from "../../tools/discover.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const TOOL_TS = resolve(import.meta.dir, "../../schemas/tool.ts");
@@ -97,31 +102,5 @@ describe("discoverTools", () => {
     const d = discoverTools(repo({ alpha: good("shared"), beta: good("shared") }));
     expect(d.tools).toHaveLength(1);
     expect(d.failures[0]!.reason).toContain("also declared by alpha");
-  });
-});
-
-describe("tools() over this checkout", () => {
-  test("includes every instance that declares a tools graph — smart-base's no longer invisible", () => {
-    const ids = new Set(tools().map((t) => t.id));
-    // One Tool from each declaring instance: cat-harness, fhir-harness, smart-base.
-    expect(ids.has("discuss")).toBe(true);
-    expect(ids.has("dmn-to-questionnaire")).toBe(true);
-    const d = discoverTools();
-    expect(d.failures).toEqual([]);
-    expect(d.sources.map((s) => s.instance)).toEqual(expect.arrayContaining(["cat-harness", "fhir-harness", "smart-base"]));
-  });
-
-  test("toolsOf(cat-harness) is the harness's own graph only — what its document publishes", () => {
-    const own = toolsOf(resolve(import.meta.dir, "../.."));
-    expect(own.some((t) => t.id === "discuss")).toBe(true);
-    expect(own.some((t) => t.id === "dmn-to-questionnaire")).toBe(false);
-    expect(own.length).toBeLessThan(tools().length);
-  });
-
-  test("every discovered Tool's io types point into the harness's published types document", () => {
-    // smart-base's nine used to mint against its FHIR canonical, a document
-    // nobody publishes. Discovery mints every instance against the harness.
-    const bases = new Set(tools().flatMap((t) => [...t.io.inputs, ...t.io.outputs].map((p) => p.schema.split("#")[0])));
-    expect(bases.size).toBe(1);
   });
 });

@@ -2,6 +2,10 @@
 title: "SMART Guidelines Group Definition — WHO SMART Base artefact"
 description: "StructureDefinition/SGGroupDefinition in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-SGGraphDefinition.html"
+ig_next: "StructureDefinition-SGImplementationGuide.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Structure and constraints for Group Definitions represented in SMART Guidelines
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="StructureDefinition-SGGraphDefinition.html" data-next="StructureDefinition-SGImplementationGuide.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

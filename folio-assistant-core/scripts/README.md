@@ -29,10 +29,14 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm.test.ts`](codemod-refterm.test.ts) | a file |  |
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`dc-render.ts`](dc-render.ts) | a file |  |
+| [`document-rendered-impact.test.ts`](document-rendered-impact.test.ts) | a file |  |
+| [`document-rendered-impact.ts`](document-rendered-impact.ts) | a file |  |
 | [`docx-structure.py`](docx-structure.py) | a file |  |
 | [`docx-structure.test.ts`](docx-structure.test.ts) | a file |  |
 | [`docx-to-folio.test.ts`](docx-to-folio.test.ts) | a file |  |
 | [`docx-to-folio.ts`](docx-to-folio.ts) | a file |  |
+| [`fetch-dspace-item.test.ts`](fetch-dspace-item.test.ts) | a file |  |
+| [`fetch-dspace-item.ts`](fetch-dspace-item.ts) | a file |  |
 | [`folio-site-chrome-check.ts`](folio-site-chrome-check.ts) | a file |  |
 | [`folio-site-qa.ts`](folio-site-qa.ts) | a file |  |
 | [`gen-covers.test.ts`](gen-covers.test.ts) | a file |  |
@@ -66,6 +70,7 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-check.ts`](sample-import-check.ts) | a file |  |
 | [`sample-import-run.test.ts`](sample-import-run.test.ts) | a file |  |
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
+| [`site-reads.test.ts`](site-reads.test.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
 | [`stage-folio-local.ts`](stage-folio-local.ts) | a file |  |

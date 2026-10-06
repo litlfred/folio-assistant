@@ -73,4 +73,19 @@ describe("review page", () => {
     expect(html).toMatch(/try \{ return window\.localStorage\.getItem/);
     expect(html).toMatch(/try \{ window\.localStorage\.setItem/);
   });
+
+  test("loads the rendered list when opened, and says when the build published none (bean bnjs)", () => {
+    expect(html).toContain('get("../rendered-impact.json")');
+    expect(html).toContain("Rendered pages this change alters");
+    expect(html).toContain("is not known (which is not the same as none)");
+    expect(html).toContain("var renderedModel = ");
+  });
+
+  test("shows the build diff under the list, and says when there is none (bean ehh6)", () => {
+    expect(html).toContain('get("../rendered-measured.json")');
+    expect(html).toContain("var measuredModel = ");
+    expect(html).toContain("var renderMeasured = ");
+    expect(html).toContain("Not measured: this build published no rendered-measured.json");
+  });
 });
+

@@ -20,6 +20,11 @@ Render an IG's pages as **folio pages** — markdown with front matter, through
 Jekyll and just-the-docs — populated from the Publisher's structured output,
 rather than copying the Publisher's finished HTML into place.
 
+**Whether an IG repository gets this rendering at all is the owner's call,
+asked when the repository is adopted, default yes.** The question, and the
+manual-only workflow template it installs, are in
+[`ig-build-pipeline`](ig-build-pipeline.md) §"Who starts a build".
+
 ## Why, in one property
 
 Mounted HTML is **opaque to everything the harness does**. It carries no front

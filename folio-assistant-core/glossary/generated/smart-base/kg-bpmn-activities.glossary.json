@@ -119,6 +119,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_l2dak.task_l1library",
+      "prefLabel": "Build the L1 library from Component 1 [dak-l1-library]",
+      "definition": "Ingest the DAK and every source its Component 1 cites into the library, and extract the L1 graph that records them: §1.1's interventions, §1.2's citations, each resolved by its printed number to a publication. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts, and validate with both smart-kg validate.mjs and the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically.",
+      "notation": "Task_L1Library",
+      "source": "smart-base/processes/content/l2-dak-authoring.bpmn#Task_L1Library",
+      "status": "candidate"
+    },
+    {
       "id": "process_l2dak.task_personas",
       "prefLabel": "Personas and scenarios [l2-dak-authoring]",
       "definition": "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated.",

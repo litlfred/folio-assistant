@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { FOOTER_TEMPLATE_PATH, ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACT_LIST_TEMPLATE_PATH, artifactListInclude, publisherPlural, FOOTER_TEMPLATE_PATH, ARTIFACTS_TEMPLATE_PATH,IG_FIGURE_IMAGES_STAMP, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -552,6 +552,8 @@ describe("edit links to the IG's own source (bean `mftp`)", () => {
     expect(readFileSync(join(d, "out", "concepts.md"), "utf-8")).toContain('ig_edit_url: "https://github.com/o/r/edit/main/input/pagecontent/concepts.md"');
     expect(readFileSync(join(d, "out", "toc.md"), "utf-8")).not.toContain("ig_edit_url");
     expect(readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8")).toContain("Edit this page on GitHub");
+    // The standalone layout carries the same opt-in, inside the content it names (bean n7f8).
+    expect(readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8")).toMatch(/id="main-content">\n<span hidden data-fa-figure-images="ig"><\/span>/);
     const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
     // Per-section: a source-line link and a pre-filled feedback issue.
     expect(layout).toContain('id="ig-source-lines"');
@@ -574,6 +576,96 @@ describe("sourceHeadings: each section's line in the IG's source (bean `mftp`)",
       { t: "Title", l: 1 },
       { t: "A link and bold", l: 7 },
       { t: "Last", l: 8 },
+    ]);
+  });
+});
+
+// Bean `x78e`: an HL7 IG's landing page is `index.md` = `{% include index-ig.md %}`,
+// so every heading the reader sees lives in the include. The ✎ / 📣 heading
+// links (bean `mftp`) must follow the include to its own file and line.
+describe("heading links on an IG's first page, whose headings live in an include (bean `x78e`)", () => {
+  /** Run the layout's per-section script against a page holding `headings`, as a browser would. */
+  const runHeadingLinks = (js: string, data: unknown, title: string, headings: Array<{ id: string; text: string }>) => {
+    const hs = headings.map(({ id, text }) => {
+      const links: Array<{ className: string; href: string; textContent: string }> = [];
+      return {
+        id,
+        links,
+        textContent: text,
+        appendChild(n: { className?: string; href?: string; textContent: string }) {
+          if (n.className) links.push(n as { className: string; href: string; textContent: string });
+        },
+      };
+    });
+    const document = {
+      title,
+      getElementById: (id: string) => (id === "ig-source-lines" ? { textContent: JSON.stringify(data) } : null),
+      querySelectorAll: () => hs,
+      createElement: () => ({ className: "", href: "", title: "", textContent: "", rel: "", target: "" }),
+      createTextNode: (t: string) => ({ textContent: t }),
+    };
+    new Function("document", "location", js)(document, { href: "https://o.github.io/r/#top" });
+    return hs.map((h) => ({ id: h.id, edit: h.links.find((a) => a.className === "ig-src")?.href, feedback: h.links.find((a) => a.className === "ig-feedback")?.href }));
+  };
+
+  test("index.md that only includes index-ig.md: every heading gets ✎ to its own line in the include and 📣 naming its own section and anchor", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-x78e-"));
+    const src = join(d, "src");
+    const pc = join(src, "input", "pagecontent");
+    mkdirSync(pc, { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: x.ig\ntitle: X IG\n");
+    writeFileSync(join(pc, "index.md"), "{% include index-ig.md %}\n\n{% include ip-statements.xhtml %}\n");
+    writeFileSync(
+      join(pc, "index-ig.md"),
+      ["An intro paragraph.", "", "<div>", "<p>Under development.</p>", "</div>{:.stu-note}", "", "", "### Summary ", "Summary text.", "", "### About this implementation guide", "", "More.", "", "### Disclaimer", "Text."].join("\n"),
+    );
+    stageIgSite(src, join(d, "out"), { menu: { groups: [{ label: "Home", items: [{ label: "Summary", href: "index.html" }] }] }, editBase: "https://github.com/o/r/edit/main" });
+    const fm = readFileSync(join(d, "out", "index.md"), "utf-8");
+    const lines = JSON.parse(/^ig_source_lines: (.*)$/m.exec(fm)?.[1] ?? "null");
+    const inc = "https://github.com/o/r/blob/main/input/pagecontent/index-ig.md";
+    expect(lines).toEqual([
+      { t: "Summary", l: 8, b: inc },
+      { t: "About this implementation guide", l: 11, b: inc },
+      { t: "Disclaimer", l: 15, b: inc },
+    ]);
+
+    // The script the layout carries, on the page as Jekyll renders it. The
+    // page is titled after its menu entry — "Summary", the first section's name too.
+    const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
+    const js = /<script>(\(function\(\)\{var d=document\.getElementById\("ig-source-lines"\)[\s\S]*?)<\/script>/.exec(layout)?.[1];
+    expect(js).toBeDefined();
+    const got = runHeadingLinks(js!, { blob: "https://github.com/o/r/blob/main/input/pagecontent/index.md", lines }, "Summary | X IG", [
+      { id: "summary", text: "Summary" },
+      { id: "about-this-implementation-guide", text: "About this implementation guide" },
+      { id: "disclaimer", text: "Disclaimer" },
+    ]);
+    const want = [
+      { id: "summary", text: "Summary", l: 8 },
+      { id: "about-this-implementation-guide", text: "About this implementation guide", l: 11 },
+      { id: "disclaimer", text: "Disclaimer", l: 15 },
+    ];
+    for (const [i, w] of want.entries()) {
+      expect(got[i]!.edit).toBe(`${inc}#L${w.l}`);
+      const issue = new URL(got[i]!.feedback!);
+      const title = issue.searchParams.get("title")!;
+      const body = issue.searchParams.get("body")!;
+      // The section first, the page apart from it and only when it is not the
+      // section: the defect read "Feedback: Summary — About this implementation guide".
+      expect(title).toBe(`Feedback on “${w.text}”${w.text === "Summary" ? "" : " (page: Summary)"}`);
+      expect(body).toContain(`**Page:** https://o.github.io/r/#${w.id}\n`);
+      expect(body).toContain(`**Section:** ${w.text}`);
+      expect(body).toContain(`**Source:** ${inc}#L${w.l}\n`);
+    }
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("an include cycle ends, and a non-markdown include is not read", () => {
+    const files: Record<string, string> = { "a.md": "# A\n{% include b.md %}", "b.md": "## B\n{% include a.md %}\n{% include x.xhtml %}" };
+    const inc = (name: string) => (files[name] ? { md: files[name]!, path: `input/includes/${name}` } : undefined);
+    expect(sourceHeadings("{% include a.md %}\n# Own", inc)).toEqual([
+      { t: "A", l: 1, p: "input/includes/a.md" },
+      { t: "B", l: 1, p: "input/includes/b.md" },
+      { t: "Own", l: 2 },
     ]);
   });
 });
@@ -611,6 +703,12 @@ describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
     expect(existsSync(join(host, "_includes", "ig", "x", "note.md"))).toBe(true);
     expect(existsSync(join(host, "_data", "ig", "x", "fhir.json"))).toBe(true);
     expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain('class="ig-topbar"');
+    // Every composed IG page opts its raster images into the shared figure viewer (bean n7f8).
+    expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain(IG_FIGURE_IMAGES_STAMP);
+    // ...through the attribute the platform's viewer actually reads: the contract is docs-ui.js's.
+    expect(IG_FIGURE_IMAGES_STAMP).toContain("data-fa-figure-images");
+    const docsUi = readFileSync(join(import.meta.dir, "..", "..", "cat-harness", "docs", "assets", "js", "docs-ui.js"), "utf-8");
+    expect(docsUi).toContain('document.querySelector("[data-fa-figure-images]")');
     expect(existsSync(join(host, "x", "_config.yml"))).toBe(false);
     expect(existsSync(join(host, "x", "_layouts"))).toBe(false);
     // A second compose of the same IG is two answers for one URL.
@@ -686,5 +784,112 @@ describe("rubyLiquidStrings — a Publisher Liquid string Jekyll can read", () =
     const plain = '{% assign a = "plain" %}';
     const apos = '{% assign b = "it\'s <a href=\\"x\\">" %}';
     expect(rubyLiquidStrings(plain + apos).text).toBe(plain + apos);
+  });
+});
+
+describe("the Publisher's artefact lists, written from the artefact index (bean 9hfi)", () => {
+  // A page as an IG's terminology or maps page writes it (bean 9hfi):
+  // `list-*.xhtml` fragments the IG Publisher GENERATES, which no
+  // IG source holds. Rendered through Liquid as Jekyll renders the page.
+  let d: string;
+  let o: string;
+  let res: StageResult;
+  let page: string;
+  const list = [
+    { resourceType: "CodeSystem", id: "cs-b", title: "beta system", description: "Beta codes" },
+    { resourceType: "CodeSystem", id: "cs-a", title: "Alpha system", category: "Terminology: Code Systems" },
+    { resourceType: "ValueSet", id: "vs.1", title: "Vaccines", description: "Codes for <vaccines> & boosters" },
+    { resourceType: "Library", id: "lib", title: "Logic" },
+  ];
+  beforeAll(async () => {
+    d = mkdtempSync(join(tmpdir(), "ig-lists-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: lists.ig\ncanonical: http://example.org/lists\ntitle: Lists IG\nversion: 0.1.0\nfhirVersion: 4.0.1\npages:\n  codings.md:\n    title: Codings\n");
+    writeFileSync(
+      join(src, "input", "pagecontent", "codings.md"),
+      [
+        "### CodeSystems",
+        "{% include list-simple-codesystems.xhtml %}",
+        "",
+        "### ValueSets",
+        "{% include list-valuesets.xhtml %}",
+        "",
+        "### Libraries",
+        "{% include list-simple-libraries.xhtml %}",
+        "",
+        "### StructureMaps",
+        "<div>",
+        "    {% include list-structuremaps.xhtml %}",
+        "  </div>",
+        "",
+        "### Profiles",
+        "{% include list-simple-profiles.xhtml %}",
+        "",
+      ].join("\n"),
+    );
+    o = join(d, "site");
+    res = stageIgSite(src, o, { artifacts: { list, pagesHref: "artifact/" } });
+    const { Liquid } = await import("liquidjs");
+    const engine = new Liquid({ root: [join(o, "_includes")], jekyllInclude: true, dynamicPartials: false, extname: "" });
+    const text = readFileSync(join(o, "codings.md"), "utf-8");
+    const body = text.slice(text.indexOf("\n---", 3) + 4);
+    page = await engine.parseAndRender(body, { site: { data: { fhir: JSON.parse(readFileSync(join(o, "_data", "fhir.json"), "utf-8")) } } });
+  });
+  afterAll(() => rmSync(d, { recursive: true, force: true }));
+
+  /** The rendered text between one heading and the next. */
+  const section = (h: string) => page.split(`### ${h}`)[1]!.split("### ")[0]!;
+  const href = (a: { resourceType: string; id: string }) => `artifact/${artifactPageName(a)}.html`;
+
+  test("a list-simple include on a published IG page lists that type's artefacts, never the placeholder", () => {
+    const cs = section("CodeSystems");
+    expect(cs).not.toContain("ig-not-rendered");
+    expect(cs).not.toContain("not rendered");
+    // The Publisher's shape: one <li> per artefact, its title linked to its page, by title.
+    expect(cs).toContain(`<ul class="ig-artifact-list">\n <li><a href="${href(list[1]!)}">Alpha system</a></li>\n <li><a href="${href(list[0]!)}">beta system</a></li>\n</ul>`);
+    // Simple: no description. Every artefact of the type, categorised or not.
+    expect(cs).not.toContain("Beta codes");
+    expect(section("Libraries")).toContain(`<a href="${href(list[3]!)}">Logic</a>`);
+    expect(res.listed).toEqual(["list-simple-codesystems.xhtml", "list-simple-libraries.xhtml", "list-structuremaps.xhtml", "list-valuesets.xhtml"]);
+    expect(res.notRendered).not.toContain("list-simple-codesystems.xhtml");
+  });
+
+  test("the full form carries each artefact's description, escaped", () => {
+    expect(section("ValueSets")).toContain(`<li><a href="${href(list[2]!)}">Vaccines</a> Codes for &lt;vaccines&gt; &amp; boosters</li>`);
+  });
+
+  test("a resource type the index holds none of is SAID, never an empty list or the placeholder", () => {
+    const sm = section("StructureMaps");
+    expect(sm).toContain("This guide's artefact index holds no StructureMap resources.");
+    expect(sm).not.toContain("not rendered");
+  });
+
+  test("a list that names no resource type stays a visible marker, and is reported", () => {
+    expect(section("Profiles")).toContain("⟦not rendered: list-simple-profiles.xhtml⟧");
+    expect(res.notRendered).toEqual(["list-simple-profiles.xhtml"]);
+  });
+
+  test("without an artefact index, the lists stay markers rather than empty lists", () => {
+    const r2 = stageIgSite(join(d, "src"), join(d, "no-index"));
+    expect(r2.listed).toEqual([]);
+    expect(r2.notRendered).toContain("list-simple-codesystems.xhtml");
+  });
+
+  test("the Publisher's plurals map back to their resource type", () => {
+    expect(publisherPlural("CodeSystem")).toBe("codesystems");
+    expect(publisherPlural("Library")).toBe("libraries");
+    expect(publisherPlural("SubscriptionStatus")).toBe("subscriptionstatuses");
+    expect(publisherPlural("RelatedPerson")).toBe("relatedpeople");
+    expect(artifactListInclude("list-simple-valuesets.xhtml")).toEqual({ resourceType: "ValueSet", simple: true });
+    expect(artifactListInclude("list-structuremaps.xhtml")).toEqual({ resourceType: "StructureMap", simple: false });
+    expect(artifactListInclude("list-simple-profiles.xhtml")).toBeUndefined();
+    expect(artifactListInclude("list-simple-valuesets-json.xhtml")).toBeUndefined();
+  });
+
+  test("the list template is a file that opens with its description and computes nothing", () => {
+    const t = readFileSync(ARTIFACT_LIST_TEMPLATE_PATH, "utf-8");
+    expect(t.startsWith("{%- comment -%}")).toBe(true);
+    expect(t).not.toMatch(/\|\s*(plus|minus|size|replace|sort)\b/);
   });
 });

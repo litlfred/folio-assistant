@@ -224,6 +224,30 @@
     return node;
   }
 
+  /* THE CHROME'S OWN LANGUAGE, declared where it is written (bean `giiw`).
+   *
+   * Every string this file injects is authored in English, and none of it
+   * goes through the page's translation pipeline. On an Arabic page that
+   * English inherits `dir="rtl"` from <html>, and the bidi algorithm lays an
+   * English sentence out right-to-left: its first words land at the RIGHT
+   * end, and wherever the line is clipped the clip takes the sentence's
+   * BEGINNING off the left edge. Measured on the unverified-translation
+   * notice, from an owner screenshot of the Arabic staging preview.
+   *
+   * `lang` is the half a screen reader needs (it picks the voice), `dir` the
+   * half the layout needs. Both are ATTRIBUTES rather than a CSS `direction`
+   * rule, because the bidi algorithm reads `dir` and a stylesheet that fails
+   * to load must not reverse a sentence. Applied to the element that holds
+   * the English, never to a container whose ORDER should follow the page —
+   * a row of badges still runs right-to-left on an Arabic page; each badge's
+   * own text does not. */
+  var CHROME_LANG = "en";
+  function chromeText(node) {
+    node.setAttribute("lang", CHROME_LANG);
+    node.setAttribute("dir", "ltr");
+    return node;
+  }
+
   /* ── Language switcher ────────────────────────────────────────────────── */
 
   // Globe glyph for the toggle button
@@ -1887,6 +1911,9 @@
       "aria-expanded": "false",
     });
     toggle.innerHTML = TILES_GLYPH; // static markup above, no input involved
+    // The header's three buttons sit in a ROW whose order is the page's; each
+    // one's English name and tooltip is marked on the button (bean `giiw`).
+    chromeText(toggle);
 
     /* ── Two mini-icons, between the title and the launcher ──────────────
      *
@@ -1919,13 +1946,13 @@
      * rebuilt. The mini-button is a shortcut INTO the panel, not a second
      * panel.
      */
-    host.appendChild(buildSchemeMini());
+    host.appendChild(chromeText(buildSchemeMini()));
 
-    var langMini = el("button", {
+    var langMini = chromeText(el("button", {
       type: "button",
       class: "fa-qr-toggle fa-lang-mini",
       "aria-label": "Language",
-    });
+    }));
     langMini.innerHTML = GLOBE_GLYPH;
     langMini.addEventListener("click", function () {
       // Open the launcher first: `showView` hides the grid and renders into
@@ -1939,13 +1966,16 @@
 
     host.appendChild(toggle);
 
-    var panel = el("div", {
+    // ENGLISH AT THE ROOT (bean `giiw`): every caption, view and setting in
+    // this panel is authored here in English and none is translated, so on an
+    // Arabic page it is an English panel, not English laid out right-to-left.
+    var panel = chromeText(el("div", {
       class: "fa-tiles",
       "data-open": "false",
       role: "region",
       "aria-label": "Actions",
       tabindex: "-1",
-    });
+    }));
     var grid = el("div", { class: "fa-tiles-grid", role: "group", "aria-label": "Actions" });
     var view = el("div", { class: "fa-tiles-view", hidden: "hidden" });
     panel.appendChild(grid);
@@ -2075,7 +2105,19 @@
         searchDrop.appendChild(noticeEl);
       }
 
-      searchHome = el("div", { class: "fa-search-home", "data-open": "false" });
+      /* ENGLISH CHROME, READER'S TEXT (bean `giiw`). The magnifier, its
+       * tooltip, the theme's placeholder, the notice and "Search everywhere"
+       * are English on every locale, so the search is marked English at its
+       * root — which also keeps the magnifier on the RIGHT of the field on an
+       * Arabic page, as the owner asked of it (#2201). The two things in it
+       * that are NOT ours are given `dir="auto"`: what the reader types, and
+       * the results, whose titles are pages in whatever language they are.
+       * The search sits in the band's end slot either way; the BAND keeps the
+       * page's direction. */
+      searchHome = chromeText(el("div", { class: "fa-search-home", "data-open": "false" }));
+      Array.prototype.forEach.call(
+        adopted.querySelectorAll("input, #search-results, .search-results"),
+        function (n) { n.setAttribute("dir", "auto"); });
 
       /* The magnifier: the one control, in both states. Its NAME stays
        * "Search" — the state is `aria-expanded`, which is what a screen
@@ -3170,6 +3212,12 @@
         // away exactly when it is surprising.
         if (badge.count === 0) b.setAttribute("data-fa-empty", "true");
         tile.appendChild(b);
+        // WHAT THE NUMBER COUNTS, on hover too (bean `v215`): the unit was in
+        // the accessible name only, so a sighted reader saw a bare "943" with
+        // no word saying what it counted, beside an icon-row "541" whose tip
+        // said "open". The icon row's tip names its count; so does this.
+        tile.setAttribute("title", (tile.getAttribute("title") || t.title) +
+          " — " + badge.count + " " + badge.unit);
       }
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
@@ -5699,11 +5747,14 @@
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
 
-    var layer = el("div", {
+    // ENGLISH AT THE ROOT (bean `giiw`). Everything on the glass — its sheet,
+    // panels, tile strip, zoom and move bars, and the todos and library items
+    // pulled onto it — is authored in English and translated by no locale.
+    var layer = chromeText(el("div", {
       class: "fa-sticky-layer",
       "aria-live": "polite",
       "data-fa-glass": "closed",
-    });
+    }));
     document.body.appendChild(layer);
     glassLayer = layer;
     var prefs = glassPrefs();
@@ -5731,13 +5782,16 @@
     // ring and the keyboard path are the browser's, and this instance's
     // declared interaction profile is low-dexterity, so the way in is never a
     // pointer-only gesture.
-    var handle = el("button", {
+    // "Folio ▾" is English too, and a sibling of the layer rather than inside
+    // it, so it is marked on its own: on an Arabic page the mark and the word
+    // swapped sides, unlike on every other locale (`giiw`).
+    var handle = chromeText(el("button", {
       type: "button",
       class: "fa-glass-handle",
       "aria-expanded": "false",
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
-    });
+    }));
     // A MARK and a LABEL, not one string, so the stylesheet can size the ▾
     // apart from the word. The accessible name is the aria-label.
     handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
@@ -7146,11 +7200,55 @@
       panel.appendChild(body);
       build(body);
       panel.removeAttribute("hidden");
+      fitPanel();
       // Opened on a folio already dragged away: open where the folio is.
       placePanel();
       if (panelButtons[id]) panelButtons[id].setAttribute("aria-expanded", "true");
-      h.focus();
+      // `preventScroll`: the panel is placed in view, so focusing its title
+      // has nothing to bring into view, and a scroll here would move the
+      // cards under a panel that does not move with them.
+      h.focus({ preventScroll: true });
     }
+
+    /* THE PANEL OPENS IN VIEW, CLEAR OF THE DOCK — wireframe `navbar`
+     * Findings ("seen on the build", #2295; first noted in #1810).
+     *
+     * It used to sit in the glass's FLOW, after the shelf. The shelf is at
+     * least 50vh, so at 1280×800 Glass settings opened at y = 591 with its
+     * body under the fixed tile dock, and the reader scrolled the glass to
+     * reach the controls the tile had just opened. Now the stylesheet takes it
+     * out of the flow (`position: fixed`) and this places it in the space the
+     * glass actually shows: below the handle and the zoom bar, above the
+     * dock's VISIBLE top edge. The panel's height is capped to that space and
+     * its body scrolls inside it when the content is taller (Glass settings
+     * on a phone), so the frame, its title and its × are never under the dock.
+     *
+     * The dock's top is read from its STATE, not from its box: it slides for
+     * 0.25 s when the strip is shown or hidden, and a box measured mid-slide
+     * would size the panel for neither state. Re-run when the strip toggles
+     * and when the window resizes. */
+    function fitPanel() {
+      if (panel.hasAttribute("hidden")) return;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var top = 0;
+      [handle, zoomBar].forEach(function (n) {
+        if (!n || !n.isConnected) return;
+        var r = n.getBoundingClientRect();
+        if (r.width && r.height && r.bottom > top && r.bottom < vh / 2) top = r.bottom;
+      });
+      top += GLASS_GAP;
+      var dockTop = vh;
+      if (dock && dock.isConnected && dock.offsetHeight) {
+        var shown = dock.getAttribute("data-fa-strip") !== "hidden";
+        // Hidden, only the header row and the 2px edge stay on screen — the
+        // same sum the stylesheet's `translateY` leaves showing.
+        var showing = shown ? dock.offsetHeight : dockHead.offsetHeight + 2;
+        dockTop = vh - showing;
+      }
+      panel.style.top = Math.round(top) + "px";
+      panel.style.maxHeight = Math.max(0, Math.floor(dockTop - GLASS_GAP - top)) + "px";
+    }
+    window.addEventListener("resize", fitPanel);
 
     /* TODOS — the todo list, on the glass, each with a pull-out.
      *
@@ -7282,19 +7380,26 @@
       body.appendChild(fs);
       showOpacity();
 
+      // THE ACTIONS, in one row of their own (bean `zpso`): with the panel
+      // laid out in a grid so it fits between the zoom bar and the dock,
+      // three full-width buttons stacked one per line were a third of its
+      // height. Grouped, they wrap side by side under the settings.
+      var actions = el("div", { class: "fa-glass-settings-actions" });
+      body.appendChild(actions);
+
       // THE HARNESSES PANEL (issue #1146): each harness's properties and the
       // skill that edits each. A Settings view, as candidate H drew it.
       var hc = el("button", { type: "button", class: "fa-glass-reset fa-glass-harnesses" },
         "Harnesses — properties, and the skill that edits each");
       hc.addEventListener("click", function () { openHarnesses(null); });
-      body.appendChild(hc);
+      actions.appendChild(hc);
 
       // THE WAY BACK FROM A MESSY GLASS. Every card returns to the grid;
       // nothing leaves the folio and nothing leaves the glass.
       var tidy = el("button", { type: "button", class: "fa-glass-reset fa-glass-tidy" },
         "Tidy the glass (put every card back in the grid)");
       tidy.addEventListener("click", tidyGlass);
-      body.appendChild(tidy);
+      actions.appendChild(tidy);
 
       var reset = el("button", { type: "button", class: "fa-glass-reset fa-glass-defaults" }, "Back to the default glass");
       reset.addEventListener("click", function () {
@@ -7305,7 +7410,7 @@
         while (body.firstChild) body.removeChild(body.firstChild);
         buildSettings(body);
       });
-      body.appendChild(reset);
+      actions.appendChild(reset);
       // THE WAY BACK for the dismissed browser-only note.
       if (localNoteDismissed()) {
         var showNote = el("button", { type: "button", class: "fa-glass-reset fa-glass-note-restore" },
@@ -7315,9 +7420,9 @@
           renderShelf();
           showNote.parentNode.removeChild(showNote);
         });
-        body.appendChild(showNote);
+        actions.appendChild(showNote);
       }
-      body.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
+      actions.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
         "Saved in this browser only."));
     }
 
@@ -7391,6 +7496,8 @@
       if (h) strip.setAttribute("inert", ""); else strip.removeAttribute("inert");
       stripToggle.setAttribute("aria-expanded", h ? "false" : "true");
       labelStripToggle();
+      // An open panel's room changes with the dock's visible height.
+      fitPanel();
     }
     stripToggle.addEventListener("click", function () {
       var h = dock.getAttribute("data-fa-strip") !== "hidden";
@@ -8846,7 +8953,11 @@
     if (!landing) boardAttrs.hidden = "hidden";
     // A HOME PANEL (bean `pv6g`): its slots are where a pinned todo returns.
     boardAttrs["data-fa-home-panel"] = "todos";
-    var board = el("section", boardAttrs);
+    // English at the root (bean `giiw`): todo summaries, their windows and
+    // the board's controls are English on every locale. Inside the landing
+    // `.fa-sticky-panel` the panel itself already says so (`landing.html`);
+    // the overlay board on any other page needs it said here.
+    var board = chromeText(el("section", boardAttrs));
     var head = el("div", { class: "fa-sticky-board-head" });
 
     /* THE HEADING SURVIVES BARE, VISUALLY HIDDEN.
@@ -9565,7 +9676,8 @@
     var floor = document.getElementById("fa-todo-listing");
     if (!floor || floor.dataset.faCollapsed === "1") return;
     floor.dataset.faCollapsed = "1";
-    var details = el("details", { class: "fa-todo-listing-details" });
+    // English, as the listing it folds is (`todo-listing.ts`; bean `giiw`).
+    var details = chromeText(el("details", { class: "fa-todo-listing-details" }));
     var summary = el(
       "summary",
       { class: "fa-todo-listing-toggle" },
@@ -9767,6 +9879,18 @@
     scope.dataset.faTools = "1";
     scope.classList.add("fa-figure-scope");
     if (isPlain) scope.classList.add("fa-plain");
+    // 100% IS THE DRAWING'S OWN SIZE, capped at the column (bean `n7f8`). A
+    // plain figure used to be stretched to the full column whatever it was
+    // drawn at, so a 555px PlantUML diagram arrived at more than twice its
+    // size, text and all. The stylesheet reads this as `min(100%, natural)`;
+    // with no natural size known it falls back to the column, as before.
+    if (isPlain) {
+      var art0 = scope.querySelector("svg, img, object");
+      var natural = intrinsicWidth(scope) ||
+        (art0 && art0.tagName.toLowerCase() === "img" ? art0.naturalWidth : 0) ||
+        (art0 ? parseFloat(art0.getAttribute("width") || "") || 0 : 0);
+      if (natural > 0) scope.style.setProperty("--fa-natural", natural + "px");
+    }
 
     var step = DEFAULT_STEP;
     var tools = el("div", { class: "fa-figure-tools", role: "group", "aria-label": "Figure view controls" });
@@ -9800,6 +9924,42 @@
     out.addEventListener("click", function () { if (step > 0) { step--; apply(); } });
     into.addEventListener("click", function () { if (step < ZOOM_STEPS.length - 1) { step++; apply(); } });
     reset.addEventListener("click", function () { step = DEFAULT_STEP; apply(); });
+
+    // THE KEYBOARD IS A WAY IN, NOT AN AFTERTHOUGHT (bean `n7f8`). This
+    // instance's profile is low-dexterity, and `board-windows` §"The floor"
+    // says drag is an accelerator and never the only way in. The toolbar's
+    // buttons already zoom from the keyboard; PANNING was drag-only, because
+    // the figure was a scroll container nobody could focus. So the figure
+    // takes focus, and once focused: the arrow keys pan, `+` and `-` zoom, and
+    // `0` resets, the same steps the buttons take. An arrow is taken only when
+    // the figure can actually scroll that way, so a figure that fits does not
+    // swallow the arrow that should scroll the page.
+    scope.setAttribute("tabindex", "0");
+    scope.setAttribute("aria-keyshortcuts", "ArrowLeft ArrowRight ArrowUp ArrowDown + - 0");
+    if (!scope.hasAttribute("title")) {
+      scope.setAttribute("title", "Diagram: arrow keys pan, + and - zoom, 0 resets");
+    }
+    var PAN_FRACTION = 0.1;
+    var MIN_PAN_PX = 40;
+    scope.addEventListener("keydown", function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      // A control or a link inside the figure owns its own keys.
+      if (e.target !== scope && e.target.closest && e.target.closest("a, button, input, select, textarea")) return;
+      var k = e.key;
+      var dx = Math.max(MIN_PAN_PX, scope.clientWidth * PAN_FRACTION);
+      var dy = Math.max(MIN_PAN_PX, scope.clientHeight * PAN_FRACTION);
+      var canX = scope.scrollWidth > scope.clientWidth + 1;
+      var canY = scope.scrollHeight > scope.clientHeight + 1;
+      if (k === "+" || k === "=") { if (step < ZOOM_STEPS.length - 1) { step++; apply(); } }
+      else if (k === "-" || k === "_") { if (step > 0) { step--; apply(); } }
+      else if (k === "0") { step = DEFAULT_STEP; apply(); }
+      else if (k === "ArrowLeft" && canX) scope.scrollLeft -= dx;
+      else if (k === "ArrowRight" && canX) scope.scrollLeft += dx;
+      else if (k === "ArrowUp" && canY) scope.scrollTop -= dy;
+      else if (k === "ArrowDown" && canY) scope.scrollTop += dy;
+      else return;
+      e.preventDefault();
+    });
     // Full-bleed by MEASUREMENT, not by the centred-element margin trick. The
     // figure sits in a content column offset right by the sidebar, so
     // `margin-left: calc(-1 * (100vw - 100%) / 2)` overshoots by about the
@@ -9984,11 +10144,40 @@
     var ICON_CONTEXT = "a, button, nav, label, summary, .search, .site-header, .site-footer, .breadcrumb-nav";
     var MIN_FIGURE_PX = 240;
 
-    document.querySelectorAll(".main-content img[src$='.svg'], .main-content svg").forEach(function (node) {
+    // A RASTER diagram is a figure only where the page SAYS its images are
+    // figures (`data-fa-figure-images`, stamped by the IG site build — bean
+    // `n7f8`). An IG's architecture drawings are `.drawio.png`, and the theme
+    // shrinks a wide one to the column with nothing to zoom it back. On the
+    // platform's own pages a raster image is as often a card face or a photo,
+    // and a toolbar on those would be the heading-icon failure again, so the
+    // opt-in is the page's and not a guess made here. Even opted in, only an
+    // image the column has SHRUNK qualifies: one shown at its own size is
+    // already readable and gains nothing but chrome.
+    var rasterOk = !!document.querySelector("[data-fa-figure-images]");
+    var sel = ".main-content img[src$='.svg'], .main-content svg, .main-content object[data$='.svg']" +
+      (rasterOk ? ", .main-content img" : "");
+
+    document.querySelectorAll(sel).forEach(function (node) {
       if (node.closest(".bpmn-figure") || node.closest(".fa-qr-host")) return;
       if (node.closest(".fa-figure-scope")) return;
+      // An <svg> nested in another is part of that drawing, never its own figure.
+      if (node.parentElement && node.parentElement.closest("svg")) return;
       if (node.closest(ICON_CONTEXT)) return;
       if (/icon/i.test(node.getAttribute("class") || "")) return;
+      var tag = node.tagName.toLowerCase();
+      if (tag === "img" && !/\.svg($|[?#])/i.test(node.getAttribute("src") || "")) {
+        // Not loaded yet: its size is unknown, so ask again once it is.
+        if (!node.complete || !node.naturalWidth) {
+          if (!node.dataset.faFigureWait) {
+            node.dataset.faFigureWait = "1";
+            node.addEventListener("load", function () { mountFigures(); }, { once: true });
+          }
+          return;
+        }
+        var shown = node.getBoundingClientRect().width;
+        var column = node.parentElement ? node.parentElement.clientWidth : 0;
+        if (shown < MIN_FIGURE_PX || node.naturalWidth <= shown + 1 || shown < 0.9 * column) return;
+      }
       var box = node.getBoundingClientRect();
       if (box.width < MIN_FIGURE_PX && box.height < MIN_FIGURE_PX) return;
       // Mermaid renders into a wrapper element; wrap THAT rather than the
@@ -10024,9 +10213,23 @@
   //
   // Degrades to the existing static image: if the fetch or the parse fails the
   // `<img>` is left exactly as it was, with one warning naming the file.
+  // `<object data="x.svg">` IS THE SAME DRAWING BY ANOTHER TAG, and an IG page
+  // uses it: the IG Publisher's convention for a pre-rendered SVG is
+  // `<object data="x.svg" type="image/svg+xml">`, and the IG page the owner
+  // reported (a sequence-diagrams page) carries three beside two inline ones.
+  // Before bean `n7f8` this function and `mountFigures` looked only for
+  // `<img>` and `<svg>`, so the inline two got the viewer and the three
+  // objects got nothing: no zoom, no scroll container, and the widest ran past
+  // the content column and was clipped. An `<object>`'s document is also not
+  // this page's, so nothing here could have reached into it anyway; inlining
+  // it is what puts it under the one viewer. Its fallback text, the only text
+  // it carries, becomes the accessible name, as `alt` does for an `<img>`.
   function inlineDiagrams(done) {
     var imgs = [].slice.call(
-      document.querySelectorAll('.bpmn-figure img[src$=".svg"], .main-content img[src$=".svg"]'),
+      document.querySelectorAll(
+        '.bpmn-figure img[src$=".svg"], .main-content img[src$=".svg"], ' +
+          '.main-content object[data$=".svg"], .main-content object[type="image/svg+xml"][data]',
+      ),
     );
     if (!imgs.length || typeof window.fetch !== "function" || typeof window.DOMParser !== "function") {
       done();
@@ -10036,7 +10239,8 @@
     function settle() { if (--pending === 0) done(); }
 
     imgs.forEach(function (img) {
-      var src = img.getAttribute("src");
+      var isObject = img.tagName.toLowerCase() === "object";
+      var src = img.getAttribute(isObject ? "data" : "src");
       window
         .fetch(src)
         .then(function (r) {
@@ -10049,7 +10253,9 @@
           if (!svg || String(svg.nodeName).toLowerCase() !== "svg") throw new Error("not an svg");
           // The alt text was the accessible name; keep it on the element that
           // replaces it, or the diagram becomes invisible to a screen reader.
-          var alt = img.getAttribute("alt");
+          var alt = isObject
+            ? img.getAttribute("aria-label") || img.getAttribute("title") || (img.textContent || "").trim()
+            : img.getAttribute("alt");
           if (alt) {
             svg.setAttribute("role", "img");
             svg.setAttribute("aria-label", alt);
@@ -10379,6 +10585,9 @@
           : "Available in " + (available[0] || meta.lang || "its source language") +
             " only; not yet translated"
     }, "\uD83C\uDF10 " + availLangs + "/" + totalLangs + " languages");
+    // English text and an English tooltip: `lang`/`dir` on the badge, never on
+    // the row, so the row's ORDER still follows the page (bean `giiw`).
+    chromeText(langBadge);
     container.appendChild(langBadge);
 
     // The round-trip QA badge that stood here is gone, and the data behind it
@@ -10392,7 +10601,14 @@
     // QA sweep completeness badge — indicates whether sidecars have been run
     var sweep = meta.sweep || {};
     var sweepState, sweepIcon, sweepLabel, sweepTitle;
-    if (!sweep.run) {
+    if (!sweep.run && typeof sweep.absent === "string" && sweep.absent) {
+      // A FOLIO's site that publishes no sweep of its own (#2263 follow-up).
+      // Not "not run" -- nobody said the folio's sweep was never run -- and
+      // never the platform's ratio: the badge stays, inert, and says why.
+      sweepState = "is-idle"; sweepIcon = "–";
+      sweepLabel = "QA: not published";
+      sweepTitle = "Translation QA: " + sweep.absent + ".";
+    } else if (!sweep.run) {
       sweepState = "is-idle"; sweepIcon = "\u2B58";
       sweepLabel = "QA: not run";
       sweepTitle = "Translation QA sweep has not been run. " +
@@ -10414,6 +10630,7 @@
       class: "fa-translation-badge fa-sweep-badge " + sweepState,
       title: sweepTitle
     }, sweepIcon + " " + sweepLabel);
+    chromeText(sweepBadge);
     container.appendChild(sweepBadge);
 
     /* Unverified translation notice — ONE LINE, opening to the detail.
@@ -10451,20 +10668,49 @@
      * rather than drawn dead (`pb04`).
      */
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
-      var warning = el("details", { class: "fa-translation-warning" });
+      // The WHOLE notice is English, so the `<details>` carries `lang`/`dir`
+      // and the summary, the drawer and the report button all inherit it
+      // (bean `giiw`). Built from nodes rather than innerHTML: the drawer
+      // used to interpolate `meta.translationSource` into markup.
+      var warning = chromeText(el("details", { class: "fa-translation-warning" }));
       var warnSummary = el("summary", { class: "fa-translation-warning__line" });
-      warnSummary.innerHTML =
-        "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
-        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert.";
+      // ONE flex item holding the whole sentence. As loose text and <strong>s
+      // each piece was its own flex item at min-content width, so the line
+      // overflowed instead of truncating \u2014 and under an inherited `rtl` it
+      // overflowed off the LEFT edge, taking the sentence's start with it.
+      // One item can carry `text-overflow: ellipsis`, which with `dir="ltr"`
+      // falls at the logical end.
+      var warnText = el("span", { class: "fa-translation-warning__text" });
+      var warnLine = [
+        "\u26A0\uFE0F ", ["strong", "Unverified translation"], " \u2014 ",
+        "This page has been translated automatically and has ",
+        ["strong", "not been reviewed"], " by a subject-matter expert."
+      ];
+      warnLine.forEach(function (part) {
+        warnText.appendChild(typeof part === "string"
+          ? document.createTextNode(part)
+          : el(part[0], null, part[1]));
+      });
+      // The full sentence on hover, for the width at which the ellipsis bites.
+      warnSummary.setAttribute("title", warnText.textContent);
+      warnSummary.appendChild(warnText);
       warning.appendChild(warnSummary);
 
       var warnBody = el("div", { class: "fa-translation-warning__body" });
-      warnBody.innerHTML =
-        (meta.translationSource
-          ? "<p><strong>Source:</strong> " + meta.translationSource + " (English)</p>"
-          : "") +
-        "<p><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
-        "or use <code>translation_validate</code> to check for staleness and coverage.</p>";
+      if (meta.translationSource) {
+        var srcP = el("p");
+        srcP.appendChild(el("strong", null, "Source:"));
+        srcP.appendChild(document.createTextNode(" " + meta.translationSource + " (English)"));
+        warnBody.appendChild(srcP);
+      }
+      var howP = el("p");
+      howP.appendChild(el("strong", null, "How to verify:"));
+      howP.appendChild(document.createTextNode(" Run "));
+      howP.appendChild(el("code", null, "translation_signoff"));
+      howP.appendChild(document.createTextNode(" after SME review, or use "));
+      howP.appendChild(el("code", null, "translation_validate"));
+      howP.appendChild(document.createTextNode(" to check for staleness and coverage."));
+      warnBody.appendChild(howP);
       warning.appendChild(warnBody);
 
       if (meta.translationQa && meta.translationQa.src) {
@@ -10521,6 +10767,9 @@
       var tqBadge = el("button", {
         type: "button",
         class: "fa-qa-badge fa-qa-pending fa-qa-fam-translation",
+        // The generated badge's two attributes too (`qaBadgePlaceholder`).
+        lang: CHROME_LANG,
+        dir: "ltr",
         "data-qa-family": "translation",
         "data-qa-key": tq.key || "page.translation",
         "data-qa-label": "Translation QA",
@@ -10840,13 +11089,16 @@
   }
 
   function qaBuildPanel(doc, panelId, badge) {
-    var panel = el("div", {
+    // English at the root (bean `giiw`): the criteria, verdicts and counts are
+    // the QA corpus's English, and the subject is the SOURCE page's title,
+    // which is what the projection was computed over.
+    var panel = chromeText(el("div", {
       class: "fa-qa-panel fa-qa-panel-" + (doc.state || "unswept"),
       id: panelId,
       role: "region",
       "aria-label": "QA detail for " + (doc.subject || "this node"),
       tabindex: "-1"
-    });
+    }));
 
     var head = el("div", { class: "fa-qa-panel-head" });
     head.appendChild(el("strong", null, (badge.getAttribute("aria-label") || "").split(":")[0]));
@@ -10940,7 +11192,7 @@
   }
 
   function qaFail(badge, panelId, src, msg) {
-    var panel = el("div", { class: "fa-qa-panel fa-qa-panel-error", id: panelId, role: "region" });
+    var panel = chromeText(el("div", { class: "fa-qa-panel fa-qa-panel-error", id: panelId, role: "region" }));
     // Loud, and specific about which file could not be read: a panel that opens
     // empty is indistinguishable from a subject with nothing to report.
     panel.appendChild(el("strong", null, "Could not load the QA detail"));
@@ -11128,7 +11380,9 @@
       : label + ": not swept — " + (noun === "page"
         ? "no block on this page carries a translation verdict"
         : "no sidecar for this " + noun);
-    var span = document.createElement("span");
+    // A NEW element, so the button's `lang`/`dir` do not come with it unless
+    // carried: an inert badge is English chrome too (bean `giiw`).
+    var span = chromeText(document.createElement("span"));
     span.className = "fa-qa-badge fa-qa-unswept" +
       (kind === "unavailable" ? " fa-qa-unavailable" : "") +
       (family ? " fa-qa-fam-" + family : "");
@@ -11169,6 +11423,13 @@
    */
   function paintQaBadges(root) {
     var scope = root || document;
+    // English chrome (bean `giiw`). The generator writes `lang`/`dir` into the
+    // markup now; a TRANSLATED copy of a generated page (`process/ar/…`) keeps
+    // the markup it was translated from — which has neither, and on the
+    // committed Arabic copies is an older generator's inert `<span>` with no
+    // index to paint from — and the generator does not rewrite it. So every
+    // badge in scope is marked here, painted or not.
+    Array.prototype.forEach.call(scope.querySelectorAll(".fa-qa-badge"), chromeText);
     var badges = scope.querySelectorAll(".fa-qa-badge[data-qa-index]");
     if (badges.length === 0) return;
 
@@ -11273,7 +11534,12 @@
 
     var box = document.createElement("details");
     box.className = "fa-doc-index";
-    var sum = document.createElement("summary");
+    // ENGLISH HEADING, PAGE'S ROWS (bean `giiw`). "On this page" and "N
+    // sub-sections" are this script's English; the rows are the page's own
+    // headings, which on a translated page are in its language. So the two
+    // summaries are marked, never the box: marking the box would call an
+    // Arabic heading English and lay it out left-to-right.
+    var sum = chromeText(document.createElement("summary"));
     sum.className = "fa-doc-index__heading";
     // textContent throughout: a heading is page content, and this script's own
     // header records that nothing here interpolates into markup.
@@ -11310,7 +11576,7 @@
         if (!section.fold) {
           section.fold = document.createElement("details");
           section.fold.className = "fa-doc-index__fold";
-          section.sum = document.createElement("summary");
+          section.sum = chromeText(document.createElement("summary"));
           section.sum.className = "fa-doc-index__fold-heading";
           section.ul = document.createElement("ul");
           section.ul.className = "fa-doc-index__list fa-doc-index__list--sub";
@@ -11515,7 +11781,9 @@
       // records against its own `open: true`. Here the block sits ABOVE the
       // theme's `.site-nav`, so folding it uncovers the navigation rather
       // than emptying the column. Same rule, different content below it.
-      var box = el("details", { class: "fa-nav-folders" });
+      // English at the root (bean `giiw`): "Folders" and every row are the
+      // declarations' labels, which no locale translates.
+      var box = chromeText(el("details", { class: "fa-nav-folders" }));
       if (scope) box.setAttribute("data-fa-scope", scope.name);
       var sum = el("summary", { class: "fa-nav-folders__heading" }, "Folders");
       var count = el("span", { class: "fa-nav-folders__count" }, String(graphs.length));
@@ -11773,12 +12041,14 @@
     var top = scoped
       ? nav.querySelectorAll(".nav-list-item:not([data-fa-out-of-scope])").length
       : nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
-    var btn = el("button", {
+    // The button is English; the list it folds (`.site-nav`) is the page
+    // titles, translated per locale, so only the button is marked (`giiw`).
+    var btn = chromeText(el("button", {
       type: "button",
       class: "fa-nav-pages",
       "aria-controls": nav.id,
       "aria-expanded": "true",
-    }, "Pages");
+    }, "Pages"));
     btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
     var scope = scoped ? readRailScope() : null;
     if (scope) btn.title = "Pages of " + (scope.title || scope.name);
@@ -11974,6 +12244,10 @@
 
     if (harnesses) {
       harnesses.classList.add("fa-nav-harness-group");
+      // Server-rendered by `navbar.ts` in English — harness names, graph
+      // labels and their descriptions — and marked here, where it is moved
+      // into the scroller, rather than in the generated bundle (`giiw`).
+      chromeText(harnesses);
       middle.appendChild(harnesses);
       mirrorExpanded(harnesses);
       toTopOnOpen(harnesses);

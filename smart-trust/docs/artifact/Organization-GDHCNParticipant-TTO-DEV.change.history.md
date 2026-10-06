@@ -3,6 +3,8 @@ title: "GDHCNParticipant-TTO-DEV — change history"
 description: "Trinidad and Tobago - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Organization-GDHCNParticipant-TTO-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-TTO-DEV.xml","active":false},{"label":"JSON","href":"Organization-GDHCNParticipant-TTO-DEV.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-TTO-DEV.ttl","active":false}],"heading":"Trinidad and Tobago - Change History","sections":[{"text":"History of changes for GDHCNParticipant-TTO-DEV ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

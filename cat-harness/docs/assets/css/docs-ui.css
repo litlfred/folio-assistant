@@ -374,17 +374,33 @@
  * here is computed and then ignored. `height: auto` with the SVG's own
  * viewBox is what makes it scale rather than stretch. */
 .fa-figure-scope img,
-.fa-figure-scope svg {
+.fa-figure-scope svg,
+.fa-figure-scope object {
   width: calc(var(--fa-zoom, 1) * 100%) !important;
   min-width: calc(var(--fa-zoom, 1) * 1200px);
   max-width: none !important;
   height: auto !important;
 }
 
-/* A non-BPMN figure has no 1200px floor to scale -- it is whatever size it is. */
+/* A non-BPMN figure has no 1200px floor to scale -- it is whatever size it is.
+ *
+ * And 100% is the drawing's OWN width, capped at the column (bean `n7f8`):
+ * `--fa-natural` is set by `mountFigure` from the viewBox, or from an image's
+ * natural width. Without it a small diagram was stretched to the full column,
+ * text and all. Where no natural width is known the fallback is the column,
+ * which is what every plain figure got before. */
 .fa-figure-scope.fa-plain img,
-.fa-figure-scope.fa-plain svg {
+.fa-figure-scope.fa-plain svg,
+.fa-figure-scope.fa-plain object {
   min-width: 0;
+  width: calc(var(--fa-zoom, 1) * min(100%, var(--fa-natural, 100%))) !important;
+}
+
+/* The figure takes keyboard focus so it can be panned without a drag
+ * (bean `n7f8`, `board-windows` §"The floor"); focus has to be seen. */
+.fa-figure-scope:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
 }
 
 /* The wrapper this script puts around a non-BPMN figure.
@@ -494,6 +510,11 @@
 .fa-figure-scope.is-fullwidth {
   max-width: none;
   border-radius: 0;
+  /* The JS sets `width` to the viewport's client width. Under content-box the
+   * card's padding and border were added on top, so every full-width figure
+   * ran 18px past the right edge of the window and was clipped there (found by
+   * the n7f8 e2e spec, which measures it). */
+  box-sizing: border-box;
 }
 
 /* ── Narrow viewports ──────────────────────────────────────────────────── */
@@ -1125,7 +1146,10 @@
    * `(3.5rem - 2rem) / 2` in `navbar-geometry.ts`, the same 12px the icon row
    * and every rail row already indent by. So the mark lands centred in the
    * strip at rest and flush with the icons when open, from one number. */
-  .side-bar .site-title { padding-left: var(--fa-nav-pad); }
+  /* LOGICAL: on an RTL page the mark is at the right, by the strip's outer
+     edge, and the theme's padding there cut it in half against the strip
+     (measured 2026-10-06: mark 1330-1362px, strip from 1344px). */
+  .side-bar .site-title { padding-inline-start: var(--fa-nav-pad); }
 
   /* THE ICON ROW BECOMES AN ICON COLUMN at rest.
    *
@@ -1375,9 +1399,14 @@
 }
 
 /* RTL overrides */
+/* `start`, not `right` (bean `giiw`). `text-align` INHERITS, and `right` is a
+   physical value, so every English island inside an Arabic page — the
+   unverified notice, a badge, anything `docs-ui.js` marks `dir="ltr"` — was
+   pushed to the right edge of its own box. `start` resolves against each
+   element's own direction: right on the Arabic, left on the English. */
 [dir="rtl"] {
   direction: rtl;
-  text-align: right;
+  text-align: start;
 }
 
 /* Sidebar moves to right in RTL */
@@ -1388,9 +1417,25 @@
   border-right: none;
 }
 
-[dir="rtl"] .main {
-  margin-left: 0;
-  margin-right: 264px; /* matches just-the-docs sidebar width */
+/* THE MIRROR OF THE LTR RESERVATION, not a width of its own (bean `giiw`).
+   This read `margin-right: 264px` — the theme's OPEN sidebar — long after
+   the sidebar came to rest as a `--fa-nav-collapsed` strip. Measured on the
+   Arabic home page at 1400px: the strip at x 1344-1400 and the content
+   column ending at 1104, a 240px dead band beside the rail that the LTR page
+   (column from 88px) does not have. Same breakpoint and the same two
+   variables as `.side-bar + .main` above, so the two sides cannot drift. */
+@media (min-width: 50rem) {
+  [dir="rtl"] .side-bar + .main {
+    margin-left: 0;
+    margin-right: var(--fa-nav-collapsed);
+  }
+  [dir="rtl"] .side-bar:has(.fa-nav-open:checked) + .main {
+    margin-right: var(--fa-nav-open);
+  }
+}
+
+@media print {
+  [dir="rtl"] .side-bar + .main { margin-right: 0; }
 }
 
 @media (max-width: 799.98px) {
@@ -2284,6 +2329,26 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
 
 .fa-translation-warning__line::-webkit-details-marker { display: none; }
 
+/* The sentence is ONE flex item, so it can truncate rather than overflow
+   (bean `giiw`). As loose text and <strong>s each piece was its own flex item
+   at min-content width; on an Arabic page the overflow ran off the LEFT edge
+   and took the sentence's START with it. `min-width: 0` lets the item shrink
+   below its content, and the ellipsis falls at the logical END because the
+   notice carries `dir="ltr"` from `docs-ui.js` — the attribute, not a
+   `direction` rule here, so bidi is right even if this sheet fails. Opened,
+   the line wraps: the reader asked to see all of it. */
+.fa-translation-warning__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fa-translation-warning[open] .fa-translation-warning__text {
+  white-space: normal;
+}
+
 /* Never left to the user agent: the notice's fill differs per scheme and the
    default ring is invisible on one of them. */
 .fa-translation-warning__line:focus-visible {
@@ -2476,9 +2541,29 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   width: 2rem;
   height: 2rem;
   vertical-align: -0.32em;
-  margin-right: 0.4rem;
+  /* LOGICAL, so the gap is between the mark and the title in either
+   * direction. `margin-right` put it on the outer side under dir=rtl, and the
+   * title ran into the avatar (0 px apart on the Arabic site, measured
+   * 2026-10-06; 6 px on the English one). */
+  margin-inline-end: 0.4rem;
   flex: none;
 }
+
+/* THE TITLE TEXT READS IN ITS OWN LANGUAGE; THE ROW MIRRORS WITH THE BAR.
+ *
+ * Owner, 2026-10-06, looking at the Arabic site: *"avatar still
+ * cutoff/overlapping text. maybe put avatar to left of text and flow LTR
+ * unless title is translated to a RTL (hebrew,arabic) then do it RTL"*.
+ *
+ * The TEXT does exactly that: `title.html` marks the title with its own
+ * language, so the English harness name reads left to right on an Arabic page
+ * and only a right-to-left title would turn. The ROW (avatar, then title)
+ * still mirrors with the page, because on an RTL page the bar is docked RIGHT
+ * and at rest shows only its rightmost 3.5rem: an avatar placed to the left
+ * of the text is outside that strip and cannot be seen (measured 2026-10-06 at
+ * 1400px: mark at 1148-1180px, strip at 1344-1400px). The overlap and the
+ * cut-off were physical sides — this margin, the strip gutter and the narrow
+ * screen's title margin, all written for the left — and are logical now. */
 
 /* ── The mark as a MASK — one asset, both schemes ─────────────────────
  *
@@ -2551,7 +2636,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   flex: none;
   width: var(--fa-nav-mark);
   height: var(--fa-nav-mark);
-  margin-right: 0.4rem;
+  margin-inline-end: 0.4rem;
   overflow: hidden;
   border-radius: 0.25rem;
   vertical-align: -0.32em;
@@ -3691,11 +3776,12 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 /* What the reader OPENS sits above the cards: a panned or zoomed shelf can
    slide under the notes and the panel, and a Todos panel a card covered would
    be the same defect as the strip above. */
-.fa-glass-notes,
-.fa-glass-panel {
+.fa-glass-notes {
   position: relative;
   z-index: 1;
 }
+/* Fixed (see "The panel a chrome tile opens" below), and above the cards. */
+.fa-glass-panel { z-index: 1; }
 
 /* ── Zoom, pan and Home — bean `b8eq` ─────────────────────────────────────
    Sticky to the top of the glass so it stays in reach however far the glass
@@ -4042,10 +4128,88 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 }
 
 /* ── The panel a chrome tile opens, above the strip ───────────────────── */
+/* IN VIEW, NOT IN THE FLOW — wireframe `navbar` Findings (#2295, first noted
+   in #1810). In the flow it came after the shelf (`min-height: 50vh`), so at
+   1280×800 Glass settings opened at y = 591 with its body under the tile
+   dock. Fixed to the viewport instead; `fitPanel()` in docs-ui.js sets `top`
+   below the handle and zoom bar and `max-height` down to the dock's visible
+   top edge, for whichever state the dock is in. Centred by `left`/`right`
+   with auto margins rather than by a transform, because the transform is
+   `placePanel`'s: the pop-out still rides the folio's pan. The HEAD stays and
+   the BODY scrolls when the content is taller than the room (Glass settings
+   on a phone), so the title and × are never under the dock. */
 .fa-glass-panel {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  top: 3rem;
   max-width: 40rem;
-  margin: 1rem auto 0;
+  margin: 0 auto;
   padding: 0.75rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+/* `display: flex` above would otherwise override the UA's `[hidden]`. */
+.fa-glass-panel[hidden] { display: none; }
+.fa-glass-panel-head { flex: 0 0 auto; }
+.fa-glass-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* Room for a focused control's 3px ring inside the scroller. */
+  padding: 0 4px;
+  margin: 0 -4px;
+}
+/* GLASS SETTINGS LAID OUT ACROSS THE WIDTH where there is width for it, so
+   at 1280×800 the whole panel fits between the zoom bar and the dock with no
+   scrolling. In one column it is ~910 px tall. Laid out, Theme takes a wide
+   column where each choice's hint fits beside its name (one line each, not
+   two), and Avatars and Opacity stack beside it. The actions wrap in a row
+   underneath. A GRID, not `columns`: a height-capped multi-column box
+   overflows SIDEWAYS into columns nobody can see, while a grid overflows
+   down into the body's own scroll. A phone keeps the single column, and
+   the body scrolls.
+   60rem, not wider: at 1280 it leaves empty glass either side to grab and
+   pan the folio by (`glass-pop-outs.e2e.ts` presses at x = 1150). */
+.fa-glass-panel[data-fa-panel="glass-settings"] { max-width: 60rem; padding-bottom: 0.5rem; }
+.fa-glass-settings-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.5rem; }
+.fa-glass-settings-actions .fa-glass-settings-note { flex: 1 1 100%; margin: 0.25rem 0 0; }
+@media (min-width: 48rem) {
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-panel-body {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    /* The cross-link shares its row with Avatars rather than taking a
+       full-width row of its own: that row was the ~45 px that put the
+       actions under the dock at 1280×800. It stays FIRST in the DOM and in
+       reading order (`ob3m` 12); only its row is shared. */
+    grid-template-areas:
+      "theme   avatars"
+      "theme   opacity"
+      "actions actions";
+    grid-template-rows: auto auto auto;
+    column-gap: 1rem;
+    align-content: start;
+  }
+  /* Only where the cross-link is drawn: a page with no launcher (a replica,
+     the harness page) has none, and an empty "link" row would still take a
+     share of Avatars' height and push Theme down. */
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-panel-body:has(> .fa-settings-crosslink) {
+    grid-template-areas:
+      "link    avatars"
+      "theme   avatars"
+      "theme   opacity"
+      "actions actions";
+    grid-template-rows: auto auto auto auto;
+  }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-settings-crosslink { grid-area: link; margin: 0; align-self: start; }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-setting { margin: 0.5rem 0 0; }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-setting:nth-of-type(1) { grid-area: theme; }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-setting:nth-of-type(2) { grid-area: avatars; }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-setting:nth-of-type(3) { grid-area: opacity; align-self: start; }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-settings-actions { grid-area: actions; margin-top: 0.25rem; gap: 0.5rem; }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-settings-actions .fa-glass-reset { margin: 0; }
+  .fa-glass-panel[data-fa-panel="glass-settings"] .fa-glass-settings-actions .fa-glass-settings-note { flex: 0 1 auto; margin: 0; }
 }
 .fa-glass-panel-head { display: flex; align-items: center; gap: 0.5rem; }
 .fa-glass-panel-title { flex: 1 1 auto; margin: 0; font-size: 1.1rem; color: var(--fa-glass-ink); }
@@ -4182,12 +4346,16 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
     white-space: nowrap;
     /* The title's row-mates (`.fa-qr-host`'s icon buttons) follow it in the
        flex row, so a shorter title slid them LEFT, under the handle. The auto
-       margin takes the space the title gave up and keeps them at the right. */
-    margin-right: auto;
+       margin takes the space the title gave up and keeps them at the right.
+       LOGICAL, with the padding below: on an RTL page the title is the bar's
+       first item at the RIGHT edge, and `margin-right: auto` pushed it to the
+       centre, under the pill (measured 2026-10-06 at 420px: title 146-314px,
+       pill 172-248px). */
+    margin-inline-end: auto;
     /* The theme's 14px right padding is what pushed "C@T Harness" into the
        ellipsis: the text ends at ~145px but the padded box needed ~159px.
        Beside a fixed pill the padding buys nothing, so it goes here. */
-    padding-right: 0;
+    padding-inline-end: 0;
   }
 }
 
@@ -5869,6 +6037,18 @@ a.fa-nav-folders__link:focus-visible {
   .side-bar [data-fa-tip]:hover::after,
   .side-bar [data-fa-tip]:focus-visible::after {
     opacity: 1;
+  }
+  /* THE MIRROR, ON AN RTL PAGE (bean `giiw`). The strip is docked to the
+     RIGHT edge there (`[dir="rtl"] .side-bar`), so "beyond the strip's
+     edge" is measured from the right. Measured on the Arabic home page at
+     1400px before this rule: hovering Beans in the strip at x 1344-1400 drew
+     "Beans — 535 open" at x 64, across the page from the icon it names.
+     Keyed on the HTML element's `dir`, not the control's: the control is
+     marked `dir="ltr"` as English text, and its tooltip still has to sit
+     beside a strip that is on the right. */
+  html[dir="rtl"] .side-bar [data-fa-tip]::after {
+    left: auto;
+    right: calc(var(--fa-nav-collapsed) + var(--fa-nav-text, 1) * (var(--fa-nav-open) - var(--fa-nav-collapsed)) + 0.5rem);
   }
 
   /* THE STRIP DOES NOT PEEK WHEN THE POINTER ARRIVES ON THE ICON COLUMN.

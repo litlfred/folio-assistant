@@ -159,6 +159,43 @@ bun run seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 n
 These were the steward's hand-applied criteria (2026-10-02), generalised per
 layer.
 
+**A test about the WHOLE CHECKOUT lives at the top (owner, 2026-10-06, "Top-level
+instance"; bean `7zz1`).** A test that reads several sibling instances at
+once, or the aggregate root itself (`.github/`, `.gitignore`, the root
+declaration, `beans/`, `todos/`, `memory/`, `fsh-guts/`), is red in every layer
+it is placed in, so it goes in the root instance's DECLARED test home —
+`folio-assistant-tests` in `folio-assistant.json`, at `test/` — never in a layer
+and never at a path a runner hardcodes. Whatever names every layer belongs at the
+top, so each layer below stays standalone-green. Split a file when only some of
+its tests read the checkout, keep the fixture tests with their layer, compose
+the moved paths from `ORIGIN_DIR` (the directory the test was written in), and
+move a corpus describe whole when it carries a vacuity guard: a sibling left
+behind passes standalone over nothing.
+
+**A test reading an UPPER layer's files moves to that layer (owner, 2026-10-06,
+"tests that read cat-harness-tools files => move to cat-harness-tools").** It is
+red standing alone for the same reason, one level down: the file it reads is
+not in its layer's closure. It goes in the upper layer's DECLARED test home,
+which may import the lower layer — never the reverse — and it is split, pointed
+back to and composed from `ORIGIN_DIR` exactly as above. Check first that the
+file it reads really IS the upper layer's: a path written from the checkout root
+(`cat-harness/src/…` read relative to the working directory) is red standing
+alone over a file the layer does hold, and the fix there is to resolve it from
+the test file, not to move it.
+
+**A test that reads the checkout's GIT asks which of two things it is (owner,
+2026-10-06, "Throwaway repository, plus moving the real-repo checks").** A
+standalone layer is a fresh clone with no `origin` and one commit, so a test
+handed this checkout's remote, `HEAD` or `origin/main` fails there on a missing
+input. A test of LOGIC that merely reads git — address derivation, an upload
+URL's shape, a commit IRI, resolving a short sha — builds a throwaway repository
+whose facts it sets (`gitFixtureRepo` in cat-harness's
+`test/support/git-fixture.ts`) and passes that root, with every assertion
+exactly as strict; a function that resolves its root internally gains an
+optional root parameter defaulting to today's. A check that THIS repository is
+configured right — its own Pages address, its committed pages' banners — keeps
+its assertion verbatim and moves to the top-level test home above.
+
 **`upward paths` replaced `sibling discovery` (owner, 2026-10-04).** The old
 criterion counted dependents that discovery could not find in a workspace of
 sibling clones. Discovery is checkout-local on purpose (`cmsl`), so that count
@@ -294,4 +331,5 @@ This skill has its own process: **[A knowledge graph leaves for its own reposito
 | process | step(s) that name it |
 |---|---|
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Measure the signals; Separate this graph?; 4 · Identity: version, iriBase, nodeSchemas; 5 · Move harness output about it to the host; 6 · Split content from tools; 8 · Rehearse standalone; Create the repositories; Drain: land, close or re-target the open PRs; 10 · Seed both repositories |
+| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | Drain: land, close or re-target the open PRs |
 

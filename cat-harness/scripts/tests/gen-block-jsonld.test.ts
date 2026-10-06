@@ -81,12 +81,17 @@ describe("gen-block-jsonld", () => {
     const doc = blockToJsonLd(blocks.get("def:widget")!, PAPER, []);
     expect(doc["@id"]).toBe("papers/test-paper/blocks/def-widget");
     expect(doc.label).toBe("def:widget");
-    expect(doc["@context"]).toEqual(CONTENT_DOCUMENT_CONTEXT);
+    // A definition is sci's kind, so its document binds sci's prefix itself:
+    // the published context binds only cat-harness's (bean `0r7u`).
+    const [url, local] = doc["@context"] as [string, Record<string, string>];
+    expect(url).toBe(CONTENT_DOCUMENT_CONTEXT[0]);
+    expect(local["@base"]).toBe(CONTENT_DOCUMENT_CONTEXT[1]["@base"]);
+    expect(Object.keys(local).sort()).toEqual(["@base", "folio-assistant-sci"]);
   });
 
   test("co-types with DoCO where the mapping is unambiguous", () => {
     const doc = blockToJsonLd(blocks.get("thm:main")!, PAPER, []);
-    expect(doc["@type"]).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
+    expect(doc["@type"]).toEqual(["folio-assistant-sci:Theorem", "doco:Section"]);
   });
 
   test("resolves uses[] to IRIs, dedupes, and preserves authored order", () => {

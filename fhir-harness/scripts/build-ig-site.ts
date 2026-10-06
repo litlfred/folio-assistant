@@ -18,6 +18,7 @@
  * | `input/includes/*`, `input/pagecontent/*`, `input/images/*.svg` | `_includes/` | the Publisher resolves `{% include %}` against all three, so pages include each other and inline SVGs |
  * | `input/images/*` | the site root | the Publisher publishes them there, so pages say `<img src="x.png">` — except a `.json`/`.jsonld` that does not parse, which is left out and reported: publishing a broken data file under our site blocks the deploy, and whose file it is cannot be told from a file no parser can read |
  * | `input/images-source/*.plantuml` | `_includes/<name>.svg` | the Publisher RENDERS these; rendered here with `--plantuml-jar`, otherwise a visible "not rendered" marker, reported |
+ * | the artefact index (`--artifacts`) | `_includes/list-(simple-)?<types>.xhtml` | the Publisher GENERATES these lists of an IG's artefacts of one type; written here as Liquid over `site.data.fhir.artifact_lists`, so any IG with an index gets them (bean `9hfi`) |
  * | `ig-site-data` over the source | `_data/fhir.json` | `site.data.fhir.*`, only what is sourced |
  * | — | `_config.yml` | just-the-docs, one site |
  * | the instance's declared `webpage` theme | `_sass/color_schemes/ig.scss` | just-the-docs' own colour-scheme mechanism, so the IG wears its palette with the machinery unchanged (bean `u3cd`) |
@@ -144,6 +145,8 @@ export interface StageResult {
   images: number;
   /** Diagrams rendered from `input/images-source/*.plantuml`. */
   rendered: string[];
+  /** The Publisher's artefact lists (`list-(simple-)?<types>.xhtml`) a page includes, written from the artefact index (bean `9hfi`). */
+  listed: string[];
   /** Included files the source does not hold and nothing rendered: a marker stands in. */
   notRendered: string[];
   /** `input/images` data files (`.json`, `.jsonld`) that do not parse: not published, with the parser's reason. */
@@ -336,6 +339,20 @@ const IG_TOPBAR_CSS = `
 `;
 
 /**
+ * The page-level opt-in that tells `docs-ui.js` an IG page's raster images
+ * are figures too (bean `n7f8`). The shared figure viewer (`mountFigures`)
+ * already takes every `<svg>`, `<img src="*.svg">` and `<object data="*.svg">`
+ * in the content; an IG's architecture drawings are `.drawio.png` as well, and
+ * the theme shrinks a wide one to the column with no way to zoom it back.
+ * Raster images on the platform's own pages are as often card faces and
+ * photos, so the viewer takes them only where the page says so, and this is
+ * where an IG page says so. Hidden, carrying no text: it is a declaration,
+ * not chrome. One string, written by both the standalone layout and the
+ * composed pages' top include, so the two cannot disagree.
+ */
+export const IG_FIGURE_IMAGES_STAMP = '<span hidden data-fa-figure-images="ig"></span>';
+
+/**
  * The plain layout for `chrome: "harness"`: just-the-docs' stylesheet for the
  * prose (and the IG's colour scheme), the IG's top bar and TOC declaration,
  * the page — and no sidebar, so the rail pass supplies the navbar.
@@ -357,11 +374,13 @@ export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: str
     tocNav,
     topBar,
     '<main class="ig-main main-content" id="main-content">',
+    IG_FIGURE_IMAGES_STAMP,
     "{{ content }}",
     ...igEditLines(),
-    // Last on the page, as on the Publisher's. Only on the pages this build
-    // wrote (`ig_footer`): a page copied in that draws its own — an artefact
-    // page — would otherwise carry two.
+    // Last on the page, as on the Publisher's. Only on pages that flag it
+    // (`ig_footer`): the pages this build wrote, and the artefact pages
+    // copied in, whose front matter (`ig_footer`, `ig_root`, `ig_prev`,
+    // `ig_next`) asks for this same include rather than drawing their own.
     `{% if page.ig_footer %}{% include ${IG_FOOTER_INCLUDE} %}{% endif %}`,
     "</main>",
     "</body>",
@@ -376,9 +395,22 @@ export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: str
  * trailing `{#id}` removed — what a reader sees, which is what the layout
  * matches it against. Setext headings are not read; a heading the reader
  * sees and this does not simply gets no source link.
+ *
+ * `include` resolves an `{% include x %}` / `{% lang-fragment x %}` target to
+ * the markdown it pulls in and that file's repository path; given, the
+ * included file's headings are spliced in at the include, in reading order,
+ * each carrying `p` — the file its line `l` is in. Without it a page that is
+ * only includes has no headings at all, which is every HL7 IG's landing page:
+ * `index.md` is `{% include index-ig.md %}`, so its "Summary" got no ✎ and a
+ * 📣 with no line (bean `x78e`). A target already being read is not read
+ * again, so an include cycle ends.
  */
-export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
-  const out: Array<{ t: string; l: number }> = [];
+export function sourceHeadings(
+  md: string,
+  include?: (name: string) => { md: string; path: string } | undefined,
+  reading: ReadonlySet<string> = new Set(),
+): Array<{ t: string; l: number; p?: string }> {
+  const out: Array<{ t: string; l: number; p?: string }> = [];
   let fence: string | undefined;
   md.split(/\r?\n/).forEach((line, i) => {
     const f = /^\s{0,3}(```|~~~)/.exec(line);
@@ -387,6 +419,13 @@ export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
       return;
     }
     if (fence !== undefined) return;
+    if (include) {
+      for (const inc of line.matchAll(/\{%-?\s*(?:include|lang-fragment)\s+([^\s%]+)/g)) {
+        const got = include(inc[1]!);
+        if (!got || reading.has(got.path)) continue;
+        for (const e of sourceHeadings(got.md, include, new Set([...reading, got.path]))) out.push({ ...e, p: e.p ?? got.path });
+      }
+    }
     const h = /^\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$/.exec(line);
     if (!h) return;
     const t = h[1]!
@@ -401,6 +440,23 @@ export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
 }
 
 /**
+ * An `{% include %}` target resolved as the build resolves it — the IG's
+ * `input/pagecontent/` copied over `input/includes/` — to its markdown and
+ * repository path, for `sourceHeadings`. Only markdown: an `.xhtml` or
+ * `.liquid` include has no ATX headings to read.
+ */
+export function includeSource(igSrc: string): (name: string) => { md: string; path: string } | undefined {
+  return (name) => {
+    if (!name.endsWith(".md") || name.includes("..") || name.startsWith("/")) return undefined;
+    for (const dir of ["input/pagecontent", "input/includes"]) {
+      const file = join(igSrc, dir, name);
+      if (existsSync(file)) return { md: readFileSync(file, "utf-8"), path: `${dir}/${name}` };
+    }
+    return undefined;
+  };
+}
+
+/**
  * The layout's per-section links: each heading in the page body that matches
  * a source heading (by its visible text, in order) gets a small link to that
  * line on GitHub, and EVERY heading gets a feedback link — a new issue on the
@@ -409,17 +465,26 @@ export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
  * next to the section as well w/ preopopulted github issue content"). Script, because Jekyll has rendered the headings by
  * the time a template could see them; matched by text, because an include can
  * add headings the page's own source does not hold.
+ *
+ * A line carrying `b` is in an included file, and ✎ goes to THAT file's line
+ * (bean `x78e`). The issue title names the section first and the page apart
+ * from it, and the page only when it is not the section itself: an IG's
+ * landing page is titled after its menu entry, e.g. "Summary", which
+ * is also its first section's name, and "Feedback: Summary — About this
+ * implementation guide" read as one heading paired with another's link.
  */
-const SOURCE_LINKS_JS = `(function(){var d=document.getElementById("ig-source-lines");if(!d)return;var m;try{m=JSON.parse(d.textContent)}catch(e){return}
-if(window.faEditLinks&&m.repo)window.faEditLinks.configure({repo:m.repo,branch:m.branch||"main"});
+export const SOURCE_LINKS_JS = `(function(){var d=document.getElementById("ig-source-lines");if(!d)return;var m;try{m=JSON.parse(d.textContent)}catch(e){return}
+var repo=(m.blob.match(/^https:\\/\\/github\\.com\\/[^/]+\\/[^/]+/)||[])[0];
 var n=function(s){return s.toLowerCase().replace(/[^a-z0-9]+/g," ").trim()};var used={};
-var link=function(h,cls,kind,title,glyph){var a=document.createElement("a");a.className=cls;a.setAttribute("data-fa-link",kind);a.title=title;a.textContent=glyph;a.rel="noopener";a.target="_blank";h.appendChild(document.createTextNode(" "));h.appendChild(a)};
+var link=function(h,cls,href,title,glyph){var a=document.createElement("a");a.className=cls;a.href=href;a.title=title;a.textContent=glyph;a.rel="noopener";a.target="_blank";h.appendChild(document.createTextNode(" "));h.appendChild(a)};
 document.querySelectorAll("#main-content h1,#main-content h2,#main-content h3,#main-content h4,#main-content h5,#main-content h6").forEach(function(h){
-var text=h.textContent.trim(),k=n(text),line;for(var i=0;i<m.lines.length;i++){if(!used[i]&&n(m.lines[i].t)===k){used[i]=1;line=m.lines[i].l;break}}
-if(!m.path)return;
-h.setAttribute("data-src",m.path);h.setAttribute("data-block",h.id||text);h.setAttribute("data-sec",text);if(line)h.setAttribute("data-line",String(line));
-if(line)link(h,"ig-src","source","This section's source, line "+line+", on GitHub","\\u270E");
-if(m.repo)link(h,"ig-feedback","feedback","Give feedback on this section (opens a GitHub issue)","\\uD83D\\uDCE3")})})();`;
+var text=h.textContent.trim(),k=n(text),line,file;for(var i=0;i<m.lines.length;i++){if(!used[i]&&n(m.lines[i].t)===k){used[i]=1;line=m.lines[i].l;file=m.lines[i].b;break}}
+var src=line?(file||m.blob)+"#L"+line:m.blob;
+if(line)link(h,"ig-src",src,"This section's source, line "+line+", on GitHub","\\u270E");
+if(repo){var here=location.href.split("#")[0]+(h.id?"#"+h.id:"");
+var pt=document.title.split(" | ")[0].trim();
+var body="**Page:** "+here+"\\n**Section:** "+text+(h.id?" (#"+h.id+")":"")+"\\n**Source:** "+src+"\\n\\n**Feedback:**\\n\\n";
+link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback on \\u201C"+text+"\\u201D"+(pt&&n(pt)!==k?" (page: "+pt+")":""))+"&body="+encodeURIComponent(body),"Give feedback on this section (opens a GitHub issue)","\\uD83D\\uDCE3")}})})();`;
 
 /**
  * The IG's chrome that goes INTO a page when the IG is built inside a host
@@ -432,15 +497,16 @@ if(m.repo)link(h,"ig-feedback","feedback","Give feedback on this section (opens 
  */
 /**
  * The edit link and the per-section source and feedback links, as Liquid, for
- * both layouts. They come from the platform's one recipe, edit-links (bean
- * v433): the page's edit link and each heading carry facts, and the runtime
- * builds the hrefs. The edit link keeps its plain href for readers without
- * JavaScript.
+ * both layouts. The page's edit link comes from the platform's one recipe,
+ * edit-links (bean v433), and keeps its plain href for readers without
+ * JavaScript. The per-section links are `SOURCE_LINKS_JS`'s own: a heading
+ * can live in an included file (bean `x78e`), and its issue is titled after
+ * the section, with the page apart, which the block recipe does not do.
  */
 function igEditLines(): string[] {
   return [
     '{% if page.ig_edit_url %}<p class="ig-edit"><a data-fa-link="edit" data-src="{{ page.ig_source_path }}" data-repo="{{ page.ig_source_repo }}" href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
-    '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"repo": {{ page.ig_source_repo | jsonify }}, "branch": {{ page.ig_source_branch | jsonify }}, "path": {{ page.ig_source_path | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
+    '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "repo": {{ page.ig_source_repo | jsonify }}, "branch": {{ page.ig_source_branch | jsonify }}, "path": {{ page.ig_source_path | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
     `<script>${EDIT_LINKS_RUNTIME}</script><script>${SOURCE_LINKS_JS}</script>{% endif %}`,
   ];
 }
@@ -453,7 +519,7 @@ export function editBaseParts(editBase: string, path: string): { ig_source_repo?
 
 export function igChromeIncludes(topBar: string): { top: string; bottom: string } {
   return {
-    top: `<style>${IG_TOPBAR_CSS.trim()}</style>\n${topBar}\n`,
+    top: `<style>${IG_TOPBAR_CSS.trim()}</style>\n${topBar}\n${IG_FIGURE_IMAGES_STAMP}\n`,
     bottom: [
       ...igEditLines(),
       "",
@@ -578,6 +644,81 @@ export function includeTargets(md: string): string[] {
   return [...md.matchAll(/\{%-?\s*(?:include|lang-fragment)\s+([^\s%]+)/g)].map((m) => m[1]!);
 }
 
+/**
+ * FHIR's concrete resource types, R4 (4.0.1) and R5 (5.0.0) together — read
+ * once from `hl7.fhir.r4.core#4.0.1` and `hl7.fhir.r5.core#5.0.0` (every
+ * `StructureDefinition` with `kind: resource`, `derivation: specialization`,
+ * not abstract). Specification data, not any IG's: it is what tells
+ * `list-structuremaps.xhtml` from `list-simple-profiles.xhtml`, which names
+ * no resource type and so stays a marker here.
+ */
+export const FHIR_RESOURCE_TYPES: ReadonlySet<string> = new Set(
+  (
+    "Account ActivityDefinition ActorDefinition AdministrableProductDefinition AdverseEvent AllergyIntolerance " +
+    "Appointment AppointmentResponse ArtifactAssessment AuditEvent Basic Binary BiologicallyDerivedProduct " +
+    "BiologicallyDerivedProductDispense BodyStructure Bundle CapabilityStatement CarePlan CareTeam CatalogEntry " +
+    "ChargeItem ChargeItemDefinition Citation Claim ClaimResponse ClinicalImpression ClinicalUseDefinition CodeSystem " +
+    "Communication CommunicationRequest CompartmentDefinition Composition ConceptMap Condition ConditionDefinition " +
+    "Consent Contract Coverage CoverageEligibilityRequest CoverageEligibilityResponse DetectedIssue Device " +
+    "DeviceAssociation DeviceDefinition DeviceDispense DeviceMetric DeviceRequest DeviceUsage DeviceUseStatement " +
+    "DiagnosticReport DocumentManifest DocumentReference EffectEvidenceSynthesis Encounter EncounterHistory Endpoint " +
+    "EnrollmentRequest EnrollmentResponse EpisodeOfCare EventDefinition Evidence EvidenceReport EvidenceVariable " +
+    "ExampleScenario ExplanationOfBenefit FamilyMemberHistory Flag FormularyItem GenomicStudy Goal GraphDefinition " +
+    "Group GuidanceResponse HealthcareService ImagingSelection ImagingStudy Immunization ImmunizationEvaluation " +
+    "ImmunizationRecommendation ImplementationGuide Ingredient InsurancePlan InventoryItem InventoryReport Invoice " +
+    "Library Linkage List Location ManufacturedItemDefinition Measure MeasureReport Media Medication " +
+    "MedicationAdministration MedicationDispense MedicationKnowledge MedicationRequest MedicationStatement " +
+    "MedicinalProduct MedicinalProductAuthorization MedicinalProductContraindication MedicinalProductDefinition " +
+    "MedicinalProductIndication MedicinalProductIngredient MedicinalProductInteraction MedicinalProductManufactured " +
+    "MedicinalProductPackaged MedicinalProductPharmaceutical MedicinalProductUndesirableEffect MessageDefinition " +
+    "MessageHeader MolecularSequence NamingSystem NutritionIntake NutritionOrder NutritionProduct Observation " +
+    "ObservationDefinition OperationDefinition OperationOutcome Organization OrganizationAffiliation " +
+    "PackagedProductDefinition Parameters Patient PaymentNotice PaymentReconciliation Permission Person PlanDefinition " +
+    "Practitioner PractitionerRole Procedure Provenance Questionnaire QuestionnaireResponse RegulatedAuthorization " +
+    "RelatedPerson RequestGroup RequestOrchestration Requirements ResearchDefinition ResearchElementDefinition " +
+    "ResearchStudy ResearchSubject RiskAssessment RiskEvidenceSynthesis Schedule SearchParameter ServiceRequest Slot " +
+    "Specimen SpecimenDefinition StructureDefinition StructureMap Subscription SubscriptionStatus SubscriptionTopic " +
+    "Substance SubstanceDefinition SubstanceNucleicAcid SubstancePolymer SubstanceProtein " +
+    "SubstanceReferenceInformation SubstanceSourceMaterial SubstanceSpecification SupplyDelivery SupplyRequest Task " +
+    "TerminologyCapabilities TestPlan TestReport TestScript Transport ValueSet VerificationResult VisionPrescription"
+  ).split(" "),
+);
+
+/**
+ * The plural the IG Publisher writes into a list fragment's name
+ * (`list-<plural>.xhtml`), lower-cased: `CodeSystem` → `codesystems`,
+ * `Library` → `libraries`, `SubscriptionStatus` → `subscriptionstatuses`,
+ * `RelatedPerson` → `relatedpeople`.
+ */
+export function publisherPlural(resourceType: string): string {
+  const w = resourceType.toLowerCase();
+  if (w.endsWith("person")) return `${w.slice(0, -"person".length)}people`;
+  if (/[^aeiou]y$/.test(w)) return `${w.slice(0, -1)}ies`;
+  if (/(s|x|ch|sh)$/.test(w)) return `${w}es`;
+  return `${w}s`;
+}
+
+/**
+ * The IG Publisher's artefact-list fragments, `list-<plural>.xhtml` and
+ * `list-simple-<plural>.xhtml`: every artefact of ONE resource type, as a list
+ * of links to its page — with its description, or (`simple`) without. The
+ * type comes from the name, read either as the Publisher pluralises it or as
+ * a plain `s`; a name whose plural is no FHIR resource type
+ * (`list-simple-profiles.xhtml`, a subset of StructureDefinitions) is not one
+ * of these, and undefined says so.
+ */
+export function artifactListInclude(name: string): { resourceType: string; simple: boolean } | undefined {
+  const m = /^list-(simple-)?([a-z]+)\.xhtml$/.exec(name);
+  if (!m) return undefined;
+  for (const t of FHIR_RESOURCE_TYPES) {
+    if (publisherPlural(t) === m[2] || `${t.toLowerCase()}s` === m[2]) return { resourceType: t, simple: m[1] !== undefined };
+  }
+  return undefined;
+}
+
+/** The include every `list-*.xhtml` this build writes calls: prefixed, so it cannot collide with one the IG's source holds. */
+export const ARTIFACT_LIST_INCLUDE = "fa-ig-artifact-list.html";
+
 /** What stands in for a diagram nothing rendered: visible, never an empty include. */
 export const notRenderedMarker = (name: string, from: string) =>
   `<p class="ig-not-rendered"><strong>⟦not rendered: ${name}⟧</strong> — the IG Publisher renders it from <code>${from}</code>; no renderer was given to this build.</p>\n`;
@@ -691,6 +832,14 @@ export interface ArtifactVariables {
   artifact_categories: Array<{ name: string; anchor: string; count: number; keys: string[] }>;
   /** How many artefacts `artifact_categories` lists — counted here, so no template counts. */
   artifacts_listed: number;
+  /**
+   * Per resource type, its artefacts' keys in the order the Publisher's
+   * `list-<types>.xhtml` lists them — by displayed title, case-folded — what
+   * the `list-*.xhtml` includes iterate (bean `9hfi`). Every artefact of the
+   * type, categorised or not: the Publisher's list is by type, not by the
+   * `artifacts.html` category.
+   */
+  artifact_lists: Record<string, { count: number; keys: string[] }>;
 }
 
 /**
@@ -748,7 +897,19 @@ export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHre
     g.keys.push(key);
     g.count++;
   }
-  return { vars: { artifacts, artifact_categories: order, artifacts_listed: order.reduce((n, c) => n + c.keys.length, 0) }, notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)) };
+  const artifactLists: ArtifactVariables["artifact_lists"] = {};
+  const byTitle = (k: string) => artifacts[k]!.text.display.toLowerCase();
+  for (const a of list) (artifactLists[a.resourceType] ??= { count: 0, keys: [] }).keys.push(variableKey(a));
+  for (const l of Object.values(artifactLists)) {
+    // One entry per key: two ids that differ only in punctuation share a key, as they share its variables.
+    l.keys = [...new Set(l.keys)];
+    l.keys.sort((x, y) => byTitle(x).localeCompare(byTitle(y)) || x.localeCompare(y));
+    l.count = l.keys.length;
+  }
+  return {
+    vars: { artifacts, artifact_categories: order, artifacts_listed: order.reduce((n, c) => n + c.keys.length, 0), artifact_lists: artifactLists },
+    notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)),
+  };
 }
 
 /**
@@ -786,6 +947,8 @@ export const ARTIFACTS_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-si
 export const RELEASES_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/releases.liquid");
 /** The Publisher's page footer, a Liquid include over `site.data.fhir.footer` (#1901). */
 export const FOOTER_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/ig-footer.liquid");
+/** The Publisher's `list-(simple-)?<types>.xhtml`, a Liquid include over `site.data.fhir.artifact_lists` (bean `9hfi`). */
+export const ARTIFACT_LIST_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/artifact-list.liquid");
 /** Its name under `_includes/`: prefixed, so it cannot collide with an include the IG's own source holds. */
 export const IG_FOOTER_INCLUDE = "fa-ig-footer.html";
 
@@ -996,7 +1159,11 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
           ig_source_blob: `${opts.editBase.replace(/\/$/, "").replace(/\/edit\//, "/blob/")}/input/pagecontent/${f}`,
           // The same facts, apart, for the shared link recipe (bean v433).
           ...editBaseParts(opts.editBase, `input/pagecontent/${f}`),
-          ig_source_lines: sourceHeadings(readFileSync(join(pagecontent, f), "utf-8")),
+          // Through the page's includes (bean `x78e`): an IG's index.md is
+          // only `{% include index-ig.md %}`, and its headings live there.
+          ig_source_lines: sourceHeadings(readFileSync(join(pagecontent, f), "utf-8"), includeSource(src), new Set([`input/pagecontent/${f}`])).map(
+            ({ p, ...h }) => (p ? { ...h, b: `${sourceBlob}/${p}` } : h),
+          ),
         }
       : {};
     for (const fill of opts.fills ?? []) {
@@ -1080,6 +1247,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   // Diagrams the Publisher renders from images-source, and anything else a page
   // includes that the source does not hold.
   const rendered: string[] = [];
+  const listed: string[] = [];
   const notRendered: string[] = [];
   const imagesSource = join(src, "input", "images-source");
   const wanted = new Set(pages.flatMap((f) => includeTargets(readFileSync(join(out, f), "utf-8"))));
@@ -1097,6 +1265,16 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     if (existsSync(tempInclude)) {
       copyFileSync(tempInclude, join(out, "_includes", name));
       rendered.push(name);
+      continue;
+    }
+    // The Publisher's list of one type's artefacts, from the artefact index
+    // whichever source produced it (the published IG, or an AST) — the same
+    // data `artifacts.md` reads, so the two pages cannot disagree (bean `9hfi`).
+    const listOf = opts.artifacts ? artifactListInclude(name) : undefined;
+    if (listOf) {
+      writeFileSync(join(out, "_includes", name), `{% include ${ARTIFACT_LIST_INCLUDE} type="${listOf.resourceType}"${listOf.simple ? ' simple="simple"' : ""} %}\n`);
+      writeFileSync(join(out, "_includes", ARTIFACT_LIST_INCLUDE), readFileSync(ARTIFACT_LIST_TEMPLATE_PATH, "utf-8"));
+      listed.push(name);
       continue;
     }
     writeFileSync(join(out, "_includes", name), notRenderedMarker(name, existsSync(puml) ? `input/images-source/${basename(puml)}` : "a source this build does not hold"));
@@ -1168,7 +1346,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     ].join("\n"),
   );
   const fillsResult = opts.fills?.length ? { filled, unused: opts.fills.map((x) => x.marker).filter((m) => !usedMarkers.has(m)) } : undefined;
-  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, relinked, deadLinks: [...dead].sort(), scheme, siteData };
+  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, listed, notRendered, unparseable, relinked, deadLinks: [...dead].sort(), scheme, siteData };
 }
 
 /**
@@ -1222,6 +1400,7 @@ export function describeStage(r: StageResult): string {
     ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
     ...(r.relinked ? [`links pointed where they resolve (artefact pages, the published IG, the source repository): ${r.relinked}`] : []),
     ...(r.deadLinks.length ? [`DEAD in the IG's own source — no page anywhere serves: ${r.deadLinks.join(", ")}`] : []),
+    ...(r.listed.length ? [`artefact lists written from the artefact index (the Publisher generates these): ${r.listed.join(", ")}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     r.scheme

@@ -2,6 +2,10 @@
 title: "ConceptMap to and from IMMZ.D DataElements — WHO SMART Immunizations artefact"
 description: "ConceptMap/IMMZ.D.ConceptMap in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ConceptMap-IMMZ.C.ConceptMap.html"
+ig_next: "ConceptMap-IMMZ.Z.ConceptMap.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Mapping to and from IMMZ.D Data Dictionary to other codesystems.
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="ConceptMap-IMMZ.C.ConceptMap.html" data-next="ConceptMap-IMMZ.Z.ConceptMap.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

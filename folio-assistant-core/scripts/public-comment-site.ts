@@ -28,7 +28,7 @@
  * only by `public-comment.ts`.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import type { ReviewAnchors } from "./docx-to-folio.js";
 import { type ChangeSet, DECISION_LABELS, IN_EDIT_STATUSES, OPEN_STATUSES, type PublicComment } from "../schemas/public-comment.js";
@@ -568,6 +568,21 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   );
   writeFileSync(join(out, "public-comments", "comments.json"), JSON.stringify(rows, null, 1) + "\n");
   return { comments: rows.length, open: rows.filter((r) => r.phase === "open").length };
+}
+
+/**
+ * What this builder READS (bean `ehh6`), repo-relative: the comment store,
+ * and the folio, where each comment's anchors and block text live. `args` are
+ * the ones the build command passes.
+ */
+export function siteReads(repoRoot: string, args: string[] = []): string[] {
+  const opt = (n: string) => {
+    const i = args.indexOf(`--${n}`);
+    return i >= 0 ? args[i + 1] : undefined;
+  };
+  const repo = resolve(repoRoot, opt("repo") ?? ".");
+  const rel = (p: string) => relative(repoRoot, p).split("\\").join("/");
+  return [rel(resolve(repo, opt("store") ?? "review/public-comment")), rel(join(repo, "folio"))];
 }
 
 if (import.meta.main) {

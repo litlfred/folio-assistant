@@ -250,7 +250,8 @@ decides it.
 > *"narrative/audio/visual content with text should be translatable. its not
 > so much the node schema itself but its content (e.g. markdown, bpmn) should
 > be translatable"*: translatability is a property of a **format within a
-> content type**, which `schemas/translation-tools.ts` already declares and
+> content type**, which the owning instance declares under
+> `contentTranslations` (collected by `schemas/translation-tools.ts`) and
 > `isTranslatable` already answers, not a property of a directory.
 >
 > `.po` catalogues are the genuine exception, and that is what
@@ -853,6 +854,94 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
 `state` on `main` and still `state` on `cat/cat-harness/todos`; a `context`
 graph could be mounted from a branch and stays read-only. See
 [`content-context-and-state-graphs`](content-context-and-state-graphs.md).
+
+### Where a NEW instance's state lives — on its own branch, by default (owner, 2026-10-06)
+
+**This subsection owns the rule.** The scaffold skills
+([`getting-started`](getting-started.md), `folio_init`)
+point here and do not restate it.
+
+Measured 2026-10-06: a folio scaffolded by `folio_init` carried `beans/` and
+`todos/` on `main` from its install commit, and its declaration named neither,
+so nothing could say where its work plan lived. The scaffold never asked the
+`source` resolver. The owner's ruling: *fix the process*. Bean `hp54`.
+
+- **The default is a property of the KIND, read once at scaffold time.** A
+  graph typology may carry `newInstanceSource: { kind: "branch", keyedBy:
+  "tip" }`, beside `perInstance`. `beans` and `todos` carry it. It has no
+  `branch`, because a kind has no branch name to give. `folio_init` composes
+  the name and writes a **complete** `source` into the new instance's own
+  `<instance>.json`. After that the declaration is the one answer. The
+  resolver never reads `newInstanceSource`, so it is not a second place
+  answering where the content lives. It also cannot move an existing
+  instance whose entry declares no source. This repository's own `beans/`
+  and `todos/` stay where they are until their cutover (`fs43`).
+- **The branch name is `cat/<instance>/<directory-id>`**, built by
+  `instanceStateBranch` in `schemas/subgraph-source.ts`. For example, the
+  `dpi-h-ra` instance's branches are `cat/dpi-h-ra/beans` and
+  `cat/dpi-h-ra/todos`. This is the owner's
+  `cat/<harness>/<name>` ruling (2026-10-02) applied to a folio. One name does
+  three jobs:
+  - it names the declaration (`<instance>.json`);
+  - it prefixes the bean ids (`.beans.yml` → `<instance>-`);
+  - it names the state branches.
+
+  The last segment is the directory **id**, the key that `branch-store
+  mount --id` and `state:seed --id` use.
+- **`folio_init` resolves each state graph through the one resolver** (after
+  writing the declaration and config, so a `subgraphSources` override is
+  honoured), and acts on the resolved source:
+
+  | resolved | what `folio_init` does |
+  |---|---|
+  | `branch` | Declares the graph. Does **not** write it into the checkout. Adds `/<path>/**` to `.gitignore` so a mount is never committed. Prints the seed command. |
+  | `directory` | Writes the graph **and** declares it. Before `hp54` the scaffold wrote it and did not declare it. |
+
+- **Seeding is printed, not performed.** No platform command creates a new
+  state branch:
+  - `branch-store` refuses to ("seeding … is a steward act");
+  - `state:seed` only refreshes an existing seed.
+
+  So `folio_init` prints a self-contained shell block. Run it once from the
+  new repository. It pushes an orphan tip branch holding:
+  - a `state-manifest/v1` manifest marked `authoritative: true`, because a
+    new instance has no `main` copy;
+  - a README;
+  - the graph's starting files. For `beans`, those are `beans/beans.json`
+    and `beans/defs/`, and the seed must carry them: `beans:claim` reads
+    `beans.json` from the branch and refuses to guess where `defs` is.
+
+  Then `state:mount` puts each branch at its declared path. This was checked
+  end to end on a fresh repository with a bare remote: init, seed, mount,
+  `beans create`, `branch-store push --id beans`, `beans:claim`.
+- **Cutting an EXISTING instance over is two halves, and both have a command.**
+  Run both from the instance's own repository. Every default is the cwd's git
+  toplevel, and `--repo-root <dir>` overrides it. Until `hp54` the default
+  was the platform checkout, so a folio that links the platform refreshed
+  the platform's branch.
+
+  1. **The branch half:** `state:seed --id <id> --authoritative`. The branch
+     becomes the store.
+  2. **The main half:** `state:seed --id <id> --cutover`. It is a dry run
+     that reports files and bytes. Add `--commit` to stage `git rm -r
+     <path>` and a `/<path>/**` ignore line as **one** commit naming the
+     branch and the tree id. It never pushes. It refuses unless all of these
+     hold:
+     - the manifest says `authoritative: true`;
+     - the manifest says `keyedBy: "tip"`, or the mount would be `corrupt`;
+     - a declaration keeps the path on that branch;
+     - nothing under the path is uncommitted;
+     - `HEAD:<path>` and the branch's `<path>` are the same tree id, so the
+       two copies are byte-identical.
+
+  Then run `state:mount`. Both halves, and the refusals, were checked end
+  to end on a fresh repository.
+- **A state directory nobody declared is a finding**: `undeclared-state` in
+  `check:declared-dirs`. Every other check there compares declarations to
+  disk. This one runs the other way, for the conventional state paths only
+  (`DEFAULT_DIRECTORIES` entries whose kinds all `holds: "state"`). It
+  reports and never removes anything. Whether to move the content off `main`
+  is the owner's call ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
 
 ## What a derived subgraph is computed FROM — `derivedFrom` (owner, 2026-10-04)
 

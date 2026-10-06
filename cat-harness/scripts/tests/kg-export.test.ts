@@ -19,6 +19,11 @@
  * already guarantees those refs resolve against the real skill locations, which
  * makes the set of BPMN refs an independent witness — if the exporter's notion
  * of "where skills live" narrows again, this fails.
+ *
+ * The tests of this file that read the whole checkout (exports the graph of
+ * every instance in the checkout, who-iris's packages among them) live in
+ * `test/kg-export-checkout.test.ts` (bean `7zz1`): standing alone, cat-harness
+ * has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
@@ -29,7 +34,8 @@ import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "n
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
-import { buildExport, exportIdentity, publishedDocument, publishedIdentity, publishedInstanceSchemas, undeclaredRootTerms } from "../kg-export.js";
+import { buildExport, exportIdentity, publishedDocument, publishedIdentity, publishedInstanceSchemas, readSourceProvenance, undeclaredRootTerms } from "../kg-export.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 import { PUBLISHED_ELSEWHERE, declaresOwnCanonical, instanceExportPlan, publishesInstanceSchema } from "../instance-exports.js";
 import { isExternalContract, skillContracts } from "../skill-contracts.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
@@ -309,16 +315,6 @@ describe("kg export", () => {
     for (const n of withLane) expect(byId.get(n.performedBy as string)?.notation).toBeTruthy();
   });
 
-  test("internal links resolve, bar the known data defects", () => {
-    // 4 on this branch, every one a manifest naming something nobody wrote
-    // (bean `nup0`) — data, not export failures, so they are reported in the
-    // document rather than thrown. The number may only go DOWN.
-    expect(EXPORT.danglingLinks.length).toBeLessThanOrEqual(4);
-    for (const d of EXPORT.danglingLinks) {
-      expect(["declaresSkill", "providesCapability"]).toContain(d.edge);
-    }
-  });
-
   test("the graph carries its own vocabulary", () => {
     // Self-describing: following `holdsGraph` from a directory must land on a
     // GraphTypology node, not on a term that only exists in TypeScript.
@@ -580,9 +576,22 @@ describe("source provenance — what the graph was generated FROM", () => {
   });
 
   test("the commit is a dereferenceable IRI, typed prov:wasDerivedFrom", () => {
+    // The IRI is derived over a throwaway repository whose `origin` is known
+    // (`test/support/git-fixture.ts`), not over this checkout's: standing
+    // alone, cat-harness has no `origin`, and the derivation is logic over
+    // whatever remote it is given.
+    const fx = gitFixtureRepo();
+    try {
+      const src = readSourceProvenance(fx.root);
+      expect(src.iri).toContain(src.sha);
+      expect(src.iri).toMatch(/^https:\/\/(github|gitlab)\.com\/.+\/commit\//);
+    } finally {
+      fx.cleanup();
+    }
     const d = EXPORT;
-    expect(d.sourceCommit).toContain(d.sourceCommitSha);
-    expect(d.sourceCommit).toMatch(/^https:\/\/(github|gitlab)\.com\/.+\/commit\//);
+    // ...and the export carries exactly what provenance read here, so the
+    // derivation above is the one the published graph uses.
+    expect(d.sourceCommit).toBe(readSourceProvenance().iri);
     const ctx = d["@context"] as Record<string, { "@id"?: string; "@type"?: string }>;
     expect(ctx.sourceCommit?.["@id"]).toMatch(/wasDerivedFrom$/);
     expect(ctx.sourceCommit?.["@type"]).toBe("@id");
@@ -955,15 +964,6 @@ describe("a package's id is declared, not derived from its path", () => {
   const packages = (): Array<Record<string, unknown>> =>
     typed("SkillPackage") as Array<Record<string, unknown>>;
 
-  // Over the CHECKOUT graph, where the witness below lives (bean `4ak5`).
-  const membersOf = (pkgIri: string): string[] =>
-    EXPORT_CHECKOUT["@graph"]
-      .filter((n) => {
-        const links = (n as { inPackage?: Array<string | { "@id": string }> }).inPackage ?? [];
-        return links.some((l) => (typeof l === "string" ? l : l["@id"]) === pkgIri);
-      })
-      .map((n) => String(n["@id"]).split("#").pop()!);
-
   test("no two packages share an @id — a collision is not a merge", () => {
     const ids = packages().map((p) => String(p["@id"]));
     expect(ids.length).toBe(new Set(ids).size);
@@ -993,9 +993,6 @@ describe("a package's id is declared, not derived from its path", () => {
   // manifest name that differs from its directory. The rule is
   // `packageIdFor`'s, which runs the same in either scope.
   const WITNESS = "who-iris";
-  const checkoutPackages = (): Array<Record<string, unknown>> =>
-    (EXPORT_CHECKOUT["@graph"] as Array<Record<string, unknown>>).filter((n) => n["@type"] === termIri("SkillPackage"));
-  const witness = () => checkoutPackages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
 
   // Reads other instances' exports, so it runs only where those instances
   // exist; skipped visibly when cat-harness stands alone (bean `ho66`).
@@ -1003,32 +1000,6 @@ describe("a package's id is declared, not derived from its path", () => {
     const at = `${EXPORT["@id"]}#package/${WITNESS}`;
     const t = (EXPORT["@graph"] as Array<Record<string, unknown>>).find((n) => n["@id"] === at);
     expect(t).toEqual({ "@id": at, deprecated: true, isReplacedBy: publishedIdentity(join(REPO, WITNESS)).docIri });
-  });
-
-  test("a package is named by its manifest, not by its directory", () => {
-    const p = witness();
-    expect(p, `packages present: ${checkoutPackages().map((x) => x["name"]).join(", ")}`).toBeDefined();
-    expect(p!["name"]).toBe(WITNESS);
-    expect(String(p!["path"])).toContain("who-iris/skills");
-    // And the basename is NOT what it is called — the assertion the rule is
-    // actually about, which naming the package alone does not make.
-    expect(p!["name"]).not.toBe("skills");
-  });
-
-  test("its members are that package's own skills and nothing else", () => {
-    // Against the manifest, because what the collision produced was a member
-    // from ANOTHER package — a count would have gone on passing while one
-    // name was swapped for another.
-    const manifest = JSON.parse(
-      readFileSync(join(import.meta.dir, "../../..", "who-iris", "skills", "package-manifest.json"), "utf8"),
-    ) as { skills: string[] };
-    expect(membersOf(String(witness()!["@id"])).sort()).toEqual(manifest.skills.map((k) => `skill/${k}`).sort());
-  });
-
-  test("`corpus-grep` is NOT among them — the contamination the merge caused", () => {
-    // The sharpest assertion here, because it is the one that was false and
-    // that every other signal called healthy. `corpus-grep` is folio-core's.
-    expect(membersOf(String(witness()!["@id"]))).not.toContain("skill/corpus-grep");
   });
 
   test("a directory with NO manifest falls back to its basename, and says so", () => {

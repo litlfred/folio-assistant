@@ -298,9 +298,17 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="staging-review"/>
         <bootstrap.processes:skill ref="visual-diff"/>
+        <bootstrap.processes:skill ref="rendered-impact"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
+        The review starts from the Change Set's RENDERED list (skill
+        rendered-impact): every rendered file the change alters, predicted
+        from each renderer's dependency cone and checked against the build.
+        The reviewer opens every content page on it, not only the pages the
+        author mentions; index files are listed but not reviewed. An input
+        the renderer could not place is shown as not known, never as no
+        change.
         Review committee opens both URLs side by side:
         - Main site: &lt;pages-url&gt;/ (current published state)
         - Staging: &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/
@@ -326,10 +334,11 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 
     <bpmn:task id="Task_SliceAndAssign" name="Slice the change and assign reviewers">
-      <bpmn:documentation>From the ChangeSet and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices.</bpmn:documentation>
+      <bpmn:documentation>From the ChangeSet, its rendered list (skill rendered-impact: each changed rendered page is assigned like a changed block) and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="review-heatmap" />
         <bootstrap.processes:skill ref="staging-review" />
+        <bootstrap.processes:skill ref="rendered-impact" />
       </bpmn:extensionElements>
       <bpmn:incoming>c1</bpmn:incoming>
       <bpmn:incoming>c8</bpmn:incoming>
@@ -383,8 +392,8 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
       <bpmn:outgoing>c10</bpmn:outgoing>
     </bpmn:callActivity>
 
-    <bpmn:exclusiveGateway id="GW_Covered" name="Every changed block reviewed?">
-      <bpmn:documentation>Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved.</bpmn:documentation>
+    <bpmn:exclusiveGateway id="GW_Covered" name="Every changed block and page reviewed?">
+      <bpmn:documentation>Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`, and, where the build published a rendered impact, `unreviewedPages`, `undeterminedInputs` and `missedPages` with their `rendered` and `measured` statuses (skill rendered-impact). Resolved comments are not coverage, and coverage is not approval — that is GW_Approved.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:decision ref="decisions/review-coverage-gate.dmn#Decision_ReviewCoverageGate" />
       </bpmn:extensionElements>
@@ -523,11 +532,15 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
     <bpmn:task id="Task_CommentPR" name="Comment staging URL on PR">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="rendered-impact"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
         Bot comments or updates the staging URL on the PR.
-        Includes commit SHA, branch name, and build log link.
+        Includes commit SHA, branch name, and build log link, and the
+        review list of rendered files the change alters (skill
+        rendered-impact), each linked on the preview and on main, with any
+        input the renderer could not place named as not known.
       </bpmn:documentation>
       <bpmn:incoming>p3</bpmn:incoming>
       <bpmn:outgoing>p4</bpmn:outgoing>

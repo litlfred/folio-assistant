@@ -58,6 +58,15 @@ can decline to overlay rather than place text somewhere nobody chose.
 
 Reader-facing walkthrough: `docs/start/getting-started.md` §8.
 
+**A new instance's `beans/` and `todos/` are not written into its checkout.**
+By default `folio_init` declares them on their own branches,
+`cat/<instance>/beans` and `cat/<instance>/todos`, and prints a one-time seed
+command. Say so when you hand the scaffold over: until the seed has been run
+and mounted, an empty `beans list` means *not mounted*, not *no work*. The
+rule, the branch naming and the override live in
+[`directory-conventions`](directory-conventions.md)
+§"Where a NEW instance's state lives".
+
 ## 0. Why this skill exists
 
 `folio_init` scaffolds a folio, and it does it well. What it cannot do is know
@@ -187,6 +196,22 @@ jumping straight to a branch.
 | `overlay` | Hand off to [`repo-conversion`](repo-conversion.md) — scan first, import second, and never in the other order. |
 | `add-folio` | `folio_init` against a new top-level slug in the existing instance. Do not re-link the platform; it is already linked. |
 | `new-content` | **Stop.** This process ends here. Hand off to `authoring-a-document` or `authoring-a-paper`. Scaffolding anything on this branch is the bug. |
+
+**An IG or a SMART Guideline is routed by its own creation skill.** When the
+answer to step 3's second question is a FHIR IG or a WHO SMART IG, hand over
+to `fhir-ig-create` (ask `skill_list`; a harness that specialises it, such as
+`smart-guideline-create`, runs instead). It reads the same facts and adds the
+one answer this table has no branch for: **inside this repository, as a staged
+sub-KG that can move to its own repository later**, which is its default in a
+harnessed repository because nothing outside the repository changes until the
+owner confirms. `folio_init` has no IG type, so the new-repository route
+scaffolds with `--instance` there. Bean `3tza`.
+
+**A second folio can leave later.** What `add-folio` creates, and any staged
+sub-KG, may later move to a repository of its own. That is
+[`sub-kg-lifecycle`](sub-kg-lifecycle.md): stage it
+in place, then create the repository and delete the in-repo copy, each only on
+the owner's confirmation.
 
 ## 5. After scaffolding — seed the plan, then publish
 

@@ -2,6 +2,10 @@
 title: "IMMZIND20 — WHO SMART Immunizations artefact"
 description: "Measure/IMMZIND20 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Measure-IMMZIND19.html"
+ig_next: "Measure-IMMZIND21.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ IMMZ.IND.20 Immunization coverage for rotavirus vaccines, 1st dose
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="Measure-IMMZIND19.html" data-next="Measure-IMMZIND21.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

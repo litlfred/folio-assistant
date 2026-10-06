@@ -1,10 +1,10 @@
 ---
 # folio-assistant-vq2g
 title: Two bean FILES share one id, and no gate catches it
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-03T02:40:59Z
-updated_at: 2026-10-03T02:40:59Z
+updated_at: 2026-10-06T19:44:02Z
 parent: folio-assistant-1xhc
 ---
 
@@ -59,3 +59,5 @@ no bean is ever deleted or renamed in this repository on an agent's initiative
 (`deletion-requires-confirmation`). Both files are left exactly as they are.
 The remedy needs the owner, and re-identifying one of them also means fixing
 every reference to it — which is the cost the gate exists to stop recurring.
+
+_2026-10-06T19:44:02Z_ — Claimed by claude/vq2g-duplicate-bean-files — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

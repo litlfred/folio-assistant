@@ -628,6 +628,17 @@ export async function buildDocumentSite(
   return result;
 }
 
+/**
+ * What this builder READS (bean `ehh6`): the folio directory, repo-relative.
+ * Its config and declaration sit at the repository root, which the document
+ * predictor already counts as read. `args` are the ones the build command passes.
+ */
+export function siteReads(repoRoot: string, args: string[] = []): string[] {
+  const i = args.indexOf("--repo");
+  const repo = i >= 0 && args[i + 1] ? resolve(repoRoot, args[i + 1]!) : repoRoot;
+  return [relative(repoRoot, folioDir(repo)).split("\\").join("/")];
+}
+
 if (import.meta.main) {
   const args = process.argv.slice(2);
   const opt = (n: string) => {

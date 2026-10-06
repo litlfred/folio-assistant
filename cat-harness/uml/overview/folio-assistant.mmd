@@ -33,6 +33,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace folio_assistant__folio_assistant_tests {
+    class n_folio_assistant_folio_assistant_tests_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace folio_assistant__fsh_guts {
     class folio_assistant_fsh_guts_FshGutsNode["FshGutsNode"] {
       <<json: FshGutsNodeSchema>>
@@ -92,6 +97,7 @@ classDiagram
       hold [0..1] object
       trainId [0..1] string
       ejection [0..1] object
+      release [0..1] object
       status [0..1] enum(7)
       beans [0..*] string[]
     }
@@ -213,6 +219,7 @@ classDiagram
       hold [0..1] object
       trainId [0..1] string
       ejection [0..1] object
+      release [0..1] object
       status [0..1] enum(7)
       beans [0..*] string[]
     }
@@ -304,6 +311,8 @@ classDiagram
   cssClass "folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json" fa_uml_kind_uploads
   cssClass "n_folio_assistant_root_tools_code" fa_uml_kind_code
   cssClass "n_folio_assistant_root_tools_code" fa_uml_undetermined
+  cssClass "n_folio_assistant_folio_assistant_tests_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_folio_assistant_tests_code" fa_uml_undetermined
   cssClass "folio_assistant_fsh_guts_FshGutsNode" fa_uml_kind_fsh_guts
   folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_beans_folio_session_survey_v1_Axe : axes
   cssClass "folio_assistant_beans_folio_workflow_instance_v1" fa_uml_kind_beans

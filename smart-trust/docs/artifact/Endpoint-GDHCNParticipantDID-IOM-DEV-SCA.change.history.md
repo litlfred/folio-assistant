@@ -5,6 +5,8 @@ did:web:tng-cdn.who.int:v2:trustlist:-:IOM:SCA
 resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/IOM/SCA/did.json - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-IOM-DEV-SCA.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-IOM-DEV-SCA.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-IOM-DEV-SCA.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-IOM-DEV-SCA.ttl","active":false}],"heading":"TEST Trustlist (DID v2) - DEV - Certificate Signing Authority\ndid:web:tng-cdn.who.int:v2:trustlist:-:IOM:SCA\nresolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/IOM/SCA/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-IOM-DEV-SCA ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

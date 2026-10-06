@@ -2,6 +2,10 @@
 title: "Mapping from CDHI v1 to CDISAH v2 — WHO SMART Base artefact"
 description: "ConceptMap/CDHIv1toCDHIv2 in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ConceptMap-CDHIv1Hierarchy.html"
+ig_next: "ConceptMap-CDHIv2Hierarchy.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Mapping from the Classification of Digital Health Interventions v1 (CDHI v1, 201
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ConceptMap-CDHIv1Hierarchy.html" data-next="ConceptMap-CDHIv2Hierarchy.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

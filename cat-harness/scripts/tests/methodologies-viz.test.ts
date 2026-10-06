@@ -27,25 +27,22 @@
  * are `pb04` one layer down: a link that goes nowhere reads as a broken site.
  *
  * @module scripts/tests/methodologies-viz.test
+ *
+ * The tests of this file that read the whole checkout (reads the methodology
+ * graphs of the content instances, smart-base's among them) live in
+ * `test/methodologies-viz-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
-
-import { siteDirFor } from "../../schemas/cat-harness.js";
+import { resolve } from "node:path";
 
 import {
   evidenceLine,
   instanceOf,
   methodologyRows,
   page,
-  pageRelPath,
-  short,
-  type MethodologyRow,
 } from "../gen-methodologies-viz.js";
 import {
-  checkMethodologyEvidence,
-  methodologyNodes,
   type EvidenceReport,
   type MethodologyNode,
 } from "../check-methodology-evidence.js";
@@ -174,111 +171,6 @@ describe("which instance declared it — `instanceOf`", () => {
     // reading the page, so it is pinned here rather than trusted to review.
     expect(instanceOf("../smart-base/methodologies/diig.md", INSTANCE, REPO)).toBe("smart-base");
     expect(instanceOf("../folio-assistant-core/methodologies/doc-researcher.md", INSTANCE, REPO)).toBe("folio-assistant-core");
-  });
-});
-
-describe("the page a reader gets — over the REAL corpus", () => {
-  const r = checkMethodologyEvidence(INSTANCE);
-  const rows = methodologyRows(methodologyNodes(INSTANCE), r, INSTANCE, REPO);
-
-  it("the graph is found at all — `undetermined` is not a clean run", () => {
-    expect(r.undetermined).toBe(false);
-    expect(rows.length).toBeGreaterThan(0);
-  });
-
-  it("every row's link resolves to an anchor ON THIS PAGE", () => {
-    // The consumer property. A "Choosing one" row links to `#<name>`; if the
-    // detail section below does not carry that id the link silently goes
-    // nowhere, which reads as a broken site rather than a broken link
-    // (`pb04`). Checking the committed page, not only the rendered string, so
-    // a stale commit fails here too.
-    const rendered = page(rows, r);
-    // `siteDirFor`, never the literal. `site-dir-single-answer.test.ts` fails
-    // a source file that hardcodes the output site root, and it is right to:
-    // the site root is one answer and a second spelling of it is a second
-    // answer free to disagree. This test wrote the literal and that guard
-    // caught it.
-    const committed = readFileSync(join(INSTANCE, siteDirFor(INSTANCE), pageRelPath(REPO)!), "utf-8");
-    for (const text of [rendered, committed]) {
-      const targets = new Set([...text.matchAll(/<a id="([^"]+)"><\/a>/g)].map((m) => m[1]));
-      const links = [...text.matchAll(/\]\(#([^)]+)\)/g)].map((m) => m[1]);
-      expect(links.length).toBe(rows.length);
-      expect(links.filter((l) => !targets.has(l))).toEqual([]);
-    }
-  });
-
-  it("no cell breaks the table it sits in", () => {
-    // `origin` and `applies-when` are free prose and one of them already
-    // contains a pipe. An unescaped one silently shifts every column to its
-    // right, which renders as a table that is subtly WRONG rather than as one
-    // that is obviously broken.
-    const body = page(rows, r).split("\n");
-    const header = body.findIndex((l) => l.startsWith("| methodology |"));
-    expect(header).toBeGreaterThan(-1);
-    const columns = (l: string): number => l.split(/(?<!\\)\|/).length;
-    const want = columns(body[header]!);
-    for (const line of body.slice(header + 2)) {
-      if (!line.startsWith("|")) break;
-      expect({ line: line.slice(0, 40), columns: columns(line) }).toEqual({
-        line: line.slice(0, 40),
-        columns: want,
-      });
-    }
-  });
-
-  it("no row leaves a code span open — the defect that printed the table as text", () => {
-    // Bean `7w1a`, owner 2026-09-24. The column check above counts pipes and
-    // IGNORES code spans, so it passed while a truncated `applies-when` cut a
-    // span open on the `madr` row: the stray backtick paired with one in a
-    // later cell, the pipes between stopped being cell boundaries, and kramdown
-    // rendered the whole table as a paragraph. Checked over the REAL page, in
-    // both the rendered string and the committed file.
-    const committed = readFileSync(join(INSTANCE, siteDirFor(INSTANCE), pageRelPath(REPO)!), "utf-8");
-    for (const text of [page(rows, r), committed]) {
-      const lines = text.split("\n");
-      const header = lines.findIndex((l) => l.startsWith("| methodology |"));
-      expect(header).toBeGreaterThan(-1);
-      const tableRows = lines.slice(header + 2).filter((l, i, all) => all.slice(0, i + 1).every((x) => x.startsWith("|")));
-      expect(tableRows.length).toBe(rows.length);
-      for (const line of tableRows) {
-        const ticks = (line.match(/`/g) ?? []).length;
-        expect({ line: line.slice(0, 60), even: ticks % 2 === 0 }).toEqual({ line: line.slice(0, 60), even: true });
-      }
-    }
-  });
-
-  it("a cut that lands inside a code span or a bold run backs out of it", () => {
-    const long = "x".repeat(130) + " (see `kepner-tregoe` for the method) and more words here";
-    const cut = short(long, 140);
-    expect((cut.match(/`/g) ?? []).length % 2).toBe(0);
-    expect(cut.endsWith("…")).toBe(true);
-    const bold = "y".repeat(130) + " **a bold phrase that runs past the limit** tail";
-    expect((short(bold, 140).match(/\*\*/g) ?? []).length % 2).toBe(0);
-    // ...and a cut that lands OUTSIDE any span is left exactly where it was.
-    expect(short("z".repeat(200), 150)).toBe("z".repeat(149) + "…");
-  });
-
-  it("the page is DECLARED, not composed — and under the docs tree", () => {
-    const at = pageRelPath(REPO);
-    expect(at).toBeDefined();
-    expect(at!.startsWith("..")).toBe(false);
-  });
-
-  it("the counts on the page are the counts in the rows", () => {
-    // A generated page that states a number nothing derived is the shape this
-    // repository keeps paying for — a count in prose is a claim, not evidence.
-    const html = page(rows, r);
-    const stat = (label: string): number => {
-      const m = new RegExp(`<b>(\\d+)</b><span>${label}`).exec(html);
-      return m ? Number(m[1]) : -1;
-    };
-    expect(stat("adopted methodologies")).toBe(rows.length);
-    expect(stat("with the source held here")).toBe(
-      rows.filter((x: MethodologyRow) => x.state === "ingested").length,
-    );
-    expect(stat("cited, not ingested")).toBe(
-      rows.filter((x: MethodologyRow) => x.state === "cited-only").length,
-    );
   });
 });
 

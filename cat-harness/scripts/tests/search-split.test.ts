@@ -6,6 +6,10 @@
  * instead of the whole: every entry lands in exactly ONE scope (the scopes
  * partition the source), the scope rule reads only declared facts, and the
  * output is the same bytes for the same index.
+ *
+ * The tests of this file that read the whole checkout (reads the instances the
+ * checkout's site mounts) live in `test/search-split-checkout.test.ts` (bean
+ * `7zz1`): standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -17,7 +21,6 @@ import {
   PLATFORM,
   SCOPES_DIR,
   SOURCE_PATH,
-  declaredInstanceNames,
   ID_LOOKUP_DIR,
   PREBUILT_TOKEN_BUDGET,
   SECTION_BUDGET_BYTES,
@@ -132,11 +135,6 @@ describe("the CLI", () => {
       rmSync(dir, { recursive: true, force: true });
     }
   });
-});
-
-test("this checkout's declared instances include the ones the site mounts", () => {
-  const names = declaredInstanceNames(resolve(import.meta.dir, "..", "..", ".."));
-  for (const n of ["smart-trust", "smart-base", "bootstrap"]) expect(names.has(n)).toBe(true);
 });
 
 describe("platform sections over the budget — bean mm2n", () => {

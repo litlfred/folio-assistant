@@ -6,6 +6,11 @@
  * needs `low`, `side` is a sibling of `low` (also needs nothing), and `odd`
  * declares no `needs` at all. Every edge kind the gate distinguishes is planted
  * once, alongside the look-alikes it must NOT count.
+ *
+ * The tests of this file that read the whole checkout (reads every instance's
+ * declaration and code in the checkout) live in
+ * `test/check-import-direction-checkout.test.ts` (bean `7zz1`): standing
+ * alone, cat-harness has none of it.
  */
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -136,16 +141,8 @@ describe("check:import-direction — the cat-harness / cat-harness-tools boundar
 
   afterAll(() => rmSync(split, { recursive: true, force: true }));
 
-  test("the real declarations carry needs for every instance involved", () => {
-    expect(report.undeclaredNeeds).toEqual([]);
-  });
-
   test("a planted cat-harness → cat-harness-tools import is wrong-direction", () => {
     const wrong = report.findings.filter((f) => f.verdict === "wrong-direction");
     expect(wrong.map((f) => `${f.file} → ${f.toInstance}`)).toEqual(["cat-harness/src/planted.ts → cat-harness-tools"]);
-  });
-
-  test("cat-harness-tools → cat-harness, down the arrow, is allowed", () => {
-    expect(report.findings.some((f) => f.file === "cat-harness-tools/src/server.ts")).toBe(false);
   });
 });
