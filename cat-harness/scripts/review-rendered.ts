@@ -170,7 +170,7 @@ export function renderMeasured(box: HTMLElement, model: MeasuredModel): void {
     missed: "Missed by the list above: " + n + " page(s) the build changed that no renderer named. Each needs a page: verdict.",
     "not-base": "Measured against main's site as built from " + (model.beforeCommit || "an unrecorded commit") + ", not this change's base, so main's own changes are mixed in and none of these " + n + " page(s) is counted as missed.",
   }[model.state];
-  box.appendChild(el("p", say, model.state === "missed" ? null : "muted"));
+  box.appendChild(el("p", say, model.state === "missed" ? undefined : "muted"));
   if (!n) return;
   const ul = el("ul");
   model.missed.forEach(function (r) {
