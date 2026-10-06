@@ -224,6 +224,22 @@ export function instanceRootsIn(repoRoot: string): string[] {
 }
 
 /**
+ * The root of the instance named `name` within `repoRoot`: the repository root
+ * itself when it declares `<name>.json` (the standalone layout, where a layer
+ * IS its repository), else the one-level-deep instance that does (the
+ * monorepo, where it is `<repoRoot>/<dir>`). `undefined` when neither does.
+ *
+ * Bean `uxn1`: three callers wrote `join(repoRoot, "cat-harness")`, which is
+ * right only in the monorepo, so a standalone cat-harness found no actors and
+ * no skill-definitions directory. Asking the declarations answers both
+ * layouts with one rule, and never guesses a path that does not exist.
+ */
+export function instanceRootNamed(repoRoot: string, name: string): string | undefined {
+  const want = `${name}${DECLARATION_SUFFIX}`;
+  return instanceRootsIn(repoRoot).find((root) => findDeclarationFile(root) === want);
+}
+
+/**
  * The submodule paths `root/.gitmodules` declares, or an empty set when it
  * declares none. Git's own declaration of which nested checkouts belong to
  * this repository — read rather than re-derived, so the answer is git's.
