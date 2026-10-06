@@ -340,16 +340,16 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-06T14:13:35.344Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c8029c7cad33280aeacac03efc7d51255f34179",
-  "sourceCommitSha": "4c8029c7cad33280aeacac03efc7d51255f34179",
-  "sourceCommitAt": "2026-10-06T15:57:46+02:00",
+  "generatedAt": "2026-10-06T15:02:48.782Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7ef9d3a700e45a7eec70198e3a7ac67378d8ff3a",
+  "sourceCommitSha": "7ef9d3a700e45a7eec70198e3a7ac67378d8ff3a",
+  "sourceCommitAt": "2026-10-06T16:46:08+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 3,
     "GraphTypology": 18,
-    "Subgraph": 8,
+    "Subgraph": 9,
     "Asset": 2
   },
   "@graph": [
@@ -548,6 +548,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/root-tools"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/folio-assistant-tests",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-tests",
+      "path": "test/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "Tests about the WHOLE CHECKOUT: each reads several sibling instances at once, or the aggregate root itself (`.github/`, `.gitignore`, `AGENTS.md`, this declaration, the root state graphs `beans/`, `todos/`, `memory/`, `fsh-guts/`). Owner ruling 2026-10-06, \"Top-level instance\" (bean `7zz1`, epic `iirv`): whatever names every layer belongs at the top, so each layer below stays green when it stands alone, and `check:cat-harness-standalone` collects none of these. `test/` rather than `tests/` because `directory-conventions` settled the spelling on 2026-09-19 (`test/` is the one test tree, and the rule for the next one). Each moved file composes its paths from `ORIGIN_DIR`, the directory it was written in, so nothing it reads changed in the move. `code`, like every other `*-tests` entry: authored test sources, discovered by a root `bun test` and compiled by `tsc` through the root tsconfig's `test/**` glob.",
+      "readmePath": "test/README.md",
+      "fileCount": 106,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/folio-assistant-tests"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/beans",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "beans",
@@ -671,8 +688,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "4c8029c7cad33280aeacac03efc7d51255f34179",
+    "sha": "7ef9d3a700e45a7eec70198e3a7ac67378d8ff3a",
     "pr": "main",
-    "run": "37475000012"
+    "run": "37481742488"
   }
 }
