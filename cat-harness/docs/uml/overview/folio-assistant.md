@@ -177,6 +177,7 @@ classDiagram
       hold [0..1] object
       trainId [0..1] string
       ejection [0..1] object
+      release [0..1] object
       status [0..1] enum(7)
       beans [0..*] string[]
     }
@@ -298,6 +299,7 @@ classDiagram
       hold [0..1] object
       trainId [0..1] string
       ejection [0..1] object
+      release [0..1] object
       status [0..1] enum(7)
       beans [0..*] string[]
     }
