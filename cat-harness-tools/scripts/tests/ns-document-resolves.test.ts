@@ -24,14 +24,23 @@
  * restating the pairs, so a fourth layer is covered the day it is added.
  *
  * @module scripts/tests/ns-document-resolves
+ *
+ * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
+ * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate
+ * repository's own root — `.github/workflows/docs-site.yml` and
+ * `feature-staging.yml` — which a standalone cat-harness layer does not have,
+ * and `check:cat-harness-standalone` collects every test in that layer.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { namespaceForLayer } from "../../schemas/namespaces.ts";
+import { namespaceForLayer } from "../../../cat-harness/schemas/namespaces.ts";
 
-const REPO = join(import.meta.dir, "../../..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move. */
+const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
+
+const REPO = join(ORIGIN_DIR, "../../..");
 
 /** The workflows that publish per-layer namespace documents. */
 const WORKFLOWS = [".github/workflows/docs-site.yml", ".github/workflows/feature-staging.yml"] as const;

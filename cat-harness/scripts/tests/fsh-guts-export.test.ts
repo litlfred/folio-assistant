@@ -8,6 +8,11 @@
  * Bean `folio-assistant-t0i3`.
  *
  * @module scripts/tests/fsh-guts-export.test
+ *
+ * The tests here that read the aggregate repository's own root (the
+ * root-declared `fsh-guts` trashcan and `.github/workflows/docs-site.yml`)
+ * live in `cat-harness-tools/scripts/tests/fsh-guts-export-repo-root.test.ts`
+ * (bean `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
@@ -81,14 +86,6 @@ function node(over: Record<string, string> = {}): string {
 describe("the real corpus", () => {
   const doc = buildFshGutsExport(ROOT);
 
-  test("every committed node is in the document", () => {
-    // The vacuity guard first: everything below filters this graph, and a
-    // filter over nothing passes.
-    expect(doc.nodeCount).toBeGreaterThan(0);
-    expect(doc["@graph"]).toHaveLength(doc.nodeCount);
-    expect(doc.scans).toContain("fsh-guts");
-  });
-
   test("nothing was skipped for a reason that means a defect", () => {
     // A file declaring another schema is data. A file declaring THIS one and
     // failing it is a broken node, and would otherwise vanish silently.
@@ -101,13 +98,6 @@ describe("the real corpus", () => {
     expect(buildFshGutsExport(ROOT, "https://example.invalid/preview")["@id"]).toBe(
       "https://example.invalid/preview/fsh-guts.jsonld",
     );
-  });
-
-  test("the directory is resolved from the declaration, not spelled", () => {
-    expect(fshGutsDirs(ROOT)).toEqual([
-      { absPath: join(repoRootFor(ROOT), "fsh-guts"), path: "fsh-guts" },
-    ]);
-    expect(fshGutsDirs(instance(false))).toEqual([]);
   });
 
   // Bean 9c7h: ONE resolution for every reader and writer, so the move to
@@ -217,12 +207,6 @@ describe("the folded block scalar the corpus actually uses", () => {
       "---\n$schema: folio-fsh-guts/v1\ntitle: T\nkind: proposal\nsummary: >-\n  one line\n  and another\n---\n",
     );
     expect(r.node?.summary).toBe("one line and another");
-  });
-
-  test("every real node's summary survived the parse", () => {
-    const withSummary = buildFshGutsExport(ROOT)["@graph"].filter((n) => n.description);
-    expect(withSummary.length).toBeGreaterThan(0);
-    for (const n of withSummary) expect(String(n.description)).not.toBe(">-");
   });
 });
 

@@ -5,6 +5,11 @@
  * reviewer primarily then it should be under `test/results/` as part of a QA
  * process."* Placement follows PROVENANCE — what produced an artefact and why
  * — not its file family and not who fetches it afterwards.
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/docs-site.yml`) live in
+ * `cat-harness-tools/scripts/tests/qa-results-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, it, test } from "bun:test";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -21,7 +26,7 @@ import {
   writeQaResult,
   QA_RESULTS_DIR,
 } from "../qa-results.js";
-import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
+import { readDeclaration } from "../../schemas/cat-harness.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -152,30 +157,6 @@ describe("the witnesses are committed in one place and published in another", ()
     const here = existsSync(qaAssets) ? readdirSync(qaAssets) : [];
     expect(here.filter((f) => f !== "index.json")).toEqual([]);
     expect(here.some((f) => /\.(block|qa|qa-results)\.json$/.test(f))).toBe(false);
-  });
-
-  it("BOTH publishing workflows copy them into the site", () => {
-    // The failure this exists to prevent is silent and asymmetric. Jekyll
-    // builds only `docs/`, so a workflow missing this copy publishes a site
-    // where every `data-qa-src` 404s — and an empty QA panel looks exactly
-    // like "nothing has been audited", which is the false pass the badges
-    // were built to remove. Missing it in ONE workflow is worse still: the
-    // docs site and the staging preview would disagree, and the preview is
-    // where a reviewer checks.
-    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
-      const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
-      // Two facts rather than one command line: `-T` so the CONTENTS land in
-      // `assets/qa/`, and the destination both workflows must agree on. The
-      // SOURCE path moved with the instance and is not what this is about —
-      // pinning the whole string made it fail on a correct relocation, the
-      // same way `site-links.test.ts` did an hour earlier.
-      expect(text).toContain("cp -rT ");
-      expect(text).toContain("test/results/witnesses ./_site/assets/qa");
-      // The RESULTS too, since bean `2634` took the findings out of the
-      // published graph: this file is now the only place a consumer can see
-      // what the QA pass found about the document it just fetched.
-      expect(text).toContain("*.qa-results.json");
-    }
   });
 
   it("the badges still point at `/assets/qa/`, unchanged by the move", () => {

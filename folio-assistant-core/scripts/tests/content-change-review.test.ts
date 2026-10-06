@@ -1,11 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import { resolve } from "path";
-import { drainSubprocess } from "./helpers";
-import { loadProcessModel } from "../../src/workflow/process-model";
-import { complete, enabled, startInstance } from "../../src/workflow/instance";
-import { workflowFile } from "../known-skills.ts";
+import { drainSubprocess } from "../../../cat-harness/scripts/tests/helpers";
+import { loadProcessModel } from "../../../cat-harness/src/workflow/process-model";
+import { complete, enabled, startInstance } from "../../../cat-harness/src/workflow/instance";
+import { workflowFile } from "../../../cat-harness/scripts/known-skills.ts";
 
-/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
+/**
+ * This instance's root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`).
+ * The test lives in folio-assistant-core because the diagram does (bean `ho66`).
+ */
 const HARNESS = resolve(import.meta.dir, "../..");
 
 /**

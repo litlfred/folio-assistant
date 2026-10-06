@@ -2,9 +2,9 @@ import { describe, expect, test, beforeEach, afterEach } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
-import { checkCorpusGate, COMMIT_ACTIVITY } from "../../src/workflow/corpus-gate";
-import { readBlockManifest } from "../../content/pipeline/qa-utils";
-import { loadBlockModuleSync } from "../../content/pipeline/block-module";
+import { checkCorpusGate, COMMIT_ACTIVITY } from "../../../cat-harness/src/workflow/corpus-gate";
+import { readBlockManifest } from "../../../cat-harness/content/pipeline/qa-utils";
+import { loadBlockModuleSync } from "../../../cat-harness/content/pipeline/block-module";
 
 /**
  * The same resolver `scripts/check-corpus-gate.ts` supplies in production.
@@ -23,11 +23,11 @@ function labelFor(tsPath: string): string | undefined {
   }
   return loaded.label;
 }
-import { drainSubprocess } from "./helpers";
-import { loadProcessModel } from "../../src/workflow/process-model";
-import { workflowFile } from "../known-skills.ts";
-import { complete, startInstance } from "../../src/workflow/instance";
-import { instanceId, saveInstance } from "../../src/workflow/store";
+import { drainSubprocess } from "../../../cat-harness/scripts/tests/helpers";
+import { loadProcessModel } from "../../../cat-harness/src/workflow/process-model";
+import { workflowFile } from "../../../cat-harness/scripts/known-skills.ts";
+import { complete, startInstance } from "../../../cat-harness/src/workflow/instance";
+import { instanceId, saveInstance } from "../../../cat-harness/src/workflow/store";
 
 /**
  * Everything before this was answerable: `workflow_gate` tells an agent whether
@@ -41,7 +41,15 @@ import { instanceId, saveInstance } from "../../src/workflow/store";
  * looking.
  */
 
-const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
+/**
+ * The platform the gate is pointed at — cat-harness, whose code this is — and
+ * the instance whose diagram it gates. The test lives here, in
+ * folio-assistant-core, because its subject is `editing-hci-validation.bpmn`,
+ * which this instance owns: standing alone, cat-harness has no such diagram
+ * (bean `ho66`).
+ */
+const INSTANCE_ROOT = resolve(import.meta.dir, "../../../cat-harness");
+const CORE = resolve(import.meta.dir, "../..");
 const BUILDERS = JSON.stringify(join(INSTANCE_ROOT, "schemas/builders.ts"));
 
 let repo: string;
@@ -61,7 +69,7 @@ const block = (slug: string, label: string): string => {
 
 /** Drive a real instance to the point where the commit step is enabled. */
 const authorise = async (label: string, decision = "accept"): Promise<void> => {
-  const model = await loadProcessModel(workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn"));
+  const model = await loadProcessModel(workflowFile(CORE, "editing-hci-validation.bpmn"));
   const state = startInstance(model, { id: instanceId(model.id, label), subject: label });
   // CallActivity_Evidence sits between claiming the bean and drafting: a
   // recommendation gathers its evidence BEFORE the change is written. It is a
@@ -127,7 +135,7 @@ describe("refusing by default", () => {
   test("an instance that has not reached the editor's decision is refused", async () => {
     const f = block("carbon", "prop:carbon");
     const model = await loadProcessModel(
-      workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn"),
+      workflowFile(CORE, "editing-hci-validation.bpmn"),
     );
     const state = startInstance(model, {
       id: instanceId(model.id, "prop:carbon"),
@@ -163,10 +171,10 @@ describe("allowing what the process authorised", () => {
   test("a block already committed in an earlier round stays allowed", async () => {
     const f = block("carbon", "prop:carbon");
     const model = await loadProcessModel(
-      workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn"),
+      workflowFile(CORE, "editing-hci-validation.bpmn"),
     );
     await authorise("prop:carbon");
-    const state = (await import("../../src/workflow/store")).loadInstance(
+    const state = (await import("../../../cat-harness/src/workflow/store")).loadInstance(
       repo,
       instanceId(model.id, "prop:carbon"),
     )!;
@@ -210,7 +218,7 @@ describe("it does not fail open", () => {
     mkdirSync(join(platform, "skills", "pkg"), { recursive: true });
     writeFileSync(
       join(platform, "processes/editing-hci-validation.bpmn"),
-      await Bun.file(workflowFile(INSTANCE_ROOT, "editing-hci-validation.bpmn")).text(),
+      await Bun.file(workflowFile(CORE, "editing-hci-validation.bpmn")).text(),
     );
     // A package holds a skill: policies are read from discovered packages (bean 9umr).
     writeFileSync(join(platform, "skills/pkg/a-skill.md"), "# A skill\n");
