@@ -657,7 +657,8 @@ export interface ComposeOptions {
   /**
    * WHOSE site a shell is for (#2263). A shell's `_data/harness.json` is
    * re-scoped to that folio (`lib/foreign-site-scope.ts`), and the platform's
-   * count projections under `assets/` are left out. Omitted on a shell, the
+   * count projections under `assets/`, and its translation sweep and index
+   * under `_data/`, are left out. Omitted on a shell, the
    * folio is unknown and the scoping still runs, with no instance: nothing is
    * then the folio's own, so every state tile is unlinked and every platform
    * tile re-based — never the platform's numbers on someone else's page.
@@ -715,8 +716,11 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
       // and todo indexes, their `count.json`, the library and QA indexes. On
       // an IG's site the icon row fetched them as that site's own, and
       // smart-trust showed folio-assistant's 537 open beans. Left out, they
-      // 404 there, which the badge reads as ABSENT -- not as zero.
-      if (opts.shell && /^assets[\\/].+\.json$/.test(rel) && isHostProjection(rel, readFileSync(src, "utf-8"))) {
+      // 404 there, which the badge reads as ABSENT -- not as zero. The same
+      // goes for the host's translation sweep and index under `_data/`
+      // (`HOST_DATA_PROJECTIONS`): "Swept 49/689" on a folio's page was the
+      // platform's sweep.
+      if (opts.shell && /^(assets|_data)[\\/].+\.json$/.test(rel) && isHostProjection(rel, readFileSync(src, "utf-8"))) {
         delete suppliedBy[rel];
         rmSync(dest, { force: true });
         hostProjections.push(rel);

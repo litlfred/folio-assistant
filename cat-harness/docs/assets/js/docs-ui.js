@@ -10478,7 +10478,14 @@
     // QA sweep completeness badge — indicates whether sidecars have been run
     var sweep = meta.sweep || {};
     var sweepState, sweepIcon, sweepLabel, sweepTitle;
-    if (!sweep.run) {
+    if (!sweep.run && typeof sweep.absent === "string" && sweep.absent) {
+      // A FOLIO's site that publishes no sweep of its own (#2263 follow-up).
+      // Not "not run" -- nobody said the folio's sweep was never run -- and
+      // never the platform's ratio: the badge stays, inert, and says why.
+      sweepState = "is-idle"; sweepIcon = "–";
+      sweepLabel = "QA: not published";
+      sweepTitle = "Translation QA: " + sweep.absent + ".";
+    } else if (!sweep.run) {
       sweepState = "is-idle"; sweepIcon = "\u2B58";
       sweepLabel = "QA: not run";
       sweepTitle = "Translation QA sweep has not been run. " +
