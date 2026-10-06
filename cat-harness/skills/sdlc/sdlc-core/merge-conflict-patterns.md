@@ -612,6 +612,24 @@ to name a `prunedBy` script that has a `:check` twin. Under `--no-regen` (a
 merge train), the orphan stays in the member's merge commit until the train's
 final `regen`.
 
+### `navbar-rail-data` — owned tree, regenerate
+
+`**/docs/assets/navbar/rail-*.js` is the navbar's shared rail data. Each file
+is named `rail-<hash>.js` after the content hash of the rail JSON it carries
+(`lib/harness-rail.ts`), so a changed rail is a **new** file and the old one is
+orphaned. `bun run navbar:assets` deletes every rail file no committed page
+names, and `navbar:assets:check` fails on one. Both sides of a merge add their
+own hash, which is why this is `owned-tree` and not `take-base`, for the same
+reason as `subgraph-payload` above. Found 2026-10-06 when #2197's merge was
+refused as `no declared pattern`.
+
+The neighbours `navbar.js` and `navbar.css` are **not** covered: they have
+fixed names and a byte-for-byte check, and stay refused.
+
+`seed:ready` reads the same declaration: deleting or renaming an `owned-tree`
+path is not a move of the layer, because a regen renames it anyway (owner,
+2026-10-06).
+
 ### `readme-generated-regions` — hunk by hunk (209)
 
 Directory READMEs mix authored prose with generated regions

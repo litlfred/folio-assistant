@@ -1,7 +1,7 @@
 ---
 # folio-assistant-ob3m
 title: 'navbar visualiser: 12 wireframe findings'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-10-01T18:55:06Z
+updated_at: 2026-10-06T05:55:41Z
 parent: folio-assistant-4ccr
 ---
 
@@ -443,3 +443,15 @@ Branch `claude/quirky-hypatia-k3aoh4-strip-pinned`, which is stacked on #1762. S
 - **Scope addition (owner, 2026-10-01): "have folio bottom strip tiles default to hidden away when folio first opened".** With no stored choice, the strip now starts slid away. Its tab reads "Show tiles (N)", carries `aria-expanded`, and toggles both ways (`l4zi`). The choice is remembered in this browser as `1`/`0`, and storage that cannot be read falls back to hidden. Test: `glass-strip-default-hidden.e2e.ts`, 7 specs at 1280×800 and 390×844. All 7 fail against #1762 head.
 
 _2026-10-02_ — **Merge of main (#1810) into the strip branch.** The strip pins the chrome tile by id `glass-settings`, so it now shows #1810's caption **Glass settings**. "Folio settings" in the 390×844 measurement above is the caption at the time of that measurement.
+
+## Summary of Changes — closed on evidence, 2026-10-06
+All 12 findings have a ruling implemented on main (#1762, #1804, #1805, #1807, #1808, #1819; see the dated sections and notes). Re-measured on gh-pages sha f4f5910 rendered in Chromium at 1280x800 and 390x844, session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92:
+- 1: the row at rest shows Todos 3, Beans 540, fsh-guts 82 with count badges, and ▦ Harnesses is a disclosure in the strip.
+- 7: one scroll region in the theme sidebar (.fa-nav-middle is the only overflowing scroller).
+- 9: the handle reads ▴ when the glass is up.
+- 10: the strip is hidden until asked ('Show tiles (18)'), and at 390 shows Todos, Glass settings, Library 42, Processes and '+14 more'.
+- 11: the strip tiles have distinct glyphs.
+- 12: 'Page settings' and 'Glass settings — theme, avatars, opacity, blur' are now two distinct names.
+- 3: the sticky half was left as authored on purpose (see the 4–5 note).
+`check:wireframes`: 50/50. `wireframe:check` on navbar/as-is.html: all pass.
+The one remaining step, re-drawing the wireframe (its intent.md still describes the pre-#1762 navbar), is split out as  rather than left as a reason to keep this bean open.

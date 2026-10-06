@@ -2396,6 +2396,11 @@ jobs:
           # about what a harness holds -- which is the defect the bean is
           # about, arriving again through the back door.
           bun run navbar:include:check
+          # The rail data beside it is content-named (`rail-<hash>.js`) and
+          # declared `owned-tree` in merge-conflict-patterns.ts, pruned by
+          # `navbar:assets`; this is that writer's check, so `regen` knows to
+          # run it and a kept orphan after a merge cannot survive (2026-10-06).
+          bun run navbar:assets:check
           bun run check:agents-xref
           # Bean `rsi6`: `@litlfred/block-qa-schema` is the only package here
           # that ships to npm, and NO workflow built it. PR #914 bumped its
