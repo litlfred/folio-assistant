@@ -42,6 +42,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `proposals`, holding `
 | [`qa-reports-branch-and-test-process-2026-10-01.md`](qa-reports-branch-and-test-process-2026-10-01.md) | QA and test evidence off main, and a test process that certifies |  |
 | [`sdlc-process-audit.md`](sdlc-process-audit.md) | SDLC process audit — which diagram owns which phase |  |
 | [`separation-arc-2026-10-01.md`](separation-arc-2026-10-01.md) | Separation arc — one workplan for GOAL 1 |  |
+| [`separation-placement-review-2026-10-06.md`](separation-placement-review-2026-10-06.md) | Separation placement review — 2026-10-06 |  |
 | [`smart-document-kinds-2026-10-01.md`](smart-document-kinds-2026-10-01.md) | SMART document kinds: L1 and DAK |  |
 | [`smart-separation-2026-10-01.md`](smart-separation-2026-10-01.md) | smart-* separation |  |
 | [`spdx-3-applicability-2026-10-03.md`](spdx-3-applicability-2026-10-03.md) | SPDX 3: where it should, could and should not be used |  |
