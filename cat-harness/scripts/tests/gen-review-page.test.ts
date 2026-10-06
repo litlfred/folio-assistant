@@ -73,4 +73,12 @@ describe("review page", () => {
     expect(html).toMatch(/try \{ return window\.localStorage\.getItem/);
     expect(html).toMatch(/try \{ window\.localStorage\.setItem/);
   });
+
+  test("loads the rendered list when opened, and says when the build published none (bean bnjs)", () => {
+    expect(html).toContain('get("../rendered-impact.json")');
+    expect(html).toContain("Rendered pages this change alters");
+    expect(html).toContain("is not known (which is not the same as none)");
+    expect(html).toContain("var renderedModel = ");
+  });
 });
+

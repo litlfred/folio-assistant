@@ -739,6 +739,17 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
       "Covered by changeset.test.ts in `bun test`",
   },
   {
+    // The rendered-impact step that follows it (bean `bnjs`): it reads the
+    // ChangeSet and the outline a FOLIO's site build just wrote, so it has
+    // the same reason to run nowhere here. Its logic is not exempt:
+    // `document-rendered-impact.test.ts` is in `bun test`.
+    match: "document-rendered-impact.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's ChangeSet and outline; the platform carries no folio. " +
+      "Covered by document-rendered-impact.test.ts in `bun test`",
+  },
+  {
     // Same reason as the ChangeSet above (bean `423d`): the review-comments
     // Tool ingests a FOLIO's pull-request comments against that folio's
     // blocks, in the folio's staging job and in its comment-triggered
