@@ -1,0 +1,319 @@
+#!/usr/bin/env python3
+"""
+toc-benchmark — score table-of-contents extractors against held-out PDF
+outlines. Issue #2302, bean `cp3v`.
+
+A PDF that carries an embedded outline (bookmarks) has its author's own answer
+to "what are the sections". Hide it, run each extractor on the page content
+alone, and score the result against it. That gives an answer key over the
+whole corpus without labelling anything by hand. The outline is not perfect
+ground truth (some omit the title, some add front matter), which is why the
+report gives several metrics rather than one.
+
+Metrics, per document and then averaged (macro) over documents:
+
+* title P/R/F1 — an extracted entry matches a gold entry when their
+  normalised titles are similar (ratio >= 0.85, see `_pdf_headings.similar`);
+  one-to-one, in document order.
+* link F1  — matched AND on the same physical page (ICDAR "matching links").
+* level F1 — matched AND at the same depth, both sides re-based so their
+  shallowest matched level is 1 (ICDAR "matching levels").
+* full F1  — matched with both page and level right ("complete entries").
+* TEDS     — 1 - TED(T_pred, T_gold) / max(|T_pred|, |T_gold|), the tree-edit
+  similarity of Wang, Gui & He (2023), labels compared with the same rule.
+
+The first four are the ICDAR Book Structure Extraction family used by Wu,
+Mitra & Giles (ICDAR 2013) and, as "Xerox F1", by Bentabet et al. (2019).
+
+Usage:
+    toc-benchmark.py [PDF ...]            # default: every PDF with >= 5 outline entries
+    toc-benchmark.py --json out.json      # also write per-document results
+    toc-benchmark.py --methods regex,font # choose methods
+"""
+
+from __future__ import annotations
+
+import argparse
+import contextlib
+import glob
+import importlib.util
+import io
+import json
+import os
+import sys
+import time
+from dataclasses import dataclass
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+import _pdf_headings as H  # noqa: E402
+
+MATCH = 0.85
+
+
+def _load_pdf_structure():
+    spec = importlib.util.spec_from_file_location("pdf_structure", os.path.join(HERE, "pdf-structure.py"))
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["pdf_structure"] = mod     # dataclasses look the module up
+    spec.loader.exec_module(mod)  # type: ignore[union-attr]
+    return mod
+
+
+# ---------------------------------------------------------------- methods
+
+
+@dataclass
+class Doc:
+    path: str
+    gold: list[H.Heading]
+    lines: list[H.Line]
+    pages: list[str]
+
+
+def m_regex(doc: Doc) -> list[H.Heading]:
+    """The current pdf-structure.py fallback, verdict included."""
+    ps = PS
+    inferred = ps.infer_headings([ps.join_soft_hyphens(p) for p in doc.pages])
+    if ps.inferred_toc_verdict(inferred, len(doc.pages)):
+        return []
+    return [H.Heading(e.level, e.title, e.page, e.number) for e in inferred]
+
+
+def m_size(doc: Doc) -> list[H.Heading]:
+    """Size-only construction (Wang et al. 2023, step 1): anything set larger
+    than the body is a heading; larger size = shallower level."""
+    body = H.body_size(doc.lines)
+    furn = H.furniture_keys(doc.lines, max((l.page for l in doc.lines), default=0))
+    cands = [l for l in doc.lines if l.size > body + 0.4 and H.RE_HAS_WORD.search(l.text)
+             and H._furniture_key(l) not in furn and len(l.text) <= 160]
+    sizes = sorted({l.size for l in cands}, reverse=True)
+    rank = {s: i + 1 for i, s in enumerate(sizes)}
+    out = []
+    for l in cands:
+        num, t = H.split_number(l.text)
+        out.append(H.Heading(rank[l.size], t, l.page, num))
+    return out
+
+
+def m_font(doc: Doc) -> list[H.Heading]:
+    return H.font_headings(doc.lines)
+
+
+def m_contents(doc: Doc) -> list[H.Heading]:
+    return H.contents_headings(doc.lines)
+
+
+def m_layout(doc: Doc) -> list[H.Heading]:
+    return H.layout_headings(doc.lines)[0]
+
+
+METHODS = {
+    "regex": m_regex,
+    "size": m_size,
+    "font": m_font,
+    "contents": m_contents,
+    "layout": m_layout,
+}
+
+
+# ---------------------------------------------------------------- scoring
+
+
+def match(gold: list[H.Heading], pred: list[H.Heading]) -> list[tuple[int, int]]:
+    """One-to-one fuzzy title matching that respects document order (an LCS
+    over the similarity relation), so a repeated title pairs with its own
+    occurrence rather than the first one."""
+    g = [H.norm_title(x.title) for x in gold]
+    p = [H.norm_title(x.title) for x in pred]
+    n, m = len(g), len(p)
+    if not n or not m:
+        return []
+    # Banded LCS would be faster; documents here are at most a few thousand
+    # entries, so the plain table is fine.
+    sim = [[H.similar(g[i], p[j]) >= MATCH for j in range(m)] for i in range(n)]
+    L = [[0] * (m + 1) for _ in range(n + 1)]
+    for i in range(n - 1, -1, -1):
+        for j in range(m - 1, -1, -1):
+            L[i][j] = L[i + 1][j + 1] + 1 if sim[i][j] else max(L[i + 1][j], L[i][j + 1])
+    pairs, i, j = [], 0, 0
+    while i < n and j < m:
+        if sim[i][j] and L[i][j] == L[i + 1][j + 1] + 1:
+            pairs.append((i, j))
+            i, j = i + 1, j + 1
+        elif L[i + 1][j] >= L[i][j + 1]:
+            i += 1
+        else:
+            j += 1
+    return pairs
+
+
+def prf(hit: int, n_pred: int, n_gold: int) -> tuple[float, float, float]:
+    p = hit / n_pred if n_pred else 0.0
+    r = hit / n_gold if n_gold else 0.0
+    return p, r, (2 * p * r / (p + r) if p + r else 0.0)
+
+
+def _tree(entries: list[H.Heading]):
+    """Nest a flat levelled list: parent = nearest earlier shallower entry."""
+    root = ("", [])
+    stack = [(0, root)]
+    for e in entries:
+        node = (H.norm_title(e.title), [])
+        while stack[-1][0] >= e.level:
+            stack.pop()
+        stack[-1][1][1].append(node)
+        stack.append((e.level, node))
+    return root
+
+
+def ted(a, b) -> int:
+    """Zhang–Shasha tree edit distance, unit costs, fuzzy label equality."""
+    def post(t):
+        nodes, lmd = [], []
+        def walk(n):
+            first = None
+            for c in n[1]:
+                f = walk(c)
+                first = f if first is None else first
+            nodes.append(n[0])
+            idx = len(nodes) - 1
+            lmd.append(first if first is not None else idx)
+            return lmd[idx]
+        walk(t)
+        return nodes, lmd
+
+    an, al = post(a)
+    bn, bl = post(b)
+    kr = lambda l: sorted({max(i for i in range(len(l)) if l[i] == v) for v in set(l)})  # noqa: E731
+    ak, bk = kr(al), kr(bl)
+    td = [[0] * len(bn) for _ in range(len(an))]
+    eq = lambda x, y: x == y or H.similar(x, y) >= MATCH  # noqa: E731
+    for i in ak:
+        for j in bk:
+            fi, fj = al[i], bl[j]
+            m, n = i - fi + 2, j - fj + 2
+            fd = [[0] * n for _ in range(m)]
+            for x in range(1, m):
+                fd[x][0] = fd[x - 1][0] + 1
+            for y in range(1, n):
+                fd[0][y] = fd[0][y - 1] + 1
+            for x in range(1, m):
+                for y in range(1, n):
+                    ii, jj = fi + x - 1, fj + y - 1
+                    if al[ii] == fi and bl[jj] == fj:
+                        fd[x][y] = min(fd[x - 1][y] + 1, fd[x][y - 1] + 1,
+                                       fd[x - 1][y - 1] + (0 if eq(an[ii], bn[jj]) else 1))
+                        td[ii][jj] = fd[x][y]
+                    else:
+                        fd[x][y] = min(fd[x - 1][y] + 1, fd[x][y - 1] + 1,
+                                       fd[al[ii] - fi][bl[jj] - fj] + td[ii][jj])
+    return td[-1][-1]
+
+
+def teds(gold: list[H.Heading], pred: list[H.Heading]) -> float | None:
+    if len(gold) + len(pred) > 1200:
+        return None                    # too slow in pure Python; reported as n/a
+    a, b = _tree(gold), _tree(pred)
+    return 1 - ted(a, b) / max(len(gold), len(pred), 1)
+
+
+def score(gold: list[H.Heading], pred: list[H.Heading]) -> dict:
+    pairs = match(gold, pred)
+    gmin = min((gold[i].level for i, _ in pairs), default=1)
+    pmin = min((pred[j].level for _, j in pairs), default=1)
+    link = sum(1 for i, j in pairs if gold[i].page is not None and gold[i].page == pred[j].page)
+    lev = sum(1 for i, j in pairs if gold[i].level - gmin == pred[j].level - pmin)
+    full = sum(1 for i, j in pairs if gold[i].page == pred[j].page and gold[i].level - gmin == pred[j].level - pmin)
+    t = prf(len(pairs), len(pred), len(gold))
+    return {
+        "n_gold": len(gold), "n_pred": len(pred),
+        "title_p": t[0], "title_r": t[1], "title_f1": t[2],
+        "link_f1": prf(link, len(pred), len(gold))[2],
+        "level_f1": prf(lev, len(pred), len(gold))[2],
+        "full_f1": prf(full, len(pred), len(gold))[2],
+        "teds": teds(gold, pred),
+    }
+
+
+# ---------------------------------------------------------------- driver
+
+
+def gold_outline(path: str) -> list[H.Heading]:
+    import pymupdf
+    with pymupdf.open(path) as d:
+        out = []
+        for level, title, page in d.get_toc(simple=True):
+            num, t = H.split_number(str(title).strip())
+            out.append(H.Heading(level, t, page if page and page > 0 else None, num))
+        return out
+
+
+def default_corpus(root: str) -> list[str]:
+    import pymupdf
+    found = []
+    for p in sorted(glob.glob(os.path.join(root, "**", "*.pdf"), recursive=True)):
+        if "node_modules" in p:
+            continue
+        try:
+            with pymupdf.open(p) as d:
+                if len(d.get_toc()) >= 5:
+                    found.append(p)
+        except Exception:
+            pass
+    return found
+
+
+def load(path: str) -> Doc:
+    with contextlib.redirect_stdout(io.StringIO()):
+        backend = PS.open_backend(path, "pymupdf")
+        pages = backend.page_texts()
+    return Doc(path, gold_outline(path), H.extract_lines(path, "pymupdf"), pages)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("pdfs", nargs="*")
+    ap.add_argument("--root", default=os.path.abspath(os.path.join(HERE, "..", "..")))
+    ap.add_argument("--methods", default=",".join(METHODS))
+    ap.add_argument("--json", help="write per-document results here")
+    args = ap.parse_args()
+
+    pdfs = args.pdfs or default_corpus(args.root)
+    methods = [m for m in args.methods.split(",") if m]
+    rows = []
+    for path in pdfs:
+        doc = load(path)
+        rel = os.path.relpath(path, args.root)
+        for m in methods:
+            t0 = time.time()
+            pred = METHODS[m](doc)
+            s = score(doc.gold, pred)
+            s.update(doc=rel, method=m, seconds=round(time.time() - t0, 2))
+            rows.append(s)
+            ted_s = f"{s['teds']:.2f}" if s["teds"] is not None else " n/a"
+            print(f"{m:9s} gold={s['n_gold']:5d} pred={s['n_pred']:5d} "
+                  f"P={s['title_p']:.2f} R={s['title_r']:.2f} F1={s['title_f1']:.2f} "
+                  f"link={s['link_f1']:.2f} level={s['level_f1']:.2f} full={s['full_f1']:.2f} "
+                  f"TEDS={ted_s}  {rel}", file=sys.stderr)
+
+    print("\nMacro average over", len(pdfs), "documents")
+    print(f"{'method':9s} {'title P':>8s} {'title R':>8s} {'title F1':>8s} {'link F1':>8s} "
+          f"{'level F1':>8s} {'full F1':>8s} {'TEDS':>6s}")
+    for m in methods:
+        rs = [r for r in rows if r["method"] == m]
+        avg = lambda k: sum(r[k] for r in rs) / len(rs)  # noqa: E731
+        tv = [r["teds"] for r in rs if r["teds"] is not None]
+        print(f"{m:9s} {avg('title_p'):8.2f} {avg('title_r'):8.2f} {avg('title_f1'):8.2f} "
+              f"{avg('link_f1'):8.2f} {avg('level_f1'):8.2f} {avg('full_f1'):8.2f} "
+              f"{(sum(tv) / len(tv) if tv else float('nan')):6.2f}")
+    if args.json:
+        with open(args.json, "w") as f:
+            json.dump(rows, f, indent=1)
+    return 0
+
+
+PS = _load_pdf_structure()
+
+if __name__ == "__main__":
+    sys.exit(main())
