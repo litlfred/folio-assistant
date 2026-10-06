@@ -319,7 +319,7 @@ describe("a whole library entry, through the real branch — bean `p67i`", () =>
 
   test("a STAGED entry is minted for the library it is promoted INTO — bean `apui`", () => {
     // Measured 2026-10-06: a document staged under `cat-harness/ingest-staging/`
-    // and promoted into `folio-assistant-sci/library/` carried a manifest `@id`
+    // and promoted into a sibling instance's library carried a manifest `@id`
     // naming `cat-harness`, because the instance is read off the entry's
     // location and staging is not where the entry ends up. Two instances, so
     // the location-derived answer and the right one differ.

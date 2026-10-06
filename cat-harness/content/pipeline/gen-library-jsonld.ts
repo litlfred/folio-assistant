@@ -655,7 +655,7 @@ function entryTitle(
  * entry sits in `ingest-staging/`, which belongs to whichever instance holds
  * the staging tree — not to the library it is being promoted into. Measured
  * 2026-10-06 (bean `apui`): a document staged and promoted into
- * `folio-assistant-sci/library` carried a manifest `@id` naming
+ * a SIBLING instance's library carried a manifest `@id` naming
  * `cat-harness`, and `--check` called 37 of its nodes stale. So the files are
  * READ from `dir` and the identity is minted for `locatedAt`.
  */
