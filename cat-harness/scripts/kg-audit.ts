@@ -1772,6 +1772,16 @@ function proseNamesResolve(): KgCriterionEntry {
 function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> {
   // declared-path-literal: the conventional fallback when no declaration names the directory
   const r = checkTestRuns(root, ownDirectoryById(root, "qa", "test/results"), skills);
+  if (!r.looked) {
+    // An absent results directory says nothing about whether runs exist —
+    // since 5hox it is derived and may not be computed or fetched yet. `n/a`
+    // would be the false pass audit C5 names (bean `2gst`).
+    const unknown = (): KgCriterionEntry => ({
+      result: "unknown",
+      findings: [{ where: "—", detail: "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run qa:refresh`) or fetch it (`bun run qa:fetch`)." }],
+    });
+    return { "test-run-skill-resolves": unknown(), "test-run-conforms": unknown(), "test-run-checkable": unknown() };
+  }
   const any = r.runs > 0;
   return {
     "test-run-skill-resolves": entry(r.unresolved, any),
