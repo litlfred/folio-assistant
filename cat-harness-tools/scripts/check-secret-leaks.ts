@@ -65,6 +65,8 @@
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { extname, join, relative } from "node:path";
+import { instanceDirectoriesForGraph } from "../../cat-harness/schemas/cat-harness.ts";
+import { instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 
@@ -193,14 +195,34 @@ export function scanTree(root: string, roots: readonly string[]): ScanResult {
   return { leaks, filesScanned, unreadable };
 }
 
-// `who-iris/skills` and `who-iris/glossary` are what `who-style-guide` held
-// until it became a subgraph of who-iris (bean qsx4): the same files, scanned
-// where they now live. A root that does not exist is `could-not-scan`, so the
-// old name could not simply stay.
-// declared-path-literal: a list of scan ROOTS chosen for this check, not a
-// graph lookup -- the same kind of literal as `cat-harness` and `beans` beside
-// them, which name directories rather than resolve a declared graph.
-const ROOTS = [".github", "cat-harness", "beans", "who-iris/skills", "who-iris/glossary", "package.json"];
+// declared-path-literal: scan ROOTS chosen for this check, not a graph lookup
+// -- `cat-harness` and `beans` name directories rather than resolve a graph.
+const FIXED_ROOTS = [".github", "cat-harness", "beans", "package.json"];
+
+/**
+ * The fixed roots plus every PRESENT instance's `skills` and `glossary`
+ * graphs: the agent-authored prose where a pasted credential would land.
+ *
+ * This named `who-iris/skills` and `who-iris/glossary` until 2026-10-06 (they
+ * were `who-style-guide` until bean qsx4) — an instance above this layer, so
+ * the list broke standalone and missed every other instance's skills. Now
+ * each instance contributes its own by declaration (bean `0r7u`). Only
+ * directories that exist are added: a declared-but-absent one would read as
+ * `could-not-scan`, and absence is not this check's question.
+ */
+export function scanRoots(root: string): string[] {
+  const out = [...FIXED_ROOTS];
+  const covered = (r: string) => out.some((o) => r === o || r.startsWith(o + "/"));
+  const derived = instanceRootsIn(root)
+    .flatMap((i) => ["skills", "glossary"].flatMap((g) => instanceDirectoriesForGraph(i, g)))
+    .filter((d) => existsSync(d))
+    .map((d) => relative(root, d).replace(/\/$/, ""))
+    .sort();
+  for (const d of derived) if (d !== "" && !covered(d)) out.push(d);
+  return out;
+}
+
+const ROOTS = scanRoots(ROOT);
 
 if (import.meta.main) {
   const { leaks, filesScanned, unreadable } = scanTree(ROOT, ROOTS);

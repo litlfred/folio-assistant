@@ -236,5 +236,41 @@
       "module": "adapters/document/index.ts",
       "className": "DocumentContentAdapter"
     }
-  ]
+  ],
+  "taskIo": {
+    "check:glossary": {
+      "inputs": [
+        "{tracked}"
+      ],
+      "outputs": [],
+      "because": "45 s — `glossary-page.ts --check` exits before its write loop — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "glossary:pot:check": {
+      "inputs": [
+        "{tracked}"
+      ],
+      "outputs": [],
+      "because": "39 s — exits before writing; compares without the POT timestamp — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "check:catalogue": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "check:materialized-fixity": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "check:voices": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "dc:render:check": {
+      "outputs": [],
+      "because": "returns before `writeFileSync` — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "kg:materialize:check": {
+      "outputs": [],
+      "because": "`checkMaterializations` is offline and reads — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    }
+  }
 }

@@ -77,6 +77,14 @@ export const PROPERTY_SKILLS = {
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },
+  // Bean `0r7u`: what an instance's own check scripts read and write, so
+  // `gates` may pool them and `regen` may skip them. prepare-merge says what
+  // a wrong declaration costs.
+  taskIo: { skills: ["prepare-merge"] },
+  // Same bean: the CI steps and scripts an instance's gate set deliberately
+  // skips, with their reasons. prepare-merge runs `bun run gates`, which
+  // reports an unclassified step.
+  gateExemptions: { skills: ["prepare-merge"] },
   contentAdapters: { skills: ["content-profiles"] },
   liquid: { skills: ["witnessed-values"] },
   // `publishable` was here until 2026-09-24 and the field is gone — replaced

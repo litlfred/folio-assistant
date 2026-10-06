@@ -696,6 +696,44 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    */
   needs?: string[];
   /**
+   * What this instance's own package tasks read and write, keyed by task name
+   * — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts`
+   * holds for the harness's own tasks: `outputs: []` (measured to write
+   * nothing, so it may run in the pool) and `inputs` (what can change the
+   * answer, so `regen` may skip it on an unchanged tree; `"{tracked}"` is the
+   * whole working tree). `because` keeps the measurement that justified it.
+   *
+   * Declared by the instance that OWNS the task, so the harness collects it
+   * instead of naming a layer above itself (owner ruling 2026-10-06: "each
+   * instance declares its own tasks", bean `0r7u` step 0). Absent declares
+   * nothing: those tasks run alone and are never skipped, the safe default.
+   */
+  taskIo?: Record<
+    string,
+    {
+      inputs?: string[];
+      outputs?: string[];
+      /** The task that REPAIRS this check when the `X` / `X:check` naming does not give it. */
+      writer?: string;
+      /** Run after a merge train even when `regen` is not (merge-train step 3). Requires `writer`. */
+      afterMerge?: boolean;
+      because?: string;
+    }
+  >;
+  /**
+   * The CI steps and check scripts of THIS instance that the local gate set
+   * deliberately does not run, each with its reason — the rows
+   * `cat-harness/scripts/gates.ts` holds as `STEP_EXEMPTIONS` and
+   * `SCRIPT_EXEMPTIONS` for the harness's own. Same contract: a reason is
+   * required, a step `match` is a substring of the workflow command, a script
+   * name is matched exactly. Declared by the owner so the harness need not
+   * name a layer above itself (bean `0r7u` step 0).
+   */
+  gateExemptions?: {
+    steps?: Array<{ match: string; kind: "covered-by" | "ci-only" | "no-folio"; reason: string }>;
+    scripts?: Array<{ script: string; kind: "report" | "covered-by" | "no-folio" | "scheduled"; reason: string }>;
+  };
+  /**
    * The content adapters this instance SHIPS, which the harness's composition
    * root discovers rather than names. See {@link ContentAdapterDeclaration}.
    */
@@ -3051,6 +3089,63 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
+  /**
+   * What this instance's own package tasks read and write, keyed by task name
+   * — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts`
+   * holds for the harness's own tasks: `outputs: []` (measured to write
+   * nothing, so it may run in the pool) and `inputs` (what can change the
+   * answer, so `regen` may skip it on an unchanged tree; `"{tracked}"` is the
+   * whole working tree). `because` keeps the measurement that justified it.
+   *
+   * Declared by the instance that OWNS the task, so the harness collects it
+   * instead of naming a layer above itself (owner ruling 2026-10-06: "each
+   * instance declares its own tasks", bean `0r7u` step 0). Absent declares
+   * nothing: those tasks run alone and are never skipped, the safe default.
+   */
+  taskIo: z
+    .record(
+      z.string().min(1),
+      z
+        .object({
+          inputs: z.array(z.string().min(1)).optional(),
+          outputs: z.array(z.string().min(1)).optional(),
+          writer: z.string().min(1).optional(),
+          afterMerge: z.boolean().optional(),
+          because: z.string().min(1).optional(),
+        })
+        .strict()
+        .refine((t) => t.afterMerge !== true || t.writer !== undefined, {
+          message: "`afterMerge` needs a `writer`: a repair step with nothing to run repairs nothing",
+        }),
+    )
+    .optional(),
+  gateExemptions: z
+    .object({
+      steps: z
+        .array(
+          z
+            .object({
+              match: z.string().min(1),
+              kind: z.enum(["covered-by", "ci-only", "no-folio"]),
+              reason: z.string().trim().min(1),
+            })
+            .strict(),
+        )
+        .optional(),
+      scripts: z
+        .array(
+          z
+            .object({
+              script: z.string().min(1),
+              kind: z.enum(["report", "covered-by", "no-folio", "scheduled"]),
+              reason: z.string().trim().min(1),
+            })
+            .strict(),
+        )
+        .optional(),
+    })
+    .strict()
+    .optional(),
   /**
    * The content adapters this instance ships — see {@link ContentAdapterDeclaration}.
    *

@@ -116,5 +116,19 @@
     "cat-openapi"
   ],
   "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `smart-ig`. THIS IS WHAT MAKES `nsbb`'s RULING TRUE IN THE DECLARATIONS rather than only in prose: there is no per-IG harness, so `smart-trust` is an INSTANCE OF `smart-ig` rather than a harness of its own. `smart-immunizations`'s declaration already called its own harness status 'PROVISIONAL BY DESIGN' pending this restructure. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here. `cat-openapi` added 2026-10-03 (bean `s4ta`): owner, *\"the smart-trust repo has a smart-base harness and a openapi harness\"* — smart-ig brings smart-base, cat-openapi renders the gateway API.",
-  "_stickies_removed_comment": "NO STICKY ON PURPOSE (bean `2vpn`, owner 2026-10-04). It contributed the `operations` card, chosen 2026-09-22 when a card was the only way to give smart-trust a navbar mark. That card is the platform owner's shared art, not smart-trust's, so the navbar showed a generic cat. Offered the choice, the owner picked *\"Own WHO-blue glyph\"*: smart-trust's mark is now its `schemas/avatars.ts` entry, a shield in WHO blue (hue 199, as smart-base), and the card leaves the landing board with the sticky, as the sticky's own comment said it would."
+  "_stickies_removed_comment": "NO STICKY ON PURPOSE (bean `2vpn`, owner 2026-10-04). It contributed the `operations` card, chosen 2026-09-22 when a card was the only way to give smart-trust a navbar mark. That card is the platform owner's shared art, not smart-trust's, so the navbar showed a generic cat. Offered the choice, the owner picked *\"Own WHO-blue glyph\"*: smart-trust's mark is now its `schemas/avatars.ts` entry, a shield in WHO blue (hue 199, as smart-base), and the card leaves the landing board with the sticky, as the sticky's own comment said it would.",
+  "taskIo": {
+    "smart-trust:pages:check": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "smart-trust:openapi:check": {
+      "outputs": [],
+      "because": "exits before `--source` is even read — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "smart-trust:openapi:pages:check": {
+      "outputs": [],
+      "because": "NO `inputs` for these five, read rather than assumed (bean `8qyc`): four — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    }
+  }
 }

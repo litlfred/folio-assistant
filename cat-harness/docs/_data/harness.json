@@ -4328,6 +4328,24 @@
         ]
       },
       {
+        "key": "taskIo",
+        "skills": [
+          {
+            "name": "prepare-merge",
+            "path": "/reference/skill-instructions/prepare-merge.html"
+          }
+        ]
+      },
+      {
+        "key": "gateExemptions",
+        "skills": [
+          {
+            "name": "prepare-merge",
+            "path": "/reference/skill-instructions/prepare-merge.html"
+          }
+        ]
+      },
+      {
         "key": "contentAdapters",
         "skills": [
           {
@@ -4468,6 +4486,10 @@
             "summary": "smart-ig, cat-openapi"
           },
           {
+            "key": "taskIo",
+            "summary": "{ smart-trust:pages:check, smart-trust:openapi:check, smart-trust:openapi:pages:check }"
+          },
+          {
             "key": "version",
             "summary": "0.1.0"
           }
@@ -4512,6 +4534,10 @@
           {
             "key": "needs",
             "summary": "smart-ig"
+          },
+          {
+            "key": "taskIo",
+            "summary": "{ smart-immunizations:pages:check }"
           },
           {
             "key": "version",
@@ -4618,6 +4644,10 @@
             "summary": "fhir-harness"
           },
           {
+            "key": "taskIo",
+            "summary": "{ smart-base:diig-figure:check, smart-base:pages:check, smart-base:document-kinds:check, smart-base:dth-terms:check, smart-base:smart-kg-l1:check }"
+          },
+          {
             "key": "version",
             "summary": "0.1.0"
           }
@@ -4682,6 +4712,10 @@
           {
             "key": "needs",
             "summary": "folio-assistant-core"
+          },
+          {
+            "key": "taskIo",
+            "summary": "{ iris:covers:check, iris:pages:check }"
           },
           {
             "key": "version",
@@ -4788,6 +4822,14 @@
             "summary": "folio-assistant-core"
           },
           {
+            "key": "taskIo",
+            "summary": "{ check:artifact-index, ig-ast:schema:check, p2:refusals:check }"
+          },
+          {
+            "key": "gateExemptions",
+            "summary": "{ steps, scripts }"
+          },
+          {
             "key": "liquid",
             "summary": "{ prefix, passThrough }"
           },
@@ -4844,6 +4886,10 @@
           {
             "key": "needs",
             "summary": "cat-harness, cat-harness-tools"
+          },
+          {
+            "key": "taskIo",
+            "summary": "{ check:glossary, glossary:pot:check, check:catalogue, check:materialized-fixity, check:voices, dc:render:check, kg:materialize:check }"
           },
           {
             "key": "contentAdapters",

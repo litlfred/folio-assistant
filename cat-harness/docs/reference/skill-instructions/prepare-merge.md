@@ -330,7 +330,10 @@ current if the fork point, the branch tip or the base tip was current.
 `merge:main -- --full-regen` asks every pair. Separately, every pass after
 the first asks only the pairs whose inputs the previous pass actually changed
 (measured from `git`, not declared). Both cuts are only as good as the
-`task-io.ts` declarations. The whole-tree pairs (`kg:audit:all:check`,
+`task-io.ts` declarations — and, for a task owned by an instance above
+cat-harness, that instance's own `taskIo` block in its `<instance>.json`
+(bean `0r7u`). `task-io.ts` collects them and **refuses a task declared
+twice**, so declare a row where its script lives, never in both places. The whole-tree pairs (`kg:audit:all:check`,
 `skill:register:check`, `kg:audit:check`) still run after every merge.
 
 ### Submodules: check the pointers BEFORE you stage the merge (STRICT)

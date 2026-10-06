@@ -682,7 +682,7 @@ Merge overlap (conflict prediction) <span class="fa-gloss-status">candidate, ext
 Merge train <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Build a train branch from a base SHA: merge each member (a PR number or branch) with <code>merge-base.ts --no-regen</code>, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one <code>bun run regen</code>, <code>check:l1-complete --write</code>, <code>extract-smart-kg-l1.ts --entry</code> for each stale entry, and <code>kg:audit:all:check</code>; then merge <code>origin/main</code>, taking main's side of generated conflicts and regenerating once more. Emits a <code>merge-train-report/v1</code> JSON report. Never pushes, opens or merges a PR.</p>
+<p>Build a train branch from a base SHA: merge each member (a PR number or branch) with <code>merge-base.ts --no-regen</code>, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one <code>bun run regen</code>, <code>check:l1-complete --write</code>, every check an instance declares <code>afterMerge</code> (its declared writer run when red), and <code>kg:audit:all:check</code>; then merge <code>origin/main</code>, taking main's side of generated conflicts and regenerating once more. Emits a <code>merge-train-report/v1</code> JSON report. Never pushes, opens or merges a PR.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#merge-train</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--methodologies-viewer" data-fa-state="extracted" data-fa-gloss="">

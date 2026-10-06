@@ -1,5 +1,7 @@
 /**
- * What a check script reads and writes — the ONE place it is declared (bean `xpcu`).
+ * What a check script reads and writes (bean `xpcu`). This layer's rows are
+ * declared here; an instance above it declares its own under `taskIo` in its
+ * `<instance>.json`, and {@link collectTaskIo} reads both (bean `0r7u`).
  *
  * @module scripts/task-io
  * @graphNode none — a declaration table read by `regen-after-merge.ts` and `gates.ts`
@@ -57,6 +59,9 @@
  * in `regen`, the settling pass re-asks every pair. A wrong `outputs: []` can
  * produce a false red, not a false green.
  */
+import { dirname } from "node:path";
+import { checkoutRootFor, readDeclaration } from "../schemas/cat-harness.ts";
+import { instanceRootsIn } from "../schemas/instance-roots.ts";
 import { TRACKED, type PairIO } from "./input-hash.ts";
 
 export interface ScriptIO {
@@ -64,6 +69,10 @@ export interface ScriptIO {
   inputs?: readonly string[];
   /** `[]`: writes nothing, may run in the pool. Absent: runs alone. */
   outputs?: readonly string[];
+  /** The task that repairs this check, when `X` / `X:check` naming does not give it (`regen`'s `WRITER_OVERRIDES`). */
+  writer?: string;
+  /** A merge train runs this check, and its writer when red, even without `regen`. */
+  afterMerge?: boolean;
 }
 
 /** Writes nothing — measured with `strace` (see the module comment). Not skippable. */
@@ -72,7 +81,15 @@ const READ_ONLY: ScriptIO = { outputs: [] };
 /** Read-only, and safe to skip on an unchanged tree: read for writes, env, network and clock. */
 const TREE_READER: ScriptIO = { inputs: [TRACKED], outputs: [] };
 
-export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
+/**
+ * This layer's own rows. A task owned by an instance ABOVE this one is not
+ * listed here: that instance declares it in its own `<instance>.json` under
+ * `taskIo`, and {@link collectTaskIo} reads it from whatever instances are
+ * present (bean `0r7u`, owner ruling 2026-10-06 — "each instance declares its
+ * own tasks"). Twenty rows moved out on that day; naming them here would be
+ * the upward reference that breaks this layer when it stands alone.
+ */
+const OWN_TASK_IO: Readonly<Record<string, ScriptIO>> = {
   // ── regen's slowest pairs, by measured wall time (seconds, both passes) ──
   "translation:block-qa:check": TREE_READER, //   456 s — `--check` compares `substantive()`, which drops commit SHAs and timestamps
   "kg:audit:all:check": TREE_READER, //            335 s — spawns `kg-audit.ts --check` per instance; the spawned source is in the tree
@@ -84,8 +101,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   // `kg:audit:check`'s). In regen its sub-checks are folded (`pair-cover.ts`).
   "skill:register:check": TREE_READER,
   "kg:audit:check": TREE_READER, //                 81 s — `--check` compares the manifest and every sidecar, writes neither
-  "check:glossary": TREE_READER, //                 45 s — `glossary-page.ts --check` exits before its write loop
-  "glossary:pot:check": TREE_READER, //             39 s — exits before writing; compares without the POT timestamp
   "readme:subgraphs:check": TREE_READER, //         25 s — writes its QA result only without `--check`
   "skills:docs:check": TREE_READER, //              19 s — returns before `writeFileSync`
   "processes:viz:check": TREE_READER, //            19 s
@@ -111,7 +126,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:agents-xref:strict": READ_ONLY,
   "check:anchor-names": READ_ONLY,
   "check:artefact-verification": READ_ONLY,
-  "check:artifact-index": READ_ONLY,
   "check:asset-roles": READ_ONLY,
   "check:available-locales": READ_ONLY,
   "check:avatar-instances": READ_ONLY,
@@ -126,7 +140,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:bean-rollup": READ_ONLY,
   "check:bootstrap-concepts": READ_ONLY,
   "check:bun-pin": READ_ONLY,
-  "check:catalogue": READ_ONLY,
   "check:ci-invocations": READ_ONLY,
   "check:code-accounting": READ_ONLY,
   "check:command-paths": READ_ONLY,
@@ -157,7 +170,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:lane-documentation": READ_ONLY,
   "check:layout-norms": READ_ONLY,
   "check:lockfile-pinning": READ_ONLY,
-  "check:materialized-fixity": READ_ONLY,
   "check:methodology-evidence": READ_ONLY,
   "check:model-languages": READ_ONLY,
   "check:module-scope-resolution": READ_ONLY,
@@ -201,7 +213,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "check:viewer-backticks": READ_ONLY,
   "check:viewer-nav": READ_ONLY,
   "check:voice-skills": READ_ONLY,
-  "check:voices": READ_ONLY,
   "check:waivers": READ_ONLY,
   "check:wireframes": READ_ONLY,
   "check:workflow-coverage": READ_ONLY,
@@ -228,8 +239,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "harness:dirs:check": READ_ONLY,
   "id-lookup:check": READ_ONLY,
   "iri:sync:check": READ_ONLY,
-  "iris:covers:check": READ_ONLY,
-  "iris:pages:check": READ_ONLY,
   "kg:detangle:direction": READ_ONLY,
   "kg:schema:check": READ_ONLY,
   "kg:subscribe:check": READ_ONLY,
@@ -251,8 +260,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "readme:sync:root:check": READ_ONLY,
   "root-scan-census:check": READ_ONLY,
   "skill:commands:check": READ_ONLY,
-  "smart-base:pages:check": READ_ONLY,
-  "smart-trust:pages:check": READ_ONLY,
   "state:visualizer:check": READ_ONLY,
   "subscriptions:viz:check": READ_ONLY,
   "theme:page:check": READ_ONLY,
@@ -294,21 +301,10 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "kg:locale:check": READ_ONLY, //                 writes nothing; reads KG_BASE_URL, so still no `inputs`
   "kind:register:check": READ_ONLY, //             `--check` skips the write loop; its five verifies are READ_ONLY here
   "check:wireframes:check": READ_ONLY,
-  "dc:render:check": READ_ONLY, //                 returns before `writeFileSync`
   "document-kinds:viz:check": READ_ONLY, //        its one `rmSync` is in the not-`check` arm
   "node-kind:pages:check": READ_ONLY, //           its one `rmSync` is in the not-`check` arm
-  "ig-ast:schema:check": READ_ONLY,
-  "kg:materialize:check": READ_ONLY, //            `checkMaterializations` is offline and reads
-  "p2:refusals:check": READ_ONLY,
   "qa:attestations:migrate:check": READ_ONLY, //   `--check` passes `dryRun` to the kg trees and `check` to criteria
   "slice:sqlite:vendor:check": READ_ONLY,
-  "smart-base:diig-figure:check": READ_ONLY, //    python; `write_text` only without `--check`
-  "smart-base:document-kinds:check": READ_ONLY,
-  "smart-base:dth-terms:check": READ_ONLY,
-  "smart-base:smart-kg-l1:check": READ_ONLY, //    `continue`s before `writeFileSync` under `check`
-  "smart-immunizations:pages:check": READ_ONLY, // `if (CHECK)` compares; the rebuild is the else
-  "smart-trust:openapi:check": READ_ONLY, //       exits before `--source` is even read
-  "smart-trust:openapi:pages:check": READ_ONLY,
   // NO `inputs` for these five, read rather than assumed (bean `8qyc`): four
   // build through `kg-export.ts`'s `buildExport`, which stamps the document
   // with `stagingFields(process.env)` (`staging-stamp.ts`), and `kg:export`
@@ -329,6 +325,45 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "slice:sqlite:check": READ_ONLY, //               12 s; `checkSlice` builds in `slice-check-*` / `slice-sqlite-*`
   "subgraph:jsonld:check": READ_ONLY, //            15 s; `if (check)` returns before `rmSync` / `writeFileSync`
 };
+
+/**
+ * {@link OWN_TASK_IO} plus every present instance's declared `taskIo`.
+ *
+ * A key declared twice — by two instances, or by an instance and this table —
+ * THROWS rather than letting one win: two owners of one task is a placement
+ * defect, and silently picking either would make `outputs: []` a claim nobody
+ * owns. An instance whose `taskIo` is absent contributes nothing; standalone,
+ * with no instance above this layer present, the result is the own rows alone.
+ */
+export function collectTaskIo(
+  repoRoot: string,
+  own: Readonly<Record<string, ScriptIO>> = OWN_TASK_IO,
+): Readonly<Record<string, ScriptIO>> {
+  const out: Record<string, ScriptIO> = { ...own };
+  const ownerOf = new Map<string, string>(Object.keys(own).map((k) => [k, "cat-harness/scripts/task-io.ts"]));
+  for (const instance of instanceRootsIn(repoRoot)) {
+    const declared = readDeclaration(instance)?.taskIo;
+    if (declared === undefined) continue;
+    for (const [task, io] of Object.entries(declared)) {
+      const prior = ownerOf.get(task);
+      if (prior !== undefined) {
+        throw new Error(`task "${task}" is declared by both ${prior} and ${instance} — one task, one owner`);
+      }
+      ownerOf.set(task, instance);
+      out[task] = {
+        ...(io.inputs === undefined ? {} : { inputs: io.inputs }),
+        ...(io.outputs === undefined ? {} : { outputs: io.outputs }),
+        ...(io.writer === undefined ? {} : { writer: io.writer }),
+        ...(io.afterMerge === undefined ? {} : { afterMerge: io.afterMerge }),
+      };
+    }
+  }
+  return out;
+}
+
+export const TASK_IO: Readonly<Record<string, ScriptIO>> = collectTaskIo(
+  checkoutRootFor(dirname(import.meta.dir)),
+);
 
 /**
  * A verify/write pair's declaration — its CHECK's. The writer needs none: in
