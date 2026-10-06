@@ -12,6 +12,23 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
+              "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, extracting the Component 1 graph, and the two validators it must pass.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "instructionLines": 102,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
+              "name": "dak-l1-library",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6a89820f2024f97d13f93d2369508cc1278a42835d642fab7117fe72179ee9c8",
+                "bytes": 5292,
+                "sha256": "6a89820f2024f97d13f93d2369508cc1278a42835d642fab7117fe72179ee9c8"
+              },
+              "title": "dak-l1-library"
+            },
+            {
               "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
               "@type": "bootstrap:Skill",
               "ambiguous": false,

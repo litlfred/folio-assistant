@@ -506,6 +506,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [dak-l1-library](dak-l1-library.html) | `dak-l1-library` | — | > Skill id: `dak-l1-library` · Package: `authoring-who-smart-guidelines` · |
 | [dak-postprocessing](dak-postprocessing.html) | `dak-postprocessing` | — | > Skill id: `dak-postprocessing` · Package: `authoring-who-smart-guidelines` · |
 | [dak-preprocessing](dak-preprocessing.html) | `dak-preprocessing` | — | > Skill id: `dak-preprocessing` · Package: `authoring-who-smart-guidelines` · |
 | [grade](grade.html) | `grade` | — | > Skill id: `grade` · Package: `authoring-who-smart-guidelines` · The grading |

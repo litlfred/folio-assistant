@@ -33,6 +33,8 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`docx-structure.test.ts`](docx-structure.test.ts) | a file |  |
 | [`docx-to-folio.test.ts`](docx-to-folio.test.ts) | a file |  |
 | [`docx-to-folio.ts`](docx-to-folio.ts) | a file |  |
+| [`fetch-dspace-item.test.ts`](fetch-dspace-item.test.ts) | a file |  |
+| [`fetch-dspace-item.ts`](fetch-dspace-item.ts) | a file |  |
 | [`folio-site-chrome-check.ts`](folio-site-chrome-check.ts) | a file |  |
 | [`folio-site-qa.ts`](folio-site-qa.ts) | a file |  |
 | [`gen-covers.test.ts`](gen-covers.test.ts) | a file |  |
