@@ -116,6 +116,7 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
   // corpus, read with this module's own exclusions: no dependency tree, no
   // dot-directory.
   if (ignoredWholesale(dir)) return diskCorpus(dir, pathspec);
+  // input-site: tree #18f05ac2 — ls-files --cached --others --exclude-standard: the index and the untracked files
   const r = spawnSync(
     "git",
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspec],
@@ -158,6 +159,7 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
 
 /** Is `dir` itself ignored by git — the directory, not some file inside it? */
 function ignoredWholesale(dir: string): boolean {
+  // input-site: tree #c974d831 — check-ignore: the tracked .gitignore files (and the user's core.excludesFile, which the tree digest's own listing obeys too)
   const r = spawnSync("git", ["check-ignore", "-q", `${resolve(dir)}${sep}`], { cwd: dir, encoding: "utf-8" });
   return r.status === 0;
 }
@@ -189,6 +191,7 @@ function diskCorpus(dir: string, pathspec: readonly string[]): string[] {
 
 /** The submodules whose gitlinks sit under `dir`, relative to it (mode 160000). */
 function submodulesUnder(dir: string): string[] {
+  // input-site: tree #78f2d62d — ls-files --stage: the index
   const r = spawnSync("git", ["ls-files", "-z", "--stage"], { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER });
   if (r.error !== undefined || r.status !== 0) return [];
   return r.stdout
@@ -223,6 +226,7 @@ function submodulePathspec(s: string, pathspec: readonly string[]): string[] | u
  */
 export function inWorkTree(dir: string): boolean {
   if (!existsSync(dir)) return false;
+  // input-site: tree #84077f0d — rev-parse --is-inside-work-tree: a fact about the checkout
   const r = spawnSync("git", ["rev-parse", "--is-inside-work-tree"], {
     cwd: dir,
     encoding: "utf-8",

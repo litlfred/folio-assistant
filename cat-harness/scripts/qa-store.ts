@@ -306,6 +306,7 @@ export function pickQaBranch(candidates: readonly string[], present: ReadonlySet
 // is left here is only what locates the checkout it runs in.
 
 function gitTopLevel(cwd = process.cwd()): string {
+  // input-site: baseline #128d75cd — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd, encoding: "utf-8" });
   if (r.status !== 0) throw new QaUsageError(`not inside a git checkout: ${cwd}`);
   return r.stdout.trim();
@@ -347,10 +348,12 @@ class Store extends TreeStore {
 
 /** The checkout's own `http.*.extraheader` lines, carried in env (never argv). */
 function authEnvFrom(repoRoot: string): Record<string, string> {
+  // input-site: baseline #d6d10161 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   const r = spawnSync("git", ["config", "--get-regexp", "^http\\..*extraheader$"], { cwd: repoRoot, encoding: "utf-8" });
   if (r.status !== 0 || !r.stdout.trim()) return {};
   const env: Record<string, string> = {};
   const lines = r.stdout.trim().split("\n");
+  // input-site: baseline #d641fe25 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   const base = Number(process.env.GIT_CONFIG_COUNT ?? 0) || 0;
   lines.forEach((line, i) => {
     const sp = line.indexOf(" ");
@@ -365,8 +368,10 @@ const stores = new Map<string, Store>();
 
 function openStore(opts: QaStoreOptions = {}): { store: Store; repoRoot: string } {
   const repoRoot = opts.repoRoot ?? gitTopLevel();
+  // input-site: baseline #82ec2164 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   let remote = opts.remote ?? process.env.QA_STORE_REMOTE;
   if (!remote) {
+    // input-site: baseline #68c082a4 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
     const r = spawnSync("git", ["remote", "get-url", "origin"], { cwd: repoRoot, encoding: "utf-8" });
     if (r.status !== 0) throw new QaUsageError(`no remote: ${repoRoot} has no \`origin\`; pass --remote or QA_STORE_REMOTE`);
     remote = r.stdout.trim();
@@ -380,8 +385,10 @@ function openStore(opts: QaStoreOptions = {}): { store: Store; repoRoot: string 
       branch = DEFAULT_QA_BRANCH;
     }
   }
+  // input-site: baseline #ed418525 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   let storeDir = opts.storeDir ?? process.env.QA_STORE_DIR;
   if (!storeDir) {
+    // input-site: baseline #f48bd6b7 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
     const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: repoRoot, encoding: "utf-8" });
     if (c.status !== 0) throw new QaUsageError(`cannot find the git directory of ${repoRoot}`);
     storeDir = join(c.stdout.trim(), "qa-store.git");
@@ -704,6 +711,7 @@ function buildEntry(
   roots: string[],
   extra: Partial<QaManifest>,
 ): { entry: string; manifest: QaManifest } | undefined {
+  // input-site: baseline #66be449e — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   const tmp = mkdtempSync(join(tmpdir(), "qa-store-index-"));
   try {
     const env = { GIT_INDEX_FILE: join(tmp, "index") };
@@ -732,6 +740,7 @@ function buildEntry(
       payloadTree: payload,
       files,
       bytes,
+      // input-site: baseline #18c2fdfe — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
       written_at: extra.written_at ?? new Date().toISOString(),
     };
     const mblob = store.hashBlob(JSON.stringify(manifest, null, 2) + "\n");
@@ -844,6 +853,7 @@ export function publishQa(
     else skipped.push(rel);
   }
   if (skipped.length) store.log(`qa-store: not in the checkout, skipped: ${skipped.join(", ")}`);
+  // input-site: baseline #0a597796 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   const writtenAt = args.writtenAt ?? new Date().toISOString();
   const built = roots.length
     ? buildEntry(store, repoRoot, key, roots, {
@@ -1034,6 +1044,7 @@ export function pruneQa(
   opts: QaStoreOptions = {},
 ): PruneResult {
   const { store } = openStore(opts);
+  // input-site: baseline #2f3d53ee — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
   const now = args.now ?? new Date();
   const prState = args.prState ?? (() => ({ state: "unknown" }) as PrState);
   let lastPlan: PrunePlan | undefined;
@@ -1175,10 +1186,12 @@ export function main(argv: string[]): number {
       if (f.has("github")) {
         let event: unknown;
         try {
+          // input-site: baseline #d7f91bed — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
           event = process.env.GITHUB_EVENT_PATH ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf-8")) : undefined;
         } catch {
           event = undefined;
         }
+        // input-site: baseline #9cc42cff — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
         const d = githubPublishDecision(process.env, event);
         if (!d.publish) {
           // A notice in the run summary, and exit 0: a skipped publish is a
@@ -1215,6 +1228,7 @@ export function main(argv: string[]): number {
         completeness = c.completeness;
       }
       const roots = f.many("root").length ? f.many("root") : resolveQaLocation(repoRoot).directories.filter((d) => d.present).map((d) => d.path);
+      // input-site: baseline #f79bad10 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
       const run = process.env.GITHUB_RUN_ID ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}` : undefined;
       const gates = f.one("gates-result");
       const r = publishQa(
@@ -1225,6 +1239,7 @@ export function main(argv: string[]): number {
       return r.state === "published" || r.state === "present" ? 0 : r.state === "empty" ? QA_EXIT.miss : QA_EXIT.unknown;
     }
     case "prune": {
+      // input-site: baseline #ec29a4c5 — the qa-reports store's remote, bare store and auth; a check reaches it only to read the entry its --against names
       const now = f.one("now") ? new Date(f.one("now")!) : new Date();
       if (Number.isNaN(now.getTime())) throw new QaUsageError(`--now is not a date: ${f.one("now")}`);
       const prState = f.one("pr-states") ? readPrStates(f.one("pr-states")!) : undefined;

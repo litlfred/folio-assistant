@@ -190,6 +190,7 @@ import {
   type Affected,
 } from "./changed-paths.ts";
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
+import { openTrace } from "./input-trace.ts";
 import { TASK_IO, pairIO } from "./task-io.ts";
 import { foldable, settleCovered } from "./pair-cover.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
@@ -1063,9 +1064,17 @@ if (import.meta.main) {
   let digests = new FileDigests(repoRoot);
   // Resolved once per run: a baseline that moves DURING a run is the next run's input.
   const baseline = qaBaselineIdentity({ repoRoot });
-  const fp = (pair: Pair) => fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests, baseline);
+  // A check whose run reached a `traced` input site (`input-trace.ts`) read
+  // something no fingerprint sees: nothing is recorded for it this run.
+  const traced = new Map<string, string>();
+  const untraced = (check: string): { undetermined: string } | undefined => {
+    const what = traced.get(check);
+    return what === undefined ? undefined : { undetermined: `its run reached a traced input site — ${what}` };
+  };
+  const fp = (pair: Pair) =>
+    untraced(pair.check) ?? fingerprint(repoRoot, scripts, scriptsOf(pair), pair.io, digests, baseline);
   const fpCheck = (check: string) =>
-    checkFingerprint(repoRoot, scripts, check, pairIO(check), digests, baseline);
+    untraced(check) ?? checkFingerprint(repoRoot, scripts, check, pairIO(check), digests, baseline);
   // The pair's own record first; failing that, a record of the CHECK alone
   // having passed on these inputs — written by `gates` or by an earlier regen
   // (bean `f017`). Either way the check would answer exactly as it did then,
@@ -1074,7 +1083,10 @@ if (import.meta.main) {
 
   const checks = new Set(repairable.map((p) => p.check));
   const asyncRun = async (script: string): Promise<boolean> => {
-    const ok = (await runCaptured(["bun", "run", script], repoRoot)).code === 0;
+    const trace = checks.has(script) && useCache ? openTrace(repoRoot) : undefined;
+    const ok = (await runCaptured(["bun", "run", script], repoRoot, trace?.env)).code === 0;
+    const reached = trace?.reached();
+    if (reached !== undefined) traced.set(script, reached);
     // A writer changed files: digests computed before it are of a tree that
     // no longer exists. (The fixpoint would catch a stale skip one pass later;
     // this makes the pass after the write see it at once.)

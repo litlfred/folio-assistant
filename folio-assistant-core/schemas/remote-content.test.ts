@@ -134,13 +134,13 @@ describe("materialization — the states and the gates", () => {
 
   it("reports four freshness verdicts, not a boolean", () => {
     const base = { provenance: { upstream: "https://x" }, localPath: "library/x", gates: GATES_OK, purpose: "working" as const };
-    expect(freshness(MaterializationSchema.parse({ state: "referenced", provenance: { upstream: "https://x" } }))).toBe("not-materialized");
-    expect(freshness(MaterializationSchema.parse({ state: "materialized", ...base, purpose: "working" }))).toBe("no-expiry");
+    expect(freshness(MaterializationSchema.parse({ state: "referenced", provenance: { upstream: "https://x" } }), new Date())).toBe("not-materialized");
+    expect(freshness(MaterializationSchema.parse({ state: "materialized", ...base, purpose: "working" }), new Date())).toBe("no-expiry");
     expect(
-      freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2020-01-01" })),
+      freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2020-01-01" }), new Date()),
     ).toBe("expired");
     expect(
-      freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2999-01-01" })),
+      freshness(MaterializationSchema.parse({ state: "materialized", ...base, expiresAt: "2999-01-01" }), new Date()),
     ).toBe("fresh");
   });
 
@@ -189,6 +189,7 @@ describe("materialization — the states and the gates", () => {
           fixity: FIXITY,
           gates: { ...GATES_OK, sourceLoss: { verdict: "permitted", basis: "original bytes held, sha256 recorded" } },
         }),
+        new Date(),
       ),
     ).toBe("permanent");
     expect(
@@ -197,6 +198,7 @@ describe("materialization — the states and the gates", () => {
           state: "materialized", provenance: { upstream: "https://x" }, localPath: "library/x",
           purpose: "working", gates: GATES_OK,
         }),
+        new Date(),
       ),
     ).toBe("no-expiry");
   });

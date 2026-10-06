@@ -365,8 +365,13 @@ export type FreshnessVerdict =
  * cannot be told from abandoned work. `permanent` is a specification: an
  * archive is supposed to outlive its source, so reporting it as a finding would
  * put every archived blob on a list of things to chase.
+ *
+ * `now` has no default on purpose (bean `f017`): a default `new Date()` here
+ * put a clock read in the import closure of every check that reaches this
+ * schema, and a clock read is something the input-hash skip cannot see. The
+ * one caller that wants "now" says so.
  */
-export function freshness(m: Materialization, now: Date = new Date()): FreshnessVerdict {
+export function freshness(m: Materialization, now: Date): FreshnessVerdict {
   if (m.state !== "materialized") return "not-materialized";
   if (m.purpose === "compiled" && !m.expiresAt) return "input-bound";
   if (!m.expiresAt) {

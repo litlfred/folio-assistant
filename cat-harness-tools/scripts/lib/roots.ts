@@ -91,6 +91,7 @@ export function isHarnessRoot(dir: string): boolean {
  */
 export function resolveHarnessRoot(inputs: HarnessRootInputs = {}): { root: string; source: HarnessRootSource } {
   const argv = inputs.argv ?? process.argv;
+  // input-site: env-unset CAT_HARNESS_ROOT #861163c1 — names a harness root that may lie outside the tree; unset, the root is the in-tree sibling
   const env = inputs.env ?? process.env;
   const toolsRoot = inputs.toolsRoot ?? TOOLS_ROOT;
 

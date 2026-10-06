@@ -283,9 +283,10 @@ export class ReadWriteGate {
 export async function runCaptured(
   argv: readonly string[],
   cwd: string,
+  env?: Record<string, string | undefined>,
 ): Promise<{ code: number; output: string; ms: number }> {
   const t0 = performance.now();
-  const child = Bun.spawn([...argv], { cwd, stdout: "pipe", stderr: "pipe" });
+  const child = Bun.spawn([...argv], { cwd, stdout: "pipe", stderr: "pipe", ...(env ? { env } : {}) });
   const chunks: string[] = [];
   const pump = async (stream: ReadableStream<Uint8Array>): Promise<void> => {
     const decoder = new TextDecoder();

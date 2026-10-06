@@ -1690,6 +1690,7 @@ export async function loadContributions<C extends { name: string }, S extends Co
 ): Promise<S> {
   registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
+    // input-site: imports */contributes.ts #c73b53ce — a dependency's declared `contributes` module; input-sites.test.ts holds every declaration to this glob
     const fn = contributeFunction(dep, modulePath, await import(modulePath));
     registerPinned(registry, dep, await (fn as () => C | Promise<C>)());
   }
@@ -1725,6 +1726,7 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
   registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // input-site: imports */contributes.ts #4875e70d — a dependency's declared `contributes` module; input-sites.test.ts holds every declaration to this glob
     const fn = contributeFunction(dep, modulePath, require(modulePath));
     const contribution = (fn as () => C | Promise<C>)();
     if (contribution instanceof Promise) {
@@ -1844,6 +1846,7 @@ function tableEntry(dep: ResolvedDependency, nodeFile: string, ref: string, key:
   const abs = resolve(dep.rootPath, path);
   if (!existsSync(abs)) throw new Error(`${nodeFile}: ${ref} — ${abs} does not exist`);
   // eslint-disable-next-line @typescript-eslint/no-require-imports
+  // input-site: imports */content/pipeline/plugin-slots.ts,*/content/pipeline/qa-checkers-*.ts #f17e81a6 — own-code refs of declared qa-checkers / pipeline-plugins nodes; input-sites.test.ts holds every ref to these globs
   const table = (require(abs) as Record<string, unknown>)[exportName];
   if (typeof table !== "object" || table === null) throw new Error(`${nodeFile}: ${ref} exports no table named ${exportName}`);
   const entry = (table as Record<string, unknown>)[key];

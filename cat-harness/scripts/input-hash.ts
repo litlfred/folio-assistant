@@ -75,15 +75,16 @@
  * does `--no-cache`, so CI asks every pair exactly as before.
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { readQaManifest, type QaStoreOptions } from "./qa-store.ts";
+import { auditClosure, SiteMemo } from "./input-sites.ts";
 
 /** Where the cache lives, relative to the repository root. `build/` is git-ignored. */
 export const CACHE_FILE = join("build", "regen-cache", "input-hashes.json");
 
 /** Bump to invalidate every recorded hash when the fingerprint's recipe changes. */
-export const RECIPE_VERSION = 2;
+export const RECIPE_VERSION = 3;
 
 export type Fingerprint = { hash: string; files: number; wholeTree?: boolean } | { undetermined: string };
 
@@ -356,7 +357,93 @@ export function trackedTreeDigest(root: string, digests: FileDigests): { hash: s
       return { undetermined: `could not read untracked ${path}` };
     }
   }
+  const ignored = git(["ls-files", "-o", "-i", "--exclude-standard", "--directory", "-z"]);
+  if (ignored === undefined) return { undetermined: "could not list the ignored files" };
+  for (const entry of split(ignored).sort()) {
+    const r = ignoredDigest(root, entry, h);
+    if (r !== undefined) return { undetermined: r };
+  }
   return { hash: h.digest("hex") };
+}
+
+/**
+ * Ignored files are part of "the whole working tree" too: a check that walks a
+ * directory with `readdirSync` or `Bun.Glob` reads them whether or not git
+ * does — the shape of the `:pages:check` that passed locally on an untracked
+ * loader and failed on a clean checkout. So each one's path, size and mtime is
+ * hashed (no content read: a touched file costs a skip, never a false one).
+ *
+ * Left out, each for a stated reason:
+ * - `node_modules/` at any depth — its content is what `bun.lock` pins, and
+ *   `bun.lock` is in every fingerprint;
+ * - the input-hash cache itself, which every run rewrites;
+ * - a directory holding its own `.git` — another checkout (an agent worktree
+ *   under `.claude/worktrees/`), which is a different repository's tree.
+ */
+function ignoredDigest(root: string, entry: string, h: ReturnType<typeof createHash>): string | undefined {
+  const rel = entry.replace(/\/$/, "");
+  if (/(^|\/)node_modules$/.test(rel) || rel === dirname(CACHE_FILE) || rel === CACHE_FILE) return undefined;
+  const walk = (r: string): string | undefined => {
+    let st;
+    try {
+      st = statSync(join(root, r));
+    } catch {
+      return undefined; // gone between the listing and the stat: nothing to read
+    }
+    if (!st.isDirectory()) {
+      if (r !== CACHE_FILE) h.update(`ignored ${r} ${st.size}:${st.mtimeMs}\n`);
+      return undefined;
+    }
+    if (/(^|\/)node_modules$/.test(r) || r === dirname(CACHE_FILE) || existsSync(join(root, r, ".git"))) return undefined;
+    let names: string[];
+    try {
+      names = readdirSync(join(root, r)).sort();
+    } catch {
+      return `could not list ignored ${r}`;
+    }
+    for (const n of names) {
+      const bad = walk(`${r}/${n}`);
+      if (bad !== undefined) return bad;
+    }
+    return undefined;
+  };
+  return walk(rel);
+}
+
+/**
+ * What a `head` / `refs` site reads, named by commit id. A commit id is a hash
+ * of its whole history, so "HEAD is the same commit" is "every `git log` from
+ * HEAD answers the same" — except across a SHALLOW boundary, which `git fetch
+ * --deepen` moves without moving HEAD; its file is hashed too. A ref that does
+ * not resolve is hashed as missing, which is itself an answer the check sees.
+ */
+function historyLine(root: string, head: boolean, refs: readonly string[]): { line: string } | { undetermined: string } {
+  const git = (args: string[]) => Bun.spawnSync(["git", ...args], { cwd: root, stdout: "pipe", stderr: "pipe" });
+  let line = "";
+  const names = [...(head ? ["HEAD"] : []), ...refs];
+  for (const name of names) {
+    const r = git(["rev-parse", "--verify", "--quiet", `${name}^{commit}`]);
+    line += `ref ${name} = ${r.exitCode === 0 ? r.stdout.toString().trim() : "missing"}\n`;
+  }
+  const shallowPath = git(["rev-parse", "--git-path", "shallow"]);
+  if (shallowPath.exitCode !== 0) return { undetermined: "could not locate the shallow file" };
+  const sp = resolve(root, shallowPath.stdout.toString().trim());
+  line += `shallow ${existsSync(sp) ? createHash("sha256").update(readFileSync(sp)).digest("hex") : "none"}\n`;
+  return { line };
+}
+
+const RUNTIME_ENV = ["BUN_OPTIONS", "NODE_OPTIONS", "GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "TZ", "LANG", "LC_ALL"] as const;
+
+/** `bun` and `git` versions — a tool upgrade can change an answer with no file changing. */
+let toolVersions: string | undefined;
+function toolsLine(): string {
+  if (toolVersions === undefined) {
+    const git = Bun.spawnSync(["git", "--version"], { stdout: "pipe", stderr: "pipe" });
+    // The variables that change how bun or git behave for EVERY script, whatever it reads itself.
+    const runtimeEnv = RUNTIME_ENV.map((n) => `${n}=${JSON.stringify(process.env[n] ?? null)}`).join(" ");
+    toolVersions = `tools bun ${Bun.version} ${Bun.revision} ${git.exitCode === 0 ? git.stdout.toString().trim() : "git?"} ${runtimeEnv}\n`;
+  }
+  return toolVersions;
 }
 
 /** Memoised per-file content digests, keyed by path + size + mtime. */
@@ -375,9 +462,12 @@ export class FileDigests {
     this.memo.set(rel, { key, digest });
     return digest;
   }
+  /** Per-file input-site scans (`input-sites.ts`), shared by every fingerprint of a run. */
+  readonly sites = new SiteMemo();
   /** Forget everything — call after writers ran, since mtimes can tie within a tick. */
   clear(): void {
     this.memo.clear();
+    this.sites.clear();
     this.tree = undefined;
   }
 }
@@ -422,15 +512,36 @@ export function fingerprint(
     if (e === undefined) return { undetermined: `\`${s}\` does not resolve to script files` };
     entries.push(...e);
   }
-  // Under TRACKED every script source is already in the tree digest — including
-  // modules loaded by a computed path and scripts that are spawned rather than
-  // imported, which the closure cannot follow. The entries were still resolved
-  // above, so a command that runs a binary is undetermined either way.
-  const closure = wholeTree ? { files: [] as string[] } : sourceClosure(root, entries);
-  if ("undetermined" in closure) return closure;
+  // Every source the check runs is AUDITED (`input-sites.ts`): a line that can
+  // read the environment, the network, the clock, git history or a computed
+  // module must carry a reviewed, pinned annotation saying what it reads, or
+  // the fingerprint is undetermined. Under TRACKED the files themselves are
+  // already in the tree digest; the audit is what makes "the tree" the whole
+  // input. A non-TypeScript script cannot be audited, so it is undetermined.
+  const foreign = entries.find((e) => !/\.(m?[jt]sx?)$/.test(e));
+  if (foreign !== undefined) return { undetermined: `${foreign} is not TypeScript/JavaScript, so its reads cannot be audited` };
+  const audit = auditClosure(root, entries, digests.sites);
+  if ("undetermined" in audit) return audit;
+  if (audit.needsTree && !wholeTree) {
+    return { undetermined: "a source reads the working tree through git (`tree` site), which only a {tracked} declaration covers" };
+  }
+  if (audit.needsBaseline && refs.length === 0) {
+    return { undetermined: "a source reads the qa-reports store, and the command names no --against baseline whose identity could be hashed" };
+  }
+  for (const name of audit.envUnset) {
+    if ((process.env[name] ?? "") !== "") return { undetermined: `$${name} is set, and names something outside the tree` };
+  }
+  const closure = { files: wholeTree ? ([] as string[]) : audit.files };
 
   const h = createHash("sha256");
   h.update(`recipe ${RECIPE_VERSION}\n`);
+  h.update(toolsLine());
+  for (const name of audit.env) h.update(`env ${name} = ${JSON.stringify(process.env[name] ?? null)}\n`);
+  if (audit.needsHead || audit.refs.length > 0) {
+    const hist = historyLine(root, audit.needsHead, audit.refs);
+    if ("undetermined" in hist) return hist;
+    h.update(hist.line);
+  }
   for (const s of scriptNames) h.update(`script ${s} = ${scripts[s]}\n`);
   h.update(`io ${JSON.stringify(io)}\n`);
   if (tree !== undefined) h.update(`tree ${tree.hash}\n`);

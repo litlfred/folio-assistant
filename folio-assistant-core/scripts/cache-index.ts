@@ -94,7 +94,7 @@ export function cacheRows(records: readonly MaterializedRecord[] = collect()): C
       ...(bytes !== undefined ? { bytes } : {}),
       sizeBasis: basis,
       ...(typeof fetched === "string" ? { fetchedAt: fetched } : {}),
-      freshness: freshness(m),
+      freshness: freshness(m, new Date()),
     };
   });
 }

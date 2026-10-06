@@ -92,6 +92,7 @@ import {
   type PairIO,
   type SkipDecision,
 } from "./input-hash.ts";
+import { openTrace } from "./input-trace.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -1631,8 +1632,8 @@ export function undeterminedReport(e: unknown, root: string): string[] {
  * which keeps the live output a reader already relies on, and accumulated so
  * the summary can quote the failing lines back at the end.
  */
-async function runTee(cmd: string, args: string[]): Promise<{ code: number; output: string }> {
-  const child = Bun.spawn([cmd, ...args], { cwd: ROOT, stdout: "pipe", stderr: "pipe" });
+async function runTee(cmd: string, args: string[], env?: Record<string, string | undefined>): Promise<{ code: number; output: string }> {
+  const child = Bun.spawn([cmd, ...args], { cwd: ROOT, stdout: "pipe", stderr: "pipe", ...(env ? { env } : {}) });
   const chunks: string[] = [];
   const pump = async (stream: ReadableStream<Uint8Array>, to: NodeJS.WriteStream): Promise<void> => {
     const decoder = new TextDecoder();
@@ -2025,17 +2026,21 @@ if (import.meta.main) {
         process.stdout.write(`▸ ${g.command}\n`);
         const [cmd, ...args] = g.command.split(/\s+/);
         const started = performance.now();
-        const r = await runTee(cmd!, args);
+        const trace = t.script !== undefined ? openTrace(ROOT) : undefined;
+        const r = await runTee(cmd!, args, trace?.env);
         // Timed like the parallel lines, so a slow serial gate is visible in
         // the log rather than inferred from the total.
         process.stdout.write(`  ↳ ${((performance.now() - started) / 1000).toFixed(1)}s, exit ${r.code}: ${g.command}\n`);
         if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
-        if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, r.code === 0, t.fp, new FileDigests(ROOT));
+        if (t.script !== undefined && t.fp !== undefined) {
+          skipper.record(t.script, r.code === 0 && !tracedReport(t.script, trace?.reached()), t.fp, new FileDigests(ROOT));
+        }
         seen = snapshot(seen, g.command);
       }
       continue;
     }
     const run = triage(seg.gates);
+    const traces = run.map((t) => (t.script !== undefined ? openTrace(ROOT) : undefined));
     const codes: number[] = [];
     const emitter = orderedEmitter<{ code: number; output: string; ms: number }>((i, r) => {
       const g = run[i]!.gate;
@@ -2045,10 +2050,10 @@ if (import.meta.main) {
       if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
     });
     await runPool(
-      run.map(({ gate: g }) => ({
+      run.map(({ gate: g }, i) => ({
         id: g.command,
         outputs: [],
-        run: () => runCaptured(g.command.split(/\s+/), ROOT),
+        run: () => runCaptured(g.command.split(/\s+/), ROOT, traces[i]?.env),
       })),
       jobs,
       (i, r) => emitter.push(i, r),
@@ -2057,12 +2062,21 @@ if (import.meta.main) {
     // it means its fingerprints disagree, and it records nothing.
     const after = new FileDigests(ROOT);
     run.forEach((t, i) => {
-      if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, codes[i] === 0, t.fp, after);
+      if (t.script !== undefined && t.fp !== undefined) {
+        skipper.record(t.script, codes[i] === 0 && !tracedReport(t.script, traces[i]?.reached()), t.fp, after);
+      }
     });
     seen = snapshot(seen, `one of the parallel read-only gates: ${run.map((t) => t.gate.command).join(", ")}`);
   }
   skipper.save();
   console.log(`\n(${((performance.now() - t0) / 1000).toFixed(0)}s wall for the gate run)`);
+
+  /** A run that reached a `traced` input site records nothing (`input-trace.ts`); say so. */
+  function tracedReport(script: string, reached: string | undefined): boolean {
+    if (reached === undefined) return false;
+    process.stdout.write(`  (${script} reached a traced input site — ${reached} — so its pass is not recorded for skipping)\n`);
+    return true;
+  }
 
   /** Compare the tree with the last snapshot and attribute any change to `who`. */
   function snapshot(prev: ReadonlyMap<string, string> | undefined, who: string): ReadonlyMap<string, string> | undefined {
