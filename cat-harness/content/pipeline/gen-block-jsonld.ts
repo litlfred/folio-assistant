@@ -41,8 +41,8 @@
 import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname, basename } from "path";
+import { documentContext } from "../../schemas/content-context.ts";
 import {
-  CONTENT_DOCUMENT_CONTEXT,
   resolveLabel,
   mintNodeId,
   resolveReferenceKey,
@@ -104,7 +104,7 @@ export function blockToJsonLd(
   const b = loaded.block;
 
   const doc: Record<string, unknown> = {
-    "@context": CONTENT_DOCUMENT_CONTEXT,
+    "@context": documentContext(typesForKind(loaded.kind)),
     // `mintNodeId`, not `resolveLabel`: a block's own label always yields an
     // id. The placeholder this replaces gave every prefix-less label the same
     // `@id`, which collided 12 blocks into one on the real corpus.

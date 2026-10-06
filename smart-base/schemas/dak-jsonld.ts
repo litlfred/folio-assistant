@@ -16,7 +16,7 @@ import { SMART_BASE_NS } from "../platform.js";
 import { DAK_BLOCK_KIND_NODES, DAK_BLOCK_KINDS, type DakBlockKind } from "./dak-kinds";
 
 /**
- * `folio-assistant-core:` type for each DAK kind.
+ * `smart-base:` type for each DAK kind, minted in smart-base's own namespace (bean `0r7u`).
  *
  * Folio's own classes rather than FHIR's, deliberately. A `value-set` *block*
  * is the authored unit that carries the label, the editorial edges and the QA
@@ -40,7 +40,7 @@ export const DAK_KIND_TO_FOLIO_TYPE = Object.fromEntries(
  * stable identifier**, and it is the same one `DAKComponentSources.fsh` uses as
  * `canonical ^type[0].targetProfile`.
  *
- * So a block keeps its `folio-assistant-core:` `@type` — it is a manifest, not a FHIR resource
+ * So a block keeps its `smart-base:` `@type` — it is a manifest, not a FHIR resource
  * — and gains this as a separate assertion: *the thing this block is an
  * authored instance of*. That makes a folio DAK joinable with WHO's published
  * vocabularies instead of merely parallel to them.
