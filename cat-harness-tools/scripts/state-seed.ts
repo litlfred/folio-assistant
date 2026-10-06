@@ -11,8 +11,8 @@
  * bun run state:seed --id beans              # refresh the seed, verify, report
  * bun run state:seed --id beans --dry-run    # what it would push, pushing nothing
  * bun run state:seed --id beans --authoritative   # the CUTOVER half: the branch becomes the store
- * bun run state:seed --retire smart-trust --into cat-harness --repository https://github.com/litlfred/smart-trust \\
- *   --also smart-trust.config.json             # SEPARATION: a whole instance, into the host's fsh-guts
+ * bun run state:seed --retire <root> --into <host instance> --repository <url> \\
+ *   --also <root>.config.json                  # SEPARATION: a whole instance, into the host's fsh-guts
  * ```
  *
  * ## Why this exists — `state:drift`'s remedy had no implementation
