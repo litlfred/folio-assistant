@@ -411,6 +411,7 @@
     "readme:subgraphs": "bun run cat-harness/scripts/subgraph-readmes.ts",
     "readme:subgraphs:check": "bun run cat-harness/scripts/subgraph-readmes.ts --check --against main",
     "regen": "bun run cat-harness/scripts/regen-after-merge.ts",
+    "measure:merge-round": "bun run cat-harness/scripts/measure-merge-round.ts",
     "merge:main": "bun run cat-harness/scripts/merge-base.ts --base origin/main",
     "merge:steward": "bun run cat-harness/scripts/merge-steward.ts",
     "merge:queue:read": "bun run cat-harness/scripts/merge-queue-cli.ts read",

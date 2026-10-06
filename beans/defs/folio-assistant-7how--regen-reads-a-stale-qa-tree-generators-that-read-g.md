@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T09:15:31Z
-updated_at: 2026-10-06T19:11:14Z
+updated_at: 2026-10-06T20:27:23Z
 parent: folio-assistant-1xhc
 ---
 
@@ -38,5 +38,10 @@ Dispatched for SPEED of the merge loop. The 6-step PR recipe (state:mount → re
 - [x] gates: rebuilds when NOT CURRENT, not only when absent.
 - [x] tests: cat-harness/scripts/tests/qa-working-copy.test.ts (13), incl. the falsifier that without the hook a regen settles on a page built from the old copy.
 - [ ] measured before/after on a fresh merge of main
-- [ ] qa:refresh restore window (the reverted uncommitted edit) — not addressed yet; still commit before qa:working-copy
-- [ ] prepare-merge / merge skill text updated to the one-command recipe
+- [x] qa:refresh restore window narrowed to ONE writer's run, every restored path named with its writer (runRestoring). Narrowed, not removed: still commit before qa:working-copy.
+- [x] prepare-merge says regen owns the QA copy.
+- [x] uml:overview and readme:subgraphs make the copy current themselves (skill:register rendered from an absent copy, measured).
+- [x] tree digest is of content (blob ids): a commit no longer stales the stamp.
+
+
+_2026-10-06T20:40Z_ — OPEN FINDING, cause not identified: an uncommitted one-line edit to package.json, made in fa-work at 20:22:1x while `regen --changed` (QA build, then pass 1) was running, was gone when the run ended. The file's mtime was 20:22:19, so it was written right after the edit. It is NOT in qa:refresh's restored list (that list names 8 paths, all docs:pages / qa-sweep side effects). It looks like a lost update (something read package.json before the edit and wrote it after), but grep finds no writer of package.json outside tests. Rule until explained: commit before running regen, exactly as before.

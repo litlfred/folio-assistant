@@ -80,5 +80,12 @@ describe("review page", () => {
     expect(html).toContain("is not known (which is not the same as none)");
     expect(html).toContain("var renderedModel = ");
   });
+
+  test("shows the build diff under the list, and says when there is none (bean ehh6)", () => {
+    expect(html).toContain('get("../rendered-measured.json")');
+    expect(html).toContain("var measuredModel = ");
+    expect(html).toContain("var renderMeasured = ");
+    expect(html).toContain("Not measured: this build published no rendered-measured.json");
+  });
 });
 
