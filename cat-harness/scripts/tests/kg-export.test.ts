@@ -34,7 +34,8 @@ import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "n
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
-import { buildExport, exportIdentity, publishedDocument, publishedIdentity, publishedInstanceSchemas, undeclaredRootTerms } from "../kg-export.js";
+import { buildExport, exportIdentity, publishedDocument, publishedIdentity, publishedInstanceSchemas, readSourceProvenance, undeclaredRootTerms } from "../kg-export.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 import { PUBLISHED_ELSEWHERE, declaresOwnCanonical, instanceExportPlan, publishesInstanceSchema } from "../instance-exports.js";
 import { isExternalContract, skillContracts } from "../skill-contracts.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
@@ -575,9 +576,22 @@ describe("source provenance — what the graph was generated FROM", () => {
   });
 
   test("the commit is a dereferenceable IRI, typed prov:wasDerivedFrom", () => {
+    // The IRI is derived over a throwaway repository whose `origin` is known
+    // (`test/support/git-fixture.ts`), not over this checkout's: standing
+    // alone, cat-harness has no `origin`, and the derivation is logic over
+    // whatever remote it is given.
+    const fx = gitFixtureRepo();
+    try {
+      const src = readSourceProvenance(fx.root);
+      expect(src.iri).toContain(src.sha);
+      expect(src.iri).toMatch(/^https:\/\/(github|gitlab)\.com\/.+\/commit\//);
+    } finally {
+      fx.cleanup();
+    }
     const d = EXPORT;
-    expect(d.sourceCommit).toContain(d.sourceCommitSha);
-    expect(d.sourceCommit).toMatch(/^https:\/\/(github|gitlab)\.com\/.+\/commit\//);
+    // ...and the export carries exactly what provenance read here, so the
+    // derivation above is the one the published graph uses.
+    expect(d.sourceCommit).toBe(readSourceProvenance().iri);
     const ctx = d["@context"] as Record<string, { "@id"?: string; "@type"?: string }>;
     expect(ctx.sourceCommit?.["@id"]).toMatch(/wasDerivedFrom$/);
     expect(ctx.sourceCommit?.["@type"]).toBe("@id");

@@ -45,6 +45,30 @@ which builds a whole IG. Validating a single resource against a package is the
 validator's job and is what an authoring loop runs between builds; the
 publisher is what a release is cut from. Both require `java-runtime`.
 
+## When a package host refuses you
+
+SUSHI and the Publisher resolve the IG's `dependencies:` from
+`packages.fhir.org`. Where that host is refused, the failure looks like a
+broken IG and is not one — the packages can be had another way:
+
+```sh
+bun run tools:remedy packages.fhir.org        # → fhir-cache-seed-npm, with its command
+```
+
+Ask the Tool graph rather than this paragraph: every network-dependent Tool
+declares `remedies` per host it reaches (`check:tools` keeps it so), and
+`fhir-harness/scripts/ig-cache.sh doctor` prints the same answer for each
+host it finds unreachable. For packages.fhir.org it is
+`fhir-cache-seed-npm --sushi-config sushi-config.yaml`, and for versions npm
+does not carry, `--mirror` from a repository that `fhir-package-mirror`
+filled on a machine that reaches the host.
+
+**Do not report "SUSHI cannot run here" before asking.** That is what
+happened on 2026-10-06 (bean `6mk7`): the seeder for exactly this refusal had
+been in the graph for five days. A refusal that `tools:remedy` answers with
+`none` IS "could not determine" in the sense of the next section — say so,
+with the reason it gave.
+
 ## A capability that is absent did not pass
 
 If a probe fails, `overallStatus` is **not** a pass with an empty findings list.

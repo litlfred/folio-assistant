@@ -40,7 +40,10 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`gen-default-boards-checkout.test.ts`](gen-default-boards-checkout.test.ts) | a file |  |
 | [`gen-lsi-viz-checkout.test.ts`](gen-lsi-viz-checkout.test.ts) | a file |  |
 | [`gen-themes-css-checkout.test.ts`](gen-themes-css-checkout.test.ts) | a file |  |
+| [`generated-banner-commands-repo-root.test.ts`](generated-banner-commands-repo-root.test.ts) | a file |  |
+| [`getting-started-repo-root.test.ts`](getting-started-repo-root.test.ts) | a file |  |
 | [`git-corpus-symlinked-deps.test.ts`](git-corpus-symlinked-deps.test.ts) | a file |  |
+| [`git-scan-repo-root.test.ts`](git-scan-repo-root.test.ts) | a file |  |
 | [`gitattributes.test.ts`](gitattributes.test.ts) | a file |  |
 | [`glossary-export-checkout.test.ts`](glossary-export-checkout.test.ts) | a file |  |
 | [`harness-tiles-checkout.test.ts`](harness-tiles-checkout.test.ts) | a file |  |
@@ -107,6 +110,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`tools-checkout.test.ts`](tools-checkout.test.ts) | a file |  |
 | [`tools-discover-checkout.test.ts`](tools-discover-checkout.test.ts) | a file |  |
 | [`tools-viewer-checkout.test.ts`](tools-viewer-checkout.test.ts) | a file |  |
+| [`upload-url-repo-root.test.ts`](upload-url-repo-root.test.ts) | a file |  |
 | [`viewer-declarations-checkout.test.ts`](viewer-declarations-checkout.test.ts) | a file |  |
 | [`viewer-tools.test.ts`](viewer-tools.test.ts) | a file |  |
 | [`voice-criteria-checkout.test.ts`](voice-criteria-checkout.test.ts) | a file |  |

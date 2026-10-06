@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6mk7
 title: 'A refused packages.fhir.org did not lead the agent to fhir-cache-seed-npm: symptom-to-Tool lookup is missing, and the mirror the skill names does not exist'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T06:31:37Z
-updated_at: 2026-10-06T09:02:29Z
+updated_at: 2026-10-06T16:00:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -21,9 +21,9 @@ Session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 needed SUSHI cle
 4. **The documented gap-closer does not exist.** That skill names `--mirror https://github.com/litlfred/fhir-package-mirror` for the 24-25 pinned HL7 versions that are on neither npm nor publisher sites. Measured the same day, that repository does not exist (`list_repos`: no match; `ls-remote` asks for credentials). With the seeder, smart-trust still lacks 25 packages, so SUSHI still cannot run here.
 
 ## Done when
-- [ ] `ig-cache.sh doctor`, and any check that finds packages.fhir.org unreachable, names `fhir-cache-seed-npm` and its command
-- [ ] the skill an agent reads before running SUSHI points at the seeder (the owner chooses which skill that is)
-- [ ] the owner decides on a general symptom-to-Tool lookup (for example a `remedies:` field on a Tool, keyed by the host or error it addresses, with a gate keeping it non-empty for network-dependent Tools)
+- [x] `ig-cache.sh doctor`, and any check that finds packages.fhir.org unreachable, names `fhir-cache-seed-npm` and its command
+- [x] the skill an agent reads before running SUSHI points at the seeder (the owner chooses which skill that is)
+- [x] the owner decides on a general symptom-to-Tool lookup (for example a `remedies:` field on a Tool, keyed by the host or error it addresses, with a gate keeping it non-empty for network-dependent Tools)
 - [x] `litlfred/fhir-package-mirror` exists and is filled from a machine that reaches packages.fhir.org, or the skill stops naming it
 - [x] MEASURED AFTER: in a container with packages.fhir.org blocked, SUSHI on smart-trust exits 0 using only documented tools
 
@@ -82,3 +82,23 @@ The owner's local run had 0 errors because that machine reaches packages.fhir.or
 ### To close
 1. Mirror those four exact versions (`mirror-fhir-packages.sh` on a networked machine).
 2. Make the seeder close over the `dependencies` of every package it installs, so '0 missing' means SUSHI will find everything. Today it means only that the direct pins were found.
+
+## Owner rulings and delivery, 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+- **Which skill:** "fhir-validation". It gains §"When a package host refuses you", and `ig-build-pipeline` points to it.
+- **Symptom-to-Tool lookup:** "remedies: field + gate". Delivered as follows.
+  - `ToolRemedySchema` (`cat-harness/schemas/tool.ts`): one `{ host, error?, tool | none }` entry per host, on the Tool that NEEDS the host. `none` is a stated value, as `install.none` is.
+  - Gate in `check:tools`. A `requires.network: true` Tool with no `remedies` fails, and a `remedies[].tool` naming no declared Tool fails. Before the entries were filled, the gate reported "28 network-dependent Tool(s) with no `remedies`".
+  - All 28 network Tools are filled, with hosts taken from each Tool's own scripts. Workarounds declared:
+    - packages.fhir.org → fhir-cache-seed-npm;
+    - release.lean-lang.org ("Host not in allowlist") → lean-toolchain-setup;
+    - github.com for beans-cli → beans-manual;
+    - huggingface.co / pypi.org → transcribe-whisper-cpp.
+    Every other entry is a stated `none` with its reason.
+  - Lookup: `bun run tools:remedy <host | URL | error line>`, using `remediesFor`. `bun run tools:remedy packages.fhir.org` prints `packages.fhir.org refused → use fhir-cache-seed-npm` and the seeder's command.
+- **`ig-cache.sh doctor`:** for each unreachable host it prints the graph's answer via `tools:remedy`. Its probe also read an HTTP/2 `200` as unreachable, because `grep '200 OK'` never matches `HTTP/2 200`. It now reads the status code.
+- **Tests:**
+  - `cat-harness/scripts/tests/tool-remedies.test.ts` covers the schema, the gate and the lookup, with synthetic Tools.
+  - `test/tools-checkout.test.ts` checks that the real graph is fully remedied and that packages.fhir.org leads to fhir-cache-seed-npm.
+
+## Still open, not in this bean's Done-when
+The four transitive packages smart-base needs (crmi#2.0.0, cql#2.0.0, sdc#4.0.0, terminology#7.3.0) are not mirrored yet, and the seeder does not follow transitive dependencies. Both are recorded above, and both need the owner's networked machine.
