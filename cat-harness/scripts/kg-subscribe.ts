@@ -49,7 +49,7 @@
  * ### Where the declaration is looked for — `upstreamPath` (bean `437w`)
  *
  * A fork that left a monorepo often keeps its instance one directory down:
- * `litlfred/smart-trust` carries `smart-base/smart-trust.json` and nothing at
+ * a fork may carry `shared/<name>.json` and nothing at
  * its root, and the directory is NOT named for the instance. So the search is,
  * in order ({@link judgeTree}):
  *
@@ -80,8 +80,8 @@
  *
  * ### A content Knowledge Graph is a SECOND kind — owner, 2026-10-06
  *
- * A declaration with Subgraphs and NO harness — a FHIR IG such as
- * `smart-trust` or `smart-immunizations` — is accepted, as kind **`content`**,
+ * A declaration with Subgraphs and NO harness — a FHIR implementation guide,
+ * a document corpus — is accepted, as kind **`content`**,
  * not as a substrate. Bootstrap's definition above is unchanged; this is a
  * separate classification, written explicitly wherever it is recorded: the
  * subscription carries `kind: "content"`, the snapshot carries `kind:

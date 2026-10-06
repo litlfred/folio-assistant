@@ -2522,8 +2522,8 @@ export const SubscriptionSchema = z
     ref: z.string().regex(/^[0-9a-f]{40}$/, "ref must be a full 40-character commit SHA — pin, never follow a branch"),
     /**
      * The repository-relative DIRECTORY holding the substrate's declaration,
-     * when that is not the root — `smart-base` for a fork whose declaration
-     * is `smart-base/smart-trust.json` (bean `437w`). Absent: the root. The
+     * when that is not the root — `shared` for a fork whose declaration
+     * is `shared/<name>.json` (bean `437w`). Absent: the root. The
      * same name and meaning as `upstreamPath` on a remote subgraph source
      * (`schemas/subgraph-source.ts`, PR #2326), so one word means one thing
      * across both, and the same pattern (a trailing slash is admitted and

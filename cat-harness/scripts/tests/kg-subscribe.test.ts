@@ -337,17 +337,17 @@ describe("checkSubscriptions: the offline gate", () => {
 
 // ── A declaration one level down (bean 437w) ──────────────────────────────────
 //
-// The shape of litlfred/smart-trust: nothing at the root, the instance one
+// The shape of litlfred/trust-kg: nothing at the root, the instance one
 // directory down in a directory NOT named for it.
 const NESTED = {
-  name: "smart-trust",
+  name: "trust-kg",
   directories: [
     { id: "trust-skills", path: "skills/", graphTypologies: ["skills"] },
     { id: "trust-folio", path: "folio/", graphTypologies: ["folio"] },
   ],
 };
-const NESTED_TREE = { "smart-base/smart-trust.json": NESTED, "smart-base/package.json": { name: "not-the-stem" }, "package.json": { name: "x" } };
-const NESTED_TARGET = `litlfred/smart-trust@${SHA}`;
+const NESTED_TREE = { "shared/trust-kg.json": NESTED, "shared/package.json": { name: "not-the-stem" }, "package.json": { name: "x" } };
+const NESTED_TARGET = `litlfred/trust-kg@${SHA}`;
 
 /**
  * A BARE repository on disk holding `files`, served through the real git
@@ -373,7 +373,7 @@ function bareRepo(files: Record<string, unknown>): { url: string; sha: string } 
 describe("a declaration one level down (bean 437w): fixture bare repositories, real git fetch", () => {
   const SUBS = [
     ["root declaration", { "ihris-kb.json": SUBSTRATE, "kb/notes.json": { name: "notes" } }, "substrate", "ihris-kb.json"],
-    ["nested, directory name differs from the instance name", NESTED_TREE, "substrate", "smart-base/smart-trust.json"],
+    ["nested, directory name differs from the instance name", NESTED_TREE, "substrate", "shared/trust-kg.json"],
     ["two candidates one level down", { "a/alpha.json": { ...NESTED, name: "alpha" }, "b/beta.json": { ...NESTED, name: "beta" } }, "ambiguous", undefined],
     ["no declaration anywhere", { "package.json": { name: "x" }, "src/index.json": { name: "not-index" } }, "not-a-substrate", undefined],
   ] as const;
@@ -397,9 +397,9 @@ describe("a declaration one level down (bean 437w): fixture bare repositories, r
   });
 
   test("the git fetcher reads only the named directory when given an upstreamPath, at any depth", async () => {
-    const { url, sha } = bareRepo({ "deep/er/smart-trust.json": NESTED, "a/alpha.json": { ...NESTED, name: "alpha" } });
+    const { url, sha } = bareRepo({ "deep/er/trust-kg.json": NESTED, "a/alpha.json": { ...NESTED, name: "alpha" } });
     const v = await judgeSubstrate("o/r", sha, gitDeclarationFetcher(() => url), { upstreamPath: "deep/er/" });
-    expect(v.state === "substrate" && v.file).toBe("deep/er/smart-trust.json");
+    expect(v.state === "substrate" && v.file).toBe("deep/er/trust-kg.json");
     // Two levels down is NOT found by the search — only by naming it — so
     // this tree's only discoverable candidate is `a/alpha.json`.
     const searched = await judgeSubstrate("o/r", sha, gitDeclarationFetcher(() => url));
@@ -415,12 +415,12 @@ describe("a declaration one level down (bean 437w): fixture bare repositories, r
 
 describe("a declaration one level down (bean 437w): the search", () => {
   test("nested with a different directory name: found, and its directory is the upstreamPath", async () => {
-    const v = await judgeSubstrate("litlfred/smart-trust", SHA, fixture(NESTED_TREE));
+    const v = await judgeSubstrate("litlfred/trust-kg", SHA, fixture(NESTED_TREE));
     expect(v.state).toBe("substrate");
     if (v.state !== "substrate") return;
-    expect(v.file).toBe("smart-base/smart-trust.json");
-    expect(v.upstreamPath).toBe("smart-base");
-    expect(v.summary.name).toBe("smart-trust");
+    expect(v.file).toBe("shared/trust-kg.json");
+    expect(v.upstreamPath).toBe("shared");
+    expect(v.summary.name).toBe("trust-kg");
   });
 
   test("the root still wins, so an existing subscription judges the same bytes", async () => {
@@ -446,7 +446,7 @@ describe("a declaration one level down (bean 437w): the search", () => {
   });
 
   test("a file whose `name` disagrees with its stem is not a candidate", async () => {
-    const v = await judgeSubstrate("o/r", SHA, fixture({ "smart-base/smart-trust.json": { ...NESTED, name: "smart-base" } }));
+    const v = await judgeSubstrate("o/r", SHA, fixture({ "shared/trust-kg.json": { ...NESTED, name: "shared" } }));
     expect(v.state).toBe("not-a-substrate");
   });
 
@@ -473,11 +473,11 @@ describe("a declaration one level down (bean 437w): what subscribe records, and 
     const r = await subscribe({ target: NESTED_TARGET, instance: dir, fetch: fixture(NESTED_TREE) });
     expect(r.ok).toBe(true);
     if (!r.ok) return;
-    expect(r.entry).toEqual({ id: "smart-trust", repository: "litlfred/smart-trust", ref: SHA, upstreamPath: "smart-base" });
+    expect(r.entry).toEqual({ id: "trust-kg", repository: "litlfred/trust-kg", ref: SHA, upstreamPath: "shared" });
     const decl = CatHarnessDeclarationSchema.parse(JSON.parse(readFileSync(file, "utf8")));
-    expect(decl.subscriptions?.[0]?.upstreamPath).toBe("smart-base");
+    expect(decl.subscriptions?.[0]?.upstreamPath).toBe("shared");
     const snap = SubstrateSnapshotSchema.parse(JSON.parse(readFileSync(r.snapshotFile, "utf8")));
-    expect(snap.file).toBe("smart-base/smart-trust.json");
+    expect(snap.file).toBe("shared/trust-kg.json");
     expect(checkSubscriptions(dir)).toEqual([]);
   });
 
@@ -509,17 +509,17 @@ describe("a declaration one level down (bean 437w): what subscribe records, and 
     await subscribe({ target: NESTED_TARGET, instance: dir, fetch: fixture(NESTED_TREE) });
     const cur = JSON.parse(readFileSync(file, "utf8")) as { subscriptions: Record<string, unknown>[] };
     writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [{ ...cur.subscriptions[0], upstreamPath: "elsewhere" }]));
-    expect(checkSubscriptions(dir).join("\n")).toMatch(/read from `smart-base\/`.*`elsewhere`/);
+    expect(checkSubscriptions(dir).join("\n")).toMatch(/read from `shared\/`.*`elsewhere`/);
     const { upstreamPath: _gone, ...atRoot } = cur.subscriptions[0]!;
     void _gone;
     writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [atRoot]));
-    expect(checkSubscriptions(dir).join("\n")).toMatch(/read from `smart-base\/`, the subscription records the root/);
+    expect(checkSubscriptions(dir).join("\n")).toMatch(/read from `shared\/`, the subscription records the root/);
   });
 
   test("moving the subtree of a subscription with chosen parts is refused", async () => {
     const { dir, file } = subscriber();
-    const tree = { ...NESTED_TREE, "other/smart-trust.json": NESTED };
-    await subscribe({ target: NESTED_TARGET, instance: dir, upstreamPath: "smart-base", fetch: fixture(tree) });
+    const tree = { ...NESTED_TREE, "other/trust-kg.json": NESTED };
+    await subscribe({ target: NESTED_TARGET, instance: dir, upstreamPath: "shared", fetch: fixture(tree) });
     const cur = JSON.parse(readFileSync(file, "utf8")) as { subscriptions: Record<string, unknown>[] };
     writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [{ ...cur.subscriptions[0], subgraphs: ["trust-skills"] }]));
     const r = await subscribe({ target: NESTED_TARGET, instance: dir, upstreamPath: "other", fetch: fixture(tree) });
@@ -529,16 +529,16 @@ describe("a declaration one level down (bean 437w): what subscribe records, and 
 
 // ── A content Knowledge Graph: a second kind (owner, 2026-10-06) ──────────────
 //
-// The shape of litlfred/smart-immunizations: Subgraphs, no harness, nested.
+// The shape of litlfred/imm-kg: Subgraphs, no harness, nested.
 const CONTENT = {
-  name: "smart-immunizations",
+  name: "imm-kg",
   directories: [
     { id: "imm-index", path: "input/", graphTypologies: ["fhir-artifact-index"] },
     { id: "imm-docs", path: "docs/", graphTypologies: ["docs", "ig-pages"] },
   ],
 };
-const CONTENT_TREE = { "smart-base/smart-immunizations.json": CONTENT, "package.json": { name: "x" } };
-const CONTENT_TARGET = `litlfred/smart-immunizations@${SHA}`;
+const CONTENT_TREE = { "shared/imm-kg.json": CONTENT, "package.json": { name: "x" } };
+const CONTENT_TARGET = `litlfred/imm-kg@${SHA}`;
 
 describe("content Knowledge Graphs (owner, 2026-10-06): fixture bare repositories, real git fetch", () => {
   test.each([
@@ -564,7 +564,7 @@ describe("content Knowledge Graphs (owner, 2026-10-06): recorded as their own ki
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.verdict.state).toBe("content");
-    expect(r.entry).toEqual({ id: "smart-immunizations", repository: "litlfred/smart-immunizations", ref: SHA, upstreamPath: "smart-base", kind: "content" });
+    expect(r.entry).toEqual({ id: "imm-kg", repository: "litlfred/imm-kg", ref: SHA, upstreamPath: "shared", kind: "content" });
     expect(CatHarnessDeclarationSchema.parse(JSON.parse(readFileSync(file, "utf8"))).subscriptions?.[0]?.kind).toBe("content");
     const snap = SubstrateSnapshotSchema.parse(JSON.parse(readFileSync(r.snapshotFile, "utf8")));
     expect(snap.kind).toBe("content");
@@ -625,7 +625,7 @@ describe("content Knowledge Graphs (owner, 2026-10-06): recorded as their own ki
     const r = await subscribe({ target: CONTENT_TARGET, instance: dir, fetch: fixture(CONTENT_TREE) });
     if (!r.ok) throw new Error("fixture did not subscribe");
     const snap = SubstrateSnapshotSchema.parse(JSON.parse(readFileSync(r.snapshotFile, "utf8")));
-    expect(harnessDeclarationIn(snap, "smart-immunizations")).toBeUndefined();
+    expect(harnessDeclarationIn(snap, "imm-kg")).toBeUndefined();
   });
 });
 
