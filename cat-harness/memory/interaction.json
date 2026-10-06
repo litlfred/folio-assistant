@@ -1,8 +1,11 @@
 {
   "$schema": "folio-interaction/v1",
-  "$comment": "Interaction preferences, read at session start by every agent working in this repository. Committed on purpose: a preference that lives in one agent's context is re-learned by every sibling session, and re-learning it means asking again — which is WCAG 2.2 SC 3.3.7 (Redundant Entry) violated in the least excusable way. See skills/conduct/conduct-core/interaction-modality.md. The site's own settings control is a DIFFERENT thing: per-viewer, in localStorage, and it never reaches an agent.",
+  "$comment": "Interaction preferences, read at session start by every agent working in this repository. Committed on purpose: a preference that lives in one agent's context is re-learned by every sibling session, and re-learning it means asking again — which is WCAG 2.2 SC 3.3.7 (Redundant Entry) violated in the least excusable way. See skills/conduct/conduct-core/interaction-modality.md. The site's own settings control is a DIFFERENT thing: per-viewer, in localStorage, and it never reaches an agent. KEYED BY GITHUB HANDLE (owner 2026-10-06): one person may log in with more than one Claude account, so a login email is not an identity. `aliases` lists other identities a person CHOOSES to publish; the session-start sweep matches the session's login, GitHub actor and git author against the handle and the aliases, and when nothing matches it says so and applies the STRICTEST profile on record — a person must never lose an accommodation because they switched accounts.",
   "users": {
-    "litlfred@ibiblio.org": {
+    "litlfred": {
+      "aliases": [
+        "litlfred@ibiblio.org"
+      ],
       "profiles": [
         "low-dexterity"
       ],

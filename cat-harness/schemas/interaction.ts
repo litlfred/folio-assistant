@@ -54,6 +54,12 @@ export const INTERACTION_SCHEMA_TAG = "folio-interaction/v1";
  */
 export const InteractionProfileSchema = z.object({
   /**
+   * Other identities this person CHOOSES to publish — a login email, a second
+   * handle. The entry's key is the GitHub handle (owner 2026-10-06: one person
+   * may hold more than one Claude account, so no login email is an identity).
+   */
+  aliases: z.array(z.string()).optional(),
+  /**
    * Named profiles, e.g. `low-dexterity`. Free strings on purpose: the
    * vocabulary is open and a closed enum here would reject a profile a
    * downstream instance has a name for and this layer does not.
@@ -73,7 +79,9 @@ export const InteractionNodeSchema = z.object({
   /** Prose for a reader who opens the file; never read by a process. */
   $comment: z.string().optional(),
   /**
-   * Keyed by the identity the agent can resolve — an email today.
+   * Keyed by GitHub handle (owner 2026-10-06); other identities go in each
+   * entry's `aliases`. An email key from before still parses, and still
+   * matches when it is the session's login.
    *
    * Required, and may be empty: a repository where nobody has stated anything
    * still HAS an interaction graph, and `{}` says so where an absent key would

@@ -42,6 +42,7 @@
   ],
   "scripts": {
     "agent-memory": "bun run cat-harness/scripts/agent-memory.ts",
+    "auth:login": "bun run cat-harness-tools/scripts/auth-login.ts",
     "agent-memory:check": "bun run cat-harness/scripts/agent-memory.ts --check",
     "root-scan-census": "bun run cat-harness/scripts/root-scan-census.ts",
     "root-scan-census:check": "bun run cat-harness/scripts/root-scan-census.ts --check --against main",

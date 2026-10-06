@@ -59,9 +59,33 @@ if [ -f "$INTERACTION" ]; then
   echo "## Interaction preferences"
   echo
   if command -v jq >/dev/null 2>&1; then
-    jq -r '
-      (.users // {}) | to_entries[] |
-      "- **\(.key)** — profiles: \(.value.profiles | join(", ") | if . == "" then "(none)" else . end)  \n  \(.value.note // "")  \n  _source: \(.value.source // "unrecorded")_"
+    # WHO is typing (owner 2026-10-06): entries are keyed by GitHub handle with
+    # optional aliases, and a person may hold several Claude accounts, so match
+    # every identity this session can see. No match is a THIRD state, not "no
+    # preferences": say so and apply the strictest profile on record, so an
+    # accommodation is never lost to an account switch.
+    # The GitHub login first, resolved by the authentication Tool's own
+    # resolver (`bun run auth:login`, auth_whoami's githubIdentity): the
+    # handle is the key, and asking GitHub is the auth process's job.
+    GH_LOGIN=""
+    if command -v bun >/dev/null 2>&1; then
+      GH_LOGIN=$(cd "$CHECKOUT_ROOT" && timeout 8 bun run --silent auth:login 2>/dev/null || true)
+    fi
+    WHO_IDS=$(printf '%s\n' "$GH_LOGIN" "${CLAUDE_CODE_USER_EMAIL:-}" "${GITHUB_ACTOR:-}" "$(git config user.email 2>/dev/null)" "$(git config user.name 2>/dev/null)" | grep -v '^$' | jq -R . | jq -s .)
+    jq -r --argjson ids "$WHO_IDS" '
+      def line($k; $v): "- **\($k)** — profiles: \($v.profiles | join(", ") | if . == "" then "(none)" else . end)  \n  \($v.note // "")  \n  _source: \($v.source // "unrecorded")_";
+      (.users // {}) as $u
+      | [ $u | to_entries[] | select(([.key] + (.value.aliases // [])) as $names | any($ids[]; . as $i | $names | index($i))) ] as $hit
+      | if ($hit | length) > 0 then
+          "**This session is " + ($hit | map(.key) | join(", ")) + " — apply this to every question:**", ($hit[] | line(.key; .value))
+        else
+          ([ $u | to_entries[] | select((.value.profiles | length) > 0) ] | sort_by(-(.value.profiles | length))) as $strict
+          | if ($strict | length) > 0 then
+              "**Could not determine who is typing** (no entry matches this session'"'"'s login, GitHub actor or git author). Apply the STRICTEST profile on record until told otherwise:", line($strict[0].key; $strict[0].value)
+            else
+              "- Nobody on record has stated a preference."
+            end
+        end
     ' "$INTERACTION" 2>/dev/null || echo "- (could not parse $INTERACTION — read it by hand)"
   else
     echo "- jq not installed; read \`cat-harness/memory/interaction.json\` by hand."
