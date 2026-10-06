@@ -1,0 +1,109 @@
+{
+  "$ref": "#/definitions/DublinCoreRecord",
+  "definitions": {
+    "DublinCoreRecord": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-dublin-core/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "schema": {
+                "default": "dc",
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              },
+              "qualifier": {
+                "type": "string",
+                "minLength": 1
+              },
+              "values": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "language": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "authority": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "element",
+              "values"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retrievedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "method": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "source",
+            "retrievedAt",
+            "method"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "fields",
+        "provenance"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/folio-assistant-core/schema/zod/dublin-core/DublinCoreRecordSchema.schema.json",
+  "title": "DublinCoreRecordSchema",
+  "description": "Generated from `DublinCoreRecordSchema` in schemas/dublin-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "f026c1190d54606af27ce58339208594c9f82e17",
+    "pr": "2267/merge",
+    "run": "37441760737"
+  }
+}
