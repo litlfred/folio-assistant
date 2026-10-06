@@ -29,6 +29,7 @@
  * the collapse #1624 was written to stop, arriving from the other direction.
  */
 import { describe, expect, test } from "bun:test";
+import { join } from "node:path";
 
 import {
   verdictForCommit,
@@ -130,7 +131,11 @@ describe("could-not-determine is never green (bean `dh4f`)", () => {
 
 describe("nothing here reconciles anything", () => {
   test("the module IMPORTS nothing — the inputs are given, not fetched", () => {
-    return Bun.file("cat-harness/src/workflow/check-verdict.ts")
+    // Resolved from THIS file, not from the working directory: a path
+    // written from the checkout root ("cat-harness/src/…") names nothing when
+    // cat-harness runs alone, where the working directory is the layer itself
+    // (`check:cat-harness-standalone`). The module read is unchanged.
+    return Bun.file(join(import.meta.dir, "../../src/workflow/check-verdict.ts"))
       .text()
       .then((src) => {
         // Two earlier designs for #1646 were wrong: one did not work, the other

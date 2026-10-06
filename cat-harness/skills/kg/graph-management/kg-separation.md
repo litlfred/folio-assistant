@@ -173,6 +173,17 @@ the moved paths from `ORIGIN_DIR` (the directory the test was written in), and
 move a corpus describe whole when it carries a vacuity guard: a sibling left
 behind passes standalone over nothing.
 
+**A test reading an UPPER layer's files moves to that layer (owner, 2026-10-06,
+"tests that read cat-harness-tools files => move to cat-harness-tools").** It is
+red standing alone for the same reason, one level down: the file it reads is
+not in its layer's closure. It goes in the upper layer's DECLARED test home,
+which may import the lower layer — never the reverse — and it is split, pointed
+back to and composed from `ORIGIN_DIR` exactly as above. Check first that the
+file it reads really IS the upper layer's: a path written from the checkout root
+(`cat-harness/src/…` read relative to the working directory) is red standing
+alone over a file the layer does hold, and the fix there is to resolve it from
+the test file, not to move it.
+
 **`upward paths` replaced `sibling discovery` (owner, 2026-10-04).** The old
 criterion counted dependents that discovery could not find in a workspace of
 sibling clones. Discovery is checkout-local on purpose (`cmsl`), so that count
