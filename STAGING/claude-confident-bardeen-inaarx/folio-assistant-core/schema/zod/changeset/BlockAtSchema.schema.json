@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/BlockAt",
+  "definitions": {
+    "BlockAt": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "file",
+        "kind"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/folio-assistant-core/schema/zod/changeset/BlockAtSchema.schema.json",
+  "title": "BlockAtSchema",
+  "description": "Generated from `BlockAtSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "b48d31c500e16caa41279beb5b4c1839cfbffac2",
+    "pr": "2248/merge",
+    "run": "37418840484"
+  }
+}

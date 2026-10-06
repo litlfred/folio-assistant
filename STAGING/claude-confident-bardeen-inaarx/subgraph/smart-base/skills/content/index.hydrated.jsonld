@@ -1,0 +1,150 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/",
+  "@type": "bootstrap:Subgraph",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/authoring-who-smart-guidelines/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 209,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
+          "name": "dak-postprocessing",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7ca17d88d663c84837110a0a456eb2d5db08c556bf378f65732997823599bd43",
+            "bytes": 10845,
+            "sha256": "7ca17d88d663c84837110a0a456eb2d5db08c556bf378f65732997823599bd43"
+          },
+          "title": "dak-postprocessing"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-preprocessing",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index. Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 139,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
+          "name": "dak-preprocessing",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ade07f3e4aadd05b142e86077587a0c99c7d7412d6bbfd2d55ad418d66df1f94",
+            "bytes": 7745,
+            "sha256": "ade07f3e4aadd05b142e86077587a0c99c7d7412d6bbfd2d55ad418d66df1f94"
+          },
+          "title": "dak-preprocessing"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/grade",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 109,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/grade.md",
+          "name": "grade",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0ef8ba42e93160819b1f1928787825652543bafe104fba1c41040bb59c985673",
+            "bytes": 5758,
+            "sha256": "0ef8ba42e93160819b1f1928787825652543bafe104fba1c41040bb59c985673"
+          },
+          "title": "grade"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/ig-artifact-ingestion",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 269,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+          "name": "ig-artifact-ingestion",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ad7a01df91aa741df3bf664e62f415dcdbb61275901750fc2a8b3244c91f337f",
+            "bytes": 13606,
+            "sha256": "ad7a01df91aa741df3bf664e62f415dcdbb61275901750fc2a8b3244c91f337f"
+          },
+          "title": "ig-artifact-ingestion"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/l2-dak-authoring",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 72,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
+          "name": "l2-dak-authoring",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/10c3580d3551d1489d640332df0301272df347253ce3d4414f7401f4de812a48",
+            "bytes": 3626,
+            "sha256": "10c3580d3551d1489d640332df0301272df347253ce3d4414f7401f4de812a48"
+          },
+          "title": "l2-dak-authoring"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-base-tools",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 90,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+          "name": "smart-base-tools",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c01b4d555c657cbc4ca37d14d7eb851d575db7fe39abbc5b5c42667378403a3",
+            "bytes": 4046,
+            "sha256": "4c01b4d555c657cbc4ca37d14d7eb851d575db7fe39abbc5b5c42667378403a3"
+          },
+          "title": "smart-base Toolchain"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 184,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
+          "name": "smart-stack-layering",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749",
+            "bytes": 9630,
+            "sha256": "810d75351d9edd7bb8bb9698a60ffd46d338726a08043a1061b1a8250a744749"
+          },
+          "title": "smart-stack-layering"
+        },
+        {
+          "@id": "http://smart.who.int/base/smart-base.jsonld#skill/toolchain-ownership",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "instructionLines": 136,
+          "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+          "name": "toolchain-ownership",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d7b0d299f3248b467515adc8b1d3b5c1c7377fa93ce574baf490aca050993259",
+            "bytes": 6529,
+            "sha256": "d7b0d299f3248b467515adc8b1d3b5c1c7377fa93ce574baf490aca050993259"
+          },
+          "title": "toolchain-ownership"
+        }
+      ],
+      "name": "skills/content/authoring-who-smart-guidelines",
+      "path": "skills/content/authoring-who-smart-guidelines/"
+    }
+  ],
+  "name": "skills/content",
+  "path": "skills/content/"
+}

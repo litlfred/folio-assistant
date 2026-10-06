@@ -1,0 +1,68 @@
+{
+  "$ref": "#/definitions/ChangeSetText",
+  "definitions": {
+    "ChangeSetText": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-changeset-text/v1"
+        },
+        "blocks": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              },
+              "head": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "blocks"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-bardeen-inaarx/folio-assistant-core/schema/zod/changeset/ChangeSetTextSchema.schema.json",
+  "title": "ChangeSetTextSchema",
+  "description": "Generated from `ChangeSetTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "b48d31c500e16caa41279beb5b4c1839cfbffac2",
+    "pr": "2248/merge",
+    "run": "37418840484"
+  }
+}
