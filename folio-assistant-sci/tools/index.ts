@@ -79,6 +79,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["latex-build-cache"],
       requires: { runtime: ["bash", "apt-get", "sudo"], network: true },
+      remedies: [{ host: "archive.ubuntu.com", none: "apt is the only source declared. The script already disables the launchpad PPAs, which answer 403 here." }],
       selection: {
         when: "A step needs to compile TeX (`paper-feature-build`'s PDFs, a full paper build) and `pdflatex` is not on PATH.",
         limits: "Debian/Ubuntu with apt and sudo only. Installs system packages; it does not touch the repository.",
@@ -134,6 +135,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["lean-cache-restore"],
       requires: { runtime: ["bash", "git", "lake"], network: true },
+      remedies: [{ host: "github.com", none: "The warm cache is stored on GitHub; without it, build cold with `lean-build` (30–60 minutes for Mathlib)." }],
     }),
   ];
 }

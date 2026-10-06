@@ -19,6 +19,12 @@ package "cat-harness/cat-harness-validators" as pkg_cat_harness_cat_harness_vali
   }
 }
 package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
+  class "Remedy" as cat_harness_tools_Remedy <<json: ToolDefinitionSchema>> #eee9f5 {
+    host [1] : string
+    error [0..1] : string
+    tool [0..1] : string
+    none [0..1] : string
+  }
   class "Maintain" as cat_harness_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
     source [1] : string
     artefact [1] : string
@@ -34,6 +40,7 @@ package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
     satisfies [1..*] : string[]
     selection [0..1] : object
     requires [0..1] : object
+    remedies [0..*] : Remedy[]
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
@@ -1297,6 +1304,7 @@ package "cat-harness/uml-overview-svgs" as pkg_cat_harness_uml_overview_svgs <<a
   note "auto-docs: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_uml_overview_svgs_auto_docs
 }
 
+cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Remedy : remedies
 cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
 cat_harness_external_schemas_folio_external_schema_v1_folio_external_schema_v1 *-- "0..*" cat_harness_external_schemas_folio_external_schema_v1_Term : terms
 cat_harness_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 *-- "0..*" cat_harness_external_schemas_folio_pinned_terminology_v1_Concept : concepts

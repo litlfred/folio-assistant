@@ -9,6 +9,12 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools <<tools>> {
+  class "Remedy" as folio_assistant_core_core_tools_Remedy <<json: ToolDefinitionSchema>> #eee9f5 {
+    host [1] : string
+    error [0..1] : string
+    tool [0..1] : string
+    none [0..1] : string
+  }
   class "Maintain" as folio_assistant_core_core_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
     source [1] : string
     artefact [1] : string
@@ -24,6 +30,7 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
     satisfies [1..*] : string[]
     selection [0..1] : object
     requires [0..1] : object
+    remedies [0..*] : Remedy[]
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
@@ -31,5 +38,6 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
   }
 }
 
+folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Remedy : remedies
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
 @enduml
