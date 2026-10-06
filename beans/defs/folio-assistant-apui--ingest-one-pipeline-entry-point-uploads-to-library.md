@@ -235,6 +235,7 @@ than gates.
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 
+_2026-10-06T06:00:26Z_ — Claimed by claude/goal5-ingest-spine — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## 2026-10-06 — the promotion half closed (issue #2253, branch claude/goal5-ingest-spine)
 

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-nij4
 title: 'MOUNT/PUSH: one implementation — state:mount/state:push rebuilt on branch-store''s byte- and mode-preserving mount/push, dispatching on the declared subgraph source'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-10-03T13:50:12Z
-updated_at: 2026-10-03T13:50:12Z
+updated_at: 2026-10-06T06:26:36Z
 parent: folio-assistant-fs43
 ---
 
@@ -35,3 +36,10 @@ While this was in review, the 2h76 session merged its own per-branch rewrite to 
 - **from main:** `mountTip`'s per-graph verdict carried verbatim (`miss`, `corrupt`, `unknown`, `refused`), `partial`, the per-graph table, a try/catch per graph, the `GraphMount` union with a required tip, and `pendingMountChanges`;
 - **from nij4:** the old worktree path deleted along with `--force`/`--branch`. Graphs are found from the resolved source (fixed in `tipLocations` itself, bean `doy3`). `stale` is decided by asking for pending edits before mounting. Main inferred it from "refused and a marker exists", which misread a still-tracked path as present and exited 0; a test now pins this and fails against main's inference. `state:push` also pushes mounts whose declaration has gone, using the marker's branch. Added `--id`, and binary/mode/symlink round-trip tests through the commands.
 - My duplicate `mountChanges` was dropped in favour of main's `pendingMountChanges`.
+
+
+## Summary of Changes
+
+**Closed on evidence, 2026-10-06** (re-measured on main at 2fdbb5109a by session_01QSd18GZBc9NJNMy6GV9v7D, not quoted from earlier notes). Status history: never completed before, so not an owner reopen; no holder.
+
+`state:mount`/`state:push` are thin fan-outs over branch-store's `mountTip`/`pushMount`; the `state/` worktree path is gone; an unknown source kind hits an exhaustive `never` arm. Binary, mode and symlink round-trip on real git (state-push.test.ts passes). Landed in #1997; #1989 before it is superseded.

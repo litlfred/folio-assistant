@@ -23806,6 +23806,13 @@
           "array": false
         },
         {
+          "name": "pages",
+          "type": "{ module: string; exportName: string }",
+          "optional": true,
+          "array": false,
+          "doc": "The kind's own page renderer, when its validator node names one (`pages`),"
+        },
+        {
           "name": "holdings",
           "type": "{ typology: string; family?: string }[]",
           "optional": false,
@@ -44454,6 +44461,13 @@
           "optional": false,
           "array": false,
           "doc": "The Zod export, `<harness>:<path>#<Export>` (or instance-relative `<path>#<Export>`)."
+        },
+        {
+          "name": "pages",
+          "type": "z.string().regex(/#[A-Za-z_$][\\w$]*$/, \"a reference ending in #Export\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The kind's own page renderer, `<harness>:<path>#<Export>`, when the"
         },
         {
           "name": "rationale",
