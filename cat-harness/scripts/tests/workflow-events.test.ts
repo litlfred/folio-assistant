@@ -16,11 +16,16 @@
  * workflows happen to exist today, which tests the repository rather than the
  * code. One test does read the real tree, and it asserts only a property that
  * must hold for ANY tree — see its own comment.
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/`) live in
+ * `cat-harness-tools/scripts/tests/workflow-events-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import { GITHUB_WORKFLOW_DIR, scanTriggers, triggerFor } from "../../src/core/workflow-events.js";
 import {
@@ -30,7 +35,6 @@ import {
   missingRequiredAdvice,
   type RunRow,
 } from "../check-head-has-run.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
 
 /** A throwaway repo root carrying exactly the workflow files named. */
 function treeWith(files: Record<string, string>): string {
@@ -317,19 +321,5 @@ describe("missingRequiredAdvice", () => {
 
   test("it names the workflows, so the reader need not go looking", () => {
     expect(missingRequiredAdvice(["Gates", "Other"], "mergeable")).toContain("Gates, Other");
-  });
-});
-
-describe("this repository's own workflows", () => {
-  test("at least one workflow is REQUIRED on pull_request", () => {
-    // The only assertion made against the real tree, and deliberately a
-    // property rather than a count: if every `pull_request` workflow were
-    // filtered, `required` would be empty and the check would pass
-    // vacuously on every commit. Naming a number here would instead fail the
-    // day somebody legitimately adds or renames a workflow — a count in a
-    // test is the same defect as a count in prose.
-    const scan = scanTriggers(repoRootFor(resolve(import.meta.dir, "..", "..")), "pull_request");
-    expect(scan.unreadable).toEqual([]);
-    expect(scan.triggers.filter((t) => t.requirement === "required").length).toBeGreaterThan(0);
   });
 });

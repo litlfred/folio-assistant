@@ -13,9 +13,14 @@
  *      links and reported "0 dead": a clean result over a file it had not
  *      checked at all. Rename `AGENTS.md` and both stubs point at nothing
  *      while the gate stays green.
+ *
+ * The tests here that read the aggregate repository's own root (the root
+ * `AGENTS.md`) live in
+ * `cat-harness-tools/scripts/tests/agent-entry-links-repo-root.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -111,13 +116,5 @@ describe("this repository, right now", () => {
     // what must never happen is a dead link in one that exists.
     expect(r.exitCode === 0 || r.exitCode === 2).toBe(true);
     if (r.exitCode === 1) throw new Error(r.text);
-  });
-
-  test("AGENTS.md carries a NON-TRIVIAL number of links", () => {
-    // The guard against the failure mode this whole bean is about: "0 links
-    // checked, 0 dead" over the file every agent opens first reads exactly
-    // like a pass. If the parser breaks or the file is emptied, this fails.
-    const links = parseLinks(readFileSync(join(REPO, "AGENTS.md"), "utf-8"));
-    expect(links.length).toBeGreaterThan(20);
   });
 });

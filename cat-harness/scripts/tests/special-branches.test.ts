@@ -1,5 +1,11 @@
+/**
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/` and `.github/actions/`) live in
+ * `cat-harness-tools/scripts/tests/special-branches-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
+ */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync, readdirSync } from "fs";
+import { readFileSync, readdirSync } from "fs";
 import { resolve } from "path";
 
 /**
@@ -49,24 +55,6 @@ describe("special-branches — the declaration", () => {
   test("gh-pages is declared and is never renamed", () => {
     expect(byId("gh-pages").name).toBe("gh-pages");
     expect(byId("gh-pages").legacy).toEqual([]);
-  });
-
-  // Owner, 2026-10-02: `cat/<harness>/<name>` (note on fs43, "rename-script").
-  // The harness segment is checked against the instance declarations, so a
-  // branch cannot claim a harness that does not exist — the dh4f shape again.
-  const HARNESS = /^cat\/([^/]+)\/[^/]/;
-  const declaredHarness = (h: string) => existsSync(resolve(REPO, h, `${h}.json`));
-
-  // Bean folio-assistant-9io2 moved the last interim `cat-<name>` row
-  // (lake-cache) onto this scheme, so there is no deferred-rename escape
-  // hatch any more: every row's `name` IS its `cat/<harness>/<name>`.
-  test("every other special branch is cat/<declared harness>/<name>", () => {
-    for (const b of DECL.branches.filter((x) => x.id !== "gh-pages")) {
-      const m = HARNESS.exec(b.name);
-      expect(m, `${b.id}: ${b.name}`).not.toBeNull();
-      expect(declaredHarness(m![1]), `${b.id}: harness '${m![1]}' has no ${m![1]}/${m![1]}.json`).toBe(true);
-      expect(Object.keys(b), `${b.id}: a pending rename is done by renaming, not by annotating`).not.toContain("pendingRename");
-    }
   });
 
   test("lake-cache is the folio-assistant-sci harness's family, with both earlier names as legacy, newest first", () => {
@@ -131,7 +119,10 @@ describe("special-branches — resolution (new name first, then legacy)", () => 
 });
 
 describe("special-branches — every copy agrees with the declaration", () => {
-  for (const m of DECL.mirrors) {
+  // The copies under the repository's own `.github/` are checked from
+  // cat-harness-tools/scripts/tests/special-branches-workflows.test.ts (bean
+  // `ho66`): standing alone, this layer has no `.github/` to read.
+  for (const m of DECL.mirrors.filter((x) => !x.file.startsWith(".github/"))) {
     test(`${m.file} carries the ${m.id} names`, () => {
       const b = byId(m.id);
       const text = readFileSync(resolve(REPO, m.file), "utf-8");

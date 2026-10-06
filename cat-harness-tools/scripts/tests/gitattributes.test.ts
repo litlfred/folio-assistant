@@ -18,13 +18,22 @@
  * the `kg-qa` sidecar — and BOTH stay textually mergeable here. 840 generated
  * files live under `test/results/`, which makes a glob there the obvious and
  * wrong widening — and the reason this test exists rather than a comment.
+ *
+ * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
+ * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate
+ * repository's own root — `.gitattributes` and the CI workflow that gates it —
+ * which a standalone cat-harness layer does not have, and
+ * `check:cat-harness-standalone` collects every test in that layer.
  */
 import { describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-const REPO = resolve(import.meta.dir, "..", "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move. */
+const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
+
+const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 const ATTRS = join(REPO, ".gitattributes");
 
 /** What git itself resolves for a path — not what the file appears to say. */
