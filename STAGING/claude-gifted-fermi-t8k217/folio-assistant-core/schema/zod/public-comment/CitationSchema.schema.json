@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Citation",
+  "definitions": {
+    "Citation": {
+      "type": "object",
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "page": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "raw": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/folio-assistant-core/schema/zod/public-comment/CitationSchema.schema.json",
+  "title": "CitationSchema",
+  "description": "Generated from `CitationSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/gifted-fermi-t8k217",
+    "sha": "175d91bfe635b129c8481cec847cc7790298c00d",
+    "pr": "2192/merge",
+    "run": "37438876553"
+  }
+}

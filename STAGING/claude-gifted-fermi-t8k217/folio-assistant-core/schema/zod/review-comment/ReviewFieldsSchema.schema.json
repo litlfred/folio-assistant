@@ -1,0 +1,90 @@
+{
+  "$ref": "#/definitions/ReviewFields",
+  "definitions": {
+    "ReviewFields": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "pattern": "^[\\w.-]+\\/[\\w.-]+$"
+        },
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "commentId": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "commentUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "question",
+            "defect",
+            "suggestion",
+            "editorial"
+          ]
+        },
+        "blockHash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "orphaned": {
+          "default": false,
+          "type": "boolean"
+        },
+        "anchoredFrom": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "decision": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "repo",
+        "pr",
+        "commentId",
+        "commentUrl",
+        "reviewer",
+        "role",
+        "kind",
+        "blockHash",
+        "commit"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-gifted-fermi-t8k217/folio-assistant-core/schema/zod/review-comment/ReviewFieldsSchema.schema.json",
+  "title": "ReviewFieldsSchema",
+  "description": "Generated from `ReviewFieldsSchema` in schemas/review-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/gifted-fermi-t8k217",
+    "sha": "175d91bfe635b129c8481cec847cc7790298c00d",
+    "pr": "2192/merge",
+    "run": "37438876553"
+  }
+}
