@@ -2,7 +2,7 @@
  * The directories a SUBSCRIBED harness declares, resolved to the tree this
  * checkout holds for each — the seam through which a site build (or anything
  * else that walks declared directories) reads an instance that is not in the
- * tree. Bean `g8jp`, the who-iris cutover's GAP 1.
+ * tree. Bean `g8jp`, GAP 1 of a staged instance's cutover.
  *
  * @module cat-harness/scripts/subscribed-trees
  *
@@ -11,8 +11,8 @@
  * Every consumer that publishes an instance's pages — `mount-instance-docs.ts`,
  * `compose-docs.ts` — walked the repository's TOP-LEVEL directories for
  * declarations. That answers "which instances are staged here", and nothing
- * else: the day who-iris leaves for `litlfred/who-iris` and is read back by
- * subscription, the walk finds no `who-iris/`, and `/who-iris/` stops being
+ * else: the day a staged instance leaves for its own repository and is read
+ * back by subscription, the walk finds no `<instance>/`, and `/<instance>/` stops being
  * published with exit 0. A declared instance publishing nothing, silently, is
  * the `dh4f` defect.
  *
@@ -48,7 +48,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
 import type { Subscription } from "../schemas/cat-harness.js";
-import { PART_RECORD_FILE, PART_TREE, partDirOf, viewOf } from "./kg-subscribe.js";
+import { PART_RECORD_FILE, PART_TREE, partDirOf, viewOf } from "./kg-parts.js";
 import { readSnapshot, snapshotDirFor } from "./subscribed-harnesses.js";
 
 /** A declared directory as the substrate's own declaration writes it — every field kept, so `instanceRoot`, `composed` and the rest read as they would in-tree. */
@@ -153,7 +153,7 @@ export function subscribedTrees(decls: readonly { dir: string; decl: DeclLike }[
  * `tree/`; nothing is copied.
  *
  * Why a root at all, rather than each tree on its own: a page in one
- * directory may embed a file from another of the same instance — who-iris's
+ * directory may embed a file from another of the same instance — a catalogue
  * replica in `site/` shows covers kept in `library/` — and a reference like
  * `../library/x.png` only resolves against the instance's own layout. With
  * the root, a consumer treats a subscribed instance exactly as an in-tree one.

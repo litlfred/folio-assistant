@@ -4,11 +4,11 @@
  * may reach.
  *
  * An instance of core declares `"needs": ["folio-assistant-core"]` and never
- * names cat-harness — owner, 2026-10-06 (bean `g8jp`): *"who-iris depends on
- * folio-asst-core"*. So the layers below core are reached TRANSITIVELY,
+ * names cat-harness — owner, 2026-10-06 (bean `g8jp`): an instance of core
+ * depends on core, never on the layers below it. So those are reached TRANSITIVELY,
  * through here: the instance's own `platform.ts` imports this file and
  * nothing else outside its directory, and core decides which of its
- * dependencies' symbols it carries. When who-iris leaves for its own
+ * dependencies' symbols it carries. When such an instance leaves for its own
  * repository it remote-mounts core and core's dependency closure; a
  * re-export here resolves through core's mounted `scripts/` like any other
  * core module, and no import in the instance assumes a monorepo sibling.
