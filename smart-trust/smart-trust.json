@@ -341,10 +341,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-06T00:34:10.320Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/13c92fcabbbc9f61cb046af88dd03de816d7a934",
-  "sourceCommitSha": "13c92fcabbbc9f61cb046af88dd03de816d7a934",
-  "sourceCommitAt": "2026-10-06T02:18:54+02:00",
+  "generatedAt": "2026-10-06T01:23:36.949Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7a2ff7ee203574ad4ba2fe77f9b2421cb01ee29e",
+  "sourceCommitSha": "7a2ff7ee203574ad4ba2fe77f9b2421cb01ee29e",
+  "sourceCommitAt": "2026-10-06T03:07:59+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -451,7 +451,7 @@
       ],
       "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
       "readmePath": "openapi/README.md",
-      "fileCount": 74,
+      "fileCount": 75,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld#directory/smart-trust-openapi"
     },
     {
@@ -530,8 +530,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "13c92fcabbbc9f61cb046af88dd03de816d7a934",
+    "sha": "7a2ff7ee203574ad4ba2fe77f9b2421cb01ee29e",
     "pr": "main",
-    "run": "37393349013"
+    "run": "37397601197"
   }
 }
