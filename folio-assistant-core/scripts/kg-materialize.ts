@@ -125,7 +125,6 @@
  */
 import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn, repoRootFor, type Subscription } from "../../cat-harness/schemas/cat-harness.ts";
@@ -145,7 +144,6 @@ import {
   treeDigest,
   treeEntries,
 } from "../../cat-harness/scripts/kg-subscribe.ts";
-import { LICENCE_NAMES, git, shallowFetch, upstreamLicence } from "../../cat-harness/scripts/sync-remote-skills.ts";
 import {
   DEFAULT_MAX_BYTES,
   KG_NODES_RECORD_SCHEMA,
@@ -165,64 +163,11 @@ const DEFAULT_INSTANCE = join(REPO, "cat-harness");
 
 // ── The fetcher ─────────────────────────────────────────────────────────────
 
-/**
- * What a fetcher leaves behind: `part` is a directory holding the subgraph's
- * contents (`kind: "tree"`) or the one asset file under its own name
- * (`kind: "blob"`). `root` is removed by the caller.
- */
-export interface FetchedPart {
-  kind: "tree" | "blob" | "submodule";
-  root: string;
-  part: string;
-  /** The upstream licence, when the part does not carry its own. */
-  licence?: { name: string; file: string; upstreamPath: string };
-  /** Files in the whole repository at the pin — the size gate's denominator, where it is known. */
-  collectionFiles?: number;
-}
-
-/**
- * Fetch one path of a repository at a commit. `undefined`: the commit holds
- * no such path (a determinate answer). Throwing: the bytes were not read
- * (could-not-determine). Injectable, so tests need no network.
- */
-export type PartFetcher = (repository: string, ref: string, path: string) => FetchedPart | undefined | Promise<FetchedPart | undefined>;
-
-/** The real fetcher: shallow, blobless, one commit, then a sparse checkout of exactly `path` and the root licence. */
-export const gitPartFetcher: PartFetcher = (repository, ref, path) => {
-  const repo = shallowFetch(`https://github.com/${repository}.git`, ref, { blobless: true, prefix: "kg-materialize-" });
-  try {
-    const head = git(["rev-parse", "FETCH_HEAD"], repo).trim();
-    if (head !== ref) throw new Error(`the remote served ${head} for ${ref}`);
-    // Trees only, so this costs no blob: the entry's type, and the denominator.
-    const entry = git(["ls-tree", "FETCH_HEAD", "--", path], repo).trim();
-    if (!entry) return undefined;
-    const type = entry.split(/\s+/)[1];
-    const collectionFiles = git(["ls-tree", "-r", "--name-only", "FETCH_HEAD"], repo).split("\n").filter(Boolean).length;
-    const out = mkdtempSync(join(tmpdir(), "kg-materialize-part-"));
-    if (type === "commit") return { kind: "submodule", root: out, part: out, collectionFiles };
-    const kind = type === "tree" ? "tree" : "blob";
-    git(["sparse-checkout", "set", "--no-cone", kind === "tree" ? `/${path}/` : `/${path}`, "/LICENSE*", "/LICENCE*", "/COPYING*"], repo);
-    git(["checkout", "-q", "FETCH_HEAD"], repo);
-    const part = join(out, "part");
-    if (kind === "tree") cpSync(join(repo, path), part, { recursive: true, verbatimSymlinks: true });
-    else {
-      mkdirSync(part);
-      cpSync(join(repo, path), join(part, basename(path)), { verbatimSymlinks: true });
-    }
-    // A subgraph carrying its own licence needs no other; otherwise the
-    // root's travels with the copy, as `sync-remote-skills` does for a skill.
-    const own = kind === "tree" ? upstreamLicence(repo, join(repo, path)) : undefined;
-    const rootName = own ? undefined : LICENCE_NAMES.find((n) => existsSync(join(repo, n)));
-    let licence: FetchedPart["licence"];
-    if (rootName) {
-      cpSync(join(repo, rootName), join(out, rootName));
-      licence = { name: rootName, file: join(out, rootName), upstreamPath: rootName };
-    }
-    return { kind, root: out, part, ...(licence ? { licence } : {}), collectionFiles };
-  } finally {
-    rmSync(repo, { recursive: true, force: true });
-  }
-};
+// MOVED DOWN to `cat-harness/scripts/remote-tree.ts` (bean `0mpw`): the
+// remote mount reads through the same fetch, and cat-harness may not import
+// core. Re-exported so every caller and test keeps its import path.
+export { gitPartFetcher, type FetchedPart, type PartFetcher } from "../../cat-harness/scripts/remote-tree.ts";
+import { gitPartFetcher, type FetchedPart, type PartFetcher } from "../../cat-harness/scripts/remote-tree.ts";
 
 // ── Resolving the request against the subscription and its snapshot ─────────
 

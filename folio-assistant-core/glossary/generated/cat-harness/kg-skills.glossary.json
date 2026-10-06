@@ -1193,6 +1193,14 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount",
+      "prefLabel": "remote-mount",
+      "definition": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.",
+      "notation": "remote-mount",
+      "source": "cat-harness/skills/kg/kg-core/remote-mount.md",
+      "status": "candidate"
+    },
+    {
       "id": "render-kg-to-cdn",
       "prefLabel": "render-kg-to-cdn",
       "definition": "Render a Knowledge Graph, or a list of its Subgraphs, for publication to a CDN at a publication root URL, and report a status and one message. The same step for a staging preview and for a release — only the root URL and the target differ. Names the target's Tool, never its steps: GitHub Pages (`gh-pages`) is one Tool, and it carries its own subprocess.",

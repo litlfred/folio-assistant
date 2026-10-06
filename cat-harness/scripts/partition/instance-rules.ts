@@ -501,6 +501,8 @@ export const RULES: Rule[] = [
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/subgraph-source.ts",          // where a declared subgraph gets its content (bean `l4ay`) — read by the declaration schema itself
+      "schemas/remote-mount.ts",             // declared-path-literal: a partition plan names modules by path. Remote mounts (bean `0mpw`): mountDefaults, remoteMounts, the lock
+
       "scripts/subgraph-node.ts",            // the declared Subgraph node as a publisher's container (bean `l4ay`); imports nothing
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
@@ -810,6 +812,8 @@ export const RULES: Rule[] = [
       // than by a rule, and an `exact` entry naming a path this scan can no longer see
       // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
+      "scripts/remote-tree.ts",              // one remote tree at one pin: shallow blobless fetch, sparse checkout; gitPartFetcher moved down from core (bean `0mpw`)
+      "scripts/remote-mount.ts",             // lay a harness and its closure down from a pinned commit, lock it, check it (bean `0mpw`)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
       "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
