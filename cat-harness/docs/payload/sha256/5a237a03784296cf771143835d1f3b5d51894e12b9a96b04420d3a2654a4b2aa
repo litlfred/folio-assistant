@@ -246,7 +246,9 @@ And what it does **not** entitle, each with what it costs:
   `check:*` scripts all passed and CI went red twice — first on
   `check:partition` (a new script must be classified in
   `scripts/partition/instance-rules.ts`), then on `no check script is unrun` (a
-  new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it).
+  new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it —
+  or, for a script owned by an instance above cat-harness, a
+  `gateExemptions.scripts` row in that instance's `<instance>.json`, bean `0r7u`).
   Neither is visible to any of the three. `bun run gates` derives its list from
   the workflow, which is why it cannot drift from what CI runs.
 - **"Nothing is failing, so nothing is wrong."** A *conflicted* head produces no
