@@ -5,7 +5,7 @@
  *
  * The tests here that read the aggregate repository's own root (the
  * root-declared `beans/` store) live in
- * `cat-harness-tools/scripts/tests/beans-landed-repo-root.test.ts` (bean
+ * `test/beans-landed-repo-root.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

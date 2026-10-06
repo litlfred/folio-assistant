@@ -1,8 +1,12 @@
+/**
+ * The tests of this file that read the whole checkout (reads the root
+ * instance's declaration (`folio-assistant.json`)) live in
+ * `test/folio-root-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
+ */
 import { describe, test, expect } from "bun:test";
-import { isAbsolute } from "path";
 import { INSTANCE_ROOT, FOLIO_ROOT, hasFolio, LEAN_DIR, QOU_LEAN_DIR } from "./helpers";
 import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-root";
-import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 
 /**
  * folio-assistant is the PLATFORM; papers, the Lake workspace,
@@ -17,19 +21,6 @@ import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
  */
 
 describe("FOLIO_ROOT detection", () => {
-  test("INSTANCE_ROOT is this platform checkout", () => {
-    expect(isAbsolute(INSTANCE_ROOT)).toBe(true);
-    // `cat-harness`, not `folio-assistant`. The two were one directory until
-    // the move (bean `wggr`): this is the INSTANCE root, and the repository is
-    // still `folio-assistant`. Asserted on the directory rather than on the
-    // stub deliberately — the stub stays `folio-assistant` because it names
-    // published artefacts, so the two now differ and a test that conflated
-    // them would pass for the wrong reason.
-    expect(INSTANCE_ROOT.endsWith("cat-harness")).toBe(true);
-    // The repository by its DECLARED name, not its folder (bean `t5dm`): a
-    // worktree or a clone under another name is the same repository.
-    expect(readDeclaration(repoRootFor(INSTANCE_ROOT))?.name).toBe("folio-assistant");
-  });
 
   test("agrees with hasFolio()", () => {
     expect(hasFolio()).toBe(FOLIO_ROOT !== undefined);

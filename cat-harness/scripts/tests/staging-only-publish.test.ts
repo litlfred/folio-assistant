@@ -32,7 +32,7 @@
  * The tests here that read the aggregate repository's own root (the
  * root-declared `fsh-guts` trashcan and
  * `.github/workflows/feature-staging.yml`) live in
- * `cat-harness-tools/scripts/tests/staging-only-publish-repo-root.test.ts`
+ * `test/staging-only-publish-repo-root.test.ts`
  * (bean `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { beforeAll, describe, expect, it } from "bun:test";

@@ -16,7 +16,7 @@
  *
  * The tests here that read the aggregate repository's own root (the root
  * `AGENTS.md`) live in
- * `cat-harness-tools/scripts/tests/agent-entry-links-repo-root.test.ts` (bean
+ * `test/agent-entry-links-repo-root.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

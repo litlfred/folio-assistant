@@ -287,6 +287,44 @@ export function scopeHarnessData(data: Json, scope: ForeignScope): Json {
   };
 }
 
+const escHtml = (s: string): string =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * The footer line a folio's site prints in place of the platform's.
+ *
+ * The platform's `_config.yml` `footer_content` describes the PLATFORM — its
+ * name and the licences of its code and documentation. Shipped in a shell it
+ * was printed on every page of a folio's site as if it described the folio,
+ * which is the same defect as a borrowed tile: another instance's facts on
+ * this site's page.
+ *
+ * A declaration carries no footer or licence field, so there is no folio text
+ * to prefer here; the line names the folio (its `title`, else its instance
+ * name) and says what built it, linking the platform's site absolutely. It
+ * states NO licence: absent is not zero, and a licence the folio has not
+ * declared is not one the platform may print for it.
+ *
+ * @param platformName what the platform calls itself — its own config's `title`.
+ */
+export function foreignFooterContent(scope: Pick<ForeignScope, "instance" | "title" | "platformBase">, platformName: string): string {
+  const who = scope.title ?? scope.instance;
+  const link = `<a href="${escHtml(`${scope.platformBase}/`)}">${escHtml(platformName)}</a>`;
+  return who ? `${escHtml(who)} — built with ${link}.` : `This site is built with ${link}.`;
+}
+
+/**
+ * The shell's merged `_config.yml` as a folio's site must serve it: the
+ * platform's `footer_content` replaced by {@link foreignFooterContent}. Pure;
+ * a config with no `footer_content` comes back unchanged, since there is then
+ * no platform text to keep off the folio's pages.
+ */
+export function scopeSiteConfig(config: Json, scope: Pick<ForeignScope, "instance" | "title" | "platformBase">): Json {
+  if (!Object.hasOwn(config, "footer_content")) return config;
+  const platformName = typeof config.title === "string" && config.title ? config.title : "the platform";
+  return { ...config, footer_content: foreignFooterContent(scope, platformName) };
+}
+
 /**
  * The host's `_data/` files that are PROJECTIONS of the host's own pages, not
  * chrome, and what their absence makes the chrome say on a folio's site.
