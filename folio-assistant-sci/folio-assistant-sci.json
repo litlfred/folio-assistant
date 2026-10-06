@@ -126,6 +126,14 @@
       ]
     },
     {
+      "id": "sci-scripts",
+      "path": "scripts/",
+      "description": "Tests whose SUBJECT is this instance's own processes: `lean-build-gate.dmn` and the `authoring-a-paper.bpmn` it backs, run through the harness's workflow engine. Declared 2026-10-06 WITH its files (bean `dh4f`), when those tests moved up out of `cat-harness/scripts/tests/` (bean `ho66`): standing alone, cat-harness has no paper diagram to read, so a test pinning one belongs to the instance that owns it. Same shape as folio-assistant-core's `scripts/` — the engine is imported DOWN from cat-harness, the diagrams are found by name through this instance's declared `processes` graph.",
+      "graphTypologies": [
+        "code"
+      ]
+    },
+    {
       "id": "sci-tools",
       "path": "tools/",
       "description": "The science layer's Tool nodes. Declared 2026-10-04 with the first two, `paper-feature-build` and `tex-install`, the iterative paper-build loop (issue #2117). Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
