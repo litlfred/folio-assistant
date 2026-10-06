@@ -4,6 +4,11 @@
  * Bean `lxpq`. The command's whole value is that it distinguishes STALENESS
  * from a real defect, so the assertions that matter are the ones about the
  * states it reports, not the happy path.
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/code-quality-gates.yml`) live in
+ * `cat-harness-tools/scripts/tests/regen-after-merge-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 
 import { describe, expect, test } from "bun:test";
@@ -131,12 +136,6 @@ describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", ()
     expect(writerFor(SCRIPTS, "translate-bpmn:check")).toBe("translate-bpmn:extract");
     expect(SCRIPTS["translate-bpmn:extract"]).toContain("--extract");
   });
-  test("the audit-coverage gates are offered, with audit:coverage as their writer", () => {
-    const pairs = repairableGates(loadGates(REPO, {}), SCRIPTS);
-    for (const gate of ["audit:coverage:strict", "audit:coverage:require-all"]) {
-      expect(pairs.find((p) => p.check === gate)?.writer).toBe("audit:coverage");
-    }
-  });
   test("every override names a writer that exists — a renamed writer is a finding, not a guess", () => {
     for (const w of Object.values(WRITER_OVERRIDES)) expect(SCRIPTS[w]).toBeDefined();
   });
@@ -149,26 +148,6 @@ describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () =>
     expect(writerFor(SCRIPTS, "check:prov-qaqc")).toBe("prov:qaqc");
     const pairs = repairableGates([{ job: "j", step: "s", command: "bun run check:prov-qaqc" }], SCRIPTS);
     expect(pairs).toEqual([{ check: "check:prov-qaqc", writer: "prov:qaqc" }]);
-  });
-
-  test("every `check:X` that is some script's command plus ` --check` is decided — paired or recorded", () => {
-    // The measurement that found `check:glossary` (main red at 7bdda74) after
-    // uju6 had listed four. Composing the pair from the COMMAND, not the name,
-    // is how a fifth and sixth were found; this keeps a seventh from hiding.
-    const byCmd = new Map(Object.entries(SCRIPTS).map(([k, v]) => [String(v).trim(), k]));
-    // The WHOLE gate set, not the fast one (bean `g5kt`). `regen --all` asks
-    // the browser jobs' and other workflows' pairs too, so a `check:X` gate
-    // that lives only there was derived by exactly the convention this test
-    // exists to police and no assertion reached it.
-    const gates = loadGates(REPO, { all: true });
-    for (const g of gates) {
-      const c = scriptOf(g.command);
-      if (c === undefined || !c.startsWith("check:") || c.endsWith(":check")) continue;
-      const cmd = String(SCRIPTS[c] ?? "").trim();
-      if (!cmd.endsWith(" --check")) continue;
-      if (!byCmd.has(cmd.slice(0, -" --check".length).trim())) continue;
-      expect(WRITER_OVERRIDES[c] !== undefined || NO_WRITER[c] !== undefined, `${c} is undecided`).toBe(true);
-    }
   });
 
   test("the recorded non-writers are real scripts, and none is also paired", () => {
@@ -240,13 +219,6 @@ describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 
       expect(pkg.scripts[check], `${check} is not a script`).toBeDefined();
       expect(pkg.scripts[writer], `${writer} is not a script`).toBeDefined();
     }
-  });
-
-  test("none of them is a gate — the owner's 2026-09-20 ruling keeps them ungated", () => {
-    // If one of these BECOMES a gate, it belongs in the gated set and this list
-    // must drop it, or regen asks it twice under two different reasons.
-    const gated = new Set(repairableGates(loadGates(REPO, { all: true }), pkg.scripts).map((p) => p.check));
-    for (const { check } of UNGATED_INPUTS) expect(gated.has(check), `${check} is gated now`).toBe(false);
   });
 
   test("an ungated input asked FIRST lets a dependent check settle in one pass", async () => {
@@ -479,15 +451,6 @@ describe("a writer must WRITE — bean `i1q7`", () => {
     expect(SCRIPTS["kg:export:bootstrap"]).toMatch(/kg-export\.ts --instance \.\/bootstrap$/);
   });
 
-  test("no pair regen uses runs its CHECK as its writer, or a writer that is itself a check", () => {
-    const pairs = [...UNGATED_INPUTS, ...repairableGates(loadGates(REPO, { all: true }), SCRIPTS)];
-    for (const p of pairs) {
-      if (p.writer === undefined) continue;
-      expect(p.writer, p.check).not.toBe(p.check);
-      expect(SCRIPTS[p.writer], `${p.check}'s writer ${p.writer}`).not.toMatch(/--check\b/);
-    }
-  });
-
   test("a writer that exits non-zero is reported `writer-failed`, not as a defect in the tree", async () => {
     const runner: Runner = (s) => (s === "x:check" ? false : s !== "x");
     const { results } = await regenPass([{ check: "x:check", writer: "x" }], runner);
@@ -501,15 +464,6 @@ describe("a writer must WRITE — bean `i1q7`", () => {
 });
 
 describe("the default asks the WHOLE gate set — bean `i1q7`, item 3", () => {
-  test("render:bpmn:check and bat:sync:check are pairs regen asks by default", () => {
-    // They are outside the fast set only because the e2e job installs a
-    // browser. regen never runs `playwright test`, so that boundary is not
-    // regen's, and render:bpmn was stale after every merge that changed a
-    // process while regen printed it as a footnote.
-    const pairs = repairableGates(loadGates(REPO, { all: true }), SCRIPTS);
-    expect(pairs.find((p) => p.check === "render:bpmn:check")?.writer).toBe("render:bpmn");
-    expect(pairs.find((p) => p.check === "bat:sync:check")?.writer).toBe("bat:sync");
-  });
 
   test("without a browser, a browser-job failure is `no-browser`, and a fast-set failure keeps its verdict", () => {
     const results = [

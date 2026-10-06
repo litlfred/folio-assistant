@@ -35,6 +35,12 @@
  * It is a scratch repository rather than this one on purpose: this repo's
  * `node_modules` is a real directory, so the defect is INVISIBLE here. A test
  * that could only run where the bug cannot occur is not a test.
+ *
+ * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
+ * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate
+ * repository's own root — the `.gitignore` — which a standalone cat-harness
+ * layer does not have, and `check:cat-harness-standalone` collects every test
+ * in that layer.
  */
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
@@ -43,9 +49,12 @@ import { join, resolve } from "node:path";
 
 import { afterAll, expect, test } from "bun:test";
 
-import { gitCorpus } from "../../schemas/git-corpus.ts";
+import { gitCorpus } from "../../../cat-harness/schemas/git-corpus.ts";
 
-const ROOT = resolve(import.meta.dir, "..", "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move. */
+const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
+
+const ROOT = resolve(ORIGIN_DIR, "..", "..", "..");
 const scratches: string[] = [];
 
 afterAll(() => {

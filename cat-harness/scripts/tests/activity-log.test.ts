@@ -5,10 +5,13 @@
  * Bean `folio-assistant-7uff`.
  *
  * @module scripts/tests/activity-log.test
+ *
+ * The tests here that read the aggregate repository's own root (the
+ * `.gitignore` and the root-declared `fsh-guts` trashcan) live in
+ * `cat-harness-tools/scripts/tests/activity-log-repo-root.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
-import { join, resolve, sep } from "node:path";
 
 import {
   LOG_CAPTURE,
@@ -20,10 +23,6 @@ import {
   shouldPersist,
 } from "../../schemas/log-entry.ts";
 import { buildExport } from "../kg-export.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
-import { fshGutsDirectory } from "../../schemas/fsh-guts.js";
-
-const ROOT = resolve(import.meta.dir, "../..");
 
 /**
  * The whole KG export, built ONCE at module scope.
@@ -123,30 +122,6 @@ describe("capture is off by default and `unknown` is a real answer", () => {
   });
 });
 
-describe("persistence is off by default in the repository too", () => {
-  test("fsh-guts/logs/ is git-ignored", () => {
-    const ignore = readFileSync(join(repoRootFor(ROOT), ".gitignore"), "utf8");
-    // The ignore file cannot read a declaration, so it names LOG_DIR's spelling;
-    // the test reads the same constant rather than repeating it (bean `gz47`).
-    expect(ignore).toContain(`${LOG_DIR}/`);
-  });
-
-  test("the REST of the trashcan is still committed", () => {
-    // Ignoring `fsh-guts/` wholesale would turn the never-delete rule from a
-    // relocation into a disappearance, which is the opposite of its purpose.
-    const ignore = readFileSync(join(repoRootFor(ROOT), ".gitignore"), "utf8");
-    expect(ignore).not.toMatch(/^fsh-guts\/\s*$/m);
-    // WITNESS CHANGED 2026-09-23, not the property. This named
-    // `fsh-guts/proposals` until the owner moved the proposals to the `docs/`
-    // of the stub that needs them — *"proposals not in fsh-guts but docs/ for
-    // needed <stub>"*. The claim being tested is that the trashcan is still
-    // COMMITTED rather than ignored wholesale; `retired/` witnesses it just as
-    // well and is the population that is actually retired material, which
-    // `proposals/` never was.
-    expect(existsSync(join(fshGutsDirectory(repoRootFor(ROOT)), "retired"))).toBe(true);
-  });
-});
-
 describe("logs never reach a published graph", () => {
   test("no node mentions the log directory", () => {
     // Asserted for logs SPECIFICALLY rather than trusting that the parent
@@ -156,14 +131,5 @@ describe("logs never reach a published graph", () => {
     const nodes = (doc as unknown as { "@graph"?: unknown[] })["@graph"] ?? [];
     expect(nodes.length).toBeGreaterThan(100);
     expect(JSON.stringify(doc)).not.toContain(LOG_DIR);
-  });
-
-  test("LOG_DIR really is inside the stripped tree, so the guarantee is structural", () => {
-    // If someone moves logs out of fsh-guts, the assertion above keeps
-    // passing (nothing would mention the old path) while the guarantee is
-    // gone. This is what catches that.
-    // Inside the DECLARED trashcan, not merely spelled with its name (bean `gz47`).
-    const repo = repoRootFor(ROOT);
-    expect(resolve(repo, LOG_DIR).startsWith(fshGutsDirectory(repo) + sep)).toBe(true);
   });
 });

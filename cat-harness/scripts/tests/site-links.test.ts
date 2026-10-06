@@ -15,6 +15,11 @@
  * against.
  *
  * @module scripts/tests/site-links
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/docs-site.yml`) live in
+ * `cat-harness-tools/scripts/tests/site-links-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
@@ -22,7 +27,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { exitCodeFor, siteLinks, verifySiteLinks } from "../site-links.js";
-import { siteDirFor, repoRootFor } from "../../schemas/cat-harness.ts";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const DECL = { name: "folio-assistant", stub: "folio-assistant" };
 
@@ -185,26 +190,5 @@ describe("the template and the data agree", () => {
     const cfg = readFileSync(join(ROOT, siteDirFor(ROOT), "_config.yml"), "utf8");
     const active = cfg.split("\n").filter((l) => /^\s*aux_links/.test(l));
     expect(active).toEqual([]);
-  });
-});
-
-describe("both publishing workflows check their own tiles", () => {
-  const ROOT = join(import.meta.dir, "..", "..");
-
-  test("`docs-site.yml` and `feature-staging.yml` each verify the links", () => {
-    // Missing it in ONE workflow is the worse failure. Both publish the same
-    // tiles, so a gate on only the production site leaves the STAGING
-    // preview — the place a reviewer actually checks — free to ship a dead
-    // knowledge-graph tile while main stays green. Same argument the QA
-    // witness copy already carries, and the same shape of test.
-    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
-      const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
-      // Asserted as two facts rather than one exact command line: that the
-      // checker RUNS, and that it is pointed at the built site. Pinning the
-      // whole string made this fail when `--root ./cat-harness` was added —
-      // a correct change, rejected for the shape of its argument list.
-      expect(text).toContain("scripts/site-links.ts");
-      expect(text).toContain("--site ./_site");
-    }
   });
 });

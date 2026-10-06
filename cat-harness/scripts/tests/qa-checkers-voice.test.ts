@@ -11,11 +11,15 @@
  *      `\mathbb{R}` acknowledgement must match regardless of case.
  *
  * Run via `bun test`.
+ *
+ * The tests here whose subject is folio-assistant-sci's contribution (the
+ * `milnorlink` entry in this instance's library) live in
+ * `folio-assistant-sci/scripts/tests/qa-checkers-voice.test.ts` (bean `ho66`):
+ * standing alone, cat-harness has no such contribution to read.
  */
 import { describe, test, expect } from "bun:test";
-import { writeFileSync, mkdtempSync, readdirSync } from "fs";
+import { writeFileSync, mkdtempSync } from "fs";
 import { join } from "path";
-import { libraryEntry } from "./library-dirs.ts";
 import { tmpdir } from "os";
 import {
   checkEditorializing,
@@ -363,7 +367,6 @@ describe("checkScholarlyDefault — a wrap continuation is not a sentence start"
   });
 });
 
-
 // ── b7yo: the two false positives that survived the profile axis ────
 //
 // Both were found by running the real sweep over `content/docs/`
@@ -518,26 +521,5 @@ describe("checkEditorializing — proof economy is not an opinion (bean 2t41)", 
         tmp("wrap-adv.md", "as = a' and Wi = WiJ ... Wi,ri clearly\nrepresents the ith parallel\n"),
       ).result,
     ).toBe("pass");
-  });
-
-  test("the exemplar scores exactly ONE finding — not zero", () => {
-    // The gate this change was verified against, and the direction that would
-    // have meant over-correcting. A criterion that never fires on its own
-    // exemplar has stopped measuring anything; the survivor is p194's
-    // "Unfortunately", which is a real finding.
-    // READ from the declaration. `milnorlink` went to `folio-assistant-sci/` in
-    // bean `frs5` — it is not an IRIS item — and `readdirSync` on the old path
-    // throws, which is at least loud; a checker counting zero hits over a
-    // directory that is not there would have been worse, because the
-    // assertion is a count.
-    const entry = libraryEntry("milnorlink");
-    expect(entry, "milnorlink is not in any declared library").toBeDefined();
-    const dir = join(entry!, "sections");
-    let hits = 0;
-    for (const f of readdirSync(dir).sort()) {
-      if (!f.endsWith(".md")) continue;
-      hits += checkEditorializing(join(dir, f)).hits.length;
-    }
-    expect(hits).toBe(1);
   });
 });
