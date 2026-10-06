@@ -2,6 +2,10 @@
 title: "IMMZD18SDengue3DosesWithPreVaccinationScreeningLogic — WHO SMART Immunizations artefact"
 description: "Library/IMMZD18SDengue3DosesWithPreVaccinationScreeningLogic in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Library-IMMZD18SCholeraWCVaccinesLogic.html"
+ig_next: "Library-IMMZD18SDTPDelayedOrInterruptedSeriesLogic.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ This library defines decision support logic for the IMMZ.D18.S.Dengue schedule t
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="Library-IMMZD18SCholeraWCVaccinesLogic.html" data-next="Library-IMMZD18SDTPDelayedOrInterruptedSeriesLogic.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

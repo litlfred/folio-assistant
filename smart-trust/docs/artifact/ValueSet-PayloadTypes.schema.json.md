@@ -3,6 +3,8 @@ title: "WHO GDHCN Payload Types — JSON Schema"
 description: "The JSON Schema sidecar of ValueSet/PayloadTypes, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"ValueSet-PayloadTypes.schema.json","src":"../fhir-artifact-index/dak/ValueSet-PayloadTypes.schema.json","artifact":{"title":"WHO GDHCN Payload Types","page":"ValueSet-PayloadTypes.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-PayloadTypes.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-PayloadTypes.xml","active":false},{"label":"JSON","href":"ValueSet-PayloadTypes.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-PayloadTypes.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-PayloadTypes.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-PayloadTypes.jsonld.html","active":false}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

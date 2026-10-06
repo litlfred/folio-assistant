@@ -41,6 +41,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`harness-config-panel.e2e.ts`](harness-config-panel.e2e.ts) | a file |  |
 | [`harness-row-alignment.e2e.ts`](harness-row-alignment.e2e.ts) | a file |  |
 | [`id-lookup.e2e.ts`](id-lookup.e2e.ts) | a file |  |
+| [`ig-diagram-viewer.e2e.ts`](ig-diagram-viewer.e2e.ts) | a file |  |
 | [`kg-viewer.e2e.ts`](kg-viewer.e2e.ts) | a file |  |
 | [`kind-fan.e2e.ts`](kind-fan.e2e.ts) | a file |  |
 | [`library-entry-iri.e2e.ts`](library-entry-iri.e2e.ts) | a file |  |

@@ -3,6 +3,8 @@ title: "COSE Headers (DRAFT) — JSON profile"
 description: "The JSON representation of StructureDefinition/COSEHeader."
 nav_exclude: true
 json_view: {"heading":"Logical Model: COSEHeader - JSON Profile","package":"../fhir-artifact-index/package.tgz","entry":"package/StructureDefinition-COSEHeader.json","raw":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.json","rawName":"StructureDefinition-COSEHeader.json","tabs":[{"label":"Content","href":"StructureDefinition-COSEHeader.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-COSEHeader-mappings.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.xml","active":false},{"label":"JSON","href":"StructureDefinition-COSEHeader.profile.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-COSEHeader.schema.json.html","active":false}],"script":"../assets/resource-json.js","intro":"JSON representation of the COSEHeader logical model."}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +39,3 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <pre><code class="language-json" data-package="{{ page.json_view.package }}" data-entry="{{ page.json_view.entry }}">Loading JSON source…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.json_view.raw }}">published JSON</a> does not.</p></noscript>
 <script src="{{ page.json_view.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

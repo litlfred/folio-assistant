@@ -3,6 +3,8 @@ title: "Receive PKI material via API — change history"
 description: "Receive Public Keys via API - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Requirements-ReceivePKUMaterialAPI.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-ReceivePKUMaterialAPI.xml","active":false},{"label":"JSON","href":"Requirements-ReceivePKUMaterialAPI.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-ReceivePKUMaterialAPI.ttl","active":false}],"heading":"Receive Public Keys via API - Change History","sections":[{"text":"History of changes for ReceivePKUMaterialAPI ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

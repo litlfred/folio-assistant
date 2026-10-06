@@ -5,6 +5,8 @@ did:web:tng-cdn.who.int:v2:trustlist:-:USA:SCA
 resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/USA/SCA/did.json - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-USA-DEV-SCA.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-USA-DEV-SCA.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-USA-DEV-SCA.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-USA-DEV-SCA.ttl","active":false}],"heading":"United States of America Trustlist (DID v2) - DEV - Certificate Signing Authority\ndid:web:tng-cdn.who.int:v2:trustlist:-:USA:SCA\nresolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/USA/SCA/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-USA-DEV-SCA ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

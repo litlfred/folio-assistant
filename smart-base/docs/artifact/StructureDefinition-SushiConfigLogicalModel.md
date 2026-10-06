@@ -2,6 +2,10 @@
 title: "SUSHI Configuration Logical Model — WHO SMART Base artefact"
 description: "StructureDefinition/SushiConfigLogicalModel in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-RequirementsSource.html"
+ig_next: "StructureDefinition-TestScenario.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-SushiConfigLogicalModel.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-SushiConfigLogicalModel.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-RequirementsSource.html" data-next="StructureDefinition-TestScenario.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { FOOTER_TEMPLATE_PATH, ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { FOOTER_TEMPLATE_PATH, ARTIFACTS_TEMPLATE_PATH, IG_FIGURE_IMAGES_STAMP, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -552,6 +552,8 @@ describe("edit links to the IG's own source (bean `mftp`)", () => {
     expect(readFileSync(join(d, "out", "concepts.md"), "utf-8")).toContain('ig_edit_url: "https://github.com/o/r/edit/main/input/pagecontent/concepts.md"');
     expect(readFileSync(join(d, "out", "toc.md"), "utf-8")).not.toContain("ig_edit_url");
     expect(readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8")).toContain("Edit this page on GitHub");
+    // The standalone layout carries the same opt-in, inside the content it names (bean n7f8).
+    expect(readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8")).toMatch(/id="main-content">\n<span hidden data-fa-figure-images="ig"><\/span>/);
     const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
     // Per-section: a source-line link and a pre-filled feedback issue.
     expect(layout).toContain('id="ig-source-lines"');
@@ -605,6 +607,12 @@ describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
     expect(existsSync(join(host, "_includes", "ig", "x", "note.md"))).toBe(true);
     expect(existsSync(join(host, "_data", "ig", "x", "fhir.json"))).toBe(true);
     expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain('class="ig-topbar"');
+    // Every composed IG page opts its raster images into the shared figure viewer (bean n7f8).
+    expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain(IG_FIGURE_IMAGES_STAMP);
+    // ...through the attribute the platform's viewer actually reads: the contract is docs-ui.js's.
+    expect(IG_FIGURE_IMAGES_STAMP).toContain("data-fa-figure-images");
+    const docsUi = readFileSync(join(import.meta.dir, "..", "..", "cat-harness", "docs", "assets", "js", "docs-ui.js"), "utf-8");
+    expect(docsUi).toContain('document.querySelector("[data-fa-figure-images]")');
     expect(existsSync(join(host, "x", "_config.yml"))).toBe(false);
     expect(existsSync(join(host, "x", "_layouts"))).toBe(false);
     // A second compose of the same IG is two answers for one URL.

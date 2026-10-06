@@ -335,6 +335,20 @@ const IG_TOPBAR_CSS = `
 `;
 
 /**
+ * The page-level opt-in that tells `docs-ui.js` an IG page's raster images
+ * are figures too (bean `n7f8`). The shared figure viewer (`mountFigures`)
+ * already takes every `<svg>`, `<img src="*.svg">` and `<object data="*.svg">`
+ * in the content; an IG's architecture drawings are `.drawio.png` as well, and
+ * the theme shrinks a wide one to the column with no way to zoom it back.
+ * Raster images on the platform's own pages are as often card faces and
+ * photos, so the viewer takes them only where the page says so, and this is
+ * where an IG page says so. Hidden, carrying no text: it is a declaration,
+ * not chrome. One string, written by both the standalone layout and the
+ * composed pages' top include, so the two cannot disagree.
+ */
+export const IG_FIGURE_IMAGES_STAMP = '<span hidden data-fa-figure-images="ig"></span>';
+
+/**
  * The plain layout for `chrome: "harness"`: just-the-docs' stylesheet for the
  * prose (and the IG's colour scheme), the IG's top bar and TOC declaration,
  * the page — and no sidebar, so the rail pass supplies the navbar.
@@ -356,6 +370,7 @@ export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: str
     tocNav,
     topBar,
     '<main class="ig-main main-content" id="main-content">',
+    IG_FIGURE_IMAGES_STAMP,
     "{{ content }}",
     '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
     '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
@@ -434,7 +449,7 @@ link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback: "+d
  */
 export function igChromeIncludes(topBar: string): { top: string; bottom: string } {
   return {
-    top: `<style>${IG_TOPBAR_CSS.trim()}</style>\n${topBar}\n`,
+    top: `<style>${IG_TOPBAR_CSS.trim()}</style>\n${topBar}\n${IG_FIGURE_IMAGES_STAMP}\n`,
     bottom: [
       '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
       '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',

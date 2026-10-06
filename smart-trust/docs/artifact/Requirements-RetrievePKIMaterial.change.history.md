@@ -3,6 +3,8 @@ title: "Retrieve PKI material — change history"
 description: "Retrieve Public Keys - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Requirements-RetrievePKIMaterial.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-RetrievePKIMaterial.xml","active":false},{"label":"JSON","href":"Requirements-RetrievePKIMaterial.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-RetrievePKIMaterial.ttl","active":false}],"heading":"Retrieve Public Keys - Change History","sections":[{"text":"History of changes for RetrievePKIMaterial ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

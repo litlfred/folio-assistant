@@ -2,6 +2,10 @@
 title: "CBOR Web Token (CWT) Claim — WHO SMART Trust artefact"
 description: "StructureDefinition/CWT in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Requirements-UtilizeVDHC.html"
+ig_next: "StructureDefinition-CWTPayload.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://litlfred.github.io/smart-trust/StructureDefinition-CWT.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-CWT.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="Requirements-UtilizeVDHC.html" data-next="StructureDefinition-CWTPayload.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

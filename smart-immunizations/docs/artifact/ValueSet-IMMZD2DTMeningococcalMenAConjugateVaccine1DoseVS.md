@@ -2,6 +2,10 @@
 title: "IMMZD2DTMeningococcalMenAConjugateVaccine1Dose ValueSet for Decision Table — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZD2DTMeaslesSupplementaryDoseVS.html"
+ig_next: "ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine2DosesVS.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine1DoseVS.jsonld` |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZD2DTMeaslesSupplementaryDoseVS.html" data-next="ValueSet-IMMZD2DTMeningococcalMenAConjugateVaccine2DosesVS.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>
