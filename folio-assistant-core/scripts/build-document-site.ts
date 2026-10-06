@@ -555,6 +555,7 @@ export function defaultBlockActions(repoRoot: string, over: Partial<BlockActions
     ...(fields ? { template, templateFields: fields } : {}),
     ...(over.labels ? { labels: over.labels } : {}),
     ...(over.siteUrl ? { siteUrl: over.siteUrl } : {}),
+    ...(over.content ? { content: over.content } : {}),
   };
 }
 
