@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-f017-input-hash-coverage/smart-ig/schema/smart-ig.schema.json",
+  "title": "smart-ig schemas",
+  "description": "The schemas instance `smart-ig` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-f017-input-hash-coverage/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {},
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-f017-input-hash-coverage/smart-ig/smart-ig.jsonld",
+  "staging": {
+    "branch": "claude/f017-input-hash-coverage",
+    "sha": "94b125c98ac713cb9f5a13af777e5a081dc7f0d9",
+    "pr": "2327/merge",
+    "run": "37525299045"
+  }
+}
