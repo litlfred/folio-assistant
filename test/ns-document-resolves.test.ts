@@ -23,7 +23,7 @@
  * This is that comparison. It reads the loop out of the YAML rather than
  * restating the pairs, so a fourth layer is covered the day it is added.
  *
- * @module scripts/tests/ns-document-resolves
+ * @module test/ns-document-resolves
  *
  * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
  * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate

@@ -51,7 +51,7 @@
  * scan in this repository would then see, and a workflow's outcome is
  * invisible from a checkout — which is the `xom7` defect both exist for.
  *
- * @module cat-harness/scripts/tests/workflow-paths-resolve.test
+ * @module test/workflow-paths-resolve.test
  *
  * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
  * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate

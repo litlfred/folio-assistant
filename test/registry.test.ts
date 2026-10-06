@@ -18,16 +18,30 @@
  * This runs the generator and validates its output. It is the check whose
  * absence let a registry that could not be parsed ship as the framework's
  * machine-readable manifest.
+ *
+ * Moved here from `cat-harness/scripts/tests/registry.test.ts` to the
+ * checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it generates and reads the skill
+ * registry at the aggregate root's `.claude/skills/`, from the root's
+ * `.claude/scenarios/role-assignments.json`, which only the whole checkout
+ * holds. Standing alone, cat-harness has none of it, and
+ * `check:cat-harness-standalone` collects every test in that layer. Paths are
+ * composed from ORIGIN_DIR, the directory it was written in, so nothing it
+ * reads changed.
  */
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import { existsSync, readFileSync, renameSync, unlinkSync } from "fs";
 import { join } from "path";
 import { spawnSync } from "child_process";
-import { SkillRegistrySchema } from "../../schemas/constraints.ts";
-import { repoRootFor } from "../../schemas/cat-harness.js";
-import { packageDirsIn } from "../skill-topics.js";
+import { SkillRegistrySchema } from "../cat-harness/schemas/constraints.ts";
+import { repoRootFor } from "../cat-harness/schemas/cat-harness.js";
+import { packageDirsIn } from "../cat-harness/scripts/skill-topics.js";
 
-const ROOT = join(import.meta.dir, "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+
+const ROOT = join(ORIGIN_DIR, "..", "..");
 const OUT = join(repoRootFor(ROOT), ".claude", "skills", "registry.json");
 const SAVED = `${OUT}.testbak`;
 

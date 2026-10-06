@@ -1,7 +1,7 @@
 /**
  * This repository's content root and its instance config AGREE — bean `zkgs`.
  *
- * @module scripts/tests/repo-config-agreement
+ * @module test/repo-config-agreement
  * @graphNode none — a test
  *
  * ## The defect this pins
@@ -19,14 +19,22 @@
  * instance root. This test is the part that was missing: it runs the REAL
  * resolution on the REAL repository, not a fixture, so the next rename that
  * separates them fails here instead of silently re-scoping QA.
+ *
+ * Moved here from `cat-harness/scripts/tests/repo-config-agreement.test.ts` to
+ * the checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it reads the aggregate root's config
+ * and declaration, which only the whole checkout holds. Standing alone,
+ * cat-harness has none of it, and `check:cat-harness-standalone` collects
+ * every test in that layer. Paths are composed from ORIGIN_DIR, the directory
+ * it was written in, so nothing it reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 
-import { findContentRepoRoot } from "../../content/pipeline/repo-root";
-import { readDeclaredFolioProfile } from "../../content/pipeline/profile-check";
-import { expectedInstanceConfigPath, resolveHarnessConfigPath } from "../../schemas/harness-config";
+import { findContentRepoRoot } from "../cat-harness/content/pipeline/repo-root";
+import { readDeclaredFolioProfile } from "../cat-harness/content/pipeline/profile-check";
+import { expectedInstanceConfigPath, resolveHarnessConfigPath } from "../cat-harness/schemas/harness-config";
 
 describe("this repository's content root and its config agree — bean `zkgs`", () => {
   const root = findContentRepoRoot();
