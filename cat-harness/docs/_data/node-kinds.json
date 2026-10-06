@@ -30,6 +30,38 @@
       }
     },
     {
+      "id": "document-kind",
+      "version": "1.0.0",
+      "tag": "document-kind/1.0.0",
+      "parents": [],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "exportName": "DocumentKindKind",
+      "holdings": [
+        {
+          "typology": "document-kinds",
+          "family": "document-kind/1.0.0"
+        }
+      ]
+    },
+    {
+      "id": "document-kind-coverage",
+      "version": "1.0.0",
+      "tag": "document-kind-coverage/1.0.0",
+      "parents": [],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "exportName": "DocumentKindCoverageKind",
+      "holdings": [
+        {
+          "typology": "document-kinds",
+          "family": "document-kind-coverage/1.0.0"
+        }
+      ]
+    },
+    {
       "id": "node-kind-index",
       "version": "1.0.0",
       "tag": "node-kind-index/1.0.0",
@@ -243,18 +275,6 @@
       "family": "folio-voices-index/v1",
       "reason": "zod-schema",
       "ref": "schemas/site-indexes.ts#VoicesIndexSchema"
-    },
-    {
-      "typology": "document-kinds",
-      "family": "folio-document-kind-coverage/v1",
-      "reason": "zod-schema",
-      "ref": "schemas/document-kind.ts#DocumentKindCoverageSchema"
-    },
-    {
-      "typology": "document-kinds",
-      "family": "folio-document-kind/v1",
-      "reason": "zod-schema",
-      "ref": "schemas/document-kind.ts#DocumentKindSchema"
     },
     {
       "typology": "external-schema",
