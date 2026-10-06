@@ -165,7 +165,7 @@
 <ul class="subs">
 <li><a href="core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">17</span></li>
 <li><a href="fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">3</span></li>
-<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">62</span></li>
+<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">63</span></li>
 <li><a href="sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -204,8 +204,12 @@
   <td>How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Editorial · Deployment owner · Build pipeline · Attestation (GDHCN / WHO SMART Trust) · Publish target · Portal (external consumer)</div><div class="f"><span class="k">skills</span> bean-blocking, continual-progress, kg-export, kg-to-portal</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>Remote-mount a dependency</code></a><br><span class="p">cat-harness/processes/kg/mount-dependency.bpmn</span></td>
+  <td>Laying a harness — and every instance it needs — down from another repository at a pinned commit, as declared directories, with a lock that says exactly what arrived.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Downstream author · Build pipeline</div><div class="f"><span class="k">skills</span> ci-health, directory-conventions, remote-mount</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>Mount a declared subgraph</code></a><br><span class="p">cat-harness/processes/kg/mount-subgraph.bpmn</span></td>
-  <td>Making a declared subgraph's content available at its declared path, whatever its content source.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Build pipeline</div><div class="f"><span class="k">skills</span> content-context-and-state-graphs, directory-conventions</div></td>
+  <td>Making a declared subgraph's content available at its declared path, whatever its content source.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Build pipeline</div><div class="f"><span class="k">skills</span> content-context-and-state-graphs, directory-conventions, remote-mount</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/review-code.bpmn"><code>Code node review</code></a><br><span class="p">cat-harness/processes/kg/review-code.bpmn</span></td>
@@ -469,7 +473,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/public-comment.bpmn"><code>Public comment on a review draft</code></a><br><span class="p">folio-assistant-core/processes/content/public-comment.bpmn</span></td>
-  <td>A frozen, line-numbered draft went out for public review.<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Public commenter · Intake agent · Review coordinator · Review committee · Editor · Author (human or agentic) · Change set — feature branch and staging</div><div class="f"><span class="k">skills</span> block-actions, public-comment, staging-review</div></td>
+  <td>A frozen, line-numbered draft went out for public review.<div class="f"><span class="k">activities</span> 11</div><div class="f"><span class="k">lanes</span> Public commenter · Intake agent · Review coordinator · Review committee · Editor · Author (human or agentic) · Change set — feature branch and staging</div><div class="f"><span class="k">skills</span> public-comment, staging-review</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/deep-document-research.bpmn"><code>Deep document research</code></a><br><span class="p">folio-assistant-core/processes/library/deep-document-research.bpmn</span></td>

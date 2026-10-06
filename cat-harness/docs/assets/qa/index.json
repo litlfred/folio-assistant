@@ -1,23 +1,45 @@
 {
   "tile": {
     "qa": {
-      "count": 574,
+      "count": 1109,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 574,
+  "files": 1109,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 478,
+      "files": 513,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 2701,
-        "fail": 401,
-        "n/a": 1417,
-        "unknown": 9
+        "pass": 2937,
+        "fail": 443,
+        "n/a": 1615,
+        "unknown": 18
       }
+    },
+    {
+      "schema": "qa-witness/v1",
+      "files": 195,
+      "rollUpField": "counts",
+      "buckets": {
+        "fail": 41,
+        "warn": 59,
+        "pass": 3768,
+        "na": 4287,
+        "unknown": 37
+      }
+    },
+    {
+      "schema": "block-qa/v1",
+      "files": 172,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-results/v1",
+      "files": 83,
+      "rollUpField": null
     },
     {
       "schema": "folio-detangle-sidecar/v1",
@@ -25,30 +47,28 @@
       "rollUpField": null
     },
     {
-      "schema": "folio-qa-index/v1",
-      "files": 17,
+      "schema": "translation-qa/v1",
+      "files": 35,
       "rollUpField": null
     },
     {
-      "schema": "qa-witness/v1",
-      "files": 4,
-      "rollUpField": "counts",
-      "buckets": {
-        "fail": 3,
-        "warn": 0,
-        "pass": 61,
-        "na": 36,
-        "unknown": 0
-      }
+      "schema": "folio-qa-index/v1",
+      "files": 25,
+      "rollUpField": null
     },
     {
-      "schema": "qa-results/v1",
-      "files": 2,
+      "schema": "kg-qa-manifest/v1",
+      "files": 6,
       "rollUpField": null
     },
     {
       "schema": "folio-lsi-index/v1",
-      "files": 1,
+      "files": 4,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-tool-run/v1",
+      "files": 4,
       "rollUpField": null
     },
     {
@@ -57,14 +77,22 @@
       "rollUpField": null
     },
     {
-      "schema": "folio-tool-run/v1",
+      "schema": "folio-test-run/v1",
       "files": 1,
       "rollUpField": null
     },
     {
-      "schema": "kg-qa-manifest/v1",
+      "schema": "viewer-nav-qa/v1",
       "files": 1,
-      "rollUpField": null
+      "rollUpField": "totals",
+      "buckets": {
+        "pages": 185,
+        "railed": 116,
+        "declined": 0,
+        "linked": 69,
+        "missing": 0,
+        "flagged": 0
+      }
     }
   ],
   "unclassified": 0,
