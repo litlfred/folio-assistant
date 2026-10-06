@@ -49,10 +49,20 @@ for (const slug of listed) {
 
     const rows = await blocks.locator("tbody tr").count();
     expect(rows).toBeGreaterThan(0);
-    // Every row without a summary carries the withheld line and a record link.
+    // Every row shows a summary (an account of the section, not its words),
+    // OR the withheld line with a record link, OR a carried extract (a block
+    // whose text the licence does permit, e.g. a figure's caption) — nothing
+    // else.
+    // Asserted as that partition rather than as "some rows are withheld":
+    // once every section of who-pub-tps-931 had a drafted summary (issue
+    // #2302, 2026-10-06), "> 0 withheld lines" failed on a page that was
+    // exactly right.
     const lines = blocks.locator("tbody .wh-line");
-    expect(await lines.count()).toBeGreaterThan(0);
-    await expect(lines.first().locator("a")).toHaveAttribute("href", /item-item-[0-9a-f-]+\.html$/);
+    const summarised = blocks.locator("tbody tr", { hasText: "Summary — an account of this section" });
+    const carried = blocks.locator("tbody tr:has(pre)");
+    const nLines = await lines.count();
+    expect(nLines + (await summarised.count()) + (await carried.count())).toBe(rows);
+    if (nLines > 0) await expect(lines.first().locator("a")).toHaveAttribute("href", /item-item-[0-9a-f-]+\.html$/);
     await expect(blocks).not.toContainText("(no content carried)");
     expect(errors).toEqual([]);
   });
