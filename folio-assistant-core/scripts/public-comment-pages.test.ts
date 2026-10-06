@@ -16,6 +16,10 @@ const changeSet = (id: string, refs: string[], status = "proposed"): KindNode =>
 });
 
 const comments = [comment("PC-0001"), comment("PC-0002", "decided"), comment("PC-0003"), comment("PC-0001", "received", "other")];
+const decided = (ref: string, code: string): KindNode => {
+  const c = comment(ref, "decided");
+  return { ...c, node: { ...c.node, public: { ref, decision: { code, reason: "r", by: "ed", at: "t" } } } };
+};
 const sets = [changeSet("CS-001", ["PC-0001", "PC-0009"]), changeSet("CS-002", ["PC-0002"], "merged")];
 const ctx: KindPagesContext = {
   locale: "en",
@@ -41,6 +45,17 @@ describe("the change-set dashboard", () => {
     expect(cov!.html).toContain("<li><b>1</b>in an open change-set</li><li><b>2</b>in none</li>");
     expect(cov!.html).toContain("PC-0002");
     expect(cov!.html).toContain("PC-0003");
+  });
+});
+
+describe("coverage leaves out a comment whose decision changes nothing", () => {
+  test("noted and not-accepted are counted apart; an accepted comment still needs a change-set", () => {
+    const pool = [comment("PC-0001"), decided("PC-0004", "not-accepted"), decided("PC-0005", "noted"), decided("PC-0006", "accepted")];
+    const c2: KindPagesContext = { ...ctx, nodesOf: (k) => (k === "public-comment" ? pool : k === "changeset" ? sets : []) };
+    const [cov] = ChangeSetPages.dashboard!(sets, c2);
+    expect(cov!.html).toContain("<li><b>1</b>in an open change-set</li><li><b>1</b>in none</li><li><b>2</b>decided, no change needed</li>");
+    expect(cov!.html).toContain("PC-0006");
+    expect(cov!.html).not.toContain("PC-0004");
   });
 });
 

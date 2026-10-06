@@ -465,15 +465,15 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `translation-sources`
 
-1 of 6 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/translation-status/' | relative_url }})
-- FHIR IG Harness — *declared, not published*
-- Folio Assistant Core — *declared, not published*
-- folio-assistant-sci — *declared, not published*
-- SMART Base — *declared, not published*
-- WHO IRIS — *declared, not published*
+- [FHIR IG Harness]({{ '/translation-status/' | relative_url }})
+- [Folio Assistant Core]({{ '/translation-status/' | relative_url }})
+- [folio-assistant-sci]({{ '/translation-status/' | relative_url }})
+- [SMART Base]({{ '/translation-status/' | relative_url }})
+- [WHO IRIS]({{ '/translation-status/' | relative_url }})
 
 ### `typologies`
 
