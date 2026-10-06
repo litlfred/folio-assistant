@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T06:54:20Z
+updated_at: 2026-10-06T07:07:13Z
 parent: folio-assistant-7x5n
 ---
 
@@ -42,3 +42,19 @@ Split by FILE AREA so the lanes don't collide:
 - **H** (session_012dn4UVLnHDxP1qR9xmotSw): step 4 and the doc candidates of step 3 (`cat-harness/docs/**`, `content/docs/**`).
 - **Coordinator**: step 0 (hard-coded upward paths), step 5 (code), then S5 `txue`.
 Generated files conflict across lanes by design; each lane merges main and runs `bun run regen`.
+
+## Step 0 progress, 2026-10-06 07:25Z
+
+**Done (declaration-driven, output verified):**
+- `check-term-mapping` walks every instance's declared glossary. It now also reaches who-iris's `who-terms`, which the literal path silently skipped.
+- `external-schemas` `skosTermsInUse` reads every declared `schemas` graph; output identical.
+- The `glossary-build` Tool is declared by folio-assistant-core. Its cat-harness kg-qa sidecar was removed under the 5hox ruling (derived QA off main), and core's is gitignored as derived.
+
+**Left as is, deliberately:** `kg-detangle` LITERAL_SCAN. It reports an absent directory honestly, and its header makes scan scope a person's decision. After the split this cross-instance measurement belongs to the parent checkout.
+
+**Needs a design, not a path edit (two classes):**
+1. **Repo-wide orchestration** in cat-harness(-tools): `gates.ts` (fhir-harness steps), `task-io.ts` and `regen-after-merge.ts` (smart-* task rows), `merge-train.ts` (the smart-base KG repair), `check-secret-leaks` ROOTS (who-iris).
+   - Proposal: each instance declares its own tasks (IO class, repair hook, scan roots), and the orchestrator aggregates them via `instanceRootsIn`.
+   - Whatever must name every layer belongs to the top-level folio-assistant instance, which may name any layer.
+2. **Stale measured lists:** `qa-refresh` hardcodes `[cat-harness, smart-base, who-iris]` as the libraries that need an LSI index. Asked today, `lsi.needOf` also flags smart-trust and smart-immunizations, so the literal is out of date. Proposal: derive the writers from `proseGraphs()` + `needOf()` at run time (cost measured at about 2.9 s).
+3. **Content-specific:** `translation-tools.ts` points at a core BPMN; `vocabulary` maintains `folio-assistant-core/ns.jsonld`; `schemas/jsonld.ts` holds core's (and sci's) vocabulary. These follow the contribution pattern: each harness contributes its own entries (as `riit` and `dmx1` did for kinds).
