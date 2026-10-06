@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:31:37Z
-updated_at: 2026-10-06T08:03:18Z
+updated_at: 2026-10-06T09:02:29Z
 parent: folio-assistant-rwmf
 ---
 
@@ -25,7 +25,7 @@ Session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 needed SUSHI cle
 - [ ] the skill an agent reads before running SUSHI points at the seeder (the owner chooses which skill that is)
 - [ ] the owner decides on a general symptom-to-Tool lookup (for example a `remedies:` field on a Tool, keyed by the host or error it addresses, with a gate keeping it non-empty for network-dependent Tools)
 - [x] `litlfred/fhir-package-mirror` exists and is filled from a machine that reaches packages.fhir.org, or the skill stops naming it
-- [ ] MEASURED AFTER: in a container with packages.fhir.org blocked, SUSHI on smart-trust exits 0 using only documented tools
+- [x] MEASURED AFTER: in a container with packages.fhir.org blocked, SUSHI on smart-trust exits 0 using only documented tools
 
 _2026-10-06T06:42:37Z_ — Claimed by claude/bold-brahmagupta-c8eoku — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -59,3 +59,26 @@ Executed sushi build . (SUSHI v3.20.1) across all three IGs:
 - smart-trust: 0 errors, 26 warnings (exit code 0).
 - smart-base: 0 errors, 16 warnings (exit code 0).
 - smart-immunizations: 0 errors, 1 warning (exit code 0).
+
+## Measured 2026-10-06 ~09:00Z in the blocked container (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+packages.fhir.org is refused here. I used only `fhir-cache-seed-npm` with `--mirror https://github.com/litlfred/fhir-package-mirror`, then SUSHI v3.20.1, on the `claude/seed-smart-base` branch of each IG:
+
+| IG | seeder | SUSHI |
+|---|---|---|
+| smart-trust | 50 present, 0 missing | **exit 0**, 0 errors, 28 warnings |
+| smart-immunizations | 17 present, 0 missing | **exit 0**, 0 errors, 3 warnings |
+| smart-base | 1 present, 0 missing | **exit 15**, 15 errors, 17 warnings |
+
+### smart-base: the seeder does not follow transitive dependencies
+The seeder resolves only smart-base's DIRECT pins and reports '0 missing'. SUSHI then needs what `hl7.fhir.uv.cpg#2.0.0` depends on, and cannot download it:
+- `hl7.fhir.uv.crmi#2.0.0`: this is where all 14 'Parent … crmi-shareable* not found' errors come from
+- `hl7.fhir.uv.cql#2.0.0`
+- `hl7.fhir.uv.sdc#4.0.0`
+- `hl7.terminology#7.3.0`
+- (`hl7.fhir.uv.tools.r4#latest` is SUSHI's automatic package; it is a warning-level miss)
+
+The owner's local run had 0 errors because that machine reaches packages.fhir.org, so SUSHI fetched these itself. The '0 missing' is therefore a false clean (the dh4f shape): the seeder judged a set it had not closed over.
+
+### To close
+1. Mirror those four exact versions (`mirror-fhir-packages.sh` on a networked machine).
+2. Make the seeder close over the `dependencies` of every package it installs, so '0 missing' means SUSHI will find everything. Today it means only that the direct pins were found.
