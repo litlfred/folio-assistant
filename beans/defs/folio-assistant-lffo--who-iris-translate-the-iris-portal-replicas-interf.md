@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-05T18:46:23Z
-updated_at: 2026-10-06T05:20:37Z
+updated_at: 2026-10-06T07:45:49Z
 parent: folio-assistant-bzyu
 ---
 
@@ -817,3 +817,15 @@ Five fresh checkers, one per locale. Each read ONLY its 116 msgstr values, with 
 - The [80]/[84] duplicates track near-identical English msgids.
 
 **Still not verified:** WHO's own localised IRIS terminology, and visual rendering in a browser.
+
+## Rendered check, and a defect found but NOT fixed in #2229 (2026-10-06)
+
+**Rendered.** Chromium, `who-iris/site/` served statically, home page in en, fr and ar at 1280x800 and 390x844. All load with no horizontal overflow. On ar, `dir="rtl"` takes effect and the layout mirrors: at 1280 the lead paragraph is 94 px from the right edge, and 94 px from the left on en. Every language-row link from en and from ar loads the right `lang`. This closes "visual rendering in a browser" above for the layout. It does not close it for the defect below.
+
+**Defect: English record data is not direction-isolated on the Arabic pages.** The page's DATA (titles, authors, abstracts, citations, the held/published note) has no `lang="en"` and no bidi isolation. So inside the RTL page it right-aligns, and the Unicode bidi algorithm reorders punctuation where an English run meets an Arabic label. Example, the WPRO item's citation line as rendered on ar: `(12-05-2020 :تاريخ النشر ,WPR/RDO/2020/003)`. The English page reads `(WPR/RDO/2020/003, Publication Date: 2020-05-12)`. The abstract's trailing ellipsis also lands at the left.
+
+**Fix, not applied.** In `gen-iris-pages.ts`:
+- Wrap every untranslated data field that is interpolated into a translated string in `<bdi>`.
+- On a block-level data element (a title, an abstract), set `dir="auto"` with `lang="en"`. Not `dir="ltr"`: a record field is not guaranteed to be English.
+
+Then re-run `iris:pages` and look at the ar page again. The `.po` catalogues need no change unless a `{placeholder}` moves inside a tag. Left out of #2229 at the parent session's request; recorded here so it is not lost.

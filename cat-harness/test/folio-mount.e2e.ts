@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 import { MARKER } from "../scripts/folio-mount.ts";
+import { TRANSLATION_META_ID } from "../scripts/lib/translation-meta.ts";
 
 /**
  * THE FOLIO MOUNT on a REAL generated who-iris page. Bean `jpjt`, F8/F9.
@@ -80,6 +81,33 @@ function withoutMount(html: string): string {
 }
 
 /**
+ * The same page with its OWN `fa-translation-meta` block removed — the replica
+ * as an untranslated instance's page. Bean `lffo`, #2229.
+ *
+ * Since #2229 the generator writes that block on every replica page, with every
+ * locale available, and `docs-ui.js` answers a block by putting the locale
+ * globe in the glass band. That band holds controls, so it sits IN FLOW
+ * between `.crumbs` and `<main>` (measured on `community-list.html` at 1280:
+ * 40 px, `<main>` 52 px lower). That is the #2219 chrome, ruled by the owner
+ * for mounted pages, and `mounted-locale.e2e.ts` asserts it. It is not the
+ * glass. The fidelity test below asks what the GLASS does to the replica, so
+ * both sides of that comparison are this block-less page. Deriving it here,
+ * rather than picking a real page that happens to be untranslated, means
+ * translating a page cannot turn the comparison red.
+ *
+ * `mounted-locale.e2e.ts` divides the work the same way: *"The control is the
+ * same page WITHOUT the block, which must keep its layout: `folio-mount.e2e.ts`
+ * holds the replica's fidelity on that."*
+ */
+function withoutTranslationMeta(html: string): string {
+  const open = `<script type="application/json" id="${TRANSLATION_META_ID}">`;
+  const i = html.indexOf(open);
+  if (i < 0) return html;
+  const j = html.indexOf("</script>", i) + "</script>".length;
+  return html.slice(0, i) + html.slice(j);
+}
+
+/**
  * Serve the real page at `path`, with the platform assets at the site root
  * the mount derives. `page.route` rather than a server, as
  * `staging-banner.e2e.ts` does, because the 404 on the todo index has to be
@@ -89,10 +117,11 @@ function withoutMount(html: string): string {
 async function serve(
   page: import("@playwright/test").Page,
   path: string,
-  opts: { withMount?: boolean } = {},
+  opts: { withMount?: boolean; untranslated?: boolean } = {},
 ): Promise<string[]> {
   const asked: string[] = [];
-  const body = opts.withMount === false ? withoutMount(PAGE) : PAGE;
+  const source = opts.untranslated ? withoutTranslationMeta(PAGE) : PAGE;
+  const body = opts.withMount === false ? withoutMount(source) : source;
 
   await page.route("**/*", async (route) => {
     const url = new URL(route.request().url());
@@ -217,11 +246,18 @@ test.describe("the replica is unchanged with the glass closed", () => {
     });
 
   test("no element moves, resizes or changes colour", async ({ page }) => {
-    await serve(page, "/who-iris/community-list.html", { withMount: false });
+    // Both sides without the translation block — see `withoutTranslationMeta`.
+    // The premise is asserted: a strip that did nothing would put the locale
+    // band back into "with" and this would fail for the wrong reason.
+    expect(PAGE).toContain(`id="${TRANSLATION_META_ID}"`);
+    expect(withoutTranslationMeta(PAGE)).not.toContain(`id="${TRANSLATION_META_ID}"`);
+
+    await serve(page, "/who-iris/community-list.html", { withMount: false, untranslated: true });
     const before = await snapshot(page);
 
-    await serve(page, "/who-iris/community-list.html");
+    await serve(page, "/who-iris/community-list.html", { untranslated: true });
     await expect(page.locator(".fa-glass-handle")).toBeVisible(); // the mount really ran
+    await expect(page.locator(".fa-page-lang-toggle")).toHaveCount(0); // and only the glass did
     const after = await snapshot(page);
 
     const changed = Object.keys(before).filter((k) => before[k] !== after[k]);
