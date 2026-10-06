@@ -417,6 +417,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   movedFrom: { gloss: "Where a node in the trashcan used to live." },
   issue: { gloss: "The issue that superseded this node, or that it was written for." },
   bean: { gloss: "The work-plan item a node was written under, where there is one." },
+  data: { gloss: "A trashcan node's kind-specific fields, kept whole as JSON because a node's kind is open." },
   nodeCount: { gloss: "How many nodes a graph or directory yielded." },
   layer: {
     gloss:
