@@ -276,3 +276,35 @@ describe("an absent corpus is UNKNOWN, never a count of what the build wrote (be
     cleanup();
   });
 });
+
+describe("opts.exclude in readQaGraph and projectQaGraph (bean 0kbt)", () => {
+  it("excludes queued orphan paths from the files count, families and buckets", () => {
+    const { dir, cleanup } = graph({
+      "witnesses/p/surviving.json": { $schema: "qa-witness/v1", counts: { pass: 2, fail: 1 } },
+      "witnesses/p/orphan.json": { $schema: "qa-witness/v1", counts: { fail: 1 } },
+    });
+    const orphanPath = join(dir, "witnesses/p/orphan.json");
+    const ix = readQaGraph(dir, { exclude: new Set([orphanPath]) });
+    expect(ix.files).toBe(1);
+    expect(ix.families).toHaveLength(1);
+    expect(ix.families[0]?.files).toBe(1);
+    expect(ix.families[0]?.buckets).toEqual({ pass: 2, fail: 1 });
+    cleanup();
+  });
+
+  it("passes opts.exclude through projectQaGraph", () => {
+    const { dir, cleanup } = graph({
+      "witnesses/p/surviving.json": { $schema: "qa-witness/v1", counts: { pass: 2 } },
+      "witnesses/p/orphan.json": { $schema: "qa-witness/v1", counts: { fail: 5 } },
+    });
+    const orphanPath = join(dir, "witnesses/p/orphan.json");
+    const ix = projectQaGraph(dir, true, undefined, { exclude: new Set([orphanPath]) });
+    expect(isQaGraphUnknown(ix)).toBe(false);
+    if (!isQaGraphUnknown(ix)) {
+      expect(ix.files).toBe(1);
+      expect(ix.families[0]?.buckets).toEqual({ pass: 2 });
+    }
+    cleanup();
+  });
+});
+

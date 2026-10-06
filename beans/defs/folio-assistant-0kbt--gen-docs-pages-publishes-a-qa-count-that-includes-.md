@@ -1,12 +1,13 @@
 ---
 # folio-assistant-0kbt
 title: 'gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run'
-status: todo
+status: in-progress
 type: bug
 parent: folio-assistant-1swy
 priority: normal
 created_at: 2026-10-04T09:39:59Z
-updated_at: 2026-10-04T09:39:59Z
+updated_at: 2026-10-06T21:53:00Z
+tags: [ready-to-close]
 ---
 The `qa` tile and `assets/qa/index.json` are projected BEFORE the orphan sweep removes witness files whose section no longer exists, so one run after a section is renamed or removed publishes a count that includes a file that run itself deleted.
 
@@ -25,6 +26,20 @@ This is the `tfqf` / C9 class — a generator asking a question that finds its o
 WHY IT MATTERS more than the arithmetic: the inflated bucket was a `fail`. A reader of the tile saw one failure that no witness file supported, and a reader comparing against main would have read it as a regression introduced by the branch. It fails in the other direction too — an orphan with `pass` counts inflates `pass`.
 
 ## Done when
-- [ ] the orphan sweep runs BEFORE the qa projection, or the projection excludes paths the sweep has queued
-- [ ] a test writes an orphan witness, runs the generator once, and asserts the published count matches the tree the run leaves behind - not the tree it started from
-- [ ] idempotence is pinned: two consecutive runs on an unchanged tree publish identical counts
+- [x] the orphan sweep runs BEFORE the qa projection, or the projection excludes paths the sweep has queued
+- [x] a test writes an orphan witness, runs the generator once, and asserts the published count matches the tree the run leaves behind - not the tree it started from
+- [x] idempotence is pinned: two consecutive runs on an unchanged tree publish identical counts
+
+_2026-10-06T21:52:57Z_ — Claimed by claude/0kbt-orphan-witness-count — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+1. **Reordered generator pipeline** (`cat-harness/scripts/gen-docs-pages.ts`):
+   - Authored page translation QA publishing and orphan asset sweep run BEFORE the QA graph projection.
+   - The orphan sweep records all identified orphan paths in `orphanedQaAssets` and unlinks them in write mode.
+   - `projectQaGraph` is called with `{ exclude: orphanedQaAssets }`, guaranteeing that even during `--check` mode where files are not deleted, queued orphans are excluded from the projection.
+2. **Added `opts.exclude` support** (`cat-harness/content/pipeline/qa-graph-index.ts`):
+   - `readQaGraph` and `projectQaGraph` accept optional `{ exclude?: ReadonlySet<string> }`.
+   - Any path in `exclude` is skipped during file scanning, excluding it from `files` count, family file counts, and bucket tallies.
+3. **Automated tests**:
+   - `cat-harness/content/pipeline/qa-graph-index.test.ts`: verifies `opts.exclude` removes excluded paths from counts, families, and bucket sums.
+   - `cat-harness/scripts/tests/gen-docs-pages-orphan-qa.test.ts`: writes an orphan witness with `fail: 999`, executes `gen-docs-pages.ts`, verifies orphan is removed, asserts published count matches the post-sweep tree on disk rather than the starting tree, and executes a second run to verify strict idempotence.
