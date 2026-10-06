@@ -338,13 +338,12 @@
   "omitted": [
     "registry",
     "packages",
-    "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-06T05:34:56.148Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f4f591029cf2c1e5eb86bc930182d676ffd543e8",
-  "sourceCommitSha": "f4f591029cf2c1e5eb86bc930182d676ffd543e8",
-  "sourceCommitAt": "2026-10-06T07:24:35+02:00",
+  "generatedAt": "2026-10-06T06:34:30.469Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/933c716aecff5082b040f0c4aec9a83618e98db9",
+  "sourceCommitSha": "933c716aecff5082b040f0c4aec9a83618e98db9",
+  "sourceCommitAt": "2026-10-06T08:19:10+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -365,8 +364,10 @@
       "title": "terminology-management",
       "instructionsPath": "skills/content/fhir-ig-authoring/terminology-management.md",
       "instructionLines": 63,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/terminology-management/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/terminology-management/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
@@ -377,8 +378,10 @@
       "title": "ig-publication",
       "instructionsPath": "skills/content/fhir-ig-authoring/ig-publication.md",
       "instructionLines": 118,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
@@ -389,8 +392,10 @@
       "title": "l3-fhir-authoring",
       "instructionsPath": "skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
       "instructionLines": 78,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/l3-fhir-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/l3-fhir-authoring/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
@@ -401,8 +406,10 @@
       "title": "fhir-validation",
       "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
       "instructionLines": 72,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills"
     },
@@ -2456,8 +2463,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f4f591029cf2c1e5eb86bc930182d676ffd543e8",
+    "sha": "933c716aecff5082b040f0c4aec9a83618e98db9",
     "pr": "main",
-    "run": "37418387390"
+    "run": "37423070968"
   }
 }

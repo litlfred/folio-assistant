@@ -338,13 +338,12 @@
   "omitted": [
     "registry",
     "packages",
-    "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-06T05:34:59.192Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f4f591029cf2c1e5eb86bc930182d676ffd543e8",
-  "sourceCommitSha": "f4f591029cf2c1e5eb86bc930182d676ffd543e8",
-  "sourceCommitAt": "2026-10-06T07:24:35+02:00",
+  "generatedAt": "2026-10-06T06:34:34.780Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/933c716aecff5082b040f0c4aec9a83618e98db9",
+  "sourceCommitSha": "933c716aecff5082b040f0c4aec9a83618e98db9",
+  "sourceCommitAt": "2026-10-06T08:19:10+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -379,8 +378,10 @@
       "title": "quality-control",
       "instructionsPath": "skills/content/content-lifecycle-ext/quality-control.md",
       "instructionLines": 70,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/quality-control/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/quality-control/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
@@ -391,8 +392,10 @@
       "title": "normative-statements",
       "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
       "instructionLines": 85,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/normative-statements/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/normative-statements/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
@@ -403,8 +406,10 @@
       "title": "document-structure",
       "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
       "instructionLines": 64,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
@@ -415,8 +420,10 @@
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
       "instructionLines": 301,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
@@ -427,8 +434,10 @@
       "title": "document-authoring",
       "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
       "instructionLines": 92,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
@@ -439,8 +448,10 @@
       "title": "document-publishing",
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
       "instructionLines": 82,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
@@ -9473,8 +9484,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f4f591029cf2c1e5eb86bc930182d676ffd543e8",
+    "sha": "933c716aecff5082b040f0c4aec9a83618e98db9",
     "pr": "main",
-    "run": "37418387390"
+    "run": "37423070968"
   }
 }
