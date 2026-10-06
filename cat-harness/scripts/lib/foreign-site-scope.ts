@@ -25,6 +25,18 @@
  * `_includes/generated/` was already blanked in a shell for the same reason
  * (#2235 F1); these two were the same kind of thing and were not.
  *
+ * Two more of the same kind outlived that fix (the #2263 follow-up):
+ *
+ * - `_data/translation-qa.json` and `_data/translations.json` — the platform's
+ *   translation sweep and translation index. Every folio page's title badge
+ *   read the sweep as its own site's ("Swept 49/689"), and with a locale
+ *   chosen the index rewrote the folio's own Home link to `/<folio>/fr/`,
+ *   which 404s: the index's paths are the platform's pages.
+ * - `fsh-guts`. Its icon was re-based to the platform's page as a link, but on
+ *   a page that loads `docs-ui.js` the icon is a BUTTON whose count is
+ *   fetched from `<this site>/fsh-guts.json` -- which a folio's site does not
+ *   publish -- so it showed "?", an error, where the truth is "absent".
+ *
  * ## The rule this applies
  *
  * **A page's tiles describe the instance whose site the page is on.**
@@ -48,6 +60,12 @@
  *
  * **No root-relative path survives.** Every href leaves here either
  * absolute on the platform, or as a path inside the folio's own root.
+ *
+ * **The same rule binds a FIGURE that is not a tile.** A badge or count the
+ * chrome reads from the page's own site describes the folio or is not shown:
+ * the host's data behind it is left out of the shell
+ * ({@link HOST_DATA_PROJECTIONS}), and the chrome is told, in
+ * `foreignSite.absent`, what to SAY instead of a number. Absent is not zero.
  *
  * @module scripts/lib/foreign-site-scope
  */
@@ -176,10 +194,17 @@ export function scopeNavbarRow(row: unknown, scope: ForeignScope): unknown {
   const r = row as NavbarRow;
   const hrefs: Record<string, string> = {};
   const notes: Record<string, string> = { ...(r.notes ?? {}) };
+  // WHOSE a borrowed link is: the icon row has no qualifier to show, so an
+  // icon re-based onto the platform says so in its accessible name, the way
+  // a borrowed tile shows its qualifier.
+  const whose: Record<string, string> = {};
   for (const [id, href] of Object.entries(r.hrefs ?? {})) {
     const l = scopeLink(href, [id], scope);
     if ("note" in l) notes[id] = l.note;
-    else hrefs[id] = l.href;
+    else {
+      hrefs[id] = l.href;
+      if (!l.own && isAbsoluteUrl(l.href) && !isAbsoluteUrl(href)) whose[id] = `the platform's: ${absentNote(id, scope)}`;
+    }
   }
   const folders = Array.isArray(r.folders)
     ? r.folders.map((f) => {
@@ -189,7 +214,7 @@ export function scopeNavbarRow(row: unknown, scope: ForeignScope): unknown {
         return "note" in l ? { ...rest, note: l.note } : { ...rest, path: l.href };
       })
     : r.folders;
-  return { ...r, hrefs, notes, ...(folders ? { folders } : {}) };
+  return { ...r, hrefs, notes, ...(Object.keys(whose).length ? { whose } : {}), ...(folders ? { folders } : {}) };
 }
 
 /**
@@ -233,6 +258,7 @@ export function scopeHarnessData(data: Json, scope: ForeignScope): Json {
   const tiles = Array.isArray(data.tiles) ? scopeTiles(data.tiles as Tile[], scope) : data.tiles;
   const linked = new Set(Array.isArray(tiles) ? (tiles as Tile[]).filter((t) => t.href).map((t) => t.id) : []);
   const glass = data.glassStrip as { pinned?: string[] } | undefined;
+  const navbar = scopeNavbarRow(data.navbar, scope) as NavbarRow | undefined;
   const links = Array.isArray(data.links)
     ? (data.links as Json[]).map((l) => {
         const { path, ...rest } = l;
@@ -249,24 +275,79 @@ export function scopeHarnessData(data: Json, scope: ForeignScope): Json {
       ? { glassStrip: { ...glass, pinned: glass.pinned.filter((id) => id.startsWith("glass-") || linked.has(id)) } }
       : {}),
     links,
-    navbar: scopeNavbarRow(data.navbar, scope),
+    navbar,
     railScopes: scopeRailScopes(data.railScopes, scope),
     ...(Array.isArray(data.harnesses) ? { harnesses: deepPaths(data.harnesses, scope) } : {}),
     ...(data.config ? { config: deepPaths(data.config, { ...scope, instance: undefined }) } : {}),
     foreignSite: {
       ...(scope.instance ? { instance: scope.instance } : {}),
       platformBase: scope.platformBase,
+      absent: absentFigures(navbar, scope),
     },
   };
 }
 
 /**
- * Is this asset a projection of the HOST's graph rather than chrome? A JSON
- * file declaring a headline `tile` count (`schemas/tile-count.ts`) is one: the
- * bean and todo indexes and their `count.json`, the library, QA and schema
- * indexes. On a folio's site it would be fetched as the folio's own.
+ * The host's `_data/` files that are PROJECTIONS of the host's own pages, not
+ * chrome, and what their absence makes the chrome say on a folio's site.
+ * `compose-docs --shell` leaves each one out ({@link isHostProjection}); the
+ * folio's own build may write its own in their place, and then the chrome
+ * shows the folio's figure, because the Liquid reads whatever file is there.
+ *
+ * Named rather than sniffed: neither file declares what it is about, and the
+ * `tile` test that finds the `assets/` projections does not reach them. A new
+ * data file that describes the host's pages is a new row here, and
+ * `foreign-site-scope.test.ts` fails on the shell until it is one.
+ */
+export const HOST_DATA_PROJECTIONS: Readonly<Record<string, { what: string; absent: string }>> = {
+  // The title badge read it as this site's sweep: "Swept 49/689" on every
+  // page of an IG folio's site was the platform's 49 translated pages out of 689.
+  "_data/translation-qa.json": {
+    what: "the platform's translation QA sweep (pages swept, pages translated)",
+    absent: "the sweep badge says no sweep is published for this site — not 'not run', which would be a claim about the folio",
+  },
+  // Its paths are the platform's pages. With a locale chosen, the folio's own
+  // Home ("/") matched the platform's "/" and became `/<folio>/fr/index.html`.
+  "_data/translations.json": {
+    what: "the platform's translation index (which of ITS pages exist in which locale)",
+    absent: "the index reads as null — 'could not determine' — and the navbar is left exactly as built",
+  },
+};
+
+/** The words for a figure the folio's site does not publish. */
+export function absentFigureNote(what: string, scope: Pick<ForeignScope, "instance">): string {
+  return `${scope.instance ?? "this site"} publishes no ${what} on this site`;
+}
+
+/**
+ * What the chrome must SAY rather than count, per figure, on a folio's site.
+ * Read by `head_custom.html` (`site.data.harness.foreignSite.absent`).
+ *
+ * - `translationQa`: used only when the site carries no
+ *   `_data/translation-qa.json` of its own.
+ * - `fshGuts`: present unless the folio's OWN fsh-guts graph is linked. The
+ *   icon's count is fetched from this site's `/fsh-guts.json`; a folio that
+ *   does not publish one would otherwise show "?" — an error, for what is an
+ *   absence.
+ */
+function absentFigures(navbar: NavbarRow | undefined, scope: ForeignScope): Record<string, string> {
+  const fish = navbar?.hrefs?.["fsh-guts"];
+  const ownFish = typeof fish === "string" && fish.startsWith("/") && !fish.startsWith("//");
+  return {
+    translationQa: absentFigureNote("translation QA sweep", scope),
+    ...(ownFish ? {} : { fshGuts: navbar?.notes?.["fsh-guts"] ?? absentNote("fsh-guts", scope) }),
+  };
+}
+
+/**
+ * Is this file a projection of the HOST's graph rather than chrome? A JSON
+ * asset declaring a headline `tile` count (`schemas/tile-count.ts`) is one:
+ * the bean and todo indexes and their `count.json`, the library, QA and
+ * schema indexes. So is every {@link HOST_DATA_PROJECTIONS} data file. On a
+ * folio's site either would be read as the folio's own.
  */
 export function isHostProjection(rel: string, text: string): boolean {
+  if (Object.hasOwn(HOST_DATA_PROJECTIONS, rel.replace(/\\/g, "/"))) return true;
   if (!/^assets[\\/].+\.json$/.test(rel)) return false;
   if (/^---\s*$/m.test(text.split("\n", 1)[0] ?? "")) return false; // Liquid-rendered from _data, scoped there
   try {

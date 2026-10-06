@@ -251,9 +251,13 @@
     });
   }
 
-  function linkSlot(id, label, href, notes) {
+  function linkSlot(id, label, href, notes, whose) {
     // `safeHref` AFTER `withBase`, so what is checked is the href written.
     var at = safeHref(withBase(href));
+    // A link BORROWED from another site (a folio's site linking the
+    // platform's graph) says whose it is, as a borrowed tile shows its
+    // qualifier (#2263): `whose` is written by `foreign-site-scope.ts`.
+    if (at && whose && typeof whose[id] === "string") label = label + " \u2014 " + whose[id];
     if (at) {
       var a = el("a", { class: "fa-nav-icon", href: at, "aria-label": label, title: label, "data-fa-tip": label });
       a.innerHTML = rowGlyph(id);
@@ -349,6 +353,7 @@
     // "resolved to nothing" and "never declared". See `navbarRow` in
     // `sync-docs-harness.ts`.
     var notes = row.notes && typeof row.notes === "object" ? row.notes : {};
+    var whose = row.whose && typeof row.whose === "object" ? row.whose : {};
 
     var host = el("div", {
       class: "fa-nav-icons", role: "group", "aria-label": "Harness actions",
@@ -363,7 +368,16 @@
       var label = LABELS[id] || id;
 
       if (id === "fsh-guts") {
-        if (full) {
+        // THE BUTTON ONLY WHERE THE TRASHCAN IS THIS SITE'S. Its count and
+        // list are fetched from this site's `/fsh-guts.json`. On a folio's
+        // site the slot is either re-based onto the platform (an absolute
+        // href) or unlinked with a note (`foreign-site-scope.ts`), and a
+        // button there showed "?" for a document that was never published
+        // (#2263 follow-up). It is then a link that says whose, or an inert
+        // icon that says why, like every other borrowed slot.
+        var elsewhere = typeof notes[id] === "string" ||
+          (typeof hrefs[id] === "string" && /^([a-z][a-z0-9+.-]*:|\/\/)/i.test(hrefs[id]));
+        if (full && !elsewhere) {
           // THE TRASHCAN, "with the others" (#1925). A button: it opens the
           // fsh-guts dialog and carries the live count, both wired by
           // `docs-ui.js` (`mountFshGutsNav`) through `data-fa-fsh-guts-open`.
@@ -375,8 +389,9 @@
           fish.appendChild(el("span", { class: "fa-nav-count", "data-fa-count-state": "pending", "aria-hidden": "true" }, "…"));
           host.appendChild(fish);
         } else {
-          // No dialog on this page, so the fish goes to the fsh-guts page.
-          host.appendChild(linkSlot(id, label, hrefs[id], notes));
+          // No dialog on this page, or not this site's trashcan: the fish
+          // goes to the fsh-guts page, or says why it does not.
+          host.appendChild(linkSlot(id, label, hrefs[id], notes, whose));
         }
         continue;
       }
@@ -392,7 +407,7 @@
         continue;
       }
 
-      host.appendChild(linkSlot(id, label, hrefs[id], notes));
+      host.appendChild(linkSlot(id, label, hrefs[id], notes, whose));
     }
 
     // Line 1 is the mark and the name, line 2 is this. On the rail, straight
