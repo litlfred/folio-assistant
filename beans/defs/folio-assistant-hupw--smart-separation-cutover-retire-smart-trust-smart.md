@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-06T19:10:49Z
-updated_at: 2026-10-06T19:30:28Z
+updated_at: 2026-10-06T19:43:03Z
 parent: folio-assistant-n3ni
 ---
 
@@ -50,3 +50,18 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 - Every overlay warns: needs smart-base / smart-trust / smart-immunizations (root) and smart-base (smart-ig) match no instance.
 - audit:coverage: check:fhir-harness-exclusions 'none of its 1 script path(s) could be read'.
 All of these are expected to clear unchanged once a remote mount lands each fork's smart-base/ at the old local path.
+
+
+
+## For the resume (after #2307 merges and #2326 lands). Not acted on yet.
+From #2326's author (0mpw), relayed by the coordinator:
+- **Entry shape:** in folio-assistant.json, `remoteMounts: [{ harness, repository: "litlfred/<fork>", ref: <full 40-char sha>, overrides? }]`. Pins:
+  - smart-base 8e16a06d22fe0b06edebb29ba5c5504bce12cb15
+  - smart-trust 02cb3002ffeb15b8836523d23fcca411325434bc
+  - smart-immunizations fa0b4071ff9f4902dc5371c17caf60f53aaac0cf
+- **Lookup:** `findInstance` finds `<dir>/<name>.json` under any top-level directory, so `smart-base/smart-trust.json` is found for smart-trust.
+- **Mount path:** defaults to the fork declaration's `livesAt.path`, else the directory it was found in. Overrides `{ "smart-trust": { path: "smart-trust" } }` and `{ "smart-immunizations": { path: "smart-immunizations" } }` avoid colliding at `smart-base/`; `upstreamRoot` stays `smart-base/`.
+  - **Measured 2026-10-06 at those pins:** each fork's `livesAt.path` already reads `smart-trust`, `smart-immunizations` and `smart-base`, with `livesAt.repository` still `litlfred/folio-assistant`. So the default may already land correctly, but that rests on a field that is stale in the fork. Set the overrides explicitly anyway, so the mount does not depend on it.
+- **needs:** smart-ig and cat-openapi stay local; smart-base needs fhir-harness, also local.
+- **Before wiring:** `bun run mount:remote --plan --instance <dir>` on #2326's branch. It writes nothing.
+- A separate PR is making `kg:subscribe` honour `upstreamPath`, so the subscriptions can be recorded as well (blocker 3).
