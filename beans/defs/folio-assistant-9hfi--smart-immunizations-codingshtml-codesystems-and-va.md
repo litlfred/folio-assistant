@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9hfi
 title: 'smart-immunizations codings.html: CodeSystems and ValueSets show ''not rendered: list-simple-*.xhtml'''
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T05:56:52Z
-updated_at: 2026-10-06T15:43:51Z
+updated_at: 2026-10-06T18:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -47,3 +47,6 @@ So the fix is option (a), with the index as the single input: a list-(simple-)?<
 `stageIgSite` now writes each `list-(simple-)?<types>.xhtml` a page includes as a Liquid include (`templates/ig-site/artifact-list.liquid`) over `site.data.fhir.artifact_lists`, which `artifactVariables` computes from the same artefact index `artifacts.md` reads. The Publisher's own `temp/` copy still wins when it exists. A name that is no FHIR resource type (e.g. `list-simple-profiles.xhtml`) stays a reported marker. smart-trust's `list-structuremaps.xhtml` marker (beans bamf, 4475) is cleared too: its index holds no StructureMaps and its `input/maps-src/` is empty, so the built maps.html says so instead of showing the marker.
 
 _2026-10-06T15:43:51Z_ — Claimed by claude/9hfi-list-simple-renderer — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Merged 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+#2294 merged as b9e74a1 after CI PASS on its head (`ci:watch`); every Done-when box above was ticked with evidence, re-checked before merging.

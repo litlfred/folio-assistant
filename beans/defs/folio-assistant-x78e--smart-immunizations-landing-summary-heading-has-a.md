@@ -1,10 +1,10 @@
 ---
 # folio-assistant-x78e
 title: 'smart-immunizations landing: Summary heading has a wrong feedback link and no section edit link'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-06T05:56:52Z
-updated_at: 2026-10-06T15:44:01Z
+updated_at: 2026-10-06T18:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -44,3 +44,6 @@ Fix (PR #2292): `sourceHeadings` follows `{% include %}` / `{% lang-fragment %}`
 Related: mftp, whose spec defines the ✎ / 📣 heading links.
 
 _2026-10-06T15:44:01Z_ — Claimed by claude/x78e-heading-links — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Merged 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+#2292 merged as c5714c8 after CI PASS on its head (`ci:watch`); every Done-when box above was ticked with evidence, re-checked before merging.
