@@ -6208,6 +6208,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.contenttranslations",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.contentTranslations"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The translation profile of each content type THIS instance owns: which formats it can extract and inject, and which diagrams need re-rendering. Collected by `schemas/translation-tools.ts` from every present instance (bean `0r7u`, step 0 part 3), so cat-harness names no content type above it. Module and diagram paths resolve from the declaring instance, then down its `needs` chain."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.contentTranslations",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.directories",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -7652,6 +7671,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contenttypetranslationschema.bpmndiagrams",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentTypeTranslationSchema.bpmnDiagrams"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "BPMN diagrams that need re-rendering for translation."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.bpmnDiagrams",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contenttypetranslationschema.contenttype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentTypeTranslationSchema.contentType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Content type identifier (matches adapter name)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.contentType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contenttypetranslationschema.formats",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentTypeTranslationSchema.formats"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Translatable formats this content type supports."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.formats",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contenttypetranslationschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentTypeTranslationSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-readable name."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contenttypetranslationschema.notes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentTypeTranslationSchema.notes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Additional notes about translation for this content type."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.notes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contenttypetranslationschema.rtlsupported",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentTypeTranslationSchema.rtlSupported"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether RTL rendering is supported."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.rtlSupported",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.declaredgraph.abspath",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -8846,6 +8979,177 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#TopologyConflict.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.extensions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.extensions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "File extensions this format applies to."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extensions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.extractmodule",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.extractModule"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "TypeScript module that implements extraction (relative to repo root)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extractModule",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Format identifier."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.injectmodule",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.injectModule"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "TypeScript module that implements injection (relative to repo root)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.injectModule",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Human-readable name."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.notes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.notes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Notes about translating THIS format specifically, as distinct from `ContentTypeTranslation.notes`, which describes the content type as a whole. \"Lean 4 terms stay in English\" and \"the diagram is re-rendered after injection\" are properties of the format, not of the folio."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.notes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.smartbaseextractref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.smartBaseExtractRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Smart-base function/line range for extraction."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseExtractRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.smartbaseinjectref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.smartBaseInjectRef"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Smart-base function/line range for injection."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseInjectRef",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.translatableformatschema.smartbasescript",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslatableFormatSchema.smartBaseScript"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Smart-base Python script that handles this format (reference)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseScript",
       "skos:note": "candidate"
     },
     {
@@ -20173,6 +20477,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/merge-queue.entryobjectschema.release",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "EntryObjectSchema.release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A person's decision to merge, or not — {@link ReleaseSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.release",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/merge-queue.entryobjectschema.repository",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29898,291 +30221,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolSelectionSchema.when",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.contenttypetranslationschema.bpmndiagrams",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ContentTypeTranslationSchema.bpmnDiagrams"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "BPMN diagrams that need re-rendering for translation."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.bpmnDiagrams",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.contenttypetranslationschema.contenttype",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ContentTypeTranslationSchema.contentType"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Content type identifier (matches adapter name)."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.contentType",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.contenttypetranslationschema.formats",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ContentTypeTranslationSchema.formats"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Translatable formats this content type supports."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.formats",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.contenttypetranslationschema.name",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ContentTypeTranslationSchema.name"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Human-readable name."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.name",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.contenttypetranslationschema.notes",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ContentTypeTranslationSchema.notes"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Additional notes about translation for this content type."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.notes",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.contenttypetranslationschema.rtlsupported",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ContentTypeTranslationSchema.rtlSupported"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Whether RTL rendering is supported."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.rtlSupported",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.extensions",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.extensions"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "File extensions this format applies to."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extensions",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.extractmodule",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.extractModule"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "TypeScript module that implements extraction (relative to repo root)."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extractModule",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.id",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.id"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Format identifier."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.id",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.injectmodule",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.injectModule"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "TypeScript module that implements injection (relative to repo root)."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.injectModule",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.name",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.name"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Human-readable name."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.name",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.notes",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.notes"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Notes about translating THIS format specifically, as distinct from `ContentTypeTranslation.notes`, which describes the content type as a whole. \"Lean 4 terms stay in English\" and \"the diagram is re-rendered after injection\" are properties of the format, not of the folio."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.notes",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.smartbaseextractref",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.smartBaseExtractRef"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Smart-base function/line range for extraction."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseExtractRef",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.smartbaseinjectref",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.smartBaseInjectRef"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Smart-base function/line range for injection."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseInjectRef",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/translation-tools.translatableformatschema.smartbasescript",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TranslatableFormatSchema.smartBaseScript"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Smart-base Python script that handles this format (reference)."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseScript",
       "skos:note": "candidate"
     },
     {

@@ -539,8 +539,14 @@ export function qaBadgePlaceholder(opts: { family: QaFamily; key: string; noun: 
   // `relative_url` so the path survives the site's baseurl — `/folio-assistant`
   // here, something else on a staging deploy. A hardcoded absolute path
   // 404s on every deploy but one.
+  //
+  // `lang="en" dir="ltr"` (bean `giiw`): the tag, the tooltip and the panel
+  // it opens are English on every locale. `docs-ui.css` already set
+  // `direction: ltr` on it under `[dir="rtl"]`, which a screen reader cannot
+  // hear and a stylesheet that fails to load does not apply. `docs-ui.js`
+  // builds the hand-authored page's badge with the same two attributes.
   return (
-    `<button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-${opts.family}" ` +
+    `<button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-${opts.family}" lang="en" dir="ltr" ` +
     `data-qa-family="${opts.family}" data-qa-key="${opts.key}" data-qa-label="${label}" ` +
     `data-qa-noun="${opts.noun}" ` +
     `data-qa-src="{{ '/assets/qa/${opts.slug}/${opts.key}.json' | relative_url }}" ` +

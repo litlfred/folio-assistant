@@ -380,10 +380,11 @@ export function localesReadableFor(
 /** The instance's content type, which decides which formats are translatable. */
 export function contentType(instanceRoot: string): string {
   const c = harnessConfig(instanceRoot).contentType;
-  // `src/index.ts` defaults a bare repo to `paper`; both declare Markdown
-  // translatable, so the navbar is unaffected either way and the default is
-  // the same one the rest of the platform uses.
-  return typeof c === "string" && c.length > 0 ? c : "paper";
+  // No declared content type means a plain docs site: the `docs` profile this
+  // harness declares itself (bean `0r7u`). It defaulted to `paper` until the
+  // profiles moved to their owners, which left a standalone cat-harness with
+  // no Markdown profile for its own translated site.
+  return typeof c === "string" && c.length > 0 ? c : "docs";
 }
 
 /**

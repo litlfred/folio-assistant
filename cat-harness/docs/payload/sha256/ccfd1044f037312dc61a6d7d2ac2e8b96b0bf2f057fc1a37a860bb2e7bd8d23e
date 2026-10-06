@@ -113,6 +113,11 @@ hand:
   content.
 - **`.gitignore`** — append the folio entries; keep theirs.
 
+A harness built on this platform may add adoption steps of its own for its
+kind of repository, for example about CI that already publishes a site on
+every push. Ask `skill_list` for the skill governing that kind before
+calling the conversion done.
+
 ## 5. Anti-patterns
 
 1. **Moving a file before Q3 is answered.** The non-relaxable step exists
