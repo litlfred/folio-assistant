@@ -2785,8 +2785,8 @@
     },
     {
       "id": "process_subkglifecycle.task_confirmcutover",
-      "prefLabel": "12 · Owner confirms: freeze the in-repo copy in fsh-guts",
-      "definition": "The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) move to fsh-guts now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, \"1\"): the host keeps a FROZEN copy in fsh-guts, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10.",
+      "prefLabel": "12 · Owner confirms: freeze the in-repo copy",
+      "definition": "The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) freeze it in the kept trashcan now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, \"1\"): the host keeps a FROZEN copy in the kept trashcan, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10.",
       "notation": "Task_ConfirmCutover",
       "source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_ConfirmCutover",
       "status": "candidate"
@@ -2801,8 +2801,8 @@
     },
     {
       "id": "process_subkglifecycle.task_cutover",
-      "prefLabel": "13 · Cutover: move the copy to fsh-guts/separated/",
-      "definition": "Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, to fsh-guts/separated/<name>/ on the fsh-guts branch (skill fsh-guts: a plain mv, git rm --cached, state:push), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory.",
+      "prefLabel": "13 · Cutover: freeze the copy in the kept trashcan",
+      "definition": "Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, under separated/<name>/ in the kept trashcan, on its own branch (a plain mv, git rm --cached, state:push; the trashcan skill says how), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory.",
       "notation": "Task_Cutover",
       "source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Cutover",
       "status": "candidate"
