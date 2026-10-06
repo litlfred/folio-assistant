@@ -163,10 +163,22 @@ async function openBody(li, row) {
   }
 }
 
+/** One row's identity across searches: a library row is a block (`part`) of an entry (`key`). */
+const rowId = (row) => `${row.key}\u0000${row.part ?? ""}`;
+
 function render(result) {
+  // A body the reader opened survives a redraw that still lists its row. The
+  // search box is debounced, so a redraw can land just after a click; rebuilding
+  // that item would throw the open body away mid-fetch.
+  const open = new Map(
+    [...out.children].filter((li) => li.querySelector("pre") && li.dataset.row).map((li) => [li.dataset.row, li]),
+  );
   out.replaceChildren(
     ...result.rows.map((row) => {
+      const kept = open.get(rowId(row));
+      if (kept) return kept;
       const li = el("li");
+      li.dataset.row = rowId(row);
       const btn = el("button", { type: "button", textContent: row.title });
       btn.addEventListener("click", () => openBody(li, row));
       li.append(btn, el("div", { className: "meta", textContent: row.meta }));
