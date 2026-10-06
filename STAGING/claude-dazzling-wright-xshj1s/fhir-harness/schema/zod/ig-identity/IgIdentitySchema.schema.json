@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/IgIdentity",
+  "definitions": {
+    "IgIdentity": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-ig-identity/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical": {
+          "type": "string",
+          "format": "uri"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readFrom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "canonical",
+        "status",
+        "readFrom",
+        "readAt"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-identity/IgIdentitySchema.schema.json",
+  "title": "IgIdentitySchema",
+  "description": "Generated from `IgIdentitySchema` in schemas/ig-identity.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "a19e73d4fb31f32cd2e7b6431d2b68bb56c7958c",
+    "pr": "2272/merge",
+    "run": "37451905524"
+  }
+}

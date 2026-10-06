@@ -1,0 +1,144 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/kg/graph-management/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/domain-fencing",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing"
+      ],
+      "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave — and how any graph is DRAWN so the restructuring can be seen (graph-rendering). The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "name": "graph-management",
+      "path": "skills/kg/graph-management",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/domain-fencing",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 219,
+      "instructionsPath": "skills/kg/graph-management/domain-fencing.md",
+      "name": "domain-fencing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/97d85eb52db9209d16fde9b9346c9eedd22ed88093e4238d3395f0a19b4a1fcc",
+        "bytes": 11674,
+        "sha256": "97d85eb52db9209d16fde9b9346c9eedd22ed88093e4238d3395f0a19b4a1fcc"
+      },
+      "title": "Domain fencing — keeping one folio's rules out of everybody's platform"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "A graph has more than one kind of edge, and conflating them corrupts both the ordering and the impact answer. Interface edges versus implementation edges, the union rule for blast radius, and the split/merge signals — generalized out of the formal-math skills that first stated them.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 170,
+      "instructionsPath": "skills/kg/graph-management/edge-kinds-and-blast-radius.md",
+      "name": "edge-kinds-and-blast-radius",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d622e90e88f16c5e3a9bb88bbe439940f207e93bc6b436d227b4231c133973b",
+        "bytes": 7530,
+        "sha256": "7d622e90e88f16c5e3a9bb88bbe439940f207e93bc6b436d227b4231c133973b"
+      },
+      "title": "consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — \"Not every edge is a dependency\", \"Provenance is three-valued\", \"Taint propagates down the dependency graph\". It is read before deciding how to traverse a graph; nobody performs it as a task."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it. The staged practice — declare in place, detangle, isolate, extract — with the seventeen moves that were measured rather than argued, and the failures each one cost.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 351,
+      "instructionsPath": "skills/kg/graph-management/graph-detanglement.md",
+      "name": "graph-detanglement",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2d75040daf6b0978bfd66c299538d8b4850852231a3b9e27053849efd862f560",
+        "bytes": 17961,
+        "sha256": "2d75040daf6b0978bfd66c299538d8b4850852231a3b9e27053849efd862f560"
+      },
+      "title": "Graph detanglement — the practice, not the migration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 140,
+      "instructionsPath": "skills/kg/graph-management/graph-rendering.md",
+      "name": "graph-rendering",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/26805cde335e323433857bd5ceb5c663c869b077bc195b3dffa1a8b568d4b50e",
+        "bytes": 9071,
+        "sha256": "26805cde335e323433857bd5ceb5c663c869b077bc195b3dffa1a8b568d4b50e"
+      },
+      "title": "Graph rendering: one set of rules for every drawn graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, and rollback. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 287,
+      "instructionsPath": "skills/kg/graph-management/kg-separation.md",
+      "name": "kg-separation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/71722d54aae0b1efbc897ea952b5d2adaecdea24d6d75a5f13e20af1a8570725",
+        "bytes": 18046,
+        "sha256": "71722d54aae0b1efbc897ea952b5d2adaecdea24d6d75a5f13e20af1a8570725"
+      },
+      "title": "Knowledge Graph separation — the method"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the beans, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 283,
+      "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
+      "name": "lsi-indexing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0fc1a338debc2461ae060e8f52bb35197e79f3fd4fac6e261efa71e27929d47e",
+        "bytes": 15443,
+        "sha256": "0fc1a338debc2461ae060e8f52bb35197e79f3fd4fac6e261efa71e27929d47e"
+      },
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/kg/graph-management",
+  "path": "skills/kg/graph-management/"
+}
