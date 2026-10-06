@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/AstEdge",
+  "definitions": {
+    "AstEdge": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resolved": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source",
+        "kind",
+        "target",
+        "targetVersion",
+        "resolved",
+        "origin"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast/AstEdgeSchema.schema.json",
+  "title": "AstEdgeSchema",
+  "description": "Generated from `AstEdgeSchema` in schemas/ig-ast.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/goal5-ingest-spine",
+    "sha": "7c6987eeebc36750db172b8bf7b185e965d33a76",
+    "pr": "2262/merge",
+    "run": "37437835250"
+  }
+}

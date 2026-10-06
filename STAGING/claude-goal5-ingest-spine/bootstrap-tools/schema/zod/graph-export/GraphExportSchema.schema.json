@@ -1,0 +1,116 @@
+{
+  "$ref": "#/definitions/GraphExport",
+  "definitions": {
+    "GraphExport": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "comment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "wasAttributedTo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "versionInfo": {
+          "type": "string"
+        },
+        "generatedAtTime": {
+          "type": "string"
+        },
+        "wasDerivedFrom": {
+          "type": "string"
+        },
+        "@graph": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "@id": {
+                "type": "string",
+                "format": "uri"
+              },
+              "@type": {
+                "type": "string",
+                "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+              }
+            },
+            "required": [
+              "@id",
+              "@type"
+            ],
+            "additionalProperties": {}
+          }
+        },
+        "omitted": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "counts": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "problems": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "@context",
+        "@id",
+        "@type",
+        "label",
+        "comment",
+        "wasAttributedTo",
+        "versionInfo",
+        "@graph",
+        "omitted",
+        "counts",
+        "problems"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-goal5-ingest-spine/bootstrap-tools/schema/zod/graph-export/GraphExportSchema.schema.json",
+  "title": "GraphExportSchema",
+  "description": "Generated from `GraphExportSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/goal5-ingest-spine",
+    "sha": "7c6987eeebc36750db172b8bf7b185e965d33a76",
+    "pr": "2262/merge",
+    "run": "37437835250"
+  }
+}
