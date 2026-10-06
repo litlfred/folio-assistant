@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, unlinkSync, writeFileSync }
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { STAMP_PATH, ensureWorkingCopy, qaChanged, workingCopyState } from "../qa-working-copy.ts";
+import { BUILDING_ENV, STAMP_PATH, ensureWorkingCopy, qaChanged, requireCurrentWorkingCopy, workingCopyState } from "../qa-working-copy.ts";
 import { regenToFixpoint, type Pair, type Runner } from "../regen-after-merge.ts";
 
 function sh(cwd: string, ...args: string[]): void {
@@ -119,6 +119,30 @@ describe("the stamp says which tree the copy was built from", () => {
     try {
       ensureWorkingCopy(f.dir, f.opts);
       expect(ensureWorkingCopy(f.dir, { ...f.opts, force: true }).ran).toBe(true);
+    } finally {
+      f.cleanup();
+    }
+  });
+
+  test("a generator running INSIDE a build does not ask for another (no recursion through readme:subgraphs)", () => {
+    const f = fixture();
+    const prev = process.env[BUILDING_ENV];
+    try {
+      process.env[BUILDING_ENV] = "1";
+      requireCurrentWorkingCopy(f.dir, "test");
+      expect(existsSync(join(f.dir, STAMP_PATH))).toBe(false);
+    } finally {
+      if (prev === undefined) delete process.env[BUILDING_ENV];
+      else process.env[BUILDING_ENV] = prev;
+      f.cleanup();
+    }
+  });
+
+  test("a build's steps run with the building flag set", () => {
+    const f = fixture();
+    try {
+      const r = ensureWorkingCopy(f.dir, { ...f.opts, steps: [["sh", "-c", `test "$${BUILDING_ENV}" = 1`]] });
+      expect(r).toMatchObject({ ran: true, ok: true });
     } finally {
       f.cleanup();
     }

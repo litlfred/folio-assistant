@@ -157,7 +157,11 @@ export function ensureWorkingCopy(repoRoot: string, opts: EnsureOptions = {}): E
   const before = qaTreeDigest(repoRoot, opts.roots).files;
   rmSync(join(repoRoot, STAMP_PATH), { force: true });
   for (const step of opts.steps ?? WORKING_COPY_STEPS) {
-    const r = spawnSync(step[0]!, step.slice(1), { cwd: repoRoot, stdio: opts.stdio ?? "inherit" });
+    const r = spawnSync(step[0]!, step.slice(1), {
+      cwd: repoRoot,
+      stdio: opts.stdio ?? "inherit",
+      env: { ...process.env, [BUILDING_ENV]: "1" },
+    });
     if (r.status !== 0) return { ran: true, ok: false, why: st.why, exit: r.status, step: step.join(" ") };
   }
   const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot));
@@ -169,6 +173,36 @@ export function ensureWorkingCopy(repoRoot: string, opts: EnsureOptions = {}): E
     writeFileSync(abs, JSON.stringify({ tree: tree.hash, qa: after.hash, at: new Date().toISOString() } satisfies Stamp, null, 2) + "\n");
   }
   return { ran: true, ok: true, why: st.why, changed: qaChanged(before, after.files) };
+}
+
+/**
+ * Set for the steps of a build. A generator that is ALSO one of the QA writers
+ * (`readme:subgraphs`) runs inside the build it would otherwise ask for, and
+ * reads the copy as the build has made it so far — as it always did.
+ */
+export const BUILDING_ENV = "QA_WORKING_COPY_BUILDING";
+
+/**
+ * For a generator that reads the QA copy from disk (`uml:overview`,
+ * `readme:subgraphs`): make the copy current before reading it, whoever ran
+ * the generator. regen does this before every pass, but `skill:register`
+ * runs `uml:overview` on its own, and so does a person — measured on this
+ * branch 2026-10-06, `skill:register` in a worktree with no built copy
+ * rewrote the QA-overview UML from the few tracked files under `test/results/`.
+ * Exits 2 (could not determine) when the copy cannot be built.
+ */
+export function requireCurrentWorkingCopy(repoRoot: string, who: string): void {
+  if (process.env[BUILDING_ENV] === "1") return;
+  const r = ensureWorkingCopy(repoRoot);
+  if (!r.ran) return;
+  if (!r.ok) {
+    console.error(
+      `${who}: UNKNOWN — the QA working copy it reads was not current (${r.why}) and building it failed ` +
+        `(\`${r.step}\` exited ${r.exit ?? "on a signal"}). Nothing was written; this is NOT a pass.`,
+    );
+    process.exit(2);
+  }
+  console.log(`${who}: built the QA working copy first (${r.why})`);
 }
 
 function main(argv: string[]): number {
