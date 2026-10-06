@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 128 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 6 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 128 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 6 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 168 terms and is 121 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 169 terms and is 121 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>168</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>168</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>169</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>169</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">168</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">169</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -101,6 +101,13 @@ Build an IG and write its AST <span class="fa-gloss-status">candidate, extracted
 <dd>
 <p>Run one ordinary IG Publisher build through <code>AstPublisher</code> (a subclass that overrides nothing) and write the AST beside <code>output/</code>: one JSON file per resource keyed <code>canonical|version</code>, <code>dependencies.json</code> (upstream's DependencyAnalyser plus the Library/PlanDefinition/ActivityDefinition/Measure edges it leaves empty), SUSHI's <code>fsh-index.json</code>, and a manifest that declares itself a cache and records the inputs it is valid for.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-export</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--site-build-local" data-fa-state="extracted" data-fa-gloss="">
+Build the docs site locally <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build <a href="#cat-harness--kg-tools--pages-publish"><code>pages-publish</code></a> runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#site-build-local</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--lsi-index" data-fa-state="extracted" data-fa-gloss="">
 Build the Latent Semantic Indexing index of a prose graph <span class="fa-gloss-status">candidate, extracted</span>
@@ -527,12 +534,12 @@ L1 source completeness <span class="fa-gloss-status">candidate, extracted</span>
 <p>Is a <code>library/&lt;bib-slug&gt;/</code> entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#l1-complete-check</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--lean-cache" data-fa-state="extracted" data-fa-gloss="">
+<dt id="folio-assistant-sci--kg-tools--lean-cache" data-fa-state="extracted" data-fa-gloss="">
 Lake olean cache <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Restore, verify, seed and diagnose the prebuilt <code>.lake/</code> artefacts for a Lean package. Always try <code>restore</code> first: a from-source Mathlib build is 30–60 minutes, a restore about two.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#lean-cache</code></a></p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#lean-cache</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--lsi-viewer" data-fa-state="extracted" data-fa-gloss="">
 Latent semantic index viewer <span class="fa-gloss-status">candidate, extracted</span>
