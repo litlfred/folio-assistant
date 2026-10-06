@@ -24,7 +24,7 @@ Two writers that touch the same output (or a writer whose output is another chec
 - [x] a concurrency limit (default = CPU count, overridable) in `gates.ts` and `regen-after-merge.ts`
 - [x] writers stay serial, or are proven disjoint by declaration
 - [x] serial vs parallel give the same verdicts and the same tree (test)
-- [ ] measured: wall-clock before/after on the same tree and load
+- [x] measured: wall-clock before/after on the same tree and load (2026-10-06, below)
 
 
 ## 2026-10-06
@@ -39,3 +39,28 @@ Two writers that touch the same output (or a writer whose output is another chec
   - gates' serial vs parallel share was NOT measured separately: a gate run is about 40 minutes here. a2a8e6c63 now prints each serial gate's time. In the last run `bun test` (1525 s) and `check:cat-harness-standalone` (496 s) were 2021 of 2765 s, and the pool cannot shorten either.
 
 _2026-10-06T19:00:41Z_ — Claimed by claude/v3nf-parallel-gates-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-06 (session_01NkYi3cBnjWW3ESQF5d9i6v, PR #2333, issue #2332)
+
+**Box 4, gates measured** on one tree (main @ de6e34e83), `--no-cache`, Bun 1.3.14, 4 CPUs, an otherwise idle container (no other sessions):
+
+| run | wall | user | sys | load start → end |
+|---|---|---|---|---|
+| `gates --jobs 3` | 2044 s | 2474 s | 778 s | 0.4 → 3.0 |
+| `gates --jobs 1` | 2369 s | 2205 s | 764 s | 3.0 → 2.2 |
+
+- The gain is about 14%. The 37 serial gates cap it at 1586 s: `bun test` is 1053 s and `check:cat-harness-standalone` 377 s.
+- The 214 read-only gates sum to 697 s one at a time and take about 458 s of wall time in the pool.
+- Both runs failed `check:materialized-fixity`, which is on main.
+- The `--jobs 1` run also failed an fsh-guts bean-reference test in `bun test`. That is not from the pool: the test runs serially in both modes.
+
+**The tree guard under concurrency (#2333):**
+- Every gate's `[start, end]` window is recorded.
+- Each changed path's mtime is checked against those windows:
+  - inside no window: reported as an outside change;
+  - inside a pooled batch: names only the gates running at that instant;
+  - deleted, quoted or renamed path: could not determine.
+
+**Next lever, being measured:** declaring `check:cat-harness-standalone` read-only.
+- Under strace it writes nothing in the checkout; every write is in a fresh `mkdtemp` directory.
+- Under strace plus a concurrent gates run, 25 tests outside its baseline failed, probably timeouts. So it is declared only if its baseline holds under pool load.
