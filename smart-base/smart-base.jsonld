@@ -340,18 +340,18 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T12:30:57.771Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e11bc289f4bd8d742f9d0883154876814bfd3cc4",
-  "sourceCommitSha": "e11bc289f4bd8d742f9d0883154876814bfd3cc4",
-  "sourceCommitAt": "2026-10-06T14:17:58+02:00",
+  "generatedAt": "2026-10-06T13:28:28.692Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1b35e021a5687f44153f0b2537d5755581fc9ff8",
+  "sourceCommitSha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
+  "sourceCommitAt": "2026-10-06T15:11:32+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 8,
+    "Skill": 9,
     "Process": 2,
-    "SequenceFlow": 35,
+    "SequenceFlow": 36,
     "Lane": 7,
-    "ProcessNode": 29,
+    "ProcessNode": 30,
     "GraphTypology": 15,
     "Subgraph": 16,
     "Asset": 2
@@ -413,6 +413,18 @@
       "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index. Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
       "instructionLines": 139,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "dak-l1-library",
+      "title": "dak-l1-library",
+      "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, extracting the Component 1 graph, and the two validators it must pass.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
+      "instructionLines": 102,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false
@@ -901,8 +913,8 @@
       "startNode": [
         "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline"
       ],
-      "nodeCount": 16,
-      "flowCount": 21,
+      "nodeCount": 17,
+      "flowCount": 22,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
     {
@@ -918,6 +930,14 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
       "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
       "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
@@ -1156,6 +1176,28 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Build the L1 library from Component 1",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
+      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
+      "implementedBy": [
+        "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22"
+      ],
+      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Seed the work plan",
@@ -1171,7 +1213,7 @@
       "workPlanOp": "claim",
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02"
+        "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22"
       ],
       "outgoing": [
         "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03"
@@ -1790,7 +1832,7 @@
       ],
       "description": "The reader-facing pages, and the landing page `/smart-base/` serves. Generated by `smart-base:pages` (`fhir-harness/scripts/gen-ig-pages.ts --summary`) from `fhir-artifact-index/index.json` plus this declaration: the index page opens with this instance's own description and every declared graph with its viewer (the `harness_details.html` include over `site.data.harness`), then the artefact index. WHY IT EXISTS: before it, smart-base declared no renderable graph, so `/smart-base/` published nothing and the navbar tile fell back to the library viewer -- `harness-tiles.ts` reported that as a finding. Owner, 2026-10-01 (#1767): \"smart-base/ needs a landing page\". NOTHING HERE IS AUTHORED; `smart-base:pages:check` is the gate. The banner names THIS IG (`smart.who.int.base`) from the index, not the IG the chrome was ingested from, and draws no status watermark because the chrome's status is smart-trust's (bean `bamf`).",
       "readmePath": "docs/README.md",
-      "fileCount": 302,
+      "fileCount": 301,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-docs"
     },
     {
@@ -1865,8 +1907,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e11bc289f4bd8d742f9d0883154876814bfd3cc4",
+    "sha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
     "pr": "main",
-    "run": "37462264557"
+    "run": "37468868227"
   }
 }

@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T12:30:49.433Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e11bc289f4bd8d742f9d0883154876814bfd3cc4",
-  "sourceCommitSha": "e11bc289f4bd8d742f9d0883154876814bfd3cc4",
-  "sourceCommitAt": "2026-10-06T14:17:58+02:00",
+  "generatedAt": "2026-10-06T13:28:17.963Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1b35e021a5687f44153f0b2537d5755581fc9ff8",
+  "sourceCommitSha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
+  "sourceCommitAt": "2026-10-06T15:11:32+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -485,7 +485,7 @@
       "title": "ig-site-links",
       "description": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the two gates that keep a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.",
       "instructionsPath": "skills/fhir-ig-base/ig-site-links.md",
-      "instructionLines": 83,
+      "instructionLines": 96,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2402,7 +2402,7 @@
       ],
       "description": "The IG site pipeline's code and the Liquid templates it renders with: `stage-ig-sites.ts` stages each instance's IG as its own just-the-docs site, `build-ig-site.ts` turns an IG's `input/` and `sushi-config.yaml` into that site (navigation, colour scheme, the lifted `site.data.fhir` artefact variables, and the Publisher-generated pages `toc` and `artifacts`), `ig-site-data.ts` lifts the IG's `_data`, and `ig-ast.ts` lists, checks, diffs and renders IG ASTs. Templates sit under `templates/`, beside the writer that reads them (`liquid-templates`). Undeclared until 2026-10-01 while the Tool nodes in `tools/` invoked every one of these files: a `.liquid` file in an undeclared directory is one no checker looks at, which is what declaring it fixes.",
       "readmePath": "scripts/README.md",
-      "fileCount": 54,
+      "fileCount": 55,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-scripts"
     },
     {
@@ -2462,8 +2462,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e11bc289f4bd8d742f9d0883154876814bfd3cc4",
+    "sha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
     "pr": "main",
-    "run": "37462264557"
+    "run": "37468868227"
   }
 }

@@ -335,10 +335,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T12:31:16.897Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e11bc289f4bd8d742f9d0883154876814bfd3cc4",
-  "sourceCommitSha": "e11bc289f4bd8d742f9d0883154876814bfd3cc4",
-  "sourceCommitAt": "2026-10-06T14:17:58+02:00",
+  "generatedAt": "2026-10-06T13:28:52.865Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1b35e021a5687f44153f0b2537d5755581fc9ff8",
+  "sourceCommitSha": "1b35e021a5687f44153f0b2537d5755581fc9ff8",
+  "sourceCommitAt": "2026-10-06T15:11:32+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1330,7 +1330,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/graph-rendering.md",
-      "instructionLines": 140,
+      "instructionLines": 176,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1905,7 +1905,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 133,
+      "instructionLines": 146,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3803,7 +3803,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
-      "instructionLines": 596,
+      "instructionLines": 619,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40241,7 +40241,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3203,
+      "fileCount": 3206,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -40344,7 +40344,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 175,
+      "fileCount": 176,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
@@ -43680,6 +43680,11 @@
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B21"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/flow/B22",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst"
@@ -43758,6 +43763,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
@@ -44923,6 +44933,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/critical-path-analysis",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/critical-path-analysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dak-l1-library",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dak-postprocessing",
