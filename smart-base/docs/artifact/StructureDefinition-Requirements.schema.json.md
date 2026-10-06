@@ -3,6 +3,8 @@ title: "Functional and Non-Functional Requirements (DAK) — JSON Schema"
 description: "The JSON Schema sidecar of StructureDefinition/Requirements, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"StructureDefinition-Requirements.schema.json","src":"../fhir-artifact-index/dak/StructureDefinition-Requirements.schema.json","artifact":{"title":"Functional and Non-Functional Requirements (DAK)","page":"StructureDefinition-Requirements.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-Requirements.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-Requirements.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-Requirements.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-Requirements.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-Requirements.schema.json.html","active":true}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

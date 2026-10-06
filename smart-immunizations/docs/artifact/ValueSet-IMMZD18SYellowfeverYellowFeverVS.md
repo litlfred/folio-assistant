@@ -2,6 +2,10 @@
 title: "IMMZD18SYellowfeverYellowFever ValueSet for Decision Table — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZD18SYellowfeverYellowFeverVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZD18SVaricella2DosesVS.html"
+ig_next: "ValueSet-IMMZD2DTBCGVS.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SYellowfeverYellowFeverVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SYellowfeverYellowFeverVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SYellowfeverYellowFeverVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.jsonld` |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZD18SVaricella2DosesVS.html" data-next="ValueSet-IMMZD2DTBCGVS.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

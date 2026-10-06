@@ -3,6 +3,8 @@ title: "GDHCNParticipant-USA-DEV — change history"
 description: "United States of America - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Organization-GDHCNParticipant-USA-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-USA-DEV.xml","active":false},{"label":"JSON","href":"Organization-GDHCNParticipant-USA-DEV.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-USA-DEV.ttl","active":false}],"heading":"United States of America - Change History","sections":[{"text":"History of changes for GDHCNParticipant-USA-DEV ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

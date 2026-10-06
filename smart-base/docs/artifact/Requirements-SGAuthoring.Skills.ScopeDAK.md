@@ -2,6 +2,10 @@
 title: "Can scope DAK — WHO SMART Base artefact"
 description: "Requirements/SGAuthoring.Skills.ScopeDAK in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Requirements-SGAuthoring.Skills.RunQAChecks.html"
+ig_next: "Requirements-SGAuthoring.Skills.TranslateContent.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Capability to define DAK scope, identify source documents, and establish the dev
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="Requirements-SGAuthoring.Skills.RunQAChecks.html" data-next="Requirements-SGAuthoring.Skills.TranslateContent.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>
