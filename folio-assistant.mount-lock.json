@@ -1,0 +1,210 @@
+{
+  "$schema": "cat-harness-mount-lock/v1",
+  "mounts": [
+    {
+      "harness": "smart-base",
+      "repository": "litlfred/smart-base",
+      "ref": "8e16a06d22fe0b06edebb29ba5c5504bce12cb15"
+    },
+    {
+      "harness": "smart-trust",
+      "repository": "litlfred/smart-trust",
+      "ref": "02cb3002ffeb15b8836523d23fcca411325434bc"
+    },
+    {
+      "harness": "smart-immunizations",
+      "repository": "litlfred/smart-immunizations",
+      "ref": "fa0b4071ff9f4902dc5371c17caf60f53aaac0cf"
+    }
+  ],
+  "instances": [
+    {
+      "instance": "smart-base",
+      "repository": "litlfred/smart-base",
+      "sha": "8e16a06d22fe0b06edebb29ba5c5504bce12cb15",
+      "upstreamRoot": "smart-base",
+      "path": "smart-base",
+      "via": "smart-base",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "smart-base.json",
+        "sha256": "80717661ec1e7381edd8e95599b0f7fa266486d924a132906d65e321a5266dc8"
+      },
+      "directories": [
+        {
+          "id": "smart-base-qa-checkers",
+          "path": "smart-base/qa-checkers",
+          "upstreamPath": "smart-base/qa-checkers",
+          "treeDigest": "da961665fde8fe30dc592ffe88f7b2198d496e1eea9a4e756912e929db86ff57",
+          "files": 6
+        },
+        {
+          "id": "smart-base-block-kinds",
+          "path": "smart-base/block-kinds",
+          "upstreamPath": "smart-base/block-kinds",
+          "treeDigest": "d4eae5e6ea90b823e5c9f85d8e03bfda61f3a1196c9f7fd612f68dcb29c98ac8",
+          "files": 22
+        },
+        {
+          "id": "smart-base-content-adapters",
+          "path": "smart-base/content-adapters",
+          "upstreamPath": "smart-base/content-adapters",
+          "treeDigest": "632f089ae5bb8c8005d2cde5e2a15416742ff002c06506566b940b13f8079c88",
+          "files": 2
+        },
+        {
+          "id": "smart-base-translations",
+          "path": "smart-base/translations",
+          "upstreamPath": "smart-base/translations",
+          "treeDigest": "db6a92cacfddfb80696ff509327a7e4f1ce251b61acee316e91b949af132709a",
+          "files": 11
+        },
+        {
+          "id": "library",
+          "path": "smart-base/library",
+          "upstreamPath": "smart-base/library",
+          "treeDigest": "c2e15f876a98f9151480aaf889d58c449033be42958ae93eec2b6eebd03bc498",
+          "files": 3350
+        },
+        {
+          "id": "methodologies",
+          "path": "smart-base/methodologies",
+          "upstreamPath": "smart-base/methodologies",
+          "treeDigest": "4758e7d47a0a82a7f752d29158bb9cd4477907ffc1d4df5807a0f5e2589fb8df",
+          "files": 4
+        },
+        {
+          "id": "processes",
+          "path": "smart-base/methodologies/processes",
+          "upstreamPath": "smart-base/methodologies/processes",
+          "treeDigest": "3f6edaefa37cf25e21c765166b4d5cb5844bb864784fae8cd14f88ab0802569f",
+          "files": 2
+        },
+        {
+          "id": "smart-base-house-processes",
+          "path": "smart-base/processes",
+          "upstreamPath": "smart-base/processes",
+          "treeDigest": "dfe9750096745c1a932b5091d3c0e9785fb9e9ff263426edcd41136b63971b36",
+          "files": 2
+        },
+        {
+          "id": "smart-base-artifact-index",
+          "path": "smart-base/fhir-artifact-index",
+          "upstreamPath": "smart-base/fhir-artifact-index",
+          "treeDigest": "daf964fd49dc7a4b6c8dde691251c72e8fc1052160ca10b80e658873abfaaada",
+          "files": 143
+        },
+        {
+          "id": "tools",
+          "path": "smart-base/tools",
+          "upstreamPath": "smart-base/tools",
+          "treeDigest": "958ef0e61211ee6dc7ca51af8804d8c1ecd32ae990bf57d1593800b3ef7dd6d4",
+          "files": 2
+        },
+        {
+          "id": "smart-base-themes",
+          "path": "smart-base/themes",
+          "upstreamPath": "smart-base/themes",
+          "treeDigest": "c43b2b66eb5904bda62a762bf55238ecaaedb08e01162071f1f019827fe133fa",
+          "files": 5
+        },
+        {
+          "id": "smart-base-document-kinds",
+          "path": "smart-base/document-kinds",
+          "upstreamPath": "smart-base/document-kinds",
+          "treeDigest": "16652602c33e1690c319a0faee60f6664ba6c0f2f1e1e8a31029d169b2981816",
+          "files": 8
+        },
+        {
+          "id": "smart-base-findings",
+          "path": "smart-base/findings",
+          "upstreamPath": "smart-base/findings",
+          "treeDigest": "21160209a4fb5578ae46d6306273d00608d32c1e03bc6ab13c6e027fbeb352ee",
+          "files": 5
+        },
+        {
+          "id": "smart-base-external-schemas",
+          "path": "smart-base/external-schemas",
+          "upstreamPath": "smart-base/external-schemas",
+          "treeDigest": "aeab979604f797ca7d3eae49f33038e86c5ca7948875230f7db27d0c8a7f0b4d",
+          "files": 3
+        }
+      ]
+    },
+    {
+      "instance": "smart-immunizations",
+      "repository": "litlfred/smart-immunizations",
+      "sha": "fa0b4071ff9f4902dc5371c17caf60f53aaac0cf",
+      "upstreamRoot": "smart-base",
+      "path": "smart-immunizations",
+      "via": "smart-immunizations",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "smart-immunizations.json",
+        "sha256": "006fe12d55db87b011d2cd5709ce7baaa7335147d896130bd143ddda779e6dbf"
+      },
+      "directories": [
+        {
+          "id": "smart-immunizations-artifact-index",
+          "path": "smart-immunizations/fhir-artifact-index",
+          "upstreamPath": "smart-base/fhir-artifact-index",
+          "treeDigest": "ba2790837c11979ec805bbf4b0f992805ebfecb1b96fdb2dfa2e2fee28059265",
+          "files": 777
+        }
+      ]
+    },
+    {
+      "instance": "smart-trust",
+      "repository": "litlfred/smart-trust",
+      "sha": "02cb3002ffeb15b8836523d23fcca411325434bc",
+      "upstreamRoot": "smart-base",
+      "path": "smart-trust",
+      "via": "smart-trust",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "smart-trust.json",
+        "sha256": "4fab91190fb4cf9b4bbe28c3bd870a23ff7ba9c2142070d2208b2d41bf6ce997"
+      },
+      "directories": [
+        {
+          "id": "smart-trust-artifact-index",
+          "path": "smart-trust/fhir-artifact-index",
+          "upstreamPath": "smart-base/fhir-artifact-index",
+          "treeDigest": "06fe6f710fd3bf6f409f2c93aba8b61e4efe9ead10f84b79a537785f71fe99d5",
+          "files": 76
+        },
+        {
+          "id": "smart-trust-openapi",
+          "path": "smart-trust/openapi",
+          "upstreamPath": "smart-base/openapi",
+          "treeDigest": "ed1beea8fbad4b9ebb103c1599f854adb32d0f8fc73c800bb870316f8a8da886",
+          "files": 3
+        },
+        {
+          "id": "smart-trust-scripts",
+          "path": "smart-trust/scripts",
+          "upstreamPath": "smart-base/scripts",
+          "treeDigest": "e957ac1921e282033b574126e193f0600ed5e675ac25f1a824b1e5829e16f94e",
+          "files": 2
+        }
+      ]
+    }
+  ],
+  "unmounted": [
+    {
+      "instance": "cat-openapi",
+      "state": "local",
+      "detail": "held by this checkout; not mounted over"
+    },
+    {
+      "instance": "fhir-harness",
+      "state": "local",
+      "detail": "held by this checkout; not mounted over"
+    },
+    {
+      "instance": "smart-ig",
+      "state": "local",
+      "detail": "held by this checkout; not mounted over"
+    }
+  ]
+}

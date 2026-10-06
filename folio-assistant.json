@@ -55,7 +55,9 @@
             "ref": "cat-harness/docs/fsh-guts/index.md",
             "title": "fsh-guts",
             "publish": "staging-only",
-            "writer": ["cat-harness/scripts/gen-fsh-guts-viz.ts"]
+            "writer": [
+              "cat-harness/scripts/gen-fsh-guts-viz.ts"
+            ]
           }
         ]
       },
@@ -172,6 +174,63 @@
     "smart-immunizations",
     "smart-trust",
     "who-iris"
+  ],
+  "_remoteMounts_comment": "THE SMART SEPARATION CUTOVER (bean hupw, owner 2026-10-06: 'smart-immz, smart-trust, smart-base'; 'All three now'). The three FHIR IG instances left this repository for their forks litlfred/<name>, and their in-repo copies were retired to fsh-guts/separated/<name>.tar.gz by `state:seed --retire`. They come back here as REMOTE MOUNTS at pinned SHAs, never submodules, so the checkout's `needs`, the site composition and the gates that read them see the same paths they always did. In each fork the declaration sits at `smart-base/<name>.json`, one directory down, so each override puts the instance at its old home path explicitly rather than relying on the fork's `livesAt.path`. smart-ig stays local ('leave smart-ig for now').",
+  "remoteMounts": [
+    {
+      "harness": "smart-base",
+      "repository": "litlfred/smart-base",
+      "ref": "8e16a06d22fe0b06edebb29ba5c5504bce12cb15",
+      "overrides": {
+        "smart-base": {
+          "path": "smart-base",
+          "directories": [
+            "smart-base-qa-checkers",
+            "smart-base-block-kinds",
+            "smart-base-content-adapters",
+            "smart-base-translations",
+            "library",
+            "methodologies",
+            "processes",
+            "smart-base-house-processes",
+            "smart-base-artifact-index",
+            "tools",
+            "smart-base-themes",
+            "smart-base-document-kinds",
+            "smart-base-findings",
+            "smart-base-external-schemas"
+          ]
+        }
+      }
+    },
+    {
+      "harness": "smart-trust",
+      "repository": "litlfred/smart-trust",
+      "ref": "02cb3002ffeb15b8836523d23fcca411325434bc",
+      "overrides": {
+        "smart-trust": {
+          "path": "smart-trust",
+          "directories": [
+            "smart-trust-artifact-index",
+            "smart-trust-openapi",
+            "smart-trust-scripts"
+          ]
+        }
+      }
+    },
+    {
+      "harness": "smart-immunizations",
+      "repository": "litlfred/smart-immunizations",
+      "ref": "fa0b4071ff9f4902dc5371c17caf60f53aaac0cf",
+      "overrides": {
+        "smart-immunizations": {
+          "path": "smart-immunizations",
+          "directories": [
+            "smart-immunizations-artifact-index"
+          ]
+        }
+      }
+    }
   ],
   "stickies": [
     {
