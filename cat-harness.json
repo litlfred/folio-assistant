@@ -335,10 +335,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T06:34:17.933Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/933c716aecff5082b040f0c4aec9a83618e98db9",
-  "sourceCommitSha": "933c716aecff5082b040f0c4aec9a83618e98db9",
-  "sourceCommitAt": "2026-10-06T08:19:10+02:00",
+  "generatedAt": "2026-10-06T08:07:07.974Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f17aaf093412a3afb2f78b7d05b548e98edaf69f",
+  "sourceCommitSha": "f17aaf093412a3afb2f78b7d05b548e98edaf69f",
+  "sourceCommitAt": "2026-10-06T09:51:49+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -351,7 +351,7 @@
     "SequenceFlow": 763,
     "Lane": 139,
     "ProcessNode": 738,
-    "Tool": 129,
+    "Tool": 128,
     "Schema": 151,
     "ExternalSchema": 22,
     "GraphTypology": 30,
@@ -2976,7 +2976,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 914,
+      "instructionLines": 932,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -34086,57 +34086,6 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/glossary-build",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "glossary-build",
-      "title": "Glossary build",
-      "description": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "targetPath",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary.",
-            "required": true,
-            "arg": {
-              "positional": 0
-            }
-          },
-          {
-            "name": "check",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
-            "description": "Report drift and write nothing.",
-            "required": false,
-            "arg": {
-              "flag": "--check"
-            }
-          }
-        ],
-        "outputs": [
-          {
-            "name": "glossary",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake"
-      ]
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/fsh-cone",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "fsh-cone",
@@ -39786,7 +39735,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph typology's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 383,
+      "fileCount": 385,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
@@ -39891,7 +39840,7 @@
       ],
       "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-typology-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "readmePath": "test/results/README.md",
-      "fileCount": 1025,
+      "fileCount": 1024,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
     {
@@ -40010,7 +39959,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3179,
+      "fileCount": 3184,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -40095,7 +40044,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 1199,
+      "fileCount": 1198,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
@@ -45088,8 +45037,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "933c716aecff5082b040f0c4aec9a83618e98db9",
+    "sha": "f17aaf093412a3afb2f78b7d05b548e98edaf69f",
     "pr": "main",
-    "run": "37423070968"
+    "run": "37432334799"
   }
 }

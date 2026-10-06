@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T06:34:34.780Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/933c716aecff5082b040f0c4aec9a83618e98db9",
-  "sourceCommitSha": "933c716aecff5082b040f0c4aec9a83618e98db9",
-  "sourceCommitAt": "2026-10-06T08:19:10+02:00",
+  "generatedAt": "2026-10-06T08:07:25.567Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f17aaf093412a3afb2f78b7d05b548e98edaf69f",
+  "sourceCommitSha": "f17aaf093412a3afb2f78b7d05b548e98edaf69f",
+  "sourceCommitAt": "2026-10-06T09:51:49+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -353,8 +353,8 @@
     "SequenceFlow": 275,
     "Lane": 62,
     "ProcessNode": 250,
-    "GraphTypology": 16,
-    "Subgraph": 16,
+    "GraphTypology": 17,
+    "Subgraph": 17,
     "Asset": 2
   },
   "@graph": [
@@ -9132,6 +9132,13 @@
       "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "docs",
+      "renderable": true,
+      "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphTypology/schemas",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "schemas",
@@ -9186,6 +9193,23 @@
       "name": "glossary",
       "renderable": false,
       "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-docs",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "folio-assistant-core-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/docs"
+      ],
+      "description": "This instance's own reader-facing pages, and the page `/folio-assistant-core/` serves. Added 2026-10-05 with `folio-assistant-core.config.json` (issue #2196, bean c5fm), when the owner asked for the instance to be staged and instantiated so the navbar's Harnesses list shows it. Without a docs directory the harness tile can only open this instance's section of the landing (`/#harness-folio-assistant-core`), and `harness-tiles.ts` reports that as a finding. Authored markdown, composed THROUGH just-the-docs like smart-base's and smart-trust's pages, so it gets the sidebar, search and layout. Declared HERE, in this instance's own file, rather than in the root's or cat-harness's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a composition layer, so declaring it there would overlay this `index.md` onto the site's own.",
+      "readmePath": "docs/README.md",
+      "fileCount": 2,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-docs"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/folio-assistant-core-translations",
@@ -9484,8 +9508,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "933c716aecff5082b040f0c4aec9a83618e98db9",
+    "sha": "f17aaf093412a3afb2f78b7d05b548e98edaf69f",
     "pr": "main",
-    "run": "37423070968"
+    "run": "37432334799"
   }
 }

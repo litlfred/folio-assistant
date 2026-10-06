@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 69 of 69 declared kind(s), 239 gate(s), 77 criteria.",
-      "count": 69,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 70 of 70 declared kind(s), 242 gate(s), 77 criteria.",
+      "count": 70,
       "entries": [
         {
           "kind": "attestations",
@@ -260,6 +260,7 @@
             "bun run kg:subscribe:check",
             "bun run kind:register:check",
             "bun run library:readmes:check",
+            "bun run node-kinds:check",
             "bun run ns:check",
             "bun run readme:subgraphs:check",
             "bun run root-scan-census:check",
@@ -404,6 +405,7 @@
           "directories": [
             "cat-harness/docs",
             "docs",
+            "folio-assistant-core/docs",
             "smart-base/docs",
             "smart-base/findings",
             "smart-immunizations/docs",
@@ -526,7 +528,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "undetermined",
+          "state": "empty",
           "directories": [
             "fsh-guts"
           ],
@@ -871,6 +873,16 @@
           ],
           "typed": false,
           "hasFiles": true
+        },
+        {
+          "kind": "public-comments",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
         },
         {
           "kind": "qa",
@@ -1294,7 +1306,9 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run kind:register:check"
+            "bun run kind:register:check",
+            "bun run node-kind:pages:check",
+            "bun run node-kinds:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -1438,12 +1452,19 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "fsh-guts",
+          "directories": [
+            "fsh-guts"
+          ]
+        }
+      ]
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 9,
+      "count": 10,
       "entries": [
         {
           "kind": "binary-release",
@@ -1462,6 +1483,11 @@
         },
         {
           "kind": "lake-cache",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "public-comments",
           "criteria": 0,
           "gates": []
         },
@@ -1498,7 +1524,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 239 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 242 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
@@ -1508,5 +1534,5 @@
       "entries": []
     }
   },
-  "total": 78
+  "total": 81
 }
