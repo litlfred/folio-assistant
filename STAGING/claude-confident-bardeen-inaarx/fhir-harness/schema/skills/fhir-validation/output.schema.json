@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FHIR Validation Output",
+  "description": "Output schema for FHIR validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        }
+      }
+    },
+    "publisherResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "qaHtmlPath": {
+          "type": "string"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        },
+        "infoCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "conformanceResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "conformant",
+              "non-conformant"
+            ]
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
+  "staging": {
+    "branch": "claude/confident-bardeen-inaarx",
+    "sha": "215b215399905656e2e9338dd5bfe9a551e4a1ce",
+    "pr": "2243/merge",
+    "run": "37391595529"
+  }
+}
