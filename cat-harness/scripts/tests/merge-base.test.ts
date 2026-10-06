@@ -75,6 +75,8 @@ describe("classify", () => {
   test("measured generated families resolve by their declared strategy", () => {
     expect(classify("cat-harness/test/results/skill-register.qa-results.json").pattern?.id).toBe("qa-results");
     expect(classify("cat-harness/test/results/lsi/cat-harness/skills.lsi.json").strategy).toBe("take-base");
+    expect(classify("cat-harness/test/results/translation-qa/docs/installation.fr.translation-qa.json").pattern?.id).toBe("derived-results");
+    expect(classify("cat-harness/test/results/translation-qa/docs/installation.fr.translation-qa.json").strategy).toBe("take-base");
     expect(classify("cat-harness/docs/cat-harness/auto-docs/index/index.html").pattern?.id).toBe("auto-docs");
     expect(classify("cat-harness/docs/glossary/index.md").pattern?.id).toBe("glossary");
     expect(classify("beans/README.md").strategy).toBe("generated-regions");

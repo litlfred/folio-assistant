@@ -307,7 +307,7 @@ any finding does.
 
 ### `derived-results` — take the base, regenerate (142)
 
-LSI indexes, detangle sidecars and tool-run records under `test/results/`.
+LSI indexes, detangle sidecars, tool-run records and translation-qa sidecars under `test/results/`.
 Recomputed from the whole corpus, so any concurrent skill or schema change
 touches them.
 
