@@ -128,7 +128,8 @@
     {
       "id": "sci-scripts",
       "path": "scripts/",
-      "description": "Tests whose SUBJECT is this instance's own processes: `lean-build-gate.dmn` and the `authoring-a-paper.bpmn` it backs, run through the harness's workflow engine. Declared 2026-10-06 WITH its files (bean `dh4f`), when those tests moved up out of `cat-harness/scripts/tests/` (bean `ho66`): standing alone, cat-harness has no paper diagram to read, so a test pinning one belongs to the instance that owns it. Same shape as folio-assistant-core's `scripts/` — the engine is imported DOWN from cat-harness, the diagrams are found by name through this instance's declared `processes` graph.",
+      "description": "Tests that hold the harness's code against what this instance owns or contributes: its paper processes and decision tables, its pipeline plugins and contributed checkers. The code under test is imported down from cat-harness.",
+      "_comment": "Declared 2026-10-06 WITH its files (bean `dh4f`), when these tests moved up out of `cat-harness/scripts/tests/` (bean `ho66`): standing alone, cat-harness has no paper diagram, no `lean-lexer` and no contributed checker to read, so a test pinning one belongs to the instance that owns it. Same shape as folio-assistant-core's `scripts/`.",
       "graphTypologies": [
         "code"
       ]
