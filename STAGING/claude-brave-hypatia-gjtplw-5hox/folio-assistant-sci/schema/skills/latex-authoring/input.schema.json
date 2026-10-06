@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LaTeX Authoring Input",
+  "description": "Input schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "documentClass",
+    "mainFile"
+  ],
+  "properties": {
+    "documentClass": {
+      "type": "string",
+      "enum": [
+        "article",
+        "book",
+        "report",
+        "beamer"
+      ],
+      "description": "LaTeX document class."
+    },
+    "mainFile": {
+      "type": "string",
+      "description": "Path to the main .tex file."
+    },
+    "bibliographyFile": {
+      "type": "string",
+      "description": "Path to the .bib bibliography file."
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "dvi",
+        "ps"
+      ],
+      "default": "pdf"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-5hox/folio-assistant-sci/schema/skills/latex-authoring/input.schema.json",
+  "staging": {
+    "branch": "claude/brave-hypatia-gjtplw-5hox",
+    "sha": "eb56e6b3a610b9ff9d5a828745117449739196a8",
+    "pr": "2080/merge",
+    "run": "37431814213"
+  }
+}

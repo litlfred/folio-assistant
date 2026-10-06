@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/GraphExportNode",
+  "definitions": {
+    "GraphExportNode": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-5hox/bootstrap-tools/schema/zod/graph-export/GraphExportNodeSchema.schema.json",
+  "title": "GraphExportNodeSchema",
+  "description": "Generated from `GraphExportNodeSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/brave-hypatia-gjtplw-5hox",
+    "sha": "eb56e6b3a610b9ff9d5a828745117449739196a8",
+    "pr": "2080/merge",
+    "run": "37431814213"
+  }
+}

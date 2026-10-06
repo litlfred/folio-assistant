@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/LangText",
+  "definitions": {
+    "LangText": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-gjtplw-5hox/folio-assistant-core/schema/zod/glossary/LangTextSchema.schema.json",
+  "title": "LangTextSchema",
+  "description": "Generated from `LangTextSchema` in schemas/glossary.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/brave-hypatia-gjtplw-5hox",
+    "sha": "eb56e6b3a610b9ff9d5a828745117449739196a8",
+    "pr": "2080/merge",
+    "run": "37431814213"
+  }
+}

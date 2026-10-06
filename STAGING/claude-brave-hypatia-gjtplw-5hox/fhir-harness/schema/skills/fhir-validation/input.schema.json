@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FHIR Validation Input",
+  "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+  "type": "object",
+  "required": [
+    "igRoot"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "validationLevel": {
+      "type": "string",
+      "enum": [
+        "sushi-only",
+        "publisher-qa",
+        "full"
+      ],
+      "default": "full",
+      "description": "Level of validation to perform."
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
+  "staging": {
+    "branch": "claude/brave-hypatia-gjtplw-5hox",
+    "sha": "eb56e6b3a610b9ff9d5a828745117449739196a8",
+    "pr": "2080/merge",
+    "run": "37431814213"
+  }
+}
