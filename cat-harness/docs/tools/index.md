@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>128</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>70</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>106</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>129</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>71</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>107</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 106 |
+| <span class="tg-tag tg-shell">shell</span> | 107 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 119 |
+| `none` | 120 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **70** skills named across **128** tools resolve to a
+Yes — all **71** skills named across **129** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -158,6 +158,7 @@ tool advertising a capability the graph cannot locate.
 | `slice-sqlite`<br>Per-slice SQLite builder | Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 4 in / 2 out |
 | `stakeholder-map`<br>Stakeholder map | Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`coordinate`](../reference/skill-instructions/coordinate.html)<br>[`role-model`](../reference/skill-instructions/role-model.html) | 1 in / 1 out |
 | `state-viewer`<br>State graph viewer | Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
+| `sub-kg-verify-clone`<br>Verify a separated repository from a fresh clone | Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory. | <span class="tg-tag tg-shell">shell</span> | [`sub-kg-lifecycle`](../reference/skill-instructions/sub-kg-lifecycle.html) | 5 in / 1 out |
 | `subgraph-readmes`<br>Directory READMEs from the Knowledge Graph | Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`upload-routes`](../reference/skill-instructions/upload-routes.html) | 1 in / 1 out |
 | `subgraph-resolve`<br>Resolve a declared subgraph's content source | Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on. | <span class="tg-tag tg-shell">shell</span> | [`directory-conventions`](../reference/skill-instructions/directory-conventions.html) | 3 in / 1 out |
 | `tabular-csv`<br>CSV tabular metadata (STUB) | STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`). | <span class="tg-tag tg-manual">manual</span> | [`tabular-metadata`](../reference/skill-instructions/tabular-metadata.html) | 1 in / 1 out |
