@@ -327,6 +327,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/basic-cdn-site",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "basic-cdn-site",
+      "comment": "A published static site on a CDN that serves files by path only (GitHub Pages): its routes, the commit it was built from, and its files as archive entries. Built from the renderable graphs its directory names, and deployed by the Tool its storage names.",
+      "prefLabel": "basic-cdn-site",
+      "definition": "A published static site on a CDN that serves files by path only (GitHub Pages): its routes, the commit it was built from, and its files as archive entries. Built from the renderable graphs its directory names, and deployed by the Tool its storage names.",
+      "notation": "cat-harness:graphTypology/basic-cdn-site",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/bean-defs",
       "@type": [
         "bootstrap:GraphTypology",
@@ -457,6 +472,21 @@
       "prefLabel": "catalogue",
       "definition": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
       "notation": "cat-harness:graphTypology/catalogue",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/cdn-site",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "cdn-site",
+      "comment": "A published site on a CDN that also controls media types, redirects and headers: a `basic-cdn-site` plus those three. No instance declares one yet.",
+      "prefLabel": "cdn-site",
+      "definition": "A published site on a CDN that also controls media types, redirects and headers: a `basic-cdn-site` plus those three. No instance declares one yet.",
+      "notation": "cat-harness:graphTypology/cdn-site",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"

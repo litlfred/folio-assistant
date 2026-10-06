@@ -540,6 +540,10 @@
                   "repository": {
                     "type": "string",
                     "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                  },
+                  "tool": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$"
                   }
                 },
                 "required": [
@@ -1249,8 +1253,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "b000302d2c82e88ab42a332f989ac26b9bec2085",
+    "sha": "3d6525c00bd1e3fc4b27c87cb091eb8d60a9d7c4",
     "pr": "main",
-    "run": "37441661756"
+    "run": "37445336529"
   }
 }

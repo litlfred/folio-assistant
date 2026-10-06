@@ -335,10 +335,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T09:31:00.573Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b000302d2c82e88ab42a332f989ac26b9bec2085",
-  "sourceCommitSha": "b000302d2c82e88ab42a332f989ac26b9bec2085",
-  "sourceCommitAt": "2026-10-06T11:15:02+02:00",
+  "generatedAt": "2026-10-06T09:56:06.557Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3d6525c00bd1e3fc4b27c87cb091eb8d60a9d7c4",
+  "sourceCommitSha": "3d6525c00bd1e3fc4b27c87cb091eb8d60a9d7c4",
+  "sourceCommitAt": "2026-10-06T11:46:56+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -352,11 +352,11 @@
     "Lane": 139,
     "ProcessNode": 738,
     "Tool": 128,
-    "Schema": 151,
+    "Schema": 152,
     "ExternalSchema": 22,
-    "GraphTypology": 30,
+    "GraphTypology": 31,
     "Role": 53,
-    "Subgraph": 28,
+    "Subgraph": 29,
     "Asset": 3
   },
   "@graph": [
@@ -1681,7 +1681,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1586,
+      "instructionLines": 1590,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2800,7 +2800,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/ref-stewardship.md",
-      "instructionLines": 194,
+      "instructionLines": 195,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -31039,7 +31039,50 @@
         "network": true
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/site-build-local",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "site-build-local",
+      "title": "Build the docs site locally",
+      "description": "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "cat-harness/scripts/preview-site.sh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dest",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the built site. Default: a temporary directory.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "site",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The built site, as `pages-publish` would publish it."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bash"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation"
       ]
     },
     {
@@ -31633,67 +31676,6 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-build-fix"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/lean-cache",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "lean-cache",
-      "title": "Lake olean cache",
-      "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "cat-harness/scripts/lake-cache.sh"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "action",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/LakeCacheAction",
-            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
-            "required": true,
-            "arg": {
-              "positional": 0
-            }
-          },
-          {
-            "name": "lakeRoot",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The package whose `.lake/` is acted on.",
-            "required": false,
-            "arg": {
-              "flag": "--lake-root"
-            }
-          },
-          {
-            "name": "package",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
-            "required": false,
-            "arg": {
-              "flag": "--package"
-            }
-          }
-        ],
-        "outputs": [
-          {
-            "name": "result",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
-            "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bash",
-          "git",
-          "lake"
-        ],
-        "network": true
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#skill/lean-cache-restore"
       ]
     },
     {
@@ -37615,6 +37597,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "site",
+      "title": "site",
+      "summary": "A published static site, as a graph: what a CDN serves, at which routes.",
+      "module": "schemas/site.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-definitions-dir",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "skill-definitions-dir",
@@ -38582,6 +38573,13 @@
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/basic-cdn-site",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "basic-cdn-site",
+      "renderable": false,
+      "summary": "A published static site on a CDN that serves files by path only (GitHub Pages): its routes, the commit it was built from, and its files as archive entries. Built from the renderable graphs its directory names, and deployed by the Tool its storage names."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphTypology/voices",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "voices",
@@ -39163,7 +39161,7 @@
       "prefLabel": "Merge steward",
       "title": "Merge steward",
       "notation": "merge-steward",
-      "description": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; `scripts/special-branches.json` is the declaration of which refs qualify. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries and windows, never the host's facts.",
+      "description": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries and windows, never the host's facts.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "agent"
@@ -39614,7 +39612,7 @@
       ],
       "description": "The validators cat-harness's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.",
       "readmePath": "validators/README.md",
-      "fileCount": 79,
+      "fileCount": 81,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-validators"
     },
     {
@@ -39718,7 +39716,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 267,
+      "fileCount": 268,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -39735,7 +39733,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph typology's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 387,
+      "fileCount": 389,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
@@ -39958,8 +39956,26 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3187,
+      "fileCount": 3192,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/site",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "site",
+      "path": "site/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/cat-harness/tree/gh-pages",
+        "kind": "branch",
+        "branch": "gh-pages",
+        "keyedBy": "route",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/basic-cdn-site"
+      ],
+      "description": "The PUBLISHED SITE, on a CDN that serves files by path only (GitHub Pages). Lives on the `gh-pages` branch, one entry per route (the release root and each `STAGING/<slug>/` preview); never in the checkout, and `site/` is only where a local build lands. Built by `site-build-local` on a machine and by `pages-publish` in CI (two Tools, one skill, `docs-generation`), and deployed by the Tool `storage.tool` names. `derivedFrom` names the renderable graphs THIS instance can reach; every other instance's docs are composed onto it by `mount-instance-docs.ts`, which an instance below cannot name without pointing upward. Declared here, on the harness that composes the site, rather than as a row in a central table (owner, 2026-10-03 and 2026-10-05: special-branches.json is gone; beans rva2, lehh).",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/site"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/swimlane-glossary",
@@ -39992,7 +40008,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 926,
+      "fileCount": 925,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -40043,7 +40059,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 174,
+      "fileCount": 175,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
@@ -45036,8 +45052,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "b000302d2c82e88ab42a332f989ac26b9bec2085",
+    "sha": "3d6525c00bd1e3fc4b27c87cb091eb8d60a9d7c4",
     "pr": "main",
-    "run": "37441661756"
+    "run": "37445336529"
   }
 }
