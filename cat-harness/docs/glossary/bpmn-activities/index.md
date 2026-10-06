@@ -106,10 +106,10 @@ be a term this corpus is right to coin.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Release</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_confirmcutover" data-fa-state="extracted" data-fa-gloss="">
-12 · Owner confirms: delete the in-repo copy <span class="fa-gloss-status">candidate, extracted</span>
+12 · Owner confirms: freeze the in-repo copy in fsh-guts <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. The owner ruled on 2026-10-06 that the host keeps a read-only copy in fsh-guts instead of deleting it. How that copy maps onto fsh-guts is an open question in bean 3tza; until it is answered, this task is not taken past.</p>
+<p>The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) move to fsh-guts now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, &quot;1&quot;): the host keeps a FROZEN copy in fsh-guts, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_ConfirmCutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_cutover" data-fa-state="extracted" data-fa-gloss="">
@@ -120,10 +120,10 @@ be a term this corpus is right to coin.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Cutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_cutover" data-fa-state="extracted" data-fa-gloss="">
-13 · Cutover: the one commit deleting the copy <span class="fa-gloss-status">candidate, extracted</span>
+13 · Cutover: move the copy to fsh-guts/separated/ <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The one commit worth reverting, made only on the owner's answer at step 12.</p>
+<p>Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, to fsh-guts/separated/&lt;name&gt;/ on the fsh-guts branch (skill fsh-guts: a plain mv, git rm --cached, state:push), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Cutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_grow" data-fa-state="extracted" data-fa-gloss="">

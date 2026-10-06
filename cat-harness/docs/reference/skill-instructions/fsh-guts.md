@@ -214,3 +214,10 @@ it is ingested", and that skill is the one to change if the rule moves.
   Not-rendered is not private, and treating it as private is the one way this
   directory could do real harm.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | 13 · Cutover: move the copy to fsh-guts/separated/ |
+

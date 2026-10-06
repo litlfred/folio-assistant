@@ -141,7 +141,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**128** distinct skill(s) are named by an activity.
+**129** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -194,6 +194,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`evidence-appraisal`](../reference/skill-instructions/evidence-appraisal.html) | [`evidence-retrieval.bpmn`](evidence-retrieval.html) |
 | [`feature-staging`](../reference/skill-instructions/feature-staging.html) | [`crdm-deliver.bpmn`](crdm-deliver.html), [`docs-site-publish.bpmn`](docs-site-publish.html), [`feature-staging.bpmn`](feature-staging.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-change-review.bpmn`](content-change-review.html) |
 | [`fhir-validation`](../reference/skill-instructions/fhir-validation.html) | [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
+| [`fsh-guts`](../reference/skill-instructions/fsh-guts.html) | [`sub-kg-lifecycle.bpmn`](sub-kg-lifecycle.html) |
 | [`getting-started`](../reference/skill-instructions/getting-started.html) | [`getting-started.bpmn`](getting-started.html) |
 | [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | [`graph-detanglement.bpmn`](graph-detanglement.html), [`kg-separation.bpmn`](kg-separation.html), [`sub-kg-lifecycle.bpmn`](sub-kg-lifecycle.html) |
 | [`handover-report`](../reference/skill-instructions/handover-report.html) | [`stalled-agent-triage.bpmn`](stalled-agent-triage.html) |

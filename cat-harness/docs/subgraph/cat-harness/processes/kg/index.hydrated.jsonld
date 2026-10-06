@@ -2785,7 +2785,7 @@
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/node/Task_ConfirmCutover",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
-      "name": "delete",
+      "name": "move to fsh-guts",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/node/Task_Cutover"
     },
@@ -3125,7 +3125,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/lane/Lane_Admin",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/flow/F27",
-      "name": "12 · Owner confirms: delete the in-repo copy",
+      "name": "12 · Owner confirms: freeze the in-repo copy in fsh-guts",
       "nodeKind": "activity",
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/flow/F28",
@@ -3156,11 +3156,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/node/Task_Cutover",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:UserTask",
-      "implementedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/fsh-guts"
+      ],
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/lane/Lane_Admin",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/flow/F29",
-      "name": "13 · Cutover: the one commit deleting the copy",
+      "name": "13 · Cutover: move the copy to fsh-guts/separated/",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/flow/F30",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle",

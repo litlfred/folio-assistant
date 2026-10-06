@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sub-kg-lifecycle\n"
-"POT-Creation-Date: 2026-10-06T09:03:23.917Z\n"
+"POT-Creation-Date: 2026-10-06T10:33:12.164Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -51,12 +51,12 @@ msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:289
 #. Diagram label
-msgid "12 · Owner confirms: delete the in-repo copy"
+msgid "12 · Owner confirms: freeze the in-repo copy in fsh-guts"
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:303
 #. Diagram label
-msgid "13 · Cutover: the one commit deleting the copy"
+msgid "13 · Cutover: move the copy to fsh-guts/separated/"
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:122
@@ -149,7 +149,7 @@ msgstr ""
 msgid "Build pipeline"
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:333
+#: processes/kg/sub-kg-lifecycle.bpmn:334
 #. Diagram label
 msgid "confirmed"
 msgstr ""
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Consumed; in-repo copy kept"
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:329
+#: processes/kg/sub-kg-lifecycle.bpmn:330
 #. Diagram label
 msgid "could not run"
 msgstr ""
@@ -184,11 +184,6 @@ msgstr ""
 msgid "Declares the sub-KG in place and grows it, reports what would move before each irreversible step, drains the open pull requests that keep the source from settling, and copies the staged contents into the new repository with their history."
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:346
-#. Diagram label
-msgid "delete"
-msgstr ""
-
 #: processes/kg/sub-kg-lifecycle.bpmn:234
 #. Diagram label
 msgid "Drain: land, close or re-target the open PRs"
@@ -199,7 +194,7 @@ msgstr ""
 msgid "Every platform symbol the sub-KG uses is re-exported from `<name>/platform.ts`, so re-pointing the platform is a one-file edit. A merge from main is where new climbs arrive; reroute them here. Learned from #1767 and #1860."
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:326
+#: processes/kg/sub-kg-lifecycle.bpmn:327
 #. Diagram label
 msgid "green"
 msgstr ""
@@ -234,14 +229,19 @@ msgstr ""
 msgid "In the new repository `livesAt` goes (absent means it sits at the root of `repository`) and `platform.ts` points at where the platform now is. The host consumes it as a submodule if it imports its code, or a subscription if it only reads its content, pinned to a commit while staging. Additive: the host keeps its copy."
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:345
+#: processes/kg/sub-kg-lifecycle.bpmn:346
 #. Diagram label
 msgid "keep"
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:322
+#: processes/kg/sub-kg-lifecycle.bpmn:323
 #. Diagram label
 msgid "leave"
+msgstr ""
+
+#: processes/kg/sub-kg-lifecycle.bpmn:347
+#. Diagram label
+msgid "move to fsh-guts"
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:145
@@ -249,7 +249,7 @@ msgstr ""
 msgid "Move what is generic into the harness below before the seam is closed, and consolidate what the sub-KG needs into the harness it instantiates. Wrong-direction edges hide in declarations and data as well as imports: run check:import-direction, check:reference-direction and check:process-bindings. Learned from stages A-D of bean n3ni (#1768, #1782, #1783, #1795)."
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:332
+#: processes/kg/sub-kg-lifecycle.bpmn:333
 #. Diagram label
 msgid "not yet"
 msgstr ""
@@ -257,6 +257,11 @@ msgstr ""
 #: processes/kg/sub-kg-lifecycle.bpmn:211
 #. Diagram element documentation
 msgid "Not yet. The sub-KG stays in the host, staged and rehearsed; nothing outside the repository changed."
+msgstr ""
+
+#: processes/kg/sub-kg-lifecycle.bpmn:304
+#. Diagram element documentation
+msgid "Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, to fsh-guts/separated/<name>/ on the fsh-guts branch (skill fsh-guts: a plain mv, git rm --cached, state:push), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:59
@@ -269,12 +274,12 @@ msgstr ""
 msgid "Ready to seed?"
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:325
+#: processes/kg/sub-kg-lifecycle.bpmn:326
 #. Diagram label
 msgid "red"
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:328
+#: processes/kg/sub-kg-lifecycle.bpmn:329
 #. Diagram label
 msgid "red: an unseen climb"
 msgstr ""
@@ -284,12 +289,12 @@ msgstr ""
 msgid "Runs the checks that decide the gateways: the separation guard and the three direction checks, the self-contained rehearsal, the seed-readiness table at seed time, and the gates of the new repository from a fresh clone. A check that could not run stops the process; it is never read as a pass."
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:312
+#: processes/kg/sub-kg-lifecycle.bpmn:313
 #. Diagram label
 msgid "Separated"
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:338
+#: processes/kg/sub-kg-lifecycle.bpmn:339
 #. Diagram label
 msgid "settled"
 msgstr ""
@@ -304,7 +309,7 @@ msgstr ""
 msgid "Staged, ready to leave"
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:321
+#: processes/kg/sub-kg-lifecycle.bpmn:322
 #. Diagram label
 msgid "stay"
 msgstr ""
@@ -316,7 +321,7 @@ msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:290
 #. Diagram element documentation
-msgid "The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. The owner ruled on 2026-10-06 that the host keeps a read-only copy in fsh-guts instead of deleting it. How that copy maps onto fsh-guts is an open question in bean 3tza; until it is answered, this task is not taken past."
+msgid "The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) move to fsh-guts now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, \"1\"): the host keeps a FROZEN copy in fsh-guts, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:123
@@ -332,11 +337,6 @@ msgstr ""
 #: processes/kg/sub-kg-lifecycle.bpmn:300
 #. Diagram element documentation
 msgid "The host consumes the new repository and keeps its own copy, as the owner chose. The cutover can be asked again later."
-msgstr ""
-
-#: processes/kg/sub-kg-lifecycle.bpmn:304
-#. Diagram element documentation
-msgid "The one commit worth reverting, made only on the owner's answer at step 12."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:215
@@ -364,7 +364,7 @@ msgstr ""
 msgid "The rehearsal could not run. Reported as could-not-check, never as green."
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:313
+#: processes/kg/sub-kg-lifecycle.bpmn:314
 #. Diagram element documentation
 msgid "The sub-KG lives in its own repository and the host consumes it from there."
 msgstr ""
@@ -374,7 +374,7 @@ msgstr ""
 msgid "The sub-KG stays staged in the host. Everything done so far is in place and reversible, and the process can be started again when it should leave."
 msgstr ""
 
-#: processes/kg/sub-kg-lifecycle.bpmn:337
+#: processes/kg/sub-kg-lifecycle.bpmn:338
 #. Diagram label
 msgid "unknown"
 msgstr ""

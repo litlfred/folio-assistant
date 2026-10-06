@@ -252,13 +252,16 @@ read only mirror in fsh-guts"*.
 
 - **Ruled and built:** `init-folio --staged` (stage 1) and
   `sub-kg:verify-clone` (stage 11).
-- **Ruled, not yet built: stage 13.** After cutover, the host is to keep a
-  read-only copy in `fsh-guts` rather than delete it. [`fsh-guts`](fsh-guts.md)
-  is the kept trashcan. It holds a one-time relocation with `movedFrom` and
-  `movedOn`, is never rendered, and is stripped from every published graph.
-  It has no notion of a copy refreshed from upstream. How a "mirror" maps onto
-  that is asked in bean `3tza`. Until it is answered, stage 13 waits at its
-  confirmation: deleting nothing is the safe state.
+- **Ruled and built: stage 13** (owner, 2026-10-06, "1"). After cutover the
+  host keeps a **frozen** copy in [`fsh-guts`](fsh-guts.md), not a
+  refreshed mirror and not a deletion. Step 12 asks (1) move to fsh-guts now,
+  (2) keep in place until the first release, (3) show the file list first,
+  default (2). Step 13 relocates the directory to
+  `fsh-guts/separated/<name>/` as one fsh-guts relocation (plain `mv`,
+  `git rm --cached`, `state:push`) with one note carrying `movedFrom`,
+  `movedOn`, the new repository and the commit the copy matches. The live
+  copy is the submodule or subscription from stage 10; the frozen one is
+  never refreshed and never rendered.
 
 ## Anti-patterns
 
