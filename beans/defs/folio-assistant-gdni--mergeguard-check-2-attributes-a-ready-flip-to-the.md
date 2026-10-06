@@ -1,11 +1,11 @@
 ---
 # folio-assistant-gdni
 title: merge:guard check 2 attributes a ready flip to the steward by time proximity
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T19:57:42Z
-updated_at: 2026-10-04T19:57:42Z
+updated_at: 2026-10-06T22:35:23Z
 parent: folio-assistant-d33q
 ---
 
@@ -15,3 +15,5 @@ Cost: each refusal routes the landing to another session, which in turn needs th
 
 ## Done when
 - Check 2 attributes a ready flip only to a session whose signed comment *claims* the flip (e.g. a `marked ready` line) or is the PR's author/takeover session from the body's session line — never by time proximity to an ACK; or the steward's ACK/hand-back comments carry a marker that check 2 excludes. A test covers an ACK posted within seconds of another session's flip.
+
+_2026-10-06T22:35:23Z_ — Claimed by claude/gdni-check2-ack-attribution — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
