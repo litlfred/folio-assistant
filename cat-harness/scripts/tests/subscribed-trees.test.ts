@@ -13,6 +13,7 @@ import { KG_PART_RECORD_SCHEMA } from "../../schemas/substrate-snapshot.ts";
 import { type RootFetcher, setTopLevelKey, subscribe, treeDigest } from "../kg-subscribe.ts";
 import { composedInstances } from "../compose-docs.ts";
 import { mountable, referencedAssets, subscribedMountEntries, withRoutes } from "../mount-instance-docs.ts";
+import { subscribedHarnesses, subscribedTile } from "../subscribed-harnesses.ts";
 import { subscribedTrees } from "../subscribed-trees.ts";
 
 const SHA = "0123456789abcdef0123456789abcdef01234567";
@@ -32,6 +33,7 @@ function tmp(prefix: string): string {
 const SUBSTRATE = {
   name: "iris-like",
   title: "IRIS-like",
+  avatar: { glyph: "M4 6h16", tone: 199, reads: "a line, in WHO blue" },
   directories: [
     { id: "iris-site", path: "site/", graphTypologies: ["docs"], instanceRoot: true },
     { id: "iris-docs", path: "docs/", graphTypologies: ["docs"] },
@@ -208,5 +210,39 @@ describe("compose-docs composes a subscribed instance's composed directories", (
     mkdirSync(join(repo, "iris-like"));
     writeFileSync(join(repo, "iris-like", "iris-like.json"), JSON.stringify({ name: "iris-like", directories: [] }));
     expect(composedInstances(repo)).toEqual([]);
+  });
+});
+
+describe("the navbar tile of a subscribed harness (GAP 2)", () => {
+  async function tile(subgraphs: string[], held: Record<string, [string, Record<string, string>]>) {
+    const { repo, host, snapshotDir } = await repoWith(subgraphs);
+    for (const [id, [path, files]] of Object.entries(held)) materialise(snapshotDir, id, path, files);
+    const file = join(host, "host.json");
+    const cur = JSON.parse(readFileSync(file, "utf8"));
+    writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [{ ...cur.subscriptions[0], harnesses: ["iris-like"] }]));
+    // What `kg:instantiate` writes: the config at the instantiation root.
+    writeFileSync(join(repo, "iris-like.config.json"), "{}\n");
+    const decl = JSON.parse(readFileSync(file, "utf8"));
+    const [h] = subscribedHarnesses(repo, [{ dir: host, decl }]);
+    return subscribedTile(h!);
+  }
+
+  test("a held themed root makes the tile a link to /<instance>/, and its own avatar is read at the pin", async () => {
+    const t = await tile(["iris-site", "iris-docs"], { "iris-site": ["site", SITE], "iris-docs": ["docs", { "index.html": "<html><body>d</body></html>" }] });
+    expect(t.instantiated).toBe(true);
+    expect(t.href).toBe("/iris-like/");
+    expect(t.hrefKind).toBe("folio");
+    expect(t.genericAvatar).toBe(false);
+    expect(t.tone).toBe(199);
+    expect(t.findings).toEqual([]);
+    expect(t.subgraphs.filter((g) => g.where === "remote" && g.materialised).map((g) => g.id).sort()).toEqual(["iris-docs", "iris-site"]);
+    expect(t.visualisations.find((v) => v.kind === "docs")?.note).toContain("held here");
+  });
+
+  test("chosen but not held: no link, and a finding — never an empty tile that looks fine", async () => {
+    const t = await tile(["iris-site"], {});
+    expect(t.href).toBeUndefined();
+    expect(t.findings.join("\n")).toContain("could not be determined");
+    expect(t.subgraphs.some((g) => g.where === "remote" && g.materialised)).toBe(false);
   });
 });
