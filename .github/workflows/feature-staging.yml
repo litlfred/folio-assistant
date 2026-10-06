@@ -87,6 +87,18 @@ on:
   merge_group:
   pull_request_target:
     types: [closed]
+  # A CONFLICTED PR STILL GETS ITS PREVIEW (owner, 2026-10-06: "preview can
+  # still run, just not merge ready"). GitHub delivers no `pull_request` event
+  # while a PR conflicts with its base, because it cannot build the test merge
+  # ref, so until this trigger a conflicted PR's preview silently froze at the
+  # last clean push (#2282 sat at its first commit for hours). A branch push
+  # reaches `conflict-gate` below, which lets `stage` run ONLY when the branch
+  # has an open PR whose merge state is `dirty`: a clean PR is already staged
+  # by `pull_request`, and a branch with no PR must not grow a preview that
+  # nothing will ever clean up (the `plj1` shape). Merging is still refused by
+  # merge-guard check 8 (`mergeable`), so the preview is not merge-ready.
+  push:
+    branches-ignore: [main, gh-pages, qa-reports, 'gh-readonly-queue/**']
   workflow_dispatch:
     inputs:
       branch:
@@ -129,12 +141,57 @@ concurrency:
   # `cleanup_slug` sits in the middle so two dispatched cleanups of
   # DIFFERENT previews do not cancel each other: without it they would both
   # land in `staging-main` and `cancel-in-progress` would drop the first.
-  group: staging-${{ github.event.pull_request.head.ref || inputs.cleanup_slug || github.ref_name }}
+  #
+  # A `push` run has a group of its OWN. It usually decides to do nothing
+  # (the PR is clean), and in the shared group its arrival would cancel the
+  # `pull_request` run building the same commit, losing the preview.
+  group: staging-${{ github.event_name == 'push' && 'push-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
+  # ── Decide whether a branch push should stage ─────────────────
+  # Every event but `push` passes straight through. On `push`, stage only
+  # when the branch has an open PR from this repository that conflicts with
+  # its base (`mergeable_state: dirty`), the one case `pull_request` cannot
+  # reach. `mergeable` is computed lazily, so an unknown answer is asked again
+  # a few times; still unknown, it stages, because a duplicate preview of the
+  # same commit costs a build and a missing one costs the reviewer.
+  conflict-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      go: ${{ steps.decide.outputs.go }}
+    steps:
+      - id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT" != "push" ]; then echo "go=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          owner="${REPO%%/*}"
+          pr=$(gh api "repos/$REPO/pulls?state=open&head=$owner:$BRANCH" --jq '.[0].number // empty')
+          if [ -z "$pr" ]; then
+            echo "no open PR for $BRANCH: no preview"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          state=unknown
+          for i in 1 2 3 4 5; do
+            state=$(gh api "repos/$REPO/pulls/$pr" --jq '.mergeable_state // "unknown"')
+            [ "$state" != "unknown" ] && break
+            sleep 6
+          done
+          echo "PR #$pr is $state"
+          if [ "$state" = "dirty" ] || [ "$state" = "unknown" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR #$pr is not conflicted: its pull_request run stages it"; echo "go=false" >> "$GITHUB_OUTPUT"
+          fi
+
   # ── Deploy feature branch to STAGING/ ─────────────────────────
   stage:
+    needs: conflict-gate
     # bpmn-node: Start_PR
     # A cleanup dispatch is not a staging request. `github.event.action` is
     # empty on `workflow_dispatch`, so without the second clause a run asked to
@@ -155,7 +212,8 @@ jobs:
     # A skipped job reports `skipped`, which satisfies a required check, so the
     # queue gets its verdict without a deployment.
     if: >-
-      github.event.action != 'closed'
+      needs.conflict-gate.outputs.go == 'true'
+      && github.event.action != 'closed'
       && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
       && github.event_name != 'merge_group'
     runs-on: ubuntu-latest
