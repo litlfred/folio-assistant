@@ -33,6 +33,7 @@ import {
   compose,
   docsLayers,
   instanceStub,
+  isChrome,
   isWithheld,
   mergeConfig,
   treeDigest,
@@ -552,5 +553,29 @@ describe("carriedInstances with the staging cone (bean 4j86)", () => {
   test("the prefix match stays a floor: the cone can only add", () => {
     const d = carriedInstances([smartTrust], ["smart-trust/scripts/gen.ts"], [{ ...reached[0]!, carry: false }], "/repo");
     expect(d[0]!.carry).toBe(true);
+  });
+});
+
+// #2235 F1: an IG repository's own site is built inside the main site's CHROME.
+describe("--shell: the chrome only", () => {
+  test("isChrome is the Jekyll machinery and assets, nothing else", () => {
+    for (const p of ["_config.yml", "_includes/head_custom.html", "_data/harness.json", "assets/js/docs-ui.js"]) expect(isChrome(p)).toBe(true);
+    for (const p of ["index.md", "glossary/index.md", "smart-trust/index.md"]) expect(isChrome(p)).toBe(false);
+  });
+  test("the real tree composes no page, no instance, and EMPTY generated includes", () => {
+    const out = mkdtempSync(join(tmpdir(), "shell-"));
+    try {
+      const r = compose(out, REPO, { shell: true });
+      const paths = Object.keys(r.suppliedBy);
+      expect(paths.length).toBeGreaterThan(0);
+      expect(paths.filter((p) => !isChrome(p))).toEqual([]);
+      expect(r.carried).toEqual([]);
+      expect(existsSync(join(out, "_config.yml"))).toBe(true);
+      const gen = paths.filter((p) => /^_includes[\\/]generated[\\/]/.test(p));
+      expect(gen.length).toBeGreaterThan(0);
+      for (const g of gen) expect(readFileSync(join(out, g), "utf-8")).toBe("");
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
   });
 });

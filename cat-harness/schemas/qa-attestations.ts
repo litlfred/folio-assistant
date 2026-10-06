@@ -137,7 +137,7 @@ export const ATTESTATIONS_SUFFIX = ".attestations.json";
  * the other two are named so bean `8wj1` extends one list rather than adding
  * a second.
  */
-export const ATTESTATION_FAMILIES = ["kg-qa", "block-qa", "translation-qa"] as const;
+export const ATTESTATION_FAMILIES = ["kg-qa", "block-qa", "translation-qa", "bib-verification", "bib-human-review"] as const;
 export type AttestationFamily = (typeof ATTESTATION_FAMILIES)[number];
 
 /** One declared prose ↔ code pair's accepted state. Paths are repo-relative. */
@@ -225,6 +225,83 @@ export const TranslationAttestationsSchema = QaAttestationsBaseSchema.extend({
 }).strict();
 
 /**
+ * ## The bibliography families: `bib-verification` and `bib-human-review` (C9 stories B3, B4)
+ *
+ * The two bibliography judgement ledgers a folio used to keep as single
+ * files beside its bibliography — `<folio>/bib-qa-verifications.json` (the
+ * source ledger: was each reference checked against a source, and is the
+ * source relevant) and `<folio>/schema/references.review.json` (the HUMAN
+ * review of a reference, pinned to the hash of its entry). Both are
+ * judgements, so both are `attestations`. One file per subject:
+ *
+ * ```
+ * <attestations>/bib-verification/reference/<ref id>.attestations.json
+ * <attestations>/bib-verification/source/<repo-relative file>.attestations.json   (a row with `id: null`)
+ * <attestations>/bib-verification/source/external/<sha256(url)[:16]>.attestations.json
+ * <attestations>/bib-human-review/reference/<ref id>.attestations.json
+ * ```
+ *
+ * Each record wraps the ledger row VERBATIM (`entry` / `review`, same keys,
+ * same order) with the one fact a per-subject split would otherwise lose: its
+ * `position` in the assembled ledger, so the reader reproduces the ledger's
+ * order exactly — readers key by id and the last duplicate wins, so order is
+ * load-bearing. A verification row with no `verified_by` is carried with
+ * `verifier: "unknown"`, and the schema refuses the combination either way: a
+ * row cannot be both unattributed and marked attributed, and the store never
+ * guesses an agent or a human for one. Reading and writing — with the legacy
+ * fallback — is `schemas/bib-attestations.ts`; nothing else opens these files.
+ */
+export const BIB_REVIEW_STATUSES = ["unreviewed", "source-in-repo", "issue-open", "photo-uploaded", "validated"] as const;
+
+/** One source-ledger row, opaque but for the three fields every reader keys on. */
+export const BibLedgerRowSchema = z
+  .record(z.string(), z.unknown())
+  .refine((e) => typeof e["id"] === "string" || e["id"] === null, { message: "`id` must be a string or null" })
+  .refine((e) => typeof e["status"] === "string", { message: "`status` must be a string" })
+  .refine((e) => typeof (e["source"] as { kind?: unknown } | undefined)?.kind === "string", { message: "`source.kind` must be a string" });
+
+/** `true` when a ledger row names no verifier — the ~101 rows that must stay `unknown`. */
+export function bibRowVerifierUnknown(e: Record<string, unknown>): boolean {
+  return e["verified_by"] === undefined || e["verified_by"] === null;
+}
+
+export const BibVerificationRecordSchema = z
+  .object({
+    position: z.number().int().nonnegative(),
+    verifier: z.literal("unknown").optional(),
+    entry: BibLedgerRowSchema,
+  })
+  .strict()
+  .refine((r) => (r.verifier === "unknown") === bibRowVerifierUnknown(r.entry), {
+    message: "`verifier: \"unknown\"` is required exactly when the row carries no `verified_by` — never attributed, never dropped",
+  });
+
+/** The `bib-verification` family: one reference's (or one orphan source's) ledger rows. */
+export const BibVerificationAttestationsSchema = QaAttestationsBaseSchema.extend({
+  family: z.literal("bib-verification"),
+  verifications: z.array(BibVerificationRecordSchema),
+}).strict();
+export type BibVerificationAttestations = z.infer<typeof BibVerificationAttestationsSchema>;
+
+/** One human review, opaque but for its status. */
+export const BibReviewSchema = z
+  .record(z.string(), z.unknown())
+  .refine((e) => (BIB_REVIEW_STATUSES as readonly unknown[]).includes(e["status"]), {
+    message: `\`status\` must be one of ${BIB_REVIEW_STATUSES.join(", ")}`,
+  });
+
+export const BibReviewRecordSchema = z
+  .object({ position: z.number().int().nonnegative(), review: BibReviewSchema })
+  .strict();
+
+/** The `bib-human-review` family: at most one review per reference; `[]` records a retraction. */
+export const BibHumanReviewAttestationsSchema = QaAttestationsBaseSchema.extend({
+  family: z.literal("bib-human-review"),
+  reviews: z.array(BibReviewRecordSchema).max(1),
+}).strict();
+export type BibHumanReviewAttestations = z.infer<typeof BibHumanReviewAttestationsSchema>;
+
+/**
  * Every `qa-attestations/v1` file. A union on `family` so `kg_validate` and
  * the registry have ONE validator per `$schema`.
  */
@@ -232,6 +309,8 @@ export const QaAttestationsSchema = z.discriminatedUnion("family", [
   KgAttestationsSchema,
   BlockAttestationsSchema,
   TranslationAttestationsSchema,
+  BibVerificationAttestationsSchema,
+  BibHumanReviewAttestationsSchema,
 ]);
 export type QaAttestations = z.infer<typeof QaAttestationsSchema>;
 

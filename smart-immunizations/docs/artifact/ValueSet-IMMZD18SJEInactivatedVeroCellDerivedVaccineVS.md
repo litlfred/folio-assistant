@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.schema.json` · [view](ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.jsonld` · [view](ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SJEInactivatedVeroCellDerivedVaccineVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SHPVSingleDoseVS.html" data-next="ValueSet-IMMZD18SJELiveAttenuatedVaccineVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

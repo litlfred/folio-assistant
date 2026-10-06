@@ -182,7 +182,7 @@ describe("the witnesses are committed in one place and published in another", ()
     // Where a file LIVES and where it is SERVED FROM are different questions.
     // Moving the URL as well would have rewritten every badge in every
     // generated page and the browser code that fetches them, for no gain.
-    const page = readFileSync(join(ROOT, siteDirFor(ROOT), "agentic-harness.md"), "utf-8");
+    const page = readFileSync(join(ROOT, siteDirFor(ROOT), "concepts/agentic-harness.md"), "utf-8");
     expect(page).toContain("data-qa-src=\"{{ '/assets/qa/");
   });
 });

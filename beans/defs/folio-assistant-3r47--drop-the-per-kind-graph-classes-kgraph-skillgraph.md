@@ -57,7 +57,7 @@ The `KGraph` docs chapter (`content/docs/kgraph/`, published at `/kgraph.html`,
 linked from 5 translated index pages) defines KGraph as "everything this
 harness knows about itself is one graph" — bootstrap's term Knowledge Graph
 under a coined name. Owner chose **rename, keep a redirect**: the chapter
-becomes "Knowledge Graph" at `/knowledge-graph.html`, and the translated link
+becomes "Knowledge Graph" at `/concepts/knowledge-graph.html`, and the translated link
 texts are drafted and left unverified. Then, 2026-09-30: "dont maintain [the
 redirect] ... excise" — `/kgraph.html` is removed, not redirected.
 
@@ -67,7 +67,7 @@ redirect] ... excise" — `/kgraph.html` is removed, not redirected.
   individual (`graphKindIri`), with an explicit `layer`; directories are
   `Subgraph` + `holdsGraph`; ns-export publishes the individuals.
 - This change: the "KGraph" docs chapter is "The Knowledge Graph" at
-  `/knowledge-graph.html` (bootstrap's term), with no redirect (owner:
+  `/concepts/knowledge-graph.html` (bootstrap's term), with no redirect (owner:
   "excise"); links in the harness chapter and the 5 translated landing
   pages updated (translations drafted, left unverified); stale code comments
   corrected, owner quotes left verbatim.

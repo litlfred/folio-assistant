@@ -17,11 +17,11 @@ This is the **librarian's** half of intake, not the ingestion engine's. A file
 lands in `uploads/`; describing *what it is* is filing, and deriving structure
 from it is `library-ingestion`. Keeping those apart is why `uploads/` and
 `library/` are two stages rather than one directory
-([`uploads-and-library-are-two-stages-of-one-pipeline`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md)).
+([`uploads-and-library-are-two-stages-of-one-pipeline`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/guides-document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md)).
 
 ## The line, and it is drawn by the vocabulary
 
-`content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md`
+`content/docs/guides-document-ingestion/how-much-of-this-does-dublin-core-carry.md`
 settles this and is the source of truth; the summary is:
 
 **Dublin Core covers the bibliographic layer well** — `dcterms:title`,

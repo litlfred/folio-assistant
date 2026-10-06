@@ -194,6 +194,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/compose-docs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Compose the site's documentation tree from its declared docs layers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235)."
+        }
+      ],
+      "skos:notation": "compose-docs",
+      "dcterms:source": "cat-harness/tools/index.ts#compose-docs",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/content-context",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1091,6 +1111,46 @@
       ],
       "skos:notation": "narrative-queue",
       "dcterms:source": "cat-harness/tools/index.ts#narrative-queue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/navbar-include",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the site sidebar's harness navbar include"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235)."
+        }
+      ],
+      "skos:notation": "navbar-include",
+      "dcterms:source": "cat-harness/tools/index.ts#navbar-include",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/node-kind-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Node kind pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195)."
+        }
+      ],
+      "skos:notation": "node-kind-pages",
+      "dcterms:source": "cat-harness/tools/viewers.ts#node-kind-pages",
       "skos:note": "candidate"
     },
     {

@@ -16,6 +16,8 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `folio-assistant
 | [`extraction.json`](extraction.json) | data |  |
 | [`glossary.json`](glossary.json) | data |  |
 | [`intake.json`](intake.json) | data |  |
+| [`public-comment-changeset.json`](public-comment-changeset.json) | data |  |
+| [`public-comment.json`](public-comment.json) | data |  |
 | [`review-verdict.json`](review-verdict.json) | data |  |
 | [`uploads-dublin-core-record.json`](uploads-dublin-core-record.json) | data |  |
 <!-- kg:subgraph:end -->

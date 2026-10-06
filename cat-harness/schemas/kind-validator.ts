@@ -56,6 +56,7 @@ import {
   type GraphTypologyRegistry,
 } from "./cat-harness.js";
 import type { NodeSchemaRef } from "./graph-typology-registry.js";
+import { isNodeKind } from "./node-kind.js";
 
 /** A validator reference, split from its `module#Export` form. */
 export interface ValidatorRef {
@@ -202,7 +203,10 @@ async function loadValidator(
     };
   }
 
-  const exported = mod[ref.exportName];
+  // A NODE KIND stands for its composed schema (issue #2195): naming the kind
+  // rather than its bare shape is what lets the node-kind index read parents.
+  const named = mod[ref.exportName];
+  const exported = isNodeKind(named) ? named.schema : named;
   if (exported === undefined) {
     return {
       state: "unresolvable",

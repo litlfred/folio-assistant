@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.schema.json` · [view](ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.jsonld` · [view](ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SDengue3DosesWithPreVaccinationScreeningVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SCholeraWCVaccinesVS.html" data-next="ValueSet-IMMZD18SDTPDelayedOrInterruptedSeriesVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

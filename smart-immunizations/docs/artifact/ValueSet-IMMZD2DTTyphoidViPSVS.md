@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTyphoidViPSVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidViPSVS.schema.json` · [view](ValueSet-IMMZD2DTTyphoidViPSVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTyphoidViPSVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidViPSVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTyphoidViPSVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidViPSVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTTyphoidViPSVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidViPSVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTTyphoidViPSVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidViPSVS.jsonld` · [view](ValueSet-IMMZD2DTTyphoidViPSVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTTyphoidViPSVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTTyphoidViPSVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTTyphoidTy21aVS.html" data-next="ValueSet-IMMZD2DTVaricella1DoseVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

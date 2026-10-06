@@ -31,7 +31,7 @@
  * ## Review comments (bean `423d`)
  *
  * `../review-comments.json` is the `folio-review-comments` Tool's output:
- * `folio-review-comment/v1` todos, one per tagged PR comment. The page lists
+ * `review-comment/1.0.0` todos, one per tagged PR comment. The page lists
  * each block's comments under it. It gives three more groups their own
  * headings, because each would otherwise vanish:
  * - comments on blocks this PR did not change;

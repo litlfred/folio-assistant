@@ -39,7 +39,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.schema.json` · [view](StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.schema.json` |
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D20_Does_client_require_a_verifiable_digital_certificate.openapi.json` |
 | JSON-LD | *not published for this artefact* | |

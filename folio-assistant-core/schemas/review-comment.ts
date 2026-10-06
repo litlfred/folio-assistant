@@ -46,7 +46,7 @@ import { nodeKind } from "../../cat-harness/schemas/node-kind.js";
 import { TodoNodeKind } from "../../cat-harness/schemas/todo.js";
 import { ReviewVerdictSchema } from "./review-verdict.js";
 
-export const REVIEW_COMMENT_SCHEMA = "folio-review-comment/v1" as const;
+export const REVIEW_COMMENT_SCHEMA = "review-comment/1.0.0" as const;
 
 // ── Lifecycle ────────────────────────────────────────────────────
 
@@ -194,13 +194,12 @@ export const ReviewCommentKind = nodeKind(
   REVIEW_COMMENT_SCHEMA,
   [TodoNodeKind],
   {
-    $schema: z.literal(REVIEW_COMMENT_SCHEMA),
     /** Required: a review comment is always about one block. */
     targetLabel: z.string().min(1),
     status: z.enum(REVIEW_COMMENT_STATUSES),
     review: ReviewFieldsSchema,
   },
-  { overrides: ["$schema", "targetLabel", "status"] },
+  { overrides: ["targetLabel", "status"] },
 );
 
 export const ReviewCommentSchema = ReviewCommentKind.schema.superRefine((c, ctx) => {
@@ -498,7 +497,7 @@ export const REVIEW_COMMENTS_FILE_SCHEMA = "folio-review-comments/v1" as const;
 /**
  * `review-comments.json`, published beside `changeset.json` in a preview.
  *
- * **`comments` IS the todo kind**: each entry is a `folio-review-comment/v1`
+ * **`comments` IS the todo kind**: each entry is a `review-comment/1.0.0`
  * node and is validated as one, so there is no second format to drift from
  * it. The envelope carries only what a single node cannot: where the
  * comments came from, and what was NOT ingested and why. A reader must be

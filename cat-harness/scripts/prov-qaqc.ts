@@ -5,7 +5,7 @@
  * deterministic engine checks the ODRL policy BEFORE a task and refuses
  * (`src/workflow/authorize.ts`, issue #1207). An agent swarm acts first, so
  * the same policy has to be checked AFTER, from the record of what was done
- * (`content/docs/agentic-harness/bpmn-execution.md`: "one skill, two
+ * (`content/docs/concepts-agentic-harness/bpmn-execution.md`: "one skill, two
  * engines"). This script is that check.
  *
  * For every workflow instance in `beans/workflows/` (and every subprocess

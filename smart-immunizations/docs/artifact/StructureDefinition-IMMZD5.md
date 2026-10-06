@@ -39,7 +39,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.schema.json` · [view](StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.schema.json` |
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.openapi.json` |
 | JSON-LD | *not published for this artefact* | |

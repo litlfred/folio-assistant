@@ -5,7 +5,7 @@
 import { describe, expect, it } from "bun:test";
 import { z } from "zod";
 
-import { nodeKind } from "./node-kind";
+import { acceptsSchemaTag, nodeKind } from "./node-kind";
 import { TodoNodeKind, TodoNodeSchema, type TodoNode } from "./todo";
 
 const base = nodeKind("base", [], { id: z.string() });
@@ -52,7 +52,8 @@ describe("nodeKind", () => {
 
 describe("the todo declares its parents", () => {
   it("is composed carried-note, then themed, then its own fields", () => {
-    expect(TodoNodeKind.order).toEqual(["carried-note", "themed", "folio-todo/v1"]);
+    expect(TodoNodeKind.order).toEqual(["carried-note", "themed", "todo"]);
+    expect(TodoNodeKind.tag).toBe("todo/1.0.0");
     expect(Object.keys(TodoNodeSchema.shape)).toEqual([
       "id", "summary", "comment", "createdAt", "updatedAt", "targetLabel", "anchor", "alsoAbout", "tags",
       "theme", "layout", "status", "priority", "origin", "$schema",
@@ -63,7 +64,42 @@ describe("the todo declares its parents", () => {
     const t = {} as TodoNode;
     const fromNote: string = t.summary;
     const fromThemed: string | undefined = t.theme;
-    const own: "folio-todo/v1" = t.$schema;
+    const own: string = t.$schema;
     expect([fromNote, fromThemed, own]).toBeDefined();
+  });
+});
+
+describe("versioned kinds (SemVer, one live major — issue #2195)", () => {
+  const Widget = nodeKind("widget/1.2.3", [], { size: z.number() });
+
+  it("splits the id into a NAME and a version, and records the tag a writer stamps", () => {
+    expect([Widget.id, Widget.version, Widget.tag]).toEqual(["widget", "1.2.3", "widget/1.2.3"]);
+  });
+
+  it("accepts its own tag and any earlier minor or patch of the same major", () => {
+    for (const t of ["widget/1.2.3", "widget/1.2.0", "widget/1.0.9"]) expect(acceptsSchemaTag(Widget, t)).toBe(true);
+    expect(Widget.schema.safeParse({ size: 1, $schema: "widget/1.1.0" }).success).toBe(true);
+  });
+
+  it("refuses a newer minor or patch, another major, and another name", () => {
+    for (const t of ["widget/1.2.4", "widget/1.3.0", "widget/2.0.0", "widget/0.9.0", "gadget/1.2.3", "widget/v1"]) {
+      expect(acceptsSchemaTag(Widget, t)).toBe(false);
+    }
+    expect(Widget.schema.safeParse({ size: 1, $schema: "widget/2.0.0" }).success).toBe(false);
+  });
+
+  it("a subclass's generated $schema replaces its parent's without an override", () => {
+    const Sub = nodeKind("sub-widget/1.0.0", [Widget], { colour: z.string() });
+    expect(Sub.schema.safeParse({ size: 1, colour: "red", $schema: "sub-widget/1.0.0" }).success).toBe(true);
+    expect(Sub.schema.safeParse({ size: 1, colour: "red", $schema: "widget/1.2.3" }).success).toBe(false);
+  });
+
+  it("refuses a hand-written $schema on a versioned kind: one answer, not two", () => {
+    expect(() => nodeKind("dup/1.0.0", [], { $schema: z.literal("dup/1.0.0") })).toThrow(/generates its `\$schema`/);
+  });
+
+  it("an unversioned id is a mixin: no version, no tag, no generated field", () => {
+    const Mixin = nodeKind("tinted", [], { tint: z.string() });
+    expect([Mixin.version, Mixin.tag, "$schema" in Mixin.schema.shape]).toEqual([undefined, undefined, false]);
   });
 });

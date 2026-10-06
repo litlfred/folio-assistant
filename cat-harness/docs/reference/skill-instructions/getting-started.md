@@ -56,7 +56,7 @@ A viewport with no variant falls back to the widest available, and the fallback
 is **reported** — that crop's region is wrong for a narrow screen, so a consumer
 can decline to overlay rather than place text somewhere nobody chose.
 
-Reader-facing walkthrough: `docs/getting-started.md` §8.
+Reader-facing walkthrough: `docs/start/getting-started.md` §8.
 
 ## 0. Why this skill exists
 

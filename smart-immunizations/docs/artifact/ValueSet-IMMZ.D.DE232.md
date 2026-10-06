@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE232.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE232.schema.json` · [view](ValueSet-IMMZ.D.DE232.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE232.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE232.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE232.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE232.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.D.DE232.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE232.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.D.DE232.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE232.jsonld` · [view](ValueSet-IMMZ.D.DE232.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.D.DE232.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.D.DE232.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZ.D.DE23.html" data-next="ValueSet-IMMZ.D.DE237.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

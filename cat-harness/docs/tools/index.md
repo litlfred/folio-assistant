@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>126</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>129</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>72</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>104</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>107</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 104 |
+| <span class="tg-tag tg-shell">shell</span> | 107 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 117 |
+| `none` | 120 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **72** skills named across **126** tools resolve to a
+Yes — all **72** skills named across **129** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -77,6 +77,7 @@ tool advertising a capability the graph cannot locate.
 | `check-dependencies`<br>Dependency probe | Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`verify-local-substrate`](../reference/skill-instructions/verify-local-substrate.html) | 1 in / 1 out |
 | `check-tools`<br>Do the Tool nodes agree with their skills? | Check every Tool node's joins: that each `satisfies` resolves to a real skill and agrees with that skill's declared contract, that every io port names a declared type, and that no argv input has a type able to express a shell payload. | <span class="tg-tag tg-shell">shell</span> | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | 0 in / 1 out |
 | `ci-health`<br>Is CI passing on the default branch? | Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start. | <span class="tg-tag tg-shell">shell</span> | [`ci-health`](../reference/skill-instructions/ci-health.html) | 3 in / 1 out |
+| `compose-docs`<br>Compose the site's documentation tree from its declared docs layers | Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235). | <span class="tg-tag tg-shell">shell</span> | [`harness-tiles`](../reference/skill-instructions/harness-tiles.html) | 4 in / 1 out |
 | `content-context`<br>Content JSON-LD context | Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 1 in / 1 out |
 | `content-graph-analysis`<br>Editorial content-graph analysis | Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one. | <span class="tg-tag tg-shell">shell</span> | [`content-graph`](../reference/skill-instructions/content-graph.html) | 6 in / 1 out |
 | `content-graph-build`<br>Content graph | Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten. | <span class="tg-tag tg-shell">shell</span> | [`content-validate`](../reference/skill-instructions/content-validate.html) | 2 in / 1 out |
@@ -122,6 +123,8 @@ tool advertising a capability the graph cannot locate.
 | `merge-train`<br>Merge train | Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR. | <span class="tg-tag tg-shell">shell</span> | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 5 in / 1 out |
 | `methodologies-viewer`<br>Methodologies viewer | Render the declared methodology graph as one page. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 0 in / 1 out |
+| `navbar-include`<br>Write the site sidebar's harness navbar include | Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235). | <span class="tg-tag tg-shell">shell</span> | [`harness-tiles`](../reference/skill-instructions/harness-tiles.html) | 5 in / 1 out |
+| `node-kind-pages`<br>Node kind pages | Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195). | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `ns-vocabulary`<br>Namespace vocabulary | Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 2 in / 1 out |
 | `package-release-manual`<br>Package release by hand | A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure. | <span class="tg-tag tg-manual">manual</span> | [`package-release`](../reference/skill-instructions/package-release.html) | 2 in / 1 out |
 | `pages-index`<br>Published-paper index page | Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 8 in / 1 out |
