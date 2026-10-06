@@ -266,7 +266,7 @@ with a reason, and the dashboard can filter on that reason.
 
 **REQ-17: [edit] and [feedback] on every block of the document.** (M, *owner, 2026-10-06*)
 Each block of the rendered document SHALL carry two links, as the
-smart-immunizations IG pages already do (`fhir-harness/scripts/build-ig-site.ts`:
+WHO immunization IG's pages already do ([`build-ig-site.ts`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/scripts/build-ig-site.ts):
 "Edit this page on GitHub" and a 📣 feedback icon per heading):
 
 - **[edit]** opens the block's source (`folio/<doc>/<chapter>/<block>.md`) in
@@ -287,7 +287,7 @@ each block's public comments and their change-set ids; it has no edit or
 feedback link. *Accept:* every block has both links; [edit] opens the right
 file; [feedback] prefills the block and lists the block's existing
 change-set issues.
-*Scope, owner 2026-10-06:* common **folio-assistant-core** functionality, not
+*Scope, owner 2026-10-06:* common functionality of the **core layer**, not
 a smart-ra feature: link any block to its markdown source, and create an issue
 from an optional, parameterised issue template; registered as a process step,
 a skill and a tool. The owner directed it built; it merges with the rest of
@@ -468,7 +468,7 @@ recommends the confidence-gated queue); and whether to split Core architects.
 ## Defects observed in the demo
 
 Each was reproduced in headless Chromium against the published dashboard and
-then fixed on this branch (`folio-assistant-core/scripts/public-comment-site.ts`,
+then fixed on this branch ([`public-comment-site.ts`](https://github.com/litlfred/folio-assistant/blob/claude/exciting-ptolemy-se2d2a/folio-assistant-core/scripts/public-comment-site.ts),
 `public-comment-changesets.ts`). The fixes were checked in the browser on a
 dashboard rebuilt from smart-ra's 2,632 comments, with no page errors, and by a
 test. They are **defect fixes, not requirements**, and wait for the same

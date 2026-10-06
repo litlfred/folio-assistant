@@ -33,6 +33,14 @@
  * | `document-site` | `<slug>/index.html`, `<slug>/media/*`, `outline.json`, `index.html` | a changed block, a document/chapter/section manifest, a media file |
  * | `public-comment-site` | `public-comments/index.html` and the comment notes on each `<slug>/index.html` | the public-comment store |
  *
+ * A large document's page is LAZY (bean v433), and `outline.json` says so
+ * (`lazy`): `index.html` is then a shell of headings and placeholders, the
+ * text is in `<slug>/blocks/NNN.json`, and the whole document is in
+ * `<slug>/index.hydrated.html`. A block's text edit changes its chunk and the
+ * hydrated page, not the shell; a block added, removed, renamed or moved
+ * changes the shell and every chunk from its position on, since the chunks
+ * after it shift. Comment notes on a lazy page are in `<slug>/pc-notes.json`.
+ *
  * Every file is pinned (`hash`) to the blobs of the changed inputs that
  * reach it, at head, so a page verdict counts only for the version reviewed.
  *
@@ -97,8 +105,11 @@ const COMMENT_STORE = /^review\/public-comment\//;
 
 /** The part of `outline.json` this reads: the documents, by slug. */
 export interface OutlineLike {
-  documents: Array<{ slug: string }>;
+  documents: Array<{ slug: string; lazy?: { hydrated: string; chunks: number; of: Record<string, number> } }>;
 }
+
+/** A lazy page's chunk file, as `build-document-site` names it. */
+const chunkFile = (slug: string, n: number) => `${slug}/blocks/${String(n).padStart(3, "0")}.json`;
 
 interface Acc {
   files: Map<string, RenderedFile>;
@@ -199,6 +210,22 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
     }
   }
 
+  const lazy = new Map((opts.outline?.documents ?? []).flatMap((d) => (d.lazy ? [[d.slug, d.lazy] as const] : [])));
+  /** Where a block's text renders on its document's site: the page, or a lazy page's chunk and hydrated page. */
+  const blockFiles = (acc: Acc, slug: string, label: string, via: string[]) => {
+    const lz = lazy.get(slug);
+    if (!lz) return add(acc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via, anchors: [label] });
+    add(acc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via, anchors: [label] });
+    const n = lz.of[label];
+    if (n !== undefined) add(acc, { path: `${pre}${chunkFile(slug, n)}`, change: "changed", role: "data", via });
+  };
+  /** Every chunk of a lazy document from `from` on: what a structural change shifts. */
+  const chunksFrom = (acc: Acc, slug: string, from: number, via: string[]) => {
+    const lz = lazy.get(slug);
+    if (!lz) return;
+    for (let n = Math.max(0, from); n < lz.chunks; n++) add(acc, { path: `${pre}${chunkFile(slug, n)}`, change: "changed", role: "data", via });
+  };
+
   const doc: Acc = { files: new Map(), undetermined: [] };
   const pc: Acc = { files: new Map(), undetermined: [] };
   const docInputs: string[] = [];
@@ -211,7 +238,14 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
       // A comment's note sits beside its block on its document's page; which
       // document a comment targets is in the comment, not the path, so every
       // document page is listed: safe, and with one document, exact.
-      for (const slug of [...slugs].sort()) add(pc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via: [f] });
+      for (const slug of [...slugs].sort()) {
+        add(pc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via: [f] });
+        const lz = lazy.get(slug);
+        if (lz) {
+          add(pc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via: [f] });
+          add(pc, { path: `${pre}${slug}/pc-notes.json`, change: "changed", role: "data", via: [f] });
+        }
+      }
       continue;
     }
     docInputs.push(f);
@@ -219,7 +253,7 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
     // A block's `.md` is named in the ChangeSet by its manifest, `<stem>.ts`.
     const block = rel ? byFile.get(rel) ?? byFile.get(rel.replace(/\.md$/, ".ts")) : undefined;
     if (block) {
-      add(doc, { path: `${pre}${block.slug}/index.html`, change: "changed", role: "content", via: [f, block.label], anchors: [block.label] });
+      blockFiles(doc, block.slug, block.label, [f, block.label]);
       continue;
     }
     const slug = rel ? slugOf(rel) : undefined;
@@ -229,6 +263,10 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
       if (sub.startsWith("media/")) {
         add(doc, { path: `${pre}${rel}`, change: "changed", role: "data", via: [f] });
         add(doc, { path: page, change: "changed", role: "content", via: [f] });
+        // Which block shows the figure is in the block, not the path: every chunk.
+        const lz = lazy.get(slug);
+        if (lz) add(doc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via: [f] });
+        chunksFrom(doc, slug, 0, [f]);
         continue;
       }
       if (sub.endsWith(".ts")) {
@@ -236,6 +274,8 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
         // manifest. Titles and order live there, so the outline and the
         // document list move with the page.
         add(doc, { path: page, change: "changed", role: "content", via: [f] });
+        const lz = lazy.get(slug);
+        if (lz) add(doc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via: [f] });
         add(doc, { path: `${pre}outline.json`, change: "changed", role: "index", via: [f] });
         if (sub === `${slug}.ts`) add(doc, { path: `${pre}index.html`, change: "changed", role: "index", via: [f] });
         continue;
@@ -244,6 +284,26 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
     // Read by no builder of the site: an input, and no page (see the module doc).
     if (!siteMayRead(f, opts.reads)) continue;
     doc.undetermined.push({ input: f, reason: "not a block the ChangeSet names, a media file, a manifest of a known document, or the comment store: may change any page", scope: "all" });
+  }
+
+  // A block added, removed, renamed or moved on a lazy page reshapes the shell
+  // and shifts every chunk from its position on, whichever file carried it.
+  // Only for the inputs given: the block's own file, or a manifest of its document.
+  for (const c of opts.changeset.changes) {
+    const structural = c.change !== "changed" || c.aspects.some((a) => a === "renamed" || a === "moved");
+    const at = c.change === "removed" ? c.base : c.head;
+    const slug = slugOf(at.file);
+    const lz = lazy.get(slug);
+    if (!structural || !lz) continue;
+    const input = opts.changed.find((f) => {
+      const r = inFolio(f);
+      return !!r && (r === at.file || r === at.file.replace(/\.ts$/, ".md") || (slugOf(r) === slug && r.endsWith(".ts") && !byFile.has(r)));
+    });
+    if (!input) continue;
+    const via = [input, c.label];
+    add(doc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via });
+    add(doc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via, ...(c.change === "removed" ? {} : { anchors: [c.label] }) });
+    chunksFrom(doc, slug, c.change === "removed" ? 0 : lz.of[c.label] ?? 0, via);
   }
 
   const out = [finish(DOCUMENT_RENDERER, docInputs, doc, opts)];

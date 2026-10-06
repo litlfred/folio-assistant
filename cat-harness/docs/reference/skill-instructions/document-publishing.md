@@ -81,6 +81,7 @@ rest of content"*).
 | `<slug>/blocks/NNN.json` | each block's rendered HTML, 40 blocks per chunk, in document order | the shell, as the reader nears a block, then the rest in idle time |
 | `<slug>/index.hydrated.html` | the whole document on one page, as before | `file://` opens (fetch fails, so the shell goes there), readers without JavaScript, tools (`block-screenshots.ts`) |
 | `<slug>/pc-notes.json` | each block's comment list (a public-comment folio) | a comment note, when opened |
+| `outline.json` `lazy` | the hydrated page, the chunk count, and each block's chunk | the rendered-impact predictor, which names the chunk a change alters (bean `bnjs`) |
 
 The name follows the knowledge graph's own pair: a subgraph publishes
 `index.jsonld`, which references its members, and `index.hydrated.jsonld`, which

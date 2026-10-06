@@ -157,6 +157,8 @@ jobs:
   # a few times; still unknown, it stages, because a duplicate preview of the
   # same commit costs a build and a missing one costs the reviewer.
   conflict-gate:
+    # bpmn-node: Start_PR
+    # The start event's guard: a push stands in for the pull_request event GitHub withholds while the PR conflicts.
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read

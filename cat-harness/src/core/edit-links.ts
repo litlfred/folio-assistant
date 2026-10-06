@@ -2,9 +2,9 @@
  * edit-links — the ONE recipe for "edit this on GitHub" and "give feedback on
  * this" links, for every page the platform publishes (owner, 2026-10-06:
  * "make sure feedback/edit links are changed across all harness/visualizers
- * to be dynamic"). Moved here from `folio-assistant-core/scripts/
- * block-actions.ts` so the harness's own generators can use it: the harness
- * may not import core, and core re-exports this.
+ * to be dynamic"). Moved here from the core layer's `block-actions.ts` so
+ * the harness's own generators can use it: the harness may not import core,
+ * and core re-exports this.
  *
  * Originally block-actions: every rendered block links back to where it can be changed:
  * **[edit]** opens the block's Markdown source in GitHub's editor, and
@@ -15,8 +15,8 @@
  * issue to change block contents"*, and *"make this common folio-asst-core
  * functionality … create an issue w/ optional parameterized template"*).
  *
- * The IG builder already does this per heading (`fhir-harness/scripts/
- * build-ig-site.ts`: "Edit this page on GitHub" and a 📣 feedback icon); this
+ * The FHIR layer's IG builder already does this per heading ("Edit this page
+ * on GitHub" and a 📣 feedback icon); this
  * is the same reader affordance for a document folio, per BLOCK, because a
  * block is what a comment, a change-set and an edit are about.
  *

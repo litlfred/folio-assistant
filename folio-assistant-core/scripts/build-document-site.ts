@@ -457,6 +457,13 @@ export interface OutlineDocument {
   /** The document's page, relative to the site root. */
   page: string;
   chapters: Array<{ title: string; label?: string; sections: OutlineSection[] }>;
+  /**
+   * Present when the page is lazy (bean v433): `page` is then a shell, the
+   * text is in `blocks/NNN.json` and the whole document in `hydrated`. `of`
+   * maps each block to its chunk, so a change can name the file it alters
+   * (rendered impact, bean `bnjs`).
+   */
+  lazy?: { hydrated: string; chunks: number; of: Record<string, number> };
 }
 export interface Outline {
   $schema: typeof OUTLINE_SCHEMA;
@@ -565,6 +572,7 @@ export async function buildDocumentSite(
   const math = opts.math ?? readHarnessConfig(repoRoot)?.contentType === "paper";
   const docs = documentManifests(repoRoot);
   const result: SiteBuildResult = { documents: [], errors: [] };
+  const lazyOf = new Map<string, NonNullable<OutlineDocument["lazy"]>>();
   if (docs.length === 0) {
     result.errors.push(`no document manifest under ${folioDir(repoRoot)} (expected folio/<slug>/<slug>.ts)`);
     return result;
@@ -602,6 +610,7 @@ export async function buildDocumentSite(
         }
         writeFileSync(join(dir, "blocks", `${String(n).padStart(3, "0")}.json`), JSON.stringify(chunk));
       }
+      lazyOf.set(d.slug, { hydrated: `${d.slug}/index.hydrated.html`, chunks: index.chunks, of: index.of });
       const shellHtml = await renderDocumentHtml(split.shell, { math });
       const note = `<p class="fa-one-page">The text loads as you read. <a href="index.hydrated.html">The whole document on one page.</a></p>\n<noscript><p><a href="index.hydrated.html">Read the whole document on one page.</a></p></noscript>\n`;
       writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, note + shellHtml, mathOpts, lazyLoader(index)), true));
@@ -617,7 +626,11 @@ export async function buildDocumentSite(
     .map((d) => `<li><a href="${esc(d.page)}">${esc(d.slug)}</a> (${d.blocks} blocks)</li>`)
     .join("\n");
   const outline: Outline = { $schema: OUTLINE_SCHEMA, documents: [] };
-  for (const d of docs) outline.documents.push(await documentOutline(d.path, folioDir(repoRoot), d.slug));
+  for (const d of docs) {
+    const o = await documentOutline(d.path, folioDir(repoRoot), d.slug);
+    const lz = lazyOf.get(d.slug);
+    outline.documents.push(lz ? { ...o, lazy: lz } : o);
+  }
   writeFileSync(join(outDir, "outline.json"), JSON.stringify(outline) + "\n");
   mkdirSync(join(outDir, "review"), { recursive: true });
   writeFileSync(join(outDir, "review", "index.html"), reviewPageHtml());

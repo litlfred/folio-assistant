@@ -168,6 +168,10 @@ describe("lazy pages: the block text as data (bean v433)", () => {
     const full = readFileSync(join(out, "handbook", "index.hydrated.html"), "utf-8");
     expect(full).toContain("<td>Bootstrapping Agent</td>");
     expect(full).toContain("https://github.com/o/r/edit/main/folio/handbook/introduction/overview.md");
+    // The outline says the page is lazy and where each block's text is (rendered impact, bean bnjs).
+    const outline = JSON.parse(readFileSync(join(out, "outline.json"), "utf-8"));
+    expect(outline.documents[0].lazy).toMatchObject({ hydrated: "handbook/index.hydrated.html", chunks: 1 });
+    expect(outline.documents[0].lazy.of["prose:overview"]).toBe(0);
   });
 
   test("auto stays one page below the threshold", async () => {

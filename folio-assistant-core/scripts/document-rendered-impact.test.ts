@@ -152,3 +152,32 @@ describe("documentRenderedImpact — a file no builder of the site reads (bean e
     });
   });
 });
+
+describe("documentRenderedImpact — a lazy page (bean v433)", () => {
+  // `doc` is lazy: three chunks, the edited block in the first, the added one in the second.
+  const lazyOutline = { documents: [{ slug: "doc", lazy: { hydrated: "doc/index.hydrated.html", chunks: 3, of: { "prose:edited": 0, "prose:new": 1 } } }, { slug: "other" }] };
+  const runLazy = (changed: string[]) => documentRenderedImpact({ changed, changeset, outline: lazyOutline })[0];
+
+  test("a text edit is its chunk and the hydrated page, not the shell", () => {
+    expect(runLazy(["folio/doc/ch1/p-1.md"]).files.map(line)).toEqual(["data:doc/blocks/000.json", "content:doc/index.hydrated.html#prose:edited"]);
+  });
+
+  test("an added block reshapes the shell and shifts every chunk from its own on", () => {
+    expect(runLazy(["folio/doc/ch1/p-2.ts"]).files.map(line)).toEqual([
+      "data:doc/blocks/001.json",
+      "data:doc/blocks/002.json",
+      "content:doc/index.html",
+      "content:doc/index.hydrated.html#prose:new",
+    ]);
+  });
+
+  test("a page that is not lazy is unchanged by any of this", () => {
+    expect(runLazy(["folio/other/ch1/p-9.ts"]).files.map(line)).toEqual(["content:other/index.html#prose:gone"]);
+  });
+
+  test("the comment store also reaches the lazy page's notes and its hydrated page", () => {
+    const pc = documentRenderedImpact({ changed: ["review/public-comment/comments/PC-1.json"], changeset, outline: lazyOutline })[1];
+    expect(pc.files.map(line)).toContain("data:doc/pc-notes.json");
+    expect(pc.files.map(line)).toContain("content:doc/index.hydrated.html");
+  });
+});
