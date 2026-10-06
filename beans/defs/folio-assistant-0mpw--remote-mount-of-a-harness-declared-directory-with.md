@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-06T17:56:08Z
+updated_at: 2026-10-06T19:03:15Z
 parent: folio-assistant-fnx4
 ---
 
@@ -31,3 +31,6 @@ smart-ra builds and serves its harness skills with no submodule, from a pinned r
 
 
 **Amended by owner 2026-10-06: a downstream folio MAY OVERRIDE the harness's defaults** — which directories it mounts and where. Overrides match on the entry's id (as config.subgraphSources and directory overrides already do), never on path; an absent override inherits the harness default.
+
+
+_2026-10-06_ — owner: this pilot is S8's first live run (bean w0at amended: code -> pinned package, KG -> declared remote mount, cutover dirs -> fsh-guts) and is UNBLOCKED from mgxw — smart-ra is already its own repository.

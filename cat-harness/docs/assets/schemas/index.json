@@ -41852,6 +41852,55 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool.ts#RemedyMatch",
+      "name": "RemedyMatch",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "interface",
+      "doc": "One answer to \"this was refused — what now?\".",
+      "fields": [
+        {
+          "name": "needed_by",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The Tool that needed the host."
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tool",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The Tool to reach for, when there is one."
+        },
+        {
+          "name": "invoke",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "That Tool's command, so the answer is runnable without a second lookup."
+        },
+        {
+          "name": "none",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Stated: no workaround, and why."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#RenderAs",
       "name": "RenderAs",
       "module": "cat-harness/schemas/tool.ts",
@@ -41970,6 +42019,13 @@
           "array": false
         },
         {
+          "name": "remedies",
+          "type": "z.array(ToolRemedySchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "One entry per host this Tool reaches, saying what to do when it is"
+        },
+        {
           "name": "maintains",
           "type": "z.array(ToolMaintainsSchema).optional()",
           "optional": true,
@@ -42010,6 +42066,7 @@
         "cat-harness/schemas/tool.ts#ToolInvokeSchema",
         "cat-harness/schemas/tool.ts#ToolMaintainsSchema",
         "cat-harness/schemas/tool.ts#ToolOutputSchema",
+        "cat-harness/schemas/tool.ts#ToolRemedySchema",
         "cat-harness/schemas/tool.ts#ToolRequiresSchema",
         "cat-harness/schemas/tool.ts#ToolSelectionSchema"
       ],
@@ -42368,6 +42425,66 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/tool.ts#SchemaRef"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRemedy",
+      "name": "ToolRemedy",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolRemedySchema",
+      "name": "ToolRemedySchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "doc": "What to reach for when a host this Tool needs refuses it.",
+      "fields": [
+        {
+          "name": "host",
+          "type": "z.string().regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/, \"a bare host name, no scheme or p…",
+          "optional": false,
+          "array": false,
+          "doc": "The host this Tool reaches, as it appears in a refusal — `packages.fhir.org`."
+        },
+        {
+          "name": "error",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Text an agent sees when the host refuses, if it does not name the host — matched as a substring."
+        },
+        {
+          "name": "tool",
+          "type": "ToolId.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The declared Tool that does the job without this host. `check:tools` resolves it."
+        },
+        {
+          "name": "none",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Stated: no Tool works around this refusal, and why — or what to do instead."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool.ts#ToolId"
       ],
       "unresolved": [],
       "external": [
@@ -62962,6 +63079,14 @@
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolRemedySchema",
+      "via": "remedies",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
       "to": "cat-harness/schemas/tool.ts#ToolRequiresSchema",
       "via": "requires",
       "kind": "field",
@@ -63014,6 +63139,14 @@
       "via": "schema",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolRemedySchema",
+      "to": "cat-harness/schemas/tool.ts#ToolId",
+      "via": "tool",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
