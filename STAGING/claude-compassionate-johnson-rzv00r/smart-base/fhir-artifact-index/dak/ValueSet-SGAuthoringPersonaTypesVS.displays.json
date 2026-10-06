@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-SGAuthoringPersonaTypesVS.displays.json",
+  "title": "SMART Guidelines Authoring Persona Types ValueSet Display Values",
+  "description": "Display values for SMART Guidelines Authoring Persona Types ValueSet ValueSet codes. Generated from FHIR expansions.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes using IRI format to match JSON schema enum values",
+      "patternProperties": {
+        "^https?://.*": {
+          "type": "object",
+          "description": "Display values for a specific IRI-formatted code by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#programme-manager": {
+      "en": "Programme Manager"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#technical-officer": {
+      "en": "Technical Officer"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#clinical-sme": {
+      "en": "Clinical Subject Matter Expert"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#business-analyst": {
+      "en": "Business Analyst"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#fhir-modeller": {
+      "en": "FHIR Modeller"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#terminologist": {
+      "en": "Terminologist"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#qc-reviewer": {
+      "en": "Quality Control Reviewer"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#publication-manager": {
+      "en": "Publication Manager"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#content-reviewer": {
+      "en": "Content Reviewer / Approver"
+    },
+    "http://smart.who.int/base/CodeSystem/SGAuthoringPersonaTypes#translator": {
+      "en": "Translator"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/SGAuthoringPersonaTypesVS",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-08-26T08:29:22.803550"
+}

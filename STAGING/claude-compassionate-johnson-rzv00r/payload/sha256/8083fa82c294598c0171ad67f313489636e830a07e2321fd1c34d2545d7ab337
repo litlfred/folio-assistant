@@ -1,0 +1,1355 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "w3c-2024-prov-jsonld",
+  "blocks": [
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "The PROV-\nJSONLD\nSerialization\nA JSON-LD Representation for the PROV Data Model\nW3C Member Submission 25 August 2024\nMore details about this document\nThis version:\nhttps://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/\nLatest published version:\nhttps://www.w3.org/submissions/prov-jsonld/\nLatest editor's draft:\nhttps://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/\nHistory:\nhttps://github.com/openprov/prov-jsonld/commits/\nEditors:\nLuc Moreau (King's College London)\nDong Huynh (King's College London)\nFeedback:\nGitHub openprov/prov-jsonld (pull requests, new issue, open issues)\nCo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 2",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/page-002.md",
+      "narrative": null,
+      "content": "1.\n2.\n2.1\n3.\nLinked Data applications, to offer a natural encoding of provenance for its targeted audience, and to\nallow for fast processing.\nThe following files are available:\nThe JSON Schema for PROV-JSONLD schema.json\nThe JSONLD Context for PROV-JSONLD context.jsonld\nOWL Ontology Extension to support PROV-JSONLD provext.ttl\nStatus of This Document\nThis section describes the status of this document at the time of its publication. A list of current W3C\npublications can be found in the W3C technical reports index at https://www.w3.org/TR/.\nA member submission by King's College London\nBy publis",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 3",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/page-003.md",
+      "narrative": null,
+      "content": "4.\n4.1\n4.2\n4.3\n4.4\n4.5\n4.6\n4.7\n4.8\n4.9\n4.10\n4.11\n4.12\n4.13\n4.14\n4.15\n4.16\n4.17\n4.18\n4.19\n4.20\n5.\n5.1\n5.2\n5.3\n5.4\n5.5\n5.6\n5.7\n5.8\n5.9\n5.10\n5.11\n5.12\n5.13\n5.14\n5.15\nSchema\nPreliminary Definitions\nprov:Entity\nprov:Activity\nprov:Agent\nprov:Derivation\nprov:Attribution\nprov:Association\nprov:Delegation\nprov:Usage\nprov:Generation\nprov:Invalidation\nprov:Start\nprov:End\nprov:Communication\nprov:Influence\nprov:Specialization\nprov:Alternate\nprov:Membership\nprov:Bundle and prov:Document\nContext\nJSON-LD Context\nIntroduction: Qualification Pattern\nDefault and generic Context Elements\nEntity\nActivity\nAgent\nDeri",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 4",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/page-004.md",
+      "narrative": null,
+      "content": "5.16\n5.17\n5.18\n5.19\n6.\nA.\nB.\nC.\nD.\nE.\nE.1\nE.2\nInfluence\nSpecialization\nAlternate\nMembership\nInteroperability Considerations\nJSON Schema for PROV-JSONLD\nJSON-LD Context for PROV-JSONLD\nPROVEXT: PROV Ontology Extension for PROV-JSONLD\nAcknowledgements\nReferences\nNormative references\nInformative references\nAs well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes\nin this specification are non-normative. Everything else in this specification is normative.\nThe key words MAY, MUST, RECOMMENDED, REQUIRED, and SHOULD in this document are to\nbe interpreted as",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 5",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/page-005.md",
+      "narrative": null,
+      "content": "Ontology [PROV-O]. The latter is most suitable for Linked Data [LINKED-DATA], given that it can\nreadily be consumed by existing Semantic Web tools and comes with the semantic grounding provided\nby PROV-O [PROV-O].\nSubsequently, the PROV-JSON [PROV-JSON] serialization has gained traction, despite simply being\na member submission, and not having gone through the various stages of a standardization activity.\nWe conjecture that the primary reason for this is that many web applications are built to be light-\nweight, working mainly with simple data formats such as JSON [RFC8259].\nThe very existence",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 6",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/page-006.md",
+      "narrative": null,
+      "content": "1.1 [JSON-LD11] and is a key enabler of this specification, allowing for the same natural PROV\nproperty names to be used in different contexts while still maintaining their correct mappings to the\nappropriate RDF properties.\nThus, this specification proposes PROV-JSONLD, a PROV serialization compatible with [PROV-DM]\nthat addresses all of our 4 key requirements. It is, first and foremost, a JSON structure supporting\nlightweight Web applications. It is structured so that each PROV expression is encoded as a self-\ncontained JSON object and, therefore, is natural to JavaScript programmers. Exploi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 7",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/page-007.md",
+      "narrative": null,
+      "content": "This section is non-normative.\nWe assume the reader to be familiar with PROV, JSON, and JSON-LD.\nTo illustrate the PROV-JSONLD serialization, we consider a subset of the example of [PROV-\nPRIMER], depicted below. It can be paraphrased as follows: agent Derek was responsible for\ncomposing an article based on an existing dataset.\ncompose\ndataSet1\nuse\nderek\nassoc\narticle1\ngen\nder\ntitle: Crime rises in cities@EN\ntype:\nprov:Person\nmbox:\n<mailto:derek@example.org>\ngivenName: Derek\nFigure 1: Provenance expressing that Derek was responsible for composing an article based on a data\nset.\nThe PROV-JSONLD",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 8",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/page-008.md",
+      "narrative": null,
+      "content": "PROV expressions can be enriched with various properties. Some properties are predefined by PROV-\nJSONLD such as activity and agent in a Association. Further PROV attributes are allowed, for\ninstance type with an array of further types, to better describe the resource. Others may be defined in a\ndifferent namespace such as foaf:givenName, for which we expect the prefix foaf to be declared in the\n@context property.\nThe property @type is mandatory and is associated with a single value, expected to be one of the\npredefined PROV expressions. From an efficiency viewpoint, this property is critical",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 9",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/page-009.md",
+      "narrative": null,
+      "content": "EXAMPLE 1\n{\n  \"@context\" : [ {\n    \"xsd\" : \"http://www.w3.org/2001/XMLSchema#\",\n    \"dcterms\" : \"http://purl.org/dc/terms/\",\n    \"ex\" : \"http://example/\",\n    \"prov\" : \"http://www.w3.org/ns/prov#\",\n    \"foaf\" : \"http://xmlns.com/foaf/0.1/\"\n  }, \"https://openprovenance.org/prov-jsonld/context.jsonld\" ],\n  \"@graph\" : [ {\n    \"@type\" : \"Entity\",\n    \"@id\" : \"ex:dataSet1\"\n  }, {\n    \"@type\" : \"Entity\",\n    \"@id\" : \"ex:article1\",\n    \"dcterms:title\" : [ {\n\"@value\" : \"Crime rises in cities\",\n\"@language\" : \"EN\"\n    } ]\n  }, {\n    \"@type\" : \"Derivation\",\n    \"generatedEntity\" : \"ex:article1\",\n    \"use",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 10",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/page-010.md",
+      "narrative": null,
+      "content": "This section provides an overview of the JSON schema [JSON-SCHEMA] for PROV-JSONLD; its\nfull details are in Appendix A.\nFor each object property identified in the JSON schema, we provide the corresponding normative\nattribute definition in [PROV-DM].\nSome primitive types occur in PROV serializations, namely DateTime and QualifiedName. We define\ntheir schemas as follows.\n{\n\"DateTime\": {\n\"$id\": \"#/definitions/DateTime\",\n\"type\": \"string\",\n\"format\": \"date-time\"\n}\n}\n{\n\"QualifiedName\": {\n\"$id\": \"#/definitions/QualifiedName\",\n\"type\": \"string\",\n\"title\": \"The QualifiedName Schema\",\n    \"activity\" : \"ex:",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 11",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/page-011.md",
+      "narrative": null,
+      "content": "\"default\": \"\",\n\"pattern\": \"(^[A-Za-z0-9_]+:)?(.*)$\"\n}\n}\nEDITOR'S NOTE\nThe production rules for qualified names are more complex than the simple regular expression outlined here. A post-\nprocessor will need to check that qualified names comply with the definition in [PROV-N].\nTyped values (typed_value) are JSON objects with properties @value and @type. String values\n(lang_string) are JSON objects with properties @value and @language.\n{\n\"typed_value\": {\n\"type\": \"object\",\n\"required\": [ \"@value\", \"@type\"],\n\"properties\": {\n\"@value\": {\n\"type\": \"string\"\n},\n\"@type\": {\n\"type\": \"string\"\n}\n},\n\"additional",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 12",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/page-012.md",
+      "narrative": null,
+      "content": "\"additionalProperties\": false\n}\n}\nWe also define general types for property values, which can be arrays of values ArrayOfValues or\narrays of labels ArrayOfLabelValues.\n{\n\"ArrayOfValues\": {\n\"$id\": \"#/definitions/ArrayOfValues\",\n\"type\": \"array\",\n\"items\": {\n\"anyOf\": [\n{ \"$ref\": \"#/definitions/QualifiedN\n{ \"$ref\": \"#/definitions/typed_valu\n{ \"$ref\": \"#/definitions/lang_strin\n                                ]\n                         }\n }\n}\n{\n\"ArrayOfLabelValues\": {\n\"$id\": \"#/definitions/ArrayOfLabelValues\",\n\"type\": \"array\",\n\"items\": { \"$ref\": \"#/definitions/lang_string\" }\n}\n}\nWith these preliminar",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 13",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/page-013.md",
+      "narrative": null,
+      "content": "PROV-DM prov:label), or other properties with an explicit prefix (see PROV-DM entity attributes).\n(The presence of a colon \":\" in the patternProperties element forces all other properties to have the\nstructure of a prefix, a colon, and a local name.)\nSchema for prov:Entity\n{\n\"prov:Entity\": {\n\"type\": \"object\",\n\"required\": [ \"@type\", \"@id\" ],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Entity\" },\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"type\":       { \"$ref\": \"#/definitions/Arra\n\"value\":      { \"$ref\": \"#/definitions/Arra\n\"location\":   { \"$ref\": \"#/definitions/Arra\n\"label\":      { \"$ref\": \"#",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 14",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../sections/page-014.md",
+      "narrative": null,
+      "content": "\"required\": [ \"@type\", \"@id\" ],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Activity\" },\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"startTime\":  { \"$ref\": \"#/definitions/Date\n\"endTime\":    { \"$ref\": \"#/definitions/Date\n\"type\":       { \"$ref\": \"#/definitions/Arra\n\"location\":   { \"$ref\": \"#/definitions/Arra\n\"label\":      { \"$ref\": \"#/definitions/Arra\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini\n},\n\"additionalProperties\": false\n}\n}\nIn the Schema for prov:Agent, an agent MUST contain an identifier (property @id) and a property\n@type with value Agent. It MAY contain furth",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 15",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/page-015.md",
+      "narrative": null,
+      "content": "\"additionalProperties\": false\n}\n}\nIn the Schema for prov:Derivation, a derivation MUST contain a property @type with value\nDerivation. It SHOULD contain a generated entity (property generatedEntity, see PROV-DM\ngeneratedEntity) and used entity (property usedEntity, see PROV-DM usedEntity). It MAY contain an\nidentifier (property @id), an activity (property activity, see PROV-DM activity), a generation\n(property generation, see PROV-DM generation), a usage (property usage, see PROV-DM usage),\nfurther type information (property type, see PROV-DM prov:type), a label (property label), or other\nprop",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 16",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../sections/page-016.md",
+      "narrative": null,
+      "content": "\"additionalProperties\": false\n}\n}\nIn the Schema for prov:Attribution, attribution MUST contain a property @type with value\nAttribution. It SHOULD contain the entity that is the subject of the attribution (property entity, see\nPROV-DM entity) and the associated agent (property agent, see PROV-DM agent). It MAY contain an\nidentifier (property @id), further type information (property type, see PROV-DM prov:type), a label\n(property label, see PROV-DM prov:label), or other properties witn an explicit prefix (see PROV-DM\nattribution attributes).\nSchema for prov:Attribution\n{\n\"prov:Attribution\": {\n\"t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 17",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../sections/page-017.md",
+      "narrative": null,
+      "content": "In the Schema for prov:Association, an association MUST contain a property @type with value\nAssociation. It SHOULD contain an activity (property activity, see PROV-DM activity) and its\nassociated agent (property agent, see PROV-DM agent). It MAY contain an identifier (property @id), a\nplan (property plan, see PROV-DM plan), a location (property location, see PROV-DM prov:location),\na role (property role, see PROV-DM prov:role), further type information (property type, see PROV-\nDM prov:type), a label (property label, see PROV-DM prov:label), or other properties with an explicit\nprefix (see PRO",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 18",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../sections/page-018.md",
+      "narrative": null,
+      "content": "In the Schema for prov:Delegation, a delegation MUST contain a property @type with value\nDelegation. It SHOULD contain a delegate agent (property delegate, see PROV-DM delegate) and a\nresponsible agent (property responsible, see PROV-DM responsible). It MAY contain an identifier\n(property @id), an activity (property activity, see PROV-DM activity), further type information\n(property type, see PROV-DM prov:type), a label (property label, see PROV-DM prov:label), or other\nproperties with an explicit prefix (see PROV-DM delegation attributes).\nSchema for prov:Delegation\n{\n\"prov:Delegation\": {\n\"ty",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 19",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/page-019.md",
+      "narrative": null,
+      "content": "In the Schema for prov:Usage, a usage MUST contain a property @type with value Usage. It\nSHOULD contain an activity (property activity, see PROV-DM activity) and an entity (property entity,\nsee PROV-DM entity). It MAY contain an identifier (property @id), a time (property time, see PROV-\nDM time), a location (property location, see PROV-DM prov:location), a role (property role, see\nPROV-DM prov:role), further type information (property type, see PROV-DM prov:type), a label\n(property label, see PROV-DM prov:label), or other properties with an explicit prefix (see PROV-DM\nusage attributes).\nSche",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 20",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/page-020.md",
+      "narrative": null,
+      "content": "In the Schema for prov:Generation, a generation MUST contain a property @type with value\nGeneration. It SHOULD contain an entity (property entity, see PROV-DM entity) and an activity\n(property activity, see PROV-DM activity). It MAY contain an identifier (property @id), a time\n(property time, see PROV-DM time), a location (property location, see PROV-DM prov:location), a\nrole (property role, see PROV-DM prov:role), further type information (property type, see PROV-DM\nprov:type), a label (property label, see PROV-DM prov:label), or other properties with an explicit\nprefix (see PROV-DM generatio",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 21",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/page-021.md",
+      "narrative": null,
+      "content": "In the Schema for prov:Invalidation, an invalidation MUST contain a property @type with value\nInvalidation. It SHOULD contain an entity (property entity, see PROV-DM entity) and an activity\n(property activity, see PROV-DM activity). It MAY contain an identifier (property @id), a time\n(property time, see PROV-DM time), a location (property location, see PROV-DM prov:location), a\nrole (property role, see PROV-DM prov:role), further type information (property type, see PROV-DM\nprov:type), a label (property label, see PROV-DM prov:label), or other properties with an explicit\nprefix (see PROV-DM in",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 22",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/page-022.md",
+      "narrative": null,
+      "content": "In the Schema for prov:Start, a start MUST contain a property @type with value Start. It SHOULD\ncontain an activity that was started (property activity, see PROV-DM activity); it MAY contain a starter\nactivity (property starter, see PROV-DM starter) and a triggering entity (property trigger, see PROV-\nDM trigger). It MAY also contain an identifier (property @id), a time (property time, see PROV-DM\ntime), a location (property location, see PROV-DM prov:location), a role (property role, see PROV-\nDM prov:role), further type information (property type, see PROV-DM prov:type), a label (property\nla",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 23",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/page-023.md",
+      "narrative": null,
+      "content": "In the Schema for prov:End, an end MUST contain a property @type with value End. It SHOULD\ncontain an activity that was ended (property activity, see PROV-DM activity); it MAY contain an ender\nactivity (property ender, see PROV-DM ender) and a triggering entity (property trigger, see PROV-\nDM trigger). It MAY also contain an identifier (property @id), a time (property time, see PROV-DM\ntime), a location (property location, see PROV-DM prov:location), a role (property role, see PROV-\nDM prov:role), further type information (property type, see PROV-DM prov:type), a label (property\nlabel, see PRO",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 24",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/page-024.md",
+      "narrative": null,
+      "content": "In the Schema for prov:Communication, a communication MUST contain a property @type with value\nCommunication. It SHOULD contain an informed activity (property informed, see PROV-DM\ninformed) and an informant activity (property informant, see PROV-DM informant). It MAY contain\nan identifier (property @id), further type information (property type, see PROV-DM prov:type), a\nlabel (property label, see PROV-DM prov:label), or other properties with an explicit prefix (see\nPROV-DM communication attributes).\nSchema for prov:Communication\n{\n\"prov:Communication\": {\n\"type\": \"object\",\n\"required\": [\n\"@type",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 25",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../sections/page-025.md",
+      "narrative": null,
+      "content": "(property influencer, see PROV-DM influencer). It MAY contain an identifier (property @id), further\ntype information (property type, see PROV-DM prov:type), a label (property label, see PROV-DM\nprov:label), or other properties with an explicit prefix (see PROV-DM influence attributes).\nSchema for prov:Influence\n{\n\"prov:Influence\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\"\n],\n\"properties\": {\n\"@type\":       { \"pattern\": \"Influence\" },\n\"@id\":         { \"$ref\": \"#/definitions/Qua\n\"influencer\":  { \"$ref\": \"#/definitions/Qua\n\"influencee\":  { \"$ref\": \"#/definitions/Qua\n\"type\":        { \"$ref\": \"#/def",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 26",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "target": "../sections/page-026.md",
+      "narrative": null,
+      "content": "Schema for prov:Specialization\n{\n\"prov:Specialization\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\"\n],\n\"properties\": {\n\"@type\":           { \"pattern\": \"Specializa\n\"@id\":             { \"$ref\": \"#/definitions\n\"generalEntity\":   { \"$ref\": \"#/definitions\n\"specificEntity\":  { \"$ref\": \"#/definitions\n\"type\":            { \"$ref\": \"#/definitions\n\"label\":           { \"$ref\": \"#/definitions\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini\n},\n\"additionalProperties\": false\n}\n}\nIn the Schema for prov:Alternate, an alternate MUST contain a property @type with value Alternate. It\nSHOULD con",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 27",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../sections/page-027.md",
+      "narrative": null,
+      "content": "],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Alternate\" },\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"alternate1\": { \"$ref\": \"#/definitions/Qual\n\"alternate2\": { \"$ref\": \"#/definitions/Qual\n\"type\":       { \"$ref\": \"#/definitions/Arra\n\"label\":      { \"$ref\": \"#/definitions/Arra\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini\n},\n\"additionalProperties\": false\n}\n}\nIn the Schema for prov:Membership, a membership MUST contain a property @type with value\nMembership. It SHOULD contain a collection (property collection, see PROV-DM collection) and a\nsingle entity or an array of",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 28",
+      "pageStart": 28,
+      "pageEnd": 28,
+      "target": "../sections/page-028.md",
+      "narrative": null,
+      "content": "},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/defini\n},\n\"additionalProperties\": false\n}\n}\n{\n\"QualifiedName+\": {\n\"$id\": \"#/definitions/QualifiedName+\",\n\"oneOf\": [\n{ \"$ref\": \"#/definitions/QualifiedName\" },\n{\n\"type\": \"array\",\n\"items\": { \"$ref\": \"#/definitions/Q\n}\n]\n           } \n}\nIn the Schemas for prov:Bundle and prov:Document, a bundle and a document MUST contain a\nproperty @type with value Bundle and Document respectively, a context @context, and set of PROV\nexpressions @graph. The names of the properties @context and @graph are specified by JSON-LD\n[JSON-LD11]. In addition,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 29",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../sections/page-029.md",
+      "narrative": null,
+      "content": "\"@graph\":     {\n\"type\": \"array\",\n\"items\": { \"$ref\": \"#/definitions/p\n}\n},\n\"additionalProperties\": false\n}\n}\n{\n\"prov:Document\": {\n\"type\": \"object\",\n\"required\": [\n\"@context\", \"@graph\"\n],\n\"properties\": {\n\"@type\":       { \"pattern\": \"Document\" },\n\"@context\":    { \"$ref\": \"#/definitions/Con\n\"@graph\":      {\n\"type\": \"array\",\n\"items\": { \"$ref\": \"#/definitions/p\n}\n},\n\"additionalProperties\": false\n}\n}\nBundles contain statements (definition prov:Statement), whereas documents contain statements or\nbundles (definition prov:StatementOrBundle); see their specification in Schemas for prov:Statement\nand prov:",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 30",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/page-030.md",
+      "narrative": null,
+      "content": "{ \"$ref\": \"#/definitions/prov:Association\" \n{ \"$ref\": \"#/definitions/prov:Delegation\" }\n{ \"$ref\": \"#/definitions/prov:Invalidation\"\n{ \"$ref\": \"#/definitions/prov:Start\" },\n{ \"$ref\": \"#/definitions/prov:End\" },\n{ \"$ref\": \"#/definitions/prov:Derivation\" }\n{ \"$ref\": \"#/definitions/prov:Alternate\" },\n{ \"$ref\": \"#/definitions/prov:Specializatio\n{ \"$ref\": \"#/definitions/prov:Membership\" }\n{ \"$ref\": \"#/definitions/prov:Influence\" },\n{ \"$ref\": \"#/definitions/prov:Communication\n]\n}\n}\n{\n\"prov:StatementOrBundle\": {\n\"oneOf\": [\n{ \"$ref\": \"#/definitions/prov:Statement\" },\n{ \"$ref\": \"#/definitions/prov:Bundl",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 31",
+      "pageStart": 31,
+      "pageEnd": 31,
+      "target": "../sections/page-031.md",
+      "narrative": null,
+      "content": "\"oneOf\": [\n{\n\"type\": \"string\",\n\"format\": \"uri\"\n},\n{\n\"type\": \"object\",\n\"title\": \"The Items Schema\"\n\"additionalProperties\": { \"\n                                        }\n                                ]\n                }\n}\n}\nIn this section, we provide a description of the JSON-LD context to map the PROV-JSON structures\nto linked data. Full details of the context can be found in Appendix B.\nThe Ontology PROV-O [PROV-O] defines the Qualification Pattern, which restates a binary property\nbetween two resources (referred to as an unqualified influence relation) by using an intermediate class\nthat r",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 32",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "target": "../sections/page-032.md",
+      "narrative": null,
+      "content": "e)\nf)\nc)\na)\nb)\nprov:activity\nprov:atTime\nprov:qualifiedInvalidation\nxsd:dateTime\nInvalidation\nprov:wasInvalidatedBy\nEntity\nActivity\nprov:entity\nprov:atTime\nprov:qualifiedUsage\nxsd:dateTime\nprov:activity\nprov:atTime\nprov:qualifiedGeneration\nxsd:dateTime\nUsage\nprov:used\nActivity\nEntity\nGeneration\nprov:wasGeneratedBy\nEntity\nActivity\nd)\ng)\nh)\nprov:entity\nprov:qualifiedDerivation\nprov:wasDerivedFrom\nEntity\nEntity\nprov:qualifiedCommunication\nActivity\nActivity\nprov:wasInformedBy\nprov:activity\nCommunication\ni)\nib\ni\nprov:qualifiedStart\nActivity\nprov:wasStartedBy\nprov:entity\nStart\nEntity\nprov:atTime\nxsd",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 33",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "target": "../sections/page-033.md",
+      "narrative": null,
+      "content": "prov:agent\nprov:qualifiedDelegation\nprov:actedOnBehalfOf\nDelegation\nj)\nprov:agent\nprov:qualifiedAssociation\nprov:wasAssociatedWith\nprov:agent\nprov:qualifiedAttribution\nEntity\nAttribution\nprov:wasAttributedTo\nActivity\nprov:hadRole\nRole\nPlan\nprov:hadPlan\nAssociation\nAgent\nAgent\nAgent\nAgent\nFigure 2 (taken from [PROV-O]): Illustration of the properties and classes to use (in blue) to qualify\nthe binary influence relations (dotted black). The diagram depict entities as ovals, activities as\nrectangles, and agents as pentagons. The Qualified Resource is represented as a left-pointy shape: in\nPROV-JS",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 34",
+      "pageStart": 34,
+      "pageEnd": 34,
+      "target": "../sections/page-034.md",
+      "narrative": null,
+      "content": "The following JSON properties have the same meaning in all contexts of a PROV-JSONLD document:\nrole, type, label and location respectively map to the RDF properties prov:hadRole, rdf:type,\nrdfs:label, and prov:atLocation.\n{\n\"role\": {\n    \"@id\": \"prov:hadRole\",\n    \"@type\": \"@id\"\n},\n\"type\": {\n    \"@id\": \"rdf:type\",\n    \"@type\": \"@id\"\n},\n\"label\": {\n    \"@id\": \"rdfs:label\"\n},\n\"location\": {\n    \"@id\": \"prov:atLocation\",\n    \"@type\": \"@id\"\n}\n}\nIn the mapping Context for Entity, the JSON property value maps to PROV-O prov:value.\nContext for Entity\n{\n\"Entity\": {\n    \"@id\": \"prov:Entity\",\n    \"@contex",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-035",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 35",
+      "pageStart": 35,
+      "pageEnd": 35,
+      "target": "../sections/page-035.md",
+      "narrative": null,
+      "content": "In the mapping Context for Activity, the JSON properties startTime and endTime map to the RDF data\nproperties prov:startedAtTime and prov:endedAtType, respectively, and have a value coerced to\ndatatype xsd:dateTime.\nContext for Activity\n{\n\"Activity\": {\n    \"@id\": \"prov:Activity\",\n    \"@context\" : {\n\"startTime\": {\n    \"@id\": \"prov:startedAtTime\",\n    \"@type\": \"xsd:dateTime\"\n},\n\"endTime\": {\n    \"@id\": \"prov:endedAtTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n}\n}\nThe mapping Context for Agent does not define further properties.\nContext for Agent\n{\n\"Agent\": {\n    \"@id\": \"prov:Agent\",\n    \"@context\"",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-036",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 36",
+      "pageStart": 36,
+      "pageEnd": 36,
+      "target": "../sections/page-036.md",
+      "narrative": null,
+      "content": "The mapping Context for Derivation supports the Qualification Pattern of Figure 2, g. Each of the\nJSON properties generatedEntity, usedEntity, activity, generation, and usage maps to an object\nproperty: namely, prov:qualifiedDerivation, prov:entity, prov:hadActivity, prov:hadGeneration, and\nprov:hadUsage, respectively.\nContext for Derivation\n{\n\"Derivation\": {\n    \"@id\": \"prov:Derivation\",\n    \"@context\": {\n\"generatedEntity\": {\n    \"@reverse\": \"prov:qualifiedDerivation\",\n    \"@type\": \"@id\"\n},\n\"usedEntity\": {\n    \"@id\": \"prov:entity\",\n    \"@type\": \"@id\"\n},\n\"generation\": {\n    \"@id\": \"prov:hadGen",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-037",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 37",
+      "pageStart": 37,
+      "pageEnd": 37,
+      "target": "../sections/page-037.md",
+      "narrative": null,
+      "content": "The mapping Context for Attribution supports the Qualification Pattern of Figure 2, i. The JSON\nproperty entity maps to the object property prov:qualifiedAttribution.\nContext for Attribution\n{\n\"Attribution\": {\n    \"@id\": \"prov:Attribution\",\n    \"@context\": {\n\"entity\": {\n    \"@reverse\" : \"prov:qualifiedAttribution\",\n    \"@type\" : \"@id\"\n}\n    }\n}\n}\nThe mapping Context for Association supports the Qualification Pattern of Figure 2, j. The JSON\nproperties activity and plan map to the object properties prov:qualifiedAssociation and prov:hadPlan,\nrespectively.\nContext for Association\n{\n\"Association\"",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-038",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 38",
+      "pageStart": 38,
+      "pageEnd": 38,
+      "target": "../sections/page-038.md",
+      "narrative": null,
+      "content": "\"@id\": \"prov:hadPlan\",\n    \"@type\": \"@id\"\n}\n    }\n}\n}\nThe mapping Context for Delegation supports the Qualification Pattern of Figure 2, h. The JSON\nproperties responsible, delegate and activity map to the object properties prov:agent,\nprov:qualifiedDelegation and prov:hadActivity, respectively.\nContext for Delegation\n{\n\"Delegation\": {\n    \"@id\": \"prov:Delegation\",\n    \"@context\": {\n\"responsible\": {\n    \"@id\": \"prov:agent\",\n    \"@type\" : \"@id\"\n},\n\"delegate\": {\n    \"@reverse\": \"prov:qualifiedDelegation\",\n    \"@type\": \"@id\"\n},\n\"activity\": {\n    \"@id\" : \"prov:hadActivity\",\n    \"@type\" : \"@id\"\n}",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-039",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 39",
+      "pageStart": 39,
+      "pageEnd": 39,
+      "target": "../sections/page-039.md",
+      "narrative": null,
+      "content": "The mapping Context for Usage supports the Qualification Pattern of Figure 2, a. The JSON properties\nactivity and time map to the object property prov:qualifiedUsage and the data property prov:atTime,\nrespectively. The value of the latter is coerced to datatype xsd:dateTime.\nContext for Usage\n{\n\"Usage\": {\n    \"@id\": \"prov:Usage\",\n    \"@context\": {\n\"activity\": {\n    \"@reverse\" : \"prov:qualifiedUsage\",\n    \"@type\" : \"@id\"\n},\n\"time\": {\n    \"@id\": \"prov:atTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n}\n}\nThe mapping Context for Generation supports the Qualification Pattern of Figure 2, b. The JSON\npr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-040",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 40",
+      "pageStart": 40,
+      "pageEnd": 40,
+      "target": "../sections/page-040.md",
+      "narrative": null,
+      "content": "\"entity\": {\n    \"@reverse\" : \"prov:qualifiedGeneration\",\n    \"@type\" : \"@id\"\n},\n\"time\": {\n    \"@id\": \"prov:atTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n}\n}\nThe mapping Context for Invalidation supports the Qualification Pattern of Figure 2, c. The JSON\nproperties entity and time map to the object property prov:qualifiedInvalidation and the data property\nprov:atTime, respectively. The value of the latter is coerced to datatype xsd:dateTime.\nContext for Invalidation\n{\n\"Invalidation\": {\n    \"@id\": \"prov:Invalidation\",\n    \"@context\": {\n\"entity\": {\n    \"@reverse\" : \"prov:qualifiedInvalidation\",",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-041",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 41",
+      "pageStart": 41,
+      "pageEnd": 41,
+      "target": "../sections/page-041.md",
+      "narrative": null,
+      "content": "The mapping Context for Start supports the Qualification Pattern of Figure 2, e. The JSON properties\nactivity, trigger, starter, and time map to the object properties prov:qualifiedStart, prov:entity,\nprov:hadActivity, and the data property prov:atTime, respectively. The value of the latter is coerced to\ndatatype xsd:dateTime.\nContext for Start\n{\n\"Start\": {\n    \"@id\": \"prov:Start\",\n    \"@context\": {\n\"activity\": {\n    \"@reverse\": \"prov:qualifiedStart\",\n    \"@type\": \"@id\"\n},\n\"trigger\": {\n    \"@id\": \"prov:entity\",\n    \"@type\": \"@id\"\n},\n\"starter\": {\n    \"@id\": \"prov:hadActivity\",\n    \"@type\": \"@id",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-042",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 42",
+      "pageStart": 42,
+      "pageEnd": 42,
+      "target": "../sections/page-042.md",
+      "narrative": null,
+      "content": "prov:hadActivity, and the data property prov:atTime, respectively. The value of the latter is coerced to\ndatatype xsd:dateTime.\nContext for End\n{\n\"End\": {\n    \"@id\": \"prov:End\",\n    \"@context\": {\n\"activity\": {\n    \"@reverse\": \"prov:qualifiedEnd\",\n    \"@type\": \"@id\"\n},\n\"trigger\": {\n    \"@id\": \"prov:entity\",\n    \"@type\": \"@id\"\n},\n\"ender\": {\n    \"@id\": \"prov:hadActivity\",\n    \"@type\": \"@id\"\n},\n\"time\": {\n    \"@id\": \"prov:atTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n}\n}\nThe mapping Context for Communication supports the Qualification Pattern of Figure 2, d. The JSON\nproperties informed and informan",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-043",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 43",
+      "pageStart": 43,
+      "pageEnd": 43,
+      "target": "../sections/page-043.md",
+      "narrative": null,
+      "content": "Context for Communication\n{\n\"Communication\": {\n    \"@id\": \"prov:Communication\",\n    \"@context\": {\n\"informed\": {\n    \"@reverse\" : \"prov:qualifiedCommunication\",\n    \"@type\" : \"@id\"\n},\n\"informant\": {\n    \"@id\": \"prov:activity\",\n    \"@type\": \"@id\"\n}\n    }\n}\n}\nIn the mapping Context for Influence, the JSON properties influencee and influencer map to the object\nproperties prov:qualifiedInfluence and prov:influencer, respectively.\nContext for Influence\n{\n\"Influence\": {\n    \"@id\": \"prov:Influence\",\n    \"@context\": {\n\"influencee\": {\n    \"@reverse\" : \"prov:qualifiedInfluence\",\n    \"@type\" : \"@id\"\n},\n\"i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-044",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 44",
+      "pageStart": 44,
+      "pageEnd": 44,
+      "target": "../sections/page-044.md",
+      "narrative": null,
+      "content": "}\n}\n}\nWhile [PROV-O] does not define a Qualification Pattern for Specialization, for uniformity and\nusability reasons, we adopt a similar mapping as other PROV relations, via a Qualification Pattern (see\nDefinition Context for Specialization). However, the mapping is to new classes and properties in the\nPROV extension namespace (denoted by the prefix provext). See Section 6 for interoperability\nconsiderations.\nThe JSON properties specificEntity and generalEntity map to the object properties\nprovext:qualifiedSpecialization and provext:generalEntity, respectively.\nContext for Specialization\n{\n\"S",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-045",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 45",
+      "pageStart": 45,
+      "pageEnd": 45,
+      "target": "../sections/page-045.md",
+      "narrative": null,
+      "content": "Definition Context for Alternate). However, the mapping is to new classes and properties in the PROV\nextension namespace (denoted by the prefix provext). See Section 6 for interoperability\nconsiderations.\nThe JSON properties alternate1 and alternate2 map to the object properties provext:qualifiedAlternate\nand provext:alternate, respectively.\nContext for Alternate\n{\n\"Alternate\": {\n    \"@id\": \"provext:Alternate\",\n    \"@context\": {\n\"alternate1\": {\n    \"@reverse\" : \"provext:qualifiedAlternate\",\n    \"@type\" : \"@id\"\n},\n\"alternate2\": {\n    \"@id\": \"provext:alternate\",\n    \"@type\": \"@id\"\n}\n    }\n}\n}\nWh",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-046",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 46",
+      "pageStart": 46,
+      "pageEnd": 46,
+      "target": "../sections/page-046.md",
+      "narrative": null,
+      "content": "Context for Membership\n{\n\"Membership\": {\n    \"@id\": \"provext:Membership\",\n    \"@context\": {\n\"collection\": {\n    \"@reverse\" : \"provext:qualifiedMembership\",\n    \"@type\" : \"@id\"\n},\n\"entity\": {\n    \"@id\": \"provext:member\",\n    \"@type\": \"@id\"\n}\n    }\n}\n}\nIC1:\nThere are differences between PROV-DM and PROV-O in terms of the level of requirements set\non some expressions. For instance, PROV-DM mandates the presence of an entity in a\ngeneration, whereas it defines an activity as optional. Compliance requirements are not the same\nin PROV-O as one could define a qualified generation with an activity but",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-047",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 47",
+      "pageStart": 47,
+      "pageEnd": 47,
+      "target": "../sections/page-047.md",
+      "narrative": null,
+      "content": "three relations are encoded using the same pattern as for other relations. Therefore, their mapping\nto RDF via the JSON-LD context relies on a PROV extension namespace (denoted by the prefix\nprovext) in which classes for Specialization, Alternate and Membership are defined. The PROV-\nJSONLD serialization also allows for identifier and properties to be encoded for these relations.\nIC3:\nThe notion of a PROV document is not present in PROV-DM or PROV-O, but is introduced in\nPROV-N as a housekeeping construct, and is defined in PROV-XML as the root of a PROV-XML\ndocument. A document in PROV-JSONLD",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-048",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 48",
+      "pageStart": 48,
+      "pageEnd": 48,
+      "target": "../sections/page-048.md",
+      "narrative": null,
+      "content": "encoding such subtypes and subrelations, alongside specialized structures. We opted for this\nsingle approach to ensure simplicity and efficiency of parsers.\nIC5:\nThe interoperability of the PROV-JSONLD serialization can be tested in different ways:\n1. In a roundtrip testing, consisting of the serialization of an internal representation in some\nprogramming language to PROV-JSONLD, followed by deserialization from PROV-\nJSONLD back to the same programming language, the source and target representations are\nexpected to be equal.\n2. Likewise, in a roundtrip testing, consisting of the serialization",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-049",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 49",
+      "pageStart": 49,
+      "pageEnd": 49,
+      "target": "../sections/page-049.md",
+      "narrative": null,
+      "content": "1. The first roundtrip testing is implemented in\nhttps://github.com/lucmoreau/ProvToolbox/blob/ProvToolbox-1.0.0/modules-\ncore/prov-\njsonld/src/test/java/org/openprovenance/prov/core/RoundTripFromJavaJSONLD11Test\n.java\n2. The second roundtrip testing is implemented in\nhttps://github.com/lucmoreau/ProvToolbox/blob/ProvToolbox-1.0.0/modules-\nlegacy/roundtrip/src/test/java/org/openprovenance/prov/core/roundtrip/RoundTripFrom\nJavaJSONLD11LegacyTest.java\n{\n\"definitions\": {\n\"DateTime\": {\n\"$id\": \"#/definitions/DateTime\",\n\"type\": \"string\",\n\"format\": \"date-time\"\n},\n\"QualifiedName\": {\n\"$id\": \"#/definiti",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-050",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 50",
+      "pageStart": 50,
+      "pageEnd": 50,
+      "target": "../sections/page-050.md",
+      "narrative": null,
+      "content": "\"^[A-Za-z0-9_]+:(.*)$\": {}\n}\n},\n\"typed_value\": {\n\"type\": \"object\",\n\"required\": [ \"@value\", \"@type\"],\n\"properties\": {\n\"@value\": {\n\"type\": \"string\"\n},\n\"@type\": {\n\"type\": \"string\"\n}\n},\n\"additionalProperties\": false\n},\n\"lang_string\": {\n\"type\": \"object\",\n\"required\": [ \"@value\" ],\n\"properties\": {\n\"@value\": {\n\"type\": \"string\"\n},\n\"@language\": {\n\"type\": \"string\"\n}\n},\n\"additionalProperties\": false\n},\n\"ArrayOfValues\": {\n\"$id\": \"#/definitions/ArrayOfValues\",\n\"type\": \"array\",\n\"items\": {\n\"anyOf\": [\n{ \"$ref\": \"#/definitions/QualifiedNa\n{ \"$ref\": \"#/definitions/typed_value\n{ \"$ref\": \"#/definitions/lang_string",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-051",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 51",
+      "pageStart": 51,
+      "pageEnd": 51,
+      "target": "../sections/page-051.md",
+      "narrative": null,
+      "content": "\"items\": { \"$ref\": \"#/definitions/lang_string\" }\n},\n\"Context\": {\n\"$id\": \"#/definitions/Context\",\n\"type\": \"array\",\n\"title\": \"The @context Schema\",\n\"items\": {\n\"oneOf\": [\n{\n\"type\": \"string\",\n\"format\": \"uri\"\n},\n{\n\"type\": \"object\",\n\"title\": \"The Items Schema\"\n\"additionalProperties\": { \"t\n}\n]\n}\n},\n\"prov:StatementOrBundle\": {\n\"oneOf\": [\n{ \"$ref\": \"#/definitions/prov:Statement\" },\n{ \"$ref\": \"#/definitions/prov:Bundle\" }\n]\n},\n\"prov:Statement\": {\n\"oneOf\": [\n{ \"$ref\": \"#/definitions/prov:Entity\" },\n{ \"$ref\": \"#/definitions/prov:Activity\" },\n{ \"$ref\": \"#/definitions/prov:Agent\" },\n{ \"$ref\": \"#/definitions",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-052",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 52",
+      "pageStart": 52,
+      "pageEnd": 52,
+      "target": "../sections/page-052.md",
+      "narrative": null,
+      "content": "{ \"$ref\": \"#/definitions/prov:Membership\" }\n{ \"$ref\": \"#/definitions/prov:Influence\" },\n{ \"$ref\": \"#/definitions/prov:Communication\"\n]\n},\n\"prov:Entity\": {\n\"type\": \"object\",\n\"required\": [ \"@type\", \"@id\" ],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Entity\" },\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"type\":       { \"$ref\": \"#/definitions/Array\n\"value\":      { \"$ref\": \"#/definitions/Array\n\"location\":   { \"$ref\": \"#/definitions/Array\n\"label\":      { \"$ref\": \"#/definitions/Array\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit\n},\n\"additionalProperties\": false\n},\n\"prov:Age",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-053",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 53",
+      "pageStart": 53,
+      "pageEnd": 53,
+      "target": "../sections/page-053.md",
+      "narrative": null,
+      "content": "\"endTime\":    { \"$ref\": \"#/definitions/DateT\n\"type\":       { \"$ref\": \"#/definitions/Array\n\"location\":   { \"$ref\": \"#/definitions/Array\n\"label\":      { \"$ref\": \"#/definitions/Array\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit\n},\n\"additionalProperties\": false\n},\n\"prov:Usage\": {\n\"type\": \"object\",\n\"required\": [ \"@type\" ],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Usage\" },\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"entity\":     { \"$ref\": \"#/definitions/Qual\n\"activity\":   { \"$ref\": \"#/definitions/Qual\n\"time\":       { \"$ref\": \"#/definitions/DateT\n\"type\":       { \"$ref\":",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-054",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 54",
+      "pageStart": 54,
+      "pageEnd": 54,
+      "target": "../sections/page-054.md",
+      "narrative": null,
+      "content": "\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit\n},\n\"additionalProperties\": false\n},\n\"prov:Invalidation\": {\n\"type\": \"object\",\n\"required\": [ \"@type\" ],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Invalidation\" }\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"entity\":     { \"$ref\": \"#/definitions/Qual\n\"activity\":   { \"$ref\": \"#/definitions/Qual\n\"time\":       { \"$ref\": \"#/definitions/DateT\n\"type\":       { \"$ref\": \"#/definitions/Array\n\"role\":       { \"$ref\": \"#/definitions/Array\n\"location\":   { \"$ref\": \"#/definitions/Array\n\"label\":      { \"$ref\": \"#/definitions/Array\n},\n\"patternPr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-055",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 55",
+      "pageStart": 55,
+      "pageEnd": 55,
+      "target": "../sections/page-055.md",
+      "narrative": null,
+      "content": "},\n\"additionalProperties\": false\n},\n\"prov:End\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\"\n],\n\"properties\": {\n\"@type\":      { \"pattern\": \"End\" },\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"activity\":   { \"$ref\": \"#/definitions/Qual\n\"ender\" :     { \"$ref\": \"#/definitions/Qual\n\"trigger\":    { \"$ref\": \"#/definitions/Qual\n\"time\":       { \"$ref\": \"#/definitions/DateT\n\"type\":       { \"$ref\": \"#/definitions/Array\n\"role\":       { \"$ref\": \"#/definitions/Array\n\"location\":   { \"$ref\": \"#/definitions/Array\n\"label\":      { \"$ref\": \"#/definitions/Array\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-056",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 56",
+      "pageStart": 56,
+      "pageEnd": 56,
+      "target": "../sections/page-056.md",
+      "narrative": null,
+      "content": "\"prov:Association\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\"\n],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Association\" },\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"activity\":   { \"$ref\": \"#/definitions/Qual\n\"agent\" :     { \"$ref\": \"#/definitions/Qual\n\"plan\" :      { \"$ref\": \"#/definitions/Qual\n\"type\":       { \"$ref\": \"#/definitions/Array\n\"role\":       { \"$ref\": \"#/definitions/Array\n\"label\":      { \"$ref\": \"#/definitions/Array\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit\n},\n\"additionalProperties\": false\n},\n\"prov:Delegation\": {\n\"type\": \"object\",\n\"required\": [\n\"@ty",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-057",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 57",
+      "pageStart": 57,
+      "pageEnd": 57,
+      "target": "../sections/page-057.md",
+      "narrative": null,
+      "content": "],\n\"properties\": {\n\"@type\":           { \"pattern\": \"Derivation\"\n\"@id\":             { \"$ref\": \"#/definitions/\n\"activity\":        { \"$ref\": \"#/definitions/\n\"generation\":      { \"$ref\": \"#/definitions/\n\"usage\":           { \"$ref\": \"#/definitions/\n\"generatedEntity\": { \"$ref\": \"#/definitions/\n\"usedEntity\":      { \"$ref\": \"#/definitions/\n\"type\":            { \"$ref\": \"#/definitions/\n\"label\":           { \"$ref\": \"#/definitions/\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit\n},\n\"additionalProperties\": false\n},\n\"prov:Alternate\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\"\n],\n\"prope",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-058",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 58",
+      "pageStart": 58,
+      "pageEnd": 58,
+      "target": "../sections/page-058.md",
+      "narrative": null,
+      "content": "\"generalEntity\":   { \"$ref\": \"#/definitions/\n\"specificEntity\":  { \"$ref\": \"#/definitions/\n\"type\":            { \"$ref\": \"#/definitions/\n\"label\":           { \"$ref\": \"#/definitions/\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit\n},\n\"additionalProperties\": false\n},\n\"prov:Membership\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\"\n],\n\"properties\": {\n\"@type\":       { \"pattern\": \"Membership\" },\n\"@id\":         { \"$ref\": \"#/definitions/Qua\n\"entity\":      { \"$ref\": \"#/definitions/Qua\n\"collection\":  { \"$ref\": \"#/definitions/Qua\n\"type\":        { \"$ref\": \"#/definitions/Arra\n\"label\":",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-059",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 59",
+      "pageStart": 59,
+      "pageEnd": 59,
+      "target": "../sections/page-059.md",
+      "narrative": null,
+      "content": "},\n\"additionalProperties\": false\n},\n\"prov:Communication\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\"\n],\n\"properties\": {\n\"@type\":      { \"pattern\": \"Communication\" }\n\"@id\":        { \"$ref\": \"#/definitions/Qual\n\"informant\":  { \"$ref\": \"#/definitions/Qual\n\"informed\":   { \"$ref\": \"#/definitions/Qual\n\"type\":       { \"$ref\": \"#/definitions/Array\n\"label\":      { \"$ref\": \"#/definitions/Array\n},\n\"patternProperties\": {\n\"^[A-Za-z0-9_]+:(.*)$\": { \"$ref\": \"#/definit\n},\n\"additionalProperties\": false\n},\n\"prov:Bundle\": {\n\"type\": \"object\",\n\"required\": [\n\"@type\", \"@id\", \"@graph\", \"@context\"\n],\n\"properties\": {\n\"@",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-060",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 60",
+      "pageStart": 60,
+      "pageEnd": 60,
+      "target": "../sections/page-060.md",
+      "narrative": null,
+      "content": "\"@type\":       { \"pattern\": \"Document\" },\n\"@context\":    { \"$ref\": \"#/definitions/Cont\n\"@graph\":      {\n\"type\": \"array\",\n\"items\": { \"$ref\": \"#/definitions/p\n}\n},\n\"additionalProperties\": false\n}\n},\n\"$schema\": \"http://json-schema.org/draft-07/schema#\",\n\"$id\": \"https://openprovenance.org/prov-jsonld/schema.json\",\n\"$ref\": \"#/definitions/prov:Document\"\n}\n{\n    \"@context\": {\n\"@version\": 1.1,\n\"prov\": \"http://www.w3.org/ns/prov#\",\n\"provext\": \"https://openprovenance.org/ns/provext#\",\n\"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n\"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\",\n\"rdf\": \"http://www.w3.org/1",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-061",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 61",
+      "pageStart": 61,
+      "pageEnd": 61,
+      "target": "../sections/page-061.md",
+      "narrative": null,
+      "content": "\"entity\": {\n    \"@id\": \"prov:entity\",\n    \"@type\": \"@id\"\n},\n\"activity\": {\n    \"@id\": \"prov:activity\",\n    \"@type\": \"@id\"\n},\n\"agent\": {\n    \"@id\": \"prov:agent\",\n    \"@type\": \"@id\"\n},\n\"Activity\": {\n    \"@id\": \"prov:Activity\",\n    \"@context\" : {\n\"startTime\": {\n    \"@id\": \"prov:startedAtTime\",\n    \"@type\": \"xsd:dateTime\"\n},\n\"endTime\": {\n    \"@id\": \"prov:endedAtTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n},\n\"Entity\": {\n    \"@id\": \"prov:Entity\",\n    \"@context\" : {\n\"value\": {\n    \"@id\": \"prov:value\"\n}\n    }\n},\n\"Agent\": {\n    \"@id\": \"prov:Agent\",\n    \"@context\" : {}\n},\n\"Delegation\": {\n10/1/26, 6:17 PM",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-062",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 62",
+      "pageStart": 62,
+      "pageEnd": 62,
+      "target": "../sections/page-062.md",
+      "narrative": null,
+      "content": "\"@id\": \"prov:Delegation\",\n    \"@context\": {\n\"responsible\": {\n    \"@id\": \"prov:agent\",\n    \"@type\" : \"@id\"\n},\n\"delegate\": {\n    \"@reverse\": \"prov:qualifiedDelegation\",\n    \"@type\": \"@id\"\n},\n\"activity\": {\n    \"@id\" : \"prov:hadActivity\",\n    \"@type\" : \"@id\"\n}\n    }\n},\n\"Usage\": {\n    \"@id\": \"prov:Usage\",\n    \"@context\": {\n\"activity\": {\n    \"@reverse\" : \"prov:qualifiedUsage\",\n    \"@type\" : \"@id\"\n},\n\"time\": {\n    \"@id\": \"prov:atTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n},\n\"Generation\": {\n    \"@id\": \"prov:Generation\",\n    \"@context\": {\n\"entity\": {\n    \"@reverse\" : \"prov:qualifiedGeneration\",\n    \"@t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-063",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 63",
+      "pageStart": 63,
+      "pageEnd": 63,
+      "target": "../sections/page-063.md",
+      "narrative": null,
+      "content": "}\n    }\n},\n\"Invalidation\": {\n    \"@id\": \"prov:Invalidation\",\n    \"@context\": {\n\"entity\": {\n    \"@reverse\" : \"prov:qualifiedInvalidation\",\n    \"@type\" : \"@id\"\n},\n\"time\": {\n    \"@id\": \"prov:atTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n},\n\"Attribution\": {\n    \"@id\": \"prov:Attribution\",\n    \"@context\": {\n\"entity\": {\n    \"@reverse\" : \"prov:qualifiedAttribution\",\n    \"@type\" : \"@id\"\n}\n    }\n},\n\"Association\": {\n    \"@id\": \"prov:Association\",\n    \"@context\": {\n\"activity\": {\n    \"@reverse\" : \"prov:qualifiedAssociation\",\n    \"@type\" : \"@id\"\n},\n\"plan\": {\n    \"@id\": \"prov:hadPlan\",\n    \"@type\": \"@id\"\n}",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-064",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 64",
+      "pageStart": 64,
+      "pageEnd": 64,
+      "target": "../sections/page-064.md",
+      "narrative": null,
+      "content": "},\n\"Communication\": {\n    \"@id\": \"prov:Communication\",\n    \"@context\": {\n\"informed\": {\n    \"@reverse\" : \"prov:qualifiedCommunication\",\n    \"@type\" : \"@id\"\n},\n\"informant\": {\n    \"@id\": \"prov:activity\",\n    \"@type\": \"@id\"\n}\n    }\n},\n\"Influence\": {\n    \"@id\": \"prov:Influence\",\n    \"@context\": {\n\"influencee\": {\n    \"@reverse\" : \"prov:qualifiedInfluence\",\n    \"@type\" : \"@id\"\n},\n\"influencer\": {\n    \"@id\": \"prov:influencer\",\n    \"@type\": \"@id\"\n}\n    }\n},\n\"Derivation\": {\n    \"@id\": \"prov:Derivation\",\n    \"@context\": {\n\"generatedEntity\": {\n    \"@reverse\": \"prov:qualifiedDerivation\",\n    \"@type\": \"@id\"",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-065",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 65",
+      "pageStart": 65,
+      "pageEnd": 65,
+      "target": "../sections/page-065.md",
+      "narrative": null,
+      "content": "\"@type\": \"@id\"\n},\n\"activity\": {\n    \"@id\": \"prov:hadActivity\",\n    \"@type\": \"@id\"\n},\n\"usage\": {\n    \"@id\": \"prov:hadUsage\",\n    \"@type\": \"@id\"\n}\n    }\n},\n\"Start\": {\n    \"@id\": \"prov:Start\",\n    \"@context\": {\n\"activity\": {\n    \"@reverse\": \"prov:qualifiedStart\",\n    \"@type\": \"@id\"\n},\n\"trigger\": {\n    \"@id\": \"prov:entity\",\n    \"@type\": \"@id\"\n},\n\"starter\": {\n    \"@id\": \"prov:hadActivity\",\n    \"@type\": \"@id\"\n},\n\"time\": {\n    \"@id\": \"prov:atTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n},\n\"End\": {\n    \"@id\": \"prov:End\",\n    \"@context\": {\n\"activity\": {\n    \"@reverse\": \"prov:qualifiedEnd\",\n    \"@type\": \"",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-066",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 66",
+      "pageStart": 66,
+      "pageEnd": 66,
+      "target": "../sections/page-066.md",
+      "narrative": null,
+      "content": "\"@id\": \"prov:entity\",\n    \"@type\": \"@id\"\n},\n\"ender\": {\n    \"@id\": \"prov:hadActivity\",\n    \"@type\": \"@id\"\n},\n\"time\": {\n    \"@id\": \"prov:atTime\",\n    \"@type\": \"xsd:dateTime\"\n}\n    }\n},\n\"Specialization\": {\n    \"@id\": \"provext:Specialization\",\n    \"@context\": {\n\"specificEntity\": {\n    \"@reverse\" : \"provext:qualifiedSpecialization\",\n    \"@type\" : \"@id\"\n},\n\"generalEntity\": {\n    \"@id\": \"provext:generalEntity\",\n    \"@type\": \"@id\"\n}\n    }\n},\n\"Membership\": {\n    \"@id\": \"provext:Membership\",\n    \"@context\": {\n\"collection\": {\n    \"@reverse\" : \"provext:qualifiedMembership\",\n    \"@type\" : \"@id\"\n},\n\"entity\"",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-067",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 67",
+      "pageStart": 67,
+      "pageEnd": 67,
+      "target": "../sections/page-067.md",
+      "narrative": null,
+      "content": "\"Alternate\": {\n    \"@id\": \"provext:Alternate\",\n    \"@context\": {\n\"alternate1\": {\n    \"@reverse\" : \"provext:qualifiedAlternate\",\n    \"@type\" : \"@id\"\n},\n\"alternate2\": {\n    \"@id\": \"provext:alternate\",\n    \"@type\": \"@id\"\n}\n    }\n}\n    }\n}\nWe provide here a minimal definition of the classes and properties introduced in provext in the context\nof PROV-JSONLD. They allow the qualification pattern to be applied to Membership, Specialization\nand Alternate. For each, we define one class and two object properties.\n@prefix : <https://openprovenance.org/ns/provext#> .\n@prefix owl: <http://www.w3.org/2002/0",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-068",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 68",
+      "pageStart": 68,
+      "pageEnd": 68,
+      "target": "../sections/page-068.md",
+      "narrative": null,
+      "content": "owl:TransitiveProperty .\n:qualifiedMembership rdf:type owl:ObjectProperty ;\n                    rdfs:domain prov:Entity ;\n                    rdfs:range :Membership .\n:qualifiedSpecialization rdf:type owl:ObjectProperty ;\n                    rdfs:domain prov:Entity ;\n                    rdfs:range :Specialization .\n:qualifiedAlternate rdf:type owl:ObjectProperty ;\n                    rdfs:domain prov:Entity ;\n                    rdfs:range :Alternate .\n:member rdf:type owl:ObjectProperty ;\n                    rdfs:domain :Membership ;\n                    rdfs:range :Entity .\n:generalEntity rdf",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-069",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 69",
+      "pageStart": 69,
+      "pageEnd": 69,
+      "target": "../sections/page-069.md",
+      "narrative": null,
+      "content": "prov:specializationOf\n    owl:propertyChainAxiom (:qualifiedSpecialization\n        :generalEntity\n    ) .\nprov:alternateOf\n    owl:propertyChainAxiom (:qualifiedAlternate\n        :alternate\n    ) .\nprov:hadMember\n    owl:propertyChainAxiom (:qualifiedMembership\n        :member\n    ) .\nThank you to Pierre-Antoine Champin for his input on JSONLD and to Denis Ah-Kang for his\nassistance with the Respec tool.\n[JSON-LD]\nJSON-LD 1.0. Manu Sporny; Gregg Kellogg; Markus Lanthaler. W3C. 3 November 2020. W3C\nRecommendation. URL: https://www.w3.org/TR/json-ld/\n[JSON-LD11]\nJSON-LD 1.1. Gregg Kellogg; Pierr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-070",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 70",
+      "pageStart": 70,
+      "pageEnd": 70,
+      "target": "../sections/page-070.md",
+      "narrative": null,
+      "content": "[LINKED-DATA]\nLinked Data Design Issues. Tim Berners-Lee. W3C. 27 July 2006. W3C-Internal Document.\nURL: https://www.w3.org/DesignIssues/LinkedData.html\n[PROV-DM]\nPROV-DM: The PROV Data Model. Luc Moreau; Paolo Missier. W3C. 30 April 2013. W3C\nRecommendation. URL: https://www.w3.org/TR/prov-dm/\n[PROV-N]\nPROV-N: The Provenance Notation. Luc Moreau; Paolo Missier. W3C. 30 April 2013. W3C\nRecommendation. URL: https://www.w3.org/TR/prov-n/\n[PROV-O]\nPROV-O: The PROV Ontology. Timothy Lebo; Satya Sahoo; Deborah McGuinness. W3C. 30\nApril 2013. W3C Recommendation. URL: https://www.w3.org/TR/prov-o/\n[P",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/w3c-2024-prov-jsonld/blocks/prose-page-071",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 71",
+      "pageStart": 71,
+      "pageEnd": 71,
+      "target": "../sections/page-071.md",
+      "narrative": null,
+      "content": "[IPAW-POSTER]\nPROV-JSONLD: A JSON and Linked Data Representation for PROV (POSTER). Springer\nVerlag. Poster at IPAW'16. URL: https://eprints.soton.ac.uk/395985/\n[PROV-JSON]\nThe PROV-JSON Serialization. A JSON Representation for the PROV Data Model. W3C. W3C\nMember Submission 24 April 2013. URL: https://www.w3.org/submissions/prov-json/\n[PROV-OVERVIEW]\nPROV-Overview. Paul Groth; Luc Moreau. W3C. 30 April 2013. W3C Working Group Note.\nURL: https://www.w3.org/TR/prov-overview/\n[PROV-PRIMER]\nPROV Model Primer. Yolanda Gil; Simon Miles. W3C. 30 April 2013. W3C Working Group\nNote. URL: https://www.w",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
