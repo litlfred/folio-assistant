@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 941,
+      "count": 947,
       "unit": "beans"
     }
   },
@@ -74,7 +74,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:42:43Z",
-      "updatedAt": "2026-10-02T21:42:43Z",
+      "updatedAt": "2026-10-04T13:29:38Z",
       "preview": "Owner, 2026-10-02, verbatim: \"i think we also need cat-kg-jsonld in which all of the json(ld) is staged before being published. right now. it is a bit adhoc. bootstrap-tools writes to bootstrap's gh-pages direcrtly i thinkj..... instead (whoever is doing the rendering of the KG):\n* the writer puts <stub>'s new/incremental updates to the json(ld) KG in the <stub>'a cat-kg-json-ld branch\n* the CI ch",
       "file": "beans/defs/folio-assistant-073f--kg-jsonld-staging-each-stub-stages-its-json-ld-on.md"
     },
@@ -1298,12 +1298,12 @@
       "title": "The committed site build under cat-harness/docs/ is 44% of all merge conflicts, and the publish workflow rebuilds it anyway",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:34:21Z",
-      "updatedAt": "2026-10-03T08:34:21Z",
+      "updatedAt": "2026-10-04T13:29:55Z",
       "preview": "Owner, 2026-10-03: *\"I want you to examine each of the conflicted PR as they\ncome in to figure out how we can reduce the conflicts/ignore them.\"* This is\nthat measurement, taken over the whole open queue at once rather than per PR,\nbecause the answer is a distribution and not a property of any one PR.\n\n## The measurement\n\nEvery conflicted path of every open non-draft PR, against `main` `d089aca961",
       "file": "beans/defs/folio-assistant-34cm--the-committed-site-build-under-cat-harnessdocs-is.md"
     },
@@ -2305,6 +2305,20 @@
       "updatedAt": "2026-09-29T18:14:48Z",
       "preview": "Found by ojcx's real run, 2026-09-23 (litlfred/folio-test#6). The visual diff's \"before\" picture, and the review page's \"view on main\" link, both read the published main site at the root of `gh-pages`. Two gaps follow:\n- **A folio has no main-site publish.** Neither `init-folio` nor `folio-staging.yml` publishes `main`'s document site to the `gh-pages` root. So every before picture reads *\"Its pag",
       "file": "beans/defs/folio-assistant-5uuf--folio-preview-before-side-no-main-site-publish-so.md"
+    },
+    {
+      "id": "folio-assistant-5uyl",
+      "title": "Extract the immunizations L1 graph from DAK Component 1 into smart-immunizations/library",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ioa4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:58:14Z",
+      "updatedAt": "2026-10-06T09:39:52Z",
+      "preview": "## Done when\n- [x] the DAK PDF is ingested by folio-assistant and its entry placed under smart-immunizations/library/\n- [x] a generic extractor reads Component 1 (§1.1 interventions, §1.2 cited guidance) and resolves each (n) against the reference list\n- [x] the graph validates with smart-kg tools/validate.mjs at WHO main AND the Zod validator in smart-base\n- [ ] every cited reference with a retri",
+      "file": "beans/defs/folio-assistant-5uyl--extract-the-immunizations-l1-graph-from-dak-compon.md"
     },
     {
       "id": "folio-assistant-5vo9",
@@ -3620,7 +3634,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:16:07Z",
-      "updatedAt": "2026-10-02T12:02:31Z",
+      "updatedAt": "2026-10-06T08:27:17Z",
       "preview": "Owner, 2026-10-02 (#1767), option 2 of the smart-kg fold-in: feed smart-kg. smart-kg's README says 'Not built yet: no PDF extractor, so publication and recommendation nodes must currently be authored by hand.' folio-assistant's ingest pipeline already produces sections, outline and page text for each library entry. Build a smart-base tool that turns one ingested guideline (e.g. who-iris/library/97",
       "file": "beans/defs/folio-assistant-8pzh--smart-base-extract-smart-kg-l1-instance-documents.md"
     },
@@ -7098,6 +7112,20 @@
       "file": "beans/defs/folio-assistant-in5a--a-declared-take-base-pattern-cannot-settle-a-gener.md"
     },
     {
+      "id": "folio-assistant-ioa4",
+      "title": "Immunizations L1 knowledge graph from DAK Component 1; smart-kg L1 schema to Zod in smart-base",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:57:58Z",
+      "updatedAt": "2026-10-06T08:58:14Z",
+      "preview": "User request 2026-10-06 (ritikarawlani): (1) use folio-assistant to extract an L1 knowledge graph for immunizations from DAK Component 1 (ISBN 9789240099456, IRIS 10665/380303), conforming to WorldHealthOrganization/smart-kg main (66a9b13), placed at litlfred/smart-immunizations/library; (2) make building a DAK's library always ingest the L1 references Component 1 names (skills + processes); (3) m",
+      "file": "beans/defs/folio-assistant-ioa4--x.md"
+    },
+    {
       "id": "folio-assistant-is8n",
       "title": "Merge refused: #2071 owed CI not green on its head",
       "status": "todo",
@@ -7382,6 +7410,20 @@
       "updatedAt": "2026-09-26T03:34:32Z",
       "preview": "Group 7 of 13 in `d308`. **16 files, 3 entry points.**\n\n`render-latex`, `generate-block-tex`, `generate-main-tex`, `latex-preflight`,\n`latex-overfull-report`, `audit-tex-source`, `validate-tex`, `latexmk-compile`,\n`render-changed-blocks`, `render-on-change`, `render-pre-commit`,\n`render-discovery`, `render-value`, `headless-render-qc`, `refresh-authors-note`,\n`scripts/render-tex/`.\n\n**BPMN:** `aut",
       "file": "beans/defs/folio-assistant-jh2j--tool-713-task-render-latex-pdf-rendering-16-files.md"
+    },
+    {
+      "id": "folio-assistant-jj2w",
+      "title": "Migrate smart-kg L1 schema to Zod in litlfred/smart-base, with FSH logical models + value sets generated from it",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ioa4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:58:15Z",
+      "updatedAt": "2026-10-06T09:39:53Z",
+      "preview": "## Done when\n- [x] the L1 ontology and the graph-document shape are Zod modules in litlfred/smart-base, the single source\n- [x] generators write FSH Logical models, CodeSystems and ValueSets into input/fsh/, plus JSON Schema + ontology JSON; --check fails when stale\n- [x] SUSHI compiles the generated FSH\n- [x] the Zod validator matches validate.mjs on a passing graph and on negative cases\n\n## Prog",
+      "file": "beans/defs/folio-assistant-jj2w--migrate-smart-kg-l1-schema-to-zod-in-litlfredsmart.md"
     },
     {
       "id": "folio-assistant-jo87",
@@ -8617,6 +8659,20 @@
       "file": "beans/defs/folio-assistant-n5be--glossary-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-n7f8",
+      "title": "IG site diagrams (PlantUML sequence/deployment SVGs) get the same pan/zoom/resize viewer as BPMN diagrams",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T10:28:18Z",
+      "updatedAt": "2026-10-06T12:16:59Z",
+      "preview": "Owner, 2026-10-06: \"the diagrams on https://litlfred.github.io/smart-trust/sequence-diagrams.html are now resiable/scrollable like the bpmn diagrams are. tehy should be\" (read as: are NOT, and should be). Screenshot: wide PlantUML SVGs on the IG narrative page overflow and are clipped at the right edge.\n\n## Done when\n- [x] Inline/IMG diagram SVGs on IG site pages get the BPMN viewer's pan, zoom an",
+      "file": "beans/defs/folio-assistant-n7f8--ig-site-diagrams-plantuml-sequencedeployment-svgs.md"
+    },
+    {
       "id": "folio-assistant-nafz",
       "title": "glossary-export walks ONE instance's diagrams while translate-bpmn walks the dependents' too",
       "status": "completed",
@@ -9355,12 +9411,12 @@
       "title": "smart-base: pin smart-kg (L1/L2 ontology) as a subgraph; document kinds cite its classes",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-qvxh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:15:59Z",
-      "updatedAt": "2026-10-02T06:15:59Z",
+      "updatedAt": "2026-10-06T08:27:17Z",
       "preview": "Owner, 2026-10-02 (#1767): 'utilize https://github.com/litlfred/smart-kg for L1 related stuff' and '(perhaps subgraph in smart-base to help define l1 dth etc docs?)'; chose options 1+2.\n\nsmart-kg (fork of WorldHealthOrganization/smart-kg) is a T-Box only: L1 (16 classes), L2 DAK components (13), L2-BPMN, L2-DMN, L3. Owner 2026-09-23 (bean wg7r): 'dont want smart-kg here yet, that is its own repo a",
       "file": "beans/defs/folio-assistant-pebe--smart-base-pin-smart-kg-l1l2-ontology-as-a-subgrap.md"
     },
@@ -9405,6 +9461,20 @@
       "updatedAt": "2026-10-02T06:44:57Z",
       "preview": "## What was measured\n\n`bun run cat-harness/scripts/kg-audit.ts --instance .` exits 1 before auditing\nanything. Measured 2026-09-27 on `main` (b4d85f2cf4) as well as on the branch, so\nit is pre-existing and not introduced by the skill-resolution fix that found it:\n\n    ENOENT: no such file or directory, open '/home/user/package.json'\n      at rootScripts (cat-harness/scripts/pair-claims.ts:181:26)\n",
       "file": "beans/defs/folio-assistant-pgzn--kgaudit-instance-crashes-the-root-instances-reporo.md"
+    },
+    {
+      "id": "folio-assistant-piw1",
+      "title": "DAK library pattern: Component 1 L1 references are always ingested (skill + BPMN)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ioa4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:58:14Z",
+      "updatedAt": "2026-10-06T09:39:53Z",
+      "preview": "## Done when\n- [x] a smart-base skill states the pattern: Component 1 → cited L1 references → library entries → L1 graph\n- [x] l2-dak-authoring.bpmn carries the step, with skill ref, before the work plan is seeded\n- [x] cat-harness library-ingestion points at it\n- [ ] render:bpmn and skill:register gates are green\n\n## Progress 2026-10-06\nSkill dak-l1-library, Task_L1Library in l2-dak-authoring.bpm",
+      "file": "beans/defs/folio-assistant-piw1--dak-library-pattern-component-1-l1-references-are.md"
     },
     {
       "id": "folio-assistant-pnn5",
@@ -9989,6 +10059,20 @@
       "updatedAt": "2026-10-04T07:07:44Z",
       "preview": "Stage B of cat-harness/docs/proposals/smart-separation-2026-10-01.md (#1767). Owner: \"push generic stuff as much as possible into fhir-harness first\".\n\n## Done when\n- [x] B1 ig-menu, ig-chrome, ig-metadata-index schemas (+tests) -> fhir-harness/schemas/; graph-kind registry validators repointed (fhir-harness:...)\n- [x] B2 ingest-ig-menu, ingest-ig-chrome (+test) -> fhir-harness/scripts/\n- [x] B3 w",
       "file": "beans/defs/folio-assistant-r939--smart-separation-stage-b-fhir-generic-ig-schemas-a.md"
+    },
+    {
+      "id": "folio-assistant-r93y",
+      "title": "IG artefact pages: one footer, same facts and links as the IG site pages (#1901 follow-up)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T12:15:12Z",
+      "updatedAt": "2026-10-06T12:15:29Z",
+      "preview": "Follow-up to #1901 / #2264. The artefact pages (gen-ig-pages) draw their own JS footer from assets/ig-footer.json: it lacks the © year (copyrightYear is in sushi-config.yaml, not the package) and its Table of Contents link points at the site root instead of toc.html. Goal: the artefact pages' footer matches the IG site pages' footer exactly — same facts from one source, same links, each link only ",
+      "file": "beans/defs/folio-assistant-r93y--ig-artefact-pages-one-footer-same-facts-and-links.md"
     },
     {
       "id": "folio-assistant-r96p",
@@ -11431,14 +11515,14 @@
     {
       "id": "folio-assistant-uvt0",
       "title": "who-iris replica: the locale band shifts the page 52px; make it an overlay (owner: no shift)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T08:56:44Z",
-      "updatedAt": "2026-10-06T08:56:44Z",
+      "updatedAt": "2026-10-06T12:30:00Z",
       "preview": "**Owner ruling, 2026-10-06** (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92), option 1 of 3: *\"Overlay, no shift\"*. The language band must not move the replica.\n\n## The defect\nWhen a who-iris replica page carries a `fa-translation-meta` block, `docs-ui.js` puts the locale globe in a band inside the page flow, between `.crumbs` and `<main>`. The band is 40 px tall and pushes `<mai",
       "file": "beans/defs/folio-assistant-uvt0--who-iris-replica-the-locale-band-shifts-the-page-5.md"
     },
@@ -12913,14 +12997,14 @@
     {
       "id": "folio-assistant-y7b3",
       "title": "VOLATILE FIELDS: a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:25:16Z",
-      "updatedAt": "2026-10-01T07:33:12Z",
+      "updatedAt": "2026-10-04T13:34:40Z",
       "preview": "Follow-on to #1658 (bean 52cz, done) and beans oxka / 520m / lxpq (completed). Owner 2026-09-30 chose MEASURE line-level before building a resolver.\n\n## Measured 2026-09-30\n\n300 recent main-into-branch merges on origin/claude/* replayed with git merge-tree (read-only). 235 conflicted; 147 (63%) conflicted ONLY on generated files.\n\nTop four, what the conflicting lines are:\n\n| file | conflicted merg",
       "file": "beans/defs/folio-assistant-y7b3--volatile-fields-a-timestamp-or-total-in-a-committe.md"
     },
@@ -14919,13 +15003,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 566,
-        "closed": 222,
-        "open": 344,
+        "closed": 223,
+        "open": 343,
         "inProgress": 121,
-        "todo": 222,
+        "todo": 221,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.392226148409894
+        "share": 0.39399293286219084
       },
       {
         "id": "folio-assistant-vuip",
@@ -14933,14 +15017,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 249,
+        "total": 255,
         "closed": 98,
-        "open": 151,
-        "inProgress": 82,
+        "open": 157,
+        "inProgress": 88,
         "todo": 68,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.39357429718875503
+        "share": 0.3843137254901961
       },
       {
         "id": "folio-assistant-yg29",
@@ -14959,8 +15043,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 534,
-    "coveredOpen": 531,
+    "openTotal": 539,
+    "coveredOpen": 536,
     "duplicateIds": 0
   }
 }
