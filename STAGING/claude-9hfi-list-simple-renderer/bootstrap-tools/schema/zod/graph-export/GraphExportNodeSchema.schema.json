@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/GraphExportNode",
+  "definitions": {
+    "GraphExportNode": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9hfi-list-simple-renderer/bootstrap-tools/schema/zod/graph-export/GraphExportNodeSchema.schema.json",
+  "title": "GraphExportNodeSchema",
+  "description": "Generated from `GraphExportNodeSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/9hfi-list-simple-renderer",
+    "sha": "804049f6744c223b9c510bc990ceffdc1d89f3ef",
+    "pr": "2294/merge",
+    "run": "37491808887"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9hfi-list-simple-renderer/skills/content-validate/input.schema.json",
+  "title": "Content Validate Input",
+  "description": "Input schema for content validation.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content to validate."
+    },
+    "validationRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific validation rule IDs to run (empty = all applicable)."
+    },
+    "schemaRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schema files to validate against."
+    }
+  },
+  "staging": {
+    "branch": "claude/9hfi-list-simple-renderer",
+    "sha": "804049f6744c223b9c510bc990ceffdc1d89f3ef",
+    "pr": "2294/merge",
+    "run": "37491808887"
+  }
+}
