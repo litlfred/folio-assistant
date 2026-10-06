@@ -829,3 +829,5 @@ Five fresh checkers, one per locale. Each read ONLY its 116 msgstr values, with 
 - On a block-level data element (a title, an abstract), set `dir="auto"` with `lang="en"`. Not `dir="ltr"`: a record field is not guaranteed to be English.
 
 Then re-run `iris:pages` and look at the ar page again. The `.po` catalogues need no change unless a `{placeholder}` moves inside a tag. Left out of #2229 at the parent session's request; recorded here so it is not lost.
+
+_2026-10-06T15:44:31Z_ — Claimed by claude/lffo-who-iris-ui-l10n — on the branch: `beans:claim` refused because #2229 left the bean in-progress with no holder; #2229 is merged and no open PR works this bean. Scope: the bidi defect above, and the rendered check of one page per locale.
