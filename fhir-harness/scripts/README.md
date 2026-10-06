@@ -28,6 +28,8 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`ig-footer-parity.test.ts`](ig-footer-parity.test.ts) | a file |  |
 | [`ig-footer.test.ts`](ig-footer.test.ts) | a file |  |
 | [`ig-footer.ts`](ig-footer.ts) | a file |  |
+| [`ig-rendered-impact.test.ts`](ig-rendered-impact.test.ts) | a file |  |
+| [`ig-rendered-impact.ts`](ig-rendered-impact.ts) | a file |  |
 | [`ig-site-data.test.ts`](ig-site-data.test.ts) | a file |  |
 | [`ig-site-data.ts`](ig-site-data.ts) | a file |  |
 | [`ingest-ig-artifacts.ts`](ingest-ig-artifacts.ts) | a file |  |

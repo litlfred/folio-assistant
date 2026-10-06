@@ -60,6 +60,14 @@
       "status": "candidate"
     },
     {
+      "id": "smart-guideline-create",
+      "prefLabel": "smart-guideline-create",
+      "definition": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
+      "notation": "smart-guideline-create",
+      "source": "smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
+      "status": "candidate"
+    },
+    {
       "id": "smart-stack-layering",
       "prefLabel": "smart-stack-layering",
       "definition": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",

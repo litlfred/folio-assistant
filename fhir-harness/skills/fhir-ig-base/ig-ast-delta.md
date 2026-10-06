@@ -179,6 +179,19 @@ changed): the planner correctly identified a **2-resource cone** (0.3%) —
 That diagram predates the AST work and is not yet edited to show these steps.
 Until it is, this section is where they are written down.
 
+## Which rendered pages a source change reaches
+
+Before any build, `fhir-harness/scripts/ig-rendered-impact.ts` predicts the
+rendered files a change to `.fsh`, `.cql` or `input/pagecontent` alters,
+through `fsh-cone` and SUSHI's `fsh-index.json`, as a `rendered-impact/v1`
+(skill `rendered-impact` in cat-harness). An AST `diff` afterwards confirms
+it: a resource the delta reports changed whose page the prediction did not
+name is a cone defect.
+
+```sh
+bun run fhir-harness/scripts/ig-rendered-impact.ts --ig <root> --base origin/main --head HEAD [--ast <output-ast>] --out impact.json
+```
+
 ## Do not
 
 - **Do not treat a clean `validity` as a correct AST.** It says the AST was

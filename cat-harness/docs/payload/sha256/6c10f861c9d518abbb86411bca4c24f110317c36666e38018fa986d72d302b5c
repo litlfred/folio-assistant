@@ -181,6 +181,22 @@ jumping straight to a branch.
 | `add-folio` | `folio_init` against a new top-level slug in the existing instance. Do not re-link the platform; it is already linked. |
 | `new-content` | **Stop.** This process ends here. Hand off to `authoring-a-document` or `authoring-a-paper`. Scaffolding anything on this branch is the bug. |
 
+**An IG or a SMART Guideline is routed by its own creation skill.** When the
+answer to step 3's second question is a FHIR IG or a WHO SMART IG, hand over
+to `fhir-ig-create` (ask `skill_list`; a harness that specialises it, such as
+`smart-guideline-create`, runs instead). It reads the same facts and adds the
+one answer this table has no branch for: **inside this repository, as a staged
+sub-KG that can move to its own repository later**, which is its default in a
+harnessed repository because nothing outside the repository changes until the
+owner confirms. `folio_init` has no IG type, so the new-repository route
+scaffolds with `--instance` there. Bean `3tza`.
+
+**A second folio can leave later.** What `add-folio` creates, and any staged
+sub-KG, may later move to a repository of its own. That is
+[`sub-kg-lifecycle`](../../kg/graph-management/sub-kg-lifecycle.md): stage it
+in place, then create the repository and delete the in-repo copy, each only on
+the owner's confirmation.
+
 ## 5. After scaffolding — seed the plan, then publish
 
 1. **Seed the work plan.** One bean per top-level thing the author named in
