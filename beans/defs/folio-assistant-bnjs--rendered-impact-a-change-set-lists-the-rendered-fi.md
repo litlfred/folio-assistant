@@ -22,8 +22,8 @@ Related: q4cm (edit set, accept = approve), c65n (measured FHIR chain), jwox (bl
 - [x] skill rendered-impact; update staging-review, before-after-preview, ig-ast-delta, public-comment change-sets
 - [x] process: content-change-review.bpmn names rendered-impact at Compare, Slice and Comment-PR (produce/read/assign)
 - [ ] gate: the coverage DMN counts unreviewed rendered pages, missed files and site-wide undetermined inputs, once the staging build publishes rendered-impact.json (an input nothing computes is not added)
-- [ ] staging build: run the renderers on the PR's changed files and publish rendered-impact.json + the PR-comment list
-- [ ] PR comment + review page show the list
+- [x] staging build: folio-staging.yml step "Compute the rendered impact" publishes rendered-impact.json beside changeset.json; the PR comment lists up to 20 pages with after/before links
+- [x] PR comment + review page show the list: the review page FETCHES rendered-impact.json when opened (owner: "dynamic loading on review page"), and says "not known" when the build published none
 
 ## Rule: the original stays in library/, edits happen in folio/
 
@@ -36,3 +36,9 @@ Owner, 2026-10-06: "original stays in library/. the presumed workflow is then it
 
 ## Document renderer (2026-10-06)
 `folio-assistant-core/scripts/document-rendered-impact.ts`: renderers `document-site` and `public-comment-site`, loaded from the published `changeset.json` + `outline.json`, never from source (owner: "use dynamic loading from the json(ld) KG and existing assets"); `files[].anchors` added to the contract for deep links. Verified on litlfred/smart-ra (local test branch, not pushed): one block sentence + one chapter title -> predicted `dpi-h-ra/index.html#prose:1-1-1-dcc314` + `outline.json`, measured the same 2 files, 0 missed, 0 unconfirmed; 0.7 s with the asset, 1.8 s computing the ChangeSet. 7 unit tests.
+
+## Staging step + review page (2026-10-06)
+`folio-staging.yml` runs the document renderer after the ChangeSet and publishes `rendered-impact.json`; the PR comment lists the review pages (after + before links, block anchors) and the not-known inputs. The review page (`gen-review-page.ts` + `review-rendered.ts`) fetches the file in the browser, like `changeset.json`. Checked in Chromium on the smart-ra test build: the edited block's after link (200) and before link, and the missing-file state; no page errors.
+
+## Staging step + review page (2026-10-06)
+`folio-staging.yml` runs the document renderer after the ChangeSet and publishes `rendered-impact.json`; the PR comment lists the review pages (after + before links, block anchors) and the not-known inputs. The review page (`gen-review-page.ts` + `review-rendered.ts`) fetches the file in the browser, like `changeset.json`. Checked in Chromium on the smart-ra test build: the edited block's after link (200) and before link, and the missing-file state; no page errors.
