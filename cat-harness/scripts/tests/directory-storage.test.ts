@@ -33,6 +33,11 @@
  * stay offline.
  *
  * @module scripts/tests/directory-storage
+ *
+ * The tests of this file that read the whole checkout (reads the aggregate
+ * root's `.gitignore` and asks git at the checkout root) live in
+ * `test/directory-storage-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { afterAll, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
@@ -400,26 +405,6 @@ describe("resolveQaLocation", () => {
       { id: "qa2", path: "more/results/", graphTypologies: ["qa"], storage: { branch: "two", keyedBy: "commit" } },
     ]);
     expect(() => resolveQaLocation(root)).toThrow(QaUsageError);
-  });
-});
-
-describe("the real declarations (bean 5hox)", () => {
-  const repoRoot = join(import.meta.dir, "..", "..", "..");
-
-  test("every declared qa directory is stored, and every stored working copy is ignored", () => {
-    const loc = resolveQaLocation(repoRoot);
-    expect(loc.directories.length).toBeGreaterThan(0);
-    expect(loc.declared).toBe(true);
-    expect(loc.directories.filter((d) => !d.storage).map((d) => d.path)).toEqual([]);
-    const probes = loc.directories.map((d) => `${d.path}/probe.json`);
-    const r = spawnSync("git", ["check-ignore", "--no-index", "--stdin"], { cwd: repoRoot, input: probes.join("\n") + "\n", encoding: "utf-8" });
-    const ignored = new Set(r.stdout.split("\n").filter(Boolean));
-    expect(probes.filter((p) => !ignored.has(p))).toEqual([]);
-  });
-
-  test("attestations are never ignored: they stay on main (ruling D2 (a))", () => {
-    const r = spawnSync("git", ["check-ignore", "--no-index", "-q", "cat-harness/test/attestations/kg-qa/probe.attestations.json"], { cwd: repoRoot });
-    expect(r.status).toBe(1);
   });
 });
 

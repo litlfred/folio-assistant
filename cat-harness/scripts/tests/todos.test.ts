@@ -10,7 +10,7 @@
  *
  * The tests here that read the aggregate repository's own root (the
  * root-declared `todos/` and `beans/` graphs, and the processes every instance
- * stacks) live in `cat-harness-tools/scripts/tests/todos-repo-root.test.ts`
+ * stacks) live in `test/todos-repo-root.test.ts`
  * (bean `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

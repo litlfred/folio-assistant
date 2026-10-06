@@ -8,21 +8,19 @@
  * stopped serving it. Three halves, each able to fail alone: the shared
  * reader against a planted list, `readEntryBlocks` against a planted entry,
  * and the committed viewer data against the real `who-iris` list.
+ *
+ * The tests of this file that read the whole checkout (reads who-iris's
+ * withheld list) live in `test/library-withheld-checkout.test.ts` (bean
+ * `7zz1`): standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import { orphanAvatars } from "../gen-library-viz.ts";
 import { readEntryBlocks } from "../library-graph.ts";
-import { withheldPaths, withheldReason } from "../lib/withheld.ts";
-import { siteDirFor } from "../../schemas/cat-harness.ts";
-
-const INSTANCE = resolve(import.meta.dir, "..", "..");
-const REPO = resolve(INSTANCE, "..");
-/** READ, never spelled: `site-dir-single-answer` is a gate. */
-const SITE_LIBRARY = join(INSTANCE, siteDirFor(INSTANCE), "assets", "library");
+import { withheldReason } from "../lib/withheld.ts";
 
 /** A library root holding one entry with a prose block and a figure. */
 function plant(withheld: boolean): string {
@@ -98,30 +96,4 @@ describe("orphanAvatars", () => {
   test("an absent root has no orphans rather than throwing", () => {
     expect(orphanAvatars(join(tmpdir(), "no-such-avatars-root"), new Set())).toEqual([]);
   });
-});
-
-describe("the committed viewer data honours who-iris's list", () => {
-  const lib = join(REPO, "who-iris", "library");
-  const slugs = existsSync(lib) ? withheldPaths(lib).filter((p) => !p.includes(".")) : [];
-
-  test("the list names at least one entry — else this half proves nothing", () => {
-    expect(slugs.length).toBeGreaterThan(0);
-  });
-
-  for (const slug of slugs) {
-    test(`${slug}: flagged, no prose excerpt, no avatar`, () => {
-      const index = JSON.parse(readFileSync(join(SITE_LIBRARY, "index.json"), "utf-8")) as {
-        entries: { id: string; withheld?: string; avatar?: unknown }[];
-      };
-      const e = index.entries.find((x) => x.id === slug);
-      expect(e?.withheld).toBeTruthy();
-      expect(e?.avatar).toBeUndefined();
-
-      const data = JSON.parse(readFileSync(join(SITE_LIBRARY, "entries", `${slug}.json`), "utf-8")) as {
-        blocks: { kind: string; content: string | null }[];
-      };
-      expect(data.blocks.filter((b) => b.kind === "prose" && b.content !== null)).toEqual([]);
-      expect(existsSync(join(SITE_LIBRARY, "avatars", "who-iris", `${slug}.png`))).toBe(false);
-    });
-  }
 });

@@ -14,18 +14,23 @@
  * `cat-harness/test/library-entry-iri.e2e.ts`.
  *
  * @module scripts/tests/library-entry-iri
+ *
+ * The tests of this file that read the whole checkout (reads the library
+ * entries of smart-base, smart-trust and fhir-harness) live in
+ * `test/library-entry-iri-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { ADDRESS_JS } from "../lib/library-address.ts";
-import { entryPageHtml, entryView, instanceRootRoutes, isEntryShellFor, isSubjectShell, libraryConfigOf, VIEWER_JS, viewerHtml } from "../gen-library-viz.ts";
+import { entryPageHtml, isEntryShellFor, isSubjectShell, libraryConfigOf, VIEWER_JS, viewerHtml } from "../gen-library-viz.ts";
 import { ReferencedSourceSchema } from "../../schemas/referenced-source.ts";
 import { LibraryIndexSchema } from "../../schemas/site-indexes.ts";
 import { checkEntry } from "../check-l1-complete.ts";
 import { readDeclaration, siteDirFor } from "../../schemas/cat-harness.ts";
-import { DOCS_SITE, libraryAssetIri, libraryAssetSitePath } from "../../schemas/library-iri.ts";
+import { DOCS_SITE, libraryAssetSitePath } from "../../schemas/library-iri.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 const REPO = resolve(HARNESS, "..");
@@ -201,15 +206,6 @@ describe("asset and rendering: two resources, two IRIs (owner, 2026-10-02)", () 
     const baseurl = /^baseurl:\s*"?([^"\n]*)"?/m.exec(cfg)?.[1];
     expect(DOCS_SITE).toBe(`${url}${baseurl}/`);
   });
-  test("every entry's @id IS the address of its published JSON-LD, and that file is published", () => {
-    for (const e of index.entries) {
-      const m = JSON.parse(readFileSync(join(REPO, e.dir, "manifest.jsonld"), "utf-8")) as { "@id": string };
-      expect(m["@id"], e.dir).toBe(libraryAssetIri(e.instance, e.id));
-      const published = join(SITE, libraryAssetSitePath(e.instance, e.id));
-      expect(existsSync(published), published).toBe(true);
-      expect((JSON.parse(readFileSync(published, "utf-8")) as { "@id": string })["@id"]).toBe(m["@id"]);
-    }
-  });
   test("the rendering points TO the asset: its alternate resolves to the asset's file", () => {
     for (const e of index.entries) {
       const shellDir = join(LIB, e.instance, e.id);
@@ -230,13 +226,6 @@ describe("asset and rendering: two resources, two IRIs (owner, 2026-10-02)", () 
       // Every view is a page that exists on the site, or an instance root route.
       if (e.view!.startsWith("/cat-harness/library/")) expect(existsSync(join(SITE, e.view!, "index.html"))).toBe(true);
     }
-  });
-  test("entryView takes a link only when it is a DECLARED root, never any page", () => {
-    const roots = new Map([["smart-trust", "/smart-trust/"]]);
-    expect(entryView({ links: [{ href: "/smart-trust/" }] }, roots, "x/y/z")).toBe("/smart-trust/");
-    expect(entryView({ links: [{ href: "/somewhere-else/" }] }, roots, "x/y/z")).toBe("/x/y/z/");
-    expect(entryView({}, roots, "x/y/z")).toBe("/x/y/z/");
-    expect(instanceRootRoutes(REPO).get("smart-trust")).toBe("/smart-trust/");
   });
   test("the asset never references a rendering of itself", () => {
     for (const e of index.entries) {
