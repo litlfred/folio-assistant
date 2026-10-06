@@ -95,6 +95,8 @@
 import { spawnSync } from "node:child_process";
 
 import { mountTip, pendingMountChanges, tipLocations, type BranchStoreOptions, type TipLocation } from "./branch-store.js";
+import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.js";
+import { tools } from "../tools/discover.js";
 
 /**
  * One declared graph's outcome in the fan-out. `state` is {@link mountTip}'s
@@ -310,12 +312,82 @@ export function report(r: MountResult): string {
   return L.join("\n");
 }
 
+/**
+ * A store this module does not mount, and the Tool its declaration hands it to
+ * (bean j9cs, owner 2026-10-04: *"there should not be a central registry for
+ * declaring mount tools"*).
+ *
+ * `state:mount` implements ONE keying, `tip`. A `family` (one branch per IG
+ * package or Lean toolchain) and a `route` store (a published site) are put on
+ * disk, or on their CDN, by a Tool the declaration names in `storage.tool`.
+ * This lists each with that Tool's command, so the mount DISPATCHES through
+ * the declaration rather than knowing every keying. It does not run them: a
+ * family member is chosen by a key (`keyFrom`) only the caller knows.
+ */
+export interface DelegatedStore {
+  id: string;
+  path: string;
+  /** The branch, or for a family its prefix. */
+  branch: string;
+  keyedBy: string;
+  tool?: string;
+  /** The Tool's shell command, when it declares one. */
+  invoke?: string;
+}
+
+export function delegatedStores(root: string = repoRootOf()): DelegatedStore[] {
+  const byId = new Map(tools().map((t) => [t.id, t]));
+  const out: DelegatedStore[] = [];
+  for (const inst of instanceRootsIn(root)) {
+    let decl;
+    try {
+      decl = readDeclaration(inst);
+    } catch {
+      continue; // an unreadable declaration is check:declared-dirs' finding
+    }
+    if (!decl) continue;
+    for (const d of [...(decl.directories ?? []), ...nestedDirectories(inst, decl)]) {
+      const st = d.storage as { keyedBy?: string; branch?: string; branchPrefix?: string; tool?: string } | undefined;
+      if (!st?.keyedBy || !["family", "route", "route-family"].includes(st.keyedBy)) continue;
+      const tool = st.tool;
+      const shell = tool ? (byId.get(tool)?.invoke as { shell?: string } | undefined)?.shell : undefined;
+      out.push({
+        id: d.id,
+        path: d.path,
+        branch: st.branch ?? st.branchPrefix ?? "",
+        keyedBy: st.keyedBy,
+        ...(tool ? { tool } : {}),
+        ...(shell ? { invoke: shell } : {}),
+      });
+    }
+  }
+  return out;
+}
+
+/** The section the command prints after the mount table: what is not mounted here, and by which Tool. */
+export function delegatedReport(stores: readonly DelegatedStore[]): string {
+  if (stores.length === 0) return "";
+  const L = [
+    "",
+    "",
+    "### Not mounted here: handed to the Tool each declaration names",
+    "",
+    "| graph | keyed by | branch | Tool | command |",
+    "|---|---|---|---|---|",
+  ];
+  for (const s of stores) {
+    const tool = s.tool ? `\`${s.tool}\`` : "⚠️ none declared";
+    L.push(`| \`${s.id}\` | ${s.keyedBy} | \`${s.branch}\` | ${tool} | ${s.invoke ? `\`${s.invoke}\`` : "—"} |`);
+  }
+  return L.join("\n");
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--id");
   const r = mountState({ id: at === -1 ? undefined : argv[at + 1] });
   if (argv.includes("--json")) console.log(JSON.stringify(r, null, 2));
-  else console.log(report(r));
+  else console.log(report(r) + delegatedReport(delegatedStores()));
   // Loud means a non-zero exit too: a hook that only prints is a hook a wrapper
   // can swallow, and the sweep calls this with `|| true`. `partial` counts: a
   // graph that did not mount is a finding even when its siblings did.
