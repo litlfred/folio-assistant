@@ -65,3 +65,18 @@ These are found by link-checking the BUILT pages, not by reading the
 generator: a full main-site build or the fork's site, and a check over every
 relative link in the IG sections. The stage log's `DEAD` line is the start,
 not the whole — it cannot see what a later step (the mount pass) serves.
+
+## The chrome's links are not the IG's, and are scoped to the IG's site
+
+The harness rail, the tiles, the navbar icon row and the folders around an IG
+page are the PLATFORM's chrome, so none of the rows above covers them. On an
+IG repository's own site they come from the platform's `_data/harness.json`,
+which `compose-docs --shell --instance <ig>` scopes to that IG: its own paths
+resolve under its baseurl, the platform's graphs link to the platform's site,
+and no other instance's state graph or count is shown. Owner, 2026-10-06, on
+smart-trust: *"the beans and todos badges seems to be countts from
+folio-assistant and not litlfred/smart-trust as expected. links to beans and
+todos dont work."* The rule, and why an undeclared graph shows no number
+rather than zero, is in
+[`harness-tiles`](../../../cat-harness/skills/ui/ui-core/harness-tiles.md)
+§"On a folio's own site, a tile describes the FOLIO" (issue #2263).
