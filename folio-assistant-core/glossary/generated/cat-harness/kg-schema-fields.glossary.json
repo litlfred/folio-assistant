@@ -4606,62 +4606,6 @@
       "status": "candidate"
     },
     {
-      "id": "document-kind.documentkindcoverageschema.from",
-      "prefLabel": "DocumentKindCoverageSchema.from",
-      "definition": "Repo-relative path of what was classified.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.from",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.kind",
-      "prefLabel": "DocumentKindCoverageSchema.kind",
-      "definition": "The kind's id.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.kind",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.method",
-      "prefLabel": "DocumentKindCoverageSchema.method",
-      "definition": "The rule, in a sentence a reader can check.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.method",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.subject",
-      "prefLabel": "DocumentKindCoverageSchema.subject",
-      "definition": "The instance whose content was classified.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.subject",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindcoverageschema.unplaced",
-      "prefLabel": "DocumentKindCoverageSchema.unplaced",
-      "definition": "What no rule placed, grouped so the remainder is legible.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.unplaced",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindschema.extends",
-      "prefLabel": "DocumentKindSchema.extends",
-      "definition": "A parent kind's id; this kind's sections extend the parent's.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.extends",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindschema.generatedby",
-      "prefLabel": "DocumentKindSchema.generatedBy",
-      "definition": "Set when the file is generated; names the generator, so a hand edit is visibly a defect.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.generatedBy",
-      "status": "candidate"
-    },
-    {
-      "id": "document-kind.documentkindschema.structure",
-      "prefLabel": "DocumentKindSchema.structure",
-      "definition": "`fixed`: exactly these sections, every one required. `semi-fixed`: the required sections must be present; others are allowed.",
-      "source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.structure",
-      "status": "candidate"
-    },
-    {
       "id": "document-kind.documentkindsectionschema.computedfrom",
       "prefLabel": "DocumentKindSectionSchema.computedFrom",
       "definition": "Declared graph ids this section is derived from.",

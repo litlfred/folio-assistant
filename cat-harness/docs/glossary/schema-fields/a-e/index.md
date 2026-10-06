@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1869 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1861 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 596 terms and is 341 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 588 terms and is 336 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2145</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2145</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">596</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">588</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -3822,62 +3822,6 @@ DocumentImageSchema.same_as <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>The SAME PICTURE is already held elsewhere in the repository, and <code>file</code> points there instead of at a copy (bean <code>scfh</code>, <code>scripts/image-reuse.py</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.same_as</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindcoverageschema.from" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindCoverageSchema.from <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Repo-relative path of what was classified.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.from</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindcoverageschema.kind" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindCoverageSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The kind's id.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.kind</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindcoverageschema.method" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindCoverageSchema.method <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The rule, in a sentence a reader can check.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.method</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindcoverageschema.subject" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindCoverageSchema.subject <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The instance whose content was classified.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.subject</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindcoverageschema.unplaced" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindCoverageSchema.unplaced <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>What no rule placed, grouped so the remainder is legible.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.unplaced</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindschema.extends" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindSchema.extends <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A parent kind's id; this kind's sections extend the parent's.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindSchema.extends</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindschema.generatedby" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindSchema.generatedBy <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Set when the file is generated; names the generator, so a hand edit is visibly a defect.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindSchema.generatedBy</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--document-kind.documentkindschema.structure" data-fa-state="extracted" data-fa-gloss="">
-DocumentKindSchema.structure <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p><code>fixed</code>: exactly these sections, every one required. <code>semi-fixed</code>: the required sections must be present; others are allowed.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-kind.ts"><code>cat-harness/schemas/document-kind.ts#DocumentKindSchema.structure</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-kind.documentkindsectionschema.computedfrom" data-fa-state="extracted" data-fa-gloss="">
 DocumentKindSectionSchema.computedFrom <span class="fa-gloss-status">candidate, extracted</span>
