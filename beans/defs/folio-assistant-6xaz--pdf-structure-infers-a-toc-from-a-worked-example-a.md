@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-19T00:12:09Z
-updated_at: 2026-09-29T20:03:11Z
+updated_at: 2026-10-06T06:15:10Z
 parent: folio-assistant-0lmb
 ---
 
@@ -120,3 +120,14 @@ was built to pin the property rather than the document.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## 2026-10-06 — shape two fixed at the dedupe layer (branch claude/goal5-ingest-spine)
+
+Root cause, measured on the stored OCR pages of who-iris/library/who-pub-tps-931 (no tesseract here; the 121 page texts were rebuilt from sections/page-*.md and fed to infer_headings + split_sections): 16 chapter headings sit on contents pages 2-4 AND once each, in order, in the body (Spelling p8, Punctuation p16 … Technical reports p78). infer_headings kept each heading's FIRST occurrence, so the contents listing shadowed every chapter. The existing contents-page skip never fired because the OCR moved the page numbers into a column of their own.
+
+Fix: `listing_pages` marks a page whose >=2 NUMBERED headings recur later on DIFFERENT pages, in the same order, and its entries are dropped before dedupe. That is a property of the page, not a calibrated threshold. Running headers (which recur on ONE page), a single recurring heading, and out-of-order recurrences are all pinned as negatives.
+
+Measured: chapters now start on their body pages; sections under 500 chars went 26 -> 14 (of 40). No collateral: 13 other outline-less PDFs plus the handbook and an arXiv outline doc are byte-identical before and after. Mutation (listing disabled) caught by arm 8. Arm 7 (the handbook falsifier) had been silently skipping because the PDF moved to who-iris/uploads/9789241548960-eng/; it runs again.
+
+STILL OPEN (shape three, not fixed): numbered LIST ITEMS in the body ('1 To mark the antithesis…', '1 List all authors when three or fewer…') read as headings. That is the remaining 14 short sections. Separating them needs either a calibrated length threshold (nothing to calibrate against: one bad document, zero known-good inferred ones) or a numbering-monotonicity rule that would break documents whose numbering restarts per part. Not guessed. Re-ingesting who-pub-tps-931 with pdf-structure --ocr also waits on shape three, and needs an OCR engine this container lacks.
