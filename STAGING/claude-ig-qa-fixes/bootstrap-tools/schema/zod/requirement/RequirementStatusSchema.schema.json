@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/RequirementStatus",
+  "definitions": {
+    "RequirementStatus": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "in-force",
+        "superseded",
+        "retired"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ig-qa-fixes/bootstrap-tools/schema/zod/requirement/RequirementStatusSchema.schema.json",
+  "title": "RequirementStatusSchema",
+  "description": "Generated from `RequirementStatusSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/ig-qa-fixes",
+    "sha": "be4ca945c7c0ae902ada1b4bd597f4f2d668044a",
+    "pr": "2236/merge",
+    "run": "37391484603"
+  }
+}
