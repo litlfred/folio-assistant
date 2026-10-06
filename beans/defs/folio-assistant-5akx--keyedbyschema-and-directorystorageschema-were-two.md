@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T08:35:58Z
-updated_at: 2026-10-04T08:48:28Z
+updated_at: 2026-10-06T06:26:48Z
 parent: folio-assistant-fs43
 ---
 
@@ -54,3 +54,7 @@ into #2069.
 - [x] each of the four consumers has a decided answer for `route`, argued in its own docblock
 - [x] mutation tested: every new guard reverted one at a time reddens the suite
 - [ ] `mountTip` refuses a non-tip keying with a reason naming the keying, instead of `corrupt`
+
+
+## Re-measured 2026-10-06 on main at 2fdbb5109a — not closable yet
+Items 1–3 landed (#2069; `keyedBy: KeyedBySchema` in cat-harness.ts). **Item 4 fails:** `mountTip` (branch-store.ts ~1083) opens the store with no `keyedBy`, so it defaults to `tip`; a probe with a route-keyed declaration returns `{state: corrupt, reason: "… keyed by route, not tip"}` rather than `refused` with a reason naming the keying. The CLI `mount` goes through the same path.
