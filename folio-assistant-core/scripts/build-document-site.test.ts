@@ -149,7 +149,7 @@ describe("lazy pages: the block text as data (bean v433)", () => {
     expect(s.shell).toContain("## Next");
   });
 
-  test("--lazy always: a shell, chunked block JSON, and the whole text in full.html", async () => {
+  test("--lazy always: a shell, chunked block JSON, and the whole text in index.hydrated.html", async () => {
     const d = scaffold();
     appendFileSync(join(d, "folio", "handbook", "introduction", "overview.md"), "\n\n| Role | who |\n|---|---|\n| Bootstrapping Agent | you |\n");
     const out = join(d, "_site");
@@ -160,12 +160,12 @@ describe("lazy pages: the block text as data (bean v433)", () => {
     expect(shell).toContain('<div class="fa-blk" data-blk="prose:overview"></div>');
     expect(shell).not.toContain("<td>Bootstrapping Agent</td>");
     expect(shell).toContain('id="fa-blocks"');
-    expect(shell).toContain('href="full.html"');
+    expect(shell).toContain('href="index.hydrated.html"');
     // compact links on the shell, full links on the one-page version
     expect(shell).toContain('data-src="folio/handbook/introduction/overview.md"');
     const chunk = JSON.parse(readFileSync(join(out, "handbook", "blocks", "000.json"), "utf-8")) as Record<string, string>;
     expect(chunk["prose:overview"]).toContain("<td>Bootstrapping Agent</td>");
-    const full = readFileSync(join(out, "handbook", "full.html"), "utf-8");
+    const full = readFileSync(join(out, "handbook", "index.hydrated.html"), "utf-8");
     expect(full).toContain("<td>Bootstrapping Agent</td>");
     expect(full).toContain("https://github.com/o/r/edit/main/folio/handbook/introduction/overview.md");
   });
@@ -174,7 +174,7 @@ describe("lazy pages: the block text as data (bean v433)", () => {
     const d = scaffold();
     const out = join(d, "_site");
     await buildDocumentSite(d, out);
-    expect(existsSync(join(out, "handbook", "full.html"))).toBe(false);
+    expect(existsSync(join(out, "handbook", "index.hydrated.html"))).toBe(false);
     expect(existsSync(join(out, "handbook", "blocks"))).toBe(false);
   });
 });

@@ -158,8 +158,8 @@ type Page = import("@playwright/test").Page;
 async function shoot(page: Page, site: string, rel: string | null, label: string, outPng: string): Promise<VisualSide> {
   if (!rel || !existsSync(join(site, rel))) return { png: null, missing: "page" };
   // A large document's index.html is a shell that loads its text as data
-  // (bean v433), which a file URL cannot fetch; its whole text is full.html.
-  const full = rel.replace(/index\.html$/, "full.html");
+  // (bean v433), which a file URL cannot fetch; its whole text is index.hydrated.html.
+  const full = rel.replace(/index\.html$/, "index.hydrated.html");
   await page.goto(pathToFileURL(join(site, full !== rel && existsSync(join(site, full)) ? full : rel)).href);
   const region = await page.evaluate(`(${blockRegion.toString()})(${JSON.stringify(label)})`);
   if (!region) return { png: null, missing: "anchor" };

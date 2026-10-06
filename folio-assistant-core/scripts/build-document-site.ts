@@ -118,7 +118,7 @@ ${body}
 // block) and an empty placeholder per block. Each block's rendered HTML is
 // published as data, `<slug>/blocks/NNN.json`, in document order, a chunk of
 // {@link LAZY_CHUNK} blocks each. The page loads the chunks near the reader,
-// then the rest in idle time. `full.html` is the whole document on one page,
+// then the rest in idle time. `index.hydrated.html` is the whole document on one page,
 // as before: a `file://` open (where fetch fails), a reader without
 // JavaScript, and any tool that wants the text in the page all get that.
 //
@@ -209,7 +209,7 @@ function lazyLoader(index: { chunks: number; of: Record<string, number>; ids: Re
     if (!pending.has(n)) pending.set(n, fetch("blocks/" + String(n).padStart(3, "0") + ".json")
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then(fill)
-      .catch(() => { if (!failed) { failed = true; location.replace("full.html" + location.search + location.hash); } }));
+      .catch(() => { if (!failed) { failed = true; location.replace("index.hydrated.html" + location.search + location.hash); } }));
     return pending.get(n);
   };
   const io = new IntersectionObserver((entries) => {
@@ -579,7 +579,7 @@ export async function buildDocumentSite(
     mkdirSync(dir, { recursive: true });
     const mathOpts = math ? { macros: katexMacros(manifest.macros) } : undefined;
     const blocks = await documentBlocks(d.path, repoRoot, d.slug);
-    const cfg = opts.actions === false ? undefined : defaultBlockActions(repoRoot, opts.actions ?? {});
+    const cfg = opts.actions === false ? undefined : defaultBlockActions(repoRoot, { content: d.slug, ...(opts.actions ?? {}) });
     // [edit] and [feedback] on every block (REQ-17, bean uphx). Off only when asked.
     const withActions = (h: string, compact = false) => (cfg ? injectBlockActions(h, blocks, cfg, { compact }).html : h);
     const lazy = opts.lazy === "always" || ((opts.lazy ?? "auto") === "auto" && blocks.length >= LAZY_THRESHOLD);
@@ -587,7 +587,7 @@ export async function buildDocumentSite(
       writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, html, mathOpts)));
     } else {
       // The whole document on one page, for file://, no-JS readers and tools.
-      writeFileSync(join(dir, "full.html"), withActions(page(manifest.title ?? d.slug, html, mathOpts)));
+      writeFileSync(join(dir, "index.hydrated.html"), withActions(page(manifest.title ?? d.slug, html, mathOpts)));
       const split = splitBlocks(built.markdown, new Set(blocks.map((b) => b.label)));
       const index = { chunks: 0, of: {} as Record<string, number>, ids: {} as Record<string, number> };
       mkdirSync(join(dir, "blocks"), { recursive: true });
@@ -603,7 +603,7 @@ export async function buildDocumentSite(
         writeFileSync(join(dir, "blocks", `${String(n).padStart(3, "0")}.json`), JSON.stringify(chunk));
       }
       const shellHtml = await renderDocumentHtml(split.shell, { math });
-      const note = `<p class="fa-one-page">The text loads as you read. <a href="full.html">The whole document on one page.</a></p>\n<noscript><p><a href="full.html">Read the whole document on one page.</a></p></noscript>\n`;
+      const note = `<p class="fa-one-page">The text loads as you read. <a href="index.hydrated.html">The whole document on one page.</a></p>\n<noscript><p><a href="index.hydrated.html">Read the whole document on one page.</a></p></noscript>\n`;
       writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, note + shellHtml, mathOpts, lazyLoader(index)), true));
     }
     // A document's images live in `folio/<slug>/media/` and its blocks link

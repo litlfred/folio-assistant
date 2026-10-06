@@ -31,6 +31,14 @@ describe("block-actions (REQ-17, bean uphx)", () => {
     expect(body).toContain("https://o.github.io/r/doc/index.html#prose%3A2-1-2-ab12");
   });
 
+  test("[feedback] is coded with the content slug: title, body, and a form's content field", () => {
+    const plain = new URL(feedbackUrl({ repo: "o/r", content: "dpi-h-ra" }, block)!);
+    expect(plain.searchParams.get("title")).toBe("Feedback [dpi-h-ra]: 2.1.2 Business services layer — prose:2-1-2-ab12");
+    expect(plain.searchParams.get("body")!.startsWith("**Content:** `dpi-h-ra`\n**Block:**")).toBe(true);
+    const form = new URL(feedbackUrl({ repo: "o/r", content: "dpi-h-ra", template: "block-feedback.yml", templateFields: ["content"] }, block)!);
+    expect(form.searchParams.get("content")).toBe("dpi-h-ra");
+  });
+
   test("[feedback] with a form prefills only the fields the form declares", () => {
     const u = new URL(feedbackUrl({ repo: "o/r", template: "block-feedback.yml", templateFields: ["block", "source"], labels: ["feedback"] }, block)!);
     expect(u.searchParams.get("template")).toBe("block-feedback.yml");
@@ -71,6 +79,8 @@ describe("the browser builds the same URLs (bean v433)", () => {
     { repo: "o/r" },
     { repo: "o/r", branch: "draft", siteUrl: "https://o.github.io/r/", labels: ["feedback", "pc"] },
     { repo: "o/r", template: "block-feedback.yml", templateFields: ["block", "section", "source", "url"], siteUrl: "https://o.github.io/r" },
+    { repo: "o/r", content: "dpi-h-ra" },
+    { repo: "o/r", content: "dpi-h-ra", template: "block-feedback.yml", templateFields: ["content", "block"] },
   ];
   for (const cfg of cases)
     for (const b of [block, { ...block, section: undefined }, { ...block, label: "tbl:a b&c" }])

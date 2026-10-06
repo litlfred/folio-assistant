@@ -66,6 +66,14 @@ export interface BlockActionsConfig {
   labels?: string[];
   /** The published site's base URL, so an issue can link back to the block. */
   siteUrl?: string;
+  /**
+   * The content the page shows, by slug (`dpi-h-ra`): every feedback issue is
+   * CODED with it, in the title (`Feedback [dpi-h-ra]: …`), the body and a
+   * form's `content` field. The title, not a label, because GitHub drops a
+   * prefilled label for a reporter who cannot triage (owner, 2026-10-06:
+   * "plain issues + coding for content slug").
+   */
+  content?: string;
 }
 
 export const DEFAULT_TEMPLATE = "block-feedback.yml";
@@ -105,15 +113,17 @@ export function feedbackUrl(cfg: BlockActionsConfig, b: BlockContext): string | 
     source: b.source,
     page: b.page ?? "",
     url: blockPageUrl(cfg, b) ?? "",
+    content: cfg.content ?? "",
   };
   const q = new URLSearchParams();
-  q.set("title", `Feedback: ${b.section ? `${b.section} — ` : ""}${b.label}`);
+  q.set("title", `Feedback${cfg.content ? ` [${cfg.content}]` : ""}: ${b.section ? `${b.section} — ` : ""}${b.label}`);
   if (cfg.labels?.length) q.set("labels", cfg.labels.join(","));
   if (cfg.template) {
     q.set("template", cfg.template);
     for (const f of cfg.templateFields ?? []) if (values[f]) q.set(f, values[f]);
   } else {
     const facts = [
+      ...(cfg.content ? [`**Content:** \`${cfg.content}\``] : []),
       `**Block:** \`${b.label}\``,
       ...(b.section ? [`**Section:** ${b.section}`] : []),
       `**Source:** ${sourceUrl(cfg, b.source, b.line, b.repo)}`,
@@ -165,15 +175,16 @@ export const BLOCK_URLS_JS = `function faBlockUrls(c, b) {
   var repo = b.repo || c.repo;
   var src = "https://github.com/" + repo + "/blob/" + branch + "/" + path + (b.line ? "#L" + b.line : "");
   var url = c.siteUrl && b.page ? c.siteUrl.replace(/\\/$/, "") + "/" + b.page + "#" + enc(b.label) : (b.pageUrl || "");
-  var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url };
+  var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url, content: c.content || "" };
   var q = new URLSearchParams();
-  q.set("title", "Feedback: " + (b.section ? b.section + " \u2014 " : "") + b.label);
+  q.set("title", "Feedback" + (c.content ? " [" + c.content + "]" : "") + ": " + (b.section ? b.section + " \u2014 " : "") + b.label);
   if (c.labels && c.labels.length) q.set("labels", c.labels.join(","));
   if (c.template) {
     q.set("template", c.template);
     (c.templateFields || []).forEach(function (f) { if (values[f]) q.set(f, values[f]); });
   } else {
-    var facts = ["**Block:** \\u0060" + b.label + "\\u0060"];
+    var facts = c.content ? ["**Content:** \\u0060" + c.content + "\\u0060"] : [];
+    facts.push("**Block:** \\u0060" + b.label + "\\u0060");
     if (b.section) facts.push("**Section:** " + b.section);
     facts.push("**Source:** " + src);
     if (url) facts.push("**On the site:** " + url);

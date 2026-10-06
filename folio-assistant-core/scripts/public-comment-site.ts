@@ -551,8 +551,8 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   if (!existsSync(docPage)) throw new Error(`${docPage} is missing: run build-document-site.ts --out ${out} first`);
   const issues = Object.fromEntries(sets.filter((c) => c.issue).map((c) => [c.id, c.issue!]));
   // A lazy document (bean v433) also publishes the whole text on one page,
-  // full.html; its comment notes are the same.
-  for (const f of [docPage, join(out, cfg.document, "full.html")]) {
+  // index.hydrated.html; its comment notes are the same.
+  for (const f of [docPage, join(out, cfg.document, "index.hydrated.html")]) {
     if (!existsSync(f)) continue;
     const html = readFileSync(f, "utf-8");
     if (html.includes('id="pc-data"')) continue;

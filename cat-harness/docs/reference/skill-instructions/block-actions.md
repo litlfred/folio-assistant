@@ -34,6 +34,17 @@ already discuss the block.
 | **📣 feedback** | a new issue about the block | describes the problem; the issue is intake, and a public-comment folio triages it like any other comment (`public-comment` skill) |
 | **discussed in #n** | the issue of each change-set the block's comments are in | joins the existing discussion instead of opening a duplicate |
 
+## Every issue is coded with its content
+
+[feedback] codes the issue with the slug of the document it came from: the
+title reads `Feedback [dpi-h-ra]: <section> — <block>` and the body opens with
+`**Content:** \`dpi-h-ra\``. A folio with several documents, or a repository
+that takes issues about more than one thing, can then sort feedback by what it
+is about without opening it. The code is in the **title** rather than only a
+label because GitHub silently drops a prefilled label when the reporter has
+no triage rights, and most public reviewers do not (owner, 2026-10-06:
+*"plain issues + coding for content slug"*).
+
 ## The issue form is the folio's, and optional
 
 With no form, [feedback] opens a blank issue whose body already says which
@@ -52,6 +63,7 @@ fields the form declares**, matched by `id`:
 | `source` | the block's source path in the repository |
 | `page` | the page it renders on |
 | `url` | the block's address on the published site (needs `--site-url`) |
+| `content` | the document's slug, the code the issue is triaged by |
 
 A form may declare any subset, and fields it does not declare are not sent.
 Add the questions you want answered (what is wrong, a suggested wording, the
@@ -67,7 +79,7 @@ them off for a build that should have none.
 ## Two forms of the same links
 
 - **Full** (`blockActionsHtml`): every href written into the page. Used on a
-  one-page document and on `full.html`, so the links work without
+  one-page document and on `index.hydrated.html`, so the links work without
   JavaScript.
 - **Compact** (`compactActionsHtml` + `compactActionsScript`): the block's
   facts as data attributes, and the hrefs built in the browser when a pointer

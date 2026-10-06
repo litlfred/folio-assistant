@@ -13,15 +13,16 @@
   var repo = b.repo || c.repo;
   var src = "https://github.com/" + repo + "/blob/" + branch + "/" + path + (b.line ? "#L" + b.line : "");
   var url = c.siteUrl && b.page ? c.siteUrl.replace(/\/$/, "") + "/" + b.page + "#" + enc(b.label) : (b.pageUrl || "");
-  var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url };
+  var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url, content: c.content || "" };
   var q = new URLSearchParams();
-  q.set("title", "Feedback: " + (b.section ? b.section + " — " : "") + b.label);
+  q.set("title", "Feedback" + (c.content ? " [" + c.content + "]" : "") + ": " + (b.section ? b.section + " — " : "") + b.label);
   if (c.labels && c.labels.length) q.set("labels", c.labels.join(","));
   if (c.template) {
     q.set("template", c.template);
     (c.templateFields || []).forEach(function (f) { if (values[f]) q.set(f, values[f]); });
   } else {
-    var facts = ["**Block:** \u0060" + b.label + "\u0060"];
+    var facts = c.content ? ["**Content:** \u0060" + c.content + "\u0060"] : [];
+    facts.push("**Block:** \u0060" + b.label + "\u0060");
     if (b.section) facts.push("**Section:** " + b.section);
     facts.push("**Source:** " + src);
     if (url) facts.push("**On the site:** " + url);

@@ -71,15 +71,20 @@ rest of content"*).
 |---|---|---|
 | `<slug>/index.html` | headings, every block anchor, a placeholder per block, [edit]/[feedback] as data, comment-note counts | readers |
 | `<slug>/blocks/NNN.json` | each block's rendered HTML, 40 blocks per chunk, in document order | the shell, as the reader nears a block, then the rest in idle time |
-| `<slug>/full.html` | the whole document on one page, as before | `file://` opens (fetch fails, so the shell goes there), readers without JavaScript, tools (`block-screenshots.ts`) |
+| `<slug>/index.hydrated.html` | the whole document on one page, as before | `file://` opens (fetch fails, so the shell goes there), readers without JavaScript, tools (`block-screenshots.ts`) |
 | `<slug>/pc-notes.json` | each block's comment list (a public-comment folio) | a comment note, when opened |
+
+The name follows the knowledge graph's own pair: a subgraph publishes
+`index.jsonld`, which references its members, and `index.hydrated.jsonld`, which
+holds them inline. The document page is the same pair: `index.html` references
+its blocks, `index.hydrated.html` holds them (owner, 2026-10-06).
 
 A link to a block (`#prose:…`) or to a term inside one (`#term-…`) loads that
 chunk first and lands on it. `--lazy always|never` overrides the threshold.
 
 Two rules for anything that reads the document page:
 
-- **Want the text? Read `full.html` when it exists.** The shell has
+- **Want the text? Read `index.hydrated.html` when it exists.** The shell has
   placeholders where the text goes.
 - **Find blocks by their anchor** (`<a id="<label>">`). It is on both pages.
 

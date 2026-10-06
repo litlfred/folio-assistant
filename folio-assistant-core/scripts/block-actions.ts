@@ -44,7 +44,7 @@ if (import.meta.main) {
   for (const d of documentManifests(root)) {
     for (const b of await documentBlocks(d.path, root, d.slug)) {
       if (want && b.label !== want) continue;
-      out.push({ label: b.label, source: b.source, section: b.section, edit: editUrl(cfg, b.source), feedback: feedbackUrl(cfg, b) });
+      out.push({ label: b.label, source: b.source, section: b.section, edit: editUrl(cfg, b.source), feedback: feedbackUrl({ content: d.slug, ...cfg }, b) });
     }
   }
   if (want && out.length === 0) {
