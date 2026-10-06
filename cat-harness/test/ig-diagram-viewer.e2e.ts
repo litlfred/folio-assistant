@@ -8,30 +8,31 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
 /**
  * IG site diagrams get the shared figure viewer (bean `n7f8`).
  *
- * Owner, 2026-10-06: *"the diagrams on
- * https://litlfred.github.io/smart-trust/sequence-diagrams.html are now
- * resiable/scrollable like the bpmn diagrams are. tehy should be"*. Measured
+ * Owner, 2026-10-06, on an IG's sequence-diagrams page: *"the diagrams on
+ * … are now resiable/scrollable like the bpmn diagrams are. tehy should
+ * be"*. Measured
  * on a local staged build: the page's two inline PlantUML diagrams had the
  * viewer, and its three `<object data="x.svg">` diagrams did not, so the
  * widest ran past the content column and was clipped.
  *
- * The fixture is that page's SHAPE: an IG page as `composeIgSite` writes it
- * (the top include's opt-in stamp, then the IG's content), with each way an IG
+ * The fixture is that page's SHAPE: an IG page as the IG site build composes
+ * it (the opt-in stamp, then the IG's content), with each way an IG
  * embeds a diagram — an inline `<svg>` in the Publisher's
- * `<figure style="width:70%">`, an `<object>`, and a wide raster drawing. The
- * stamp is READ from the build's source, not copied, so the fixture cannot
- * drift from what the build writes. Read rather than imported: Playwright runs
- * under Node, and `build-ig-site.ts` resolves its templates with Bun's
- * `import.meta.dir`.
+ * `<figure style="width:70%">`, an `<object>`, and a wide raster drawing.
+ *
+ * The opt-in attribute, `data-fa-figure-images`, is THIS file's contract:
+ * `docs-ui.js` owns it, and the IG site build is one page writer that stamps
+ * it (its own unit test asserts the stamp carries it). So the fixture writes
+ * the attribute itself rather than reaching into the IG build: a platform
+ * test that read a dependant instance's source would point the wrong way.
  */
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = siteDirFor(ROOT);
 const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
-const BUILD = readFileSync(join(ROOT, "..", "fhir-harness", "scripts", "build-ig-site.ts"), "utf8");
-const IG_FIGURE_IMAGES_STAMP = /export const IG_FIGURE_IMAGES_STAMP = '([^']+)'/.exec(BUILD)?.[1] ?? "";
-if (!IG_FIGURE_IMAGES_STAMP.includes("data-fa-figure-images")) throw new Error("IG_FIGURE_IMAGES_STAMP not found in build-ig-site.ts");
+/** The page-level opt-in, as a page writer stamps it. */
+const FIGURE_IMAGES_STAMP = '<span hidden data-fa-figure-images="ig"></span>';
 
 const ORIGIN = "https://ig.example.test";
 
@@ -91,7 +92,7 @@ function pageHtml(stamped: boolean): string {
 <style>body { margin: 0; background: #fff; } .main { margin-left: 16rem; }
 .main-content { max-width: 50rem; padding: 1rem; } .main-content img { max-width: 100%; } ${CSS}</style></head><body>
 <div class="main"><div class="main-content" id="main-content">
-${stamped ? IG_FIGURE_IMAGES_STAMP : ""}
+${stamped ? FIGURE_IMAGES_STAMP : ""}
 <h1>Sequence Diagrams</h1>
 <h4>Routine Synchronization</h4>
 <figure style="width:70%">

@@ -10077,8 +10077,8 @@
   // `<img>` is left exactly as it was, with one warning naming the file.
   // `<object data="x.svg">` IS THE SAME DRAWING BY ANOTHER TAG, and an IG page
   // uses it: the IG Publisher's convention for a pre-rendered SVG is
-  // `<object data="x.svg" type="image/svg+xml">`, so smart-trust's
-  // `sequence-diagrams.html` carries three of them beside two inline ones.
+  // `<object data="x.svg" type="image/svg+xml">`, and the IG page the owner
+  // reported (a sequence-diagrams page) carries three beside two inline ones.
   // Before bean `n7f8` this function and `mountFigures` looked only for
   // `<img>` and `<svg>`, so the inline two got the viewer and the three
   // objects got nothing: no zoom, no scroll container, and the widest ran past

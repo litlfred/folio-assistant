@@ -609,6 +609,10 @@ describe("composeIgSite: a staged IG moved into a host Jekyll source", () => {
     expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain('class="ig-topbar"');
     // Every composed IG page opts its raster images into the shared figure viewer (bean n7f8).
     expect(readFileSync(join(host, "_includes", "ig", "x", "_top.html"), "utf-8")).toContain(IG_FIGURE_IMAGES_STAMP);
+    // ...through the attribute the platform's viewer actually reads: the contract is docs-ui.js's.
+    expect(IG_FIGURE_IMAGES_STAMP).toContain("data-fa-figure-images");
+    const docsUi = readFileSync(join(import.meta.dir, "..", "..", "cat-harness", "docs", "assets", "js", "docs-ui.js"), "utf-8");
+    expect(docsUi).toContain('document.querySelector("[data-fa-figure-images]")');
     expect(existsSync(join(host, "x", "_config.yml"))).toBe(false);
     expect(existsSync(join(host, "x", "_layouts"))).toBe(false);
     // A second compose of the same IG is two answers for one URL.

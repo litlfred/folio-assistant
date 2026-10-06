@@ -72,7 +72,9 @@ not the whole — it cannot see what a later step (the mount pass) serves.
 An IG page embeds a diagram in three ways: inline (`{% include x.svg %}`), as
 `<object data="x.svg">`, or as an `<img>`, often a `.drawio.png`. All three get
 the same pan, zoom, full-width and export viewer as the platform's BPMN
-figures. Every IG page carries the `data-fa-figure-images` stamp, so a raster
+figures. Every IG page carries the `data-fa-figure-images` stamp
+(`IG_FIGURE_IMAGES_STAMP` in `build-ig-site.ts`, written by the standalone
+layout and by the composed pages' top include), so a raster
 drawing that the column has shrunk also gets the viewer. Which embed is
 taken, the opt-in, and the keyboard controls are covered in
 [`graph-rendering`](graph-rendering.md)
