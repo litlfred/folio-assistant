@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lean Formalization Output",
+  "description": "Output schema for the lean-formalization skill.",
+  "type": "object",
+  "required": [
+    "leanFiles",
+    "buildStatus"
+  ],
+  "properties": {
+    "leanFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "module"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "module": {
+            "type": "string"
+          },
+          "sorryCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-smart-trust-ast-rehand/folio-assistant-sci/schema/skills/lean-formalization/output.schema.json",
+  "staging": {
+    "branch": "claude/smart-trust-ast-rehand",
+    "sha": "8f80e8913f6966d656c20bd199ef3ff7838bb1fb",
+    "pr": "2288/merge",
+    "run": "37484909052"
+  }
+}
