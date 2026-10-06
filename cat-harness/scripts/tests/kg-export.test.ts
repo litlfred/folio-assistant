@@ -29,8 +29,9 @@ import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "n
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
-import { buildExport, exportIdentity, publishedDocument, publishedIdentity, undeclaredRootTerms } from "../kg-export.js";
-import { PUBLISHED_ELSEWHERE, declaresOwnCanonical, instanceExportPlan } from "../instance-exports.js";
+import { buildExport, exportIdentity, publishedDocument, publishedIdentity, publishedInstanceSchemas, undeclaredRootTerms } from "../kg-export.js";
+import { PUBLISHED_ELSEWHERE, declaresOwnCanonical, instanceExportPlan, publishesInstanceSchema } from "../instance-exports.js";
+import { isExternalContract, skillContracts } from "../skill-contracts.js";
 import { buildDeclarationSchema, buildSkillIoContracts } from "../harness-schema-export.js";
 import { artefactStub, findDeclarationFile, instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../../schemas/namespaces.js";
@@ -1339,11 +1340,14 @@ describe("an actor's roles are links to Role nodes (#1168 B8)", () => {
  * `tombstonesFor`.
  */
 const OWNER_EXPORTS = new Map<string, Set<string>>();
+/** The same builds, whole, by instance root — for the schema-link tests below. */
+const OWNER_DOCS = new Map<string, Awaited<ReturnType<typeof buildExport>>>();
 for (const r of instanceRootsIn(REPO)) {
   if (resolve(r) === resolve(join(import.meta.dir, "../.."))) continue;
   const own = declaresOwnCanonical(readDeclaration(r));
   const e = await buildExport({ instanceRoot: r, ...(own ? {} : { baseUrl: BASE }) });
   OWNER_EXPORTS.set(String(e["@id"]), new Set((e["@graph"] as Array<{ "@id": string }>).map((n) => n["@id"])));
+  OWNER_DOCS.set(resolve(r), e);
 }
 
 describe("the published graph is this instance's own (bean 4ak5 item 2)", () => {
@@ -1414,5 +1418,107 @@ describe("the published graph is this instance's own (bean 4ak5 item 2)", () => 
     // forwarding address — a role's skill held by a stacked instance is
     // re-homed by `skillHome`, as a Tool's `satisfies` is.
     expect(EXPORT_CANONICAL.danglingLinks).toEqual([]);
+  });
+});
+
+/*
+ * A DOCUMENT LINKS THE SCHEMAS ITS INSTANCE PUBLISHES — bean `4ak5` follow-up,
+ * owner-approved 2026-10-05. Three links, each minted by the function that
+ * mints the file it names, so the link and the file cannot disagree:
+ *
+ * - a planned instance's `omitted` drops `schemas` once its document links
+ *   the `<stub>/schema/` index, which says where they ARE;
+ * - a skill held by a planned instance links its contract's published `$id`
+ *   (`publishedInstanceSchemas`), where it used to be left unset;
+ * - the host's own document `conformsTo` its `<stub>.schema.json`.
+ */
+describe("a document links the schemas its instance publishes (bean 4ak5 follow-up)", () => {
+  const HOST = resolve(join(import.meta.dir, "../.."));
+  /** The base the deploy passes this instance — none for one with its own `canonicalUrl`. */
+  const deployBase = (root: string): string | undefined => (declaresOwnCanonical(readDeclaration(root)) ? undefined : BASE);
+  type Skill = { name: string; inputSchema?: string; outputSchema?: string };
+  const skills = (e: { "@graph": unknown[] }): Map<string, Skill> =>
+    new Map(
+      (e["@graph"] as Array<Record<string, unknown>>)
+        .filter((n) => n["@type"] === termIri("Skill"))
+        .map((n) => [String(n.name), n as unknown as Skill]),
+    );
+  /** `skill/io` → the `$id` the deploy writes that contract under, for one instance. */
+  const contractIds = (root: string, baseUrl: string | undefined): Map<string, string> =>
+    new Map(publishedInstanceSchemas(root, baseUrl).contracts.map((c) => [c.source.split("\\").join("/"), String(c.schema.$id)]));
+
+  test.skipIf(!inAggregate())("a planned instance's document stops saying its schemas were not looked for, and links where they are", () => {
+    const plan = instanceExportPlan(REPO);
+    expect(plan.length).toBeGreaterThan(0);
+    for (const p of plan) {
+      const root = resolve(REPO, p.path);
+      const e = OWNER_DOCS.get(root)!;
+      const index = publishedInstanceSchemas(root, deployBase(root)).indexIri;
+      expect({ stub: p.stub, conformsTo: e.conformsTo }).toEqual({ stub: p.stub, conformsTo: index });
+      expect({ stub: p.stub, omitted: [...(e.omitted ?? [])].sort() }).toEqual({ stub: p.stub, omitted: ["packages", "registry", "tools"] });
+    }
+  });
+
+  test("an exempt instance publishes no schema/ here, so it still says `schemas` was not looked for", () => {
+    expect(EXPORT_ALT_BOOT.conformsTo).toBeUndefined();
+    expect([...(EXPORT_ALT_BOOT.omitted ?? [])].sort()).toEqual(["packages", "registry", "schemas", "tools"]);
+  });
+
+  test.skipIf(!inAggregate())("a planned instance's skills link the contract $id its publisher writes", () => {
+    let linked = 0;
+    for (const p of instanceExportPlan(REPO)) {
+      const root = resolve(REPO, p.path);
+      const ids = contractIds(root, deployBase(root));
+      const nodes = skills(OWNER_DOCS.get(root)!);
+      for (const c of skillContracts(root, "instance").values()) {
+        if (resolve(c.instanceRoot) !== root) continue;
+        const node = nodes.get(c.skill);
+        if (node === undefined) continue; // an unpublished skill has no node to link from
+        for (const [io, ref] of [["inputSchema", c.input], ["outputSchema", c.output]] as const) {
+          if (ref === undefined) continue;
+          const want = isExternalContract(ref) ? ref : ids.get(ref);
+          expect({ skill: c.skill, io, got: node[io] }).toEqual({ skill: c.skill, io, got: want });
+          if (want !== undefined) linked++;
+        }
+      }
+    }
+    // Measured 2026-10-05: 14 skills across four planned instances hold contracts.
+    expect(linked).toBeGreaterThan(0);
+    const qc = skills(OWNER_DOCS.get(resolve(REPO, "folio-assistant-core"))!).get("quality-control")!;
+    expect(qc.inputSchema).toBe(`${BASE}/folio-assistant-core/schema/skills/quality-control/input.schema.json`);
+  });
+
+  test.skipIf(!inAggregate())("in checkout scope a skill held by a stacked instance links that instance's published contract", () => {
+    // The host's own skills are minted under the host's base, as before; a
+    // stacked instance's under its OWN publication identity — smart-base's
+    // `canonicalUrl`, not this site.
+    const nodes = skills(EXPORT_CHECKOUT);
+    let foreign = 0;
+    for (const c of skillContracts(HOST, "checkout").values()) {
+      const node = nodes.get(c.skill);
+      if (node === undefined || c.input === undefined || isExternalContract(c.input)) continue;
+      if (resolve(c.instanceRoot) === HOST) {
+        expect(node.inputSchema).toStartWith(`${BASE}/skills/`);
+        continue;
+      }
+      if (!publishesInstanceSchema(c.instanceRoot)) continue;
+      foreign++;
+      expect({ skill: c.skill, got: node.inputSchema }).toEqual({ skill: c.skill, got: contractIds(c.instanceRoot, BASE).get(c.input) });
+    }
+    expect(foreign).toBeGreaterThan(0);
+    const canonical = readDeclaration(resolve(REPO, "smart-base"))!.canonicalUrl!.replace(/\/+$/, "");
+    const sb = [...skillContracts(HOST, "checkout").values()].find((c) => resolve(c.instanceRoot) === resolve(REPO, "smart-base"));
+    if (sb !== undefined) expect(nodes.get(sb.skill)?.inputSchema ?? nodes.get(sb.skill)?.outputSchema).toStartWith(`${canonical}/schema/skills/`);
+  });
+
+  test("the host's document conformsTo its own declaration schema, by the $id the schema export mints with the same base", () => {
+    expect(EXPORT.conformsTo).toBe(buildDeclarationSchema().$id as string);
+    expect(EXPORT_CANONICAL.conformsTo).toBe(buildDeclarationSchema({ baseUrl: BASE }).$id as string);
+    expect(EXPORT_CANONICAL.conformsTo).toBe(`${BASE}/${artefactStub(readDeclaration(HOST)!)}.schema.json`);
+    // A preview links the preview's copy, never the canonical one.
+    expect(EXPORT_ALT.conformsTo).toBe(buildDeclarationSchema({ baseUrl: ALT_BASE }).$id as string);
+    expect(EXPORT_ALT.conformsTo).toStartWith(`${ALT_BASE}/`);
+    // And the host still carries no `omitted`: every collector runs.
+    expect(EXPORT.omitted).toBeUndefined();
   });
 });

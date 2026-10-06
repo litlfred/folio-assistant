@@ -393,8 +393,21 @@ replaces it, and with no base the contract has none.
 
 **The document links its index** with `conformsTo` (`dcterms:conformsTo`).
 It does so exactly when `instance-exports.ts` writes one, which is when
-`publishesInstanceSchema` finds the instance in the plan. The host and the
-other two exemptions carry no such link.
+`publishesInstanceSchema` finds the instance in the plan. The other two
+exemptions carry no such link. **The host links its own
+`<stub>.schema.json`**, the shared declaration schema, by the `$id`
+`buildDeclarationSchema` mints with the same base (bean `4ak5` follow-up,
+owner-approved 2026-10-05). With no base there is no `$id`, so there is no
+link: never a relative one.
+
+**A skill links the contract its own instance publishes.** A skill held by a
+planned instance gets `inputSchema` / `outputSchema` set to its contract's
+`$id` as `publishedInstanceSchemas` mints it, which is the function the deploy
+writes the file with. That holds in the instance's own document and in a
+checkout-scope build that stacks it. Before the follow-up those edges were
+left unset, and `hasIOContract` read `false`. A skill whose instance is not in
+the plan, or whose contract gets no absolute `$id`, still has no link. A
+guessed address is worse than none. The host's own skills are unchanged.
 
 #### Which Zod schemas are public
 
@@ -435,10 +448,27 @@ complete.
 under a per-instance `<stub>/schema/`, and every existing host file must stay
 byte-identical, so it gets no `zod/`.
 
-The JSON-LD document's own `omitted` is unchanged. Its schema-node collector
-is still instance-bound and lists modules, not exports. The gate fails the
-day an instance's export lists a `Schema` node, because nothing yet maps a
-module node to its per-export renderings.
+**The JSON-LD document drops `schemas` from its own `omitted` once it links
+the index** (bean `4ak5` follow-up, owner-approved 2026-10-05). Its module-level
+`Schema` collector is still instance-bound and does not run for a foreign
+instance. But "not looked for" is false when the schemas are published and
+the document says where. Two cases keep `schemas` listed. One is a document
+with no `conformsTo`: an exemption, or no base. The other is an instance whose
+schemas directory cannot be resolved (`zodSchemaScanDetermined`, the scan's
+own first step), because its index then says `omitted: ["schemas"]` too, and
+the two must not disagree. The gate fails the day an instance's export lists a
+`Schema` node, because nothing yet maps a module node to its per-export
+renderings.
+
+**Re-exports are public too.** The publisher imports each module and reads
+every key, so `export { FooSchema } from "./x"` and `export { X as YSchema }`
+were always rendered. The gate's text half now reads them as well
+(`declaredExportNames`): `export const`, `export { … }` lists with or without
+`from`, the name after `as`, and `export * as N`. A `type`-only export is not
+a value and is skipped. A bare `export * from` is a **finding**. Its names
+live in another module's text, so whether they are published cannot be
+determined from this one, and could-not-determine is never green. List the
+names in an `export { … }` instead.
 
 ### Named subgraphs, and the root index above them
 
@@ -492,7 +522,7 @@ module node to its per-export renderings.
 
 | gate | fails when |
 |---|---|
-| `check:published-instance-exports` | the deploy does not run `instance-exports.ts`, a workflow running it drops an exempt instance's own publisher, an exemption names no declared instance, or a published export fails or mints a relative `@id`; or, for a planned instance, a contract its skills name is not written to `<stub>/schema/`, the index is missing, the document's `conformsTo` is not the index's `$id`, or the document lists a `Schema` node the publisher does not render; or an exported Zod `*Schema` const (read from the module text, confirmed Zod by import) is not written to `<stub>/schema/zod/` and listed in the index, the publisher did not scan, or it reports an import or render failure |
+| `check:published-instance-exports` | the deploy does not run `instance-exports.ts`, a workflow running it drops an exempt instance's own publisher, an exemption names no declared instance, or a published export fails or mints a relative `@id`; or, for a planned instance, a contract its skills name is not written to `<stub>/schema/`, the index is missing, the document's `conformsTo` is not the index's `$id`, or the document lists a `Schema` node the publisher does not render; or an exported Zod `*Schema` (read from the module text, re-exports included, confirmed Zod by import) is not written to `<stub>/schema/zod/` and listed in the index, a module has a bare `export * from` (undetermined), the publisher did not scan, or it reports an import or render failure |
 | `root-index.ts` at deploy | an instance's export is missing; the deploy fails rather than publish a shorter map |
 | `subgraph:jsonld:check` | the committed subgraph tree or its payloads are stale |
 | `check:process-index` | a declared BPMN has no `Process` node in the published subgraphs |

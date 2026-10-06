@@ -126,10 +126,12 @@ import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { declaresOwnCanonical, publishesInstanceSchema } from "./instance-exports.js";
 import {
+  buildDeclarationSchema,
   buildInstanceSchemas,
   instanceSchemaIndexIri,
   scanInstanceZodSchemas,
   skillIoIri,
+  zodSchemaScanDetermined,
   type InstanceSchemaExport,
   type ZodSchemaScan,
 } from "./harness-schema-export.js";
@@ -889,10 +891,19 @@ interface Export {
   /** On a preview: the canonical document this one is an alternate of. */
   canonicalDocument?: string;
   /**
-   * The instance's schema index — `<stub>/schema/<stub>.schema.json` at its
-   * published identity — for an instance `instance-exports.ts` publishes one
-   * for (bean `4ak5` item 1). `dcterms:conformsTo`. Absent for the host, whose
-   * `<stub>.schema.json` is the shared declaration schema itself.
+   * The schema this instance's declaration and contracts are written against.
+   * `dcterms:conformsTo`.
+   *
+   * - **A foreign instance** `instance-exports.ts` publishes a schema
+   *   directory for (bean `4ak5` item 1): its index,
+   *   `<stub>/schema/<stub>.schema.json` at its published identity.
+   * - **The host**: its `<stub>.schema.json` — the shared declaration schema
+   *   itself, at the `$id` `harness-schema-export.ts` mints for it with the
+   *   same base (`buildDeclarationSchema`), so the link and the file cannot
+   *   disagree (bean `4ak5` follow-up, owner-approved 2026-10-05).
+   *
+   * Absent with no base — an `@id` is absolute or absent, never relative — and
+   * for the other two exemptions, which publish no schema directory.
    */
   conformsTo?: string;
   /**
@@ -907,6 +918,14 @@ interface Export {
    *
    * Absent for the host instance, where every collector runs and "omitted" is
    * not a question.
+   *
+   * **`schemas` leaves the list when the schemas ARE published** — when the
+   * deploy writes this instance a `<stub>/schema/` directory and this document
+   * links its index with `conformsTo` (bean `4ak5` follow-up, owner-approved
+   * 2026-10-05). The module-level `Schema` collector still does not run here;
+   * what a consumer needs is not "not looked for" but the link to where they
+   * are. It stays when the Zod scan would be undetermined, because the index
+   * then says `omitted: ["schemas"]` too, and the two must not disagree.
    */
   omitted?: readonly string[];
   repository: string;
@@ -1041,6 +1060,13 @@ function collectSkills(
   problems: string[],
   root: string = ROOT,
   scope: CorpusScope = corpusScopeFor(root),
+  /**
+   * The `--base-url` the deploy passes, for minting a FOREIGN instance's
+   * contract at its published identity (`publishedInstanceSchemas`). Not
+   * `base`: that is this document's, and a contract another instance holds is
+   * published under that instance's.
+   */
+  baseUrl?: string,
 ): Node[] {
   const byName = new Map<string, SkillFacts>();
   const get = (n: string): SkillFacts =>
@@ -1098,13 +1124,36 @@ function collectSkills(
   // contract under its own instance's `schemas/skills/` (placement PR1, bean
   // `ybwt`), which this instance's schema export does not publish — so minting
   // an IRI under this base would name a path nothing serves, the defect the
-  // published-paths test exists for. That instance DOES publish it now, under
-  // its own `<stub>/schema/` (bean `4ak5` item 1, `publishedInstanceSchemas`);
-  // pointing this edge there is not yet done, so it is still left unset.
+  // published-paths test exists for.
+  //
+  // THAT instance publishes it, under its own `<stub>/schema/` (bean `4ak5`
+  // item 1), so the edge points there: the contract's `$id` as
+  // `publishedInstanceSchemas` mints it — the function the deploy writes the
+  // file with, so the link and the file come from one identity (follow-up,
+  // owner-approved 2026-10-05). Looked up by the ref, which is the contract's
+  // source path under that instance's root, exactly as the gate matches them.
+  // An instance the plan does not publish, or a contract the publisher does
+  // not write or cannot give an absolute `$id`, stays unset: a guessed address
+  // is worse than none.
   const own = resolve(ROOT);
+  const publishedByInstance = new Map<string, Map<string, string>>();
+  const publishedContract = (instanceRoot: string, ref: string): string | undefined => {
+    const abs = resolve(instanceRoot);
+    let ids = publishedByInstance.get(abs);
+    if (ids === undefined) {
+      ids = new Map();
+      if (publishesInstanceSchema(abs)) {
+        for (const c of publishedInstanceSchemas(abs, baseUrl).contracts) {
+          if (typeof c.schema.$id === "string") ids.set(c.source.split(sep).join("/"), c.schema.$id);
+        }
+      }
+      publishedByInstance.set(abs, ids);
+    }
+    return ids.get(ref);
+  };
   const contractIri = (instanceRoot: string, ref: string): string | undefined => {
     if (isExternalContract(ref)) return ref;
-    if (resolve(instanceRoot) !== own) return undefined;
+    if (resolve(instanceRoot) !== own) return publishedContract(instanceRoot, ref);
     const m = new RegExp(`^${SKILL_IO_DIR}/([^/]+)/(input|output)\\.schema\\.json$`).exec(ref);
     return m ? skillIoIri(base, m[1]!, m[2]!) : undefined;
   };
@@ -2534,10 +2583,12 @@ export async function collectInstanceNodes(
    * instance's — when the caller publishes there. See `collectProcesses`.
    */
   siteBase?: string,
+  /** The deploy's `--base-url`, for a skill's link to a published contract. See `collectSkills`. */
+  baseUrl?: string,
 ): Promise<{ nodes: Node[]; omitted: readonly string[]; notes: string[] }> {
   const notes: string[] = [];
   const nodes = [
-    ...collectSkills(doc, base, problems, root),
+    ...collectSkills(doc, base, problems, root, corpusScopeFor(root), baseUrl),
     ...(await collectProcesses(doc, problems, root, notes, siteBase)),
     ...collectGraphTypologies(root),
     ...collectDeclaredRoles(doc, root),
@@ -3052,7 +3103,7 @@ async function computeTombstones(kept: ReadonlySet<string>, docIri: string, base
   for (const inst of instanceRootsIn(repoRootFor(ROOT))) {
     if (resolve(inst) === resolve(ROOT)) continue;
     const id = publishedIdentity(inst, baseUrl);
-    const { nodes } = await collectInstanceNodes(inst, id.docIri, id.base, []);
+    const { nodes } = await collectInstanceNodes(inst, id.docIri, id.base, [], undefined, baseUrl);
     for (const n of nodes) {
       const iri = String(n["@id"]);
       if (!iri.startsWith(`${id.docIri}#`)) continue;
@@ -3200,13 +3251,14 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
         // The pictures are on THIS site — the host's base, which for an
         // instance with its own `canonicalUrl` is not `base`.
         exportedInstancePublishedHere ? exportIdentity({ baseUrl: opts.baseUrl }).base || undefined : undefined,
+        opts.baseUrl,
       )
     : undefined;
   const graph = (
     instanceOnly
       ? instanceOnly.nodes
       : [
-          ...collectSkills(docIri, base, problems, ROOT, scope),
+          ...collectSkills(docIri, base, problems, ROOT, scope, opts.baseUrl),
           ...collectRegistryNodes(docIri, problems),
           ...collectPackages(docIri, problems, scope),
           ...(await collectProcesses(docIri, problems, ROOT, undefined, base, scope)),
@@ -3285,10 +3337,28 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   // written against" — here, of the instance's declaration and contracts.
   // Minted from THIS export's identity, which is the published one whenever
   // the deploy runs it (`publishedIdentity`).
-  const schemaIndex =
-    foreign && publishesInstanceSchema(exportedInstance)
+  //
+  // The HOST links its own `<stub>.schema.json` (follow-up, owner-approved
+  // 2026-10-05): the shared declaration schema, by the `$id`
+  // `harness-schema-export.ts` gives it in a build with the same base —
+  // `buildDeclarationSchema` itself, not a recomposition. With no base that
+  // has no `$id`, so the link is absent rather than relative.
+  const schemaIndex = foreign
+    ? publishesInstanceSchema(exportedInstance)
       ? instanceSchemaIndexIri({ stub, base, docPath })
-      : undefined;
+      : undefined
+    : (buildDeclarationSchema({ baseUrl: opts.baseUrl }).$id as string | undefined);
+
+  // `schemas` leaves `omitted` once the document links where the schemas ARE
+  // published (follow-up, owner-approved 2026-10-05) — see `Export.omitted`.
+  // Not with no link (a consumer told "looked for" must be able to follow it),
+  // and not when the index itself would still say `omitted: ["schemas"]`.
+  const omitted =
+    instanceOnly === undefined
+      ? undefined
+      : foreign && schemaIndex !== undefined && zodSchemaScanDetermined(exportedInstance)
+        ? instanceOnly.omitted.filter((c) => c !== "schemas")
+        : instanceOnly.omitted;
 
   return {
     "@context": buildContext(),
@@ -3303,7 +3373,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     "@type": isPreview ? [`${PROV}Entity`, termIri("PreviewGraph")] : `${PROV}Entity`,
     ...(isPreview && canonicalIri !== undefined ? { canonicalDocument: canonicalIri } : {}),
     repository: stub,
-    ...(instanceOnly ? { omitted: instanceOnly.omitted } : {}),
+    ...(omitted !== undefined ? { omitted } : {}),
     generatedAt: new Date().toISOString(),
     ...commitFields,
     ...dependsOnFields,
