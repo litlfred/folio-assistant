@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1770 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1869 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 578 terms and is 320 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 603 terms and is 335 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2022</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2022</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">578</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">603</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -107,6 +107,13 @@ Section.blocks <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Ordered list of block root names (resolved to .ts files in section/chapter dir).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#Section.blocks</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--types.section.lead" data-fa-state="extracted" data-fa-gloss="">
+Section.lead <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A chapter's LEAD: the text between the chapter heading and its first section (an executive summary has nothing else). It keeps a title, for outlines and the review page, but renders without a heading of its own, because the chapter heading directly above already says it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#Section.lead</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.section.subsections" data-fa-state="extracted" data-fa-gloss="">
 Section.subsections <span class="fa-gloss-status">candidate, extracted</span>
@@ -801,6 +808,48 @@ SourceProvenanceSchema.upstream <span class="fa-gloss-status">candidate, extract
 <p>The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not &quot;there is none&quot;.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.batch" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.batch <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The intake batch: a file name, a form export, a letter.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.batch</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.entry" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.entry <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The log's OWN number for the row (&quot;No.&quot;), within its sheet. A review log is re-sent as it is worked, so a later copy is a different file with the same rows: this, with the sheet and the series, is what recognises them.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.entry</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.segment" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.segment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>For a narrative: which passage of the letter this comment is.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.segment</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.series" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.series <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The log this row belongs to, across the copies of it that are re-sent.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.series</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.sha256" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.sha256 <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>sha256 of the intake file, so a re-import is recognised.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.sha256</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.sourceschema.url" data-fa-state="extracted" data-fa-gloss="">
+SourceSchema.url <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>For a GitHub comment: its URL.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.url</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.stageskillbinding.skills" data-fa-state="extracted" data-fa-gloss="">
 StageSkillBinding.skills <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1178,6 +1227,41 @@ SubgraphCoverageSchema.visualiser <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>The page that renders this subgraph, **relative to the REPOSITORY root** — not to the instance, which is what the sibling <code>path</code> on &#123;@link ContentDirectorySchema} is relative to.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.visualiser</code></a></p>
+</dd>
+<dt id="bootstrap-tools--kg-schema-fields--subgraph-export.subgraphnodebase.holdsgraph" data-fa-state="extracted" data-fa-gloss="">
+SubgraphNodeBase.holdsGraph <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The graph typologies it holds, as bootstrap's graph-typology individuals.</p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.holdsGraph</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--subgraph-manifest.subgraphnodebase.holdsgraph" data-fa-state="extracted" data-fa-gloss="">
+SubgraphNodeBase.holdsGraph <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Links to the GraphTypology nodes this subgraph holds.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/subgraph-manifest.ts"><code>cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.holdsGraph</code></a></p>
+</dd>
+<dt id="bootstrap-tools--kg-schema-fields--subgraph-export.subgraphnodebase.name" data-fa-state="extracted" data-fa-gloss="">
+SubgraphNodeBase.name <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The repository's or harness's name at the two top levels; the instance-relative path below them.</p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.name</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--subgraph-manifest.subgraphnodebase.name" data-fa-state="extracted" data-fa-gloss="">
+SubgraphNodeBase.name <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The subgraph's label: the harness name at the root, the instance-relative path below it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/subgraph-manifest.ts"><code>cat-harness/schemas/subgraph-manifest.ts#SubgraphNodeBase.name</code></a></p>
+</dd>
+<dt id="bootstrap-tools--kg-schema-fields--subgraph-export.subgraphnodebase.path" data-fa-state="extracted" data-fa-gloss="">
+SubgraphNodeBase.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Instance-relative, ending in <code>/</code>; <code>./</code> at the two top levels.</p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.path</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subgraphrelation.children" data-fa-state="extracted" data-fa-gloss="">
 SubgraphRelation.children <span class="fa-gloss-status">candidate, extracted</span>
@@ -2426,7 +2510,7 @@ ToolDefinitionSchema.maintains <span class="fa-gloss-status">candidate, extracte
 ToolDefinitionSchema.renders <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The graph KINDS this Tool draws a viewer for — one page per declared directory of the kind, placed by the Tool itself.</p>
+<p>The graph TYPOLOGIES this Tool draws a viewer for — one page per declared directory of the kind, placed by the Tool itself.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDefinitionSchema.renders</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tool.tooldefinitionschema.satisfies" data-fa-state="extracted" data-fa-gloss="">
@@ -2645,6 +2729,20 @@ TopologyConflict.reason <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>Why the mechanism forbids it — an entailment, never a report.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TopologyConflict.reason</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.transitioninput.decision" data-fa-state="extracted" data-fa-gloss="">
+TransitionInput.decision <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>at</code> and <code>by</code> default to the transition's.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#TransitionInput.decision</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--public-comment.transitioninput.recommendation" data-fa-state="extracted" data-fa-gloss="">
+TransitionInput.recommendation <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>at</code> defaults to the transition's.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#TransitionInput.recommendation</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.extensions" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.extensions <span class="fa-gloss-status">candidate, extracted</span>
@@ -2993,6 +3091,13 @@ UniverseLevel.objects <span class="fa-gloss-status">candidate, extracted</span>
 <p>Universe for objects (typically <code>u</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#UniverseLevel.objects</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--node-kind-index.unkinded.family" data-fa-state="extracted" data-fa-gloss="">
+Unkinded.family <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The <code>$schema</code> family; absent when it is the typology's kind-level validator.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-index.ts"><code>cat-harness/schemas/node-kind-index.ts#Unkinded.family</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--block-qa.untainteddispatch.adjudicator_sees" data-fa-state="extracted" data-fa-gloss="">
 UntaintedDispatch.adjudicator_sees <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3053,6 +3158,41 @@ UserStorySchema.want <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-V">V</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.id" data-fa-state="extracted" data-fa-gloss="">
+ValidatorNodeSchema.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>This validator's own name, as its file is named.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.pages" data-fa-state="extracted" data-fa-gloss="">
+ValidatorNodeSchema.pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The kind's own page renderer, <code>&lt;harness&gt;:&lt;path&gt;#&lt;Export&gt;</code>, when the generic pages built from its schema are not enough (issue #2195: *&quot;Generic + override&quot;*). The export is a <code>KindPages</code> (<code>scripts/gen-node-kind-pages.ts</code>). Declared here, beside the schema, so the harness whose code knows the kind is the one that says how to show it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.pages</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.rationale" data-fa-state="extracted" data-fa-gloss="">
+ValidatorNodeSchema.rationale <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why this validator is the one, when that is not obvious from the code.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.rationale</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.schema" data-fa-state="extracted" data-fa-gloss="">
+ValidatorNodeSchema.schema <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The Zod export, <code>&lt;harness&gt;:&lt;path&gt;#&lt;Export&gt;</code> (or instance-relative <code>&lt;path&gt;#&lt;Export&gt;</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.schema</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--validator-node.validatornodeschema.validates" data-fa-state="extracted" data-fa-gloss="">
+ValidatorNodeSchema.validates <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What it validates: a graph typology, and the <code>$schema</code> family within it when the kind has several.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/validator-node.ts"><code>cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.validates</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--kind-validator.validatorref.exportname" data-fa-state="extracted" data-fa-gloss="">
 ValidatorRef.exportName <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3421,8 +3561,15 @@ VisualisationSchema.theme <span class="fa-gloss-status">candidate, extracted</sp
 VisualisationSchema.title <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What a tile calls it. Absent, the tile takes the display name of the directory's first graph kind (<code>kindTitle</code>, via <code>scripts/lib/nav-label.ts</code>), which is what every other surface calls that page. Declare one only when the page is not simply &quot;the kind's viewer&quot;. Never add the harness as a suffix (&quot;Docs — cat-harness&quot;): the qualifier is appended by the surface (bean <code>ob3m</code> finding 6, &quot;One name everywhere&quot;).</p>
+<p>What a tile calls it. Absent, the tile takes the display name of the directory's first graph typology (<code>kindTitle</code>, via <code>scripts/lib/nav-label.ts</code>), which is what every other surface calls that page. Declare one only when the page is not simply &quot;the kind's viewer&quot;. Never add the harness as a suffix (&quot;Docs — cat-harness&quot;): the qualifier is appended by the surface (bean <code>ob3m</code> finding 6, &quot;One name everywhere&quot;).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#VisualisationSchema.title</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.visualisationschema.writer" data-fa-state="extracted" data-fa-gloss="">
+VisualisationSchema.writer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The GENERATOR that writes this page: repo-relative script files, run with <code>bun run &lt;file&gt;</code> — the same field, with the same meaning, as a directory's <code>writer</code>. Bean <code>0b8c</code> (#2230).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#VisualisationSchema.writer</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--formalization-types.vizcamera.phi" data-fa-state="extracted" data-fa-gloss="">
 VizCamera.phi <span class="fa-gloss-status">candidate, extracted</span>
@@ -3929,7 +4076,7 @@ WaiverNodeSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
 WebPage.documents <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What this page documents: graph kinds (<code>library</code>), or one directory as <code>&lt;instance&gt;/&lt;id&gt;</code> where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).</p>
+<p>What this page documents: graph typologies (<code>library</code>), or one directory as <code>&lt;instance&gt;/&lt;id&gt;</code> where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPage.documents</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpage.heading" data-fa-state="extracted" data-fa-gloss="">
@@ -3957,7 +4104,7 @@ WebPage.nodes <span class="fa-gloss-status">candidate, extracted</span>
 WebPage.slug <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>URL stem. <code>document-ingestion</code> publishes to <code>docs/document-ingestion.md</code> and thus to <code>&lt;baseurl&gt;/document-ingestion.html</code>, which is what existing inbound links already use.</p>
+<p>URL stem. <code>document-ingestion</code> publishes to <code>docs/guides/document-ingestion.md</code> and thus to <code>&lt;baseurl&gt;/guides/document-ingestion.html</code>, which is what existing inbound links already use.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPage.slug</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpageasset.alt" data-fa-state="extracted" data-fa-gloss="">
@@ -4099,6 +4246,34 @@ WorkflowDefinition.transitions <span class="fa-gloss-status">candidate, extracte
 <dd>
 <p>Allowed transitions between stages.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-workflow.ts"><code>cat-harness/schemas/assistant-workflow.ts#WorkflowDefinition.transitions</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--ref-window.writerequestschema.authored" data-fa-state="extracted" data-fa-gloss="">
+WriteRequestSchema.authored <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether an AUTHOR wrote this route's content, as opposed to a generator regenerating it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ref-window.ts"><code>cat-harness/schemas/ref-window.ts#WriteRequestSchema.authored</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--ref-window.writerequestschema.requestedby" data-fa-state="extracted" data-fa-gloss="">
+WriteRequestSchema.requestedBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Who asked — a workflow file, a session URL, or an actor id.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ref-window.ts"><code>cat-harness/schemas/ref-window.ts#WriteRequestSchema.requestedBy</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--ref-window.writerequestschema.route" data-fa-state="extracted" data-fa-gloss="">
+WriteRequestSchema.route <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The route this write owns — <code>/</code> for the published site, <code>STAGING/&lt;slug&gt;/</code> for a preview. Composition is per route: two different routes compose by union, two of the same route take the newer.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ref-window.ts"><code>cat-harness/schemas/ref-window.ts#WriteRequestSchema.route</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--bib-attestations.writeresult.written" data-fa-state="extracted" data-fa-gloss="">
+WriteResult.written <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Paths written (store) or the legacy path.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-attestations.ts"><code>cat-harness/schemas/bib-attestations.ts#WriteResult.written</code></a></p>
 </dd>
 </dl>
 

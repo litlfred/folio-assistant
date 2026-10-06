@@ -56,6 +56,9 @@ import type {
   HealthContext,
   Probe,
   RepoSizeEvidence,
+  SpecialBranchBudget,
+  SpecialBranchEvidence,
+  SpecialBranchMeasure,
   StagingEvidence,
   StagingPreview,
   TodoEvidence,
@@ -561,9 +564,9 @@ function declaredDir(
   repoRoot: string,
   root: string,
   file: string,
-  read: (raw: unknown) => { directories: { path: string; graphKinds: string[] }[] },
-  pick: (g: { directories: { path: string; graphKinds: string[] }[] }) => { path: string } | undefined,
-  fallback: { directories: { path: string; graphKinds: string[] }[] },
+  read: (raw: unknown) => { directories: { path: string; graphTypologies: string[] }[] },
+  pick: (g: { directories: { path: string; graphTypologies: string[] }[] }) => { path: string } | undefined,
+  fallback: { directories: { path: string; graphTypologies: string[] }[] },
 ): { dir: string } | { reason: string } {
   const graphPath = join(repoRoot, root, file);
   let graph = fallback;
@@ -827,6 +830,7 @@ export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
       doneWhen: doneWhenState(text),
       renderedDecision: hasRenderedDecision(text),
       parent: frontMatterValue(fm, "parent"),
+      type: frontMatterValue(fm, "type"),
     });
   }
   // An empty store is not a clean one. A walk that found nothing is how a
@@ -879,6 +883,110 @@ export interface GatherOptions {
   now?: Date;
   /** Override the remote's default branch, which is otherwise discovered. */
   defaultBranch?: string;
+  /** `special-branches.json` to read budgets from. Tests point it at a fixture. */
+  specialBranchesPath?: string;
+}
+
+/** The one declaration of the special branches, beside the scripts that use it. */
+const SPECIAL_BRANCHES_JSON = resolve(import.meta.dir, "..", "..", "scripts", "special-branches.json");
+
+// ── Special branches ────────────────────────────────────────────
+
+/** A `special-branches.json` row as this probe reads it: names, shape, budget. */
+export interface SpecialBranchDecl {
+  id: string;
+  shape: "branch" | "family";
+  name: string;
+  legacy: string[];
+  budget?: SpecialBranchBudget;
+}
+
+/** `special-branches.json` — the one declaration of the special branches and their budgets. */
+export function readSpecialBranches(path: string): SpecialBranchDecl[] {
+  const raw = JSON.parse(readFileSync(path, "utf-8")) as { branches?: SpecialBranchDecl[] };
+  return (raw.branches ?? []).map((b) => ({
+    id: b.id,
+    shape: b.shape,
+    name: b.name,
+    legacy: [...(b.legacy ?? [])],
+    ...(b.budget ? { budget: b.budget } : {}),
+  }));
+}
+
+/**
+ * Which remote branches a row names, by the table's own RESOLUTION rule: the
+ * new name if it exists, else the first legacy name that does. For a family,
+ * the first prefix (new, then legacy) with any member. Pure — `heads` is the
+ * remote's branch list without `refs/heads/`.
+ */
+export function membersFor(row: SpecialBranchDecl, heads: readonly string[]): { resolved?: string; refs: string[] } {
+  for (const name of [row.name, ...row.legacy]) {
+    const refs =
+      row.shape === "branch"
+        ? heads.filter((h) => h === name)
+        : heads.filter((h) => name.endsWith("/") && h.startsWith(name) && h.length > name.length).sort();
+    if (refs.length > 0) return { resolved: name, refs };
+  }
+  return { refs: [] };
+}
+
+export interface SpecialBranchProbeOptions {
+  repoRoot: string;
+  remote: string;
+  rows: SpecialBranchDecl[];
+}
+
+/**
+ * Every BUDGETED special branch's tip tree, measured from the remote.
+ *
+ * Fetched into a private ref (`refs/health/…`) rather than `FETCH_HEAD`, which
+ * the staging and branch probes read, and deleted after. One unreadable branch
+ * makes the evidence unknown, not smaller — the staging probe's rule: a
+ * partial sum compared against a budget is a wrong answer wearing a right
+ * one's clothes. A row with no branch on the remote is a determined ABSENT.
+ */
+export function probeSpecialBranches(o: SpecialBranchProbeOptions): Probe<SpecialBranchEvidence> {
+  const ls = git(o.repoRoot, ["ls-remote", "--heads", o.remote]);
+  if (ls.code !== 0) {
+    return { state: "unknown", reason: `git ls-remote --heads ${o.remote} exited ${ls.code}: ${ls.err.trim() || "no output"}` };
+  }
+  const heads = ls.out
+    .split("\n")
+    .map((l) => l.split("\t")[1]?.trim() ?? "")
+    .filter((r) => r.startsWith("refs/heads/"))
+    .map((r) => r.slice("refs/heads/".length));
+  const rows: SpecialBranchMeasure[] = [];
+  for (const row of o.rows) {
+    const { resolved, refs } = membersFor(row, heads);
+    if (row.budget === undefined || refs.length === 0) {
+      rows.push({ id: row.id, name: row.name, shape: row.shape, ...(row.budget ? { budget: row.budget } : {}), state: refs.length === 0 ? "absent" : "unbudgeted", ...(resolved ? { resolved } : {}), branches: [] });
+      continue;
+    }
+    const branches: SpecialBranchMeasure["branches"] = [];
+    for (const ref of refs) {
+      const local = `refs/health/special/${ref}`;
+      const fetched = git(o.repoRoot, ["fetch", "--depth=1", "--no-tags", o.remote, `+refs/heads/${ref}:${local}`]);
+      if (fetched.code !== 0) {
+        return { state: "unknown", reason: `git fetch ${o.remote} ${ref} exited ${fetched.code}: ${fetched.err.trim()}` };
+      }
+      const listed = git(o.repoRoot, ["ls-tree", "-r", "-l", local]);
+      git(o.repoRoot, ["update-ref", "-d", local]);
+      if (listed.code !== 0) {
+        return { state: "unknown", reason: `git ls-tree -r -l ${ref} exited ${listed.code}: ${listed.err.trim()}` };
+      }
+      let bytes = 0;
+      let files = 0;
+      for (const line of listed.out.split("\n")) {
+        const m = /^\S+\s+blob\s+\S+\s+(\d+)\t/.exec(line);
+        if (!m) continue;
+        bytes += Number(m[1]);
+        files += 1;
+      }
+      branches.push({ ref, bytes, files });
+    }
+    rows.push({ id: row.id, name: row.name, shape: row.shape, budget: row.budget, state: "measured", resolved, branches });
+  }
+  return { state: "ok", value: { rows, command: `git ls-remote --heads ${o.remote}; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch` } };
 }
 
 /** Gather everything the registry needs. Never throws; every failure is a `reason`. */
@@ -912,5 +1020,12 @@ export async function gatherContext(o: GatherOptions): Promise<HealthContext> {
     repoSize: probeRepoSize(o.repoRoot),
     beans: probeBeans(o.repoRoot),
     todos: probeTodos(o.repoRoot),
+    // Last, after every probe that reads `FETCH_HEAD`, although it fetches into
+    // private refs and would not disturb them anyway.
+    specialBranches: probeSpecialBranches({
+      repoRoot: o.repoRoot,
+      remote,
+      rows: readSpecialBranches(o.specialBranchesPath ?? SPECIAL_BRANCHES_JSON),
+    }),
   };
 }

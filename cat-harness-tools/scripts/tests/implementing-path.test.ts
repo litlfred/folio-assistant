@@ -24,7 +24,8 @@ import {
   resolveImplementingPath,
 } from "../../../cat-harness/schemas/harness-config.ts";
 import { unresolvedPaths } from "../../../cat-harness/scripts/check-tools.ts";
-import { tools } from "../../../cat-harness/tools/discover.ts";
+import { toolsOf } from "../../../cat-harness/tools/discover.ts";
+import { instanceRootsIn } from "../../../cat-harness/schemas/cat-harness.ts";
 import { HARNESS_ROOT, TOOLS_ROOT } from "../lib/roots.ts";
 
 const made: string[] = [];
@@ -140,11 +141,20 @@ describe("in this checkout", () => {
   });
 
   test("every Tool module and every check:tools path resolves today", () => {
-    const mods = tools()
-      .map((t) => (t.invoke as { inProcess?: { module?: string } } | undefined)?.inProcess?.module)
-      .filter((m): m is string => typeof m === "string");
-    expect(mods.length).toBeGreaterThan(10);
-    for (const m of mods) expect(resolveImplementingPath(HARNESS_ROOT, m).state).toBe("found");
+    // Each Tool's module is instance-relative, so it resolves from the
+    // instance that DECLARES the node — the harness's from cat-harness, sci's
+    // `lean-formal-edges` from folio-assistant-sci (bean riit, 3c). Resolving
+    // every one from the harness asked a question no server asks.
+    let count = 0;
+    for (const inst of instanceRootsIn(resolve(HARNESS_ROOT, ".."))) {
+      for (const t of toolsOf(inst)) {
+        const m = (t.invoke as { inProcess?: { module?: string } } | undefined)?.inProcess?.module;
+        if (typeof m !== "string") continue;
+        count++;
+        expect([t.id, resolveImplementingPath(inst, m).state]).toEqual([t.id, "found"]);
+      }
+    }
+    expect(count).toBeGreaterThan(10);
     expect(unresolvedPaths()).toEqual([]);
   });
 });

@@ -371,7 +371,8 @@ test.describe("cards on the glass move, resize and zoom — the glass is a surfa
     expect(await leftOf(page)).toBe(before);
   });
 
-  test("the − button shrinks it, and below the DECLARED width it zooms to its avatar", async ({ page }) => {
+  test("its own − shrinks it, and below the DECLARED width it zooms to its avatar", async ({ page }) => {
+    // Owner, 2026-10-05: *"Only the plus minus"* — the card's own buttons.
     await pull(page);
     const card = page.locator(book);
     await expect(card).toHaveAttribute("data-fa-zoom", "card");

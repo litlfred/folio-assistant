@@ -48,7 +48,7 @@ import {
   plan,
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
-import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
+import { defaultGraphTypologies, type GraphTypologyRegistry } from "../schemas/graph-typology-registry.ts";
 import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
@@ -58,7 +58,7 @@ const REPO = repoRootFor(ROOT);
 
 /**
  * What each SUBDIRECTORY of `abs` is, by name — read from the directory's own
- * declaration file, the one its graph kinds name as `declarationFile` (the
+ * declaration file, the one its graph typologies name as `declarationFile` (the
  * owner's rule, 2026-09-20: each type declares its own filename, so
  * relocating `beans/` to `work/` renames nothing inside it).
  *
@@ -77,11 +77,11 @@ const REPO = repoRootFor(ROOT);
  */
 export function subdirDescriptions(
   abs: string,
-  graphKinds: readonly string[],
-  registry: GraphKindRegistry = defaultGraphKinds,
+  graphTypologies: readonly string[],
+  registry: GraphTypologyRegistry = defaultGraphTypologies,
 ): Record<string, string> {
   const out: Record<string, string> = {};
-  const files = graphKinds.map((g) => registry.get(g)?.declarationFile).filter((f): f is string => typeof f === "string");
+  const files = graphTypologies.map((g) => registry.get(g)?.declarationFile).filter((f): f is string => typeof f === "string");
   for (const f of [...new Set(files)]) {
     const p = join(abs, f);
     if (!existsSync(p)) continue;
@@ -110,8 +110,11 @@ export function subdirDescriptions(
 
 /** Does a directory declaration carry `storage` — its record lives on a branch, not in the checkout? */
 export function isStored(d: unknown): boolean {
-  const s = (d as { storage?: { branch?: unknown } }).storage;
-  return typeof s === "object" && s !== null && typeof s.branch === "string" && s.branch !== "";
+  const s = (d as { storage?: { branch?: unknown; branchPrefix?: unknown } }).storage;
+  if (typeof s !== "object" || s === null) return false;
+  // A branch FAMILY (bean `lehh`) is stored too, on `branchPrefix` rather than one `branch`;
+  // reading only `branch` would generate a README into a mount path that is empty by design.
+  return (typeof s.branch === "string" && s.branch !== "") || (typeof s.branchPrefix === "string" && s.branchPrefix !== "");
 }
 
 /**
@@ -165,17 +168,17 @@ export function harnessInstances(repo: string): InstanceInput[] {
         // rather than a gap. A declared name resolving to no diagram still
         // gets a view, because the section has to say *could not determine*.
         const declared = (d as { coverage?: { process?: string } }).coverage?.process;
-        const subdirs = subdirDescriptions(abs, d.graphKinds as string[]);
+        const subdirs = subdirDescriptions(abs, d.graphTypologies as string[]);
         return {
           id: d.id,
           path: d.path,
           abs,
           title: (d as { title?: string }).title,
           description: (d as { description?: string }).description,
-          graphKinds: d.graphKinds as string[],
+          graphTypologies: d.graphTypologies as string[],
           // `absent` declared, OR a kind the qa-reports arc moves off `main`
           // (bean `0dav`): its working copy being missing is not a finding.
-          mayBeAbsent: Boolean((d as { absent?: unknown }).absent) || mayLeaveMain(d as { graphKinds?: string[]; storage?: unknown }),
+          mayBeAbsent: Boolean((d as { absent?: unknown }).absent) || mayLeaveMain(d as { graphTypologies?: string[]; storage?: unknown }),
           ...(Object.keys(subdirs).length > 0 ? { subdirs } : {}),
           ...(declared !== undefined
             ? { process: forDirectory(resolveProcess(index(), declared), repo, abs) }

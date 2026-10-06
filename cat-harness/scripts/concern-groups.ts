@@ -40,7 +40,7 @@ import { join, relative, resolve } from "node:path";
 
 import { findInstanceRoot, readDeclaration } from "../schemas/cat-harness.ts";
 import { ConcernGroupsSchema } from "../schemas/concern-groups.ts";
-import { defaultGraphKinds, type GraphKindRegistry } from "../schemas/graph-kind-registry.ts";
+import { defaultGraphTypologies, type GraphTypologyRegistry } from "../schemas/graph-typology-registry.ts";
 import { checkoutDirectories, orderedDependencies } from "../schemas/harness-config.ts";
 import { SkillTopicsSchema } from "../schemas/skill-topics.ts";
 
@@ -56,7 +56,7 @@ export interface DeclaredGroup {
 }
 
 /** The kinds that group by concern, read from the registry rather than listed. */
-export function groupingKinds(registry: GraphKindRegistry = defaultGraphKinds): string[] {
+export function groupingKinds(registry: GraphTypologyRegistry = defaultGraphTypologies): string[] {
   return registry
     .names()
     .filter((k) => registry.get(k)?.concernGroups === true && typeof registry.get(k)?.declarationFile === "string")
@@ -68,7 +68,7 @@ export function groupingKinds(registry: GraphKindRegistry = defaultGraphKinds): 
  * is no file. Throws on a malformed file or on a group whose directory does
  * not exist — declare only what exists (bean `dh4f`).
  */
-export function declaredGroupsIn(dir: string, kind: string, registry: GraphKindRegistry = defaultGraphKinds): DeclaredGroup[] {
+export function declaredGroupsIn(dir: string, kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): DeclaredGroup[] {
   const def = registry.get(kind);
   if (def?.concernGroups !== true || def.declarationFile === undefined) return [];
   const file = join(dir, def.declarationFile);
@@ -108,7 +108,7 @@ const inheritedCache = new Map<string, DeclaredGroup[]>();
  * A lower instance's malformed file is that instance's finding, not this
  * walk's, so it contributes nothing here rather than throwing.
  */
-export function inheritedGroupsFor(dir: string, kind: string, registry: GraphKindRegistry = defaultGraphKinds): DeclaredGroup[] {
+export function inheritedGroupsFor(dir: string, kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): DeclaredGroup[] {
   const key = `${resolve(dir)}\0${kind}`;
   const hit = inheritedCache.get(key);
   if (hit !== undefined) return hit;
@@ -156,7 +156,7 @@ export interface GroupedChild {
  * `dir` itself or INHERITED from the same-named directory below. Sorted by
  * `rel`, so every caller sees one order.
  */
-export function groupedChildrenIn(dir: string, kind: string, registry: GraphKindRegistry = defaultGraphKinds): GroupedChild[] {
+export function groupedChildrenIn(dir: string, kind: string, registry: GraphTypologyRegistry = defaultGraphTypologies): GroupedChild[] {
   if (!existsSync(dir)) return [];
   const groups = new Map<string, string>();
   for (const g of declaredGroupsIn(dir, kind, registry)) groups.set(g.path, g.code);
@@ -202,8 +202,8 @@ export interface ResolvedGroup {
  * Resolved over {@link checkoutDirectories}, deepest instance first, so the
  * first declarer is the lowest.
  */
-export function resolveGroups(kind: string, start: string, registry: GraphKindRegistry = defaultGraphKinds): ResolvedGroup[] {
-  const dirs = checkoutDirectories(start).filter((d) => d.graphKinds.includes(kind as never));
+export function resolveGroups(kind: string, start: string, registry: GraphTypologyRegistry = defaultGraphTypologies): ResolvedGroup[] {
+  const dirs = checkoutDirectories(start).filter((d) => d.graphTypologies.includes(kind as never));
   const norm = (p: string): string => p.replace(/^\.\//, "").replace(/\/+$/, "");
   const nameOf = (d: { member?: string; declaredBy: string; absPath: string }): string => {
     if (d.member !== undefined && d.member !== "(default)") return d.member;

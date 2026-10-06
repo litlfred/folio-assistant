@@ -27,8 +27,9 @@ import {
   type NavGroup,
   type NavbarModel,
 } from "../lib/navbar.js";
-import { injectRail, railModel } from "../lib/harness-rail.js";
-import { documentIndexOf } from "../lib/navbar.js";
+import { NAVBAR_LINKED, NAVBAR_ROW_CSS, NAVBAR_ROW_INLINE, NAVBAR_ROW_JS, declinesNavbar, injectRail, wantsLinkedRail, railModel, withNavbarRow } from "../lib/harness-rail.js";
+import { NAVBAR_CSS, documentIndexOf, visualiserLabelOf } from "../lib/navbar.js";
+import { thinPageHtml } from "../thin-page.js";
 import {
   BEGIN,
   END,
@@ -41,6 +42,7 @@ import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 import { kindTitle } from "../lib/nav-label.js";
+import { graphTypologyRowDecor } from "../lib/graph-typology-nav.js";
 
 // Typed WITH its middle region, because this fixture is a mounted page's
 // navbar and a mounted page always has one. `graphs` became optional for the
@@ -425,7 +427,7 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // when the WHO style guide was folded into who-iris as a subgraph (bean
     // `qsx4`) — the voices declared from within `skills/skills.json`, the
     // glossary in who-iris.json. Same reason as both above.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "uploads", "voices"].map(K));
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "glossary", "library", "qa", "schemas", "skills", "themes", "translation-sources", "uploads", "voices"].map(K));
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -451,6 +453,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       "schemas",
       "skills",
       "themes",
+      // `translation-sources`: who-iris carries its own glossary catalogues
+      // since bean riit ("move things to semantically appropriate place").
+      "translation-sources",
       "uploads",
       "voices",
     ].map(K));
@@ -635,11 +640,35 @@ describe("the document index — `documentIndexOf`", () => {
     const g = documentIndexOf(
       page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h2 id="c">Gamma</h2>`),
     );
+    // An h3 is a CHILD of the h2 above it, folded (bean `r2ld`).
     expect(g?.items.map((i) => [i.href, i.label, i.depth ?? 0])).toEqual([
       ["#a", "Alpha", 0],
-      ["#b", "Beta", 1],
       ["#c", "Gamma", 0],
     ]);
+    expect(g?.items[0]!.children?.map((i) => [i.href, i.label, i.depth])).toEqual([["#b", "Beta", 1]]);
+    expect(g?.items[0]!.fold).toBe("1 sub-section");
+    expect(g?.items[1]!.fold).toBeUndefined();
+  });
+
+  it("FOLDS sub-sections under their section, closed, as a disclosure BELOW the link — owner, 2026-10-05", () => {
+    // "on this page should have sub-sections collapsible" (bean `r2ld`).
+    const g = documentIndexOf(
+      page(`<h2 id="a">Alpha</h2><h3 id="b">Beta</h3><h3 id="b2">Beta 2</h3><h2 id="c">Gamma</h2>`),
+    )!;
+    expect(g.items[0]!.fold).toBe("2 sub-sections");
+    const html = navbarHtml({ instance: "x", graphs: { label: "Graphs", items: [] }, documentIndex: g });
+    // The section stays a plain link; the fold follows it, closed.
+    expect(html).toMatch(/<a href="#a"[^>]*>[\s\S]*?<\/a><details class="fa-nav-fold"><summary>/);
+    expect(html).not.toMatch(/<details class="fa-nav-fold" open/);
+    // No link INSIDE any one summary.
+    expect(html).not.toMatch(/<summary>(?:(?!<\/summary>)[^])*<a /);
+    expect(html).toContain('href="#b2"');
+  });
+
+  it("an h3 BEFORE any h2 stays a row of its own", () => {
+    const g = documentIndexOf(page(`<h3 id="x">Lead</h3><h2 id="a">A</h2><h3 id="b">B</h3>`))!;
+    expect(g.items.map((i) => i.label)).toEqual(["Lead", "A"]);
+    expect(g.items[0]!.depth).toBe(1);
   });
 
   it("SKIPS a heading with no id — it is not a destination", () => {
@@ -1078,5 +1107,239 @@ describe("adjacent graph rows cannot be confused (bean yag0)", () => {
   it("the glyph is an SVG hidden from assistive technology — the words are the name", () => {
     const html = navbarRegionsHtml(railModel({ instance: "who-iris", toRoot: "..", links: rows }));
     expect(html).toMatch(/<span class="fa-nav-glyph fa-nav-tone" style="[^"]*" aria-hidden="true"><svg viewBox="0 0 24 24"/);
+  });
+});
+
+describe("the rail's Graphs group starts closed (#2150)", () => {
+  // Owner, 2026-10-05: "also have the "Graphs" section start closed on LHS navbar".
+  const graphsSummary = /<details class="fa-nav-group"( open)?><summary><span class="fa-nav-glyph" aria-hidden="true">▤<\/span>/;
+
+  it("is folded on arrival on a page with no section of its own", () => {
+    const html = navbarRegionsHtml(railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }] }));
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+    expect(graphsSummary.test(html)).toBe(true);
+  });
+
+  it("opens when one of its rows is the page being read", () => {
+    const html = navbarRegionsHtml(
+      railModel({ instance: "x", toRoot: "..", links: [{ href: "../a/", label: "a" }, { label: "b", current: true }] }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBe(" open");
+  });
+
+  it("stays folded beside the page's own section, which is the one open group", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "x",
+        toRoot: "..",
+        links: [{ label: "b", current: true }],
+        documentIndex: { label: "Contents", items: [{ href: "#a", label: "A" }], collapsible: true, open: true },
+      }),
+    );
+    expect(graphsSummary.exec(html)?.[1]).toBeUndefined();
+  });
+});
+
+describe("a harness row is not a graph-typology row, whatever its mark (#2151)", () => {
+  // Owner, 2026-10-05: "alignment of harnesses is off". `fa-nav-kind` (the
+  // strip-column indent) was inferred from "has an SVG glyph"; #2122 gave
+  // harnesses glyph marks, and smart-trust / SMART Base took the kind indent.
+  //
+  // Rows built from `graphTypologyRowDecor` itself, the one function that sets
+  // `NavItem.kind`, so this holds in a standalone cat-harness layer. That the
+  // rows `declaredGraphs` builds for a REAL instance carry it is asserted in
+  // `cat-harness-tools/scripts/tests/navbar-kind-rows.test.ts`, because it
+  // reads who-iris's declaration, which only the monorepo has.
+  const kinds = ["docs", "library", "skills"].map((k) => ({ href: `../${k}/`, label: k, ...graphTypologyRowDecor(k, "x") }));
+
+  it("graphTypologyRowDecor DECLARES the row a kind, whatever mark it draws", () => {
+    expect(kinds.every((r) => r.kind === true)).toBe(true);
+  });
+
+  it("a glyph-marked harness row gets no kind class, and nor does an avatar one", () => {
+    const html = navbarRegionsHtml(
+      railModel({
+        instance: "cat-harness",
+        toRoot: "..",
+        links: kinds,
+        harnesses: [
+          { href: "../smart-trust/", label: "smart-trust", glyphPath: "M12 3l7 3v6", tone: 199 },
+          { href: "../", label: "C@T Harness", avatar: { src: "../a.webp" }, tone: 268 },
+        ],
+      }),
+    );
+    const at = html.indexOf('<div class="fa-nav-bottom">');
+    expect(html.slice(at)).toContain('<a href="../smart-trust/"><span class="fa-nav-glyph');
+    expect(html.slice(at)).not.toContain("fa-nav-kind");
+    // ...while the kind rows above keep it.
+    expect(html.slice(0, at)).toContain('class="fa-nav-kind"');
+  });
+});
+
+describe("the harness row's data reaches a railed page (bean wckf, #2147)", () => {
+  // `injectRail` writes the same `#fa-navbar-row` block `head_custom.html`
+  // writes for the theme, so `docs-ui.js`'s ONE `mountNavIconRow` draws the
+  // same row on both surfaces. The browser half is `rail-icon-row.e2e.ts`.
+  const SHELL = "<!doctype html><html><head></head><body><h1>x</h1></body></html>";
+  const opts = { instance: "WHO IRIS", toRoot: "..", links: [] };
+
+  it("an object row is written once, right after <body>, and parses back to itself", () => {
+    const row = { icons: ["todos", "beans"], hrefs: { todos: "/todos/" } };
+    const out = injectRail(SHELL, { ...opts, navbarRow: row })!;
+    const m = /<body><script type="application\/json" id="fa-navbar-row" data-fa-root="\.\.">([^<]*)<\/script>/.exec(out);
+    expect(m).not.toBeNull();
+    expect(JSON.parse(m![1]!)).toEqual(row);
+    expect(withNavbarRow(out, row)).toBe(out); // never twice
+  });
+
+  it("a value cannot close the script element early", () => {
+    const out = injectRail(SHELL, { ...opts, navbarRow: { notes: { kg: "</script><img src=x onerror=alert(1)>" } } })!;
+    expect(out).not.toContain("</script><img");
+    expect(out).toContain("\\u003c/script>");
+  });
+
+  it("declared none is written as null; could-not-tell writes nothing", () => {
+    expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain('id="fa-navbar-row" data-fa-root="..">null</script>');
+    expect(injectRail(SHELL, { ...opts })).not.toContain("fa-navbar-row");
+  });
+
+  // WHAT DRAWS IT — bean `lhvt`. #2149 wrote the data and nothing else, and on
+  // the 2,709 railed pages without `docs-ui.js` nothing drew it.
+  it("links the row's script and stylesheet, once, in <head>, at the page's own depth", () => {
+    const out = injectRail(SHELL, { ...opts, navbarRow: { icons: ["todos"] } })!;
+    const head = out.slice(0, out.indexOf("</head>"));
+    expect(head).toContain(`<script src="../${NAVBAR_ROW_JS}" defer></script>`);
+    expect(head).toContain(`<link rel="stylesheet" href="../${NAVBAR_ROW_CSS}">`);
+    expect(withNavbarRow(out, { icons: ["todos"] }, { root: ".." })).toBe(out);
+    expect(out.split(NAVBAR_ROW_JS).length - 1).toBe(1);
+  });
+
+  it("a folio's site links the PLATFORM's row files and composes the row's hrefs there", () => {
+    const BASE = "https://litlfred.github.io/folio-assistant";
+    const out = injectRail(SHELL, { ...opts, assetRoot: BASE, navbarRow: { icons: ["todos"] } })!;
+    expect(out).toContain(`<script src="${BASE}/${NAVBAR_ROW_JS}" defer></script>`);
+    expect(out).toContain(`data-fa-root="${BASE}"`);
+  });
+
+  it("a page that fetches nothing gets the row INLINED, not linked", () => {
+    const out = injectRail(SHELL, { ...opts, navbarRow: { icons: ["todos"] }, inlineRowAssets: { js: "/*JS*/", css: "/*CSS*/" } })!;
+    expect(out).not.toContain("<script src=");
+    expect(out).not.toContain('rel="stylesheet"');
+    expect(out).toContain(">/*JS*/</script>");
+    expect(out).toContain(">/*CSS*/</style>");
+    expect(out.split("/*JS*/").length - 1).toBe(1);
+  });
+
+  it("no row data, no row script — and a declined row still gets one, to say so", () => {
+    expect(injectRail(SHELL, { ...opts })).not.toContain(NAVBAR_ROW_JS);
+    expect(injectRail(SHELL, { ...opts, navbarRow: null })).toContain(NAVBAR_ROW_JS);
+  });
+});
+
+describe("a thin page asks for the rail with its style LINKED (bean lnoy)", () => {
+  // Owner, 2026-10-05: "1. Shared rail style first". Inlined, the rail was
+  // 7.9 KB (4.3 KB of CSS) on pages of 1.4-3 KB, which is why they declined it.
+  const opts = { instance: "C@T Harness", toRoot: "../..", links: [{ label: "Library", href: "../../library/" }], navbarRow: { icons: ["todos"] } };
+  const thin = `<!doctype html><html><head>${NAVBAR_LINKED}<title>x</title></head><body><main>x</main></body></html>`;
+
+  it("links navbar.css and the row's files, and inlines neither", () => {
+    const out = injectRail(thin, { ...opts, inlineRowAssets: { js: "/*JS*/", css: "/*CSS*/" } })!;
+    expect(out).toContain(`<link rel="stylesheet" href="../../${NAVBAR_CSS}">`);
+    expect(out).toContain(`<script src="../../${NAVBAR_ROW_JS}" defer></script>`);
+    expect(out).not.toContain("<style>");
+    expect(out).not.toContain("/*JS*/");
+    expect(out).toContain('<nav class="fa-nav"');
+  });
+
+  it("is a fraction of the inlined rail's weight", () => {
+    const plain = thin.replace(NAVBAR_LINKED, "");
+    const inlined = injectRail(plain, opts)!.length - plain.length;
+    const linked = injectRail(thin, opts)!.length - thin.length;
+    expect(linked).toBeLessThan(inlined / 2);
+  });
+
+  it("the meta is read in either attribute order, and `none` is still `none`", () => {
+    expect(wantsLinkedRail('<meta content="linked" name="folio-navbar">')).toBe(true);
+    expect(wantsLinkedRail('<meta name="folio-navbar" content="none">')).toBe(false);
+  });
+
+  it("thinPageHtml writes `linked`, not `none`", () => {
+    const html = thinPageHtml({ title: "x", configId: "x-config", config: {}, body: "<main></main>", script: "x.js", jsonld: "x.jsonld" });
+    expect(wantsLinkedRail(html)).toBe(true);
+    expect(declinesNavbar(html)).toBe(false);
+  });
+});
+
+describe("the row's glyphs are docs-ui.js's glyphs (bean lhvt)", () => {
+  // `navbar-row.js` carries copies of the six drawings; `docs-ui.js` still
+  // draws them on its tiles. Evaluated, not grepped: the constants are string
+  // concatenations, so the comparison is of the SVG each produces.
+  const js = join(import.meta.dir, "../../docs/assets/js");
+  const glyphs = (file: string): Record<string, string> => {
+    const src = readFileSync(join(js, file), "utf-8");
+    const out: Record<string, string> = {};
+    for (const name of ["STICKY_GLYPH", "BEANS_GLYPH", "PROCESS_GLYPH", "NET_GLYPH", "TILES_GLYPH", "FISH_GLYPH"]) {
+      const m = new RegExp(`var ${name} =([\\s\\S]*?);\\n`).exec(src);
+      if (!m) throw new Error(`${file}: ${name} not found`);
+      const expr = m[1]!.replace(/^\s*\/\/.*$/gm, "");
+      out[name] = new Function(`return (${expr});`)() as string;
+    }
+    return out;
+  };
+
+  it("all six are identical in both files", () => {
+    const row = glyphs("navbar-row.js");
+    const ui = glyphs("docs-ui.js");
+    expect(Object.keys(row).length).toBe(6);
+    expect(row).toEqual(ui);
+  });
+});
+
+describe("every committed railed page carries the harness row's data (bean wckf, #2147)", () => {
+  // THE GATE. A page with the rail and no `#fa-navbar-row` shows the harness's
+  // navbar without the harness's row — the defect the owner reported on
+  // who-iris. It reached 92 committed pages across nine generators before this
+  // existed, because each generator had to be regenerated to pick the block up
+  // and CI named them one at a time. Reads only `cat-harness/docs`, so it holds
+  // standing alone too.
+  const docs = join(import.meta.dir, "../../docs");
+  const pages = new Bun.Glob("**/*.html").scanSync({ cwd: docs });
+  const railed: string[] = [];
+  const missing: string[] = [];
+  const undrawn: string[] = [];
+  for (const rel of pages) {
+    const html = readFileSync(join(docs, rel), "utf-8");
+    if (!html.includes('<nav class="fa-nav"')) continue;
+    railed.push(rel);
+    if (!html.includes('id="fa-navbar-row"')) missing.push(rel);
+    // The data alone drew nothing on 2,709 published pages (bean `lhvt`): a
+    // railed page must also load what draws it, itself or through docs-ui.js.
+    if (!html.includes(NAVBAR_ROW_JS) && !html.includes(NAVBAR_ROW_INLINE)) undrawn.push(rel);
+  }
+
+  it("there are railed pages to check — an empty scan is not a clean one", () => {
+    expect(railed.length).toBeGreaterThan(20);
+  });
+
+  it("none of them is missing the row's data", () => {
+    expect(missing).toEqual([]);
+  });
+
+  it("every one of them loads navbar-row.js, which draws it (bean lhvt)", () => {
+    expect(undrawn).toEqual([]);
+  });
+});
+
+// Bean `mftp`: a page may NAME its own section (an IG site names it after the IG).
+describe("a page's declared section label", () => {
+  const page = (head: string) => `<html><head>${head}</head><body><script type="application/json" data-fa-visualiser-nav>[{"label":"Home","href":"/x/"}]</script><p>hi</p></body></html>`;
+  it("is read off the page and names the section", () => {
+    expect(visualiserLabelOf(page('<meta name="fa-visualiser-label" content="WHO SMART Trust">'))).toBe("WHO SMART Trust");
+    const railed = injectRail(page('<meta name="fa-visualiser-label" content="WHO SMART Trust">'), { instance: "x", toRoot: "..", links: [] })!;
+    expect(railed).toContain("WHO SMART Trust");
+  });
+  it("is absent when undeclared, and the section stays Contents", () => {
+    expect(visualiserLabelOf(page(""))).toBeUndefined();
+    expect(injectRail(page(""), { instance: "x", toRoot: "..", links: [] })!).toContain("Contents");
   });
 });

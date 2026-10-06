@@ -74,7 +74,7 @@ Only the properties that decide placement are listed here. Section references
 | property | consequence here |
 |---|---|
 | **Model.** Element-based: everything has an absolute-IRI `spdxId` and a `CreationInfo` (`specVersion`, `created`, `createdBy` required; `createdUsing` optional). | Every element needs an **absolute IRI** and a **date**. The date may be the source commit's: *"often the date of last change (e.g., a git commit date) … as doing so supports reproducible builds"* (`sec-044`). |
-| **Serialisation.** JSON-LD native, with a published remote `@context`. | It aligns with [`json-ld-serialisation`](../methodologies/json-ld-serialisation.md). The context must be **vendored**, since that methodology forbids network context fetches (`localLoader`). |
+| **Serialisation.** JSON-LD native, with a published remote `@context`. | It aligns with [`json-ld-serialisation`](../../methodologies/json-ld-serialisation.md). The context must be **vendored**, since that methodology forbids network context fetches (`localLoader`). |
 | **Profiles in 3.0.1.** Core, Software, Security, SimpleLicensing, ExpandedLicensing, Dataset, AI, Build, Lite. | §3 maps them. |
 | **Relationships.** A closed vocabulary: `dependsOn`, `generates`, `hasInput`, `hasOutput`, `hasEvidence`, `hasTest`, `testedOn`, `trainedOn`, `usesTool`, `hasDeclaredLicense`, `hasConcludedLicense`, and others. | Edges such as skill `satisfies` have no SPDX term and stay KG edges. |
 | **No verdict class in 3.0; one in 3.1-RC1.** In 3.0 a result is an `Annotation` (*"An assertion made in relation to one or more elements"*, `sec-039`) or a `hasEvidence` / `hasTest` edge. 3.1-RC1 adds `functionalsafety_EvaluationResult` (pass / fail / inconclusive) over a `RequirementVerification`. 3.0 also has `externalRefType: qualityAssessmentReport`, *"A reference to a quality assessment for a package"* (`sec-123`). | §4.1. |
@@ -224,7 +224,7 @@ The AI profile describes models as **supplied components**: autonomy type,
 training data, energy consumption, limitations. The platform *uses* models
 through agents and ships none. Recording `agent_model` as an `ai_AIPackage`
 would assert that we distribute a model. Revisit this only if a folio ever
-packages a fine-tuned or local model (the `models` graph kind exists, holding
+packages a fine-tuned or local model (the `models` graph typology exists, holding
 nothing of that sort today).
 
 ## 5. The rule that decides placement
@@ -269,7 +269,7 @@ otherwise surface as a malformed SPDX document.
 | M4 | **Licence-id validation.** Pin the SPDX License List (`upstream-pins.json` entry: repo `spdx/license-list-data`, `pinnedIn` a vendored JSON), and make `check:source-licence` refuse an id that is neither on the list nor `LicenseRef-`. | a task inside the existing ingest processes, plus a pin watched by `upstream-pin-watch.bpmn` | `check:source-licence` three-state discipline |
 | M5 | **Notices generation.** `gen:notices` writes NOTICE and THIRD-PARTY-NOTICES from `licence.json` plus remote-package licences plus the release SBOM; `gen:notices:check` gates staleness. Plus `REUSE.toml` for row 5. | a generator and a gate | `readme:sync` / `readme:sync:check` |
 | M6 | **VEX triage** (later, after M2). A human or agent lane decides each advisory, `affected` or `not_affected` with a justification, recorded as VEX. | a decision task with a DMN for the justification codes | `decision-audit` |
-| M7 | **Graph kind `sbom`**: only if D3 chooses committing. `holds: "derived"`, `renderable: false`, with schema and validator. | `graph-kind-registry.ts` | `binary-release` (but that is `state`, because re-running yields new bytes. A regenerable SBOM is `derived`, which is why D3 recommends not committing it). |
+| M7 | **Graph typology `sbom`**: only if D3 chooses committing. `holds: "derived"`, `renderable: false`, with schema and validator. | `graph-typology-registry.ts` | `binary-release` (but that is `state`, because re-running yields new bytes. A regenerable SBOM is `derived`, which is why D3 recommends not committing it). |
 
 ## 8. Impact on existing processes and tasks
 

@@ -43,7 +43,7 @@
  */
 
 import { loadVoices, VOICE_ARTEFACT_KINDS, type VoiceProfile } from "../../schemas/voices.ts";
-import { instanceRootsIn, readDeclaration, repoRootFor } from "../../schemas/cat-harness.ts";
+import { instanceRootsIn, readDeclaration, siblingScopeFor } from "../../schemas/cat-harness.ts";
 import type { QaCriterionDefinition } from "../../schemas/block-qa.ts";
 
 /**
@@ -72,7 +72,9 @@ export interface OwnedVoice {
  * false-clean this repository keeps paying for.
  */
 export function shippedVoices(instanceRoot: string): OwnedVoice[] {
-  const repo = repoRootFor(instanceRoot);
+  // `siblingScopeFor`, not `repoRootFor`: for the root instance `dirname` is
+  // outside the checkout and lists no instance at all — zero voices (g43f).
+  const repo = siblingScopeFor(instanceRoot);
   const out: OwnedVoice[] = [];
   for (const root of instanceRootsIn(repo)) {
     const name = readDeclaration(root)?.name;

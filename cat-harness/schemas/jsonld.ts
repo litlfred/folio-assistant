@@ -63,7 +63,7 @@
  * @conformsTo w3c-xsd11-datatypes
  */
 
-import { BLOCK_KINDS, type BlockKind } from "./block-kinds";
+import { BLOCK_KIND_NODES, BLOCK_KINDS, type BlockKind } from "./block-kinds";
 import type { ContributionRegistry } from "./contributions";
 
 // ── Namespaces ───────────────────────────────────────────────────
@@ -186,28 +186,14 @@ export const ContentContextSchema = z.union([
 // ── Block kind → RDF types ───────────────────────────────────────
 
 /**
- * `folio-assistant-core:` type for each block kind. These are folio's own classes because
+ * `folio-assistant-core:` type for each block kind, read off its discovered
+ * `folio-block-kind/v1` node (`folioType`; bean riit, step 2). These are folio's own classes because
  * no published vocabulary distinguishes a theorem from a lemma from a
  * conjecture in the way this project's editorial machinery needs.
  */
-export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = {
-  definition: "folio-assistant-core:Definition",
-  theorem: "folio-assistant-core:Theorem",
-  lemma: "folio-assistant-core:Lemma",
-  proposition: "folio-assistant-core:Proposition",
-  corollary: "folio-assistant-core:Corollary",
-  algorithm: "folio-assistant-core:Algorithm",
-  conjecture: "folio-assistant-core:Conjecture",
-  example: "folio-assistant-core:Example",
-  remark: "folio-assistant-core:Remark",
-  proof: "folio-assistant-core:Proof",
-  simulator: "folio-assistant-core:Simulator",
-  prose: "folio-assistant-core:Prose",
-  equation: "folio-assistant-core:Equation",
-  diagram: "folio-assistant-core:Diagram",
-  table: "folio-assistant-core:Table",
-  figure: "folio-assistant-core:Figure",
-};
+export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = Object.fromEntries(
+  BLOCK_KIND_NODES.map((n) => [n.kind, n.folioType]),
+) as Record<BlockKind, string>;
 
 /**
  * DoCO co-type, where one is *unambiguously* right.
@@ -273,26 +259,9 @@ export function siteNodeIri(slug: string, nodeId?: string): string {
   return `${DOCS_SITE_BASE}${siteNodeSitePath(slug, nodeId)}`;
 }
 
-export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
-  equation: "doco:Formula",
-  diagram: "doco:Figure",
-  // A FACT, not a stretch: DoCO's Figure is a figure in a document, which is
-  // exactly what an extracted `figure` block is. `diagram` already maps here,
-  // and `SITE_ASSET_TYPES` already pairs `folio-assistant-core:Figure` with `doco:Figure`.
-  figure: "doco:Figure",
-  table: "doco:Table",
-  prose: "doco:Section",
-  definition: "doco:Section",
-  theorem: "doco:Section",
-  lemma: "doco:Section",
-  proposition: "doco:Section",
-  corollary: "doco:Section",
-  algorithm: "doco:Section",
-  conjecture: "doco:Section",
-  example: "doco:Section",
-  remark: "doco:Section",
-  proof: "doco:Section",
-};
+export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = Object.fromEntries(
+  BLOCK_KIND_NODES.flatMap((n) => (n.docoType ? [[n.kind, n.docoType]] : [])),
+);
 
 
 /**
@@ -329,14 +298,12 @@ export function typesForKind(kind: string, contributions?: ContributionRegistry)
  * against the two drifting, and the test suite calls it.
  */
 export const KIND_PREFIXES: readonly string[] = [
-  "def", "thm", "lem", "prop", "cor", "rem", "ex", "conj",
-  "prf", "sim", "eq", "fig", "tbl",
-  "alg", "prose",
+  ...new Set(BLOCK_KIND_NODES.map((n) => n.labelPrefix)),
   "sec", "chap", "app", "bib",
-  // The `dak` adapter's prefixes were spread in here until bean `1335`. They
-  // are a contributed adapter's now, carried as `labelPrefix` on each
-  // contributed kind (`ContributionRegistry.contributedLabelPrefixes()`), so
-  // this list is the BUILT-IN prefixes and nothing a harness adds.
+  // A contributed adapter's prefixes (the `dak` adapter's, since bean `1335`)
+  // are carried as `labelPrefix` on each contributed kind
+  // (`ContributionRegistry.contributedLabelPrefixes()`), so this list is the
+  // DISCOVERED kinds' prefixes plus the structural ones.
 ];
 
 const KIND_PREFIX_SET: ReadonlySet<string> = new Set(KIND_PREFIXES);
@@ -345,8 +312,10 @@ const KIND_PREFIX_SET: ReadonlySet<string> = new Set(KIND_PREFIXES);
  * Throws if `KIND_PREFIXES` has drifted from `constraints.ts`.
  *
  * Takes the constraints list as an argument rather than importing it, so
- * this module stays free of the Zod dependency chain (it is imported by the
- * generator and by tooling that has no reason to pull in schema validation).
+ * this module stays free of `constraints.ts`'s block-schema chain (it is
+ * imported by the generator and by tooling with no reason to build every
+ * block schema). Since bean riit, step 2, both lists are read off the same
+ * discovered nodes, so this guards the structural prefixes each adds.
  */
 export function assertPrefixesInSync(knownLabelPrefixes: readonly string[]): void {
   const theirs = new Set(knownLabelPrefixes.map((p) => p.replace(/:$/, "")));
@@ -608,6 +577,17 @@ export const CONTENT_CONTEXT = {
   leanSource: { "@id": "folio-assistant-core:leanSource" },
 
   meta: { "@id": "folio-assistant-core:meta", "@type": "@json" },
+
+  // A library item's licence, OUT of `meta` (finding D4, bean `gzkt`, owner
+  // ruling 2026-10-03). Both bindings are the rows of
+  // `vocab-mappings/licence-naming.json`, the table a glossary's
+  // `dcterms:license` comes from too; `gen-library-jsonld.test.ts` fails if
+  // either drifts from it. `license` is a literal (an SPDX expression), as the
+  // glossary writes it. `licenceRecord` is the authored record, `@json` for the
+  // reason given under "THE SPLIT" below: its `unknown` state and the places
+  // searched are a nested structure of ours.
+  license: { "@id": "dcterms:license" },
+  licenceRecord: { "@id": "folio-assistant-core:licenceRecord", "@type": "@json" },
 
   // ── Ingest-arm records, and the narrative they share — bean `yh6u` ──────
   //

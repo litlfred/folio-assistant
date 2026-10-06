@@ -7,16 +7,22 @@
   "title": "Folio Assistant",
   "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
   "summary": "This repository as a working instance: the platform and the folios it hosts.",
+  "avatar": {
+    "glyph": "M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3",
+    "tone": 236,
+    "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it"
+  },
+  "_avatar_comment": "THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`. Owner, reporting it: *\"folio assistant icon is messed up still. I want theme like in avaatars\"*. It was the GENERIC question mark, which is what `avatarFor` returns for a name nothing declares, and the table's own header has carried the instruction the whole time: *\"bootstrap has avatar, so does cat-harness, folio-asst\"*. Two of those three were here. TONE 236, between `folio` (224) and `tools` (250), and deliberately near `folio-assistant-core`'s 212 — the same reasoning the three kinds below `cat-harness` are given: these are parts of one graph and a reader scanning a legend should see them as a family. Far enough to tell apart, close enough that neither reads as belonging somewhere else. THE GLYPH IS THE CORE'S LEAF, HELD. `folio-assistant-core` is the leaf of paper; the root instance is what holds one, so this is that leaf inside a frame rather than a second unrelated mark. An instance and its core drawn as two unrelated things would be the same drift the tones avoid. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.",
   "directories": [
     {
       "id": "uploads",
       "path": "uploads/",
       "description": "The incoming queue of the document-ingestion pipeline for THIS checkout — raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
-      "graphKinds": [
+      "graphTypologies": [
         "uploads"
       ],
       "coverage": {
-        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "docs": "cat-harness/docs/concepts/subgraph-viewers.md",
         "skill": "library-ingestion",
         "process": "document-ingestion"
       }
@@ -25,7 +31,7 @@
       "id": "root-tools",
       "path": "tools/",
       "description": "The Tool-node barrel. `index.ts` merges every instance's `<stub>/tools/*.ts` into the one import five consumers use -- `check-tools`, `kg-export`, `harness-schema-export`, `tool-coverage` and the MCP projection -- so adding an instance is one line here rather than a path baked into five call sites. Declared by the ROOT rather than by `cat-harness` with repository scope: it is the checkout's own barrel over every instance, and repository-scoped entries from `cat-harness` are what put 15 paths under two declarations each.",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
       ],
       "coverage": {
@@ -40,7 +46,8 @@
           {
             "ref": "cat-harness/docs/fsh-guts/index.md",
             "title": "fsh-guts",
-            "publish": "staging-only"
+            "publish": "staging-only",
+            "writer": ["cat-harness/scripts/gen-fsh-guts-viz.ts"]
           }
         ]
       },
@@ -51,7 +58,7 @@
         "keyedBy": "tip"
       },
       "description": "The trashcan that is kept. Deprecated and throwaway structured content — addressable, exported as <base>/fsh-guts.jsonld, and DELIBERATELY absent from the rendered site. Every other declared kind here is non-renderable because it is a graph a tool reads and there was never a page to make of it; this one's contents could be rendered and are not, so that something can be kept without being published. It is also the destination that makes the never-delete rule enforceable beyond beans: AGENTS.md forbids deleting a bean because a scrapped item stops the next agent re-entering a dead end while a deleted one cannot be told from an accident, and that reasoning was always general — an agent removing a page or a script had only `rm`. Delete now means relocate here, and relocate is reversible. Files declare themselves with `$schema: folio-fsh-guts/v1`, per the same contract the bean and workflow stores use. NOTE on the name: `.fsh` is FHIR Shorthand in this codebase and across the WHO SMART folios; the collision was raised and the owner confirmed this spelling. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "graphKinds": [
+      "graphTypologies": [
         "fsh-guts"
       ],
       "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."
@@ -63,7 +70,7 @@
       },
       "path": "beans/",
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "graphKinds": [
+      "graphTypologies": [
         "beans"
       ],
       "tile": {
@@ -79,7 +86,7 @@
       },
       "_coverage_comment": "Issue #1908: the todo graph is published as ONE JSON-LD graph at <base>/todos.jsonld (+ .json), and every todo at <base>/todos/<id>.jsonld (+ .json), whose @id is that address, with a page at <base>/todos/<id>/. All written by gen-docs-pages.ts from the same items as assets/todos/index.json; scripts/todo-graph.ts is the builder.",
       "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "graphKinds": [
+      "graphTypologies": [
         "todos"
       ],
       "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."
@@ -88,7 +95,7 @@
       "id": "memory",
       "path": "memory/",
       "description": "Agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md`. `context` by the axis bean `mhh9` settled: read during a process, never written by one; it changes when a human directs an authoring agent. It sat in `skills/memory/` until 2026-09-20 — inside the `cat-harness` directory, which is `content` — so the CONTAINING kind and the contents were on opposite layers, and a nested declaration is the defect #263 names. Moving it was held back from the classification change on purpose (#395's rule, and bean `auap`'s precedent: a relocation is its own change) and is bean `07xs`. SCOPE IS `repository`, like `beans/`: these are facts about this REPOSITORY carried by the agents working in it, and `.claude/agents/` — the consumers — sit at the repository root too.",
-      "graphKinds": [
+      "graphTypologies": [
         "memory",
         "waiver"
       ],
@@ -98,7 +105,7 @@
       "id": "interaction",
       "path": "interaction/",
       "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
-      "graphKinds": [
+      "graphTypologies": [
         "interaction"
       ],
       "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."
@@ -107,7 +114,7 @@
       "id": "issue-marks",
       "path": "issue-marks/",
       "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
-      "graphKinds": [
+      "graphTypologies": [
         "issue-marks"
       ],
       "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."
@@ -116,7 +123,7 @@
       "id": "root-docs",
       "path": "docs/",
       "description": "THE REPOSITORY ROOT'S DOCUMENTATION OVERLAY, managed by this instance. Owner's ruling, 2026-09-21, answering whether the root declares its own docs: \"harness can have docs/ which then get listed under cat-harness/docs/<harness>, there is also docs/ dir in repo root managed by cat-harness. other harness augment or overlay ontop of that (content and behviors)\". SEPARATE FROM THE `docs` ENTRY ABOVE, AND IT HAS TO BE. That one is instance-scoped and `reproduce`, which is what makes a DEPENDENT materialise its own docs/ (bean n0nf slice 1). This one is `scope: \"repository\"`, and a repository-scoped entry is filtered out for dependencies -- cat-harness.ts:3261 and :3507 both skip it unless `link.own`. Re-scoping the existing entry instead of adding this one would therefore have UNDONE slice 1 silently: a dependent would simply stop getting a docs/ and nothing would fail. Two directories answering two questions, so two entries, with distinct ids -- the convention `who-iris-docs` already follows. `dependents` is `skip` for the same reason every other cross-instance repository-scoped entry here is: a dependent never reaches this one at all, and claiming it reproduces would be a promise the resolver does not keep. WHAT MAKES IT NOT `dh4f`: a declared directory that nothing reads is this repository's most-paid-for defect, and an empty overlay is exactly that shape. It is consumed by the site build, which composes it OVER cat-harness/docs/ -- so what it contributes today is nothing VERIFIABLY, pinned by a test asserting an empty overlay produces a byte-identical site, rather than nothing unnoticed.",
-      "graphKinds": [
+      "graphTypologies": [
         "docs"
       ],
       "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."

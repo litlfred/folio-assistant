@@ -5,7 +5,8 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-02T17:17:27Z
-updated_at: 2026-10-02T18:52:43Z
+updated_at: 2026-10-04T15:12:15Z
+parent: folio-assistant-rwmf
 blocking:
     - folio-assistant-7x5n
 ---

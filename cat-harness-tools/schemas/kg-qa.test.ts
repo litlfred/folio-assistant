@@ -16,10 +16,10 @@ import {
   worstSeverity,
   type KgQaReport,
   KG_QA_RESULTS_DIR,
-  KG_SUBJECT_GRAPH_KINDS,
+  KG_SUBJECT_GRAPH_TYPOLOGIES,
   KG_SUBJECT_KINDS,
 } from "../../cat-harness/schemas/kg-qa";
-import { defaultGraphKinds, instanceRootsIn, kgQaHomeFor, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
+import { defaultGraphTypologies, instanceRootsIn, kgQaHomeFor, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { actorsDir } from "../../cat-harness/schemas/role-graph.ts";
 
 describe("the criteria registry", () => {
@@ -143,14 +143,14 @@ describe("reachability reads the serving registry, not just manifests", () => {
     // The defect this whole change came from: `skills/authoring/content-lifecycle` was
     // absent from LOCAL_PACKAGES while 52 activities named its skills. A
     // package pointing at a missing directory is the same failure one step on.
-    const { LOCAL_PACKAGES } = await import("../../cat-harness/src/tools/skill-fetch.js");
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
     const { existsSync } = await import("node:fs");
     const missing = Object.entries(LOCAL_PACKAGES).filter(([, dir]) => !existsSync(dir));
     expect(missing).toEqual([]);
   });
 
   test("every directory holding `<skill>.md` that a diagram can name is served", async () => {
-    const { LOCAL_PACKAGES } = await import("../../cat-harness/src/tools/skill-fetch.js");
+    const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
     const served = new Set(Object.keys(LOCAL_PACKAGES));
     // `content-lifecycle` is the one this change added; pin it so a future
     // edit to the table cannot silently drop it again.
@@ -224,21 +224,21 @@ describe("requirements are the fifth node kind and only point", () => {
   });
 });
 
-describe("KG_SUBJECT_GRAPH_KINDS — the bridge to the graph-kind registry", () => {
+describe("KG_SUBJECT_GRAPH_TYPOLOGIES — the bridge to the graph-typology registry", () => {
   test("every subject kind says which graph it inhabits", () => {
     // `Record<KgSubjectKind, string>` makes this a type error rather than a
     // test failure, which is the point; this asserts it at run time too,
     // because a cast or a JSON round trip can defeat the type.
-    for (const k of KG_SUBJECT_KINDS) expect(KG_SUBJECT_GRAPH_KINDS[k]).toBeTruthy();
+    for (const k of KG_SUBJECT_KINDS) expect(KG_SUBJECT_GRAPH_TYPOLOGIES[k]).toBeTruthy();
   });
 
   test("every named graph is one the registry knows", () => {
     // Without this the map is free to name a graph that does not exist, and
     // `audit-coverage` would emit a row about a kind nothing declares — a
     // coverage claim over an empty set, which reads exactly like coverage.
-    const registered = new Set(defaultGraphKinds.names());
-    for (const [subject, graph] of Object.entries(KG_SUBJECT_GRAPH_KINDS)) {
-      expect(registered.has(graph), `${subject} names graph kind "${graph}", which is not registered`).toBe(true);
+    const registered = new Set(defaultGraphTypologies.names());
+    for (const [subject, graph] of Object.entries(KG_SUBJECT_GRAPH_TYPOLOGIES)) {
+      expect(registered.has(graph), `${subject} names graph typology "${graph}", which is not registered`).toBe(true);
     }
   });
 
@@ -248,7 +248,7 @@ describe("KG_SUBJECT_GRAPH_KINDS — the bridge to the graph-kind registry", () 
     // criterion from every row silently — an under-count that reads as a gap.
     for (const c of KG_CRITERIA) {
       for (const s of c.applies) {
-        expect(KG_SUBJECT_GRAPH_KINDS[s], `criterion ${c.id} applies to "${s}", which names no graph`).toBeTruthy();
+        expect(KG_SUBJECT_GRAPH_TYPOLOGIES[s], `criterion ${c.id} applies to "${s}", which names no graph`).toBeTruthy();
       }
     }
   });

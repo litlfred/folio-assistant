@@ -3,7 +3,7 @@
  *
  * ## The defect this exists for
  *
- * `harness.json` declares `schemas/` with `graphKinds: ["schemas", "kg"]`.
+ * `harness.json` declares `schemas/` with `graphTypologies: ["schemas", "kg"]`.
  * Measured on `814b693e`: the exported graph contained **zero** nodes of the
  * `schemas` kind — 11 node types, none of them a schema. A declaration a
  * consumer reads and finds nothing behind is the `dh4f` shape this repository
@@ -12,7 +12,7 @@
  * ## The declaration principle, applied to the odd one out
  *
  * A directory says what to EXPECT; the files declare what they ARE. Three of
- * the four graph kinds already hold that up — skills by YAML front matter,
+ * the four graph typologies already hold that up — skills by YAML front matter,
  * beans by front matter, workflow instances by `"$schema"`. `schemas/*.ts`
  * declared nothing: `@module` names the file's own path, which a scanner
  * already knows, so it says WHERE and not WHAT. Bean `xxxb`.
@@ -42,7 +42,9 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+import { directoriesForGraph } from "../schemas/cat-harness.js";
+import type { CorpusScope } from "./known-skills.js";
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because
@@ -72,9 +74,13 @@ import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
  * visible. `schemas/` declares TWO graphs — it is a knowledge-graph node AND
  * the schema definitions — which is why the accessor is asked for the
  * `schemas` one by name rather than being handed a single-home guess.
+ *
+ * `scope` is the corpus by default, which is what the gate asks. `"instance"`
+ * is the instance's own declaration alone — what `kg-export` publishes for it
+ * since the split (bean `4ak5` item 2), so its schema nodes are its own.
  */
-function schemasRoots(root: string): string[] {
-  const declared = corpusDirectoriesForGraph(root, "schemas");
+function schemasRoots(root: string, scope: CorpusScope = "checkout"): string[] {
+  const declared = scope === "instance" ? directoriesForGraph(root, "schemas") : corpusDirectoriesForGraph(root, "schemas");
   return declared.length > 0 ? declared : [join(root, "schemas")];
 }
 
@@ -104,9 +110,9 @@ const TAG = /@graphNode\s+(\S+)(?:\s*[—-]\s*(.*))?/;
  * mention, not a declaration — a module documenting the convention must not
  * thereby declare itself.
  */
-export function schemaModules(root: string): SchemaModule[] {
+export function schemaModules(root: string, scope: CorpusScope = "checkout"): SchemaModule[] {
   const out: SchemaModule[] = [];
-  for (const dir of schemasRoots(root)) {
+  for (const dir of schemasRoots(root, scope)) {
     if (!existsSync(dir)) continue;
     // The module id carries the DIRECTORY, not a bare `schemas/` prefix: three
     // directories declare this graph and two of them hold a `catalogue.ts` or an
@@ -170,8 +176,8 @@ export interface SchemaNodeAudit {
   reasonless: SchemaModule[];
 }
 
-export function auditSchemaNodes(root: string): SchemaNodeAudit {
-  const all = schemaModules(root);
+export function auditSchemaNodes(root: string, scope: CorpusScope = "checkout"): SchemaNodeAudit {
+  const all = schemaModules(root, scope);
   return {
     nodes: all.filter((m) => m.kind === "schema"),
     exempt: all.filter((m) => m.kind === "none" && m.reason),

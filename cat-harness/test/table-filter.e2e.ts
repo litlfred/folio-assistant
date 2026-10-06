@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -20,6 +20,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = siteDirFor(ROOT);
 const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
+/** A file under the site's `assets/`, served as itself — `undefined` for anything else. */
+function siteAsset(path: string): { contentType: string; body: string } | undefined {
+  const at = path.indexOf("/assets/");
+  if (at < 0) return undefined;
+  const file = join(ROOT, SITE, path.slice(at + 1));
+  if (!existsSync(file)) return undefined;
+  const type = file.endsWith(".css") ? "text/css" : file.endsWith(".js") ? "text/javascript" : "application/octet-stream";
+  return { contentType: type, body: readFileSync(file, "utf8") };
+}
 
 function table(n: number, attrs = "", wrap = false): string {
   const rows = Array.from({ length: n }, (_, i) =>
@@ -97,7 +106,14 @@ test.describe("table filter on a auto-docs page", () => {
   test("the shipped glossary page filters its rows with a live count", async ({ page: p }) => {
     const errors: string[] = [];
     p.on("pageerror", (e) => errors.push(String(e)));
-    await p.route("http://docsauto.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: GLOSSARY }));
+    await p.route("http://docsauto.fixture/**", (r) => {
+      // The shipped page links the row's own files (bean `lhvt`); serve the real ones.
+      const path = new URL(r.request().url()).pathname;
+    // The site's own assets — the row's and the rail's files a railed page links (beans `lhvt`, `lnoy`).
+    const asset = siteAsset(path);
+    if (asset) return r.fulfill(asset);
+      return r.fulfill({ contentType: "text/html", body: GLOSSARY });
+    });
     await p.goto("http://docsauto.fixture/g", { waitUntil: "load" });
     expect(errors).toEqual([]);
     const input = p.getByLabel("Filter this table");

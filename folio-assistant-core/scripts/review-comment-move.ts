@@ -33,7 +33,7 @@
  *
  * ## The file is the node, as JSON
  *
- * `<feedback dir>/<id>.json`: one `folio-review-comment/v1` node, the same
+ * `<feedback dir>/<id>.json`: one `review-comment/1.0.0` node, the same
  * object `review-comments.json` carries. It is not Markdown, because the
  * todo reader's front-matter parser is flat and a review comment carries a
  * nested `review` field. One format for the kind, wherever it is stored.
@@ -84,12 +84,12 @@ export function feedbackDir(todosRoot: string): string {
   if (!existsSync(decl)) {
     throw new Error(
       `${decl} does not exist, so this folio declares no todos graph to commit a review comment to. ` +
-        `Declare one with a directory of graph kind "todo-feedback".`,
+        `Declare one with a directory of graph typology "todo-feedback".`,
     );
   }
   const node = nodeOfKind(parseTodoGraph(JSON.parse(readFileSync(decl, "utf-8"))), "todo-feedback");
   if (!node) {
-    throw new Error(`${decl} declares no directory of graph kind "todo-feedback", which is where review comments are committed.`);
+    throw new Error(`${decl} declares no directory of graph typology "todo-feedback", which is where review comments are committed.`);
   }
   return join(todosRoot, node.path);
 }
@@ -101,7 +101,7 @@ export function readCommitted(dir: string): Map<string, ReviewComment> {
   for (const f of new Bun.Glob("*.json").scanSync(dir)) {
     const raw = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { $schema?: unknown };
     // Declaration over location: the directory may hold other feedback.
-    if (raw.$schema !== "folio-review-comment/v1") continue;
+    if (raw.$schema !== "review-comment/1.0.0") continue;
     const c = ReviewCommentSchema.parse(raw);
     out.set(c.id, c);
   }

@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-nav-names.ts",
-    "script_hash": "b06474541cb5"
+    "script_hash": "89c655fbcb2e"
   },
   "subject": {
     "kind": "corpus",
@@ -16,9 +16,96 @@
     },
     "two-names-for-one-destination": {
       "summary": "A destination (normalised href) that carries two or more base labels across the generated navigation surfaces: the viewer rail, the Jekyll sidebar include, harness rows, landing viewers, FOLDERS, the glass and Stickies tiles, and sticky card links where another surface links the same page. Owner, 2026-10-01, bean `ob3m` finding 6: 'One name everywhere'. Each destination gets one label from `scripts/lib/nav-label.ts`, and a surface may only APPEND the harness as a qualifier. Measured before: 10 of 42 destinations carried two names.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "href": "/",
+          "names": [
+            {
+              "label": "C@T Harness",
+              "surfaces": [
+                "Jekyll sidebar harnesses",
+                "viewer rail (/attestations/)",
+                "viewer rail (/beans/)",
+                "viewer rail (/cat-harness/catalogue/who-iris/)",
+                "viewer rail (/cat-harness/document-kinds/)",
+                "viewer rail (/cat-harness/document-kinds/smart-base/)",
+                "viewer rail (/cat-harness/folio/)",
+                "viewer rail (/cat-harness/voices/)",
+                "viewer rail (/cat-harness/voices/cat-harness/)",
+                "viewer rail (/cat-harness/voices/folio-assistant-core/)",
+                "viewer rail (/cat-harness/voices/folio-assistant-sci/)",
+                "viewer rail (/cat-harness/voices/smart-base/)",
+                "viewer rail (/cat-harness/voices/who-iris/)",
+                "viewer rail (/health/)",
+                "viewer rail (/issue-marks/)",
+                "viewer rail (/swimlane-glossary/)",
+                "viewer rail (/translation-status/)",
+                "viewer rail (/uploads/)"
+              ]
+            },
+            {
+              "label": "folio-assistant",
+              "surfaces": [
+                "viewer rail (/cat-harness/auto-docs/)",
+                "viewer rail (/cat-harness/auto-docs/glossary/)",
+                "viewer rail (/cat-harness/auto-docs/glossary/swimlane-glossary/)",
+                "viewer rail (/cat-harness/auto-docs/index/)",
+                "viewer rail (/cat-harness/auto-docs/index/dmn/)",
+                "viewer rail (/cat-harness/auto-docs/index/dmn/core-processes/)",
+                "viewer rail (/cat-harness/auto-docs/index/dmn/processes/)",
+                "viewer rail (/cat-harness/auto-docs/index/dmn/sci-processes/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/docs/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/root-docs/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/smart-base-docs/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/smart-base-findings/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/smart-immunizations-docs/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/smart-trust-docs/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/who-iris-docs/)",
+                "viewer rail (/cat-harness/auto-docs/index/docs/who-iris-site/)",
+                "viewer rail (/cat-harness/auto-docs/index/roles/)",
+                "viewer rail (/cat-harness/auto-docs/index/roles/scenarios/)",
+                "viewer rail (/cat-harness/auto-docs/index/schemas/)",
+                "viewer rail (/cat-harness/auto-docs/index/schemas/cat-openapi-schemas/)",
+                "viewer rail (/cat-harness/auto-docs/index/schemas/core-schemas/)",
+                "viewer rail (/cat-harness/auto-docs/index/schemas/fhir-harness-schemas/)",
+                "viewer rail (/cat-harness/auto-docs/index/schemas/schemas/)",
+                "viewer rail (/cat-harness/auto-docs/index/schemas/smart-base-schemas/)",
+                "viewer rail (/cat-harness/auto-docs/index/tasks/fhir-harness-processes/)",
+                "viewer rail (/cat-harness/auto-docs/index/tools/)",
+                "viewer rail (/cat-harness/auto-docs/index/tools/core-tools/)",
+                "viewer rail (/cat-harness/auto-docs/index/tools/fhir-ig-tools/)",
+                "viewer rail (/cat-harness/auto-docs/index/tools/smart-base-tools/)",
+                "viewer rail (/cat-harness/auto-docs/index/tools/tools/)",
+                "viewer rail (/cat-harness/auto-docs/lsi/)",
+                "viewer rail (/cat-harness/auto-docs/lsi/qa/)",
+                "viewer rail (/cat-harness/auto-docs/uml/)",
+                "viewer rail (/cat-harness/auto-docs/uml/uml/)",
+                "viewer rail (/cat-harness/library/)",
+                "viewer rail (/cat-harness/library/cat-harness/)",
+                "viewer rail (/cat-harness/library/fhir-harness/)",
+                "viewer rail (/cat-harness/library/folio-assistant-core/)",
+                "viewer rail (/cat-harness/library/folio-assistant-sci/)",
+                "viewer rail (/cat-harness/library/folio-assistant/)",
+                "viewer rail (/cat-harness/library/smart-base/)",
+                "viewer rail (/cat-harness/library/who-iris/)",
+                "viewer rail (/cat-harness/schemas/)",
+                "viewer rail (/cat-harness/schemas/cat-harness/)",
+                "viewer rail (/cat-harness/schemas/cat-openapi/)",
+                "viewer rail (/cat-harness/schemas/fhir-harness/)",
+                "viewer rail (/cat-harness/schemas/folio-assistant-core/)",
+                "viewer rail (/cat-harness/schemas/smart-base/)",
+                "viewer rail (/cat-harness/uploads/)",
+                "viewer rail (/cat-harness/uploads/cat-harness/)",
+                "viewer rail (/cat-harness/uploads/folio-assistant/)",
+                "viewer rail (/cat-harness/uploads/who-iris/)"
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
-  "total": 0
+  "total": 1
 }

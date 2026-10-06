@@ -17,6 +17,12 @@
     }
   ],
   "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
+  "avatar": {
+    "glyph": "M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3M7 15h10",
+    "tone": 56,
+    "reads": "a laboratory flask — folios that are scientific papers"
+  },
+  "_avatar_comment": "A conical flask with a fill line — the scientific-paper profile. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.",
   "assets": [
     {
       "id": "agent-instructions",
@@ -35,10 +41,58 @@
   ],
   "directories": [
     {
+      "id": "folio-assistant-sci-qa-checkers",
+      "path": "qa-checkers/",
+      "description": "The QA checkers this instance's Lean tooling provides, one folio-qa-checker/v1 node per criterion, naming COST_AUTOMATED_CHECKERS in content/pipeline/qa-checkers-cost.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
+      "graphTypologies": [
+        "qa-checkers"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-pipeline-plugins",
+      "path": "pipeline-plugins/",
+      "description": "The generic pipeline slots this instance fills, one folio-pipeline-plugin/v1 node per slot, naming PIPELINE_IMPLEMENTATIONS in content/pipeline/plugin-slots.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the pipelinePlugins array contributions.ts returned.",
+      "graphTypologies": [
+        "pipeline-plugins"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-translations",
+      "path": "translations/",
+      "description": "The gettext side of folio-assistant-sci's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
+      "graphTypologies": [
+        "translation-sources"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-block-typologies",
+      "path": "block-kinds/",
+      "description": "The paper adapter's math block kinds — the ones whose assertion is a formal mathematical claim (definition, theorem, lemma, proposition, corollary, conjecture, proof), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
+      "graphTypologies": [
+        "block-kinds"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-content-adapters",
+      "path": "content-adapters/",
+      "description": "The paper block VOCABULARY's node, folio-content-adapter/v1 (bean riit, step 5): its name, its companion roles (md, ts, lean) and that cat-harness's code types it. cat-harness/schemas/block-kinds.ts derives CONTENT_ADAPTERS from the typed nodes, and block-qa.ts derives ADAPTER_COMPANION_ROLES. Owner, 2026-10-05, option 1: the vocabulary is a node; the server adapter class stays in contentAdapters.",
+      "graphTypologies": [
+        "content-adapters"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-typologies",
+      "path": "typologies/",
+      "description": "The graph typologies folio-assistant-sci owns, one folio-graph-typology/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph.",
+      "graphTypologies": [
+        "typologies"
+      ]
+    },
+    {
       "id": "library",
       "path": "library/",
       "description": "Ingested L1 source material for the sciences. `milnorlink` was the whole of it until 2026-09-29, when three Lean-autoformalization papers arrived as the `evidence` of this layer's methodology nodes (bean h3rw). `milnorlink` is the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
-      "graphKinds": [
+      "graphTypologies": [
         "library"
       ]
     },
@@ -49,23 +103,41 @@
       },
       "path": "methodologies/",
       "description": "The methodologies this layer adopts from its own library: external, named methods for formalising mathematics in Lean. Separate from `cat-harness/methodologies/` for the reason `core-methodologies` is separate from both -- a method belongs to the layer whose job it describes, so this directory lifts out with this instance and nothing else moves (`methodology-adoption` §4). Each node renders the METHOD and states where the rendering stops; the paper's tools and numbers are not adopted. Bean h3rw.",
-      "graphKinds": [
+      "graphTypologies": [
         "methodology"
+      ]
+    },
+    {
+      "id": "skills",
+      "readOnly": false,
+      "readOnlyBasis": "NOT frozen, for the reason cat-harness gives for its own `skills` entry: most of this graph is authored here and edited, and the packages in it that are MATERIALIZED from a remote at a pinned commit each carry their own `materialization.json` with a sha256 per file, so `check:materialized-fixity` already fails an edit in place, file by file. Freezing the whole directory because some packages in it are materialized would freeze the skills this layer writes.",
+      "path": "skills/",
+      "description": "The skills this layer owns: the paper content adapter's skills (`content/folio-paper-adapter/`, with `authoring-math`, `hypothesis-generation`, `scientific-critical-thinking` and `scientific-visualization` beside it), plus `lean/`, `data/` and the `voices/` subgraph, which `skills/skills.json` declares from within. Declared here explicitly on 2026-10-04 (bean `g2sv`, issue #2106). The directory was already reachable through the `skills` entry of `DEFAULT_DIRECTORIES`, which `ownDirectories` seeds for every instance and marks `declaredBy: (default)`, so `skill_list` already served its packages. A read-only analysis of the qou folio nonetheless reported it as undeclared and reachable only through `known-skills.ts`, because the declaration file was the only place the analysis looked, and that file said nothing. A convention is not visible from the declaration a reader opens, and a reader should not have to know the fallback to learn that this instance's largest graph exists. The id is `skills`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it. The reason is the one the `library` entry above gives: overrides match on id and never on path, so a distinct id at the same path would make two entries for one directory.",
+      "graphTypologies": [
+        "skills"
       ]
     },
     {
       "id": "sci-adapters",
       "path": "adapters/",
       "description": "The PAPER content adapter — `PaperContentAdapter` and its Lean tool registrar. It arrived here 2026-09-30 (bean y5si, step 1 of 2 on the owner's Option A ruling on issue #1558), and the destination was not a judgement made at the time: `cat-harness/src/builtin-adapters.ts` already declared this adapter `layer: \"sci\"`, and `cat-harness/scripts/partition/instance-rules.ts` already listed the prefix `adapters/paper/` in its `repo: \"sci\"` block. Two existing machine-readable classifications that the DIRECTORY had simply never matched; the directory caught up with them. This is the first EXECUTABLE TypeScript this instance holds beyond `contributions.ts`, which is why `tsconfig.json`'s `include` gained `folio-assistant-sci/adapters/**/*.ts` in the same commit as the move — bean `lvoa` measured what happens when it does not: a file crossing an instance boundary leaves the typecheck program and no gate reports a shrinking one. `dependents: skip` because a dependent gets its adapter by DECLARING a `contentType`, resolved through `BUILTIN_ADAPTERS` by variable path, rather than by inheriting this directory to scan. `adapters/document/` is NOT here and is not coming in this change: it is step 2, and moving it alongside is what takes the instance-boundary import axis through 16 instead of leaving it at 2.",
-      "graphKinds": [
+      "graphTypologies": [
         "code"
+      ]
+    },
+    {
+      "id": "sci-tools",
+      "path": "tools/",
+      "description": "The science layer's Tool nodes. Declared 2026-10-04 with the first two, `paper-feature-build` and `tex-install`, the iterative paper-build loop (issue #2117). Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
+      "graphTypologies": [
+        "tools"
       ]
     },
     {
       "id": "sci-sources",
       "path": "sources/",
       "description": "Source descriptors (`folio-source-descriptor/v1`): how to ENUMERATE Lean mathlib and ask it for a SUBSET, so an agent asked for part of it is not told the API by a human every time. Moved here from large-datasets' `sources/` on 2026-10-01 (owner ruling: large-datasets dissolves into cat-harness; bean `j7ql`), because a descriptor is ABOUT one corpus and the instance that holds or catalogues that corpus owns it — the schema stays in cat-harness. Its far-apart sibling, WHO IRIS, is in who-iris: a mathlib declaration needs its import closure (`subsetIsSelfContained: false`), one identifier system, a local module graph.",
-      "graphKinds": [
+      "graphTypologies": [
         "schemas"
       ]
     },
@@ -74,7 +146,7 @@
       "path": "processes/",
       "dependents": "skip",
       "description": "The BPMN and DMN this layer OWNS: the paper's content processes, grouped by concern exactly as the harness groups its own (`processes/<group>/`, a DMN in `processes/<group>/decisions/`). `content/authoring-a-paper.bpmn` with `content/decisions/lean-build-gate.dmn`, and `content/atomic-mass-drift-check.bpmn`. Moved up from cat-harness/processes/ by placement PR3 (bean `63wl`, owner rulings 2026-09-30): both name Lean and paper skills that live here, which cat-harness cannot reach. Their calls and skill refs that stay generic point DOWN through core to the harness. Declared WITH its files in one commit, per bean `dh4f`.",
-      "graphKinds": [
+      "graphTypologies": [
         "processes"
       ]
     },
@@ -86,7 +158,7 @@
         "keyedBy": "commit"
       },
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
-      "graphKinds": [
+      "graphTypologies": [
         "qa"
       ]
     },
@@ -94,7 +166,7 @@
       "id": "attestations",
       "path": "test/attestations/",
       "description": "The judgement half of this instance's QA verdicts, kept on main by owner ruling D2 (a), 2026-10-01 (bean `2gst`): the `pair_attestations` that were carried inside its `kg-qa/v1` sidecars (all `by: baseline` at migration, which the owner ruled are judgements), one `qa-attestations/v1` file per subject at `kg-qa/<mirrored subject path>.attestations.json`. Schema: cat-harness `schemas/qa-attestations.ts`. dependents: reproduce, for the reason the `qa` entry gives. Declared WITH its files, per bean dh4f.",
-      "graphKinds": [
+      "graphTypologies": [
         "attestations"
       ]
     }

@@ -164,7 +164,7 @@ development as agent commands (`/speckit-specify`, `/speckit-plan`,
 `/speckit-implement`, …), plus bug-fix and idea-assessment workflows.
 
 **Overlap:** phased requirements before implementation, as in
-[CRDM](../crdm-methodology.html). **Difference:** CRDM runs as
+[CRDM](../process/crdm-methodology.html). **Difference:** CRDM runs as
 `processes/process/crdm-requirements.bpmn`, with its state committed under
 `beans/workflows/`.
 

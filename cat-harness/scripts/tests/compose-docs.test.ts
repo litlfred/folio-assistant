@@ -33,6 +33,7 @@ import {
   compose,
   docsLayers,
   instanceStub,
+  isChrome,
   isWithheld,
   mergeConfig,
   treeDigest,
@@ -55,11 +56,11 @@ const INSTANCE = "cat-harness";
  * `site-dir-single-answer.test.ts` guards against. The fixture derives them.
  */
 const ENTRIES = [
-  { id: "docs", path: "docs/", graphKinds: ["docs"] },
-  { id: "root-docs", path: "docs/", scope: "repository", graphKinds: ["docs"] },
+  { id: "docs", path: "docs/", graphTypologies: ["docs"] },
+  { id: "root-docs", path: "docs/", scope: "repository", graphTypologies: ["docs"] },
   // A non-docs entry, so the filter is doing something rather than happening
   // to match everything.
-  { id: "schemas", path: "schemas/", graphKinds: ["schemas"] },
+  { id: "schemas", path: "schemas/", graphTypologies: ["schemas"] },
 ] as const;
 
 const layerDir = (root: string, id: string): string => {
@@ -193,9 +194,14 @@ describe("an EMPTY overlay composes byte-identically — the safety property", (
     // replaces read `expect(after.size).toBe(before.size + (after.size -
     // before.size))`, which is an identity and guarded nothing — the same
     // defect as a test that restates the expression it checks.
-    expect(report.composed.length).toBeGreaterThan(0);
+    //
+    // SINCE BEAN `mftp` NO INSTANCE ON THE REAL TREE COMPOSES: every smart-*
+    // IG builds into its own IG site (`igSite`). So the addition is asserted
+    // to follow the composition exactly, either way, rather than to be
+    // non-empty: added files exist iff an instance composed. The composer's
+    // own behaviour on an instance stays pinned by the fixtures below.
     const added = [...after.keys()].filter((p) => !before.has(p));
-    expect(added.length).toBeGreaterThan(0);
+    expect(added.length > 0).toBe(report.composed.length > 0);
     rmSync(join(dest, ".."), { recursive: true, force: true });
   });
 
@@ -457,7 +463,8 @@ describe("the cut, on the REAL tree", () => {
     // pages must be distinguishable from an instance that failed to read.
     const dest = join(mkdtempSync(join(tmpdir(), "composecarry-")), "site");
     const r = compose(dest, REPO, { changedFiles: ["cat-harness/docs/index.md"] });
-    expect(r.composed.length).toBeGreaterThan(0);
+    // No instance composes on the real tree since bean `mftp` (each smart-* IG
+    // builds its own site); the decisions must still match the compositions.
     expect(r.carried.map((d) => d.instance.under).sort()).toEqual(
       r.composed.map((c) => c.under).sort(),
     );
@@ -476,10 +483,26 @@ describe("the cut, on the REAL tree", () => {
 
     const nAll = Object.keys(all.suppliedBy).length;
     const nCut = Object.keys(cut.suppliedBy).length;
-    // The cut fired at all, and on something worth cutting. Without the second
-    // claim this passes for a composer that dropped a single page.
+    // The cut fires on every composed instance a branch does not touch. Since
+    // bean `mftp` the real tree composes none — the smart-* IGs build their
+    // own sites, whose cut is `stage-ig-sites`' staging cone — so with none,
+    // there is nothing to cut and the two trees must be the same size.
+    if (all.composed.length === 0) {
+      expect(nCut).toBe(nAll);
+      rmSync(join(a, ".."), { recursive: true, force: true });
+      rmSync(join(b, ".."), { recursive: true, force: true });
+      return;
+    }
     expect(cut.carried.some((d) => !d.carry)).toBe(true);
-    expect(nCut).toBeLessThan(nAll * 0.75);
+    // EVERY page of every stubbed instance is gone, each replaced by its one
+    // stub. This was a ratio (`nCut < 0.75 * nAll`) while smart-trust and
+    // smart-base were composed; since bean `mftp` they build into their own
+    // IG sites (`igSite`), whose cut is the staging cone in `stage-ig-sites`,
+    // so a ratio tuned to that corpus measured instances no longer here.
+    const stubbed = cut.carried.filter((d) => !d.carry).map((d) => `${d.instance.under}/`);
+    const theirs = Object.keys(all.suppliedBy).filter((k) => stubbed.some((u) => k.startsWith(u))).length;
+    expect(theirs).toBeGreaterThan(stubbed.length);
+    expect(nCut).toBeLessThanOrEqual(nAll - theirs + stubbed.length);
 
     // ...and what remains in place of each stubbed instance is its stub, not a
     // hole. A 404 where a tile links is the `pb04` defect this replaces.
@@ -499,5 +522,52 @@ describe("the cut, on the REAL tree", () => {
     const r = compose(dest, REPO);
     expect(r.carried.every((d) => d.carry)).toBe(true);
     rmSync(join(dest, ".."), { recursive: true, force: true });
+  });
+});
+
+describe("carriedInstances with the staging cone (bean 4j86)", () => {
+  const smartTrust = {
+    instance: "smart-trust",
+    dir: "/repo/smart-trust/docs",
+    under: "smart-trust",
+    root: "smart-trust",
+  };
+  const reached = [{ node: "smart-trust/smart-trust-docs", path: "smart-trust/docs/", carry: true, why: "x" }];
+  test("the cone carries what the prefix match drops: a generator change", () => {
+    const d = carriedInstances([smartTrust], ["fhir-harness/scripts/gen-ig-pages.ts"], reached, "/repo");
+    expect(d[0]!.carry).toBe(true);
+    expect(d[0]!.why).toContain("staging cone");
+  });
+  test("a cone that does not reach it leaves the stub", () => {
+    const d = carriedInstances([smartTrust], ["cat-harness/skills/x.md"], [{ ...reached[0]!, carry: false }], "/repo");
+    expect(d[0]!.carry).toBe(false);
+  });
+  test("the prefix match stays a floor: the cone can only add", () => {
+    const d = carriedInstances([smartTrust], ["smart-trust/scripts/gen.ts"], [{ ...reached[0]!, carry: false }], "/repo");
+    expect(d[0]!.carry).toBe(true);
+  });
+});
+
+// #2235 F1: an IG repository's own site is built inside the main site's CHROME.
+describe("--shell: the chrome only", () => {
+  test("isChrome is the Jekyll machinery and assets, nothing else", () => {
+    for (const p of ["_config.yml", "_includes/head_custom.html", "_data/harness.json", "assets/js/docs-ui.js"]) expect(isChrome(p)).toBe(true);
+    for (const p of ["index.md", "glossary/index.md", "smart-trust/index.md"]) expect(isChrome(p)).toBe(false);
+  });
+  test("the real tree composes no page, no instance, and EMPTY generated includes", () => {
+    const out = mkdtempSync(join(tmpdir(), "shell-"));
+    try {
+      const r = compose(out, REPO, { shell: true });
+      const paths = Object.keys(r.suppliedBy);
+      expect(paths.length).toBeGreaterThan(0);
+      expect(paths.filter((p) => !isChrome(p))).toEqual([]);
+      expect(r.carried).toEqual([]);
+      expect(existsSync(join(out, "_config.yml"))).toBe(true);
+      const gen = paths.filter((p) => /^_includes[\\/]generated[\\/]/.test(p));
+      expect(gen.length).toBeGreaterThan(0);
+      for (const g of gen) expect(readFileSync(join(out, g), "utf-8")).toBe("");
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
   });
 });

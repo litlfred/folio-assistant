@@ -16,7 +16,7 @@ import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { DOCS_SITE_BASE, SITE_DOCUMENT_CONTEXT, ContentContextSchema, siteIri, siteNodeIri } from "../../schemas/jsonld.ts";
 import { TodoIndexSchema, type TodoIndexItem } from "../../schemas/todo-index.ts";
 import { thinPageConfigOf, thinPageHtml } from "../thin-page.ts";
-import { termIri } from "../../schemas/namespaces.ts";
+import { propertyIri, termIri } from "../../schemas/namespaces.ts";
 import { declaredSubgraphNode } from "../kg-export.ts";
 import { subgraphPublicationFindings } from "../subgraph-node.ts";
 import {
@@ -107,11 +107,13 @@ describe("the JSON-LD", () => {
     expect(subgraphPublicationFindings(g, { iri: SUBGRAPH.iri })).toEqual([]);
   });
 
-  test("a member's subgraph edge expands to dcterms:isPartOf, beside its bean", async () => {
+  test("a member's subgraph edge is its own term, distinct from its bean's dcterms:isPartOf", async () => {
+    // Bean `3f5f`: subgraph membership is a VIEW, `bean` is containment — one
+    // predicate for both made them indistinguishable once expanded.
     const [node] = (await jsonld.expand(todoDocument(ITEM, SUBGRAPH) as jsonld.JsonLdDocument)) as Array<Record<string, unknown>>;
-    const partOf = (node!["http://purl.org/dc/terms/isPartOf"] as Array<Record<string, unknown>>).map((b) => b["@id"]);
-    expect(partOf).toContain(SUBGRAPH.iri);
-    expect(partOf).toContain("https://example.org/bean");
+    const ids = (k: string) => ((node![k] ?? []) as Array<Record<string, unknown>>).map((b) => b["@id"]);
+    expect(ids(propertyIri("inSubgraph"))).toEqual([SUBGRAPH.iri]);
+    expect(ids("http://purl.org/dc/terms/isPartOf")).toEqual(["https://example.org/bean"]);
   });
 
   test("the container's own node expands to the bootstrap Subgraph class", async () => {
@@ -133,7 +135,7 @@ describe("the thin page", () => {
     const html = todoPageHtml(ITEM, { targetHref: "../../p.html#n" });
     expect(html).toContain(`<link rel="canonical" href="./">`);
     expect(html).toContain(`<link rel="alternate" type="application/ld+json" href="../a-todo.jsonld">`);
-    expect(html).toContain(`<meta name="folio-navbar" content="none">`);
+    expect(html).toContain(`<meta name="folio-navbar" content="linked">`);
     expect(html).not.toContain(ITEM.summary);
     expect(isTodoPage(html)).toBe(true);
     expect(thinPageConfigOf(html, TODO_PAGE_CONFIG_ID)).toMatchObject({ id: "a-todo", targetHref: "../../p.html#n" });

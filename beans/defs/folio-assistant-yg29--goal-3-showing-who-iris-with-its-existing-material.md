@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yg29
 title: 'GOAL 3: showing who-iris with its existing materialised assets, through a themed harness'
-status: in-progress
+status: completed
 type: milestone
 priority: high
 created_at: 2026-09-20T18:48:29Z
-updated_at: 2026-09-22T19:30:00Z
+updated_at: 2026-10-05T04:57:30Z
 ---
 
 The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:
@@ -225,5 +225,19 @@ Closing a GOAL milestone is left to the owner. The goal review of 2026-09-30 put
 
 Answering the goal review, the owner chose to keep GOAL 3 open with a harness-theming bean over closing it. So *"themed harness"* covers the harness's own surfaces, not only the pages. That work is **`v8n5`**: the who-iris board tile, navbar and stickies render on the IRIS theme, resolved from `who-iris/themes/` and never copied into the platform.
 
-- [ ] `v8n5` — the harness surfaces render on the IRIS theme
+- [x] `v8n5` — the harness surfaces render on the IRIS theme
 
+
+## 2026-10-04 — every Done-when box ticked; closing is the owner's
+
+The last box (`v8n5`) closed on evidence in session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi: #1611 and #1681 merged, its four boxes ticked, and the deployed landing page on `gh-pages` carries the `iris-sticky` card and the accent-band rule. **This milestone stays `in-progress`**: two children are still open — `kupb` (IRIS catalogue) and the who-style-guide fold into who-iris — and whether GOAL 3 is met with them open is the owner's sign-off, not a checker's.
+
+
+## 2026-10-04 (later) — sign-off asked, and WITHDRAWN: GOAL 3 is not met
+
+`qsx4` and `kupb` close on evidence in this change, so the who-iris catalogue work under this milestone is done. The owner was asked to sign GOAL 3 off and chose "Sign off — close it", then withdrew it in the same session (https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi): *"actually no, who-iris is missing top icon on LHS navbar. investigate why and if also try of other harnesses. all needs to be sconsisisten and consolidated"*. That defect is the new child `folio-assistant-2vpn`, and this milestone stays `in-progress` over it.
+
+
+## Owner sign-off, 2026-10-05 — GOAL 3 is met, closed
+
+The withdrawn sign-off of 2026-10-04 was withdrawn for one defect: who-iris's top navbar mark was the letter "W". That is `2vpn`, now closed. The owner confirmed the WHO emblem is live on the published page, and with no open work left under this milestone they chose **"Sign off GOAL 3"** (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi). Issue #476 stays the owner's to close.

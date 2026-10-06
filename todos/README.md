@@ -11,6 +11,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `todos`, holding `tod
 | file | what it is | used by |
 |---|---|---|
 | [`todos.json`](todos.json) | data |  |
-| [`boards/`](boards/) | One file per board, carrying `$schema: folio-board/v1`. A board is a DIAGRAM OF this folio, not a container of one — it declares what it shows (absent filter means the whole folio) and nothing else. Owner, 2026-09-20: "treat it like OMG specs and BPMN layout. relationship first, visualiztion alter." So this is the semantic half; `positions` beside it is the Diagram Interchange. A folio with no boards is complete, and deleting every board loses layout and no content. | |
-| [`items/`](items/) | One Markdown file per todo, carrying `$schema: folio-todo/v1` in its front matter. Tagged against the knowledge graph — roles, processes, tasks, identities, references and artefacts — so "what is outstanding here" is answerable from any node. | |
+| [`boards/`](boards/README.md) | One file per board, carrying `$schema: folio-board/v1`. A board is a DIAGRAM OF this folio, not a container of one — it declares what it shows (absent filter means the whole folio) and nothing else. Owner, 2026-09-20: "treat it like OMG specs and BPMN layout. relationship first, visualiztion alter." So this is the semantic half; `positions` beside it is the Diagram Interchange. A folio with no boards is complete, and deleting every board loses layout and no content. | |
+| [`feedback/`](feedback/README.md) | Todos raised against a specific block, carrying the submitter's identity. The content-review feedback workflow the `todo-review` skill reads. | |
+| [`items/`](items/README.md) | One Markdown file per todo, carrying `$schema: todo/1.0.0` in its front matter. Tagged against the knowledge graph — roles, processes, tasks, identities, references and artefacts — so "what is outstanding here" is answerable from any node. | |
 <!-- kg:subgraph:end -->

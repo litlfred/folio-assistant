@@ -4,15 +4,16 @@
  * Moved out of core's `cat-harness/schemas/jsonld.ts` with the kinds themselves
  * (bean `1335`). Core's `typesForKind` still answers for every kind, a
  * DAK one included, but it learns a DAK kind's types from the CONTRIBUTION —
- * `smart-base/contributions.ts` hands `folioType` and `docoType` over with each
- * kind — so core no longer names a DAK kind to do it.
+ * each kind's `folio-block-kind/v1` node in `smart-base/block-kinds/` carries
+ * its `folioType` and `docoType`, registered by `loadContributions` (bean
+ * riit) — so core no longer names a DAK kind to do it.
  *
  * @module smart-base/schemas/dak-jsonld
  * @graphNode schema
  */
 
-import { SMART_BASE_NS } from "../../cat-harness/schemas/jsonld";
-import { DAK_BLOCK_KINDS, type DakBlockKind } from "./dak-kinds";
+import { SMART_BASE_NS } from "../platform.js";
+import { DAK_BLOCK_KIND_NODES, DAK_BLOCK_KINDS, type DakBlockKind } from "./dak-kinds";
 
 /**
  * `folio-assistant-core:` type for each DAK kind.
@@ -24,29 +25,9 @@ import { DAK_BLOCK_KINDS, type DakBlockKind } from "./dak-kinds";
  * which it is not — and would invite a consumer to read FHIR fields off it.
  * The link to the resource is the companion, not the type.
  */
-export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
-  "health-intervention": "folio-assistant-core:HealthIntervention",
-  persona: "folio-assistant-core:Persona",
-  "user-scenario": "folio-assistant-core:UserScenario",
-  "business-process": "folio-assistant-core:BusinessProcess",
-  "data-element": "folio-assistant-core:DataElement",
-  "decision-table": "folio-assistant-core:DecisionTable",
-  "scheduling-logic": "folio-assistant-core:SchedulingLogic",
-  indicator: "folio-assistant-core:Indicator",
-  "functional-requirement": "folio-assistant-core:FunctionalRequirement",
-  "non-functional-requirement": "folio-assistant-core:NonFunctionalRequirement",
-  "test-scenario": "folio-assistant-core:TestScenario",
-  "logical-model": "folio-assistant-core:LogicalModel",
-  profile: "folio-assistant-core:Profile",
-  "value-set": "folio-assistant-core:ValueSet",
-  questionnaire: "folio-assistant-core:Questionnaire",
-  "cql-library": "folio-assistant-core:CqlLibrary",
-  "structure-map": "folio-assistant-core:StructureMap",
-  "plan-definition": "folio-assistant-core:PlanDefinition",
-  measure: "folio-assistant-core:Measure",
-  "test-case": "folio-assistant-core:TestCase",
-  "actor-definition": "folio-assistant-core:ActorDefinition",
-};
+export const DAK_KIND_TO_FOLIO_TYPE = Object.fromEntries(
+  DAK_BLOCK_KIND_NODES.map((n) => [n.kind, n.folioType]),
+) as Record<DakBlockKind, string>;
 
 /**
  * The WHO logical model each DAK kind corresponds to, as a canonical IRI.
@@ -92,11 +73,9 @@ export const DAK_KIND_TO_WHO_MODEL: Partial<Record<DakBlockKind, string>> = {
  * parts of a document's layout, and co-typing them `doco:Section` would be a
  * stretch that puts wrong triples in a published graph.
  */
-export const DAK_KIND_TO_DOCO_TYPE: Partial<Record<DakBlockKind, string>> = {
-  "decision-table": "doco:Table",
-  "business-process": "doco:Figure",
-  "logical-model": "doco:Figure",
-};
+export const DAK_KIND_TO_DOCO_TYPE: Partial<Record<DakBlockKind, string>> = Object.fromEntries(
+  DAK_BLOCK_KIND_NODES.flatMap((n) => (n.docoType ? [[n.kind, n.docoType]] : [])),
+);
 
 /** DAK kinds with no DoCO counterpart — most of them, by design. */
 export const DAK_KINDS_WITHOUT_DOCO_TYPE = DAK_BLOCK_KINDS.filter(

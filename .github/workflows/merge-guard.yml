@@ -1,0 +1,209 @@
+# Merge guard — the `merge-guard` commit status on every open PR's head.
+#
+# Bean `uoob`, owner ruling 2026-10-03 (option 1). Three PRs were landed
+# unfinished by a steward calling the merge PUT directly (#1937, #1960, #1957;
+# the table is in `cat-harness/scripts/merge-guard.ts`). That script is now
+# the only way a steward lands a PR (`bun run merge:guard <pr> --merge`); this
+# workflow runs its EVALUATE mode on every event that can change a verdict and
+# posts the result as the `merge-guard` commit status on the head, so the
+# owner can make it a REQUIRED check and a merge that bypasses the script is
+# refused by GitHub as well.
+#
+# THIS WORKFLOW CHANGES NO SETTING. A required check is a ruleset the owner
+# adds by hand; the exact ruleset is in the PR that introduced this file.
+#
+# WHY A COMMIT STATUS AND NOT THE JOB'S OWN CHECK. The job runs on four
+# events, and only `pull_request` attaches its check run to the PR's head:
+# `issue_comment` and `workflow_run` runs attach to `main`. A status posted
+# to the head sha is the one signal all four can update. A ruleset can pin
+# the `merge-guard` context to the GitHub Actions app, so a status posted
+# with a person's token does not satisfy it.
+#
+# WHY FOUR EVENTS. A verdict reads labels, the draft flag, the body
+# (`pull_request`); the `ready:` marker and later questions (`issue_comment`);
+# and the head's CI, which FINISHES after the push that started it
+# (`workflow_run`). Without the last, a status computed while CI was still
+# running would stay red until somebody touched a label. Feature Staging is
+# NOT listed: it has no `push` trigger, and `workflow-triggers.test.ts`
+# refuses a `workflow_run` on such a workflow (#1725). Check 5 judges its
+# run once it FINISHES but never waits for it (owner ruling 2026-10-05, bean
+# `gnnj`: its deploy waits out the #1956 rate limit, measured at up to 41
+# min), and a run red ONLY in its deploy step is not a refusal either
+# (`DEPLOY_ONLY_STEP`); a finished-red run found later is caught by the next label, comment
+# or gating-workflow completion, or by a dispatch.
+#
+# CHECK 8 (`mergeable`, bean `vihx`) READS A FACT THAT CHANGES WHEN MAIN
+# MOVES, and none of the four events fires then. So a posted `success` can go
+# stale on exactly that check until the next event on the PR. The status is a
+# backstop: `merge:guard --merge` re-evaluates live, and GitHub's own merge
+# PUT refuses a conflicting head with a 405 regardless.
+#
+# THE SCRIPT COMES FROM MAIN, NOT FROM THE PR, as in `merge-main.yml`: a PR
+# that edits `merge-guard.ts` must not judge itself with its own copy. The
+# one exception is the bootstrap — until this lands, main has no guard — and
+# that run says so. It does not stop a PR from editing THIS file, which a
+# `pull_request` run takes from the PR's tree; the guard is against a careless
+# steward, not a hostile author, and the script's header says so.
+name: Merge guard
+
+on:
+  pull_request:
+    types: [labeled, unlabeled, ready_for_review, synchronize, edited]
+  issue_comment:
+    types: [created, edited]
+  workflow_run:
+    workflows: ["Code-quality gates", "JSON-LD generated-file drift"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "PR number to evaluate"
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+  actions: read
+  statuses: write
+
+# THROTTLE. Measured 2026-10-04: ~25 runs in the 6 min after #2000 merged
+# and 54 in ~20 min. Of the first 97 runs, 37 were `workflow_run` (9 of them
+# evaluated no PR at all — a completion on `main`, where a merge-guard status
+# means nothing), 26 `issue_comment` and 34 `pull_request`; of 90 PR comments
+# sampled over the same day, 52 contained nothing any check reads. Every cut
+# below is a JOB-level `if:`, so a skipped run is never given a runner, and
+# every cut drops only an event that CANNOT change a verdict: the status means
+# exactly what it meant before.
+#
+# The concurrency group is on the JOB, not the workflow, on purpose: a
+# workflow-level group is entered by runs whose job is then skipped, so an
+# irrelevant comment would cancel a real evaluation in flight and leave a
+# stale status. A skipped job never enters a job-level group.
+jobs:
+  merge-guard:
+    name: merge-guard (evaluate)
+    # One filter per event; `workflow_dispatch` always runs.
+    #
+    # issue_comment — only on a PR, and only when the comment (or, for an
+    # edit, its previous text) contains something a check READS from a
+    # comment: `ready:` (check 3's marker, and the window of check 7), `?`
+    # (check 7's questions), a `claude.ai/code/session_` footer (check 2
+    # attributes a ready flip to the nearest signed comment; check 3 needs the
+    # marker signed), or merge-main's `merge-main-bot` marker (checks 3 and 5
+    # read the shas it names). `contains()` is case-insensitive, as `READY_RE`
+    # is. Those are every comment-reading function in `merge-guard.ts`
+    # (`readyMarkers`, `openQuestions`, `signingSession`, `botPushedShas`); a
+    # check that reads comments for anything else must add its text here.
+    #
+    # workflow_run — not for a completion on this repository's default branch,
+    # and not for one GitHub associates with no PR: `pull_requests` is exactly
+    # what the first step reads, so an empty list already evaluated nothing —
+    # it just did so on a paid runner. CI completing on a PR head still runs.
+    #
+    # pull_request — every type still runs, except an `edited` that changed
+    # neither the body (checks 2, 3 and 6 read it) nor the base (check 1): a
+    # title-only edit cannot change a verdict.
+    if: >-
+      (github.event_name == 'issue_comment'
+        && github.event.issue.pull_request
+        && (contains(github.event.comment.body, 'ready:')
+          || contains(github.event.comment.body, '?')
+          || contains(github.event.comment.body, 'claude.ai/code/session_')
+          || contains(github.event.comment.body, 'merge-main-bot')
+          || contains(github.event.changes.body.from, 'ready:')
+          || contains(github.event.changes.body.from, '?')
+          || contains(github.event.changes.body.from, 'claude.ai/code/session_')
+          || contains(github.event.changes.body.from, 'merge-main-bot')))
+      || (github.event_name == 'workflow_run'
+        && !(github.event.workflow_run.head_branch == github.event.repository.default_branch
+          && github.event.workflow_run.head_repository.full_name == github.repository)
+        && toJSON(github.event.workflow_run.pull_requests) != '[]')
+      || (github.event_name == 'pull_request'
+        && (github.event.action != 'edited' || github.event.changes.body || github.event.changes.base))
+      || github.event_name == 'workflow_dispatch'
+    # One group per PR, so a burst (a push, a label, a comment) collapses to
+    # the latest evaluation, which reads the newest facts. A `workflow_run` is
+    # keyed by its head BRANCH instead: its `pull_requests` may name more than
+    # one PR, and cancelling it from one PR's group would leave the other's
+    # status stale. It still collapses the two gating workflows' completions
+    # on one head into one evaluation. Before this, a `workflow_run` fell
+    # through to `github.run_id` and never collapsed at all.
+    concurrency:
+      group: merge-guard-${{ github.event.pull_request.number || github.event.issue.number || inputs.pr || format('branch-{0}', github.event.workflow_run.head_branch) }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Which PRs this event is about
+        id: prs
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          WR_PRS: ${{ toJSON(github.event.workflow_run.pull_requests) }}
+          INPUT_PR: ${{ inputs.pr }}
+        run: |
+          set -euo pipefail
+          case "$EVENT" in
+            pull_request) list="$PR_NUMBER" ;;
+            issue_comment) list="$ISSUE_NUMBER" ;;
+            workflow_run) list="$(jq -r '.[]?.number' <<<"$WR_PRS" | tr '\n' ' ')" ;;
+            workflow_dispatch) list="$INPUT_PR" ;;
+            *) list="" ;;
+          esac
+          echo "list=$list" >> "$GITHUB_OUTPUT"
+          echo "PRs to evaluate: ${list:-none}"
+
+      - uses: actions/checkout@v7
+        if: steps.prs.outputs.list != ''
+        with:
+          ref: main
+          submodules: true
+
+      - name: Bootstrap — main has no guard yet, so use the PR's copy
+        if: steps.prs.outputs.list != '' && github.event_name == 'pull_request' && hashFiles('cat-harness/scripts/merge-guard.ts') == ''
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          echo "::notice::main carries no merge-guard.ts yet; evaluating with the PR's copy (bootstrap only)"
+          git fetch -q --depth=1 origin "$HEAD_SHA"
+          git checkout -q FETCH_HEAD
+          git submodule update --init
+
+      - uses: oven-sh/setup-bun@v2
+        if: steps.prs.outputs.list != ''
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        if: steps.prs.outputs.list != ''
+        run: bun install --frozen-lockfile
+
+      # Exit 1 (refused) is a VERDICT, carried by the status, not a failure of
+      # this job. Exit 2 is could-not-determine: the script posts `error`
+      # where it can, and the job warns. If even the status could not be
+      # posted, the required context is simply absent, which blocks a merge:
+      # the safe direction.
+      - name: Evaluate and post the merge-guard status
+        if: steps.prs.outputs.list != ''
+        env:
+          LIST: ${{ steps.prs.outputs.list }}
+        # `|| code=$?`, NOT a bare call followed by `code=$?`: Actions runs
+        # this with `bash -e`, so a refusal (exit 1) ended the step before
+        # `code` was read, and the job went red on every PR not yet ready —
+        # measured on #2000's run 37134160848.
+        run: |
+          set -uo pipefail
+          for pr in $LIST; do
+            code=0
+            bun run cat-harness/scripts/merge-guard.ts "$pr" --status --repo "$GITHUB_REPOSITORY" || code=$?
+            case "$code" in
+              0) echo "#$pr: pass" ;;
+              1) echo "#$pr: refused (status: pending or failure, by kind)" ;;
+              *) echo "::warning::#$pr: merge-guard could not determine (exit $code)" ;;
+            esac
+          done

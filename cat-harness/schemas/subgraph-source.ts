@@ -19,7 +19,7 @@
  * | kind | content comes from | the entry's `path` is |
  * |---|---|---|
  * | `directory` (the default) | the checkout, at `path` | the content itself |
- * | `branch` | a declared repository branch (`special-branches.json`), keyed by `commit` or `tip` | where a mount of it lands |
+ * | `branch` | a declared repository branch, keyed by `commit` or `tip` | where a mount of it lands |
  *
  * A third kind (a graph database) is a new MEMBER of the union — an additive
  * change every `switch` on `kind` is then forced by the compiler to answer —
@@ -35,9 +35,11 @@
  * answers to one question is the defect this module exists to remove.
  * `qa-store.ts` and `branch-store.ts` still read `storage` directly; moving
  * them onto the resolver is their owners' change (#1957 takes `branch-store`'s
- * `mount`/`push` onto it), not this module's. `special-branches.json` stays the
- * one declaration of branch NAMES (and their legacy spellings): a branch
- * source names its branch, and the resolver attaches the matching row.
+ * `mount`/`push` onto it), not this module's. The DECLARATION is the only
+ * source of a branch's name (bean rva2, owner 2026-10-04: special-branches.json
+ * leaves infrastructure). The resolver attaches no table row any more, and a
+ * branch no directory declares is a health finding (`state:drift`), not a
+ * resolver failure.
  *
  * ## Overridable by the instance config, matched on id
  *
@@ -56,9 +58,6 @@
  * precedence (config, then `source`, then legacy `storage`, then the
  * `directory` default) is stated once.
  */
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
 import { propertyIri, termIri } from "./namespaces";
@@ -98,8 +97,92 @@ export const BranchNameSchema = z
  * `DirectoryStorageSchema`'s docblock — one place, because the meaning is one
  * fact even though the enum is now read in two.
  */
-export const KeyedBySchema = z.enum(["commit", "tip", "route"]);
+/**
+ * The ONE keying enum. `DirectoryStorageSchema.keyedBy` in `cat-harness.ts`
+ * imports this rather than restating it, and bean `1j3q` is why: that field
+ * held its own copy, `route` was added there and not here, and a route-keyed
+ * declaration then parsed and threw a ZodError inside
+ * {@link resolveSubgraphSource}. A schema change somebody has to make is only
+ * a guard if there is one schema to change.
+ *
+ * `route-family` (bean `xp5j`) is added HERE for that reason. The branch that
+ * introduced it first added a fourth value to the copy in `cat-harness.ts` and
+ * reproduced `1j3q` one keying later — accepted by the declaration, rejected by
+ * every consumer that parses through this.
+ *
+ * `family` (bean `lehh`) is here for the same reason: a family of BRANCHES,
+ * one per key, under a `branchPrefix` (fhir-ast, lake-cache). It first lived
+ * as a separate `z.literal("family")` arm of the storage schema — a second
+ * definition of a keying, the drift this enum exists to prevent — and merging
+ * main's identity test (`route-member.test.ts`) said so.
+ */
+export const KeyedBySchema = z.enum(["commit", "tip", "route", "route-family", "family"]);
 export type KeyedBy = z.infer<typeof KeyedBySchema>;
+
+/** A branch-name PREFIX for a family of branches: a plain branch name ending in `/`. */
+export const BranchPrefixSchema = z
+  .string()
+  .regex(/^(?!-)(?!refs\/)[A-Za-z0-9._/-]+\/$/, "a plain branch prefix ending in /, e.g. cat/fhir-harness/fhir-ast/")
+  .refine((b) => !b.includes("..") && !b.includes("//") && !b.startsWith("/"), "not a valid branch prefix");
+
+/**
+ * ## `route-family`, and why its reasoning is HERE
+ *
+ * One entry per MEMBER of a family under a directory's path, the member
+ * supplied at publish time rather than declared — the `STAGING/<slug>/`
+ * previews on `gh-pages`, one per open branch. Bean `xp5j`.
+ *
+ * A fourth keying rather than a flag on `route`, because `route` must not carry
+ * two write contracts for the same reason it is not a synonym for `tip`. Three
+ * things differ, each a decision rather than a detail:
+ *
+ * 1. **The member key is UNTRUSTED** — it derives from a branch name, and
+ *    `.github/workflows/feature-staging.yml` states a branch name is
+ *    attacker-controlled on a fork PR. {@link RouteMemberSchema} is the
+ *    validation.
+ * 2. **Source and destination differ.** A declared `route` is published FROM
+ *    the declared path; a family member is built into a local directory and
+ *    published to a route named at publish time, so the two cannot be one field.
+ * 3. **A member can be REMOVED.** `route`'s contract has no case for it — "a
+ *    generator that stops emitting a page must stop publishing it" — but a
+ *    member's branch can be deleted, and `feature-staging.yml` already deletes
+ *    `STAGING/<slug>` on PR close.
+ *
+ * Like `route`, a `route-family` write carries NO `expect`: a member is a
+ * rendering authored by nobody, so the newer generation wins.
+ *
+ * This text sits beside the enum rather than on
+ * `DirectoryStorageSchema.keyedBy` in `cat-harness.ts`, and that is `1j3q`'s
+ * rule applied to prose: the keying has ONE definition, so it gets one
+ * description. It also keeps this branch out of a file `main` edits constantly
+ * — the earlier arrangement put 67 lines there and `merge-main-bot` refused
+ * every sweep on it.
+ */
+
+/**
+ * A `route-family` MEMBER key — one path segment, from untrusted input.
+ *
+ * The member becomes a path on the published branch, so a traversal here writes
+ * OUTSIDE the family's prefix — over the site at `/` in the worst case. This
+ * REFUSES rather than sanitises: a key that had to be cleaned up is a key whose
+ * author meant something else, and a sanitiser's output is a value nobody
+ * declared.
+ *
+ * ONE SEGMENT is the load-bearing rule. Refusing `/` outright disposes of
+ * `..`, `//`, absolute paths and deep traversal in a single rule rather than as
+ * four patterns somebody has to keep complete. No dot-prefixed segment (the
+ * `kg-core/directory-conventions` guard, written to stay correct if a member
+ * ever stops being one segment); no leading dash, so a member cannot be read as
+ * a flag.
+ */
+export const RouteMemberSchema = z
+  .string()
+  .min(1)
+  .max(100)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*$/, "one path segment: alphanumerics, dot, dash, underscore, not starting with a dot or dash")
+  .refine((m) => !m.split("/").some((seg) => seg.startsWith(".")), "no dot-prefixed segment")
+  .refine((m) => m !== "." && m !== ".." && !m.includes(".."), "not a traversal");
+export type RouteMember = z.infer<typeof RouteMemberSchema>;
 
 /** The content is the checkout's own directory at the entry's `path`. */
 export const DirectorySourceSchema = z.object({ kind: z.literal("directory") }).strict();
@@ -114,34 +197,60 @@ export const BranchSourceSchema = z
   .strict();
 
 /**
+ * The content is a FAMILY of branches, one per key: `<branchPrefix><key>`,
+ * where `keyFrom` says in words what the key is (an IG's package id; a Lean
+ * package and toolchain). Bean `lehh`, owner 2026-10-04 (option 1 of 3): a
+ * branch-only graph is declared on its directory, with a mount path, as
+ * fsh-guts is. `repository` says WHERE the family is (owner, 2026-10-04: an
+ * IG's AST *"could also materialize a remote AST into local branch"*, and
+ * *"similar for lean cache"*): absent, it is on this repository, a local copy
+ * materialised here; present, it is read from that remote `owner/repo`.
+ * Its own KIND rather than a fourth `keyedBy` on `branch`,
+ * because a family has no single branch to read: a consumer that took the
+ * `branch` arm would read a branch that does not exist as an empty graph. A new
+ * union member is a compile error at every such consumer instead.
+ */
+export const FamilySourceSchema = z
+  .object({
+    kind: z.literal("family"),
+    branchPrefix: BranchPrefixSchema,
+    keyFrom: z.string().min(1),
+    /** Where the family is: absent = this repository (materialised locally); `owner/repo` = read from that remote. */
+    repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
+  })
+  .strict();
+
+/**
  * A declared subgraph's content source. A discriminated union, so a new kind
  * is a new member here and a compile error at every consumer that has not
  * decided what to do with it.
  */
-export const SubgraphSourceSchema = z.discriminatedUnion("kind", [DirectorySourceSchema, BranchSourceSchema]);
+export const SubgraphSourceSchema = z.discriminatedUnion("kind", [DirectorySourceSchema, BranchSourceSchema, FamilySourceSchema]);
 export type SubgraphSource = z.infer<typeof SubgraphSourceSchema>;
 export type SubgraphSourceKind = SubgraphSource["kind"];
 
 /** Every kind the union knows — for a reader that must refuse the rest (`branch-store mount`'s exit code). */
-export const SUBGRAPH_SOURCE_KINDS: readonly SubgraphSourceKind[] = ["directory", "branch"];
+export const SUBGRAPH_SOURCE_KINDS: readonly SubgraphSourceKind[] = ["directory", "branch", "family"];
 
 /** The config half: `<instance>.config.json` → `subgraphSources`, keyed by directory id. */
 export const SubgraphSourceOverridesSchema = z.record(z.string().min(1), SubgraphSourceSchema);
 export type SubgraphSourceOverrides = z.infer<typeof SubgraphSourceOverridesSchema>;
 
 /** The #1764 shape, read only to map it. */
-const LegacyStorageSchema = z.object({ branch: BranchNameSchema, keyedBy: KeyedBySchema });
+const LegacyStorageSchema = z.union([
+  z.object({ branch: BranchNameSchema, keyedBy: KeyedBySchema.exclude(["family"]) }),
+  // `storage`'s family form (bean `lehh`): the owner's spelling, mapped to `kind: "family"`.
+  z.object({
+    branchPrefix: BranchPrefixSchema,
+    keyedBy: KeyedBySchema.extract(["family"]),
+    keyFrom: z.string().min(1),
+    repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
+  }),
+]);
 
 /** Which layer the answer came from — reported, so an override is never silent. */
 export type SourceDeclaredIn = "default" | "declaration" | "storage" | "config";
 
-/** A row of `special-branches.json`, as far as a source needs it. */
-export interface SpecialBranchRow {
-  id: string;
-  shape: "branch" | "family";
-  name: string;
-  legacy: string[];
-}
 
 export type ResolvedSubgraphSource =
   | {
@@ -159,54 +268,29 @@ export type ResolvedSubgraphSource =
       path: string;
       branch: string;
       keyedBy: KeyedBy;
-      /**
-       * The `special-branches.json` row naming this branch (exactly, or as a
-       * member of a `family`), or `undefined` when none does — a FINDING the
-       * subgraph-source gate reports, never a guess at the name.
-       */
-      special: SpecialBranchRow | undefined;
+      declaredIn: SourceDeclaredIn;
+    }
+  | {
+      kind: "family";
+      id: string;
+      /** The entry's `path` — where a mount of ONE member of the family lands. */
+      path: string;
+      branchPrefix: string;
+      keyFrom: string;
+      /** The remote `owner/repo` the family is read from; absent when it is materialised on this repository. */
+      repository?: string;
       declaredIn: SourceDeclaredIn;
     };
 
-/**
- * Where `special-branches.json` is — resolved LAZILY, from `import.meta.url`.
- * `import.meta.dir` is Bun's alone: Playwright loads this module under Node,
- * where a top-level `resolve(import.meta.dir, …)` threw before any test ran.
- * Lazy as well, so importing the declaration schema touches no filesystem.
- */
-function specialBranchesPath(): string {
-  return resolve(dirname(fileURLToPath(import.meta.url)), "..", "scripts", "special-branches.json");
-}
 
-let specialRows: SpecialBranchRow[] | undefined;
 
-/** `special-branches.json`'s rows — the one declaration of branch names. */
-export function specialBranches(path?: string): SpecialBranchRow[] {
-  if (path === undefined && specialRows !== undefined) return specialRows;
-  const raw = JSON.parse(readFileSync(path ?? specialBranchesPath(), "utf-8")) as { branches?: SpecialBranchRow[] };
-  const rows = (raw.branches ?? []).map((b) => ({ id: b.id, shape: b.shape, name: b.name, legacy: [...(b.legacy ?? [])] }));
-  if (path === undefined) specialRows = rows;
-  return rows;
-}
 
-/** The row declaring `branch`: an exact `branch` row, or the `family` whose prefix it carries. Legacy names count. */
-export function specialBranchFor(branch: string, rows: readonly SpecialBranchRow[] = specialBranches()): SpecialBranchRow | undefined {
-  for (const r of rows) {
-    if (r.shape === "branch" && (r.name === branch || r.legacy.includes(branch))) return r;
-  }
-  for (const r of rows) {
-    if (r.shape === "family" && [r.name, ...r.legacy].some((p) => p.endsWith("/") && branch.startsWith(p) && branch.length > p.length)) {
-      return r;
-    }
-  }
-  return undefined;
-}
 
 /** The fields of a directory entry the resolver reads. */
 export interface SourcedEntry {
   id: string;
   path: string;
-  graphKinds?: readonly string[];
+  graphTypologies?: readonly string[];
   source?: SubgraphSource;
   /** #1764's field, if a declaration carries it. Read only to map it. */
   storage?: unknown;
@@ -237,7 +321,6 @@ export function contentIsOffCheckout(entry: { source?: SubgraphSource; storage?:
 export function resolveSubgraphSource(
   entry: SourcedEntry,
   overrides?: SubgraphSourceOverrides,
-  rows?: readonly SpecialBranchRow[],
 ): ResolvedSubgraphSource {
   if (entry.source !== undefined && entry.storage !== undefined) {
     throw new Error(
@@ -256,7 +339,9 @@ export function resolveSubgraphSource(
     declaredIn = "declaration";
   } else if (entry.storage !== undefined) {
     const s = LegacyStorageSchema.parse(entry.storage);
-    src = { kind: "branch", branch: s.branch, keyedBy: s.keyedBy };
+    src = "branchPrefix" in s
+      ? { kind: "family", branchPrefix: s.branchPrefix, keyFrom: s.keyFrom, ...(s.repository ? { repository: s.repository } : {}) }
+      : { kind: "branch", branch: s.branch, keyedBy: s.keyedBy };
     declaredIn = "storage";
   }
   switch (src.kind) {
@@ -270,7 +355,7 @@ export function resolveSubgraphSource(
       // `ContentDirectorySchema` refuses both for a DECLARED entry, so this arm
       // is reached by a caller that builds an entry by hand — `audit-coverage.ts`
       // does — which is precisely where a schema cannot help.
-      if (src.keyedBy !== "commit" && (entry.graphKinds ?? []).includes("qa")) {
+      if (src.keyedBy !== "commit" && (entry.graphTypologies ?? []).includes("qa")) {
         throw new Error(
           `directory "${entry.id}" is a \`qa\` subgraph: it is keyed by commit, and \`keyedBy: "${src.keyedBy}"\` is not. ` +
             `\`tip\` is for one-live-copy state (beans, todos); \`route\` is for regenerable published output. ` +
@@ -283,7 +368,23 @@ export function resolveSubgraphSource(
         path: entry.path,
         branch: src.branch,
         keyedBy: src.keyedBy,
-        special: specialBranchFor(src.branch, rows),
+        declaredIn,
+      };
+    }
+    case "family": {
+      if ((entry.graphTypologies ?? []).includes("qa")) {
+        throw new Error(
+          `directory "${entry.id}" is a \`qa\` subgraph: it is keyed by commit, and a branch family is not.`,
+        );
+      }
+      const prefix = src.branchPrefix;
+      return {
+        kind: "family",
+        id: entry.id,
+        path: entry.path,
+        branchPrefix: prefix,
+        keyFrom: src.keyFrom,
+        ...(src.repository ? { repository: src.repository } : {}),
         declaredIn,
       };
     }
@@ -314,6 +415,15 @@ export function contentSourceJsonLd(src: ResolvedSubgraphSource, repository?: st
         declaredIn: src.declaredIn,
       };
     }
+    case "family":
+      // The prefix is the family's identifier; no single branch has a tree URL.
+      return {
+        kind: "family",
+        branch: src.branchPrefix,
+        keyFrom: src.keyFrom,
+        ...(src.repository ? { familyRepository: src.repository } : {}),
+        declaredIn: src.declaredIn,
+      };
   }
 }
 
@@ -344,6 +454,8 @@ export function contentSourceContext(): Record<string, unknown> {
       kind: propertyIri("contentSourceKind"),
       branch: propertyIri("contentSourceBranch"),
       keyedBy: termIri("keyedBy"),
+      keyFrom: termIri("keyFrom"),
+      familyRepository: termIri("familyRepository"),
       declaredIn: termIri("sourceDeclaredIn"),
     },
   };

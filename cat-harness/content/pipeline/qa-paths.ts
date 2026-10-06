@@ -19,8 +19,8 @@
  *
  * ## The tree MIRRORS the block's directory
  *
- * `content/docs/evidence/overview.qa.json` becomes
- * `test/results/block-qa/content/docs/evidence/overview.qa.json`.
+ * `content/docs/process-evidence/overview.qa.json` becomes
+ * `test/results/block-qa/content/docs/process-evidence/overview.qa.json`.
  *
  * Flat would collide: block stems repeat freely across chapters, far more than
  * the four collisions measured in the KG corpus. Mirroring also keeps the

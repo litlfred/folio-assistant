@@ -3,8 +3,10 @@
 title: 'KG PUBLICATION: named subgraphs (referenced + hydrated), skeleton/payload split, late client-side materialization'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T08:07:45Z
+updated_at: 2026-10-04T15:12:15Z
+parent: folio-assistant-vuip
 ---
 
 Owner, 2026-10-02 (lead session, verbatim excerpts):

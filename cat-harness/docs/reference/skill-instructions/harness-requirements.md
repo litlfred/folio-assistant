@@ -27,7 +27,7 @@ how to read it and what to do before adding to it.
 |---|---|---|
 | **visualiser** | by the PAGE: a viewer Tool (`renders:` its kinds) writes into each page the directories it draws (`<meta name="renders">`); the directory keeps only its `tile:` look (#1168 B7a) | can a person LOOK at this? |
 | **docs** | by the PAGE: `documents:` in its front matter (or its manifest, or `<meta name="documents">` in generated HTML) names the kind or `<instance>/<id>` (#1168 B7c) | can a person READ ABOUT this? |
-| **skill** | by the SKILL: `graph-kinds:` names the kind, or `governs: [<instance>/<id>]` the one directory (#1168 B7b) | is an agent handed something that GOVERNS this? |
+| **skill** | by the SKILL: `graph-typologies:` names the kind, or `governs: [<instance>/<id>]` the one directory (#1168 B7b) | is an agent handed something that GOVERNS this? |
 | **serialisations** | `coverage.serialisations` | is each node ADDRESSABLE as json, jsonld and schema.json? |
 | **README** | an `instance-readme` asset, inside the instance | can a reader ENTER this instance at all? |
 
@@ -101,8 +101,8 @@ not a hole**: an axis that dropped bootstrap by kind would stop checking the
 one thing bootstrap must have.
 
 **An unknown kind owes one.** The default is the strict side, for the reason
-`DOCUMENT_BLOCK_KINDS` is a derived complement rather than a list: a kind
-nobody has classified must not escape an obligation by being unmentioned.
+a block kind's `profile` is a required field rather than an opt-in list: a
+kind nobody has classified must not escape an obligation by being unmentioned.
 Note this is the opposite collapse from `graphLayer()`, whose `undefined`
 callers must *not* read as `content` — there the unknown must stay unknown,
 here it resolves to the obligation. Both choose the direction that fails safe.
@@ -206,9 +206,9 @@ published-URL resolver answers where they are served.
 3. **Check the kind's layer.** If it is not `content`, you are promising a
    visualiser, so know who is building it before the declaration lands.
 
-## Before you add a graph kind
+## Before you add a graph typology
 
-`GraphKindDef` requires `renderable` and `holds`, so a kind cannot go
+`GraphTypologyDef` requires `renderable` and `holds`, so a kind cannot go
 unclassified — that is deliberate and `tsc` enforces it. What it does **not**
 carry is the visualiser obligation, because that is derived rather than
 declared, for the `fsh-guts` reason above.
@@ -239,7 +239,7 @@ Three rules for reading it, the same three every sweep here follows:
 ## See also
 
 - [`directory-conventions`](directory-conventions.md) — the declaration schema
-  and every graph kind
+  and every graph typology
 - [`content-context-and-state-graphs`](content-context-and-state-graphs.md) —
   what `holds` means, and the one question that settles a kind
 - [`kg-viewer`](kg-viewer.md) — the viewer this repository already ships

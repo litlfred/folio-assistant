@@ -95,6 +95,12 @@ on:
       # bean `iwtn`), so a change to any of them changes the site.
       - 'bootstrap/**'
       - 'bootstrap-tools/**'
+      # The IG sites this workflow builds (bean `mftp`): the stager and the
+      # page generator, each IG instance's index, menu and pages. Without these
+      # an IG re-ingest or a generator fix would not redeploy what it changes.
+      - 'fhir-harness/scripts/**'
+      - '*/fhir-artifact-index/**'
+      - 'smart-trust/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -112,13 +118,19 @@ jobs:
     runs-on: ubuntu-latest
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
-    # `docs-site` pushes to the same `gh-pages` ref that
-    # `feature-staging` does, and a concurrency group serialises only the jobs
-    # that NAME it. `eoix` gave the group to `feature-staging`'s two jobs and
-    # stopped there, so this workflow was still free to race them — which is
-    # what PR #297 hit on 2026-09-18: `! [remote rejected] gh-pages -> gh-pages
-    # (cannot lock ref ... is at 0779d88f but expected f885578d)`, after a full
-    # site build.
+    # A concurrency group serialises only the jobs that NAME it, and this one
+    # is named by `publish.yml` and by a folio's `blueprint` and `lean_ci` —
+    # NOT by `feature-staging`. That job held it once (`eoix`) and dropped it
+    # on 2026-09-19, measured: a PENDING job is cancelled when a newer one
+    # queues for the same group, so three previews from three branches inside
+    # 17 seconds lost two. This comment said until 2026-10-03 that staging was
+    # still in the group; it has not been since. The race with staging is
+    # handled on both sides instead: `publish-gh-pages.sh` re-reads and
+    # rebuilds on a rejected push (PR #297 hit that rejection on 2026-09-18,
+    # `cannot lock ref ... is at 0779d88f but expected f885578d`, after a full
+    # site build), and since #1956 a staging push waits until this job's
+    # commit is ten minutes old (`staging-push-gate.ts`), so a preview cannot
+    # cancel the Pages build that publishes the main site.
     #
     # `cancel-in-progress: false` is load-bearing and is the same reasoning as
     # `eoix`: a pending run that a later arrival cancels is a DEPLOY SILENTLY
@@ -158,6 +170,14 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
+        # be current in a commit, so it is never committed: one state:push
+        # made a committed copy stale on main and every open PR (2026-10-05).
+        # check:derived-from names them; this runs each one's declared writer
+        # against the mount above, sources before consumers.
+        run: bun run derive:publish
 
       # WHERE THIS BUILD'S QA EVIDENCE COMES FROM, decided before anything is
       # generated. Bean `tfqf`, reader audit F6 (defects C9, C10).
@@ -333,6 +353,24 @@ jobs:
       - name: Compose the docs layers
         run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs
 
+      # EACH IG IS BUILT INSIDE THIS SITE (bean `mftp`, owner 2026-10-05:
+      # "Build in main site"), so its pages wear this site's chrome — sidebar,
+      # search, language selector — rather than a site of their own. Each IG
+      # whose instance records its source (`fhir-artifact-index/menu.json`) is
+      # cloned at that commit, staged, and composed into `_docs/<instance>/`,
+      # its includes and data namespaced per IG. Which IGs is DATA, so this
+      # names none. Before the Jekyll build, which is what renders them.
+      - name: Compose each IG into the docs source
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          # Retried: Maven Central answers 429 under load, and one unretried
+          # 429 failed a whole preview build on 2026-10-05 (#2238).
+          curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o /tmp/plantuml.jar \
+            https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar
+          bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "/${REPO_NAME}" \
+            --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs > ./_ig-list.txt
+
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
         with:
@@ -348,6 +386,15 @@ jobs:
       - name: Take ownership of the Jekyll output
         run: sudo chown -R "$(id -u):$(id -g)" ./_site
 
+      # An IG's source can repeat an anchor, and the Publisher's output repeats
+      # it too. Keep the first copy (where every link already lands), rename
+      # the rest, and report each one — per IG, over its composed pages.
+      - name: Rename repeated ids on the IG pages
+        run: |
+          while read -r INSTANCE SRC AT; do
+            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${INSTANCE}"
+          done < ./_ig-list.txt
+
       # Mount every OTHER instance's rendered content under the built site.
       #
       # Jekyll above builds ONE directory — `cat-harness/docs` — so an instance
@@ -362,6 +409,19 @@ jobs:
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+
+
+      # The inline PDF viewer (bean `folio-assistant-5ea6`): pdf.js, pinned and
+      # hash-checked in `pdf-viewer.ts`, installed into the BUILT site and never
+      # committed. `--allow` is this repository's own owner on the two hosts its
+      # pages link PDFs from; the viewer refuses any other cross-origin `?src=`.
+      - name: Install the inline PDF viewer
+        env:
+          OWNER: ${{ github.repository_owner }}
+        run: >-
+          bun run cat-harness/scripts/pdf-viewer.ts --site ./_site
+          --allow "https://cdn.jsdelivr.net/gh/$OWNER/"
+          --allow "https://raw.githubusercontent.com/$OWNER/"
 
       # WCAG 3.1.1 (Language of Page). Bean `zru7`: the pinned theme emits
       # `<html lang="{{ site.lang | default: 'en-US' }}">` — `site.lang`, not
@@ -409,7 +469,7 @@ jobs:
       # Serve the prebuilt static output as-is (just-the-docs is already rendered;
       # /api is TypeDoc HTML).
       # The harness has no renderer of its own — `folio` is the only renderable
-      # graph kind and it belongs to folio-assistant-core — so its knowledge graph
+      # graph typology and it belongs to folio-assistant-core — so its knowledge graph
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
@@ -439,10 +499,14 @@ jobs:
       # `check:published-instance-exports` runs the `--instance` commands
       # below from a checkout, so a break in them is visible before a merge
       # rather than only in this workflow's own run (bean `u1iu`).
+      #
+      # `--scope instance` (the default, said aloud). Which instance publishes
+      # what, where, and the one-release tombstones for an `@id` that moved:
+      # `instance-publication` §"What each instance publishes" (bean `4ak5`).
       - name: Export the knowledge graph and its schema
         run: |
           STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-harness)
-          bun run cat-harness/scripts/kg-export.ts             --out "./_site/${STUB}.jsonld"
+          bun run cat-harness/scripts/kg-export.ts             --scope instance --out "./_site/${STUB}.jsonld"
           bun run cat-harness/scripts/harness-schema-export.ts --out-dir ./_site
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
@@ -580,10 +644,8 @@ jobs:
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
           # The export above STRIPS `fsh-guts` from every graph it publishes,
-          # so nothing in `<stub>.jsonld` links here. That is the owner's
-          # rule and the reason this is a second document rather than a
-          # subgraph: a consumer may fetch it deliberately, and a crawler
-          # walking the knowledge graph never arrives.
+          # so nothing in `<stub>.jsonld` links here. Why it is a second
+          # document: `instance-publication` §"What each instance publishes".
           #
           # `fsh-guts/logs/` sits inside the tree it walks and is NOT in it.
           # The exporter admits a file only if it declares
@@ -628,6 +690,38 @@ jobs:
           # defect bean `blv9` records and the cheapest one to have fixed.
           mkdir -p "./_site/ns/content"
           cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+          # The named-subgraph context (bean `c1m4`): every
+          # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
+          mkdir -p "./_site/ns/subgraph"
+          cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
+          # Content-addressed payloads (bean `f233`): `<BASE_URL>/payload/sha256/<hex>`
+          # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
+          # (excluded in _config.yml): a rendered body would not hash to its name.
+          mkdir -p "./_site/payload"
+          cp -R ./cat-harness/docs/payload/. "./_site/payload/"
+          # The SQLite slices (bean `q8ar`), one line each, built from the tree
+          # being deployed rather than committed, because their sources move
+          # on most merges (every session writes `beans/`). The deploy payloads
+          # (bean files, todo files, published library entries) are
+          # content-addressed in the same `payload/sha256/` namespace, added
+          # here and never to the committed `docs/payload/`, whose orphan audit
+          # admits KG nodes only. The `kg` slice writes none: it points at the
+          # committed KG payloads copied just above. Each run also rewrites
+          # `assets/slices/index.json`, which lists every slice built so far.
+          # Searched at `slices/search.html?slice=<name>`.
+          # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
+          # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
+          # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
+          # not pile up: each run writes only the current file, this deploy is a FULL REPLACE of
+          # `gh-pages` (`publish-gh-pages.sh`, `rm -r '*'` over the branch), and
+          # the STAGING/ previews it carries forward are restored as they were.
+          # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
+          # manifest and the older file it names -- a self-consistent pair --
+          # or a stale manifest whose file is gone, which the page reports.
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
+          bun run cat-harness/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
           # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
           # each term is defined by its layer's own document, below, and the
           # Glossary publishes SKOS for every scheme. bootstrap's document is
@@ -643,6 +737,16 @@ jobs:
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
+
+          # The ROOT INDEX (bean `4ak5` item 3): `<site>/index.jsonld` and its
+          # `.json` alias name every declared instance at depth 1 — its export,
+          # where this site serves it, its directories and graph typologies, its
+          # dependencies, its subgraph root, and a node count and digest of
+          # the document. LAST in this step because it reads what the lines
+          # above wrote, and it exits 1 on any instance whose export is not
+          # there rather than publishing a shorter map. Built here and never
+          # committed: `instance-publication` §"What each instance publishes".
+          bun run cat-harness/scripts/root-index.ts --site ./_site
 
       # Every `maintains` claim, checked where the answer exists.
       #
@@ -726,6 +830,11 @@ jobs:
           bun run cat-harness/scripts/qa-site-assets.ts verify \
             --site ./_site --results cat-harness/test/results \
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
+          # The panels' links to each result file, judged on what was BUILT
+          # (bean `bejf`, #2217): every projection carries `sidecarLinks`, and
+          # none addresses a stored result on `main`. Mirrored in
+          # `feature-staging.yml`.
+          bun run check:qa-result-links --site ./_site
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
       # composed.

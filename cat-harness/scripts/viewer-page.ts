@@ -59,12 +59,16 @@
  * @module scripts/viewer-page
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, relative, sep } from "node:path";
+import { dirname, join, relative, sep } from "node:path";
 
 import { declinesNavbar, injectRail, type NavItem } from "./lib/harness-rail.js";
+import { withSavedScheme } from "./lib/scheme-css.js";
+// Moved to `lib/scheme-css.ts` (issue #2208) so a folio's page gets it too
+// without importing this module, which imports `mount-instance-docs.ts`.
+export { schemeKey, withSavedScheme } from "./lib/scheme-css.js";
 import { VISUALISER_NAV_ATTR, visualiserNavDeclaration, type VisualiserNavEntry } from "./lib/navbar.js";
 import { kindTitle } from "./lib/nav-label.js";
-import { declaredGraphs, instanceMark, instantiatedHarnesses, publishedGraphs, railNames } from "./mount-instance-docs.js";
+import { declaredGraphs, instanceMark, instantiatedHarnesses, navbarRowData, publishedGraphs, railNames } from "./mount-instance-docs.js";
 
 /**
  * The opt-out a visualisation writes into its own page.
@@ -120,6 +124,15 @@ export interface ViewerNav {
    * one. {@link subjectSection} builds the common shape.
    */
   section?: readonly VisualiserNavEntry[];
+  /**
+   * Where the rail's SHARED data goes — the absolute path and the bytes
+   * (bean `lnoy`, owner: *"4. Option 3 everywhere"*). Given, the page carries
+   * only its own rail block and links the shared data, `navbar.css` and
+   * `navbar.js`; {@link makeEmit} supplies it with the same check-or-write
+   * contract as the page. Absent, the rail is rendered into the page, so a
+   * page that must fetch nothing (the state dashboards) still has one.
+   */
+  emitAsset?: (path: string, body: string) => void;
 }
 
 /**
@@ -242,8 +255,11 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     // Compared against the RESOLVED href rather than the kind, because a kind
     // may be published at a path that does not contain its name.
     if (item.href === undefined || item.href !== `${toRoot}${here}`) return item;
-    const { href: _here, ...rest } = item;
     visualiserLabel = item.label;
+    // From SHARED data the browser marks it (`renderRailRegions`, given
+    // `here`): the data is the same for every page that shares it.
+    if (o.emitAsset) return item;
+    const { href: _here, ...rest } = item;
     return { ...rest, current: true };
   });
 
@@ -269,6 +285,12 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     ...(visualiserLabel ? { visualiserLabel } : {}),
     links,
     ...(harnesses ? { harnesses } : {}),
+    navbarRow: navbarRowData(o.built),
+    // INLINED, like the narrow-viewport rules below: these pages fetch nothing
+    // (`state-visualizer.test.ts` holds them to it). Bean `lhvt`.
+    ...(o.emitAsset
+      ? { here, emitRailData: (file: string, body: string) => o.emitAsset!(join(o.docsRoot, file), body) }
+      : { inlineRowAssets: navbarRowAssets() }),
   });
   return railed === undefined ? undefined : withNarrowViewport(withSavedScheme(railed));
 }
@@ -299,49 +321,16 @@ export function withNarrowViewport(html: string): string {
 
 const NARROW_MARK = `data-folio-narrow-viewport`;
 
-/**
- * The reader's saved colour scheme, applied to a standalone viewer — bean `dc64`.
- *
- * The dashboards (beans, todos, translation status) style both schemes through
- * `:root[data-fa-scheme="light"]`, and default to dark because the site's
- * configured `color_scheme` is dark. On a themed page `docs-ui.js` sets that
- * attribute from the reader's stored choice. These pages do not load it, so a
- * reader who picked LIGHT anywhere on the site still got dark here.
- *
- * A few bytes in the HEAD, run before first paint so the page does not flash
- * dark and then flip. It reads ONLY a stored choice: with none, the page keeps
- * its CSS default, which is the configured scheme, the same fallback
- * `docs-ui.js` uses.
- *
- * The storage key is read out of `docs-ui.js` at generation time, not written
- * down again here. Two copies of a key are two answers free to disagree, and a
- * rename in one would silently disconnect every dashboard.
- */
-export function withSavedScheme(html: string): string {
-  if (html.includes(SCHEME_MARK)) return html;
-  const head = /<head\b[^>]*>/i.exec(html);
-  if (!head) return html;
-  const key = JSON.stringify(schemeKey());
-  const script =
-    `<script ${SCHEME_MARK}>try{var s=localStorage.getItem(${key});` +
-    `if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>\n`;
-  const at = head.index + head[0].length;
-  return html.slice(0, at) + "\n" + script + html.slice(at);
-}
-
-const SCHEME_MARK = `data-folio-saved-scheme`;
-
-let schemeKeyCache: string | undefined;
-/** The key `docs-ui.js` stores the reader's scheme under. Throws if it cannot be found: a silent default would disconnect every page. */
-export function schemeKey(): string {
-  if (schemeKeyCache) return schemeKeyCache;
-  // declared-path-literal: a platform asset beside this module, not a folio
-  // directory. It is the one place the key is defined.
-  const js = readFileSync(new URL("../docs/assets/js/docs-ui.js", import.meta.url), "utf-8");
-  const m = /var SCHEME_KEY = "([^"]+)";/.exec(js);
-  if (!m) throw new Error("viewer-page: docs-ui.js no longer declares SCHEME_KEY — the dashboards cannot follow the reader's scheme");
-  schemeKeyCache = m[1]!;
-  return schemeKeyCache;
+let rowAssets: { js: string; css: string } | undefined;
+/** The harness icon row's script and stylesheet, read once — inlined by {@link withViewerNav}. */
+function navbarRowAssets(): { js: string; css: string } {
+  // declared-path-literal: platform assets beside this module, not a folio
+  // directory. The docs site publishes them at the same relative paths.
+  rowAssets ??= {
+    js: readFileSync(new URL("../docs/assets/js/navbar-row.js", import.meta.url), "utf-8"),
+    css: readFileSync(new URL("../docs/assets/css/navbar-row.css", import.meta.url), "utf-8"),
+  };
+  return rowAssets;
 }
 
 let narrowCss: string | undefined;
@@ -382,8 +371,24 @@ export interface EmitOptions {
  * generator — a gate that cannot see what it is gating.
  */
 export function makeEmit(o: EmitOptions): (path: string, content: string) => void {
+  // The rail's shared data (bean `lnoy`): many pages name one file, so it is
+  // checked or written once per run, under the same contract as a page.
+  const seen = new Set<string>();
+  const emitAsset = (path: string, body: string): void => {
+    if (seen.has(path)) return;
+    seen.add(path);
+    if (o.check) {
+      const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
+      if (current === body) return;
+      console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
+      o.onStale();
+      return;
+    }
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, body);
+  };
   return (path: string, content: string): void => {
-    const railed = o.nav ? withViewerNav(content, path, o.nav) : undefined;
+    const railed = o.nav ? withViewerNav(content, path, { ...o.nav, emitAsset }) : undefined;
     const final = railed ?? content;
 
     if (o.check) {

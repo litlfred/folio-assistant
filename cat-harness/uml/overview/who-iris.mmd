@@ -1,5 +1,15 @@
 classDiagram
   direction LR
+  namespace who_iris__who_iris_translations {
+    class who_iris_who_iris_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
   namespace who_iris__library {
     class who_iris_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
       <<json: ImagesSidecarSchema>>
@@ -233,7 +243,7 @@ classDiagram
       id [1] string
       path [1] string
       subgraph [1] true
-      graphKinds [1..*] string[]
+      graphTypologies [1..*] string[]
     }
     class who_iris_who_iris_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {
       <<json: SkillTopicsSchema>>
@@ -244,8 +254,40 @@ classDiagram
     }
   }
   namespace who_iris__glossary {
-    class n_who_iris_glossary_glossary["glossary: no node schema"] {
-      <<could not determine>>
+    class who_iris_glossary_folio_glossary_v1_Term["Term"] {
+      <<json: GlossarySchema>>
+      id [1] string
+      prefLabel [1] string | map~string~
+      altLabel [0..*] string[]
+      definition [0..1] string | map~string~
+      notation [0..1] string
+      scopeNote [0..1] string
+      broader [0..*] string[]
+      related [0..*] string[]
+      exactMatch [0..*] string[]
+      closeMatch [0..*] string[]
+      broadMatch [0..*] string[]
+      narrowMatch [0..*] string[]
+      requires [0..*] string[]
+      isDefinedBy [0..1] string
+      iri [0..1] string
+      source [0..1] string
+      status [1] authored | candidate | could-not-extract
+      reason [0..1] string
+    }
+    class who_iris_glossary_folio_glossary_v1_folio_glossary_v1["folio-glossary/v1"] {
+      <<json: GlossarySchema>>
+      $schema [1] 'folio-glossary/v1'
+      id [1] string
+      title [1] string
+      description [0..1] string
+      hasVersion [0..1] string
+      modified [0..1] string
+      source [0..1] string
+      license [0..1] string
+      terms [0..*] Term[]
+      ordered [0..1] boolean
+      members [0..*] string[]
     }
   }
   namespace who_iris__who_iris_themes {
@@ -376,6 +418,7 @@ classDiagram
       superseded [0..1] object
     }
   }
+  cssClass "who_iris_who_iris_translations_TranslationConfig" fa_uml_kind_translation_sources
   who_iris_library_folio_withheld_v1_Path *-- "1..*" who_iris_library_folio_withheld_v1_Gate : gates
   who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
@@ -419,8 +462,9 @@ classDiagram
   cssClass "who_iris_who_iris_skills_skill_topics_v1_Topic" fa_uml_kind_skills
   cssClass "who_iris_who_iris_skills_skill_topics_v1_Directory" fa_uml_kind_skills
   cssClass "who_iris_who_iris_skills_skill_topics_v1_skill_topics_v1" fa_uml_kind_skills
-  cssClass "n_who_iris_glossary_glossary" fa_uml_kind_glossary
-  cssClass "n_who_iris_glossary_glossary" fa_uml_undetermined
+  who_iris_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" who_iris_glossary_folio_glossary_v1_Term : terms
+  cssClass "who_iris_glossary_folio_glossary_v1_Term" fa_uml_kind_glossary
+  cssClass "who_iris_glossary_folio_glossary_v1_folio_glossary_v1" fa_uml_kind_glossary
   who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
   cssClass "who_iris_who_iris_themes_Override" fa_uml_kind_themes
   cssClass "who_iris_who_iris_themes_Theme" fa_uml_kind_themes

@@ -42,7 +42,7 @@
  * | Resource | Resolved? | How |
  * |---|---|---|
  * | PO translations | ✅ | `translations/<locale>/`, fallback chain step 4 — the only path with a live consumer (`content/pipeline/po-resolve.ts`) |
- * | Kind headings | ✅ | `schemas/translation.ts` KIND_HEADINGS |
+ * | Kind headings | ✅ | `kindHeading` in `schemas/translation.ts`: English on each block-kind node, other locales in its owner's `translations/<lang>/block-kinds.po` |
  * | Skills | ✅ | {@link resolveSkillDirs} reads each instance's DECLARATION, and `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from it, so a dependency's packages are served. Two nearby call sites stay root-only on purpose — see its docs |
  * | Declared directories | ✅ | {@link declarationChain} + `resolveDirectories`, materialised by {@link materialiseDeclaredDirectories} |
  * | Block kinds | ✅ | {@link loadContributions} → `schemas/contributions.ts` |
@@ -332,7 +332,7 @@ export const HarnessConfigSchema = z.object({
    * The interactivity axis — issue #764, O1, settled by the owner
    * 2026-09-22. Vocabulary and the full argument: `CONTENT_INTERACTIVITY`.
    *
-   * Here rather than beside `graphKinds` because it is a fact about the
+   * Here rather than beside `graphTypologies` because it is a fact about the
    * CONTENT, which is what `contentType` and `adapter` next to it are also
    * about. The visualiser axis went the other way, onto the directory, and
    * the two placements are the axes' own difference rather than an
@@ -381,6 +381,9 @@ export const HarnessConfigSchema = z.object({
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
+import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
+import { ContentAdapterNodeSchema } from "./content-adapter-node";
+import { PipelinePluginNodeSchema, QaCheckerNodeSchema, splitOwnCodeRef } from "./contribution-nodes";
 import {
   describeRepository,
   type ContentTypeDisagreement,
@@ -389,6 +392,7 @@ import {
 } from "./content-type";
 import {
   CONFIG_SUFFIX,
+  directoriesForGraph,
   ExactVersionSchema,
   instanceConfigFilename,
   findInstanceRoot,
@@ -398,6 +402,7 @@ import {
   instanceRootsIn,
   readDeclaration,
   siblingScopeFor,
+  checkoutRootFor as checkoutRootForInstance,
   resolveDirectories,
   type MaterialisedDirectory,
   type ResolvedDirectory,
@@ -413,7 +418,7 @@ import {
  * from here, where every existing caller looks for it.
  */
 export { ExactVersionSchema };
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because
@@ -1047,9 +1052,14 @@ export function declarationChain(
  * nested instance (`cat-harness/`) it is the repository root; for the
  * instance declared AT the repository root it is that root itself, not its
  * parent — the case `repoRootFor` gets wrong by construction.
+ *
+ * Delegates to `checkoutRootFor` in `schemas/cat-harness.ts` (bean `g43f`),
+ * which adds git's own marker to the container rule: a root instance that
+ * holds its own `.git` is its checkout even when it aggregates nothing, where
+ * the container rule alone returned its parent. One answer, two import paths.
  */
 export function checkoutRootFor(start: string): string {
-  return siblingScopeFor(resolve(start));
+  return checkoutRootForInstance(start);
 }
 
 /**
@@ -1368,7 +1378,7 @@ export function checkoutDirectoriesForGraph(
   opts: { stackedOn?: string } = {},
 ): string[] {
   return checkoutDirectories(start, opts)
-    .filter((d) => d.graphKinds.includes(kind as never))
+    .filter((d) => d.graphTypologies.includes(kind as never))
     .map((d) => d.absPath);
 }
 
@@ -1663,12 +1673,22 @@ export function resolveTranslationDirs(folioRoot: string): string[] {
  */
 export interface ContributionSink<C extends { name: string }> {
   register(contribution: C): void;
+  /**
+   * Whether a DECLARED block-kind node of `adapter` is a contribution to this
+   * sink (bean riit, step 3). `ContributionRegistry` answers no for a built-in
+   * adapter, whose kinds the platform's code types and reads for every folio.
+   * Asked here rather than decided by the loader, because the loader is
+   * harness-layer and the built-in vocabulary is the content layer's.
+   * Absent means every node is.
+   */
+  acceptsDeclaredKind?(adapter: string): boolean;
 }
 
 export async function loadContributions<C extends { name: string }, S extends ContributionSink<C>>(
   folioRoot: string,
   registry: S,
 ): Promise<S> {
+  registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
     const fn = contributeFunction(dep, modulePath, await import(modulePath));
     registerPinned(registry, dep, await (fn as () => C | Promise<C>)());
@@ -1702,6 +1722,7 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
   folioRoot: string,
   registry: S,
 ): S {
+  registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const fn = contributeFunction(dep, modulePath, require(modulePath));
@@ -1718,8 +1739,122 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
   return registry;
 }
 
+/**
+ * The CONTRIBUTED block kinds each dependency declares as `folio-block-kind/v1`
+ * nodes in its `block-kinds/` graph (bean riit, step 3), registered as that
+ * dependency's contribution. Owner, 2026-10-04: a folio sees the nodes of the
+ * instances it depends on (option 1 of 3) — so this walks the SAME
+ * `orderedDependencies` the `contributes` modules are found by, and a kind
+ * reaches exactly the folios a `blockKinds` array returned from code used to.
+ *
+ * A built-in adapter's nodes (the paper adapter's, in core and sci) are
+ * skipped when the sink says so ({@link ContributionSink.acceptsDeclaredKind}):
+ * the platform's code types them and `block-kinds.ts` reads them for every
+ * folio, and registering them again would be refused as a redefinition.
+ */
+function registerDeclaredContributions<C extends { name: string }>(folioRoot: string, registry: ContributionSink<C>): void {
+  for (const dep of orderedDependencies(folioRoot)) {
+    const blockKinds: Record<string, unknown>[] = [];
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "block-kinds")) {
+      const parsed = BlockKindNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-block-kind/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      if (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.adapter)) continue;
+      blockKinds.push({
+        kind: n.kind,
+        adapter: n.adapter,
+        builder: builderOf(n),
+        labelPrefix: n.labelPrefix,
+        folioType: n.folioType,
+        ...(n.docoType ? { docoType: n.docoType } : {}),
+      });
+    }
+
+    // QA checkers and pipeline plugins (bean riit, step 3b): the node names
+    // the criterion or slot; its ref names the TABLE that holds the code,
+    // relative to THIS dependency's root, keyed by that criterion or slot.
+    const qaCheckers: Record<string, unknown>[] = [];
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "qa-checkers")) {
+      const parsed = QaCheckerNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-qa-checker/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      const { path } = splitOwnCodeRef(n.check);
+      qaCheckers.push({ criterion: n.criterion, check: tableEntry(dep, file, n.check, n.criterion, "function"), sourceFile: path });
+    }
+    const pipelinePlugins: Record<string, unknown>[] = [];
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "pipeline-plugins")) {
+      const parsed = PipelinePluginNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-pipeline-plugin/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      pipelinePlugins.push({ kind: n.slot, implementation: tableEntry(dep, file, n.implementation, n.slot, "object") });
+    }
+
+    if (blockKinds.length + qaCheckers.length + pipelinePlugins.length > 0) {
+      registerPinned(registry, dep, {
+        name: dep.dependency.name,
+        ...(blockKinds.length ? { blockKinds } : {}),
+        ...(qaCheckers.length ? { qaCheckers } : {}),
+        ...(pipelinePlugins.length ? { pipelinePlugins } : {}),
+      } as unknown as C);
+    }
+
+    // Content-adapter vocabularies (bean riit, step 5). A TYPED one is the
+    // platform's own and is read off the nodes at load, like a built-in
+    // kind; an untyped one is what this dependency contributes, with its
+    // companion roles and its vocabulary module. One registration each,
+    // since a contribution carries one adapter.
+    for (const { file, raw } of declaredNodesOf(dep.rootPath, "content-adapters")) {
+      const parsed = ContentAdapterNodeSchema.safeParse(raw);
+      if (!parsed.success) throw new Error(`${file} is not a folio-content-adapter/v1 node: ${parsed.error.message}`);
+      const n = parsed.data;
+      if (n.typed || (registry.acceptsDeclaredKind && !registry.acceptsDeclaredKind(n.adapter))) continue;
+      registerPinned(registry, dep, {
+        name: dep.dependency.name,
+        adapter: { name: n.adapter, module: n.vocabulary ?? "", companionRoles: n.companionRoles },
+      } as unknown as C);
+    }
+  }
+}
+
+/** Every `*.json` in every directory ONE instance declares with `graphTypology`, files sorted. */
+function declaredNodesOf(root: string, graphTypology: string): { file: string; raw: unknown }[] {
+  const out: { file: string; raw: unknown }[] = [];
+  for (const dir of directoriesForGraph(root, graphTypology)) {
+    let files: string[];
+    try {
+      files = readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
+    } catch {
+      continue; // a declared-but-absent directory is `check:declared-dirs`' finding
+    }
+    for (const f of files) out.push({ file: join(dir, f), raw: JSON.parse(readFileSync(join(dir, f), "utf-8")) });
+  }
+  return out;
+}
+
+/**
+ * `table[key]` from the module `ref` names, under `dep`'s root — loaded with
+ * `require`, which Bun runs synchronously for `.ts` (the property
+ * {@link loadContributionsSync} relies on), so one resolver serves both
+ * loaders. A missing module, export or entry throws naming the node: a node
+ * that names code which is not there is a contribution that appears wired
+ * and is not.
+ */
+function tableEntry(dep: ResolvedDependency, nodeFile: string, ref: string, key: string, want: "function" | "object"): unknown {
+  const { path, exportName } = splitOwnCodeRef(ref);
+  const abs = resolve(dep.rootPath, path);
+  if (!existsSync(abs)) throw new Error(`${nodeFile}: ${ref} — ${abs} does not exist`);
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const table = (require(abs) as Record<string, unknown>)[exportName];
+  if (typeof table !== "object" || table === null) throw new Error(`${nodeFile}: ${ref} exports no table named ${exportName}`);
+  const entry = (table as Record<string, unknown>)[key];
+  if (want === "function" ? typeof entry !== "function" : typeof entry !== "object" || entry === null) {
+    throw new Error(`${nodeFile}: ${exportName} in ${path} has no ${want} entry for "${key}"`);
+  }
+  return entry;
+}
+
 /** Every dependency declaring a `contributes` module, with its resolved path. */
-function contributingDependencies(
+export function contributingDependencies(
   folioRoot: string,
 ): Array<{ dep: ResolvedDependency; modulePath: string }> {
   const out: Array<{ dep: ResolvedDependency; modulePath: string }> = [];

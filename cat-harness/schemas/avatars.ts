@@ -35,13 +35,23 @@
  *
  * ## `kind` is open, so there is a fallback and it is reported
  *
- * `BASE_GRAPH_KINDS` is an open registry and `fsh-guts` node kinds are open
+ * `BASE_GRAPH_TYPOLOGIES` is an open registry and `fsh-guts` node kinds are open
  * by design. An unknown kind gets {@link GENERIC} and shows up as a QA
  * finding — never as a blank, which is the third-state rule applied to art.
  *
  * @module schemas/avatars
  * @graphNode schema
  */
+
+import { readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { defaultGraphTypologies } from "./graph-typology-registry";
+import { findDeclarationFile, instanceRootsIn } from "./instance-roots";
+
+/** The platform checkout this module sits in — where instances are scanned from. */
+const PLATFORM_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 /**
  * One avatar.
@@ -67,7 +77,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
   // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
-  // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
+  // one. `kind-fan` and `gen-avatars-css` key by GRAPH TYPOLOGY; `harness-tiles`
   // calls `avatarFor(decl.name)` — an INSTANCE's declared name. Most entries
   // are kinds; these three are instances, which is why `check-avatar-coverage`
   // reports them as "an avatar for a kind this instance does not declare" and
@@ -99,55 +109,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
   },
-  // WHO BLUE, AND NO EMBLEM. Owner, 2026-09-23: *"no logo on who-iris icon
-  // (for now). just WHO blue"* — reversing their own choice of 2026-09-22,
-  // which had the WHO emblem-and-wordmark cropped to the emblem. The image
-  // stays declared in `who-iris.json`; only the `icon` pointer to it is gone,
-  // so restoring it is one field rather than a re-ingest.
-  //
-  // 199 is MEASURED from #0093D5, the organisation's blue as `who-iris.json`
-  // already records it: rgb(0,147,213), max channel blue, so the hue is
-  // 4 + (0-147)/213 sixths of a turn = 198.6°, rounded. Written as an angle
-  // rather than as the hex because that is what this table holds and what the
-  // stylesheet builds both schemes from — a literal colour here would be
-  // legible in one mode and not the other, which is the `y8cm` failure.
-  //
-  // Without this entry `avatarFor("who-iris")` falls to GENERIC, so the tile
-  // would have taken the generic hue and reported a finding — "no avatar
-  // declared" is true of an instance nobody has decided about, and this one
-  // has been decided about twice.
-  // SMART-BASE — THE SAME WHO BLUE, AND FOR THE SAME REASON. Owner,
-  // 2026-09-23: *"smart-base avatar: use who-iris route, WHO blue no logo"*,
-  // taking the route this instance's exemption had named as open and
-  // preferable rather than leaving it exempt.
-  //
-  // TONE 199 IS SHARED WITH `who-iris` ON PURPOSE, not by oversight. It is
-  // measured from the same #0093D5 — the organisation's own blue — and these
-  // are two instances of the SAME organisation's material. A reader scanning
-  // the navbar should see them as a family; giving smart-base a near-miss hue
-  // would assert a distinction that does not exist. The registry requires
-  // distinct GLYPHS, not distinct tones, and that is the right constraint:
-  // the glyph says which instance, the tone says whose.
-  //
-  // And no emblem, which is the whole of "the who-iris route": an
-  // organisation's published colour with a neutral glyph is not inventing its
-  // identity, where cropping its logo would be.
-  "smart-base": {
-    // A broad base with three narrowing courses above it — the layer the rest
-    // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
-    // under it, and `smart-ig` (and the IGs that need it) is built on top,
-    // so the glyph reads the instance's position rather than its subject.
-    glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
-    tone: 199,
-    reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
-  },
-  "who-iris": {
-    // An open book with a band across it — a repository of published
-    // documents, which is what IRIS is. Deliberately NOT the emblem: the
-    // owner asked for the colour without the logo.
-    glyph: "M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10",
-    tone: 199,
-    reads: "an open book — a repository of published documents, in WHO blue",
+  "bootstrap-tools": {
+    // A trowel — the tool that plants bootstrap's seed.
+    glyph: "M12 3v9M8 12h8l-1 5a3 3 0 01-6 0z",
+    tone: 96,
+    reads: "a trowel, in bootstrap's colour — the code that implements bootstrap's tools",
   },
   // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
   //
@@ -182,42 +148,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 304,
     reads: "a shield with a tick — what each Actor is permitted to do",
   },
-  // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
-  //
-  // Owner, reporting it: *"folio assistant icon is messed up still. I want
-  // theme like in avaatars"*. It was the GENERIC question mark, which is what
-  // `avatarFor` returns for a name nothing declares, and the table's own
-  // header has carried the instruction the whole time: *"bootstrap has
-  // avatar, so does cat-harness, folio-asst"*. Two of those three were here.
-  //
-  // TONE 236, between `folio` (224) and `tools` (250), and deliberately near
-  // `folio-assistant-core`'s 212 — the same reasoning the three kinds below
-  // `cat-harness` are given: these are parts of one graph and a reader
-  // scanning a legend should see them as a family. Far enough to tell apart,
-  // close enough that neither reads as belonging somewhere else.
-  //
-  // THE GLYPH IS THE CORE'S LEAF, HELD. `folio-assistant-core` is the leaf of
-  // paper; the root instance is what holds one, so this is that leaf inside a
-  // frame rather than a second unrelated mark. An instance and its core
-  // drawn as two unrelated things would be the same drift the tones avoid.
-  "folio-assistant": {
-    glyph: "M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3",
-    tone: 236,
-    reads: "a leaf of paper held in a frame — the folio, and the instance that holds it",
-  },
-  // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
-  // and name both spelled in full, per the owner's ruling of 2026-09-20 and
-  // as `folio-assistant-core/harness.json` records against itself.
-  "folio-assistant-core": {
-    glyph: "M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h5",
-    tone: 212,
-    reads: "a leaf of paper with lines — the folio itself",
-  },
 
   // THE ONE RENDERABLE KIND, and the one this whole platform exists for.
   //
-  // Registered by `schemas/folio-graph-kind.ts` ON IMPORT rather than sitting
-  // in `BASE_GRAPH_KINDS`, which is why it was missing from the first draft
+  // Registered by `schemas/folio-graph-typology.ts` ON IMPORT rather than sitting
+  // in `BASE_GRAPH_TYPOLOGIES`, which is why it was missing from the first draft
   // of this registry and why `check-avatar-coverage` now seeds from the base
   // table explicitly: a check that reads only the live registry reports a
   // clean run whenever the module that registers a kind was not imported.
@@ -304,10 +239,48 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 28,
     reads: "a signed sheet — a judgement somebody recorded, kept apart from what a script derives",
   },
-  "review-verdicts": {
-    glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
-    tone: 200,
-    reads: "a page with a tick — somebody read this version and judged it",
+
+  "qa-checkers": {
+    // A magnifier over a tick: code that judges content against a criterion.
+    // Bean riit, step 3b.
+    glyph: "M10 4a6 6 0 1 1 0 12a6 6 0 0 1 0-12zM14.5 14.5L20 20M7.5 10l2 2 3.5-3.5",
+    tone: 96,
+    reads: "a magnifier over a tick — a QA checker, declared by the harness whose code it is",
+  },
+  "pipeline-plugins": {
+    // A plug entering a socket: an implementation filling a generic slot.
+    // Bean riit, step 3b.
+    glyph: "M4 12h6M10 8h4v8h-4zM14 10h3M14 14h3M17 7v10h3",
+    tone: 300,
+    reads: "a plug in a socket — a pipeline slot filled by the harness that owns the code",
+  },
+  "block-kinds": {
+    // Three stacked blocks with a tag on the top one: each kind a node,
+    // labelled by its prefix. Bean riit, step 2.
+    glyph: "M5 15h14v4H5zM5 10h14v4H5zM5 5h9v4H5zM16 5l3 2-3 2",
+    tone: 32,
+    reads: "stacked blocks, the top one tagged — block kinds, each declared by the harness that owns it",
+  },
+  "content-adapters": {
+    // A book with a bookmark: a vocabulary, the words its blocks are made of.
+    // Bean riit, step 5.
+    glyph: "M6 4h10a2 2 0 0 1 2 2v14H8a2 2 0 0 1-2-2zM6 18a2 2 0 0 1 2-2h10M13 4v6l2-1.5 2 1.5V4",
+    tone: 44,
+    reads: "a book with a bookmark — a content adapter's block vocabulary, declared by the harness that owns it",
+  },
+  validators: {
+    // A check mark inside a shield: code that judges a node, declared as a node.
+    // Bean riit.
+    glyph: "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM8.5 12.5l2.5 2.5 4.5-5M12 3v2",
+    tone: 132,
+    reads: "a shield with a tick — a validator, declared by the harness whose code it is",
+  },
+  typologies: {
+    // A stack of three cards, the top one tagged: a graph whose nodes are the
+    // KINDS of the other graphs. Bean dmx1.
+    glyph: "M5 8h12v11H5zM7 5h12v11M9 2h12v11M8 12h6M8 15h4",
+    tone: 300,
+    reads: "a stack of type cards — the graph typologies a harness declares it owns",
   },
   tools: {
     glyph: "M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z",
@@ -427,48 +400,23 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 168,
     reads: "a clipboard carrying a tick and a cross — one run's own account of what it did, both outcomes on the same sheet",
   },
-  uploads: {
-    glyph: "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14",
-    tone: 200,
-    reads: "an arrow onto a line — something arriving",
-  },
-  catalogue: {
-    // A card index: drawers of cards standing for things that are elsewhere.
-    // Deliberately NOT books on a shelf — that is `library`, and the difference
-    // between "we have it" and "we know of it" is the point of the kind.
-    glyph: "M4 6h16v12H4zM4 10h16M10 6v12M13 13h4M13 15h3",
-    tone: 258,
-    reads: "a card index — what is known to exist, mostly not held",
-  },
-  "fhir-artifact-index": {
-    // A card index with a braced tail: the `catalogue` drawer, plus the
-    // JSON-Schema brace that is the whole reason this kind exists. It quotes
-    // `catalogue`'s glyph deliberately — the two are siblings sharing a
-    // materialisation model, and an unrelated mark would hide that.
-    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M19 7c-1 0-1 2-2 2 1 0 1 2 2 2",
-    tone: 168,
-    reads: "a card index with a schema brace — an IG's artefacts, known by canonical URL",
-  },
-  "ig-metadata-index": {
-    // The `fhir-artifact-index` drawer with an arrow LEAVING it. It quotes
-    // that glyph on purpose, as that one quotes `catalogue`'s: the three are
-    // a family, and an unrelated mark would hide the relation the kind was
-    // registered to keep. What the arrow adds is the distinction itself —
-    // the index says what an IG HOLDS, this says what its toolchain REPORTED
-    // about what it holds.
-    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M18 13h4m-2-2l2 2-2 2",
-    tone: 190,
-    reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
-  },
-  openapi: {
-    // Curly braces around a two-way arrow: a machine-readable description
-    // (the braces) of something you call and that answers (the arrow out and
-    // back). Deliberately NOT `fhir-artifact-index`'s card drawer — an API
-    // document is one node holding operations, not an index of things held
-    // elsewhere. Bean `s4ta`.
-    glyph: "M8 4c-2 0-2 2-2 4s-1 3-2 4c1 1 2 2 2 4s0 4 2 4M16 4c2 0 2 2 2 4s1 3 2 4c-1 1-2 2-2 4s0 4-2 4M9 10h6l-2-2m2 6H9l2 2",
-    tone: 136,
-    reads: "braces around an arrow out and back — an API described as data: what you can call, and what answers",
+
+
+
+
+
+
+
+
+  "computation-witness": {
+    // A clipboard with a tick: the record a computation keeps of what it
+    // checked and that the checks held. Deliberately NOT `qa`'s verdict — a
+    // witness is a computation's own record, produced by running it, and
+    // judges nothing else. Bean `qou-qb6t`. `tone: 328` was unused and sits
+    // away from `code`'s so a producer and its record are told apart.
+    glyph: "M9 4h6v2H9zM7 5H5v15h14V5h-2M8.5 13l2.5 2.5 4.5-5",
+    tone: 328,
+    reads: "a clipboard with a tick — a computation's record of what it checked, and that it held",
   },
   "binary-release": {
     // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
@@ -576,6 +524,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 38,
     reads: "a lightbulb — an idea being argued, not yet a promise",
   },
+  "doc-group": {
+    // A folder holding lined pages — one named group of the docs graph's own
+    // pages (bean `xka5`). The docs family's tone: its pages ARE docs pages.
+    glyph: "M3 6h6l2 2h10v11H3zM7 12h10M7 15h7",
+    tone: 212,
+    reads: "a folder of pages — one named group of the documentation",
+  },
   requirements: {
     // A page with two ticked lines — what was agreed, each line checkable.
     // A proposal is MOVED here when its feature ships (issue #1164).
@@ -653,19 +608,66 @@ export const GENERIC: Avatar = {
   reads: "a question mark — no avatar is declared for this kind",
 };
 
-/** Has this kind got an avatar of its own? */
+/**
+ * A kind DECLARED as a node (bean dmx1) carries its own avatar, so this table
+ * is not a second central registry for kinds it does not list.
+ */
+function declaredAvatar(kind: string): Avatar | undefined {
+  return defaultGraphTypologies.get(kind)?.avatar;
+}
+
+/**
+ * An INSTANCE that declares its own mark (bean sod4 #4): the `avatar` field of
+ * its `<instance>.json`. Eleven instances' marks sat in AVATARS until
+ * 2026-10-05; only the two submodules, `bootstrap` and `bootstrap-tools`,
+ * remain there, because their declarations live in other repositories and a
+ * mark for a layer BELOW this one is a reference in the allowed direction.
+ *
+ * Read RAW, for the reason `instanceSiteDir` gives: the full declaration
+ * reader imports the registry, which imports this file.
+ */
+let instanceAvatarCache: Map<string, Avatar> | undefined;
+function instanceAvatars(): Map<string, Avatar> {
+  if (instanceAvatarCache) return instanceAvatarCache;
+  const out = new Map<string, Avatar>();
+  for (const root of instanceRootsIn(PLATFORM_ROOT)) {
+    const file = findDeclarationFile(root);
+    if (file === undefined) continue;
+    try {
+      const d = JSON.parse(readFileSync(join(root, file), "utf-8")) as { name?: string; avatar?: Avatar };
+      if (d.name && d.avatar) out.set(d.name, d.avatar);
+    } catch {
+      // an unreadable declaration is `readDeclaration`'s finding, with its own message
+    }
+  }
+  instanceAvatarCache = out;
+  return out;
+}
+
+/** Has this kind, or this instance, got an avatar of its own? */
 export function hasAvatar(kind: string): boolean {
-  return Object.prototype.hasOwnProperty.call(AVATARS, kind);
+  return Object.prototype.hasOwnProperty.call(AVATARS, kind) || declaredAvatar(kind) !== undefined || instanceAvatars().has(kind);
 }
 
-/** The avatar for a kind, falling back to {@link GENERIC}. */
+/** The avatar for a kind or an instance, falling back to {@link GENERIC}. */
 export function avatarFor(kind: string): Avatar {
-  return AVATARS[kind] ?? GENERIC;
+  return AVATARS[kind] ?? declaredAvatar(kind) ?? instanceAvatars().get(kind) ?? GENERIC;
 }
 
-/** Every kind that has one, in declaration order. */
+/**
+ * Every key that has one: this table's, in declaration order, then the
+ * declared kinds', then the declared instances'.
+ */
 export function avatarKinds(): string[] {
-  return Object.keys(AVATARS);
+  const listed = Object.keys(AVATARS);
+  const kinds = defaultGraphTypologies.names().filter((k) => !listed.includes(k) && declaredAvatar(k) !== undefined);
+  const insts = [...instanceAvatars().keys()].filter((k) => !listed.includes(k) && !kinds.includes(k));
+  return [...listed, ...kinds, ...insts];
+}
+
+/** Every avatar, keyed as {@link avatarKinds} orders them — the table, then declared kinds and instances. */
+export function allAvatars(): [string, Avatar][] {
+  return avatarKinds().map((k) => [k, avatarFor(k)]);
 }
 
 /**

@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_CRDM` · strict (defaulted) · 9 step(s)
 
-The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its "not a feature" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.
+A feature request turned into agreed, signed-off requirements and delivered, with one call activity per CRDM phase from issue linking to close-out. The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its "not a feature" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.
 
 <img src="../assets/img/workflows/crdm-requirements.svg" alt="BPMN diagram: CRDM requirements" style="max-width:100%">
 
@@ -19,7 +19,7 @@ The CRDM requirements process, decomposed. Each phase is a real subprocess in it
 
 - **Called by:** no call activity names this process
 - **Calls:** [CRDM close-out](crdm-close.html), [CRDM data model](crdm-data-model.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [CRDM — link the work to an issue](crdm-issue-linking.html), [CRDM Phase 1 — needs](crdm-needs.html), [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html), [CRDM Phase 5 — beans and sign-off](crdm-signoff.html)
-- **Presented on:** [CRDM methodology — The process](../crdm-methodology.html#the-process)
+- **Presented on:** [CRDM methodology — The process](../process/crdm-methodology.html#the-process)
 
 ## Lanes — who acts
 

@@ -5,7 +5,7 @@
     "id": "Process_Ingestion",
     "path": "processes/library/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:c20753818b860438250123765e184fce9b1bc1ec2b6b2156ea46718d16f4e9ca",
+  "source_hash": "sha256:19036fcc9ca7948b6ba46950e6a7b67ff46552bafe59f19ad8bd132453604817",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,13 +32,8 @@
       "findings": []
     },
     "activity-skill-has-tool": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "CallActivity_IngestTheme",
-          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -78,7 +73,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "process-diagram-published": {
@@ -120,8 +115,8 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 2,
-    "n/a": 8,
+    "fail": 1,
+    "n/a": 9,
     "unknown": 0
   }
 }

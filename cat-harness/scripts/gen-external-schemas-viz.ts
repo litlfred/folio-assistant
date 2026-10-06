@@ -8,7 +8,7 @@
  *
  * ## The gap this closes
  *
- * `external-schema` was one of the declared graph kinds with no published
+ * `external-schema` was one of the declared graph typologies with no published
  * viewer, so the navbar listed it disabled. Four records — BPMN 2.0, Diagram
  * Definition 1.0, DCMI Metadata Terms, SKOS — each naming an authority, an
  * edition, its namespace IRIs, the files that depend on it and the operative
@@ -46,7 +46,7 @@ import { fileURLToPath } from "node:url";
 import { baseDocsDir } from "./compose-docs.js";
 import { loadSpecs, namespacesInUse } from "./external-schemas.js";
 import { specUsers, type SpecUse, type SpecUseForm, type SpecUsers } from "./spec-users.js";
-import { BASE_GRAPH_KINDS } from "../schemas/graph-kind-registry.js";
+import { BASE_GRAPH_TYPOLOGIES, defaultGraphTypologies } from "../schemas/graph-typology-registry.js";
 import {
   undeclaredNamespaces,
   unusedNamespaces,
@@ -62,14 +62,23 @@ const VIEWER_TOOL = "external-schemas-viewer";
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
 
-/** The graph kind this renders. A KIND, never a path. */
+/** The graph typology this renders. A KIND, never a path. */
 const KIND = "external-schema";
 
 /** Every declared user of every spec, read from the users (bean `u63y`). */
 export function declaredUsers(specs: readonly ExternalSchema[], repoRoot = REPO): SpecUsers {
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repoRoot });
   const files = new TextDecoder().decode(ls.stdout).split("\n").filter(Boolean);
-  return specUsers(repoRoot, files, specs, BASE_GRAPH_KINDS, "cat-harness");
+  // BASE's kinds, read THROUGH the registry: since bean riit (step 1c) a
+  // kind's validator refs are `validators/` nodes the registry joins on, so
+  // the code list alone carries none and the `kind` form would vanish.
+  const joined = Object.fromEntries(
+    Object.keys(BASE_GRAPH_TYPOLOGIES).flatMap((k) => {
+      const def = defaultGraphTypologies.get(k);
+      return def ? [[k, def]] : [];
+    }),
+  );
+  return specUsers(repoRoot, files, specs, joined, "cat-harness");
 }
 
 /**
@@ -202,7 +211,7 @@ export function page(
     "That is data-modelling step 8 — the dependent holds the pointer — and it is",
     "why this list cannot drift from the code: a file that stops declaring stops",
     "being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`",
-    "front-matter list, an `xmlns` binding, and a graph kind whose typing module",
+    "front-matter list, an `xmlns` binding, and a graph typology whose typing module",
     "declares the spec (bean `u63y`).",
     "",
   );
@@ -330,7 +339,7 @@ if (import.meta.main) {
 
   const PAGE = pageRelPath(REPO);
   if (PAGE === undefined) {
-    console.error(`::error::gen-external-schemas-viz: no visualiser declared for graph kind '${KIND}'`);
+    console.error(`::error::gen-external-schemas-viz: no visualiser declared for graph typology '${KIND}'`);
     process.exit(1);
   }
 

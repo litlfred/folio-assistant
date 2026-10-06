@@ -58,11 +58,12 @@
  * Nothing is minted in this project's namespaces.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join, posix, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { DOCS_SITE_BASE } from "../../cat-harness/schemas/jsonld.ts";
 import { escHtml, thinPageConfigOf, thinPageHtml } from "../../cat-harness/scripts/thin-page.ts";
 import { OpenApiDocumentSchema, OpenApiProvenanceSchema, operationsOf, type OpenApiOperation } from "../schemas/openapi.ts";
 import { localDirOf, openapiDir, readConfig } from "./ingest-openapi.ts";
+import { findDeclarationFile } from "../../cat-harness/schemas/cat-harness.ts";
 
 /** The config-block id every page written here carries — how a run recognises its own output. */
 export const PAGE_CONFIG_ID = "openapi-page";
@@ -86,12 +87,19 @@ export interface Written {
 
 /** Every file a run writes for one instance, keyed by its path under the instance's docs. */
 export function pagesFor(instanceRoot: string): Written[] {
-  const instance = posix.basename(resolve(instanceRoot));
   const config = readConfig(instanceRoot);
   const dir = openapiDir(instanceRoot, config);
-  const decl = JSON.parse(readFileSync(join(instanceRoot, `${instance}.json`), "utf8")) as {
+  // The declaration is FOUND, and the instance is its DECLARED name, never the
+  // directory's: in an IG fork the directory is `smart-base/` and the instance
+  // is `smart-trust` (n3ni stage E), and the name is what every IRI below
+  // extends, so the published IRIs stay the same wherever the instance lives.
+  const declFile = findDeclarationFile(instanceRoot);
+  if (declFile === undefined) throw new Error(`no instance declaration in ${resolve(instanceRoot)}`);
+  const decl = JSON.parse(readFileSync(join(instanceRoot, declFile), "utf8")) as {
+    name: string;
     directories: Array<{ id: string; served?: boolean; path: string }>;
   };
+  const instance = decl.name;
   const entry = decl.directories.find((d) => d.id === config.directory)!;
   if (!entry.served) {
     throw new Error(
@@ -102,6 +110,10 @@ export function pagesFor(instanceRoot: string): Written[] {
   // The graph's path under /<instance>/ — `openapi` — which every IRI here extends.
   const graphPath = localDirOf(instanceRoot, dir).replace(/\/$/, "");
   const out: Written[] = [];
+  // For the graph's own index page (below): every document, and which
+  // document each operation id belongs to.
+  const listed: Array<{ id: string; title: string; version: string; ops: number }> = [];
+  const opDoc: Record<string, string> = {};
   const json = (path: string, node: object) => {
     const text = `${JSON.stringify(node, null, 2)}\n`;
     out.push({ path: `${path}.jsonld`, content: text }, { path: `${path}.json`, content: text });
@@ -113,6 +125,8 @@ export function pagesFor(instanceRoot: string): Written[] {
     const ops = operationsOf(doc);
     const title = d.title ?? doc.info.title;
     const docSite = d.id;
+    listed.push({ id: d.id, title, version: doc.info.version, ops: ops.length });
+    for (const o of ops) opDoc[o.id] ??= d.id;
     const docIri = iri(instance, `${graphPath}/${docSite}.jsonld`);
     const opIri = (o: OpenApiOperation) => iri(instance, `${graphPath}/${docSite}/${o.id}.jsonld`);
     const opSummary = (o: OpenApiOperation) => ({
@@ -183,6 +197,21 @@ export function pagesFor(instanceRoot: string): Written[] {
       });
     }
   }
+  // THE GRAPH'S OWN INDEX — `openapi/index.html`. An IG's pages link it the
+  // way the Publisher's vendored Swagger UI is linked, often deep:
+  // `openapi/index.html#/<tag>/<operationId>`. Nothing wrote it, so 43 links
+  // on smart-trust's pages led nowhere (#2235). It lists the documents held,
+  // and sends a Swagger-style deep link to that operation's own page.
+  out.push({
+    path: "index.html",
+    content:
+      `<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">` +
+      `<title>API documents — ${escHtml(instance)}</title><link rel="stylesheet" href="${STYLE}"></head>\n<body><main class="oa">` +
+      `<h1>API documents</h1><ul>` +
+      listed.map((l) => `<li><a href="${encodeURI(l.id)}/">${escHtml(l.title)}</a> ${escHtml(l.version)} — ${l.ops} operation(s)</li>`).join("") +
+      `</ul></main>\n<script>(function(){var m=/^#\\/[^/]+\\/([^/?#]+)/.exec(location.hash);var d=${JSON.stringify(opDoc).replace(/</g, "\\u003c")};` +
+      `if(m&&Object.prototype.hasOwnProperty.call(d,m[1]))location.replace(encodeURIComponent(d[m[1]])+"/"+encodeURIComponent(m[1])+"/");})();</script>\n</body></html>\n`,
+  });
   out.push(
     { path: LOADER, content: readFileSync(join(TEMPLATES, "openapi.js"), "utf8") },
     { path: STYLE, content: readFileSync(join(TEMPLATES, "openapi.css"), "utf8") },

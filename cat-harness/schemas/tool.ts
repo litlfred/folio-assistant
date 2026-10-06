@@ -452,7 +452,7 @@ export const ToolDefinitionSchema = z
      */
     downstream: ToolDownstreamSchema.optional(),
     /**
-     * The graph KINDS this Tool draws a viewer for — one page per declared
+     * The graph TYPOLOGIES this Tool draws a viewer for — one page per declared
      * directory of the kind, placed by the Tool itself.
      *
      * #1168 B7a, owner 2026-09-24 (*"viz scripts become Tools"*): until then

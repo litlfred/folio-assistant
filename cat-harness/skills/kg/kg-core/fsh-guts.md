@@ -7,13 +7,13 @@ description: >-
 # advertises it to every consumer of the folio's graph, which is the precise
 # thing the owner's 2026-09-19 instruction forbids: "NEVER include fsh-guts,
 # references to fsh-guts stripped out of KG before sending to publication."
-# It was ALREADY stripped, by a name match against UNPUBLISHED_GRAPH_KINDS.
+# It was ALREADY stripped, by a name match against UNPUBLISHED_GRAPH_TYPOLOGIES.
 # Declaring it states the fact where the author is looking, rather than
-# inferring it from a collision between this skill's name and a graph kind's
+# inferring it from a collision between this skill's name and a graph typology's
 # — which `isPublishedSkill` itself flags as the thing to replace: "if that
 # ever stops being true this needs its own list, not a cleverer derivation".
 published: false
-graph-kinds:
+graph-typologies:
   - fsh-guts
 ---
 
@@ -34,7 +34,7 @@ Owner, 2026-09-19:
 
 ## What makes it different from every other non-renderable graph
 
-The declaration declares nine graph kinds and none of them renders. That makes
+The declaration declares nine graph typologies and none of them renders. That makes
 `renderable: false` look like a weak signal, and for the others it is: `tools`,
 `schemas`, `beans` and the rest are graphs a **tool** reads, and there was
 never a page to make of them.
@@ -105,6 +105,13 @@ the branch. A relocation is both halves.
   reporting a clean, empty corpus. CI mounts before it reads.
 - **`fsh-guts/logs/` stays local scratch.** It is never pushed, and logs
   written before the first mount do not block the mount.
+- **There is no viewer page to commit after a relocation.** The page
+  `cat-harness/docs/fsh-guts/index.md` is derived from this branch, so it is
+  built at publish by `derive:publish` and gitignored (bean `0b8c`, #2230).
+  Before that it was committed, and one relocation made it stale on main and
+  on every open PR at once (2026-10-05). `fsh-guts:viz:check` now judges that
+  the mounted graph renders. The rule is general:
+  [`directory-conventions`](directory-conventions.md) §"The storage clock".
 
 ## Files declare themselves
 
@@ -160,7 +167,9 @@ shipped and then corrected the same day.
 A consumer may fetch `fsh-guts.jsonld` deliberately. It must never **arrive**
 there by following an edge. Mechanism and the three emitters that had to be
 filtered: [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published
-graph".
+graph". Where this sits among everything else the site publishes, and what
+else is never published: [`instance-publication`](instance-publication.md)
+§"What each instance publishes".
 
 Reaching it as a human is the dead-fish icon under settings, with a node
 counter and a select dialog. Bean `folio-assistant-7vhe`; until that exists,
@@ -193,7 +202,8 @@ It arrives the way every other non-markdown node does: the bytes, plus a
 same-basename `.md` sidecar with `kind: source`, whose `movedFrom` is the
 `uploads/` path and whose `summary` names the library entry it was ingested
 into. The full lifecycle is in
-[`library-ingestion`](../../library/library-core/library-ingestion.md) §"What happens to the upload after
+[`library-ingestion`](../../library/library-core/library-ingestion.md), in its detail
+[`uploads-retirement`](../../library/library-core/library-ingestion/uploads-retirement.md) §"What happens to the upload after
 it is ingested", and that skill is the one to change if the rule moves.
 
 **`fsh-guts/uploads/` is the proposed sub-directory**, beside `retired/` and

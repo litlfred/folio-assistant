@@ -143,7 +143,7 @@ and a completion timestamp. `qa.json` from the Publisher run is uploaded as a
 workflow artifact.
 
 **Both are produced and neither was read downstream.** That is the evidence the
-`qa-report` graph kind was registered from on 2026-09-22 —
+`qa-report` graph typology was registered from on 2026-09-22 —
 `schemas/qa-report.ts`. The shape is what these scripts already emit, not a
 design.
 

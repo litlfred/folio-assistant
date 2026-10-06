@@ -1,6 +1,6 @@
 /**
- * `folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind
- * (`cat-harness/schemas/glossary-graph-kind.ts` registers the name).
+ * `folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph typology
+ * (`cat-harness/schemas/glossary-graph-typology.ts` registers the name).
  *
  * Owner, 2026-09-23: *"put glossary into folio-assistant-core"*, *"it should be
  * part of general pracice w/ glossary/ page"*, and *"can glossary be
@@ -10,7 +10,7 @@
  * |---|---|
  * | a local term linked to an external concept | `exactMatch` / `closeMatch` / `broadMatch` / `narrowMatch` on a {@link Term} |
  * | a glossary that lists external terms without copying them | `members`: external concept IRIs, emitted as a `skos:Collection` |
- * | a whole external scheme | the declaration's `remoteGraphs` entry with `graphKinds: ["glossary"]`: known about, not held |
+ * | a whole external scheme | the declaration's `remoteGraphs` entry with `graphTypologies: ["glossary"]`: known about, not held |
  *
  * Bean `lqo9` settled the rest before this was written, and it is followed,
  * not re-decided:
@@ -30,6 +30,9 @@
 import { z } from "zod";
 
 import { PROV_CONTEXT } from "../../cat-harness/schemas/prov.ts";
+import { STANDARD_PREFIXES } from "../../cat-harness/schemas/vocab-mapping-fhir.ts";
+import { applyVocabMapping, contextBindings, vocabMapping, type VocabMapping } from "../../cat-harness/schemas/vocab-mapping.ts";
+import { fileURLToPath } from "node:url";
 
 export const GLOSSARY_SCHEMA_ID = "folio-glossary/v1" as const;
 
@@ -286,6 +289,25 @@ function automatedNodes(
   ];
 }
 
+let licenceNaming: VocabMapping | undefined;
+
+/**
+ * A glossary's licence, by the `licence-naming` table row a library item's
+ * licence uses too (finding D4, bean `gzkt`, owner 2026-10-03). The key is the
+ * row's predicate written as a CURIE, because this document's context binds
+ * prefixes rather than terms: `dcterms:license`, as before the table existed.
+ */
+export function licenceTerms(license: string | undefined): Record<string, unknown> {
+  licenceNaming ??= vocabMapping(fileURLToPath(new URL("../../cat-harness", import.meta.url)), "licence-naming");
+  const applied = applyVocabMapping(licenceNaming, { license });
+  const curies = contextBindings([licenceNaming], {
+    inContext: { dcterms: DCTERMS_NS },
+    prefixes: STANDARD_PREFIXES,
+    only: ["license"],
+  });
+  return Object.fromEntries(Object.entries(applied).map(([k, v]) => [curies[k] ?? k, v]));
+}
+
 /**
  * The glossary as SKOS JSON-LD. `ns` is the declaring instance's namespace,
  * so the IRIs follow the instance, not the file (bean `lqo9`).
@@ -315,7 +337,9 @@ export function toSkos(
       ...(g.hasVersion ? { "dcterms:hasVersion": g.hasVersion } : {}),
       ...(g.modified ? { "dcterms:modified": g.modified } : {}),
       ...(g.source ? { "dcterms:source": g.source } : {}),
-      ...(g.license ? { "dcterms:license": g.license } : {}),
+      // The `licence-naming` row a library item's licence comes from too
+      // (finding D4, bean `gzkt`): one row, so one predicate for both.
+      ...licenceTerms(g.license),
     },
   ];
   for (const t of g.terms) {

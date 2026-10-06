@@ -6,7 +6,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { defaultGraphKinds, graphKindIri, graphLayer, isRenderable, processMayWrite } from "./cat-harness";
+import { defaultGraphTypologies, graphTypologyIri, graphLayer, isRenderable, processMayWrite } from "./cat-harness";
 import { TEST_PLAN_SCHEMA_ID, TestPlanSchema } from "./test-plan";
 import {
   TEST_REPORT_SCHEMA_ID,
@@ -189,16 +189,16 @@ describe("where it is written", () => {
   });
 });
 
-describe("the graph kind it is held under", () => {
+describe("the graph typology it is held under", () => {
   test("registered, not renderable, and `state` — a run writes it", () => {
-    expect(defaultGraphKinds.get("test-report")).toBeDefined();
+    expect(defaultGraphTypologies.get("test-report")).toBeDefined();
     expect(isRenderable("test-report")).toBe(false);
     expect(graphLayer("test-report")).toBe("state");
     expect(processMayWrite("test-report")).toBe(true);
   });
 
   test("a different kind from `qa-report` and `test-plan`, on purpose", () => {
-    const kinds = ["qa-report", "test-plan", "test-report"].map((k) => graphKindIri(k, defaultGraphKinds.get(k)));
+    const kinds = ["qa-report", "test-plan", "test-report"].map((k) => graphTypologyIri(k, defaultGraphTypologies.get(k)));
     expect(new Set(kinds).size).toBe(3);
   });
 });

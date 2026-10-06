@@ -69,6 +69,13 @@ provide narrative description of change"*).
 If any part is missing, say so in the preview. Never drop a missing part
 silently.
 
+**Build only the cone.** For any rendered kind, the "after" build need only
+cover what the change can reach: its own files, its generator's import closure,
+and what is derived from those. That is the general rule, written once in
+[`feature-staging`](feature-staging.md) §7. Anything the cone leaves out is
+identical to the "before" by construction, so leaving it out loses no
+comparison.
+
 ## 1. One build, one variable
 
 The only difference between the two pictures should be the change under
@@ -374,7 +381,7 @@ merges. Merging still needs the explicit confirmation the processes require.
   the pair's label, the status line's SHA and the position
   ([`todo-manager`](todo-manager.md); check before you create).
 - On a folio, a comment tagged `block: <label>` on the PR becomes a
-  `folio-review-comment/v1` todo ([`review-comments`](review-comments.md)).
+  `review-comment/1.0.0` todo ([`review-comments`](review-comments.md)).
 - Feedback on published content goes through
   [`content-feedback`](content-feedback.md).
 - The next round's preview answers each item. Take the same pair again and

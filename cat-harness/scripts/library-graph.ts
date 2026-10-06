@@ -80,7 +80,7 @@ import type { LibraryRef } from "./library-refs.ts";
 import { dirname, extname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
-import { directoriesForGraph, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
+import { checkoutRootFor, directoriesForGraph, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { arxivId } from "./library-readmes.ts";
 
@@ -758,7 +758,7 @@ function intakeTitle(intake: { title?: string; item?: string; record?: string },
   return "";
 }
 
-export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor(roots[0] ?? ".")): LibraryGraph | null {
+export function readLibraryGraph(roots: string[], repoRoot: string = checkoutRootFor(roots[0] ?? ".")): LibraryGraph | null {
   // `repoRoot` is passed by a caller whose first root IS the repository root:
   // `repoRootFor` of that is its parent, which put every upload queue under
   // one wrong instance with a path one level too long (#1168 B7a-2).

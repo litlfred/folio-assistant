@@ -333,7 +333,7 @@ describe("a served directory's bytes publish at /<instance>/<path> — bean 680p
   const entry = (path: string, served?: boolean) => ({
     name: "smart-trust",
     abs: `/repo/smart-trust/${path}`,
-    entry: { path, graphKinds: ["fhir-artifact-index"], ...(served === undefined ? {} : { served }) },
+    entry: { path, graphTypologies: ["fhir-artifact-index"], ...(served === undefined ? {} : { served }) },
   });
 
   it("is opt-in: only a directory declaring `served: true` is served", () => {

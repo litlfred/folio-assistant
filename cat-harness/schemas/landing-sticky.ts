@@ -222,17 +222,17 @@ export type LandingSticky = z.infer<typeof LandingStickySchema>;
 export const DEFAULT_ONBOARDING_LINKS: readonly LandingLink[] = [
   {
     label: "The work plan is where you say what you are doing",
-    href: "/beans-and-todos.html",
+    href: "/guides/beans-and-todos.html",
     note: "Claim a bean before you work, so a sibling session does not pick up the same item.",
   },
   {
     label: "Make your first folio",
-    href: "/getting-started.html",
+    href: "/start/getting-started.html",
     note: "This repository is the platform; your content lives in its own.",
   },
   {
     label: "Know which kind of thing you are writing",
-    href: "/content-types.html",
+    href: "/concepts/content-types.html",
     note: "A document is structured prose; a paper adds the block kinds whose assertion is a formal claim.",
   },
   {

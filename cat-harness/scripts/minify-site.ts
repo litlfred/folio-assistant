@@ -4,7 +4,7 @@
  * the inter-tag whitespace a browser never renders.
  *
  * @module scripts/minify-site
- * @covers none — `.github/workflows/` is not a declared graph kind, and the
+ * @covers none — `.github/workflows/` is not a declared graph typology, and the
  *   subject here is the assembled `_site/`, which is not one either. Its
  *   logic is covered by `minify-site.test.ts` in `bun test`, which runs over
  *   pages built as strings; its WIRING by `check:invocation-parity` and
@@ -130,7 +130,8 @@
  *   bun run cat-harness/scripts/minify-site.ts --site ./_site [--check]
  */
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
-import { join } from "path";
+import { join, relative } from "path";
+import { isVendoredViewer } from "./pdf-viewer.ts";
 
 /**
  * Elements whose CONTENT is copied through byte for byte.
@@ -418,7 +419,9 @@ const mib = (b: number) => `${(b / 1048576).toFixed(1)} MiB`;
 export function runMinifySite(opts: RunOptions): RunResult {
   let files: string[];
   try {
-    files = htmlFiles(opts.site);
+    // The pinned pdf.js viewer is Mozilla's page, not one of ours: rewriting
+    // it would ship bytes no release of theirs contains (bean `folio-assistant-5ea6`).
+    files = htmlFiles(opts.site).filter((f) => !isVendoredViewer(relative(opts.site, f)));
   } catch (e) {
     return {
       exitCode: 2,

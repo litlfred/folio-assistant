@@ -177,7 +177,7 @@ export const NodeIdSchema = z
  * A running process instance — the stem of a file in the `workflow-state` node
  * of the bean graph.
  *
- * **Named by its graph kind rather than by a path, deliberately.** An earlier
+ * **Named by its graph typology rather than by a path, deliberately.** An earlier
  * draft of this comment named a directory that had already been relocated, and
  * a path written into a doc comment is checked by nothing. The instance
  * declares where that node lives (`beans/beans.json`), so a reader who needs

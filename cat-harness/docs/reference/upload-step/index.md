@@ -16,7 +16,7 @@ The **first step of document ingestion** — what puts a file into the queue eve
 
 | | |
 |---|---|
-| process | Document ingestion — uploads/ to the L1 source knowledge graph (`Process_Ingestion`) |
+| process | Basic ingestion — an upload to an asset catalogued in library/ (`Process_Ingestion`) |
 | begins at | A contributor has a file for the folio |
 | first step | **Place it in uploads/ by a declared route** (`Task_Place`) |
 | performed in the lane | Contributor (human or agent) (role `user`) |
@@ -25,9 +25,9 @@ The **first step of document ingestion** — what puts a file into the queue eve
 
 What the diagram says about the step itself:
 
-> THE FIRST LINK, and it did not exist until 2026-09-30. Everything downstream of here takes a file that is already in the queue: `document-intake` triggers on "User drops a file into `uploads/`", and both ingest Tools type their first input as "The upload to ingest, under the declared `uploads` graph". So the act of PUTTING it there was performed by three different mechanisms and governed by none of them.
+> THE FIRST LINK, and it did not exist until 2026-09-30. Everything downstream of here takes a file that is already in the queue, and both ingest Tools type their first input as "The upload to ingest, under the declared `uploads` graph". So the act of PUTTING it there was performed by three different mechanisms and governed by none of them.
 >
-> WHAT THIS STEP IS. Choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal, because a hand-written one 404'd.
+> WHAT THIS STEP IS. The basic flow's ACCEPT step: choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal, because a hand-written one 404'd.
 >
 > WHY A PLAIN `bpmn:task` AND NOT A `userTask`. A `userTask` asserts a human performs it, and this lane is named "Contributor (human or agent)" precisely because both do — measured over this repository's own history, files have reached `uploads/` in commits authored by `Carl Leitner` and in commits authored by `Claude`. Asserting human-only here would be the `activity-fulfilment-kind` contradiction written deliberately: the diagram saying one thing and the lane's role graph another. A plain task asserts nothing about the performer, which is the truth.
 >
@@ -39,7 +39,7 @@ The skill is the prose an actor reads; each Tool below is one concrete way to ex
 
 `subgraph-readmes` · satisfies `docs-generation`, `upload-routes`
 
-Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.
+Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.
 
 | | |
 |---|---|

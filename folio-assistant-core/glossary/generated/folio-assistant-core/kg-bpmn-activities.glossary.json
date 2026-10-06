@@ -127,6 +127,46 @@
       "status": "candidate"
     },
     {
+      "id": "process_buildl1kg.task_assets",
+      "prefLabel": "Record assets[] — local path or remote URL",
+      "definition": "kind / role / url-or-path / checksum / retrieved. A SIBLING of library:, never inside it: LibraryRef is regenerated from the tree, so an authored URL placed there is dropped on the next sync.",
+      "notation": "Task_Assets",
+      "source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Assets",
+      "status": "candidate"
+    },
+    {
+      "id": "process_buildl1kg.task_bind",
+      "prefLabel": "Bind the folder name to the bibliography slug",
+      "definition": "Bind the folder name to the document's bibliography slug, so library/<bib-slug>/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them.",
+      "notation": "Task_Bind",
+      "source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Bind",
+      "status": "candidate"
+    },
+    {
+      "id": "process_buildl1kg.task_dublin",
+      "prefLabel": "Write dublin-core.jsonld (the record of truth)",
+      "definition": "One standalone Dublin Core record per folder. dcterms is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one.",
+      "notation": "Task_Dublin",
+      "source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Dublin",
+      "status": "candidate"
+    },
+    {
+      "id": "process_buildl1kg.task_link",
+      "prefLabel": "Link L1 nodes into the corpus graph",
+      "definition": "Anything in library/ is L1 source content. A knowledge-graph reference from any artefact -- paper, L2, L3 -- resolves to it through library/.",
+      "notation": "Task_Link",
+      "source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Link",
+      "status": "candidate"
+    },
+    {
+      "id": "process_buildl1kg.task_manifest",
+      "prefLabel": "Write manifest.jsonld referencing it",
+      "definition": "Write manifest.jsonld for the folder: its @id, @type folio:SourceDocument, what it contains and its provenance, referencing the standalone dublin-core.jsonld as the record of truth rather than copying its fields.",
+      "notation": "Task_Manifest",
+      "source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Manifest",
+      "status": "candidate"
+    },
+    {
       "id": "process_contentchangereview.call_adjudication",
       "prefLabel": "Adjudicate the disagreement [adjudication]",
       "definition": "adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it. Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.",
@@ -257,7 +297,7 @@
     {
       "id": "process_contentchangereview.task_ingestcomments",
       "prefLabel": "Ingest tagged review comments [folio-review-comments]",
-      "definition": "Every PR conversation comment that starts with `block: <label>` becomes a `folio-review-comment/v1` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.",
+      "definition": "Every PR conversation comment that starts with `block: <label>` becomes a `review-comment/1.0.0` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.",
       "notation": "Task_IngestComments",
       "source": "folio-assistant-core/processes/content/content-change-review.bpmn#Task_IngestComments",
       "status": "candidate"
@@ -396,6 +436,54 @@
       "definition": "The paper's Searcher, at the granularity A_Plan chose. Which retrieval paradigm — text-only, vision-only or hybrid — is recorded in the methodology node as an open trade-off rather than settled here: the paper's comparison was measured on its own corpus and says nothing about a folio's.",
       "notation": "A_Search",
       "source": "folio-assistant-core/processes/library/deep-document-research.bpmn#A_Search",
+      "status": "candidate"
+    },
+    {
+      "id": "process_derivecontent.task_archive",
+      "prefLabel": "Archive → greppable contents manifest",
+      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data.",
+      "notation": "Task_Archive",
+      "source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Archive",
+      "status": "candidate"
+    },
+    {
+      "id": "process_derivecontent.task_audio",
+      "prefLabel": "Transcribe and translate audio",
+      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md.",
+      "notation": "Task_Audio",
+      "source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Audio",
+      "status": "candidate"
+    },
+    {
+      "id": "process_derivecontent.task_image",
+      "prefLabel": "Narrative description per image, localized",
+      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one.",
+      "notation": "Task_Image",
+      "source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Image",
+      "status": "candidate"
+    },
+    {
+      "id": "process_derivecontent.task_provenance",
+      "prefLabel": "Cite the author of every narrative",
+      "definition": "A generated description is a claim by someone. Record whether a human or an agent wrote it, and for an agent the model version. An uncited narrative is indistinguishable from a transcription of the source.",
+      "notation": "Task_Provenance",
+      "source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Provenance",
+      "status": "candidate"
+    },
+    {
+      "id": "process_derivecontent.task_tabular",
+      "prefLabel": "Sheet names, headers, shape, narrative",
+      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about.",
+      "notation": "Task_Tabular",
+      "source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Tabular",
+      "status": "candidate"
+    },
+    {
+      "id": "process_derivecontent.task_techmeta",
+      "prefLabel": "File info, sizes, hashes, timestamps, mimetype",
+      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable.",
+      "notation": "Task_TechMeta",
+      "source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_TechMeta",
       "status": "candidate"
     },
     {
@@ -687,6 +775,46 @@
       "status": "candidate"
     },
     {
+      "id": "process_extractstructure.task_candidates",
+      "prefLabel": "Extract claim candidates",
+      "definition": "candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts.",
+      "notation": "Task_Candidates",
+      "source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Candidates",
+      "status": "candidate"
+    },
+    {
+      "id": "process_extractstructure.task_extracttext",
+      "prefLabel": "Extract the text layer",
+      "definition": "The document has a text layer: extract it with pdf-extract (pdfminer.six, then a zero-dependency content-stream reader). Exit 2 means no text layer — a scan — and routes to OCR; it is not an empty document.",
+      "notation": "Task_ExtractText",
+      "source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_ExtractText",
+      "status": "candidate"
+    },
+    {
+      "id": "process_extractstructure.task_ocr",
+      "prefLabel": "OCR to ocr/page-*.txt",
+      "definition": "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier.",
+      "notation": "Task_Ocr",
+      "source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Ocr",
+      "status": "candidate"
+    },
+    {
+      "id": "process_extractstructure.task_sections",
+      "prefLabel": "Split into sections/*.md with doc_brief front-matter",
+      "definition": "Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief.",
+      "notation": "Task_Sections",
+      "source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Sections",
+      "status": "candidate"
+    },
+    {
+      "id": "process_extractstructure.task_structure",
+      "prefLabel": "Write structure.json (TOC, page ranges, metadata)",
+      "definition": "Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one.",
+      "notation": "Task_Structure",
+      "source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Structure",
+      "status": "candidate"
+    },
+    {
       "id": "process_gettingstarted.task_askintent",
       "prefLabel": "Choose from the offered options",
       "definition": "The question is presented as a short list of selectable options, never as free prose, and the list names the top-level content types the agent knows about. The answer becomes the statedIntent fact and the table is evaluated again — the user's answer is read as evidence, like any other fact.",
@@ -783,6 +911,134 @@
       "status": "candidate"
     },
     {
+      "id": "process_l1documentingestion.callactivity_basic",
+      "prefLabel": "Basic ingestion (harness)",
+      "definition": "The harness's `document-ingestion.bpmn`: accept the upload by a declared route, extract its metadata into the KG, and catalogue the asset in library/ — placed if materialized, recorded as referenced if not. Everything below refines that result for a document. Called, not copied: this was Lane_0 and Task_Place of this diagram until placement PR6 moved them down as the basic flow.",
+      "notation": "CallActivity_Basic",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Basic",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.callactivity_buildkg",
+      "prefLabel": "Build the L1 knowledge graph [document-intake]",
+      "definition": "See ingest-build-l1-kg.bpmn.",
+      "notation": "CallActivity_BuildKg",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_BuildKg",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.callactivity_derive",
+      "prefLabel": "Derive content from the assets [document-intake]",
+      "definition": "See ingest-derive-content.bpmn. Most of this subprocess is not implemented yet.",
+      "notation": "CallActivity_Derive",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Derive",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.callactivity_extract",
+      "prefLabel": "Extract structure [document-intake]",
+      "definition": "See ingest-extract-structure.bpmn.",
+      "notation": "CallActivity_Extract",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Extract",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.callactivity_gate",
+      "prefLabel": "L1 completeness gate",
+      "definition": "See ingest-l1-completeness-gate.bpmn. Skill-backed by `l1-document-ingestion` (2026-09-30, bean 7bg9; the section moved there from the harness's `library-ingestion` in placement PR6): its section \"What a complete L1 entry holds\" names `check:l1-complete` as the gate and states its three results. Until then this step named `paper-relevance-triage`, which never existed, and was left uncovered rather than bound to a guess. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.",
+      "notation": "CallActivity_Gate",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_Gate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.callactivity_ingesttheme",
+      "prefLabel": "Ingest the theme [theme-art-intake]",
+      "definition": "See ingest-theme.bpmn. The subprocess derives one Theme node with kind sticky|webpage|publication, and refuses a source it cannot complete rather than emitting a partial theme.",
+      "notation": "CallActivity_IngestTheme",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_IngestTheme",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.task_citeable",
+      "prefLabel": "Available to cite as an L1 source",
+      "definition": "Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn.",
+      "notation": "Task_Citeable",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Citeable",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.task_detect",
+      "prefLabel": "Detect media type and mint a doc id [document-intake]",
+      "definition": "Sniff the media type rather than trusting the extension, and mint the doc id from the page-1 arXiv stamp where there is one, else from the filename.",
+      "notation": "Task_Detect",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Detect",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.task_licence",
+      "prefLabel": "Establish the licence from the upload alone [document-intake]",
+      "definition": "EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find.",
+      "notation": "Task_Licence",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Licence",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.task_openbean",
+      "prefLabel": "Record the gap as a bean",
+      "definition": "A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes.",
+      "notation": "Task_OpenBean",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_OpenBean",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.task_promote",
+      "prefLabel": "Move into library/<bib-slug>/",
+      "definition": "The folder name IS the bibliography citation key, so a citation and a directory are the same string.",
+      "notation": "Task_Promote",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Promote",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1documentingestion.task_summaryqueue",
+      "prefLabel": "Prose blocks enter the summary queue [l1-document-ingestion]",
+      "definition": "Owner, 2026-09-24: \"Make as QA sidecar as part of general doc ingestion to slowly drain.\" Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.",
+      "notation": "Task_SummaryQueue",
+      "source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_SummaryQueue",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1gate.task_checkderived",
+      "prefLabel": "Is every derived artefact present?",
+      "definition": "L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational.",
+      "notation": "Task_CheckDerived",
+      "source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_CheckDerived",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1gate.task_flagdrift",
+      "prefLabel": "Adjudicate the flagged passage",
+      "definition": "A machine can detect that two readings differ. Which one is right is a human call.",
+      "notation": "Task_FlagDrift",
+      "source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_FlagDrift",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1gate.task_roundtrip",
+      "prefLabel": "Round-trip translation QA",
+      "definition": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see.",
+      "notation": "Task_RoundTrip",
+      "source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_RoundTrip",
+      "status": "candidate"
+    },
+    {
+      "id": "process_l1gate.task_verdict",
+      "prefLabel": "Record the L1 completeness verdict",
+      "definition": "Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/.",
+      "notation": "Task_Verdict",
+      "source": "folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_Verdict",
+      "status": "candidate"
+    },
+    {
       "id": "process_lifecycle.callactivity_editing",
       "prefLabel": "Editing and HCI validation [content-author]",
       "definition": "See editing-hci-validation.bpmn. Runs once per proposed change, not once per cycle.",
@@ -852,6 +1108,14 @@
       "definition": "The editing sub-process. Every change to the corpus goes through its HCI validation gate — a red draft is fixed there, never by patching the built artifact.",
       "notation": "CallActivity_Editing",
       "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#CallActivity_Editing",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publication.callactivity_publiccomment",
+      "prefLabel": "Public comment on the review version",
+      "definition": "When the draft is released for public comment: comments returned on the frozen, line-numbered review version are placed, triaged, recommended on by the review committee and decided by the editor (public-comment.bpmn). Bean v26p, issue #197.",
+      "notation": "CallActivity_PublicComment",
+      "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#CallActivity_PublicComment",
       "status": "candidate"
     },
     {
@@ -932,6 +1196,94 @@
       "definition": "Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper.",
       "notation": "Task_SmeSignoff",
       "source": "folio-assistant-core/processes/content/draft-to-publication.bpmn#Task_SmeSignoff",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.callactivity_changeset",
+      "prefLabel": "Review the change set on its staging preview",
+      "definition": "The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process.",
+      "notation": "CallActivity_ChangeSet",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#CallActivity_ChangeSet",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_assign",
+      "prefLabel": "Assign to committee members",
+      "definition": "public-comment assign: by GitHub login. A committee member who recommends on an unassigned comment is assigned it as they do.",
+      "notation": "Task_Assign",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Assign",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_authoredits",
+      "prefLabel": "Edit the document as decided, on a feature branch",
+      "definition": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing.",
+      "notation": "Task_AuthorEdits",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_AuthorEdits",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_committeerecommends",
+      "prefLabel": "Recommend a decision, with a rationale",
+      "definition": "A GitHub comment tagged pc: PC-0042 / recommend: code, from a login in config.json committee, or public-comment recommend.",
+      "notation": "Task_CommitteeRecommends",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_CommitteeRecommends",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_editordecides",
+      "prefLabel": "Decide, weighing the recommendations",
+      "definition": "public-comment decide, or decide: code on GitHub from a login in config.json editors. accepted, accepted-modified, not-accepted, noted, deferred; a reason for all but accepted. Also reopens a decided comment.",
+      "notation": "Task_EditorDecides",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_EditorDecides",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_groupchangesets",
+      "prefLabel": "Agree each change-set's requirements on its issue",
+      "definition": "A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-merge / cs-split / cs-close / cs-new. The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval.",
+      "notation": "Task_GroupChangeSets",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_GroupChangeSets",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_incorporate",
+      "prefLabel": "Mark incorporated when the change set merges",
+      "definition": "public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing.",
+      "notation": "Task_Incorporate",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Incorporate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_ingest",
+      "prefLabel": "Ingest and place each comment",
+      "definition": "public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received.",
+      "notation": "Task_Ingest",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Ingest",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_proposechangesets",
+      "prefLabel": "Propose change-sets, as records with no issue yet",
+      "definition": "public-comment-changesets seed / propose: the agent groups the comments to be weighed into change-sets, one per change the document may need, each a record under changesets/ with its requirements and members. A PROPOSAL: nothing is decided, no GitHub issue is opened, and a comment may sit in zero, one or several change-sets. The record is the only one; everything shown about a change-set is rendered from it.",
+      "notation": "Task_ProposeChangeSets",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_ProposeChangeSets",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_triage",
+      "prefLabel": "Triage: confirm the anchor, type and priority",
+      "definition": "public-comment triage / reassign / duplicate. An unplaced or low-confidence anchor is placed here, by a person.",
+      "notation": "Task_Triage",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Triage",
+      "status": "candidate"
+    },
+    {
+      "id": "process_publiccomment.task_withdraw",
+      "prefLabel": "Record the withdrawal",
+      "definition": "public-comment withdraw, from any open status.",
+      "notation": "Task_Withdraw",
+      "source": "folio-assistant-core/processes/content/public-comment.bpmn#Task_Withdraw",
       "status": "candidate"
     }
   ]

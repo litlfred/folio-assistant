@@ -174,6 +174,10 @@ describe("the live declarations", () => {
     // test cannot catch a wrong one.
     const decl = readDeclaration(ROOT);
     expect(decl?.name).toBe("cat-harness");
-    expect(decl?.navbarIcons).toEqual([...NAVBAR_ICONS]);
+    // A SUBSET of the vocabulary since 2026-10-05: the owner dropped
+    // processes and the knowledge graph from the row (bean `82qs`).
+    expect(NavbarIconsSchema.safeParse(decl?.navbarIcons).success).toBe(true);
+    expect(decl?.navbarIcons).not.toContain("processes");
+    expect(decl?.navbarIcons).not.toContain("kg");
   });
 });

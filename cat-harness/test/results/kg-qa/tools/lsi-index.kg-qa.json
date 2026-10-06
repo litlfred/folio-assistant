@@ -5,7 +5,7 @@
     "id": "lsi-index",
     "path": null
   },
-  "source_hash": "e3abbdb60a23",
+  "source_hash": "e252ca69dfda",
   "criteria": {
     "tool-invoke-path-resolves": {
       "result": "pass",
@@ -39,6 +39,14 @@
           "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs`"
         },
         {
+          "where": "lsi-index/cat-harness/library",
+          "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph library`"
+        },
+        {
+          "where": "lsi-index/smart-base/library",
+          "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph library`"
+        },
+        {
           "where": "lsi-index/smart-base/smart-base-docs",
           "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph smart-base-docs`"
         },
@@ -49,6 +57,10 @@
         {
           "where": "lsi-index/smart-trust/smart-trust-docs",
           "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs`"
+        },
+        {
+          "where": "lsi-index/who-iris/library",
+          "detail": "not-run: needs an LSI index and has none — run `bun run lsi index --instance who-iris --graph library`"
         }
       ]
     },

@@ -1,5 +1,75 @@
 classDiagram
   direction LR
+  namespace folio_assistant_core__folio_assistant_core_translations {
+    class folio_assistant_core_folio_assistant_core_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  namespace folio_assistant_core__folio_assistant_core_block_typologies {
+    class folio_assistant_core_folio_assistant_core_block_typologies_folio_block_kind_v1_folio_block_kind_v1["folio-block-kind/v1"] {
+      <<json: BlockKindNodeSchema>>
+      $schema [1] 'folio-block-kind/v1'
+      kind [1] string
+      adapter [1] string
+      profile [0..1] document | paper
+      builder [0..1] string
+      labelPrefix [1] string
+      prefixEnforced [0..1] boolean
+      provable [0..1] boolean
+      folioType [1] string
+      docoType [0..1] string
+      heading [0..1] string
+      headingPlural [0..1] string
+      indexRank [0..1] integer
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_core__folio_assistant_core_validators {
+    class folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      <<json: ValidatorNodeSchema>>
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      pages [0..1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_core__folio_assistant_core_typologies {
+    class folio_assistant_core_folio_assistant_core_typologies_folio_graph_typology_v1_folio_graph_typology_v1["folio-graph-typology/v1"] {
+      <<json: GraphTypologyNodeSchema>>
+      $schema [1] 'folio-graph-typology/v1'
+      kind [1] string
+      title [0..1] string
+      layer [0..1] 'core'
+      perInstance [0..1] true
+      renderable [1] boolean
+      recordsWork [0..1] boolean
+      holds [1] content | context | state | derived
+      summary [1] string
+      schema [0..1] string
+      validator [0..1] string
+      validatorNotApplicable [0..1] string
+      nodeSchemas [0..1] map~object~
+      declarationFile [0..1] string
+      concernGroups [0..1] true
+      within [0..1] string
+      avatar [0..1] object
+      tileIcon [0..1] string
+      published [0..1] false
+      skillBearing [0..1] true
+      kgContent [0..1] true
+      description [0..1] string
+      renderableNote [0..1] string
+      anyLayer [0..1] true
+      rationale [0..1] string
+    }
+  }
   namespace folio_assistant_core__core_schemas {
     class folio_assistant_core_core_schemas_skills_document_authoring_input_schema_json_Document_Authoring_Input["Document Authoring Input"] {
       <<schema: skills/document-authoring/input.schema.json>>
@@ -72,6 +142,25 @@ classDiagram
       anchor [0..1] string
       citedBy [0..*] string[]
     }
+    class folio_assistant_core_core_schemas_skills_public_comment_input_schema_json_Public_Comment_Input["Public Comment Input"] {
+      <<schema: skills/public-comment/input.schema.json>>
+      operation [1] enum(13)
+      file [0..1] string
+      ref [0..1] string
+      to [0..1] string
+      code [0..1] accepted | accepted-modified | not-accepted | noted | deferred
+      reason [0..1] string
+      branch [0..1] string
+      pr [0..1] integer
+      filter [0..1] object
+    }
+    class folio_assistant_core_core_schemas_skills_public_comment_output_schema_json_Public_Comment_Output["Public Comment Output"] {
+      <<schema: skills/public-comment/output.schema.json>>
+      changed [0..*] string[]
+      unplaced [0..*] string[]
+      refused [0..*] string[]
+      comments [0..*] any[]
+    }
     class folio_assistant_core_core_schemas_skills_quality_control_input_schema_json_Quality_Control_Input["Quality Control Input"] {
       <<schema: skills/quality-control/input.schema.json>>
       checkType [1] qa-report | publication-checklist | conformance-validation | functionality-test | cross-component-consistency
@@ -99,8 +188,40 @@ classDiagram
     }
   }
   namespace folio_assistant_core__glossary {
-    class n_folio_assistant_core_glossary_glossary["glossary: no node schema"] {
-      <<could not determine>>
+    class folio_assistant_core_glossary_folio_glossary_v1_Term["Term"] {
+      <<json: GlossarySchema>>
+      id [1] string
+      prefLabel [1] string | map~string~
+      altLabel [0..*] string[]
+      definition [0..1] string | map~string~
+      notation [0..1] string
+      scopeNote [0..1] string
+      broader [0..*] string[]
+      related [0..*] string[]
+      exactMatch [0..*] string[]
+      closeMatch [0..*] string[]
+      broadMatch [0..*] string[]
+      narrowMatch [0..*] string[]
+      requires [0..*] string[]
+      isDefinedBy [0..1] string
+      iri [0..1] string
+      source [0..1] string
+      status [1] authored | candidate | could-not-extract
+      reason [0..1] string
+    }
+    class folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1["folio-glossary/v1"] {
+      <<json: GlossarySchema>>
+      $schema [1] 'folio-glossary/v1'
+      id [1] string
+      title [1] string
+      description [0..1] string
+      hasVersion [0..1] string
+      modified [0..1] string
+      source [0..1] string
+      license [0..1] string
+      terms [0..*] Term[]
+      ordered [0..1] boolean
+      members [0..*] string[]
     }
   }
   namespace folio_assistant_core__core_tools {
@@ -129,6 +250,11 @@ classDiagram
   }
   namespace folio_assistant_core__core_adapters {
     class n_folio_assistant_core_core_adapters_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace folio_assistant_core__core_src {
+    class n_folio_assistant_core_core_src_code["code: no node schema"] {
       <<could not determine>>
     }
   }
@@ -219,7 +345,7 @@ classDiagram
       id [1] string
       path [1] string
       subgraph [1] true
-      graphKinds [1..*] string[]
+      graphTypologies [1..*] string[]
     }
     class folio_assistant_core_core_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {
       <<json: SkillTopicsSchema>>
@@ -240,7 +366,6 @@ classDiagram
       bpmn:exclusiveGateway [0..*] element
       bpmn:extensionElements [0..*] element
       bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
       bpmn:incoming [0..*] element
       bpmn:lane [0..*] element
       bpmn:laneSet [0..*] element
@@ -323,6 +448,10 @@ classDiagram
       superseded [0..1] object
     }
   }
+  cssClass "folio_assistant_core_folio_assistant_core_translations_TranslationConfig" fa_uml_kind_translation_sources
+  cssClass "folio_assistant_core_folio_assistant_core_block_typologies_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
+  cssClass "folio_assistant_core_folio_assistant_core_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
+  cssClass "folio_assistant_core_folio_assistant_core_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
   folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output *-- "0..*" folio_assistant_core_core_schemas_skills_document_publishing_output_schema_json_Issue : issues
   folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output *-- "0..*" folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding : findings
   cssClass "folio_assistant_core_core_schemas_skills_document_authoring_input_schema_json_Document_Authoring_Input" fa_uml_kind_schemas
@@ -334,18 +463,23 @@ classDiagram
   cssClass "folio_assistant_core_core_schemas_skills_document_structure_output_schema_json_Document_Structure_Output" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_normative_statements_input_schema_json_Normative_Statement_Input" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_normative_statements_output_schema_json_Normative_Statement_Output" fa_uml_kind_schemas
+  cssClass "folio_assistant_core_core_schemas_skills_public_comment_input_schema_json_Public_Comment_Input" fa_uml_kind_schemas
+  cssClass "folio_assistant_core_core_schemas_skills_public_comment_output_schema_json_Public_Comment_Output" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_quality_control_input_schema_json_Quality_Control_Input" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Finding" fa_uml_kind_schemas
   cssClass "folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Quality_Control_Output" fa_uml_kind_schemas
   cssClass "n_folio_assistant_core_folios_folio" fa_uml_kind_folio
   cssClass "n_folio_assistant_core_folios_folio" fa_uml_undetermined
-  cssClass "n_folio_assistant_core_glossary_glossary" fa_uml_kind_glossary
-  cssClass "n_folio_assistant_core_glossary_glossary" fa_uml_undetermined
+  folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" folio_assistant_core_glossary_folio_glossary_v1_Term : terms
+  cssClass "folio_assistant_core_glossary_folio_glossary_v1_Term" fa_uml_kind_glossary
+  cssClass "folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1" fa_uml_kind_glossary
   folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
   cssClass "folio_assistant_core_core_tools_Maintain" fa_uml_kind_tools
   cssClass "folio_assistant_core_core_tools_ToolDefinition" fa_uml_kind_tools
   cssClass "n_folio_assistant_core_core_adapters_code" fa_uml_kind_code
   cssClass "n_folio_assistant_core_core_adapters_code" fa_uml_undetermined
+  cssClass "n_folio_assistant_core_core_src_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_core_core_src_code" fa_uml_undetermined
   cssClass "n_folio_assistant_core_core_scripts_code" fa_uml_kind_code
   cssClass "n_folio_assistant_core_core_scripts_code" fa_uml_undetermined
   cssClass "folio_assistant_core_core_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library

@@ -253,7 +253,7 @@ describe("inputGraphs — read the declaration, do not spell the paths", () => {
   const resolve = (g: string): string[] =>
     g === "kg" ? ["a/skills", "b/skills"] : g === "beans" ? ["beans/defs"] : [];
 
-  it("resolves a graph kind to its declared directories", () => {
+  it("resolves a graph typology to its declared directories", () => {
     const root = repo({ "a/skills/x.md": "1", "b/skills/y.md": "2" });
     expect(resolvedInputs(root, { id: "s", inputGraphs: ["kg"] }, resolve)).toEqual([
       "a/skills",

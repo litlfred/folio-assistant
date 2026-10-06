@@ -16,7 +16,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
+import { checkoutRootFor, resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
 
 /**
  * The instance this module belongs to — the one that owns the repository-level
@@ -70,7 +70,7 @@ import { checkoutDirectories, orderedDependencies } from "../schemas/harness-con
 import { packageDirsIn } from "./skill-topics.js";
 import { checkoutRoleGraph } from "../schemas/scenario-overlay.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
-// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// The `folio` graph typology is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
 // COMMAND that runs carries it — and since #840 every caller does, because
@@ -84,6 +84,14 @@ import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-mat
 // gate failed to say so — the same silence this repository keeps paying for.
 // It is moot now rather than fixed: #840 made the registration automatic, so
 // there is no longer a command that can forget it (bean `z9ax`).
+
+/**
+ * Claude Code's skill-loader stub file name. Under `.claude/skills/` it is a
+ * trigger pointing at a corpus skill, so a group holding only that is not a
+ * group of skills. Elsewhere `SKILL.md` IS a skill's own file (who-iris's
+ * voices use that layout), so this is checked only where the stubs live.
+ */
+export const LOADER_STUB = "SKILL.md";
 
 /**
  * Groups under `.claude/skills/` that hold something other than skills.
@@ -150,7 +158,7 @@ export function kgDirectories(
 ): Array<{ id: string; path: string; absPath: string }> {
   try {
     return (scope === "checkout" ? checkoutDirectories(root, { stackedOn: root }) : resolveDirectories([{ name: "(local)", root, own: true }]))
-      // EXACTLY ONE knowledge-graph kind, not merely including one.
+      // EXACTLY ONE knowledge-graph typology, not merely including one.
       //
       // `schemas/` declares `["schemas", "cat-harness"]` — a schema IS a
       // knowledge-graph node, which is why it carries the kind at all — but
@@ -459,11 +467,25 @@ export function skillMdDirs(root: string, scope: CorpusScope = corpusScopeFor(ro
   // and the exported graph did not — a skill by this repository's own
   // definition, absent from the graph. Latent rather than live (only `local`
   // exists today), and now impossible: the exporter reads this function.
-  const localRoot = join(repoRootFor(root), ".claude", "skills");
+  //
+  // `checkoutRootFor` (bean `g43f`): `repoRootFor` is `dirname`, so for the
+  // root instance this read `.claude/worktrees/.claude/skills` in a worktree
+  // and `/home/user/.claude/skills` in the main checkout — outside the
+  // checkout. The root instance now reads the checkout's own `.claude/skills`
+  // (owner, 2026-10-04: "do g43f"), which is the same directory a nested
+  // instance already reached through `repoRootFor`.
+  //
+  // `SKILL.md` does not make a group. It is Claude Code's loader stub
+  // (`.claude/skills/<name>/SKILL.md`), a trigger pointing at the corpus
+  // skill, so a group holding only that is not a group of skills — counted,
+  // it published a skill literally named `SKILL` (measured 2026-10-03: the
+  // root instance went 0 -> 4 names with it, 0 -> 3 without).
+  const checkout = checkoutRootFor(root);
+  const localRoot = join(checkout, ".claude", "skills");
   if (existsSync(localRoot)) {
     for (const g of readdirSync(localRoot, { withFileTypes: true })) {
       if (!g.isDirectory() || NON_SKILL_GROUPS.has(g.name)) continue;
-      if (readdirSync(join(localRoot, g.name)).some((f) => f.endsWith(".md"))) {
+      if (readdirSync(join(localRoot, g.name)).some((f) => f.endsWith(".md") && f !== LOADER_STUB)) {
         dirs.push([".claude", "skills", g.name]);
       }
     }
@@ -644,7 +666,7 @@ export function consultedSkills(root: string, scope: CorpusScope = corpusScopeFo
  *
  * ## Why a declaration, when a name match already worked
  *
- * `isPublishedSkill` strips a skill whose NAME is an unpublished graph kind,
+ * `isPublishedSkill` strips a skill whose NAME is an unpublished graph typology,
  * and its own note says why that was enough and where it stops:
  *
  * > *"Same list, because the skill and the kind share a name by

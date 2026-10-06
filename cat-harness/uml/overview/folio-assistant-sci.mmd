@@ -1,5 +1,93 @@
 classDiagram
   direction LR
+  namespace folio_assistant_sci__folio_assistant_sci_qa_checkers {
+    class folio_assistant_sci_folio_assistant_sci_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1["folio-qa-checker/v1"] {
+      <<json: QaCheckerNodeSchema>>
+      $schema [1] 'folio-qa-checker/v1'
+      criterion [1] string
+      check [1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_pipeline_plugins {
+    class folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1["folio-pipeline-plugin/v1"] {
+      <<json: PipelinePluginNodeSchema>>
+      $schema [1] 'folio-pipeline-plugin/v1'
+      slot [1] string
+      implementation [1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_translations {
+    class folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_block_typologies {
+    class folio_assistant_sci_folio_assistant_sci_block_typologies_folio_block_kind_v1_folio_block_kind_v1["folio-block-kind/v1"] {
+      <<json: BlockKindNodeSchema>>
+      $schema [1] 'folio-block-kind/v1'
+      kind [1] string
+      adapter [1] string
+      profile [0..1] document | paper
+      builder [0..1] string
+      labelPrefix [1] string
+      prefixEnforced [0..1] boolean
+      provable [0..1] boolean
+      folioType [1] string
+      docoType [0..1] string
+      heading [0..1] string
+      headingPlural [0..1] string
+      indexRank [0..1] integer
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_content_adapters {
+    class folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1["folio-content-adapter/v1"] {
+      <<json: ContentAdapterNodeSchema>>
+      $schema [1] 'folio-content-adapter/v1'
+      adapter [1] string
+      typed [1] boolean
+      companionRoles [1..*] enum(9)[]
+      vocabulary [0..1] string
+      rationale [0..1] string
+    }
+  }
+  namespace folio_assistant_sci__folio_assistant_sci_typologies {
+    class folio_assistant_sci_folio_assistant_sci_typologies_folio_graph_typology_v1_folio_graph_typology_v1["folio-graph-typology/v1"] {
+      <<json: GraphTypologyNodeSchema>>
+      $schema [1] 'folio-graph-typology/v1'
+      kind [1] string
+      title [0..1] string
+      layer [0..1] 'core'
+      perInstance [0..1] true
+      renderable [1] boolean
+      recordsWork [0..1] boolean
+      holds [1] content | context | state | derived
+      summary [1] string
+      schema [0..1] string
+      validator [0..1] string
+      validatorNotApplicable [0..1] string
+      nodeSchemas [0..1] map~object~
+      declarationFile [0..1] string
+      concernGroups [0..1] true
+      within [0..1] string
+      avatar [0..1] object
+      tileIcon [0..1] string
+      published [0..1] false
+      skillBearing [0..1] true
+      kgContent [0..1] true
+      description [0..1] string
+      renderableNote [0..1] string
+      anyLayer [0..1] true
+      rationale [0..1] string
+    }
+  }
   namespace folio_assistant_sci__library {
     class folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1["folio-document-images/v1"] {
       <<json: ImagesSidecarSchema>>
@@ -28,9 +116,125 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace folio_assistant_sci__skills {
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Source["Source"] {
+      <<json: VoiceSkillSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      path [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Pattern["Pattern"] {
+      <<json: VoiceSkillSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Terminology["Terminology"] {
+      <<json: VoiceSkillSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_Rule["Rule"] {
+      <<json: VoiceSkillSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+      counterintuitive [0..1] boolean
+      commonError [0..1] string
+    }
+    class folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1["folio-voice-skill/v1"] {
+      <<json: VoiceSkillSchema>>
+      $schema [1] 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      owner [0..1] string
+      instructions [1] object
+      sources [0..*] Source[]
+      provenance [1] assertion | evidence | house
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification | code~
+      activeIn [0..1] object
+      extends [0..1] object
+      superseded [0..1] object
+    }
+    class folio_assistant_sci_skills_folio_remote_skill_v1_File["File"] {
+      <<json: RemoteSkillRecordSchema>>
+      id [1] string
+      name [1] string
+      materialization [1] object
+    }
+    class folio_assistant_sci_skills_folio_remote_skill_v1_folio_remote_skill_v1["folio-remote-skill/v1"] {
+      <<json: RemoteSkillRecordSchema>>
+      $schema [1] 'folio-remote-skill/v1'
+      skill [1] string
+      package [1] string
+      repo [1] string~uri~
+      ref [1] string
+      wrapper [1] string
+      note [1] string
+      files [1..*] File[]
+    }
+    class folio_assistant_sci_skills_skill_topics_v1_Topic["Topic"] {
+      <<json: SkillTopicsSchema>>
+      id [1] string
+      path [1] string
+      title [1] string
+      description [1] string
+    }
+    class folio_assistant_sci_skills_skill_topics_v1_Directory["Directory"] {
+      <<json: SkillTopicsSchema>>
+      id [1] string
+      path [1] string
+      subgraph [1] true
+      graphTypologies [1..*] string[]
+    }
+    class folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {
+      <<json: SkillTopicsSchema>>
+      $schema [1] 'skill-topics/v1'
+      _comment [0..1] string
+      topics [0..*] Topic[]
+      directories [0..*] Directory[]
+    }
+  }
   namespace folio_assistant_sci__sci_adapters {
     class n_folio_assistant_sci_sci_adapters_code["code: no node schema"] {
       <<could not determine>>
+    }
+  }
+  namespace folio_assistant_sci__sci_tools {
+    class folio_assistant_sci_sci_tools_Maintain["Maintain"] {
+      <<json: ToolDefinitionSchema>>
+      source [1] string
+      artefact [1] string
+      format [0..1] string
+    }
+    class folio_assistant_sci_sci_tools_ToolDefinition["ToolDefinition"] {
+      <<json: ToolDefinitionSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      install [1] object
+      invoke [1] object
+      io [1] object
+      satisfies [1..*] string[]
+      selection [0..1] object
+      requires [0..1] object
+      maintains [0..*] Maintain[]
+      downstream [0..1] object
+      renders [0..*] string[]
+      subprocesses [0..*] string[]
     }
   }
   namespace folio_assistant_sci__sci_sources {
@@ -69,7 +273,6 @@ classDiagram
       bpmn:exclusiveGateway [0..*] element
       bpmn:extensionElements [0..*] element
       bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
       bpmn:incoming [0..*] element
       bpmn:lane [0..*] element
       bpmn:laneSet [0..*] element
@@ -167,13 +370,39 @@ classDiagram
       <<could not determine>>
     }
   }
+  cssClass "folio_assistant_sci_folio_assistant_sci_qa_checkers_folio_qa_checker_v1_folio_qa_checker_v1" fa_uml_kind_qa_checkers
+  cssClass "folio_assistant_sci_folio_assistant_sci_pipeline_plugins_folio_pipeline_plugin_v1_folio_pipeline_plugin_v1" fa_uml_kind_pipeline_plugins
+  cssClass "folio_assistant_sci_folio_assistant_sci_translations_TranslationConfig" fa_uml_kind_translation_sources
+  cssClass "folio_assistant_sci_folio_assistant_sci_block_typologies_folio_block_kind_v1_folio_block_kind_v1" fa_uml_kind_block_kinds
+  cssClass "folio_assistant_sci_folio_assistant_sci_content_adapters_folio_content_adapter_v1_folio_content_adapter_v1" fa_uml_kind_content_adapters
+  cssClass "folio_assistant_sci_folio_assistant_sci_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
   cssClass "folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "folio_assistant_sci_library_folio_image_verdicts_v1" fa_uml_kind_library
   cssClass "folio_assistant_sci_library_folio_vector_labels_v1_folio_vector_labels_v1" fa_uml_kind_library
   cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_undetermined
+  folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" folio_assistant_sci_skills_folio_voice_skill_v1_Source : sources
+  folio_assistant_sci_skills_folio_voice_skill_v1_Rule *-- "0..*" folio_assistant_sci_skills_folio_voice_skill_v1_Pattern : patterns
+  folio_assistant_sci_skills_folio_voice_skill_v1_Rule *-- "0..*" folio_assistant_sci_skills_folio_voice_skill_v1_Terminology : terminology
+  folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" folio_assistant_sci_skills_folio_voice_skill_v1_Rule : rules
+  folio_assistant_sci_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" folio_assistant_sci_skills_folio_remote_skill_v1_File : files
+  folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" folio_assistant_sci_skills_skill_topics_v1_Topic : topics
+  folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" folio_assistant_sci_skills_skill_topics_v1_Directory : directories
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Source" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Pattern" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Terminology" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_Rule" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_voice_skill_v1_folio_voice_skill_v1" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_remote_skill_v1_File" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_folio_remote_skill_v1_folio_remote_skill_v1" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_skill_topics_v1_Topic" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_skill_topics_v1_Directory" fa_uml_kind_skills
+  cssClass "folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1" fa_uml_kind_skills
   cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_kind_code
   cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_undetermined
+  folio_assistant_sci_sci_tools_ToolDefinition *-- "0..*" folio_assistant_sci_sci_tools_Maintain : maintains
+  cssClass "folio_assistant_sci_sci_tools_Maintain" fa_uml_kind_tools
+  cssClass "folio_assistant_sci_sci_tools_ToolDefinition" fa_uml_kind_tools
   folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier : identifiers
   cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_Identifier" fa_uml_kind_schemas
   cssClass "folio_assistant_sci_sci_sources_folio_source_descriptor_v1_folio_source_descriptor_v1" fa_uml_kind_schemas

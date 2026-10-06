@@ -114,6 +114,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Artefact reachability](artefact-reachability.html) | `artefact-reachability` | — | **A declared executable artefact that nothing can reach is indistinguishable, |
 | [Associate a harness](associate-harness.html) | `associate-harness` | — | The owner, 2026-09-23, on the ihris folio: |
 | [Audit coverage](audit-coverage.html) | `audit-coverage` | — | **A sidecar count is a fine measurement of sidecars and says nothing about |
 | [Code node review](code-node-review.html) | `code-node-review` | — |  |
@@ -158,22 +159,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Adopt a methodology from a source document](adopt-methodology-from-source.html) | `adopt-methodology-from-source` | — | The adoption **rules** are [`methodology-adoption`](methodology-adoption.md). This skill is the **op |
-| [Materializing from arXiv](archiving-arxiv.html) | `archiving-arxiv` | — | arXiv is the easiest case to get *nearly* right, which is why it is worth its |
-| [Archiving a web page](archiving-web-pages.html) | `archiving-web-pages` | — | **A URL is not an archive.** It is a request you hope somebody else keeps |
 | [Asset extraction](asset-extraction.html) | `asset-extraction` | — | A container arrives in `uploads/`: a zip of a saved web page, a PDF, a |
-| [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
-| [bib-photo-ingestion-watcher](bib-photo-ingestion-watcher.html) | `bib-photo-ingestion-watcher` | — | The automation half of the [`bib-human-review`](bib-human-review.md) workflow. |
-| [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
 | [Code lists](code-lists.html) | `code-lists` | — | Owner, 2026-09-23: *"we need an expandable option, not just declared in code. |
 | [Acquisition is the step before ingestion, and it had no home](content-acquisition.html) | `content-acquisition` | — | `document-ingestion.bpmn` begins at **`StartEvent_Dropped` — "a file lands in |
-| [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
-| [Filing a source: what Dublin Core carries, and what it does not](filing-dublin-core.html) | `filing-dublin-core` | — | This is the **librarian's** half of intake, not the ingestion engine's. A file |
-| [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [Glossary terms](glossary-terms.html) | `glossary-terms` | — | The owner, 2026-09-23: *"put glossary into folio-assistant-core"*, *"it should |
 | [Library ingestion](library-ingestion.html) | `library-ingestion` | — | `uploads/` and `library/` are two stages of **one** pipeline. `uploads/` is the |
 | [Literature search](literature-search.html) | `literature-search` | — | A node cites a source. Nothing in any declared library holds it. This skill is |
-| [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
-| [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Term disagreement](term-disagreement.html) | `term-disagreement` | — | > Skill id: `term-disagreement` · Package: `library-core` |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Package: |
 | [Upload naming](upload-naming.html) | `upload-naming` | — | > **Lives in `library-core`, not `folio-core`.** It was written into |
@@ -234,9 +225,11 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Activity log](activity-log.html) | `activity-log` | — | **Write an entry when you start a task, when you end one, and whenever you |
 | [Adjudication](adjudication.html) | `adjudication` | — | > Skill id: `adjudication` · Package: `sdlc-core` |
+| [One task, two agents, one human between them](agent-handoff.html) | `agent-handoff` | — | Two agents, two environments: the **coordinator** can see the work, but it |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [/before-after-preview](before-after-preview.html) | `before-after-preview` | — | > Skill id: `before-after-preview` · Package: `sdlc-core` · Issue: #1710 · |
+| [Branch archaeology: what each branch holds that main does not](branch-archaeology.html) | `branch-archaeology` | — | The question sounds like `git branch -r --no-merged`, and that command answers |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
@@ -272,6 +265,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [QA report signing](qa-report-signing.html) | `qa-report-signing` | — | A QA report becomes **evidence** when a third party can establish what was |
 | [QA reports](qa-reports.html) | `qa-reports` | — | **A QA result is either reproducible or it is not, and that decides where it |
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
+| [Ref stewardship](ref-stewardship.html) | `ref-stewardship` | — | A **watched ref** is a long-lived branch that several processes write and that |
 | [Related work: find it, sort it, ask](related-work-coordination.html) | `related-work-coordination` | — | Owner, 2026-09-23 (issue #1023): *"when CRDM is initiated/updated through human agent chat discussio |
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
@@ -287,6 +281,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Visual diff](visual-diff.html) | `visual-diff` | — | > Skill id: `visual-diff` · Package: `sdlc-core` · Bean: `0rxe` · Epic: `q4jm` |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
+| [Restructuring a work plan](work-plan-restructure.html) | `work-plan-restructure` | — | [`lsi-indexing`](lsi-indexing.md) §"Epic filing" |
 
 ## Spec Kit spec-driven development (skills/sdlc/spec-kit)
 
@@ -321,6 +316,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
 | [Liquid templates](liquid-templates.html) | `liquid-templates` | — | Two engines run Liquid here, and they produce different kinds of output. Know |
 | [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
+| [Inline PDF viewer](pdf-inline-viewer.html) | `pdf-inline-viewer` | — | > Skill id: `pdf-inline-viewer` · Package: `ui-core` · Bean |
 | [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
 | [Render logging](render-logging.html) | `render-logging` | — | Owner, 2026-09-20: *"a specialised Logger skill for the gh-pages rendering |
 | [Render order](render-order.html) | `render-order` | — | Two things live here, and they are deliberately one skill: **the general |
@@ -350,12 +346,34 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
+| [public-comment](public-comment.html) | `public-comment` | — | > Skill id: `public-comment` · Package: `folio-document-adapter` · Process: |
 
 ## Catalogue records — Dublin Core renderings (catalogue)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
+
+## Cataloguing methods (cataloguing)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Materializing from arXiv](archiving-arxiv.html) | `archiving-arxiv` | — | arXiv is the easiest case to get *nearly* right, which is why it is worth its |
+| [Archiving a web page](archiving-web-pages.html) | `archiving-web-pages` | — | **A URL is not an archive.** It is a request you hope somebody else keeps |
+| [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
+| [bib-photo-ingestion-watcher](bib-photo-ingestion-watcher.html) | `bib-photo-ingestion-watcher` | — | The automation half of the [`bib-human-review`](bib-human-review.md) workflow. |
+| [Bibliography QA](bib-qa.html) | `bib-qa` | — | cd content && bun run pipeline/bib-qa.ts --check-urls |
+| [Filing a source: what Dublin Core carries, and what it does not](filing-dublin-core.html) | `filing-dublin-core` | — | This is the **librarian's** half of intake, not the ingestion engine's. A file |
+| [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
+| [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
+
+## Document ingestion methods (ingestion)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
+| [L1 document ingestion](l1-document-ingestion.html) | `l1-document-ingestion` | — | **This is a refinement, not the entry point.** The harness's |
+| [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 
 ## FHIR IG authoring (fhir-ig-authoring)
 
@@ -383,6 +401,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
 | [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
 | [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
+| [ig-site-links](ig-site-links.html) | `ig-site-links` | — | > Skill id: `ig-site-links` · Package: `fhir-ig-base` · Instance: |
 | [ig-site-theme](ig-site-theme.html) | `ig-site-theme` | — | > Skill id: `ig-site-theme` · Package: `fhir-ig-base` · Instance: |
 
 ## WHO IRIS (catalogue instance)
@@ -416,7 +435,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [FFI roundtrip audit](ffi-roundtrip-audit.html) | `ffi-roundtrip-audit` | — | total = mp.mpf(0) |
 | [Lean 4 Formalizer (Narrative to Proof)](formalizer.html) | `formalizer` | — | The base ring rule, import ordering, and library synthesis. Read before |
 | [Gröbner Basis](groebner-basis.html) | `groebner-basis` | — |  |
-| [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | A from-scratch compile re-parses the heavy preamble on **every latexmk |
+| [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | ``` |
 | [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
 | [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
 | [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | > This is an instantiation of the general compiled-artefact-cache pattern. See `cat-harness/skills/p |

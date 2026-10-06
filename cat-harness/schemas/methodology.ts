@@ -97,7 +97,7 @@ export const MethodologyFrontMatterSchema = z
      * they cover, and are silent on different things. Forcing a choice between
      * them would make the node cite less than it rests on.
      *
-     * An array even for one, matching `graphKinds` and for the same reason:
+     * An array even for one, matching `graphTypologies` and for the same reason:
      * a field with two spellings is a field every consumer must branch on, and
      * the one-element case is the one that would silently become the default.
      * A present-but-empty array is refused — an empty list of sources is

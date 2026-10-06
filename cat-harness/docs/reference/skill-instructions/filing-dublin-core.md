@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/library/library-core/filing-dublin-core.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/filing-dublin-core.md) — do not edit here.
+> Generated from [`folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/filing-dublin-core.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/filing-dublin-core.md){: .fa-edit-source }
 
 {% raw %}
 # Filing a source: what Dublin Core carries, and what it does not
@@ -17,11 +17,11 @@ This is the **librarian's** half of intake, not the ingestion engine's. A file
 lands in `uploads/`; describing *what it is* is filing, and deriving structure
 from it is `library-ingestion`. Keeping those apart is why `uploads/` and
 `library/` are two stages rather than one directory
-([`uploads-and-library-are-two-stages-of-one-pipeline`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md)).
+([`uploads-and-library-are-two-stages-of-one-pipeline`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/guides-document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md)).
 
 ## The line, and it is drawn by the vocabulary
 
-`content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md`
+`content/docs/guides-document-ingestion/how-much-of-this-does-dublin-core-carry.md`
 settles this and is the source of truth; the summary is:
 
 **Dublin Core covers the bibliographic layer well** — `dcterms:title`,

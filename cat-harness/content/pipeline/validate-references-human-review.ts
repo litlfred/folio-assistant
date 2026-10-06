@@ -3,7 +3,9 @@
  *
  * Every entry in `content/schema/references.ts` must be **human-reviewed against
  * its source**. This script computes each entry's `entryHash` (staleness gate),
- * reads the `content/schema/references.review.json` status sidecar, and flags
+ * reads each reference's human review — the attestation store's `bib-human-review`
+ * family, or the legacy `<folio>/schema/references.review.json` before migration
+ * (`schemas/bib-attestations.ts`) — and flags
  * every reference whose *effective* status is not `validated` (absent ⇒
  * `unreviewed` by default; a `validated` entry whose `entryHash` has drifted is
  * stale ⇒ treated as `unreviewed`).
@@ -22,21 +24,15 @@
  * @module content/pipeline/validate-references-human-review
  */
 
-import { folioDir, deferResolution} from "../../schemas/cat-harness.js";
-import { readFileSync, existsSync } from "fs";
-import { join } from "path";
+import { deferResolution } from "../../schemas/cat-harness.js";
 import { createHash } from "crypto";
 import { references } from "./references-registry-di";
 import type { Data as CSLData } from "csl-json";
 import { findContentRepoRoot } from "./repo-root";
+import { BIB_REVIEW_STATUSES, readHumanReviews } from "../../schemas/bib-attestations";
 
-const STATUS_ENUM = [
-  "unreviewed",
-  "source-in-repo",
-  "issue-open",
-  "photo-uploaded",
-  "validated",
-] as const;
+/** The status vocabulary — the schema's (`BIB_REVIEW_STATUSES`), not a second copy. */
+const STATUS_ENUM = BIB_REVIEW_STATUSES;
 type ReviewStatus = (typeof STATUS_ENUM)[number];
 
 interface ReviewEntry {
@@ -53,15 +49,15 @@ interface ReviewSidecar {
   reviews: Record<string, ReviewEntry>;
 }
 
-// The review sidecar sits BESIDE the bibliography it annotates, which is
-// folio content (`content/schema/references.review.json`). Computing it from
-// `import.meta.dir` pointed at `<folio-assistant>/schemas/` — a path that does
-// not exist, and one the folio's symlinked embedding resolves to even when the
-// pipeline is run from the content repo.
-const SIDECAR_PATH = deferResolution(() => join(folioDir(findContentRepoRoot()),  "schema", "references.review.json"), {
+// The reviews are read through the ONE reader of the human-review ledger:
+// the attestation store's `bib-human-review` family, or the legacy
+// `<folio>/schema/references.review.json` while the store has none. It says
+// which. (The sidecar path was once computed from `import.meta.dir`, pointing
+// into the platform; the reader resolves from the content repo root.)
+const CONTENT_ROOT = deferResolution(() => findContentRepoRoot(), {
   moduleUrl: import.meta.url,
-  what: "SIDECAR_PATH",
-  under: findContentRepoRoot(),
+  what: "CONTENT_ROOT",
+  under: process.cwd(),
 });
 
 /** Recursively key-sorted JSON, so the hash is independent of source key order.
@@ -93,9 +89,9 @@ export function entryHash(entry: CSLData): string {
 }
 
 function loadSidecar(): ReviewSidecar {
-  if (!existsSync(SIDECAR_PATH())) return { reviews: {} };
-  const raw = JSON.parse(readFileSync(SIDECAR_PATH(), "utf-8"));
-  return { _meta: raw._meta, reviews: raw.reviews ?? {} };
+  const read = readHumanReviews(CONTENT_ROOT());
+  console.error(read.note);
+  return { _meta: read.meta, reviews: read.reviews as Record<string, ReviewEntry> };
 }
 
 interface Flag {

@@ -98,7 +98,7 @@ Three facts, in case the question comes up again:
   `memoryForRoles` filters on `tags.roles`; the 26 memory entries keep it.
   The first pass of the excision took all 140 files and `agent-memory.test.ts`
   caught it — every entry untagged means every lane sees everything. Sharing
-  a key name across graph kinds is not sharing a field, and
+  a key name across graph typologies is not sharing a field, and
   `check:retired-front-matter` keys its exemption on `$schema`, never on the
   directory.
 - **It was dangling from its first commit, not from a later rename.** At

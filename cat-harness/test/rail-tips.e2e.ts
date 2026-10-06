@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -30,8 +30,10 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = join(ROOT, siteDirFor(ROOT));
-const CSS = readFileSync(join(SITE, "assets/css/docs-ui.css"), "utf8");
-const JS = readFileSync(join(SITE, "assets/js/docs-ui.js"), "utf8");
+// The row's own stylesheet FIRST, as `head_custom.html` links it (beans `lhvt`, `9rq1`).
+const CSS = readFileSync(join(SITE, "assets/css/navbar-row.css"), "utf8") + "\n" + readFileSync(join(SITE, "assets/css/docs-ui.css"), "utf8");
+// `navbar-row.js` FIRST — it draws the row, and `docs-ui.js` calls it — as `head_custom.html` loads them.
+const JS = readFileSync(join(SITE, "assets/js/navbar-row.js"), "utf8") + "\n" + readFileSync(join(SITE, "assets/js/docs-ui.js"), "utf8");
 const QR = readFileSync(join(SITE, "assets/js/vendor/qrcode.js"), "utf8");
 const BASEURL = "/folio-assistant";
 const ROW = (JSON.parse(readFileSync(join(SITE, "_data/harness.json"), "utf8")) as { navbar: unknown }).navbar;
@@ -78,12 +80,28 @@ function landing(): string {
 </body></html>`;
 }
 
+/** A file under the site's `assets/`, served as itself — `undefined` for anything else. */
+function siteAsset(path: string): { contentType: string; body: string } | undefined {
+  const at = path.indexOf("/assets/");
+  if (at < 0) return undefined;
+  const file = join(SITE, path.slice(at + 1));
+  if (!existsSync(file)) return undefined;
+  const type = file.endsWith(".css") ? "text/css" : file.endsWith(".js") ? "text/javascript" : "application/octet-stream";
+  return { contentType: type, body: readFileSync(file, "utf8") };
+}
+
 async function open(p: Page, which: "landing" | "viewer"): Promise<string[]> {
   const errors: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
-  await p.route("http://rail.fixture/**", (r) =>
-    r.fulfill({ contentType: "text/html", body: which === "landing" ? landing() : VIEWER }),
-  );
+  await p.route("http://rail.fixture/**", (r) => {
+    // A committed viewer links the row's own files (`injectRail`, bean
+    // `lhvt`); serve the real ones there rather than the page's HTML.
+    const path = new URL(r.request().url()).pathname;
+    // The site's own assets — the row's and the rail's files a railed page links (beans `lhvt`, `lnoy`).
+    const asset = siteAsset(path);
+    if (asset) return r.fulfill(asset);
+    return r.fulfill({ contentType: "text/html", body: which === "landing" ? landing() : VIEWER });
+  });
   await p.goto("http://rail.fixture/" + which + "/", { waitUntil: "load" });
   // At rest means the pointer is NOT on the strip — see navbar-row.e2e.ts.
   await p.mouse.move(1200, 700);
@@ -105,7 +123,7 @@ async function harnessesAtRest(p: Page, which: "landing" | "viewer") {
   return p.evaluate((sel) => {
     const strip = document.querySelector(sel)!.getBoundingClientRect();
     // In the footer, or -- on a theme page, once `mountSidebarRail` (ob3m
-    // finding 7) has moved it -- beside Graphs in the one scroller.
+    // finding 7) has moved it -- beside Folders in the one scroller.
     const sum = [...document.querySelectorAll(
       sel + " .fa-nav-bottom > .fa-nav-group > summary, " + sel + " .fa-nav-middle > .fa-nav-harness-group > summary",
     )].find(
@@ -175,7 +193,12 @@ test.describe("landing: every icon in the strip is named on hover and on keyboar
     expect(await open(page, "landing")).toEqual([]);
     const icons = page.locator(".side-bar > .fa-nav-icons > .fa-nav-icon");
     const n = await icons.count();
-    expect(n).toBeGreaterThanOrEqual(6);
+    // Every declared slot (the retired `close` aside) plus the light/dark
+    // switch. Read from the declaration, not a number: the owner changes the
+    // row (2026-10-05 dropped processes and kg, bean `82qs`).
+    const declared = (JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "cat-harness.json"), "utf-8"))
+      .navbarIcons as string[]).filter((i) => i !== "close");
+    expect(n).toBe(declared.length + 1);
     for (let i = 0; i < n; i++) {
       const box = (await icons.nth(i).boundingBox())!;
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);

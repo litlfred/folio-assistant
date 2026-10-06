@@ -13,67 +13,49 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`Gemfile`](Gemfile) | a file |  |
 | [`Gemfile.lock`](Gemfile.lock) | a file |  |
 | [`_config.yml`](_config.yml) | a file |  |
-| [`accessibility.md`](accessibility.md) | Accessibility |  |
-| [`agentic-harness.md`](agentic-harness.md) | Agentic harness |  |
-| [`architecture.md`](architecture.md) | Architecture |  |
-| [`beans-and-todos.md`](beans-and-todos.md) | Beans and todos |  |
-| [`content-types.md`](content-types.md) | [Content](https://litlfred.github.io/bootstrap/schemas/#content) types |  |
-| [`contributing.md`](contributing.md) | Contributing |  |
-| [`crdm-methodology.md`](crdm-methodology.md) | CRDM methodology |  |
-| [`detangle.md`](detangle.md) | detangle |  |
 | [`docs.json`](docs.json) | data |  |
-| [`document-ingestion.md`](document-ingestion.md) | Document ingestion |  |
-| [`evidence.md`](evidence.md) | Evidence for a recommendation |  |
-| [`fhir-content.md`](fhir-content.md) | FHIR content |  |
 | [`folio-assistant-migration.md`](folio-assistant-migration.md) | Folio-Assistant Infrastructure Migration (miga) |  |
-| [`getting-started.md`](getting-started.md) | Getting started |  |
-| [`harness.md`](harness.md) | The [Harness](https://litlfred.github.io/bootstrap/schemas/#harness) |  |
-| [`harnessed-kg-overview.md`](harnessed-kg-overview.md) | Harnessed [Knowledge Graph](https://litlfred.github.io/bootstrap/schemas/#knowledge-graph) Overview |  |
-| [`ig-publisher.md`](ig-publisher.md) | The FHIR IG Publisher |  |
 | [`index.md`](index.md) | "folio-assistant — a content-agnostic agent skills framework." |  |
-| [`installation.md`](installation.md) | Installation |  |
-| [`kg-navigation.md`](kg-navigation.md) | kg-navigation |  |
-| [`knowledge-graph.md`](knowledge-graph.md) | The [Knowledge Graph](https://litlfred.github.io/bootstrap/schemas/#knowledge-graph) |  |
-| [`managing-agent-context.md`](managing-agent-context.md) | Managing agent context |  |
 | [`platform.md`](platform.md) | "What the platform does, and how its processes, roles, tasks and skills fit together." |  |
-| [`publication-workflow.md`](publication-workflow.md) | Publication workflow |  |
 | [`qou-migration-checklist.md`](qou-migration-checklist.md) | qou migration checklist |  |
 | [`sage-mcp.md`](sage-mcp.md) | Sage as an MCP server (lazily loaded) |  |
-| [`skills.md`](skills.md) | [Skills](https://litlfred.github.io/bootstrap/schemas/#skill) & roles |  |
-| [`subgraph-viewers.md`](subgraph-viewers.md) | [Subgraph](https://litlfred.github.io/bootstrap/schemas/#subgraph) viewers |  |
-| [`swarm-management.md`](swarm-management.md) | Swarm management |  |
 | [`todos.json`](todos.json) | data |  |
 | [`todos.jsonld`](todos.jsonld) | data |  |
-| [`tool-graph.md`](tool-graph.md) | "What a Tool is, how it differs from a skill, and how the two are joined without being conflated." |  |
-| [`translation-support.md`](translation-support.md) | Translation support |  |
 | [`_data/`](_data/) | _nothing declares what this holds_ | |
 | [`_includes/`](_includes/) | _nothing declares what this holds_ | |
 | [`ar/`](ar/) | _nothing declares what this holds_ | |
-| [`architecture/`](architecture/) | _nothing declares what this holds_ | |
 | [`assets/`](assets/) | _nothing declares what this holds_ | |
 | [`attestations/`](attestations/) | _nothing declares what this holds_ | |
 | [`beans/`](beans/) | _nothing declares what this holds_ | |
 | [`bootstrap/`](bootstrap/) | _nothing declares what this holds_ | |
 | [`cat-harness/`](cat-harness/) | _nothing declares what this holds_ | |
+| [`concepts/`](concepts/README.md) | Concepts: what the harness, the knowledge graph and their parts are. | |
+| [`en/`](en/) | _nothing declares what this holds_ | |
 | [`es/`](es/) | _nothing declares what this holds_ | |
 | [`external-schemas/`](external-schemas/) | _nothing declares what this holds_ | |
+| [`fhir/`](fhir/README.md) | FHIR: FHIR content and the IG Publisher. | |
 | [`fr/`](fr/) | _nothing declares what this holds_ | |
-| [`fsh-guts/`](fsh-guts/) | _nothing declares what this holds_ | |
 | [`glossary/`](glossary/) | _nothing declares what this holds_ | |
-| [`guides/`](guides/) | _nothing declares what this holds_ | |
+| [`guides/`](guides/README.md) | Authoring guides: how to do a task with the harness, one guide per task. | |
 | [`health/`](health/) | _nothing declares what this holds_ | |
 | [`issue-marks/`](issue-marks/) | _nothing declares what this holds_ | |
 | [`lsi/`](lsi/) | _nothing declares what this holds_ | |
 | [`methodologies/`](methodologies/) | _nothing declares what this holds_ | |
+| [`payload/`](payload/) | _nothing declares what this holds_ | |
+| [`process/`](process/README.md) | [Process](https://litlfred.github.io/bootstrap/schemas/#process) & methodology: the publication workflow, CRDM and what counts as evidence. | |
 | [`processes/`](processes/) | _nothing declares what this holds_ | |
-| [`proposals/`](proposals/) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
+| [`proposals/`](proposals/README.md) | Proposals for this harness's own features — initial analysis, MVP, options — argued, and updated in place, before and while they are built. | |
 | [`prov-qaqc/`](prov-qaqc/) | _nothing declares what this holds_ | |
 | [`qa/`](qa/) | _nothing declares what this holds_ | |
+| [`quality/`](quality/) | _nothing declares what this holds_ | |
 | [`reference/`](reference/) | _nothing declares what this holds_ | |
-| [`requirements/`](requirements/) | What this harness promises, one page per shipped feature: a proposal MOVED here when its feature ships, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. | |
+| [`requirements/`](requirements/README.md) | What this harness promises, one page per shipped feature: a proposal MOVED here when its feature ships, its front matter a `Requirement` (`bootstrap/schemas/requirement.schema.json`), checked by `check:requirements`. | |
 | [`research-and-analysis/`](research-and-analysis/) | _nothing declares what this holds_ | |
 | [`ru/`](ru/) | _nothing declares what this holds_ | |
 | [`site/`](site/) | _nothing declares what this holds_ | |
+| [`slices/`](slices/) | _nothing declares what this holds_ | |
+| [`start/`](start/README.md) | Start here: installing, getting started, contributing and accessibility. | |
+| [`subgraph/`](subgraph/) | _nothing declares what this holds_ | |
 | [`subscriptions/`](subscriptions/) | _nothing declares what this holds_ | |
 | [`swimlane-glossary/`](swimlane-glossary/) | _nothing declares what this holds_ | |
 | [`themes/`](themes/) | _nothing declares what this holds_ | |

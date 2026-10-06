@@ -51,20 +51,20 @@ function mount(root: string, id: string, into: string): void {
 
 describe("a directory that never moved", () => {
   test("reads from the checkout, and says so", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"] }]);
     mkdirSync(join(root, "beans"));
     expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: join(root, "beans"), from: "checkout", id: "beans", path: "beans" });
   });
 
   test("a COMMIT-keyed branch directory still reads from the checkout: only a tip mount relocates a read", () => {
-    const root = repo([{ id: "qa", path: "test/results/", graphKinds: ["qa"], storage: { branch: "cat/cat-harness/qa-reports", keyedBy: "commit" } }]);
+    const root = repo([{ id: "qa", path: "test/results/", graphTypologies: ["qa"], storage: { branch: "cat/cat-harness/qa-reports", keyedBy: "commit" } }]);
     expect(graphReadPath("qa", root)).toMatchObject({ state: "ok", from: "checkout" });
   });
 });
 
 describe("a tip-keyed directory, through the cutover", () => {
   test("BEFORE: declaration flipped, files still tracked — the checkout IS the store", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     mkdirSync(join(root, "beans"));
     writeFileSync(join(root, "beans", "a.md"), "x\n");
     git(root, "add", "beans/a.md");
@@ -80,14 +80,14 @@ describe("a tip-keyed directory, through the cutover", () => {
   });
 
   test("AFTER: mounted — the marker's `into`, which need not be the declared path", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const into = join(root, "elsewhere");
     mount(root, "beans", into);
     expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: into, from: "mount", id: "beans", path: "beans" });
   });
 
   test("BETWEEN: cut over and NOT mounted — refused, never a plausible empty directory", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const r = graphReadPath("beans", root);
     expect(r.state).toBe("refused");
     if (r.state !== "refused") throw new Error("unreachable");
@@ -98,7 +98,7 @@ describe("a tip-keyed directory, through the cutover", () => {
   });
 
   test("the SAME call serves before and after the cutover — the migration is not two migrations", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     mkdirSync(join(root, "beans"));
     writeFileSync(join(root, "beans", "a.md"), "x\n");
     git(root, "add", "beans/a.md");
@@ -129,7 +129,7 @@ describe("what it refuses to guess", () => {
 
   test("a declaration carrying both `source` and `storage` is refused with the resolver's message", () => {
     const root = repo([
-      { id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP, source: { kind: "branch", branch: TIP.branch, keyedBy: "tip" } },
+      { id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP, source: { kind: "branch", branch: TIP.branch, keyedBy: "tip" } },
     ]);
     const r = graphReadPath("beans", root);
     expect(r.state).toBe("refused");
@@ -137,7 +137,7 @@ describe("what it refuses to guess", () => {
   });
 
   test("the modern `source` spelling reaches the same answer as the legacy `storage`", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], source: { kind: "branch", branch: TIP.branch, keyedBy: "tip" } }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], source: { kind: "branch", branch: TIP.branch, keyedBy: "tip" } }]);
     const into = join(root, "beans");
     mount(root, "beans", into);
     expect(graphReadPath("beans", root)).toEqual({ state: "ok", at: into, from: "mount", id: "beans", path: "beans" });
@@ -146,13 +146,13 @@ describe("what it refuses to guess", () => {
 
 describe("mustReadGraph", () => {
   test("hands back the path when there is one", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"] }]);
     mkdirSync(join(root, "beans"));
     expect(mustReadGraph("beans", root)).toEqual({ at: join(root, "beans"), from: "checkout" });
   });
 
   test("throws carrying the remedy — a crash beats a clean run over an empty directory", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     expect(() => mustReadGraph("beans", root)).toThrow(/cannot read graph "beans".*state:mount/s);
   });
 });
@@ -165,11 +165,11 @@ describe("mustReadGraph", () => {
 describe("readBeanStore relocates, and refuses", () => {
   /** A repository whose root instance declares `beans`, with a bean graph in it. */
   function beansRepo(storage?: Record<string, unknown>): string {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], ...(storage ? { storage } : {}) }]);
     mkdirSync(join(root, "beans", "defs"), { recursive: true });
     writeFileSync(
       join(root, "beans", "beans.json"),
-      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }),
+      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }] }),
     );
     writeFileSync(join(root, "beans", "defs", "x.md"), "---\n# fx-1\ntitle: one\nstatus: todo\ntype: task\n---\nbody\n");
     return root;
@@ -193,12 +193,12 @@ describe("readBeanStore relocates, and refuses", () => {
   });
 
   test("cut over and mounted: reads the MOUNT, and `defs` resolves within it", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const into = join(root, "mounted-beans");
     mkdirSync(join(into, "defs"), { recursive: true });
     writeFileSync(
       join(into, "beans.json"),
-      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }),
+      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }] }),
     );
     writeFileSync(join(into, "defs", "y.md"), "---\n# fx-2\ntitle: two\nstatus: todo\ntype: task\n---\nbody\n");
     mount(root, "beans", into);
@@ -211,7 +211,7 @@ describe("readBeanStore relocates, and refuses", () => {
   });
 
   test("cut over and NOT mounted: `unreachable`, which is NOT `declared-but-absent`", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const s = readBeanStore(root);
     expect(s.state).toBe("unreachable");
     if (s.state !== "unreachable") throw new Error("unreachable");
@@ -220,7 +220,7 @@ describe("readBeanStore relocates, and refuses", () => {
   });
 
   test("readBeanFiles THROWS on `unreachable` — five gates read through it and `null` is a pass", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     expect(() => readBeanFiles(root)).toThrow(/cannot read the bean store.*state:mount/s);
     // ...while a repository that genuinely has no store still gets `null`.
     expect(readBeanFiles(repo([]))).toBeNull();
@@ -230,11 +230,11 @@ describe("readBeanStore relocates, and refuses", () => {
 // ── The readers that funnel through `resolveBeanDefs` (bean `9ofm` row D) ───
 describe("resolveBeanDefs carries the third state, so ten call sites inherit it", () => {
   function beansRepo(storage?: Record<string, unknown>): string {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], ...(storage ? { storage } : {}) }]);
     mkdirSync(join(root, "beans", "defs"), { recursive: true });
     writeFileSync(
       join(root, "beans", "beans.json"),
-      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }),
+      JSON.stringify({ name: "fixture", directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }] }),
     );
     writeFileSync(join(root, "beans", "defs", "x.md"), "---\n# fx-1\ntitle: one\nstatus: todo\ntype: task\n---\nbody\n");
     return root;
@@ -247,16 +247,16 @@ describe("resolveBeanDefs carries the third state, so ten call sites inherit it"
   });
 
   test("mounted: `dir` resolves INSIDE the mount, so `defs` follows the graph", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const into = join(root, "mounted");
     mkdirSync(join(into, "defs"), { recursive: true });
-    writeFileSync(join(into, "beans.json"), JSON.stringify({ name: "f", directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }] }));
+    writeFileSync(join(into, "beans.json"), JSON.stringify({ name: "f", directories: [{ id: "defs", path: "defs", graphTypologies: ["bean-defs"] }] }));
     mount(root, "beans", into);
     expect(resolveBeanDefs(root).dir).toBe(join(into, "defs"));
   });
 
   test("unreachable: `dir` is null but `declared` stays true — the declaration is CORRECT", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const r = resolveBeanDefs(root);
     expect(r.dir).toBeNull();
     expect(r.declared).toBe(true);
@@ -264,7 +264,7 @@ describe("resolveBeanDefs carries the third state, so ten call sites inherit it"
   });
 
   test("beanDefsDir THROWS on unreachable: its `null` already means 'no store' to ten callers", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     expect(() => beanDefsDir(root)).toThrow(/cannot resolve the bean store.*state:mount/s);
 
     // ...while a repository with NO declaration at all still gets the
@@ -275,13 +275,13 @@ describe("resolveBeanDefs carries the third state, so ten call sites inherit it"
 
     // `null` is for a bean graph that declares no `bean-defs` NODE — a
     // different question from either of the two above.
-    const noNode = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"] }]);
+    const noNode = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"] }]);
     mkdirSync(join(noNode, "beans"), { recursive: true });
     // At least one directory (the schema requires it), of a kind that is NOT
     // `bean-defs` — that is what "declares no bean-defs node" means.
     writeFileSync(
       join(noNode, "beans", "beans.json"),
-      JSON.stringify({ name: "f", directories: [{ id: "notes", path: "notes", graphKinds: ["bean-notes"] }] }),
+      JSON.stringify({ name: "f", directories: [{ id: "notes", path: "notes", graphTypologies: ["bean-notes"] }] }),
     );
     expect(beanDefsDir(noNode)).toBeNull();
   });
@@ -289,7 +289,7 @@ describe("resolveBeanDefs carries the third state, so ten call sites inherit it"
   test("readBeans inherits it rather than reporting an empty roadmap", () => {
     const root = beansRepo();
     expect(readBeans(root)?.map((b) => b.id)).toEqual(["fx-1"]);
-    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const cut = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     expect(() => readBeans(cut)).toThrow(/cannot resolve the bean store/);
   });
 });
@@ -297,7 +297,7 @@ describe("resolveBeanDefs carries the third state, so ten call sites inherit it"
 describe("beans-fallback: the CLI-absent reader relocates, and refuses", () => {
   /** A repo declaring `beans`, with `.beans.yml` pointing at `beans/defs`. */
   function fallbackRepo(storage?: Record<string, unknown>): string {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], ...(storage ? { storage } : {}) }]);
     writeFileSync(join(root, ".beans.yml"), "path: beans/defs\nprefix: fx-\nid_length: 4\n");
     return root;
   }
@@ -327,7 +327,7 @@ describe("beans-fallback: the CLI-absent reader relocates, and refuses", () => {
   });
 
   test("a `.beans.yml` path OUTSIDE the declared graph is left alone, not invented onto it", () => {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     writeFileSync(join(root, ".beans.yml"), "path: somewhere/else\n");
     const cfg = readStoreConfig(root);
     expect(fallbackStoreDir(root, cfg)).toEqual({ at: join(root, "somewhere", "else") });
@@ -339,17 +339,17 @@ describe("todos, issue-marks and the claim writer resolve by declared ID", () =>
   test("issue-marks: `seenPath` lands in the mount, and REFUSES when the graph is unreachable", async () => {
     const { seenPath } = await import("../../src/issue-watch/seen-comments.ts");
 
-    const plain = repo([{ id: "issue-marks", path: "issue-marks/", graphKinds: ["issue-marks"] }]);
+    const plain = repo([{ id: "issue-marks", path: "issue-marks/", graphTypologies: ["issue-marks"] }]);
     expect(seenPath(plain, "o", "r", 7)).toBe(join(plain, "issue-marks", "o-r-7.json"));
 
-    const mounted = repo([{ id: "issue-marks", path: "issue-marks/", graphKinds: ["issue-marks"], storage: { branch: "cat/cat-harness/issue-marks", keyedBy: "tip" } }]);
+    const mounted = repo([{ id: "issue-marks", path: "issue-marks/", graphTypologies: ["issue-marks"], storage: { branch: "cat/cat-harness/issue-marks", keyedBy: "tip" } }]);
     const into = join(mounted, "im-mount");
     mount(mounted, "issue-marks", into);
     expect(seenPath(mounted, "o", "r", 7)).toBe(join(into, "o-r-7.json"));
 
     // Unreachable: a path under the repo root would make `loadSeen` report
     // "not seen" for every comment, forever, in silence.
-    const cut = repo([{ id: "issue-marks", path: "issue-marks/", graphKinds: ["issue-marks"], storage: { branch: "cat/cat-harness/issue-marks", keyedBy: "tip" } }]);
+    const cut = repo([{ id: "issue-marks", path: "issue-marks/", graphTypologies: ["issue-marks"], storage: { branch: "cat/cat-harness/issue-marks", keyedBy: "tip" } }]);
     expect(() => seenPath(cut, "o", "r", 7)).toThrow(/cannot resolve the issue-marks graph/);
   });
 
@@ -372,7 +372,7 @@ describe("todos, issue-marks and the claim writer resolve by declared ID", () =>
   test("claim-bean DISPATCHES to the branch store once the store is mounted — it no longer pushes to main", async () => {
     const { claimOnDefaultBranch } = await import("../claim-bean.ts");
 
-    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const cut = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const into = join(cut, "beans-mount");
     mount(cut, "beans", into);
     const r = claimOnDefaultBranch("fx-1", "some-branch", { repo: cut });
@@ -391,7 +391,7 @@ describe("todos, issue-marks and the claim writer resolve by declared ID", () =>
     // Declaration names the branch, files still tracked => the default branch
     // IS the store, so this must behave exactly as before. It gets past the
     // pre-flight and fails later, on the store lookup, not on the guard.
-    const notCutOver = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const notCutOver = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     mkdirSync(join(notCutOver, "beans", "defs"), { recursive: true });
     writeFileSync(join(notCutOver, "beans", "defs", "a.md"), "---\n# fx-1\ntitle: t\nstatus: todo\ntype: task\n---\nb\n");
     git(notCutOver, "add", "beans/defs/a.md");
@@ -406,7 +406,7 @@ describe("todos, issue-marks and the claim writer resolve by declared ID", () =>
 describe("resolveBeanGraphNode and the workflow instance store", () => {
   /** A repo whose bean graph declares `defs` AND `workflows`. */
   function graphRepo(storage?: Record<string, unknown>): string {
-    const root = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], ...(storage ? { storage } : {}) }]);
+    const root = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], ...(storage ? { storage } : {}) }]);
     mkdirSync(join(root, "beans", "workflows"), { recursive: true });
     mkdirSync(join(root, "beans", "defs"), { recursive: true });
     writeFileSync(
@@ -414,8 +414,8 @@ describe("resolveBeanGraphNode and the workflow instance store", () => {
       JSON.stringify({
         name: "fixture",
         directories: [
-          { id: "defs", path: "defs", graphKinds: ["bean-defs"] },
-          { id: "workflows", path: "workflows", graphKinds: ["workflow-state"] },
+          { id: "defs", path: "defs", graphTypologies: ["bean-defs"] },
+          { id: "workflows", path: "workflows", graphTypologies: ["workflow-state"] },
         ],
       }),
     );
@@ -429,12 +429,12 @@ describe("resolveBeanGraphNode and the workflow instance store", () => {
     expect(resolveBeanGraphNode(plain, "workflow-state").dir).toBe(join(plain, "beans", "workflows"));
 
     // Mounted: `workflows` follows the graph, exactly as `defs` does.
-    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const cut = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const into = join(cut, "mount");
     mkdirSync(join(into, "workflows"), { recursive: true });
     writeFileSync(
       join(into, "beans.json"),
-      JSON.stringify({ name: "f", directories: [{ id: "workflows", path: "workflows", graphKinds: ["workflow-state"] }] }),
+      JSON.stringify({ name: "f", directories: [{ id: "workflows", path: "workflows", graphTypologies: ["workflow-state"] }] }),
     );
     mount(cut, "beans", into);
     expect(resolveBeanGraphNode(cut, "workflow-state").dir).toBe(join(into, "workflows"));
@@ -442,7 +442,7 @@ describe("resolveBeanGraphNode and the workflow instance store", () => {
 
   test("unreachable is carried, not turned into a path that happens not to exist", async () => {
     const { resolveBeanGraphNode } = await import("../beans.ts");
-    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const cut = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     const r = resolveBeanGraphNode(cut, "workflow-state");
     expect(r.dir).toBeNull();
     expect(r.declared).toBe(true);
@@ -464,10 +464,26 @@ describe("resolveBeanGraphNode and the workflow instance store", () => {
     expect(workflowDir(plain)).toBe(join(plain, "beans", "workflows"));
 
     clearWorkflowDirCache();
-    const cut = repo([{ id: "beans", path: "beans/", graphKinds: ["beans"], storage: TIP }]);
+    const cut = repo([{ id: "beans", path: "beans/", graphTypologies: ["beans"], storage: TIP }]);
     // `listInstances` would return [] and every running workflow would read as
     // never started; `saveInstance` would write where nothing looks.
     expect(() => workflowDir(cut)).toThrow(/cannot resolve the workflow instance directory/);
     clearWorkflowDirCache();
+  });
+});
+
+describe("a branch FAMILY (bean lehh)", () => {
+  test("is refused, never read as the empty declared path", () => {
+    const root = repo([
+      {
+        id: "ig-ast",
+        path: "ig-ast/",
+        graphTypologies: ["docs"],
+        storage: { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "the IG's package id" },
+      },
+    ]);
+    const r = graphReadPath("ig-ast", root);
+    expect(r.state).toBe("refused");
+    expect(JSON.stringify(r)).toContain("FAMILY");
   });
 });

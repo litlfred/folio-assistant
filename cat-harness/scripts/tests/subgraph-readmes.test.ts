@@ -23,7 +23,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
 import { BEGIN, END, plan, TEMPLATES } from "../../../bootstrap-tools/scripts/subgraph-readmes.ts";
-import { harnessInstances, harnessPlan, subdirDescriptions } from "../subgraph-readmes.ts";
+import { harnessInstances, harnessPlan, isStored, subdirDescriptions } from "../subgraph-readmes.ts";
 import { siteDir } from "../../schemas/cat-harness.ts";
 import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
@@ -86,20 +86,20 @@ function processRepo(): string {
       name: "demo",
       title: "Demo",
       directories: [
-        { id: "processes", path: "processes/", graphKinds: ["processes"], title: "Processes", description: "The diagrams." },
+        { id: "processes", path: "processes/", graphTypologies: ["processes"], title: "Processes", description: "The diagrams." },
         {
           id: "drop",
           path: "drop/",
-          graphKinds: ["skills"],
+          graphTypologies: ["skills"],
           title: "Drop",
           description: "Where files land.",
           coverage: { process: "demo-flow" },
         },
-        { id: "quiet", path: "quiet/", graphKinds: ["skills"], title: "Quiet", description: "Declares no process." },
+        { id: "quiet", path: "quiet/", graphTypologies: ["skills"], title: "Quiet", description: "Declares no process." },
         {
           id: "claimed",
           path: "claimed/",
-          graphKinds: ["skills"],
+          graphTypologies: ["skills"],
           title: "Claimed",
           description: "Names a diagram that is not there.",
           coverage: { process: "no-such-diagram" },
@@ -107,7 +107,7 @@ function processRepo(): string {
         {
           id: "unrendered",
           path: "unrendered/",
-          graphKinds: ["skills"],
+          graphTypologies: ["skills"],
           title: "Unrendered",
           description: "Names a real diagram nobody rendered.",
           coverage: { process: "unrendered-flow" },
@@ -227,7 +227,7 @@ describe("subdirectory rows — described from the declaration, or saying nothin
     JSON.stringify({
       name: "demo",
       title: "Demo",
-      directories: [{ id: "work", path: "work/", graphKinds: ["beans"], title: "Work", description: "The work plan." }],
+      directories: [{ id: "work", path: "work/", graphTypologies: ["beans"], title: "Work", description: "The work plan." }],
     }),
   );
   writeFileSync(join(inst, "README.md"), "# demo\n");
@@ -236,10 +236,10 @@ describe("subdirectory rows — described from the declaration, or saying nothin
     JSON.stringify({
       name: "demo",
       directories: [
-        { id: "parts", path: "parts", graphKinds: ["bean-defs"], description: "The parts of the plan." },
-        { id: "deep", path: "parts/deep", graphKinds: ["bean-defs"], description: "Not a row of work/." },
-        { id: "promoted", path: "promoted", graphKinds: ["beans"], subgraph: true, description: "Its own subgraph." },
-        { id: "nodesc", path: "nodesc", graphKinds: ["bean-defs"] },
+        { id: "parts", path: "parts", graphTypologies: ["bean-defs"], description: "The parts of the plan." },
+        { id: "deep", path: "parts/deep", graphTypologies: ["bean-defs"], description: "Not a row of work/." },
+        { id: "promoted", path: "promoted", graphTypologies: ["beans"], subgraph: true, description: "Its own subgraph." },
+        { id: "nodesc", path: "nodesc", graphTypologies: ["bean-defs"] },
       ],
     }),
   );
@@ -302,11 +302,11 @@ describe("a stored directory: the plan is the same with and without its working 
       name: "demo",
       title: "Demo",
       directories: [
-        { id: "tests", path: "tests/", graphKinds: ["skills"], title: "Tests", description: "The tests." },
+        { id: "tests", path: "tests/", graphTypologies: ["skills"], title: "Tests", description: "The tests." },
         {
           id: "qa",
           path: "tests/results/",
-          graphKinds: ["qa"],
+          graphTypologies: ["qa"],
           title: "Results",
           description: "Derived QA.",
           storage: { branch: "qa-reports", keyedBy: "commit" },
@@ -341,5 +341,13 @@ describe("a stored directory: the plan is the same with and without its working 
     expect(withCopy.findings).toEqual(without.findings);
     expect(without.findings["absent-directory"]).toEqual([]);
     rmSync(r, { recursive: true, force: true });
+  });
+});
+
+describe("isStored (bean lehh)", () => {
+  test("a branch FAMILY is stored: no README is written into its empty mount path", () => {
+    expect(isStored({ storage: { branchPrefix: "cat/fhir-harness/fhir-ast/", keyedBy: "family", keyFrom: "k" } })).toBe(true);
+    expect(isStored({ storage: { branch: "cat/cat-harness/beans", keyedBy: "tip" } })).toBe(true);
+    expect(isStored({})).toBe(false);
   });
 });

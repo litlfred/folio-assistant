@@ -18,9 +18,9 @@
  *
  * ## What is NOT here, deliberately
  *
- * **The graph kinds.** `tools`, `cat-harness`, `beans` and the rest are
- * `GraphKind` individuals, not classes (bean `3r47`), and each already carries
- * a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it from there. Restating them here would be a second answer to one question,
+ * **The graph typologies.** `tools`, `cat-harness`, `beans` and the rest are
+ * `GraphTypology` individuals, not classes (bean `3r47`), and each already carries
+ * a `summary` in `BASE_GRAPH_TYPOLOGIES`, so `ns-export` reads it from there. Restating them here would be a second answer to one question,
  * free to disagree — the drift this repository keeps paying for. A gloss below
  * for a term the registry already describes is a bug, and the completeness
  * test says so.
@@ -163,7 +163,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   /**
    * The two CONTENT-TYPE markers — what a repository asserts it is.
    *
-   * Distinct from a graph kind, which says what is in a DIRECTORY. These say
+   * Distinct from a graph typology, which says what is in a DIRECTORY. These say
    * what the REPOSITORY is, and a repository is a set of them: `smart-base` is
    * a DAK and a SUSHI project at once. `DAK` is not here because it is WHO's
    * term in WHO's namespace, which is the point — a marker's type IRI belongs
@@ -173,13 +173,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     layer: "harness",
     gloss:
       "A repository carrying a harness declaration — it names itself, its published stub, and the directories it holds.",
-    seeAlso: "/agentic-harness.html",
+    seeAlso: "/concepts/agentic-harness.html",
   },
   Folio: {
     layer: "harness",
     gloss:
       "A repository that authors folio content — it declares a content type, and `folio_init` wrote its config. Distinct from an Instance: this repository's `cat-harness/` is an Instance and is not a Folio.",
-    seeAlso: "/getting-started.html",
+    seeAlso: "/start/getting-started.html",
   },
   SushiProject: {
     layer: "harness",
@@ -191,13 +191,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     layer: "harness",
     gloss:
       "A standing rule an actor must hold while performing a task, bound to a process, a lane or an activity rather than loaded unconditionally. Resolution is first-binding-wins along that order, not a merge, so a reader asking why a rule applies here gets one answer.",
-    seeAlso: "/agentic-harness.html",
+    seeAlso: "/concepts/agentic-harness.html",
   },
   Requirement: {
     layer: "harness",
     gloss:
       "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
-    seeAlso: "/crdm-methodology.html",
+    seeAlso: "/process/crdm-methodology.html",
   },
   Lane: {
     gloss:
@@ -215,7 +215,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   SkillPackage: {
     gloss: "A directory of skills shipped and versioned together.",
-    seeAlso: "/skills.html",
+    seeAlso: "/concepts/skills.html",
   },
   Tool: {
     // The harness's own term. Bootstrap defined it until v3 of its terms; the
@@ -223,7 +223,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     // Actor runs, so the word belongs to the layer that has Tools.
     gloss:
       "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
-    seeAlso: "/architecture.html",
+    seeAlso: "/concepts/architecture.html",
   },
   Schema: {
     gloss: "A schema definition, itself a node in the knowledge graph rather than an island beside one.",
@@ -250,13 +250,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   RoleGraph: {
     gloss: "The role registry as a graph — every role, what it inherits, and the lanes it binds.",
   },
-  // Registered outside BASE_GRAPH_KINDS — `folio-graph-kind.ts` adds the first
+  // Registered outside BASE_GRAPH_TYPOLOGIES — `folio-graph-typology.ts` adds the first
   // and the other two are reporting states — so they carry no `summary` for
   // `ns-export` to read and are glossed here instead.
   FolioGraph: {
     layer: "core",
     gloss: "Authored content — the folio itself, rendered to a website.",
-    seeAlso: "/content-types.html",
+    seeAlso: "/concepts/content-types.html",
   },
   GlossaryGraph: {
     layer: "core",
@@ -278,7 +278,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   UnknownGraph: {
     layer: "core",
     gloss:
-      "A declared graph kind nothing recognises — reported as its own state, never silently treated as empty.",
+      "A declared graph typology nothing recognises — reported as its own state, never silently treated as empty.",
   },
 };
 
@@ -301,9 +301,30 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no " +
       "value belongs to no declared directory — vocabulary nodes are minted from the namespace " +
       "rather than from any file — and that absence is reported as its own state rather than " +
-      "folded into a default.",
-    replacedBy: "dcterms:isPartOf",
+      "folded into a default. Its own term, NOT `dcterms:isPartOf`: membership of a subgraph is a " +
+      "view of the graph, while `partOf` is structural containment, and one predicate for both " +
+      "made the two indistinguishable once compacted (bean `3f5f`).",
   },
+  hasMember: {
+    gloss:
+      "A node a named subgraph DIRECTLY contains: the deepest subgraph directory holding the " +
+      "node's source path, or its `partOf` parent's subgraph when it has no path. Transitive " +
+      "membership is not a second property — it is this one, followed through `hasSubgraph` " +
+      "(bean `c1m4`).",
+  },
+  hasSubgraph: {
+    gloss:
+      "A child named subgraph: a directory directly inside this one. The index names it by " +
+      "IRI; the hydrated file nests it, members and all.",
+  },
+  payload: {
+    gloss:
+      "Where a node's heavy content is published: an immutable, content-addressed file at " +
+      "`<BASE_URL>/payload/sha256/<hex>`, the hex being the SHA-256 of its bytes. A subgraph file " +
+      "carries this link in place of the body (bean `f233`).",
+  },
+  sha256: { gloss: "The lower-case hex SHA-256 digest of a payload's bytes — also its IRI's last segment." },
+  bytes: { gloss: "The size of a payload, in bytes." },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
   path: { gloss: "A declared directory's path, relative to the instance root." },
@@ -338,8 +359,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "new surface could exist.",
   },
   nodeKind: { gloss: "Which kind of node this is, where the type alone is not specific enough." },
-  graphKind: { gloss: "The kind of graph a directory declares it holds." },
-  holdsGraph: { gloss: "A graph kind found in this directory.", replacedBy: "dcterms:type" },
+  graphTypology: { gloss: "The kind of graph a directory declares it holds." },
+  holdsGraph: { gloss: "A graph typology found in this directory.", replacedBy: "dcterms:type" },
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
   scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
@@ -353,11 +374,27 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "a later kind — as resolved after the instance config's override.",
     replacedBy: "dcterms:source",
   },
-  contentSourceKind: { gloss: "Which kind of content source: `directory` or `branch`.", replacedBy: "dcterms:type" },
+  contentSourceKind: {
+    gloss:
+      "Which kind of content source: `directory`, `branch`, or a branch `family`, as a plain value. Its own term, NOT " +
+      "`dcterms:type`: that property's range is a class, and the published subgraph files use it as a " +
+      "link (`holdsGraph`), so a literal under it failed publish-verify's object-link check " +
+      "(ld-object-property-is-a-link, 2026-10-03).",
+  },
   contentSourceBranch: { gloss: "The repository branch a subgraph's content is read from.", replacedBy: "dcterms:identifier" },
   keyedBy: {
     gloss:
       "How entries are keyed on a content branch: one entry per `commit`, or one live copy at the `tip`.",
+  },
+  keyFrom: {
+    gloss:
+      "What the key of a branch FAMILY is, in words (an IG's package id; a Lean package and toolchain): each member " +
+      "branch is the family's prefix followed by one key.",
+  },
+  familyRepository: {
+    gloss:
+      "The remote repository (`owner/repo`) a branch FAMILY is read from. Absent when the family is materialised " +
+      "on the declaring repository itself.",
   },
   sourceDeclaredIn: {
     gloss:
@@ -368,7 +405,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss:
       "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. " +
       "Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — " +
-      "and whether a dependent gets one created is its graph kind's `perInstance`.",
+      "and whether a dependent gets one created is its graph typology's `perInstance`.",
   },
 
   // ── The trashcan ─────────────────────────────────────────────────────
@@ -498,6 +535,9 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   outgoing: { gloss: "A sequence flow leaving this node.", replacedBy: "bpmn:outgoing" },
   from: { gloss: "The node a sequence flow leaves.", replacedBy: "bpmn:sourceRef" },
   to: { gloss: "The node a sequence flow arrives at.", replacedBy: "bpmn:targetRef" },
+  calledElement: { gloss: "The process a call activity invokes.", replacedBy: "bpmn:calledElement" },
+  depiction: { gloss: "A rendered picture of this node, e.g. the SVG drawn from a process's diagram." },
+  sourceUrl: { gloss: "Where the file a node was read from can be viewed on its forge." },
   decisionRef: { gloss: "The DMN table that computes this gateway's branch." },
   decidedBy: { gloss: "The Decision node whose table computes this gateway's branch." },
   hitPolicy: { gloss: "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE." },
@@ -574,7 +614,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  *
  * `namespaces.ts` calls this to decide which namespace a term hangs off, so
  * the layer and the IRI cannot disagree. An earlier draft kept a separate
- * `GRAPH_KIND_LAYERS` map inside `ns-export.ts`, which decided the same fact a
+ * `GRAPH_TYPOLOGY_LAYERS` map inside `ns-export.ts`, which decided the same fact a
  * second time and in a different file from the one that mints the type — the
  * shape of drift this repository keeps paying for.
  *
@@ -587,6 +627,6 @@ export function termLayer(name: string): TermLayer {
   return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
 }
 
-// There is no per-kind class, so no layer table for one: a graph kind states
-// its own layer (`GraphKindDef.layer`) and is named by its individual,
-// `<ns>graphKind/<name>` (owner, 2026-09-30, bean `3r47`).
+// There is no per-kind class, so no layer table for one: a graph typology states
+// its own layer (`GraphTypologyDef.layer`) and is named by its individual,
+// `<ns>graphTypology/<name>` (owner, 2026-09-30, bean `3r47`).

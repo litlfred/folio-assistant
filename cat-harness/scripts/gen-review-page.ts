@@ -31,7 +31,7 @@
  * ## Review comments (bean `423d`)
  *
  * `../review-comments.json` is the `folio-review-comments` Tool's output:
- * `folio-review-comment/v1` todos, one per tagged PR comment. The page lists
+ * `review-comment/1.0.0` todos, one per tagged PR comment. The page lists
  * each block's comments under it. It gives three more groups their own
  * headings, because each would otherwise vanish:
  * - comments on blocks this PR did not change;
@@ -103,11 +103,14 @@ import { cleanRendered, renderInline, renderSideBySide, renderVisual, renderWord
 import { computeHeat, heatBucket, renderHeat } from "./review-heat.js";
 import { crumbFor, renderMinimap, renderOutline } from "./review-nav.js";
 import { wordDiff } from "./word-diff.js";
+import { darkRules } from "./lib/scheme-css.ts";
 
 const STYLE = `
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #d8d8d4; }
-  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #3a3a38; } }
-  body { margin: 0 auto; max-width: 78rem; padding: 2rem 1rem 4rem; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  ${darkRules(`:root { --fg: #e8e8e6; --bg: #161616; --muted: #a8a8a4; --link: #7db4ff; --rule: #3a3a38; }`)}
+  body { margin: 0; font: 1.05rem/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); }
+  /* Column and gutters belong to main: the harness rail owns body padding-left. */
+  main { max-width: 78rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
   .layout { display: grid; grid-template-columns: 17rem minmax(0, 1fr); gap: 2rem; align-items: start; }
   .layout > aside { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow: auto; font-size: .95rem; }
   @media (max-width: 62rem) { .layout { grid-template-columns: 1fr; } .layout > aside { position: static; max-height: none; } }
@@ -123,7 +126,8 @@ const STYLE = `
   a { color: var(--link); }
   a:focus-visible, button:focus-visible, li:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   .nav { display: flex; gap: .5rem; margin: 1rem 0; flex-wrap: wrap; align-items: center; }
-  button { font: inherit; padding: .5rem 1rem; min-height: 2.75rem; border: 1px solid var(--muted); border-radius: .4rem; background: transparent; color: var(--fg); cursor: pointer; }
+  /* Control rules are scoped to .layout: the harness rail's own controls sit outside it. */
+  .layout button { font: inherit; padding: .5rem 1rem; min-height: 2.75rem; border: 1px solid var(--muted); border-radius: .4rem; background: transparent; color: var(--fg); cursor: pointer; }
   h2 { font-size: 1.05rem; margin-top: 2rem; border-bottom: 1px solid var(--rule); padding-bottom: .25rem; }
   ul { list-style: none; padding: 0; }
   li { padding: .5rem .25rem; border-bottom: 1px solid var(--rule); }
@@ -134,14 +138,14 @@ const STYLE = `
   .comments { margin: .25rem 0 0 1rem; padding-left: .75rem; border-left: 3px solid var(--rule); }
   .comment { padding: .15rem 0; }
   .tagline { font-family: ui-monospace, monospace; font-size: .9rem; }
-  select { font: inherit; min-height: 2.75rem; padding: .25rem .5rem; color: var(--fg); background: var(--bg); border: 1px solid var(--muted); border-radius: .4rem; }
-  select:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+  .layout select { font: inherit; min-height: 2.75rem; padding: .25rem .5rem; color: var(--fg); background: var(--bg); border: 1px solid var(--muted); border-radius: .4rem; }
+  .layout select:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
   .viewrow { margin: .5rem 0 .25rem; display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
   .diff { margin: .25rem 0 .5rem; padding: .5rem .75rem; border: 1px solid var(--rule); border-radius: .4rem; overflow-x: auto; }
   pre.diff { white-space: pre-wrap; font: .95rem/1.5 ui-monospace, monospace; }
   ins { background: #d7f5dc; color: #0b3d17; text-decoration: underline; }
   del { background: #fbdada; color: #5c0b0b; text-decoration: line-through; }
-  @media (prefers-color-scheme: dark) { ins { background: #12391d; color: #c8f2d0; } del { background: #45181a; color: #f5caca; } }
+  ${darkRules(`ins { background: #12391d; color: #c8f2d0; } del { background: #45181a; color: #f5caca; }`)}
   .diff-sbs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
   .diff-sbs iframe { width: 100%; height: 22rem; border: 1px solid var(--rule); border-radius: .3rem; background: #fff; }
   @media (max-width: 40rem) { .diff-sbs { grid-template-columns: 1fr; } }
@@ -165,7 +169,7 @@ const STYLE = `
   table.heat thead th { font-weight: 600; border-bottom: 1px solid var(--rule); }
   table.heat td { font-variant-numeric: tabular-nums; }
   .h1 { background: #86b6ef; color: #1b1b1b; } .h2 { background: #3987e5; color: #1b1b1b; } .h3 { background: #1c5cab; color: #ffffff; }
-  @media (prefers-color-scheme: dark) { .h1 { background: #184f95; color: #ffffff; } .h2 { background: #256abf; color: #ffffff; } .h3 { background: #3987e5; color: #161616; } }
+  ${darkRules(`.h1 { background: #184f95; color: #ffffff; } .h2 { background: #256abf; color: #ffffff; } .h3 { background: #3987e5; color: #161616; }`)}
   button.linklike { border: 0; padding: 0; min-height: 0; background: none; color: var(--link); text-decoration: underline; cursor: pointer; font: inherit; text-align: left; }
   h2:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
 `;

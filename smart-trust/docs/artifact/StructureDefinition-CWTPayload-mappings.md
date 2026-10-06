@@ -4,8 +4,8 @@ description: "Logical Model: CWTPayload - Mappings."
 nav_exclude: true
 mappings: {"tabs":[{"label":"Content","href":"StructureDefinition-CWTPayload.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-CWTPayload-mappings.html","active":true},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.xml","active":false},{"label":"JSON","href":"StructureDefinition-CWTPayload.profile.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-CWTPayload.schema.json.html","active":false}],"heading":"Logical Model: CWTPayload - Mappings","status":"Active as of 2026-10-01","intro":"Mappings for the CWTPayload logical model.","inIg":[],"toOther":[],"other":[{"name":"RIM Mapping","uri":"http://hl7.org/v3","rows":[{"label":"CWTPayload","depth":0,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload-definitions.html#CWTPayload","title":"CBOR Web Token (CWT) Payload (Common)","value":"n/a"},{"label":"1","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload-definitions.html#CWTPayload.1","title":"Issuer Code (iss)","value":""},{"label":"4","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload-definitions.html#CWTPayload.4","title":"Expiration Date Time(exp)","value":""},{"label":"6","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload-definitions.html#CWTPayload.6","title":"Issued At (iat)","value":""},{"label":"-260","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload-definitions.html#CWTPayload.-260","title":"Health Certificate","value":""}]}],"legend":"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views"}
 ---
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-pages.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/smart-trust/assets/ig-chrome.css' | relative_url }}">
+<link rel="stylesheet" href="../assets/ig-pages.css">
+<link rel="stylesheet" href="../assets/ig-chrome.css">
 
 <div class="st-ig">
   <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
@@ -47,4 +47,4 @@ values are markdown-escaped by the generator; an empty section prints the Publis
 [Documentation for this format]({{ page.mappings.legend }})
 
 <footer id="ig-footer" class="st-ig"></footer>
-<script src="{{ '/smart-trust/assets/ig-footer.js' | relative_url }}" defer></script>
+<script src="../assets/ig-footer.js" defer></script>

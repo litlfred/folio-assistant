@@ -36,15 +36,15 @@
  * schema.org and Dublin Core terms. The one term of ours is the CONTAINER's
  * class, `Subgraph` — the declared subgraph node the KG export already
  * publishes, so a todo graph names the same node rather than minting a
- * collection beside it (bean `l4ay`). Its member edge, `inSubgraph`, expands
- * to `dcterms:isPartOf`.
+ * collection beside it (bean `l4ay`). Its member edge, `inSubgraph`, is its own
+ * term, not `dcterms:isPartOf` (bean `3f5f`).
  *
  * | edge | term | object |
  * |---|---|---|
  * | `target` | `schema:about` | the content node the todo is attached to — its `site/…` IRI |
  * | `assignee` | `schema:agent` | the person (a `schema:Person`; a GitHub identity is its profile URL) |
  * | `bean` | `dcterms:isPartOf` | the bean whose work this todo is part of |
- * | `inSubgraph` | `dcterms:isPartOf` | the declared `todos` Subgraph node this todo is published as a member of |
+ * | `inSubgraph` | `ch:inSubgraph` (own term, bean `3f5f`) | the declared `todos` Subgraph node this todo is published as a member of |
  * | `pullRequest`, `issue` | `dcterms:references` | the PR or issue it refers to |
  * | `process` | `dcterms:subject` | a BPMN process id (a literal: no process has a published IRI yet) |
  * | `source` | `dcterms:source` | the file the todo is authored in |
@@ -115,7 +115,7 @@ export const TODO_CONTEXT = {
   Todo: "ical:Vtodo",
   // The CONTAINER is the declared Subgraph node (bootstrap's class), and each
   // todo's edge to it is `inSubgraph` — the term `kg-export` uses for the same
-  // edge, which IS `dcterms:isPartOf`. `TodoGraph` → `schema:Collection` was
+  // edge, its own term since bean `3f5f` (not `dcterms:isPartOf`). `TodoGraph` → `schema:Collection` was
   // here: a second node for one subgraph (bean `l4ay`).
   Subgraph: termIri("Subgraph"),
   inSubgraph: { "@id": propertyIri("inSubgraph"), "@type": "@id" },

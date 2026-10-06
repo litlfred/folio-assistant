@@ -13,7 +13,7 @@
  * - every `swimlane-glossary` directory (the harness's ledger): counted and
  *   linked to the page that already renders it, never copied, because a
  *   second rendering of the same terms is a second answer free to drift;
- * - every `remoteGraphs` entry with `graphKinds: ["glossary"]`: an external
+ * - every `remoteGraphs` entry with `graphTypologies: ["glossary"]`: an external
  *   SKOS scheme, listed with its link. Referenced, never held;
  * - every KG asset with a title and a description (skills, Tools, BPMN
  *   activities, DMN decisions, documented schema fields), extracted by
@@ -78,7 +78,7 @@ import { addressBook } from "../../cat-harness/schemas/prov-jsonld.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 import { perScheme, run as runTermMapping, termState, type SchemeState, type TermStateAnswer } from "../../cat-harness/scripts/check-term-mapping.ts";
 import { MAPPING_TARGETS } from "../../cat-harness/schemas/term-mapping.ts";
-import { GLOSSARY_SUBDIR, potPath, sourceText, templateName, translationsDir } from "./glossary-pot.ts";
+import { GLOSSARY_SUBDIR, allTranslationDirs, potPath, sourceText, templateName } from "./glossary-pot.ts";
 import { parsePo } from "../../cat-harness/content/pipeline/po-inject.ts";
 
 const CORE = resolve(import.meta.dir, "..");
@@ -328,7 +328,7 @@ export function collect(repo: string = REPO): {
     const dirs = resolveDirectories([{ name: decl.name, root, own: true }]).filter((d) => d.own);
     for (const d of dirs) {
       if (!existsSync(d.absPath)) continue;
-      const kinds = d.graphKinds ?? [];
+      const kinds = d.graphTypologies ?? [];
       if (kinds.includes("glossary")) {
         for (const f of readdirSync(d.absPath).filter((f) => f.endsWith(".glossary.json")).sort()) {
           const p = join(d.absPath, f);
@@ -390,7 +390,7 @@ export function collect(repo: string = REPO): {
       }
     }
     for (const g of decl.remoteGraphs ?? []) {
-      if (g.graphKinds.includes("glossary")) external.push({ instance: decl.name, id: g.id, url: g.url, title: g.title });
+      if (g.graphTypologies.includes("glossary")) external.push({ instance: decl.name, id: g.id, url: g.url, title: g.title });
     }
   }
   // Extracted schemes, in the OWNING instance's namespace. Derived here on
@@ -1304,21 +1304,25 @@ export type SchemeTranslations = ReadonlyMap<string, string>;
  * per template name. Reads the SAME paths `glossary-pot.ts` writes, through
  * its own `potPath`, so the reader cannot look somewhere the writer does not.
  */
-export function readGlossaryTranslations(dir: string = translationsDir()): Map<string, Map<string, SchemeTranslations>> {
+export function readGlossaryTranslations(dirs: readonly string[] = allTranslationDirs()): Map<string, Map<string, SchemeTranslations>> {
   const out = new Map<string, Map<string, SchemeTranslations>>();
-  if (!existsSync(dir)) return out;
-  for (const locale of readdirSync(dir).sort()) {
-    const sub = join(dir, locale, GLOSSARY_SUBDIR);
-    if (!existsSync(sub)) continue;
-    for (const f of readdirSync(sub).filter((x) => x.endsWith(".po")).sort()) {
-      const name = f.slice(0, -".po".length);
-      // Only a .po beside its template counts: an orphan .po translates
-      // nothing the page shows, and `glossary:pot:check` reports it.
-      if (!existsSync(potPath(dir, locale, name))) continue;
-      const m = parsePo(readFileSync(join(sub, f), "utf-8"));
-      const byScheme = out.get(locale) ?? new Map<string, SchemeTranslations>();
-      byScheme.set(name, m);
-      out.set(locale, byScheme);
+  // Every declared translation-sources directory (bean riit): a scheme's
+  // catalogues sit with the instance that owns it, not in one platform tree.
+  for (const dir of dirs) {
+    if (!existsSync(dir)) continue;
+    for (const locale of readdirSync(dir).sort()) {
+      const sub = join(dir, locale, GLOSSARY_SUBDIR);
+      if (!existsSync(sub)) continue;
+      for (const f of readdirSync(sub).filter((x) => x.endsWith(".po")).sort()) {
+        const name = f.slice(0, -".po".length);
+        // Only a .po beside its template counts: an orphan .po translates
+        // nothing the page shows, and `glossary:pot:check` reports it.
+        if (!existsSync(potPath(dir, locale, name))) continue;
+        const m = parsePo(readFileSync(join(sub, f), "utf-8"));
+        const byScheme = out.get(locale) ?? new Map<string, SchemeTranslations>();
+        byScheme.set(name, m);
+        out.set(locale, byScheme);
+      }
     }
   }
   return out;

@@ -1,5 +1,5 @@
 /**
- * The viewer generators as Tool nodes — each says which graph kinds it renders
+ * The viewer generators as Tool nodes — each says which graph typologies it renders
  * (#1168 B7a, bean `w91p`).
  *
  * Until then a directory named its viewer page (`coverage.visualiser`): the
@@ -17,7 +17,7 @@
  *
  * **`gen-fsh-guts-viz.ts` is deliberately not here.** Tool nodes are
  * published in the tools graph, and the owner's rule is that no published
- * artefact carries a path to fsh-guts (`UNPUBLISHED_GRAPH_KINDS`). A Tool
+ * artefact carries a path to fsh-guts (`UNPUBLISHED_GRAPH_TYPOLOGIES`). A Tool
  * whose `renders` named it would be that path.
  *
  * @module tools/viewers
@@ -113,6 +113,13 @@ const VIEWERS: Viewer[] = [
     description: "Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance.",
     script: "document-kinds:viz",
     renders: ["document-kinds"],
+  },
+  {
+    id: "node-kind-pages",
+    title: "Node kind pages",
+    description: "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+    script: "node-kind:pages",
+    renders: ["todo-items"],
   },
   {
     id: "state-viewer",

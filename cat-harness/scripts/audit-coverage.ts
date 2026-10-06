@@ -16,7 +16,7 @@
  *
  * ## What this is NOT a second answer to
  *
- * `check:kind-validators` (bean `i31r`) asks whether every graph kind has a
+ * `check:kind-validators` (bean `i31r`) asks whether every graph typology has a
  * **validator that loads** — can a node of this kind be *typed*. This asks who
  * **judges** it. The two come apart: a kind can be perfectly typed and audited
  * by nothing, which is exactly the state that got misread, and a validator
@@ -48,14 +48,14 @@
  * gates do, and forcing them into it would have made the declaration a lie:
  *
  * - **`@covers none`** — a gate that has DECIDED it audits no declared graph.
- *   `check:workflows` reads `.github/workflows/`, which is not a graph kind.
+ *   `check:workflows` reads `.github/workflows/`, which is not a graph typology.
  *   That is a different fact from a gate that has not said, and collapsing them
  *   would mean the one honest answer available to such a gate is silence.
  * - **`@covers computed`** — a gate whose covered set is DERIVED at run time.
  *   `check:kind-validators` walks whichever kinds declare `nodeSchemas`, so its
  *   coverage moves when the registry does. Writing today's answer as a literal
  *   would be a snapshot that goes stale silently, which is the failure
- *   `BASE_GRAPH_KINDS`'s own doc refuses for counts in prose. It counts as
+ *   `BASE_GRAPH_TYPOLOGIES`'s own doc refuses for counts in prose. It counts as
  *   neither coverage nor a gap: the kinds it reaches are reported by that gate,
  *   not by this one.
  *
@@ -152,13 +152,13 @@ import { join, relative, resolve } from "node:path";
 import {
   type ResolvedDirectory,
   declaredKinds,
-  defaultGraphKinds,
+  defaultGraphTypologies,
   instanceRootsIn,
   readDeclaration,
   repoRootFor,
   resolveDirectories,
 } from "../schemas/cat-harness.js";
-import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
+import { KG_CRITERIA, KG_SUBJECT_GRAPH_TYPOLOGIES, type KgSubjectKind } from "../schemas/kg-qa.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
 import { contentIsOffCheckout, resolveSubgraphSource, type SubgraphSource } from "../schemas/subgraph-source.ts";
 // The same single reader `check:declared-dirs` uses, so the two gates cannot
@@ -256,7 +256,7 @@ export interface KindCoverage {
   files: number;
   /** `kg-audit` criteria ids reaching a subject kind that lives in this graph. */
   criteria: string[];
-  /** Subject kinds of `KG_SUBJECT_GRAPH_KINDS` that live in this graph. */
+  /** Subject kinds of `KG_SUBJECT_GRAPH_TYPOLOGIES` that live in this graph. */
   subjectKinds: KgSubjectKind[];
   /** Gate commands that DECLARE they cover this kind. */
   gates: string[];
@@ -414,7 +414,8 @@ export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SI
  *   tip-keyed directories, so a caller with none needs no git repository.
  */
 export function censusDirectories(
-  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: { branch: string; keyedBy?: string }; source?: SubgraphSource }>,
+  // `storage` as the declaration holds it — read only through the resolver, which parses it.
+  dirs: ReadonlyArray<{ id?: string; absPath: string; storage?: unknown; source?: SubgraphSource }>,
   skip?: ReadonlySet<string>,
   repoRoot: string = process.cwd(),
 ): { files: number; sidecars: number; stored: number; undetermined: number; uncounted: number } {
@@ -605,7 +606,7 @@ export function gateCoverage(root: string, repo: string): GateCoverage[] {
 
 /** The universe of kinds: the registry, plus anything an instance declares that it does not know. */
 export function kindUniverse(repo: string): { registered: string[]; declaredOnly: string[] } {
-  const registered = defaultGraphKinds.names().sort();
+  const registered = defaultGraphTypologies.names().sort();
   const extra = new Set<string>();
   for (const inst of instanceRootsIn(repo)) {
     const decl = readDeclaration(inst);
@@ -623,7 +624,7 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
   const criteriaByGraph = new Map<string, { ids: string[]; subjects: Set<KgSubjectKind> }>();
   for (const c of KG_CRITERIA) {
     for (const s of c.applies) {
-      const graph = KG_SUBJECT_GRAPH_KINDS[s];
+      const graph = KG_SUBJECT_GRAPH_TYPOLOGIES[s];
       const e = criteriaByGraph.get(graph) ?? { ids: [], subjects: new Set<KgSubjectKind>() };
       if (!e.ids.includes(c.id)) e.ids.push(c.id);
       e.subjects.add(s);
@@ -648,14 +649,14 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
     const resolved = new Map<string, Pick<ResolvedDirectory, "id" | "absPath" | "storage">>();
     for (const inst of instances) {
       for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }])) {
-        if (d.graphKinds.includes(kind as never) && !resolved.has(d.absPath)) resolved.set(d.absPath, d);
+        if (d.graphTypologies.includes(kind as never) && !resolved.has(d.absPath)) resolved.set(d.absPath, d);
       }
     }
     const dirs = new Set(resolved.keys());
     const { files, sidecars, stored, undetermined, uncounted } = censusDirectories([...resolved.values()], undefined, repo);
     const crit = criteriaByGraph.get(kind);
     const gs = gatesByKind.get(kind) ?? [];
-    const def = defaultGraphKinds.get(kind);
+    const def = defaultGraphTypologies.get(kind);
     const typed = Boolean(def?.validator) || Boolean(def?.nodeSchemas);
     const judged = (crit?.ids.length ?? 0) > 0 || gs.length > 0;
     const state: KindState =
@@ -813,7 +814,7 @@ function main(): number {
   const result = buildQaResult({
     script: relative(REPO, join(ROOT, "scripts", "audit-coverage.ts")),
     scriptAbsPath: join(ROOT, "scripts", "audit-coverage.ts"),
-    subject: { kind: "audit-coverage", id: "graph-kinds" },
+    subject: { kind: "audit-coverage", id: "graph-typologies" },
     families: {
       "kinds-unaudited": {
         summary:

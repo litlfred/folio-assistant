@@ -180,6 +180,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "read real content; a contributor's session-start hook runs the same command",
   },
   {
+    // Bean `0b8c` (#2230). The site builds run every writer of an artefact
+    // derived from a branch-kept graph (today the fsh-guts viewer), after
+    // `state:mount`. Nothing it writes is committed. Its verdicts run in the
+    // fast set: `check:derived-from` decides WHICH artefacts are publish-time
+    // and refuses a committed one, and `fsh-guts:viz:check` runs the writer
+    // over the mount.
+    match: "bun run derive:publish",
+    kind: "covered-by",
+    reason:
+      "a BUILD step, not a check: it writes the derived artefacts that cannot be committed because an input is " +
+      "kept on a branch; check:derived-from and each writer's own :check (fsh-guts:viz:check) are its verdict",
+  },
+  {
     // Bean `wnhh`: each IG whose repository carries a seeded `fhir-ast/*`
     // cache is rendered from it into the preview at `/<instance>/ast/`. The
     // lister asks each IG repository over the network (`git ls-remote`).
@@ -188,6 +201,32 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a BUILD step, not a check: it lists the IGs whose repositories carry an AST cache by asking " +
       "each repository over the network; best effort (continue-on-error), its output only feeds the preview",
+  },
+  {
+    // Bean `q8ar`. The deploy-time BUILD of each SQLite slice (beans, todos,
+    // library, kg; one line per slice) and its payloads, written straight into
+    // `./_site`. None is committed, because their sources move on most merges.
+    // The fast set runs their verdict as `slice:sqlite:check` (determinism,
+    // the row digest against the source, FTS5, the payload audit, for every
+    // slice), so these lines only write.
+    match: "gen-slice-sqlite.ts --out ./_site",
+    kind: "covered-by",
+    reason:
+      "a DEPLOY build into ./_site, which only the deploy and staging jobs produce; its verdict is " +
+      "`slice:sqlite:check` in the fast set, and gen-slice-sqlite.test.ts plus slice-sqlite.e2e.ts pin it",
+  },
+  {
+    // Bean `4ak5` item 3. The root index is BUILT at publish time over the
+    // exports the deploy has just written into `./_site`, and never committed
+    // (owner, 2026-10-04), so there is no committed artefact for a `--check`
+    // to compare. It refuses to write when any declared instance has no
+    // export, which is its verdict, and root-index.test.ts pins that over a
+    // real site layout.
+    match: "scripts/root-index.ts --site ./_site",
+    kind: "covered-by",
+    reason:
+      "a DEPLOY build into ./_site over the exports only the deploy writes, with no committed copy to check; " +
+      "it exits 1 rather than publish a shorter map, and root-index.test.ts pins both the map and that refusal",
   },
   {
     // Bean `bamf`: each IG's own just-the-docs site, staged from the source
@@ -243,6 +282,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Bean `uoob`. The merge guard's evaluate mode, posting the `merge-guard`
+    // commit status. Its subject is a PULL REQUEST's live state on GitHub —
+    // labels, comments, timeline, the head's runs — not the tree, so a
+    // contributor has no verdict to get from it locally, and it needs
+    // `statuses: write`. Its logic is pinned by merge-guard.test.ts in
+    // `bun test`, against the three real PRs it exists because of.
+    match: "scripts/merge-guard.ts",
+    kind: "ci-only",
+    reason:
+      "judges a PR's live GitHub state rather than the tree and needs `statuses: write`; its logic is " +
+      "covered by merge-guard.test.ts in `bun test`",
+  },
+  {
     // Bean `16ei`. The scheduled retention job for the `qa-reports` branch.
     // It WRITES a branch rather than judging a tree, needs `contents: write`
     // and `pull-requests: read`, and a contributor has no verdict to get from
@@ -267,6 +319,16 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "a build step keyed by the run's own ref (network fetch) and the built ./_site; its source " +
       "decision and shrink judgement are covered by qa-site-assets.test.ts in `bun test`",
+  },
+  {
+    // Bean `bejf`, #2217. The built-site half of `check:qa-result-links` reads
+    // `./_site`, which only the site build produces; the sources half runs as
+    // its own step in `gates-docs`, and is therefore in the gate set.
+    match: "check:qa-result-links --site",
+    kind: "ci-only",
+    reason:
+      "judges the built ./_site that only the docs build produces; the sources half is a gate step " +
+      "in gates-docs, and the rule itself is covered by check-qa-result-links.test.ts in `bun test`",
   },
   {
     // Bean `tfqf`. `folio-staging.yml` reads the FOLIO's own `qa-reports`
@@ -304,6 +366,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "a DEPLOY step, not a check: it copies rendered output into ./_site, which only exists " +
       "inside the site-build job. Its path-collision refusal is covered by " +
       "mount-instance-docs.test.ts in `bun test`",
+  },
+  {
+    // The inline PDF viewer (bean `folio-assistant-5ea6`). A DEPLOY step like
+    // the mount above it: it downloads the pinned pdf.js release and writes it
+    // into `./_site`, which only the deploy and staging jobs produce, and it
+    // needs the network the fast set must not. The allowlist shim, the root
+    // derivation and the install helpers are run as shipped bytes by
+    // `pdf-viewer.test.ts` in `bun test`.
+    match: "pdf-viewer.ts --site",
+    kind: "ci-only",
+    reason:
+      "a DEPLOY step, not a check: it installs the pinned, hash-checked pdf.js viewer into ./_site, " +
+      "which only exists inside the site-build job, and it fetches the release over the network. " +
+      "Its shim, embed and install helpers are covered by pdf-viewer.test.ts in `bun test`",
   },
   {
     // Its sibling, and exempt for the same reason. `compose-docs.ts` lays the
@@ -720,10 +796,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "staging-rotate.ts",
     kind: "ci-only",
     reason:
-      "enforces the preview cap (owner ruling 2026-10-02, issue #1868) by removing previews from a " +
-      "`gh-pages` checkout at deploy time; that checkout exists only in CI. Its rules — the cap counts " +
-      "the current preview, the oldest go, `_retired/` and non-previews are untouched, the age " +
+      "enforces the preview size budget (owner ruling 2026-10-02, issue #1868, amended 2026-10-04) by " +
+      "removing previews from a `gh-pages` checkout at deploy time; that checkout exists only in CI. Its " +
+      "rules — the budget counts the current preview, the oldest go, `_retired/` and non-previews are untouched, the age " +
       "fallbacks — are covered by `staging-rotate.test.ts` in `bun test`",
+  },
+  {
+    match: "staging-push-gate.ts",
+    kind: "ci-only",
+    reason:
+      "rate-limits the staging push (owner ruling 2026-10-03, issues #1868 and #1956) by reading the tip " +
+      "of a `gh-pages` checkout and SLEEPING until its Pages build has had time to finish; that checkout " +
+      "and the wait exist only in CI. Its rules — the two windows, clock skew never opening early, the " +
+      "deadline failing rather than pushing, an unreadable tip never open, the PR comment's wording — are " +
+      "covered by `staging-push-gate.test.ts` in `bun test`",
   },
   {
     match: "restore-staging.ts",
@@ -1136,6 +1222,18 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "skill:register:declarations:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `skill:register:check`, which CI runs: this is the same script with `--declarations-only`, which asks the declaration half and leaves out the chain checks (`STEPS`), so the gate performs this one's entire job besides. It exists for ONE caller, `regen-after-merge` via `pair-cover.ts` (bean `8qyc`): when every chain check is already asked in the same pool, the full gate would ask them a second time, so the pool asks the residual instead. As a CI step it would duplicate a subset of a step CI already runs",
+  },
+  {
+    script: "split:baseline:check",
+    kind: "report",
+    reason:
+      "A COMPARISON FOR ONE CHANGE, not a property of every commit — bean `pyds`. It compares the served MCP tools and the resolvable skills against the stage-0 baseline of the cat-harness-tools split, and its only consumer is the stage-1a move (`70lx`), whose falsifiers say a change that only MOVES files must leave both identical. Every other pull request legitimately adds a skill or a tool, so as a CI gate it would go red on ordinary work and teach the next agent to rewrite the baseline to get green, which is a ratchet with no direction. The 70lx PRs run it by hand and quote the result; once the split is done it has no subject, and the script and its baseline are removed with the last 70lx batch",
+  },
+  {
     script: "check:test-budgets",
     kind: "report",
     reason:
@@ -1164,6 +1262,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "SUBSUMED by `check:kind-validators:require-all`, which CI runs: the same script with a flag that adds one assertion — that no kind has stayed silent about a validator — and performs this one's entire job besides. Kept as a script because the bare form is the REPORT, and a contributor adding a kind wants to read the three states without the non-zero exit while they are still deciding which one applies. Bean `rj0n`",
+  },
+  {
+    script: "kind:table:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `kind:register:check`, which CI runs: its first STEP is exactly `kind:table:check` (cat-harness-tools/scripts/kind-register.ts), so the generated kind table in directory-conventions.md is checked on every push through the command that owns every artefact a kind owes. Kept as a script because a contributor editing one kind node wants the table's answer alone, without the other steps. Bean `dmx1`",
   },
   {
     script: "check:harness-state",
@@ -1215,9 +1319,9 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   },
   {
     script: "check:reference-direction",
-    kind: "report",
+    kind: "covered-by",
     reason:
-      "ADVISORY BECAUSE THE COUNT IS NOT ZERO YET, and for no other reason \u2014 1,206 wrong-direction occurrences across 275 files, measured 2026-09-30, of which 453 in 47 files are PENDING. The repository's own precedent settles this: the ruff comment in `code-quality-gates.yml`, and `repo-partition.ts`'s note that its two axes were each enforced only as they reached zero. Turning a red gate on just teaches the next agent to append `|| true`. It is built so an advisory run CANNOT be mistaken for a clean one: the summary always prints `undetermined \u2014 NOT clean` with its count and what landed there, and 969 occurrences do. THAT NUMBER WAS 11,090 UNTIL 2026-09-30: `folio-assistant` names the repository, the published product AND the root instance, and the check resolved a reference against the instance's ROOT \u2014 which is the repo root, because the declaration file lives there \u2014 rather than against the two directories the instance DECLARES. It now decides per occurrence, so a URL or a repo path reads as `names-repository` (1,986 of them) and only a bare mention with no path and no URL stays undetermined. `--strict` exits 1 on any wrong-direction occurrence and is what flips this to `kind: \"gate\"` once the backlog is drained. NOTHING RUNS THIS SCRIPT IN CI \u2014 `grep -rn 'reference-direction' .github/workflows/` returns 0, so the PENDING guard is UNENFORCED and this entry said the opposite until 2026-09-30 (bean `vzo5`). It exits 1 today on 75 files that name several instances above them and are not in PENDING, which is why wiring it as-is would land red; whether those 75 join PENDING or are ruled on is `zhg2`'s open question, not this entry's to assume. What IS enforced on every run is the IMPORT half of the same arrow \u2014 `check:partition`, 0/0, computing direction through the very same `layer-direction.ts` this consumes, though `p11x` records that its scan is rooted at `cat-harness/` and so cannot see cross-instance edges. Issue #1219, beans `zhg2`, `vzo5`",
+      "SUBSUMED by `check:reference-direction:check`, which CI runs with `--against main`: the same script with `--check`, which writes nothing and fails on a graded state that is NEW against the `qa-reports` baseline \u2014 above all A.10's `wrong-direction` family (owner Q-B 2026-10-01), one entry per file and per instance above it that the file names, so a new file naming ONE higher instance fails as well as one naming several, and a known file naming a further instance fails too; plus an unlisted multi-destination file, a `PENDING` entry newly no longer qualifying, an instance newly declaring no `needs`. The inherited backlog is not graded: a gate that refused every push until the backlog drained would be switched off. This plain form is kept as the WRITER of `cat-harness/test/results/reference-direction.qa-results.json` (`qa:refresh` runs it, and that copy is what the next `main` entry on `qa-reports` publishes), and it still exits 1 on the stale-`PENDING` and unlisted-multi-destination states \u2014 recording a state is not resolving it. Fix a finding by REWORDING in place (Q1), not by moving the file. Beans `1bvx`, `vzo5`, `zhg2`",
   },
   {
     script: "ingest:ig-menu:check",
@@ -1263,13 +1367,7 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     script: "check:reference-direction:strict",
     kind: "report",
     reason:
-      "THE SAME SCRIPT AS `check:reference-direction`, exiting 1 instead of 0 on a wrong-direction occurrence. It is the form this becomes a gate in, kept runnable and wired to nothing while the count is 574: a gate that fails on a backlog is a gate somebody switches off. Run it by hand, or from `/prepare-merge`, to see what enforcement would say today. Flipping the advisory entry above to `kind: \"gate\"` and pointing it here is the whole of the change once the backlog is drained. Bean `zhg2`",
-  },
-  {
-    script: "check:reference-direction:check",
-    kind: "report",
-    reason:
-      "THE SAME SCRIPT AS `check:reference-direction`, with `--check`: it does not write, and it fails ONLY on the committed sidecar (`cat-harness/test/results/reference-direction.qa-results.json`) recording different STATES from the run \u2014 the PENDING set, the entries that no longer qualify, the unlisted multi-destination files, the instances that declare no `needs`. It does NOT grade the verdict counts it records, for `audit-coverage`'s measured reason: a number that moves whenever somebody writes a paragraph makes a gate stale by default, and a gate that is stale by default is one people learn to regenerate without reading. Out of CI for the SAME reason its parent is, and not a second one: the states it grades move when a sibling merges a file naming two instances above it, so wiring it would redden a branch whose own tree is correct \u2014 the `schema:viz:check` case. It becomes wirable on the day `check:reference-direction` does, which is when the backlog reaches zero and the advisory entry above flips to `kind: \"gate\"`. Run it by hand, or from `/prepare-merge`, after regenerating with `bun run check:reference-direction`. Beans `zhg2`, `yj6r`",
+      "THE SAME SCRIPT AS `check:reference-direction`, exiting 1 on ANY wrong-direction occurrence rather than only on a NEW (file, instance) pair. It is the form the axis ends in: it becomes the gate when the `wrong-direction` family of the sidecar is empty, which is the drain (reword in place, owner Q-B Q1). Until then `check:reference-direction:check` is what CI enforces \u2014 the ratchet over the `qa-reports` baseline \u2014 and a gate that failed on the inherited backlog would be a gate somebody switches off. Run it by hand to see what full enforcement would say today. Bean `zhg2`",
   },
   {
     script: "check:partition:edges",

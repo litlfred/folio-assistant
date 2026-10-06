@@ -96,6 +96,10 @@ describe("the folio root is asked for, not spelled", () => {
       if (relative(ROOT, f) === BASE_CASE) return false;
       return /(?<![.\w])folioDir\s*\(/.test(readFileSync(f, "utf-8"));
     });
-    expect(callers.length).toBeGreaterThan(40);
+    // 41 → 39 on 2026-10-04 with no call site deleted: the glossary and
+    // relevance routes moved UP to folio-assistant-core with their content
+    // (bean `70lx`, owner ruling), out of what this scans. A move is not the
+    // regression this floor exists to catch, so the floor follows it.
+    expect(callers.length).toBeGreaterThan(37);
   });
 });

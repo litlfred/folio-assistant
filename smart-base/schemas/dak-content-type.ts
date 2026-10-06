@@ -22,7 +22,7 @@
  * requires `DAK_TYPE`, and reaching for it *is* the edge. A boundary argued in
  * prose is a boundary that does not hold; this one is held by the import graph.
  *
- * Same shape as `folio-graph-kind.ts`, and for the same reason: the layer that
+ * Same shape as `folio-graph-typology.ts`, and for the same reason: the layer that
  * owns the model registers the entry at load time, and the layer that cannot
  * serve it does not name it.
  *
@@ -34,8 +34,8 @@
  * while our own is at least honest about who is speaking.
  */
 import { DAK_MARKER_FILENAME, DAK_TYPE } from "./dak";
-import { defaultContentTypes, type ContentTypeRegistry } from "../../cat-harness/schemas/content-type";
-import { termIri } from "../../cat-harness/schemas/namespaces";
+import { defaultContentTypes, type ContentTypeRegistry } from "../platform.js";
+import { termIri } from "../platform.js";
 
 /**
  * The `@type` a SUSHI project projects to.

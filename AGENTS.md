@@ -44,7 +44,7 @@ are thin stubs pointing here.
 > - No MCP? Resolve the `kg` graph from the instance's `<instance>.json`
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
-> Conventions for the declaration and its graph kinds:
+> Conventions for the declaration and its graph typologies:
 > [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 >
 > **A dependency's skills ARE reachable** — `resolveSkillDirs` in
@@ -89,9 +89,9 @@ conventions to come back to, not a path through the project.
 A **document** folio is structured prose; a **paper** is that plus the block
 kinds whose assertion is a formal mathematical claim, backed by `.lean` siblings
 and typeset through LaTeX. `PaperContentAdapter` extends
-`DocumentContentAdapter`, and `DOCUMENT_BLOCK_KINDS` in
-`schemas/block-kinds.ts` is the **derived** complement of `MATH_BLOCK_KINDS`, so
-a kind added to `BLOCK_KINDS` cannot go unclassified.
+`DocumentContentAdapter`. Block kinds are **discovered**, not listed: each is a
+`folio-block-kind/v1` node in the `block-kinds/` graph of the harness that owns
+it, with a required `profile`, so a kind cannot go unclassified.
 
 **The discipline is in the skill, not here** —
 [`skills/authoring/authoring-core/content-profiles.md`](cat-harness/skills/authoring/authoring-core/content-profiles.md)
@@ -124,7 +124,7 @@ adapter-scoped tool would be unreachable in exactly the case it exists for.
 bun install                 # install deps
 bun run gates               # EVERY fast gate CI runs — run this before you push
 bun run gates --all         # ...plus the browser jobs
-bun run cat-harness/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
+bun run cat-harness-tools/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
 bun test                    # unit tests
 bunx playwright test        # e2e tests   (npm script: test:e2e)
 eslint .                    # lint
@@ -184,7 +184,7 @@ coincidence; a declaration inside the file is the contract.**
 
 **The discipline is in the skill, not here** —
 [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md)
-carries the declaration schema and every graph kind, path resolution and the
+carries the declaration schema and every graph typology, path resolution and the
 dot-prefix guard that tests **every** segment, and the rule that an unavoidable
 duplicate is fine while an unchecked one is not. In this instance
 `bun run check:harness-dirs` is what checks the two that cannot be removed:
@@ -307,7 +307,7 @@ hides.
 The processes are executable diagrams, not prose: `board-open-close.bpmn`,
 `board-relocate.bpmn` and `board-place-note.bpmn` under `folio-assistant-core/processes/ui/`,
 indexed with the rest on the [publication-workflow
-page](cat-harness/docs/publication-workflow.md). **Count the directory rather
+page](cat-harness/docs/process/publication-workflow.md). **Count the directory rather
 than quoting a number from this paragraph** — `bpmn-processes` says why.
 
 ## CI health — a red workflow looks exactly like a green one from in here
@@ -364,7 +364,7 @@ without anybody deciding it.
 
 `check:ci-health` asks whether the workflows pass; `bun run health` asks about
 the repository. **`bun run audit:coverage` asks what is audited at all** — per
-declared graph kind, how many directories are declared, how many files they
+declared graph typology, how many directories are declared, how many files they
 hold, how many `kg-audit` criteria reach the kind, and how many CI gates
 **declare** they cover it. Written as a sidecar under
 `cat-harness/test/results/` and stored on `qa-reports`
@@ -657,7 +657,7 @@ to spend the words: **do not start the topic.**
   [issue #198](https://github.com/litlfred/folio-assistant/issues/198).
 - **Every process here is BPMN, and the diagrams are executable.** The `.bpmn`
   files under `processes/` are the source of truth, indexed by
-  [`folio-assistant/docs/publication-workflow.md`](cat-harness/docs/publication-workflow.md) — the normative
+  [`folio-assistant/docs/process/publication-workflow.md`](cat-harness/docs/process/publication-workflow.md) — the normative
   picture of the HCI validation gate, the draft-review-publish path and the
   work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is
   generated: `bun run render:bpmn`, and `render:bpmn:check` fails if stale.
@@ -687,7 +687,7 @@ to spend the words: **do not start the topic.**
   A swarm is **asked for every time**, per swarm, with agent count, model level
   and rough cost —
   [`skills/sdlc/sdlc-core/swarm-management.md`](cat-harness/skills/sdlc/sdlc-core/swarm-management.md)
-  and the [reader-facing page](cat-harness/docs/swarm-management.md).
+  and the [reader-facing page](cat-harness/docs/guides/swarm-management.md).
 - **An instance declares the directories it scans — `<instance>.json` at that
   instance's own root.** Each entry names a directory and the **kind of graph**
   it holds: `folio` (authored content, rendered to a website by just-the-docs),
