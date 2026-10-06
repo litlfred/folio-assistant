@@ -459,7 +459,9 @@ export function cutoverMain(row: SpecialBranch, opts: CutoverOptions = {}): Cuto
 }
 
 export function cutoverReport(r: CutoverResult): string {
-  if (r.state === "refused" || r.state === "unknown") return `${r.state === "refused" ? "·" : "✗"} ${r.branch}: ${r.state} — ${r.reason}`;
+  // Narrowed by naming the arm it KEEPS, as `report` below does: typescript7
+  // declines to narrow this union by excluding the other arm's literals.
+  if (r.state !== "would-cut-over" && r.state !== "cut-over") return `${r.state === "refused" ? "·" : "✗"} ${r.branch}: ${r.state} — ${r.reason}`;
   const L = [`${r.state === "cut-over" ? "✓" : "·"} ${r.branch}: ${r.state} — ${r.reason}`];
   for (const p of r.paths) L.push(`    - ${p.path}/: ${p.files} file(s), ${p.bytes} bytes, tree ${p.tree}`);
   return L.join("\n");
