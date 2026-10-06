@@ -105,6 +105,7 @@ import { ODRL_ACTIONS } from "./odrl";
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, SUT_ACTOR_KINDS, SystemUnderTestFacetSchema, type ActorKind, type SystemUnderTestFacet } from "./skill-package";
 import { NETWORK_REACHES, directoryForGraph, type NetworkReach } from "./cat-harness";
+import { instanceRootNamed } from "./instance-roots";
 import { SkillNameSchema } from "./tool-types";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
@@ -580,8 +581,10 @@ export function capabilitiesDir(repoRoot: string): string | undefined {
 
 /** A registry directory inside the platform's declared `scenarios` graph. */
 function scenariosSubdir(repoRoot: string, name: string): string | undefined {
-  // declared-path-literal: the platform instance, as glossary-page.ts names it.
-  const platform = join(repoRoot, "cat-harness");
+  // The platform instance by its declaration, not `<repoRoot>/cat-harness`:
+  // standalone, cat-harness IS the repository root (bean `uxn1`).
+  const platform = instanceRootNamed(repoRoot, "cat-harness");
+  if (platform === undefined) return undefined;
   const scenarios = directoryForGraph(platform, "scenarios");
   return scenarios === undefined ? undefined : join(scenarios, name);
 }

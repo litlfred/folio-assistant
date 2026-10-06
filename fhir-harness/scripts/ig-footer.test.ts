@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { dayOf, fhirSpecUrl, igFooterData, licenseUrl } from "./ig-footer.ts";
+import { dayOf, fhirSpecUrl, igFooterData, igSiteFooter, licenseUrl, sushiFooterData } from "./ig-footer.ts";
 
 describe("igFooterData", () => {
   const pkg = {
@@ -58,5 +58,32 @@ describe("the footer's derived links", () => {
     expect(dayOf("2026-10-01T11:40:21+00:00")).toBe("2026-10-01");
     expect(dayOf("20261001114021")).toBe("2026-10-01");
     expect(dayOf("Oct 1")).toBeUndefined();
+  });
+});
+
+describe("sushiFooterData: the same facts from the IG's source (#1901)", () => {
+  it("reads SUSHI's shapes: a publisher object, packageId defaulting to id, a copyright year", () => {
+    expect(sushiFooterData({ id: "x.ig", version: "1.0.0", fhirVersion: "4.0.1", publisher: { name: "Org", url: "https://o" }, license: "CC0-1.0", copyrightYear: "2023+" })).toEqual({
+      publisher: "Org",
+      publisherUrl: "https://o",
+      packageId: "x.ig",
+      version: "1.0.0",
+      fhirVersion: "4.0.1",
+      fhirUrl: "http://hl7.org/fhir/R4/",
+      license: "CC0-1.0",
+      licenseUrl: "https://spdx.org/licenses/CC0-1.0.html",
+      copyrightYear: "2023+",
+    });
+    // A plain-string publisher, a list of FHIR versions, a numeric year.
+    expect(sushiFooterData({ packageId: "p", publisher: "Org", fhirVersion: ["5.0.0"], copyrightYear: 2024 })).toMatchObject({ packageId: "p", publisher: "Org", fhirVersion: "5.0.0", copyrightYear: "2024" });
+    expect(sushiFooterData({})).toEqual({});
+  });
+});
+
+describe("igSiteFooter: the Links row names only what the site holds", () => {
+  it("keeps the Publisher's order and drops a target that is not there", () => {
+    const f = igSiteFooter({ licenseUrl: "https://l" }, (h) => h === "toc.html" || h === "history.html");
+    expect(f.links.map((l) => l.label)).toEqual(["Table of Contents", "Version History", "License"]);
+    expect(igSiteFooter({}, () => false).links).toEqual([]);
   });
 });
