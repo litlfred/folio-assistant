@@ -102,8 +102,9 @@ export interface FolioAssistantDependency {
 
   /**
    * Git clone URL for the dependency. Used when `path` is absent or
-   * the directory does not exist. The agent should clone to a
-   * deterministic location (e.g. `.deps/<name>/`).
+   * the directory does not exist. Not cloned into `.deps/` (owner,
+   * 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on
+   * the declaration, laid down by `bun run mount:remote` (bean `0mpw`).
    */
   git?: string;
 
@@ -381,6 +382,7 @@ export const HarnessConfigSchema = z.object({
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
+import { mountScopeFor, mountedInstanceRoots } from "./remote-mount";
 import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
 import { ContentAdapterNodeSchema } from "./content-adapter-node";
 import { PipelinePluginNodeSchema, QaCheckerNodeSchema, splitOwnCodeRef } from "./contribution-nodes";
@@ -748,9 +750,14 @@ export function rootInstanceName(repoRoot: string): string | undefined {
 /**
  * Resolve a single dependency to an absolute path.
  *
- * Tries `path` first (relative to folioRoot), then falls back to
- * checking `.deps/<name>/` for a previous clone. Does NOT clone —
- * that is the caller's responsibility.
+ * Tries `path` first (relative to folioRoot), then a REMOTE MOUNT of that
+ * name recorded in the checkout's mount lock (bean `0mpw`). Does NOT fetch —
+ * `bun run mount:remote` does, and `mount:remote:check` says when it has not.
+ *
+ * This fell back to `.deps/<name>/` until 2026-10-06, a directory nothing
+ * created and the owner ruled out: a dot directory collides with GitHub's
+ * conventions and with this repository's own dot-prefix guard. The lock is
+ * the declared answer to "where did that layer land", so it is the one read.
  */
 export function resolveDependencyPath(
   folioRoot: string,
@@ -764,11 +771,9 @@ export function resolveDependencyPath(
     if (existsSync(abs)) return abs;
   }
 
-  // Try .deps/<name>/
-  const depsDir = join(folioRoot, ".deps", dep.name);
-  if (existsSync(depsDir)) return depsDir;
-
-  return null;
+  // Try a remote mount of that name
+  const abs = resolve(folioRoot);
+  return mountedInstanceRoots(mountScopeFor(abs) ?? abs).get(dep.name) ?? null;
 }
 
 /**
@@ -835,7 +840,10 @@ export function dependenciesFromNeeds(instanceRoot: string): {
   // the one instance declared at the repository root. That made the root
   // instance's `needs` derive nothing while its authored edge still resolved —
   // an overlay that looked like it worked and held one entry.
-  const repoRoot = siblingScopeFor(abs);
+  // A MOUNTED instance's siblings are where the mount that placed it put
+  // them (bean `0mpw`) — which `siblingScopeFor` cannot see when an override
+  // moved it below the one-level scan.
+  const repoRoot = mountScopeFor(abs) ?? siblingScopeFor(abs);
   const byName = new Map<string, string>();
   for (const root of instanceRootsIn(repoRoot)) {
     try {
@@ -845,6 +853,11 @@ export function dependenciesFromNeeds(instanceRoot: string): {
       // An unreadable sibling cannot be matched against; it is not an error
       // here, and `check:declaration-filename` is what reports it.
     }
+  }
+  // A REMOTE MOUNT an override moved below the one-level scan is still a
+  // sibling (bean `0mpw`): its lock says where it landed.
+  for (const [n, root] of mountedInstanceRoots(repoRoot)) {
+    if (!byName.has(n)) byName.set(n, root);
   }
 
   const dependencies: FolioAssistantDependency[] = [];
