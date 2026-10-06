@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-19T00:12:09Z
-updated_at: 2026-10-06T06:15:10Z
+updated_at: 2026-10-06T06:33:19Z
 parent: folio-assistant-0lmb
 ---
 
@@ -131,3 +131,9 @@ Fix: `listing_pages` marks a page whose >=2 NUMBERED headings recur later on DIF
 Measured: chapters now start on their body pages; sections under 500 chars went 26 -> 14 (of 40). No collateral: 13 other outline-less PDFs plus the handbook and an arXiv outline doc are byte-identical before and after. Mutation (listing disabled) caught by arm 8. Arm 7 (the handbook falsifier) had been silently skipping because the PDF moved to who-iris/uploads/9789241548960-eng/; it runs again.
 
 STILL OPEN (shape three, not fixed): numbered LIST ITEMS in the body ('1 To mark the antithesis…', '1 List all authors when three or fewer…') read as headings. That is the remaining 14 short sections. Separating them needs either a calibrated length threshold (nothing to calibrate against: one bad document, zero known-good inferred ones) or a numbering-monotonicity rule that would break documents whose numbering restarts per part. Not guessed. Re-ingesting who-pub-tps-931 with pdf-structure --ocr also waits on shape three, and needs an OCR engine this container lacks.
+
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
