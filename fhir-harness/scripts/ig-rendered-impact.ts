@@ -51,6 +51,7 @@ import {
   type RenderedFile,
   type RenderedImpact,
 } from "../../cat-harness/schemas/rendered-impact.ts";
+import { gitBlobs } from "../../cat-harness/scripts/git-blobs.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
 
 export const RENDERER = "fhir-ig-pages";
@@ -190,17 +191,6 @@ export function igRenderedImpact(opts: IgImpactOptions): RenderedImpact {
   });
 }
 
-/** Each path's blob id at `head`, read in one `git ls-tree`; a path absent there is absent from the map. */
-function gitBlobs(root: string, head: string, paths: string[]): Map<string, string> {
-  const out = new Map<string, string>();
-  if (!paths.length) return out;
-  const text = execFileSync("git", ["-C", root, "ls-tree", "-r", head, "--", ...paths], { encoding: "utf-8" });
-  for (const line of text.split("\n")) {
-    const m = line.match(/^\d+ blob ([0-9a-f]+)\t(.+)$/);
-    if (m) out.set(m[2]!, m[1]!);
-  }
-  return out;
-}
 
 if (import.meta.main) {
   const argv = process.argv.slice(2);

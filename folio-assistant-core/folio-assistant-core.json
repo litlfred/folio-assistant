@@ -287,5 +287,27 @@
       "outputs": [],
       "because": "`checkMaterializations` is offline and reads — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     }
-  }
+  },
+  "contentTranslations": [
+    {
+      "contentType": "document",
+      "name": "Document (generic prose)",
+      "formats": [
+        {
+          "id": "markdown",
+          "name": "Markdown",
+          "extensions": [
+            ".md"
+          ],
+          "smartBaseScript": "extract_translations.py",
+          "smartBaseExtractRef": "L633–856 (extract_markdown)",
+          "smartBaseInjectRef": "inject_translations.py L56–818",
+          "extractModule": "content/pipeline/pot-extract.ts",
+          "injectModule": "content/pipeline/po-inject.ts"
+        }
+      ],
+      "rtlSupported": true,
+      "notes": "Base content type. All other types inherit Markdown translation."
+    }
+  ]
 }

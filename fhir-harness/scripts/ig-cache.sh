@@ -327,7 +327,12 @@ cmd_seed() {
     edges=$(grep -o '"target"' "$out/dependencies.json" 2>/dev/null | wc -l | tr -d ' ')
   fi
   
+  # The exporter records its toolchain in the manifest; the subject reads it
+  # from there rather than saying "Publisher unknown" (smart-trust#4).
   local pub_version="unknown"
+  if [ -f "$out/manifest.json" ] && command -v python3 >/dev/null 2>&1; then
+    pub_version=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("toolchain",{}).get("publisher") or "unknown")' "$out/manifest.json" 2>/dev/null || echo unknown)
+  fi
   local sha; sha=$(igit rev-parse --short HEAD 2>/dev/null || echo "unknown")
   
   if [ "$PUSH" -eq 1 ] && would_shrink "$br" "$n" "$edges"; then
@@ -344,6 +349,20 @@ cmd_seed() {
   
   cp -R "$out/"* "$tmp/" 2>/dev/null || true
   rm -f "$tmp/index.lock"
+  # `ig.root` is the builder's absolute path (`/Users/<name>/...`): it names a
+  # machine, not the cache, and nothing reads it. Record it relative to the IG.
+  if [ -f "$tmp/manifest.json" ] && command -v python3 >/dev/null 2>&1; then
+    python3 - "$tmp/manifest.json" <<'PY' || die "could not normalise ig.root in manifest.json"
+import json, sys
+p = sys.argv[1]
+m = json.load(open(p))
+if isinstance(m.get("ig"), dict) and "root" in m["ig"]:
+    m["ig"]["root"] = "."
+    with open(p, "w") as f:
+        json.dump(m, f, indent=2)
+        f.write("\n")
+PY
+  fi
   # txcache goes alongside AST on the branch
   if [ -d "$root/input-cache/txcache" ]; then
     cp -R "$root/input-cache/txcache" "$tmp/"

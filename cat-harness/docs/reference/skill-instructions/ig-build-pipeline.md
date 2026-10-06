@@ -80,6 +80,144 @@ an IG concern in any layer. The falsification test asks whether a step can be
 placed, not whether it lands in one of the five; a step with a home elsewhere
 in the harness is placed.
 
+## Who starts a build: two owner questions before a repository publishes on its own
+
+Owner, 2026-10-06: *"make this part of the process/skill. if gh-pages is being
+populated, ask use if disable. ask use if they want justthedocs rendering
+(default is yes)"*. Bean `p3yl`.
+
+**This section owns the rule.** Every other skill that adopts, onboards or
+converts an IG repository points here rather than restating it.
+
+**When it applies:** whenever an agent adopts an IG repository
+([`fhir-ig-create`](fhir-ig-create.md) `existing-ig` or `new-repo`, or
+[`repo-conversion`](repo-conversion.md)
+over a repository with a `sushi-config.yaml` or `ig.ini`), **and** whenever it
+notices automatic builds in an IG repository it is already working in. A
+repository forked from an upstream IG usually arrives with the upstream's
+build workflows, and those publish on every push and every pull request
+whether or not the fork's owner wants that.
+
+Why ask rather than leave them: the measured case (2026-10-06, three IG forks)
+had IG Publisher workflows writing a `branches/<name>/` preview to `gh-pages`
+on every push and every PR, which the owner did not want, and one fork's PR
+preview was deploying to **another organisation's** Pages site. Nothing in the
+repository said so; it was found by reading the triggers.
+
+### 1. Detect, read-only
+
+List every workflow under `.github/workflows/` whose `on:` includes `push`,
+`pull_request`, `pull_request_target` or `schedule` **and** that builds or
+deploys a site: it runs the IG Publisher, pushes to `gh-pages` (or another
+pages branch), or uses a Pages deploy action. For each, record:
+
+| field | what |
+|---|---|
+| file | the workflow path |
+| automatic triggers | which of the four, with their branch filters |
+| what it publishes | full build, branch preview (`branches/<name>/`), PR preview |
+| where it publishes | the repository's own Pages site, or a target **outside** it (another repository's pages branch, another organisation's `github.io`) |
+| called by others | whether it declares `workflow_call`, and whether another repository calls it |
+
+**A deploy target outside the repository's own Pages site is a finding in its
+own right**, reported even if the owner keeps every trigger: the repository
+is writing to a site it does not own.
+
+If nothing matches, say so in one line and skip to step 3.
+
+### 2. Ask whether to disable the automatic triggers
+
+Put it per
+[`interaction-modality`](interaction-modality.md):
+the detection table first, so the owner can answer without opening anything,
+then this question:
+
+> This repository publishes to gh-pages automatically: *(the table from step 1)*.
+> Should those builds keep running on their own?
+>
+> 1. **Manual only** *(recommended)*. I change each listed trigger to
+>    `workflow_dispatch`, so a build runs only when someone starts it from
+>    the Actions tab. I keep `workflow_call` wherever another repository calls
+>    the workflow, and I leave what is already on gh-pages untouched.
+> 2. **Manual only, and remove the workflows nobody calls.** As 1, but a
+>    workflow with no caller and no remaining use is deleted from
+>    `.github/workflows/` rather than kept as a manual one.
+> 3. **Keep them as they are.** Nothing changes; I record the finding
+>    (and any out-of-repository target) in the work plan.
+> 4. **Tell me more.**
+>
+> **Default if you do not answer: 3.** I change no workflow until you choose.
+
+The default is "no change" and the recommendation is 1 on purpose. Disabling
+a trigger is reversible, but it changes what the owner's repository does, so
+it is not done on silence; and 1 is recommended because an IG fork's owner
+has, so far, never wanted every push published.
+
+Rules that hold whichever option is chosen:
+
+- **Never delete gh-pages content as part of this.** The previews already
+  published stay. Removing them is a separate question, asked separately, with
+  what would go and how big it is, per
+  [`deletion-requires-confirmation`](deletion-requires-confirmation.md).
+  Option 2 deletes a workflow file, which `git revert` restores; it does not
+  delete anything the workflow published.
+- **Keep `workflow_call`.** A workflow another repository calls is an API;
+  dropping the trigger breaks the caller, and the caller's owner is not in
+  this conversation.
+- **An out-of-repository deploy target is never "kept" silently.** If the
+  owner chooses 3, the finding still goes in the work plan.
+
+### 3. Ask whether to render the IG with the just-the-docs site
+
+> Do you want this IG rendered as a just-the-docs site, with the harness's
+> navigation, search and language bar, on this repository's own Pages site?
+>
+> 1. **Yes** *(recommended)*. I install the folio site workflow, manual
+>    trigger only, and tell you how to run it.
+> 2. **No.** The IG Publisher output stays the only rendering.
+> 3. **Tell me more.**
+>
+> **Default if you do not answer: 1.**
+
+The default is yes because this is the rendering the owner wants
+([`ig-render-jekyll`](ig-render-jekyll.md) says why: the Publisher's finished
+HTML is opaque to every harness surface), and installing a manual-only
+workflow publishes nothing until somebody runs it.
+
+On yes:
+
+1. Copy [`templates/ig-repo-site/folio-site.yml`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/templates/ig-repo-site/folio-site.yml)
+   to `.github/workflows/folio-site.yml` and replace its two placeholders, as
+   its header says. The template is `workflow_dispatch` only (#2291). Add a
+   `push` trigger to the copy only if the owner asks for one in so many words.
+2. The repository needs folio-assistant as a submodule at `folio-assistant/`;
+   the template's header says so, and `init-folio --link submodule` does it.
+3. Tell the owner how to run it: **Actions tab → "folio site" → Run
+   workflow**, on the branch to publish. The site lands at the repository's
+   own Pages URL, since the template reads the base path from the repository
+   name rather than assuming it.
+
+### 4. Say what the pull request will fire
+
+A pull request that changes a workflow **still runs the base branch's
+`pull_request_target` workflows**, because `pull_request_target` runs the
+workflow file from the base, not the one in the PR. So the PR that disables
+an automatic preview fires that preview one last time, and on the measured
+fork that meant a deploy to another organisation's site.
+
+Say so before opening the PR, and offer the two ways round it: cancel those
+runs as soon as they start (`gh run cancel <id>`), or, with the owner's
+agreement, push the workflow change straight to the working branch rather
+than through a PR. Once the change is on the base branch, later PRs are
+quiet.
+
+### Process diagram
+
+No BPMN activity covers IG repository adoption yet, so these steps are not
+in a diagram. When one is drawn, steps 2 and 3 are the owner's lane and step
+1 is the agent's, with step 2's "no change" default as the gateway's default
+flow.
+
 ## What this layer refuses to know about
 
 A list, because "generic" is a claim and a list is checkable. `fhir-harness`
