@@ -6,13 +6,14 @@
  * rather than asserted.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { tools } from "../../tools/discover.js";
 import { ToolDefinitionSchema, alternativesWithoutSelection, deriveAlternatives } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
-import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
+import { checkTools, danglingStorageTools, knownSkills, contractRequires } from "../check-tools.js";
 import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
@@ -397,5 +398,27 @@ describe("the gates Tool — one node over a derived list", () => {
     }
     expect(gates?.selection?.when).toContain("INHERITED");
     expect(gates?.requires?.network).toBe(false);
+  });
+});
+
+describe("storage.tool names a declared Tool (bean j9cs)", () => {
+  test("the repository's own declarations name only declared Tools", () => {
+    expect(danglingStorageTools()).toEqual([]);
+  });
+
+  test("a store naming no declared Tool is reported, with where it was declared", () => {
+    const repo = mkdtempSync(join(tmpdir(), "storage-tool-"));
+    mkdirSync(join(repo, "inst"), { recursive: true });
+    writeFileSync(
+      join(repo, "inst", "inst.json"),
+      JSON.stringify({
+        name: "inst",
+        directories: [
+          { id: "site", path: "site/", graphTypologies: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "no-such-tool" } },
+          { id: "ok", path: "ok/", graphTypologies: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "gh-pages" } },
+        ],
+      }),
+    );
+    expect(danglingStorageTools(repo)).toEqual([{ instance: "inst", directory: "site", tool: "no-such-tool" }]);
   });
 });

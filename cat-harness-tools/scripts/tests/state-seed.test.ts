@@ -211,7 +211,7 @@ describe("the cutover's branch half", () => {
 });
 
 describe("the key it takes", () => {
-  test("`rowFor` reads `special-branches.json`, so the live rows are the vocabulary", () => {
+  test("`rowFor` matches an observed row by id, so the live rows are the vocabulary", () => {
     expect(rowFor("beans")?.name).toBe("cat/cat-harness/beans");
     expect(rowFor("todos")?.name).toBe("cat/cat-harness/todos");
     expect(rowFor("no-such-row")).toBeUndefined();

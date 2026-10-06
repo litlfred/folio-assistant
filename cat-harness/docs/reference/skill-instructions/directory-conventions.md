@@ -159,6 +159,8 @@ decides it.
 | `boards` | **harness** | boards — one file each, `"$schema": "folio-board/v1"`. A board is a **diagram OF** a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — *"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter."* | no |
 | `board-positions` | **harness** | where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The **Diagram Interchange** half: it points at notes and is never pointed back at, which is why a note carries no `x`, `y`, `board` or `position`. `state` rather than `content`, because a running process writes it every time somebody moves a note. | no |
 | `binary-release` | **harness** | published binary releases — one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. **Never the bytes**: the schema is strict throughout. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option A); Option B was reusing `materialization`, and bean `gpdo`'s `compiled` purpose landing since has sharpened that mismatch rather than softening it — all four materialization purposes are purposes of A COPY THIS INSTANCE HOLDS, while a release is a publication UPSTREAM that stays true after every local copy is gone. The two compose rather than substitute. `state`: the release pipeline writes it, and re-running produces a DIFFERENT release rather than the same one again, which is why this is not `derived` although `ig-metadata-index` above is. `recordsWork: false` — a published release is a completed fact, not something anybody is partway through. The case it exists for is the deploy purge: after the WHO deploy phase deletes its >100 MB files, nothing else anywhere records that they existed, so a purged asset must still say where to fetch it and why it went — a removal with no recorded reason cannot be told from an accident. Shape in `schemas/binary-release.ts`. | no |
+| `basic-cdn-site` | **harness** | a published static site on a CDN that serves files by path only: no media-type mapping, no redirects, no headers. One `basic-cdn-site/1.0.0` document describes it: its root URL, its routes (the release root, the staging-preview template `STAGING/<slug>/`, the per-instance sub-sites), the commit it was built from, and its files as archive entries. `derived`: built from the renderable graphs its directory's `derivedFrom` names, by a build Tool, and put on the CDN by the Tool its `storage.tool` names. GitHub Pages is one such CDN. | no |
+| `cdn-site` | **harness** | a published site on a CDN that also controls media types, redirects and response headers. One `cdn-site/1.0.0` document: everything a `basic-cdn-site` carries, plus `mimeTypes`, `redirects` and `headers`. Declared ahead of its first instance so a CDN deployment (who-iris, beans l9v6 and xies) lands in a kind rather than widening `basic-cdn-site`, whose point is what it cannot do. | no |
 | `themes` | **harness** | themes an instance DERIVED from a source it holds — a served stylesheet, or a style guide's stated rules. One Theme node each, carrying `kind: sticky \| webpage \| publication`; the palette vocabulary is shared across every kind and only the geometry varies. Every value cites where it was measured. NOT the platform's own twelve themes, which are furniture in `cat-harness/schemas/themes.ts` — a palette read off a WHO style guide is subject matter. | no |
 | `document-kinds` | **harness** | DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `folio-document-kind/v1` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767. | no |
 | `session-state` | **harness** | a SESSION's context — the acting actor, the instances it has open, the beans it claimed and what it waits on. Distinct from `workflow-state`, which is where ONE instance got to: a session spans processes, and a session with nothing open is the commonest state there is. `actor` is required because nothing else can supply it. **Registered ahead of a directory**: nothing writes one yet, and the state machine that will is bean `3nfv`. Shape in `schemas/session-context.ts`; read with [`session-context`](session-context.md). | no |
@@ -813,11 +815,13 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
   declared repository branch and `path` is where a mount of it lands. A later
   kind (a graph database) is a new member of the union: additive, and a
   compile error at every consumer that has not decided what to do with it.
-- **The branch NAME is declared once**, in `cat-harness/scripts/special-branches.json`
-  (with its legacy spellings and its mirrors). A branch source names its
-  branch; the resolver attaches the matching row, and a branch no row
-  declares is a finding (`subgraph-source.test.ts`), never a guess at what to
-  fetch.
+- **The branch NAME is declared once**, on the directory entry that owns it:
+  its `storage` (or `source`). There is no central table — `special-branches.json`
+  was removed on 2026-10-05 (owner: *"dont use /get rid of"*). A script that
+  resolves a family's branch reads the folio's declaration first and keeps
+  its built-in names only as a fallback (`cache-family-fallbacks.test.ts`
+  keeps those in step). A branch no declaration names is a finding
+  (`subgraph-source.test.ts`), never a guess at what to fetch.
 - **The instance config overrides it, by id.** `<instance>.config.json` →
   `"subgraphSources": { "<dir-id>": <source> }`. The declaration says what the
   subgraph IS; the config says how THIS instantiation is set up, and where
@@ -1094,8 +1098,8 @@ one is argued.
    (§"Node schemas, one per `$schema` family").
 4. **Declare only what exists**, or say why not with `absent: { reason }`.
    **Where its content comes from** is `source` — omit it for the checkout
-   directory; a branch source names a branch declared in
-   `special-branches.json` (§"Where a subgraph gets its content").
+   directory; a branch source names its branch on the entry itself
+   (§"Where a subgraph gets its content").
 5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
    for, the `visualiser` that renders it; an opt-out carries its reason
    (`SubgraphCoverageSchema`). Without a skill the directory is unreachable
