@@ -1,12 +1,12 @@
 ---
 # folio-assistant-4z5o
 title: 'Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure'
-status: todo
+status: in-progress
 type: bug
 parent: folio-assistant-o3xy
 priority: normal
 created_at: 2026-10-04T09:08:59Z
-updated_at: 2026-10-04T09:08:59Z
+updated_at: 2026-10-06T19:49:01Z
 ---
 Generated pages compose GitHub URLs by joining an instance-relative path that leaves the instance root, producing links with `/main/../` in them:
 
@@ -30,3 +30,5 @@ PRE-EXISTING ON MAIN, not introduced by any one PR. Counted with `git grep -o "e
 - [ ] a cross-instance edit URL is repo-root-relative, with no `..` segment
 - [ ] a test pins it for a figure whose source is in a nested instance
 - [ ] the count is zero, not baselined
+
+_2026-10-06T19:49:01Z_ — Claimed by claude/4z5o-cross-instance-figure-urls — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
