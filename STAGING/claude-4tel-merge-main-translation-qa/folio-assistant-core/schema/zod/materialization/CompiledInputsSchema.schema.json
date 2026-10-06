@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/CompiledInputs",
+  "definitions": {
+    "CompiledInputs": {
+      "type": "object",
+      "properties": {
+        "toolchain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "toolchain",
+        "sourceRevision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-4tel-merge-main-translation-qa/folio-assistant-core/schema/zod/materialization/CompiledInputsSchema.schema.json",
+  "title": "CompiledInputsSchema",
+  "description": "Generated from `CompiledInputsSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/4tel-merge-main-translation-qa",
+    "sha": "b10b6d5a02b3aa945a752bf67b1b224e0dc74487",
+    "pr": "2314/merge",
+    "run": "37515460299"
+  }
+}
