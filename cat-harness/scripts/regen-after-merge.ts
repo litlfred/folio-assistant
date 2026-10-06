@@ -111,8 +111,9 @@
  *
  * Why concurrency cannot change a verdict: a pass that ran a writer is always
  * followed by another, and the run is reported settled only after a pass in
- * which NO writer ran — so the final verdicts were all read from a tree no
- * writer was touching (bean `14ve`'s fixpoint does the work).
+ * which NO writer ran, or whose writers repaired nothing and left the tree
+ * measurably unchanged — so the final verdicts were all read from a tree no
+ * writer changed (bean `14ve`'s fixpoint does the work).
  *
  * ## Asking only what a change can have affected — bean `94zs`
  *
@@ -567,7 +568,8 @@ export async function regenPass(
 }
 
 /**
- * Passes until one runs NO writer, at most `maxPasses` — bean `14ve`.
+ * Passes until one runs NO writer — or a BARREN one, whose writers repaired
+ * nothing and measurably changed nothing — at most `maxPasses` — bean `14ve`.
  *
  * One pass asks each check once, in workflow order. When writer B's output is
  * an INPUT to check A and A comes first, A reads current before B runs, B then
@@ -635,6 +637,22 @@ export async function regenToFixpoint(
       settled = true;
       break;
     }
+    // A BARREN pass (bean `xpcu`, measured 2026-10-06): writers ran, but none
+    // repaired anything and — measured, not declared — the tree is exactly
+    // as it was before the pass. The next pass would read that same tree and
+    // run the same writers to the same effect, so this pass IS the fixed
+    // point. Without this a writer that exits non-zero (`writer-failed`)
+    // counted as "a writer ran" on every pass: measured, `fsh-guts:viz` took
+    // a run to the pass cap re-asking ~80-106 undeclared pairs per pass, then
+    // reported NOT SETTLED and recorded no hash at all. Only with the
+    // measurement: a change set that could not be read (`undefined`) settles
+    // nothing.
+    const repaired = results.some((r) => r.outcome === "regenerated");
+    if (lastChange !== undefined && lastChange.size === 0 && !repaired) {
+      opts.onBarren?.(passes, writerRan);
+      settled = true;
+      break;
+    }
   }
   return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
 }
@@ -667,6 +685,8 @@ export interface FixpointOptions {
   };
   /** Called for each pair a pass does not ask, before the pass runs. */
   onNotAsked?: (pair: Pair, why: string, pass: number) => void;
+  /** Called when a pass settles as BARREN: its writers repaired nothing and changed nothing measured. */
+  onBarren?: (pass: number, writers: readonly string[]) => void;
 }
 
 /** Why a run exited as it did — one of these, never a bare number. */
@@ -1107,6 +1127,11 @@ if (import.meta.main) {
       firstPass,
       narrow,
       onNotAsked,
+      onBarren: (n, writers) =>
+        console.log(
+          `  pass ${n} was BARREN — its writer(s) (${writers.join(", ")}) repaired nothing and changed ` +
+            "nothing in the tree (measured), so the next pass would repeat it: settled here",
+        ),
       onPass: (n) => {
         digests = new FileDigests(repoRoot);
         if (explain) console.log(`  pass ${n}:`);
