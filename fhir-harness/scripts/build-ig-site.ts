@@ -462,10 +462,17 @@ export function igChromeIncludes(topBar: string): { top: string; bottom: string 
  * site's and are not carried. A file already at a destination path is
  * reported, never overwritten.
  */
-export function composeIgSite(staged: string, docsRoot: string, instance: string): { pages: number; files: number; includes: number; collisions: string[] } {
+export function composeIgSite(
+  staged: string,
+  docsRoot: string,
+  instance: string,
+  opts: { atRoot?: boolean } = {},
+): { pages: number; files: number; includes: number; collisions: string[] } {
   const title = /^title:\s*(.+)$/m.exec(readFileSync(join(staged, "_config.yml"), "utf-8"))?.[1]?.replace(/^"(.*)"$/, "$1") ?? instance;
   const q = JSON.stringify(title);
-  const dest = join(docsRoot, instance);
+  // `atRoot`: the IG IS the site (an IG repository's own site, composed into
+  // the chrome-only shell — #2235 F1), so its pages land at the root.
+  const dest = opts.atRoot ? docsRoot : join(docsRoot, instance);
   const incDest = join(docsRoot, "_includes", "ig", instance);
   const dataDest = join(docsRoot, "_data", "ig", instance);
   const collisions: string[] = [];
