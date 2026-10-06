@@ -47,20 +47,30 @@
  * Except a file the site's builders cannot read (bean `ehh6`). On the first
  * real run (smart-ra#26) the work-plan bean the branch carried was reported
  * "may change any page", and an undetermined input holds the coverage gate
- * shut, so every PR that touches a bean would wait on a false alarm. A
- * document site is built from the graphs its instance DECLARES, the platform
- * (a submodule), and the build's own definition (`.github/`, the root's
- * declaration, config and lockfiles). A file outside all of those — an
- * undeclared directory such as `beans/`, or a Markdown note at the root — is
- * an input that reaches no page ({@link siteMayRead}). With no declaration to
- * read, nothing is excluded: doubt carries. The claim is checked, not
- * trusted: the staging build's diff counts any page it changed that the list
- * did not name.
+ * shut, so every PR that touches a bean would wait on a false alarm.
+ *
+ * What a builder reads is the BUILDER's to say, not a list here and not the
+ * instance's declaration: the second run showed why. smart-ra declared
+ * `beans/` and `todos/`, so "declared" read as "read", yet the site renders
+ * todos and never beans. So each builder exports `siteReads(repoRoot, args)`
+ * (`build-document-site`: the folio; `public-comment-site`: the comment store
+ * and the folio; `gen-node-kind-pages`: every directory of a typology holding
+ * a kind it renders), and {@link siteReadsOf} asks every builder the folio's
+ * build command runs. A file outside all of their directories, the
+ * submodules (the platform builds every page), `.github/` and the root's
+ * non-Markdown files (declaration, config, lockfiles) is an input that
+ * reaches no page ({@link siteMayRead}).
+ *
+ * Any doubt carries: a step in the command that is not a builder exporting
+ * `siteReads` excludes nothing, and with no command the instance's declared
+ * directories stand in. The claim is checked, not trusted: the staging
+ * build's diff counts any page it changed that the list did not name.
  *
  * Usage:
  *   bun run folio-assistant-core/scripts/document-rendered-impact.ts --root <folio repo>
  *     (--changed a,b | --base <ref> [--head <ref>]) [--changeset changeset.json]
- *     [--outline outline.json] [--site <prefix>] [--out impact.json]
+ *     [--outline outline.json] [--site <prefix>] [--build-command "<the folio's build command>"]
+ *     [--out impact.json]
  *
  * @module folio-assistant-core/scripts/document-rendered-impact
  */
@@ -125,10 +135,10 @@ function finish(renderer: string, inputs: string[], acc: Acc, opts: { base?: str
   });
 }
 
-/** What the document site's builders can read, from the instance's own declarations. */
+/** What the document site's builders can read. */
 export interface SiteReads {
-  /** Directories the instance declares (`<instance>.json` `directories[].path`), repo-relative. */
-  declared: string[];
+  /** Directories the builders read (their `siteReads`), or the instance's declared ones; repo-relative. */
+  reads: string[];
   /** Submodule paths (`.gitmodules`): the platform, whose code builds every page. */
   submodules: string[];
 }
@@ -139,14 +149,13 @@ const under = (f: string, dir: string) => {
 };
 
 /**
- * Whether a document site's builders can read `f`: under a declared
- * directory, a submodule, or `.github/`, or a root file that is not Markdown
- * (the declaration, config, lockfiles). `undefined` reads (no declaration)
- * means every file may be read.
+ * Whether a document site's builders can read `f`: under a directory they
+ * read, a submodule, or `.github/`, or a root file that is not Markdown (the
+ * declaration, config, lockfiles). `undefined` reads means every file may be.
  */
 export function siteMayRead(f: string, reads: SiteReads | undefined): boolean {
   if (!reads) return true;
-  if (reads.declared.some((d) => under(f, d)) || reads.submodules.some((d) => under(f, d))) return true;
+  if (reads.reads.some((d) => under(f, d)) || reads.submodules.some((d) => under(f, d))) return true;
   if (under(f, ".github")) return true;
   return !f.includes("/") && !/\.md$/i.test(f);
 }
@@ -244,18 +253,27 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
 
 const readJson = (p: string) => JSON.parse(readFileSync(p, "utf-8"));
 
-/**
- * The repository's {@link SiteReads}, or `undefined` when it declares nothing
- * readable: then no file is excluded.
- */
-export function siteReadsOf(root: string): SiteReads | undefined {
+/** One step of a build command: the script it runs and the arguments after it; `undefined` when it runs no `.ts`. */
+export function buildSteps(command: string): Array<{ script: string; args: string[] } | undefined> {
+  return command
+    .split(/&&|\|\||;|\|/)
+    .map((seg) => seg.trim().split(/\s+/).filter(Boolean))
+    .filter((t) => t.length)
+    .map((t) => {
+      const i = t.findIndex((x) => x.endsWith(".ts"));
+      return i < 0 ? undefined : { script: t[i]!, args: t.slice(i + 1) };
+    });
+}
+
+/** The instance's declared directories and its submodules, or `undefined` when either cannot be read. */
+function declaredReads(root: string): SiteReads | undefined {
   const decl = declarationPathIn(root);
   if (!decl) return undefined;
-  let declared: string[];
+  let reads: string[];
   try {
     const dirs = (readJson(decl) as { directories?: Array<{ path?: unknown }> }).directories;
     if (!Array.isArray(dirs)) return undefined;
-    declared = dirs.map((d) => d.path).filter((p): p is string => typeof p === "string");
+    reads = dirs.map((d) => d.path).filter((p): p is string => typeof p === "string");
   } catch {
     return undefined;
   }
@@ -269,9 +287,29 @@ export function siteReadsOf(root: string): SiteReads | undefined {
       return undefined;
     }
   }
-  return { declared, submodules };
+  return { reads, submodules };
 }
 
+/**
+ * The repository's {@link SiteReads}: with a build command, what its builders
+ * say they read; without one, the declared directories. `undefined` (nothing
+ * excluded) when there is no declaration, or a step is not a builder that
+ * exports `siteReads`.
+ */
+export async function siteReadsOf(root: string, buildCommand?: string): Promise<SiteReads | undefined> {
+  const base = declaredReads(root);
+  if (!base || buildCommand === undefined) return base;
+  const reads = new Set<string>();
+  for (const step of buildSteps(buildCommand)) {
+    if (!step) return undefined;
+    const path = resolve(root, step.script);
+    if (!existsSync(path)) return undefined;
+    const fn = ((await import(path)) as { siteReads?: (r: string, a: string[]) => string[] | Promise<string[]> }).siteReads;
+    if (typeof fn !== "function") return undefined;
+    for (const d of await fn(root, step.args)) reads.add(d);
+  }
+  return { reads: [...reads].sort(), submodules: base.submodules };
+}
 
 if (import.meta.main) {
   const argv = process.argv.slice(2);
@@ -295,7 +333,7 @@ if (import.meta.main) {
   const olPath = arg("--outline");
   const outline = olPath && existsSync(olPath) ? (readJson(olPath) as OutlineLike) : undefined;
   // Pinned to the inputs' blobs at head, so a page verdict is about this version (see rendered-impact.ts, "A PIN").
-  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site"), reads: siteReadsOf(root) });
+  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site"), reads: await siteReadsOf(root, arg("--build-command")) });
   try {
     const blobs = gitBlobs(root, head ?? "HEAD", changed);
     impacts = impacts.map((i) => pinImpact(i, (p) => blobs.get(p)));
