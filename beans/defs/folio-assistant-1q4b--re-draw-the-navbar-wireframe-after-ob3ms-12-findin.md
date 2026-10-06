@@ -1,10 +1,10 @@
 ---
 # folio-assistant-1q4b
 title: Re-draw the navbar wireframe after ob3m's 12 findings landed
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-06T05:55:48Z
-updated_at: 2026-10-06T15:44:13Z
+updated_at: 2026-10-06T18:30:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -18,3 +18,6 @@ ob3m's closing step, split out when ob3m closed on 2026-10-06: 'When fixed, re-d
 _2026-10-06T15:44:13Z_ — Claimed by claude/1q4b-navbar-wireframe — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 _2026-10-06_ — Two corrections to ob3m's record, found while re-checking on the build. (1) The `check:navbar-consistency` gate (finding 11, declared half) landed in **#1589** ("Goal-review arc + the navbar QA check"), not #1687, which is an adapters PR. (2) ob3m's closing summary says finding 3's sticky half was "left as authored"; on the build it is fixed by #1807 — both cards open on the declaration's summary.
+
+## Merged 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+#2295 merged as cd0e90e after CI PASS on its head (`ci:watch`); every Done-when box above was ticked with evidence, re-checked before merging.
