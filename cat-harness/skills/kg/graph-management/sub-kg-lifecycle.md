@@ -259,10 +259,14 @@ read only mirror in fsh-guts"*.
   host keeps a **frozen** copy in [`fsh-guts`](../kg-core/fsh-guts.md), not a
   refreshed mirror and not a deletion. Step 12 asks (1) move to fsh-guts now,
   (2) keep in place until the first release, (3) show the file list first,
-  default (2). Step 13 relocates the directory to
-  `fsh-guts/separated/<name>/` as one fsh-guts relocation (plain `mv`,
-  `git rm --cached`, `state:push`) with one note carrying `movedFrom`,
-  `movedOn`, the new repository and the commit the copy matches. The live
+  default (2). Step 13 runs `state:seed --id <id> --cutover --commit`
+  (owner, 2026-10-06, choosing this archive form over plain trees, which
+  CI then audited as live content): it deposits the directory into the
+  instance's fsh-guts as an archive that must extract to the exact tree
+  being removed, with a provenance note (`movedFrom`, `movedOn`,
+  `sourceCommit`, `tree`), and removes the directory from `main` only once
+  the deposit has landed. [`directory-conventions`](../kg-core/directory-conventions.md)
+  carries the rule. The live
   copy is the submodule or subscription from stage 10; the frozen one is
   never refreshed and never rendered.
 
