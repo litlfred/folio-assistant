@@ -29,6 +29,10 @@ on:
       # this the pages are committed, gated, and never redeployed.
       - 'who-iris/docs/**'
       - 'who-iris/catalogue/**'
+      # A SUBSCRIBED instance's pages are mounted from its materialised tree
+      # (`subscribed-trees.ts`, bean `g8jp`), so a re-subscribe or a
+      # re-materialise changes the site while touching no instance directory.
+      - '*/subscriptions/**'
       # The identifier lookup this workflow publishes (bean `1br0`): the
       # script, its client, and each instance's generated index — a changed
       # index must redeploy, or the search box links to a stale one.

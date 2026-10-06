@@ -11,6 +11,7 @@ import { join } from "node:path";
 
 import { KG_PART_RECORD_SCHEMA } from "../../schemas/substrate-snapshot.ts";
 import { type RootFetcher, setTopLevelKey, subscribe, treeDigest } from "../kg-subscribe.ts";
+import { composedInstances } from "../compose-docs.ts";
 import { mountable, referencedAssets, subscribedMountEntries, withRoutes } from "../mount-instance-docs.ts";
 import { subscribedTrees } from "../subscribed-trees.ts";
 
@@ -36,6 +37,7 @@ const SUBSTRATE = {
     { id: "iris-docs", path: "docs/", graphTypologies: ["docs"] },
     { id: "library", path: "library/", graphTypologies: ["library"] },
     { id: "iris-skills", path: "skills/", graphTypologies: ["skills"] },
+    { id: "iris-notes", path: "notes/", graphTypologies: ["docs"], composed: true },
   ],
 };
 
@@ -185,5 +187,26 @@ describe("mount-instance-docs reads a subscribed instance like an in-tree one", 
     const { entries, shadowed } = subscribedMountEntries(repo);
     expect(entries).toEqual([]);
     expect(shadowed[0]).toContain("also staged in this tree");
+  });
+});
+
+describe("compose-docs composes a subscribed instance's composed directories", () => {
+  test("a held directory the substrate declares `composed` is composed under the substrate's name", async () => {
+    const { repo, snapshotDir } = await repoWith(["iris-notes", "iris-docs"]);
+    materialise(snapshotDir, "iris-notes", "notes", { "index.md": "# notes" });
+    materialise(snapshotDir, "iris-docs", "docs", { "index.html": "<html><body>docs</body></html>" });
+    const composed = composedInstances(repo);
+    // iris-docs is not marked composed, so it is mount-instance-docs' and not this one's.
+    expect(composed.map((c) => [c.instance, c.under, c.root])).toEqual([
+      ["iris-like", "iris-like", "host/subscriptions/iris-like/subgraphs/iris-notes/tree"],
+    ]);
+  });
+
+  test("an instance also staged in the tree is composed from the staged copy alone", async () => {
+    const { repo, snapshotDir } = await repoWith(["iris-notes"]);
+    materialise(snapshotDir, "iris-notes", "notes", { "index.md": "# notes" });
+    mkdirSync(join(repo, "iris-like"));
+    writeFileSync(join(repo, "iris-like", "iris-like.json"), JSON.stringify({ name: "iris-like", directories: [] }));
+    expect(composedInstances(repo)).toEqual([]);
   });
 });
