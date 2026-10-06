@@ -247,9 +247,9 @@ function postChecks(root: string, label: string, regen: boolean): TrainCheck[] {
     l1 === 1 ? "a library entry has an unmet L1 requirement (the verdict is written)" : l1 === 2 ? "could not check" : undefined);
 
   // Each check an instance declares `afterMerge` under `taskIo`, with its
-  // writer run when red (bean `0r7u`). This named smart-base's `smart-kg-l1`
-  // and its extractor until 2026-10-06 — a layer above this one, so the train
-  // broke standalone; smart-base now declares the pair itself.
+  // writer run when red (bean `0r7u`). It named one instance's gate and
+  // extractor until 2026-10-06 — a layer above this one, so the train broke
+  // standalone; that instance now declares the pair itself.
   for (const { check, writer } of afterMergeRepairs()) {
     const first = run(root, "bun", ["run", check], true).code;
     if (first === 0) {

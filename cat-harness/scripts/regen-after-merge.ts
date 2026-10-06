@@ -274,8 +274,9 @@ const OWN_WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // single `regen` called the tree current and CI then went red (trains 2 and
   // 3, #1876, #1883). `check:l1-complete -- --check` was not a bare script,
   // so regen never saw it; it is now the named `check:l1-complete:check`,
-  // whose writer is `--write`. (Its sibling, smart-base's `smart-kg-l1`, is
-  // declared by smart-base under `taskIo` since bean `0r7u`.)
+  // whose writer is `--write`. (Its sibling gate, which took one `--entry`
+  // at a time, is declared by its own instance under `taskIo` since bean
+  // `0r7u`.)
   "check:l1-complete:check": "l1-complete:write",
 };
 

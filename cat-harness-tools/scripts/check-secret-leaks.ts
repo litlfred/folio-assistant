@@ -203,9 +203,9 @@ const FIXED_ROOTS = [".github", "cat-harness", "beans", "package.json"];
  * The fixed roots plus every PRESENT instance's `skills` and `glossary`
  * graphs: the agent-authored prose where a pasted credential would land.
  *
- * This named `who-iris/skills` and `who-iris/glossary` until 2026-10-06 (they
- * were `who-style-guide` until bean qsx4) — an instance above this layer, so
- * the list broke standalone and missed every other instance's skills. Now
+ * This named one upper instance's skills and glossary directories until
+ * 2026-10-06 — a layer above this one, so the list broke standalone and
+ * missed every other instance's skills. Now
  * each instance contributes its own by declaration (bean `0r7u`). Only
  * directories that exist are added: a declared-but-absent one would read as
  * `could-not-scan`, and absence is not this check's question.

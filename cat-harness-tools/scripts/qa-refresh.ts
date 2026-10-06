@@ -178,7 +178,7 @@ export const QA_WRITERS: readonly QaWriter[] = [
     run: ["lsi", "index", "--graph", "library", "--needed"],
     writes: [`${R}/lsi/*/library.lsi.json`, `${R}/tool-runs/lsi-index/*/library.tool-run.json`],
     because:
-      "every library graph `lsi audit` says needs an index, chosen by `needOf` over the instances present (cat-harness, smart-base and who-iris, measured 2026-10-06). The list was hardcoded and named instances above this layer (bean `0r7u`)",
+      "every library graph `lsi audit` says needs an index, chosen by `needOf` over the instances present (three, measured 2026-10-06). The list was hardcoded and named instances above this layer (bean `0r7u`)",
   },
   { id: "lsi:audit", run: ["lsi:audit"], writes: [`${R}/lsi-need-an-index.qa-results.json`], because: "which prose graphs need an index; reads the indexes above" },
   { id: "docs:pages", run: ["docs:pages"], writes: [`${R}/witnesses/**`], because: "the published witness projections of the block and translation verdicts above" },
