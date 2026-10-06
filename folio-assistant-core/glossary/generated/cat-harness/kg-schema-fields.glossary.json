@@ -7665,6 +7665,13 @@
       "status": "candidate"
     },
     {
+      "id": "node-kind-index.nodekindentry.pages",
+      "prefLabel": "NodeKindEntry.pages",
+      "definition": "The kind's own page renderer, when its validator node names one (`pages`), repo-relative. Absent: the generic pages built from the schema.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.pages",
+      "status": "candidate"
+    },
+    {
       "id": "node-kind-index.nodekindentry.parents",
       "prefLabel": "NodeKindEntry.parents",
       "definition": "Direct parents, by id, in declared order.",
@@ -12219,6 +12226,13 @@
       "prefLabel": "ValidatorNodeSchema.id",
       "definition": "This validator's own name, as its file is named.",
       "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "validator-node.validatornodeschema.pages",
+      "prefLabel": "ValidatorNodeSchema.pages",
+      "definition": "The kind's own page renderer, `<harness>:<path>#<Export>`, when the generic pages built from its schema are not enough (issue #2195: *\"Generic + override\"*). The export is a `KindPages` (`scripts/gen-node-kind-pages.ts`). Declared here, beside the schema, so the harness whose code knows the kind is the one that says how to show it.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.pages",
       "status": "candidate"
     },
     {

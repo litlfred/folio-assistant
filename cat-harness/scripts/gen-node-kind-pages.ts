@@ -37,8 +37,8 @@
  *   bun run node-kind:pages          # write
  *   bun run node-kind:pages:check    # fail if a page is stale or orphaned
  */
-import { readdirSync, readFileSync, rmSync, statSync } from "node:fs";
-import { basename, join, relative, sep } from "node:path";
+import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { join, relative, resolve, sep } from "node:path";
 
 import { defaultGraphTypologies, readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { nodeKindIndex, type NodeKindEntry, type NodeKindIndex } from "../schemas/node-kind-index.ts";
@@ -54,7 +54,7 @@ export const LOCALES = ["en"] as const;
 /** Marks a page this generator wrote, so pruning never touches anyone else's. */
 export const PAGE_MARK = "data-fa-node-kind-page";
 
-const esc = (s: unknown): string =>
+export const esc = (s: unknown): string =>
   String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 /** One top-level field of a kind's schema, as a page uses it. */
@@ -155,6 +155,43 @@ ${body}
 `;
 }
 
+/** A section a kind's own renderer adds to a page: a heading with an id, so the rail can index it. */
+export interface PageSection {
+  id: string;
+  label: string;
+  /** Already escaped; `esc` is exported for the renderer's use. */
+  html: string;
+}
+
+/** What a renderer is given besides its nodes: a way to reach other kinds' nodes, and to link them. */
+export interface KindPagesContext {
+  locale: string;
+  /** Every node of `kindId` and its subclasses on this site. */
+  nodesOf(kindId: string): readonly KindNode[];
+  /** A relative link from the page being written to `n`'s page under kind `kindId`; undefined when that kind has no pages. */
+  linkTo(kindId: string, n: Pick<KindNode, "harness" | "path">): string | undefined;
+}
+
+/**
+ * A kind's own renderer — the "override" of *"Generic + override"* (issue
+ * #2195). Named by its validator node's `pages` reference, so the harness that
+ * knows the kind says how to show it. It ADDS sections; the heading, the
+ * tiles, the table, the fields and the navbar stay the platform's, so every
+ * kind's pages read alike and a renderer cannot drop the generic view.
+ */
+export interface KindPages {
+  /** Sections on the kind page and each harness page, after the tiles and before the table. */
+  dashboard?(nodes: readonly KindNode[], ctx: KindPagesContext): PageSection[];
+  /** Sections on a node's page, after its heading and before its fields. */
+  node?(n: KindNode, ctx: KindPagesContext): PageSection[];
+}
+
+export const isKindPages = (v: unknown): v is KindPages =>
+  !!v && typeof v === "object" && (typeof (v as KindPages).dashboard === "function" || typeof (v as KindPages).node === "function");
+
+const sectionsHtml = (extra: readonly PageSection[]): string =>
+  extra.map((x) => `<h2 id="${esc(x.id)}">${esc(x.label)}</h2>\n${x.html}`).join("\n");
+
 /** Where a kind's pages live, relative to the site root. */
 export const kindDir = (locale: string, k: Pick<NodeKindEntry, "id" | "declaredBy">): string => `${locale}/${k.declaredBy}/${k.id}`;
 
@@ -184,6 +221,7 @@ export function dashboardHtml(
   byId: Map<string, NodeKindEntry>,
   locale: string,
   harness?: string,
+  extra: readonly PageSection[] = [],
 ): string {
   const base = kindDir(locale, k);
   const here = harness ? `${base}/${harness}` : base;
@@ -220,7 +258,9 @@ export function dashboardHtml(
   const cls = (c: FieldInfo) => (c.type === "string" && !["id", "status", "priority"].includes(c.name) ? "t" : "s");
   const rows = nodes
     .map((n) => {
-      const to = href(here, `${base}/${n.harness}/${n.path}`);
+      // A node's page is under the kind it IS — one address per node — so a
+      // subclass's row links into its own kind's pages.
+      const to = href(here, `${kindDir(locale, byId.get(n.kind) ?? k)}/${n.harness}/${n.path}`);
       return `<tr data-kind="${esc(n.kind)}" data-harness="${esc(n.harness)}"><td class="p"><a href="${to}">${esc(n.path)}</a></td>${
         harness ? "" : `<td class="s">${esc(n.harness)}</td>`
       }${oneKind ? "" : `<td class="s">${esc(n.kind)}</td>`}${cols.map((c) => `<td class="${cls(c)}">${esc(cell(n.node[c.name]))}</td>`).join("")}</tr>`;
@@ -246,13 +286,14 @@ ${rows}
 ${lineage(here, k, byId, locale)}
 ${where}
 ${tiles}
+${sectionsHtml(extra)}
 ${table}`,
     nodes.length ? FILTER : "",
   );
 }
 
 /** One node's page: every field, then the source. */
-export function nodeHtml(k: NodeKindEntry, n: KindNode, locale: string): string {
+export function nodeHtml(k: NodeKindEntry, n: KindNode, locale: string, extra: readonly PageSection[] = []): string {
   const base = kindDir(locale, k);
   const here = `${base}/${n.harness}/${n.path}`;
   const name = n.node.title ?? n.node.summary ?? n.node.id ?? n.path;
@@ -264,7 +305,9 @@ export function nodeHtml(k: NodeKindEntry, n: KindNode, locale: string): string 
     `${cell(name)} — ${k.id}`,
     `<h1>${esc(cell(name))}</h1>
 <p class="m">A <a href="${href(here, base)}">${esc(n.kind)}</a> node held by <a href="${href(here, `${base}/${n.harness}`)}">${esc(n.harness)}</a>, at <code>${esc(n.file)}</code>.</p>
-<dl id="fields">
+${sectionsHtml(extra)}
+<h2 id="fields">Fields</h2>
+<dl>
 ${fields}
 </dl>`,
   );
@@ -282,6 +325,7 @@ export function dashboardSection(
   nodes: readonly KindNode[],
   fields: readonly FieldInfo[],
   harness?: string,
+  extra: readonly Pick<PageSection, "id" | "label">[] = [],
 ): VisualiserNavEntry[] {
   const scoped = harness ? nodes.filter((n) => n.harness === harness) : nodes;
   const regions = [
@@ -289,19 +333,20 @@ export function dashboardSection(
     ...fields
       .filter((f) => f.type === "enum" && f.options?.some((o) => scoped.some((n) => n.node[f.name] === o)))
       .map((f) => ({ label: `By ${f.name}`, id: `by-${f.name}` })),
+    ...extra.map((x) => ({ label: x.label, id: x.id })),
     ...(scoped.length ? [{ label: "Nodes", id: "nodes" }] : []),
   ];
   const harnesses = [...new Set(nodes.map((n) => n.harness))].sort();
   return subjectSection(harnesses, harness, regions, (s) => ({ label: s ?? k.id }));
 }
 
-export function nodeSection(k: NodeKindEntry, n: KindNode): VisualiserNavEntry[] {
+export function nodeSection(k: NodeKindEntry, n: KindNode, extra: readonly Pick<PageSection, "id" | "label">[] = []): VisualiserNavEntry[] {
   const depth = n.path.split("/").length;
   const up = (levels: number) => "../".repeat(levels);
   return [
     { label: k.id, href: up(depth + 1) },
     { label: n.harness, href: up(depth) },
-    { label: n.path.split("/").pop()!, items: [{ label: "Fields", href: "#fields" }] },
+    { label: n.path.split("/").pop()!, items: [...extra.map((x) => ({ label: x.label, href: `#${x.id}` })), { label: "Fields", href: "#fields" }] },
   ];
 }
 
@@ -315,7 +360,7 @@ export function plannedPages(index: NodeKindIndex, nodesOf: (id: string) => Kind
       out.push(base);
       const nodes = nodesOf(k.id);
       for (const h of new Set(nodes.map((n) => n.harness))) out.push(`${base}/${h}`);
-      for (const n of nodes) out.push(`${base}/${n.harness}/${n.path}`);
+      for (const n of nodes) if (n.kind === k.id) out.push(`${base}/${n.harness}/${n.path}`);
     }
   }
   return out;
@@ -341,74 +386,149 @@ function ownPages(dir: string): string[] {
   return out;
 }
 
-if (import.meta.main) {
-  const check = process.argv.includes("--check");
-  const ROOT = join(import.meta.dir, "..");
-  const repoRoot = repoRootFor(ROOT);
-  const site = join(ROOT, siteDirFor(ROOT));
-  if (!readDeclaration(ROOT)?.name) {
-    console.log("  · this instance declares no name — nothing to publish under");
-    process.exit(0);
-  }
-  let stale = 0;
-  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+export interface BuildOptions {
+  /** The instance whose registry the index is built from: cat-harness's root, wherever the platform is checked out. */
+  instanceRoot: string;
+  /** The checkout whose harnesses hold the nodes: the platform's own, or a folio's. */
+  siteRepo: string;
+  /** The site directory pages are written under. */
+  site: string;
+  /** The instance the site is built for, as the navbar names it. */
+  built: string;
+  check: boolean;
+  /** Fail when a page is stale or orphaned only if the site is committed; a folio's `_site` is not. */
+  prune: boolean;
+}
 
-  const index = await nodeKindIndex(defaultGraphTypologies, ROOT, repoRoot);
+/**
+ * Write (or check) every node-kind page for one site. Returns the pages it
+ * planned, so a caller can verify each one RESOLVES — exists and carries the
+ * mark — rather than trust that writing it worked.
+ */
+export async function buildNodeKindPages(o: BuildOptions): Promise<{ pages: string[]; stale: number }> {
+  const platformRepo = repoRootFor(o.instanceRoot);
+  let stale = 0;
+  const nav: ViewerNav = { built: o.built, docsRoot: o.site };
+
+  const index = await nodeKindIndex(defaultGraphTypologies, o.instanceRoot, platformRepo);
   const byId = new Map(index.kinds.map((k) => [k.id, k]));
   const cache = new Map<string, KindNode[]>();
-  const nodesOf = (id: string) => cache.get(id) ?? cache.set(id, nodesOfKind(index, id, repoRoot)).get(id)!;
-  const fieldsCache = new Map<string, FieldInfo[]>();
+  const nodesOf = (id: string) => cache.get(id) ?? cache.set(id, nodesOfKind(index, id, o.siteRepo)).get(id)!;
+  const imported = new Map<string, Record<string, unknown>>();
+  const load = async (module: string) =>
+    imported.get(module) ?? imported.set(module, (await import(join(platformRepo, module))) as Record<string, unknown>).get(module)!;
   const fieldsOfKind = async (k: NodeKindEntry): Promise<FieldInfo[]> => {
-    if (!fieldsCache.has(k.id)) {
-      const mod = k.module ? ((await import(join(repoRoot, k.module))) as Record<string, unknown>) : {};
-      const kind = k.exportName ? mod[k.exportName] : undefined;
-      fieldsCache.set(k.id, isNodeKind(kind) ? fieldsOf(kind.schema) : []);
-    }
-    return fieldsCache.get(k.id)!;
+    const kind = k.module && k.exportName ? (await load(k.module))[k.exportName] : undefined;
+    return isNodeKind(kind) ? fieldsOf(kind.schema) : [];
+  };
+  // A named renderer that does not load is an error, not a quiet fall back to
+  // the generic pages: the declaration says this kind has its own view.
+  const pagesOf = async (k: NodeKindEntry): Promise<KindPages> => {
+    if (!k.pages) return {};
+    const r = (await load(k.pages.module))[k.pages.exportName];
+    if (!isKindPages(r)) throw new Error(`${k.id}: ${k.pages.module}#${k.pages.exportName} is not a KindPages`);
+    return r;
   };
 
   const written = new Set<string>();
+  const pages: string[] = [];
   const write = (rel: string, html: string, section: VisualiserNavEntry[]) => {
-    const file = join(site, rel, "index.html");
+    const file = join(o.site, rel, "index.html");
     written.add(file);
-    makeEmit({ check, onStale: () => { stale++; }, nav: { ...nav, section }, quiet: true })(file, html);
+    pages.push(rel);
+    makeEmit({ check: o.check, onStale: () => { stale++; }, nav: { ...nav, section }, quiet: true })(file, html);
   };
   for (const locale of LOCALES) {
+    const ctxFor = (here: string): KindPagesContext => ({
+      locale,
+      nodesOf,
+      linkTo: (kindId, n) => {
+        const t = byId.get(kindId);
+        return t?.declaredBy && t.version ? href(here, `${kindDir(locale, t)}/${n.harness}/${n.path}`) : undefined;
+      },
+    });
     for (const k of index.kinds) {
       if (!k.declaredBy || !k.version) continue;
       const nodes = nodesOf(k.id);
       const fields = await fieldsOfKind(k);
+      const own = await pagesOf(k);
       const base = kindDir(locale, k);
-      write(base, dashboardHtml(k, nodes, fields, byId, locale), dashboardSection(k, nodes, fields));
+      const dash = (scoped: readonly KindNode[], here: string) => own.dashboard?.(scoped, ctxFor(here)) ?? [];
+      const top = dash(nodes, base);
+      write(base, dashboardHtml(k, nodes, fields, byId, locale, undefined, top), dashboardSection(k, nodes, fields, undefined, top));
       for (const h of new Set(nodes.map((n) => n.harness))) {
-        write(`${base}/${h}`, dashboardHtml(k, nodes.filter((n) => n.harness === h), fields, byId, locale, h), dashboardSection(k, nodes, fields, h));
+        const scoped = nodes.filter((n) => n.harness === h);
+        const extra = dash(scoped, `${base}/${h}`);
+        write(`${base}/${h}`, dashboardHtml(k, scoped, fields, byId, locale, h, extra), dashboardSection(k, nodes, fields, h, extra));
       }
-      for (const n of nodes) write(`${base}/${n.harness}/${n.path}`, nodeHtml(k, n, locale), nodeSection(k, n));
+      for (const n of nodes) {
+        if (n.kind !== k.id) continue; // written under its own kind
+        const here = `${base}/${n.harness}/${n.path}`;
+        const extra = own.node?.(n, ctxFor(here)) ?? [];
+        write(here, nodeHtml(k, n, locale, extra), nodeSection(k, n, extra));
+      }
     }
   }
 
   // An orphan is a page this generator wrote for a node or kind that is gone.
   // Only pages carrying the mark are candidates, so a hand-written page that
   // happens to sit under a locale is never touched.
-  for (const locale of LOCALES) {
-    for (const file of ownPages(join(site, locale))) {
-      if (written.has(file)) continue;
-      if (check) {
-        console.error(`  ✗ ${relative(repoRoot, file)} is an orphan — its node or kind is gone`);
-        stale++;
-      } else {
-        rmSync(file);
-        console.log(`  ✗ pruned ${relative(repoRoot, file)}`);
+  if (o.prune) {
+    for (const locale of LOCALES) {
+      for (const file of ownPages(join(o.site, locale))) {
+        if (written.has(file)) continue;
+        if (o.check) {
+          console.error(`  ✗ ${relative(o.siteRepo, file)} is an orphan — its node or kind is gone`);
+          stale++;
+        } else {
+          rmSync(file);
+          console.log(`  ✗ pruned ${relative(o.siteRepo, file)}`);
+        }
       }
     }
   }
+  return { pages, stale };
+}
 
-  const kinds = index.kinds.filter((k) => k.declaredBy && k.version).length;
-  if (!check) console.log(`  ${written.size} page(s) for ${kinds} node kind(s) under ${LOCALES.join(", ")}`);
+/** The planned pages that do not resolve: no `index.html`, or one this generator did not write. */
+export function unresolvedPages(site: string, pages: readonly string[]): string[] {
+  return pages.filter((rel) => {
+    const file = join(site, rel, "index.html");
+    return !existsSync(file) || !readFileSync(file, "utf-8").includes(PAGE_MARK);
+  });
+}
+
+if (import.meta.main) {
+  const argv = process.argv.slice(2);
+  const opt = (name: string) => {
+    const i = argv.indexOf(name);
+    return i >= 0 ? argv[i + 1] : undefined;
+  };
+  const check = argv.includes("--check");
+  const INSTANCE_ROOT = join(import.meta.dir, "..");
+  // A folio builds its own site: `--root <folio checkout> --out <site dir>`.
+  // Its nodes are its harnesses', the kinds are the platform's, and its
+  // `_site` is built at deploy rather than committed, so there is nothing to
+  // prune or to call stale.
+  const folio = opt("--root");
+  const siteRepo = folio ? resolve(folio) : repoRootFor(INSTANCE_ROOT);
+  const site = folio ? resolve(opt("--out") ?? "_site") : join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+  const built = readDeclaration(folio ? siteRepo : INSTANCE_ROOT)?.name;
+  if (!built) {
+    console.log("  · this instance declares no name — nothing to publish under");
+    process.exit(0);
+  }
+  const { pages, stale } = await buildNodeKindPages({ instanceRoot: INSTANCE_ROOT, siteRepo, site, built, check, prune: !folio });
+  if (!check) console.log(`  ${pages.length} node-kind page(s) under ${LOCALES.join(", ")} in ${relative(process.cwd(), site) || "."}`);
   if (stale > 0) {
     console.error(`\n${stale} page(s) stale — run \`bun run node-kind:pages\``);
     process.exit(1);
   }
-  if (check) console.log(`✓ ${written.size} node-kind page(s) current`);
+  // Every planned page must resolve, written or checked: the QA half of PR 3.
+  const missing = unresolvedPages(site, pages);
+  if (missing.length) {
+    for (const m of missing) console.error(`  ✗ ${m}/ does not resolve`);
+    process.exit(1);
+  }
+  if (check) console.log(`✓ ${pages.length} node-kind page(s) current, and every one resolves`);
 }
-

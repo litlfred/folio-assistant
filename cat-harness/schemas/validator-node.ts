@@ -37,6 +37,14 @@ export const ValidatorNodeSchema = z
       .strict(),
     /** The Zod export, `<harness>:<path>#<Export>` (or instance-relative `<path>#<Export>`). */
     schema: z.string().regex(/#[A-Za-z_$][\w$]*$/, "a reference ending in #Export"),
+    /**
+     * The kind's own page renderer, `<harness>:<path>#<Export>`, when the
+     * generic pages built from its schema are not enough (issue #2195: *"Generic
+     * + override"*). The export is a `KindPages` (`scripts/gen-node-kind-pages.ts`).
+     * Declared here, beside the schema, so the harness whose code knows the kind
+     * is the one that says how to show it.
+     */
+    pages: z.string().regex(/#[A-Za-z_$][\w$]*$/, "a reference ending in #Export").optional(),
     /** Why this validator is the one, when that is not obvious from the code. */
     rationale: z.string().min(1).optional(),
   })

@@ -394,38 +394,6 @@
       "result": "fail",
       "findings": [
         {
-          "where": "_docs/assets/folio/index.json",
-          "detail": "nested instance \"_docs/assets/folio\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "_docs/assets/voices/index.json",
-          "detail": "nested instance \"_docs/assets/voices\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "_docs/cat-harness/auto-docs/auto-docs.json",
-          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "_docs/docs.json",
-          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "_site/assets/folio/index.json",
-          "detail": "nested instance \"_site/assets/folio\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "_site/assets/voices/index.json",
-          "detail": "nested instance \"_site/assets/voices\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "_site/cat-harness/auto-docs/auto-docs.json",
-          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "_site/docs.json",
-          "detail": "nested instance \"cat-harness\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
           "where": "beans/beans.json",
           "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
