@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/IgChromeLayer",
+  "definitions": {
+    "IgChromeLayer": {
+      "type": "object",
+      "properties": {
+        "package": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "of": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 7
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readAt": {
+          "type": "string",
+          "minLength": 4
+        }
+      },
+      "required": [
+        "package",
+        "version",
+        "of",
+        "ref",
+        "path",
+        "readAt"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-chrome/IgChromeLayerSchema.schema.json",
+  "title": "IgChromeLayerSchema",
+  "description": "Generated from `IgChromeLayerSchema` in schemas/ig-chrome.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/7ji4-id-lookup-rail",
+    "sha": "ff3522483bf03c0ac853075c740f72e0f391c372",
+    "pr": "2323/merge",
+    "run": "37517854487"
+  }
+}

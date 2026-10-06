@@ -1,0 +1,114 @@
+{
+  "$ref": "#/definitions/IgMenu",
+  "definitions": {
+    "IgMenu": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-ig-menu/v1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical": {
+          "type": "string",
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "sushi-config"
+            },
+            "of": {
+              "type": "string",
+              "format": "uri"
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 7
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "readAt": {
+              "type": "string",
+              "minLength": 4
+            }
+          },
+          "required": [
+            "kind",
+            "of",
+            "ref",
+            "path",
+            "readAt"
+          ]
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "href": {
+                "type": "string",
+                "minLength": 1
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "label",
+              "items"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "canonical",
+        "source",
+        "groups"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-menu/IgMenuSchema.schema.json",
+  "title": "IgMenuSchema",
+  "description": "Generated from `IgMenuSchema` in schemas/ig-menu.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/7ji4-id-lookup-rail",
+    "sha": "ff3522483bf03c0ac853075c740f72e0f391c372",
+    "pr": "2323/merge",
+    "run": "37517854487"
+  }
+}
