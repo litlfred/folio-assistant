@@ -69,6 +69,7 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-check.ts`](sample-import-check.ts) | a file |  |
 | [`sample-import-run.test.ts`](sample-import-run.test.ts) | a file |  |
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
+| [`site-reads.test.ts`](site-reads.test.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
 | [`stage-folio-local.ts`](stage-folio-local.ts) | a file |  |

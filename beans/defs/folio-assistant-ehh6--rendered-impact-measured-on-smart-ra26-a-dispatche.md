@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-06T18:25:34Z
-updated_at: 2026-10-06T18:34:34Z
+updated_at: 2026-10-06T19:52:38Z
 parent: folio-assistant-q4jm
 ---
 
@@ -16,9 +16,23 @@ B. document-rendered-impact.ts puts every unplaced file at 'may change any page'
 C. The review page lists the prediction but not rendered-measured.json: misses and not-base appear only in the PR comment, which A suppressed.
 
 ## Done when
-- [ ] A dispatched run on a branch with an open same-repo PR uses that PR's number and base everywhere the pull_request run does, and comments on it.
-- [ ] A changed file under no declared directory, no submodule, not .github/, and not a non-Markdown root file is an input that reaches no page; every other unplaced file stays undetermined; no declaration keeps today's behaviour.
-- [ ] The review page shows the measurement: missed pages, not-base, or not measured, never silence.
-- [ ] Tests for each; gates green.
+- [x] A dispatched run on a branch with an open same-repo PR uses that PR's number and base everywhere the pull_request run does, and comments on it.
+- [x] A changed file under no declared directory, no submodule, not .github/, and not a non-Markdown root file is an input that reaches no page; every other unplaced file stays undetermined; no declaration keeps today's behaviour.
+- [x] The review page shows the measurement: missed pages, not-base, or not measured, never silence.
+- [x] Tests for each; gates green.
 
 Held by claude/laughing-ramanujan-uripip (session https://claude.ai/code/session_01HzVuZ2axYhgcko3rodMh2S).
+
+## Summary of Changes
+
+Landed in #2310 (merge 9452bc6), CI green on every gate, merge guard PASS.
+- A: folio-staging.yml 'Find the pull request' step; later steps read steps.pr. Tests run the step with a fake gh.
+- B: document-rendered-impact.ts siteMayRead/siteReadsOf: declared dirs, submodules, .github/, non-Markdown root files may be read; anything else reaches no page; no declaration excludes nothing.
+- C: review-rendered.ts measuredModel/renderMeasured; gen-review-page fetches rendered-measured.json. Checked in Chromium on the smart-ra#26 files.
+The confirming re-run on smart-ra#26 (submodule past 9452bc6) is the folio's bean dpi-h-ra-7ss8.
+
+## Reopened 2026-10-06: B did not hold on the real run
+
+smart-ra#26 run 37517493046 (folio-assistant 9452bc6): A worked (PR 26 found, comments ingested; the comment POST got a GitHub 500). B did not: smart-ra's dpi-h-ra.json now DECLARES beans/ and todos/, and 'declared' was the test for 'may be read', so the bean stayed 'any page'. The site reads todos/ (gen-node-kind-pages renders todo pages) and not beans/. Owner, 2026-10-06, option 1 of 3: each site builder declares what it reads.
+
+- [ ] build-document-site, public-comment-site and gen-node-kind-pages export siteReads(repoRoot, args); the predictor finds the builders in the folio's build command and unions their reads; a builder with no siteReads excludes nothing.
