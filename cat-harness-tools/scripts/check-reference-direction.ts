@@ -492,7 +492,6 @@ const PENDING: readonly { file: string; names: number }[] = [
   // very fact the entry records.
   { file: "folio-assistant-core/schemas/fhir-artifact-index.ts", names: 2 },
   { file: "fhir-harness/fhir-harness.json", names: 6 },
-  { file: "cat-harness/schemas/jsonld.ts", names: 2 },
   { file: "fhir-harness/AGENTS.md", names: 4 },
   { file: "smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md", names: 3 },
   { file: "cat-harness/skills/kg/kg-core/kg-export.md", names: 2 },
