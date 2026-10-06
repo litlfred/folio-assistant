@@ -2,6 +2,10 @@
 title: "IMMZIND07Logic — WHO SMART Immunizations artefact"
 description: "Library/IMMZIND07Logic in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Library-IMMZIND06Logic.html"
+ig_next: "Library-IMMZIND08Logic.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ This library defines population criteria logic for the IMMZ.IND.07 indicator in 
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="Library-IMMZIND06Logic.html" data-next="Library-IMMZIND08Logic.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

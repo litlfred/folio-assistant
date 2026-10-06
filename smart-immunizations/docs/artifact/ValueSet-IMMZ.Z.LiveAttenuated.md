@@ -2,6 +2,10 @@
 title: "IMMZ.Z.LiveAttenuated ValueSet for live attenuated vaccines — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZ.Z.LiveAttenuated in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZ.Z.DE9.html"
+ig_next: "ValueSet-IMMZ.Z.VS.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.LiveAttenuated.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.LiveAttenuated.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.LiveAttenuated.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.LiveAttenuated.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.LiveAttenuated.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.LiveAttenuated.jsonld` |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZ.Z.DE9.html" data-next="ValueSet-IMMZ.Z.VS.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -3,6 +3,8 @@ title: "GDHCNParticipant-XXU-DEV — change history"
 description: "Geneva - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Organization-GDHCNParticipant-XXU-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-XXU-DEV.xml","active":false},{"label":"JSON","href":"Organization-GDHCNParticipant-XXU-DEV.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-XXU-DEV.ttl","active":false}],"heading":"Geneva - Change History","sections":[{"text":"History of changes for GDHCNParticipant-XXU-DEV ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

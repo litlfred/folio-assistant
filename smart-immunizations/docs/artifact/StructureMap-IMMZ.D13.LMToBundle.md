@@ -2,6 +2,10 @@
 title: "IMMZ.D13.LMToBundle — WHO SMART Immunizations artefact"
 description: "StructureMap/IMMZ.D13.LMToBundle in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureMap-IMMZ.D1.QRToLM.html"
+ig_next: "StructureMap-IMMZ.D13.QRToBundle.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Immunization Administer Vaccine - Transform Logical Model to Immunization resour
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="StructureMap-IMMZ.D1.QRToLM.html" data-next="StructureMap-IMMZ.D13.QRToBundle.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

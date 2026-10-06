@@ -5620,6 +5620,16 @@
     return glassBandEl;
   }
 
+  /**
+   * Is this a REPLICA, which reserves the handle's 2.25rem strip at the top of
+   * body? The marker `docs-ui.css` keys that padding on (`g9r2`), so the
+   * overlay and the space it sits in cannot disagree. Viewers reserve the same
+   * strip by another marker but are out of this bean's scope (`uvt0`).
+   */
+  function reservesHandleBand() {
+    return !!document.querySelector("script[data-fa-folio-mount]");
+  }
+
   /** The band's `start` or `end` slot, moving the band into the panel the first time. */
   function glassBandSlot(which) {
     var band = glassBand();
@@ -5637,7 +5647,15 @@
       band.removeAttribute("data-fa-band-fallback");
       var panelTop = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
       if (panelTop) panelTop.insertBefore(band, panelTop.firstChild);
-      else {
+      else if (reservesHandleBand()) {
+        // A REPLICA: an OVERLAY, never a row in the flow
+        // (bean `uvt0`, owner 2026-10-06: "Overlay, no shift"). These pages
+        // already reserve a 2.25rem strip at the top of body for the handle
+        // (`g9r2`, `015u`); the band's controls sit in that strip, fixed,
+        // beside the handle. In the flow it pushed a replica's <main> 52px down.
+        if (!band.parentNode || band.parentNode !== document.body) document.body.insertBefore(band, document.body.firstChild);
+        band.setAttribute("data-fa-band-overlay", "");
+      } else {
         var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
         if (mainEl && mainEl.parentNode) mainEl.parentNode.insertBefore(band, mainEl);
         else document.body.insertBefore(band, document.body.firstChild);
@@ -9741,6 +9759,18 @@
     scope.dataset.faTools = "1";
     scope.classList.add("fa-figure-scope");
     if (isPlain) scope.classList.add("fa-plain");
+    // 100% IS THE DRAWING'S OWN SIZE, capped at the column (bean `n7f8`). A
+    // plain figure used to be stretched to the full column whatever it was
+    // drawn at, so a 555px PlantUML diagram arrived at more than twice its
+    // size, text and all. The stylesheet reads this as `min(100%, natural)`;
+    // with no natural size known it falls back to the column, as before.
+    if (isPlain) {
+      var art0 = scope.querySelector("svg, img, object");
+      var natural = intrinsicWidth(scope) ||
+        (art0 && art0.tagName.toLowerCase() === "img" ? art0.naturalWidth : 0) ||
+        (art0 ? parseFloat(art0.getAttribute("width") || "") || 0 : 0);
+      if (natural > 0) scope.style.setProperty("--fa-natural", natural + "px");
+    }
 
     var step = DEFAULT_STEP;
     var tools = el("div", { class: "fa-figure-tools", role: "group", "aria-label": "Figure view controls" });
@@ -9774,6 +9804,42 @@
     out.addEventListener("click", function () { if (step > 0) { step--; apply(); } });
     into.addEventListener("click", function () { if (step < ZOOM_STEPS.length - 1) { step++; apply(); } });
     reset.addEventListener("click", function () { step = DEFAULT_STEP; apply(); });
+
+    // THE KEYBOARD IS A WAY IN, NOT AN AFTERTHOUGHT (bean `n7f8`). This
+    // instance's profile is low-dexterity, and `board-windows` §"The floor"
+    // says drag is an accelerator and never the only way in. The toolbar's
+    // buttons already zoom from the keyboard; PANNING was drag-only, because
+    // the figure was a scroll container nobody could focus. So the figure
+    // takes focus, and once focused: the arrow keys pan, `+` and `-` zoom, and
+    // `0` resets, the same steps the buttons take. An arrow is taken only when
+    // the figure can actually scroll that way, so a figure that fits does not
+    // swallow the arrow that should scroll the page.
+    scope.setAttribute("tabindex", "0");
+    scope.setAttribute("aria-keyshortcuts", "ArrowLeft ArrowRight ArrowUp ArrowDown + - 0");
+    if (!scope.hasAttribute("title")) {
+      scope.setAttribute("title", "Diagram: arrow keys pan, + and - zoom, 0 resets");
+    }
+    var PAN_FRACTION = 0.1;
+    var MIN_PAN_PX = 40;
+    scope.addEventListener("keydown", function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      // A control or a link inside the figure owns its own keys.
+      if (e.target !== scope && e.target.closest && e.target.closest("a, button, input, select, textarea")) return;
+      var k = e.key;
+      var dx = Math.max(MIN_PAN_PX, scope.clientWidth * PAN_FRACTION);
+      var dy = Math.max(MIN_PAN_PX, scope.clientHeight * PAN_FRACTION);
+      var canX = scope.scrollWidth > scope.clientWidth + 1;
+      var canY = scope.scrollHeight > scope.clientHeight + 1;
+      if (k === "+" || k === "=") { if (step < ZOOM_STEPS.length - 1) { step++; apply(); } }
+      else if (k === "-" || k === "_") { if (step > 0) { step--; apply(); } }
+      else if (k === "0") { step = DEFAULT_STEP; apply(); }
+      else if (k === "ArrowLeft" && canX) scope.scrollLeft -= dx;
+      else if (k === "ArrowRight" && canX) scope.scrollLeft += dx;
+      else if (k === "ArrowUp" && canY) scope.scrollTop -= dy;
+      else if (k === "ArrowDown" && canY) scope.scrollTop += dy;
+      else return;
+      e.preventDefault();
+    });
     // Full-bleed by MEASUREMENT, not by the centred-element margin trick. The
     // figure sits in a content column offset right by the sidebar, so
     // `margin-left: calc(-1 * (100vw - 100%) / 2)` overshoots by about the
@@ -9958,11 +10024,40 @@
     var ICON_CONTEXT = "a, button, nav, label, summary, .search, .site-header, .site-footer, .breadcrumb-nav";
     var MIN_FIGURE_PX = 240;
 
-    document.querySelectorAll(".main-content img[src$='.svg'], .main-content svg").forEach(function (node) {
+    // A RASTER diagram is a figure only where the page SAYS its images are
+    // figures (`data-fa-figure-images`, stamped by the IG site build — bean
+    // `n7f8`). An IG's architecture drawings are `.drawio.png`, and the theme
+    // shrinks a wide one to the column with nothing to zoom it back. On the
+    // platform's own pages a raster image is as often a card face or a photo,
+    // and a toolbar on those would be the heading-icon failure again, so the
+    // opt-in is the page's and not a guess made here. Even opted in, only an
+    // image the column has SHRUNK qualifies: one shown at its own size is
+    // already readable and gains nothing but chrome.
+    var rasterOk = !!document.querySelector("[data-fa-figure-images]");
+    var sel = ".main-content img[src$='.svg'], .main-content svg, .main-content object[data$='.svg']" +
+      (rasterOk ? ", .main-content img" : "");
+
+    document.querySelectorAll(sel).forEach(function (node) {
       if (node.closest(".bpmn-figure") || node.closest(".fa-qr-host")) return;
       if (node.closest(".fa-figure-scope")) return;
+      // An <svg> nested in another is part of that drawing, never its own figure.
+      if (node.parentElement && node.parentElement.closest("svg")) return;
       if (node.closest(ICON_CONTEXT)) return;
       if (/icon/i.test(node.getAttribute("class") || "")) return;
+      var tag = node.tagName.toLowerCase();
+      if (tag === "img" && !/\.svg($|[?#])/i.test(node.getAttribute("src") || "")) {
+        // Not loaded yet: its size is unknown, so ask again once it is.
+        if (!node.complete || !node.naturalWidth) {
+          if (!node.dataset.faFigureWait) {
+            node.dataset.faFigureWait = "1";
+            node.addEventListener("load", function () { mountFigures(); }, { once: true });
+          }
+          return;
+        }
+        var shown = node.getBoundingClientRect().width;
+        var column = node.parentElement ? node.parentElement.clientWidth : 0;
+        if (shown < MIN_FIGURE_PX || node.naturalWidth <= shown + 1 || shown < 0.9 * column) return;
+      }
       var box = node.getBoundingClientRect();
       if (box.width < MIN_FIGURE_PX && box.height < MIN_FIGURE_PX) return;
       // Mermaid renders into a wrapper element; wrap THAT rather than the
@@ -9998,9 +10093,23 @@
   //
   // Degrades to the existing static image: if the fetch or the parse fails the
   // `<img>` is left exactly as it was, with one warning naming the file.
+  // `<object data="x.svg">` IS THE SAME DRAWING BY ANOTHER TAG, and an IG page
+  // uses it: the IG Publisher's convention for a pre-rendered SVG is
+  // `<object data="x.svg" type="image/svg+xml">`, and the IG page the owner
+  // reported (a sequence-diagrams page) carries three beside two inline ones.
+  // Before bean `n7f8` this function and `mountFigures` looked only for
+  // `<img>` and `<svg>`, so the inline two got the viewer and the three
+  // objects got nothing: no zoom, no scroll container, and the widest ran past
+  // the content column and was clipped. An `<object>`'s document is also not
+  // this page's, so nothing here could have reached into it anyway; inlining
+  // it is what puts it under the one viewer. Its fallback text, the only text
+  // it carries, becomes the accessible name, as `alt` does for an `<img>`.
   function inlineDiagrams(done) {
     var imgs = [].slice.call(
-      document.querySelectorAll('.bpmn-figure img[src$=".svg"], .main-content img[src$=".svg"]'),
+      document.querySelectorAll(
+        '.bpmn-figure img[src$=".svg"], .main-content img[src$=".svg"], ' +
+          '.main-content object[data$=".svg"], .main-content object[type="image/svg+xml"][data]',
+      ),
     );
     if (!imgs.length || typeof window.fetch !== "function" || typeof window.DOMParser !== "function") {
       done();
@@ -10010,7 +10119,8 @@
     function settle() { if (--pending === 0) done(); }
 
     imgs.forEach(function (img) {
-      var src = img.getAttribute("src");
+      var isObject = img.tagName.toLowerCase() === "object";
+      var src = img.getAttribute(isObject ? "data" : "src");
       window
         .fetch(src)
         .then(function (r) {
@@ -10023,7 +10133,9 @@
           if (!svg || String(svg.nodeName).toLowerCase() !== "svg") throw new Error("not an svg");
           // The alt text was the accessible name; keep it on the element that
           // replaces it, or the diagram becomes invisible to a screen reader.
-          var alt = img.getAttribute("alt");
+          var alt = isObject
+            ? img.getAttribute("aria-label") || img.getAttribute("title") || (img.textContent || "").trim()
+            : img.getAttribute("alt");
           if (alt) {
             svg.setAttribute("role", "img");
             svg.setAttribute("aria-label", alt);

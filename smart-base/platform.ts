@@ -147,3 +147,10 @@ export {
 export {
   AST_SITE_WRITERS,
 } from "../fhir-harness/scripts/stage-ast-sites.ts";
+export {
+  handleFromUrl,
+} from "../folio-assistant-core/schemas/catalogue.ts";
+export {
+  DublinCoreRecordSchema,
+  type DublinCoreRecord,
+} from "../folio-assistant-core/schemas/dublin-core.ts";

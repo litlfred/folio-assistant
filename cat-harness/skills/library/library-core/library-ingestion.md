@@ -125,6 +125,19 @@ convention, the four-faced 2026-09-30 sweep, the blocking and advisory
 families, the state after correction, and renaming — is in
 [`library-ingestion/uploads-retirement.md`](library-ingestion/uploads-retirement.md).
 
+## When an ingested document names what else the library needs
+
+Some documents say what they rest on, by number, in a section the content type
+defines — and then the library is not complete until it holds those too. The
+flow above is run again for each, and the citing document's graph is
+regenerated once they are in, so a cited source the library HOLDS is described
+from its own metadata rather than from a one-line reference.
+
+The content type owns which section that is, how its citations resolve, and how
+a cited source is acquired (for instance from a DSpace repository); it says so
+in its own authoring skill. This layer owns only the rule: the flow above runs
+once per cited source, and the citing document's graph is regenerated after.
+
 ## Related
 
 - [`directory-conventions`](../../kg/kg-core/directory-conventions.md) — the graph typologies and who declares them; `uploads` and `library` are both declared by this layer

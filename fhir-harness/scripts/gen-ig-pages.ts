@@ -615,6 +615,13 @@ type ChromeChoice = "fixture" | "removed";
 
 /** The footer's opening tag, up to where a page's prev/next attributes go. */
 const FOOTER_TAG = `<footer id="ig-footer"`;
+/**
+ * The front-matter flag an IG site's layout draws its footer for (`ig_footer`
+ * in `build-ig-site.ts`). On an `igSite` instance's pages it replaces the
+ * `<footer>` + loader pair, so an artefact page and an IG site page are drawn
+ * by ONE template from ONE `site.data.fhir.footer` (#1901 follow-up).
+ */
+const IG_FOOTER_FLAG = "ig_footer: true";
 
 function shell(
   title: string,
@@ -632,6 +639,7 @@ function shell(
     // Page variables for a Liquid template, as JSON flow mappings — YAML is a
     // superset of JSON, so one line per key needs no YAML emitter.
     ...Object.entries(data).map(([k, v]) => `${k}: ${JSON.stringify(v)}`),
+    ...(chrome === "fixture" && IG_SITE ? [IG_FOOTER_FLAG] : []),
     "---",
     "",
   ].join("\n");
@@ -653,14 +661,25 @@ function shell(
   const link = (file: string) => `<link rel="stylesheet" href="${assetHref(file)}">`;
   const links = `${link(PAGES_CSS)}${wearsChrome ? `\n${link(CHROME_CSS)}` : ""}`;
   const banner = wearsChrome ? `${igBanner(IX)}\n\n` : "";
-  // The footer is drawn by its loader from the IG's own metadata; the page
-  // carries an empty <footer> and, set later for the pages in reading order,
-  // its previous and next pages (`FOOTER_TAG`). The data file and the index
-  // are found from the loader's own URL, so ~3,200 pages do not each repeat
-  // two more URLs. On every fixture page, chrome
-  // or not: it is the IG's facts, not the mirrored styling.
+  // The footer, on every fixture page, chrome or not: it is the IG's facts,
+  // not the mirrored styling.
+  //
+  // In an IG site (`igSite`) the page only FLAGS it (`IG_FOOTER_FLAG`), and
+  // the site's layout draws it with the include every IG site page uses, from
+  // the same `site.data.fhir.footer` — the facts read from the IG's package
+  // AND its source (the © year is only in `sushi-config.yaml`), and the
+  // "Links:" row already narrowed to pages the site holds. A second renderer
+  // here drew a footer that differed (no year; "Table of Contents" at the
+  // root, not `toc.html`). The page's place in the reading order and its
+  // depth below the site root are set later (`ig_prev`, `ig_next`, `ig_root`).
+  //
+  // Elsewhere there is no IG site and no IG source, so the loader draws it
+  // from the package's facts alone: the page carries an empty <footer> and,
+  // set later for the pages in reading order, its previous and next pages
+  // (`FOOTER_TAG`). The data file and the index are found from the loader's
+  // own URL, so ~3,200 pages do not each repeat two more URLs.
   const footer =
-    chrome === "fixture"
+    chrome === "fixture" && !IG_SITE
       ? // In the chrome's scope when the page wears it, which is where the
         // mirrored `--footer-*` tokens are defined.
         `\n\n${FOOTER_TAG}${wearsChrome ? ` class="${CHROME_SCOPE.slice(1)}"` : ""}></footer>\n` +
@@ -1391,7 +1410,9 @@ if (existsSync(MENU)) {
   const json = (name: string | undefined) => (name && held?.has(name) ? (JSON.parse(held.get(name)!.toString("utf8")) as Record<string, unknown>) : undefined);
   const igEntry = held ? [...held.keys()].find((k) => /^package\/ImplementationGuide-[^/]+\.json$/.test(k)) : undefined;
   pages.set(IG_FOOTER_DATA, `${JSON.stringify(igFooterData(json("package/package.json"), json(igEntry), ix), null, 2)}\n`);
-  pages.set(IG_FOOTER_SCRIPT, readFileSync(IG_FOOTER_LOADER, "utf8"));
+  // The loader only where no IG site draws the footer: an IG site's pages
+  // flag it instead, and the data file stays as `stage-ig-sites`' input.
+  if (!IG_SITE) pages.set(IG_FOOTER_SCRIPT, readFileSync(IG_FOOTER_LOADER, "utf8"));
 
   const order = ["index.md", ...[...byCategory(ix.artifacts).values()].flat().map((a) => join("artifact", `${pageName(a)}.md`))];
   const href = (from: string, to: string): string => {
@@ -1399,15 +1420,35 @@ if (existsSync(MENU)) {
     const rel = posix.relative(posix.dirname(from), to.replace(/\.md$/, ".html"));
     return to === "index.md" ? rel.replace(/index\.html$/, "") || "./" : rel;
   };
-  order.forEach((page, i) => {
-    const text = pages.get(page);
-    if (text === undefined) return;
-    const attrs = [
-      i > 0 ? ` data-prev="${esc(href(page, order[i - 1]!))}"` : "",
-      i < order.length - 1 ? ` data-next="${esc(href(page, order[i + 1]!))}"` : "",
-    ].join("");
-    pages.set(page, text.replace(FOOTER_TAG, `${FOOTER_TAG}${attrs}`));
-  });
+  const position = new Map(order.map((page, i) => [page, i]));
+  if (IG_SITE) {
+    // Front matter the IG site's footer include reads: the page's previous
+    // and next pages, relative to the page as an IG site page's are, and the
+    // way up to the site root, which the include puts before every on-site
+    // link it holds (`toc.html`, the stylesheets) — those are written once,
+    // relative to the root, for every page of the site.
+    for (const [page, text] of pages) {
+      if (!text.startsWith("---\n") || !text.includes(`\n${IG_FOOTER_FLAG}\n`)) continue;
+      const i = position.get(page);
+      const up = posix.relative(posix.dirname(page.split(sep).join("/")), ".");
+      const fm = [
+        ...(up ? [`ig_root: ${yamlScalar(`${up}/`)}`] : []),
+        ...(i !== undefined && i > 0 ? [`ig_prev: ${yamlScalar(href(page, order[i - 1]!))}`] : []),
+        ...(i !== undefined && i < order.length - 1 ? [`ig_next: ${yamlScalar(href(page, order[i + 1]!))}`] : []),
+      ];
+      if (fm.length) pages.set(page, text.replace(`\n${IG_FOOTER_FLAG}\n`, `\n${IG_FOOTER_FLAG}\n${fm.join("\n")}\n`));
+    }
+  } else {
+    order.forEach((page, i) => {
+      const text = pages.get(page);
+      if (text === undefined) return;
+      const attrs = [
+        i > 0 ? ` data-prev="${esc(href(page, order[i - 1]!))}"` : "",
+        i < order.length - 1 ? ` data-next="${esc(href(page, order[i + 1]!))}"` : "",
+      ].join("");
+      pages.set(page, text.replace(FOOTER_TAG, `${FOOTER_TAG}${attrs}`));
+    });
+  }
 }
 
 for (const [label, list] of byCategory(ix.artifacts)) {

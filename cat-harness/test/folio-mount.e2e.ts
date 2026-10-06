@@ -81,33 +81,6 @@ function withoutMount(html: string): string {
 }
 
 /**
- * The same page with its OWN `fa-translation-meta` block removed — the replica
- * as an untranslated instance's page. Bean `lffo`, #2229.
- *
- * Since #2229 the generator writes that block on every replica page, with every
- * locale available, and `docs-ui.js` answers a block by putting the locale
- * globe in the glass band. That band holds controls, so it sits IN FLOW
- * between `.crumbs` and `<main>` (measured on `community-list.html` at 1280:
- * 40 px, `<main>` 52 px lower). That is the #2219 chrome, ruled by the owner
- * for mounted pages, and `mounted-locale.e2e.ts` asserts it. It is not the
- * glass. The fidelity test below asks what the GLASS does to the replica, so
- * both sides of that comparison are this block-less page. Deriving it here,
- * rather than picking a real page that happens to be untranslated, means
- * translating a page cannot turn the comparison red.
- *
- * `mounted-locale.e2e.ts` divides the work the same way: *"The control is the
- * same page WITHOUT the block, which must keep its layout: `folio-mount.e2e.ts`
- * holds the replica's fidelity on that."*
- */
-function withoutTranslationMeta(html: string): string {
-  const open = `<script type="application/json" id="${TRANSLATION_META_ID}">`;
-  const i = html.indexOf(open);
-  if (i < 0) return html;
-  const j = html.indexOf("</script>", i) + "</script>".length;
-  return html.slice(0, i) + html.slice(j);
-}
-
-/**
  * Serve the real page at `path`, with the platform assets at the site root
  * the mount derives. `page.route` rather than a server, as
  * `staging-banner.e2e.ts` does, because the 404 on the todo index has to be
@@ -117,11 +90,10 @@ function withoutTranslationMeta(html: string): string {
 async function serve(
   page: import("@playwright/test").Page,
   path: string,
-  opts: { withMount?: boolean; untranslated?: boolean } = {},
+  opts: { withMount?: boolean } = {},
 ): Promise<string[]> {
   const asked: string[] = [];
-  const source = opts.untranslated ? withoutTranslationMeta(PAGE) : PAGE;
-  const body = opts.withMount === false ? withoutMount(source) : source;
+  const body = opts.withMount === false ? withoutMount(PAGE) : PAGE;
 
   await page.route("**/*", async (route) => {
     const url = new URL(route.request().url());
@@ -246,18 +218,21 @@ test.describe("the replica is unchanged with the glass closed", () => {
     });
 
   test("no element moves, resizes or changes colour", async ({ page }) => {
-    // Both sides without the translation block — see `withoutTranslationMeta`.
-    // The premise is asserted: a strip that did nothing would put the locale
-    // band back into "with" and this would fail for the wrong reason.
+    // The REAL page, translation block and all (bean `uvt0`, owner 2026-10-06:
+    // "Overlay, no shift"). From #2229 until uvt0 both sides stripped the
+    // block, because the locale band then sat in the flow and moved <main>
+    // down 52px; that comparison could not see the shift a reader got. The
+    // band is now an overlay on the strip the replica already reserves, so the
+    // translated page is the one compared. The premise is asserted: the block
+    // is present, and the band really drew its locale control.
     expect(PAGE).toContain(`id="${TRANSLATION_META_ID}"`);
-    expect(withoutTranslationMeta(PAGE)).not.toContain(`id="${TRANSLATION_META_ID}"`);
 
-    await serve(page, "/who-iris/community-list.html", { withMount: false, untranslated: true });
+    await serve(page, "/who-iris/community-list.html", { withMount: false });
     const before = await snapshot(page);
 
-    await serve(page, "/who-iris/community-list.html", { untranslated: true });
+    await serve(page, "/who-iris/community-list.html");
     await expect(page.locator(".fa-glass-handle")).toBeVisible(); // the mount really ran
-    await expect(page.locator(".fa-page-lang-toggle")).toHaveCount(0); // and only the glass did
+    await expect(page.locator(".fa-page-lang-toggle")).toHaveCount(1); // and so did the locale band
     const after = await snapshot(page);
 
     const changed = Object.keys(before).filter((k) => before[k] !== after[k]);
@@ -268,6 +243,56 @@ test.describe("the replica is unchanged with the glass closed", () => {
     // asserted: the same trap `site-mark-mask.test.ts` fell into.
     expect(Object.keys(before).length).toBeGreaterThan(20);
   });
+
+  test("the locale band is an overlay on the reserved strip, not a row in the flow (uvt0)", async ({ page }) => {
+    await serve(page, "/who-iris/community-list.html");
+    await expect(page.locator(".fa-page-lang-toggle")).toBeVisible();
+    const g = await page.evaluate(() => {
+      const band = document.querySelector(".fa-glass-band[data-fa-band-tools]")!;
+      const r = band.getBoundingClientRect();
+      return {
+        position: getComputedStyle(band).position,
+        overlay: band.hasAttribute("data-fa-band-overlay"),
+        inBody: band.parentElement === document.body,
+        top: r.top,
+        bottom: r.bottom,
+        padding: parseFloat(getComputedStyle(document.body).paddingTop),
+        bannerTop: document.querySelector(".ingested")!.getBoundingClientRect().top,
+      };
+    });
+    expect(g.overlay).toBe(true);
+    expect(g.inBody).toBe(true);
+    expect(g.position).toBe("fixed");
+    // It occupies the strip body already reserves, and nothing below it.
+    expect(g.padding).toBe(36);
+    expect(g.top).toBe(0);
+    expect(g.bottom).toBeLessThanOrEqual(g.padding);
+    expect(g.bannerTop).toBeGreaterThanOrEqual(g.bottom);
+  });
+
+  // Sharing the strip means sharing it with the handle: the locale control sits
+  // at the inline START, the handle at the centre, and they must not touch —
+  // in RTL at phone width too, where the start is the right edge.
+  for (const [path, width] of [
+    ["/who-iris/community-list.html", 1280],
+    ["/who-iris/community-list.html", 390],
+    ["/who-iris/ar/community-list.html", 1280],
+    ["/who-iris/ar/community-list.html", 390],
+  ] as const) {
+    test(`the locale control clears the handle on the shared strip (uvt0, ${path} @ ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await serve(page, path);
+      await expect(page.locator(".fa-page-lang-toggle")).toBeVisible();
+      await expect(page.locator(".fa-glass-handle")).toBeVisible();
+      const [ctrl, handle] = await page.evaluate(() =>
+        [".fa-page-lang-bar", ".fa-glass-handle"].map((s) => {
+          const r = document.querySelector(s)!.getBoundingClientRect();
+          return { left: r.left, right: r.right };
+        }),
+      );
+      expect(ctrl.right <= handle.left || ctrl.left >= handle.right).toBe(true);
+    });
+  }
 
   test("the band above the replica is the handle's, and clears it", async ({ page }) => {
     await serve(page, "/who-iris/community-list.html");

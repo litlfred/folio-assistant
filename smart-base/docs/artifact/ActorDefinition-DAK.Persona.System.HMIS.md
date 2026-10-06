@@ -2,6 +2,10 @@
 title: "Health Management Information System (HMIS) — WHO SMART Base artefact"
 description: "ActorDefinition/DAK.Persona.System.HMIS in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ActorDefinition-DAK.Persona.System.EMR.html"
+ig_next: "ActorDefinition-DAK.Persona.System.InteropPlatform.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ A digital system used to collect, process, report, and use aggregate health data
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ActorDefinition-DAK.Persona.System.EMR.html" data-next="ActorDefinition-DAK.Persona.System.InteropPlatform.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

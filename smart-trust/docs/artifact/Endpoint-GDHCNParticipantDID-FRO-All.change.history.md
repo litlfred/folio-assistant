@@ -5,6 +5,8 @@ did:web:tng-cdn.who.int:v2:trustlist:-:FRO
 resolvable at https://tng-cdn.who.int/v2/trustlist/-/FRO/did.json - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-FRO-All.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-FRO-All.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-FRO-All.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-FRO-All.ttl","active":false}],"heading":"Faroe Islands Trustlist (DID v2) - All keys\ndid:web:tng-cdn.who.int:v2:trustlist:-:FRO\nresolvable at https://tng-cdn.who.int/v2/trustlist/-/FRO/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-FRO-All ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

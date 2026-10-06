@@ -2,6 +2,10 @@
 title: "IMMZ.C4.LMToPatient — WHO SMART Immunizations artefact"
 description: "StructureMap/IMMZ.C4.LMToPatient in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-IMMZD7.html"
+ig_next: "StructureMap-IMMZ.C4.QRToLM.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Immunization Client Registry - Transform Logical Model to Patient resources
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="StructureDefinition-IMMZD7.html" data-next="StructureMap-IMMZ.C4.QRToLM.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -2,6 +2,10 @@
 title: "GDHCNParticipantDID-SVN-UAT-All — WHO SMART Trust artefact"
 description: "Endpoint/GDHCNParticipantDID-SVN-UAT-All in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Endpoint-GDHCNParticipantDID-SVN-SCA.html"
+ig_next: "Endpoint-GDHCNParticipantDID-SVN-UAT-DSC.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Slovenia Trustlist (DID v2) - UAT - All keys did:web:tng-cdn.who.int:v2:trustlis
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
-
-<footer id="ig-footer" data-prev="Endpoint-GDHCNParticipantDID-SVN-SCA.html" data-next="Endpoint-GDHCNParticipantDID-SVN-UAT-DSC.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>
