@@ -866,10 +866,10 @@
       "entries": [
         {
           "instances": 14,
-          "occurrences": 63447,
+          "occurrences": 63442,
           "allowed": 0,
-          "wrongDirection": 4539,
-          "wrongDirectionFiles": 519,
+          "wrongDirection": 4534,
+          "wrongDirectionFiles": 514,
           "exempt": 14280,
           "namesRepository": 43356,
           "undetermined": 1272,
@@ -880,7 +880,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 918,
+      "count": 913,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -1353,26 +1353,6 @@
         {
           "file": "cat-harness/content/pipeline/repo-root.ts",
           "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-bpmn-has-process.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-companion-present.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-dmn-has-decision-table.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-fsh-declares-kind.script.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/content/pipeline/script-sidecars/dak-label-prefix-matches-kind.script.json",
-          "target": "smart-base"
         },
         {
           "file": "cat-harness/content/pipeline/script-sidecars/proof-compile-cost.script.json",
@@ -4557,5 +4537,5 @@
       ]
     }
   },
-  "total": 1126
+  "total": 1121
 }
