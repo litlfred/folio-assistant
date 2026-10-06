@@ -80,6 +80,40 @@ prevents is stated beside it.
    where the browser allows, else as SVG text, and it says which; #1270). A pages
    template missing `layout: default` renders with no site script and so no
    controls, and nothing reports it.
+
+   **There is ONE viewer, and every diagram on a folio or IG page gets it.**
+   It is `mountFigure` in `docs-ui.js`; `mountFigures` decides what is a
+   figure. Do not write a second one for a new kind of page. Extend what
+   `mountFigures` and `inlineDiagrams` recognise instead. Since bean `n7f8`
+   (owner, 2026-10-06: *"the diagrams on …/smart-trust/sequence-diagrams.html
+   are now resiable/scrollable like the bpmn diagrams are. tehy should be"*),
+   it takes each way a page embeds a drawing:
+
+   | embedded as | taken by | where it appears |
+   |---|---|---|
+   | `.bpmn-figure` markup | always | the process pages |
+   | an inline `<svg>` | always (an icon-sized one, or one inside a link or nav, is not a figure) | Mermaid, an IG's `{% include x.svg %}` (PlantUML) |
+   | `<img src="x.svg">` | always; inlined first | UML overviews, workflow figures |
+   | `<object data="x.svg">` | always; inlined first, and its fallback text becomes the name | the IG Publisher's convention, e.g. smart-trust's sequence diagrams |
+   | a raster `<img>` | only on a page that opts in with `data-fa-figure-images`, and only when the column has shrunk it | an IG's `.drawio.png` architecture drawings |
+
+   The raster row is an **opt-in** because a raster image on the platform's
+   own pages is as often a card face or a photo. The IG site build stamps it on
+   every IG page (`IG_FIGURE_IMAGES_STAMP` in `fhir-harness/scripts/build-ig-site.ts`,
+   written by the standalone layout and the composed pages' top include).
+
+   At 100% a plain figure is shown at its **own** width, capped at the column.
+   It is not stretched to fill the column. A figure that is wider than its
+   column scrolls inside its card and never runs past the page's edge.
+
+   **The viewer is keyboard-operable, because the profile is low-dexterity.**
+   Drag-to-pan is an accelerator, never the only way to pan
+   ([`board-windows`](board-windows.md) §"The floor"). The
+   figure takes focus (Tab from its toolbar). While it has focus, the arrow
+   keys pan it, `+` and `-` zoom, and `0` resets. An arrow key is taken only
+   when the figure can scroll in that direction. Otherwise the page scrolls as
+   usual. `cat-harness/test/ig-diagram-viewer.e2e.ts` checks all of this on
+   a fixture IG page.
 10. **Put the measurement on the drawing.** When a graph is being partitioned,
     show each group's detangle numbers (size, cohesion, links in and out)
     beside the group, so the picture and the metric are read together. The UML

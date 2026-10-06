@@ -374,17 +374,33 @@
  * here is computed and then ignored. `height: auto` with the SVG's own
  * viewBox is what makes it scale rather than stretch. */
 .fa-figure-scope img,
-.fa-figure-scope svg {
+.fa-figure-scope svg,
+.fa-figure-scope object {
   width: calc(var(--fa-zoom, 1) * 100%) !important;
   min-width: calc(var(--fa-zoom, 1) * 1200px);
   max-width: none !important;
   height: auto !important;
 }
 
-/* A non-BPMN figure has no 1200px floor to scale -- it is whatever size it is. */
+/* A non-BPMN figure has no 1200px floor to scale -- it is whatever size it is.
+ *
+ * And 100% is the drawing's OWN width, capped at the column (bean `n7f8`):
+ * `--fa-natural` is set by `mountFigure` from the viewBox, or from an image's
+ * natural width. Without it a small diagram was stretched to the full column,
+ * text and all. Where no natural width is known the fallback is the column,
+ * which is what every plain figure got before. */
 .fa-figure-scope.fa-plain img,
-.fa-figure-scope.fa-plain svg {
+.fa-figure-scope.fa-plain svg,
+.fa-figure-scope.fa-plain object {
   min-width: 0;
+  width: calc(var(--fa-zoom, 1) * min(100%, var(--fa-natural, 100%))) !important;
+}
+
+/* The figure takes keyboard focus so it can be panned without a drag
+ * (bean `n7f8`, `board-windows` §"The floor"); focus has to be seen. */
+.fa-figure-scope:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: 2px;
 }
 
 /* The wrapper this script puts around a non-BPMN figure.
@@ -494,6 +510,11 @@
 .fa-figure-scope.is-fullwidth {
   max-width: none;
   border-radius: 0;
+  /* The JS sets `width` to the viewport's client width. Under content-box the
+   * card's padding and border were added on top, so every full-width figure
+   * ran 18px past the right edge of the window and was clipped there (found by
+   * the n7f8 e2e spec, which measures it). */
+  box-sizing: border-box;
 }
 
 /* ── Narrow viewports ──────────────────────────────────────────────────── */
