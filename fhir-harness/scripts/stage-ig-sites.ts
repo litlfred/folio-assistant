@@ -50,6 +50,7 @@
  */
 
 import { igApiHubFill } from "./ig-api-views.ts";
+import { IG_CHROME_SCOPE, type IgFooterData } from "./ig-footer.ts";
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
@@ -158,6 +159,29 @@ export function artifactsFor(root: string, pagesHref = "../artifact/"): StageOpt
   if (!existsSync(index) || !existsSync(join(root, "docs", "artifact"))) return undefined;
   const ix = JSON.parse(readFileSync(index, "utf-8")) as { artifacts: IndexedArtifact[] };
   return { list: ix.artifacts, pagesHref };
+}
+
+/**
+ * The IG site pages' footer (#1901), dressed as the artefact pages' footer
+ * is: the package's facts from the `assets/ig-footer.json` `gen-ig-pages`
+ * writes, and the two stylesheets it writes beside it, linked from the IG
+ * site's root (`prefix`: "" when the artefact pages build into the IG site,
+ * "../" when they sit one level above it). Read off the disk, never assumed:
+ * a file not held is not linked, and the footer then falls back to the IG
+ * source's values, unstyled.
+ */
+export function footerFor(root: string, prefix = "../"): StageOptions["footer"] {
+  // declared-path-literal: the staged IG instance's own docs/assets/ under `root`, not folio-assistant's docs/
+  const assets = join(root, "docs", "assets");
+  const data = join(assets, "ig-footer.json");
+  const facts = existsSync(data) ? (JSON.parse(readFileSync(data, "utf-8")) as IgFooterData) : undefined;
+  const stylesheets = ["ig-pages.css", "ig-chrome.css"].filter((f) => existsSync(join(assets, f))).map((f) => `${prefix}assets/${f}`);
+  return {
+    ...(facts ? { facts } : {}),
+    // The chrome's `--footer-*` colours are scoped; the footer wears the scope only where the chrome is linked.
+    ...(stylesheets.some((s) => s.endsWith("ig-chrome.css")) ? { scope: IG_CHROME_SCOPE } : {}),
+    stylesheets,
+  };
 }
 
 /**
@@ -324,6 +348,7 @@ if (import.meta.main) {
       menu: JSON.parse(readFileSync(ig.menuPath, "utf-8")) as IgMenu,
       remoteTheme: opt("--remote-theme"),
       artifacts: artifactsFor(ig.root, docs ? "artifact/" : "../artifact/"),
+      footer: footerFor(ig.root, docs ? "" : "../"),
       releases: releasesFor(ig.root),
       ...(editBase ? { editBase } : {}),
       // The IG's post-processing output, where its source holds only a marker.

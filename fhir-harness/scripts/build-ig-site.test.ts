@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { FOOTER_TEMPLATE_PATH, ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -72,7 +72,7 @@ describe("staging one IG as one just-the-docs site", () => {
     expect(nav.get("index")).toEqual({ title: "Home", navOrder: 1 });
     expect(nav.get("overview")).toEqual({ title: "Overview", parent: "Home", navOrder: 2 });
     expect(nav.get("changes")).toEqual({ title: "Change Log", navOrder: 3 });
-    expect(readFileSync(join(out, "overview.md"), "utf-8")).toStartWith('---\ntitle: "Overview"\nparent: "Home"\nnav_order: 2\n---\n');
+    expect(readFileSync(join(out, "overview.md"), "utf-8")).toStartWith('---\ntitle: "Overview"\nparent: "Home"\nnav_order: 2\nig_footer: true\n');
   });
 
   test("a page sushi-config does not list is kept, titled by file name, and reported", () => {
@@ -200,7 +200,9 @@ describe("pages the Publisher generates, written from data the build holds (bean
     expect(v.link.html).toBe('<a href="../artifact/ValueSet-a-b.html">A [b]</a>');
     expect(v.elements).toEqual({ title: "A [b]", version: "1.0" });
     // Uncategorised = not on the Publisher's artifacts.html: variables written, not grouped.
-    expect(vars.artifact_categories).toEqual([{ name: "Terminology", keys: ["ValueSet__a_b"] }]);
+    expect(vars.artifact_categories).toEqual([{ name: "Terminology", anchor: "artifacts-terminology", count: 1, keys: ["ValueSet__a_b"] }]);
+    // No description is an empty cell, never "undefined".
+    expect(v.text.description_cell).toBe("");
     expect(vars.artifacts["Endpoint__e"]).toBeDefined();
     // What no source holds is REPORTED, never written empty.
     expect(notSourced).toContain("status");
@@ -209,13 +211,18 @@ describe("pages the Publisher generates, written from data the build holds (bean
 
   const ruby = spawnSync("ruby", ["-e", 'require "liquid"'], { encoding: "utf-8" }).status === 0;
   test.skipIf(!ruby)("the artifacts TEMPLATE renders the variables through real Liquid", () => {
-    const { vars } = artifactVariables([{ resourceType: "ValueSet", id: "v", title: "V [x]", category: "T" }], "../artifact/");
+    const { vars } = artifactVariables([{ resourceType: "ValueSet", id: "v", title: "V [x]", category: "Terminology: Value Sets", description: "Codes for a | b,\nover two lines." }], "../artifact/");
     const script = 'require "liquid"; require "json"; d = JSON.parse(STDIN.read.force_encoding("UTF-8")); print Liquid::Template.parse(d["t"], error_mode: :strict).render("site" => { "data" => { "fhir" => d["v"] } })';
     const r = spawnSync("ruby", ["-e", script], { input: JSON.stringify({ t: readFileSync(ARTIFACTS_TEMPLATE_PATH, "utf-8"), v: vars }), encoding: "utf-8" });
     expect(r.stderr).toBe("");
-    expect(r.stdout).toContain("This IG has 1 artefact(s).");
-    expect(r.stdout).toContain("## T");
-    expect(r.stdout).toContain("- [V \\[x\\]](../artifact/ValueSet-v.html) — `ValueSet/v`");
+    expect(r.stdout).toContain("1 artefact(s).");
+    // #1901: one COLLAPSED section per category, a Name | Description table inside,
+    // `markdown="1"` so kramdown renders the table rather than printing pipes.
+    expect(r.stdout).toContain('<details markdown="1" id="artifacts-terminology-value-sets">');
+    expect(r.stdout).toContain("<summary><strong>Terminology: Value Sets</strong> — 1</summary>");
+    expect(r.stdout).not.toContain("<details open");
+    expect(r.stdout).toContain("| Name | Description |");
+    expect(r.stdout).toContain("| [V \\[x\\]](../artifact/ValueSet-v.html) | Codes for a \\| b, over two lines. |");
   });
 
   test("the artifacts template is a file that opens with the comment describing it", () => {
@@ -247,7 +254,7 @@ describe("post-processing fills: content a step writes after the Publisher, at a
         ],
       });
       const page = readFileSync(join(d, "site", "hub.md"), "utf-8");
-      expect(page).toContain('k: {"v":"y"}\n---\n');
+      expect(page.split("\n---\n")[0]).toContain('\nk: {"v":"y"}\n');
       expect(page).toContain("Intro.\n\nfilled {{ page.k.v }}");
       expect(page).not.toContain("<!-- MARK -->");
       expect(res.fills).toEqual({ filled: ["hub.md (<!-- MARK -->)"], unused: ["<!-- NOWHERE -->"] });
@@ -416,6 +423,121 @@ describe("every IG site: the IG's top bar, and its TOC declared for the navbar",
     expect(layout).not.toContain("site-nav");
     expect(layout).toContain('<meta name="fa-visualiser-label" content="X IG">');
     rmSync(d, { recursive: true, force: true });
+  });
+});
+
+// #1901, owner 2026-10-02: "footer is missing" — the Publisher's footer, from
+// the IG's own metadata, linking only what this site holds.
+describe("the Publisher's page footer on the IG site's own pages (#1901)", () => {
+  const sushi = [
+    "id: x.ig",
+    "title: X IG",
+    "version: 0.2.0",
+    "fhirVersion: 5.0.0",
+    "copyrightYear: 2023+",
+    "license: CC0-1.0",
+    "publisher:",
+    "  name: Example Org",
+    "  url: https://example.org",
+    "pages:",
+    "  index.md:",
+    "    title: Home",
+    "  concepts.md:",
+    "    title: Concepts",
+    "  missing.md:",
+    "    title: Not built",
+    "  changes.md:",
+    "    title: Changes",
+    "",
+  ].join("\n");
+  const stage = (opts: Parameters<typeof stageIgSite>[2]) => {
+    const d = mkdtempSync(join(tmpdir(), "ig-footer-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), sushi);
+    for (const p of ["index", "concepts", "changes"]) writeFileSync(join(src, "input", "pagecontent", `${p}.md`), `# ${p}\n`);
+    stageIgSite(src, join(d, "out"), opts);
+    return { d, out: join(d, "out") };
+  };
+  const menu = { groups: [{ label: "Home", items: [{ label: "Concepts", href: "concepts.html" }] }] };
+
+  test("the facts come from the package first, then the IG's source; links only to what is held", () => {
+    const { d, out } = stage({ menu, footer: { facts: { version: "0.2.1", generated: "2026-10-01", packageId: "x.ig" }, scope: "st-ig", stylesheets: ["assets/ig-pages.css"] } });
+    const f = JSON.parse(readFileSync(join(out, "_data", "fhir.json"), "utf-8")).footer;
+    expect(f).toMatchObject({
+      publisher: "Example Org",
+      publisherUrl: "https://example.org",
+      packageId: "x.ig",
+      version: "0.2.1", // the package's, over sushi-config's 0.2.0
+      fhirVersion: "5.0.0",
+      fhirUrl: "http://hl7.org/fhir/R5/",
+      generated: "2026-10-01",
+      copyrightYear: "2023+",
+      scope: "st-ig",
+      stylesheets: ["assets/ig-pages.css"],
+    });
+    // toc.html is always written; qa.html and history.html are not, so no link.
+    expect(f.links).toEqual([
+      { label: "Table of Contents", href: "toc.html" },
+      { label: "License", href: "https://spdx.org/licenses/CC0-1.0.html", external: true },
+    ]);
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("prev and next follow the IG's table-of-contents order, skipping what is not built", () => {
+    const { d, out } = stage({ menu });
+    const fm = (p: string) => readFileSync(join(out, p), "utf-8").split("\n---")[0]!;
+    expect(fm("index.md")).toContain("ig_footer: true");
+    expect(fm("index.md")).not.toContain("ig_prev");
+    expect(fm("index.md")).toContain('ig_next: "concepts.html"');
+    expect(fm("concepts.md")).toContain('ig_prev: "index.html"');
+    expect(fm("concepts.md")).toContain('ig_next: "changes.html"'); // missing.md is skipped
+    expect(fm("changes.md")).not.toContain("ig_next");
+    // A generated page carries the footer, outside the order.
+    expect(fm("toc.md")).toContain("ig_footer: true");
+    expect(fm("toc.md")).not.toContain("ig_prev");
+    // The layout draws it last, only where the page asks.
+    const layout = readFileSync(join(out, "_layouts", "default.html"), "utf-8");
+    expect(layout).toContain("{% if page.ig_footer %}{% include fa-ig-footer.html %}{% endif %}\n</main>");
+    expect(existsSync(join(out, "_includes", "fa-ig-footer.html"))).toBe(true);
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("without a menu there is no generated layout, so the footer goes into the page", () => {
+    const { d, out } = stage({});
+    expect(readFileSync(join(out, "concepts.md"), "utf-8")).toMatch(/\{% include fa-ig-footer\.html %\}\n$/);
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  test("composed into a host site, the footer include is namespaced and gated by the page", () => {
+    const { d, out } = stage({ menu });
+    const host = join(d, "host");
+    mkdirSync(host, { recursive: true });
+    expect(composeIgSite(out, host, "x").collisions).toEqual([]);
+    expect(readFileSync(join(host, "x", "concepts.md"), "utf-8")).toContain("{% include ig/_bottom.html %}\n{% if page.ig_footer %}{% include ig/x/fa-ig-footer.html %}{% endif %}");
+    expect(readFileSync(join(host, "_includes", "ig", "x", "fa-ig-footer.html"), "utf-8")).toContain('site.data.ig["x"].fhir.footer');
+    rmSync(d, { recursive: true, force: true });
+  });
+
+  const ruby = spawnSync("ruby", ["-e", 'require "liquid"'], { encoding: "utf-8" }).status === 0;
+  test.skipIf(!ruby)("the footer TEMPLATE renders the Publisher's three rows through real Liquid", () => {
+    const footer = {
+      publisher: "Example Org", publisherUrl: "https://example.org", packageId: "x.ig", version: "0.2.1",
+      fhirVersion: "5.0.0", fhirUrl: "http://hl7.org/fhir/R5/", generated: "2026-10-01", copyrightYear: "2023+",
+      links: [{ label: "Table of Contents", href: "toc.html" }, { label: "License", href: "https://l", external: true }],
+      scope: "st-ig", stylesheets: ["assets/ig-pages.css"],
+    };
+    const script = 'require "liquid"; require "json"; d = JSON.parse(STDIN.read.force_encoding("UTF-8")); print Liquid::Template.parse(d["t"], error_mode: :strict).render("site" => { "data" => { "fhir" => { "footer" => d["f"] } } }, "page" => d["p"])';
+    const run = (p: Record<string, string>) => spawnSync("ruby", ["-e", script], { input: JSON.stringify({ t: readFileSync(FOOTER_TEMPLATE_PATH, "utf-8"), f: footer, p }), encoding: "utf-8" });
+    const r = run({ ig_prev: "a.html", ig_next: "c.html" });
+    expect(r.stderr).toBe("");
+    expect(r.stdout).toContain('<link rel="stylesheet" href="assets/ig-pages.css">');
+    expect(r.stdout).toContain('<footer id="ig-footer" class="st-ig">');
+    expect(r.stdout).toContain('<a href="a.html">&lt;prev</a> | <a href="#">top</a> | <a href="c.html">next&gt;</a>');
+    expect(r.stdout).toContain('IG © 2023+ <a href="https://example.org" rel="external">Example Org</a>. Package <code>x.ig#0.2.1</code> based on <a href="http://hl7.org/fhir/R5/" rel="external">FHIR 5.0.0</a>. Generated 2026-10-01');
+    expect(r.stdout).toContain('Links: <a href="toc.html">Table of Contents</a> | <a href="https://l" rel="external">License</a>');
+    // The first page: no prev, and nothing invented for it.
+    expect(run({}).stdout).toContain('<p class="ig-footer-nav"><a href="#">top</a></p>');
   });
 });
 
