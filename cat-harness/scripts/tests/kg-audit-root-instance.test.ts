@@ -25,21 +25,23 @@
  * `dirname` fails here before it fails as a crash.
  *
  * @module scripts/tests/kg-audit-root-instance
+ *
+ * The tests here that read the aggregate repository's own root (the root
+ * instance declaration) live in
+ * `cat-harness-tools/scripts/tests/kg-audit-root-instance-repo-root.test.ts`
+ * (bean `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 import { checkoutRootFor } from "../../schemas/harness-config.js";
 import { inAggregate } from "../../test/support/checkout.js";
 
 const REPO = resolve(import.meta.dir, "../../..");
 
 describe("kg:audit over the instance declared at the repository root (bean `pgzn`)", () => {
-  test("the repository root IS a declared instance, so the case is not vacuous", () => {
-    expect(readDeclaration(REPO), "no declaration at the repository root — this test has no subject").toBeTruthy();
-  });
 
   // The root instance here is the AGGREGATE's, the one checkout whose root
   // carries `package.json` and nests `cat-harness/`. cat-harness run as its own

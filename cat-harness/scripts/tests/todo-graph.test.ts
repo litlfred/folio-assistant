@@ -6,6 +6,11 @@
  * is about what is published: every todo's JSON-LD and page exist, the
  * graph names every todo, and every `target` edge names a file that is
  * really there.
+ *
+ * The tests here that read the aggregate repository's own root (the
+ * root-declared `todos/` graph) live in
+ * `cat-harness-tools/scripts/tests/todo-graph-repo-root.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
@@ -17,7 +22,6 @@ import { DOCS_SITE_BASE, SITE_DOCUMENT_CONTEXT, ContentContextSchema, siteIri, s
 import { TodoIndexSchema, type TodoIndexItem } from "../../schemas/todo-index.ts";
 import { thinPageConfigOf, thinPageHtml } from "../thin-page.ts";
 import { propertyIri, termIri } from "../../schemas/namespaces.ts";
-import { declaredSubgraphNode } from "../kg-export.ts";
 import { subgraphPublicationFindings } from "../subgraph-node.ts";
 import {
   segment,
@@ -160,13 +164,6 @@ describe("what is published", () => {
   test("the graph, as .jsonld and .json, names every todo in the index", () => {
     expect(readFileSync(join(SITE, "todos.json"), "utf8")).toBe(readFileSync(join(SITE, "todos.jsonld"), "utf8"));
     expect(graph["hasPart"]).toEqual(INDEX.items.map((i) => todoIri(i.id)));
-  });
-
-  test("its container is the declared todos Subgraph node, and every todo is a member of it", () => {
-    const declared = declaredSubgraphNode(ROOT, "todos");
-    expect(declared).toBeDefined();
-    expect(subgraphPublicationFindings(graph, { iri: declared!.iri })).toEqual([]);
-    expect(graph["contentSource"]).toEqual(declared!.contentSource);
   });
 
   for (const item of INDEX.items) {

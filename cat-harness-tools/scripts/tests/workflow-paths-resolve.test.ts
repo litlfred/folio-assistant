@@ -52,14 +52,23 @@
  * invisible from a checkout — which is the `xom7` defect both exist for.
  *
  * @module cat-harness/scripts/tests/workflow-paths-resolve.test
+ *
+ * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
+ * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate
+ * repository's own root — `.github/workflows/` — which a standalone
+ * cat-harness layer does not have, and `check:cat-harness-standalone` collects
+ * every test in that layer.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../../cat-harness/schemas/cat-harness.js";
 
-const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move. */
+const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
+
+const REPO = repoRootFor(resolve(ORIGIN_DIR, "../.."));
 
 /** Workflows that run THIS repository's code. See the module note. */
 const PLATFORM_WORKFLOWS = [
