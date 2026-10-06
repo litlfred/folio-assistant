@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 235,
+      "count": 237,
       "unit": "modules"
     }
   },
@@ -298,6 +298,21 @@
       "graphNode": "undeclared",
       "summary": "The four axes stay four, and each keeps the property that makes it useful.",
       "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/content-context.test.ts",
+      "instance": "cat-harness",
+      "name": "content-context.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/content-context.ts",
+      "instance": "cat-harness",
+      "name": "content-context",
+      "graphNode": "undeclared",
+      "summary": "The `@context` a content document carries, built from the types it uses.",
+      "isTest": false
     },
     {
       "module": "cat-harness/schemas/content-type.ts",
