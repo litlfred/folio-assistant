@@ -14,7 +14,7 @@ Candidate terms extracted from every skill's front matter: `name` as the label, 
 
 From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 221 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 19 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 333 terms and is 255 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 333 terms and is 256 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -1009,7 +1009,7 @@ ig-binary-artefacts <span class="fa-gloss-status">candidate, extracted</span>
 ig-build-pipeline <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Read before adding anything to fhir-harness.</p>
+<p>The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Read before adding anything to fhir-harness, and before onboarding, converting or changing the workflows of an IG repository.</p>
 <p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md"><code>fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-skills--ig-publication" data-fa-state="extracted" data-fa-gloss="">

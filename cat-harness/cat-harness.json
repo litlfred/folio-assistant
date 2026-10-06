@@ -861,5 +861,24 @@
       "status": "proposed",
       "note": "Proposed by the owner 2026-09-30 as a repository per large KG asset type; no instance or repository yet."
     }
+  ],
+  "contentTranslations": [
+    {
+      "contentType": "docs",
+      "name": "Docs site (Markdown)",
+      "formats": [
+        {
+          "id": "markdown",
+          "name": "Markdown",
+          "extensions": [
+            ".md"
+          ],
+          "extractModule": "content/pipeline/pot-extract.ts",
+          "injectModule": "content/pipeline/po-inject.ts"
+        }
+      ],
+      "rtlSupported": true,
+      "notes": "The harness's own just-the-docs site, and the profile of any instance that declares no content type: every site this platform publishes is Markdown, translated through the generic pipeline (bean 0r7u)."
+    }
   ]
 }
