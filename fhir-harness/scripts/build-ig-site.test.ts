@@ -692,8 +692,8 @@ describe("rubyLiquidStrings — a Publisher Liquid string Jekyll can read", () =
 });
 
 describe("the Publisher's artefact lists, written from the artefact index (bean 9hfi)", () => {
-  // A page as smart-immunizations' `codings.md` and smart-trust's `maps.md`
-  // write it: `list-*.xhtml` fragments the IG Publisher GENERATES, which no
+  // A page as an IG's terminology or maps page writes it (bean 9hfi):
+  // `list-*.xhtml` fragments the IG Publisher GENERATES, which no
   // IG source holds. Rendered through Liquid as Jekyll renders the page.
   let d: string;
   let o: string;
