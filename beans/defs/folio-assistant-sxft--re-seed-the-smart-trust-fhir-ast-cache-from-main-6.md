@@ -1,14 +1,14 @@
 ---
 # folio-assistant-sxft
 title: Re-seed the smart-trust FHIR AST cache from main 644bfda (needs FHIR network)
-status: todo
+status: in-progress
 type: task
 priority: high
 tags:
     - agy
     - needs-network
 created_at: 2026-10-06T15:06:56Z
-updated_at: 2026-10-06T15:06:56Z
+updated_at: 2026-10-06T15:50:21Z
 parent: folio-assistant-uhkv
 ---
 
@@ -155,3 +155,12 @@ After that the coordinator asks once on #2288 and sets a new date.
 
 Context: the three defects come from the owner's ruling on litlfred/smart-trust#4
 (2026-10-02). Predecessor: `folio-assistant-mac1` (completed; same procedure, both caches).
+
+
+## Progress
+
+- 2026-10-06: Claimed bean `folio-assistant-sxft` (`status: in-progress`).
+- Step 1 (Exporter): Checked out `litlfred/fhir-ig-publisher@claude/ast-export` at `bfa914b` (contains `84ee3c8`). Built with Maven `mvn -f ast-export/pom.xml -q install` and generated `cp.txt` (exit 0).
+- Step 2 (Inputs verification): Checked remote `git ls-remote https://github.com/litlfred/smart-trust.git HEAD`. HEAD on `main` has moved to `73831e996cdcc13c2bb7382597a7a78bce13fda4` (PR #11 merged on top of `644bfda9e11e8729cde082f8a65fc55846412321`).
+- Per instructions ("If smart-trust `main` has moved, report `sxft: blocked inputs smart-trust now <sha>` and wait"): posted report comment on PR #2288: `sxft: blocked inputs smart-trust now 73831e996cdcc13c2bb7382597a7a78bce13fda4`.
+- Additional local finding: host disk is at 100% capacity (288MB free of 927GB), which caused fresh clone to fail with `fatal: write error: No space left on device`.
