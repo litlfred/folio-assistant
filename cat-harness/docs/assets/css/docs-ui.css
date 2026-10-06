@@ -1146,7 +1146,10 @@
    * `(3.5rem - 2rem) / 2` in `navbar-geometry.ts`, the same 12px the icon row
    * and every rail row already indent by. So the mark lands centred in the
    * strip at rest and flush with the icons when open, from one number. */
-  .side-bar .site-title { padding-left: var(--fa-nav-pad); }
+  /* LOGICAL: on an RTL page the mark is at the right, by the strip's outer
+     edge, and the theme's padding there cut it in half against the strip
+     (measured 2026-10-06: mark 1330-1362px, strip from 1344px). */
+  .side-bar .site-title { padding-inline-start: var(--fa-nav-pad); }
 
   /* THE ICON ROW BECOMES AN ICON COLUMN at rest.
    *
@@ -2538,9 +2541,29 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   width: 2rem;
   height: 2rem;
   vertical-align: -0.32em;
-  margin-right: 0.4rem;
+  /* LOGICAL, so the gap is between the mark and the title in either
+   * direction. `margin-right` put it on the outer side under dir=rtl, and the
+   * title ran into the avatar (0 px apart on the Arabic site, measured
+   * 2026-10-06; 6 px on the English one). */
+  margin-inline-end: 0.4rem;
   flex: none;
 }
+
+/* THE TITLE TEXT READS IN ITS OWN LANGUAGE; THE ROW MIRRORS WITH THE BAR.
+ *
+ * Owner, 2026-10-06, looking at the Arabic site: *"avatar still
+ * cutoff/overlapping text. maybe put avatar to left of text and flow LTR
+ * unless title is translated to a RTL (hebrew,arabic) then do it RTL"*.
+ *
+ * The TEXT does exactly that: `title.html` marks the title with its own
+ * language, so the English harness name reads left to right on an Arabic page
+ * and only a right-to-left title would turn. The ROW (avatar, then title)
+ * still mirrors with the page, because on an RTL page the bar is docked RIGHT
+ * and at rest shows only its rightmost 3.5rem: an avatar placed to the left
+ * of the text is outside that strip and cannot be seen (measured 2026-10-06 at
+ * 1400px: mark at 1148-1180px, strip at 1344-1400px). The overlap and the
+ * cut-off were physical sides — this margin, the strip gutter and the narrow
+ * screen's title margin, all written for the left — and are logical now. */
 
 /* ── The mark as a MASK — one asset, both schemes ─────────────────────
  *
@@ -2613,7 +2636,7 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   flex: none;
   width: var(--fa-nav-mark);
   height: var(--fa-nav-mark);
-  margin-right: 0.4rem;
+  margin-inline-end: 0.4rem;
   overflow: hidden;
   border-radius: 0.25rem;
   vertical-align: -0.32em;
@@ -4244,12 +4267,16 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
     white-space: nowrap;
     /* The title's row-mates (`.fa-qr-host`'s icon buttons) follow it in the
        flex row, so a shorter title slid them LEFT, under the handle. The auto
-       margin takes the space the title gave up and keeps them at the right. */
-    margin-right: auto;
+       margin takes the space the title gave up and keeps them at the right.
+       LOGICAL, with the padding below: on an RTL page the title is the bar's
+       first item at the RIGHT edge, and `margin-right: auto` pushed it to the
+       centre, under the pill (measured 2026-10-06 at 420px: title 146-314px,
+       pill 172-248px). */
+    margin-inline-end: auto;
     /* The theme's 14px right padding is what pushed "C@T Harness" into the
        ellipsis: the text ends at ~145px but the padded box needed ~159px.
        Beside a fixed pill the padding buys nothing, so it goes here. */
-    padding-right: 0;
+    padding-inline-end: 0;
   }
 }
 
@@ -5931,6 +5958,18 @@ a.fa-nav-folders__link:focus-visible {
   .side-bar [data-fa-tip]:hover::after,
   .side-bar [data-fa-tip]:focus-visible::after {
     opacity: 1;
+  }
+  /* THE MIRROR, ON AN RTL PAGE (bean `giiw`). The strip is docked to the
+     RIGHT edge there (`[dir="rtl"] .side-bar`), so "beyond the strip's
+     edge" is measured from the right. Measured on the Arabic home page at
+     1400px before this rule: hovering Beans in the strip at x 1344-1400 drew
+     "Beans — 535 open" at x 64, across the page from the icon it names.
+     Keyed on the HTML element's `dir`, not the control's: the control is
+     marked `dir="ltr"` as English text, and its tooltip still has to sit
+     beside a strip that is on the right. */
+  html[dir="rtl"] .side-bar [data-fa-tip]::after {
+    left: auto;
+    right: calc(var(--fa-nav-collapsed) + var(--fa-nav-text, 1) * (var(--fa-nav-open) - var(--fa-nav-collapsed)) + 0.5rem);
   }
 
   /* THE STRIP DOES NOT PEEK WHEN THE POINTER ARRIVES ON THE ICON COLUMN.
