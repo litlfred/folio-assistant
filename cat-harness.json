@@ -335,10 +335,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T19:31:21.583Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9452bc629feb9aec54646acb7c08d368cd7592fe",
-  "sourceCommitSha": "9452bc629feb9aec54646acb7c08d368cd7592fe",
-  "sourceCommitAt": "2026-10-06T21:06:29+02:00",
+  "generatedAt": "2026-10-06T21:32:33.178Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c77fafec4329aadbd3f6986421a61d9d9d4e46c1",
+  "sourceCommitSha": "c77fafec4329aadbd3f6986421a61d9d9d4e46c1",
+  "sourceCommitAt": "2026-10-06T23:17:23+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1346,7 +1346,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/sub-kg-lifecycle.md",
-      "instructionLines": 282,
+      "instructionLines": 310,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1697,7 +1697,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1679,
+      "instructionLines": 1703,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40767,7 +40767,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 271,
+      "fileCount": 273,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -41059,7 +41059,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 927,
+      "fileCount": 932,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -41110,7 +41110,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 178,
+      "fileCount": 180,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
@@ -46128,8 +46128,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "9452bc629feb9aec54646acb7c08d368cd7592fe",
+    "sha": "c77fafec4329aadbd3f6986421a61d9d9d4e46c1",
     "pr": "main",
-    "run": "37516461145"
+    "run": "37532813547"
   }
 }

@@ -297,6 +297,51 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:Block",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Block",
+      "comment": "One addressable unit of a folio's content — a paragraph, a theorem, a table — typed further by its block kind.",
+      "prefLabel": "Block",
+      "definition": "One addressable unit of a folio's content — a paragraph, a theorem, a table — typed further by its block kind.",
+      "notation": "cat-harness:Block",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:SourceDocument",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "SourceDocument",
+      "comment": "An external source a library holds — a paper, a report, a dataset — that blocks are ingested from and cite.",
+      "prefLabel": "SourceDocument",
+      "definition": "An external source a library holds — a paper, a report, a dataset — that blocks are ingested from and cite.",
+      "notation": "cat-harness:SourceDocument",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:WebPage",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "WebPage",
+      "comment": "A page of a published site, as a node whose sections and assets are its parts.",
+      "prefLabel": "WebPage",
+      "definition": "A page of a published site, as a node whose sections and assets are its parts.",
+      "notation": "cat-harness:WebPage",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/attestations",
       "@type": [
         "bootstrap:GraphTypology",
@@ -1620,6 +1665,21 @@
       "prefLabel": "bean",
       "definition": "The work-plan item a node was written under, where there is one.",
       "notation": "cat-harness:bean",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:data",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "data",
+      "comment": "A trashcan node's kind-specific fields, kept whole as JSON because a node's kind is open.",
+      "prefLabel": "data",
+      "definition": "A trashcan node's kind-specific fields, kept whole as JSON because a node's kind is open.",
+      "notation": "cat-harness:data",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
@@ -3076,6 +3136,516 @@
       "prefLabel": "ambiguous",
       "definition": "That more than one answer matched, and none was chosen.",
       "notation": "cat-harness:ambiguous",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:label",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "label",
+      "comment": "The authored label a block is referred to by, kept verbatim beside its minted IRI.",
+      "prefLabel": "label",
+      "definition": "The authored label a block is referred to by, kept verbatim beside its minted IRI.",
+      "notation": "cat-harness:label",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:kind",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "kind",
+      "comment": "A block's kind — the name of the `folio-block-kind/v1` node that classifies it.",
+      "prefLabel": "kind",
+      "definition": "A block's kind — the name of the `folio-block-kind/v1` node that classifies it.",
+      "notation": "cat-harness:kind",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:uses",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "uses",
+      "comment": "A block a reader must have read to follow this one: the editorial prerequisite relation, never derived from proofs.",
+      "prefLabel": "uses",
+      "definition": "A block a reader must have read to follow this one: the editorial prerequisite relation, never derived from proofs.",
+      "notation": "cat-harness:uses",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:interprets",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "interprets",
+      "comment": "The block a remark comments on.",
+      "prefLabel": "interprets",
+      "definition": "The block a remark comments on.",
+      "notation": "cat-harness:interprets",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:foreshadows",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "foreshadows",
+      "comment": "A later block this one prepares the reader for.",
+      "prefLabel": "foreshadows",
+      "definition": "A later block this one prepares the reader for.",
+      "notation": "cat-harness:foreshadows",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:proofs",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "proofs",
+      "comment": "A block that proves this one.",
+      "prefLabel": "proofs",
+      "definition": "A block that proves this one.",
+      "notation": "cat-harness:proofs",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:examples",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "examples",
+      "comment": "A block that illustrates this one.",
+      "prefLabel": "examples",
+      "definition": "A block that illustrates this one.",
+      "notation": "cat-harness:examples",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:tag",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "tag",
+      "comment": "A free label grouping blocks across chapters.",
+      "prefLabel": "tag",
+      "definition": "A free label grouping blocks across chapters.",
+      "notation": "cat-harness:tag",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:defines",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "defines",
+      "comment": "A term this block defines.",
+      "prefLabel": "defines",
+      "definition": "A term this block defines.",
+      "notation": "cat-harness:defines",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:leanRef",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "leanRef",
+      "comment": "The Lean declaration that formalises this block, as a name rather than a link.",
+      "prefLabel": "leanRef",
+      "definition": "The Lean declaration that formalises this block, as a name rather than a link.",
+      "notation": "cat-harness:leanRef",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sorryFree",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sorryFree",
+      "comment": "Whether the formal declaration behind this block is complete, with no `sorry`.",
+      "prefLabel": "sorryFree",
+      "definition": "Whether the formal declaration behind this block is complete, with no `sorry`.",
+      "notation": "cat-harness:sorryFree",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:text",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "text",
+      "comment": "The path, relative to this document, of the block's prose companion.",
+      "prefLabel": "text",
+      "definition": "The path, relative to this document, of the block's prose companion.",
+      "notation": "cat-harness:text",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:leanSource",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "leanSource",
+      "comment": "The path, relative to this document, of the block's Lean companion.",
+      "prefLabel": "leanSource",
+      "definition": "The path, relative to this document, of the block's Lean companion.",
+      "notation": "cat-harness:leanSource",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:blockMeta",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "blockMeta",
+      "comment": "A block's own metadata, kept verbatim as JSON.",
+      "prefLabel": "blockMeta",
+      "definition": "A block's own metadata, kept verbatim as JSON.",
+      "notation": "cat-harness:blockMeta",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:licenceRecord",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "licenceRecord",
+      "comment": "The authored licence record of a library item, including where its licence was searched for.",
+      "prefLabel": "licenceRecord",
+      "definition": "The authored licence record of a library item, including where its licence was searched for.",
+      "notation": "cat-harness:licenceRecord",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:narrative",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "narrative",
+      "comment": "A figure's or record's drafted narrative with its attribution, kept verbatim as JSON.",
+      "prefLabel": "narrative",
+      "definition": "A figure's or record's drafted narrative with its attribution, kept verbatim as JSON.",
+      "notation": "cat-harness:narrative",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sourceTechnicalMetadata",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sourceTechnicalMetadata",
+      "comment": "Technical metadata of an ingested source file, kept verbatim as JSON.",
+      "prefLabel": "sourceTechnicalMetadata",
+      "definition": "Technical metadata of an ingested source file, kept verbatim as JSON.",
+      "notation": "cat-harness:sourceTechnicalMetadata",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:archiveTechnicalMetadata",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "archiveTechnicalMetadata",
+      "comment": "Technical metadata of an ingested archive, kept verbatim as JSON.",
+      "prefLabel": "archiveTechnicalMetadata",
+      "definition": "Technical metadata of an ingested archive, kept verbatim as JSON.",
+      "notation": "cat-harness:archiveTechnicalMetadata",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sheets",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sheets",
+      "comment": "The shape of each sheet of an ingested workbook, kept verbatim as JSON.",
+      "prefLabel": "sheets",
+      "definition": "The shape of each sheet of an ingested workbook, kept verbatim as JSON.",
+      "notation": "cat-harness:sheets",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:archiveEntries",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "archiveEntries",
+      "comment": "The entry list of an ingested archive, kept verbatim as JSON.",
+      "prefLabel": "archiveEntries",
+      "definition": "The entry list of an ingested archive, kept verbatim as JSON.",
+      "notation": "cat-harness:archiveEntries",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sheetCount",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sheetCount",
+      "comment": "How many sheets an ingested workbook has.",
+      "prefLabel": "sheetCount",
+      "definition": "How many sheets an ingested workbook has.",
+      "notation": "cat-harness:sheetCount",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:entryCount",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "entryCount",
+      "comment": "How many entries an ingested archive lists.",
+      "prefLabel": "entryCount",
+      "definition": "How many entries an ingested archive lists.",
+      "notation": "cat-harness:entryCount",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:archiveFileCount",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "archiveFileCount",
+      "comment": "How many files an ingested archive contains.",
+      "prefLabel": "archiveFileCount",
+      "definition": "How many files an ingested archive contains.",
+      "notation": "cat-harness:archiveFileCount",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:directoryCount",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "directoryCount",
+      "comment": "How many directories an ingested archive contains.",
+      "prefLabel": "directoryCount",
+      "definition": "How many directories an ingested archive contains.",
+      "notation": "cat-harness:directoryCount",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:uncompressedBytes",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "uncompressedBytes",
+      "comment": "An ingested archive's size once unpacked, in bytes.",
+      "prefLabel": "uncompressedBytes",
+      "definition": "An ingested archive's size once unpacked, in bytes.",
+      "notation": "cat-harness:uncompressedBytes",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:headerVocabulary",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "headerVocabulary",
+      "comment": "Every column header a tabular record carries, as a set, so a search for a header finds the dataset.",
+      "prefLabel": "headerVocabulary",
+      "definition": "Every column header a tabular record carries, as a set, so a search for a header finds the dataset.",
+      "notation": "cat-harness:headerVocabulary",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:headers",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "headers",
+      "comment": "A table block's column headers, in order.",
+      "prefLabel": "headers",
+      "definition": "A table block's column headers, in order.",
+      "notation": "cat-harness:headers",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:file",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "file",
+      "comment": "The path, relative to the block, of a figure's image.",
+      "prefLabel": "file",
+      "definition": "The path, relative to the block, of a figure's image.",
+      "notation": "cat-harness:file",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:refs",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "refs",
+      "comment": "A node an ingested node refers to.",
+      "prefLabel": "refs",
+      "definition": "A node an ingested node refers to.",
+      "notation": "cat-harness:refs",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sourceDocument",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sourceDocument",
+      "comment": "The source document an ingested node was taken from.",
+      "prefLabel": "sourceDocument",
+      "definition": "The source document an ingested node was taken from.",
+      "notation": "cat-harness:sourceDocument",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:provenance",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "provenance",
+      "comment": "How an ingested node was produced.",
+      "prefLabel": "provenance",
+      "definition": "How an ingested node was produced.",
+      "notation": "cat-harness:provenance",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:pageStart",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "pageStart",
+      "comment": "The first page of the source an ingested node covers.",
+      "prefLabel": "pageStart",
+      "definition": "The first page of the source an ingested node covers.",
+      "notation": "cat-harness:pageStart",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:pageEnd",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "pageEnd",
+      "comment": "The last page of the source an ingested node covers.",
+      "prefLabel": "pageEnd",
+      "definition": "The last page of the source an ingested node covers.",
+      "notation": "cat-harness:pageEnd",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:strength",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "strength",
+      "comment": "The stated strength of an ingested recommendation.",
+      "prefLabel": "strength",
+      "definition": "The stated strength of an ingested recommendation.",
+      "notation": "cat-harness:strength",
       "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"

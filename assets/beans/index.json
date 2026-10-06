@@ -2,8 +2,8 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 958,
-      "unit": "beans"
+      "count": 543,
+      "unit": "open beans"
     }
   },
   "repoWeb": "https://github.com/litlfred/folio-assistant",
@@ -275,6 +275,20 @@
       "updatedAt": "2026-10-01T17:25:48Z",
       "preview": "G4. Main moves ~every 3 min; a merge->regen->CI cycle is ~22 min; three handovers stalled on it.\n\n## Done when\n- [ ] #1754 merged\n- [ ] d33q part B: CI regenerates on the merge result\n- [ ] median PR-green -> merged measured before and after\n\n_2026-10-01T17:25:48Z_ — Claimed by claude/s2-regen-in-ci — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).",
       "file": "beans/defs/folio-assistant-0mf0--s2-merge-treadmill-land-mergemain-1754-and-regen-i.md"
+    },
+    {
+      "id": "folio-assistant-0mpw",
+      "title": "Remote mount of a harness: declared directory with a remote source, defaults in the harness's own declaration",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-fnx4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T17:55:54Z",
+      "updatedAt": "2026-10-06T19:03:15Z",
+      "preview": "Owner ruling 2026-10-06 (this session): replace submodule linking (e.g. litlfred/smart-ra has folio-assistant as a submodule) with a REMOTE MOUNT. Not .deps/ (dot-dir; collides with GitHub conventions and our own dot-prefix guard).\n\n## Design (option 1, amended by the owner)\n- A remote mount is a DECLARED DIRECTORY with a new SubgraphSource member, e.g. source: {remote: {repository, ref: <40-char ",
+      "file": "beans/defs/folio-assistant-0mpw--remote-mount-of-a-harness-declared-directory-with.md"
     },
     {
       "id": "folio-assistant-0qjq",
@@ -1066,6 +1080,20 @@
       "updatedAt": "2026-09-19T08:55:36Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"developer\nmode: likely wants local server hostign the content, run CLI version of tools.\nuses single agent/model for all workflows\".\n\n## The strawperson position\n\nDeveloper mode is a **point in the topology product**, not a special code path:\n\n| axis | value |\n|---|---|\n| forge | local git only, or any — the mode does not care |",
       "file": "beans/defs/folio-assistant-2ngl--mode-developer-local-server-cli-tools-one-model-fo.md"
+    },
+    {
+      "id": "folio-assistant-2osx",
+      "title": "Each instance publishes its own ns document for the block-kind classes it mints",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T16:41:00Z",
+      "updatedAt": "2026-10-06T17:23:55Z",
+      "preview": "Follow-up to the vocabulary move (bean 0r7u, owner rulings 2026-10-06): block-kind classes are minted in the declaring instance's namespace (folio-assistant-core:Prose, folio-assistant-sci:Theorem, smart-base:Persona), but no instance publishes a document defining them, so the class IRIs do not dereference. The core ones never did (pre-existing gap); sci and smart-base are new namespaces with no n",
+      "file": "beans/defs/folio-assistant-2osx--each-instance-publishes-its-own-ns-document-for-th.md"
     },
     {
       "id": "folio-assistant-2q1p",
@@ -2029,14 +2057,14 @@
     {
       "id": "folio-assistant-4z5o",
       "title": "Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T09:08:59Z",
-      "updatedAt": "2026-10-04T09:08:59Z",
+      "updatedAt": "2026-10-06T19:49:01Z",
       "preview": "Generated pages compose GitHub URLs by joining an instance-relative path that leaves the instance root, producing links with `/main/../` in them:\n\n    https://github.com/litlfred/folio-assistant/edit/main/../folio-assistant-core/processes/library/l1-document-ingestion.bpmn\n    https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/...   (the blob form is correct)\n\nThe `edit/` f",
       "file": "beans/defs/folio-assistant-4z5o--generated-github-edit-source-urls-escape-the-repo-.md"
     },
@@ -2448,6 +2476,20 @@
       "updatedAt": "2026-09-24T12:40:45Z",
       "preview": "The test \"every family in the committed result matches the export's own field\" in cat-harness/scripts/tests/qa-results.test.ts failed in 2 of 4 local `bun run gates` runs on 2026-09-23, on diffs that don't touch kg-export (the a1lq and 423d work). It passed 3 of 3 plain `bun test` runs, passes when run alone, and passed in CI every time.\n\nIt compares the committed kg-export.qa-results.json against",
       "file": "beans/defs/folio-assistant-61n5--qa-results-parity-test-fails-intermittently-under.md"
+    },
+    {
+      "id": "folio-assistant-61t6",
+      "title": "fsh-guts checks treat a separated subtree as one frozen item described by its note",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-3tza",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T20:21:29Z",
+      "updatedAt": "2026-10-06T20:21:29Z",
+      "preview": "cf210f4 deposited fsh-guts/separated/{smart-base,smart-trust,smart-immunizations}/ (~7.7k files) on cat/cat-harness/fsh-guts and every PR's CI went red (export @context lacked `data`, render-pipeline tests and the page walked every file, materialized-fixity judged a frozen copy's index.json, bean refs to hupw). 611a3fd held the cutover back until #2320 merges. Platform must treat separated/<name>/",
+      "file": "beans/defs/folio-assistant-61t6--fsh-guts-checks-treat-a-separated-subtree-as-one-f.md"
     },
     {
       "id": "folio-assistant-61tg",
@@ -3061,15 +3103,15 @@
     {
       "id": "folio-assistant-7ji4",
       "title": "id-lookup page has no rail: find why and fix",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T15:23:55Z",
-      "updatedAt": "2026-10-05T15:23:55Z",
-      "preview": "Left over from lnoy (#2185): of the 95 navbar-less pages, id-lookup is the one not covered by the thin-page linked rail. Not investigated.",
+      "updatedAt": "2026-10-06T19:13:41Z",
+      "preview": "Left over from lnoy (#2185): of the 95 navbar-less pages, id-lookup is the one not covered by the thin-page linked rail. Not investigated.\n\n_2026-10-06T19:13:41Z_ — Claimed by claude/7ji4-id-lookup-rail — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).",
       "file": "beans/defs/folio-assistant-7ji4--id-lookup-page-has-no-rail-find-why-and-fix.md"
     },
     {
@@ -4267,14 +4309,14 @@
     {
       "id": "folio-assistant-a98i",
       "title": "translate-kg-viewer --extract refreshes every .pot but never syncs the .po stubs",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T08:11:21Z",
-      "updatedAt": "2026-09-19T08:11:21Z",
+      "updatedAt": "2026-10-06T19:56:02Z",
       "preview": "MEASURED 2026-09-19 while adding one string to `scripts/kg-viewer-strings.ts`.\n\n`bun run translate-kg-viewer --extract` rewrites all five `translations/<loc>/kg-viewer.pot` files and refreshes each TranslationNode manifest. It does **not** touch the `.po` stubs beside them. So a new msgid leaves every catalogue one entry short, and nothing in the tool says so — it prints `po: 0/39, manifest refres",
       "file": "beans/defs/folio-assistant-a98i--translate-kg-viewer-extract-refreshes-every-pot-bu.md"
     },
@@ -5716,7 +5758,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T18:25:34Z",
-      "updatedAt": "2026-10-06T18:34:34Z",
+      "updatedAt": "2026-10-06T19:52:38Z",
       "preview": "Found by the real staging run on litlfred/smart-ra#26 (run 37507489070, bean dpi-h-ra-7ss8).\n\nA. folio-staging.yml reads the PR only from a pull_request event. smart-ra runs staging by dispatch only (owner decision 2026-10-06), so PR=n/a, no bot comment, no review-comment ingestion, no qa-reports fetch, though GitHub lists the run under #26.\nB. document-rendered-impact.ts puts every unplaced file ",
       "file": "beans/defs/folio-assistant-ehh6--rendered-impact-measured-on-smart-ra26-a-dispatche.md"
     },
@@ -6954,14 +6996,14 @@
     {
       "id": "folio-assistant-hp54",
       "title": "FOLIO_INIT STATE SOURCE: folio_init resolves each state graph's declared source — branch-mounted beans/todos by default, declared either way; audit present-but-undeclared state dirs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T17:07:20Z",
-      "updatedAt": "2026-10-06T17:07:43Z",
+      "updatedAt": "2026-10-06T19:11:46Z",
       "preview": "Measured 2026-10-06: litlfred/smart-ra got beans/ and todos/ as plain in-checkout dirs on main from its install commit 79fcb9d, written by init-folio.ts, which never consults a declared subgraph source; the folio's instance json declares neither, and the directory checks compare declarations to disk, not the reverse. Owner chose 'fix the process'.\n\n## Done when\n- folio_init resolves each state gra",
       "file": "beans/defs/folio-assistant-hp54--folio-init-state-source-folio-init-resolves-each-s.md"
     },
@@ -6978,6 +7020,20 @@
       "updatedAt": "2026-09-22T18:18:42Z",
       "preview": "Owner, 2026-09-20: *\"content/ shouldnt be expected anymore. folio/ was\nrenamed as default/convention.\"* Then, on being shown a compatibility-fallback\ndesign: **\"no content/ fallback. excise!!!!!\"**\n\nMeasured on `0392892c`.\n\n## Where the rename HAS landed\n\n- `cat-harness/harness.json` declares `folio/` holding the `folio` graph, and\n  carries no `content` entry at all\n- the `folio` graph kind exist",
       "file": "beans/defs/folio-assistant-hs08--migration-the-content-folio-rename-has-reached-the.md"
+    },
+    {
+      "id": "folio-assistant-hupw",
+      "title": "SMART separation cutover: retire smart-trust, smart-base, smart-immunizations, smart-ig to fsh-guts/separated and repair main",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-n3ni",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T19:10:49Z",
+      "updatedAt": "2026-10-06T19:30:28Z",
+      "preview": "Stage 13 / F of n3ni. Owner 2026-10-06 (confirmed twice): 'cutover dirs should go to fsh-guts', then 'All three now'. Content lives in forks litlfred/smart-trust, litlfred/smart-base, litlfred/smart-immunizations (branch claude/seed-smart-base). smart-ig retired with them: it is only the waypoint between smart-base and the two IGs, and its needs:[smart-base] cannot resolve once smart-base is gone.",
+      "file": "beans/defs/folio-assistant-hupw--smart-separation-cutover-retire-smart-trust-smart.md"
     },
     {
       "id": "folio-assistant-hx65",
@@ -11158,7 +11214,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T18:57:25Z",
-      "updatedAt": "2026-10-06T18:53:18Z",
+      "updatedAt": "2026-10-06T18:54:54Z",
       "preview": "Found 2026-10-04 running paper-feature-build on litlfred/qou (PR #2118). The LaTeX preflight that build.ts runs reports two undefined-macro findings, and both are standard commands:\n- \\phantom is LaTeX core (first use qou chapters/mass-theory.tex:7091);\n- \\lessgtr is amssymb, which the paper print template loads (chapters/knots-particles-confinement.tex:179).\ncat-harness/content/pipeline/latex-kno",
       "file": "beans/defs/folio-assistant-tdi0--latex-known-macrosjson-lacks-phantom-and-lessgtr-p.md"
     },
@@ -11727,6 +11783,20 @@
       "file": "beans/defs/folio-assistant-v1hw--visualiser-uploads-an-uningested-badge-a-browsable.md"
     },
     {
+      "id": "folio-assistant-v215",
+      "title": "Beans count disagrees: 541 on the icon row, 943 on the glass and launcher tiles",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T18:52:19Z",
+      "updatedAt": "2026-10-06T18:52:29Z",
+      "preview": "Recorded in the navbar wireframe's Findings (\"Seen on the build, not one of the twelve\"), re-drawn in #2295 (bean `folio-assistant-1q4b`).\n\n## Defect\n\nBeans carries two counts. The icon row shows **541** (\"Beans — 541 open\"). The glass tile and the launcher tile show **943**, and no word says what 943 counts.\n\n## What each number counts (measured from source)\n\n- **Icon row (541).** `navbar-row.js`",
+      "file": "beans/defs/folio-assistant-v215--beans-count-disagrees-541-on-the-icon-row-943-on-t.md"
+    },
+    {
       "id": "folio-assistant-v26p",
       "title": "PUBLIC COMMENT: tabular comments returned on a line-numbered draft, mapped by page and line to block ids, then triaged, reassigned and dispensed as Findings",
       "status": "in-progress",
@@ -12033,14 +12103,14 @@
     {
       "id": "folio-assistant-vq2g",
       "title": "Two bean FILES share one id, and no gate catches it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T02:40:59Z",
-      "updatedAt": "2026-10-03T02:40:59Z",
+      "updatedAt": "2026-10-06T19:44:02Z",
       "preview": "Found 2026-10-03 by the first run of `milestone-rollup.ts`, not by looking for\nit: the module reported `openTotal - orphanOpen = 149` while the sum of the\nper-milestone bars was 148, and the board was about to render both.\n\n## The measurement\n\n```\nbeans: 675 files · distinct ids: 674 · duplicated ids: 1\n  folio-assistant-t3n8 -> beans/defs/folio-assistant-t3n8--harness-display-names-every-instance",
       "file": "beans/defs/folio-assistant-vq2g--two-bean-files-share-one-id-and-no-gate-catches-it.md"
     },
@@ -13518,6 +13588,20 @@
       "file": "beans/defs/folio-assistant-yxob--formal-edge-extractor-in-folio-assistant-sci-gener.md"
     },
     {
+      "id": "folio-assistant-yywu",
+      "title": "Repo root cleanup: excise root tools/ and docs/; move stray .beans/ bean into beans/defs",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T18:05:32Z",
+      "updatedAt": "2026-10-06T18:05:32Z",
+      "preview": "Owner ruling 2026-10-06 (this session): 'excise tools/ docs/ it's confusing'.\n\nAudit (read-only, 2026-10-06): root tools/ is a 1-line barrel re-exporting cat-harness/tools that NOTHING imports (the apparent consumers resolve ../tools relative to cat-harness/scripts/); root docs/ is an empty overlay composed over cat-harness/docs/ (owner ruling 2026-09-21), holding only .gitkeep + README. .beans/ i",
+      "file": "beans/defs/folio-assistant-yywu--repo-root-cleanup-excise-root-tools-and-docs-move.md"
+    },
+    {
       "id": "folio-assistant-yzp9",
       "title": "Preview cap by size: rotate STAGING previews to a 3 GB total, not a count of 10",
       "status": "completed",
@@ -13646,6 +13730,20 @@
       "file": "beans/defs/folio-assistant-zdfa--init-sibling-link-stagingyml-gets-platform-dir-pla.md"
     },
     {
+      "id": "folio-assistant-zdty",
+      "title": "CUTOVER DEPOSITS TO FSH-GUTS: state:seed --cutover deposits a verified snapshot + provenance into the instance's fsh-guts before removing; folio_init declares fsh-guts by default",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-fs43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T19:11:46Z",
+      "updatedAt": "2026-10-06T19:11:46Z",
+      "preview": "Owner, 2026-10-06 (verbatim): \"cutover dirs should go to fsh-guts\".\n\nHolder: session_013WbQekVypi9A6YQbLDXMmJ, branch claude/awesome-fermi-ua31th-cutover-fsh-guts.\n\n## Done when\n- [ ] cutoverMain deposits a `retired/` pair (git-archive tar.gz + folio-fsh-guts/v1 .md with provenance) into the cut-over directory's own instance's fsh-guts graph via branch-store, verified by re-read, BEFORE the remova",
+      "file": "beans/defs/folio-assistant-zdty--cutover-deposits-to-fsh-guts-stateseed-cutover-dep.md"
+    },
+    {
       "id": "folio-assistant-zhg2",
       "title": "REFERENCE DIRECTION: generalise bootstrap's no-upward-reference rule to all 17 instances, sharing check:partition's direction computation",
       "status": "in-progress",
@@ -13742,6 +13840,20 @@
       "updatedAt": "2026-09-30T14:29:18Z",
       "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n\n\n## 2026-09-30 progress\n- [x] voice source kgRef → path (37 v",
       "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
+    },
+    {
+      "id": "folio-assistant-zpso",
+      "title": "Glass settings panel opens under the tile dock (navbar wireframe, seen on the build)",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T18:52:19Z",
+      "updatedAt": "2026-10-06T18:52:29Z",
+      "preview": "Recorded in the navbar wireframe's Findings (\"Seen on the build, not one of the twelve\"), re-drawn in #2295 (bean `folio-assistant-1q4b`); first noted in #1810 as \"found, not fixed\".\n\n## Defect\n\nAt 1280×800, opening ⚙ Glass settings from the tile dock puts the panel at y = 591. Its body sits under the fixed tile dock until the reader scrolls the glass. The controls the tile has just opened cannot ",
+      "file": "beans/defs/folio-assistant-zpso--glass-settings-panel-opens-under-the-tile-dock-nav.md"
     },
     {
       "id": "folio-assistant-zru7",
@@ -15173,14 +15285,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 573,
-        "closed": 233,
-        "open": 340,
-        "inProgress": 121,
-        "todo": 218,
+        "total": 576,
+        "closed": 234,
+        "open": 342,
+        "inProgress": 127,
+        "todo": 214,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.40663176265270506
+        "share": 0.40625
       },
       {
         "id": "folio-assistant-vuip",
@@ -15188,14 +15300,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 259,
+        "total": 264,
         "closed": 102,
-        "open": 157,
-        "inProgress": 96,
-        "todo": 60,
+        "open": 162,
+        "inProgress": 97,
+        "todo": 64,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3938223938223938
+        "share": 0.38636363636363635
       },
       {
         "id": "folio-assistant-yg29",
@@ -15214,8 +15326,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 536,
-    "coveredOpen": 533,
+    "openTotal": 543,
+    "coveredOpen": 540,
     "duplicateIds": 0
   }
 }
