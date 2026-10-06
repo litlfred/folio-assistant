@@ -33,9 +33,17 @@
 import { z } from "zod";
 
 import { ArchiveEntrySchema } from "./archive-contents.js";
+import { nodeKind } from "./node-kind.js";
 
-export const BASIC_CDN_SITE_SCHEMA_ID = "folio-basic-cdn-site/v1";
-export const CDN_SITE_SCHEMA_ID = "folio-cdn-site/v1";
+/**
+ * Node kinds since #2195's gate (`node-kinds:check` refuses a new family with
+ * no `nodeKind()`), so the short SemVer names the owner chose for kinds
+ * (2026-10-05): the name is the URL segment, the version lives in `$schema`.
+ * No document carried the earlier `folio-*-site/v1` tags, so nothing is
+ * retagged.
+ */
+export const BASIC_CDN_SITE_SCHEMA_ID = "basic-cdn-site/1.0.0";
+export const CDN_SITE_SCHEMA_ID = "cdn-site/1.0.0";
 
 /** A path within the site: relative, no leading slash, ending `/` for a directory route. */
 const SitePath = z
@@ -82,9 +90,8 @@ const siteShape = {
 };
 
 /** A site on a CDN that serves files by path and nothing more. */
-export const BasicCdnSiteSchema = z
-  .object({ $schema: z.literal(BASIC_CDN_SITE_SCHEMA_ID), ...siteShape })
-  .strict();
+export const BasicCdnSiteKind = nodeKind(BASIC_CDN_SITE_SCHEMA_ID, [], siteShape);
+export const BasicCdnSiteSchema = BasicCdnSiteKind.schema.strict();
 export type BasicCdnSite = z.infer<typeof BasicCdnSiteSchema>;
 
 /** A media type the CDN serves for paths matching a glob. */
@@ -103,13 +110,14 @@ export const RedirectRuleSchema = z
 export const HeaderRuleSchema = z.object({ match: z.string().min(1), name: z.string().regex(/^[A-Za-z0-9-]+$/), value: z.string() }).strict();
 
 /** A site on a CDN that also controls media types, redirects and headers. */
-export const CdnSiteSchema = z
-  .object({
-    $schema: z.literal(CDN_SITE_SCHEMA_ID),
-    ...siteShape,
-    mimeTypes: z.array(MimeTypeRuleSchema).optional(),
-    redirects: z.array(RedirectRuleSchema).optional(),
-    headers: z.array(HeaderRuleSchema).optional(),
-  })
-  .strict();
+/**
+ * A SUBCLASS of {@link BasicCdnSiteKind}: everything a basic site carries,
+ * plus control over media types, redirects and headers.
+ */
+export const CdnSiteKind = nodeKind(CDN_SITE_SCHEMA_ID, [BasicCdnSiteKind], {
+  mimeTypes: z.array(MimeTypeRuleSchema).optional(),
+  redirects: z.array(RedirectRuleSchema).optional(),
+  headers: z.array(HeaderRuleSchema).optional(),
+});
+export const CdnSiteSchema = CdnSiteKind.schema.strict();
 export type CdnSite = z.infer<typeof CdnSiteSchema>;

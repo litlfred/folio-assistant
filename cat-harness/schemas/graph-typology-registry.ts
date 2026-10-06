@@ -2146,14 +2146,14 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   // ArchiveEntrySchema, and the kind adds the route layout.
   "basic-cdn-site": {
     description:
-      "a published static site on a CDN that serves files by path only: no media-type mapping, no redirects, no headers. One `folio-basic-cdn-site/v1` document describes it: its root URL, its routes (the release root, the staging-preview template `STAGING/<slug>/`, the per-instance sub-sites), the commit it was built from, and its files as archive entries. `derived`: built from the renderable graphs its directory's `derivedFrom` names, by a build Tool, and put on the CDN by the Tool its `storage.tool` names. GitHub Pages is one such CDN.",
+      "a published static site on a CDN that serves files by path only: no media-type mapping, no redirects, no headers. One `basic-cdn-site/1.0.0` document describes it: its root URL, its routes (the release root, the staging-preview template `STAGING/<slug>/`, the per-instance sub-sites), the commit it was built from, and its files as archive entries. `derived`: built from the renderable graphs its directory's `derivedFrom` names, by a build Tool, and put on the CDN by the Tool its `storage.tool` names. GitHub Pages is one such CDN.",
     title: "Basic CDN site",
     renderable: false,
     holds: "derived",
     // declared-path-literal: this table IS the declaration, as on `binary-release`.
     schema: "schemas/site.ts",
     nodeSchemas: {
-      "folio-basic-cdn-site/v1": {},
+      "basic-cdn-site/1.0.0": {},
     },
     summary:
       "A published static site on a CDN that serves files by path only (GitHub Pages): its routes, " +
@@ -2162,14 +2162,14 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "cdn-site": {
     description:
-      "a published site on a CDN that also controls media types, redirects and response headers. One `folio-cdn-site/v1` document: everything a `basic-cdn-site` carries, plus `mimeTypes`, `redirects` and `headers`. Declared ahead of its first instance so a CDN deployment (who-iris, beans l9v6 and xies) lands in a kind rather than widening `basic-cdn-site`, whose point is what it cannot do.",
+      "a published site on a CDN that also controls media types, redirects and response headers. One `cdn-site/1.0.0` document: everything a `basic-cdn-site` carries, plus `mimeTypes`, `redirects` and `headers`. Declared ahead of its first instance so a CDN deployment (who-iris, beans l9v6 and xies) lands in a kind rather than widening `basic-cdn-site`, whose point is what it cannot do.",
     title: "CDN site",
     renderable: false,
     holds: "derived",
     // declared-path-literal: this table IS the declaration.
     schema: "schemas/site.ts",
     nodeSchemas: {
-      "folio-cdn-site/v1": {},
+      "cdn-site/1.0.0": {},
     },
     summary:
       "A published site on a CDN that also controls media types, redirects and headers: " +
