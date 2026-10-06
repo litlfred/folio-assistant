@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 221 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 19 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 222 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 19 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 333 terms and is 256 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 334 terms and is 257 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>333</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>333</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>334</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>334</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">333</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">334</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -171,6 +171,13 @@ block-density <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Audits individual content blocks for single-topic coherence, length, and embedded tables. Blocks that cover multiple topics or exceed ~2/3 of a page should be split; large tables (&gt;5 rows) must be their own <code>table</code> block. Child blocks from a split may belong in different chapters than the parent.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/block-density.md"><code>cat-harness/skills/authoring/authoring-core/block-density.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--blocked-build-dependencies" data-fa-state="extracted" data-fa-gloss="">
+blocked-build-dependencies <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/blocked-build-dependencies.md"><code>cat-harness/skills/sdlc/sdlc-core/blocked-build-dependencies.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--board-diagram-interchange" data-fa-state="extracted" data-fa-gloss="">
 board-diagram-interchange <span class="fa-gloss-status">candidate, extracted</span>

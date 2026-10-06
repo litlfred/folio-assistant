@@ -3131,6 +3131,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
@@ -3305,6 +3306,25 @@
                 "sha256": "05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1"
               },
               "title": "/before-after-preview — show the reviewer the change, not a description of it"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 89,
+              "instructionsPath": "skills/sdlc/sdlc-core/blocked-build-dependencies.md",
+              "name": "blocked-build-dependencies",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b11d5494517e5d174c3007cf68afaf103bf79b62519f52305e50b4691ec8fc9",
+                "bytes": 4366,
+                "sha256": "5b11d5494517e5d174c3007cf68afaf103bf79b62519f52305e50b4691ec8fc9"
+              },
+              "title": "Blocked build dependencies — read the refusal before you work around it"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",

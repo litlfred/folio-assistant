@@ -230,6 +230,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [/before-after-preview](before-after-preview.html) | `before-after-preview` | — | > Skill id: `before-after-preview` · Package: `sdlc-core` · Issue: #1710 · |
+| [Blocked build dependencies](blocked-build-dependencies.html) | `blocked-build-dependencies` | — | Outbound HTTPS from an agent container goes through a proxy. A failed download |
 | [Branch archaeology: what each branch holds that main does not](branch-archaeology.html) | `branch-archaeology` | — | The question sounds like `git branch -r --no-merged`, and that command answers |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
