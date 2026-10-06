@@ -219,9 +219,9 @@ function conflictedVerdict(lead: string): Verdict {
     state: "undetermined",
     names: [],
     because:
-      `${lead}, but the head is CONFLICTED with its base — no ` +
-      "`pull_request` run is published for it at all (bean `52cz`), so the missing checks " +
-      "will never arrive. Merge the base in. NOT a pass",
+      `${lead}, but the head is CONFLICTED with its base, so it cannot merge, and no ` +
+      "`pull_request` run is published for it until it can (bean `52cz`). Runs it does carry " +
+      "were made against an older base (bean `rwwl`). Merge the base in. NOT a pass",
   };
 }
 
