@@ -133,6 +133,67 @@ export function blockActionsHtml(cfg: BlockActionsConfig, b: BlockContext): stri
   );
 }
 
+/**
+ * The same URLs, built in the browser. A lazy document page (bean v433) has
+ * hundreds of blocks, and a feedback URL carries its prefilled issue, so
+ * writing every href into the page cost 864 KB on the DPI-H document. The
+ * compact form writes each block's facts as data attributes and this builds
+ * the hrefs when a pointer or focus reaches them. `block-actions.test.ts`
+ * evaluates it and holds it equal to {@link editUrl} and {@link feedbackUrl}.
+ */
+export const BLOCK_URLS_JS = `function faBlockUrls(c, b) {
+  var enc = encodeURIComponent;
+  var path = b.source.split("/").map(enc).join("/");
+  var branch = c.branch || "main";
+  var src = "https://github.com/" + c.repo + "/blob/" + branch + "/" + path;
+  var url = c.siteUrl && b.page ? c.siteUrl.replace(/\\/$/, "") + "/" + b.page + "#" + enc(b.label) : "";
+  var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url };
+  var q = new URLSearchParams();
+  q.set("title", "Feedback: " + (b.section ? b.section + " \u2014 " : "") + b.label);
+  if (c.labels && c.labels.length) q.set("labels", c.labels.join(","));
+  if (c.template) {
+    q.set("template", c.template);
+    (c.templateFields || []).forEach(function (f) { if (values[f]) q.set(f, values[f]); });
+  } else {
+    var facts = ["**Block:** \\u0060" + b.label + "\\u0060"];
+    if (b.section) facts.push("**Section:** " + b.section);
+    facts.push("**Source:** " + src);
+    if (url) facts.push("**On the site:** " + url);
+    q.set("body", facts.concat(["", "**Feedback:**", ""]).join("\\n"));
+  }
+  return { edit: "https://github.com/" + c.repo + "/edit/" + branch + "/" + path, feedback: "https://github.com/" + c.repo + "/issues/new?" + q };
+}`;
+
+/** One block's links in the compact form: facts as data, hrefs filled by {@link compactActionsScript}. */
+export function compactActionsHtml(b: BlockContext): string {
+  return (
+    `<span class="block-actions" data-block="${esc(b.label)}" data-src="${esc(b.source)}"${b.section ? ` data-sec="${esc(b.section)}"` : ""}>` +
+    `<a class="ba-edit" title="Edit this block's source on GitHub">✎ edit</a>` +
+    `<a class="ba-feedback" title="Give feedback on this block (opens a GitHub issue)">📣 feedback</a>` +
+    `</span>`
+  );
+}
+
+/** Fills a compact span's hrefs the first time a pointer or focus reaches it. */
+export function compactActionsScript(cfg: BlockActionsConfig, page?: string): string {
+  const c = JSON.stringify({ ...cfg, ...(page ? { page } : {}) }).replace(/</g, "\\u003c");
+  return `<script>
+(() => {
+  ${BLOCK_URLS_JS}
+  const cfg = ${c};
+  const ready = (s) => {
+    if (s.dataset.ready) return;
+    s.dataset.ready = "1";
+    const u = faBlockUrls(cfg, { label: s.dataset.block, source: s.dataset.src, section: s.dataset.sec, page: cfg.page });
+    s.querySelector(".ba-edit").href = u.edit;
+    s.querySelector(".ba-feedback").href = u.feedback;
+  };
+  for (const ev of ["pointerover", "focusin", "touchstart"])
+    document.addEventListener(ev, (e) => { const s = e.target.closest && e.target.closest(".block-actions[data-src]"); if (s) ready(s); }, { passive: true });
+})();
+</script>`;
+}
+
 export const BLOCK_ACTIONS_CSS = `
 .block-actions { float:right; font-size:.75rem; margin-left:.6rem; opacity:.55; white-space:nowrap; }
 .block-actions:hover, .block-actions:focus-within { opacity:1; }
@@ -150,17 +211,21 @@ export function injectBlockActions(
   html: string,
   blocks: Iterable<BlockContext>,
   cfg: BlockActionsConfig,
+  opts: { compact?: boolean } = {},
 ): { html: string; inserted: number } {
   if (!cfg.repo) return { html, inserted: 0 };
   let out = html;
   let inserted = 0;
+  let page: string | undefined;
   for (const b of blocks) {
     const anchor = new RegExp(`(<a id="${b.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"\\s*>\\s*</a>)`);
     if (!anchor.test(out)) continue;
-    out = out.replace(anchor, `$1${blockActionsHtml(cfg, b)}`);
+    out = out.replace(anchor, `$1${opts.compact ? compactActionsHtml(b) : blockActionsHtml(cfg, b)}`);
+    if (page === undefined) page = b.page;
     inserted++;
   }
   if (inserted) out = out.replace("</head>", `<style>${BLOCK_ACTIONS_CSS}</style></head>`);
+  if (inserted && opts.compact) out = out.replace("</body>", `${compactActionsScript(cfg, page)}</body>`);
   return { html: out, inserted };
 }
 

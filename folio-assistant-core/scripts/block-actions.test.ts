@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { blockActionsHtml, editUrl, feedbackUrl, injectBlockActions, readIssueForm, sourceUrl } from "./block-actions.js";
+import { BLOCK_URLS_JS, blockActionsHtml, editUrl, feedbackUrl, injectBlockActions, readIssueForm, sourceUrl } from "./block-actions.js";
 
 const block = { label: "prose:2-1-2-ab12", source: "folio/doc/ch2/p-2-1-2.md", section: "2.1.2 Business services layer", page: "doc/index.html" };
 
@@ -61,5 +61,30 @@ describe("block-actions (REQ-17, bean uphx)", () => {
     expect(r.html.match(/<style>/g)!.length).toBe(1);
     expect(r.html).toContain("✎ edit");
     expect(r.html).toContain("📣 feedback");
+  });
+});
+
+describe("the browser builds the same URLs (bean v433)", () => {
+  // The lazy page builds hrefs in the browser; one recipe, so test it against the server's.
+  const faBlockUrls = new Function(`${BLOCK_URLS_JS}; return faBlockUrls;`)() as (c: unknown, b: unknown) => { edit: string; feedback: string };
+  const cases = [
+    { repo: "o/r" },
+    { repo: "o/r", branch: "draft", siteUrl: "https://o.github.io/r/", labels: ["feedback", "pc"] },
+    { repo: "o/r", template: "block-feedback.yml", templateFields: ["block", "section", "source", "url"], siteUrl: "https://o.github.io/r" },
+  ];
+  for (const cfg of cases)
+    for (const b of [block, { ...block, section: undefined }, { ...block, label: "tbl:a b&c" }])
+      test(`${JSON.stringify(cfg)} ${b.label} ${b.section ?? "(no section)"}`, () => {
+        const u = faBlockUrls(cfg, b);
+        expect(u.edit).toBe(editUrl(cfg, b.source)!);
+        expect(u.feedback).toBe(feedbackUrl(cfg, b)!);
+      });
+
+  test("the compact form carries the facts, not the URLs, and adds the filler once", () => {
+    const html = '<html><head></head><body><a id="prose:2-1-2-ab12"></a><p>x</p></body></html>';
+    const r = injectBlockActions(html, [block], { repo: "o/r" }, { compact: true });
+    expect(r.html).toContain('data-src="folio/doc/ch2/p-2-1-2.md"');
+    expect(r.html).not.toMatch(/class="ba-(edit|feedback)" href=/);
+    expect(r.html.match(/function faBlockUrls/g)!.length).toBe(1);
   });
 });

@@ -428,13 +428,31 @@ ${body}
  * comments are inlined as JSON, and a small script places a collapsible note
  * after each block's anchor. With scripts off the document reads as before.
  */
-export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issues?: Record<string, number> } = {}): string {
+/** Each anchored block's comments, as the document page's notes list them. */
+export function notesByTarget(rows: SiteComment[]) {
   const byTarget: Record<string, Array<Pick<SiteComment, "ref" | "status" | "phase" | "type" | "summary" | "decision"> & { sets?: string[] }>> = {};
   for (const r of rows) {
     if (!r.target) continue;
     (byTarget[r.target] ??= []).push({ ref: r.ref, status: r.status, phase: r.phase, type: r.type, summary: r.summary, ...(r.decision ? { decision: r.decision } : {}), ...(r.changeSets.length ? { sets: r.changeSets.map((c) => c.id) } : {}) });
   }
-  const json = JSON.stringify(byTarget).replace(/</g, "\\u003c");
+  return byTarget;
+}
+
+/**
+ * The document page's comment notes. Inline, the page carries every block's
+ * list. With `notesUrl` (a lazy page, bean v433) it carries only each block's
+ * counts and change-sets, and the list is fetched from that file the first
+ * time a note is opened: 545 KB less on the DPI-H document.
+ */
+export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issues?: Record<string, number>; notesUrl?: string } = {}): string {
+  const byTarget = notesByTarget(rows);
+  const head = Object.fromEntries(
+    Object.entries(byTarget).map(([label, list]) => [
+      label,
+      { n: list.length, o: list.filter((c) => c.phase === "open").length, s: [...new Set(list.flatMap((c) => c.sets ?? []))] },
+    ]),
+  );
+  const json = JSON.stringify({ head, lists: opts.notesUrl ? null : byTarget, url: opts.notesUrl ?? null }).replace(/</g, "\\u003c");
   // The change-sets' issues, so a block's [feedback] can point at the
   // discussion that already exists (REQ-17, bean uphx).
   const meta = JSON.stringify({ repo: opts.repo ?? "", issues: opts.issues ?? {} }).replace(/</g, "\\u003c");
@@ -449,7 +467,12 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
 <script type="application/json" id="pc-meta">${meta}</script>
 <script>
 (() => {
-  const data = JSON.parse(document.getElementById("pc-data").textContent);
+  const pc = JSON.parse(document.getElementById("pc-data").textContent);
+  const data = pc.head;
+  let notes = null;
+  const listOf = (label) => pc.lists ? Promise.resolve(pc.lists[label] || [])
+    : (notes ??= fetch(pc.url).then((r) => (r.ok ? r.json() : Promise.reject(r.status))).catch(() => ({})))
+      .then((all) => all[label] || []);
   const meta = JSON.parse(document.getElementById("pc-meta").textContent);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   // LIGHT ON LOAD (owner, 2026-10-06: ease "2,520 comment notes built all at
@@ -461,28 +484,29 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
     (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") +
     (c.sets ? " · " + c.sets.map((id) => "<a href=\\"../public-comments/index.html#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") +
     " — " + esc(c.summary) + "</li>";
-  const note = (label, list) => {
+  const note = (label, h) => {
     const a = document.getElementById(label);
     if (!a) return;
     const host = a.parentElement && a.parentElement.tagName === "P" && a.parentElement.textContent.trim() === "" ? a.parentElement : a;
     const d = document.createElement("details");
     d.className = "pc-note";
-    const n = list.filter((c) => c.phase === "open").length;
+    const n = h.o;
     const sum = document.createElement("summary");
-    sum.textContent = list.length + " public comment" + (list.length > 1 ? "s" : "") + (n ? " (" + n + " open)" : "");
+    sum.textContent = h.n + " public comment" + (h.n > 1 ? "s" : "") + (n ? " (" + n + " open)" : "");
     d.append(sum);
     d.addEventListener("toggle", () => {
       if (!d.open || d.dataset.built) return;
       d.dataset.built = "1";
       const ul = document.createElement("ul");
-      ul.innerHTML = list.map(item).join("");
+      ul.innerHTML = "<li>Loading…</li>";
       d.append(ul);
+      listOf(label).then((list) => { ul.innerHTML = list.map(item).join("") || "<li>Could not load the comments.</li>"; });
     });
     host.after(d);
     // Beside the block's [feedback]: the issues where its change-sets are
     // already being discussed, so a reader joins rather than duplicates.
     const acts = document.querySelector('.block-actions[data-block="' + CSS.escape(label) + '"]');
-    const nums = [...new Set(list.flatMap((c) => (c.sets || []).map((id) => meta.issues[id]).filter(Boolean)))];
+    const nums = [...new Set(h.s.map((id) => meta.issues[id]).filter(Boolean))];
     if (acts && meta.repo && nums.length) {
       const s = document.createElement("span");
       s.className = "ba-existing";
@@ -492,7 +516,7 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
   };
   const entries = Object.entries(data);
   let total = 0, open = 0;
-  for (const [, list] of entries) { total += list.length; open += list.filter((c) => c.phase === "open").length; }
+  for (const [, h] of entries) { total += h.n; open += h.o; }
   const idle = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 1));
   let i = 0;
   const batch = (deadline) => {
@@ -525,9 +549,18 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   });
   const docPage = join(out, cfg.document, "index.html");
   if (!existsSync(docPage)) throw new Error(`${docPage} is missing: run build-document-site.ts --out ${out} first`);
-  const html = readFileSync(docPage, "utf-8");
   const issues = Object.fromEntries(sets.filter((c) => c.issue).map((c) => [c.id, c.issue!]));
-  if (!html.includes('id="pc-data"')) writeFileSync(docPage, html.replace("</body>", `${overlaySnippet(rows, { ...(cfg.repo ? { repo: cfg.repo } : {}), issues })}</body>`));
+  // A lazy document (bean v433) also publishes the whole text on one page,
+  // full.html; its comment notes are the same.
+  for (const f of [docPage, join(out, cfg.document, "full.html")]) {
+    if (!existsSync(f)) continue;
+    const html = readFileSync(f, "utf-8");
+    if (html.includes('id="pc-data"')) continue;
+    // A lazy page fetches its notes' lists; the one-page version carries them.
+    const lazy = html.includes('id="fa-blocks"');
+    if (lazy) writeFileSync(join(out, cfg.document, "pc-notes.json"), JSON.stringify(notesByTarget(rows)));
+    writeFileSync(f, html.replace("</body>", `${overlaySnippet(rows, { ...(cfg.repo ? { repo: cfg.repo } : {}), issues, ...(lazy ? { notesUrl: "pc-notes.json" } : {}) })}</body>`));
+  }
   mkdirSync(join(out, "public-comments"), { recursive: true });
   writeFileSync(
     join(out, "public-comments", "index.html"),
