@@ -18,6 +18,13 @@
  * (1) and (3) read `folio-intent.dmn` and `pages-live-gate.dmn`, which
  * folio-assistant-core owns, so those tests live beside them in
  * `folio-assistant-core/scripts/tests/getting-started.test.ts` (bean `ho66`).
+ *
+ * "this repo's own address is derived from the remote" is a check of THIS
+ * repository's configuration — it expects `litlfred.github.io/folio-assistant`
+ * — so it lives in the checkout's root test home, as
+ * `test/getting-started-repo-root.test.ts` (owner, 2026-10-06: "Throwaway
+ * repository, plus moving the real-repo checks"). The derivation itself is
+ * asserted here over a throwaway repository whose `origin` is known.
  */
 
 import { describe, expect, test } from "bun:test";
@@ -25,6 +32,7 @@ import { resolve } from "node:path";
 
 import { classify, scanRepo } from "../scan-repo-content.js";
 import { derivePagesUrl, parseRemote } from "../pages-bootstrap.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -83,9 +91,17 @@ describe("pages-bootstrap — deriving the address", () => {
     expect(r.url).toBeUndefined();
   });
 
-  test("this repo's own address is derived from the remote", () => {
-    const r = derivePagesUrl(INSTANCE_ROOT);
-    expect(r.url).toBe("https://litlfred.github.io/folio-assistant/");
-    expect(r.urlSource).toBe("git remote");
+  test("a repository's address is derived from its remote", () => {
+    // Over a throwaway repository whose `origin` is
+    // `https://github.com/example/demo.git`. This repository's own address is
+    // checked in `test/getting-started-repo-root.test.ts`.
+    const fx = gitFixtureRepo();
+    try {
+      const r = derivePagesUrl(fx.root);
+      expect(r.url).toBe("https://example.github.io/demo/");
+      expect(r.urlSource).toBe("git remote");
+    } finally {
+      fx.cleanup();
+    }
   });
 });

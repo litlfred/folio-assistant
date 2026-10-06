@@ -22,6 +22,7 @@ import { DEFAULT_PUBLISH_REF, ownerRepo, publishTargets, publishedPaths } from "
 import { loadReadmeConfig } from "../../content/pipeline/readme-toc.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 
 const REPO = repoRootFor(resolve(import.meta.dir, "..", ".."));
 
@@ -83,9 +84,17 @@ describe("the git facts", () => {
     expect(publishedPaths(root, "definitely-not-a-ref")).toBeUndefined();
   });
 
-  test("a ref this checkout CAN read comes back as a set of paths", () => {
-    const paths = publishedPaths(REPO, "HEAD");
-    expect(paths).toBeDefined();
-    expect(paths!.has("AGENTS.md")).toBe(true);
+  test("a ref the repository CAN read comes back as a set of paths", () => {
+    // Over a throwaway repository whose one commit holds `AGENTS.md`, not over
+    // this checkout: standing alone, cat-harness's parent is not a repository,
+    // and reading a ref is logic over whatever repository it is handed.
+    const fx = gitFixtureRepo({ files: { "AGENTS.md": "# fixture\n" } });
+    try {
+      const paths = publishedPaths(fx.root, "HEAD");
+      expect(paths).toBeDefined();
+      expect(paths!.has("AGENTS.md")).toBe(true);
+    } finally {
+      fx.cleanup();
+    }
   });
 });
