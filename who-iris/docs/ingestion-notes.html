@@ -69,6 +69,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -228,7 +233,7 @@
     border-radius: 3px;
     background: var(--iris-accent);
     color: #fff;
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
   .search-remote-box {
     border-top: 1px solid var(--iris-edge);
@@ -446,7 +451,7 @@ the owner supplied. Where a transcription is partial, the record says so.</p>
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Ingested replica.</strong> Rendered from <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <p><strong>Ingested replica.</strong> Rendered from <code dir="ltr">who-iris/catalogue/</code> by <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
   <div class="rule"></div>
   <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO. This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>
