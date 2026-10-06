@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Proof Verification Input",
+  "description": "Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations.",
+  "type": "object",
+  "required": [
+    "projectRoot"
+  ],
+  "properties": {
+    "projectRoot": {
+      "type": "string",
+      "description": "Path to the Lean project root (containing lakefile.lean)."
+    },
+    "targetFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific files to verify (empty = entire project)."
+    },
+    "trackSorries": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to track and report sorry placeholders."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-happy-pasteur-pav8ba/folio-assistant-sci/schema/skills/proof-verification/input.schema.json",
+  "staging": {
+    "branch": "claude/happy-pasteur-pav8ba",
+    "sha": "851ebd69f8c7e7e08717beecdb28aa13c3c3abe1",
+    "pr": "2274/merge",
+    "run": "37460082057"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$ref": "#/definitions/SubgraphPointer",
+  "definitions": {
+    "SubgraphPointer": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-happy-pasteur-pav8ba/bootstrap-tools/schema/zod/subgraph-export/SubgraphPointerSchema.schema.json",
+  "title": "SubgraphPointerSchema",
+  "description": "Generated from `SubgraphPointerSchema` in schemas/subgraph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/happy-pasteur-pav8ba",
+    "sha": "851ebd69f8c7e7e08717beecdb28aa13c3c3abe1",
+    "pr": "2274/merge",
+    "run": "37460082057"
+  }
+}
