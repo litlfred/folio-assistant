@@ -27,9 +27,10 @@
  *       (it showed "?").
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { parse as parseYaml } from "yaml";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
 import { compose } from "../compose-docs.ts";
@@ -37,8 +38,10 @@ import {
   HOST_DATA_PROJECTIONS,
   foreignScopeFor,
   isHostProjection,
+  foreignFooterContent,
   rootRelativeLeft,
   scopeHarnessData,
+  scopeSiteConfig,
   scopeNavbarRow,
   scopeTiles,
   siteHref,
@@ -267,6 +270,48 @@ describe("the IG site's shell (compose-docs --shell), end to end", () => {
     expect(d.tiles.filter((t) => t.count !== undefined)).toEqual([]);
     const known = new Set(["/artifacts.html"]); // smart-trust's own, under its baseurl
     for (const left of rootRelativeLeft(d)) expect(known.has(left.split("=")[1]!)).toBe(true);
+  });
+});
+
+describe("the footer line: a folio's site does not print the platform's (#1901 follow-up)", () => {
+  /** The platform's own `footer_content`, read from its config rather than restated. */
+  const platformConfig = parseYaml(readFileSync(join(CAT_HARNESS, siteDirFor(CAT_HARNESS), "_config.yml"), "utf-8")) as Record<string, unknown>;
+  const platformFooter = platformConfig.footer_content as string;
+
+  test("scopeSiteConfig names the folio, links the platform absolutely, and states no licence", () => {
+    const c = scopeSiteConfig({ title: "Platform", footer_content: "Platform — code under Some Licence" }, { instance: "scratch-folio", title: "Scratch <Folio>", platformBase: BASE });
+    expect(c.footer_content).toBe(`Scratch &lt;Folio&gt; — built with <a href="${BASE}/">Platform</a>.`);
+    expect(String(c.footer_content)).not.toMatch(/licen[cs]e/i);
+    // No title: the instance name. No instance either: no name is invented.
+    expect(foreignFooterContent({ instance: "scratch-folio", platformBase: BASE }, "P")).toStartWith("scratch-folio — built with");
+    expect(foreignFooterContent({ platformBase: BASE }, "P")).toBe(`This site is built with <a href="${BASE}/">P</a>.`);
+    // Nothing to replace: the same object back.
+    const none = { title: "Platform" };
+    expect(scopeSiteConfig(none, { platformBase: BASE })).toBe(none);
+  });
+
+  test("the shell for a scratch folio carries the neutral line, not the platform's footer text", () => {
+    expect(platformFooter).toBeTruthy(); // else this test proves nothing
+    const out = mkdtempSync(join(tmpdir(), "foreign-footer-"));
+    try {
+      compose(out, REPO, { shell: true, foreign: { instance: "scratch-folio", title: "Scratch Folio", platformBase: BASE } });
+      const c = parseYaml(readFileSync(join(out, "_config.yml"), "utf-8")) as Record<string, unknown>;
+      expect(c.footer_content).not.toBe(platformFooter);
+      expect(String(c.footer_content)).toBe(foreignFooterContent({ instance: "scratch-folio", title: "Scratch Folio", platformBase: BASE }, String(platformConfig.title)));
+      expect(String(c.footer_content)).not.toMatch(/licen[cs]e/i);
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
+  });
+
+  test("the platform's own build keeps its footer text, byte for byte", () => {
+    const out = mkdtempSync(join(tmpdir(), "own-footer-"));
+    try {
+      compose(out, REPO, {});
+      expect(readFileSync(join(out, "_config.yml"), "utf-8")).toBe(readFileSync(join(CAT_HARNESS, siteDirFor(CAT_HARNESS), "_config.yml"), "utf-8"));
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
   });
 });
 
