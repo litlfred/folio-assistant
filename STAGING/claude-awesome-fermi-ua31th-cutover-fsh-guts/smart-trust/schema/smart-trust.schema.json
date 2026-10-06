@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-cutover-fsh-guts/smart-trust/schema/smart-trust.schema.json",
+  "title": "smart-trust schemas",
+  "description": "The schemas instance `smart-trust` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-cutover-fsh-guts/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {},
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-cutover-fsh-guts/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "claude/awesome-fermi-ua31th-cutover-fsh-guts",
+    "sha": "e1e8e9458ed8653593ead411a6d73806956036a0",
+    "pr": "2322/merge",
+    "run": "37518418239"
+  }
+}
