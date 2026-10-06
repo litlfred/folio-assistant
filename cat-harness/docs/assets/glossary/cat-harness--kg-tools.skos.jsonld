@@ -814,26 +814,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/lean-cache",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Lake olean cache"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two."
-        }
-      ],
-      "skos:notation": "lean-cache",
-      "dcterms:source": "cat-harness/tools/index.ts#lean-cache",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/lean-coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1651,6 +1631,26 @@
       ],
       "skos:notation": "sibling-sessions",
       "dcterms:source": "cat-harness/tools/sessions.ts#sibling-sessions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/site-build-local",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the docs site locally"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill)."
+        }
+      ],
+      "skos:notation": "site-build-local",
+      "dcterms:source": "cat-harness/tools/index.ts#site-build-local",
       "skos:note": "candidate"
     },
     {

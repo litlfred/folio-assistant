@@ -514,7 +514,7 @@ instead of rebuilding) — worktree-based, tarball created in-repo:
 WT=/tmp/lake-cache-wt
 SLUG=$(cut -d: -f2 lean-toolchain | tr -d '\r' | tr . -)
 # The branch NAME is resolved, never spelled: new name if it exists, else a
-# legacy one that does, else the new name (cat-harness/scripts/special-branches.json).
+# legacy one that does, else the new name (the folio's declared lake-cache family comes first).
 # Writing a hardcoded legacy name would bypass that and block the owner's rename.
 BR=$(cat-harness/scripts/lake-cache.sh resolve-branch --key "<package>-$SLUG") || exit 1
 # 1. Pack the built oleans (compressed). Create the tarball where the

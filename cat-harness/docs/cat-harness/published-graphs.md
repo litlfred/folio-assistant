@@ -52,6 +52,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - C@T Harness — *declared, not published*
 
+### `basic-cdn-site`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `bean-defs`
 
 0 of 1 published.
