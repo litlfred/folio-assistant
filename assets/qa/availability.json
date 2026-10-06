@@ -1,12 +1,12 @@
 {
   "$schema": "folio-qa-availability/v1",
-  "source": "checkout",
+  "source": "fetched-fallback",
   "requested": [
-    "main/f17aaf093412a3afb2f78b7d05b548e98edaf69f",
+    "main/2d7bffe046c5ac6270d71f361559606c85a3329e",
     "main"
   ],
-  "key": "main/69b08fdf4b2e32a06b9e1ea83133c2ac01165226",
-  "reason": "the checkout holds the QA corpus (still committed), so it is published as checked out; qa-reports also has main/69b08fdf4b2e32a06b9e1ea83133c2ac01165226",
+  "key": "main/f17aaf093412a3afb2f78b7d05b548e98edaf69f",
+  "reason": "no entry for the requested ref; fetched main/f17aaf093412a3afb2f78b7d05b548e98edaf69f instead — QA evidence from ANOTHER commit, labelled as such",
   "expected": {
     "witnesses": 171,
     "results": 21

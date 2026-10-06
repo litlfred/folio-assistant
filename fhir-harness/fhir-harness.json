@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T08:07:21.002Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f17aaf093412a3afb2f78b7d05b548e98edaf69f",
-  "sourceCommitSha": "f17aaf093412a3afb2f78b7d05b548e98edaf69f",
-  "sourceCommitAt": "2026-10-06T09:51:49+02:00",
+  "generatedAt": "2026-10-06T08:37:43.292Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2d7bffe046c5ac6270d71f361559606c85a3329e",
+  "sourceCommitSha": "2d7bffe046c5ac6270d71f361559606c85a3329e",
+  "sourceCommitAt": "2026-10-06T10:21:59+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2439,7 +2439,7 @@
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 9 files across scenarios (1), skills (6), tools (2). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "readmePath": "test/results/README.md",
-      "fileCount": 42,
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/qa"
     },
     {
@@ -2463,8 +2463,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f17aaf093412a3afb2f78b7d05b548e98edaf69f",
+    "sha": "2d7bffe046c5ac6270d71f361559606c85a3329e",
     "pr": "main",
-    "run": "37432334799"
+    "run": "37435626562"
   }
 }

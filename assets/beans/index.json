@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 931,
+      "count": 932,
       "unit": "beans"
     }
   },
@@ -2831,6 +2831,20 @@
       "updatedAt": "2026-10-04T12:41:46Z",
       "preview": "Owner, 2026-10-03 (issue #1984, relayed from session_015Q15h1fg2Hh9MJXfAqr4h7): \"use one DIIG seven phase figure as source. need SVG rendering maybe as bean\".\n\nThe figure is DIIG §1.1 Fig. 1.1.1, smart-base/library/9789240010567-eng, PDF p.17 (the phase list is on p.16). vector-labels.json records 82 drawings on that spread, and no raster figure. It is vector-drawn, so its home is the vector-figur",
       "file": "beans/defs/folio-assistant-70zt--svg-rendering-of-diig-fig-111-seven-phases-of-plan.md"
+    },
+    {
+      "id": "folio-assistant-72a8",
+      "title": "5hox readers: the six gates + tests that still read committed test/results/ on main after #1801",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-04T09:07:28Z",
+      "updatedAt": "2026-10-04T09:07:28Z",
+      "preview": "Measured 2026-10-04 on main 12b916e with the qa:verify-moved inventory removed (1,223 files): 10 of 228 gates red (issue #1763 comment 5978225547). Owner, 2026-10-04: \"lets move the qa-reports off main\", then \"Yes, do the readers\". Pattern: #1801's compute-and-judge (a gate's own results absent -> recompute and judge), or fetch from cat/cat-harness/qa-reports. Agent/human verdicts must never be si",
+      "file": "beans/defs/folio-assistant-72a8--5hox-readers-the-six-gates-tests-that-still-read-c.md"
     },
     {
       "id": "folio-assistant-72gk",
@@ -14778,14 +14792,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 559,
+        "total": 560,
         "closed": 222,
-        "open": 337,
-        "inProgress": 119,
+        "open": 338,
+        "inProgress": 120,
         "todo": 217,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.39713774597495527
+        "share": 0.3964285714285714
       },
       {
         "id": "folio-assistant-vuip",
@@ -14819,8 +14833,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 525,
-    "coveredOpen": 522,
+    "openTotal": 526,
+    "coveredOpen": 523,
     "duplicateIds": 0
   }
 }
