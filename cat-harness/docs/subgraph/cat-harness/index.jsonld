@@ -54,6 +54,11 @@
       "name": "code-list"
     },
     {
+      "@id": "cat-harness:graphTypology/doc-group",
+      "@type": "bootstrap:GraphTypology",
+      "name": "doc-group"
+    },
+    {
       "@id": "cat-harness:graphTypology/docs",
       "@type": "bootstrap:GraphTypology",
       "name": "docs"
@@ -1095,6 +1100,12 @@
       "title": "bean-note"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-attestations",
+      "@type": "cat-harness:Schema",
+      "name": "bib-attestations",
+      "title": "bib-attestations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-verification",
       "@type": "cat-harness:Schema",
       "name": "bib-verification",
@@ -1995,6 +2006,12 @@
       "title": "Is CI passing on the default branch?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/compose-docs",
+      "@type": "cat-harness:Tool",
+      "name": "compose-docs",
+      "title": "Compose the site's documentation tree from its declared docs layers"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/content-context",
       "@type": "cat-harness:Tool",
       "name": "content-context",
@@ -2257,6 +2274,18 @@
       "@type": "cat-harness:Tool",
       "name": "narrative-queue",
       "title": "What narratives are waiting on a person"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/navbar-include",
+      "@type": "cat-harness:Tool",
+      "name": "navbar-include",
+      "title": "Write the site sidebar's harness navbar include"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/node-kind-pages",
+      "@type": "cat-harness:Tool",
+      "name": "node-kind-pages",
+      "title": "Node kind pages"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/ns-vocabulary",

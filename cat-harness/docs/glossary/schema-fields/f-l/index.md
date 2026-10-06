@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/f-l/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1843 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 164 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1869 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 408 terms and is 232 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 416 terms and is 236 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2135</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2135</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2153</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">408</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">416</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a></nav>
 
@@ -2291,6 +2291,41 @@ KgSubject.path <span class="fa-gloss-status">candidate, extracted</span>
 <p>Repo-relative path, or <code>null</code> for the roll-up, which has no one file.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts"><code>cat-harness/schemas/kg-qa.ts#KgSubject.path</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--node-kind-nodes.kindnode.file" data-fa-state="extracted" data-fa-gloss="">
+KindNode.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Repo-relative, for a reader who wants the source.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-nodes.ts"><code>cat-harness/schemas/node-kind-nodes.ts#KindNode.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--node-kind-nodes.kindnode.harness" data-fa-state="extracted" data-fa-gloss="">
+KindNode.harness <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance that holds it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-nodes.ts"><code>cat-harness/schemas/node-kind-nodes.ts#KindNode.harness</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--node-kind-nodes.kindnode.kind" data-fa-state="extracted" data-fa-gloss="">
+KindNode.kind <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The kind the node IS — the kind asked for, or one of its subclasses.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-nodes.ts"><code>cat-harness/schemas/node-kind-nodes.ts#KindNode.kind</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--node-kind-nodes.kindnode.node" data-fa-state="extracted" data-fa-gloss="">
+KindNode.node <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The parsed node: a JSON object, or a Markdown file's front matter.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-nodes.ts"><code>cat-harness/schemas/node-kind-nodes.ts#KindNode.node</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--node-kind-nodes.kindnode.path" data-fa-state="extracted" data-fa-gloss="">
+KindNode.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Relative to that instance's root, extension dropped: the node's address.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/node-kind-nodes.ts"><code>cat-harness/schemas/node-kind-nodes.ts#KindNode.path</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--semantic-zoom.kindzoomschema.because" data-fa-state="extracted" data-fa-gloss="">
 KindZoomSchema.because <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2644,6 +2679,27 @@ LedgerEntry.status <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Source-verification status. <code>unreviewed</code> for a freshly-indexed upload that nothing has looked at.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-verification.ts"><code>cat-harness/schemas/bib-verification.ts#LedgerEntry.status</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--bib-attestations.ledgerread.files" data-fa-state="extracted" data-fa-gloss="">
+LedgerRead.files <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Store reads only: how many store files were read.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-attestations.ts"><code>cat-harness/schemas/bib-attestations.ts#LedgerRead.files</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--bib-attestations.ledgerread.legacypresent" data-fa-state="extracted" data-fa-gloss="">
+LedgerRead.legacyPresent <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Store reads only: a legacy file is still there beside the store.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-attestations.ts"><code>cat-harness/schemas/bib-attestations.ts#LedgerRead.legacyPresent</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--bib-attestations.ledgerread.note" data-fa-state="extracted" data-fa-gloss="">
+LedgerRead.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One line for the caller to print: which home answered.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-attestations.ts"><code>cat-harness/schemas/bib-attestations.ts#LedgerRead.note</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--site-indexes.libraryindexentryschema.extractedtitle" data-fa-state="extracted" data-fa-gloss="">
 LibraryIndexEntrySchema.extractedTitle <span class="fa-gloss-status">candidate, extracted</span>

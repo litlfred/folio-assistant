@@ -298,7 +298,7 @@ describe("figures keep a white plate, with and without JavaScript", () => {
  * `:root.fa-has-fullwidth .side-bar { z-index: auto }`, to let a panel escape
  * over a full-bleed figure. At (0,3,0) against the hover rule's (0,2,0) it won
  * the cascade in EVERY state, so on any page that auto-expands a figure the
- * nav opened behind the page. Measured on `/document-ingestion.html`, which
+ * nav opened behind the page. Measured on `/guides/document-ingestion.html`, which
  * expands 4 of its 5 figures: `elementFromPoint` inside the opened column
  * returned page content, not the nav.
  *

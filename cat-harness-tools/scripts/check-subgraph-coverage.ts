@@ -78,6 +78,7 @@ import {
   resolveCoveragePath,
   type CatHarnessDeclaration,
   visualisationsOf,
+  visualisationResolves,
 } from "../../cat-harness/schemas/cat-harness.js";
 import { withViewers } from "../../cat-harness/scripts/viewer-declarations.js";
 
@@ -559,11 +560,14 @@ export function auditInstance(root: string, repoRoot: string = checkoutRootFor(r
       // second visualisation is broken is reported for that one rather than
       // for the whole declaration: "one of your two viewers is missing" and
       // "your viewer is missing" are different repairs.
+      // A visualisation built at publish (bean 0b8c) resolves by its writer:
+      // its page is never committed, so the disk cannot be the answer.
+      const exists = (r: string) => targetExists(repoRoot, r);
       const refs =
         criterion === "visualiser"
-          ? visualisationsOf(dir.coverage, dir.id).map((v) => v.ref)
-          : [declared as string];
-      const broken = refs.filter((r) => !targetExists(repoRoot, r));
+          ? visualisationsOf(dir.coverage, dir.id).map((v) => ({ ref: v.ref, ok: visualisationResolves(v, exists) }))
+          : [{ ref: declared as string, ok: exists(declared as string) }];
+      const broken = refs.filter((r) => !r.ok).map((r) => r.ref);
       if (broken.length > 0) {
         findings.push({
           instance,

@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.schema.json` · [view](ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.jsonld` · [view](ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTPolioBOPVPlusIPVVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTPolioBirthDoseVS.html" data-next="ValueSet-IMMZD2DTPolioIPVOnlyVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

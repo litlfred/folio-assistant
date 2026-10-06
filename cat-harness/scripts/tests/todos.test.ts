@@ -215,7 +215,7 @@ describe("reading", () => {
     // `readTodos` throws, so reaching here is the assertion. A malformed todo
     // is a person's outstanding item no consumer will ever show them, and a
     // clean run over it is worse than a failure.
-    for (const t of readTodos()) expect(t.$schema).toBe("folio-todo/v1");
+    for (const t of readTodos()) expect(t.$schema).toBe("todo/1.0.0");
   });
 
   test("ids are unique", () => {

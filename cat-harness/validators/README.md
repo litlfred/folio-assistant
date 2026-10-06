@@ -45,6 +45,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`library-index.json`](library-index.json) | data |  |
 | [`memory-node.json`](memory-node.json) | data |  |
 | [`merge-queue-merge-queue-entry.json`](merge-queue-merge-queue-entry.json) | data |  |
+| [`node-kind-index.json`](node-kind-index.json) | data |  |
 | [`odrl-policy.json`](odrl-policy.json) | data |  |
 | [`payload-sidecar.json`](payload-sidecar.json) | data |  |
 | [`pinned-terminology.json`](pinned-terminology.json) | data |  |

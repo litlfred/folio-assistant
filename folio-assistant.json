@@ -22,7 +22,7 @@
         "uploads"
       ],
       "coverage": {
-        "docs": "cat-harness/docs/subgraph-viewers.md",
+        "docs": "cat-harness/docs/concepts/subgraph-viewers.md",
         "skill": "library-ingestion",
         "process": "document-ingestion"
       }
@@ -46,7 +46,8 @@
           {
             "ref": "cat-harness/docs/fsh-guts/index.md",
             "title": "fsh-guts",
-            "publish": "staging-only"
+            "publish": "staging-only",
+            "writer": ["cat-harness/scripts/gen-fsh-guts-viz.ts"]
           }
         ]
       },

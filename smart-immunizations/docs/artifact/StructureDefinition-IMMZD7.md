@@ -39,7 +39,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D7_Counsel_client.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D7_Counsel_client.schema.json` · [view](StructureDefinition-IMMZ_D7_Counsel_client.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D7_Counsel_client.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D7_Counsel_client.schema.json` |
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D7_Counsel_client.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D7_Counsel_client.openapi.json` |
 | JSON-LD | *not published for this artefact* | |

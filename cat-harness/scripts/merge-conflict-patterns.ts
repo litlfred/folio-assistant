@@ -154,12 +154,15 @@ export const PATTERNS: readonly ConflictPattern[] = [
       // above refused a merge of #2082 on 2026-10-04 with "no declared
       // pattern"; the per-instance smart-base page refused the next one.
       "cat-harness/docs/cat-harness/document-kinds/**/index.html",
-      // fsh-guts:viz writes this page whole (writeFileSync) from fsh-guts/**;
-      // refused on #1766 2026-10-03 when main archived new uploads into fsh-guts/.
-      "cat-harness/docs/fsh-guts/index.md",
+      // node-kind:pages writes these whole from the node-kind index and the
+      // nodes the typologies' directories hold (#2195): /<locale>/<declaring>/<kind>/.
+      "cat-harness/docs/en/**/index.html",
+      // NOT cat-harness/docs/fsh-guts/index.md any more: it is derived from a
+      // graph kept on a branch, so it is built at publish and never committed
+      // (bean 0b8c, #2230), and a merge can no longer meet it.
     ],
     strategy: "take-base",
-    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, fsh-guts:viz, document-kinds:viz), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
+    why: "whole-file viewer pages (external-schemas:viz, methodologies:viz, tools:viz, processes:viz, state:visualizer, translation:status, document-kinds:viz, node-kind:pages), each with a --check in the CI workflow. Rewritten whole from the declarations they render, so a new schema, diagram or translation anywhere changes them; found 2026-10-01 when a merge refused on these alone; tools/index.md (rendered-by tools-viewer) added 2026-10-03 after #1987 refused on it twice.",
   },
   {
     id: "viewer-namespace",
@@ -215,11 +218,15 @@ export const PATTERNS: readonly ConflictPattern[] = [
     // authored prose. A page added to `content/docs/` is refused until it is
     // named here, which is the safe direction to be wrong in.
     globs: [
-      "cat-harness/docs/{agentic-harness,beans-and-todos,content-types,crdm-methodology,document-ingestion,evidence,fhir-content,harness,harnessed-kg-overview,ig-publisher,knowledge-graph,managing-agent-context,publication-workflow}.md",
-      "cat-harness/docs/guides/{who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+      // In the docs graph's named groups since bean `xka5`: the same 17 pages,
+      // each under the folder its slug names.
+      "cat-harness/docs/concepts/{agentic-harness,content-types,harness,harnessed-kg-overview,knowledge-graph}.md",
+      "cat-harness/docs/guides/{beans-and-todos,document-ingestion,managing-agent-context,who-smart-dak,who-smart-ig,writing-a-document,writing-a-paper}.md",
+      "cat-harness/docs/process/{crdm-methodology,evidence,publication-workflow}.md",
+      "cat-harness/docs/fhir/{fhir-content,ig-publisher}.md",
     ],
     strategy: "take-base",
-    why: "the 17 whole-file docs pages gen-docs-pages.ts writes from the authored blocks under cat-harness/content/docs/<slug>/ (`docs:pages`, gated by `docs:pages:check`), each carrying `generated: scripts/gen-docs-pages.ts — do not hand-edit` in its own front matter. Bean `8c6v`: all 17 were named by NO pattern, so merge:main refused them and handed back for hand-editing the files that forbid it — docs/publication-workflow.md was one of the 2 refusals that blocked #1888 after 53 of its 55 conflicts resolved. Safe because `emit()` is compare-or-write and the only read of a prior page is inside its `--check` branch, so nothing is carried forward; and the `page` kind is gated on EXACT content, which makes regeneration the verifiable resolution. The AUTHORED SOURCES under cat-harness/content/docs/** are the neighbour and stay refused.",
+    why: "the 17 whole-file docs pages gen-docs-pages.ts writes from the authored blocks under cat-harness/content/docs/<slug>/ (`docs:pages`, gated by `docs:pages:check`), each carrying `generated: scripts/gen-docs-pages.ts — do not hand-edit` in its own front matter. Bean `8c6v`: all 17 were named by NO pattern, so merge:main refused them and handed back for hand-editing the files that forbid it — docs/process/publication-workflow.md was one of the 2 refusals that blocked #1888 after 53 of its 55 conflicts resolved. Safe because `emit()` is compare-or-write and the only read of a prior page is inside its `--check` branch, so nothing is carried forward; and the `page` kind is gated on EXACT content, which makes regeneration the verifiable resolution. The AUTHORED SOURCES under cat-harness/content/docs/** are the neighbour and stay refused.",
   },
   {
     id: "health-report",

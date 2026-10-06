@@ -2140,7 +2140,7 @@ Ingest into library/ <span class="fa-gloss-status">candidate, extracted</span>
 Ingest tagged review comments [folio-review-comments] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every PR conversation comment that starts with <code>block: &lt;label&gt;</code> becomes a <code>folio-review-comment/v1</code> todo (open), idempotently, and is published with the preview as <code>review-comments.json</code>. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the <code>ingest</code> transition of REVIEW_TRANSITIONS.</p>
+<p>Every PR conversation comment that starts with <code>block: &lt;label&gt;</code> becomes a <code>review-comment/1.0.0</code> todo (open), idempotently, and is published with the preview as <code>review-comments.json</code>. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the <code>ingest</code> transition of REVIEW_TRANSITIONS.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-change-review.bpmn"><code>folio-assistant-core/processes/content/content-change-review.bpmn#Task_IngestComments</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_l1documentingestion.callactivity_ingesttheme" data-fa-state="extracted" data-fa-gloss="">

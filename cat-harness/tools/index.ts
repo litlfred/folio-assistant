@@ -197,6 +197,49 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
     defineTool({
+      id: "compose-docs",
+      title: "Compose the site's documentation tree from its declared docs layers",
+      description:
+        "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/compose-docs.ts" },
+      io: {
+        inputs: [
+          { name: "out", schema: t("RepoPath"), required: true, description: "The Jekyll source to write (replaced)." },
+          { name: "staging", schema: t("Flag"), required: false, arg: { flag: "--staging" }, description: "A local build or a staging preview: staging-only visualisations are included." },
+          { name: "changed-files", schema: t("RepoPath"), required: false, description: "The branch's changed paths, one per line: instances it does not reach are stubbed." },
+          { name: "shell", schema: t("Flag"), required: false, arg: { flag: "--shell" }, description: "The chrome only: Jekyll machinery and assets, no page and no composed instance; generated includes written empty." },
+        ],
+        outputs: [
+          { name: "files", schema: t("Count"), description: "Files composed, with every override, merge, withheld file and carried or stubbed instance named." },
+        ],
+      },
+      satisfies: ["harness-tiles"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
+      id: "navbar-include",
+      title: "Write the site sidebar's harness navbar include",
+      description:
+        "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/gen-navbar-include.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if the committed include is stale; write nothing." },
+          { name: "instance", schema: t("Slug"), required: false, description: "The instance whose own site this navbar is for." },
+          { name: "link-root", schema: t("RepoPath"), required: false, description: "With `--instance`: the main site's URL, for every link that is not this instance's own." },
+          { name: "title", schema: t("Slug"), required: false, description: "With `--instance`: the label the navbar's home row carries." },
+          { name: "out", schema: t("RepoPath"), required: false, description: "With `--instance`: where to write the include (the shell's `_includes/generated/navbar-footer.html`)." },
+        ],
+        outputs: [
+          { name: "include", schema: t("RepoPath"), description: "The include written, or `up to date`." },
+        ],
+      },
+      satisfies: ["harness-tiles"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
       id: "subgraph-resolve",
       title: "Resolve a declared subgraph's content source",
       description:

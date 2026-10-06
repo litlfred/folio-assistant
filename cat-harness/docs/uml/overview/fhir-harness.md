@@ -75,6 +75,7 @@ classDiagram
       id [1] string
       validates [1] object
       schema [1] string
+      pages [0..1] string
       rationale [0..1] string
     }
   }

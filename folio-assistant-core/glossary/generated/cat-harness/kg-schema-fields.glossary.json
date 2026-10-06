@@ -973,6 +973,48 @@
       "status": "candidate"
     },
     {
+      "id": "bib-attestations.ledgerread.files",
+      "prefLabel": "LedgerRead.files",
+      "definition": "Store reads only: how many store files were read.",
+      "source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.files",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.ledgerread.legacypresent",
+      "prefLabel": "LedgerRead.legacyPresent",
+      "definition": "Store reads only: a legacy file is still there beside the store.",
+      "source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.legacyPresent",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.ledgerread.note",
+      "prefLabel": "LedgerRead.note",
+      "definition": "One line for the caller to print: which home answered.",
+      "source": "cat-harness/schemas/bib-attestations.ts#LedgerRead.note",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.reviewread.meta",
+      "prefLabel": "ReviewRead.meta",
+      "definition": "The legacy file's `_meta`, when that is where the read came from.",
+      "source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.meta",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.reviewread.reviews",
+      "prefLabel": "ReviewRead.reviews",
+      "definition": "Reference id → review, in recorded order.",
+      "source": "cat-harness/schemas/bib-attestations.ts#ReviewRead.reviews",
+      "status": "candidate"
+    },
+    {
+      "id": "bib-attestations.writeresult.written",
+      "prefLabel": "WriteResult.written",
+      "definition": "Paths written (store) or the legacy path.",
+      "source": "cat-harness/schemas/bib-attestations.ts#WriteResult.written",
+      "status": "candidate"
+    },
+    {
       "id": "bib-verification.keyresult.locator",
       "prefLabel": "KeyResult.locator",
       "definition": "Locator *within the source*: \"Thm 3.2\", \"§4.1\", \"eq. (12)\", \"p. 87\".",
@@ -3245,6 +3287,13 @@
       "prefLabel": "VisualisationSchema.title",
       "definition": "What a tile calls it. Absent, the tile takes the display name of the directory's first graph typology (`kindTitle`, via `scripts/lib/nav-label.ts`), which is what every other surface calls that page. Declare one only when the page is not simply \"the kind's viewer\". Never add the harness as a suffix (\"Docs — cat-harness\"): the qualifier is appended by the surface (bean `ob3m` finding 6, \"One name everywhere\").",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.visualisationschema.writer",
+      "prefLabel": "VisualisationSchema.writer",
+      "definition": "The GENERATOR that writes this page: repo-relative script files, run with `bun run <file>` — the same field, with the same meaning, as a directory's `writer`. Bean `0b8c` (#2230).",
+      "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.writer",
       "status": "candidate"
     },
     {
@@ -7595,6 +7644,125 @@
       "status": "candidate"
     },
     {
+      "id": "node-kind-index.nodekindentry.declaredby",
+      "prefLabel": "NodeKindEntry.declaredBy",
+      "definition": "The instance that declares it: the one whose code holds the `nodeKind()`. Absent for a kind reached only as an ANCESTOR (a mixin such as `themed`): no typology names it, so nothing here says where it lives, and guessing from a child would file it under whichever child was read first.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.declaredBy",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.holdings",
+      "prefLabel": "NodeKindEntry.holdings",
+      "definition": "The graph typologies that hold nodes of this kind, and the families they file it under.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.holdings",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.id",
+      "prefLabel": "NodeKindEntry.id",
+      "definition": "`nodeKind()`'s id — a `$schema` tag for a tagged kind, a name for a mixin.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.id",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.module",
+      "prefLabel": "NodeKindEntry.module",
+      "definition": "Where, repo-relative, and under which export. Absent for an ancestor reached only as a parent.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.module",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.pages",
+      "prefLabel": "NodeKindEntry.pages",
+      "definition": "The kind's own page renderer, when its validator node names one (`pages`), repo-relative. Absent: the generic pages built from the schema.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.pages",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.parents",
+      "prefLabel": "NodeKindEntry.parents",
+      "definition": "Direct parents, by id, in declared order.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.parents",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.subclasses",
+      "prefLabel": "NodeKindEntry.subclasses",
+      "definition": "Direct subclasses, by id, sorted: the kinds that name this one as a parent.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.subclasses",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.tag",
+      "prefLabel": "NodeKindEntry.tag",
+      "definition": "`<id>/<version>`: the `$schema` a current node carries.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.tag",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindentry.version",
+      "prefLabel": "NodeKindEntry.version",
+      "definition": "SemVer, for a kind whose nodes are files; absent for a mixin.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindEntry.version",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.nodekindindex.collisions",
+      "prefLabel": "NodeKindIndex.collisions",
+      "definition": "Two different kinds sharing one id — always a finding.",
+      "source": "cat-harness/schemas/node-kind-index.ts#NodeKindIndex.collisions",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-index.unkinded.family",
+      "prefLabel": "Unkinded.family",
+      "definition": "The `$schema` family; absent when it is the typology's kind-level validator.",
+      "source": "cat-harness/schemas/node-kind-index.ts#Unkinded.family",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.file",
+      "prefLabel": "KindNode.file",
+      "definition": "Repo-relative, for a reader who wants the source.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.file",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.harness",
+      "prefLabel": "KindNode.harness",
+      "definition": "The instance that holds it.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.harness",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.kind",
+      "prefLabel": "KindNode.kind",
+      "definition": "The kind the node IS — the kind asked for, or one of its subclasses.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.kind",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.node",
+      "prefLabel": "KindNode.node",
+      "definition": "The parsed node: a JSON object, or a Markdown file's front matter.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.node",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind-nodes.kindnode.path",
+      "prefLabel": "KindNode.path",
+      "definition": "Relative to that instance's root, extension dropped: the node's address.",
+      "source": "cat-harness/schemas/node-kind-nodes.ts#KindNode.path",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind.nodekind.id",
+      "prefLabel": "NodeKind.id",
+      "definition": "The kind's NAME — its identity and its URL segment (`changeset`). Never versioned.",
+      "source": "cat-harness/schemas/node-kind.ts#NodeKind.id",
+      "status": "candidate"
+    },
+    {
       "id": "node-kind.nodekind.order",
       "prefLabel": "NodeKind.order",
       "definition": "Every ancestor and then this kind, deepest first: the composition order.",
@@ -7620,6 +7788,20 @@
       "prefLabel": "NodeKind.schema",
       "definition": "Every field, composed in {@link order}.",
       "source": "cat-harness/schemas/node-kind.ts#NodeKind.schema",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind.nodekind.tag",
+      "prefLabel": "NodeKind.tag",
+      "definition": "`<id>/<version>`: what a writer stamps in `$schema`. Absent when unversioned.",
+      "source": "cat-harness/schemas/node-kind.ts#NodeKind.tag",
+      "status": "candidate"
+    },
+    {
+      "id": "node-kind.nodekind.version",
+      "prefLabel": "NodeKind.version",
+      "definition": "SemVer, for a kind whose nodes are files (issue #2195). Absent for a mixin (`themed`), which has no `$schema` of its own.",
+      "source": "cat-harness/schemas/node-kind.ts#NodeKind.version",
       "status": "candidate"
     },
     {
@@ -12054,6 +12236,13 @@
       "status": "candidate"
     },
     {
+      "id": "validator-node.validatornodeschema.pages",
+      "prefLabel": "ValidatorNodeSchema.pages",
+      "definition": "The kind's own page renderer, `<harness>:<path>#<Export>`, when the generic pages built from its schema are not enough (issue #2195: *\"Generic + override\"*). The export is a `KindPages` (`scripts/gen-node-kind-pages.ts`). Declared here, beside the schema, so the harness whose code knows the kind is the one that says how to show it.",
+      "source": "cat-harness/schemas/validator-node.ts#ValidatorNodeSchema.pages",
+      "status": "candidate"
+    },
+    {
       "id": "validator-node.validatornodeschema.rationale",
       "prefLabel": "ValidatorNodeSchema.rationale",
       "definition": "Why this validator is the one, when that is not obvious from the code.",
@@ -12805,7 +12994,7 @@
     {
       "id": "webpage.webpage.slug",
       "prefLabel": "WebPage.slug",
-      "definition": "URL stem. `document-ingestion` publishes to `docs/document-ingestion.md` and thus to `<baseurl>/document-ingestion.html`, which is what existing inbound links already use.",
+      "definition": "URL stem. `document-ingestion` publishes to `docs/guides/document-ingestion.md` and thus to `<baseurl>/guides/document-ingestion.html`, which is what existing inbound links already use.",
       "source": "cat-harness/schemas/webpage.ts#WebPage.slug",
       "status": "candidate"
     },

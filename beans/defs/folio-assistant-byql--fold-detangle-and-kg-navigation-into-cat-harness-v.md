@@ -18,7 +18,7 @@ This reverses the 2026-09-20 ruling that kg-navigation be a top-level named subg
   - `kg-navigation/skills/*` → `cat-harness/skills/kg/kg-navigation/` (a package of the `skills/` graph)
   - `detangle/schemas/*.ts` → `cat-harness/schemas/`, `detangle/scripts/kg-detangle.ts` → `cat-harness/scripts/`
   - `detangle/results/` → `cat-harness/test/results/detangle/` (under the declared `qa` directory)
-  - `detangle/README.md` + `AGENTS.md` → `cat-harness/docs/detangle.md` (AGENTS.md's rules kept verbatim as a section)
+  - `detangle/README.md` + `AGENTS.md` → `cat-harness/docs/guides/detangle.md` (AGENTS.md's rules kept verbatim as a section)
 - [x] `detangle.json` and `kg-navigation.json` removed; their three directory entries in `cat-harness.json` removed too — the existing `skills`, `schemas` and `qa` declarations cover the new homes
 - [x] every hand-written reference updated; generated ones regenerated
 - [x] kg:detangle reports 0 undetermined edges repository-wide
