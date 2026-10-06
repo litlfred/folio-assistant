@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-10-06T18:19:05Z
-updated_at: 2026-10-06T18:32:52Z
+updated_at: 2026-10-06T18:47:21Z
 parent: folio-assistant-7x5n
 ---
 
@@ -39,3 +39,6 @@ A fresh clone's root lists only the target set, and every gate is green.
 
 
 **Owner 2026-10-06: remove the 6 expired waivers** (memory/waiver-*.json, all expired on or before 2026-09-23) rather than moving them; git history keeps them. Unsure memory nodes default to cat-harness except locale-directories-are-declared-not-inferred -> core; core gets adding-a-block-kind-is-30-files-not-one, document-render-path-takes-no-tex, there-is-no-recommendation-block-kind.
+
+
+**P2 finding (2026-10-06):** the gen-python-deps drift check (`dockerfileInstallsDeclaredSet`, cat-harness/scripts/gen-python-deps.ts:94) only inspects the ROOT Dockerfile — which no workflow builds. Every image that IS built retypes its own pip list instead of installing `-r requirements.txt`: .github/docker/Dockerfile:51, .github/docker/Dockerfile.latex:44, cat-harness-tools/adapters/mcp-server/Dockerfile:62 — the exact drift the check was written for (2026-09-21: 6 of 10 packages missing). So P2 is: (1) each image becomes part of its Tool node (install.container) and installs the generated requirements file from its build context; (2) the drift check iterates the images the Tool nodes declare, not a root path; (3) THEN the root Dockerfile goes. Also: build-lean-mcp and build-latex-image build with `context: .`, so .dockerignore moves beside each Dockerfile as `<Dockerfile>.dockerignore` (BuildKit per-Dockerfile ignore), not to one folder.
