@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of folio-assistant-core"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools/block-actions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Block edit and feedback links"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill (bean `uphx`, REQ-17)."
+        }
+      ],
+      "skos:notation": "block-actions",
+      "dcterms:source": "folio-assistant-core/tools/index.ts#block-actions",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools/dublin-core-render",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -98,16 +98,13 @@ export function feedbackUrl(cfg: BlockActionsConfig, b: BlockContext): string | 
     q.set("template", cfg.template);
     for (const f of cfg.templateFields ?? []) if (values[f]) q.set(f, values[f]);
   } else {
-    const lines = [
+    const facts = [
       `**Block:** \`${b.label}\``,
-      b.section && `**Section:** ${b.section}`,
+      ...(b.section ? [`**Section:** ${b.section}`] : []),
       `**Source:** ${sourceUrl(cfg, b.source)}`,
-      values.url && `**On the site:** ${values.url}`,
-      "",
-      "**Feedback:**",
-      "",
-    ].filter((l) => l !== undefined && l !== false);
-    q.set("body", lines.join("\n"));
+      ...(values.url ? [`**On the site:** ${values.url}`] : []),
+    ];
+    q.set("body", [...facts, "", "**Feedback:**", ""].join("\n"));
   }
   return `https://github.com/${cfg.repo}/issues/new?${q}`;
 }
@@ -165,4 +162,52 @@ export function injectBlockActions(
   }
   if (inserted) out = out.replace("</head>", `<style>${BLOCK_ACTIONS_CSS}</style></head>`);
   return { html: out, inserted };
+}
+
+/**
+ * `bun run folio-assistant-core/scripts/block-actions.ts --repo <folio root> [--block <label>]`
+ * prints each block's links as JSON: `{ label, source, section, edit, feedback }`.
+ * The `block-actions` Tool invokes this, so an agent can hand a reader the
+ * right edit or feedback link for the block under discussion.
+ */
+if (import.meta.main) {
+  const { resolve } = await import("node:path");
+  const { defaultBlockActions, documentBlocks, documentManifests } = await import("./build-document-site.js");
+  const args = process.argv.slice(2);
+  const opt = (n: string) => {
+    const i = args.indexOf(`--${n}`);
+    return i >= 0 ? args[i + 1] : undefined;
+  };
+  if (args.includes("--help")) {
+    console.log(
+      "usage: bun run folio-assistant-core/scripts/block-actions.ts [--repo <folio root>] [--block <label>]\n" +
+        "         [--github <owner/repo>] [--edit-branch main] [--issue-template block-feedback.yml] [--site-url <url>]",
+    );
+    process.exit(0);
+  }
+  const root = resolve(opt("repo") ?? process.cwd());
+  const cfg = defaultBlockActions(root, {
+    ...(opt("github") ? { repo: opt("github") } : {}),
+    ...(opt("edit-branch") ? { branch: opt("edit-branch") } : {}),
+    ...(opt("issue-template") ? { template: opt("issue-template") } : {}),
+    ...(opt("site-url") ? { siteUrl: opt("site-url") } : {}),
+  });
+  if (!cfg.repo) {
+    console.error("✗ no GitHub repository: pass --github <owner/repo>, set GITHUB_REPOSITORY, or run in a checkout whose origin is on GitHub");
+    process.exit(2);
+  }
+  const want = opt("block");
+  const out = [];
+  for (const d of documentManifests(root)) {
+    for (const b of await documentBlocks(d.path, root, d.slug)) {
+      if (want && b.label !== want) continue;
+      out.push({ label: b.label, source: b.source, section: b.section, edit: editUrl(cfg, b.source), feedback: feedbackUrl(cfg, b) });
+    }
+  }
+  if (want && out.length === 0) {
+    console.error(`✗ no block labelled ${want}`);
+    process.exit(1);
+  }
+  console.log(JSON.stringify(out, null, 1));
+  console.error(`✓ ${out.length} block(s), ${cfg.template ? `issue form ${cfg.template}` : "no issue form: plain issues"}`);
 }

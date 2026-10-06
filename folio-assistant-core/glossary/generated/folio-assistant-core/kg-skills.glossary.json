@@ -47,6 +47,14 @@
       "status": "candidate"
     },
     {
+      "id": "block-actions",
+      "prefLabel": "block-actions",
+      "definition": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
+      "notation": "block-actions",
+      "source": "folio-assistant-core/skills/content/folio-document-adapter/block-actions.md",
+      "status": "candidate"
+    },
+    {
       "id": "deep-document-research",
       "prefLabel": "deep-document-research",
       "definition": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",

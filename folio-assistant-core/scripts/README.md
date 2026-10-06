@@ -11,6 +11,8 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | file | what it is | used by |
 |---|---|---|
 | [`backfill-materialized-fixity.ts`](backfill-materialized-fixity.ts) | a file |  |
+| [`block-actions.test.ts`](block-actions.test.ts) | a file |  |
+| [`block-actions.ts`](block-actions.ts) | a file |  |
 | [`build-document-site.test.ts`](build-document-site.test.ts) | a file |  |
 | [`build-document-site.ts`](build-document-site.ts) | a file |  |
 | [`build-folio-site.test.ts`](build-folio-site.test.ts) | a file |  |

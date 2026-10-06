@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T12:31:42Z
-updated_at: 2026-10-06T15:06:54Z
+updated_at: 2026-10-06T19:48:40Z
 parent: folio-assistant-q4jm
 ---
 
@@ -25,3 +25,6 @@ _2026-10-06T14:40Z_ — Video arrived (smart-ra@5a3d655). Done on this branch: i
 
 
 _2026-10-06T15:15Z_ — Added the TWG Coordinator's categorisation-skill specification (smart-ra@bcd7e92, owner on #197: 'please add to requirements') to the CRD as CAT-01..30, mapped to REQ-xx and to what the platform does today. It settles the committee names (8 categories); new open decision: master log vs comment store as the system of record.
+
+
+_2026-10-06T20:00Z_ — REQ-17 built as common folio-assistant-core functionality (owner): block-actions.ts + Tool block-actions + skill block-actions (folio-document-adapter) + StartEvent_BlockFeedback in public-comment.bpmn. Feature Staging now also previews a conflicted PR (push trigger + conflict-gate).

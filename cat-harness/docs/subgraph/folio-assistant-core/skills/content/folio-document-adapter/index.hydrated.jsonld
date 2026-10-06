@@ -4,6 +4,24 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 88,
+      "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
+      "name": "block-actions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ad6e5a08e7ea9b89ed133937a87ac99479545abee9c7bfc0844430c02f5f9c7",
+        "bytes": 4287,
+        "sha256": "3ad6e5a08e7ea9b89ed133937a87ac99479545abee9c7bfc0844430c02f5f9c7"
+      },
+      "title": "Block actions: [edit] and [feedback] on every block"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-authoring",
       "@type": "bootstrap:Skill",
       "ambiguous": false,

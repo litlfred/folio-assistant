@@ -1251,6 +1251,10 @@
       "name": "Public comment on a review draft"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_BlockFeedbackToIngest",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_Duplicate",
       "@type": "bootstrap:SequenceFlow",
       "name": "duplicate"
@@ -1396,6 +1400,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_Triage",
       "@type": "bootstrap:ProcessNode",
       "name": "Duplicate, plain editorial, or to be weighed?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_BlockFeedback",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Feedback on one block ([feedback] link)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",

@@ -7,6 +7,14 @@
   "source": "Tools of folio-assistant-core",
   "terms": [
     {
+      "id": "block-actions",
+      "prefLabel": "Block edit and feedback links",
+      "definition": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill (bean `uphx`, REQ-17).",
+      "notation": "block-actions",
+      "source": "folio-assistant-core/tools/index.ts#block-actions",
+      "status": "candidate"
+    },
+    {
       "id": "dublin-core-render",
       "prefLabel": "Dublin Core renderings",
       "definition": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill (bean `7eak`).",
