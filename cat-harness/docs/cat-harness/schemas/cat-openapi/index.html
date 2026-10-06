@@ -117,6 +117,19 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 .ov-key i.k-gen { width: 16px; height: 0; border-top: 2px solid var(--fg); border-radius: 0; }
 .ov-key i.k-field { width: 16px; height: 0; border-top: 2px solid var(--accent); border-radius: 0; }
 .ov-key i.k-idref { width: 16px; height: 0; border-top: 2px dashed var(--warn); border-radius: 0; }
+/* Node kinds (issue #2278). Open by default: on a subject page the kinds its
+   schemas define are the first thing the owner asked to see, and the table is
+   short. It scrolls sideways inside itself, never the page. */
+#kinds { border-bottom: 1px solid var(--line); }
+#kinds > summary { cursor: pointer; padding: 10px 16px; font-weight: 600; font-size: .9rem; list-style: revert; }
+#kinds > summary:hover { color: var(--accent); }
+.nk-wrap { overflow-x: auto; max-height: 40vh; overflow-y: auto; }
+#nk-table { margin: 0; }
+/* Identifiers stay whole: a kind id broken mid-token cannot be read or
+   copied (finding 4 of the schemas wireframe). The wrapper scrolls instead. */
+#nk-table td code, #nk-table td .sub { white-space: nowrap; word-break: normal; }
+#nk-table button { border: 0; background: none; padding: 0; color: var(--accent); cursor: pointer; text-decoration: underline; font: inherit; }
+.tag.nk { color: var(--accent); border-color: var(--accent); }
 </style>
 <link rel="stylesheet" href="../../../assets/css/navbar.css"><script src="../../../assets/navbar/rail-9kp4004zzv.js" defer></script><script src="../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../assets/css/navbar-row.css"><script src="../../../assets/js/navbar-row.js" defer></script><style data-folio-narrow-viewport>
 /* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
@@ -197,7 +210,7 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 
 </style>
 </head>
-<body><script type="application/json" id="fa-navbar-row" data-fa-root="../../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"basic-cdn-site","label":"Basic CDN site","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"doc-group","label":"Doc group","within":"docs","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../../.." data-fa-to-root="../../..">{"data":"rail-9kp4004zzv","here":"/cat-harness/schemas/cat-openapi/","documentIndex":{"label":"Schemas","icon":"§","items":[{"label":"Schemas","icon":"▸","href":"../"},{"label":"Schemas","qualifier":"C@T Harness","icon":"▸","href":"../cat-harness/"},{"label":"Schemas","qualifier":"C@T OpenAPI","icon":"▸"},{"label":"Overview","icon":"·","href":"#overview","depth":1},{"label":"Declarations","icon":"·","href":"#list","depth":1},{"label":"Detail","icon":"·","href":"#detail","depth":1},{"label":"Schemas","qualifier":"FHIR IG Harness","icon":"▸","href":"../fhir-harness/"},{"label":"Schemas","qualifier":"Folio Assistant Core","icon":"▸","href":"../folio-assistant-core/"},{"label":"Schemas","qualifier":"SMART Base","icon":"▸","href":"../smart-base/"}],"collapsible":true,"open":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../">C@T Harness</a></nav><script type="application/json" data-fa-visualiser-nav>[{"label":"Schemas","href":"../"},{"label":"Schemas","qualifier":"C@T Harness","href":"../cat-harness/"},{"label":"Schemas","qualifier":"C@T OpenAPI","items":[{"label":"Overview","href":"#overview"},{"label":"Declarations","href":"#list"},{"label":"Detail","href":"#detail"}]},{"label":"Schemas","qualifier":"FHIR IG Harness","href":"../fhir-harness/"},{"label":"Schemas","qualifier":"Folio Assistant Core","href":"../folio-assistant-core/"},{"label":"Schemas","qualifier":"SMART Base","href":"../smart-base/"}]</script>
+<body><script type="application/json" id="fa-navbar-row" data-fa-root="../../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"basic-cdn-site","label":"Basic CDN site","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"doc-group","label":"Doc group","within":"docs","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../../.." data-fa-to-root="../../..">{"data":"rail-9kp4004zzv","here":"/cat-harness/schemas/cat-openapi/","documentIndex":{"label":"Schemas","icon":"§","items":[{"label":"Schemas","icon":"▸","href":"../"},{"label":"Schemas","qualifier":"Bootstrap","icon":"▸","href":"../bootstrap/"},{"label":"Schemas","qualifier":"Bootstrap tools","icon":"▸","href":"../bootstrap-tools/"},{"label":"Schemas","qualifier":"C@T Harness","icon":"▸","href":"../cat-harness/"},{"label":"Schemas","qualifier":"C@T OpenAPI","icon":"▸"},{"label":"Overview","icon":"·","href":"#overview","depth":1},{"label":"Node kinds","icon":"·","href":"#kinds","depth":1},{"label":"Declarations","icon":"·","href":"#list","depth":1},{"label":"Detail","icon":"·","href":"#detail","depth":1},{"label":"Schemas","qualifier":"FHIR IG Harness","icon":"▸","href":"../fhir-harness/"},{"label":"Schemas","qualifier":"Folio Assistant Core","icon":"▸","href":"../folio-assistant-core/"},{"label":"Schemas","qualifier":"SMART Base","icon":"▸","href":"../smart-base/"}],"collapsible":true,"open":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../">C@T Harness</a></nav><script type="application/json" data-fa-visualiser-nav>[{"label":"Schemas","href":"../"},{"label":"Schemas","qualifier":"Bootstrap","href":"../bootstrap/"},{"label":"Schemas","qualifier":"Bootstrap tools","href":"../bootstrap-tools/"},{"label":"Schemas","qualifier":"C@T Harness","href":"../cat-harness/"},{"label":"Schemas","qualifier":"C@T OpenAPI","items":[{"label":"Overview","href":"#overview"},{"label":"Node kinds","href":"#kinds"},{"label":"Declarations","href":"#list"},{"label":"Detail","href":"#detail"}]},{"label":"Schemas","qualifier":"FHIR IG Harness","href":"../fhir-harness/"},{"label":"Schemas","qualifier":"Folio Assistant Core","href":"../folio-assistant-core/"},{"label":"Schemas","qualifier":"SMART Base","href":"../smart-base/"}]</script>
 <header>
   <h1>Schema graph</h1>
   <p class="counts" id="counts">loading…</p>
@@ -213,10 +226,19 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
     <div class="ov-key" id="ov-key"></div>
   </div>
 </details>
+<details id="kinds" open>
+  <summary>Node kinds &mdash; <span id="nk-count">loading&hellip;</span></summary>
+  <div class="ov-body">
+    <p class="ov-cap">A <b>node kind</b> is a TypeScript <code>nodeKind()</code>; a <b>family</b> is a <code>$schema</code>
+      value a graph typology holds or an instance declares, whose validator is not (yet) a node kind; a <b>typology</b>
+      is validated as a whole. Each row links to the declaration that defines it. The search box filters this table too.</p>
+    <div class="nk-wrap"><table id="nk-table"><thead><tr><th>kind</th><th>source</th><th>held by</th><th>defined by</th></tr></thead><tbody id="nk-rows"></tbody></table></div>
+  </div>
+</details>
 <main>
   <section id="list" aria-label="Declarations">
     <div class="controls">
-      <input id="q" type="search" placeholder="Search declarations…" aria-label="Search declarations">
+      <input id="q" type="search" placeholder="Search declarations and node kinds…" aria-label="Search declarations and node kinds">
       <select id="kind" aria-label="Filter by kind"><option value="">any kind</option></select>
       <select id="mod" aria-label="Filter by module"><option value="">any module</option></select>
     </div>
@@ -232,7 +254,12 @@ var DATA_HREF = "../../../assets/schemas/index.json";
    One projection serves every page — a second JSON per subject would be the
    same facts written N+1 times, free to disagree once one is regenerated. */
 var SCOPE = "cat-openapi";
+/* The site root, relative to this page: where a node kind's own page is. */
+var SITE_HREF = "../../../";
 function inScope(d){ return !SCOPE || d.instance === SCOPE; }
+function nkInScope(r){ return !SCOPE || r.instance === SCOPE; }
+/* The node kinds a declaration defines, by declaration id. */
+function kindsOf(d){ return (G.nkByDecl && G.nkByDecl[d.id]) || []; }
 var $ = function (id) { return document.getElementById(id); };
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -351,6 +378,12 @@ function detail(d) {
   var h = '<h2>' + esc(d.name) + '</h2><p class="sub">' + esc(d.module) +
     ' &middot; ' + esc(d.kind) + (d.exported ? "" : " &middot; not exported") + "</p>";
   if (d.doc) h += "<p>" + esc(d.doc) + "</p>";
+  kindsOf(d).forEach(function (r) {
+    h += '<p class="sub">Defines ' + esc(r.source) + " <code>" + esc(r.tag || r.id) + "</code>" +
+      ((r.typologies || []).length ? ", held by " + esc(r.typologies.join(", ")) : "") +
+      (r.parents && r.parents.length ? "; subclass of " + esc(r.parents.join(", ")) : "") +
+      (r.page && SITE_HREF ? ' &middot; <a href="' + esc(SITE_HREF + r.page) + '">its node-kind page</a>' : "") + "</p>";
+  });
   if (d.kind === "undetermined") {
     h += '<p class="note"><strong>Could not be classified.</strong> This is not "it has no fields" — ' +
       "the reader saw an expression it does not model, and says so rather than rendering an empty type: <code>" +
@@ -464,10 +497,40 @@ function diaWidth(svg) {
    look identical to the person looking at them. */
 function matchesFilter(d, q, k, m) {
   if (!inScope(d)) return false;
-  if (k && d.kind !== k) return false;
+  if (k === "@nk") { if (!kindsOf(d).length) return false; }
+  else if (k && d.kind !== k) return false;
   if (m && d.module !== m) return false;
   if (!q) return true;
-  return (d.name + " " + d.module + " " + (d.doc || "")).toLowerCase().indexOf(q) >= 0;
+  var nk = kindsOf(d).map(function (r) { return r.id + " " + (r.tag || ""); }).join(" ");
+  return (d.name + " " + d.module + " " + (d.doc || "") + " " + nk).toLowerCase().indexOf(q) >= 0;
+}
+
+/* The node-kind table: scoped like the list, and narrowed by the same search. */
+function renderKinds() {
+  var q = $("q") ? $("q").value.trim().toLowerCase() : "";
+  var all = (G.nodeKinds || []).filter(nkInScope);
+  var rows = all.filter(function (r) {
+    if (!q) return true;
+    var d = r.decl ? byId(r.decl) : null;
+    return (r.id + " " + (r.tag || "") + " " + r.source + " " + (r.typologies || []).join(" ") + " " +
+      (d ? d.name + " " + d.module : "")).toLowerCase().indexOf(q) >= 0;
+  });
+  $("nk-count").textContent = rows.length + " of " + all.length + (SCOPE ? " defined in " + SCOPE : "");
+  $("nk-rows").innerHTML = rows.map(function (r) {
+    var d = r.decl ? byId(r.decl) : null;
+    var name = r.page && SITE_HREF
+      ? '<a href="' + esc(SITE_HREF + r.page) + '"><code>' + esc(r.id) + "</code></a>"
+      : "<code>" + esc(r.id) + "</code>";
+    var by = d
+      ? '<button type="button" data-sel="' + esc(d.id) + '"><code>' + esc(d.name) + "</code></button>" +
+        '<br><span class="sub">' + esc(d.module) + "</span>"
+      : '<span class="sub">' + esc(r.note || "not a declaration in this graph") + "</span>";
+    return "<tr><td>" + name + (r.tag && r.tag !== r.id ? '<br><span class="sub">' + esc(r.tag) + "</span>" : "") +
+      "</td><td>" + esc(r.source) + (SCOPE || !r.instance ? "" : '<br><span class="sub">' + esc(r.instance) + "</span>") +
+      "</td><td>" + esc((r.typologies || []).join(", ") || "—") + "</td><td>" + by + "</td></tr>";
+  }).join("") || '<tr><td colspan="4" class="empty">' +
+    (all.length ? "No node kind matches the search." : "No node kind or family is defined in " + esc(SCOPE || "this graph") + ".") +
+    "</td></tr>";
 }
 
 /** The three filter controls, read once so every caller sees one state. */
@@ -801,6 +864,7 @@ function render() {
     return '<li><button type="button" data-id="' + esc(d.id) + '" aria-current="' + (SEL === d.id) + '">' +
       '<span class="nm">' + esc(d.name) + "</span>" +
       (d.kind === "undetermined" ? '<span class="tag warn">undetermined</span>' : '<span class="tag">' + esc(d.kind) + "</span>") +
+      (kindsOf(d).length ? '<span class="tag nk">' + esc(kindsOf(d).map(function (r) { return r.id; }).join(", ")) + "</span>" : "") +
       '<br><span class="sub">' + esc(d.module.split("/").pop()) + "</span></li>";
   }).join("") || '<li><p class="empty">Nothing matches.</p></li>';
   $("counts").textContent = "";
@@ -819,6 +883,7 @@ function render() {
     "<b>" + rows.length + "</b> of <b>" + scoped.length + "</b> declarations &middot; <b>" +
     mods.length + "</b> modules &middot; <b>" + edgeCount + "</b> edges &middot; <b>" +
     scoped.filter(function (d) { return d.kind === "undetermined"; }).length + "</b> undetermined";
+  renderKinds();
 }
 
 function select(id) {
@@ -844,9 +909,21 @@ fetch(DATA_HREF).then(function (r) {
   var instOf = {};
   G.modules.forEach(function (m) { instOf[m.module] = m.instance; });
   G.decls.forEach(function (d) { d.instance = instOf[d.module]; });
+  G.nkByDecl = {};
+  (G.nodeKinds || []).forEach(function (r) {
+    if (r.decl) (G.nkByDecl[r.decl] = G.nkByDecl[r.decl] || []).push(r);
+  });
   var kinds = [...new Set(G.decls.map(function (d) { return d.kind; }))].sort();
   kinds.forEach(function (k) {
     var o = document.createElement("option"); o.value = k; o.textContent = k; $("kind").appendChild(o);
+  });
+  var nko = document.createElement("option");
+  nko.value = "@nk"; nko.textContent = "defines a node kind or family"; $("kind").appendChild(nko);
+  $("nk-rows").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-sel]");
+    if (!b) return;
+    select(b.getAttribute("data-sel"));
+    $("detail").scrollIntoView({ block: "start" });
   });
   var withDecls = {};
   G.decls.forEach(function (d) { withDecls[d.module] = true; });
