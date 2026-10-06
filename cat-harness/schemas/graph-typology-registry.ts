@@ -2253,7 +2253,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "document-kinds": {
     description:
-      "DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `folio-document-kind/v1` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767.",
+      "DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `document-kind/1.0.0` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767.",
     renderable: false,
     // Authored-from-a-source, like `themes`: a document kind is true whether
     // or not any document has been written in it yet. Core knows that kinds
@@ -2262,16 +2262,16 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-document-kind/v1": {},
+      "document-kind/1.0.0": {},
       // How one subject realises a kind, computed by the kind's owner — a
       // second family in this directory because it is DERIVED from another
       // graph (an IG's artefact index), where the kind is authored.
-      "folio-document-kind-coverage/v1": {},
+      "document-kind-coverage/1.0.0": {},
     },
     summary:
       "Document kinds — named structures of sections (fixed or semi-fixed) that a document " +
-      "authored with a harness follows, one `folio-document-kind/v1` JSON each, plus computed " +
-      "`folio-document-kind-coverage/v1` reports of how a subject realises one. Every kind and " +
+      "authored with a harness follows, one `document-kind/1.0.0` JSON each, plus computed " +
+      "`document-kind-coverage/1.0.0` reports of how a subject realises one. Every kind and " +
       "section names its sources; `computedFrom` names the declared graphs a section derives from.",
   },
   "todo-feedback": {

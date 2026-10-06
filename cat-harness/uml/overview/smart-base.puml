@@ -645,12 +645,12 @@ package "smart-base/smart-base-docs" as pkg_smart_base_smart_base_docs <<docs, i
   note "ig-pages: no node schema declared\n(no validator registered: could not determine)" as n_smart_base_smart_base_docs_ig_pages
 }
 package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_document_kinds <<document-kinds>> {
-  class "Source" as smart_base_smart_base_document_kinds_folio_document_kind_v1_Source <<json: DocumentKindSchema>> #f4f4f1 {
+  class "Source" as smart_base_smart_base_document_kinds_document_kind_1_0_0_Source <<json: DocumentKindKind>> #f4f4f1 {
     ref [1] : string
     locator [0..1] : string
     note [0..1] : string
   }
-  class "Section" as smart_base_smart_base_document_kinds_folio_document_kind_v1_Section <<json: DocumentKindSchema>> #f4f4f1 {
+  class "Section" as smart_base_smart_base_document_kinds_document_kind_1_0_0_Section <<json: DocumentKindKind>> #f4f4f1 {
     id [1] : string
     title [1] : string
     required [1] : boolean
@@ -659,8 +659,7 @@ package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_docu
     modelledBy [0..*] : string[]
     sources [0..*] : Source[]
   }
-  class "folio-document-kind/v1" as smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 <<json: DocumentKindSchema>> #f4f4f1 {
-    $schema [1] : 'folio-document-kind/v1'
+  class "document-kind/1.0.0" as smart_base_smart_base_document_kinds_document_kind_1_0_0_document_kind_1_0_0 <<json: DocumentKindKind>> #f4f4f1 {
     id [1] : string
     title [1] : string
     description [1] : string
@@ -669,21 +668,21 @@ package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_docu
     sections [1..*] : Section[]
     sources [1..*] : Source[]
     generatedBy [0..1] : string
+    $schema [1] : string
   }
-  class "Member" as smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member <<json: DocumentKindCoverageSchema>> #f4f4f1 {
+  class "Member" as smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Member <<json: DocumentKindCoverageKind>> #f4f4f1 {
     key [1] : string
     label [1] : string
   }
-  class "Section" as smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section <<json: DocumentKindCoverageSchema>> #f4f4f1 {
+  class "Section" as smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Section <<json: DocumentKindCoverageKind>> #f4f4f1 {
     id [1] : string
     members [0..*] : Member[]
   }
-  class "Unplaced" as smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced <<json: DocumentKindCoverageSchema>> #f4f4f1 {
+  class "Unplaced" as smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Unplaced <<json: DocumentKindCoverageKind>> #f4f4f1 {
     group [1] : string
     count [1] : integer
   }
-  class "folio-document-kind-coverage/v1" as smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 <<json: DocumentKindCoverageSchema>> #f4f4f1 {
-    $schema [1] : 'folio-document-kind-coverage/v1'
+  class "document-kind-coverage/1.0.0" as smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_document_kind_coverage_1_0_0 <<json: DocumentKindCoverageKind>> #f4f4f1 {
     kind [1] : string
     subject [1] : string
     from [1] : string
@@ -692,6 +691,7 @@ package "smart-base/smart-base-document-kinds" as pkg_smart_base_smart_base_docu
     sections [0..*] : Section[]
     unplaced [0..*] : Unplaced[]
     generatedBy [1] : string
+    $schema [1] : string
   }
 }
 package "smart-base/smart-base-findings" as pkg_smart_base_smart_base_findings <<docs>> {
@@ -785,12 +785,12 @@ smart_base_smart_base_artifact_index_ig_releases_v1_Release *-- "0..*" smart_bas
 smart_base_smart_base_artifact_index_ig_releases_v1_ig_releases_v1 *-- "0..*" smart_base_smart_base_artifact_index_ig_releases_v1_Release : releases
 smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains
 smart_base_smart_base_themes_Theme *-- "0..*" smart_base_smart_base_themes_Override : overrides
-smart_base_smart_base_document_kinds_folio_document_kind_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
-smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Section : sections
-smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
-smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member : members
-smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section : sections
-smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced : unplaced
+smart_base_smart_base_document_kinds_document_kind_1_0_0_Section *-- "0..*" smart_base_smart_base_document_kinds_document_kind_1_0_0_Source : sources
+smart_base_smart_base_document_kinds_document_kind_1_0_0_document_kind_1_0_0 *-- "1..*" smart_base_smart_base_document_kinds_document_kind_1_0_0_Section : sections
+smart_base_smart_base_document_kinds_document_kind_1_0_0_document_kind_1_0_0 *-- "1..*" smart_base_smart_base_document_kinds_document_kind_1_0_0_Source : sources
+smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Section *-- "0..*" smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Member : members
+smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_document_kind_coverage_1_0_0 *-- "0..*" smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Section : sections
+smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_document_kind_coverage_1_0_0 *-- "0..*" smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Unplaced : unplaced
 smart_base_smart_base_external_schemas_folio_external_schema_v1_folio_external_schema_v1 *-- "0..*" smart_base_smart_base_external_schemas_folio_external_schema_v1_Term : terms
 smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 *-- "0..*" smart_base_smart_base_external_schemas_folio_pinned_terminology_v1_Concept : concepts
 smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Source : sources
