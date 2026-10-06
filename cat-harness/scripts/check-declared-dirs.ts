@@ -98,13 +98,28 @@
  * the checkout copy really is an artefact of whether `qa:fetch` ran. The
  * distinction, and the measurements behind it, are in {@link tipPresence}.
  *
+ * ## And the REVERSE direction, for state: `undeclared-state` (bean `hp54`)
+ *
+ * Everything above compares declarations to disk, so a directory on disk that
+ * NO declaration names is invisible to it. For most directories that is
+ * right — an instance may hold files nobody needs to know the kind of. For a
+ * STATE graph it is not: measured 2026-10-06, a folio scaffolded by
+ * `folio_init` carried `beans/` and `todos/` on `main` from its first commit,
+ * declared nowhere, so no reader could ask where its work plan lives and no
+ * check could see that it had been put on `main` rather than on a branch.
+ * {@link auditUndeclaredState} reports a top-level directory at a
+ * conventional state path (every `DEFAULT_DIRECTORIES` entry whose kinds all
+ * `holds: "state"`) that the instance does not declare. It REPORTS: the
+ * remedy is to declare it (with its `source`), never to remove it —
+ * `deletion-requires-confirmation`.
+ *
  * Exit codes: 0 clean · 1 any finding.
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, statSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
 
-import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.js";
+import { DEFAULT_DIRECTORIES, instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.js";
 import { defaultGraphTypologies } from "../schemas/graph-typology-registry.js";
 import {
   contentIsOffCheckout,
@@ -135,7 +150,7 @@ export interface DirFinding {
    * command cannot reach the entry at all, so printing it would send a reader
    * to run something that does nothing. Bean `najo`.
    */
-  kind: "absent" | "stale-exemption" | "mirror" | "not-cut-over" | "unmounted" | "unmountable";
+  kind: "absent" | "stale-exemption" | "mirror" | "not-cut-over" | "unmounted" | "unmountable" | "undeclared-state";
   detail: string;
   /**
    * Set on a NESTED entry: the declaration that holds it, instance-relative
@@ -383,6 +398,50 @@ export function auditInstance(
     }
   }
   return findings.concat(auditNested(instanceRoot, repoRoot, decl));
+}
+
+/** The conventional STATE paths: a `DEFAULT_DIRECTORIES` entry whose every kind `holds: "state"`. */
+export function conventionalStateDirectories(): Array<{ id: string; path: string; kinds: readonly string[] }> {
+  return DEFAULT_DIRECTORIES
+    .filter((d) => (d.graphTypologies ?? []).length > 0 &&
+      (d.graphTypologies ?? []).every((k) => defaultGraphTypologies.get(k)?.holds === "state"))
+    .map((d) => ({ id: d.id, path: d.path, kinds: d.graphTypologies ?? [] }));
+}
+
+/**
+ * `undeclared-state` — a conventional state directory (`beans/`, `todos/`)
+ * present at the top of an instance and named by none of its own entries.
+ * See the module docblock. Any entry covering the path counts, whatever its
+ * id or source: the question is whether ANY declaration says what this
+ * directory is, not whether it says the right thing.
+ */
+export function auditUndeclaredState(instanceRoot: string, repoRoot: string): DirFinding[] {
+  let decl: { directories?: Array<{ path: string; scope?: string }> } | undefined;
+  try {
+    decl = readDeclaration(instanceRoot) as typeof decl;
+  } catch {
+    return []; // an unreadable declaration is `check:harness-dirs`'s to report
+  }
+  if (!decl) return []; // no declaration at all: the conventional defaults apply, so nothing is undeclared
+  const covered = new Set((decl.directories ?? []).map((e) => resolve(resolveDeclaredPath(e, instanceRoot, repoRoot))));
+  const out: DirFinding[] = [];
+  for (const d of conventionalStateDirectories()) {
+    const abs = resolve(instanceRoot, d.path);
+    if (!existsSync(abs) || !statSync(abs).isDirectory() || covered.has(abs)) continue;
+    out.push({
+      instance: instanceRoot,
+      id: d.id,
+      path: d.path,
+      kind: "undeclared-state",
+      detail:
+        `a ${d.kinds.join("/")} STATE directory on disk that ${basename(instanceRoot) || instanceRoot}'s declaration ` +
+        `does not name, so nothing can say where this graph lives or whether it belongs on a branch. Declare it — ` +
+        `\`{ "id": "${d.id}", "path": "${d.path}", "graphTypologies": ${JSON.stringify(d.kinds)}, "source": … }\`, ` +
+        `with \`source: { kind: "branch", branch: "cat/<instance>/${d.id}", keyedBy: "tip" }\` for the default ` +
+        `(the \`directory-conventions\` skill). Nothing is removed: moving the content off main is the owner's call.`,
+    });
+  }
+  return out;
 }
 
 /**
@@ -654,7 +713,7 @@ if (import.meta.main) {
     // it says this checkout has no from-within declaration, not that the walk
     // was skipped.
     nestedCount += auditNestedCount(inst, decl);
-    findings = findings.concat(auditInstance(inst, repoRoot, instances));
+    findings = findings.concat(auditInstance(inst, repoRoot, instances), auditUndeclaredState(inst, repoRoot));
   }
 
   for (const f of findings) {

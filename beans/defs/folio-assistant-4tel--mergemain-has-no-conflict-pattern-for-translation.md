@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4tel
 title: merge:main has no conflict pattern for translation-qa results, so it aborts
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T18:25:31Z
-updated_at: 2026-10-04T18:25:31Z
+updated_at: 2026-10-06T18:57:18Z
 parent: folio-assistant-d33q
 ---
 
@@ -15,3 +15,5 @@ These are derived QA results like the `detangle` and `lsi` sidecars that `derive
 
 ## Done when
 - `merge-conflict-patterns.ts` classifies `*/test/results/translation-qa/**` as `derived-results: take-base` (or the pattern is widened to the whole declared results graph), with a test.
+
+_2026-10-06T18:57:18Z_ — Claimed by claude/4tel-merge-main-translation-qa — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

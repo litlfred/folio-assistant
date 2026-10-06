@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v3nf
 title: 'SPEED-UP 2: parallel checks — regen and gates run independent --check scripts concurrently, writers stay ordered'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-06T10:47:48Z
+updated_at: 2026-10-06T19:00:41Z
 parent: folio-assistant-7x5n
 ---
 
@@ -37,3 +37,5 @@ Two writers that touch the same output (or a writer whose output is another chec
 - **Box 4 left OPEN:**
   - Measured for regen only, same tree, Bun 1.3.14, load 2.5-4.9: `regen --dry-run --no-cache --jobs 1` took 426 s wall, 428 s user, 156 s sys. `--jobs 3` took 254 s wall, 430 s user, 137 s sys. The verdicts were identical: 119 current, 2 stale.
   - gates' serial vs parallel share was NOT measured separately: a gate run is about 40 minutes here. a2a8e6c63 now prints each serial gate's time. In the last run `bun test` (1525 s) and `check:cat-harness-standalone` (496 s) were 2021 of 2765 s, and the pool cannot shorten either.
+
+_2026-10-06T19:00:41Z_ — Claimed by claude/v3nf-parallel-gates-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
