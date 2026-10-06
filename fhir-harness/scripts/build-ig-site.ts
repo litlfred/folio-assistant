@@ -393,9 +393,22 @@ export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: str
  * trailing `{#id}` removed — what a reader sees, which is what the layout
  * matches it against. Setext headings are not read; a heading the reader
  * sees and this does not simply gets no source link.
+ *
+ * `include` resolves an `{% include x %}` / `{% lang-fragment x %}` target to
+ * the markdown it pulls in and that file's repository path; given, the
+ * included file's headings are spliced in at the include, in reading order,
+ * each carrying `p` — the file its line `l` is in. Without it a page that is
+ * only includes has no headings at all, which is every HL7 IG's landing page:
+ * `index.md` is `{% include index-ig.md %}`, so its "Summary" got no ✎ and a
+ * 📣 with no line (bean `x78e`). A target already being read is not read
+ * again, so an include cycle ends.
  */
-export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
-  const out: Array<{ t: string; l: number }> = [];
+export function sourceHeadings(
+  md: string,
+  include?: (name: string) => { md: string; path: string } | undefined,
+  reading: ReadonlySet<string> = new Set(),
+): Array<{ t: string; l: number; p?: string }> {
+  const out: Array<{ t: string; l: number; p?: string }> = [];
   let fence: string | undefined;
   md.split(/\r?\n/).forEach((line, i) => {
     const f = /^\s{0,3}(```|~~~)/.exec(line);
@@ -404,6 +417,13 @@ export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
       return;
     }
     if (fence !== undefined) return;
+    if (include) {
+      for (const inc of line.matchAll(/\{%-?\s*(?:include|lang-fragment)\s+([^\s%]+)/g)) {
+        const got = include(inc[1]!);
+        if (!got || reading.has(got.path)) continue;
+        for (const e of sourceHeadings(got.md, include, new Set([...reading, got.path]))) out.push({ ...e, p: e.p ?? got.path });
+      }
+    }
     const h = /^\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$/.exec(line);
     if (!h) return;
     const t = h[1]!
@@ -418,6 +438,23 @@ export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
 }
 
 /**
+ * An `{% include %}` target resolved as the build resolves it — the IG's
+ * `input/pagecontent/` copied over `input/includes/` — to its markdown and
+ * repository path, for `sourceHeadings`. Only markdown: an `.xhtml` or
+ * `.liquid` include has no ATX headings to read.
+ */
+export function includeSource(igSrc: string): (name: string) => { md: string; path: string } | undefined {
+  return (name) => {
+    if (!name.endsWith(".md") || name.includes("..") || name.startsWith("/")) return undefined;
+    for (const dir of ["input/pagecontent", "input/includes"]) {
+      const file = join(igSrc, dir, name);
+      if (existsSync(file)) return { md: readFileSync(file, "utf-8"), path: `${dir}/${name}` };
+    }
+    return undefined;
+  };
+}
+
+/**
  * The layout's per-section links: each heading in the page body that matches
  * a source heading (by its visible text, in order) gets a small link to that
  * line on GitHub, and EVERY heading gets a feedback link — a new issue on the
@@ -426,18 +463,26 @@ export function sourceHeadings(md: string): Array<{ t: string; l: number }> {
  * next to the section as well w/ preopopulted github issue content"). Script, because Jekyll has rendered the headings by
  * the time a template could see them; matched by text, because an include can
  * add headings the page's own source does not hold.
+ *
+ * A line carrying `b` is in an included file, and ✎ goes to THAT file's line
+ * (bean `x78e`). The issue title names the section first and the page apart
+ * from it, and the page only when it is not the section itself: an IG's
+ * landing page is titled after its menu entry, "Summary" on the WHO IGs, which
+ * is also its first section's name, and "Feedback: Summary — About this
+ * implementation guide" read as one heading paired with another's link.
  */
-const SOURCE_LINKS_JS = `(function(){var d=document.getElementById("ig-source-lines");if(!d)return;var m;try{m=JSON.parse(d.textContent)}catch(e){return}
+export const SOURCE_LINKS_JS = `(function(){var d=document.getElementById("ig-source-lines");if(!d)return;var m;try{m=JSON.parse(d.textContent)}catch(e){return}
 var repo=(m.blob.match(/^https:\\/\\/github\\.com\\/[^/]+\\/[^/]+/)||[])[0];
 var n=function(s){return s.toLowerCase().replace(/[^a-z0-9]+/g," ").trim()};var used={};
 var link=function(h,cls,href,title,glyph){var a=document.createElement("a");a.className=cls;a.href=href;a.title=title;a.textContent=glyph;a.rel="noopener";a.target="_blank";h.appendChild(document.createTextNode(" "));h.appendChild(a)};
 document.querySelectorAll("#main-content h1,#main-content h2,#main-content h3,#main-content h4,#main-content h5,#main-content h6").forEach(function(h){
-var text=h.textContent.trim(),k=n(text),line;for(var i=0;i<m.lines.length;i++){if(!used[i]&&n(m.lines[i].t)===k){used[i]=1;line=m.lines[i].l;break}}
-var src=line?m.blob+"#L"+line:m.blob;
+var text=h.textContent.trim(),k=n(text),line,file;for(var i=0;i<m.lines.length;i++){if(!used[i]&&n(m.lines[i].t)===k){used[i]=1;line=m.lines[i].l;file=m.lines[i].b;break}}
+var src=line?(file||m.blob)+"#L"+line:m.blob;
 if(line)link(h,"ig-src",src,"This section's source, line "+line+", on GitHub","\\u270E");
 if(repo){var here=location.href.split("#")[0]+(h.id?"#"+h.id:"");
-var body="**Page:** "+here+"\\n**Section:** "+text+"\\n**Source:** "+src+"\\n\\n**Feedback:**\\n\\n";
-link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback: "+document.title.split(" | ")[0]+" \\u2014 "+text)+"&body="+encodeURIComponent(body),"Give feedback on this section (opens a GitHub issue)","\\uD83D\\uDCE3")}})})();`;
+var pt=document.title.split(" | ")[0].trim();
+var body="**Page:** "+here+"\\n**Section:** "+text+(h.id?" (#"+h.id+")":"")+"\\n**Source:** "+src+"\\n\\n**Feedback:**\\n\\n";
+link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback on \\u201C"+text+"\\u201D"+(pt&&n(pt)!==k?" (page: "+pt+")":""))+"&body="+encodeURIComponent(body),"Give feedback on this section (opens a GitHub issue)","\\uD83D\\uDCE3")}})})();`;
 
 /**
  * The IG's chrome that goes INTO a page when the IG is built inside a host
@@ -993,7 +1038,11 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
           // should link to line numbers if possible"): each heading's line in the
           // ORIGINAL file, read before anything here rewrites it.
           ig_source_blob: `${opts.editBase.replace(/\/$/, "").replace(/\/edit\//, "/blob/")}/input/pagecontent/${f}`,
-          ig_source_lines: sourceHeadings(readFileSync(join(pagecontent, f), "utf-8")),
+          // Through the page's includes (bean `x78e`): an IG's index.md is
+          // only `{% include index-ig.md %}`, and its headings live there.
+          ig_source_lines: sourceHeadings(readFileSync(join(pagecontent, f), "utf-8"), includeSource(src), new Set([`input/pagecontent/${f}`])).map(
+            ({ p, ...h }) => (p ? { ...h, b: `${sourceBlob}/${p}` } : h),
+          ),
         }
       : {};
     for (const fill of opts.fills ?? []) {
