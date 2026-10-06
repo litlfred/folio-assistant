@@ -1975,7 +1975,11 @@ if (import.meta.main) {
         if (t === undefined) continue;
         process.stdout.write(`▸ ${g.command}\n`);
         const [cmd, ...args] = g.command.split(/\s+/);
+        const started = performance.now();
         const r = await runTee(cmd!, args);
+        // Timed like the parallel lines, so a slow serial gate is visible in
+        // the log rather than inferred from the total.
+        process.stdout.write(`  ↳ ${((performance.now() - started) / 1000).toFixed(1)}s, exit ${r.code}: ${g.command}\n`);
         if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
         if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, r.code === 0, t.fp, new FileDigests(ROOT));
         seen = snapshot(seen, g.command);
