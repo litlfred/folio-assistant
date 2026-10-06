@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Publishing Input",
+  "description": "Input schema for the document-publishing skill: render a document folio without a TeX installation.",
+  "type": "object",
+  "required": [
+    "document",
+    "format"
+  ],
+  "properties": {
+    "document": {
+      "type": "string",
+      "description": "Document slug under content/."
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "md",
+        "html",
+        "pdf"
+      ],
+      "description": "Output format. All three assemble Markdown first; html and pdf then run pandoc."
+    },
+    "pdfEngine": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "weasyprint",
+        "prince",
+        "wkhtmltopdf"
+      ],
+      "default": "auto",
+      "description": "HTML-to-PDF engine. Never latexmk: a document folio is defined by not requiring TeX to publish."
+    },
+    "css": {
+      "type": "string",
+      "description": "Stylesheet path relative to the repo root. Belongs in the folio repo — a house style is content."
+    },
+    "toc": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-release-ixmq/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
+  "staging": {
+    "branch": "claude/merge-release-ixmq",
+    "sha": "17191e855ed7348a07376bfa9a106581c179a423",
+    "pr": "2091/merge",
+    "run": "37486989370"
+  }
+}

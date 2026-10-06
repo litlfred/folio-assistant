@@ -1,0 +1,100 @@
+{
+  "tile": {
+    "qa": {
+      "count": 1009,
+      "unit": "documents"
+    }
+  },
+  "$schema": "folio-qa-graph/v1",
+  "files": 1009,
+  "families": [
+    {
+      "schema": "kg-qa/v1",
+      "files": 507,
+      "rollUpField": "totals",
+      "buckets": {
+        "pass": 2898,
+        "fail": 436,
+        "n/a": 1614,
+        "unknown": 22
+      }
+    },
+    {
+      "schema": "qa-witness/v1",
+      "files": 145,
+      "rollUpField": "counts",
+      "buckets": {
+        "fail": 23,
+        "warn": 59,
+        "pass": 2849,
+        "na": 3150,
+        "unknown": 37
+      }
+    },
+    {
+      "schema": "block-qa/v1",
+      "files": 122,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-results/v1",
+      "files": 87,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-detangle-sidecar/v1",
+      "files": 69,
+      "rollUpField": null
+    },
+    {
+      "schema": "translation-qa/v1",
+      "files": 35,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-index/v1",
+      "files": 25,
+      "rollUpField": null
+    },
+    {
+      "schema": "kg-qa-manifest/v1",
+      "files": 8,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-lsi-index/v1",
+      "files": 4,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-tool-run/v1",
+      "files": 4,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-translation-pages/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-test-run/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "viewer-nav-qa/v1",
+      "files": 1,
+      "rollUpField": "totals",
+      "buckets": {
+        "pages": 172,
+        "railed": 103,
+        "declined": 0,
+        "linked": 69,
+        "missing": 0,
+        "flagged": 0
+      }
+    }
+  ],
+  "unclassified": 0,
+  "unreadable": 0
+}
