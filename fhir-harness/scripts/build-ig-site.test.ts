@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { FOOTER_TEMPLATE_PATH, ARTIFACTS_TEMPLATE_PATH, IG_FIGURE_IMAGES_STAMP, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACT_LIST_TEMPLATE_PATH, artifactListInclude, publisherPlural, FOOTER_TEMPLATE_PATH, ARTIFACTS_TEMPLATE_PATH,IG_FIGURE_IMAGES_STAMP, artifactVariables, colourScheme, composeIgSite, contrast, dedupeIds, igTocNav, igTopBar, includeTargets, pageNav, relinkArtifacts, relinkOffSite, rubyLiquidStrings, relinkPublisherOutputs, sourceHeadings, RELEASES_TEMPLATE_PATH, releaseVariables, sizeLabel, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { copyDocsInto, igSiteDocs, webpagePalette } from "./stage-ig-sites";
 import type { IgReleases } from "../schemas/ig-releases.ts";
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
@@ -688,5 +688,112 @@ describe("rubyLiquidStrings — a Publisher Liquid string Jekyll can read", () =
     const plain = '{% assign a = "plain" %}';
     const apos = '{% assign b = "it\'s <a href=\\"x\\">" %}';
     expect(rubyLiquidStrings(plain + apos).text).toBe(plain + apos);
+  });
+});
+
+describe("the Publisher's artefact lists, written from the artefact index (bean 9hfi)", () => {
+  // A page as smart-immunizations' `codings.md` and smart-trust's `maps.md`
+  // write it: `list-*.xhtml` fragments the IG Publisher GENERATES, which no
+  // IG source holds. Rendered through Liquid as Jekyll renders the page.
+  let d: string;
+  let o: string;
+  let res: StageResult;
+  let page: string;
+  const list = [
+    { resourceType: "CodeSystem", id: "cs-b", title: "beta system", description: "Beta codes" },
+    { resourceType: "CodeSystem", id: "cs-a", title: "Alpha system", category: "Terminology: Code Systems" },
+    { resourceType: "ValueSet", id: "vs.1", title: "Vaccines", description: "Codes for <vaccines> & boosters" },
+    { resourceType: "Library", id: "lib", title: "Logic" },
+  ];
+  beforeAll(async () => {
+    d = mkdtempSync(join(tmpdir(), "ig-lists-"));
+    const src = join(d, "src");
+    mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+    writeFileSync(join(src, "sushi-config.yaml"), "id: lists.ig\ncanonical: http://example.org/lists\ntitle: Lists IG\nversion: 0.1.0\nfhirVersion: 4.0.1\npages:\n  codings.md:\n    title: Codings\n");
+    writeFileSync(
+      join(src, "input", "pagecontent", "codings.md"),
+      [
+        "### CodeSystems",
+        "{% include list-simple-codesystems.xhtml %}",
+        "",
+        "### ValueSets",
+        "{% include list-valuesets.xhtml %}",
+        "",
+        "### Libraries",
+        "{% include list-simple-libraries.xhtml %}",
+        "",
+        "### StructureMaps",
+        "<div>",
+        "    {% include list-structuremaps.xhtml %}",
+        "  </div>",
+        "",
+        "### Profiles",
+        "{% include list-simple-profiles.xhtml %}",
+        "",
+      ].join("\n"),
+    );
+    o = join(d, "site");
+    res = stageIgSite(src, o, { artifacts: { list, pagesHref: "artifact/" } });
+    const { Liquid } = await import("liquidjs");
+    const engine = new Liquid({ root: [join(o, "_includes")], jekyllInclude: true, dynamicPartials: false, extname: "" });
+    const text = readFileSync(join(o, "codings.md"), "utf-8");
+    const body = text.slice(text.indexOf("\n---", 3) + 4);
+    page = await engine.parseAndRender(body, { site: { data: { fhir: JSON.parse(readFileSync(join(o, "_data", "fhir.json"), "utf-8")) } } });
+  });
+  afterAll(() => rmSync(d, { recursive: true, force: true }));
+
+  /** The rendered text between one heading and the next. */
+  const section = (h: string) => page.split(`### ${h}`)[1]!.split("### ")[0]!;
+  const href = (a: { resourceType: string; id: string }) => `artifact/${artifactPageName(a)}.html`;
+
+  test("a list-simple include on a published IG page lists that type's artefacts, never the placeholder", () => {
+    const cs = section("CodeSystems");
+    expect(cs).not.toContain("ig-not-rendered");
+    expect(cs).not.toContain("not rendered");
+    // The Publisher's shape: one <li> per artefact, its title linked to its page, by title.
+    expect(cs).toContain(`<ul class="ig-artifact-list">\n <li><a href="${href(list[1]!)}">Alpha system</a></li>\n <li><a href="${href(list[0]!)}">beta system</a></li>\n</ul>`);
+    // Simple: no description. Every artefact of the type, categorised or not.
+    expect(cs).not.toContain("Beta codes");
+    expect(section("Libraries")).toContain(`<a href="${href(list[3]!)}">Logic</a>`);
+    expect(res.listed).toEqual(["list-simple-codesystems.xhtml", "list-simple-libraries.xhtml", "list-structuremaps.xhtml", "list-valuesets.xhtml"]);
+    expect(res.notRendered).not.toContain("list-simple-codesystems.xhtml");
+  });
+
+  test("the full form carries each artefact's description, escaped", () => {
+    expect(section("ValueSets")).toContain(`<li><a href="${href(list[2]!)}">Vaccines</a> Codes for &lt;vaccines&gt; &amp; boosters</li>`);
+  });
+
+  test("a resource type the index holds none of is SAID, never an empty list or the placeholder", () => {
+    const sm = section("StructureMaps");
+    expect(sm).toContain("This guide's artefact index holds no StructureMap resources.");
+    expect(sm).not.toContain("not rendered");
+  });
+
+  test("a list that names no resource type stays a visible marker, and is reported", () => {
+    expect(section("Profiles")).toContain("⟦not rendered: list-simple-profiles.xhtml⟧");
+    expect(res.notRendered).toEqual(["list-simple-profiles.xhtml"]);
+  });
+
+  test("without an artefact index, the lists stay markers rather than empty lists", () => {
+    const r2 = stageIgSite(join(d, "src"), join(d, "no-index"));
+    expect(r2.listed).toEqual([]);
+    expect(r2.notRendered).toContain("list-simple-codesystems.xhtml");
+  });
+
+  test("the Publisher's plurals map back to their resource type", () => {
+    expect(publisherPlural("CodeSystem")).toBe("codesystems");
+    expect(publisherPlural("Library")).toBe("libraries");
+    expect(publisherPlural("SubscriptionStatus")).toBe("subscriptionstatuses");
+    expect(publisherPlural("RelatedPerson")).toBe("relatedpeople");
+    expect(artifactListInclude("list-simple-valuesets.xhtml")).toEqual({ resourceType: "ValueSet", simple: true });
+    expect(artifactListInclude("list-structuremaps.xhtml")).toEqual({ resourceType: "StructureMap", simple: false });
+    expect(artifactListInclude("list-simple-profiles.xhtml")).toBeUndefined();
+    expect(artifactListInclude("list-simple-valuesets-json.xhtml")).toBeUndefined();
+  });
+
+  test("the list template is a file that opens with its description and computes nothing", () => {
+    const t = readFileSync(ARTIFACT_LIST_TEMPLATE_PATH, "utf-8");
+    expect(t.startsWith("{%- comment -%}")).toBe(true);
+    expect(t).not.toMatch(/\|\s*(plus|minus|size|replace|sort)\b/);
   });
 });

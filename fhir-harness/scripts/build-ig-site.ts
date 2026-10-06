@@ -18,6 +18,7 @@
  * | `input/includes/*`, `input/pagecontent/*`, `input/images/*.svg` | `_includes/` | the Publisher resolves `{% include %}` against all three, so pages include each other and inline SVGs |
  * | `input/images/*` | the site root | the Publisher publishes them there, so pages say `<img src="x.png">` — except a `.json`/`.jsonld` that does not parse, which is left out and reported: publishing a broken data file under our site blocks the deploy, and whose file it is cannot be told from a file no parser can read |
  * | `input/images-source/*.plantuml` | `_includes/<name>.svg` | the Publisher RENDERS these; rendered here with `--plantuml-jar`, otherwise a visible "not rendered" marker, reported |
+ * | the artefact index (`--artifacts`) | `_includes/list-(simple-)?<types>.xhtml` | the Publisher GENERATES these lists of an IG's artefacts of one type; written here as Liquid over `site.data.fhir.artifact_lists`, so any IG with an index gets them (bean `9hfi`) |
  * | `ig-site-data` over the source | `_data/fhir.json` | `site.data.fhir.*`, only what is sourced |
  * | — | `_config.yml` | just-the-docs, one site |
  * | the instance's declared `webpage` theme | `_sass/color_schemes/ig.scss` | just-the-docs' own colour-scheme mechanism, so the IG wears its palette with the machinery unchanged (bean `u3cd`) |
@@ -143,6 +144,8 @@ export interface StageResult {
   images: number;
   /** Diagrams rendered from `input/images-source/*.plantuml`. */
   rendered: string[];
+  /** The Publisher's artefact lists (`list-(simple-)?<types>.xhtml`) a page includes, written from the artefact index (bean `9hfi`). */
+  listed: string[];
   /** Included files the source does not hold and nothing rendered: a marker stands in. */
   notRendered: string[];
   /** `input/images` data files (`.json`, `.jsonld`) that do not parse: not published, with the parser's reason. */
@@ -577,6 +580,81 @@ export function includeTargets(md: string): string[] {
   return [...md.matchAll(/\{%-?\s*(?:include|lang-fragment)\s+([^\s%]+)/g)].map((m) => m[1]!);
 }
 
+/**
+ * FHIR's concrete resource types, R4 (4.0.1) and R5 (5.0.0) together — read
+ * once from `hl7.fhir.r4.core#4.0.1` and `hl7.fhir.r5.core#5.0.0` (every
+ * `StructureDefinition` with `kind: resource`, `derivation: specialization`,
+ * not abstract). Specification data, not any IG's: it is what tells
+ * `list-structuremaps.xhtml` from `list-simple-profiles.xhtml`, which names
+ * no resource type and so stays a marker here.
+ */
+export const FHIR_RESOURCE_TYPES: ReadonlySet<string> = new Set(
+  (
+    "Account ActivityDefinition ActorDefinition AdministrableProductDefinition AdverseEvent AllergyIntolerance " +
+    "Appointment AppointmentResponse ArtifactAssessment AuditEvent Basic Binary BiologicallyDerivedProduct " +
+    "BiologicallyDerivedProductDispense BodyStructure Bundle CapabilityStatement CarePlan CareTeam CatalogEntry " +
+    "ChargeItem ChargeItemDefinition Citation Claim ClaimResponse ClinicalImpression ClinicalUseDefinition CodeSystem " +
+    "Communication CommunicationRequest CompartmentDefinition Composition ConceptMap Condition ConditionDefinition " +
+    "Consent Contract Coverage CoverageEligibilityRequest CoverageEligibilityResponse DetectedIssue Device " +
+    "DeviceAssociation DeviceDefinition DeviceDispense DeviceMetric DeviceRequest DeviceUsage DeviceUseStatement " +
+    "DiagnosticReport DocumentManifest DocumentReference EffectEvidenceSynthesis Encounter EncounterHistory Endpoint " +
+    "EnrollmentRequest EnrollmentResponse EpisodeOfCare EventDefinition Evidence EvidenceReport EvidenceVariable " +
+    "ExampleScenario ExplanationOfBenefit FamilyMemberHistory Flag FormularyItem GenomicStudy Goal GraphDefinition " +
+    "Group GuidanceResponse HealthcareService ImagingSelection ImagingStudy Immunization ImmunizationEvaluation " +
+    "ImmunizationRecommendation ImplementationGuide Ingredient InsurancePlan InventoryItem InventoryReport Invoice " +
+    "Library Linkage List Location ManufacturedItemDefinition Measure MeasureReport Media Medication " +
+    "MedicationAdministration MedicationDispense MedicationKnowledge MedicationRequest MedicationStatement " +
+    "MedicinalProduct MedicinalProductAuthorization MedicinalProductContraindication MedicinalProductDefinition " +
+    "MedicinalProductIndication MedicinalProductIngredient MedicinalProductInteraction MedicinalProductManufactured " +
+    "MedicinalProductPackaged MedicinalProductPharmaceutical MedicinalProductUndesirableEffect MessageDefinition " +
+    "MessageHeader MolecularSequence NamingSystem NutritionIntake NutritionOrder NutritionProduct Observation " +
+    "ObservationDefinition OperationDefinition OperationOutcome Organization OrganizationAffiliation " +
+    "PackagedProductDefinition Parameters Patient PaymentNotice PaymentReconciliation Permission Person PlanDefinition " +
+    "Practitioner PractitionerRole Procedure Provenance Questionnaire QuestionnaireResponse RegulatedAuthorization " +
+    "RelatedPerson RequestGroup RequestOrchestration Requirements ResearchDefinition ResearchElementDefinition " +
+    "ResearchStudy ResearchSubject RiskAssessment RiskEvidenceSynthesis Schedule SearchParameter ServiceRequest Slot " +
+    "Specimen SpecimenDefinition StructureDefinition StructureMap Subscription SubscriptionStatus SubscriptionTopic " +
+    "Substance SubstanceDefinition SubstanceNucleicAcid SubstancePolymer SubstanceProtein " +
+    "SubstanceReferenceInformation SubstanceSourceMaterial SubstanceSpecification SupplyDelivery SupplyRequest Task " +
+    "TerminologyCapabilities TestPlan TestReport TestScript Transport ValueSet VerificationResult VisionPrescription"
+  ).split(" "),
+);
+
+/**
+ * The plural the IG Publisher writes into a list fragment's name
+ * (`list-<plural>.xhtml`), lower-cased: `CodeSystem` → `codesystems`,
+ * `Library` → `libraries`, `SubscriptionStatus` → `subscriptionstatuses`,
+ * `RelatedPerson` → `relatedpeople`.
+ */
+export function publisherPlural(resourceType: string): string {
+  const w = resourceType.toLowerCase();
+  if (w.endsWith("person")) return `${w.slice(0, -"person".length)}people`;
+  if (/[^aeiou]y$/.test(w)) return `${w.slice(0, -1)}ies`;
+  if (/(s|x|ch|sh)$/.test(w)) return `${w}es`;
+  return `${w}s`;
+}
+
+/**
+ * The IG Publisher's artefact-list fragments, `list-<plural>.xhtml` and
+ * `list-simple-<plural>.xhtml`: every artefact of ONE resource type, as a list
+ * of links to its page — with its description, or (`simple`) without. The
+ * type comes from the name, read either as the Publisher pluralises it or as
+ * a plain `s`; a name whose plural is no FHIR resource type
+ * (`list-simple-profiles.xhtml`, a subset of StructureDefinitions) is not one
+ * of these, and undefined says so.
+ */
+export function artifactListInclude(name: string): { resourceType: string; simple: boolean } | undefined {
+  const m = /^list-(simple-)?([a-z]+)\.xhtml$/.exec(name);
+  if (!m) return undefined;
+  for (const t of FHIR_RESOURCE_TYPES) {
+    if (publisherPlural(t) === m[2] || `${t.toLowerCase()}s` === m[2]) return { resourceType: t, simple: m[1] !== undefined };
+  }
+  return undefined;
+}
+
+/** The include every `list-*.xhtml` this build writes calls: prefixed, so it cannot collide with one the IG's source holds. */
+export const ARTIFACT_LIST_INCLUDE = "fa-ig-artifact-list.html";
+
 /** What stands in for a diagram nothing rendered: visible, never an empty include. */
 export const notRenderedMarker = (name: string, from: string) =>
   `<p class="ig-not-rendered"><strong>⟦not rendered: ${name}⟧</strong> — the IG Publisher renders it from <code>${from}</code>; no renderer was given to this build.</p>\n`;
@@ -690,6 +768,14 @@ export interface ArtifactVariables {
   artifact_categories: Array<{ name: string; anchor: string; count: number; keys: string[] }>;
   /** How many artefacts `artifact_categories` lists — counted here, so no template counts. */
   artifacts_listed: number;
+  /**
+   * Per resource type, its artefacts' keys in the order the Publisher's
+   * `list-<types>.xhtml` lists them — by displayed title, case-folded — what
+   * the `list-*.xhtml` includes iterate (bean `9hfi`). Every artefact of the
+   * type, categorised or not: the Publisher's list is by type, not by the
+   * `artifacts.html` category.
+   */
+  artifact_lists: Record<string, { count: number; keys: string[] }>;
 }
 
 /**
@@ -747,7 +833,19 @@ export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHre
     g.keys.push(key);
     g.count++;
   }
-  return { vars: { artifacts, artifact_categories: order, artifacts_listed: order.reduce((n, c) => n + c.keys.length, 0) }, notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)) };
+  const artifactLists: ArtifactVariables["artifact_lists"] = {};
+  const byTitle = (k: string) => artifacts[k]!.text.display.toLowerCase();
+  for (const a of list) (artifactLists[a.resourceType] ??= { count: 0, keys: [] }).keys.push(variableKey(a));
+  for (const l of Object.values(artifactLists)) {
+    // One entry per key: two ids that differ only in punctuation share a key, as they share its variables.
+    l.keys = [...new Set(l.keys)];
+    l.keys.sort((x, y) => byTitle(x).localeCompare(byTitle(y)) || x.localeCompare(y));
+    l.count = l.keys.length;
+  }
+  return {
+    vars: { artifacts, artifact_categories: order, artifacts_listed: order.reduce((n, c) => n + c.keys.length, 0), artifact_lists: artifactLists },
+    notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)),
+  };
 }
 
 /**
@@ -785,6 +883,8 @@ export const ARTIFACTS_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-si
 export const RELEASES_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/releases.liquid");
 /** The Publisher's page footer, a Liquid include over `site.data.fhir.footer` (#1901). */
 export const FOOTER_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/ig-footer.liquid");
+/** The Publisher's `list-(simple-)?<types>.xhtml`, a Liquid include over `site.data.fhir.artifact_lists` (bean `9hfi`). */
+export const ARTIFACT_LIST_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/artifact-list.liquid");
 /** Its name under `_includes/`: prefixed, so it cannot collide with an include the IG's own source holds. */
 export const IG_FOOTER_INCLUDE = "fa-ig-footer.html";
 
@@ -1077,6 +1177,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   // Diagrams the Publisher renders from images-source, and anything else a page
   // includes that the source does not hold.
   const rendered: string[] = [];
+  const listed: string[] = [];
   const notRendered: string[] = [];
   const imagesSource = join(src, "input", "images-source");
   const wanted = new Set(pages.flatMap((f) => includeTargets(readFileSync(join(out, f), "utf-8"))));
@@ -1094,6 +1195,16 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     if (existsSync(tempInclude)) {
       copyFileSync(tempInclude, join(out, "_includes", name));
       rendered.push(name);
+      continue;
+    }
+    // The Publisher's list of one type's artefacts, from the artefact index
+    // whichever source produced it (the published IG, or an AST) — the same
+    // data `artifacts.md` reads, so the two pages cannot disagree (bean `9hfi`).
+    const listOf = opts.artifacts ? artifactListInclude(name) : undefined;
+    if (listOf) {
+      writeFileSync(join(out, "_includes", name), `{% include ${ARTIFACT_LIST_INCLUDE} type="${listOf.resourceType}"${listOf.simple ? ' simple="simple"' : ""} %}\n`);
+      writeFileSync(join(out, "_includes", ARTIFACT_LIST_INCLUDE), readFileSync(ARTIFACT_LIST_TEMPLATE_PATH, "utf-8"));
+      listed.push(name);
       continue;
     }
     writeFileSync(join(out, "_includes", name), notRenderedMarker(name, existsSync(puml) ? `input/images-source/${basename(puml)}` : "a source this build does not hold"));
@@ -1165,7 +1276,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     ].join("\n"),
   );
   const fillsResult = opts.fills?.length ? { filled, unused: opts.fills.map((x) => x.marker).filter((m) => !usedMarkers.has(m)) } : undefined;
-  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, relinked, deadLinks: [...dead].sort(), scheme, siteData };
+  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, listed, notRendered, unparseable, relinked, deadLinks: [...dead].sort(), scheme, siteData };
 }
 
 /**
@@ -1219,6 +1330,7 @@ export function describeStage(r: StageResult): string {
     ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
     ...(r.relinked ? [`links pointed where they resolve (artefact pages, the published IG, the source repository): ${r.relinked}`] : []),
     ...(r.deadLinks.length ? [`DEAD in the IG's own source — no page anywhere serves: ${r.deadLinks.join(", ")}`] : []),
+    ...(r.listed.length ? [`artefact lists written from the artefact index (the Publisher generates these): ${r.listed.join(", ")}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     r.scheme
