@@ -69,3 +69,19 @@ Driven by https://claude.ai/code/session_01SmeBn6QZsDFaNQ4GtuC2sd (Parcel B): ma
 ## 2026-10-04 — the sibling-discovery criterion is replaced (bean `k9mv`)
 
 The note above (*"separate work needs to make discovery work without the aggregate root"*) was resolved the other way, on the owner's choice: discovery stays checkout-local (`cmsl`), and the criterion now counts **paths declared in the layer that resolve only above it** — `upward-paths`. cat-harness: 0 of 134.
+
+## 2026-10-06 — every staged layer measured "not yet"; open PRs are the blocker
+
+Measured on main `f0bd0c78c` by session https://claude.ai/code/session_01FrpbCpM7BWxGCPsu618MLr, `bun run seed:ready --layer <L>` (no `--rehearse`):
+
+| layer | verdict | rule that fired | next-layer PRs | layer PRs (limit 5) | moving PRs | upward paths |
+|---|---|---|---|---|---|---|
+| cat-harness | not yet | Rule_NextLayer | 5 | 11 | 6 | 0 of 134 |
+| folio-assistant-core | not yet | Rule_NextLayer | 3 | 6 | 1 | 0 of 0 |
+| folio-assistant-sci | not yet | Rule_LayerMoves | 0 | 2 | 2 | 0 of 1 |
+| fhir-harness | not yet | Rule_NextLayer | 3 | 2 | 1 | 0 of 0 |
+| bootstrap | — | not staged here (no `livesAt`) | | | | |
+
+- **#2080 (5hox) appears in every layer's list.** It deletes ~1,200 derived files under `*/test/results/`, so it is a "moving" PR for each layer. Landing it clears one count on every row.
+- **Standalone (`check:cat-harness-standalone`):** 375 failing tests vs the committed baseline of 377 (3 now pass, `compose-docs.test.ts`). That run used Bun 1.4.2, the container default, and showed 1 new failure, `navbar-assets.test.ts > navbar.js`. Under the pinned Bun 1.3.14 (`.bun-version`, all 31 workflow steps) that test passes, so it was the environment, not main. Not yet re-run end to end on 1.3.14. For comparison: 472 on 10-03 (ho66), 482 on 10-04.
+- **Proposal, not applied:** `layerMovingPrs` counts deletions of content-addressed generated files (`docs/assets/navbar/rail-<hash>.js`, `docs/payload/sha256/*`). Those are renamed by every regen and do not change what any seeded path means, which is what `Rule_LayerMoves` says it guards. For cat-harness, measured with `git diff --name-status -M --diff-filter=DR <merge-base> <head> -- cat-harness/`: **4 of the 6** moving PRs (#2229, #2224, #2197, #2189) move ONLY such hashed files (9, 3, 15 and 15 paths). #2192 moves 2 authored files (`scripts/special-branches.json` and its test), and #2080's removal of derived results is a deliberate move, so those two count under either reading. Excluding them is a change to the gate's meaning, so it waits for the owner.
