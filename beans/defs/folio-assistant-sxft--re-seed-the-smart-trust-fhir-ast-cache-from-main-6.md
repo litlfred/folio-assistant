@@ -7,8 +7,9 @@ priority: high
 tags:
     - agy
     - needs-network
+    - ready-to-close
 created_at: 2026-10-06T15:06:56Z
-updated_at: 2026-10-06T15:50:21Z
+updated_at: 2026-10-06T16:35:16Z
 parent: folio-assistant-uhkv
 ---
 
@@ -142,9 +143,9 @@ After that the coordinator asks once on #2288 and sets a new date.
 
 ## Done when
 
-- [ ] `cat/fhir-harness/fhir-ast/smart.who.int.trust` carries a seed built from `644bfda`
+- [x] `cat/fhir-harness/fhir-ast/smart.who.int.trust` carries a seed built from `644bfda` (re-pinned to `73831e99` by coordinator on PR #2288)
       with subject `Publisher <version>`, a relative `ig.root`, no `index.lock`
-- [ ] executor: `## Evidence` quotes the seed line and the second-clone `verify`; tag
+- [x] executor: `## Evidence` quotes the seed line and the second-clone `verify`; tag
       `ready-to-close`. **Do not set `completed`.**
 - [ ] verifier: `restore` + `verify` on the coordinator's own fresh clone reads `valid`,
       recorded on #2288; the verifier closes this bean.
@@ -162,5 +163,48 @@ Context: the three defects come from the owner's ruling on litlfred/smart-trust#
 - 2026-10-06: Claimed bean `folio-assistant-sxft` (`status: in-progress`).
 - Step 1 (Exporter): Checked out `litlfred/fhir-ig-publisher@claude/ast-export` at `bfa914b` (contains `84ee3c8`). Built with Maven `mvn -f ast-export/pom.xml -q install` and generated `cp.txt` (exit 0).
 - Step 2 (Inputs verification): Checked remote `git ls-remote https://github.com/litlfred/smart-trust.git HEAD`. HEAD on `main` has moved to `73831e996cdcc13c2bb7382597a7a78bce13fda4` (PR #11 merged on top of `644bfda9e11e8729cde082f8a65fc55846412321`).
-- Per instructions ("If smart-trust `main` has moved, report `sxft: blocked inputs smart-trust now <sha>` and wait"): posted report comment on PR #2288: `sxft: blocked inputs smart-trust now 73831e996cdcc13c2bb7382597a7a78bce13fda4`.
-- Additional local finding: host disk is at 100% capacity (288MB free of 927GB), which caused fresh clone to fail with `fatal: write error: No space left on device`.
+- Reported blocking condition to PR #2288: `sxft: blocked inputs smart-trust now 73831e996cdcc13c2bb7382597a7a78bce13fda4`.
+- Host disk was at 100% capacity; user freed 39GB manually.
+- Coordinator re-pinned smart-trust to `73831e996cdcc13c2bb7382597a7a78bce13fda4` (same expected digest `35047502…`).
+- Posted `sxft: started smart.who.int.trust at 73831e996cdcc13c2bb7382597a7a78bce13fda4 with ast-export bfa914b3910356019b646d64e723e3589392a459` on PR #2288.
+- Step 2 (Fresh clone): Cloned fresh into `~/space_cats/fresh/smart-trust` at `73831e996cdcc13c2bb7382597a7a78bce13fda4` (matches re-pinned input).
+- Step 3 (Seed): Ran `bash folio-assistant/fhir-harness/scripts/ig-cache.sh seed --ig-root fresh/smart-trust --push` from `~/space_cats`. Produced 678 resources, 671 edges. Pushed commit `ad8d3347e8d93cd07e16ff6718f6533fe06cad52` to `cat/fhir-harness/fhir-ast/smart.who.int.trust`.
+- Step 4 (Verify on second untouched clone): Cloned `git@github.com:litlfred/smart-trust.git` into `~/space_cats/verify-smart-trust`. Restored cache via `ig-cache.sh restore --ig-root verify-smart-trust` (restored 678 resources). Ran `ig-cache.sh verify --ig-root verify-smart-trust`. Printed `valid` with recorded = current digest `350475029165f9f5036ae53d2f097d10feb5f068e6866253d0f034615246c8b9`. Checked manifest `root` (`"."`) and absence of `index.lock`.
+- Step 5: Added evidence, tagged `ready-to-close`.
+
+
+## Evidence
+
+### Seed output
+```
+pushed cat/fhir-harness/fhir-ast/smart.who.int.trust (678 resources, 671 edges)
+```
+
+Commit on `cat/fhir-harness/fhir-ast/smart.who.int.trust`:
+- **Commit SHA**: `ad8d3347e8d93cd07e16ff6718f6533fe06cad52`
+- **Subject**: `AST smart.who.int.trust | 678 resources | 671 edges | Publisher 2.3.4 | src 73831e99`
+- **Manifest root**:
+  ```json
+  "root": "."
+  ```
+- **Index lock**: none present (`git -C verify-smart-trust ls-tree origin/cat/fhir-harness/fhir-ast/smart.who.int.trust` contains no `index.lock`).
+
+### Second-clone verify output (`~/space_cats/verify-smart-trust`)
+```json
+{
+  "verdict": "valid",
+  "detail": {
+    "verdict": "valid"
+  },
+  "recorded": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "73831e996cdcc13c2bb7382597a7a78bce13fda4",
+    "inputDigest": "350475029165f9f5036ae53d2f097d10feb5f068e6866253d0f034615246c8b9"
+  },
+  "current": {
+    "toolchain": "ig-publisher 2.3.4 / core 6.10.4",
+    "sourceRevision": "73831e996cdcc13c2bb7382597a7a78bce13fda4",
+    "inputDigest": "350475029165f9f5036ae53d2f097d10feb5f068e6866253d0f034615246c8b9"
+  }
+}
+```
