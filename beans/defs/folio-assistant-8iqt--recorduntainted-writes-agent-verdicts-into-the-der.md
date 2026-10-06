@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8iqt
 title: recordUntainted writes agent verdicts into the DERIVED block-qa file, not the attestation store
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-01T19:22:21Z
-updated_at: 2026-10-02T07:57:02Z
+updated_at: 2026-10-06T06:09:21Z
 parent: folio-assistant-3fva
 ---
 
@@ -16,7 +16,7 @@ Found by the d6bw agent, 2026-10-01.
 ## Done when
 - [x] `recordUntainted` writes through the attestation store API, like the 9 writers 8wj1 fixed
 - [x] a test: with the derived file absent, a recorded untainted verdict lands in the store
-- [ ] lands before `5hox`
+- [x] lands before `5hox` — **verified 2026-10-06: the fix is on main (`cat-harness/content/pipeline/untainted-verification.ts:360` calls `attestationKeyForDerived`), and 5hox (#2080) is still open, so it landed first.**
 
 ## Summary of Changes
 
@@ -28,3 +28,7 @@ Commit `de510c798` on branch `qa-8iqt-e2e` (from `claude/quirky-davinci-ixuymr-p
 - Skill `untainted-verification.md` §"Where the verdict is kept" now says what the recorder does, not "still writes into the derived sidecar".
 
 Third box: whether this lands before 5hox depends on merge order. It is left open, and this bean stays in-progress until it lands.
+
+## Closed 2026-10-06 on re-measured evidence
+
+Closed by the 3fva QA-readers pass (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze). Every done-when box is ticked; the boxes that waited on a merge or a scheduled run were re-checked against GitHub on 2026-10-06 and carry their evidence inline. Closed on evidence, not authorship (bean-coordination §"Closing a bean whose work has already landed").

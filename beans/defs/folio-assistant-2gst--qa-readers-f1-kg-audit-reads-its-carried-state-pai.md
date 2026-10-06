@@ -32,7 +32,7 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 
 ## Done when
 - [x] the attestations live in `test/attestations/`, and `kg:audit` on a tree with no `test/results/` still reports the `prose-reviewed-since-code-changed` findings it reports today. Measured: 12 with the results present and 12 with them absent. Main reports 12 today; the audit's 13 was at an earlier commit.
-- [ ] with `test/results/` absent and no fetch, the test-run criteria read `unknown`, not `n/a`
+- [x] with `test/results/` absent and no fetch, the test-run criteria read `unknown`, not `n/a` — **done 2026-10-06: `checkTestRuns` returns `looked: false` for an absent directory and `kg-audit` `testRunCriteria` records all three criteria as `unknown` with the remedy (`qa:refresh` / `qa:fetch`); an existing-but-empty directory stays a determined `n/a`. Tests: `cat-harness/scripts/tests/test-run-conformance.test.ts`.**
 - [ ] `kg:audit:check` and `kg:audit:all:check` pass on `main` with `test/results/` absent from the checkout
 - [ ] a seeded new finding fails a PR, and an inherited one is reported but does not fail
 
@@ -61,7 +61,7 @@ Asked with three options, recommended first. The owner chose "count as judgement
 - Measured: with `cat-harness/test/results/` moved aside, `kg:audit:check` still reports **12** `prose-reviewed-since-code-changed` findings, the same as with the results present. Main reports 12 today; the audit's 13 was at an earlier commit. Before this change the same run gave 0 (C4).
 
 ## Done-when status (the rest)
-- [ ] the test-run criteria read `unknown`, not `n/a` (C5, `test-run-conformance.ts`): NOT done here, still open
+- [x] the test-run criteria read `unknown`, not `n/a` (C5, `test-run-conformance.ts`): done 2026-10-06, see above
 - [ ] `kg:audit:check` / `kg:audit:all:check` pass with `test/results/` absent: needs compute-and-judge against `qa-reports`, still open. With the results absent, `--check` reports 488 stale, as expected.
 - [ ] a seeded new finding fails a PR and an inherited one does not: still open, same reason
 
