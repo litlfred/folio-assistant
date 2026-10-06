@@ -21,7 +21,11 @@
     heavyMoversOpen         open PRs labelled `heavy-mover` that touch L or L+1
     nextLayerPrs            open PRs touching the next layer (L+1)
     layerPrs                open PRs touching L
-    layerMovingPrs          open PRs that rename or delete a file in L
+    layerMovingPrs          open PRs that rename or delete a file in L, not
+                            counting a generator's own names (`owned-tree`
+                            in merge-conflict-patterns.ts: content-hashed
+                            payloads and rail data, which every regen
+                            renames; owner 2026-10-06)
     standaloneRed           checks red in the sibling-layout rehearsal of L
     upwardPaths             paths DECLARED in L that resolve only in an
                             instance above L — each one breaks the day L
