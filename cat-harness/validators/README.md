@@ -41,8 +41,10 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`kg-qa-report.json`](kg-qa-report.json) | data |  |
 | [`ledger.json`](ledger.json) | data |  |
 | [`library-concern-groups.json`](library-concern-groups.json) | data |  |
+| [`library-document.json`](library-document.json) | data |  |
 | [`library-entry.json`](library-entry.json) | data |  |
 | [`library-index.json`](library-index.json) | data |  |
+| [`library-keywords.json`](library-keywords.json) | data |  |
 | [`memory-node.json`](memory-node.json) | data |  |
 | [`merge-queue-merge-queue-entry.json`](merge-queue-merge-queue-entry.json) | data |  |
 | [`node-kind-index.json`](node-kind-index.json) | data |  |
