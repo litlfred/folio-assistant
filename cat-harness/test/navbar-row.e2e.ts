@@ -1183,3 +1183,52 @@ test.describe("the Pages list is sorted in the page's own language (bean xka5)",
     });
   }
 });
+
+test.describe("on a folio's site the fish is not this site's trashcan — #2263 follow-up", () => {
+  // `foreign-site-scope.ts` re-bases the platform's fsh-guts onto the
+  // platform (an absolute href, with WHOSE in `whose`) or unlinks it with a
+  // note. The fish used to be drawn as the dialog BUTTON regardless, and its
+  // count was fetched from this site's `/fsh-guts.json`, which a folio's site
+  // does not publish: it showed "?", an error, for what is an absence.
+  const PLATFORM = "https://example.org/folio-assistant";
+  const borrowed = {
+    icons: ["fsh-guts"],
+    hrefs: { "fsh-guts": PLATFORM + "/fsh-guts/" },
+    whose: { "fsh-guts": "the platform's: smart-trust declares no fsh-guts graph" },
+    notes: {},
+    folders: [],
+  } as NavbarRow;
+  const unlinked = {
+    icons: ["fsh-guts"],
+    hrefs: {},
+    notes: { "fsh-guts": "smart-trust declares no fsh-guts graph" },
+    folders: [],
+  } as NavbarRow;
+
+  test("re-based onto the platform: a link that says whose, with no count and no dialog", async ({ page }) => {
+    const { errors } = await load(page, borrowed);
+    expect(errors).toEqual([]);
+    await expect(page.locator(".fa-nav-icons [data-fa-fsh-guts-open]")).toHaveCount(0);
+    const fish = page.locator('.fa-nav-icons a[aria-label^="fsh-guts"]');
+    await expect(fish).toHaveCount(1);
+    await expect(fish).toHaveAttribute("href", PLATFORM + "/fsh-guts/");
+    await expect(fish).toHaveAttribute("aria-label", "fsh-guts, discarded items — the platform's: smart-trust declares no fsh-guts graph");
+    await expect(fish.locator(".fa-nav-count")).toHaveCount(0);
+  });
+
+  test("unlinked: an inert icon that says why, never a '?'", async ({ page }) => {
+    const { errors } = await load(page, unlinked);
+    expect(errors).toEqual([]);
+    await expect(page.locator(".fa-nav-icons [data-fa-fsh-guts-open]")).toHaveCount(0);
+    const fish = page.locator('.fa-nav-icons [aria-label^="fsh-guts"]');
+    await expect(fish).toHaveClass(/fa-nav-icon--dead/);
+    await expect(fish).toHaveAttribute("aria-label", "fsh-guts, discarded items — smart-trust declares no fsh-guts graph");
+    await expect(page.locator(".fa-nav-icons")).not.toContainText("?");
+  });
+
+  test("the platform's own row still draws the dialog button", async ({ page }) => {
+    const { errors } = await load(page, { icons: ["fsh-guts"], hrefs: { "fsh-guts": "/fsh-guts/" }, notes: {}, folders: [] });
+    expect(errors).toEqual([]);
+    await expect(page.locator(".fa-nav-icons [data-fa-fsh-guts-open]")).toHaveCount(1);
+  });
+});
