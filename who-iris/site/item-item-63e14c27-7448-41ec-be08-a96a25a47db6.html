@@ -76,6 +76,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -426,12 +431,12 @@
 <tr><td>Upstream, at WHO</td><td><a href="https://hdl.handle.net/10665/145714"><bdi>https://hdl.handle.net/10665/145714</bdi></a></td></tr>
 <tr><td>Held here, in folio-assistant</td>
     <td><span class="none" title="copyright: refused — The publication's copyright page (library/9789241548960-eng/sections/sec-000-who-handbook-for-guideline-development.md l.31-36): &quot;© World Health Organization 2014. All rights reserved. … Requests for permission to reproduce or translate WHO publications –whether for sale or for non-commercial distribution– should be addressed to WHO Press&quot;. No such permission has been sought.; restrictions: refused — Reproduction, for sale or non-commercial distribution alike, requires WHO Press's permission (same page, l.35-36); none has been sought.">held here, not published — copyright: refused, restrictions: refused</span></td></tr>
-<tr><td>In collection</td><td><a href="collection-collection-hq-publications.html"><bdi>Publications</bdi></a><br><code>in <bdi>1. Headquarters</bdi></code></td></tr>
+<tr><td>In collection</td><td><a href="collection-collection-hq-publications.html"><bdi>Publications</bdi></a><br><code class="ui">in <bdi>1. Headquarters</bdi></code></td></tr>
 <tr><td>Ingested text (L1)</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections">who-iris/library/9789241548960-eng/sections/</a></td></tr>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections"><bdi dir="ltr">who-iris/library/9789241548960-eng/sections/</bdi></a></td></tr>
 <tr><td>Dublin Core record</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Download <bdi>9789241548960-eng.dc.json</bdi></a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/9789241548960-eng.dc.json">via CDN</a>
-      <br><code>qualified Dublin Core · 6.7 KB</code></td></tr>
+      <br><code class="ui">qualified Dublin Core · 6.7 KB</code></td></tr>
 <tr><td>Dublin Core renderings</td><td><a href="dublin-core/9789241548960-eng.dc.xml">Dublin Core XML</a>
       <br><a href="dublin-core/9789241548960-eng.dc.jsonld">JSON-LD (DCMI Terms)</a></td></tr>
 </tbody>
@@ -442,7 +447,7 @@
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Ingested replica.</strong> Rendered from <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <p><strong>Ingested replica.</strong> Rendered from <code dir="ltr">who-iris/catalogue/</code> by <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
   <div class="rule"></div>
   <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO. This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>

@@ -663,7 +663,7 @@ function linkOrWithheld(a: NonNullable<ReturnType<typeof assetHref>>, withSize: 
   }
   return (
     `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">${t("via CDN")}</a>` +
-    (withSize ? ` &middot; <code>${esc(mb(a.bytes))}</code>` : "")
+    (withSize ? ` &middot; <code class="ui">${esc(mb(a.bytes))}</code>` : "")
   );
 }
 
@@ -1379,6 +1379,11 @@ function page(
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -1706,8 +1711,8 @@ ${body}
 
 <footer class="mast"><div class="wrap">
   <p>${t("<strong>Ingested replica.</strong> Rendered from {catalogue} by {generator}. Layout after {iris}; every figure on this page is read out of the catalogue, not copied from a screenshot.", {
-    catalogue: "<code>who-iris/catalogue/</code>",
-    generator: "<code>who-iris/scripts/gen-iris-pages.ts</code>",
+    catalogue: "<code dir=\"ltr\">who-iris/catalogue/</code>",
+    generator: "<code dir=\"ltr\">who-iris/scripts/gen-iris-pages.ts</code>",
     iris: `<a href="https://iris.who.int/community-list">iris.who.int</a>`,
   })}</p>
   <div class="rule"></div>
@@ -2100,7 +2105,7 @@ function collectionCell(n: Node, all: Node[]): string {
       (c) =>
         `<a href="collection-${esc(slug(c.id))}.html">${data(c.title)}</a>` +
         (containers.filter((x) => x.flavour === "community").length
-          ? `<br><code>${t("in {communities}", { communities: data(containers.filter((x) => x.flavour === "community").map((x) => x.title).join(" / ")) })}</code>`
+          ? `<br><code class="ui">${t("in {communities}", { communities: data(containers.filter((x) => x.flavour === "community").map((x) => x.title).join(" / ")) })}</code>`
           : ""),
     )
     .join("<br>");
@@ -2207,7 +2212,7 @@ function metadataCell(n: Node): string {
   const bytes = readFileSync(abs, "utf-8").length;
   return `<a href="${esc(`${RAW}/${rel}`)}">${t("Download {file}", { file: data(n.metadataRef.split("/").pop()!) })}</a>
       <br><a class="cdn" href="${esc(`${CDN}/${rel}`)}">${t("via CDN")}</a>
-      <br><code>${t("qualified Dublin Core · {size} KB", { size: num(bytes / 1024, 1) })}</code>`;
+      <br><code class="ui">${t("qualified Dublin Core · {size} KB", { size: num(bytes / 1024, 1) })}</code>`;
 }
 
 /**
@@ -2357,7 +2362,7 @@ ${readHere(n, a)}<h3>${t("Both links, as asked for")}</h3>
     <td>${a ? linkOrWithheld(a, false) : t("not held")}</td></tr>
 <tr><td>${t("In collection")}</td><td>${collectionCell(n, all)}</td></tr>
 <tr><td>${t("Ingested text (L1)")}</td>
-    <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
+    <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections"><bdi dir="ltr">who-iris/library/${esc(n.libraryId)}/sections/</bdi></a>` : "—"}</td></tr>
 <tr><td>${t("Dublin Core record")}</td><td>${metadataCell(n)}</td></tr>
 <tr><td>${t("Dublin Core renderings")}</td><td>${renderingsCell(n)}</td></tr>
 </tbody>

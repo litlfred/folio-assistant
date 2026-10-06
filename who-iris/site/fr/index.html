@@ -76,6 +76,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -427,7 +432,7 @@ IRIS en amont recense <strong>273 559</strong> documents répartis dans <stron
     <a class="sub-title" dir="auto" lang="en" href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a>
     <p class="sub-by"><bdi lang="en">World Health Organization. Regional Office for the Western Pacific</bdi> (<bdi lang="en">WPR/RDO/2020/003</bdi>, Date de publication : <bdi>2020-05-12</bdi>)</p>
     <p class="sub-abs" dir="auto" lang="en">This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also available. For more information on WPRO publications guidelines, please contact wpropuballstaff@who.int</p>
-    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via le CDN</a> &middot; <code>2,68 Mo</code></p>
+    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via le CDN</a> &middot; <code class="ui">2,68 Mo</code></p>
   </div>
 </article>
 <article class="sub">
@@ -570,7 +575,7 @@ IRIS en amont recense <strong>273 559</strong> documents répartis dans <stron
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Réplique ingérée.</strong> Générée à partir de <code>who-iris/catalogue/</code> par <code>who-iris/scripts/gen-iris-pages.ts</code>. Mise en page d’après <a href="https://iris.who.int/community-list">iris.who.int</a> ; chaque chiffre de cette page est lu dans le catalogue, et non copié d’une capture d’écran.</p>
+  <p><strong>Réplique ingérée.</strong> Générée à partir de <code dir="ltr">who-iris/catalogue/</code> par <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code>. Mise en page d’après <a href="https://iris.who.int/community-list">iris.who.int</a> ; chaque chiffre de cette page est lu dans le catalogue, et non copié d’une capture d’écran.</p>
   <div class="rule"></div>
   <p>Source faisant foi : <a href="https://iris.who.int/">iris.who.int</a> — © OMS. Cette copie ne revendique aucune approbation et ne porte aucune marque de l’OMS.</p>
 </div></footer>

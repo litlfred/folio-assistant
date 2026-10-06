@@ -76,6 +76,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -449,12 +454,12 @@ io.observe(f);
 <tr><td>En origen, en la OMS</td><td><a href="https://hdl.handle.net/10665/332098"><bdi>https://hdl.handle.net/10665/332098</bdi></a></td></tr>
 <tr><td>Conservado aquí, en folio-assistant</td>
     <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">vía CDN</a></td></tr>
-<tr><td>En la colección</td><td><a href="collection-collection-wpro-information-products.html"><bdi>Information products</bdi></a><br><code>en <bdi>7. Regional Office for the Western Pacific</bdi></code></td></tr>
+<tr><td>En la colección</td><td><a href="collection-collection-wpro-information-products.html"><bdi>Information products</bdi></a><br><code class="ui">en <bdi>7. Regional Office for the Western Pacific</bdi></code></td></tr>
 <tr><td>Texto ingerido (L1)</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections">who-iris/library/wpr-rdo-2020-003-eng/sections/</a></td></tr>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections"><bdi dir="ltr">who-iris/library/wpr-rdo-2020-003-eng/sections/</bdi></a></td></tr>
 <tr><td>Registro Dublin Core</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Descargar <bdi>wpr-rdo-2020-003-eng.dc.json</bdi></a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">vía CDN</a>
-      <br><code>Dublin Core cualificado · 5,0 KB</code></td></tr>
+      <br><code class="ui">Dublin Core cualificado · 5,0 KB</code></td></tr>
 <tr><td>Representaciones Dublin Core</td><td><a href="../dublin-core/wpr-rdo-2020-003-eng.dc.xml">Dublin Core XML</a>
       <br><a href="../dublin-core/wpr-rdo-2020-003-eng.dc.jsonld">JSON-LD (términos DCMI)</a></td></tr>
 </tbody>
@@ -465,7 +470,7 @@ io.observe(f);
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Réplica ingerida.</strong> Generada a partir de <code>who-iris/catalogue/</code> por <code>who-iris/scripts/gen-iris-pages.ts</code>. Diseño basado en <a href="https://iris.who.int/community-list">iris.who.int</a>; cada cifra de esta página se lee del catálogo, no se copia de una captura de pantalla.</p>
+  <p><strong>Réplica ingerida.</strong> Generada a partir de <code dir="ltr">who-iris/catalogue/</code> por <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code>. Diseño basado en <a href="https://iris.who.int/community-list">iris.who.int</a>; cada cifra de esta página se lee del catálogo, no se copia de una captura de pantalla.</p>
   <div class="rule"></div>
   <p>Fuente oficial: <a href="https://iris.who.int/">iris.who.int</a> — © OMS. Esta copia no afirma ningún respaldo y no lleva ninguna marca de la OMS.</p>
 </div></footer>

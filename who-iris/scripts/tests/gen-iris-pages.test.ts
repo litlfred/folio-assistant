@@ -598,7 +598,9 @@ describe("the replica in the six UN languages — issue #2228", () => {
     // Abstracts and titles are block-level data: `dir="auto"`, never `ltr`.
     expect(home).toMatch(/<p class="sub-abs" dir="auto" lang="en">/);
     expect(home).toMatch(/<a class="sub-title" dir="auto" lang="en" /);
-    expect(home).not.toContain(`dir="ltr"`);
+    // Record data never gets `ltr`; only repository paths do, which are LTR by nature.
+    expect(home).not.toMatch(/<(?:bdi|h1|p class="sub-abs"|a class="sub-title")[^>]*dir="ltr"/);
+    expect(home).toContain(`<code dir="ltr">who-iris/catalogue/</code>`);
   });
 
   it("the interface is translated — no page in a translation carries the English chrome", () => {

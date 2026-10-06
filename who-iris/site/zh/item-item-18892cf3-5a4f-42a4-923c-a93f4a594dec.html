@@ -76,6 +76,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -449,12 +454,12 @@ io.observe(f);
 <tr><td>上游，位于世卫组织</td><td><a href="https://hdl.handle.net/10665/332098"><bdi>https://hdl.handle.net/10665/332098</bdi></a></td></tr>
 <tr><td>保存在此处，位于 folio-assistant</td>
     <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">经由 CDN</a></td></tr>
-<tr><td>所属馆藏</td><td><a href="collection-collection-wpro-information-products.html"><bdi>Information products</bdi></a><br><code>位于 <bdi>7. Regional Office for the Western Pacific</bdi></code></td></tr>
+<tr><td>所属馆藏</td><td><a href="collection-collection-wpro-information-products.html"><bdi>Information products</bdi></a><br><code class="ui">位于 <bdi>7. Regional Office for the Western Pacific</bdi></code></td></tr>
 <tr><td>收录的文本（L1）</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections">who-iris/library/wpr-rdo-2020-003-eng/sections/</a></td></tr>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections"><bdi dir="ltr">who-iris/library/wpr-rdo-2020-003-eng/sections/</bdi></a></td></tr>
 <tr><td>都柏林核心记录</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">下载 <bdi>wpr-rdo-2020-003-eng.dc.json</bdi></a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">经由 CDN</a>
-      <br><code>限定都柏林核心 · 5.0 KB</code></td></tr>
+      <br><code class="ui">限定都柏林核心 · 5.0 KB</code></td></tr>
 <tr><td>都柏林核心呈现</td><td><a href="../dublin-core/wpr-rdo-2020-003-eng.dc.xml">都柏林核心 XML</a>
       <br><a href="../dublin-core/wpr-rdo-2020-003-eng.dc.jsonld">JSON-LD（DCMI 术语）</a></td></tr>
 </tbody>
@@ -465,7 +470,7 @@ io.observe(f);
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>收录副本。</strong>由 <code>who-iris/scripts/gen-iris-pages.ts</code> 根据 <code>who-iris/catalogue/</code> 生成。版式参照 <a href="https://iris.who.int/community-list">iris.who.int</a>；本页面上的每个数字都读取自目录，而非从屏幕截图复制。</p>
+  <p><strong>收录副本。</strong>由 <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code> 根据 <code dir="ltr">who-iris/catalogue/</code> 生成。版式参照 <a href="https://iris.who.int/community-list">iris.who.int</a>；本页面上的每个数字都读取自目录，而非从屏幕截图复制。</p>
   <div class="rule"></div>
   <p>权威来源：<a href="https://iris.who.int/">iris.who.int</a> — © 世卫组织。本副本不声称获得任何认可，也不带有任何世卫组织标志。</p>
 </div></footer>
