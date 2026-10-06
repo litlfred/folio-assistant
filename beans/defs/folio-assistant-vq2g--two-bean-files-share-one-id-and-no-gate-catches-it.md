@@ -3,8 +3,10 @@
 title: Two bean FILES share one id, and no gate catches it
 status: in-progress
 type: bug
+tags:
+  - ready-to-close
 created_at: 2026-10-03T02:40:59Z
-updated_at: 2026-10-06T19:44:02Z
+updated_at: 2026-10-06T19:45:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -48,9 +50,9 @@ green run.
 
 ## Done when
 
-- [ ] A gate refuses a bean id held by more than one file, with both paths named
-- [ ] The gate is in the fast gate set, so `bun run gates` covers it
-- [ ] `folio-assistant-t3n8`'s two files are resolved by their owner (see below)
+- [x] A gate refuses a bean id held by more than one file, with both paths named
+- [x] The gate is in the fast gate set, so `bun run gates` covers it
+- [x] `folio-assistant-t3n8`'s two files are resolved by their owner (see below)
 
 ## NOT done here, on purpose
 
@@ -61,3 +63,13 @@ The remedy needs the owner, and re-identifying one of them also means fixing
 every reference to it — which is the cost the gate exists to stop recurring.
 
 _2026-10-06T19:44:02Z_ — Claimed by claude/vq2g-duplicate-bean-files — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+- Resolved by bean `folio-assistant-4vg7`:
+  - `cat-harness-tools/scripts/check-bean-front-matter.ts` groups beans in `defs/` and `archive/` by `# <id>` and flags any id declared across multiple files with the `duplicate-id` defect kind, naming all colliding files.
+  - Included in the fast gate set via `check:bean-front-matter` in `.github/workflows/code-quality-gates.yml`.
+  - `folio-assistant-t3n8` collision resolved: the archive-rung file was renamed to `folio-assistant-ke1w` by its owner with references updated; the display-names file retained `t3n8`.
+- Re-derived and verified:
+  - `bun test cat-harness-tools/scripts/tests/bean-front-matter.test.ts` (28/28 tests passing, including tests covering cross-file duplicate ID reporting and defs vs archive collision).
+  - `bun run check:bean-front-matter` (exit code 0; 0 duplicate ID defects across 1589 beans).
+  - Independent scan over `beans/defs` confirms 0 duplicate IDs among all bean files.
