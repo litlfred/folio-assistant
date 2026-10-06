@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7pp6
 title: A column-0 pseudo-tag in a published markdown source is caught only AFTER merge — five hand-fixes and no gate
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-01T06:29:56Z
-updated_at: 2026-10-01T06:36:29Z
+updated_at: 2026-10-06T23:37:28Z
 parent: folio-assistant-o3xy
 ---
 
@@ -165,3 +165,5 @@ and the measurement is why:** `library/` publishes **0 of 1460** built pages,
 so a gate reaching it would fail over a page nobody renders — the scope axis
 widened past the problem. If `library/` ever publishes, add its directories to
 the `--source` argument list and this becomes the first finding.
+
+_2026-10-06T23:37:28Z_ — Claimed by claude/7pp6-close-landed-escaped-markup-source — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
