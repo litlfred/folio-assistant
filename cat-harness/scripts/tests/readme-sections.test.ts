@@ -7,6 +7,11 @@
  * test here that looks like bookkeeping — untouched prose, absent markers,
  * no-markers-at-all — is really asserting that no code path writes outside a
  * region the folio explicitly marked.
+ *
+ * The tests of this file that read the whole checkout (reads the root
+ * instance's declaration (`memory/`) or the checkout's own submodule layout)
+ * live in `test/readme-sections-checkout.test.ts` (bean `7zz1`): standing
+ * alone, cat-harness has none of it.
  */
 import { describe, test, it, expect, afterEach } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
@@ -272,15 +277,6 @@ describe("cat-harness:instances — both entries, per instance (issue #592)", ()
     expect(out.markdown).toContain("| `bootstrap` |");
   });
 
-  it("a declared `scope: \"repository\"` directory is linked at the REPOSITORY root", () => {
-    // cat-harness declares `memory/` with `scope: "repository"`. Composing
-    // `./cat-harness/memory/` rendered a link to a directory that is not
-    // there — and a dead link in a generated table is worse than a missing
-    // row, because the row asserts the entry exists.
-    expect(out.markdown).toContain("[memory](memory/)");
-    expect(out.markdown).not.toContain("./cat-harness/memory/");
-  });
-
   // The gap behaviour is tested against a FIXTURE rather than the real tree.
   // It used to assert on `who-style-guide`, which had no agent entry when this
   // was written and has one now — so the test was measuring the repository's
@@ -453,10 +449,5 @@ describe("isSubmoduleRoot — `--all` skips a README another repository owns (be
     mkdirSync(join(own, ".git"));
     expect(isSubmoduleRoot(own)).toBe(false);
     expect(isSubmoduleRoot(tmp())).toBe(false);
-  });
-
-  it("this checkout's bootstrap-tools is one (the case the skip exists for)", () => {
-    const bt = resolve(import.meta.dir, "../../../bootstrap-tools");
-    expect(isSubmoduleRoot(bt)).toBe(true);
   });
 });

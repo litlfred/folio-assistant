@@ -9,6 +9,11 @@
  * The end-to-end test is the load-bearing one: it scaffolds into a temp dir,
  * links the platform, and renders. A layout mistake shows up there and
  * nowhere else, because every individual file is syntactically fine.
+ *
+ * The tests of this file that read the whole checkout (scaffolds against the
+ * adapters folio-assistant-core and folio-assistant-sci hold) live in
+ * `test/init-folio-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, test, expect, afterEach } from "bun:test";
 import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, symlinkSync } from "fs";
@@ -209,59 +214,6 @@ describe("what gets written", () => {
       expect(r.created).toContain(f);
       expect(existsSync(join(d, f))).toBe(true);
     }
-  });
-
-  test("the config selects the adapter matching the content type", () => {
-    // `toBe`, not `toContain`, and that is the whole point of this test now.
-    //
-    // It pinned the SUBSTRINGS `adapters/document/index.ts` and
-    // `adapters/paper/index.ts` until 2026-09-30, and both survive a wrong
-    // answer: when `adapters/paper/` moved to `folio-assistant-sci/` (bean
-    // `y5si`), the old composed path
-    // `./folio-assistant/cat-harness/adapters/paper/index.ts` still contained
-    // its substring while naming a file that does not exist. A gate that
-    // cannot tell the right path from the broken one is not covering the
-    // thing it looks like it covers, so each full path is written out.
-    //
-    // The two differ in their INSTANCE, which is the fact worth pinning, and
-    // since 2026-09-30 NEITHER is under `cat-harness/`: `document` under
-    // `folio-assistant-core/` (bean `ybp4`, step 2 of the adapters closure)
-    // and `paper` under `folio-assistant-sci/` (bean `y5si`, step 1). That is
-    // the whole closure — the escape axis reads 0 because the harness no
-    // longer holds an adapter that imports upward.
-    //
-    // This assertion is why `toBe` replaced `toContain`, and it earned that on
-    // the very next move: the document path changed instance, and a substring
-    // pin on `adapters/document/index.ts` would have passed over it silently.
-    // A change that re-composes both from one template breaks this line.
-    const doc = tmp();
-    initFolio(opts(doc));
-    const docCfg = JSON.parse(readFileSync(scaffoldConfigIn(doc), "utf-8"));
-    expect(docCfg.contentType).toBe("document");
-    expect(docCfg.adapterModule).toBe("./folio-assistant/folio-assistant-core/adapters/document/index.ts");
-    // The document entry's `module` now starts `../` too, exactly as paper's
-    // does, so it has to RESOLVE rather than carry the segment through.
-    expect(docCfg.adapterModule).not.toContain("..");
-
-    const pap = tmp();
-    initFolio(opts(pap, { contentType: "paper" }));
-    const papCfg = JSON.parse(readFileSync(scaffoldConfigIn(pap), "utf-8"));
-    expect(papCfg.contentType).toBe("paper");
-    expect(papCfg.adapterModule).toBe("./folio-assistant/folio-assistant-sci/adapters/paper/index.ts");
-  });
-
-  test("the adapter path is normalised, and a non-default link path is honoured", () => {
-    // The paper entry's `module` in `BUILTIN_ADAPTERS` starts `../`, because
-    // it is relative to `cat-harness/`. Joining it to the link path has to
-    // RESOLVE that segment rather than leave it in the string: a config
-    // carrying `vendor/fa/cat-harness/../folio-assistant-sci/...` resolves to
-    // the same file, but it reads as a mistake and would not survive anyone
-    // tidying it by hand.
-    const d = tmp();
-    initFolio(opts(d, { contentType: "paper", assistantPath: "vendor/fa" }));
-    const cfg = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
-    expect(cfg.adapterModule).toBe("./vendor/fa/folio-assistant-sci/adapters/paper/index.ts");
-    expect(cfg.adapterModule).not.toContain("..");
   });
 
   test("the builder shim is the only place the platform path is written", () => {
@@ -646,28 +598,5 @@ describe("a scaffold says what it stands on (zmdo)", () => {
     expect(chain).toContain("bootstrap");
     expect(chain).not.toContain("folio-assistant-core");
     expect(skillRoots(d)).toContain("cat-harness/skills");
-  });
-
-  test("a document folio stands on its adapter's instance, folio-assistant-core", () => {
-    const d = tmp();
-    initFolio(opts(d));
-    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
-    expect(config.dependencies).toEqual({
-      folioAssistant: [{ name: "folio-assistant-core", path: "folio-assistant/folio-assistant-core" }],
-    });
-    symlinkSync(REPO_ROOT, join(d, "folio-assistant"));
-    const chain = chainNames(d);
-    expect(chain).toContain("folio-assistant-core");
-    expect(chain).toContain("cat-harness");
-    expect(skillRoots(d)).toContain("folio-assistant-core/skills");
-  });
-
-  test("a paper folio stands on folio-assistant-sci; a sibling link path is honoured", () => {
-    const d = tmp();
-    initFolio(opts(d, { contentType: "paper", link: "sibling", assistantPath: "../platform" }));
-    const config = JSON.parse(readFileSync(scaffoldConfigIn(d), "utf-8"));
-    expect(config.dependencies).toEqual({
-      folioAssistant: [{ name: "folio-assistant-sci", path: "../platform/folio-assistant-sci" }],
-    });
   });
 });
