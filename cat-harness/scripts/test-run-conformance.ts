@@ -41,6 +41,13 @@ export interface TestRunConformance {
   checked: number;
   /** Every `*.test-run.json` found. */
   runs: number;
+  /**
+   * Whether the results directory was there to look in. Absent is NOT "no
+   * runs": since 5hox the directory is derived and may simply not have been
+   * computed or fetched, so a caller must report `unknown`, never `n/a`
+   * (audit C5, bean `2gst`).
+   */
+  looked: boolean;
 }
 
 /** The `*.test-run.json` files directly under `dir`. */
@@ -56,7 +63,8 @@ export function testRunFiles(dir: string): string[] {
 const SHOWN = 3;
 
 export function checkTestRuns(root: string, resultsDir: string, knownSkills: Set<string>): TestRunConformance {
-  const out: TestRunConformance = { unresolved: [], nonconforming: [], unchecked: [], checked: 0, runs: 0 };
+  const out: TestRunConformance = { unresolved: [], nonconforming: [], unchecked: [], checked: 0, runs: 0, looked: existsSync(resultsDir) };
+  if (!out.looked) return out;
   const contracts = skillContracts(root);
   const schemaCache = new Map<string, ZodType | Error>();
   // Against the instance HOLDING the skill: its local contract path is

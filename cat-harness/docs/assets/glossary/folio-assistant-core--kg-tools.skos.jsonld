@@ -112,6 +112,26 @@
       "skos:notation": "folio-review-coverage",
       "dcterms:source": "folio-assistant-core/tools/index.ts#folio-review-coverage",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools/glossary-build",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Glossary build"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change."
+        }
+      ],
+      "skos:notation": "glossary-build",
+      "dcterms:source": "folio-assistant-core/tools/index.ts#glossary-build",
+      "skos:note": "candidate"
     }
   ]
 }

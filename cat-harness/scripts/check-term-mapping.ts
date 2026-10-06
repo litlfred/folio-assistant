@@ -35,6 +35,9 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
+import { instanceDirectoriesForGraph } from "../schemas/cat-harness.ts";
+import { instanceRootsIn } from "../schemas/instance-roots.ts";
+
 import {
   MAPPING_TARGETS,
   type ConceptMatch,
@@ -73,7 +76,16 @@ interface GlossScheme {
   file: string;
 }
 
-/** Every file under the glossary directory whose name ends in `suffix`. */
+/**
+ * Every file whose name ends in `suffix` under a declared `glossary` graph of
+ * any instance in this checkout.
+ *
+ * Found through the declarations, not a literal path: this script lives in
+ * cat-harness and the glossary is declared by folio-assistant-core, a layer
+ * ABOVE it. A hard-coded `folio-assistant-core/glossary` was an upward path no
+ * import gate sees, and it would scan nothing — silently — the day cat-harness
+ * stands alone (separation placement review, 2026-10-06, bean `0r7u` step 0).
+ */
 function glossaryFiles(root: string, suffix: string): string[] {
   const out: string[] = [];
   const walk = (dir: string) => {
@@ -96,7 +108,9 @@ function glossaryFiles(root: string, suffix: string): string[] {
       else if (n.endsWith(suffix)) out.push(abs);
     }
   };
-  walk(join(root, "folio-assistant-core", "glossary"));
+  for (const instance of instanceRootsIn(root)) {
+    for (const dir of instanceDirectoriesForGraph(instance, "glossary")) walk(dir);
+  }
   return out;
 }
 
