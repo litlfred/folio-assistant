@@ -591,14 +591,14 @@
     {
       "id": "folio-assistant-1bvx",
       "title": "check:reference-direction fails on main and is in NO workflow — nothing catches it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:13:49Z",
-      "updatedAt": "2026-10-01T17:45:55Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "Measured on `main` `25bff68c4f3`, 2026-09-30.\n\n```\n$ bun run check:reference-direction\n✗ 1 PENDING entr(y/ies) no longer qualify — delete them\n✗ 91 file(s) name several instances above them and are not in PENDING\nexit 1\n```\n\n```\n$ grep -q \"bun run check:reference-direction\" .github/workflows/*.yml\nnot in any workflow\n```\n\n**Red on the default branch, and run by nothing.** That is `1xhc` in its\npur",
       "file": "beans/defs/folio-assistant-1bvx--checkreference-direction-fails-on-main-and-is-in-n.md"
     },
@@ -2681,14 +2681,14 @@
     {
       "id": "folio-assistant-6lre",
       "title": "CI WATCH READS A PARTIAL CHECK SET AS GREEN: 1 of 13 registered, verdict PASS — ask the check SUITES, not only the runs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T16:15:00Z",
-      "updatedAt": "2026-09-30T18:43:38Z",
+      "updatedAt": "2026-10-06T14:57:00Z",
       "preview": "Found while using the tool, not while reading it. Sibling of `2c2b`, which\nshipped `ci:watch` for issue #1624.\n\n## The defect, measured\n\n`bun run ci:watch 29b10a68923` at 16:13:58:\n\n```\n16:13:58  29b10a68923  PASS — 1 check(s) completed clean\n```\n\nexit **0**. At that instant `get_check_runs` on the same commit returned\n`total_count: 1` — the `.jsonld siblings` job — and **nothing else had been\ncre",
       "file": "beans/defs/folio-assistant-6lre--ci-watch-reads-a-partial-check-set-as-green-1-of-1.md"
     },
@@ -6445,7 +6445,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T07:58:59Z",
-      "updatedAt": "2026-10-06T14:10:58Z",
+      "updatedAt": "2026-10-06T14:11:01Z",
       "preview": "Owner, 2026-10-06, from a screenshot of the staging preview of #2261 (Arabic selected): \"note bean up arabic display issues\".\n\n## Observed (screenshot, AR active in the language selector)\n- The one-line notice reads \"…matically and has — **Unverified translation** ⚠\": the English sentence is laid out right-to-left, so its start ('⚠ Unverified translation —') sits at the RIGHT end, and the one-line",
       "file": "beans/defs/folio-assistant-giiw--arabic-rtl-display-the-unverified-translation-noti.md"
     },
@@ -7284,14 +7284,14 @@
     {
       "id": "folio-assistant-j27s",
       "title": "PAGES CANCELLATION: batch staging-preview pushes to gh-pages so the main-site Pages build is not cancelled (#1868 option 1)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:07:15Z",
-      "updatedAt": "2026-10-03T09:30:00Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "Issue #1868, second problem (comment 2026-10-02T18:10Z): GitHub's pages-build keeps only the newest run and staging pushes land every few minutes, so main-site deploys are cancelled. Owner ruling 2026-10-03 (this session): option 1, push staging previews to gh-pages less often (batch / rate-limit).\n\n## Done when\n- [x] tracking issue for option 1 opened and linked from #1868 — done as #1956\n- [x] f",
       "file": "beans/defs/folio-assistant-j27s--pages-cancellation-batch-staging-preview-pushes-to.md"
     },
@@ -11543,14 +11543,14 @@
     {
       "id": "folio-assistant-uvt0",
       "title": "who-iris replica: the locale band shifts the page 52px; make it an overlay (owner: no shift)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T08:56:44Z",
-      "updatedAt": "2026-10-06T12:30:00Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "**Owner ruling, 2026-10-06** (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92), option 1 of 3: *\"Overlay, no shift\"*. The language band must not move the replica.\n\n## The defect\nWhen a who-iris replica page carries a `fa-translation-meta` block, `docs-ui.js` puts the locale globe in a band inside the page flow, between `.crumbs` and `<main>`. The band is 40 px tall and pushes `<mai",
       "file": "beans/defs/folio-assistant-uvt0--who-iris-replica-the-locale-band-shifts-the-page-5.md"
     },
@@ -12057,14 +12057,14 @@
     {
       "id": "folio-assistant-vzo5",
       "title": "check:reference-direction runs in NO workflow, so its PENDING guard — the half its docblock calls enforced — fires nowhere",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T22:16:35Z",
-      "updatedAt": "2026-10-01T17:46:56Z",
+      "updatedAt": "2026-10-06T14:30:00Z",
       "preview": "Found by a goal-review sweep, 2026-09-29, on `origin/main` @ `35402147f55`.\n\n`zhg2` shipped `check:reference-direction` (PR #1222, merged 2026-09-26) and\nregistered it in `gates.ts` as `kind: \"report\"` — advisory, deliberately,\nbecause the wrong-direction count is 574 and *\"a gate that fails on a backlog\nis a gate somebody switches off\"*. That reasoning is sound and is not what\nthis bean disputes.",
       "file": "beans/defs/folio-assistant-vzo5--checkreference-direction-runs-in-no-workflow-so-it.md"
     },
@@ -15045,13 +15045,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 567,
-        "closed": 223,
-        "open": 344,
-        "inProgress": 123,
+        "closed": 228,
+        "open": 339,
+        "inProgress": 118,
         "todo": 220,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3932980599647266
+        "share": 0.4021164021164021
       },
       {
         "id": "folio-assistant-vuip",
@@ -15085,8 +15085,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 541,
-    "coveredOpen": 538,
+    "openTotal": 536,
+    "coveredOpen": 533,
     "duplicateIds": 0
   }
 }
