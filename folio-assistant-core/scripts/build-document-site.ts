@@ -62,6 +62,8 @@ import { visit } from "unist-util-visit";
 
 import { folioDir } from "../../cat-harness/schemas/cat-harness.js";
 import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
+import { detectRepoUrl, ownerRepo } from "../../cat-harness/src/core/git-refs.js";
+import { DEFAULT_TEMPLATE, injectBlockActions, readIssueForm, type BlockActionsConfig, type BlockContext } from "./block-actions.js";
 import type { Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
 import { buildDocumentMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
 import { reviewPageHtml } from "../../cat-harness/scripts/gen-review-page.js";
@@ -366,6 +368,60 @@ export async function documentOutline(manifestPath: string, folioRoot: string, s
   return doc;
 }
 
+/**
+ * Every labelled block of one document, with its source file and section, in
+ * manifest order: what [edit] and [feedback] are built from (`block-actions`).
+ * The source is the block's `.md` when it has one (the prose a person edits),
+ * else its `.ts` manifest.
+ */
+export async function documentBlocks(manifestPath: string, repoRoot: string, slug: string): Promise<BlockContext[]> {
+  const docDir = dirname(manifestPath);
+  const paper = (await import(manifestPath)).default as Paper;
+  const out: BlockContext[] = [];
+  for (const chRef of paper.chapters) {
+    const chDir = join(docDir, chRef.dir);
+    const chPath = join(chDir, `${chRef.dir}.ts`);
+    if (!existsSync(chPath)) continue;
+    const chapter = (await import(chPath)).default as Chapter;
+    const walk = async (secs: Array<Section | SectionRef>) => {
+      for (const sec of secs) {
+        if (isRef(sec)) continue;
+        for (const root of sec.blocks) {
+          const ts = join(chDir, `${root}.ts`);
+          if (!existsSync(ts)) continue;
+          const b = (await import(ts)).default as { label?: string };
+          if (!b.label) continue;
+          const md = join(chDir, `${root}.md`);
+          out.push({ label: b.label, source: relative(repoRoot, existsSync(md) ? md : ts), section: sec.title, page: `${slug}/index.html` });
+        }
+        if (sec.subsections) await walk(sec.subsections);
+      }
+    };
+    await walk(chapter.sections);
+  }
+  return out;
+}
+
+/**
+ * Where [edit] and [feedback] point, from the build's environment: the
+ * repository is `GITHUB_REPOSITORY` in CI, else the checkout's `origin`; the
+ * issue form is the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when
+ * it has one. Explicit options win.
+ */
+export function defaultBlockActions(repoRoot: string, over: Partial<BlockActionsConfig> = {}): BlockActionsConfig {
+  const origin = detectRepoUrl(repoRoot);
+  const repo = over.repo ?? process.env.GITHUB_REPOSITORY ?? (origin?.includes("github.com") ? ownerRepo(origin) : undefined);
+  const template = over.template ?? DEFAULT_TEMPLATE;
+  const fields = readIssueForm(repoRoot, template);
+  return {
+    ...(repo ? { repo } : {}),
+    branch: over.branch ?? "main",
+    ...(fields ? { template, templateFields: fields } : {}),
+    ...(over.labels ? { labels: over.labels } : {}),
+    ...(over.siteUrl ? { siteUrl: over.siteUrl } : {}),
+  };
+}
+
 export interface SiteBuildResult {
   documents: { slug: string; blocks: number; page: string }[];
   errors: string[];
@@ -374,7 +430,7 @@ export interface SiteBuildResult {
 export async function buildDocumentSite(
   repoRoot: string,
   outDir: string,
-  opts: { math?: boolean } = {},
+  opts: { math?: boolean; actions?: Partial<BlockActionsConfig> | false } = {},
 ): Promise<SiteBuildResult> {
   // Math defaults on only for a paper instance; see the note on renderDocumentHtml.
   const math = opts.math ?? readHarnessConfig(repoRoot)?.contentType === "paper";
@@ -392,10 +448,13 @@ export async function buildDocumentSite(
     const manifest = (await import(d.path)).default as Paper;
     const dir = join(outDir, d.slug);
     mkdirSync(dir, { recursive: true });
-    writeFileSync(
-      join(dir, "index.html"),
-      page(manifest.title ?? d.slug, html, math ? { macros: katexMacros(manifest.macros) } : undefined),
-    );
+    let pageHtml = page(manifest.title ?? d.slug, html, math ? { macros: katexMacros(manifest.macros) } : undefined);
+    // [edit] and [feedback] on every block (REQ-17, bean uphx). Off only when asked.
+    if (opts.actions !== false) {
+      const cfg = defaultBlockActions(repoRoot, opts.actions ?? {});
+      pageHtml = injectBlockActions(pageHtml, await documentBlocks(d.path, repoRoot, d.slug), cfg).html;
+    }
+    writeFileSync(join(dir, "index.html"), pageHtml);
     // A document's images live in `folio/<slug>/media/` and its blocks link
     // them as `media/<file>`, relative to the document's page. Copied, so a
     // figure in the preview is the figure in the folio.
@@ -426,14 +485,23 @@ if (import.meta.main) {
   };
   if (args.includes("--help")) {
     console.log(
-      "usage: bun run folio-assistant-core/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site] [--math | --no-math]",
+      "usage: bun run folio-assistant-core/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site] [--math | --no-math]\n" +
+        "         [--github <owner/repo>] [--edit-branch main] [--issue-template block-feedback.yml] [--site-url <url>] [--no-block-actions]",
     );
     process.exit(0);
   }
   const repo = resolve(opt("repo") ?? process.cwd());
   const out = resolve(repo, opt("out") ?? "_site");
   const math = args.includes("--math") ? true : args.includes("--no-math") ? false : undefined;
-  const r = await buildDocumentSite(repo, out, { math });
+  const actions = args.includes("--no-block-actions")
+    ? false
+    : {
+        ...(opt("github") ? { repo: opt("github") } : {}),
+        ...(opt("edit-branch") ? { branch: opt("edit-branch") } : {}),
+        ...(opt("issue-template") ? { template: opt("issue-template") } : {}),
+        ...(opt("site-url") ? { siteUrl: opt("site-url") } : {}),
+      };
+  const r = await buildDocumentSite(repo, out, { math, actions });
   for (const d of r.documents) console.error(`  ${d.page}  ${d.blocks} block(s)`);
   if (r.errors.length > 0) {
     for (const e of r.errors) console.error(`✗ ${e}`);

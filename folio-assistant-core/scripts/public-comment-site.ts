@@ -387,13 +387,16 @@ ${body}
  * comments are inlined as JSON, and a small script places a collapsible note
  * after each block's anchor. With scripts off the document reads as before.
  */
-export function overlaySnippet(rows: SiteComment[]): string {
+export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issues?: Record<string, number> } = {}): string {
   const byTarget: Record<string, Array<Pick<SiteComment, "ref" | "status" | "phase" | "type" | "summary" | "decision"> & { sets?: string[] }>> = {};
   for (const r of rows) {
     if (!r.target) continue;
     (byTarget[r.target] ??= []).push({ ref: r.ref, status: r.status, phase: r.phase, type: r.type, summary: r.summary, ...(r.decision ? { decision: r.decision } : {}), ...(r.changeSets.length ? { sets: r.changeSets.map((c) => c.id) } : {}) });
   }
   const json = JSON.stringify(byTarget).replace(/</g, "\\u003c");
+  // The change-sets' issues, so a block's [feedback] can point at the
+  // discussion that already exists (REQ-17, bean uphx).
+  const meta = JSON.stringify({ repo: opts.repo ?? "", issues: opts.issues ?? {} }).replace(/</g, "\\u003c");
   return `
 <style>
   .pc-note { border-left:4px solid var(--link,#0b5cad); margin:.4rem 0 .8rem; padding:.2rem .7rem; font-size:.9rem; background:color-mix(in srgb, currentColor 4%, transparent); }
@@ -402,9 +405,11 @@ export function overlaySnippet(rows: SiteComment[]): string {
   .pc-bar { position:sticky; top:0; z-index:1; padding:.4rem 0; background:var(--bg,#fdfdfb); border-bottom:1px solid #8884; margin-bottom:1rem; }
 </style>
 <script type="application/json" id="pc-data">${json}</script>
+<script type="application/json" id="pc-meta">${meta}</script>
 <script>
 (() => {
   const data = JSON.parse(document.getElementById("pc-data").textContent);
+  const meta = JSON.parse(document.getElementById("pc-meta").textContent);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   let total = 0, open = 0;
   for (const [label, list] of Object.entries(data)) {
@@ -419,6 +424,16 @@ export function overlaySnippet(rows: SiteComment[]): string {
       list.map((c) => "<li><a href=\\"../public-comments/index.html#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
         (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") + (c.sets ? " · " + c.sets.map((id) => "<a href=\\"../public-comments/index.html#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") + " — "+ esc(c.summary) + "</li>").join("") + "</ul>";
     host.after(d);
+    // Beside the block's [feedback]: the issues where its change-sets are
+    // already being discussed, so a reader joins rather than duplicates.
+    const acts = document.querySelector('.block-actions[data-block="' + CSS.escape(label) + '"]');
+    const nums = [...new Set(list.flatMap((c) => (c.sets || []).map((id) => meta.issues[id]).filter(Boolean)))];
+    if (acts && meta.repo && nums.length) {
+      const s = document.createElement("span");
+      s.className = "ba-existing";
+      s.innerHTML = "discussed in " + nums.map((n) => "<a href=\\"https://github.com/" + esc(meta.repo) + "/issues/" + n + "\\">#" + n + "</a>").join(" ");
+      acts.append(s);
+    }
   }
   const bar = document.createElement("div");
   bar.className = "pc-bar";
@@ -445,7 +460,8 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   const docPage = join(out, cfg.document, "index.html");
   if (!existsSync(docPage)) throw new Error(`${docPage} is missing: run build-document-site.ts --out ${out} first`);
   const html = readFileSync(docPage, "utf-8");
-  if (!html.includes('id="pc-data"')) writeFileSync(docPage, html.replace("</body>", `${overlaySnippet(rows)}</body>`));
+  const issues = Object.fromEntries(sets.filter((c) => c.issue).map((c) => [c.id, c.issue!]));
+  if (!html.includes('id="pc-data"')) writeFileSync(docPage, html.replace("</body>", `${overlaySnippet(rows, { ...(cfg.repo ? { repo: cfg.repo } : {}), issues })}</body>`));
   mkdirSync(join(out, "public-comments"), { recursive: true });
   writeFileSync(
     join(out, "public-comments", "index.html"),
