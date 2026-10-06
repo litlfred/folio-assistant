@@ -237,6 +237,11 @@ describe("a folio's own repository (hp54)", () => {
   /** A folio `x` declaring `beans/` on `cat/x/beans`, committed on main while main still tracks it. */
   function folio(): ReturnType<typeof remote> {
     const r = remote();
+    // `cutoverMain` commits with plain `git commit`, so the clone needs an
+    // identity of its own — CI's fresh HOME has none (the env `run` passes
+    // does not reach a commit the module under test makes).
+    run(r.work, "config", "user.name", "t");
+    run(r.work, "config", "user.email", "t@t");
     writeFileSync(
       join(r.work, "x.json"),
       JSON.stringify({

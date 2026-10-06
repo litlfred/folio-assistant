@@ -303,18 +303,21 @@ function stateEntry(slug: string, g: StateGraphDef): {
  * source, on the branch (via the seed command) for a `branch` one. One list,
  * so the two placements cannot start from different content.
  */
-function stateGraphFiles(slug: string, id: StateGraphDef["id"]): Record<string, string> {
-  // `beans/beans.json` is the bean graph's own declaration, and it is not
-  // optional once the graph is on a branch: `beans:claim` reads it FROM THE
-  // BRANCH to find the \`bean-defs\` directory and refuses to guess (measured
-  // end to end on a fresh repository, 2026-10-06). Same layout as the
-  // platform's own: the CLI's store at \`beans/defs\`.
-  if (id === "beans") return { "beans/beans.json": beansGraph(slug), "beans/defs/.gitkeep": "" };
+function stateGraphFiles(slug: string, g: StateGraphDef): Record<string, string> {
+  // Composed from the graph's OWN entry path, never spelled whole: the paths
+  // below are relative to whatever directory the entry names.
+  const at = (rel: string): string => `${g.path.replace(/\/+$/, "")}/${rel}`;
+  // `beans.json` is the bean graph's own declaration, and it is not optional
+  // once the graph is on a branch: `beans:claim` reads it FROM THE BRANCH to
+  // find the \`bean-defs\` directory and refuses to guess (measured end to end
+  // on a fresh repository, 2026-10-06). Same layout as the platform's own: the
+  // CLI's store at \`defs/\`.
+  if (g.id === "beans") return { [at("beans.json")]: beansGraph(slug), [at("defs/.gitkeep")]: "" };
   return {
-    "todos/todos.json": todosGraph(slug),
-    "todos/items/.gitkeep": "",
-    "todos/feedback/.gitkeep": "",
-    "todos/verdicts/.gitkeep": "",
+    [at("todos.json")]: todosGraph(slug),
+    [at("items/.gitkeep")]: "",
+    [at("feedback/.gitkeep")]: "",
+    [at("verdicts/.gitkeep")]: "",
   };
 }
 
@@ -1349,11 +1352,11 @@ function writeInstanceFiles(s: Scaffold): void {
       // The todos graph and every directory it declares: declaring a directory
       // that does not exist is the `dh4f` defect (a consumer scans nothing and
       // reports a clean run).
-      for (const [path, text] of Object.entries(stateGraphFiles(o.slug, g.id as StateGraphDef["id"]))) write(path, text);
+      for (const [path, text] of Object.entries(stateGraphFiles(o.slug, INSTANCE_STATE_GRAPHS.find((d) => d.id === g.id)!))) write(path, text);
       continue;
     }
     if (g.source.kind === "branch") {
-      g.seed = stateSeedCommand(g.source.branch, g.id, stateGraphFiles(o.slug, g.id as StateGraphDef["id"]));
+      g.seed = stateSeedCommand(g.source.branch, g.id, stateGraphFiles(o.slug, INSTANCE_STATE_GRAPHS.find((d) => d.id === g.id)!));
       s.result.notes.push(
         `${g.path} is declared on branch ${g.source.branch} (keyedBy ${g.source.keyedBy}) and was NOT written into the checkout. ` +
           `No platform command creates a new state branch, so seed it once, from this repository, with:\n${g.seed}\n` +
