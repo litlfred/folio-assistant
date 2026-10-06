@@ -6,7 +6,7 @@
 
 The content layer's own ContentAdapters. `document/` arrived 2026-09-30 as step 2 of the adapters closure (bean `ybp4`, planned in `r0tm`, ruled by the owner as option A: two PRs, paper first). It took the `cat-harness ->` sibling-import count from 2 to 0 — the last two escapes were `intake-records.ts` and its test, both importing `schemas/dublin-core.js` UP out of the harness, and both are now intra-instance. The remedy is `yj6r`'s throughout: the CONSUMER moves up and the schema stays; no schema moved down into `cat-harness/schemas/`, which that bean forbids as buying a green gate by relocating the boundary the gate protects. The directory's own imports into `cat-harness/src/`, `cat-harness/schemas/` and `cat-harness/content/pipeline/` are DOWNWARD and therefore legal — core declares `needs: ["cat-harness"]`. Its six consuming tests moved with it into `scripts/tests/`, because a test does not leave its subject to make a count fall. Three things shipped in the same commit because each fails SILENTLY rather than loudly: this declaration, `tsconfig.json`'s `include` entry (without it `bun run typecheck` goes green while covering twelve fewer files, and no gate reports a shrinking program), and the `BUILTIN_ADAPTERS` module path — which is resolved by VARIABLE specifier, so no static-import gate would have caught it. `paper/` is not here: it is the science layer's and lives in `folio-assistant-sci/adapters/paper/` since bean `y5si`, step 1 of the same closure.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-adapters`, holding `code`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-adapters`, holding `code`.
 
 | file | what it is | used by |
 |---|---|---|

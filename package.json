@@ -389,6 +389,7 @@
     "qa:publish": "bun run cat-harness/scripts/qa-store.ts publish",
     "qa:refresh": "bun run cat-harness-tools/scripts/qa-refresh.ts",
     "qa:resolve-conflicts": "bun run cat-harness/scripts/qa-resolve-conflicts.ts",
+    "qa:working-copy": "bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out build/bootstrap-kg-export.jsonld && bun run qa:refresh",
     "qa:verify-moved": "bun run cat-harness/scripts/qa-verify-moved.ts",
     "raci": "bun run cat-harness/scripts/raci-chart.ts",
     "readme:audit": "bun run cat-harness/content/pipeline/readme-links.ts",
