@@ -64,6 +64,23 @@ else `--github <owner/repo>`. **No repository, no links**: a page with no
 links is honest, a page with broken ones is not. `--no-block-actions` turns
 them off for a build that should have none.
 
+## Two forms of the same links
+
+- **Full** (`blockActionsHtml`): every href written into the page. Used on a
+  one-page document and on `full.html`, so the links work without
+  JavaScript.
+- **Compact** (`compactActionsHtml` + `compactActionsScript`): the block's
+  facts as data attributes, and the hrefs built in the browser when a pointer
+  or focus reaches them. Used on a lazy page's shell, where 933 prefilled
+  feedback URLs cost 864 KB. The browser builder, `BLOCK_URLS_JS`, is held
+  equal to `editUrl` and `feedbackUrl` by `block-actions.test.ts`; change both
+  together or the test fails.
+
+**Any page that shows edit or feedback links uses these,** not a URL of its
+own: one recipe, so a change to the issue form or the branch reaches every
+page at once (owner, 2026-10-06: *"make sure feedback/edit links are changed
+across all harness/visualizers to be dynamic"*).
+
 ## Using it as an agent
 
 ```sh

@@ -9,7 +9,7 @@ import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkS
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { buildDocumentSite, citationsToHtml, documentManifests, katexMacros, renderDocumentHtml, type Outline } from "./build-document-site.js";
+import { buildDocumentSite, citationsToHtml, documentManifests, katexMacros, renderDocumentHtml, splitBlocks, type Outline } from "./build-document-site.js";
 import { readPositions } from "../schemas/changeset.js";
 import { initFolio } from "../../cat-harness/scripts/init-folio.js";
 
@@ -129,5 +129,52 @@ describe("paper content: math, glossary directives and citations (owner, 2026-10
   test("the macro table is the viewer's: \\name -> tex from the paper manifest", () => {
     expect(katexMacros({ qou: { tex: "\\mathbf{Q}" } })["\\qou"]).toBe("\\mathbf{Q}");
     expect(katexMacros(undefined)["\\bigbowtie"]).toBe("\\bowtie");
+  });
+});
+
+describe("lazy pages: the block text as data (bean v433)", () => {
+  test("splitBlocks keeps headings and anchors in the shell, never splits inside a fence", () => {
+    const md = [
+      "# Chapter", "", '<a id="chap:one"></a>', "", "## Section", "",
+      '<a id="prose:a"></a>', "Block A text.", "", "```", '<a id="prose:not-an-anchor"></a>', "# not a heading", "```", "",
+      '<a id="prose:b"></a>', "Block B text.", "", "## Next",
+    ].join("\n");
+    const s = splitBlocks(md, new Set(["prose:a", "prose:b", "prose:not-an-anchor"]));
+    expect(s.blocks.map((b) => b.label)).toEqual(["prose:a", "prose:b"]);
+    expect(s.blocks[0]!.markdown).toContain("# not a heading");
+    expect(s.blocks[0]!.markdown).toContain("Block A text.");
+    expect(s.shell).toContain('<a id="chap:one"></a>');
+    expect(s.shell).toContain('<div class="fa-blk" data-blk="prose:a"></div>');
+    expect(s.shell).not.toContain("Block A text.");
+    expect(s.shell).toContain("## Next");
+  });
+
+  test("--lazy always: a shell, chunked block JSON, and the whole text in full.html", async () => {
+    const d = scaffold();
+    appendFileSync(join(d, "folio", "handbook", "introduction", "overview.md"), "\n\n| Role | who |\n|---|---|\n| Bootstrapping Agent | you |\n");
+    const out = join(d, "_site");
+    const r = await buildDocumentSite(d, out, { lazy: "always", actions: { repo: "o/r" } });
+    expect(r.errors).toEqual([]);
+    const shell = readFileSync(join(out, "handbook", "index.html"), "utf-8");
+    expect(shell).toContain('<a id="prose:overview"></a>');
+    expect(shell).toContain('<div class="fa-blk" data-blk="prose:overview"></div>');
+    expect(shell).not.toContain("<td>Bootstrapping Agent</td>");
+    expect(shell).toContain('id="fa-blocks"');
+    expect(shell).toContain('href="full.html"');
+    // compact links on the shell, full links on the one-page version
+    expect(shell).toContain('data-src="folio/handbook/introduction/overview.md"');
+    const chunk = JSON.parse(readFileSync(join(out, "handbook", "blocks", "000.json"), "utf-8")) as Record<string, string>;
+    expect(chunk["prose:overview"]).toContain("<td>Bootstrapping Agent</td>");
+    const full = readFileSync(join(out, "handbook", "full.html"), "utf-8");
+    expect(full).toContain("<td>Bootstrapping Agent</td>");
+    expect(full).toContain("https://github.com/o/r/edit/main/folio/handbook/introduction/overview.md");
+  });
+
+  test("auto stays one page below the threshold", async () => {
+    const d = scaffold();
+    const out = join(d, "_site");
+    await buildDocumentSite(d, out);
+    expect(existsSync(join(out, "handbook", "full.html"))).toBe(false);
+    expect(existsSync(join(out, "handbook", "blocks"))).toBe(false);
   });
 });

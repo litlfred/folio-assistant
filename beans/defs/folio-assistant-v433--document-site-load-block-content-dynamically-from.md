@@ -17,9 +17,9 @@ Design: the document page becomes a SHELL (headings, block anchors, block action
 - [x] build-document-site writes the shell, per-chapter block JSON and the full page
 - [x] blocks near the viewport load first; a #block link loads its chapter and lands on it
 - [x] file:// and fetch failures fall back to the full page
-- [ ] tools that read or picture the document page still get the full content
+- [x] tools that read or picture the document page still get the full content
 - [x] measured before/after on smart-ra (page size, longest task)
-- [ ] skill and tests updated
+- [x] skill and tests updated
 
 
 _2026-10-06T21:00Z_ — Built and pushed (01820ca): shell + blocks/NNN.json + full.html, compact block-actions, notes fetched from pc-notes.json. Measured on smart-ra: 2.3 MB -> 621 KB, load 1,078 -> 155 ms, longest task 199 -> 73 ms. Owner: search only needs the dashboard (PC search), not the document page. Owner: make edit/feedback links dynamic across ALL harness visualizers, not just here (inventory running).

@@ -157,7 +157,10 @@ type Page = import("@playwright/test").Page;
 /** Screenshot one side. The page is loaded from `site` (a directory) by file URL. */
 async function shoot(page: Page, site: string, rel: string | null, label: string, outPng: string): Promise<VisualSide> {
   if (!rel || !existsSync(join(site, rel))) return { png: null, missing: "page" };
-  await page.goto(pathToFileURL(join(site, rel)).href);
+  // A large document's index.html is a shell that loads its text as data
+  // (bean v433), which a file URL cannot fetch; its whole text is full.html.
+  const full = rel.replace(/index\.html$/, "full.html");
+  await page.goto(pathToFileURL(join(site, full !== rel && existsSync(join(site, full)) ? full : rel)).href);
   const region = await page.evaluate(`(${blockRegion.toString()})(${JSON.stringify(label)})`);
   if (!region) return { png: null, missing: "anchor" };
   const r = region as { x: number; y: number; width: number; height: number };
