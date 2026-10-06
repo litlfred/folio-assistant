@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/OpenApiSource",
+  "definitions": {
+    "OpenApiSource": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^[\\w.-]+\\/[\\w.-]+$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "default": "main",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "repository",
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-openapi/schema/zod/openapi/OpenApiSourceSchema.schema.json",
+  "title": "OpenApiSourceSchema",
+  "description": "Generated from `OpenApiSourceSchema` in schemas/openapi.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "dba9203fc3addccda369b32bb3c07f6025bbe542",
+    "pr": "2307/merge",
+    "run": "37513728804"
+  }
+}
