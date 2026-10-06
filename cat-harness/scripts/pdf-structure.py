@@ -505,12 +505,57 @@ def inferred_toc_verdict(toc: list["TocEntry"], n_pages: int) -> str | None:
     return None
 
 
+def _heading_key(e: TocEntry) -> str:
+    return f"{e.number or ''}|{e.title.lower()}"
+
+
+def listing_pages(per_page: list[list[TocEntry]]) -> set[int]:
+    """
+    Pages that LIST headings the document states later — a contents page —
+    rather than open them. Bean `6xaz`, shape two.
+
+    `infer_headings` keeps a heading's FIRST occurrence, which is right for a
+    running header and wrong for a contents page: the listing comes first, so
+    it shadows every chapter it names. Measured on `WHO_PUB_TPS_93.1.pdf`
+    (OCR'd, no outline): 16 chapter headings sit on contents pages 2-4 and
+    again, once each and in order, in the body (Spelling p8, Punctuation p16,
+    ... Technical reports p78). Every boundary landed on pages 2-4, and 26 of
+    42 sections came out under 500 characters. The contents-page skip above
+    never fired because the OCR moved the page numbers into a column of their
+    own, so no line carried a trailing number.
+
+    The test is a property of the page, not a calibrated threshold: at least
+    two of its NUMBERED headings recur later, their next occurrences fall on
+    DIFFERENT pages, and in the same order. A running header cannot satisfy
+    it — two headers repeated on the next page recur on ONE page — and neither
+    can a page that opens one chapter.
+    """
+    where: dict[str, list[int]] = {}
+    for pageno, es in enumerate(per_page, start=1):
+        for e in es:
+            if e.number:
+                where.setdefault(_heading_key(e), []).append(pageno)
+    out: set[int] = set()
+    for pageno, es in enumerate(per_page, start=1):
+        nxt = []
+        for e in es:
+            if not e.number:
+                continue
+            later = [p for p in where.get(_heading_key(e), []) if p > pageno]
+            if later:
+                nxt.append(later[0])
+        if len(nxt) >= 2 and len(set(nxt)) >= 2 and nxt == sorted(nxt):
+            out.add(pageno)
+    return out
+
+
 def infer_headings(pages: list[str]) -> list[TocEntry]:
     """Heading detection for documents with no outline (43% of the corpus)."""
-    entries: list[TocEntry] = []
-    seen: set[str] = set()
+    per_page: list[list[TocEntry]] = []
 
     for pageno, text in enumerate(pages, start=1):
+        found: list[TocEntry] = []
+        per_page.append(found)
         # A table-of-contents page is itself a dense list of heading-shaped
         # lines, each ending in the page number it points at. Scraping it
         # yields a whole document's headings all claiming to start on the
@@ -555,12 +600,20 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
                 continue
 
             title = re.sub(r"\s{2,}", " ", title).strip(" .")
-            key = f"{num or ''}|{title.lower()}"
+            found.append(TocEntry(level, title, pageno, "inferred", num))
+
+    listed = listing_pages(per_page)
+    entries: list[TocEntry] = []
+    seen: set[str] = set()
+    for pageno, found in enumerate(per_page, start=1):
+        if pageno in listed:
+            continue
+        for e in found:
+            key = _heading_key(e)
             if key in seen:
                 continue
             seen.add(key)
-            entries.append(TocEntry(level, title, pageno, "inferred", num))
-
+            entries.append(e)
     return entries
 
 
