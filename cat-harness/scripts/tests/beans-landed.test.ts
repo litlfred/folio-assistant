@@ -2,10 +2,15 @@
  * `beans:landed` ranks what it finds and never reads silence as clean — bean `4d22`.
  *
  * @module cat-harness/scripts/tests/beans-landed.test
+ *
+ * The tests here that read the aggregate repository's own root (the
+ * root-declared `beans/` store) live in
+ * `cat-harness-tools/scripts/tests/beans-landed-repo-root.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 
-import { doneWhen, findings, openBeans, type Merge, type OpenBean } from "../beans-landed.js";
+import { doneWhen, findings, type Merge, type OpenBean } from "../beans-landed.js";
 
 const bean = (short: string, ticked: number, unticked: number): OpenBean => ({
   id: `folio-assistant-${short}`,
@@ -34,14 +39,6 @@ describe("doneWhen", () => {
 - [ ] not counted either
 `),
     ).toEqual({ ticked: 2, unticked: 1 });
-  });
-});
-
-describe("openBeans", () => {
-  test("reads the real store through its declaration, and excludes epics and closed beans", () => {
-    const bs = openBeans();
-    expect(bs.length).toBeGreaterThan(0);
-    expect(bs.every((b) => b.type !== "epic" && ["todo", "in-progress", "draft"].includes(b.status))).toBe(true);
   });
 });
 

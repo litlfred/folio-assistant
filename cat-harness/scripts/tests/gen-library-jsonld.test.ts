@@ -16,7 +16,7 @@
  * Fixtures mirror the real artefact shapes measured on `litlfred/qou`.
  */
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "fs";
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import {
@@ -35,6 +35,7 @@ import { NS_PREFIXES } from "../../schemas/namespaces";
 import { STANDARD_PREFIXES } from "../../schemas/vocab-mapping-fhir";
 import { contextBindings, vocabMapping } from "../../schemas/vocab-mapping";
 import { manifestLicence } from "../../schemas/source-licence";
+import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const DIR = mkdtempSync(join(tmpdir(), "gen-library-"));
 afterAll(() => {
@@ -314,6 +315,39 @@ describe("a whole library entry, through the real branch — bean `p67i`", () =>
     expect(manifest.contains).toEqual(["library/d/sheets/sheet-001", "library/d/sheets/sheet-002"]);
     expect(manifest.meta.tabular_depth).toBe("sheet");
     rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("a STAGED entry is minted for the library it is promoted INTO — bean `apui`", () => {
+    // Measured 2026-10-06: a document staged under `cat-harness/ingest-staging/`
+    // and promoted into a sibling instance's library carried a manifest `@id`
+    // naming `cat-harness`, because the instance is read off the entry's
+    // location and staging is not where the entry ends up. Two instances, so
+    // the location-derived answer and the right one differ.
+    const root = mkdtempSync(join(tmpdir(), "located-"));
+    for (const name of ["stager", "sib"]) {
+      mkdirSync(join(root, name, "library"), { recursive: true });
+      writeDeclaration(join(root, name), {
+        name,
+        directories: [{ id: "library", path: "library/", graphTypologies: ["library"] }],
+      });
+    }
+    const staged = join(root, "stager", "ingest-staging", "d");
+    mkdirSync(staged, { recursive: true });
+    writeFileSync(join(staged, "tabular.jsonld"), JSON.stringify(record("csv", [{ name: "d", headers: ["a"] }])));
+    const manifestId = (o: ReturnType<typeof buildEntryNodes>) =>
+      o.state === "built" ? JSON.parse(o.files.find((f) => f.path === "manifest.jsonld")!.content)["@id"] : o.state;
+
+    // Without a destination the staging tree's own instance answers — the defect.
+    expect(manifestId(buildEntryNodes("d", staged))).toContain("/stager/d/");
+    // With one, the destination's — and the bytes are those the corpus walk
+    // will compute once the entry sits there, which is what `--check` compares.
+    const dest = join(root, "sib", "library", "d");
+    const minted = manifestId(buildEntryNodes("d", staged, dest));
+    expect(minted).toContain("/sib/d/");
+    mkdirSync(dest, { recursive: true });
+    writeFileSync(join(dest, "tabular.jsonld"), readFileSync(join(staged, "tabular.jsonld")));
+    expect(manifestId(buildEntryNodes("d", dest))).toBe(minted);
+    rmSync(root, { recursive: true, force: true });
   });
 
   test("a record that is THERE and unreadable is `unreadable`, never `no-input`", () => {

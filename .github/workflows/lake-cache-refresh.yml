@@ -108,7 +108,7 @@ jobs:
           # The family is `cat/folio-assistant-sci/lake-cache/` (bean
           # folio-assistant-9io2; it was `lake-cache/`, then the interim
           # `cat-lake-cache/`; names declared in
-          # cat-harness/scripts/special-branches.json). The push step resolves
+          # the declaring folio's `storage`; special-branches.json is gone). The push step resolves
           # this key through lake-cache.sh, which writes to a legacy name only
           # while that is the one that exists — a new-name branch beside a
           # live legacy one would block the owner's rename.

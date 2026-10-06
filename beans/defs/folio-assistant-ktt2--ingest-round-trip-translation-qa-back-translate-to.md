@@ -91,6 +91,12 @@ bean asks for exists structurally, not as a note in a report.
   there — supply agent entries for `translation-semantic-roundtrip`; no schema
   change is needed.
 
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
 ## Owner ruling 2026-10-06: an agent back-translates, and that mechanism already exists
 
 Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze. **The owner chose the agent back-translator** and added, verbatim: *"should already be ethe skill."*

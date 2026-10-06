@@ -19,9 +19,10 @@ something downstream consumes serially. `main` is one. `gh-pages` is one. Each
 one writer and no downstream serialisation, and giving it a steward buys
 nothing and adds a single point of failure.
 
-`scripts/special-branches.json` is the declaration: *"this file is the ONE
-declaration of the names."* A ref that is not in it is not a watched ref, and
-this skill does not apply to it.
+A watched ref is `main`, `gh-pages`, or a branch a declaring directory's
+`storage` (or `source`) names. There is no central table: `special-branches.json`
+was removed on 2026-10-05 (owner). A ref nothing declares is not a watched
+ref, and this skill does not apply to it.
 
 ## What a steward is FOR, and what it must not become
 
@@ -176,7 +177,7 @@ the number readable at all.
   carries the migration; until the five producers write through
   `branch-store`'s route keying there is no window to hold.
 - **No steward runs over the `cat/cat-harness/*` refs.** They are seeded and
-  declared and, per `special-branches.json`, *"not authoritative"* until arc
+  declared and, per their declarations, *"not authoritative"* until arc
   `fs43`'s flip. A steward over a ref nobody reads from would be ceremony.
 - **Nothing writes a window yet.** `schemas/ref-window.ts` types one and
   `ref-window.test.ts` holds it to the handover rules, but no steward opens one,

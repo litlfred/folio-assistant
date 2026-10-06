@@ -61,7 +61,7 @@ import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { SLIDE_MIMETYPES } from "../schemas/pdf-structure.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
-import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
+import { LICENCE_FILENAME, buildEntryNodes, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
 import { STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
@@ -880,6 +880,25 @@ export function mayPromote(requirements: readonly Requirement[]): boolean {
   return requirements.every((r) => r.state !== "unmet");
 }
 
+/**
+ * The command that promotes what was just staged — the caller's OWN arguments
+ * with `--promote` added, never a path recomposed here.
+ *
+ * It was recomposed, relative to the instance root, and `bun run` runs from
+ * the repository root: measured 2026-10-06 (bean `apui`), the printed line was
+ * `ingest-document.ts ../uploads/X.pdf --promote`, which answers
+ * "../uploads/X.pdf: not there". It also dropped `--library`, which a repo
+ * declaring several libraries refuses to guess — so the line was wrong twice,
+ * and either fix alone still left it failing. Echoing argv is right by
+ * construction: the shell that ran the staging step is the one that will run
+ * this, with the same working directory.
+ */
+export function promoteCommand(argv: readonly string[]): string {
+  const quote = (a: string) => (/[\s"'$`\\]/.test(a) ? JSON.stringify(a) : a);
+  const kept = argv.filter((a) => a !== "--promote" && a !== "--dry-run");
+  return ["bun", "run", "ingest", ...kept.map(quote), "--promote"].join(" ");
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const dry = argv.includes("--dry-run");
@@ -1052,7 +1071,7 @@ if (import.meta.main) {
     if (pending.length === 0) {
       console.log(`  every requirement met — ready to promote.`);
     }
-    console.log(`\nNext: bun run cat-harness/scripts/ingest-document.ts ${relative(resolve(INSTANCE_ROOT), pdf)} --promote`);
+    console.log(`\nNext: ${promoteCommand(argv)}`);
     process.exit(0);
   }
 
@@ -1088,13 +1107,42 @@ if (import.meta.main) {
   // could sit in a SIBLING instance the path gained a `../` and the same line
   // started escaping the repository altogether.
   const out = join(resolve(INSTANCE_ROOT, destination), slug);
+  // The entry's JSON-LD nodes, minted for where it is GOING (bean `apui`).
+  //
+  // The arms wrote a manifest in staging, and staging belongs to whichever
+  // instance holds `ingest-staging/` — so a document promoted into a sibling's
+  // library arrived naming the wrong instance, and `gen-library-jsonld
+  // --check` called 37 of its nodes stale. That left the path as four
+  // commands, two of them corpus-wide generators run by hand. This is the same
+  // `buildEntryNodes` the corpus walk calls, scoped to ONE entry: the
+  // single-document promotion never rewrites anybody else's nodes.
+  //
+  // Built BEFORE the copy, so an entry whose nodes cannot be built is refused
+  // like any other unmet requirement instead of being filed half-described.
+  const nodes = buildEntryNodes(slug, staging, out);
+  if (nodes.state === "unreadable") {
+    console.error(`\n✗ NOT promoted — its JSON-LD nodes could not be built (${nodes.rung} input present, not readable).`);
+    console.error(`Staged output is left at ${relative(resolve(INSTANCE_ROOT), staging)}/.`);
+    process.exit(1);
+  }
   mkdirSync(dirname(out), { recursive: true });
   // Only ever INTO the library. `renameSync` would fail across a filesystem
   // boundary, and a staged tree the arms just wrote is small enough that the
   // copy is not worth a fallback path nobody tests.
   cpSync(staging, out, { recursive: true });
   rmSync(staging, { recursive: true, force: true });
+  if (nodes.state === "built") {
+    for (const f of nodes.files) {
+      mkdirSync(dirname(join(out, f.path)), { recursive: true });
+      writeFileSync(join(out, f.path), f.content);
+    }
+  }
   console.log(`\n${existsSync(out) ? "✓" : "✗"} ${destination}/${slug}/  (L1 complete, promoted)`);
+  console.log(
+    nodes.state === "built"
+      ? `  · ${nodes.files.length} JSON-LD node(s) written for this entry`
+      : "  · no JSON-LD input in this entry — nothing to generate (determined)",
+  );
   for (const r of verdict.requirements.filter((r) => r.state === "not-derivable")) {
     console.log(`  · ${r.name}: ${r.detail}`);
   }

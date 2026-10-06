@@ -98,9 +98,48 @@ resolve_package() {
   return 1
 }
 
+# The family's prefixes, newest first, each ending in `/` (bean rva2; owner,
+# 2026-10-05: "make fhir and lean work same"). The IG checkout's own
+# declaration goes first — a directory with graphTypology `ig-ast` and
+# `storage.keyedBy: "family"` in its `<instance>.json` — exactly as
+# lake-cache.sh reads the Lean folio's. The built-in names stay as fallbacks;
+# no declaration, or no python3 to read one, leaves them as they were.
+# IGIT_ROOT must be set.
+ast_prefixes() {
+  local declared="" p
+  if command -v python3 >/dev/null 2>&1; then
+    declared=$(python3 - "$IGIT_ROOT" <<'PY' 2>/dev/null
+import glob, json, os, sys
+for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
+    try:
+        d = json.load(open(path))
+    except Exception:
+        continue
+    dirs = d.get("directories") if isinstance(d, dict) else None
+    if not isinstance(dirs, list):
+        continue
+    for e in dirs:
+        if not isinstance(e, dict):
+            continue
+        st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
+        kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
+        if "ig-ast" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
+            print(st["branchPrefix"].rstrip("/") + "/")
+            sys.exit(0)
+PY
+)
+  fi
+  [ -n "$declared" ] && printf '%s\n' "$declared"
+  for p in "cat/fhir-harness/fhir-ast/" "cat-fhir-ast/" "fhir-ast/"; do
+    [ "$p" = "$declared" ] || printf '%s\n' "$p"
+  done
+}
+
 cmd_list_names() {
   IGIT_ROOT=$(resolve_ig_root)
-  igit ls-remote --heads "$REMOTE" 'refs/heads/cat/fhir-harness/fhir-ast/*' 'refs/heads/cat-fhir-ast/*' 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
+  local p pats=()
+  while IFS= read -r p; do pats+=("refs/heads/${p}*"); done < <(ast_prefixes)
+  igit ls-remote --heads "$REMOTE" "${pats[@]}" | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
 }
 
 # The cache branch for a package. Special branches are moving to the owner's
@@ -114,14 +153,16 @@ cmd_list_names() {
 resolve_branch() {
   local pkg="$1"
   if [ -n "$BRANCH" ]; then printf '%s\n' "$BRANCH"; return; fi
-  local name rc
-  for name in "cat/fhir-harness/fhir-ast/$pkg" "cat-fhir-ast/$pkg" "fhir-ast/$pkg"; do
+  local name rc p first=""
+  while IFS= read -r p; do
+    name="$p$pkg"
+    [ -n "$first" ] || first="$name"
     igit ls-remote --exit-code --heads "$REMOTE" "refs/heads/$name" >/dev/null 2>&1
     rc=$?
     if [ "$rc" -eq 0 ]; then printf '%s\n' "$name"; return; fi
     [ "$rc" -eq 2 ] || die "could not reach remote '$REMOTE' to look up $name (git ls-remote exit $rc)"
-  done
-  printf '%s\n' "cat/fhir-harness/fhir-ast/$pkg"
+  done < <(ast_prefixes)
+  printf '%s\n' "$first"
 }
 
 count_resources() {
