@@ -6,7 +6,7 @@
 
 The gettext side of folio-assistant-core's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt "block-kind:<kind>"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-translations`, holding `translation-sources`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `folio-assistant-core-translations`, holding `translation-sources`.
 
 | file | what it is | used by |
 |---|---|---|

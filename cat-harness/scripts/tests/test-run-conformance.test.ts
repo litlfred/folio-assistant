@@ -40,3 +40,21 @@ describe("a test run is checked against the contract of the skill it names (#116
     expect(names(r.unchecked)).toEqual(["d-no-cases", "e-no-contract"]);
   });
 });
+
+describe("an absent results directory is not 'no runs' (audit C5, bean 2gst)", () => {
+  test("absent: looked is false and nothing is counted, so the caller reports unknown, not n/a", () => {
+    const r = checkTestRuns(INSTANCE, join(dir, "never-created"), SKILLS);
+    expect(r.looked).toBe(false);
+    expect(r.runs).toBe(0);
+  });
+  test("present but empty: looked is true — a determined zero the caller may call n/a", () => {
+    const empty = mkdtempSync(join(tmpdir(), "test-runs-empty-"));
+    try {
+      const r = checkTestRuns(INSTANCE, empty, SKILLS);
+      expect(r.looked).toBe(true);
+      expect(r.runs).toBe(0);
+    } finally {
+      rmSync(empty, { recursive: true, force: true });
+    }
+  });
+});

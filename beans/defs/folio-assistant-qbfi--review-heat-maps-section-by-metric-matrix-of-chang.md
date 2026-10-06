@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:03:10Z
+updated_at: 2026-10-06T06:19:16Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -97,3 +97,12 @@ coverage is not approval.
 **Left:**
 - coverage, which needs en2d's verdicts;
 - the minimap (`eb4l`).
+
+## Owner ruling 2026-10-06: the QA-column work waits for #2080
+
+Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, from two options (recommended first):
+
+1. **CHOSEN: hold the heat map's QA-column work until #2080 (5hox, QA results off main) merges.** The column reads per-block QA files that #2080 moves to the `qa-reports` branch, so it is built once, against where the files will live.
+2. Build now and adapt after #2080 (not chosen: the same reader would be reworked twice).
+
+The rest of q4jm (the end-to-end check on folio-test, comments, accept, the large fixture) is not held.

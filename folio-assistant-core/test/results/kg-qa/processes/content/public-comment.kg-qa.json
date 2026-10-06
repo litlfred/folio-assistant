@@ -5,7 +5,7 @@
     "id": "Process_PublicComment",
     "path": "processes/content/public-comment.bpmn"
   },
-  "source_hash": "sha256:e33f5f51da6ad3d4092dbba24121bd14715131c2f1610807e63d28678fbc8489",
+  "source_hash": "sha256:fabf2d61a4530e58958e91e6bd6a5a8935fafe59d0e25475d11b110606fecf3f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -40,6 +40,14 @@
         },
         {
           "where": "Task_Triage",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ProposeChangeSets",
+          "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_GroupChangeSets",
           "detail": "names skill \"public-comment\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
