@@ -744,12 +744,18 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     untranslated [1] : integer
     unreadable [0..*] : string[]
   }
+  class "Instance" as cat_harness_docs_folio_translation_status_v1_Instance <<json: TranslationStatusSchema>> #f4f4f1 {
+    instance [1] : string
+    scope [1] : string
+    locales [0..*] : Locale[]
+  }
   class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 <<json: TranslationStatusSchema>> #f4f4f1 {
     $schema [1] : 'folio-translation-status/v1'
     tile [0..1] : map<object>
     changedAt [1] : string
     scope [1] : string
     locales [0..*] : Locale[]
+    instances [0..*] : Instance[]
   }
   class "Module" as cat_harness_docs_folio_schema_graph_v1_Module <<json: SchemaGraphIndexSchema>> #f4f4f1 {
     module [1] : string
@@ -1335,6 +1341,8 @@ cat_harness_docs_node_kind_index_1_0_0_Kind *-- "0..*" cat_harness_docs_node_kin
 cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Kind : kinds
 cat_harness_docs_node_kind_index_1_0_0_node_kind_index_1_0_0 *-- "0..*" cat_harness_docs_node_kind_index_1_0_0_Unkinded : unkinded
 cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
+cat_harness_docs_folio_translation_status_v1_Instance *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
+cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Instance : instances
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Module : modules
 cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
 cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
