@@ -116,8 +116,13 @@ function publishedFor(base: string | undefined, type: string, id: string, hasPag
     : { json: at("json"), xml: at("xml"), ttl: at("ttl") };
 }
 
-/** `undefined` for null, empty, or whitespace-only: the index's strings are non-empty. */
-const nonEmpty = (s: string | null | undefined): string | undefined => (s && s.trim() ? s : undefined);
+/**
+ * `undefined` for null, empty, whitespace-only, or not a string: the index's
+ * strings are non-empty. Not a string is real data, not a hypothetical: a
+ * Patient's `name` is an array of HumanName, and a SUSHI-compiled
+ * smart-immunizations (bean `c65n`) crashed here on its example Patients.
+ */
+const nonEmpty = (s: unknown): string | undefined => (typeof s === "string" && s.trim() ? s : undefined);
 
 export interface AstIndexOptions {
   /** The index's `id`: the instance directory name. */
