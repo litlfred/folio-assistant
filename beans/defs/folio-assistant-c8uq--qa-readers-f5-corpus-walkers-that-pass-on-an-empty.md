@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c8uq
 title: 'QA READERS F5: corpus walkers that pass on an empty corpus (orphan-verdict sweep, validate orphan check, reviewer permission)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T16:44:05Z
+updated_at: 2026-10-06T06:09:22Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -44,3 +44,6 @@ Branch `qa-readers-f5-f6-c8uq-tfqf` (commit `1d82ae83`), not pushed.
 
 Verified by moving all 15 results directories aside and restoring them: every gate exits 2 and none prints a pass. With the corpus present each gives today's answer (122 verdicts examined, 0 orphans; 5974 entries, 0 forbidden; 0 lost witnesses). The fetched `qa-reports` entry `pr/1764/a4c54517…` is byte-identical to the committed corpus (diff -rq over all 14 trees), so "with the branch fetched" is the same answer.
 
+## Closed 2026-10-06 on re-measured evidence
+
+Closed by the 3fva QA-readers pass (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze). Every done-when box is ticked; the boxes that waited on a merge or a scheduled run were re-checked against GitHub on 2026-10-06 and carry their evidence inline. Closed on evidence, not authorship (bean-coordination §"Closing a bean whose work has already landed").

@@ -239,14 +239,6 @@
       "status": "candidate"
     },
     {
-      "id": "glossary-build",
-      "prefLabel": "Glossary build",
-      "definition": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
-      "notation": "glossary-build",
-      "source": "cat-harness/tools/index.ts#glossary-build",
-      "status": "candidate"
-    },
-    {
       "id": "headless-render-qc",
       "prefLabel": "Headless render QC (Playwright)",
       "definition": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",

@@ -162,8 +162,17 @@
       "findings": []
     },
     "prose-names-resolve": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "processes/library/ingest-derive-content.bpmn",
+          "detail": "names `docs/document-ingestion.md`: its directory is here and the file is not — renamed, moved, or never written."
+        },
+        {
+          "where": "processes/library/ingest-l1-completeness-gate.bpmn",
+          "detail": "names `docs/document-ingestion.md`: its directory is here and the file is not — renamed, moved, or never written."
+        }
+      ]
     },
     "skill-contract-claimed": {
       "result": "pass",
@@ -184,8 +193,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 8,
+    "fail": 2,
     "n/a": 16,
     "unknown": 0
   }
