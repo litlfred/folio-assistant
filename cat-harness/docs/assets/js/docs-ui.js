@@ -3212,6 +3212,12 @@
         // away exactly when it is surprising.
         if (badge.count === 0) b.setAttribute("data-fa-empty", "true");
         tile.appendChild(b);
+        // WHAT THE NUMBER COUNTS, on hover too (bean `v215`): the unit was in
+        // the accessible name only, so a sighted reader saw a bare "943" with
+        // no word saying what it counted, beside an icon-row "541" whose tip
+        // said "open". The icon row's tip names its count; so does this.
+        tile.setAttribute("title", (tile.getAttribute("title") || t.title) +
+          " — " + badge.count + " " + badge.unit);
       }
       tile.setAttribute("data-fa-tile", t.id);
       tile.setAttribute("data-fa-surface", surface);
@@ -7188,11 +7194,55 @@
       panel.appendChild(body);
       build(body);
       panel.removeAttribute("hidden");
+      fitPanel();
       // Opened on a folio already dragged away: open where the folio is.
       placePanel();
       if (panelButtons[id]) panelButtons[id].setAttribute("aria-expanded", "true");
-      h.focus();
+      // `preventScroll`: the panel is placed in view, so focusing its title
+      // has nothing to bring into view, and a scroll here would move the
+      // cards under a panel that does not move with them.
+      h.focus({ preventScroll: true });
     }
+
+    /* THE PANEL OPENS IN VIEW, CLEAR OF THE DOCK — wireframe `navbar`
+     * Findings ("seen on the build", #2295; first noted in #1810).
+     *
+     * It used to sit in the glass's FLOW, after the shelf. The shelf is at
+     * least 50vh, so at 1280×800 Glass settings opened at y = 591 with its
+     * body under the fixed tile dock, and the reader scrolled the glass to
+     * reach the controls the tile had just opened. Now the stylesheet takes it
+     * out of the flow (`position: fixed`) and this places it in the space the
+     * glass actually shows: below the handle and the zoom bar, above the
+     * dock's VISIBLE top edge. The panel's height is capped to that space and
+     * its body scrolls inside it when the content is taller (Glass settings
+     * on a phone), so the frame, its title and its × are never under the dock.
+     *
+     * The dock's top is read from its STATE, not from its box: it slides for
+     * 0.25 s when the strip is shown or hidden, and a box measured mid-slide
+     * would size the panel for neither state. Re-run when the strip toggles
+     * and when the window resizes. */
+    function fitPanel() {
+      if (panel.hasAttribute("hidden")) return;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var top = 0;
+      [handle, zoomBar].forEach(function (n) {
+        if (!n || !n.isConnected) return;
+        var r = n.getBoundingClientRect();
+        if (r.width && r.height && r.bottom > top && r.bottom < vh / 2) top = r.bottom;
+      });
+      top += GLASS_GAP;
+      var dockTop = vh;
+      if (dock && dock.isConnected && dock.offsetHeight) {
+        var shown = dock.getAttribute("data-fa-strip") !== "hidden";
+        // Hidden, only the header row and the 2px edge stay on screen — the
+        // same sum the stylesheet's `translateY` leaves showing.
+        var showing = shown ? dock.offsetHeight : dockHead.offsetHeight + 2;
+        dockTop = vh - showing;
+      }
+      panel.style.top = Math.round(top) + "px";
+      panel.style.maxHeight = Math.max(0, Math.floor(dockTop - GLASS_GAP - top)) + "px";
+    }
+    window.addEventListener("resize", fitPanel);
 
     /* TODOS — the todo list, on the glass, each with a pull-out.
      *
@@ -7324,19 +7374,26 @@
       body.appendChild(fs);
       showOpacity();
 
+      // THE ACTIONS, in one row of their own (bean `zpso`): with the panel
+      // laid out in a grid so it fits between the zoom bar and the dock,
+      // three full-width buttons stacked one per line were a third of its
+      // height. Grouped, they wrap side by side under the settings.
+      var actions = el("div", { class: "fa-glass-settings-actions" });
+      body.appendChild(actions);
+
       // THE HARNESSES PANEL (issue #1146): each harness's properties and the
       // skill that edits each. A Settings view, as candidate H drew it.
       var hc = el("button", { type: "button", class: "fa-glass-reset fa-glass-harnesses" },
         "Harnesses — properties, and the skill that edits each");
       hc.addEventListener("click", function () { openHarnesses(null); });
-      body.appendChild(hc);
+      actions.appendChild(hc);
 
       // THE WAY BACK FROM A MESSY GLASS. Every card returns to the grid;
       // nothing leaves the folio and nothing leaves the glass.
       var tidy = el("button", { type: "button", class: "fa-glass-reset fa-glass-tidy" },
         "Tidy the glass (put every card back in the grid)");
       tidy.addEventListener("click", tidyGlass);
-      body.appendChild(tidy);
+      actions.appendChild(tidy);
 
       var reset = el("button", { type: "button", class: "fa-glass-reset fa-glass-defaults" }, "Back to the default glass");
       reset.addEventListener("click", function () {
@@ -7347,7 +7404,7 @@
         while (body.firstChild) body.removeChild(body.firstChild);
         buildSettings(body);
       });
-      body.appendChild(reset);
+      actions.appendChild(reset);
       // THE WAY BACK for the dismissed browser-only note.
       if (localNoteDismissed()) {
         var showNote = el("button", { type: "button", class: "fa-glass-reset fa-glass-note-restore" },
@@ -7357,9 +7414,9 @@
           renderShelf();
           showNote.parentNode.removeChild(showNote);
         });
-        body.appendChild(showNote);
+        actions.appendChild(showNote);
       }
-      body.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
+      actions.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
         "Saved in this browser only."));
     }
 
@@ -7433,6 +7490,8 @@
       if (h) strip.setAttribute("inert", ""); else strip.removeAttribute("inert");
       stripToggle.setAttribute("aria-expanded", h ? "false" : "true");
       labelStripToggle();
+      // An open panel's room changes with the dock's visible height.
+      fitPanel();
     }
     stripToggle.addEventListener("click", function () {
       var h = dock.getAttribute("data-fa-strip") !== "hidden";

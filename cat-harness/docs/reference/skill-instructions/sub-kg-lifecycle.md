@@ -256,16 +256,46 @@ read only mirror in fsh-guts"*.
   host keeps a **frozen** copy in [`fsh-guts`](fsh-guts.md), not a
   refreshed mirror and not a deletion. Step 12 asks (1) move to fsh-guts now,
   (2) keep in place until the first release, (3) show the file list first,
-  default (2). Step 13 runs `state:seed --id <id> --cutover --commit`
-  (owner, 2026-10-06, choosing this archive form over plain trees, which
-  CI then audited as live content): it deposits the directory into the
-  instance's fsh-guts as an archive that must extract to the exact tree
-  being removed, with a provenance note (`movedFrom`, `movedOn`,
-  `sourceCommit`, `tree`), and removes the directory from `main` only once
-  the deposit has landed. [`directory-conventions`](directory-conventions.md)
-  carries the rule. The live
+  default (2). Step 13 deposits the directory into the PARENT's fsh-guts
+  as a verified archive, then removes it from `main` (owner, 2026-10-06,
+  choosing this archive form over plain trees, which CI then audited as
+  live content). The deposit is the one `state:seed --cutover` makes for a
+  state graph: an archive that must extract to the exact tree being
+  removed, plus a provenance note (`movedFrom`, `movedOn`, `sourceCommit`,
+  `tree`), and the removal commit is made only once it has landed. A
+  separation targets the parent's fsh-guts rather than the departing
+  instance's, which `--cutover` does not do; the separation mode is
+  follow-up work to #2322. The live
   copy is the submodule or subscription from stage 10; the frozen one is
   never refreshed and never rendered.
+
+### How checks treat a frozen subtree
+
+**This is the one place the rule is stated; scanners point here.** A frozen
+subtree is **one retired item**, and its sibling note is the node that answers
+for it. Every reader of `fsh-guts` — the `fsh-guts.jsonld` export, the
+fsh-guts page, the render-pipeline and bean-reference tests,
+`check:materialized-fixity` — reports the note and does not enter the
+directory. The page shows it as one row in the `via sidecar` state.
+
+- **Recognised by declaration, never by path.** A directory is frozen because
+  `<name>.md` beside it declares `$schema: folio-fsh-guts/v1` and
+  `kind: separated-instance` (`isFrozenSubtree` in `schemas/fsh-guts.ts`). A
+  copy dropped in with no note, or under a note of another kind, is walked
+  like any directory, so its files fail self-declaration loudly rather than
+  vanishing from every check.
+- **The note must carry all four stage-13 fields** — `movedFrom`, `movedOn`,
+  `repository`, `matchesCommit` — because it is now the only thing any check
+  reads about thousands of files. Those beyond the common set are exported
+  under the node's `data`.
+- **Materialization records inside are not judged.** They claim bytes in the
+  repository the graph now lives in, which the copy deliberately does not
+  carry.
+- **The note's `bean:` resolves against main's work plan, with no pending
+  escape.** So the deposit lands on the fsh-guts branch in the same step that
+  merges the PR carrying that bean, never before it. The first cutover
+  (2026-10-06, bean `61t6`) was pushed ahead of its PR and turned every PR's
+  CI red until it was held back.
 
 ## Anti-patterns
 

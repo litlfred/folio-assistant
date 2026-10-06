@@ -77,7 +77,7 @@ import {
 } from "../schemas/cat-harness.ts";
 import { isQaGraphUnknown, projectQaGraph } from "../content/pipeline/qa-graph-index.ts";
 import { tileCounts } from "../schemas/tile-count.js";
-import { OPEN_STATUSES as OPEN_BEAN_STATUSES } from "./bean-store-read.js";
+import { OPEN_BEANS_UNIT, openBeanCount } from "./bean-store-read.js";
 import { qaStorageOf } from "./qa-results.ts";
 import { qaResultLinkFor, siteLinkKey } from "./qa-result-link.ts";
 
@@ -1642,11 +1642,13 @@ function processHierarchy(): Record<string, string[]> {
       JSON.stringify(
         {
         $schema: "folio-bean-index/v1",
-        // `items`, not `items + findings`: a finding is a defect ABOUT the
-        // work plan, not an item on it, and adding them would make the tile
-        // disagree with the board it opens. See `schemas/tile-count.ts` for
-        // why the number is declared here rather than inferred by the reader.
-        ...tileCounts({ beans: [items.length, "beans"] }),
+        // OPEN beans, the same number `count.json` gives the icon row and the
+        // board's "open" (bean `v215`): it was `items.length`, every bean
+        // ever filed, so the tile read 943 beside the icon row's 541. Not
+        // `findings` either: a finding is a defect ABOUT the work plan, not
+        // an item on it. See `schemas/tile-count.ts` for why the number is
+        // declared here rather than inferred by the reader.
+        ...tileCounts({ beans: [openBeanCount(beans), OPEN_BEANS_UNIT] }),
         // The forge, so `work-plan.js` composes its links from DATA rather
         // than carrying one instance's address in shared client code. Same
         // reason `editHref` is composed here, one level further on.
@@ -1699,8 +1701,7 @@ function processHierarchy(): Record<string, string[]> {
       "verdict",
     );
     // Existence-gated for the same reason as the index: every session moves it.
-    const open = beans.filter((b) => OPEN_BEAN_STATUSES.has(b.status)).length;
-    emit(BEANS_COUNT_ASSET, JSON.stringify(tileCounts({ beans: [open, "open beans"] }), null, 2) + "\n", "verdict");
+    emit(BEANS_COUNT_ASSET, JSON.stringify(tileCounts({ beans: [openBeanCount(beans), OPEN_BEANS_UNIT] }), null, 2) + "\n", "verdict");
     const both = edges.filter((e) => e.declaredOn.length > 1).length;
     console.log(
       `  ${check ? "·" : "✓"} assets/beans/index.json (${items.length} bean(s), ${edges.length} block edge(s), ` +

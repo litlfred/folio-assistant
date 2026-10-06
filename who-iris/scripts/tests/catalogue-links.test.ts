@@ -8,7 +8,7 @@ import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { siteDirFor } from "../../../cat-harness/schemas/cat-harness.ts";
+import { siteDirFor } from "../../platform.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const REPO = resolve(INSTANCE, "..");
