@@ -15,6 +15,7 @@
  * - a comment's page lists the change-sets it is in.
  */
 import type { KindNode } from "../../cat-harness/schemas/node-kind-nodes.ts";
+import { CHANGING_DECISIONS, type DecisionCode } from "../schemas/public-comment.ts";
 import { esc, type KindPages, type KindPagesContext, type PageSection } from "../../cat-harness/scripts/gen-node-kind-pages.ts";
 
 const CHANGE_SET = "changeset";
@@ -28,6 +29,16 @@ const refOf = (n: KindNode): string | undefined => {
 const refsOf = (cs: KindNode): string[] => (Array.isArray(cs.node.refs) ? cs.node.refs.filter((r): r is string => typeof r === "string") : []);
 /** A change-set that no longer carries its comments: merged into the document, or closed without. */
 const settled = (cs: KindNode) => cs.node.status === "merged" || cs.node.status === "closed";
+
+/**
+ * A comment decided "noted", "not accepted" or "deferred" changes nothing, so
+ * no change-set is owed it. Counting it as "in none" overstated the gap: on
+ * smart-ra, PC-0051 was decided not-accepted and still showed as uncovered.
+ */
+const owesNoChange = (c: KindNode): boolean => {
+  const code = (c.node.public as { decision?: { code?: unknown } } | undefined)?.decision?.code;
+  return typeof code === "string" && !CHANGING_DECISIONS.includes(code as DecisionCode);
+};
 
 /** Comments by reference, within one harness: a change-set names comments of its own review only. */
 function commentsIn(harness: string, ctx: KindPagesContext): Map<string, KindNode> {
@@ -61,8 +72,10 @@ export const ChangeSetPages: KindPages = {
 
   dashboard(sets, ctx): PageSection[] {
     const harnesses = [...new Set(sets.map((s) => s.harness))];
-    const comments = ctx.nodesOf(COMMENT).filter((c) => harnesses.includes(c.harness));
-    if (!comments.length) return [];
+    const all = ctx.nodesOf(COMMENT).filter((c) => harnesses.includes(c.harness));
+    if (!all.length) return [];
+    const decidedNoChange = all.filter(owesNoChange).length;
+    const comments = all.filter((c) => !owesNoChange(c));
     const covered = new Set(sets.filter((s) => !settled(s)).flatMap((s) => refsOf(s).map((r) => `${s.harness}\u0000${r}`)));
     const outside = comments.filter((c) => !covered.has(`${c.harness}\u0000${refOf(c)}`));
     const list = outside.map((c) => link(COMMENT, c, refOf(c) ?? c.path, ctx)).join(", ");
@@ -70,7 +83,9 @@ export const ChangeSetPages: KindPages = {
       {
         id: "coverage",
         label: "Coverage",
-        html: `<ul class="tiles"><li><b>${comments.length - outside.length}</b>in an open change-set</li><li><b>${outside.length}</b>in none</li></ul>${
+        html: `<ul class="tiles"><li><b>${comments.length - outside.length}</b>in an open change-set</li><li><b>${outside.length}</b>in none</li>${
+          decidedNoChange ? `<li><b>${decidedNoChange}</b>decided, no change needed</li>` : ""
+        }</ul>${
           outside.length ? `<details><summary>The ${outside.length} comment(s) in none</summary><p>${list}</p></details>` : ""
         }`,
       },
