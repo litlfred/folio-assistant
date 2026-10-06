@@ -1,0 +1,49 @@
+{
+  "$ref": "#/definitions/GraphTypology",
+  "definitions": {
+    "GraphTypology": {
+      "anyOf": [
+        {
+          "type": "string",
+          "const": "skills",
+          "description": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task."
+        },
+        {
+          "type": "string",
+          "const": "schemas",
+          "description": "A Subgraph of Node Schemas: files that state the shape other files must have."
+        },
+        {
+          "type": "string",
+          "const": "scenarios",
+          "description": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+        },
+        {
+          "type": "string",
+          "const": "processes",
+          "description": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
+        },
+        {
+          "type": "string",
+          "const": "models",
+          "description": "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked."
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "description": "A Graph Typology a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+        }
+      ],
+      "description": "A named set of Node Kinds."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/bootstrap-tools/schema/zod/graph/GraphTypologySchema.schema.json",
+  "title": "GraphTypologySchema",
+  "description": "Generated from `GraphTypologySchema` in schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/laughing-ramanujan-uripip",
+    "sha": "b81ca680a1d3346ea29de154d02f618aa6cba438",
+    "pr": "2285/merge",
+    "run": "37483571045"
+  }
+}
