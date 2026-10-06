@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/Dependency",
+  "definitions": {
+    "Dependency": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-retire/bootstrap-tools/schema/zod/graph/DependencySchema.schema.json",
+  "title": "DependencySchema",
+  "description": "Generated from `DependencySchema` in schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/awesome-fermi-ua31th-retire",
+    "sha": "44e9fc82a7d92bcee60f2e20a099619d56319b6c",
+    "pr": "2338/merge",
+    "run": "37537436464"
+  }
+}
