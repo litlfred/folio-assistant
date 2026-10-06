@@ -143,6 +143,23 @@ describe("the gateway", () => {
     expect(moves({ path: "harness/in.ts", status: "renamed", previousPath: "folio/in.ts" })).toBe("fail");
   });
 
+  test("a regenerated, content-named file is not a move: deleting it changes what no seeded path means (owner, 2026-10-06)", () => {
+    const moves = (f: PrFile) => verdictOf(assess(plan, forge([pr([f])]), table, CLEAN_PROBES), "layer-moves");
+    expect(moves({ path: "harness/docs/assets/navbar/rail-1tstgx8dr3c.js", status: "removed" })).toBe("pass");
+    expect(moves({ path: "harness/docs/payload/sha256/0a58f990.json", status: "removed" })).toBe("pass");
+    expect(moves({ path: "harness/docs/payload/sha256/new", status: "renamed", previousPath: "harness/docs/payload/sha256/old" })).toBe("pass");
+    // Only the generator's own names: an authored file beside them still counts,
+    // and so does a rename with one authored end.
+    expect(moves({ path: "harness/docs/assets/navbar/navbar.js", status: "removed" })).toBe("fail");
+    expect(moves({ path: "harness/docs/assets/navbar/rail-x.js", status: "renamed", previousPath: "harness/scripts/rail.js" })).toBe("fail");
+    // One real move among regenerated ones is still a moving PR.
+    const mixed = verdictOf(
+      assess(plan, forge([pr([{ path: "harness/docs/assets/navbar/rail-a1.js", status: "removed" }, { path: "harness/scripts/gone.ts", status: "removed" }])]), table, CLEAN_PROBES),
+      "layer-moves",
+    );
+    expect(mixed).toBe("fail");
+  });
+
   test("a PR GitHub truncated is undetermined unless what WAS seen already counts", () => {
     const blind = pr(["folio/x.md"], { changedFiles: 4000 });
     const r = assess(plan, forge([blind]), table, CLEAN_PROBES);
