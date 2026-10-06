@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-05T18:46:23Z
-updated_at: 2026-10-05T21:42:56Z
+updated_at: 2026-10-06T05:20:37Z
 parent: folio-assistant-bzyu
 ---
 
@@ -796,3 +796,24 @@ Issue #2228. Owner, 2026-10-05: 'help make sure who-iris has all translations'; 
 - [ ] rendered check of one page per locale, Arabic in particular — no browser was available here
 
 PR #2229 (draft), issue #2228.
+
+## Independent round-trip check — 2026-10-06
+
+Five fresh checkers, one per locale. Each read ONLY its 116 msgstr values, with the msgids stripped out, and back-translated them blind. Every report ends TOOLS_USED: read <lc>.only.txt, write <lc>.bt.txt; ar also records two edits to its own output lines. I compared all 580 back-translations against the English source.
+
+**Result:** meaning is preserved in all but 4 strings, and every placeholder and HTML tag survived.
+
+**Fixed (meaning drift):**
+- zh [92] Recent Submissions — 最新提交 read back as *Latest commit*; now 最近提交的条目.
+- zh [56] and [107], the IRIS expansion — 机构信息共享知识库 read back as *Institutional Information Shared Knowledge Base*; now 信息共享机构知识库, using 机构知识库, the standard term for institutional repository.
+- fr [56] — Répertoire (directory) was inconsistent with dépôt everywhere else; now Dépôt institutionnel.
+
+**Fixed (grammar):** fr [87] and [88] — URI permanent → URI permanente; URI is feminine in French.
+
+**Kept, with reasons:**
+- Bundle stays fr Paquet / ru Пакет, the DSpace interface terms in those languages.
+- live → active/usable, and ingested → imported/archived in ru/zh: the meaning holds.
+- [23] instance-that-instantiates is awkward in every locale because the English is.
+- The [80]/[84] duplicates track near-identical English msgids.
+
+**Still not verified:** WHO's own localised IRIS terminology, and visual rendering in a browser.
