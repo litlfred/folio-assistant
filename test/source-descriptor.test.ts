@@ -14,15 +14,28 @@
  *
  * The directories are found through the checkout.s DECLARATIONS, not a literal
  * path, so moving it cannot turn this into a test over nothing.
+ *
+ * Moved here from `cat-harness/schemas/source-descriptor.test.ts` to the
+ * checkout's own test home `test/` (bean `7zz1`, owner ruling 2026-10-06
+ * "Top-level instance"): every test in it reads the source descriptors the
+ * content instances' libraries commit, which only the whole checkout holds.
+ * Standing alone, cat-harness has none of it, and
+ * `check:cat-harness-standalone` collects every test in that layer. Paths are
+ * composed from ORIGIN_DIR, the directory it was written in, so nothing it
+ * reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import { checkoutDirectoriesForGraph } from "./harness-config.ts";
-import { SOURCE_DESCRIPTOR_SCHEMA_TAG, SourceDescriptorSchema } from "./source-descriptor.ts";
+import { checkoutDirectoriesForGraph } from "../cat-harness/schemas/harness-config.ts";
+import { SOURCE_DESCRIPTOR_SCHEMA_TAG, SourceDescriptorSchema } from "../cat-harness/schemas/source-descriptor.ts";
 
-const INSTANCE = join(import.meta.dir, "..");
+/** The directory this test was written in (`cat-harness/schemas/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/schemas");
+
+
+const INSTANCE = join(ORIGIN_DIR, "..");
 
 /**
  * Every descriptor in the checkout, keyed by its path relative to the
