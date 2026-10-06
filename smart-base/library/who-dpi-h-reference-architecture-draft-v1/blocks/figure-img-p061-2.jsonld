@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p061-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p061-2.png",
+  "pageStart": 61,
+  "pageEnd": 61,
+  "narrative": {
+    "text": "Figure 3.3, 'Simplified view of a single health goal (Establish Trusted Personal Health Records)' (section 3.3). At the top, a 'TPHR Goals' group holds the overall goal of a secure, universally accessible system for issuing verifiable digital health records. It is composed of four sub-goals: a verifiable health record for every individual; patient control and consent-based sharing; trust, security and privacy in all transactions; and interoperability across providers, facilities and jurisdictions. A 'TPHR Outcomes' group lists four outcomes, such as citizens empowered to own, access and share their health records. These realise the goals. A 'TPHR Implementation' area shows capabilities realising those outcomes, including Health Record Management, Identity and Authentication, Universal Access Enablement, Dynamic Consent Management, Data Governance, Data Sharing and Authorization, Audit and Compliance Monitoring, Trust and Verification, Data Privacy, Incident Detection and Response, Interoperability and Health Information Exchange, Terminology and Data Management, and Provider and Facility Verification. Below them, application services such as Client Identity Service, Consent Management Service, FHIR API Service and Terminology Service (SNOMED, ICD, LOINC) are realised by application components such as Lifelong Health Record, Client Registry, PHR Portal/Mobile App, PKI/Trust Infrastructure, IAM/Access Control System, SIEM, Interoperability Middleware, Terminology Service and Facility Registry.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-026",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

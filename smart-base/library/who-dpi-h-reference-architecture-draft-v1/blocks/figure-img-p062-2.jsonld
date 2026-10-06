@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p062-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p062-2.png",
+  "pageStart": 62,
+  "pageEnd": 62,
+  "narrative": {
+    "text": "Figure 3.4, 'Layered view for one sub-goal relating to Establish Trusted Personal Health Records' (section 3.3). The sub-goal 'Establish a secure, universally accessible, verifiable health record for every individual' is realised by the outcome 'Population has verifiable digital health records'. Within 'TPHR Sub-goal #1 Implementation', three capabilities realise that outcome: Health Record Management, Identity and Authentication, and Universal Access Enablement. These are realised by the product 'Trusted Personal Health Record (PHR)', which three services serve: Health Record Management Service, Client Identity Service and Record Verification Service. In turn these are realised by the components Lifelong Health Record, Client Registry and PKI/Trust Infrastructure. A 'Metadata Components' group at the bottom holds the Client Registry, Facility Registry, Health Worker Registry, Product Registry and Terminology Service.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-026",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

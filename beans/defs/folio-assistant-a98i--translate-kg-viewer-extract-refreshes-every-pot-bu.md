@@ -1,10 +1,12 @@
 ---
 # folio-assistant-a98i
 title: translate-kg-viewer --extract refreshes every .pot but never syncs the .po stubs
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-09-19T08:11:21Z
+updated_at: 2026-10-06T19:56:02Z
+tags:
+  - ready-to-close
 parent: folio-assistant-bzyu
 ---
 
@@ -20,7 +22,30 @@ Synced all five by hand: rebuilt each `.po` from its `.pot`, preserving the file
 
 ## Done when
 
-- [ ] `--extract` adds a missing msgid to every `.po`, with an empty `msgstr`
-- [ ] it NEVER overwrites an existing `msgstr` — a filled catalogue must survive
-- [ ] it reports what it added per locale, rather than exiting 0 silently
-- [ ] removing a string from the table is handled too, or the tool says it does not handle it
+- [x] `--extract` adds a missing msgid to every `.po`, with an empty `msgstr`
+- [x] it NEVER overwrites an existing `msgstr` — a filled catalogue must survive
+- [x] it reports what it added per locale, rather than exiting 0 silently
+- [x] removing a string from the table is handled too, or the tool says it does not handle it
+
+## Evidence
+
+- Implemented `syncPoContent` in `cat-harness/scripts/translate-kg-viewer.ts`:
+  - Syncs existing `.po` content against string entries.
+  - Adds missing msgids with `msgstr ""`.
+  - Preserves existing `msgstr` translations, comments, and entry flags (e.g. `#, fuzzy`).
+  - Prunes obsolete msgids from `.po` if removed from string table and reports them in result.
+  - Preserves file header blocks (including comments and header metadata).
+  - Reports added and pruned msgids per locale during `--extract`.
+- Added unit tests in `cat-harness/scripts/tests/translate-kg-viewer.test.ts` (7 tests, all passing):
+  - Adds missing msgids with empty msgstr.
+  - Preserves existing filled msgstr translations.
+  - Prunes obsolete strings and reports them.
+  - Preserves header metadata and comments.
+  - Generates default header when file is empty.
+  - Preserves entry flags (e.g., fuzzy).
+  - Idempotent when content already matches.
+- Existing string tests in `cat-harness/scripts/tests/kg-viewer-strings.test.ts` pass (17/17).
+- `bun run translate-kg-viewer:check` passes with exit code 0.
+- All fast quality gates (`bun run gates`) pass.
+
+_2026-10-06T19:56:02Z_ — Claimed by claude/a98i-translate-kg-viewer-sync-po — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

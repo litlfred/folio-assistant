@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p070-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p070-2.png",
+  "pageStart": 70,
+  "pageEnd": 70,
+  "narrative": {
+    "text": "Figure 3.4.1, 'Semantic Governance Infrastructure: the governance, runtime, and content-and-application layers, and the flow of content between them' (section 3.4.5). Three horizontal layers are separated by dashed lines. Governance Services contains LIMR, Profile authoring, Conformance resources and Governance TMS. Runtime Services contains Runtime TS and a placeholder box. Content and Application Layers contains a row of IGs (IG 1, IG 2, IG 3 and more) and a row of Applications/Use Cases (App 1, App 2, App 3 and more). An arrow labelled 'Content syndication' runs from Global Content Sources, outside the layers, into Governance TMS, and a two-way arrow links Governance TMS with Runtime TS.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-032",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

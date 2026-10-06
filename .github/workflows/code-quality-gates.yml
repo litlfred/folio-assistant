@@ -1509,6 +1509,13 @@ jobs:
       - name: KG materialised parts hold, and nothing sits unrecorded
         run: bun run kg:materialize:check
 
+      # Bean `0mpw`: every instance declaring `remoteMounts` has a lock written
+      # for exactly its pins, and every locked directory on disk hashes to its
+      # tree digest. Offline; never fetches. `not-enabled` (exit 0) while no
+      # instance here declares a mount; could-not-determine exits 2, never 0.
+      - name: Remote mounts match their lock
+        run: bun run mount:remote:check
+
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
       # on the same reasoning as `check:skills`: it locks in a property this tree

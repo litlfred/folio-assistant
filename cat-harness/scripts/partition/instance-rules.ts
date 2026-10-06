@@ -458,6 +458,14 @@ export const RULES: Rule[] = [
       // are instantiated at the root, read from their snapshots. HARNESS so the
       // tile above may import it; `kg-instantiate.ts` (core) imports it too.
       "scripts/subscribed-harnesses.ts",
+      // Its site half (bean `g8jp`): each subgraph a subscription chose,
+      // resolved to the tree held for it. HARNESS for the same reason — the
+      // tile above and `mount-instance-docs.ts` / `compose-docs.ts` (all
+      // harness) import it, and it reads declarations, never folio content.
+      "scripts/subscribed-trees.ts",
+      // The part LAYOUT both halves share, moved out of `kg-subscribe.ts`
+      // (core) so the reader above may import it (bean `g8jp`).
+      "scripts/kg-parts.ts",
       // Beside its sibling, and HARNESS rather than core — the opposite
       // classification to `gen-default-boards.ts`, for the reason that entry
       // records: what settles it is what a module is ABOUT. That one produces
@@ -493,6 +501,8 @@ export const RULES: Rule[] = [
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/subgraph-source.ts",          // where a declared subgraph gets its content (bean `l4ay`) — read by the declaration schema itself
+      "schemas/remote-mount.ts",             // declared-path-literal: a partition plan names modules by path. Remote mounts (bean `0mpw`): mountDefaults, remoteMounts, the lock
+
       "scripts/subgraph-node.ts",            // the declared Subgraph node as a publisher's container (bean `l4ay`); imports nothing
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
@@ -802,6 +812,8 @@ export const RULES: Rule[] = [
       // than by a rule, and an `exact` entry naming a path this scan can no longer see
       // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
+      "scripts/remote-tree.ts",              // one remote tree at one pin: shallow blobless fetch, sparse checkout; gitPartFetcher moved down from core (bean `0mpw`)
+      "scripts/remote-mount.ts",             // lay a harness and its closure down from a pinned commit, lock it, check it (bean `0mpw`)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
       "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
@@ -1350,6 +1362,8 @@ export const RULES: Rule[] = [
       "scripts/pair-cover.ts",              // ...and which regen pairs FOLD into one another's check (bean `8qyc`): a gate whose chain the pool already asks is replaced by its residual. Scheduling only, beside the pool for the same reason
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
+      "scripts/qa-working-copy.ts",         // ...and the QA working copy's stamp (bean `7how`): which tree the computed QA tree was built from, rebuilt by `regen`/`gates` when stale
+      "scripts/measure-merge-round.ts",     // ...and the merge-round yardstick (bean `xpcu`): times the recipe in a scratch worktree, judges nothing
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
       "scripts/kind-table.ts",              // the reader over the graph-typology TABLE in `directory-conventions.md`, which `kind-register` and `graph-typology-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
       "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)

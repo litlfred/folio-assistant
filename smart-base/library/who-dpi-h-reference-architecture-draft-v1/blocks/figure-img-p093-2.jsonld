@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#"
+    }
+  ],
+  "@id": "library/who-dpi-h-reference-architecture-draft-v1/blocks/figure-img-p093-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p093-2.png",
+  "pageStart": 93,
+  "pageEnd": 93,
+  "narrative": {
+    "text": "Figure 3.7.1 (section 3.7.2, The model), showing a system realising an actor with its offered and required services, and two actors connected by a transaction. The components Document Source and Document Repository are both assigned to the interaction 'Provide and Register Document Set [ITI-41]'. 'Vendor EHR Product' realises Document Source, and 'Vendor 2 EHR product' realises Document Repository; both links are drawn as red dotted lines. Document Repository realises the service 'Register Document Set', which serves Document Source.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+    },
+    "drafted_at": "2026-10-01"
+  },
+  "derivedFrom": "library/who-dpi-h-reference-architecture-draft-v1/sections/sec-048",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/who-dpi-h-reference-architecture-draft-v1/manifest.jsonld",
+  "provenance": "ingested"
+}

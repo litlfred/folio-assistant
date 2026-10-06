@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 435 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 160 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 441 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 160 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 701 terms and is 570 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 707 terms and is 575 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>701</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>701</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>707</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>707</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">701</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">707</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -112,19 +112,19 @@ be a term this corpus is right to coin.</p>
 <p>The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) freeze it in the kept trashcan now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, &quot;1&quot;): the host keeps a FROZEN copy in the kept trashcan, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_ConfirmCutover</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_cutover" data-fa-state="extracted" data-fa-gloss="">
-13 · Cutover: delete the parent's copy <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Cutover</code></a></p>
-</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_cutover" data-fa-state="extracted" data-fa-gloss="">
 13 · Cutover: freeze the copy in the kept trashcan <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, under separated/&lt;name&gt;/ in the kept trashcan, on its own branch (a plain mv, git rm --cached, state:push; the trashcan skill says how), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Cutover</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_cutover" data-fa-state="extracted" data-fa-gloss="">
+13 · Cutover: retire the parent's copy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it (owner, 2026-10-06). Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Cutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_grow" data-fa-state="extracted" data-fa-gloss="">
 2 · Grow it in place <span class="fa-gloss-status">candidate, extracted</span>
@@ -978,6 +978,13 @@ Check before you create (exact-title search) <span class="fa-gloss-status">candi
 <p>STRICT. <code>beans create</code> is not idempotent: it mints a fresh id every call and dedupes on nothing, so re-entering a step duplicates the plan instead of no-op'ing. In the qou folio an unguarded re-run produced 14,688 duplicate beans — 92% of every open bean — which starved the idle-backlog policy of signal and collided with 15 real ids.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/bean-lifecycle.bpmn"><code>cat-harness/processes/sdlc/bean-lifecycle.bpmn#Task_CheckExists</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountdependency.task_checkagainstlock" data-fa-state="extracted" data-fa-gloss="">
+Check disk against lock against declaration <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>mount:remote:check</code>, with no network: the lock's pins are the declaration's, and every locked directory is on disk and hashes to its digest. Could-not-determine outranks missing, which outranks mounted.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_CheckAgainstLock</code></a></p>
+</dd>
 <dt id="bootstrap--kg-bpmn-activities--process_completeinitialization.a_checkstep" data-fa-state="extracted" data-fa-gloss="">
 Check it <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1478,6 +1485,13 @@ Declare the model where a tool can read it <span class="fa-gloss-status">candida
 <dd>
 <p>A model in prose is a proposal; a model in the declaration is a model. Ship a reader in the same change — everything here that was only documentation went inert within weeks.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/crdm-data-model.bpmn"><code>cat-harness/processes/process/crdm-data-model.bpmn#A_Declare</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountdependency.task_declaremount" data-fa-state="extracted" data-fa-gloss="">
+Declare the mount: harness, repository, pin <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>remoteMounts: [&#123; harness, repository, ref }]</code> on the downstream's own declaration. <code>ref</code> is a full 40-character commit. Overrides, if any, are keyed by instance name and then by directory id — never by path. Decide first whether you want a remote mount at all: reading another graph without holding its code is a SUBSCRIPTION, not a mount.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_DeclareMount</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_declare" data-fa-state="extracted" data-fa-gloss="">
 Declare the node <code>materialized</code> <span class="fa-gloss-status">candidate, extracted</span>
@@ -2677,12 +2691,26 @@ Monitor, and use data effectively <span class="fa-gloss-status">candidate, extra
 <p>DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, <code>9789241511766-eng</code>, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_MonitorAndUseData</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountdependency.task_mountinstances" data-fa-state="extracted" data-fa-gloss="">
+Mount each instance at its declared path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Sparse checkout of the declaration and the chosen directories, copied to the mount path (by default the instance's home path, so relative imports and sibling discovery hold). Never onto tracked bytes; never onto a directory no lock says this mount made; never over edits to a previous mount — those are left untouched and reported.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_MountInstances</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_mountbranchtip" data-fa-state="extracted" data-fa-gloss="">
 Mount the branch tip at the declared path <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>A <code>branch</code> source keyed by <code>tip</code>: <code>branch-store mount --id &lt;dir-id&gt;</code> writes the tip's files at the declared path, so every reader finds the directory where it always was; <code>push</code> splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the declaring directory's <code>storage</code> (or <code>source</code>) — a branch no declaration names is refused rather than guessed. A <code>commit</code>-keyed branch is read per commit through its own store (<code>qa-store</code>), not mounted.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountBranchTip</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountsubgraph.task_mountremotepin" data-fa-state="extracted" data-fa-gloss="">
+Mount the remote tree at its pin <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A <code>remote</code> source (bean <code>0mpw</code>): another repository's tree at a full 40-character commit. <code>bun run mount:remote</code> lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through <code>remoteMounts</code>, which expands a whole harness and its closure — <code>Process_MountDependency</code>.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountRemotePin</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_l1documentingestion.task_promote" data-fa-state="extracted" data-fa-gloss="">
 Move into library/&lt;bib-slug&gt;/ <span class="fa-gloss-status">candidate, extracted</span>
@@ -3957,6 +3985,13 @@ Resolve or re-open the bean [todo-manager] <span class="fa-gloss-status">candida
 <p>Resolved when the change landed clean; left open with the residue when it did not.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/editing-hci-validation.bpmn"><code>folio-assistant-core/processes/content/editing-hci-validation.bpmn#Task_ResolveBean</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountdependency.task_resolveclosure" data-fa-state="extracted" data-fa-gloss="">
+Resolve the closure at the pin <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Fetch the pinned tree (shallow, blobless). Read the harness's declaration from it; for each <code>needs</code> name, find that instance in the same tree, else follow a GITLINK at that tree as a pin into its own repository. A need found in neither is missing; one the downstream already holds is local. Paths and directories come from <code>mountDefaults</code> unless overridden.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_ResolveClosure</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_boardopenclose.a_resolvethreshold" data-fa-state="extracted" data-fa-gloss="">
 Resolve the kind's zoom threshold <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -4998,6 +5033,13 @@ Write the entry that LEADS — keeping the checker's beneath it <span class="fa-
 <dd>
 <p>Not relaxable, and the one step here that is not. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not. Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. <code>/api/relevance/adjudicate</code> reached the same rule independently — <code>human_adjudicated</code> written alongside, never over, the agent's <code>assessed_by</code>.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/criterion-adjudication.bpmn"><code>cat-harness/processes/sdlc/criterion-adjudication.bpmn#A_RecordEntry</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_mountdependency.task_writelock" data-fa-state="extracted" data-fa-gloss="">
+Write the lock <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>&lt;instance&gt;.mount-lock.json</code> beside the downstream's declaration: the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_WriteLock</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_boardplacenote.a_createnote" data-fa-state="extracted" data-fa-gloss="">
 Write the note into the folio — with no coordinate <span class="fa-gloss-status">candidate, extracted</span>

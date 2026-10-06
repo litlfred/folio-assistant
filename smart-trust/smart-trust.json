@@ -1,0 +1,135 @@
+{
+  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THE INGESTED INDEX HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING: everything under `fhir-artifact-index/` and `docs/` was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit THERE is a defect, because the next check will either overwrite it or fail. If something is wrong in the index, the fix is in the pipeline or in the upstream IG, never in those files. THAT SENTENCE USED TO COVER THE WHOLE INSTANCE and stopped being true on 2026-09-30, when `themes/` arrived (bean `7h3u`; it moved to `smart-base/themes/` in stage D of the smart-* separation, bean `kg83`, because the theme is the WHO template's, not this IG's): a theme is DERIVED from an upstream stylesheet but is not produced by `ingest:ig`, and `themes.test.ts` re-reads the vendored source rather than a pipeline re-deriving it. Narrowed rather than deleted, because the rule is still exactly right for the two directories it names -- and a whole-instance claim that is true of most of it is the stale-guidance defect this repository keeps paying for.",
+  "name": "smart-trust",
+  "repository": "litlfred/smart-trust",
+  "livesAt": {
+    "repository": "litlfred/folio-assistant",
+    "path": "smart-trust"
+  },
+  "version": "0.1.0",
+  "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
+  "avatar": {
+    "glyph": "M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM12 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM12 12.5v3",
+    "tone": 199,
+    "reads": "a shield with a keyhole — the trust framework, in WHO blue"
+  },
+  "_avatar_comment": "A shield with a keyhole — a trust framework, about who may open what. NOT the shield-with-check: that is `qa`'s, and the registry refuses two kinds sharing a glyph. WHO BLUE, like smart-base: an organisation's published colour on a neutral glyph is not its identity, which is the line the owner drew for who-iris on 2026-09-23. Added 2026-10-04 (bean `2vpn`) when the owner chose a glyph over the shared operations card it had borrowed through a sticky. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.",
+  "directories": [
+    {
+      "id": "smart-trust-ast",
+      "path": "fhir-ast/",
+      "description": "WHO SMART Trust's IG Publisher AST, INGESTED here although the IG's source is not (owner, 2026-10-04: an IG's semi-static KG may stay remote, and its AST is still ingested into the folio). Read from the branch family cat/fhir-harness/fhir-ast/ on the IG's own repository (litlfred/smart-trust; it could instead be materialised onto a local branch here, by dropping `repository`), one branch per IG package id; this IG's member is cat/fhir-harness/fhir-ast/smart.who.int.trust. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout by design. Bean lehh.",
+      "graphTypologies": [
+        "ig-ast"
+      ],
+      "storage": {
+        "branchPrefix": "cat/fhir-harness/fhir-ast/",
+        "keyedBy": "family",
+        "keyFrom": "the IG's package id",
+        "repository": "litlfred/smart-trust",
+        "tool": "ig-cache"
+      }
+    },
+    {
+      "id": "smart-trust-artifact-index",
+      "path": "fhir-artifact-index/",
+      "description": "The reconstructed artefact index, and the DAK API surface it points at. ONE directory rather than two on purpose: `dak/` sits INSIDE the declared graph because a sibling would be an undeclared directory holding the very bytes the index claims to have — the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. `index.json` carries a `provenance` block naming the published file every field came out of, because no IG publishes an artefact index and each row was therefore assembled rather than transcribed.",
+      "graphTypologies": [
+        "fhir-artifact-index"
+      ],
+      "readOnly": true,
+      "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened.",
+      "served": true
+    },
+    {
+      "id": "smart-trust-openapi",
+      "path": "openapi/",
+      "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
+      "graphTypologies": [
+        "openapi"
+      ],
+      "readOnly": true,
+      "readOnlyBasis": "Copies of an upstream API description (each a materialized node, `<id>.source.json`) and pages generated from it; `ingest-openapi.ts` and `gen-openapi-pages.ts` rewrite them, a person does not. A hand edit would silently change what this repository claims the API's authors published — the two scripts' `--check` is what catches one.",
+      "served": true
+    },
+    {
+      "id": "smart-trust-docs",
+      "path": "docs/",
+      "instanceRoot": true,
+      "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). SINCE 2026-10-05 THESE ARE THE ARTEFACT PAGES OF ONE SITE (`igSite`, bean `mftp`): they build into smart-trust's own IG site at `/smart-trust/` under the IG's menu, and the index, menu-section and category pages this description goes on to mention are no longer written -- the IG's own index, toc and artifacts pages replace them. What follows is the history of how the directory got here. THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `auto-docs` indexes the 20 pages it holds and publishes that page. \"No verbatim mount\" and \"no viewer\" are different facts, and declaring this is what stops the second being inferred from the first.",
+      "graphTypologies": [
+        "docs",
+        "ig-pages"
+      ],
+      "derivedFrom": [
+        "smart-trust-artifact-index",
+        "smart-base-themes"
+      ],
+      "writer": [
+        "fhir-harness/scripts/gen-ig-pages.ts",
+        "fhir-harness/scripts/templates/ig-pages/"
+      ],
+      "igSite": true,
+      "_comment_igSite": "Built INTO smart-trust's own IG site at /smart-trust/, not composed into the main site (bean mftp, owner 2026-10-05: one site, \"clean break on old beahviour, no redirect needed\"). Until then these pages were COMPOSED into the main Jekyll site at /smart-trust/ while the IG's 42 narrative pages were a second site at /smart-trust/ig/ built only in staging previews -- so production /smart-trust/ showed an artefact index and none of WHO's narrative pages. Now `stage-ig-sites.ts` copies this directory's artefact pages and assets into the IG's Jekyll source, under the IG's own menu, and `gen-ig-pages.ts` no longer writes the index/menu/category pages the IG's own index, toc and artifacts pages replace. Still rendered THROUGH just-the-docs, as the 2026-09-21 ruling asked (\"i want the input/page(s)/ content to be rendered viajustthedocs pipeline\"). who-iris does NOT set this and must not: it is a replica of IRIS.",
+      "tile": {
+        "icon": "docs"
+      }
+    },
+    {
+      "id": "smart-trust-scripts",
+      "path": "scripts/",
+      "description": "The tests that pin smart-trust's GENERATED pages -- markdown rather than HTML wearing front matter, and every link resolving to a file. The generator itself moved to `fhir-harness/scripts/gen-ig-pages.ts` (#1767), because nothing in it was smart-trust's: it reads `fhir-artifact-index/`, which every ingested IG holds in the same shape, and smart-base now uses it too. `smart-trust:pages` still names this instance's label and chrome owner. The tests stay here because what they assert is a fact about THESE pages.",
+      "graphTypologies": [
+        "code"
+      ]
+    },
+    {
+      "id": "qa",
+      "path": "test/results/",
+      "storage": {
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit"
+      },
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 1 file across scenarios (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "graphTypologies": [
+        "qa"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — smart-trust",
+      "description": "Cold start for work in this layer, and one rule above all others: nothing here is authored, so nothing here is edited."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "smart-trust",
+      "description": "What this index is, what it was reconstructed from, and how to re-derive it."
+    }
+  ],
+  "needs": [
+    "smart-ig",
+    "cat-openapi"
+  ],
+  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `smart-ig`. THIS IS WHAT MAKES `nsbb`'s RULING TRUE IN THE DECLARATIONS rather than only in prose: there is no per-IG harness, so `smart-trust` is an INSTANCE OF `smart-ig` rather than a harness of its own. `smart-immunizations`'s declaration already called its own harness status 'PROVISIONAL BY DESIGN' pending this restructure. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here. `cat-openapi` added 2026-10-03 (bean `s4ta`): owner, *\"the smart-trust repo has a smart-base harness and a openapi harness\"* — smart-ig brings smart-base, cat-openapi renders the gateway API.",
+  "_stickies_removed_comment": "NO STICKY ON PURPOSE (bean `2vpn`, owner 2026-10-04). It contributed the `operations` card, chosen 2026-09-22 when a card was the only way to give smart-trust a navbar mark. That card is the platform owner's shared art, not smart-trust's, so the navbar showed a generic cat. Offered the choice, the owner picked *\"Own WHO-blue glyph\"*: smart-trust's mark is now its `schemas/avatars.ts` entry, a shield in WHO blue (hue 199, as smart-base), and the card leaves the landing board with the sticky, as the sticky's own comment said it would.",
+  "taskIo": {
+    "smart-trust:pages:check": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "smart-trust:openapi:check": {
+      "outputs": [],
+      "because": "exits before `--source` is even read — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "smart-trust:openapi:pages:check": {
+      "outputs": [],
+      "because": "NO `inputs` for these five, read rather than assumed (bean `8qyc`): four — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    }
+  }
+}
