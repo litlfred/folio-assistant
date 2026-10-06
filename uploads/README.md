@@ -22,6 +22,9 @@ It begins at the start **event** “A contributor has a file for the folio”. A
 
 | file | what it is | used by |
 |---|---|---|
+| [`1911.08836v1.pdf`](1911.08836v1.pdf) | a file |  |
+| [`2310.18073v1.pdf`](2310.18073v1.pdf) | a file |  |
+| [`2403.07553v1.pdf`](2403.07553v1.pdf) | a file |  |
 | [`2403.09442v1.pdf`](2403.09442v1.pdf) | a file |  |
 | [`2409.00038v1.pdf`](2409.00038v1.pdf) | a file |  |
 | [`2505.07664v1.pdf`](2505.07664v1.pdf) | a file |  |
@@ -41,6 +44,7 @@ It begins at the start **event** “A contributor has a file for the folio”. A
 | [`ChatGPT-Image-Sep-20-2026-11_57_08-AM.png`](ChatGPT-Image-Sep-20-2026-11_57_08-AM.png) | a file |  |
 | [`ChatGPT-Image-Sep-20-2026-11_58_08-AM.png`](ChatGPT-Image-Sep-20-2026-11_58_08-AM.png) | a file |  |
 | [`Home-_-folio-assistant.pdf`](Home-_-folio-assistant.pdf) | a file |  |
+| [`ICDAR2013-ToC.pdf`](ICDAR2013-ToC.pdf) | a file |  |
 | [`d1a26515-9bde-455d-84bc-2e5fc196b004.png`](d1a26515-9bde-455d-84bc-2e5fc196b004.png) | a file |  |
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`9789240101197-eng/`](9789240101197-eng/) | _nothing declares what this holds_ | |
