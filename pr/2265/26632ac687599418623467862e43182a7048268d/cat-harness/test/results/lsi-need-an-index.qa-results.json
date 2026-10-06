@@ -1,0 +1,62 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/lsi.ts",
+    "script_hash": "00b95f09a936"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "declared-prose-graphs"
+  },
+  "families": {
+    "index-missing": {
+      "summary": "A declared prose graph with >= 100 units and >= 20000 words has no LSI index sidecar. Basis: a HOUSE threshold, not from the method (the 1990 paper gives no corpus-size rule) — more prose than one reader holds in a sitting, so a change of vocabulary between two units goes unnoticed. Graphs below either threshold are not judged (n/a, not pass); state graphs (beans) are indexed on demand and never asked for one.",
+      "count": 4,
+      "entries": [
+        {
+          "instance": "cat-harness",
+          "graph": "docs",
+          "path": "cat-harness/docs",
+          "units": 857,
+          "words": 587060,
+          "detail": "needs an index (857 units, 587060 words) and has none"
+        },
+        {
+          "instance": "smart-base",
+          "graph": "smart-base-docs",
+          "path": "smart-base/docs",
+          "units": 295,
+          "words": 20312,
+          "detail": "needs an index (295 units, 20312 words) and has none"
+        },
+        {
+          "instance": "smart-immunizations",
+          "graph": "smart-immunizations-docs",
+          "path": "smart-immunizations/docs",
+          "units": 749,
+          "words": 45989,
+          "detail": "needs an index (749 units, 45989 words) and has none"
+        },
+        {
+          "instance": "smart-trust",
+          "graph": "smart-trust-docs",
+          "path": "smart-trust/docs",
+          "units": 2145,
+          "words": 149710,
+          "detail": "needs an index (2145 units, 149710 words) and has none"
+        }
+      ]
+    },
+    "index-run-unrecorded": {
+      "summary": "An LSI index sidecar with no successful run record over the current inputs — never run by the recording path, or its last run failed. Never green: a file on disk is not evidence the run that should keep it current succeeded (bean fq5u).",
+      "count": 0,
+      "entries": []
+    },
+    "index-stale": {
+      "summary": "An LSI index sidecar whose input fingerprint no longer matches the graph: built before the graph last changed.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 4
+}
