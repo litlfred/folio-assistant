@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-06T22:02:03Z
+updated_at: 2026-10-06T22:01:50Z
 parent: folio-assistant-fnx4
 ---
 
