@@ -142,7 +142,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**130** distinct skill(s) are named by an activity.
+**131** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
