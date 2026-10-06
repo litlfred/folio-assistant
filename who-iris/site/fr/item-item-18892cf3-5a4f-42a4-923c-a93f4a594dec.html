@@ -76,6 +76,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -235,7 +240,7 @@
     border-radius: 3px;
     background: var(--iris-accent);
     color: #fff;
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
   .search-remote-box {
     border-top: 1px solid var(--iris-edge);
@@ -392,15 +397,15 @@
   <span>Parcourir IRIS</span><span>Statistiques</span><span>À propos</span><span>Contact</span><span>Aide</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="community-list.html">Accueil</a><span class="sep">•</span><span class="here">Publication and information products style guide</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="community-list.html">Accueil</a><span class="sep">•</span><span class="here"><bdi lang="en">Publication and information products style guide</bdi></span></div></div>
 
 <main class="wrap">
-<h1>Publication and information products style guide</h1>
+<h1 dir="auto" lang="en">Publication and information products style guide</h1>
 <p>URI permanente de ce document
-  <a href="https://hdl.handle.net/10665/332098">https://hdl.handle.net/10665/332098</a>
+  <a href="https://hdl.handle.net/10665/332098"><bdi>https://hdl.handle.net/10665/332098</bdi></a>
   <span class="state materialized">matérialisé</span></p>
 
-<p class="note" style="margin-inline-start:0">Dans : 7. Regional Office for the Western Pacific &rsaquo; Information products</p>
+<p class="note" style="margin-inline-start:0">Dans : <bdi>7. Regional Office for the Western Pacific</bdi> &rsaquo; <bdi>Information products</bdi></p>
 
 <h2>Fichiers</h2>
 <table class="items">
@@ -446,15 +451,15 @@ io.observe(f);
 <table class="items">
 <thead><tr><th>Où</th><th>Lien</th></tr></thead>
 <tbody>
-<tr><td>En amont, à l’OMS</td><td><a href="https://hdl.handle.net/10665/332098">https://hdl.handle.net/10665/332098</a></td></tr>
+<tr><td>En amont, à l’OMS</td><td><a href="https://hdl.handle.net/10665/332098"><bdi>https://hdl.handle.net/10665/332098</bdi></a></td></tr>
 <tr><td>Conservé ici, dans folio-assistant</td>
     <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via le CDN</a></td></tr>
-<tr><td>Dans la collection</td><td><a href="collection-collection-wpro-information-products.html">Information products</a><br><code>dans 7. Regional Office for the Western Pacific</code></td></tr>
+<tr><td>Dans la collection</td><td><a href="collection-collection-wpro-information-products.html"><bdi>Information products</bdi></a><br><code class="ui">dans <bdi>7. Regional Office for the Western Pacific</bdi></code></td></tr>
 <tr><td>Texte ingéré (L1)</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections">who-iris/library/wpr-rdo-2020-003-eng/sections/</a></td></tr>
-<tr><td>Notice Dublin Core</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Télécharger wpr-rdo-2020-003-eng.dc.json</a>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/wpr-rdo-2020-003-eng/sections"><bdi dir="ltr">who-iris/library/wpr-rdo-2020-003-eng/sections/</bdi></a></td></tr>
+<tr><td>Notice Dublin Core</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Télécharger <bdi>wpr-rdo-2020-003-eng.dc.json</bdi></a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">via le CDN</a>
-      <br><code>Dublin Core qualifié · 5,0 Ko</code></td></tr>
+      <br><code class="ui">Dublin Core qualifié · 5,0 Ko</code></td></tr>
 <tr><td>Rendus Dublin Core</td><td><a href="../dublin-core/wpr-rdo-2020-003-eng.dc.xml">Dublin Core XML</a>
       <br><a href="../dublin-core/wpr-rdo-2020-003-eng.dc.jsonld">JSON-LD (termes DCMI)</a></td></tr>
 </tbody>
@@ -465,7 +470,7 @@ io.observe(f);
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Réplique ingérée.</strong> Générée à partir de <code>who-iris/catalogue/</code> par <code>who-iris/scripts/gen-iris-pages.ts</code>. Mise en page d’après <a href="https://iris.who.int/community-list">iris.who.int</a> ; chaque chiffre de cette page est lu dans le catalogue, et non copié d’une capture d’écran.</p>
+  <p><strong>Réplique ingérée.</strong> Générée à partir de <code dir="ltr">who-iris/catalogue/</code> par <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code>. Mise en page d’après <a href="https://iris.who.int/community-list">iris.who.int</a> ; chaque chiffre de cette page est lu dans le catalogue, et non copié d’une capture d’écran.</p>
   <div class="rule"></div>
   <p>Source faisant foi : <a href="https://iris.who.int/">iris.who.int</a> — © OMS. Cette copie ne revendique aucune approbation et ne porte aucune marque de l’OMS.</p>
 </div></footer>

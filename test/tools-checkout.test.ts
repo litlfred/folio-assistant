@@ -11,6 +11,8 @@
 import { describe, expect, test } from "bun:test";
 
 import { checkTools, knownSkills } from "../cat-harness/scripts/check-tools.js";
+import { tools } from "../cat-harness/tools/discover.js";
+import { danglingRemedies, networkToolsWithoutRemedies, remediesFor } from "../cat-harness/schemas/tool.js";
 
 /**
  * The Tool audit, run ONCE at module scope.
@@ -42,5 +44,22 @@ describe("tools", () => {
     expect(s.has("smart-base-tools")).toBe(true); // smart-base/skills/content/authoring-who-smart-guidelines
     expect(s.has("lean-formalization")).toBe(true); // schemas/skills/<name>/
     expect(s.has("kg-export")).toBe(true); // skills/folio-core
+  });
+});
+
+// Bean `6mk7`: the case that motivated `remedies`. On 2026-10-06 a refused
+// packages.fhir.org did not lead the agent to the seeder; this is the lookup
+// that now does, over the real graph.
+describe("remedies over the real Tool graph", () => {
+  const all = tools();
+
+  test("every network Tool states its remedies, and every named remedy exists", () => {
+    expect(networkToolsWithoutRemedies(all)).toEqual([]);
+    expect(danglingRemedies(all)).toEqual([]);
+  });
+
+  test("a refused packages.fhir.org leads to fhir-cache-seed-npm", () => {
+    const tools_ = new Set(remediesFor(all, "packages.fhir.org").map((m) => m.tool).filter(Boolean));
+    expect([...tools_]).toEqual(["fhir-cache-seed-npm"]);
   });
 });

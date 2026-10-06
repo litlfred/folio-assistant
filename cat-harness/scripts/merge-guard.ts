@@ -35,7 +35,9 @@
  *
  * `--session` is the MERGING session (an id `session_…` or its URL). It is
  * required with `--merge`, because check 2 asks whether that session is the
- * one that marked the PR ready. `--status` also posts the verdict as the
+ * one that marked the PR ready. `--no-merge-manager` lifts that separation
+ * when no Merge Manager is active and the PR's own session merges (owner
+ * ruling 2026-10-06); everything else is still checked. `--status` also posts the verdict as the
  * `merge-guard` commit status on the head, which is what the workflow does.
  *
  * ## The eight checks
@@ -45,7 +47,9 @@
  * 1. `base` — the base is `main`, the PR is open, and the base is not the head
  *    branch of a merged PR (#1937).
  * 2. `ready-for-review` — not a draft; and the latest `ready_for_review` event
- *    is attributable to the PR's OWN session, never the merging one (#1957).
+ *    is attributable to the PR's OWN session, never the merging one (#1957) —
+ *    unless `--no-merge-manager`: with no Merge Manager active, the own
+ *    session IS the merging one (owner ruling 2026-10-06).
  * 3. `ready-marker` — a `ready: <sha>` comment whose session footer is the
  *    PR's own session, and `<sha>` is the head or every commit after it is a
  *    merge-main bot merge (#1937, #1960, #1957).
@@ -275,6 +279,14 @@ export interface GuardOptions {
   mergingSession?: string;
   /** The login the merge would be made under, for check 2's actor half. */
   mergingActor?: string;
+  /**
+   * No Merge Manager is active, so the PR's OWN session merges it (owner
+   * ruling 2026-10-06). Check 2 then drops its separation half — "the merging
+   * session did not mark it ready" — because there is no second session to
+   * separate from. Every other check, and check 2's own-session attribution,
+   * still applies. CLI: `--no-merge-manager`.
+   */
+  noMergeManager?: boolean;
   /** For a fixture's clock; defaults to {@link READY_WINDOW_MS}. */
   readyWindowMs?: number;
 }
@@ -515,14 +527,15 @@ function checkReadyForReview(s: GuardSnapshot, o: GuardOptions): CheckResult {
   const own = signingSession(s.pr.body);
   const window = o.readyWindowMs ?? READY_WINDOW_MS;
 
-  if (o.mergingActor && actor === o.mergingActor && actor !== s.pr.user?.login) {
+  const separate = !o.noMergeManager;
+  if (separate && o.mergingActor && actor === o.mergingActor && actor !== s.pr.user?.login) {
     return R(2, "ready-for-review", "refuse", `marked ready at ${last.created_at} by \`${actor}\`, the merging actor`, "defect");
   }
   const near = s.comments
     .map((c) => ({ c, session: signingSession(c.body), dt: Math.abs(Date.parse(c.created_at) - at) }))
     .filter((x) => x.session && x.dt <= window)
     .sort((a, b) => a.dt - b.dt);
-  if (o.mergingSession && near.some((x) => x.session === o.mergingSession)) {
+  if (separate && o.mergingSession && near.some((x) => x.session === o.mergingSession)) {
     return R(
       2,
       "ready-for-review",
@@ -545,7 +558,8 @@ function checkReadyForReview(s: GuardSnapshot, o: GuardOptions): CheckResult {
       kind,
     );
   }
-  return R(2, "ready-for-review", "pass", `marked ready at ${last.created_at} by the PR's own session \`${own}\``);
+  const lifted = o.noMergeManager ? "; no Merge Manager is active, so the merging session is not separated from it (--no-merge-manager)" : "";
+  return R(2, "ready-for-review", "pass", `marked ready at ${last.created_at} by the PR's own session \`${own}\`${lifted}`);
 }
 
 function latestOwnMarker(s: GuardSnapshot): ReadyMarker | undefined {
@@ -1049,7 +1063,7 @@ export function render(v: GuardVerdict): string {
   return lines.join("\n");
 }
 
-const USAGE = "usage: bun run merge:guard <pr> [--merge --session <id>] [--actor <login>] [--repo owner/repo] [--status] [--json]";
+const USAGE = "usage: bun run merge:guard <pr> [--merge --session <id> [--no-merge-manager]] [--actor <login>] [--repo owner/repo] [--status] [--json]";
 
 async function main(argv: string[]): Promise<number> {
   const args = [...argv];
@@ -1069,6 +1083,7 @@ async function main(argv: string[]): Promise<number> {
   const doMerge = flag("--merge");
   const asJson = flag("--json");
   const doStatus = flag("--status");
+  const noMergeManager = flag("--no-merge-manager");
   const sessionArg = opt("--session");
   const actor = opt("--actor");
   const root = repoRootFor(resolve(import.meta.dir, ".."));
@@ -1091,7 +1106,7 @@ async function main(argv: string[]): Promise<number> {
     console.error(`merge-guard #${n}: COULD NOT DETERMINE — ${e instanceof Error ? e.message : String(e)}`);
     return 2;
   }
-  const v = evaluate(snapshot, { mergingSession, mergingActor: actor });
+  const v = evaluate(snapshot, { mergingSession, mergingActor: actor, noMergeManager });
   console.log(asJson ? JSON.stringify(v, null, 2) : render(v));
   if (doStatus) {
     try {

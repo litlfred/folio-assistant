@@ -43,6 +43,13 @@ Kept so the page renders even where the PlantUML image is missing, and because M
 classDiagram
   direction TB
   namespace fhir_harness__fhir_ig_tools {
+    class fhir_harness_fhir_ig_tools_Remedy["Remedy"] {
+      <<json: ToolDefinitionSchema>>
+      host [1] string
+      error [0..1] string
+      tool [0..1] string
+      none [0..1] string
+    }
     class fhir_harness_fhir_ig_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
       source [1] string
@@ -60,13 +67,16 @@ classDiagram
       satisfies [1..*] string[]
       selection [0..1] object
       requires [0..1] object
+      remedies [0..*] Remedy[]
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
       subprocesses [0..*] string[]
     }
   }
+  fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Remedy : remedies
   fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
+  cssClass "fhir_harness_fhir_ig_tools_Remedy" fa_uml_kind_tools
   cssClass "fhir_harness_fhir_ig_tools_Maintain" fa_uml_kind_tools
   cssClass "fhir_harness_fhir_ig_tools_ToolDefinition" fa_uml_kind_tools
 ```

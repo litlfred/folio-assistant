@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9hfi
 title: 'smart-immunizations codings.html: CodeSystems and ValueSets show ''not rendered: list-simple-*.xhtml'''
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T05:56:52Z
-updated_at: 2026-10-06T15:43:51Z
+updated_at: 2026-10-06T18:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -19,9 +19,9 @@ Owner, 2026-10-06: on https://litlfred.github.io/smart-immunizations/codings.htm
 The owner asked "what to do to fix?". Investigation started in session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92.
 
 ## Done when
-- [ ] root cause recorded here, with the fix options and the owner's choice
-- [ ] codings.html on the built smart-immunizations site lists its CodeSystems and ValueSets, checked on a built page
-- [ ] a gate or test fails when a list-simple-* include on a published IG page renders as the placeholder
+- [x] root cause recorded here, with the fix options and the owner's choice — §"Root cause", §"Options", and the owner's choice of (a) below
+- [x] codings.html on the built smart-immunizations site lists its CodeSystems and ValueSets, checked on a built page — PR #2294: the fork's folio-site.yml steps were reproduced locally against litlfred/smart-immunizations (Jekyll 4.4.1 with the local just-the-docs gem in place of remote_theme). The built codings.html lists 6 CodeSystems and 192 ValueSets, the index's counts, and all 198 links resolve on the built site. Before and after screenshots were taken with Playwright (Chromium).
+- [x] a gate or test fails when a list-simple-* include on a published IG page renders as the placeholder — `build-ig-site.test.ts` › "the Publisher's artefact lists, written from the artefact index (bean 9hfi)" › "a list-simple include on a published IG page lists that type's artefacts, never the placeholder". With the renderer disabled, 4 of its tests fail and the marker appears in the received output. With it restored, 58 of 58 pass.
 
 Related: jut3 (smart-* via just-the-docs, which defines how IG includes render).
 
@@ -43,4 +43,10 @@ Yes. The index exists from two sources:
 
 So the fix is option (a), with the index as the single input: a list-(simple-)?<kind>.xhtml renderer over the artefact index, whichever source produced it, and no IG Publisher run. One caveat from that script's own docblock: an AST does not carry the Publisher's editorial CATEGORY, so publisherCategory() applies the default grouping by resource type. For CodeSystem and ValueSet lists that default is exact, because the grouping is by type.
 
+## Fix, 2026-10-06 (PR #2294)
+`stageIgSite` now writes each `list-(simple-)?<types>.xhtml` a page includes as a Liquid include (`templates/ig-site/artifact-list.liquid`) over `site.data.fhir.artifact_lists`, which `artifactVariables` computes from the same artefact index `artifacts.md` reads. The Publisher's own `temp/` copy still wins when it exists. A name that is no FHIR resource type (e.g. `list-simple-profiles.xhtml`) stays a reported marker. smart-trust's `list-structuremaps.xhtml` marker (beans bamf, 4475) is cleared too: its index holds no StructureMaps and its `input/maps-src/` is empty, so the built maps.html says so instead of showing the marker.
+
 _2026-10-06T15:43:51Z_ — Claimed by claude/9hfi-list-simple-renderer — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Merged 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+#2294 merged as b9e74a1 after CI PASS on its head (`ci:watch`); every Done-when box above was ticked with evidence, re-checked before merging.

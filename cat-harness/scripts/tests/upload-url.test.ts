@@ -6,15 +6,40 @@
  * is at `cat-harness/uploads`. Verified against GitHub the same day:
  * `/tree/main/uploads` returns 404, `/tree/main/cat-harness/uploads` returns
  * 200.
+ *
+ * The URL's SHAPE is asserted over a throwaway repository whose `origin` is
+ * known (`test/support/git-fixture.ts`), not over this checkout's: standing
+ * alone, cat-harness has no `origin`, and the shape is logic over whatever
+ * remote it is given. Whether THIS instance resolves — its declaration, its
+ * queue on disk, its remote — is a check of this repository's configuration,
+ * and lives in `test/upload-url-repo-root.test.ts` at the checkout's root.
  */
-import { describe, expect, test } from "bun:test";
+import { afterAll, describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { queueRepoRelative, uploadUrl } from "../upload-url.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
+
+/**
+ * An INSTANCE inside a throwaway repository: `inst/` declares an `uploads`
+ * graph at `uploads/`, which exists, and the repository's `origin` is
+ * `https://github.com/example/demo.git` — `.git` suffix and all.
+ */
+const FIXTURE = gitFixtureRepo({
+  files: {
+    "inst/inst.json": JSON.stringify({
+      name: "inst",
+      directories: [{ id: "uploads", path: "uploads/", graphTypologies: ["uploads"] }],
+    }),
+    "inst/uploads/.gitkeep": "",
+  },
+});
+const FIXTURE_INSTANCE = resolve(FIXTURE.root, "inst");
+afterAll(() => FIXTURE.cleanup());
 
 describe("the queue path is REPOSITORY-relative, not instance-relative", () => {
   test("it carries the instance segment", () => {
@@ -43,26 +68,24 @@ describe("the queue path is REPOSITORY-relative, not instance-relative", () => {
 });
 
 describe("the URL", () => {
-  test("resolves for this instance", () => {
-    const t = uploadUrl(ROOT);
-    expect(t.ok).toBe(true);
-  });
+  // "resolves for this instance" checks THIS repository's configuration, and is
+  // in `test/upload-url-repo-root.test.ts`.
 
   test("is the /upload/<branch>/<repo-relative path> form", () => {
-    const t = uploadUrl(ROOT, "main");
+    const t = uploadUrl(FIXTURE_INSTANCE, "main");
     if (!t.ok) throw new Error(t.reason);
     expect(t.url).toContain("/upload/main/");
     expect(t.url.endsWith(t.repoRelative)).toBe(true);
   });
 
   test("honours a branch other than main", () => {
-    const t = uploadUrl(ROOT, "some-branch");
+    const t = uploadUrl(FIXTURE_INSTANCE, "some-branch");
     if (!t.ok) throw new Error(t.reason);
     expect(t.url).toContain("/upload/some-branch/");
   });
 
   test("carries no `.git` suffix from the remote", () => {
-    const t = uploadUrl(ROOT, "main");
+    const t = uploadUrl(FIXTURE_INSTANCE, "main");
     if (!t.ok) throw new Error(t.reason);
     expect(t.url).not.toContain(".git/upload/");
   });

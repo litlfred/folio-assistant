@@ -68,6 +68,12 @@ package "fhir-harness/fhir-ig-skills" as pkg_fhir_harness_fhir_ig_skills <<skill
   note "skills: no node schema declared\n(no node here carries a $schema family skills names (4 named): could not determine)" as n_fhir_harness_fhir_ig_skills_skills
 }
 package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>> {
+  class "Remedy" as fhir_harness_fhir_ig_tools_Remedy <<json: ToolDefinitionSchema>> #eee9f5 {
+    host [1] : string
+    error [0..1] : string
+    tool [0..1] : string
+    none [0..1] : string
+  }
   class "Maintain" as fhir_harness_fhir_ig_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
     source [1] : string
     artefact [1] : string
@@ -83,6 +89,7 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     satisfies [1..*] : string[]
     selection [0..1] : object
     requires [0..1] : object
+    remedies [0..*] : Remedy[]
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
@@ -133,6 +140,7 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
   }
 }
 
+fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Remedy : remedies
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
 ' grid: portrait, 3 column(s) — pkg_fhir_harness_fhir_harness_translations pkg_fhir_harness_fhir_harness_validators pkg_fhir_harness_fhir_harness_typologies pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_fhir_harness_processes pkg_fhir_harness_qa
 pkg_fhir_harness_fhir_harness_translations -[hidden]down- pkg_fhir_harness_library
