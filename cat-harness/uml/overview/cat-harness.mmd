@@ -554,6 +554,14 @@ classDiagram
       $schema [1] 'kg-qa-manifest/v1'
       auditor [1] object
     }
+    class cat_harness_qa_qa_results_v1["qa-results/v1"] {
+      <<ts: QaResult>>
+      $schema [1] 'qa-results/v1'
+      producer [1]  /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; 
+      subject [1]  kind: string; id: string 
+      families [1] Record~string, QaResultFamily~
+      total [1] number
+    }
   }
   namespace cat_harness__attestations {
     class cat_harness_attestations_QaAttestations["QaAttestations"] {
@@ -1587,6 +1595,7 @@ classDiagram
   cssClass "n_cat_harness_methodologies_methodology" fa_uml_undetermined
   cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa
   cssClass "cat_harness_attestations_QaAttestations" fa_uml_kind_attestations
   cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
   cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
