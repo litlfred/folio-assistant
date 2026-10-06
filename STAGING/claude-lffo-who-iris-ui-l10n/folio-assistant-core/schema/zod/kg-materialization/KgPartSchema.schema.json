@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/KgPart",
+  "definitions": {
+    "KgPart": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "subgraph"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "id",
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "asset"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lffo-who-iris-ui-l10n/folio-assistant-core/schema/zod/kg-materialization/KgPartSchema.schema.json",
+  "title": "KgPartSchema",
+  "description": "Generated from `KgPartSchema` in schemas/kg-materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/lffo-who-iris-ui-l10n",
+    "sha": "8a4f4e8829a931926a8a0e07b9d6cfb1ab40964c",
+    "pr": "2290/merge",
+    "run": "37500618283"
+  }
+}

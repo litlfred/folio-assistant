@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>As-is wireframe: Latent semantic indexes</title><link rel="stylesheet" href="../wireframe.css"><style>
+  .page { display: grid; grid-template-columns: 56px 1fr; min-height: 100vh; }
+  .strip { border-right: 1px solid var(--line); background: var(--fill); }
+  .main { min-width: 0; padding: 16px 24px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+  .stat { flex: 1 1 8rem; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; }
+  .stat b { display: block; font-size: 1.25rem; }
+  .wrap { overflow-x: auto; max-width: 100%; }
+  table { border-collapse: collapse; min-width: 100%; }
+  th, td { border: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+  code { word-break: break-all; }
+  blockquote { border-left: 4px solid var(--ink); margin: 8px 0; padding: 4px 10px; }
+  @media (max-width: 799px) { .page { grid-template-columns: 1fr; } .strip { height: 44px; border-right: 0; border-bottom: 1px solid var(--line); } .main { padding: 12px 16px; } }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-18tvdlcp03u.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/css/navbar-row.css"><script src="../../assets/js/navbar-row.js" defer></script></head><body><script type="application/json" id="fa-navbar-row" data-fa-root="../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"basic-cdn-site","label":"Basic CDN site","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"doc-group","label":"Doc group","within":"docs","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-18tvdlcp03u"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">C@T Harness</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><div class="page"><div class="strip" aria-label="site navigation strip"></div><main class="main"><h1>Latent semantic indexes</h1><p>A latent semantic index places every unit of a prose graph — a library section, a skill, a bean — in a space built from which words occur together, so units that discuss the same thing in different words sit close. Every neighbour and finding is a proposal, never a relation the graph asserts.</p><p>Method: Latent Semantic Indexing (node <code>lsi</code>), with correspondence analysis as its parallel track; skill <code>lsi-indexing</code>.</p><div class="stats"><div class="stat"><b>3</b>committed indexes</div><div class="stat"><b>994</b>units indexed</div><div class="stat"><b>4</b>graphs that need an index and lack a fresh one</div></div><h2>Which graphs need an index</h2><p>A graph needs one at 100 units and 20,000 words — a house threshold. Below it a graph is not judged, which is not the same as fine.</p><div class="wrap"><table><tr><th>graph</th><th>verdict</th><th>detail</th></tr><tr><td><code>agent-skills/library</code></td><td>fail</td><td>needs an LSI index and has none — run <code>bun run lsi index --instance agent-skills --graph library</code></td></tr><tr><td><code>cat-harness/beans</code></td><td>n/a</td><td>state graph — indexed on demand, never committed</td></tr><tr><td><code>cat-harness/library</code></td><td>pass</td><td>fresh</td></tr><tr><td><code>who-iris/library</code></td><td>pass</td><td>fresh</td></tr></table></div><h2>who-iris / library</h2><p><b>342</b> units · <b>3937</b> terms · k = <b>100</b> · retains <b>69.7 %</b> · weighting <code>log-entropy</code></p><blockquote>Dimension 1 has no negative pole: it most likely measures unit length and term frequency (a margin), not a theme.</blockquote><div class="wrap"><table><tr><th>dim</th><th>σ</th><th>one pole</th><th>the other pole</th></tr><tr><td>1</td><td>23.78</td><td>evidence, review, group, health, quality</td><td>(none)</td></tr><tr><td>3</td><td>13.83</td><td>imprecision, effect, confidence, inconsistency</td><td>organization, november, accessed, world</td></tr><tr><td>4</td><td>13.11</td><td>accessed, pmid, cochrane, website, doi</td><td>interests, members, conflict, financial</td></tr></table></div><p><b>Findings</b> — 2 narrow dimension(s), 12 near-duplicate pair(s).</p><ul><li>dimension 11: <code>who-iris/library/wpr-rdo-2020-003-eng/sections/page-014.md</code>, <code>…/page-015.md</code></li><li>0.964 — <code>…/wpr-rdo-2020-003-eng/sections/page-006.md</code> ~ <code>…/page-008.md</code></li></ul><p>Generated by <code>bun run lsi:viz</code> from the committed sidecars.</p></main></div></body></html>
