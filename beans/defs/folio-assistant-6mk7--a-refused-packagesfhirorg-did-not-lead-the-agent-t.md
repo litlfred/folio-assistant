@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:31:37Z
-updated_at: 2026-10-06T06:42:37Z
+updated_at: 2026-10-06T08:03:18Z
 parent: folio-assistant-rwmf
 ---
 
@@ -24,7 +24,38 @@ Session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 needed SUSHI cle
 - [ ] `ig-cache.sh doctor`, and any check that finds packages.fhir.org unreachable, names `fhir-cache-seed-npm` and its command
 - [ ] the skill an agent reads before running SUSHI points at the seeder (the owner chooses which skill that is)
 - [ ] the owner decides on a general symptom-to-Tool lookup (for example a `remedies:` field on a Tool, keyed by the host or error it addresses, with a gate keeping it non-empty for network-dependent Tools)
-- [ ] `litlfred/fhir-package-mirror` exists and is filled from a machine that reaches packages.fhir.org, or the skill stops naming it
+- [x] `litlfred/fhir-package-mirror` exists and is filled from a machine that reaches packages.fhir.org, or the skill stops naming it
 - [ ] MEASURED AFTER: in a container with packages.fhir.org blocked, SUSHI on smart-trust exits 0 using only documented tools
 
 _2026-10-06T06:42:37Z_ — Claimed by claude/bold-brahmagupta-c8eoku — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-10-06: litlfred/fhir-package-mirror created and seeded across smart-trust, smart-base, smart-immunizations
+
+### 1. Fixes in fhir-ig-publisher (branch claude/ast-export)
+- Resolved IHE profile path lookups in ihe_paths() for profiles already prefixed with ihe. (such as ihe.formatcode.fhir), mapping wildcard 1.2.x to 1.2.0 from IHE/publications.
+- Updated check_cached() in seed-fhir-cache-from-npm.py to recognize @hl7/ scoped names when checking cached packages, preventing false mismatches against npm packages installed under the @hl7/ scope.
+
+### 2. Seeder Runs & Missing Detection
+Ran python3 fhir-ig-publisher/ast-export/scripts/seed-fhir-cache-from-npm.py --sushi-config <ig>/sushi-config.yaml --missing-out missing-<ig>.txt on clean cache:
+- smart-trust: 22 installed, 23 missing (missing-smart-trust.txt).
+- smart-base: 1 installed, 0 missing (missing-smart-base.txt).
+- smart-immunizations: 4 installed, 9 missing (missing-smart-immunizations.txt).
+- Merged unique missing specs (missing-all.txt): 24 packages (fhir.cqf.common#4.0.1, us.nlm.vsac#0.9.0, and 22 pinned HL7 packages).
+
+### 3. Repository Creation & Mirroring
+- Created litlfred/fhir-package-mirror on GitHub (gh repo create litlfred/fhir-package-mirror --public --clone).
+- Ran fhir-ig-publisher/ast-export/scripts/mirror-fhir-packages.sh fhir-package-mirror missing-all.txt: downloaded 24 packages from packages.fhir.org, verified SHA512SUMS, committed and pushed to main.
+- Round 2: Transitive dependencies surfaced when mirror packages were installed (hl7.terminology.r4#5.0.0, fhir.dicom#2022.4.20221006, hl7.fhir.uv.smart-app-launch#2.0.0, hl7.terminology.r4#7.1.0, hl7.fhir.uv.cpg#1.0.0) mirrored (5 packages) and pushed to main (total 29 packages mirrored in litlfred/fhir-package-mirror).
+
+### 4. Verification with Mirror
+Re-ran seeder with --mirror https://github.com/litlfred/fhir-package-mirror:
+- smart-trust: 50 installed or present, 0 missing (exit code 0).
+- smart-base: 1 installed or present, 0 missing (exit code 0).
+- smart-immunizations: 17 installed or present, 0 missing (exit code 0).
+
+### 5. SUSHI Builds
+Executed sushi build . (SUSHI v3.20.1) across all three IGs:
+- smart-trust: 0 errors, 26 warnings (exit code 0).
+- smart-base: 0 errors, 16 warnings (exit code 0).
+- smart-immunizations: 0 errors, 1 warning (exit code 0).
