@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0r7u
 title: 'CONTENT SPLIT 2026-10-06: authoring, review and publication to folio-assistant-core; methods stay in cat-harness — before seeding and before GOAL 5 resumes'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T06:42:34Z
+updated_at: 2026-10-06T06:42:52Z
 parent: folio-assistant-7x5n
 ---
 
@@ -32,3 +32,6 @@ Evidence and every candidate: `cat-harness/docs/proposals/separation-placement-r
 ## Not this bean
 - S5 `txue` (all remaining cat-harness code to cat-harness-tools, including `y9r6`) follows this bean, so code moves once and to its final home.
 - Seeding itself (S7 `mgxw`).
+
+## Holder 2026-10-06
+Claimed by https://claude.ai/code/session_012qoycyCSGidZqW245vXhze on branch `claude/dazzling-wright-xshj1s` (PR #2254). Starting with step 0.
