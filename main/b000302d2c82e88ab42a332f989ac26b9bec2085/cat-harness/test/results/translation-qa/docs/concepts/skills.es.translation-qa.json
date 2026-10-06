@@ -1,0 +1,106 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:es/skills",
+  "block": "Skills & roles",
+  "locale": "es",
+  "paths": {
+    "md": "docs/concepts/skills.md"
+  },
+  "po": "translations/es/concepts/skills.po",
+  "source_hashes": {
+    "md": "5c8d1b17ba24",
+    "po": "540ccee4ed71"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "5c8d1b17ba24",
+          "po": "540ccee4ed71"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T09:26:06.435Z",
+        "reviewed_sha": "b000302d2c82e88ab42a332f989ac26b9bec2085",
+        "severity": "minor",
+        "metrics": {
+          "translated": 145,
+          "total": 146,
+          "pct": 99
+        },
+        "notes": "1 of 146 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "5c8d1b17ba24",
+          "po": "540ccee4ed71"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T09:26:06.438Z",
+        "reviewed_sha": "b000302d2c82e88ab42a332f989ac26b9bec2085",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "ICD-11 — absent from: \"Gobernanza terminológica (CIE-11, SNOMED CT, LOINC).\""
+          },
+          {
+            "text": "UN — absent from: \"Localización para idiomas oficiales admitidos por la ONU.\""
+          }
+        ],
+        "metrics": {
+          "checked": 145,
+          "missing": 2,
+          "missing_strict": 0,
+          "missing_acronyms": 2,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "2 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/es/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how. 1 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "5c8d1b17ba24",
+          "po": "540ccee4ed71"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T09:26:06.441Z",
+        "reviewed_sha": "b000302d2c82e88ab42a332f989ac26b9bec2085",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 12,
+          "translated": 145
+        },
+        "notes": "12 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-06T09:26:06.442Z"
+}
