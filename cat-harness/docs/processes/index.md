@@ -141,7 +141,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**127** distinct skill(s) are named by an activity.
+**128** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -241,6 +241,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`render-kg-to-cdn`](../reference/skill-instructions/render-kg-to-cdn.html) | [`render-kg-to-cdn.bpmn`](render-kg-to-cdn.html), [`docs-site-publish.bpmn`](docs-site-publish.html), [`feature-staging.bpmn`](feature-staging.html), [`draft-to-publication.bpmn`](draft-to-publication.html) |
 | `render-kg-to-github-pages` | [`render-kg-to-github-pages.bpmn`](render-kg-to-github-pages.html) |
 | [`render-logging`](../reference/skill-instructions/render-logging.html) | [`feature-staging.bpmn`](feature-staging.html), [`staging-render-log.bpmn`](staging-render-log.html) |
+| [`rendered-impact`](../reference/skill-instructions/rendered-impact.html) | [`content-change-review.bpmn`](content-change-review.html) |
 | [`rendered-verification`](../reference/skill-instructions/rendered-verification.html) | [`slice-sqlite-publish.bpmn`](slice-sqlite-publish.html) |
 | [`repo-conversion`](../reference/skill-instructions/repo-conversion.html) | [`getting-started.bpmn`](getting-started.html) |
 | [`review-comments`](../reference/skill-instructions/review-comments.html) | [`content-change-review.bpmn`](content-change-review.html) |

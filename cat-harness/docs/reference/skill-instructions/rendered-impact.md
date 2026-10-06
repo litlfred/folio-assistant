@@ -112,3 +112,10 @@ names none above it.
 2. Put every other input in `undetermined`.
 3. Test it against a real build with `comparePrediction`: 0 missed is the bar.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Compare main vs staging; Slice the change and assign reviewers; Comment staging URL on PR |
+

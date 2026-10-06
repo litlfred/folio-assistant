@@ -45,7 +45,7 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <tr><td>this page</td><td>authored terms, counts and sources</td><td>38</td><td>52 KB</td></tr>
 <tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>332</td><td>255 KB</td></tr>
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>169</td><td>122 KB</td></tr>
-<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>700</td><td>568 KB</td></tr>
+<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>700</td><td>569 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>12</td><td>10 KB</td></tr>
 <tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>2162</td><td>1.2 MB</td></tr>
 </tbody></table></div>

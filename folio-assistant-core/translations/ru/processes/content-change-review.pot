@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-change-review\n"
-"POT-Creation-Date: 2026-10-05T18:40:30.350Z\n"
+"POT-Creation-Date: 2026-10-06T09:47:00.550Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,27 +14,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:398
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:407
 #. Diagram element documentation
 msgid "`uses[]` is what a READER must have read to follow the block — never populated from the formal dependency graph. Once every changed block is covered, the committee checks the editorial dependencies of the change as a whole before judging its impact. Moved here from the harness's `review-narrative` by placement PR3 (bean `63wl`): reading order is a property of folio content, so the step belongs to the content process, which reaches the harness's review by calling DOWN into `review-task`."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:349
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:358
 #. Diagram label
 msgid "A comment withdrawn?"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:365
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:374
 #. Diagram label
 msgid "A finding disputed?"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:373
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:382
 #. Diagram label
 msgid "Adjudicate the disagreement [adjudication]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:374
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:383
 #. Diagram element documentation
 msgid "adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it. Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check."
 msgstr ""
@@ -69,12 +69,12 @@ msgstr ""
 msgid "Agent reviews downstream implications: - Will indicators need adjustment? - Will referral/follow-up for next visit be impacted? - Are translations affected (re-extract POT)? - Do Lean proofs still hold? skill: integration-watcher, translation-manager"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:448
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:457
 #. Diagram label
 msgid "Approve"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:350
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:359
 #. Diagram element documentation
 msgid "Asked after the slices are reviewed: did a reviewer withdraw a comment? `Yes` records the withdrawal first; either way the flow then asks whether a finding is disputed."
 msgstr ""
@@ -109,17 +109,17 @@ msgstr ""
 msgid "Author submits the PR for formal review by the guidance review committee. The STAGING URL is the review surface."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:528
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:538
 #. Diagram element documentation
-msgid "Bot comments or updates the staging URL on the PR. Includes commit SHA, branch name, and build log link."
+msgid "Bot comments or updates the staging URL on the PR. Includes commit SHA, branch name, and build log link, and the review list of rendered files the change alters (skill rendered-impact), each linked on the preview and on main, with any input the renderer could not place named as not known."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:492
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:501
 #. Diagram label
 msgid "Build staging site"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:481
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:490
 #. Diagram label
 msgid "Change accepted"
 msgstr ""
@@ -129,7 +129,7 @@ msgstr ""
 msgid "Change submitted"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:428
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:437
 #. Diagram label
 msgid "Changes approved?"
 msgstr ""
@@ -139,7 +139,7 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:523
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:532
 #. Diagram label
 msgid "Comment staging URL on PR"
 msgstr ""
@@ -149,12 +149,12 @@ msgstr ""
 msgid "Commit, push, update PR"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:436
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:445
 #. Diagram element documentation
 msgid "Committee provides feedback. PR stays open. Author and agent iterate further."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:418
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:427
 #. Diagram element documentation
 msgid "Committee reviews the agent's impact assessment: - Were all downstream effects identified? - Are the indicator changes acceptable? - Does the logic change match the narrative intent?"
 msgstr ""
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Compares staged against main, reviews the slices it is assigned (review-task.bpmn, one call per slice), takes a disputed finding to adjudication, and judges the impact assessment. It is also, unusually for this role elsewhere in this corpus, where the accept decision is made. Task_Approve records the approval, and Task_Merge merges only on the owner's explicit confirmation: they were one task, \"Approve and merge\", until bean en2d split them, because approving is the committee's judgement and merging is a separate, confirmed act. A rejection routes back to Task_Iterate in the agent's lane rather than to the author."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:387
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:396
 #. Diagram element documentation
 msgid "Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved."
 msgstr ""
@@ -194,12 +194,12 @@ msgstr ""
 msgid "Create feature branch"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:509
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:518
 #. Diagram label
 msgid "Deploy to STAGING/<slug>/"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:619
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:632
 #. Diagram label
 msgid "Deployment complete"
 msgstr ""
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Detect change scope & impact"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:587
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:600
 #. Diagram element documentation
 msgid "docs-site.yml triggers on the merge commit to main, rebuilding the root of gh-pages with the accepted changes. The build SHA stamp now reflects the merged state."
 msgstr ""
@@ -229,12 +229,12 @@ msgstr ""
 msgid "Edit narrative content blocks"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:386
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:395
 #. Diagram label
 msgid "Every changed block reviewed?"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:320
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:328
 #. Diagram element documentation
 msgid "Every PR conversation comment that starts with `block: <label>` becomes a `review-comment/1.0.0` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS."
 msgstr ""
@@ -244,12 +244,12 @@ msgstr ""
 msgid "Feature branch ready"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:497
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:506
 #. Diagram element documentation
 msgid "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:543
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:556
 #. Diagram element documentation
 msgid "First dispatch point for a CI watcher: the feature branch has changed and a staging build now exists to watch. The watcher is DISPATCHED BY OPENING A BEAN, not by a workflow_dispatch -- per the owner on bean 29ij, this is a task/workflow initiation. That is the whole reason it is an activity rather than a line of prose. A bean makes the watch durable past the session that opened it: the container is reclaimed, and what survives is the claim. Starting the watcher and recording that it is running are ONE declared step, so the two cannot disagree about whether anything is watching. Claim rather than note: the watch is work in progress, and it is idempotent, so re-entering on a subsequent push does not duplicate it."
 msgstr ""
@@ -259,9 +259,9 @@ msgstr ""
 msgid "Folio-Assistant Agent"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:329
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:337
 #. Diagram element documentation
-msgid "From the ChangeSet and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices."
+msgid "From the ChangeSet, its rendered list (skill rendered-impact: each changed rendered page is assigned like a changed block) and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices."
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:16
@@ -274,12 +274,12 @@ msgstr ""
 msgid "If the content change affects decision logic, indicators, or workflows: - Update CQL expressions - Update DMN decision tables - Adjust indicator definitions skill: dak-authoring, fhir-pipeline"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:319
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:327
 #. Diagram label
 msgid "Ingest tagged review comments [folio-review-comments]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:366
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:375
 #. Diagram element documentation
 msgid "Is any finding disputed between author and reviewer? `Yes` goes to adjudication; `No` goes on to check that every changed block was reviewed."
 msgstr ""
@@ -294,27 +294,27 @@ msgstr ""
 msgid "Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:464
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:473
 #. Diagram label
 msgid "Merge, on explicit confirmation"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:644
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:657
 #. Diagram label
 msgid "No"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:662
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:675
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:622
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:635
 #. Diagram label
 msgid "Not merged: preview kept"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:596
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:609
 #. Diagram label
 msgid "Note the main-branch watch [watch]"
 msgstr ""
@@ -324,7 +324,7 @@ msgstr ""
 msgid "On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through `Task_CompareBeforeAfter`, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not. In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process. On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:536
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:549
 #. Diagram label
 msgid "Open the branch-watch bean [watch]"
 msgstr ""
@@ -344,12 +344,12 @@ msgstr ""
 msgid "Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:514
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:523
 #. Diagram element documentation
 msgid "peaceiris/actions-gh-pages deploys to gh-pages branch under STAGING/<branch-slug>/ with keep_files: true so other staging deployments and the main site are preserved."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:561
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:574
 #. Diagram label
 msgid "PR merged?"
 msgstr ""
@@ -359,12 +359,12 @@ msgstr ""
 msgid "PR submitted for review"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:486
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:495
 #. Diagram label
 msgid "Push to feature branch"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:582
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:595
 #. Diagram label
 msgid "Rebuild main site"
 msgstr ""
@@ -374,12 +374,12 @@ msgstr ""
 msgid "Receive change request"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:568
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:581
 #. Diagram label
 msgid "Remove STAGING/<slug>/"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:435
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:444
 #. Diagram label
 msgid "Request changes"
 msgstr ""
@@ -394,22 +394,17 @@ msgstr ""
 msgid "Review Committee"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:303
-#. Diagram element documentation
-msgid "Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots). Anything the staging job cannot picture (page chrome, scroll behaviour, a PDF page, an IG page) is in the agent's before/after preview (skill before-after-preview)."
-msgstr ""
-
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:80
 #. Diagram label
 msgid "Review Coordinator"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:339
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:348
 #. Diagram label
 msgid "Review each slice [review-task]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:413
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:422
 #. Diagram label
 msgid "Review impact assessment"
 msgstr ""
@@ -419,12 +414,12 @@ msgstr ""
 msgid "Review staged rendering"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:397
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:406
 #. Diagram label
 msgid "Review the editorial dependencies"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:340
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:349
 #. Diagram element documentation
 msgid "review-task.bpmn, once per slice, in parallel lanes by role. What kind of thing changed decides which review the slice descends into; the reviewer takes on that inner lane's role for the call only. Each reviewer gives the slice's blocks a verdict, and comments on the pull request with the `block:` tag where something needs saying."
 msgstr ""
@@ -439,12 +434,12 @@ msgstr ""
 msgid "Satisfied with changes?"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:603
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:616
 #. Diagram element documentation
 msgid "Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. `note` rather than `claim`, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:328
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:336
 #. Diagram label
 msgid "Slice the change and assign reviewers"
 msgstr ""
@@ -454,7 +449,7 @@ msgstr ""
 msgid "Submit to review committee"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:623
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:636
 #. Diagram element documentation
 msgid "The approval did not end in a merge. Nothing is deployed and STAGING/<slug>/ is left up; a later push to the branch starts a new run of this process."
 msgstr ""
@@ -464,47 +459,52 @@ msgstr ""
 msgid "The author's own call after looking at the staged rendering. `No` requests further revisions; `Yes` submits the change to the review committee."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:449
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:458
 #. Diagram element documentation
 msgid "The committee approves the change: the judgement, recorded with the evidence it rests on. Approving is not merging. They were one task (\"Approve and merge\") until bean en2d split them, because a self-authored change cannot be approved through GitHub's own review (the approver may not be the PR's author), and a merge needs the owner's explicit confirmation whoever approved."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:429
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:438
 #. Diagram element documentation
 msgid "The committee's decision on the impact assessment. `No` requests changes; `Yes` approves."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:465
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:474
 #. Diagram element documentation
 msgid "The owner says \"merge it\", and only then is the branch merged. Merge to main triggers: 1. the main site rebuilds with the changes; 2. the staging preview's cleanup runs; 3. the review comments committed on the feature branch land on main, as the review record."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:357
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:304
+#. Diagram element documentation
+msgid "The review starts from the Change Set's RENDERED list (skill rendered-impact): every rendered file the change alters, predicted from each renderer's dependency cone and checked against the build. The reviewer opens every content page on it, not only the pages the author mentions; index files are listed but not reviewed. An input the renderer could not place is shown as not known, never as no change. Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots). Anything the staging job cannot picture (page chrome, scroll behaviour, a PDF page, an IG page) is in the agent's before/after preview (skill before-after-preview)."
+msgstr ""
+
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:366
 #. Diagram element documentation
 msgid "The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:562
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:575
 #. Diagram element documentation
 msgid "Was the PR merged? `Yes` removes the STAGING/<slug>/ preview; `No` ends this run at End_NotMerged without deploying and without looping back into review (the lane note says why); the preview stays in place, and the next push starts a new run."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:573
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:586
 #. Diagram element documentation
 msgid "When the PR is merged or closed, the cleanup job removes the STAGING/<slug>/ directory from gh-pages so stale previews don't accumulate."
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:356
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:365
 #. Diagram label
 msgid "Withdraw a review comment [folio-review-comment-move]"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:648
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:661
 #. Diagram label
 msgid "Yes"
 msgstr ""
 
-#: ../folio-assistant-core/processes/content/content-change-review.bpmn:663
+#: ../folio-assistant-core/processes/content/content-change-review.bpmn:676
 #. Diagram label
 msgid "yes"
 msgstr ""
