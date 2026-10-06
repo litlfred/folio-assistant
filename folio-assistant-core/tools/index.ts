@@ -118,6 +118,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["review-comments"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "api.github.com", none: "Reviewer comments are held by GitHub; without it the review page keeps its last ingested set." }],
       selection: {
         when:
           "A pull request that edits a folio has reviewer comments, and the review page, the heat map, or an editor needs them as structured todos anchored to blocks.",

@@ -10864,6 +10864,34 @@
       "status": "candidate"
     },
     {
+      "id": "tool.remedymatch.invoke",
+      "prefLabel": "RemedyMatch.invoke",
+      "definition": "That Tool's command, so the answer is runnable without a second lookup.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.invoke",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.remedymatch.needed_by",
+      "prefLabel": "RemedyMatch.needed_by",
+      "definition": "The Tool that needed the host.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.needed_by",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.remedymatch.none",
+      "prefLabel": "RemedyMatch.none",
+      "definition": "Stated: no workaround, and why.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.none",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.remedymatch.tool",
+      "prefLabel": "RemedyMatch.tool",
+      "definition": "The Tool to reach for, when there is one.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.tool",
+      "status": "candidate"
+    },
+    {
       "id": "tool.tooldefinitionschema.downstream",
       "prefLabel": "ToolDefinitionSchema.downstream",
       "definition": "A downstream output this Tool keeps current, with its declared inputs. See {@link ToolDownstreamSchema}. Optional because most Tools keep no derived output; a run record or a publish verifier naming a Tool that does not declare one is a finding (`downstream-tool-declared`).",
@@ -10875,6 +10903,13 @@
       "prefLabel": "ToolDefinitionSchema.maintains",
       "definition": "Published artefacts this Tool is authoritative for. See {@link ToolMaintainsSchema}.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.maintains",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldefinitionschema.remedies",
+      "prefLabel": "ToolDefinitionSchema.remedies",
+      "definition": "One entry per host this Tool reaches, saying what to do when it is refused. See {@link ToolRemedySchema}. REQUIRED non-empty when `requires.network` is true; `check:tools` enforces it, and resolves every `tool` it names.",
+      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.remedies",
       "status": "candidate"
     },
     {
@@ -10994,6 +11029,34 @@
       "prefLabel": "ToolOutputSchema.render",
       "definition": "How a renderer may place this output in a page. Absent is `text`. See {@link RENDER_AS}.",
       "source": "cat-harness/schemas/tool.ts#ToolOutputSchema.render",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.toolremedyschema.error",
+      "prefLabel": "ToolRemedySchema.error",
+      "definition": "Text an agent sees when the host refuses, if it does not name the host — matched as a substring.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.error",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.toolremedyschema.host",
+      "prefLabel": "ToolRemedySchema.host",
+      "definition": "The host this Tool reaches, as it appears in a refusal — `packages.fhir.org`.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.host",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.toolremedyschema.none",
+      "prefLabel": "ToolRemedySchema.none",
+      "definition": "Stated: no Tool works around this refusal, and why — or what to do instead.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.none",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.toolremedyschema.tool",
+      "prefLabel": "ToolRemedySchema.tool",
+      "definition": "The declared Tool that does the job without this host. `check:tools` resolves it.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.tool",
       "status": "candidate"
     },
     {

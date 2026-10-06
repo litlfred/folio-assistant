@@ -36,6 +36,10 @@ sushi-config.yaml   ┘  →  IG Publisher (JVM, Docker)  →  output/
 Four stages, and the only one that is not a straight invocation is the last: a
 pages branch is a deployment target, and which one is the instance's to declare.
 
+SUSHI and the Publisher both need `packages.fhir.org`. Where it is refused,
+see [`fhir-validation`](fhir-validation.md)
+§"When a package host refuses you" before concluding either cannot run.
+
 ## What the Publisher run emits
 
 Stated in [`ig-publication`](ig-publication.md)
