@@ -71,3 +71,12 @@ The rendered page loads the compiled resource in the browser (`ast-resource.js`)
 6. **`ast-to-artifact-index.ts` crashed on any resource whose `name` is not a string**: a Patient's `name` is HumanName[]. Fixed in this PR, with a test that fails without the fix.
 7. **Restamping (design question, not fixed):** every artefact page prints the source commit ("compiled copy of `<sha>`"), so any commit rewrites all 722 artefact pages even when one resource changed. Jekyll incremental then does 7.0 s of work instead of 2.8 s. Moving the stamp into one shared data file (or stamping each page with its resource's own `builtAt`) would make the re-render proportional to the cone. Owner to decide.
 8. The old cone's false edge was confirmed by compiling: the ValueSet it listed as a dependent did not change.
+
+## Finding 7 fixed (owner chose option 1: the revision is printed once)
+
+`gen-ig-pages.ts`: the index page of an AST build carries the revision under `#build-revision`, and an artefact page built at that same revision links to it instead of printing it. An artefact built at a different revision, or any page of an `igSite` instance (whose index body is the IG site's own page), still prints its own revision. Re-measured on smart-immunizations, with the FSH change `37f6f24 → a4b4cc4`:
+- page sources that differ: **1** (`index.md`), down from 723;
+- rendered files that differ: 3 (`ast-data/.../PlanDefinition-IMMZD18SBCG.json`, `ast/index.html`, `assets/js/search-data.json`);
+- jekyll incremental re-render: **3.0 s**, down from 7.0 s (full build 13.7 s).
+
+All six `*:pages:check` gates show the committed pages unchanged; they come from published indexes, not AST builds.
