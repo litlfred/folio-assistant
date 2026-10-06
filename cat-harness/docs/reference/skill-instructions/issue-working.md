@@ -91,6 +91,31 @@ After each round of implementation, post a summary on **the issue**, not only on
 the change proposal: what was accomplished, what remains, and links to the
 updated content for review.
 
+## Milestones and decision points go on the issue, as they happen
+
+A round can be long, and the owner follows the **issue**, not the session or the
+PR. So between round summaries, post on the issue at two kinds of moment:
+
+- **A milestone** — a result the owner would want to know before the round
+  ends: a method lands, a benchmark number moves, a tool turns out not to
+  run here, an approach is replaced because measurement reversed it.
+- **A decision point** — whenever you put a choice to the owner in the chat,
+  put it on the issue too, in the same shape: context, options with their
+  cost, the marked recommendation, and what happens if nobody answers
+  ([`interaction-modality`](interaction-modality.md)).
+  A choice made only in the chat leaves no record where the next reader looks.
+
+Not every push: a push is reported on the PR. An issue update is for what a
+stakeholder would act on.
+
+Each update must be **readable on its own**, because it is read days later
+without the session: status, approach in a line, findings with their numbers
+and provenance, what landed, and next steps — and a link to the previous
+update rather than a restatement of it. Measured on issue #2302 (2026-10-06):
+the owner asked for an issue update three times in one session — after the
+method comparison, after the figures work, and again for overall status —
+each time because the last one was hours and several milestones old.
+
 ## Before you publish that something does not exist (STRICT)
 
 An issue comment is **published**, and a false claim in one costs more than a
