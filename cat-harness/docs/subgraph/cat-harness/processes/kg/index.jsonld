@@ -1100,7 +1100,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/flow/F29",
       "@type": "bootstrap:SequenceFlow",
-      "name": "move to fsh-guts"
+      "name": "freeze"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/flow/F3",
@@ -1231,7 +1231,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/node/Task_ConfirmCutover",
       "@type": "bootstrap:ProcessNode",
-      "name": "12 · Owner confirms: freeze the in-repo copy in fsh-guts"
+      "name": "12 · Owner confirms: freeze the in-repo copy"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/node/Task_CreateRepo",
@@ -1241,7 +1241,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/node/Task_Cutover",
       "@type": "bootstrap:ProcessNode",
-      "name": "13 · Cutover: move the copy to fsh-guts/separated/"
+      "name": "13 · Cutover: freeze the copy in the kept trashcan"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SubKgLifecycle/node/Task_DecideLeave",

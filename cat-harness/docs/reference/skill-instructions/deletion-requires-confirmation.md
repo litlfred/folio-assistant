@@ -316,7 +316,7 @@ nothing.
 |---|---|
 | [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Report what would move — sizes, and what breaks; Authorise the extraction |
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Report what moves — sizes, what breaks; 9 · Authorise the extraction; 13 · Cutover: delete the parent's copy |
-| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | 6 · Report what would move, and how it undoes; 7 · Owner confirms: create the repository; 12 · Owner confirms: freeze the in-repo copy in fsh-guts; 13 · Cutover: move the copy to fsh-guts/separated/ |
+| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | 6 · Report what would move, and how it undoes; 7 · Owner confirms: create the repository; 12 · Owner confirms: freeze the in-repo copy; 13 · Cutover: freeze the copy in the kept trashcan |
 | [Actor and role administration](../../processes/actor-role-administration.html) | Retire an actor — never delete one |
 | [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Remove the preview AND append `removed` — one commit; Check the slug's SHAPE and that the confirmation repeats it; Re-evaluate liveness AT REMOVAL TIME; Remove it AND append `removed` — one commit; Repeat the slug, exactly, to confirm |
 | [Is the repository itself healthy?](../../processes/repository-health-watch.html) | Run the health checks, keeping the report either way |
