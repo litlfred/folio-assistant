@@ -52,3 +52,22 @@ The boxes were ticked on these measurements. Bun 1.3.14 throughout.
 Status is left as is: the gates half is not on main until `local/regen-speedup` is merged.
 
 _2026-10-06T19:02:53Z_ — Claimed by claude/f017-input-hash-coverage — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-06 (evening): the falsifier is now checked on every fingerprint
+
+Work is on branch `claude/f017-input-hash-coverage`, PR #2327, issue #2325.
+
+- **Audit (`input-sites.ts`).** Every fingerprint walks the check's import closure. Any line that can read the environment, the network, the clock, randomness, git history, a spawned process, the host or a computed module must carry a pinned `// input-site:` annotation. If one lacks it, or its pin is stale, the result is undetermined and the check runs.
+  - What a verdict names is hashed: env values, HEAD and ref commit ids plus the shallow boundary, and the `--against` identity.
+  - Code inside `import.meta.main` is skipped when the file is only imported. `import type` is not followed.
+- **Runtime trace (`input-trace.ts`).** A site that no check is known to reach is `traced`. A recorded run that reaches it records nothing.
+  - qa-store reads report the ref they read. A run is tolerated only when every ref it read is a hashed `--against` baseline.
+- **Also hashed:** bun and git versions, the runtime env, and the ignored files under `{tracked}`.
+- **Coverage:** 164 of 222 declared tasks can now skip (15 before). Run `bun run input-hash:coverage` to see the list.
+- **Two old skips were unsound:**
+  - `skill:register:check` spawns `uml:overview:check`, which reads the network.
+  - `lsi:viz:check` reads the qa-reports branch at `main` when its indexes are not checked out.
+  - The audit now refuses the first. The trace refuses the second for any run that read the store.
+- **Open:**
+  - Wall-time before and after, same tree.
+  - About 57 tasks are still blocked by unreviewed sites; `--blockers` lists them. The biggest are kind-validator, staging-stamp and kg-export.
