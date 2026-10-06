@@ -75,6 +75,19 @@ them off for a build that should have none.
   equal to `editUrl` and `feedbackUrl` by `block-actions.test.ts`; change both
   together or the test fails.
 
+The recipe lives in the harness, `cat-harness/src/core/edit-links.ts`, so
+every layer can use it; this package re-exports it. It is published once as
+`assets/js/edit-links.js` (held equal to the code by a test). On a page, mark
+a link `data-fa-link="edit|source|feedback"` and either give its host the
+facts (`data-src`, optional `data-repo`, `data-line`, `data-block`,
+`data-sec`) or leave a GitHub `blob`/`edit` href, which the runtime reads the
+facts from. Generators that write Markdown use `markdownEditLink`.
+
+Two pages keep their own link on purpose: the public-comment dashboard's
+**Discuss** (it opens a change-set discussion, not feedback on a block) and
+the bootstrap site's **Improve this page** (`bootstrap-tools` may import
+nothing outside itself).
+
 **Any page that shows edit or feedback links uses these,** not a URL of its
 own: one recipe, so a change to the issue form or the branch reaches every
 page at once (owner, 2026-10-06: *"make sure feedback/edit links are changed
