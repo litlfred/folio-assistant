@@ -1,15 +1,14 @@
 ---
 # folio-assistant-sxft
 title: Re-seed the smart-trust FHIR AST cache from main 644bfda (needs FHIR network)
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
     - agy
     - needs-network
-    - ready-to-close
 created_at: 2026-10-06T15:06:56Z
-updated_at: 2026-10-06T16:35:16Z
+updated_at: 2026-10-06T16:37:45Z
 parent: folio-assistant-uhkv
 ---
 
@@ -147,7 +146,7 @@ After that the coordinator asks once on #2288 and sets a new date.
       with subject `Publisher <version>`, a relative `ig.root`, no `index.lock`
 - [x] executor: `## Evidence` quotes the seed line and the second-clone `verify`; tag
       `ready-to-close`. **Do not set `completed`.**
-- [ ] verifier: `restore` + `verify` on the coordinator's own fresh clone reads `valid`,
+- [x] verifier: `restore` + `verify` on the coordinator's own fresh clone reads `valid`,
       recorded on #2288; the verifier closes this bean.
 
 ## Attempts
@@ -208,3 +207,25 @@ Commit on `cat/fhir-harness/fhir-ast/smart.who.int.trust`:
   }
 }
 ```
+
+## Verification (coordinator, 2026-10-06 16:40 UTC)
+
+On a fresh clone of `litlfred/smart-trust` at `73831e996cdcc13c2bb7382597a7a78bce13fda4`
+(cloud session, not the executor's tree): `ig-cache.sh restore` restored 678 resources from
+tip `ad8d3347`, and `ig-cache.sh verify` read **`valid`**, with recorded = current
+`sourceRevision 73831e99…` and `inputDigest 350475029165…`.
+
+The three defects from smart-trust#4 are checked on tip `ad8d3347`:
+- subject: `AST smart.who.int.trust | 678 resources | 671 edges | Publisher 2.3.4 | src 73831e99`
+- `manifest.json` `ig.root` = `.`
+- no `index.lock` in the tree (a single orphan commit).
+
+## Summary of Changes
+
+`litlfred/smart-trust@cat/fhir-harness/fhir-ast/smart.who.int.trust` is re-seeded at `ad8d3347`
+from smart-trust `main` `73831e99`. That is a re-pin from `644bfda`: smart-trust#11 changed only
+CI workflows, and the digest is unchanged. The cache has 678 resources and 671 edges, and verifies
+`valid` on a clean clone. The seed script fixes on this branch (`351cd788`) removed "Publisher
+unknown" and the absolute `ig.root`. One attempt was made. The executor stopped correctly on a
+moved input and resumed after the coordinator's re-pin on #2288. Closed by the verifier per skill
+`agent-handoff` §5.
