@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0mpw
 title: 'Remote mount of a harness: declared directory with a remote source, defaults in the harness''s own declaration'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-06T19:03:15Z
+updated_at: 2026-10-06T22:01:50Z
 parent: folio-assistant-fnx4
 ---
 
@@ -34,3 +34,5 @@ smart-ra builds and serves its harness skills with no submodule, from a pinned r
 
 
 _2026-10-06_ — owner: this pilot is S8's first live run (bean w0at amended: code -> pinned package, KG -> declared remote mount, cutover dirs -> fsh-guts) and is UNBLOCKED from mgxw — smart-ra is already its own repository.
+
+_2026-10-06T22:01:50Z_ — Claimed by claude/remote-mount-0mpw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

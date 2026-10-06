@@ -66,7 +66,8 @@ import { instanceRootsIn } from "../schemas/instance-roots.ts";
 import { parse } from "yaml";
 
 import { distortions } from "./check-environment.ts";
-import { movedInventory, movedRoots } from "./qa-verify-moved.ts";
+import { movedRoots } from "./qa-verify-moved.ts";
+import { workingCopyState } from "./qa-working-copy.ts";
 
 import {
   diffReadings,
@@ -1904,12 +1905,15 @@ if (import.meta.main) {
   // "could not determine" for a reason nobody's change caused. So the tree is
   // PRODUCED first, exactly as CI produces it before its gates: the external
   // bootstrap export, then `qa:refresh`, which runs every declared QA writer.
-  // Only when the copy is absent: a working copy already present is the one
-  // the writers last produced here, and re-running ~30 writers on every local
-  // run would be minutes spent re-deriving what is on disk.
+  // Only when the copy is not CURRENT (bean `7how`): its stamp names the tree
+  // it was built from, so a copy built from this tree is not rebuilt — the
+  // `gates` that follows a `regen` costs nothing here — while one built from
+  // another tree, or edited since, is. "Present" was the test until
+  // 2026-10-06, and a present-but-stale copy was judged as current.
   const qaRoots = movedRoots(ROOT);
-  if (qaRoots.length > 0 && movedInventory(ROOT, qaRoots).files === 0) {
-    console.log("No QA working copy under the declared qa directories — producing it first, as CI does:\n");
+  const qaCopy = workingCopyState(ROOT);
+  if (qaRoots.length > 0 && qaCopy.state !== "current") {
+    console.log(`QA working copy is ${qaCopy.state} (${qaCopy.why}) — producing it first, as CI does:\n`);
     for (const cmd of [["bun", "run", "qa:working-copy"]]) {
       console.log(`$ ${cmd.join(" ")}`);
       const r = spawnSync(cmd[0]!, cmd.slice(1), { cwd: ROOT, stdio: "inherit" });
