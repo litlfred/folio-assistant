@@ -1,0 +1,167 @@
+{
+  "$ref": "#/definitions/KgDecisions",
+  "definitions": {
+    "KgDecisions": {
+      "type": "object",
+      "properties": {
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "working",
+            "archival",
+            "both"
+          ]
+        },
+        "maxBytes": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "expiresAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gates": {
+          "type": "object",
+          "properties": {
+            "restrictions": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "unknown",
+                    "refused",
+                    "permitted"
+                  ]
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedAt": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedBy": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "verdict",
+                "basis"
+              ],
+              "additionalProperties": false
+            },
+            "retention": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "unknown",
+                    "refused",
+                    "permitted"
+                  ]
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedAt": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedBy": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "verdict",
+                "basis"
+              ],
+              "additionalProperties": false
+            },
+            "sourceLoss": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "unknown",
+                    "refused",
+                    "permitted"
+                  ]
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedAt": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedBy": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "verdict",
+                "basis"
+              ],
+              "additionalProperties": false
+            },
+            "copyright": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "unknown",
+                    "refused",
+                    "permitted"
+                  ]
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedAt": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decidedBy": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "verdict",
+                "basis"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "decidedBy": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-core/schema/zod/kg-materialization/KgDecisionsSchema.schema.json",
+  "title": "KgDecisionsSchema",
+  "description": "Generated from `KgDecisionsSchema` in schemas/kg-materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/laughing-ramanujan-uripip",
+    "sha": "ba471171cf4e99d16e4a2e3ebcf9bea7befee580",
+    "pr": "2318/merge",
+    "run": "37523648784"
+  }
+}

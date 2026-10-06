@@ -1,0 +1,31 @@
+{
+  "$ref": "#/definitions/IgMenuItem",
+  "definitions": {
+    "IgMenuItem": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "label",
+        "href"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-menu/IgMenuItemSchema.schema.json",
+  "title": "IgMenuItemSchema",
+  "description": "Generated from `IgMenuItemSchema` in schemas/ig-menu.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/laughing-ramanujan-uripip",
+    "sha": "ba471171cf4e99d16e4a2e3ebcf9bea7befee580",
+    "pr": "2318/merge",
+    "run": "37523648784"
+  }
+}
