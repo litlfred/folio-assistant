@@ -133,7 +133,10 @@ test.describe("overview panel — the picture follows every filter", () => {
     // The unfiltered page is over DIA_MAX and refuses, which is the state
     // that made the old behaviour invisible: nothing moved because nothing
     // was drawn.
-    await page.locator("#q").fill("role");
+    // "lane", not "role": "role" sat at 39 of DIA_MAX 40 and the bootstrap
+    // subject (#2278) carries a Role vocabulary, so the corpus outgrew it.
+    // A term well under the limit tests the narrowing, not the corpus size.
+    await page.locator("#q").fill("lane");
     await expect(page.locator(CAP)).not.toContainText("too many to draw");
 
     const drawn = await drawnSettled(page);
