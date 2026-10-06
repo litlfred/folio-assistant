@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6mk7
 title: 'A refused packages.fhir.org did not lead the agent to fhir-cache-seed-npm: symptom-to-Tool lookup is missing, and the mirror the skill names does not exist'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:31:37Z
-updated_at: 2026-10-06T06:31:37Z
+updated_at: 2026-10-06T06:42:37Z
 parent: folio-assistant-rwmf
 ---
 
@@ -26,3 +26,5 @@ Session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 needed SUSHI cle
 - [ ] the owner decides on a general symptom-to-Tool lookup (for example a `remedies:` field on a Tool, keyed by the host or error it addresses, with a gate keeping it non-empty for network-dependent Tools)
 - [ ] `litlfred/fhir-package-mirror` exists and is filled from a machine that reaches packages.fhir.org, or the skill stops naming it
 - [ ] MEASURED AFTER: in a container with packages.fhir.org blocked, SUSHI on smart-trust exits 0 using only documented tools
+
+_2026-10-06T06:42:37Z_ — Claimed by claude/bold-brahmagupta-c8eoku — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
