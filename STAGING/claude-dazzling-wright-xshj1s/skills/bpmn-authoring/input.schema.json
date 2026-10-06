@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/skills/bpmn-authoring/input.schema.json",
+  "title": "BPMN Authoring Input",
+  "description": "Input schema for BPMN 2.0 business process authoring.",
+  "type": "object",
+  "required": [
+    "processName"
+  ],
+  "properties": {
+    "processName": {
+      "type": "string",
+      "description": "Name of the business process to model."
+    },
+    "sourceWorkflow": {
+      "type": "string",
+      "description": "Textual description or reference to the workflow to model."
+    },
+    "existingBpmn": {
+      "type": "string",
+      "description": "Path to existing BPMN file to update."
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Actor/participant IDs involved in the process."
+    }
+  },
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "21b8b79da13c8e6b3861528df5f0b57743d61b2d",
+    "pr": "2267/merge",
+    "run": "37449340515"
+  }
+}

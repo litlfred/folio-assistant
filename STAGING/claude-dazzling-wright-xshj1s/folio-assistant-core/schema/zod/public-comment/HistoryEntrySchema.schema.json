@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/HistoryEntry",
+  "definitions": {
+    "HistoryEntry": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "at",
+        "transition",
+        "by",
+        "task"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/folio-assistant-core/schema/zod/public-comment/HistoryEntrySchema.schema.json",
+  "title": "HistoryEntrySchema",
+  "description": "Generated from `HistoryEntrySchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "21b8b79da13c8e6b3861528df5f0b57743d61b2d",
+    "pr": "2267/merge",
+    "run": "37449340515"
+  }
+}
