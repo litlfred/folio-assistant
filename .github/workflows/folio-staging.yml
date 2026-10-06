@@ -359,10 +359,13 @@ jobs:
         # source; the review page fetches the result when it is opened. A
         # platform with no renderer writes nothing, and the page and the PR
         # comment then say the list is not known, never that it is empty.
+        # The build command is passed so each builder it runs says what it
+        # reads (bean ehh6): a file none of them reads reaches no page.
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           BASE_REF: ${{ steps.base.outputs.ref }}
           SITE_DIR: ${{ inputs.site_dir }}
+          BUILD_COMMAND: ${{ inputs.build_command }}
         run: |
           set -eu
           R="$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts"
@@ -372,7 +375,7 @@ jobs:
           fi
           bun run "$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts" --root . --base "origin/$BASE_REF" --head HEAD \
             --changeset "$SITE_DIR/changeset.json" --outline "$SITE_DIR/outline.json" \
-            --out "$SITE_DIR/rendered-impact.json"
+            --build-command "$BUILD_COMMAND" --out "$SITE_DIR/rendered-impact.json"
 
       - name: Fetch the folio's QA results from its qa-reports branch
         # Bean `tfqf`, reader audit R60. The folio's derived QA verdicts are
