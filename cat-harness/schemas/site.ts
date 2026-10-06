@@ -11,7 +11,7 @@
  *   `gh-pages` Tool says so: *"Pages cannot serve server-side redirects or
  *   custom headers"*).
  * - **`cdn-site`** — the same, plus the three a real CDN adds. Declared now so
- *   the who-iris CDN deployment (beans `l9v6`, `xies`) has a kind to land in
+ *   a downstream instance's CDN deployment (beans `l9v6`, `xies`) has a kind to land in
  *   rather than widening this one later.
  *
  * ## A site is an archive with routes
