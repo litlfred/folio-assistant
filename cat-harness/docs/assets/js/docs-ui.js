@@ -7374,19 +7374,26 @@
       body.appendChild(fs);
       showOpacity();
 
+      // THE ACTIONS, in one row of their own (bean `zpso`): with the panel
+      // laid out in a grid so it fits between the zoom bar and the dock,
+      // three full-width buttons stacked one per line were a third of its
+      // height. Grouped, they wrap side by side under the settings.
+      var actions = el("div", { class: "fa-glass-settings-actions" });
+      body.appendChild(actions);
+
       // THE HARNESSES PANEL (issue #1146): each harness's properties and the
       // skill that edits each. A Settings view, as candidate H drew it.
       var hc = el("button", { type: "button", class: "fa-glass-reset fa-glass-harnesses" },
         "Harnesses — properties, and the skill that edits each");
       hc.addEventListener("click", function () { openHarnesses(null); });
-      body.appendChild(hc);
+      actions.appendChild(hc);
 
       // THE WAY BACK FROM A MESSY GLASS. Every card returns to the grid;
       // nothing leaves the folio and nothing leaves the glass.
       var tidy = el("button", { type: "button", class: "fa-glass-reset fa-glass-tidy" },
         "Tidy the glass (put every card back in the grid)");
       tidy.addEventListener("click", tidyGlass);
-      body.appendChild(tidy);
+      actions.appendChild(tidy);
 
       var reset = el("button", { type: "button", class: "fa-glass-reset fa-glass-defaults" }, "Back to the default glass");
       reset.addEventListener("click", function () {
@@ -7397,7 +7404,7 @@
         while (body.firstChild) body.removeChild(body.firstChild);
         buildSettings(body);
       });
-      body.appendChild(reset);
+      actions.appendChild(reset);
       // THE WAY BACK for the dismissed browser-only note.
       if (localNoteDismissed()) {
         var showNote = el("button", { type: "button", class: "fa-glass-reset fa-glass-note-restore" },
@@ -7407,9 +7414,9 @@
           renderShelf();
           showNote.parentNode.removeChild(showNote);
         });
-        body.appendChild(showNote);
+        actions.appendChild(showNote);
       }
-      body.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
+      actions.appendChild(el("p", { class: "fa-glass-local-note fa-glass-settings-note" },
         "Saved in this browser only."));
     }
 

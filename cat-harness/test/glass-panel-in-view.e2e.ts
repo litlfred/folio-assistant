@@ -46,12 +46,41 @@ const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
 <style>body { margin: 0; } ${CSS}</style></head><body><main><h1>A page</h1><p>Page.</p></main>
 <script>${JS}</script></body></html>`;
 
+/** just-the-docs' shape: a sidebar with a header, so the ▦ launcher mounts and
+ *  Glass settings draws its "Page settings →" cross-link as its first row. */
+const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
+const WITH_SIDEBAR = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Panel</title>
+<meta name="fa-tiles" content="${attr(TILES)}">
+<meta name="fa-glass-strip" content="${attr(PINS)}">
+<style>
+  body { margin: 0; }
+  .side-bar { position: fixed; top: 0; left: 0; width: 16.5rem; height: 100%;
+              display: flex; flex-flow: column nowrap; background: #27262b; color: #fff; }
+  .site-header { width: 100%; display: flex; align-items: center; }
+  .site-title { flex: 1; }
+  .main { margin-left: 16.5rem; }
+  @media (max-width: 50rem) {
+    .side-bar { position: static; width: 100%; height: auto; }
+    .main { margin-left: 0; }
+  }
+  ${CSS}
+</style></head><body>
+  <div class="side-bar">
+    <div class="site-header"><a class="site-title">folio-assistant</a></div>
+    <nav class="site-nav"><a href="#">Home</a></nav>
+  </div>
+  <div class="main"><div class="main-content"><h1>A page</h1></div></div>
+  <script>${QR}<\/script>
+  <script>${JS}<\/script>
+</body></html>`;
+
 const layer = ".fa-sticky-layer";
 const dock = ".fa-glass-dock";
 const panel = ".fa-glass-panel";
 
-async function openGlass(page: Page): Promise<void> {
-  await page.goto("http://panel.test/p.html");
+type Shape = "bare" | "launcher";
+async function openGlass(page: Page, shape: Shape = "bare"): Promise<void> {
+  await page.goto(shape === "bare" ? "http://panel.test/p.html" : "http://panel.test/side.html");
   await page.click(".fa-glass-handle");
   await expect(page.locator(layer)).toHaveAttribute("data-fa-glass", "open");
   if ((await page.locator(dock).getAttribute("data-fa-strip")) !== "shown") await page.click(".fa-glass-strip-toggle");
@@ -59,8 +88,8 @@ async function openGlass(page: Page): Promise<void> {
 }
 
 /** Open Glass settings from its strip tile, then leave the dock in `strip` state. */
-async function openSettings(page: Page, strip: "shown" | "hidden"): Promise<void> {
-  await openGlass(page);
+async function openSettings(page: Page, strip: "shown" | "hidden", shape: Shape = "bare"): Promise<void> {
+  await openGlass(page, shape);
   await page.click('[data-fa-glass-chrome="glass-settings"]');
   await expect(page.locator(panel)).toHaveAttribute("data-fa-panel", "glass-settings");
   if (strip === "hidden") {
@@ -121,6 +150,7 @@ test.beforeEach(async ({ page }) => {
   await page.route("http://panel.test/**", (route) => {
     const path = new URL(route.request().url()).pathname;
     if (path === "/p.html") return route.fulfill({ contentType: "text/html", body: PAGE });
+    if (path === "/side.html") return route.fulfill({ contentType: "text/html", body: WITH_SIDEBAR });
     return route.fulfill({ status: 404, body: "" });
   });
 });
@@ -129,9 +159,11 @@ for (const [width, height] of [[1280, 800], [390, 844]] as const) {
   test.describe(`at ${width}×${height}`, () => {
     test.beforeEach(async ({ page }) => { await page.setViewportSize({ width, height }); });
 
-    for (const strip of ["shown", "hidden"] as const) {
-      test(`Glass settings opens wholly above the dock, with the dock ${strip}`, async ({ page }) => {
-        await openSettings(page, strip);
+    for (const [strip, shape] of [["shown", "bare"], ["hidden", "bare"], ["shown", "launcher"], ["hidden", "launcher"]] as const) {
+      const on = shape === "bare" ? "" : ", on a page with the launcher (its cross-link drawn)";
+      test(`Glass settings opens wholly above the dock, with the dock ${strip}${on}`, async ({ page }) => {
+        await openSettings(page, strip, shape);
+        if (shape === "launcher") await expect(page.locator(`${panel} [data-fa-settings-crosslink="page"]`)).toBeVisible();
         const g = await geometry(page);
         expect(g.top, "panel top is on screen").toBeGreaterThanOrEqual(0);
         expect(g.bottom, `panel bottom ${Math.round(g.bottom)} is above the dock's top ${Math.round(g.dockTop)}`)
