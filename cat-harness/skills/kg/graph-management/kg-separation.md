@@ -160,6 +160,19 @@ bun run seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 n
 These were the steward's hand-applied criteria (2026-10-02), generalised per
 layer.
 
+**A test about the WHOLE CHECKOUT lives at the top (owner, 2026-10-06, "Top-level
+instance"; bean `7zz1`).** A test that reads several sibling instances at
+once, or the aggregate root itself (`.github/`, `.gitignore`, the root
+declaration, `beans/`, `todos/`, `memory/`, `fsh-guts/`), is red in every layer
+it is placed in, so it goes in the root instance's DECLARED test home —
+`folio-assistant-tests` in `folio-assistant.json`, at `test/` — never in a layer
+and never at a path a runner hardcodes. Whatever names every layer belongs at the
+top, so each layer below stays standalone-green. Split a file when only some of
+its tests read the checkout, keep the fixture tests with their layer, compose
+the moved paths from `ORIGIN_DIR` (the directory the test was written in), and
+move a corpus describe whole when it carries a vacuity guard: a sibling left
+behind passes standalone over nothing.
+
 **`upward paths` replaced `sibling discovery` (owner, 2026-10-04).** The old
 criterion counted dependents that discovery could not find in a workspace of
 sibling clones. Discovery is checkout-local on purpose (`cmsl`), so that count
