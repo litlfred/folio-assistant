@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/GraphExportNode",
+  "definitions": {
+    "GraphExportNode": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-f017-input-hash-coverage/bootstrap-tools/schema/zod/graph-export/GraphExportNodeSchema.schema.json",
+  "title": "GraphExportNodeSchema",
+  "description": "Generated from `GraphExportNodeSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/f017-input-hash-coverage",
+    "sha": "1edfab13355140d142fce43e44e75aba9ff0e5f7",
+    "pr": "2327/merge",
+    "run": "37535261967"
+  }
+}

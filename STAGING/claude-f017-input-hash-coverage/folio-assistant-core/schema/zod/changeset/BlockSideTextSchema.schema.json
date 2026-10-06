@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/BlockSideText",
+  "definitions": {
+    "BlockSideText": {
+      "type": "object",
+      "properties": {
+        "prose": {
+          "type": "string"
+        },
+        "html": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prose",
+        "html"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-f017-input-hash-coverage/folio-assistant-core/schema/zod/changeset/BlockSideTextSchema.schema.json",
+  "title": "BlockSideTextSchema",
+  "description": "Generated from `BlockSideTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/f017-input-hash-coverage",
+    "sha": "1edfab13355140d142fce43e44e75aba9ff0e5f7",
+    "pr": "2327/merge",
+    "run": "37535261967"
+  }
+}
