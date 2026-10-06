@@ -12,7 +12,7 @@ import {
   parseConflicted,
   parseMergeTree,
   parseRefusedPaths,
-  parseStaleSmartKgEntries,
+  afterMergeRepairs,
   simulate,
   verdictOf,
   type TrainReport,
@@ -51,9 +51,22 @@ describe("merge-base log parsing", () => {
     expect(parseAbortReason("merge-base: no such base deadbeef\n")).toBe("merge-base: no such base deadbeef");
   });
 
-  test("stale smart-kg entries are read from the --check output", () => {
-    const log = "✓ a ok\n✗ smart-base/library/x/smart-kg-l1.json is stale — run with --entry smart-base/library/x\n✗ y is stale — run with --entry smart-base/library/y\n";
-    expect(parseStaleSmartKgEntries(log)).toEqual(["smart-base/library/x", "smart-base/library/y"]);
+  test("a train re-asks every declared afterMerge check, and only those with a writer (bean 0r7u)", () => {
+    expect(
+      afterMergeRepairs({
+        "b:check": { outputs: [], writer: "b:all", afterMerge: true },
+        "a:check": { outputs: [], writer: "a:write", afterMerge: true },
+        "c:check": { outputs: [], writer: "c:all" },
+        "d:check": { outputs: [] },
+      }),
+    ).toEqual([
+      { check: "a:check", writer: "a:write" },
+      { check: "b:check", writer: "b:all" },
+    ]);
+  });
+
+  test("with no instance declaring one, a train re-asks nothing extra", () => {
+    expect(afterMergeRepairs({})).toEqual([]);
   });
 
   test("merge-tree output: clean, conflicted, and a failure that is neither", () => {

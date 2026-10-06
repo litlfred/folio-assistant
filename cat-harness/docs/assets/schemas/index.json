@@ -7532,6 +7532,20 @@
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         },
         {
+          "name": "taskIo",
+          "type": "Record< string, { inputs?: string[]; outputs?: string[]; /** The task that REPAIRS this check when the `X` / `X:check` …",
+          "optional": true,
+          "array": false,
+          "doc": "What this instance's own package tasks read and write, keyed by task name"
+        },
+        {
+          "name": "gateExemptions",
+          "type": "{ steps?: Array<{ match: string; kind: \"covered-by\" | \"ci-only\" | \"no-folio\"; reason: string }>; scripts?: Array<{ scri…",
+          "optional": true,
+          "array": false,
+          "doc": "The CI steps and check scripts of THIS instance that the local gate set"
+        },
+        {
           "name": "contentAdapters",
           "type": "ContentAdapterDeclaration[]",
           "optional": true,
@@ -7777,6 +7791,19 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
+        },
+        {
+          "name": "taskIo",
+          "type": "z .record( z.string().min(1), z .object({ inputs: z.array(z.string().min(1)).optional(), outputs: z.array(z.string().mi…",
+          "optional": true,
+          "array": false,
+          "doc": "What this instance's own package tasks read and write, keyed by task name"
+        },
+        {
+          "name": "gateExemptions",
+          "type": "z .object({ steps: z .array( z .object({ match: z.string().min(1), kind: z.enum([\"covered-by\", \"ci-only\", \"no-folio\"]),…",
+          "optional": true,
+          "array": false
         },
         {
           "name": "contentAdapters",
