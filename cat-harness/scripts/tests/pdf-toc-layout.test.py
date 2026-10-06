@@ -25,6 +25,8 @@ used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.86.
    the chapter level is the same hierarchy (constant shift), not a zero.
 8. End to end: `pdf-structure.py` on a PDF with no outline records
    `toc_inferred_method: "font"` and the headings. Skipped without PyMuPDF.
+9. The benchmark reads Grobid's TEI-XML: depth from the head's `n`, page from
+   its `coords`, body heads only.
 
 Synthetic `Line`s carry every case but the last, so nothing here needs a PDF
 library or a corpus file.
@@ -148,6 +150,22 @@ def test_metric_identity_and_constant_level_shift():
     assert s["level_f1"] == 1, s
     s = tb.score(gold, [])
     assert s["title_f1"] == 0, s
+
+
+def test_grobid_tei_heads_read_with_depth_and_page():
+    tb = load("toc-benchmark.py")
+    tei = """<TEI xmlns="http://www.tei-c.org/ns/1.0"><text><body>
+      <div><head n="1" coords="1,72,90,200,12">Introduction</head><p>x</p></div>
+      <div><head n="2.1" coords="3,72,90,200,12">Data   sets</head></div>
+      <div><head>Acknowledgements</head></div>
+    </body><back><div><head>Not a body head</head></div></back></text></TEI>"""
+    with tempfile.TemporaryDirectory() as d:
+        path = os.path.join(d, "x.tei.xml")
+        with open(path, "w") as f:
+            f.write(tei)
+        got = [(h.level, h.title, h.page, h.number) for h in tb._tei_headings(path)]
+    assert got == [(1, "Introduction", 1, "1"), (2, "Data sets", 3, "2.1"),
+                   (1, "Acknowledgements", None, None)], got
 
 
 def test_pdf_structure_records_the_layout_method():

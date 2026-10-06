@@ -45,6 +45,7 @@ import importlib.util
 import io
 import json
 import os
+import re
 import sys
 import time
 from collections import Counter
@@ -114,12 +115,54 @@ def m_layout(doc: Doc) -> list[H.Heading]:
     return H.layout_headings(doc.lines)[0]
 
 
+TEI_DIR: str | None = None          # set by --grobid-tei
+
+
+def _tei_headings(path: str) -> list[H.Heading]:
+    """Grobid's TEI-XML body headings as `Heading`s.
+
+    Grobid writes the body as a FLAT run of `<div>`s, each opening with a
+    `<head>`; the hierarchy is only in the `n` attribute ("1.1"), so depth is
+    read from it and an unnumbered head is level 1. The page comes from the
+    head's `coords` ("page,x,y,w,h;...") when Grobid was asked for
+    `teiCoordinates=head`.
+    """
+    import xml.etree.ElementTree as ET
+    ns = {"tei": "http://www.tei-c.org/ns/1.0"}
+    root = ET.parse(path).getroot()
+    out: list[H.Heading] = []
+    for head in root.iterfind(".//tei:text/tei:body//tei:head", ns):
+        title = re.sub(r"\s+", " ", "".join(head.itertext())).strip()
+        if not title:
+            continue
+        n = (head.get("n") or "").strip().rstrip(".") or None
+        level = n.count(".") + 1 if n and re.fullmatch(r"\d+(?:\.\d+)*", n) else 1
+        coords = head.get("coords") or ""
+        page = int(coords.split(",")[0]) if re.match(r"^\d+,", coords) else None
+        out.append(H.Heading(level, title, page, n))
+    return out
+
+
+def m_grobid(doc: Doc) -> list[H.Heading]:
+    """Grobid (CRF models, `processFulltextDocument`), read from saved TEI.
+
+    Run Grobid separately and save `<stem>.tei.xml` per PDF into the
+    directory given by --grobid-tei; a PDF with no TEI scores as empty.
+    """
+    if not TEI_DIR:
+        return []
+    stem = os.path.splitext(os.path.basename(doc.path))[0]
+    tei = os.path.join(TEI_DIR, stem + ".tei.xml")
+    return _tei_headings(tei) if os.path.exists(tei) else []
+
+
 METHODS = {
     "regex": m_regex,
     "size": m_size,
     "font": m_font,
     "contents": m_contents,
     "layout": m_layout,
+    "grobid": m_grobid,
 }
 
 
@@ -302,12 +345,17 @@ def main() -> int:
     ap.add_argument("--root", default=os.path.abspath(os.path.join(HERE, "..", "..")))
     ap.add_argument("--methods", default=",".join(METHODS))
     ap.add_argument("--json", help="write per-document results here")
+    ap.add_argument("--grobid-tei", help="directory of Grobid <stem>.tei.xml outputs, for the `grobid` method")
     ap.add_argument("--layout-backend", choices=["pymupdf", "pdfminer"], default="pymupdf",
                     help="which library reads font metrics (pdfminer.six is MIT; PyMuPDF is AGPL)")
     args = ap.parse_args()
 
+    global TEI_DIR
+    TEI_DIR = args.grobid_tei
     pdfs = args.pdfs or default_corpus(args.root)
     methods = [m for m in args.methods.split(",") if m]
+    if "grobid" in methods and not TEI_DIR:
+        methods.remove("grobid")             # needs saved output; not run by default
     rows = []
     for path in pdfs:
         doc = load(path, args.layout_backend)
