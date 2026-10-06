@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T16:15:00Z
-updated_at: 2026-09-30T18:43:38Z
+updated_at: 2026-10-06T14:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -91,7 +91,7 @@ cost of a red `main`, arrived at by a different route.
       and watch it refuse, then watch it pass once the suites finish.
 - [ ] The base-branch-name-comparison alternative is written down as
       considered and rejected, so it is not rediscovered as an improvement.
-- [ ] `2c2b`'s docblock says "empty" where it means "empty"; the partial case
+- [x] `2c2b`'s docblock says "empty" where it means "empty"; the partial case
       gets its own sentence, since the current wording reads as covering it.
 
 ## NOT in this bean
@@ -152,12 +152,20 @@ them.
 
 ### Done-when, amended
 
-- [ ] A conflicted head does not report pass. This produced the more dangerous
+- [x] A conflicted head does not report pass. This produced the more dangerous
       of the two live reproductions.
-- [ ] Workflow-file reconciliation at the commit, distinguished IN THE PROSE
+- [x] Workflow-file reconciliation at the commit, distinguished IN THE PROSE
       from the base-branch comparison that stays rejected.
 
 The fourth item above ("the base-branch alternative is written down as
 considered and rejected") is wrong as written and is superseded by this.
 
 _2026-09-30T18:43:34Z_ — Claimed by claude/cool-fermi-htir5p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence, 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92)
+Re-derived on main 713b9d3+:
+- **Partial set:** `verdictForCommit` turns a would-be pass with `owed.missing` non-empty into `undetermined` ("a partial check set, not a green one"), and `exitCodeFor` exits 2. Covered by `cat-harness/scripts/tests/verdict-for-commit.test.ts:61`. This supersedes the "queued suites" wording of item 1, a rule this bean's own correction showed never terminates: `github-pages` and `claude` suites stay queued forever.
+- **Docblock:** `check-verdict.ts:45` names the EMPTY case; the 6lre section names the PARTIAL case in its own sentence.
+- **Conflicted head:** `conflictedVerdict` (beans `52cz` and `rwwl`, #2250). Tested at `verdict-for-commit.test.ts:104`.
+- **Reconciliation vs base comparison:** the docblock now has a third design, the REJECTED base-branch comparison, kept distinct from the adopted workflow-file reconciliation (this commit).
+- **Live falsification:** still to do. Poll this PR's head seconds after the push and expect a non-pass, then poll again after the suites finish and expect PASS.
