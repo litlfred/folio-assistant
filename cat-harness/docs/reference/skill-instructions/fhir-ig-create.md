@@ -135,11 +135,19 @@ From there the IG grows in place, and leaves only through
 3. **Declare** `needs: ["fhir-harness"]` and the same graphs as above, at the
    new repository's root, with no `livesAt`.
 4. Then steps 3 to 5 of `in-repo`, at the root.
+5. **Ask the two build questions** before the first push: whether the
+   repository's automatic gh-pages builds stay automatic, and whether to
+   install the just-the-docs site (default yes). The rule and the question
+   text are [`ig-build-pipeline`](ig-build-pipeline.md) §"Who starts a
+   build"; a repository forked from an upstream IG is the usual case.
 
 ### `existing-ig`
 
 `repo-conversion` scans first and imports second, never the other way round.
-After the import, declare the instance at the root as in `new-repo` step 3.
+After the import, declare the instance at the root as in `new-repo` step 3,
+then ask the two build questions in [`ig-build-pipeline`](ig-build-pipeline.md)
+§"Who starts a build". An existing IG repository almost always carries build
+workflows that publish on every push.
 
 ## Anti-patterns
 
