@@ -2,7 +2,7 @@
 title: "Public comment, round 2: requirements from the chief-editor walkthrough"
 kind: proposal
 summary: >-
-  Proposed 2026-10-06, for the chief editor's sign-off BEFORE approval: sixteen
+  Proposed 2026-10-06, for the chief editor's sign-off BEFORE approval: seventeen
   requirements and four defects from a 17-minute CRDM walkthrough of the DPI-H
   Reference Architecture public-comment dashboard with its chief editor. Change
   sets get a type axis and a committee axis, new comments are ingested
@@ -263,6 +263,35 @@ measured above. *Ruled by the owner, 2026-10-06:* "As the existing
 'not-accepted' decision with a reason. No new state, but a committee still
 reviews each one first." *Accept:* an out-of-scope decision is `not-accepted`
 with a reason, and the dashboard can filter on that reason.
+
+**REQ-17: [edit] and [feedback] on every block of the document.** (M, *owner, 2026-10-06*)
+Each block of the rendered document SHALL carry two links, as the
+smart-immunizations IG pages already do (`fhir-harness/scripts/build-ig-site.ts`:
+"Edit this page on GitHub" and a 📣 feedback icon per heading):
+
+- **[edit]** opens the block's source (`folio/<doc>/<chapter>/<block>.md`) in
+  GitHub's editor on `main`, so a person with access proposes the change as a
+  pull request;
+- **[feedback]** opens a new GitHub issue prefilled with the block's label,
+  section, page and line in the review version, and a link back to the
+  block. Where comments on the block are already in change-sets, it SHALL
+  first list those change-sets' issues, so the reader can join an existing
+  discussion instead of opening a duplicate.
+
+*Source:* the owner, 2026-10-06, on the staging document page (§2.1.2
+"Business services layer", six open comments in five change-sets: *"each
+block should also have an [edit] and [feedback] icons (like smart-immiz)
+does back to edit source on github or create an issue to change block
+contents/link to exist change set issues"*). *Today:* the document page shows
+each block's public comments and their change-set ids; it has no edit or
+feedback link. *Accept:* every block has both links; [edit] opens the right
+file; [feedback] prefills the block and lists the block's existing
+change-set issues.
+*Scope, owner 2026-10-06:* common **folio-assistant-core** functionality, not
+a smart-ra feature: link any block to its markdown source, and create an issue
+from an optional, parameterised issue template; registered as a process step,
+a skill and a tool. The owner directed it built; it merges with the rest of
+this round.
 
 ### E. Quality assurance of agent work
 
