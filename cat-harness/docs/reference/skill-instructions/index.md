@@ -109,6 +109,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Package: `graph-management` |
 | [Knowledge Graph separation](kg-separation.html) | `kg-separation` | — | > Skill id: `kg-separation` · Package: `graph-management` |
 | [LSI indexing](lsi-indexing.html) | `lsi-indexing` | — | **The method is the node, not this file.** [`lsi`](https://github.com/litlfred/folio-assistant/blob/ |
+| [Sub-KG lifecycle](sub-kg-lifecycle.html) | `sub-kg-lifecycle` | — | > Skill id: `sub-kg-lifecycle` · Package: `graph-management` |
 
 ## Knowledge graph — declaration, placement, export, audit (kg-core)
 
@@ -396,6 +397,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [fhir-ig-create](fhir-ig-create.html) | `fhir-ig-create` | — | > Skill id: `fhir-ig-create` · Package: `fhir-ig-base` · Instance: `fhir-harness` |
 | [ig-ast-delta](ig-ast-delta.html) | `ig-ast-delta` | — | > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance: |
 | [ig-binary-artefacts](ig-binary-artefacts.html) | `ig-binary-artefacts` | — | > Skill id: `ig-binary-artefacts` · Package: `fhir-ig-base` · Instance: |
 | [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
@@ -510,6 +512,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [ig-artifact-ingestion](ig-artifact-ingestion.html) | `ig-artifact-ingestion` | — | > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` · |
 | [l2-dak-authoring](l2-dak-authoring.html) | `l2-dak-authoring` | [schema](../skills/l2-dak-authoring.html) | > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` · |
 | [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Package: |
+| [smart-guideline-create](smart-guideline-create.html) | `smart-guideline-create` | — | > Skill id: `smart-guideline-create` · Package: `authoring-who-smart-guidelines` |
 | [smart-stack-layering](smart-stack-layering.html) | `smart-stack-layering` | — | > Skill id: `smart-stack-layering` · Package: `authoring-who-smart-guidelines` |
 | [toolchain-ownership](toolchain-ownership.html) | `toolchain-ownership` | — | > Skill id: `toolchain-ownership` · Package: `authoring-who-smart-guidelines` · |
 

@@ -34,6 +34,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/fhir-ig-create",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "fhir-ig-create"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide."
+        }
+      ],
+      "skos:notation": "fhir-ig-create",
+      "dcterms:source": "fhir-harness/skills/fhir-ig-base/fhir-ig-create.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/fhir-validation",
       "@type": "skos:Concept",
       "skos:inScheme": {
