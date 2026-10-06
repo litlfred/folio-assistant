@@ -1,0 +1,31 @@
+{
+  "$ref": "#/definitions/IgMenuItem",
+  "definitions": {
+    "IgMenuItem": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "label",
+        "href"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-menu/IgMenuItemSchema.schema.json",
+  "title": "IgMenuItemSchema",
+  "description": "Generated from `IgMenuItemSchema` in schemas/ig-menu.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/exciting-ptolemy-se2d2a",
+    "sha": "df030e3a4914bb533445dc9534203e5f97239850",
+    "pr": "claude/exciting-ptolemy-se2d2a",
+    "run": "37519370232"
+  }
+}
