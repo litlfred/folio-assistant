@@ -86,7 +86,7 @@ link or a path breaks when the layer stands alone.
 | folio MCP surfaces (`folio-init`, `readme-*`, `preview`, `translation`, …) | CHT → core | **ruled in part** (MCP placement; `mer2`) | 2 / 1 |
 | review store and block CRUD (`feedback`, `qa-agent-write`, `blocks/*`, `manifest-entries`) | CH/CHT → core | **ruled** (C1) | 12 / 2 |
 | `folio`/`glossary` graph typologies, `glossary-ledger` | CH → core | **ruled** (`q2wn`) | 30 / **22** |
-| **content-object model** (`types`, `builders`, `webpage`, `block-kinds`, …) | CH → core; the kind registry and adapter interface stay as seams | **owner decision** | 310 / **219** |
+| **content-object model** (`types`, `builders`, `webpage`, `block-kinds`, …) | **stays** (owner, 2026-10-06) | **ruled: keep** | 310 / 219 |
 | bibliography (`citations`, `bib-qa`, `validate-references*`, …) | CH → core | med-high | 27 / 6 |
 | library / L1 intake | CH → core | partition-triaged | 48 / 2 |
 | content validation and publication pipeline | CH → core | med-high | 36 / 2 |
@@ -105,7 +105,7 @@ link or a path breaks when the layer stands alone.
 ## Open owner decisions
 
 1. **Ruling 1A against the 2026-10-06 rule: RULED 2026-10-06.** The owner said *"do content split propoerly across repos"*, then *"that needs to be done before F"* (GOAL 5 resumes after the split). Read as a SPLIT: the method write-ups (the "how") stay in cat-harness as general methodology, and the operational content-authoring, review and publication skills, processes and code move to core, each split cleanly with no upward reference left behind. The question as it was put: 1A (2026-09-30) and the completed PR3 keep a generic `content` group in cat-harness: `content-lifecycle` (8 skills), the voice-review skills (3), `technical-documentation`, `review-task`, `review-narrative` and `voice-review.bpmn`. Today's rule says content authoring and review belong in core. Which wins decides the largest single skills move.
-2. **The content-object model** (`schemas/types`, `builders`, `webpage`, `block-kinds`, …): core, or kept below as the seam every layer builds on? Moving it puts 219 importers below it, 189 of them cat-harness's own `content/docs` manifests.
+2. **The content-object model: RULED 2026-10-06, KEEP in cat-harness.** The owner chose "Keep in cat-harness" from three options (split with seams staying; keep; move all to core). It is common infrastructure every layer builds on. Nothing moves, and cat-harness's `content/docs` manifests keep importing `builders`/`webpage`. Under D2 those builders still go to cat-harness-tools with the rest of the code (S5), which is downward and allowed. The question as it was put: **The content-object model** (`schemas/types`, `builders`, `webpage`, `block-kinds`, …): core, or kept below as the seam every layer builds on? Moving it puts 219 importers below it, 189 of them cat-harness's own `content/docs` manifests.
 
 ## Prerequisites for a clean split, in order
 
