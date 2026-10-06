@@ -24,6 +24,7 @@
 import { z } from "zod";
 
 import type { GraphTypologyDef } from "./graph-typology-registry";
+import { NewInstanceSourceSchema } from "./subgraph-source";
 
 export const GRAPH_TYPOLOGY_NODE_TAG = "folio-graph-typology/v1" as const;
 
@@ -59,6 +60,7 @@ export const GraphTypologyNodeSchema = z
     title: z.string().min(1).optional(),
     layer: z.literal("core").optional(),
     perInstance: z.literal(true).optional(),
+    newInstanceSource: NewInstanceSourceSchema.optional(),
     renderable: z.boolean(),
     recordsWork: z.boolean().optional(),
     holds: z.enum(["content", "context", "state", "derived"]),

@@ -29,6 +29,7 @@ import {
   folioTemplates,
   initFolio,
   initInstance,
+  INSTANCE_STATE_GRAPHS,
   isValidSlug,
   renderTemplate,
   slugify,
@@ -40,6 +41,8 @@ import { instanceConfigFilename } from "../../schemas/harness-config.js";
 import { instanceDeclarationFilename, readDeclaration } from "../../schemas/cat-harness.js";
 import { declarationChain, resolveSkillDirs } from "../../schemas/harness-config.js";
 import { nodeOfKind, parseTodoGraph } from "../../schemas/todo-graph.js";
+import { defaultGraphTypologies } from "../../schemas/graph-typology-registry.js";
+import { instanceStateBranch } from "../../schemas/subgraph-source.js";
 
 /**
  * The scaffold names its config after the folio's SLUG, not after the temp
@@ -92,6 +95,19 @@ function opts(dir: string, over: Partial<InitFolioOptions> = {}): InitFolioOptio
     skipVcs: true,
     ...over,
   };
+}
+
+/**
+ * Pre-write the scaffold's CONFIG with a `subgraphSources` override keeping
+ * both state graphs in the checkout. `folio_init` leaves an existing file
+ * alone, so the override is what the resolver reads — the real config layer,
+ * not a test-only switch.
+ */
+function writeDirectoryOverride(dir: string): void {
+  writeFileSync(
+    scaffoldConfigIn(dir),
+    JSON.stringify({ subgraphSources: { beans: { kind: "directory" }, todos: { kind: "directory" } } }, null, 2) + "\n",
+  );
 }
 
 describe("slug validation", () => {
@@ -151,7 +167,10 @@ describe("what gets written", () => {
   });
 
   test("a new folio declares a todos graph with a feedback directory, so a review decision has somewhere to go (423d)", () => {
+    // Kept in the checkout (a `directory` override), so its files are on disk;
+    // the branch default puts the same files in the seed — see `hp54` below.
     const d = tmp();
+    writeDirectoryOverride(d);
     initFolio(opts(d, { contentType: "document" }));
     const g = parseTodoGraph(JSON.parse(readFileSync(join(d, "todos", "todos.json"), "utf-8")));
     const fb = nodeOfKind(g, "todo-feedback");
@@ -477,11 +496,6 @@ describe("a contentless instance (mer2)", () => {
     ".claude/settings.json",
     ".gitignore",
     ".beans.yml",
-    "beans/.gitkeep",
-    "todos/todos.json",
-    "todos/items/.gitkeep",
-    "todos/feedback/.gitkeep",
-    "todos/verdicts/.gitkeep",
     "README.md",
     "AGENTS.md",
     "CLAUDE.md",
@@ -511,7 +525,8 @@ describe("a contentless instance (mer2)", () => {
     expect(config.adapterModule).toBeUndefined();
     const decl = readDeclaration(d);
     expect(decl?.name).toBe(SLUG);
-    expect(decl?.directories).toEqual([]);
+    // No `folio` entry — only the two state graphs every instance holds (hp54).
+    expect(decl?.directories.map((e) => e.id)).toEqual(["beans", "todos"]);
   });
 
   test("a folio's instance half is the instance's — the two cannot drift", () => {
@@ -521,7 +536,7 @@ describe("a contentless instance (mer2)", () => {
     const r = initFolio(opts(folio));
     for (const f of INSTANCE_LEVEL) expect(r.created).toContain(f);
     // The files with no content-type dependence are byte-identical.
-    for (const f of [".mcp.json", ".claude/settings.json", ".beans.yml", "todos/todos.json"]) {
+    for (const f of [".mcp.json", ".claude/settings.json", ".beans.yml"]) {
       expect(readFileSync(join(folio, f), "utf-8")).toBe(readFileSync(join(bare, f), "utf-8"));
     }
   });
@@ -538,7 +553,12 @@ describe("a contentless instance (mer2)", () => {
       run(d);
       const decl = readDeclaration(d);
       expect(decl).toBeDefined();
-      for (const dir of decl!.directories) expect(existsSync(join(d, dir.path))).toBe(true);
+      // Every declared directory exists — except one whose content is declared
+      // OFF the checkout (hp54), which is mounted, never written.
+      for (const dir of decl!.directories) {
+        if (dir.source?.kind === "branch") continue;
+        expect(existsSync(join(d, dir.path))).toBe(true);
+      }
     });
   }
 
@@ -598,5 +618,80 @@ describe("a scaffold says what it stands on (zmdo)", () => {
     expect(chain).toContain("bootstrap");
     expect(chain).not.toContain("folio-assistant-core");
     expect(skillRoots(d)).toContain("cat-harness/skills");
+  });
+});
+
+/**
+ * Bean `hp54`, measured 2026-10-06: `folio_init` wrote `beans/` and `todos/`
+ * into the checkout and declared neither, so a folio's work plan landed on
+ * `main` with nothing able to say so. Each state graph now goes through the
+ * ONE resolver: `branch` → declared, not written; `directory` → written AND
+ * declared.
+ */
+describe("state graphs follow their resolved source (hp54)", () => {
+  test("by default both are declared on cat/<instance>/<id>, tip-keyed, and NOT written", () => {
+    const d = tmp();
+    const r = initFolio(opts(d));
+    const decl = readDeclaration(d)!;
+    for (const id of ["beans", "todos"]) {
+      const e = decl.directories.find((x) => x.id === id);
+      expect(e?.source).toEqual({ kind: "branch", branch: `cat/${SLUG}/${id}`, keyedBy: "tip" });
+      expect(existsSync(join(d, id))).toBe(false);
+      expect(r.created.some((f) => f.startsWith(`${id}/`))).toBe(false);
+      const g = r.stateGraphs.find((x) => x.id === id)!;
+      expect(g.source.kind).toBe("branch");
+      expect(g.declared).toBe(true);
+      // The branch's content travels in the seed, so it starts from the same files.
+      expect(g.seed).toContain(`refs/heads/cat/${SLUG}/${id}`);
+      expect(g.seed).toContain("manifest.json");
+    }
+    expect(r.stateGraphs.find((x) => x.id === "todos")!.seed).toContain("todos/todos.json");
+    // The mount must never be committed to main.
+    const ignore = readFileSync(join(d, ".gitignore"), "utf-8");
+    expect(ignore).toContain("/beans/**");
+    expect(ignore).toContain("/todos/**");
+    expect(r.notes.join("\n")).toContain("NOT written into the checkout");
+  });
+
+  test("a `directory` source (config override) is written AND declared", () => {
+    const d = tmp();
+    writeDirectoryOverride(d);
+    const r = initInstance({ targetDir: d, slug: SLUG, title: "X", link: "submodule", skipVcs: true });
+    for (const id of ["beans", "todos"]) {
+      expect(existsSync(join(d, id))).toBe(true);
+      expect(readDeclaration(d)!.directories.some((x) => x.id === id)).toBe(true);
+      const g = r.stateGraphs.find((x) => x.id === id)!;
+      expect(g.source.kind).toBe("directory");
+      expect(g.source.declaredIn).toBe("config");
+      expect(g.seed).toBeUndefined();
+    }
+    expect(r.created).toContain("beans/.gitkeep");
+    expect(r.created).toContain("todos/todos.json");
+    expect(readFileSync(join(d, ".gitignore"), "utf-8")).not.toContain("/beans/**");
+  });
+
+  test("an existing declaration that does not name a state graph is reported, not rewritten", () => {
+    const d = tmp();
+    writeFileSync(join(d, instanceDeclarationFilename(SLUG)), JSON.stringify({ name: SLUG, directories: [] }) + "\n");
+    const r = initInstance({ targetDir: d, slug: SLUG, title: "X", link: "submodule", skipVcs: true });
+    expect(r.skipped).toContain(instanceDeclarationFilename(SLUG));
+    for (const g of r.stateGraphs) expect(g.declared).toBe(false);
+    expect(r.notes.join("\n")).toContain('does not declare "beans"');
+  });
+
+  test("every registry kind with a newInstanceSource is a state graph the scaffold writes", () => {
+    const listed = new Set<string>(INSTANCE_STATE_GRAPHS.map((g) => g.kind));
+    for (const kind of defaultGraphTypologies.names()) {
+      const def = defaultGraphTypologies.get(kind)!;
+      if (!def.newInstanceSource) continue;
+      expect(def.holds).toBe("state");
+      expect(listed.has(kind)).toBe(true);
+    }
+    for (const kind of listed) expect(defaultGraphTypologies.get(kind)?.newInstanceSource?.kind).toBe("branch");
+  });
+
+  test("the branch convention refuses an instance name that would make an invalid ref", () => {
+    expect(instanceStateBranch("demo-x", "beans")).toBe("cat/demo-x/beans");
+    expect(() => instanceStateBranch("a..b", "beans")).toThrow();
   });
 });

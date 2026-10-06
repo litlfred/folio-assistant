@@ -51,6 +51,7 @@ import { declaredNodeFiles } from "./declared-nodes";
 import { GraphTypologyNodeSchema, kindDefOf } from "./graph-typology-node";
 import { ValidatorNodeSchema, type ValidatorNode } from "./validator-node";
 import { namespaceForLayer } from "./namespaces";
+import type { NewInstanceSource } from "./subgraph-source";
 import { BOOTSTRAP_GRAPH_TYPOLOGIES } from "../../bootstrap-tools/schemas/graph";
 
 
@@ -195,6 +196,24 @@ export interface GraphTypologyDef {
    * (the `dh4f` rule). {@link materialiseDirectories} reads it.
    */
   perInstance?: true;
+  /**
+   * Where a NEW instance's own graph of this kind lives, when `folio_init`
+   * scaffolds it — `perInstance`'s companion: that field says a dependent HAS
+   * its own; this one says where the new one is kept. Bean `hp54`.
+   *
+   * Read by `folio_init` ONCE, never by the resolver: the scaffolder writes a
+   * complete `source: { kind: "branch", branch: "cat/<instance>/<id>",
+   * keyedBy }` into the new instance's own declaration, and from then on that
+   * declaration is the one answer. So an existing instance whose entry
+   * declares no source (this repository's own `beans/` and `todos/`, still
+   * awaiting their cutover) is not moved by it. The rule and the branch-name
+   * convention are in the `directory-conventions` skill, §"Where a NEW
+   * instance's state lives".
+   *
+   * Absent means a new instance's graph of this kind is written into its
+   * checkout, as before.
+   */
+  newInstanceSource?: NewInstanceSource;
   /**
    * Is a graph of this kind expected to render as a website?
    *
@@ -1635,6 +1654,9 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   beans: {
     tileIcon: "beans",
+    // A NEW instance keeps its own on `cat/<instance>/beans`, branch-mounted
+    // (owner, 2026-10-06, bean `hp54`). folio_init only — see the field.
+    newInstanceSource: { kind: "branch", keyedBy: "tip" },
     description:
       "the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json`",
     title: "Beans",
@@ -1827,6 +1849,9 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json`",
     title: "Todos",
     perInstance: true,
+    // A NEW instance keeps its own on `cat/<instance>/todos`, branch-mounted
+    // (owner, 2026-10-06, bean `hp54`). folio_init only — see the field.
+    newInstanceSource: { kind: "branch", keyedBy: "tip" },
     layer: "core",
     renderable: false,
     // A person's outstanding items. Outstanding is the word that settles it —
