@@ -262,6 +262,12 @@
     },
     {
       "typology": "docs",
+      "family": "folio-library-document/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/site-indexes.ts#LibraryDocumentSchema"
+    },
+    {
+      "typology": "docs",
       "family": "folio-library-entry/v1",
       "reason": "zod-schema",
       "ref": "schemas/site-indexes.ts#LibraryEntrySchema"
@@ -433,6 +439,12 @@
       "typology": "library",
       "family": "folio-image-verdicts/v1",
       "reason": "no-validator"
+    },
+    {
+      "typology": "library",
+      "family": "folio-keywords/v1",
+      "reason": "zod-schema",
+      "ref": "schemas/library-keywords.ts#KeywordsFileSchema"
     },
     {
       "typology": "library",
