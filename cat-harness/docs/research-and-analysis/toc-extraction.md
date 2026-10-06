@@ -150,8 +150,30 @@ PyMuPDF when it is installed and pdfminer.six otherwise.
 | **Donut / GPT** (Feyisa et al. 2024) | contents-page parsing with an OCR-free image model or a prompted LLM | paper reports ~85–89 % field accuracy on 20 test documents in one domain, and its own figures disagree with its text | the rule-based `contents` method already reaches 0.81–1.00 on this corpus's contents pages, and runs offline |
 | **Bentabet et al. 2019 / Wang et al. 2023 models** | char-CNN + BiLSTM-CRF; RoBERTa + GNN over a block tree | need training data and a GPU | their **rule-based parts** are implemented: Bentabet's tree repair (`tree_levels`), and Wang's size-ordered construction (the `size` baseline) |
 
+### Grobid and Nougat side by side, for a TOC
+
+| dimension | Grobid | Nougat |
+|---|---|---|
+| input | the digital PDF: text, font metrics and boxes, read through `pdfalto` | raster page images: a scan, or a rendered PDF page |
+| heading hierarchy | TEI-XML `<head n="1.1">` with token-level coordinates | Markdown `#`, `##`, `###` in the text stream; a Markdown parser (mistletoe, mistune) gives the tree |
+| linking a heading to a page | direct: physical page index and coordinates | indirect: output is per page, so page boundaries must be tracked |
+| cost | fast on CPU; poor on degraded scans without OCR first | heavy GPU inference; robust to scanning defects and maths |
+
+The split matches this corpus. Grobid works from the same text layer
+`_pdf_headings.py` reads, so on born-digital PDFs it competes with `font`, and
+its training is on scientific articles. Nougat is the only candidate for the
+case nothing here handles: a scanned PDF with no text layer.
+
+Sources: Grobid — <https://github.com/grobidOrg/grobid>, documentation
+<https://grobid.readthedocs.io>, the batch client
+<https://github.com/grobidOrg/grobid-client-python>; P. Lopez, *GROBID:
+Combining Automatic Bibliographic Data Recognition and Term Extraction for
+Scholarship Publications*, ECDL 2009. Nougat — arXiv:2308.13418,
+<https://github.com/facebookresearch/nougat>, weights `facebook/nougat-base`
+and `facebook/nougat-small` on Hugging Face.
+
 To score Grobid or Nougat here, an environment needs `huggingface.co` (Nougat)
-or a Docker daemon (Grobid). Either can also run elsewhere and write its output
+or a Docker daemon, or permission to build Grobid from source with Gradle (Java is present and the source clones; building outside code was not permitted in this session). Either can also run elsewhere and write its output
 as `(level, title, page)` rows, which `toc-benchmark.py`'s `score()` accepts
 unchanged.
 
