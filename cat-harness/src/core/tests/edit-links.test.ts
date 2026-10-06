@@ -1,11 +1,13 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { readDeclaration, siteDir } from "../../../schemas/cat-harness.js";
 import { BLOCK_URLS_JS, editLinkHtml, editLinksAsset, editUrl, feedbackUrl, sourceUrl } from "../edit-links.js";
 
 describe("edit-links: one recipe for every page's edit and feedback links (bean v433)", () => {
   test("the published runtime is the generated one (run --write-asset after changing the recipe)", () => {
-    const asset = readFileSync(join(import.meta.dir, "..", "..", "..", "docs", "assets", "js", "edit-links.js"), "utf-8");
+    const harness = join(import.meta.dir, "..", "..", "..");
+    const asset = readFileSync(join(harness, siteDir(readDeclaration(harness)!), "assets", "js", "edit-links.js"), "utf-8");
     expect(asset).toBe(editLinksAsset());
   });
 

@@ -152,7 +152,7 @@ jobs:
   # ── Decide whether a branch push should stage ─────────────────
   # Every event but `push` passes straight through. On `push`, stage only
   # when the branch has an open PR from this repository that conflicts with
-  # its base (`mergeable_state: dirty`), the one case `pull_request` cannot
+  # its base (`mergeable_state: dirty`, which licenses only "conflicts", bean yv4z), the one case `pull_request` cannot
   # reach. `mergeable` is computed lazily, so an unknown answer is asked again
   # a few times; still unknown, it stages, because a duplicate preview of the
   # same commit costs a build and a missing one costs the reviewer.
@@ -179,6 +179,7 @@ jobs:
             echo "no open PR for $BRANCH: no preview"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           state=unknown
+          # `unknown` means not computed yet (bean h2s9), so it is asked again.
           for i in 1 2 3 4 5; do
             state=$(gh api "repos/$REPO/pulls/$pr" --jq '.mergeable_state // "unknown"')
             [ "$state" != "unknown" ] && break
