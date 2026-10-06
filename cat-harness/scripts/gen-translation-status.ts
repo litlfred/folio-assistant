@@ -268,9 +268,9 @@ function pct(v: number | null): string {
 /**
  * Another instance's `translation-sources` directory, measured the same way.
  *
- * Added for issue #2228: who-iris's catalogues moved out of cat-harness's
- * directory into its own on 2026-10-04 (bean `riit`), and from then on this
- * page — which measured one directory — no longer counted them. The move was
+ * Added for issue #2228: an instance's catalogues moved out of cat-harness's
+ * directory into the instance's own on 2026-10-04 (bean `riit`), and from
+ * then on this page, which measured one directory, no longer counted them. The move was
  * right and the page went quietly blind to it, which is the gap its own note
  * warned about. Each instance is a SEPARATE table, never summed into the
  * first: two instances' catalogues answer two questions.
