@@ -3,7 +3,7 @@ title: "Table-of-contents extraction — methods compared against held-out PDF o
 kind: research
 bean: folio-assistant-cp3v
 summary: >-
-  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Six methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.86 against 0.30 for the text-pattern heuristic it replaces. Grobid measured (title F1 0.59, CRF models); Nougat assessed from the literature, its run handed to bean u9lb.
+  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Six methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.88 against 0.30 for the text-pattern heuristic it replaces. Grobid measured (title F1 0.59, CRF models); Nougat assessed from the literature, its run handed to bean u9lb.
 ---
 
 # Table-of-contents extraction
@@ -78,9 +78,9 @@ distance is too slow at 2,500 nodes) and is averaged over the other 12.
 |---|---|---|---|---|---|---|---|---|
 | `regex` | 0.46 | 0.29 | 0.30 | 0.30 | 0.29 | 0.28 | 0.28 | 0.15 |
 | `size` | 0.43 | 0.63 | 0.44 | 0.51 | 0.42 | 0.36 | 0.35 | 0.27 |
-| `font` | 0.69 | 0.90 | 0.76 | 0.81 | 0.75 | 0.73 | 0.73 | 0.62 |
+| `font` | 0.69 | 0.94 | 0.77 | 0.82 | 0.76 | 0.75 | 0.74 | 0.64 |
 | `contents` | 0.21 | 0.21 | 0.21 | 0.21 | 0.21 | 0.16 | 0.15 | 0.20 |
-| **`layout`** | **0.82** | **0.92** | **0.86** | **0.88** | **0.85** | **0.79** | **0.78** | **0.74** |
+| **`layout`** | **0.83** | **0.95** | **0.88** | **0.90** | **0.87** | **0.81** | **0.80** | **0.76** |
 | `grobid` | 0.52 | 0.75 | 0.59 | 0.61 | 0.58 | 0.51 | 0.51 | 0.33 |
 
 `grobid` is Grobid 0.9.2-SNAPSHOT built from source (commit `e7c522b` of
@@ -92,27 +92,27 @@ unnumbered head is level 1. See [Grobid, measured](#grobid-measured).
 
 Title F1 per document, smallest outline first:
 
-| document | outline entries | regex | size | font | contents | layout |
-|---|---|---|---|---|---|---|
-| `2403.07553v1.pdf` | 16 | 0.20 | 0.40 | 0.94 | 0.00 | 0.94 |
-| `2506.20759v1.pdf` | 17 | 0.53 | 0.00 | 0.71 | 0.00 | 0.71 |
-| `2609.07340v1.pdf` | 17 | 0.80 | 0.00 | 0.97 | 0.00 | 0.97 |
-| `arxiv-2601.04544v1.pdf` | 19 | 0.17 | 0.93 | 0.86 | 0.00 | 0.86 |
-| `arxiv-2404.04834v4.pdf` | 23 | 0.23 | 0.15 | 0.77 | 0.00 | 0.77 |
-| `2603.10808v1.pdf` | 27 | 0.18 | 0.86 | 0.93 | 0.00 | 0.93 |
-| `2505.07664v1.pdf` | 29 | 0.00 | 0.42 | 0.93 | 0.00 | 0.93 |
-| `arxiv-2507.23348v1.pdf` | 33 | 0.13 | 0.63 | 0.80 | 0.00 | 0.80 |
-| `arxiv-2402.02172v5.pdf` | 39 | 0.09 | 0.40 | 0.57 | 0.00 | 0.57 |
-| `9789240093362-eng.pdf` | 54 | 0.34 | 0.10 | 0.29 | 0.81 | 0.81 |
-| `who-dpi-h-reference-architecture-draft-v1.pdf` | 138 | 0.45 | 0.07 | 0.42 | 1.00 | 1.00 |
-| `9789241548960_eng.pdf` | 258 | 0.70 | 0.81 | 0.75 | 0.98 | 0.98 |
-| `ihris_admin_handbook_sep_17_2010.pdf` | 1357 | 0.01 | 0.97 | 0.88 | 0.00 | 0.88 |
+| document | outline entries | regex | size | font | contents | layout | grobid |
+|---|---|---|---|---|---|---|---|
+| `2403.07553v1.pdf` | 16 | 0.20 | 0.40 | 0.94 | 0.00 | 0.94 | 0.91 |
+| `2506.20759v1.pdf` | 17 | 0.53 | 0.00 | 0.71 | 0.00 | 0.71 | 0.70 |
+| `2609.07340v1.pdf` | 17 | 0.80 | 0.00 | 0.97 | 0.00 | 0.97 | 0.73 |
+| `arxiv-2601.04544v1.pdf` | 19 | 0.17 | 0.93 | 0.90 | 0.00 | 0.90 | 0.61 |
+| `arxiv-2404.04834v4.pdf` | 23 | 0.23 | 0.15 | 0.77 | 0.00 | 0.77 | 0.60 |
+| `2603.10808v1.pdf` | 27 | 0.18 | 0.86 | 0.95 | 0.00 | 0.95 | 0.65 |
+| `2505.07664v1.pdf` | 29 | 0.00 | 0.42 | 0.92 | 0.00 | 0.92 | 0.50 |
+| `arxiv-2507.23348v1.pdf` | 33 | 0.13 | 0.63 | 0.79 | 0.00 | 0.79 | 0.57 |
+| `arxiv-2402.02172v5.pdf` | 39 | 0.09 | 0.40 | 0.67 | 0.00 | 0.67 | **0.69** |
+| `9789240093362-eng.pdf` | 54 | 0.34 | 0.10 | 0.26 | 0.81 | 0.81 | 0.13 |
+| `who-dpi-h-reference-architecture-draft-v1.pdf` | 138 | 0.45 | 0.07 | 0.37 | 1.00 | 1.00 | 0.31 |
+| `9789241548960_eng.pdf` | 258 | 0.70 | 0.81 | 0.77 | 0.98 | 0.98 | 0.75 |
+| `ihris_admin_handbook_sep_17_2010.pdf` | 1357 | 0.01 | 0.97 | 0.97 | 0.00 | 0.97 | 0.51 |
 
 ### What the table says
 
 - **The two layout methods are complementary, and the split is by genre.**
   Every WHO publication with a printed contents page is solved by `contents`
-  (0.81–1.00), where `font` is poor (0.29–0.75), because their body headings
+  (0.81–1.00), where `font` is poor (0.26–0.77), because their body headings
   share styles with call-outs and boxes. Every paper has no contents page, and
   `font` carries them. `layout` takes the better of the two on every document.
 - **Style beats size.** `size` (Wang et al.'s construction step alone) misses
@@ -120,9 +120,17 @@ Title F1 per document, smallest outline first:
   are `I. INTRODUCTION` in small capitals and `A. Search strategy` in italics,
   both at body size and weight. Reading capitals and italics, gated on a section
   number, is what recovers them.
-- **But `size` wins on two documents**, `arxiv-2601.04544v1` (0.93 vs 0.86) and
-  the iHRIS handbook (0.97 vs 0.88). There the extra filters in `font` drop
-  real headings. This is the place to look next, not a settled result.
+- **`size` used to win on two documents; it was three over-reaching rules.**
+  On the iHRIS handbook `font` missed 264 headings `size` found, all 14pt bold:
+  "Step 1: Create the module" fell to the theorem/proof word list (which names
+  `Step`), `<configuration>` to the code-fragment filter, and a repeated
+  "Configuration Settings" to de-duplication. Each rule is right for **body-size
+  bold** type and wrong for type set clearly larger; restricting them to body
+  size, keeping captions excluded at every size, and de-duplicating only a
+  heading that repeats on the same or next page took iHRIS from 0.88 to 0.97 and
+  `layout` from 0.86 to 0.88. On `arxiv-2601.04544v1` `size` still leads by 0.03
+  (0.93 vs 0.90): three bold box titles and list labels that `font` keeps and
+  the outline does not list.
 - **Levels lag titles by about 0.07.** Most of the loss is in outlines that are
   themselves inconsistent: DPI-H puts `1.1` sections and `Appendix A` at the
   same level, and `9789240093362-eng` lists `1.2` and `1.3` at level 1 beside
@@ -139,23 +147,23 @@ Title F1 per document, against `layout`:
 | `2403.07553v1.pdf` | 16 | 19 | 0.84 | 1.00 | 0.91 | 0.94 |
 | `2506.20759v1.pdf` | 17 | 20 | 0.65 | 0.76 | 0.70 | 0.71 |
 | `2609.07340v1.pdf` | 17 | 24 | 0.62 | 0.88 | 0.73 | 0.97 |
-| `arxiv-2601.04544v1.pdf` | 19 | 37 | 0.46 | 0.89 | 0.61 | 0.86 |
+| `arxiv-2601.04544v1.pdf` | 19 | 37 | 0.46 | 0.89 | 0.61 | 0.90 |
 | `arxiv-2404.04834v4.pdf` | 23 | 37 | 0.49 | 0.78 | 0.60 | 0.77 |
-| `2603.10808v1.pdf` | 27 | 53 | 0.49 | 0.96 | 0.65 | 0.93 |
-| `2505.07664v1.pdf` | 29 | 43 | 0.42 | 0.62 | 0.50 | 0.93 |
-| `arxiv-2507.23348v1.pdf` | 33 | 47 | 0.49 | 0.70 | 0.57 | 0.80 |
-| `arxiv-2402.02172v5.pdf` | 39 | 57 | 0.58 | 0.85 | **0.69** | 0.57 |
+| `2603.10808v1.pdf` | 27 | 53 | 0.49 | 0.96 | 0.65 | 0.95 |
+| `2505.07664v1.pdf` | 29 | 43 | 0.42 | 0.62 | 0.50 | 0.92 |
+| `arxiv-2507.23348v1.pdf` | 33 | 47 | 0.49 | 0.70 | 0.57 | 0.79 |
+| `arxiv-2402.02172v5.pdf` | 39 | 57 | 0.58 | 0.85 | **0.69** | 0.67 |
 | `9789240093362-eng.pdf` | 54 | 250 | 0.08 | 0.37 | 0.13 | 0.81 |
 | `who-dpi-h-reference-architecture-draft-v1.pdf` | 138 | 518 | 0.20 | 0.74 | 0.31 | 1.00 |
 | `9789241548960_eng.pdf` | 258 | 285 | 0.72 | 0.79 | 0.75 | 0.98 |
-| `ihris_admin_handbook_sep_17_2010.pdf` | 1357 | 719 | 0.73 | 0.39 | 0.51 | 0.88 |
+| `ihris_admin_handbook_sep_17_2010.pdf` | 1357 | 719 | 0.73 | 0.39 | 0.51 | 0.97 |
 
 - **Recall is good on papers (0.62–1.00); precision is the problem.** Grobid
   emits more heads than there are sections — on `2403.07553v1`, a whole
   sentence ("Li, et al. [12] proposed an upgraded version …") is tagged as a
   `<head>`. Its fulltext model is trained to find every heading-like segment;
   a TOC wants only the sections.
-- **It wins on one document**, `arxiv-2402.02172v5` (0.69 vs 0.57) — the paper
+- **It wins on one document**, `arxiv-2402.02172v5` (0.69 vs 0.67) — the paper
   whose appendix carries its own contents page, where `font` is weakest.
 - **Off its training domain it collapses**: 0.13 and 0.31 on the two WHO
   publications with printed contents pages, which `layout` solves at 0.81 and
@@ -182,7 +190,8 @@ metrics from either. Run with `--layout-backend pdfminer`:
 | pdfminer.six (MIT) | `font` | 0.76 | 0.86 | 0.76 | 0.74 | 0.72 | 0.72 | 0.65 |
 
 Within 0.02 on every headline number, so the gain does not depend on taking
-the AGPL dependency. pdfminer.six is markedly slower (the 13 documents take
+the AGPL dependency. (Measured before the body-size-only rule fix that took
+PyMuPDF `layout` from 0.86 to 0.88; not re-run since.) pdfminer.six is markedly slower (the 13 documents take
 about 1 minute with PyMuPDF; the pdfminer.six run was not timed but took many
 times longer). `pdf-structure.py` uses
 PyMuPDF when it is installed and pdfminer.six otherwise.

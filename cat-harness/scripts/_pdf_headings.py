@@ -253,6 +253,11 @@ RE_NUM = re.compile(
     r"(?:[.:)]|\s)\s*(?P<title>\S.*)$",
     re.I,
 )
+# A caption's label: never a section, at any size.
+RE_CAPTION = re.compile(
+    r"^(?:fig(?:ure)?\.?|table|tab\.|algorithm|listing|box|panel|chart|exhibit)\s*[\dA-Z][\d.]*\s*[:.\-–—]",
+    re.I,
+)
 # Lines that are set like headings but are not sections.
 RE_NOT_SECTION = re.compile(
     r"^(?:fig(?:ure)?\.?|table|tab\.|algorithm|listing|box|panel|source|note|notes|"
@@ -381,7 +386,12 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
             prominent = num is not None
         if not prominent:
             continue
-        if RE_NOT_SECTION.match(t):
+        # Figure captions, theorem labels and proof steps are set in BOLD BODY
+        # type; type set clearly larger than the body is a heading whatever
+        # its first word ("Step 1: Create the module" heads a section of a
+        # manual). Measured on the iHRIS handbook: applying this list to
+        # large type lost 264 real headings.
+        if RE_CAPTION.match(t) or l.size < body + 0.9 and RE_NOT_SECTION.match(t):
             continue
         if l.page == 1 and (cover or first_opening and (l.y0, l.x0) < first_opening):
             continue
@@ -409,7 +419,14 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
             return False
         if sum(c.isdigit() for c in title) > len(title) / 3:
             return False
-        if re.match(r"^[<>{}\[\]=#/\\|$@]", title):       # markup or code, not prose
+        small = l.size < body + 0.9
+        # Markup or code in body type is a code fragment; in large type it is
+        # a reference manual's entry heading ("<configuration>").
+        if small and re.match(r"^[<>{}\[\]=#/\\|$@]", title):
+            return False
+        # A bold body-size line ending in a colon is a label ("Prompt:")
+        # introducing what follows, not a section title.
+        if small and not num and title.endswith(":"):
             return False
         # Body-size bold is also emphasis — and a numbered pseudocode line
         # ("7 end") — so it must open like a title. Type
@@ -453,15 +470,17 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
         level = _depth(num) or learned.get(l.style) or rank[l.style]
         out.append(Heading(min(level, max_levels + 2), title.strip(), l.page, num))
     out = tree_levels(out)
-    # Keep the first occurrence of an identical heading (a repeated chapter
-    # title on a part page, say).
-    seen: set[str] = set()
+    # Drop a heading that repeats on the same or the next page (a chapter
+    # title restated at the top of its first page, say). The same title
+    # further on is a different section: a manual opens "Configuration
+    # Settings" in chapter after chapter.
+    last: dict[str, int] = {}
     uniq = []
     for h in out:
         k = f"{h.number}|{norm_title(h.title)}"
-        if k in seen:
+        if k in last and h.page is not None and h.page - last[k] <= 1:
             continue
-        seen.add(k)
+        last[k] = h.page if h.page is not None else last.get(k, 0)
         uniq.append(h)
     return uniq
 

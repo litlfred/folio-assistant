@@ -4,7 +4,7 @@
 plain page text, which has thrown away what makes a heading visible: it is set
 larger, bolder, in capitals or in italics. `_pdf_headings.py` reads the text
 WITH its font metrics. Over the 13 corpus PDFs that carry an outline, hidden and
-used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.86.
+used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.88.
 
 ## What these tests hold
 

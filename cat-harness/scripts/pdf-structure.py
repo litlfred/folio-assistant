@@ -631,7 +631,7 @@ def infer_toc(path: str, pages: list[str], ocr_used: bool) -> tuple[list[TocEntr
 
     Layout first, text patterns last. Measured over the 13 corpus PDFs that
     carry an outline, with the outline hidden and used as the answer key
-    (`toc-benchmark.py`, issue #2302): title F1 0.86 for the layout methods
+    (`toc-benchmark.py`, issue #2302): title F1 0.88 for the layout methods
     against 0.30 for `infer_headings` alone. The text heuristic stays for
     OCR'd text, which carries no font metrics, and for a document where the
     layout finds nothing.
