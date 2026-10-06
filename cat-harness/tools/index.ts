@@ -1593,10 +1593,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "memory", schema: t("RepoPath"), description: "Each agent's assembled memory file, per vendor." }],
       },
       satisfies: ["agent-memory"],
-      maintains: [
-        { source: "memory/", artefact: ".claude/agent-memory/<agent>/MEMORY.md", format: "markdown" },
-        { source: "memory/", artefact: ".agents/skills/<agent>-memory/SKILL.md", format: "markdown" },
-      ],
       requires: { runtime: ["bun"], network: false },
     }),
 
