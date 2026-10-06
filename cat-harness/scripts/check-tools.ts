@@ -39,7 +39,7 @@ import { alternativesWithoutSelection } from "../schemas/tool.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
 import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
-import { instanceRootsIn, siblingScopeFor } from "../schemas/cat-harness.js";
+import { instanceRootsIn, nestedDirectories, readDeclaration, siblingScopeFor } from "../schemas/cat-harness.js";
 import { resolveImplementingPath } from "../schemas/harness-config.js";
 import type { ToolDefinition } from "../schemas/tool.js";
 
@@ -375,6 +375,34 @@ function satisfiableSkills(instance: string = ROOT): Set<string> {
   return out;
 }
 
+/**
+ * Every directory's `storage.tool` names a declared Tool (bean j9cs).
+ *
+ * The Tool that deploys or mounts a store is named ON the store's declaration,
+ * never in a central table (owner, 2026-10-04). A name with no Tool behind it
+ * is the same dangling edge as a `satisfies` naming no skill: the declaration
+ * says how the store is reached, and following it lands nowhere. Resolved
+ * against every declared `tools` graph, since a dependency's Tool serves.
+ */
+export function danglingStorageTools(repoRoot: string = REPO): Array<{ instance: string; directory: string; tool: string }> {
+  const known = new Set(tools().map((t) => t.id));
+  const out: Array<{ instance: string; directory: string; tool: string }> = [];
+  for (const root of instanceRootsIn(repoRoot)) {
+    let decl;
+    try {
+      decl = readDeclaration(root);
+    } catch {
+      continue; // an unreadable declaration is check:declared-dirs' finding
+    }
+    if (!decl) continue;
+    for (const d of [...(decl.directories ?? []), ...nestedDirectories(root, decl)]) {
+      const tool = (d.storage as { tool?: string } | undefined)?.tool;
+      if (tool !== undefined && !known.has(tool)) out.push({ instance: relative(repoRoot, root) || ".", directory: d.id, tool });
+    }
+  }
+  return out;
+}
+
 export function checkTools(instance?: string): ToolCheck {
   // Coverage is asked of THE AUDITED instance's skills; resolution is asked of
   // every declared one. Two questions, two sets — see `satisfiableSkills`.
@@ -544,6 +572,12 @@ if (import.meta.main) {
     bad = true;
     console.error(`\n✗ ${r.unreadableContracts.length} skill contract(s) present but unreadable:`);
     for (const s of r.unreadableContracts) console.error(`    schemas/skills/${s}/input.schema.json`);
+  }
+  const storageTools = danglingStorageTools();
+  if (storageTools.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${storageTools.length} storage.tool value(s) naming no declared Tool:`);
+    for (const d of storageTools) console.error(`    ${d.instance}: ${d.directory} → ${d.tool}`);
   }
   const unresolved = unresolvedPaths();
   if (unresolved.length > 0) {

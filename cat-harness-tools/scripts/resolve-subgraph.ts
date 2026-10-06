@@ -16,7 +16,7 @@
  * Exit: 0 resolved; 1 no instance declares the id; 2 the declaration
  * contradicts itself (both `source` and `storage`, a tip-keyed `qa`), or a
  * declaration cannot be resolved. A branch source no longer needs a
- * special-branches row: the declaration is the authority (bean rva2).
+ * table row (special-branches.json is gone): the declaration is the authority (bean rva2).
  *
  * @module scripts/resolve-subgraph
  */

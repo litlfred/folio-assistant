@@ -213,6 +213,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace folio_assistant_sci__sci_scripts {
+    class n_folio_assistant_sci_sci_scripts_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace folio_assistant_sci__sci_tools {
     class folio_assistant_sci_sci_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
@@ -400,6 +405,8 @@ classDiagram
   cssClass "folio_assistant_sci_skills_skill_topics_v1_skill_topics_v1" fa_uml_kind_skills
   cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_kind_code
   cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_undetermined
+  cssClass "n_folio_assistant_sci_sci_scripts_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_sci_sci_scripts_code" fa_uml_undetermined
   folio_assistant_sci_sci_tools_ToolDefinition *-- "0..*" folio_assistant_sci_sci_tools_Maintain : maintains
   cssClass "folio_assistant_sci_sci_tools_Maintain" fa_uml_kind_tools
   cssClass "folio_assistant_sci_sci_tools_ToolDefinition" fa_uml_kind_tools

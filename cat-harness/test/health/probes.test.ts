@@ -8,6 +8,11 @@
  * on an unreachable branch would pass every test in the other file.
  *
  * @module test/health/probes.test
+ *
+ * The tests here that read the aggregate repository's own root (the
+ * root-declared `beans/` store) live in
+ * `cat-harness-tools/scripts/tests/health-probes-repo-root.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -314,40 +319,6 @@ describe("front matter", () => {
   });
 });
 
-describe("the root the sweep is given", () => {
-  it("is the REPOSITORY root, not the instance root", async () => {
-    // The probes above resolve their store from a declaration, and do it
-    // correctly. That was not enough: `run.ts` handed them the INSTANCE root,
-    // so from the moment `#437` moved the instance under `cat-harness/` both
-    // stores resolved to `cat-harness/beans/defs` and
-    // `cat-harness/todos/items`, neither of which exists.
-    //
-    // The three-state rule did its job — the sweep reported "could not be
-    // evaluated" and refused to call itself clean rather than reporting an
-    // empty store as healthy, which is the `dh4f` shape it exists to avoid.
-    // But a check that cannot see its subject is not doing the work either,
-    // and this one hid 215 inline completed beans and 449 MB of staging
-    // previews until it was repointed.
-    //
-    // Asserted against the real tree rather than a fixture: the defect was
-    // that a real path stopped existing, and a fixture would have passed
-    // throughout.
-    const { existsSync } = await import("node:fs");
-    const { join, resolve } = await import("node:path");
-    const { repoRootFor } = await import("../../schemas/cat-harness.ts");
-
-    const instanceRoot = resolve(import.meta.dir, "..", "..");
-    const repoRoot = repoRootFor(instanceRoot);
-
-    expect(existsSync(join(repoRoot, "beans", "beans.json"))).toBe(true);
-    expect(existsSync(join(instanceRoot, "beans", "beans.json"))).toBe(false);
-
-    // And the probes actually find something when given the right one.
-    const beans = probeBeans(repoRoot);
-    expect(beans.state).toBe("ok");
-  });
-});
-
 describe("countConsideredOptions — the parse the MADR criterion rests on", () => {
   it("returns `undefined` for a bean with no options section, never 0", () => {
     // The distinction the whole criterion depends on: a bean recording WORK has
@@ -483,19 +454,6 @@ describe("countConsideredOptions — the parse the MADR criterion rests on", () 
     // documents itself. Counting the last would let a thin original hide.
     const text = "## Options\n\n- a\n\n## Later\n\n## Options, revisited\n\n- a\n- b\n- c\n";
     expect(countConsideredOptions(text)).toBe(1);
-  });
-
-  it("the real store has SUBJECTS — a detector with none is not a detector that passed", async () => {
-    // Asserted against the real bean store rather than a fixture, for the same
-    // reason the staging test above is: the failure mode is the detector matching
-    // nothing in practice, and every fixture in this file would pass throughout.
-    const { repoRootFor } = await import("../../schemas/cat-harness.ts");
-    const { resolve } = await import("node:path");
-    const p = probeBeans(repoRootFor(resolve(import.meta.dir, "..", "..")));
-    expect(p.state).toBe("ok");
-    if (p.state !== "ok") return;
-    const records = p.value.filter((b) => b.consideredOptions !== undefined);
-    expect(records.length).toBeGreaterThan(0);
   });
 });
 

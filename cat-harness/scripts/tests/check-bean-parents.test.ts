@@ -7,6 +7,11 @@
  * here perturbs one thing and names what must appear in the finding.
  *
  * @module scripts/tests/check-bean-parents
+ *
+ * The tests here that read the aggregate repository's own root (the
+ * root-declared `beans/` store) live in
+ * `cat-harness-tools/scripts/tests/check-bean-parents-repo-root.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -14,7 +19,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { checkBeanParents } from "../check-bean-parents.ts";
-import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const made: string[] = [];
 afterEach(() => {
@@ -141,12 +145,6 @@ describe("every open bean belongs to an epic", () => {
     ]));
     expect(bad.problems).toHaveLength(1);
     expect(bad.problems[0]).toContain("not a milestone, epic or feature");
-  });
-
-  test("the real corpus passes", () => {
-    const r = checkBeanParents(repoRootFor(join(import.meta.dir, "../..")));
-    expect({ orphans: r.problems }).toEqual({ orphans: [] });
-    expect(r.open).toBeGreaterThan(50);
   });
 });
 

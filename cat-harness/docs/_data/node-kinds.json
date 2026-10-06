@@ -2,12 +2,48 @@
   "$schema": "node-kind-index/1.0.0",
   "kinds": [
     {
+      "id": "basic-cdn-site",
+      "version": "1.0.0",
+      "tag": "basic-cdn-site/1.0.0",
+      "parents": [],
+      "subclasses": [
+        "cdn-site"
+      ],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/site.ts",
+      "exportName": "BasicCdnSiteKind",
+      "holdings": [
+        {
+          "typology": "basic-cdn-site",
+          "family": "basic-cdn-site/1.0.0"
+        }
+      ]
+    },
+    {
       "id": "carried-note",
       "parents": [],
       "subclasses": [
         "todo"
       ],
       "holdings": []
+    },
+    {
+      "id": "cdn-site",
+      "version": "1.0.0",
+      "tag": "cdn-site/1.0.0",
+      "parents": [
+        "basic-cdn-site"
+      ],
+      "subclasses": [],
+      "declaredBy": "cat-harness",
+      "module": "cat-harness/schemas/site.ts",
+      "exportName": "CdnSiteKind",
+      "holdings": [
+        {
+          "typology": "cdn-site",
+          "family": "cdn-site/1.0.0"
+        }
+      ]
     },
     {
       "id": "changeset",
