@@ -38,12 +38,21 @@
  * branch is a real and cheaper-to-catch failure, not because it would have
  * caught this one. Proving a fallback CAN pass needs the event, which is CI's
  * job, not a unit test's.
+ *
+ * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
+ * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate
+ * repository's own root — `.github/workflows/code-quality-gates.yml` — which a
+ * standalone cat-harness layer does not have, and
+ * `check:cat-harness-standalone` collects every test in that layer.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-const REPO = resolve(import.meta.dir, "..", "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move. */
+const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
+
+const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 const WF = join(REPO, ".github", "workflows", "code-quality-gates.yml");
 const text = (): string => readFileSync(WF, "utf-8");
 

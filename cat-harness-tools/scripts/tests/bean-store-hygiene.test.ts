@@ -10,12 +10,21 @@
  *
  * The store is committed and read by every sibling session, so a malformed
  * entry is not a local mess — it is a hole in the shared plan.
+ *
+ * Moved here from `cat-harness/scripts/tests/` (bean `ho66`), as
+ * `merge-guard-workflows.test.ts` was: every test in it reads the aggregate
+ * repository's own root — the root-declared `beans/` store — which a
+ * standalone cat-harness layer does not have, and
+ * `check:cat-harness-standalone` collects every test in that layer.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor } from "../../../cat-harness/schemas/cat-harness.js";
+
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move. */
+const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
 
 // The `bean-defs` node of the bean graph (schemas/bean-graph.ts), not the
 // graph root — `beans/` itself holds only `beans.json`.
@@ -27,7 +36,7 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 // existed — so `beanFiles()` returned `[]` and every hygiene assertion below
 // passed over an empty set. The emptiness guard is the only reason that was
 // visible at all, which is what it is for.
-const BEANS = join(repoRootFor(join(import.meta.dir, "../..")), "beans/defs");
+const BEANS = join(repoRootFor(join(ORIGIN_DIR, "../..")), "beans/defs");
 
 /** Exactly what `beans update --status` accepts. */
 const VALID = new Set(["draft", "todo", "in-progress", "completed", "scrapped"]);

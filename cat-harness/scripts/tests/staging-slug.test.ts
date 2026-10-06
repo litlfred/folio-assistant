@@ -18,6 +18,11 @@
  *     bean was written believing that was the hazard.
  *   - `git add -A` does NOT refuse, so a `..` slug stages the tree above. That
  *     is the residual, and it is why the guard is on the VALUE.
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/feature-staging.yml`) live in
+ * `cat-harness-tools/scripts/tests/staging-slug-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
@@ -41,13 +46,6 @@ function slugify(branch: string): string {
 }
 
 describe("the sanitiser, run rather than described", () => {
-  test("it is the SAME pipeline the workflow runs — or this whole file is fiction", () => {
-    // The literal above is copied. If the workflow's changes, this fails here
-    // rather than leaving these tests quietly measuring something else.
-    const yml = readFileSync(WORKFLOW, "utf-8");
-    expect(yml).toContain(`sed 's|[^a-zA-Z0-9._-]|-|g'`);
-    expect(yml).toContain(`sed 's|--*|-|g'`);
-  });
 
   test("THE FINDING — input `..` survives as output `..`", () => {
     expect(slugify("..")).toBe("..");

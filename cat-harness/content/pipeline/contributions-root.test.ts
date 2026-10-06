@@ -6,6 +6,11 @@
  * (folio-assistant#1492). Loading from `cat-harness/` returns an empty
  * registry WITHOUT error, which is why this needs a test rather than a crash
  * to notice it.
+ *
+ * The tests here whose subject is folio-assistant-sci's contribution (the two
+ * cost checkers this instance contributes) live in
+ * `folio-assistant-sci/scripts/tests/contributions-root.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such contribution to read.
  */
 
 import { describe, expect, test } from "bun:test";
@@ -29,9 +34,5 @@ describe("contributionsRoot", () => {
 
   test("the control: loading from cat-harness/ registers neither cost checker", async () => {
     expect(await checkersFrom(PLATFORM_INSTANCE)).toEqual([]);
-  });
-
-  test("loading from contributionsRoot() registers both contributed cost checkers", async () => {
-    expect(await checkersFrom(contributionsRoot())).toEqual(COST_CRITERIA);
   });
 });
