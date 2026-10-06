@@ -121,5 +121,55 @@
   },
   "_canonicalUrl_comment": "A placeholder base under this repository's own publication root, NOT a FHIR canonical: this layer publishes no FHIR artefacts, it publishes a Tool graph. It exists because a Tool node's I/O type IRIs are minted against it at load and Zod refuses a relative one. Stated rather than left blank so nobody reads it as a claim that fhir-harness is an IG.",
   "canonicalUrl": "https://litlfred.github.io/folio-assistant/fhir-harness",
-  "_name_comment": "THE NAME IS NOT AN INSTANTIATION CLAIM. `fhir-harness` is DECLARED here and is not instantiated: instantiation is a `<name>.config.json` at the REPOSITORY root (`harness-tiles`, bean `6n23`), and there is no `fhir-harness.config.json`. It also declares no `coverage.visualiser` on either directory, so by the tile rule it owes no tile and gets none — making it, measured 2026-09-23, the least harness-like thing in this repository that carries the word in its name. That is not a defect: this repository stages future instances as siblings, and `description` above says so (\"What a non-WHO implementation guide instantiates\") — a downstream IG instantiates it, this checkout does not. Written down because the name says otherwise to anyone who has not read the declaration, and `check:harness-claims` reports the pairing rather than leaving the next reader to re-derive it."
+  "_name_comment": "THE NAME IS NOT AN INSTANTIATION CLAIM. `fhir-harness` is DECLARED here and is not instantiated: instantiation is a `<name>.config.json` at the REPOSITORY root (`harness-tiles`, bean `6n23`), and there is no `fhir-harness.config.json`. It also declares no `coverage.visualiser` on either directory, so by the tile rule it owes no tile and gets none — making it, measured 2026-09-23, the least harness-like thing in this repository that carries the word in its name. That is not a defect: this repository stages future instances as siblings, and `description` above says so (\"What a non-WHO implementation guide instantiates\") — a downstream IG instantiates it, this checkout does not. Written down because the name says otherwise to anyone who has not read the declaration, and `check:harness-claims` reports the pairing rather than leaving the next reader to re-derive it.",
+  "taskIo": {
+    "check:artifact-index": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "ig-ast:schema:check": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    },
+    "p2:refusals:check": {
+      "outputs": [],
+      "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
+    }
+  },
+  "gateExemptions": {
+    "steps": [
+      {
+        "match": "fhir-harness/scripts/stage-ast-sites.ts",
+        "kind": "ci-only",
+        "reason": "a BUILD step, not a check: it lists the IGs whose repositories carry an AST cache by asking each repository over the network; best effort (continue-on-error), its output only feeds the preview (bean `wnhh`)"
+      },
+      {
+        "match": "fhir-harness/scripts/stage-ig-sites.ts",
+        "kind": "ci-only",
+        "reason": "a BUILD step, not a check: it clones each IG's recorded source and stages a Jekyll source; its logic is covered by stage-ig-sites.test.ts and build-ig-site.test.ts in `bun test` (bean `bamf`)"
+      },
+      {
+        "match": "fhir-harness/scripts/build-ig-site.ts --dedupe-ids",
+        "kind": "ci-only",
+        "reason": "a DEPLOY step: it rewrites ids in ./_site, which only the staging job produces; dedupeIds is covered by build-ig-site.test.ts, and check:duplicate-ids judges the result (bean `bamf`)"
+      }
+    ],
+    "scripts": [
+      {
+        "script": "ingest:ig-menu:check",
+        "kind": "report",
+        "reason": "CI CANNOT OBTAIN ITS INPUT. It compares the committed `menu.json` against the IG's OWN `sushi-config.yaml`, which lives in the upstream source repository — not in this checkout, and not reachable from a runner: `worldhealthorganization.github.io:443` and `litlfred.github.io:443` both answer 403 CONNECT from this environment (measured 2026-09-23, and `wjfu` recorded the same denial on the 21st). Wired as a gate it would exercise nothing on every run. It is built so that CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed menu's effect: `smart-trust:pages:check` regenerates the 5 left-hand-nav sections FROM `menu.json` and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-menu/v1`. Run this one by hand after cloning the IG, or from `/prepare-merge`. Bean `0818`"
+      },
+      {
+        "script": "ingest:ig-chrome:check",
+        "kind": "report",
+        "reason": "CI CANNOT OBTAIN ITS INPUT, and here it needs THREE checkouts rather than one. It compares the committed `chrome.json` against the `fhir.template` chain the IG's `ig.ini` names — `fhir.base.template` and `who.template.root`, which are separate repositories (`HL7/ig-template-base`, `WorldHealthOrganization/smart-ig-template`) that this checkout does not contain and a runner cannot fetch. Same wall as `ingest:ig-menu:check`, one layer worse: an IG's appearance is declared in no file the IG owns. Built so a skip CANNOT be mistaken for a pass — with no `--ig`/`--layer` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed chrome's EFFECT: `smart-trust:pages:check` regenerates all 681 pages from it and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-chrome/v1`. Run this one by hand after cloning the IG and its templates, or from `/prepare-merge`. Bean `ajx9`"
+      },
+      {
+        "script": "ingest:ig:check",
+        "kind": "covered-by",
+        "reason": "re-derives an IG's artefact index from its PUBLISHED OUTPUT, which this repository does not carry — smart-trust's `gh-pages` is 342,656 files, so no runner here can supply the subject. `check:artifact-index` is wired and covers the half that needs only the repository: that every committed index is a valid `folio-fhir-artifact-index/v1` document, with `count` agreeing with its array and no DAK overlay on an index declaring `dakApi: \"absent\"`. That is DELIBERATELY less than this check would catch — an index that validates can still be stale against an IG that has moved on — and the difference is stated rather than papered over. The script itself exits 2 (\"could not determine\") when the source is absent, never 0, so wiring it would redden CI over a missing clone rather than over a regression. Run it by hand, or from `/prepare-merge`, with the IG checkout as its argument"
+      }
+    ]
+  }
 }

@@ -184,7 +184,7 @@ import {
   type Affected,
 } from "./changed-paths.ts";
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
-import { pairIO } from "./task-io.ts";
+import { TASK_IO, pairIO } from "./task-io.ts";
 import { foldable, settleCovered } from "./pair-cover.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 
@@ -231,7 +231,7 @@ export function writerFor(scripts: Record<string, string>, check: string): strin
  *   convention never offered them; `audit:coverage` rewrites the sidecar both
  *   compare against.
  */
-export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
+const OWN_WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   "translate-bpmn:check": "translate-bpmn:extract",
   "audit:coverage:strict": "audit:coverage",
   "audit:coverage:require-all": "audit:coverage",
@@ -274,11 +274,27 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // single `regen` called the tree current and CI then went red (trains 2 and
   // 3, #1876, #1883). `check:l1-complete -- --check` was not a bare script,
   // so regen never saw it; it is now the named `check:l1-complete:check`,
-  // whose writer is `--write`. `smart-kg-l1`'s only writer took one
-  // `--entry` at a time; `--all` rewrites every entry `--check` examines.
+  // whose writer is `--write`. (Its sibling gate, which took one `--entry`
+  // at a time, is declared by its own instance under `taskIo` since bean
+  // `0r7u`.)
   "check:l1-complete:check": "l1-complete:write",
-  "smart-base:smart-kg-l1:check": "smart-base:smart-kg-l1:all",
 };
+
+/**
+ * {@link OWN_WRITER_OVERRIDES} plus each present instance's declared
+ * `taskIo[check].writer` (bean `0r7u`): a layer above declares the writer of
+ * its own check rather than this table naming it. A check given a writer in
+ * both places throws — two answers to one question.
+ */
+export const WRITER_OVERRIDES: Readonly<Record<string, string>> = (() => {
+  const out: Record<string, string> = { ...OWN_WRITER_OVERRIDES };
+  for (const [check, io] of Object.entries(TASK_IO)) {
+    if (io.writer === undefined) continue;
+    if (out[check] !== undefined) throw new Error(`the writer of "${check}" is declared twice — in regen-after-merge.ts and by its instance`);
+    out[check] = io.writer;
+  }
+  return out;
+})();
 
 /**
  * Verify/write pairs that are NOT gates but whose artefacts something gated

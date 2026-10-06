@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1870 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1873 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 597 terms and is 342 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 600 terms and is 345 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2154</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2154</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2157</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2157</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">597</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">600</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -1614,6 +1614,13 @@ CatHarnessDeclaration.directories <span class="fa-gloss-status">candidate, extra
 <p>Directories this instance scans, before inheritance.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.directories</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.gateexemptions" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.gateExemptions <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The CI steps and check scripts of THIS instance that the local gate set deliberately does not run, each with its reason — the rows <code>cat-harness/scripts/gates.ts</code> holds as <code>STEP_EXEMPTIONS</code> and <code>SCRIPT_EXEMPTIONS</code> for the harness's own. Same contract: a reason is required, a step <code>match</code> is a substring of the workflow command, a script name is matched exactly. Declared by the owner so the harness need not name a layer above itself (bean <code>0r7u</code> step 0).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.gateExemptions</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.glassstrip" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.glassStrip <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1754,6 +1761,13 @@ CatHarnessDeclaration.summary <span class="fa-gloss-status">candidate, extracted
 <p>A reader's one line — see &#123;@link CatHarnessDeclarationSchema}'s <code>summary</code> (<code>ob3m</code> 4/5).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.summary</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.taskio" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.taskIo <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this instance's own package tasks read and write, keyed by task name — the same &#123;@link ScriptIO}-shaped facts <code>cat-harness/scripts/task-io.ts</code> holds for the harness's own tasks: <code>outputs: []</code> (measured to write nothing, so it may run in the pool) and <code>inputs</code> (what can change the answer, so <code>regen</code> may skip it on an unchanged tree; <code>&quot;&#123;tracked}&quot;</code> is the whole working tree). <code>because</code> keeps the measurement that justified it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.taskIo</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.topology" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.topology <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1893,6 +1907,13 @@ CatHarnessDeclarationSchema.summary <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>One line for a READER, where <code>description</code> is written for an author.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.summary</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.taskio" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.taskIo <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this instance's own package tasks read and write, keyed by task name — the same &#123;@link ScriptIO}-shaped facts <code>cat-harness/scripts/task-io.ts</code> holds for the harness's own tasks: <code>outputs: []</code> (measured to write nothing, so it may run in the pool) and <code>inputs</code> (what can change the answer, so <code>regen</code> may skip it on an unchanged tree; <code>&quot;&#123;tracked}&quot;</code> is the whole working tree). <code>because</code> keeps the measurement that justified it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.taskIo</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.version" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.version <span class="fa-gloss-status">candidate, extracted</span>
