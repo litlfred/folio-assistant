@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LaTeX Authoring Input",
+  "description": "Input schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "documentClass",
+    "mainFile"
+  ],
+  "properties": {
+    "documentClass": {
+      "type": "string",
+      "enum": [
+        "article",
+        "book",
+        "report",
+        "beamer"
+      ],
+      "description": "LaTeX document class."
+    },
+    "mainFile": {
+      "type": "string",
+      "description": "Path to the main .tex file."
+    },
+    "bibliographyFile": {
+      "type": "string",
+      "description": "Path to the .bib bibliography file."
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "dvi",
+        "ps"
+      ],
+      "default": "pdf"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/folio-assistant-sci/schema/skills/latex-authoring/input.schema.json",
+  "staging": {
+    "branch": "claude/laughing-ramanujan-uripip",
+    "sha": "640584b43b278183076fce395a8fe00048d19157",
+    "pr": "2261/merge",
+    "run": "37451049917"
+  }
+}

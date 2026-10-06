@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-ramanujan-uripip/skills/content-plan/input.schema.json",
+  "title": "Content Plan Input",
+  "description": "Input schema for content planning — scope, team, timeline, governance.",
+  "type": "object",
+  "required": [
+    "projectName"
+  ],
+  "properties": {
+    "projectName": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Description of the content scope."
+    },
+    "targetDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "teamSize": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sprintDuration": {
+      "type": "string",
+      "enum": [
+        "1w",
+        "2w",
+        "3w",
+        "4w"
+      ],
+      "default": "2w"
+    }
+  },
+  "staging": {
+    "branch": "claude/laughing-ramanujan-uripip",
+    "sha": "640584b43b278183076fce395a8fe00048d19157",
+    "pr": "2261/merge",
+    "run": "37451049917"
+  }
+}
