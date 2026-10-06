@@ -3262,6 +3262,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.subscription.kind",
+      "prefLabel": "Subscription.kind",
+      "definition": "`content` for a Knowledge Graph with Subgraphs and no harness (owner, 2026-10-06); absent: `substrate`. See {@link SubscriptionSchema}.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.kind",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.subscription.note",
       "prefLabel": "Subscription.note",
       "definition": "One sentence a reader of the visualizer sees.",
@@ -3294,6 +3301,13 @@
       "prefLabel": "Subscription.upstreamPath",
       "definition": "The repository-relative directory holding the substrate's declaration; absent: the root. See {@link SubscriptionSchema}.",
       "source": "cat-harness/schemas/cat-harness.ts#Subscription.upstreamPath",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscriptionschema.kind",
+      "prefLabel": "SubscriptionSchema.kind",
+      "definition": "What kind of Knowledge Graph this subscribes to — `substrate` (absent) or `content` (owner, 2026-10-06): a declaration with Subgraphs and NO harness, such as a FHIR IG. Bootstrap's definition of a substrate is unchanged; a content subscription is a separate kind, written explicitly, and contributes no skills, processes or roles — so it may choose no `harnesses`. `SUBSCRIPTION_KINDS` in `schemas/substrate-snapshot.ts` carries the rule once.",
+      "source": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema.kind",
       "status": "candidate"
     },
     {
@@ -10035,6 +10049,13 @@
       "prefLabel": "SubstrateSnapshotSchema.file",
       "definition": "The upstream file, relative to the substrate's repository root: `<name>.json` at the root, or `<upstreamPath>/<name>.json` when the declaration is nested (bean `437w`). Its directory is the subscription's `upstreamPath`, and `kg:subscribe:check` holds the two equal.",
       "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "substrate-snapshot.substratesnapshotschema.kind",
+      "prefLabel": "SubstrateSnapshotSchema.kind",
+      "definition": "See {@link SUBSCRIPTION_KINDS}. Absent: `substrate`. Written only as `content`.",
+      "source": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.kind",
       "status": "candidate"
     },
     {

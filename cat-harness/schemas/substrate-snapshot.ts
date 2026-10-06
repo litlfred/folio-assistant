@@ -56,11 +56,37 @@ export const SNAPSHOT_GRAPH_TYPOLOGY = "substrate-snapshot";
 /** A snapshot's filename: `<subscription id>.substrate.json`. */
 export const SNAPSHOT_SUFFIX = ".substrate.json";
 
+/**
+ * What KIND of Knowledge Graph a subscription is to — owner, 2026-10-06.
+ *
+ * - `substrate` — bootstrap's definition, unchanged: the declaration declares
+ *   at least one harness (a Subgraph holding Skills, Roles or Processes). Its
+ *   harnesses may be CHOSEN and instantiated.
+ * - `content` — the declaration declares Subgraphs and NO harness: a FHIR IG,
+ *   a document corpus. Its Subgraphs may be referenced and materialised; it
+ *   contributes no skills, processes or roles to any harness overlay, so a
+ *   content subscription chooses no harness and its snapshot lists none.
+ *
+ * ABSENT means `substrate` on both the subscription and the snapshot, so every
+ * record written before the kind existed reads as what it was. A content
+ * record always carries `kind: "content"` — never inferred from an empty list.
+ */
+export const SUBSCRIPTION_KINDS = ["substrate", "content"] as const;
+export type SubscriptionKind = (typeof SUBSCRIPTION_KINDS)[number];
+export const SubscriptionKindSchema = z.enum(SUBSCRIPTION_KINDS);
+
+/** A record's kind, with absent read as `substrate`. */
+export function subscriptionKindOf(x: { kind?: SubscriptionKind | undefined }): SubscriptionKind {
+  return x.kind ?? "substrate";
+}
+
 export const SubstrateSnapshotSchema = z
   .object({
     $schema: z.literal(SUBSTRATE_SNAPSHOT_SCHEMA),
     /** The `subscriptions[].id` this snapshot belongs to. */
     subscription: z.string().min(1),
+    /** See {@link SUBSCRIPTION_KINDS}. Absent: `substrate`. Written only as `content`. */
+    kind: SubscriptionKindSchema.optional(),
     repository: RepoFullNameSchema,
     /** The pinned commit the bytes were read at — a full SHA, never a branch. */
     ref: z.string().regex(/^[0-9a-f]{40}$/),
@@ -82,11 +108,21 @@ export const SubstrateSnapshotSchema = z
         title: z.string().optional(),
         version: z.string().optional(),
         subgraphs: z.array(z.object({ id: z.string().min(1), graphTypologies: z.array(z.string().min(1)) }).strict()),
-        harnesses: z.array(z.string().min(1)).min(1),
+        /** At least one for a `substrate`; none for `content` — the schema holds the kind and the list together. */
+        harnesses: z.array(z.string().min(1)),
       })
       .strict(),
     note: z.string().min(1).optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((s, ctx) => {
+    const kind = subscriptionKindOf(s);
+    if (kind === "substrate" && s.summary.harnesses.length === 0) {
+      ctx.addIssue({ code: "custom", path: ["summary", "harnesses"], message: "a substrate snapshot lists at least one harness; one with none is `kind: \"content\"`" });
+    }
+    if (kind === "content" && s.summary.harnesses.length > 0) {
+      ctx.addIssue({ code: "custom", path: ["summary", "harnesses"], message: "a content snapshot lists no harness — a content Knowledge Graph contributes none" });
+    }
+  });
 
 export type SubstrateSnapshot = z.infer<typeof SubstrateSnapshotSchema>;

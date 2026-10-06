@@ -34,6 +34,7 @@ import {
   SNAPSHOT_SUFFIX,
   SubstrateSnapshotSchema,
   type SubstrateSnapshot,
+  subscriptionKindOf,
 } from "../schemas/substrate-snapshot.js";
 import type { HarnessTile } from "./harness-tiles.js";
 
@@ -94,6 +95,9 @@ export type HarnessDeclaration = {
 
 /** Read the harness `harness` out of a snapshot, or undefined when the bytes do not declare it. */
 export function harnessDeclarationIn(snap: SubstrateSnapshot, harness: string): HarnessDeclaration | undefined {
+  // A CONTENT Knowledge Graph (owner, 2026-10-06) contributes no harness to
+  // any overlay, whatever its bytes say — asked of the kind, not inferred.
+  if (subscriptionKindOf(snap) === "content") return undefined;
   if (!snap.summary.harnesses.includes(harness)) return undefined;
   const parsed = KnowledgeGraphDeclarationSchema.safeParse(JSON.parse(snap.raw));
   // `summary.harnesses` is derived from the root declaration's own name

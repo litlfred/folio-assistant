@@ -78,9 +78,26 @@
  * elsewhere in the same repository — is still not seen; that is a limit of
  * reading one declaration, and the zero-harness reason says so.
  *
+ * ### A content Knowledge Graph is a SECOND kind — owner, 2026-10-06
+ *
+ * A declaration with Subgraphs and NO harness — a FHIR IG such as
+ * `smart-trust` or `smart-immunizations` — is accepted, as kind **`content`**,
+ * not as a substrate. Bootstrap's definition above is unchanged; this is a
+ * separate classification, written explicitly wherever it is recorded: the
+ * subscription carries `kind: "content"`, the snapshot carries `kind:
+ * "content"` and an empty `harnesses`, and the verdict's `state` is
+ * `"content"` (`AcceptedVerdict`), so no reader can take one for the other.
+ * A content subscription contributes NO skills, processes or roles: it may
+ * choose no harness (the schema refuses one), `kg:instantiate` refuses it,
+ * and its Subgraphs are referenced or materialised like any other. A
+ * declaration with no harness and no Subgraph is still not-a-substrate, and
+ * a tree with no declaration keeps every reason it had.
+ *
  * ## Three answers, never two
  *
  * - **substrate** — both points hold; the harness names are listed.
+ * - **content** — the declaration holds and declares Subgraphs but no harness.
+ *   Accepted, as the other kind; see above.
  * - **not-a-substrate(reason)** — the bytes were read and one point fails.
  * - **ambiguous(reason, candidates)** — the bytes were read and more than one
  *   directory one level down holds a declaration. `subscribe` reports it as
@@ -148,7 +165,9 @@ import {
   SNAPSHOT_SUFFIX,
   SUBSTRATE_SNAPSHOT_SCHEMA,
   SubstrateSnapshotSchema,
+  type SubscriptionKind,
   type SubstrateSnapshot,
+  subscriptionKindOf,
 } from "../schemas/substrate-snapshot.js";
 import { git, pinnedRef, shallowFetch } from "./sync-remote-skills.js";
 
@@ -166,16 +185,25 @@ export { SNAPSHOT_GRAPH_TYPOLOGY, SNAPSHOT_SUFFIX };
 // (`kgContent`, sod4 #5) other than the umbrella itself.
 export const HARNESS_GRAPH_TYPOLOGIES: readonly string[] = KG_CONTENT_GRAPH_TYPOLOGIES.filter((k) => k !== KG_GRAPH_TYPOLOGY);
 
+/**
+ * A judgement that ACCEPTS: a harness substrate, or — a distinct kind, never
+ * folded into it — a content Knowledge Graph (owner, 2026-10-06). The `state`
+ * IS the subscription kind, so every reader must say which it handles.
+ */
+export type AcceptedVerdict = { [K in SubscriptionKind]: AcceptedAs<K> }[SubscriptionKind];
+type AcceptedAs<K extends SubscriptionKind> = {
+  state: K;
+  /** Repository-relative: `<name>.json`, or `<upstreamPath>/<name>.json`. */
+  file: string;
+  /** The directory the declaration was found in; absent at the root. */
+  upstreamPath?: string;
+  raw: string;
+  /** `harnesses` is non-empty for `substrate` and empty for `content`. */
+  summary: SubstrateSnapshot["summary"];
+};
+
 export type SubstrateVerdict =
-  | {
-      state: "substrate";
-      /** Repository-relative: `<name>.json`, or `<upstreamPath>/<name>.json`. */
-      file: string;
-      /** The directory the declaration was found in; absent at the root. */
-      upstreamPath?: string;
-      raw: string;
-      summary: SubstrateSnapshot["summary"];
-    }
+  | AcceptedVerdict
   | { state: "not-a-substrate"; reason: string }
   | { state: "ambiguous"; reason: string; candidates: string[] }
   | { state: "could-not-determine"; reason: string };
@@ -356,18 +384,23 @@ export function judgeDeclaration(name: string, raw: string): SubstrateVerdict {
   }
   const decl = parsed.data;
   const harnesses = harnessesOf(decl);
-  if (harnesses.length === 0) {
+  const subgraphCount = (decl.directories ?? []).length;
+  // No harness AND no Subgraph: nothing to subscribe to of either kind. No
+  // harness but at least one Subgraph: a CONTENT Knowledge Graph (owner,
+  // 2026-10-06) — accepted as its own kind, never as a substrate.
+  if (harnesses.length === 0 && subgraphCount === 0) {
     return {
       state: "not-a-substrate",
       reason:
-        `\`${name}\` declares no harness: none of its ${(decl.directories ?? []).length} Subgraph(s) holds ` +
-        `${HARNESS_GRAPH_TYPOLOGIES.map((k) => `\`${k}\``).join(", ")} — bootstrap's kinds for Skills, Roles and Processes. ` +
+        `\`${name}\` declares no harness: none of its ${subgraphCount} Subgraph(s) holds ` +
+        `${HARNESS_GRAPH_TYPOLOGIES.map((k) => `\`${k}\``).join(", ")} — bootstrap's kinds for Skills, Roles and Processes — ` +
+        `and no Subgraph at all, so it is not a content Knowledge Graph either. ` +
         `Only this one declaration is read; harnesses declared by other nested instances are not seen`,
     };
   }
   const at = dirname(name);
   return {
-    state: "substrate",
+    state: harnesses.length > 0 ? "substrate" : "content",
     file: name,
     ...(at !== "." ? { upstreamPath: at } : {}),
     raw,
@@ -512,7 +545,7 @@ export function setTopLevelKey(text: string, key: string, value: unknown): strin
 // ── Subscribe ────────────────────────────────────────────────────────────────
 
 export type SubscribeResult =
-  | { ok: true; verdict: Extract<SubstrateVerdict, { state: "substrate" }>; entry: Subscription; changed: string[]; declarationFile: string; snapshotFile: string }
+  | { ok: true; verdict: AcceptedVerdict; entry: Subscription; changed: string[]; declarationFile: string; snapshotFile: string }
   | { ok: false; state: "refused" | "not-a-substrate" | "could-not-determine"; reason: string };
 
 export interface SubscribeOptions {
@@ -583,7 +616,7 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
 
   const verdict = await judgeSubstrate(t.repository, t.ref, opts.fetch ?? gitRootFetcher, locate);
   if (verdict.state === "ambiguous") return { ok: false, state: "refused", reason: verdict.reason };
-  if (verdict.state !== "substrate") return { ok: false, state: verdict.state, reason: verdict.reason };
+  if (verdict.state !== "substrate" && verdict.state !== "content") return { ok: false, state: verdict.state, reason: verdict.reason };
 
   const id = opts.id ?? verdict.summary.name;
   const at = existing.findIndex((s) => s.id === id);
@@ -618,12 +651,15 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
   }
   // Nothing chosen on a first subscribe; a re-subscribe keeps every choice.
   // `upstreamPath` is what was judged THIS time, so the record names exactly that.
-  const { upstreamPath: _judgedBefore, ...kept } = prior ?? { id, repository: t.repository, ref: t.ref };
+  // So is `kind`: written only for `content`, absent for a substrate.
+  const { upstreamPath: _judgedBefore, kind: _kindBefore, ...kept } = prior ?? { id, repository: t.repository, ref: t.ref };
   void _judgedBefore;
+  void _kindBefore;
   const entry: Subscription = {
     ...kept,
     ref: t.ref,
     ...(verdict.upstreamPath !== undefined ? { upstreamPath: verdict.upstreamPath } : {}),
+    ...(verdict.state === "content" ? { kind: "content" as const } : {}),
   };
   if (at >= 0) existing[at] = entry;
   else existing.push(entry);
@@ -640,6 +676,7 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
   const snapshot: SubstrateSnapshot = SubstrateSnapshotSchema.parse({
     $schema: SUBSTRATE_SNAPSHOT_SCHEMA,
     subscription: id,
+    ...(verdict.state === "content" ? { kind: "content" } : {}),
     repository: t.repository,
     ref: t.ref,
     file: verdict.file,
@@ -724,8 +761,17 @@ export function checkSubscriptions(instanceRoot: string): string[] {
     if (createHash("sha256").update(snap.raw).digest("hex") !== snap.fixity.digest) {
       out.push(`${s.id}: the snapshot's bytes do not match their digest — somebody else's bytes were edited in place`);
     }
+    // The kind: the entry, the snapshot and a re-judgement of the bytes
+    // must all say the same — a content subscription is never read as a
+    // substrate, nor a substrate as content.
+    const kind = subscriptionKindOf(snap);
+    if (subscriptionKindOf(s) !== kind) {
+      out.push(`${s.id}: the subscription is \`${subscriptionKindOf(s)}\`, its snapshot is \`${kind}\` — re-subscribe`);
+    }
     const again = judgeDeclaration(snap.file, snap.raw);
-    if (again.state !== "substrate") out.push(`${s.id}: the cached declaration no longer judges as a substrate: ${again.reason}`);
+    if (again.state !== "substrate" && again.state !== "content") {
+      out.push(`${s.id}: the cached declaration no longer judges as a substrate or content: ${again.reason}`);
+    } else if (again.state !== kind) out.push(`${s.id}: the snapshot says \`${kind}\`, its bytes judge as \`${again.state}\``);
     else if (JSON.stringify(again.summary) !== JSON.stringify(snap.summary)) out.push(`${s.id}: the snapshot's summary is not what its bytes say`);
     const offered = new Set(snap.summary.subgraphs.map((g) => g.id));
     for (const g of s.subgraphs ?? []) if (!offered.has(g)) out.push(`${s.id}: chose subgraph \`${g}\`, which the substrate does not declare`);
@@ -1025,7 +1071,12 @@ if (import.meta.main) {
     console.error(`  ${mark} ${r.state}: ${r.reason}`);
     process.exit(r.state === "could-not-determine" ? 3 : 1);
   }
-  console.log(`  ✓ substrate: ${r.verdict.summary.name} at ${r.verdict.file} — harness(es) ${r.verdict.summary.harnesses.join(", ")}, ${r.verdict.summary.subgraphs.length} subgraph(s), all referenced`);
+  const v = r.verdict;
+  console.log(
+    v.state === "content"
+      ? `  ✓ content: ${v.summary.name} at ${v.file} — no harness (contributes no skills, processes or roles), ${v.summary.subgraphs.length} subgraph(s), all referenced`
+      : `  ✓ substrate: ${v.summary.name} at ${v.file} — harness(es) ${v.summary.harnesses.join(", ")}, ${v.summary.subgraphs.length} subgraph(s), all referenced`,
+  );
   if (r.changed.length === 0) console.log("  ✓ already subscribed at this pin — nothing to write");
   for (const f of r.changed) console.log(`  ${dryRun ? "would write" : "wrote"} ${relative(process.cwd(), f)}`);
 }

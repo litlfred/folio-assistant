@@ -200,7 +200,11 @@ export function render(substrates: readonly SubstrateRow[], cards: readonly Subs
   }
   for (const { subscriber, subscription: s, parts = [], strays = [], instantiated } of cards) {
     lines.push(`### \`${subscriber}\` → ${repoLink(s.repository)} as \`${s.id}\``, "");
-    lines.push(`Pinned at \`${s.ref}\`.${s.note ? ` ${s.note}` : ""}`, "");
+    // The kind is drawn, never inferred from an empty harness list: a content
+    // Knowledge Graph (owner, 2026-10-06) offers no harness to choose.
+    const kind = s.kind === "content" ? " A **content** Knowledge Graph: Subgraphs and no harness, so it contributes no skills, processes or roles." : "";
+    const from = s.upstreamPath ? ` Declaration under \`${s.upstreamPath}/\`.` : "";
+    lines.push(`Pinned at \`${s.ref}\`.${from}${kind}${s.note ? ` ${s.note}` : ""}`, "");
     lines.push("| part | chosen | state here |", "|---|---|---|");
     // A chosen part's STATE is not in the subscription on purpose (see
     // `Subscription`); until a materialisation record exists it is chosen and
