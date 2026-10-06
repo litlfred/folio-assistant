@@ -1,0 +1,104 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/architecture",
+  "block": "Architecture",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/concepts/architecture.md"
+  },
+  "po": "translations/ru/concepts/architecture.po",
+  "source_hashes": {
+    "md": "01478fd992a8",
+    "po": "85fa36890d0a"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "01478fd992a8",
+          "po": "85fa36890d0a"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "41b3965e636d",
+          "script_commit_sha": "17dc3b6f0a60e3a0a657b48c80b2fd4ae3f5adca"
+        },
+        "reviewed_at": "2026-10-05T22:42:22.524Z",
+        "reviewed_sha": "3639e3907cc0136456f021586b0a75183b64ff9e",
+        "severity": "minor",
+        "metrics": {
+          "translated": 59,
+          "total": 60,
+          "pct": 98
+        },
+        "notes": "1 of 60 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "01478fd992a8",
+          "po": "85fa36890d0a"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "41b3965e636d",
+          "script_commit_sha": "17dc3b6f0a60e3a0a657b48c80b2fd4ae3f5adca"
+        },
+        "reviewed_at": "2026-10-05T22:42:22.530Z",
+        "reviewed_sha": "3639e3907cc0136456f021586b0a75183b64ff9e",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "IS — absent from: \"Чем ЯВЛЯЕТСЯ инстанс — схемы, визуализации, инструменты; четыре каталога; рендер\""
+          },
+          {
+            "text": "UI — absent from: \"Веб-интерфейс, интерактивный просмотрщик и пример сайта Pages\""
+          }
+        ],
+        "metrics": {
+          "checked": 59,
+          "missing": 2,
+          "missing_strict": 0,
+          "missing_acronyms": 2,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "2 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/ru/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "01478fd992a8",
+          "po": "85fa36890d0a"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "41b3965e636d",
+          "script_commit_sha": "17dc3b6f0a60e3a0a657b48c80b2fd4ae3f5adca"
+        },
+        "reviewed_at": "2026-10-05T22:42:22.537Z",
+        "reviewed_sha": "3639e3907cc0136456f021586b0a75183b64ff9e",
+        "metrics": {
+          "echoed": 0,
+          "translated": 59
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-05T22:42:22.540Z"
+}
