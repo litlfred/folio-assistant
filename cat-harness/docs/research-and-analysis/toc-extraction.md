@@ -3,7 +3,7 @@ title: "Table-of-contents extraction — methods compared against held-out PDF o
 kind: research
 bean: folio-assistant-cp3v
 summary: >-
-  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Five methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.86 against 0.30 for the text-pattern heuristic it replaces. Grobid and Nougat assessed from the literature; neither could be run here.
+  Which way of inferring a PDF's table of contents works, when the PDF has no outline? Six methods scored on 2026-10-06 against the 13 corpus PDFs that do carry one, with the outline hidden and used as the answer key. Layout (a printed contents page, else heading styles from font metrics) reaches title F1 0.86 against 0.30 for the text-pattern heuristic it replaces. Grobid measured (title F1 0.59, CRF models); Nougat assessed from the literature, its run handed to bean u9lb.
 ---
 
 # Table-of-contents extraction
@@ -81,6 +81,14 @@ distance is too slow at 2,500 nodes) and is averaged over the other 12.
 | `font` | 0.69 | 0.90 | 0.76 | 0.81 | 0.75 | 0.73 | 0.73 | 0.62 |
 | `contents` | 0.21 | 0.21 | 0.21 | 0.21 | 0.21 | 0.16 | 0.15 | 0.20 |
 | **`layout`** | **0.82** | **0.92** | **0.86** | **0.88** | **0.85** | **0.79** | **0.78** | **0.74** |
+| `grobid` | 0.52 | 0.75 | 0.59 | 0.61 | 0.58 | 0.51 | 0.51 | 0.33 |
+
+`grobid` is Grobid 0.9.2-SNAPSHOT built from source (commit `e7c522b` of
+`grobidOrg/grobid`), CRF models only (`wapiti`, the default configuration, no
+deep-learning models), batch `processFullText` with `-teiCoordinates`, on CPU:
+237 s for all 13 documents. Section depth is read from each `<head>`'s `n`
+attribute, because Grobid writes the body as a flat run of `<div>`s; an
+unnumbered head is level 1. See [Grobid, measured](#grobid-measured).
 
 Title F1 per document, smallest outline first:
 
@@ -122,7 +130,46 @@ Title F1 per document, smallest outline first:
 - **Where `regex` was right, it was right for the same reason** — numbered
   headings (`2609.07340v1`, 0.80) — and it had no way to see anything else.
 
-### The PDF-library question
+### Grobid, measured
+
+Title F1 per document, against `layout`:
+
+| document | outline entries | Grobid heads | P | R | Grobid F1 | `layout` F1 |
+|---|---|---|---|---|---|---|
+| `2403.07553v1.pdf` | 16 | 19 | 0.84 | 1.00 | 0.91 | 0.94 |
+| `2506.20759v1.pdf` | 17 | 20 | 0.65 | 0.76 | 0.70 | 0.71 |
+| `2609.07340v1.pdf` | 17 | 24 | 0.62 | 0.88 | 0.73 | 0.97 |
+| `arxiv-2601.04544v1.pdf` | 19 | 37 | 0.46 | 0.89 | 0.61 | 0.86 |
+| `arxiv-2404.04834v4.pdf` | 23 | 37 | 0.49 | 0.78 | 0.60 | 0.77 |
+| `2603.10808v1.pdf` | 27 | 53 | 0.49 | 0.96 | 0.65 | 0.93 |
+| `2505.07664v1.pdf` | 29 | 43 | 0.42 | 0.62 | 0.50 | 0.93 |
+| `arxiv-2507.23348v1.pdf` | 33 | 47 | 0.49 | 0.70 | 0.57 | 0.80 |
+| `arxiv-2402.02172v5.pdf` | 39 | 57 | 0.58 | 0.85 | **0.69** | 0.57 |
+| `9789240093362-eng.pdf` | 54 | 250 | 0.08 | 0.37 | 0.13 | 0.81 |
+| `who-dpi-h-reference-architecture-draft-v1.pdf` | 138 | 518 | 0.20 | 0.74 | 0.31 | 1.00 |
+| `9789241548960_eng.pdf` | 258 | 285 | 0.72 | 0.79 | 0.75 | 0.98 |
+| `ihris_admin_handbook_sep_17_2010.pdf` | 1357 | 719 | 0.73 | 0.39 | 0.51 | 0.88 |
+
+- **Recall is good on papers (0.62–1.00); precision is the problem.** Grobid
+  emits more heads than there are sections — on `2403.07553v1`, a whole
+  sentence ("Li, et al. [12] proposed an upgraded version …") is tagged as a
+  `<head>`. Its fulltext model is trained to find every heading-like segment;
+  a TOC wants only the sections.
+- **It wins on one document**, `arxiv-2402.02172v5` (0.69 vs 0.57) — the paper
+  whose appendix carries its own contents page, where `font` is weakest.
+- **Off its training domain it collapses**: 0.13 and 0.31 on the two WHO
+  publications with printed contents pages, which `layout` solves at 0.81 and
+  1.00 by reading the contents page Grobid ignores.
+- **Levels are flat** unless numbered: Grobid gives no depth to an unnumbered
+  head, so level F1 (0.51) trails title F1 by more than `layout`'s does.
+
+Verdict for this repository: Grobid is not a better fallback than `layout`,
+on papers or on WHO publications. It remains the right tool for what it was
+built for — references, header metadata, citation parsing — which this
+benchmark does not measure. Its deep-learning (DeLFT) models were not tried;
+they need a GPU-scale Python stack and might narrow the precision gap.
+
+## The PDF-library question
 
 PyMuPDF is AGPL-3.0; pdfminer.six is MIT. `_pdf_headings.py` reads font
 metrics from either. Run with `--layout-backend pdfminer`:
@@ -142,9 +189,12 @@ PyMuPDF when it is installed and pdfminer.six otherwise.
 
 ## Methods assessed but not run
 
+Grobid was first in this list; it is now measured above, built from source with
+the Maven Central mirror in `cat-harness/scripts/gradle-maven-mirror.init.gradle`
+(skill `blocked-build-dependencies`).
+
 | tool | what it is | why not run here | assessment |
 |---|---|---|---|
-| **Grobid** | Java service; CRF and deep-learning models trained on scientific articles: header, sections, references | needs a Docker daemon or a GitHub release download. This container has no daemon, and the network policy refuses github.com release assets (HTTP 403) | strong on its home ground, scientific articles, which is where `font` is already at 0.57–0.97. It is a server dependency, not a library, and is not trained for WHO-style publications, where the gain is needed |
 | **Nougat** (Blecher et al. 2023, arXiv:2308.13418) | vision transformer encoder-decoder: page image to Markdown, headings and maths included | installs from PyPI, but the weights download from huggingface.co, which the network policy refuses (HTTP 403). On CPU it is slow enough that only a few short papers could be scored | the right tool for **scanned** PDFs, where there are no font metrics and `regex` over OCR text is all that is left. It hallucinates and repeats on long documents, so it is no replacement for an outline or a contents page |
 | **LayoutLMv3** | multimodal transformer for document layout; needs fine-tuning for heading detection | no labelled data, and a GPU-scale dependency | not justified while a rule-based method reaches 0.86 |
 | **Donut / GPT** (Feyisa et al. 2024) | contents-page parsing with an OCR-free image model or a prompted LLM | paper reports ~85–89 % field accuracy on 20 test documents in one domain, and its own figures disagree with its text | the rule-based `contents` method already reaches 0.81–1.00 on this corpus's contents pages, and runs offline |
@@ -172,8 +222,8 @@ Scholarship Publications*, ECDL 2009. Nougat — arXiv:2308.13418,
 <https://github.com/facebookresearch/nougat>, weights `facebook/nougat-base`
 and `facebook/nougat-small` on Hugging Face.
 
-To score Grobid or Nougat here, an environment needs `huggingface.co` (Nougat)
-or a Docker daemon, or permission to build Grobid from source with Gradle (Java is present and the source clones; building outside code was not permitted in this session). Either can also run elsewhere and write its output
+To score Nougat, an environment needs `huggingface.co`; bean `u9lb` carries the
+run for an agent that has it. Either can also run elsewhere and write its output
 as `(level, title, page)` rows, which `toc-benchmark.py`'s `score()` accepts
 unchanged.
 
