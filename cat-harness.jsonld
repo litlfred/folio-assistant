@@ -335,10 +335,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T17:56:14.375Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
-  "sourceCommitSha": "cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
-  "sourceCommitAt": "2026-10-06T19:39:44+02:00",
+  "generatedAt": "2026-10-06T18:39:51.590Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
+  "sourceCommitSha": "d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
+  "sourceCommitAt": "2026-10-06T20:24:26+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1378,7 +1378,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/kg-separation.md",
-      "instructionLines": 311,
+      "instructionLines": 324,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2515,7 +2515,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
-      "instructionLines": 969,
+      "instructionLines": 1010,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -41059,7 +41059,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 926,
+      "fileCount": 927,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -41110,7 +41110,7 @@
       ],
       "description": "The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.",
       "readmePath": "test/README.md",
-      "fileCount": 177,
+      "fileCount": 178,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
@@ -46128,8 +46128,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
+    "sha": "d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
     "pr": "main",
-    "run": "37505279015"
+    "run": "37511068805"
   }
 }

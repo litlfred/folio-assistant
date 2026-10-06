@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 159,
+      "count": 158,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/check-avatar-instances.ts",
@@ -292,10 +292,6 @@
         },
         {
           "file": "cat-harness/docs/wireframes/library/intent.md",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/docs/wireframes/navbar/intent.md",
           "names": 2
         },
         {
@@ -880,11 +876,11 @@
           "instances": 14,
           "occurrences": 63932,
           "allowed": 0,
-          "wrongDirection": 4552,
+          "wrongDirection": 4551,
           "wrongDirectionFiles": 525,
           "exempt": 14777,
           "namesRepository": 43342,
-          "undetermined": 1261,
+          "undetermined": 1262,
           "pendingFiles": 43,
           "pendingOccurrences": 331
         }
@@ -892,7 +888,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 928,
+      "count": 927,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -2561,10 +2557,6 @@
         {
           "file": "cat-harness/docs/wireframes/navbar/intent.md",
           "target": "smart-trust"
-        },
-        {
-          "file": "cat-harness/docs/wireframes/navbar/intent.md",
-          "target": "who-iris"
         },
         {
           "file": "cat-harness/docs/wireframes/schemas/intent.md",
@@ -4609,5 +4601,5 @@
       ]
     }
   },
-  "total": 1139
+  "total": 1137
 }

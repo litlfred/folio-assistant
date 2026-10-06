@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 954,
+      "count": 956,
       "unit": "beans"
     }
   },
@@ -1408,6 +1408,20 @@
       "file": "beans/defs/folio-assistant-3hk4--qa-publish-must-publish-real-results-once-main-hol.md"
     },
     {
+      "id": "folio-assistant-3ka9",
+      "title": "fhir-cache-seed-npm: follow transitive dependencies, and mirror smart-base's 4 missing packages",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T16:04:40Z",
+      "updatedAt": "2026-10-06T16:04:40Z",
+      "preview": "Split from 6mk7 on 2026-10-06 (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92).\n\nSUSHI on smart-base still fails here, because 4 TRANSITIVE packages are not in the cache: crmi#2.0.0, cql#2.0.0, sdc#4.0.0 and terminology#7.3.0. The seeder reads only the IG's own `dependencies:`, so it never lists them. That means `--missing-out` never asks fhir-package-mirror for them either.\n\n## D",
+      "file": "beans/defs/folio-assistant-3ka9--fhir-cache-seed-npm-follow-transitive-dependencies.md"
+    },
+    {
       "id": "folio-assistant-3lbz",
       "title": "TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis",
       "status": "todo",
@@ -2695,14 +2709,14 @@
     {
       "id": "folio-assistant-6mk7",
       "title": "A refused packages.fhir.org did not lead the agent to fhir-cache-seed-npm: symptom-to-Tool lookup is missing, and the mirror the skill names does not exist",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:31:37Z",
-      "updatedAt": "2026-10-06T09:02:29Z",
+      "updatedAt": "2026-10-06T16:00:00Z",
       "preview": "Owner, 2026-10-06: *\"why didnt you know about the tool already? what KG process broke down?\"*\n\n## What happened\nSession https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 needed SUSHI clean on three IG repositories (owner preference). SUSHI failed: packages.fhir.org is refused by the egress proxy. The agent told the owner \"SUSHI can't run in this container\" and moved on. The owner pointed at ",
       "file": "beans/defs/folio-assistant-6mk7--a-refused-packagesfhirorg-did-not-lead-the-agent-t.md"
     },
@@ -7002,6 +7016,20 @@
       "updatedAt": "2026-10-01T18:34:23Z",
       "preview": "Found 2026-10-01 while merging `yhjr` into PR #1764.\n\n`bun run regen` reported `translate-bpmn:bootstrap:check STILL fails after bun run translate-bpmn:bootstrap — a real defect, not staleness`. It was staleness: `translate-bpmn:bootstrap` (`translate-bpmn.ts --instance ./bootstrap`) prints *\"Nothing to do. Pass --extract, --check, or --inject\"* and writes nothing. Running `translate-bpmn.ts --ins",
       "file": "beans/defs/folio-assistant-i1q7--regen-blind-spot-regen-after-merge-repairs-transla.md"
+    },
+    {
+      "id": "folio-assistant-i2cx",
+      "title": "merge-guard: separation of ready-marker and merging session applies only while a Merge Manager is active",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-nok9",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T17:00:01Z",
+      "updatedAt": "2026-10-06T17:31:05Z",
+      "preview": "Owner ruling 2026-10-06: the merge guard's same-session separation (check 2) applies only if a Merge Manager is active; none is now; durable, not per session. Add --no-merge-manager to merge-guard.ts, tests, and merge-queue skill section incl. the cloud fallback (read the merge-guard commit status on the exact head when gh cannot run).",
+      "file": "beans/defs/folio-assistant-i2cx--merge-guard-separation-of-ready-marker-and-merging.md"
     },
     {
       "id": "folio-assistant-i2kp",
@@ -15117,14 +15145,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 569,
-        "closed": 230,
-        "open": 339,
+        "total": 571,
+        "closed": 231,
+        "open": 340,
         "inProgress": 118,
-        "todo": 220,
+        "todo": 221,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.40421792618629176
+        "share": 0.404553415061296
       },
       {
         "id": "folio-assistant-vuip",
@@ -15158,8 +15186,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 537,
-    "coveredOpen": 534,
+    "openTotal": 538,
+    "coveredOpen": 535,
     "duplicateIds": 0
   }
 }

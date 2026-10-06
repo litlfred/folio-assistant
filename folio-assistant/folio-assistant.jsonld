@@ -340,10 +340,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-10-06T17:56:17.812Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
-  "sourceCommitSha": "cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
-  "sourceCommitAt": "2026-10-06T19:39:44+02:00",
+  "generatedAt": "2026-10-06T18:39:54.932Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
+  "sourceCommitSha": "d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
+  "sourceCommitAt": "2026-10-06T20:24:26+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -561,7 +561,7 @@
       ],
       "description": "Tests about the WHOLE CHECKOUT: each reads several sibling instances at once, or the aggregate root itself (`.github/`, `.gitignore`, `AGENTS.md`, this declaration, the root state graphs `beans/`, `todos/`, `memory/`, `fsh-guts/`). Owner ruling 2026-10-06, \"Top-level instance\" (bean `7zz1`, epic `iirv`): whatever names every layer belongs at the top, so each layer below stays green when it stands alone, and `check:cat-harness-standalone` collects none of these. `test/` rather than `tests/` because `directory-conventions` settled the spelling on 2026-09-19 (`test/` is the one test tree, and the rule for the next one). Each moved file composes its paths from `ORIGIN_DIR`, the directory it was written in, so nothing it reads changed in the move. `code`, like every other `*-tests` entry: authored test sources, discovered by a root `bun test` and compiled by `tsc` through the root tsconfig's `test/**` glob.",
       "readmePath": "test/README.md",
-      "fileCount": 106,
+      "fileCount": 110,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/folio-assistant-tests"
     },
     {
@@ -578,7 +578,7 @@
       ],
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "readmePath": "beans/README.md",
-      "fileCount": 1717,
+      "fileCount": 1719,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant/folio-assistant.jsonld#directory/beans"
     },
     {
@@ -688,8 +688,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
+    "sha": "d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
     "pr": "main",
-    "run": "37505279015"
+    "run": "37511068805"
   }
 }

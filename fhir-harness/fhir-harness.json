@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T17:56:27.683Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
-  "sourceCommitSha": "cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
-  "sourceCommitAt": "2026-10-06T19:39:44+02:00",
+  "generatedAt": "2026-10-06T18:40:04.587Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
+  "sourceCommitSha": "d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
+  "sourceCommitAt": "2026-10-06T20:24:26+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -405,7 +405,7 @@
       "name": "fhir-validation",
       "title": "fhir-validation",
       "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
-      "instructionLines": 72,
+      "instructionLines": 96,
       "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
       "hasInstructions": true,
@@ -524,7 +524,7 @@
       "title": "ig-build-pipeline",
       "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Read before adding anything to fhir-harness, and before onboarding, converting or changing the workflows of an IG repository.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 310,
+      "instructionLines": 314,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2475,8 +2475,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "cd0e90eb925f22be6ff2447ed8d44a2c4ed85d73",
+    "sha": "d2e75a262b4656d52a739f2899fd3c17b1a9e11c",
     "pr": "main",
-    "run": "37505279015"
+    "run": "37511068805"
   }
 }
