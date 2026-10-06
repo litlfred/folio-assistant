@@ -34,7 +34,7 @@
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
-import { MERGE_QUEUE_ENTRY_TAG, MergeQueueEntrySchema, PRIORITY_CLASSES } from "../schemas/merge-queue.ts";
+import { MERGE_QUEUE_ENTRY_TAG, MergeQueueEntrySchema, PRIORITY_CLASSES, type MergeQueueEntry } from "../schemas/merge-queue.ts";
 import { PRIORITY_DECISION } from "./merge-queue.ts";
 import { holdInForce, readQueueStore, recordDecision } from "./merge-queue-store.ts";
 
@@ -206,6 +206,128 @@ export function entryFrom(argv: readonly string[], root: string): { entry: unkno
   };
 }
 
+/**
+ * The entry a `decide` invocation produces (bean `ixmq`): the PR's EXISTING
+ * entry with a person's `release` set and `--beans` merged in — or, when the
+ * PR has no entry yet, a new one built from `record`'s placement flags.
+ *
+ * Placement is never invented here. A decision to merge says nothing about
+ * where the PR sits in the queue, and computing a placement would mean reading
+ * GitHub's live facts inside a capture command; so a PR with no entry and no
+ * placement flags is REFUSED with the remedy named.
+ *
+ * `--by` is the PERSON. A session URL there is refused: the agent that writes
+ * the decision down is `--captured-by`, and an agent recording its own
+ * decision as a person's is what this record exists to prevent.
+ */
+export function decisionFrom(
+  argv: readonly string[],
+  root: string,
+  existing: MergeQueueEntry | undefined,
+): { entry: unknown } | { usage: string } {
+  const verdict = flag(argv, "verdict");
+  if (verdict !== "merge" && verdict !== "do-not-merge") return { usage: "--verdict merge|do-not-merge is required" };
+  const by = flag(argv, "by");
+  if (!by) return { usage: "--by <person> is required: the human who decided (a GitHub login, or `owner`)" };
+  if (/\/code\/session_|^session_/.test(by)) {
+    return { usage: "--by is the PERSON who decided, not a session — the session that records it goes in --captured-by" };
+  }
+  const capturedBy = flag(argv, "captured-by");
+  if (!capturedBy) return { usage: "--captured-by <your session URL> is required: who wrote the decision down" };
+  const quote = flag(argv, "quote");
+  if (!quote) return { usage: "--quote \"<their words, verbatim>\" is required: a release nobody can quote cannot be checked" };
+  const source = flag(argv, "source");
+  if (!source) return { usage: "--source <url> is required: where they said it (the chat session or the PR comment)" };
+  const sha = flag(argv, "sha");
+  if (!sha) return { usage: "--sha <40-hex> is required: the head the person approved — a later push voids the decision" };
+  const standing = argv.includes("--standing-ruling");
+  const ruledAt = flag(argv, "ruled-at");
+  if (standing && !ruledAt) return { usage: "--standing-ruling needs --ruled-at <YYYY-MM-DD>: Task_Release accepts a standing ruling only with its date" };
+
+  const release = {
+    verdict,
+    decidedBy: by,
+    decidedAt: flag(argv, "at") ?? new Date().toISOString(),
+    authority: standing ? { kind: "standing-ruling", quote, ruledAt, source } : { kind: "explicit", quote, source },
+    releasedSha: sha,
+    capturedBy,
+    ...(flag(argv, "reason") !== undefined ? { reason: flag(argv, "reason") } : {}),
+  };
+  const beans = (flag(argv, "beans") ?? "").split(",").map((b) => b.trim()).filter(Boolean);
+
+  if (existing) {
+    return { entry: { ...existing, release, beans: [...new Set([...existing.beans, ...beans])] } };
+  }
+  if (flag(argv, "class") === undefined && flag(argv, "position") === undefined) {
+    return {
+      usage:
+        "this PR has no queue entry yet, and a decision to merge says nothing about where it sits in the queue: " +
+        "record its placement first (merge:queue:record), or pass --class/--rank/--rule (or --position) with --reason here",
+    };
+  }
+  // A new entry: the PLACEMENT is the capturing session's, so `record`'s
+  // `--by` becomes the capturer for that half; the person's word is `release`.
+  const placementArgv = argv.map((a, i) => (argv[i - 1] === "--by" ? capturedBy : a));
+  const built = entryFrom(placementArgv, root);
+  if ("usage" in built) return built;
+  return { entry: { ...(built.entry as Record<string, unknown>), release } };
+}
+
+function decideMain(argv: readonly string[], root: string): number {
+  const pr = Number(flag(argv, "pr"));
+  if (!Number.isInteger(pr) || pr <= 0) {
+    console.error("merge:queue:decide — --pr <number> is required");
+    return EXIT.usage;
+  }
+  const repository = flag(argv, "repository") ?? repositoryOf(root);
+  if (!repository) {
+    console.error("merge:queue:decide — --repository <owner/name> is required: `origin` is not a recognisable forge URL");
+    return EXIT.usage;
+  }
+  const store = readQueueStore(root);
+  if (store.state === "unreachable") {
+    console.error(`merge:queue:decide — COULD NOT REACH THE QUEUE (run \`bun run state:mount\`): ${store.reason}`);
+    return EXIT.unreachable;
+  }
+  if (store.state !== "read") {
+    console.error(`merge:queue:decide — the queue reads \`${store.state}\`, so there is nowhere to record a decision`);
+    return EXIT.absent;
+  }
+  const existing = store.entries.find(({ entry: e }) => e.pr === pr && e.repository === repository)?.entry;
+  const built = decisionFrom(argv, root, existing);
+  if ("usage" in built) {
+    console.error(`merge:queue:decide — ${built.usage}`);
+    return EXIT.usage;
+  }
+  const check = MergeQueueEntrySchema.safeParse(built.entry);
+  if (argv.includes("--dry-run") || !check.success) {
+    console.log(JSON.stringify(built.entry, null, 2));
+    if (!check.success) {
+      for (const i of check.error.issues) console.error(`  ✗ ${i.path.join(".") || "(root)"}: ${i.message}`);
+      return EXIT.usage;
+    }
+    console.log("\n(--dry-run: this decision VALIDATES and nothing was written. Drop the flag to record it.)");
+    return EXIT.ok;
+  }
+  const verdict = check.data.release!.verdict;
+  const r = recordDecision(check.data, {
+    root,
+    push: !argv.includes("--no-push"),
+    message: `queue: ${repository}#${pr} — release ${verdict} at ${check.data.release!.releasedSha.slice(0, 12)} by ${check.data.release!.decidedBy}`,
+  });
+  if (r.state === "refused") {
+    console.error(`merge:queue:decide — REFUSED: ${r.reason}`);
+    return EXIT.write;
+  }
+  console.log(`merge:queue:decide — ${verdict} recorded for #${pr} in ${r.file}${existing ? "" : " (new entry)"}`);
+  if (r.push === "skipped") {
+    console.log("--no-push: the decision is in the mount only. Nobody else can see it until `bun run state:push --id queue`.");
+    return EXIT.ok;
+  }
+  console.log(`  push: ${r.push.state} — ${r.push.reason}`);
+  return r.push.state === "pushed" || r.push.state === "unchanged" ? EXIT.ok : EXIT.write;
+}
+
 function recordMain(argv: readonly string[], root: string): number {
   const built = entryFrom(argv, root);
   if ("usage" in built) {
@@ -251,8 +373,10 @@ export function main(argv: readonly string[], root: string = process.cwd()): num
       return read(root, argv.includes("--json"));
     case "record":
       return recordMain(argv.slice(1), root);
+    case "decide":
+      return decideMain(argv.slice(1), root);
     default:
-      console.error("usage: merge-queue-cli.ts read [--json] | record --pr <n> --reason <why> --by <who> [--class <c> --rank <n> | --position <n>] [--file <path|->] [--no-push] [--dry-run]");
+      console.error("usage: merge-queue-cli.ts read [--json] | decide --pr <n> --verdict merge|do-not-merge --by <person> --quote <words> --source <url> --sha <head> --captured-by <session> [--standing-ruling --ruled-at <date>] [--beans <ids>] | record --pr <n> --reason <why> --by <who> [--class <c> --rank <n> | --position <n>] [--file <path|->] [--no-push] [--dry-run]");
       return EXIT.usage;
   }
 }
