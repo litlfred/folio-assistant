@@ -173,14 +173,13 @@ export const QA_WRITERS: readonly QaWriter[] = [
     because: "each IG instance's record of the Publisher pages refused under P2 (bean `jut3`), derived from its artefact index; missing from this list until bean `72a8`, so a computed tree lacked it and `p2:refusals:check` failed",
   },
   { id: "lsi:index:cat-harness:skills", run: ["lsi:skills"], writes: [`${R}/lsi/cat-harness/skills.lsi.json`, `${R}/tool-runs/lsi-index/cat-harness/skills.tool-run.json`], because: "the skills graph's LSI index and its run record" },
-  ...(["cat-harness", "smart-base", "who-iris"] as const).map(
-    (inst): QaWriter => ({
-      id: `lsi:index:${inst}:library`,
-      run: ["lsi", "index", "--instance", inst, "--graph", "library"],
-      writes: [`${R}/lsi/${inst}/library.lsi.json`, `${R}/tool-runs/lsi-index/${inst}/library.tool-run.json`],
-      because: "a library graph `lsi audit` says needs an index (measured); a fourth would show as `index-missing` there",
-    }),
-  ),
+  {
+    id: "lsi:index:library",
+    run: ["lsi", "index", "--graph", "library", "--needed"],
+    writes: [`${R}/lsi/*/library.lsi.json`, `${R}/tool-runs/lsi-index/*/library.tool-run.json`],
+    because:
+      "every library graph `lsi audit` says needs an index, chosen by `needOf` over the instances present (three, measured 2026-10-06). The list was hardcoded and named instances above this layer (bean `0r7u`)",
+  },
   { id: "lsi:audit", run: ["lsi:audit"], writes: [`${R}/lsi-need-an-index.qa-results.json`], because: "which prose graphs need an index; reads the indexes above" },
   { id: "docs:pages", run: ["docs:pages"], writes: [`${R}/witnesses/**`], because: "the published witness projections of the block and translation verdicts above" },
   { id: "viewer:nav:audit", run: ["viewer:nav:audit"], writes: [`${R}/viewer-nav/**`], because: "viewer navbar census" },

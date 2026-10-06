@@ -99,7 +99,7 @@ describe("the declaration", () => {
       "cat-harness/test/results/block-qa/content/docs/concepts-agentic-harness/overview.qa.json": "qa-sweep:docs",
       "cat-harness/test/results/library-qa/9789240010567-eng.qa-results.json": "check:l1-complete",
       "cat-harness/test/results/lsi/cat-harness/skills.lsi.json": "lsi:index:cat-harness:skills",
-      "cat-harness/test/results/tool-runs/lsi-index/who-iris/library.tool-run.json": "lsi:index:who-iris:library",
+      "cat-harness/test/results/tool-runs/lsi-index/who-iris/library.tool-run.json": "lsi:index:library",
       "cat-harness/test/results/lsi-need-an-index.qa-results.json": "lsi:audit",
       "cat-harness/test/results/witnesses/skills/index.json": "docs:pages",
       "cat-harness/test/results/viewer-nav/viewer-nav.qa.json": "viewer:nav:audit",
