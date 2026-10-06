@@ -56,6 +56,15 @@ describe("diffBuiltSites", () => {
     expect(by.get("new.html")).toMatch(/^[0-9a-f]{64}$/);
     expect(by.get("gone.html")).toBeUndefined();
   });
+  test("build stamps are not content: two builds of one page differ only by them, and are not a change", () => {
+    put("c/page.html", '<link href="a.css?v=1791301518">');
+    put("d/page.html", '<link href="a.css?v=1791301617">');
+    put("c/meta.json", '{"generatedAt": "2026-10-06T15:46:47Z", "sourceTreeDirty": false, "n": 1}');
+    put("d/meta.json", '{"generatedAt": "2026-10-06T15:48:19Z", "sourceTreeDirty": true, "n": 1}');
+    put("d/real.json", '{"n": 2}');
+    put("c/real.json", '{"n": 1}');
+    expect(diffBuiltSites(join(T, "c"), join(T, "d"), { renderer: "jekyll" }).files.map((f) => f.path)).toEqual(["real.json"]);
+  });
   test("`keep` limits BOTH sides, so another site under a shared root is neither removed nor added", () => {
     const k = diffBuiltSites(join(T, "a"), join(T, "b"), { renderer: "jekyll", keep: (p) => p !== "gone.html" && p !== "new.html" });
     expect(k.files.map((f) => f.path)).toEqual(["assets/js/search-data.json", "data/r.json", "page.html"]);

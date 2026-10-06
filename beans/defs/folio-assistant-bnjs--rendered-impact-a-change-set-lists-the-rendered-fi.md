@@ -1,10 +1,11 @@
 ---
 # folio-assistant-bnjs
 title: 'RENDERED IMPACT: a Change Set lists the rendered files it changes — each renderer maps changed inputs to changed outputs through its dependency cone, and review approves against that list'
-status: in-progress
+status: completed
 type: feature
+priority: normal
 created_at: 2026-10-06T07:13:23Z
-updated_at: 2026-10-06T07:13:23Z
+updated_at: 2026-10-06T16:54:17Z
 parent: folio-assistant-q4jm
 ---
 
@@ -18,7 +19,7 @@ Related: q4cm (edit set, accept = approve), c65n (measured FHIR chain), jwox (bl
 - [x] verify the FHIR prediction against the real smart-immunizations build diff (expect the 3 files of c65n)
 - [x] Change Set generalised: refs optional, rendered[] field
 - [x] document-folio renderer (block ChangeSet -> page anchors), for smart-ra: loaded from changeset.json + outline.json (owner: "use dynamic loading from the json(ld) KG and existing assets")
-- [ ] docs-site renderer (staging-cone, directory -> pages)
+- [x] docs-site renderer (staging-cone, directory -> pages): `cat-harness/scripts/docs-rendered-impact.ts`, measured against two local builds (8 predicted / 8 measured / 7 confirmed; the 1 miss is environmental); `diffBuiltSites` now blanks build stamps (826 -> 1 file between two builds of one commit)
 - [x] skill rendered-impact; update staging-review, before-after-preview, ig-ast-delta, public-comment change-sets
 - [x] process: content-change-review.bpmn names rendered-impact at Compare, Slice and Comment-PR (produce/read/assign)
 - [x] gate: the coverage DMN counts unreviewed rendered pages, missed files and site-wide undetermined inputs, once the staging build publishes rendered-impact.json (an input nothing computes is not added)
@@ -76,4 +77,32 @@ never read as 0.
 - [x] DMN rules + process documentation + skills (rendered-impact, review verdict syntax)
 - [x] folio-staging.yml: pin, measure step, ingestion args, PR comment shows missed pages
 
-- [ ] see it on a real staging run (smart-ra: blocked on SUSHI's package hosts, issue litlfred/smart-ra#23)
+- [x] see it on a real staging run: MOVED to litlfred/smart-ra#23 and the bean created there (it needs network access to packages.fhir.org for SUSHI, which this environment refuses); nothing left in this repository
+
+## Summary of Changes
+
+Merged in #2261, #2285 and #2293 (issue #971).
+
+- **Contract:** `rendered-impact/v1` (`cat-harness/schemas/rendered-impact.ts`).
+  - A build diff and a prediction check (`diffBuiltSites`, `comparePrediction`).
+  - Pins: `pinImpact`, which hashes the git blobs of the changed inputs on a file's `via`.
+  - Build stamps blanked before hashing: the `?v=` cache-buster, `generatedAt`, `sourceTreeDirty`.
+- **Renderers.** Each was checked against a real build, and none missed a file the build changed:
+
+  | renderer | predicted | measured | confirmed | notes |
+  |---|---|---|---|---|
+  | `fhir-ig-pages` | 4 | 3 | 3 | |
+  | `document-site` + `public-comment-site` | 2 | 2 | 2 | |
+  | `docs-site` | 8 | 8 | 7 | the 1 miss is environmental |
+
+- **Change Set:** generalised to any folio, with a `rendered[]` field.
+- **Staging:**
+  - `folio-staging.yml` publishes `rendered-impact.json`.
+  - It measures the build against main's site (`rendered-measured.json`); missed pages count only when that site was built from the base.
+  - Both ingestion paths accept `page:` and `input:` verdicts, pinned to the build's pins.
+- **Gate:** `review-coverage-gate.dmn` reads `unreviewedPages`, `undeterminedInputs` and `missedPages`. Each has a status fact (`rendered`, `measured`), so an uncomputed count is never read as 0. Tested through the real engine.
+- **Docs:**
+  - the `rendered-impact` skill;
+  - `review-comments` (the tag);
+  - `prepare-merge`;
+  - `content-change-review.bpmn`.
