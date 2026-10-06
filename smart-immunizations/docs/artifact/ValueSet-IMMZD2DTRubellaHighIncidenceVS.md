@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRubellaHighIncidenceVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaHighIncidenceVS.schema.json` · [view](ValueSet-IMMZD2DTRubellaHighIncidenceVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRubellaHighIncidenceVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaHighIncidenceVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRubellaHighIncidenceVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaHighIncidenceVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRubellaHighIncidenceVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaHighIncidenceVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTRubellaHighIncidenceVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaHighIncidenceVS.jsonld` · [view](ValueSet-IMMZD2DTRubellaHighIncidenceVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTRubellaHighIncidenceVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRubellaHighIncidenceVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTRotavirusVS.html" data-next="ValueSet-IMMZD2DTRubellaLowIncidenceVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

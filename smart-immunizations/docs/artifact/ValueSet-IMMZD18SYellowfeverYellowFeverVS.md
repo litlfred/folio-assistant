@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SYellowfeverYellowFeverVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.schema.json` · [view](ValueSet-IMMZD18SYellowfeverYellowFeverVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SYellowfeverYellowFeverVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SYellowfeverYellowFeverVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SYellowfeverYellowFeverVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SYellowfeverYellowFeverVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.jsonld` · [view](ValueSet-IMMZD18SYellowfeverYellowFeverVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SYellowfeverYellowFeverVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SYellowfeverYellowFeverVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD18SVaricella2DosesVS.html" data-next="ValueSet-IMMZD2DTBCGVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

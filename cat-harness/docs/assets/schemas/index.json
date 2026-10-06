@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 230,
+      "count": 232,
       "unit": "modules"
     }
   },
@@ -863,6 +863,23 @@
       "graphNode": "none",
       "reason": "a function library over the typology registry; it defines no schema",
       "summary": "Every node kind a checkout declares, found THROUGH the graph typologies —",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-nodes.test.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-nodes.test",
+      "graphNode": "undeclared",
+      "summary": "Issue #2195: a kind's nodes are the files its typologies' directories hold",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind-nodes.ts",
+      "instance": "cat-harness",
+      "name": "node-kind-nodes",
+      "graphNode": "none",
+      "reason": "a reader over declared directories; it defines no schema",
+      "summary": "The NODES of a node kind, found where its typologies say they are — issue",
       "isTest": false
     },
     {
@@ -23741,6 +23758,20 @@
           "doc": "`nodeKind()`'s id — a `$schema` tag for a tagged kind, a name for a mixin."
         },
         {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "SemVer, for a kind whose nodes are files; absent for a mixin."
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`<id>/<version>`: the `$schema` a current node carries."
+        },
+        {
           "name": "parents",
           "type": "string[]",
           "optional": false,
@@ -23874,6 +23905,55 @@
           "type": "string",
           "optional": true,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind-nodes.ts#KindNode",
+      "name": "KindNode",
+      "module": "cat-harness/schemas/node-kind-nodes.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The kind the node IS — the kind asked for, or one of its subclasses."
+        },
+        {
+          "name": "harness",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance that holds it."
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Relative to that instance's root, extension dropped: the node's address."
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative, for a reader who wants the source."
+        },
+        {
+          "name": "node",
+          "type": "Record<string, unknown>",
+          "optional": false,
+          "array": false,
+          "doc": "The parsed node: a JSON object, or a Markdown file's front matter."
         }
       ],
       "extendsNames": [],

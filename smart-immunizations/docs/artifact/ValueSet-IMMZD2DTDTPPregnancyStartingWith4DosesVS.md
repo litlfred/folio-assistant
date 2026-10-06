@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.schema.json` · [view](ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.jsonld` · [view](ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTDTPPregnancyStartingWith3DosesVS.html" data-next="ValueSet-IMMZD2DTDTPPregnancyVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

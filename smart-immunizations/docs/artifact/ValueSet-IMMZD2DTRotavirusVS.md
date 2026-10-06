@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRotavirusVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRotavirusVS.schema.json` · [view](ValueSet-IMMZD2DTRotavirusVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRotavirusVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRotavirusVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRotavirusVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRotavirusVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTRotavirusVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRotavirusVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTRotavirusVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRotavirusVS.jsonld` · [view](ValueSet-IMMZD2DTRotavirusVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTRotavirusVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTRotavirusVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTRabiesVS.html" data-next="ValueSet-IMMZD2DTRubellaHighIncidenceVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>

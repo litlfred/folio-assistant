@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMalariaVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMalariaVS.schema.json` · [view](ValueSet-IMMZD2DTMalariaVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMalariaVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMalariaVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMalariaVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMalariaVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTMalariaVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMalariaVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTMalariaVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMalariaVS.jsonld` · [view](ValueSet-IMMZD2DTMalariaVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTMalariaVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTMalariaVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTJELiveRecombinantVaccineVS.html" data-next="ValueSet-IMMZD2DTMeaslesLowTransmissionVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>
