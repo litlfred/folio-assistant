@@ -353,6 +353,7 @@ export const RULES: Rule[] = [
       // needs a folio to have anything to do.
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
+      "scripts/tool-remedy.ts",              // a refused host → the Tool that works without it (bean `6mk7`)
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
       "scripts/gen-subgraph-jsonld.ts",      // that graph framed per named subgraph (bean `c1m4`)
       // Harness by subject: the slice is the platform's own work plan, and the

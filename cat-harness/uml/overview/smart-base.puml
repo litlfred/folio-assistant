@@ -578,6 +578,12 @@ package "smart-base/smart-base-artifact-index" as pkg_smart_base_smart_base_arti
   }
 }
 package "smart-base/tools" as pkg_smart_base_tools <<tools>> {
+  class "Remedy" as smart_base_tools_Remedy <<json: ToolDefinitionSchema>> #eee9f5 {
+    host [1] : string
+    error [0..1] : string
+    tool [0..1] : string
+    none [0..1] : string
+  }
   class "Maintain" as smart_base_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
     source [1] : string
     artefact [1] : string
@@ -593,6 +599,7 @@ package "smart-base/tools" as pkg_smart_base_tools <<tools>> {
     satisfies [1..*] : string[]
     selection [0..1] : object
     requires [0..1] : object
+    remedies [0..*] : Remedy[]
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
@@ -783,6 +790,7 @@ smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_bas
 smart_base_smart_base_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_ig_menu_v1_Group : groups
 smart_base_smart_base_artifact_index_ig_releases_v1_Release *-- "0..*" smart_base_smart_base_artifact_index_ig_releases_v1_Asset : assets
 smart_base_smart_base_artifact_index_ig_releases_v1_ig_releases_v1 *-- "0..*" smart_base_smart_base_artifact_index_ig_releases_v1_Release : releases
+smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Remedy : remedies
 smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains
 smart_base_smart_base_themes_Theme *-- "0..*" smart_base_smart_base_themes_Override : overrides
 smart_base_smart_base_document_kinds_document_kind_1_0_0_Section *-- "0..*" smart_base_smart_base_document_kinds_document_kind_1_0_0_Source : sources

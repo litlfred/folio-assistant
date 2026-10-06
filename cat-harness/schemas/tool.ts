@@ -270,6 +270,55 @@ export const ToolRequiresSchema = z.object({
 });
 
 /**
+ * What to reach for when a host this Tool needs refuses it.
+ *
+ * ## The failure this exists for — bean `6mk7`
+ *
+ * 2026-10-06: packages.fhir.org was refused, SUSHI could not resolve its
+ * dependencies, and the agent concluded SUSHI could not run here.
+ * `fhir-cache-seed-npm` existed for exactly that refusal and had for five
+ * days; its `selection.when` even said so. Nothing led from the SYMPTOM to it:
+ * `selection` is read by an agent already choosing among a skill's Tools,
+ * and an agent looking at a refused host is not choosing — it is stuck.
+ * The owner's ruling the same day: a field keyed by the host or error, and a
+ * gate keeping it non-empty for every network-dependent Tool.
+ *
+ * ## Why it sits on the Tool that NEEDS the host
+ *
+ * The dependent holds the pointer, as `satisfies` and `subprocesses` do. A
+ * Tool that reaches a host is the one that knows it does, and it is where the
+ * gate can ask the question: `requires.network: true` and no `remedies` is a
+ * finding (`check:tools`). Declaring remedies on the REMEDY instead would
+ * leave every host nobody has a workaround for undeclared, and the absence
+ * would look exactly like the gap that caused 6mk7.
+ *
+ * ## `none` is a value, stated
+ *
+ * Most refusals have no workaround — a GitHub Pages push needs GitHub. Saying
+ * so, with the reason, is the answer an agent needs as much as a Tool id: it
+ * stops the agent hunting. Same reason `install.none` and `selection.limits`
+ * must be stated rather than omitted.
+ *
+ * Looked up by {@link remediesFor} and `bun run tools:remedy <host|error>`.
+ */
+export const ToolRemedySchema = z
+  .object({
+    /** The host this Tool reaches, as it appears in a refusal — `packages.fhir.org`. */
+    host: z.string().regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/, "a bare host name, no scheme or path"),
+    /** Text an agent sees when the host refuses, if it does not name the host — matched as a substring. */
+    error: z.string().min(1).optional(),
+    /** The declared Tool that does the job without this host. `check:tools` resolves it. */
+    tool: ToolId.optional(),
+    /** Stated: no Tool works around this refusal, and why — or what to do instead. */
+    none: z.string().min(1).optional(),
+  })
+  .refine((r) => (r.tool === undefined) !== (r.none === undefined), {
+    message: "a remedy names exactly one of `tool` (the Tool that works without this host) or `none` (stated: no workaround, and why)",
+  });
+
+export type ToolRemedy = z.infer<typeof ToolRemedySchema>;
+
+/**
  * A published artefact this Tool is AUTHORITATIVE for, and the source it is
  * generated from.
  *
@@ -436,6 +485,13 @@ export const ToolDefinitionSchema = z
     selection: ToolSelectionSchema.optional(),
     requires: ToolRequiresSchema.optional(),
     /**
+     * One entry per host this Tool reaches, saying what to do when it is
+     * refused. See {@link ToolRemedySchema}. REQUIRED non-empty when
+     * `requires.network` is true; `check:tools` enforces it, and resolves
+     * every `tool` it names.
+     */
+    remedies: z.array(ToolRemedySchema).optional(),
+    /**
      * Published artefacts this Tool is authoritative for. See
      * {@link ToolMaintainsSchema}.
      *
@@ -577,4 +633,61 @@ export function alternativesWithoutSelection(tools: readonly ToolDefinition[]): 
   return tools
     .filter((t) => alts.has(t.id) && t.selection === undefined)
     .map((t) => ({ tool: t.id, alternatives: alts.get(t.id)! }));
+}
+
+// ─── Remedies, looked up from a symptom ──────────────────────────────────────
+
+/** One answer to "this was refused — what now?". */
+export interface RemedyMatch {
+  /** The Tool that needed the host. */
+  readonly needed_by: string;
+  readonly host: string;
+  /** The Tool to reach for, when there is one. */
+  readonly tool?: string;
+  /** That Tool's command, so the answer is runnable without a second lookup. */
+  readonly invoke?: string;
+  /** Stated: no workaround, and why. */
+  readonly none?: string;
+}
+
+/**
+ * Every declared remedy whose host appears in `symptom`, or whose `error`
+ * text does. `symptom` is what the agent has in hand — a host name, a URL, or
+ * a pasted error line — so matching is by containment, case-insensitive.
+ * Bean `6mk7`.
+ */
+export function remediesFor(tools: readonly ToolDefinition[], symptom: string): RemedyMatch[] {
+  const s = symptom.toLowerCase();
+  const byId = new Map(tools.map((t) => [t.id, t]));
+  const out: RemedyMatch[] = [];
+  for (const t of tools) {
+    for (const r of t.remedies ?? []) {
+      const hit = s.includes(r.host.toLowerCase()) || (r.error !== undefined && s.includes(r.error.toLowerCase()));
+      if (!hit) continue;
+      const remedy = r.tool === undefined ? undefined : byId.get(r.tool);
+      out.push({
+        needed_by: t.id,
+        host: r.host,
+        ...(r.tool !== undefined ? { tool: r.tool } : {}),
+        ...(remedy?.invoke.shell !== undefined ? { invoke: remedy.invoke.shell } : {}),
+        ...(r.none !== undefined ? { none: r.none } : {}),
+      });
+    }
+  }
+  return out;
+}
+
+/** Tools that declare `requires.network` and no remedy — the `6mk7` gap. */
+export function networkToolsWithoutRemedies(tools: readonly ToolDefinition[]): string[] {
+  return tools.filter((t) => t.requires?.network === true && (t.remedies ?? []).length === 0).map((t) => t.id);
+}
+
+/** `remedies[].tool` values naming no declared Tool. */
+export function danglingRemedies(tools: readonly ToolDefinition[]): Array<{ tool: string; host: string; remedy: string }> {
+  const ids = new Set(tools.map((t) => t.id));
+  return tools.flatMap((t) =>
+    (t.remedies ?? [])
+      .filter((r) => r.tool !== undefined && !ids.has(r.tool))
+      .map((r) => ({ tool: t.id, host: r.host, remedy: r.tool as string })),
+  );
 }
