@@ -426,6 +426,12 @@ def font_headings(lines: list[Line], max_levels: int = 4, styles_out: list | Non
             return False
         if sum(c.isdigit() for c in title) > len(title) / 3:
             return False
+        # A number followed by a lower-case word is a sentence that happens to
+        # open a line ("3.1 describes the modelling approach ..."), not a
+        # numbered heading. Unnumbered lower-case titles stay possible: a
+        # manual heads entries with identifiers ("nextOfKin").
+        if num and title[:1].islower():
+            return False
         small = l.size < body + 0.9
         # Markup or code in body type is a code fragment; in large type it is
         # a reference manual's entry heading ("<configuration>").
@@ -543,6 +549,7 @@ def _rows(page_lines: list[Line]) -> list[Line]:
 
 
 def _parse_entry(t: str) -> tuple[str, str] | None:
+    t = re.sub(r"[\x00-\x08\x0b-\x1f]", " ", t)          # stray control characters
     m = RE_LEADER.match(t) or RE_TRAIL.match(t)
     if not m:
         return None
@@ -665,18 +672,24 @@ class ScoredHeading(NamedTuple):
 
 def _found_near(title: str, page: int | None, index: dict[str, list[int]], slack: int = 1) -> bool:
     """Is `title` a line of the body, on or near `page`?"""
-    key = norm_title(title)
-    if not key:
-        return False
-    hits = index.get(key)
-    if hits is None:
-        # Titles wrap: also accept a body line that the title begins with, or
-        # that begins the title, when either is substantial.
-        hits = [p for k, ps in index.items() if len(k) >= 12 and (key.startswith(k) or k.startswith(key))
-                for p in ps]
+    hits = _hits(title, index)
     if not hits:
         return False
     return page is None or any(abs(p - page) <= slack for p in hits)
+
+
+def _hits(title: str, index: dict[str, list[int]]) -> list[int]:
+    """Pages where a body line carries `title` — exactly, or as the first
+    line of a title that wraps (either is a prefix of the other, and the
+    shorter is substantial). Both kinds count: a chapter title wraps on its
+    divider page and appears whole in the running text pages later."""
+    key = norm_title(title)
+    if not key:
+        return []
+    hits = list(index.get(key, []))
+    hits += [p for k, ps in index.items() if k != key and min(len(k), len(key)) >= 12
+             and (key.startswith(k) or k.startswith(key)) for p in ps]
+    return hits
 
 
 def _match(a: Heading, pool: list[Heading]) -> Heading | None:
@@ -777,6 +790,75 @@ def consensus_headings(lines: list[Line], others: dict[str, list[Heading]] | Non
     kept = [s for s in out if s.confidence >= min_confidence]
     relevelled = tree_levels([s.heading for s in kept]) if len(contents) < 5 else [s.heading for s in kept]
     return [s._replace(heading=h) for s, h in zip(kept, relevelled)]
+
+
+# ---------------------------------------------------------------- contents vs body
+
+
+def contents_alignment(lines: list[Line], limit: int = 50) -> dict | None:
+    """Where a printed contents page and the body disagree — drafts drift.
+
+    None when there is no contents page. Otherwise three lists, each capped
+    at `limit` with the full count beside it:
+
+    * `listed_not_found` — a contents entry no body line carries: renamed,
+      moved or deleted since the contents was set;
+    * `found_not_listed` — a NUMBERED body heading, no deeper than the
+      contents goes, that the contents omits: added since;
+    * `page_mismatch` — found in the body, but more than one page from where
+      the contents says, as "title: listed p<n>, found p<m>".
+
+    It reports and never corrects: which side is right is the author's call.
+    """
+    contents = contents_headings(lines)
+    if len(contents) < 5:
+        return None
+    by_page: dict[int, list[Line]] = defaultdict(list)
+    for l in lines:
+        by_page[l.page].append(l)
+    toc_pages = set(contents_pages(by_page))
+    index: dict[str, list[int]] = defaultdict(list)
+    for l in lines:
+        if l.page not in toc_pages:
+            index[norm_title(l.text)].append(l.page)
+
+    listed_not_found, page_mismatch = [], []
+    for h in contents:
+        if not _found_near(h.title, None, index):
+            listed_not_found.append(h.title)
+        elif h.page is not None and not _found_near(h.title, h.page, index):
+            pages = _hits(h.title, index)
+            near = min(pages, key=lambda p: abs(p - h.page)) if pages else None
+            page_mismatch.append(f"{h.title}: listed p{h.page}" + (f", found p{near}" if near else ""))
+
+    depth = max((h.number.count(".") + 1 for h in contents if h.number), default=0)
+    found_not_listed = []
+    if depth:
+        body_heads = font_headings(lines)
+        # A number that recurs is a local enumeration restarting in each
+        # block ("1 What it is", "2 Why it matters" under every component
+        # of an appendix), not the document's section numbering.
+        recurs = Counter(h.number for h in body_heads if h.number)
+        for h in body_heads:
+            if recurs[h.number] >= 3:
+                continue
+            # Numeric section numbers only: a lettered line is a list item.
+            if not (h.number and re.fullmatch(r"\d+(?:\.\d+)*", h.number)):
+                continue
+            k = norm_title(h.title)
+            wrapped = any(len(k) >= 12 and norm_title(c.title).startswith(k) for c in contents)
+            if (h.number.count(".") + 1 <= depth and h.page not in toc_pages and not wrapped
+                    and not _match(h._replace(page=None), contents)):
+                found_not_listed.append(f"{h.number} {h.title}")
+
+    def capped(xs: list[str]) -> dict:
+        return {"count": len(xs), "items": xs[:limit]}
+
+    return {
+        "listed_not_found": capped(listed_not_found),
+        "found_not_listed": capped(found_not_listed),
+        "page_mismatch": capped(page_mismatch),
+    }
 
 
 # ---------------------------------------------------------------- scoring

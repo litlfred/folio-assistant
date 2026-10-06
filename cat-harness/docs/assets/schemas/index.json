@@ -25127,6 +25127,34 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema",
+      "name": "PdfAlignmentListSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "count",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "items",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
       "name": "PdfDiagnosticsSchema",
       "module": "cat-harness/schemas/pdf-structure.ts",
@@ -25164,6 +25192,26 @@
           "doc": "Which inference produced an inferred TOC (issue #2302): a printed"
         },
         {
+          "name": "figure_entries",
+          "type": "z.number().int().min(0).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "figure_sequence_gaps",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Numbers missing from a caption run, e.g. \"table 2.1\" beside a Table 2.2."
+        },
+        {
+          "name": "toc_alignment",
+          "type": "z .object({ listed_not_found: PdfAlignmentListSchema, found_not_listed: PdfAlignmentListSchema, page_mismatch: PdfAlign…",
+          "optional": true,
+          "array": false,
+          "doc": "Where a printed contents page and the body disagree (issue #2302) —"
+        },
+        {
           "name": "sections",
           "type": "z.number().int().min(0)",
           "optional": false,
@@ -25174,6 +25222,61 @@
           "type": "z.number().int().min(0)",
           "optional": false,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfFigureEntrySchema",
+      "name": "PdfFigureEntrySchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "One caption in the list of figures and tables (issue #2302). `evidence`",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum([\"figure\", \"table\", \"box\", \"chart\", \"algorithm\", \"listing\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "confidence",
+          "type": "z.number().min(0).max(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -25450,6 +25553,13 @@
           "doc": "Why an inferred TOC was not trusted, in a sentence a person can check."
         },
         {
+          "name": "figures",
+          "type": "z.array(PdfFigureEntrySchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The list of figures and tables, cross-checked (issue #2302)."
+        },
+        {
           "name": "sections",
           "type": "z.array(PdfSectionSchema)",
           "optional": false,
@@ -25480,6 +25590,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfFigureEntrySchema",
         "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
@@ -60469,6 +60580,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema",
+      "via": "toc_alignment",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
       "to": "cat-harness/schemas/pdf-structure.ts#Sha256",
       "via": "sha256",
@@ -60483,6 +60602,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfFigureEntrySchema",
+      "via": "figures",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",

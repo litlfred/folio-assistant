@@ -27,6 +27,11 @@ used as the answer key (`toc-benchmark.py`), title F1 went from 0.30 to 0.90.
    `toc_inferred_method: "font"` and the headings. Skipped without PyMuPDF.
 9. The benchmark reads Grobid's TEI-XML (depth from `n`, page from `coords`)
    and Nougat's Markdown (depth from `#`).
+11. The list of figures: a caption opens its line with label, number and
+    punctuation ("Fig. 2 outlines" is a reference); evidence is a citation in
+    the text, its numbering run, a graphic on its page; gaps are reported.
+12. Contents vs body: a draft's contents may list a section it no longer has,
+    omit one it does, or point at the wrong page — all three are reported.
 10. The consensus TOC: a contents entry the body confirms is near certain, one
     it never finds is kept but flagged; in a numbered document a stray
     unnumbered style is dropped.
@@ -209,6 +214,44 @@ def test_consensus_drops_an_unconfirmed_style_in_a_numbered_document():
     lines += [ln(3, 400, "Prompt Template", size=12, italic=True, bold=True)] + body(3, 420, 2)
     got = [s.heading.title for s in H.consensus_headings(lines)]
     assert got == ["Introduction", "Method", "Results", "Discussion"], got
+
+
+def test_figure_list_cross_checks_captions():
+    import _pdf_figures as F
+    lines = []
+    lines += [ln(1, 100, "As Figure 1 shows, and Table 1 lists, the method works.")]
+    lines += [ln(2, 300, "Figure 1: The pipeline of the method", size=9)]
+    lines += [ln(2, 400, "Fig. 2 outlines the second stage of the work.")]   # a reference, not a caption
+    lines += [ln(3, 300, "Figure 3. A later stage", size=9)]
+    lines += [ln(3, 500, "Table 1.", size=9), ln(3, 500, "Scores by method", size=9, x0=140)]
+    got = {(e.kind, e.number): e for e in F.figure_list(lines, graphics={2: 4})}
+    assert set(got) == {("figure", "1"), ("figure", "3"), ("table", "1")}, got
+    assert got[("figure", "1")].evidence == ("referenced", "in-sequence", "graphic"), got[("figure", "1")]
+    assert got[("table", "1")].title == "Scores by method", got[("table", "1")]
+    # Figure 3 is kept (a well-formed caption) but not in sequence: Figure 2
+    # was only ever referenced, never captioned — and the gap is reported.
+    assert "in-sequence" not in got[("figure", "3")].evidence
+    assert F.sequence_gaps(list(got.values())) == ["figure 2"], F.sequence_gaps(list(got.values()))
+
+
+def test_contents_alignment_reports_draft_drift():
+    # A draft: the contents still lists "Old Section" (since renamed), omits
+    # the new "4 Added Section", and says Methods is on p3 when it moved to p6.
+    contents = [ln(2, 60, "Contents", size=14, bold=True)]
+    entries = [("1 Introduction", 1), ("2 Methods", 3), ("3 Results", 5), ("Old Section", 6),
+               ("References", 7)]
+    for i, (t, pg) in enumerate(entries):
+        contents.append(ln(2, 100 + 20 * i, f"{t} {'.' * 20} {pg}"))
+    lines = [ln(1, 100, "A Draft Report", size=20)] + contents
+    body_at = {"1 Introduction": 4, "2 Methods": 9, "3 Results": 8, "References": 10}
+    for t, phys in sorted(body_at.items(), key=lambda kv: kv[1]):
+        lines += [ln(phys, 80, t, size=14, bold=True)] + body(phys, 120, 3)
+    lines += [ln(9, 400, "4 Added Section", size=14, bold=True)] + body(9, 420, 2)
+    lines.sort(key=lambda l: (l.page, l.y0))
+    a = H.contents_alignment(lines)
+    assert a["listed_not_found"]["items"] == ["Old Section"], a
+    assert a["found_not_listed"]["items"] == ["4 Added Section"], a
+    assert a["page_mismatch"]["items"] == ["Methods: listed p6, found p9"], a
 
 
 def test_pdf_structure_records_the_layout_method():

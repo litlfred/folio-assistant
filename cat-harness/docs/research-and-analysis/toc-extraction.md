@@ -234,6 +234,60 @@ measured rather than assumed, and each reversed a first attempt:
 **Grobid as a voter lowers the score** (0.89): agreeing with Grobid confirms
 some of the extra heads it emits. It stays available (`others=`) but off.
 
+## The list of figures, and a contents page against its body
+
+### Figures and tables
+
+`_pdf_figures.figure_list` writes `figures` into `structure.json`. A caption is
+a line that **opens** with a label, a number and punctuation — "Figure 3:",
+"Fig 5.", "Table 2 —", or a label alone ("Table 4.1.") with its title beside
+or below it. "Fig. 5 outlines the phases" opens a line the same way without
+the punctuation: that is a **reference**, and it counts as evidence for
+Figure 5. Each caption is then scored by evidence independent of how it was
+found:
+
+| evidence | meaning |
+|---|---|
+| `referenced` | the body cites it elsewhere — the figure form of "a TOC entry should be findable later" |
+| `in-sequence` | every smaller number of its run is present (1, 2, 3 … or 2.1, 2.2 … within a chapter) |
+| `graphic` | figures only: the page carries an image or vector drawing |
+| `listed` | a printed "List of figures / tables" names it |
+
+None of the 31 PDFs has a printed list of figures, so there is no answer key
+and no F1 here; the evidence is the measure. Over the 20 PDFs with captions,
+219 captions were found and every one kept; the three that failed every check
+— DPI-H Tables 2.2, 2.4 and 3.5 — are real captions in a draft whose own
+numbering skips 2.1, 2.3 and 3.4. **A check that fails on a real caption is
+reporting the document, not the extraction**, so a well-formed caption keeps
+confidence 0.5 and the gap goes to `diagnostics.figure_sequence_gaps`
+(`["figure 2.1", "table 2.1", "table 2.3", "table 3.4"]` for that draft,
+each confirmed absent from its text).
+
+### Contents page against body — drafts drift
+
+A printed contents page is set once and the body keeps changing, so in a
+draft the two disagree. `_pdf_headings.contents_alignment` writes
+`diagnostics.toc_alignment` whenever a document has a contents page — with or
+without an embedded outline, because the printed page is what a reader sees:
+
+| list | meaning |
+|---|---|
+| `listed_not_found` | a contents entry no body line carries — renamed, moved or deleted since |
+| `found_not_listed` | a numbered body heading, no deeper than the contents goes, that the contents omits — added since |
+| `page_mismatch` | found, but more than a page from where the contents says |
+
+Measured on the five WHO documents with contents pages (counts: listed-not-
+found / found-not-listed / page-mismatch): DPI-H draft 1/1/0,
+9789240093362 0/1/1, 9789241548960 0/1/0, 9789240101197 5/0/4,
+9789240116191 2/2/0. The first pass flagged far more — 95 for the DPI-H draft
+alone — and four rules brought it down, each a convention rather than a
+document: a title that **wraps** on a chapter divider matches by prefix; a
+**lettered** line is a list item; a number followed by a **lower-case** word is
+a sentence ("3.1 describes the modelling approach"); and a number that
+**recurs** three or more times is a local enumeration ("1 What it is" under
+every appendix component). It reports and never corrects: which side is right
+is the author's call.
+
 ## The PDF-library question
 
 PyMuPDF is AGPL-3.0; pdfminer.six is MIT. `_pdf_headings.py` reads font

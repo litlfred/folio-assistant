@@ -255,7 +255,13 @@ someone time:
   ones; look at the flagged ones before citing them. Measured over the 13
   corpus PDFs that carry an outline, hidden and used as the answer key: title
   F1 0.90 for this consensus against 0.30 for text patterns alone (issue
-  #2302). Before changing `cat-harness/scripts/_pdf_headings.py`,
+  #2302). The same artefact carries `figures` — the list of figures and
+  tables, each caption with `confidence` and `evidence` (cited in the text,
+  in its numbering run, a graphic on its page) — with numbering gaps in
+  `diagnostics.figure_sequence_gaps`; and, when the document has a printed
+  contents page, `diagnostics.toc_alignment`: entries the body no longer
+  carries, numbered sections the contents omits, and page mismatches. On a
+  draft, read these as findings about the document. Before changing `cat-harness/scripts/_pdf_headings.py`,
   run `python3 cat-harness/scripts/toc-benchmark.py` before and after: a rule
   that fixes one document and costs two is visible only there. The numbers,
   the methods compared and what could not be run are in

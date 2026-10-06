@@ -7966,6 +7966,20 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfdiagnosticsschema.figure_sequence_gaps",
+      "prefLabel": "PdfDiagnosticsSchema.figure_sequence_gaps",
+      "definition": "Numbers missing from a caption run, e.g. \"table 2.1\" beside a Table 2.2.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.figure_sequence_gaps",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfdiagnosticsschema.toc_alignment",
+      "prefLabel": "PdfDiagnosticsSchema.toc_alignment",
+      "definition": "Where a printed contents page and the body disagree (issue #2302) — drafts drift. Present only when the document has a contents page. Each list is capped; `count` is the full number.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_alignment",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfdiagnosticsschema.toc_inferred_method",
       "prefLabel": "PdfDiagnosticsSchema.toc_inferred_method",
       "definition": "Which inference produced an inferred TOC (issue #2302): a printed contents page, heading styles read from font metrics, or the text-pattern heuristic that OCR'd text falls back to.",
@@ -8005,6 +8019,13 @@
       "prefLabel": "PdfMetadataSchema.title_verified",
       "definition": "False when no source corroborated the title: the raw title was kept, not guessed at.",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfstructureschema.figures",
+      "prefLabel": "PdfStructureSchema.figures",
+      "definition": "The list of figures and tables, cross-checked (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.figures",
       "status": "candidate"
     },
     {

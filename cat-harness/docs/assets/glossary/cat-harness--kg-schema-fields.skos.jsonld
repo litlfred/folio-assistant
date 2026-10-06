@@ -21617,6 +21617,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.figure_sequence_gaps",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.figure_sequence_gaps"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Numbers missing from a caption run, e.g. \"table 2.1\" beside a Table 2.2."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.figure_sequence_gaps",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.toc_alignment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.toc_alignment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a printed contents page and the body disagree (issue #2302) — drafts drift. Present only when the document has a contents page. Each list is capped; `count` is the full number."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_alignment",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.toc_inferred_method",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21728,6 +21766,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfstructureschema.figures",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfStructureSchema.figures"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The list of figures and tables, cross-checked (issue #2302)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.figures",
       "skos:note": "candidate"
     },
     {

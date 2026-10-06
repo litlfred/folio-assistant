@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1894 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1897 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 560 terms and is 316 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 563 terms and is 317 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2187</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2187</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2190</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2190</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">560</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">563</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -1394,6 +1394,20 @@ PDCrossing.strands <span class="fa-gloss-status">candidate, extracted</span>
 <p>Four strand indices meeting at the crossing [i, j, k, l].</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#PDCrossing.strands</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfdiagnosticsschema.figure_sequence_gaps" data-fa-state="extracted" data-fa-gloss="">
+PdfDiagnosticsSchema.figure_sequence_gaps <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Numbers missing from a caption run, e.g. &quot;table 2.1&quot; beside a Table 2.2.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.figure_sequence_gaps</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfdiagnosticsschema.toc_alignment" data-fa-state="extracted" data-fa-gloss="">
+PdfDiagnosticsSchema.toc_alignment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where a printed contents page and the body disagree (issue #2302) — drafts drift. Present only when the document has a contents page. Each list is capped; <code>count</code> is the full number.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_alignment</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--pdf-structure.pdfdiagnosticsschema.toc_inferred_method" data-fa-state="extracted" data-fa-gloss="">
 PdfDiagnosticsSchema.toc_inferred_method <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1435,6 +1449,13 @@ PdfMetadataSchema.title_verified <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>False when no source corroborated the title: the raw title was kept, not guessed at.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.figures" data-fa-state="extracted" data-fa-gloss="">
+PdfStructureSchema.figures <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The list of figures and tables, cross-checked (issue #2302).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.figures</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.granularity" data-fa-state="extracted" data-fa-gloss="">
 PdfStructureSchema.granularity <span class="fa-gloss-status">candidate, extracted</span>

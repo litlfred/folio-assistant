@@ -109,6 +109,7 @@ from _pdf_title import BROWSER_RE, apply as resolve_title, evidence_from_pdf  # 
 # or from a printed contents page. Measured against held-out outlines by
 # `toc-benchmark.py`; see docs/research-and-analysis/toc-extraction.md.
 import _pdf_headings  # noqa: E402
+import _pdf_figures  # noqa: E402
 
 SCHEMA = "pdf-structure/v1"
 
@@ -632,7 +633,33 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
     return entries
 
 
-def infer_toc(path: str, pages: list[str], ocr_used: bool) -> tuple[list[TocEntry], str | None]:
+def layout_lines(path: str, ocr_used: bool) -> list | None:
+    """Text lines with their font metrics, or None when there is no layout."""
+    if ocr_used:
+        return None
+    try:
+        return _pdf_headings.extract_lines(path) or None
+    except Exception:                           # no layout-capable backend
+        return None
+
+
+def infer_figures(path: str, lines: list | None) -> tuple[list[dict[str, Any]], list[str]]:
+    """The list of figures and tables, and the gaps in its numbering.
+
+    Read from the layout like the TOC; with no layout there is nothing to
+    say, and the answer is an empty list rather than a guess.
+    """
+    if not lines:
+        return [], []
+    try:
+        graphics = _pdf_figures.graphics_pymupdf(path)
+    except Exception:                           # pdfminer only: no graphic evidence
+        graphics = {}
+    entries = _pdf_figures.figure_list(lines, graphics)
+    return [e._asdict() | {"evidence": list(e.evidence)} for e in entries], _pdf_figures.sequence_gaps(entries)
+
+
+def infer_toc(lines: list | None, pages: list[str]) -> tuple[list[TocEntry], str | None]:
     """A table of contents for a document with no outline, and the method.
 
     Layout first, text patterns last: the printed contents page cross-checked
@@ -644,18 +671,13 @@ def infer_toc(path: str, pages: list[str], ocr_used: bool) -> tuple[list[TocEntr
     OCR'd text, which carries no font metrics, and for a document where the
     layout finds nothing.
     """
-    if not ocr_used:
-        try:
-            lines = _pdf_headings.extract_lines(path)
-        except Exception:                       # no layout-capable backend
-            lines = []
-        if lines:
-            scored = _pdf_headings.consensus_headings(lines)
-            if scored:
-                method = "contents" if any("contents" in s.sources for s in scored) else "font"
-                return [TocEntry(s.heading.level, s.heading.title, s.heading.page, "inferred",
-                                 s.heading.number, round(s.confidence, 2), list(s.sources))
-                        for s in scored], method
+    if lines:
+        scored = _pdf_headings.consensus_headings(lines)
+        if scored:
+            method = "contents" if any("contents" in s.sources for s in scored) else "font"
+            return [TocEntry(s.heading.level, s.heading.title, s.heading.page, "inferred",
+                             s.heading.number, round(s.confidence, 2), list(s.sources))
+                    for s in scored], method
     found = infer_headings(pages)
     return found, ("regex" if found else None)
 
@@ -1371,10 +1393,14 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     outline = _toc_entries(reader.raw_toc())
     # An inferred table of contents is asked to justify itself; an outline is
     # the document's own answer and is not second-guessed (bean `6xaz`).
+    # The page layout, read once for the TOC, the figures and the contents
+    # check. None when there is none to read: OCR'd text has no fonts, and a
+    # pypdf-only install has no layout-capable backend.
+    lines = layout_lines(path, ocr_used)
     inferred: list[TocEntry] = []
     inferred_method: str | None = None
     if not outline:
-        inferred, inferred_method = infer_toc(path, pages, ocr_used)
+        inferred, inferred_method = infer_toc(lines, pages)
     n_inferred = len(inferred)
     toc_undetermined = inferred_toc_verdict(inferred, len(pages)) if inferred else None
     if toc_undetermined:
@@ -1382,6 +1408,11 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     toc = outline or inferred
     meta = parse_front_matter(pages)
     sections = split_sections(pages, toc)
+    figures, figure_gaps = infer_figures(path, lines)
+    # A printed contents page and the body can disagree — drafts drift. Asked
+    # whether or not the PDF has an outline, since the printed contents is
+    # what a reader sees either way. Reported, never corrected.
+    toc_alignment = _pdf_headings.contents_alignment(lines) if lines else None
 
     docinfo = reader.docinfo()
 
@@ -1447,6 +1478,10 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
         # Why, in a sentence a person can check, rather than a bare flag. Absent
         # when the TOC was trusted.
         "toc_undetermined_reason": toc_undetermined,
+        # The list of figures and tables, each caption scored by the evidence
+        # that agreed: cited in the text, in its numbering run, a graphic on
+        # its page, a printed list naming it (`_pdf_figures`, issue #2302).
+        "figures": figures,
         "sections": [
             {k: v for k, v in asdict(s).items() if k != "text"} for s in sections
         ],
@@ -1463,6 +1498,11 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # page), "font" (heading styles) or "regex" (text patterns, the
             # last resort). Absent when the outline was used.
             **({"toc_inferred_method": inferred_method} if inferred_method else {}),
+            "figure_entries": len(figures),
+            # Numbers missing from a caption run ("table 2.1" when there is a
+            # Table 2.2): a finding about the DOCUMENT — usually a draft's.
+            "figure_sequence_gaps": figure_gaps,
+            **({"toc_alignment": toc_alignment} if toc_alignment else {}),
             "sections": len(sections),
             "chars_total": sum(s.n_chars for s in sections),
         },

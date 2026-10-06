@@ -166,6 +166,27 @@ export const PdfMetadataSchema = z
   })
   .passthrough();
 
+/**
+ * One caption in the list of figures and tables (issue #2302). `evidence`
+ * names what agreed beyond the caption line itself: `referenced` (cited in the
+ * text), `in-sequence` (its number fits its run), `graphic` (an image or
+ * drawing on its page; figures only), `listed` (a printed list names it).
+ */
+export const PdfFigureEntrySchema = z
+  .object({
+    kind: z.enum(["figure", "table", "box", "chart", "algorithm", "listing"]),
+    number: z.string(),
+    title: z.string(),
+    page: z.number().int().min(1),
+    confidence: z.number().min(0).max(1),
+    evidence: z.array(z.string()),
+  })
+  .strict();
+
+const PdfAlignmentListSchema = z
+  .object({ count: z.number().int().min(0), items: z.array(z.string()) })
+  .strict();
+
 export const PdfDiagnosticsSchema = z
   .object({
     pages_without_text: z.number().int().min(0),
@@ -178,6 +199,22 @@ export const PdfDiagnosticsSchema = z
      * text-pattern heuristic that OCR'd text falls back to.
      */
     toc_inferred_method: z.enum(["contents", "font", "regex"]).optional(),
+    figure_entries: z.number().int().min(0).optional(),
+    /** Numbers missing from a caption run, e.g. "table 2.1" beside a Table 2.2. */
+    figure_sequence_gaps: z.array(z.string()).optional(),
+    /**
+     * Where a printed contents page and the body disagree (issue #2302) —
+     * drafts drift. Present only when the document has a contents page.
+     * Each list is capped; `count` is the full number.
+     */
+    toc_alignment: z
+      .object({
+        listed_not_found: PdfAlignmentListSchema,
+        found_not_listed: PdfAlignmentListSchema,
+        page_mismatch: PdfAlignmentListSchema,
+      })
+      .strict()
+      .optional(),
     sections: z.number().int().min(0),
     chars_total: z.number().int().min(0),
   })
@@ -193,6 +230,8 @@ export const PdfStructureSchema = z
     toc_source: z.enum(TOC_SOURCES),
     /** Why an inferred TOC was not trusted, in a sentence a person can check. */
     toc_undetermined_reason: z.string().nullable().optional(),
+    /** The list of figures and tables, cross-checked (issue #2302). */
+    figures: z.array(PdfFigureEntrySchema).optional(),
     sections: z.array(PdfSectionSchema),
     diagnostics: PdfDiagnosticsSchema.optional(),
     /**
