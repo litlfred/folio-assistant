@@ -397,9 +397,9 @@ export const RULES: Rule[] = [
       // The seeds' own freshness check (bean `9ofm`): it reads each special
       // branch's `manifest.json`, resolves the ref that manifest names, and
       // compares the two TREES. Harness-level for the same reason as its
-      // neighbours, and one more: the branches it reads are declared in
-      // `scripts/special-branches.json`, which is the harness's table — a
-      // folio's subject matter cannot add a row to it or change what a tree
+      // neighbours, and one more: the branches it reads are the ones the
+      // instances' declarations name (special-branches.json is gone, owner
+      // 2026-10-05) — a folio's subject matter cannot change what a tree
       // comparison concludes.
       "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
       // What every reader of a moved graph needs, written once (bean `9ofm`

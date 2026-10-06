@@ -43,6 +43,7 @@ import { describeSiteData, igSiteData, type IgSiteDataResult } from "./ig-site-d
 import { artifactPageName } from "../schemas/fhir-artifact-index.js";
 import { wrapRaw } from "../../cat-harness/scripts/lib/liquid-raw.ts";
 import type { IgReleases } from "../schemas/ig-releases.ts";
+import { igSiteFooter, sushiFooterData, type IgFooterData } from "./ig-footer.ts";
 
 /** One page's navigation, from `sushi-config.yaml` `pages:`. */
 export interface PageNav {
@@ -359,6 +360,10 @@ export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: str
     '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
     '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
     `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
+    // Last on the page, as on the Publisher's. Only on the pages this build
+    // wrote (`ig_footer`): a page copied in that draws its own — an artefact
+    // page — would otherwise carry two.
+    `{% if page.ig_footer %}{% include ${IG_FOOTER_INCLUDE} %}{% endif %}`,
     "</main>",
     "</body>",
     "</html>",
@@ -535,7 +540,10 @@ export function composeIgSite(
       // and a plain Jekyll build does not, so the page says which it uses.
       if (!/^layout:/m.test(fm)) fm += "\nlayout: default";
       fm = fm.replace(/\n+$/, "");
-      put(join(dest, r), `---\n${fm}\n---\n{% include ig/${instance}/_top.html %}\n\n${body.replace(/\s*$/, "")}\n\n{% include ig/_bottom.html %}\n`);
+      // The IG's footer last, after the shared bottom, on the pages the IG
+      // build wrote (`ig_footer`), as `harnessLayout` places it.
+      const footer = incNames.has(IG_FOOTER_INCLUDE) ? `{% if page.ig_footer %}{% include ig/${instance}/${IG_FOOTER_INCLUDE} %}{% endif %}\n` : "";
+      put(join(dest, r), `---\n${fm}\n---\n{% include ig/${instance}/_top.html %}\n\n${body.replace(/\s*$/, "")}\n\n{% include ig/_bottom.html %}\n${footer}`);
       pages++;
     }
   };
@@ -599,6 +607,16 @@ export interface StageOptions {
    * this build GENERATES has no source to edit, so it gets none.
    */
   editBase?: string;
+  /**
+   * The Publisher's page footer on every page this build writes (#1901):
+   * `facts` are the IG package's own values (`assets/ig-footer.json`, the
+   * same file the artefact pages' footer reads), laid over what
+   * `sushi-config.yaml` says (`sushiFooterData`) — so the IG source fills
+   * only what the package does not carry, `copyrightYear` among it. `scope`
+   * and `stylesheets` dress it as the artefact pages' footer is dressed;
+   * absent, it is unstyled rather than given a hand-typed palette.
+   */
+  footer?: { facts?: IgFooterData; scope?: string; stylesheets?: string[] };
 }
 
 /** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
@@ -627,21 +645,33 @@ export const ELEMENT_KEYS = ["name", "title", "description", "purpose", "status"
 /** Text safe inside a markdown link label. */
 const mdLabel = (s: string) => s.replace(/([\\[\]|])/g, "\\$1");
 
+/** Text safe as ONE markdown table cell: a newline would end the row, a pipe the cell. */
+export const mdCell = (s: string) => s.replace(/\s+/g, " ").trim().replace(/([\\|])/g, "\\$1");
+
 export const variableKey = (a: { resourceType: string; id: string }) => `${a.resourceType}__${a.id.replace(/[^A-Za-z0-9]/g, "_")}`;
 
 export interface ArtifactVariables {
   /** `site.data.fhir.artifacts.<key>.{url,text,link,elements}` — one entry per artefact. */
   artifacts: Record<string, {
     url: { canonical?: string; page: string; json?: string; xml?: string; ttl?: string };
-    /** `display` as WHO computes it; `label` is the same text escaped for a markdown link label. */
-    text: { display: string; label: string };
+    /**
+     * `display` as WHO computes it; `label` is the same text escaped for a
+     * markdown link label; `description_cell` is the artefact's description as
+     * one markdown table cell (whitespace folded, pipes escaped), empty when it has none.
+     */
+    text: { display: string; label: string; description_cell: string };
     link: { html: string };
     elements: Partial<Record<(typeof ELEMENT_KEYS)[number], string>>;
     category?: string;
     reference: string;
   }>;
-  /** Categories in index order, each naming its artefacts' keys — what a template iterates. Uncategorised artefacts (not on the Publisher's `artifacts.html`) are left out. */
-  artifact_categories: Array<{ name: string; keys: string[] }>;
+  /**
+   * Categories in index order, each naming its artefacts' keys — what a
+   * template iterates — with its element id (`anchor`) and how many it lists
+   * (`count`), so no template counts or slugs. Uncategorised artefacts (not on
+   * the Publisher's `artifacts.html`) are left out.
+   */
+  artifact_categories: Array<{ name: string; anchor: string; count: number; keys: string[] }>;
   /** How many artefacts `artifact_categories` lists — counted here, so no template counts. */
   artifacts_listed: number;
 }
@@ -685,7 +715,7 @@ export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHre
     }
     artifacts[key] = {
       url: { canonical: a.canonical, page, json: a.published?.json?.url, xml: a.published?.xml?.url, ttl: a.published?.ttl?.url },
-      text: { display, label: mdLabel(display) },
+      text: { display, label: mdLabel(display), description_cell: mdCell(a.description ?? "") },
       link: { html: `<a href="${page}">${display.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</a>` },
       elements,
       category: a.category,
@@ -697,8 +727,9 @@ export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHre
     // grouped, so the template lists exactly what the Publisher's page does.
     if (a.category === undefined) continue;
     let g = order.find((c) => c.name === a.category);
-    if (!g) order.push((g = { name: a.category, keys: [] }));
+    if (!g) order.push((g = { name: a.category, anchor: `artifacts-${slug(a.category)}`, count: 0, keys: [] }));
     g.keys.push(key);
+    g.count++;
   }
   return { vars: { artifacts, artifact_categories: order, artifacts_listed: order.reduce((n, c) => n + c.keys.length, 0) }, notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)) };
 }
@@ -736,6 +767,25 @@ export function tocPage(pages: unknown, has: (stem: string) => boolean): string 
  */
 export const ARTIFACTS_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/artifacts.liquid");
 export const RELEASES_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/releases.liquid");
+/** The Publisher's page footer, a Liquid include over `site.data.fhir.footer` (#1901). */
+export const FOOTER_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/ig-footer.liquid");
+/** Its name under `_includes/`: prefixed, so it cannot collide with an include the IG's own source holds. */
+export const IG_FOOTER_INCLUDE = "fa-ig-footer.html";
+
+/**
+ * Each page's previous and next page, as the Publisher links them: the IG's
+ * table-of-contents order (`sushi-config.yaml` `pages:`), skipping what this
+ * site does not hold. A page outside that order gets neither.
+ */
+export function pageSequence(pages: unknown, held: (stem: string) => boolean): Map<string, { prev?: string; next?: string }> {
+  const order = [...pageNav(pages).keys()].filter(held);
+  return new Map(
+    order.map((stem, i) => [
+      stem,
+      { ...(i > 0 ? { prev: `${order[i - 1]}.html` } : {}), ...(i < order.length - 1 ? { next: `${order[i + 1]}.html` } : {}) },
+    ]),
+  );
+}
 
 /** A byte count as the Publisher's download pages show one: one decimal, in KB or MB. */
 export function sizeLabel(bytes: number): string {
@@ -1034,11 +1084,34 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
     notRendered.push(name);
   }
 
+  // The Publisher's footer on every page written above (#1901): flagged in
+  // front matter for the layout to draw, with the page's place in the IG's
+  // table-of-contents order. Without a menu there is no generated layout, so
+  // the footer goes into the page itself.
+  const written = [...pages, ...generated, ...(fromMenu?.groups ?? []).map((g) => `${g.stem}.md`)];
+  const heldStems = new Set(written.map((f) => basename(f, ".md")));
+  const sequence = pageSequence(sushi.pages, (stem) => heldStems.has(stem));
+  for (const f of written) {
+    const text = readFileSync(join(out, f), "utf-8");
+    const at = sequence.get(basename(f, ".md"));
+    const fm = ["ig_footer: true", ...(at?.prev ? [`ig_prev: ${yamlString(at.prev)}`] : []), ...(at?.next ? [`ig_next: ${yamlString(at.next)}`] : [])].join("\n");
+    const tail = opts.menu ? "" : `\n\n{% include ${IG_FOOTER_INCLUDE} %}\n`;
+    // Last in the front matter, so a page still opens with its own title.
+    const end = text.startsWith("---\n") ? text.indexOf("\n---", 3) : -1;
+    writeFileSync(join(out, f), end >= 0 ? `${text.slice(0, end)}\n${fm}${text.slice(end)}${tail}` : `---\n${fm}\n---\n${text}${tail}`);
+  }
+  writeFileSync(join(out, "_includes", IG_FOOTER_INCLUDE), readFileSync(FOOTER_TEMPLATE_PATH, "utf-8"));
+  const footer = igSiteFooter(
+    { ...sushiFooterData(sushi), ...(opts.footer?.facts ?? {}) },
+    (href) => heldStems.has(basename(href, ".html")),
+    { scope: opts.footer?.scope, stylesheets: opts.footer?.stylesheets },
+  );
+
   const siteData = igSiteData(src);
   // The per-artefact variables ride in the same `site.data.fhir` the IG's
   // metadata does (bean `4tts`), written in THIS build, read by THIS build.
   const lifted = opts.artifacts ? artifactVariables(opts.artifacts.list, opts.artifacts.pagesHref) : undefined;
-  writeFileSync(join(out, "_data", "fhir.json"), JSON.stringify({ ...siteData.data, ...(lifted?.vars ?? {}) }, null, 2) + "\n");
+  writeFileSync(join(out, "_data", "fhir.json"), JSON.stringify({ ...siteData.data, ...(lifted?.vars ?? {}), footer }, null, 2) + "\n");
   const title = typeof sushi.title === "string" ? sushi.title : String(sushi.id ?? "IG");
   const scheme = opts.palette ? colourScheme(opts.palette) : undefined;
   if (scheme) {

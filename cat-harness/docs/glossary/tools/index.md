@@ -12,9 +12,9 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 130 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 128 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 6 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 169 terms and is 122 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 169 terms and is 121 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -101,6 +101,13 @@ Build an IG and write its AST <span class="fa-gloss-status">candidate, extracted
 <dd>
 <p>Run one ordinary IG Publisher build through <code>AstPublisher</code> (a subclass that overrides nothing) and write the AST beside <code>output/</code>: one JSON file per resource keyed <code>canonical|version</code>, <code>dependencies.json</code> (upstream's DependencyAnalyser plus the Library/PlanDefinition/ActivityDefinition/Measure edges it leaves empty), SUSHI's <code>fsh-index.json</code>, and a manifest that declares itself a cache and records the inputs it is valid for.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-export</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--site-build-local" data-fa-state="extracted" data-fa-gloss="">
+Build the docs site locally <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build <a href="#cat-harness--kg-tools--pages-publish"><code>pages-publish</code></a> runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#site-build-local</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--lsi-index" data-fa-state="extracted" data-fa-gloss="">
 Build the Latent Semantic Indexing index of a prose graph <span class="fa-gloss-status">candidate, extracted</span>
@@ -388,12 +395,12 @@ Give every page Jekyll did not lay out the folio-assistant navbar <span class="f
 <p>A LAST pass over the finished site: inject the shared navbar (<code>lib/navbar.ts</code>, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by <code>stage-ig-sites</code>. A page under an <code>igSite</code> instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (<code>data-fa-visualiser-nav</code>) and its label (<code>fa-visualiser-label</code>). Mount routes are left to the mount pass, and a page that declines (<code>folio-navbar: none</code>) is left bare.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#rail-standalone-pages</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--glossary-build" data-fa-state="extracted" data-fa-gloss="">
+<dt id="folio-assistant-core--kg-tools--glossary-build" data-fa-state="extracted" data-fa-gloss="">
 Glossary build <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Build a paper's glossary index from its manifests and render the LaTeX. <code>--check</code> reports drift instead of writing, comparing everything except the <code>generated</code> timestamp so a re-run is not mistaken for a change.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#glossary-build</code></a></p>
+<p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#glossary-build</code></a></p>
 </dd>
 </dl>
 
@@ -527,12 +534,12 @@ L1 source completeness <span class="fa-gloss-status">candidate, extracted</span>
 <p>Is a <code>library/&lt;bib-slug&gt;/</code> entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#l1-complete-check</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--lean-cache" data-fa-state="extracted" data-fa-gloss="">
+<dt id="folio-assistant-sci--kg-tools--lean-cache" data-fa-state="extracted" data-fa-gloss="">
 Lake olean cache <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Restore, verify, seed and diagnose the prebuilt <code>.lake/</code> artefacts for a Lean package. Always try <code>restore</code> first: a from-source Mathlib build is 30–60 minutes, a restore about two.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#lean-cache</code></a></p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#lean-cache</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--lsi-viewer" data-fa-state="extracted" data-fa-gloss="">
 Latent semantic index viewer <span class="fa-gloss-status">candidate, extracted</span>
@@ -1217,13 +1224,6 @@ ValueSets → JSON Schema <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#valueset-schemas</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--sub-kg-verify-clone" data-fa-state="extracted" data-fa-gloss="">
-Verify a separated repository from a fresh clone <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its <a href="#cat-harness--kg-tools--gates"><code>gates</code></a> script, else its <code>test</code> script (a person may pass <code>--gate</code> on the command line instead; it is not part of this contract because it is a shell command). Reports <code>green</code>, <code>red</code> or <code>unknown</code>; an empty tree, a failed clone or a repository with no gate is <code>unknown</code>, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's <code>node_modules</code> and environment (#2082). Writes only inside the scratch directory.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#sub-kg-verify-clone</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--voices-viewer" data-fa-state="extracted" data-fa-gloss="">
 Voices viewer <span class="fa-gloss-status">candidate, extracted</span>

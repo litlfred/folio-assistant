@@ -730,8 +730,33 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
-      satisfies: ["kg-export"],
+      // `docs-generation` too (owner, 2026-10-05, bean lehh): this is the CI
+      // build of the site, and `site-build-local` is the same build on a
+      // developer's machine — two Tools, one skill.
+      satisfies: ["kg-export", "docs-generation"],
       requires: { network: true },
+    }),
+
+    defineTool({
+      id: "site-build-local",
+      title: "Build the docs site locally",
+      description:
+        "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
+      install: { none: true },
+      invoke: { shell: "cat-harness/scripts/preview-site.sh" },
+      io: {
+        inputs: [
+          { name: "dest", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "Where to write the built site. Default: a temporary directory." },
+        ],
+        outputs: [{ name: "site", schema: t("RepoPath"), description: "The built site, as `pages-publish` would publish it." }],
+      },
+      satisfies: ["docs-generation"],
+      selection: {
+        when: "Looking at a rendered page before pushing it: a layout, an anchor, a generated index.",
+        limits: "Not what CI builds: it uses the installed just-the-docs gem rather than the pinned remote theme, so chrome can differ, while Liquid and kramdown do not. It runs the cheap post-Jekyll steps and names the rest it skipped. Read a layout question off the staging preview.",
+        cost: "Local Ruby and Jekyll; a minute or two.",
+      },
+      requires: { runtime: ["bash"], network: false },
     }),
 
     // ── The preview host: one STAGING/<slug> per open pull request ─────────
@@ -1137,25 +1162,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It is the build half of that skill's loop, not the whole loop.
       satisfies: ["lean-build-fix"],
       requires: { runtime: ["bash", "lean", "lake"], network: true },
-    }),
-
-    defineTool({
-      id: "lean-cache",
-      title: "Lake olean cache",
-      description:
-        "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
-      install: { none: true },
-      invoke: { shell: "cat-harness/scripts/lake-cache.sh" },
-      io: {
-        inputs: [
-          { name: "action", schema: t("LakeCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
-          { name: "lakeRoot", schema: t("RepoPath"), required: false, arg: { flag: "--lake-root" }, description: "The package whose `.lake/` is acted on." },
-          { name: "package", schema: t("PackageName"), required: false, arg: { flag: "--package" } },
-        ],
-        outputs: [{ name: "result", schema: t("Text"), description: "A real hit, a miss, or a diagnosis — never a miss that reads as a hit." }],
-      },
-      satisfies: ["lean-cache-restore"],
-      requires: { runtime: ["bash", "git", "lake"], network: true },
     }),
 
     defineTool({
@@ -2506,54 +2512,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["proof-status-tracking"],
       requires: { runtime: ["python3"], network: false },
-    }),
-
-    // ── The evidence path, and the check that is NOT a computation ────────
-    //
-    // Group 11 of `d308` (`1oqu`). The bean's constraint was that a Tool here
-    // must return "could not determine" distinctly from "verified", because
-    // `evidence-retrieval · Task_RecordUnverified` exists for the case where the
-    // authority check fails, and collapsing them would launder an unverified
-    // citation into an authoritative one.
-    //
-    // **That constraint is already met, and not by a Tool.** Measured
-    // 2026-09-20: nothing in the corpus WRITES a `VerificationEntry`.
-    // `schemas/bib-verification.ts` carries seven `VerificationStatus` values —
-    // `unfetchable` ("URL/DOI did not resolve") and `partial` ("awaiting PDF")
-    // are the could-not-determine cases — and a `Verifier` discriminated union
-    // whose own comment states the point: *"`kind: "agent"` is a
-    // machine-generated claim awaiting human review; `kind: "human"` is a human
-    // adjudication."* Verification is a judgement RECORDED in a curated file, so
-    // the guarantee lives in that file's schema, where a boolean cannot reach it.
-    //
-    // The laundering risk is therefore sharper than the bean assumed: it is not
-    // only unknown→verified, it is **agent-claim→verified**. A node emitting
-    // `verified: true` would collapse both distinctions at once, which is why
-    // this node declares neither — it builds the glossary and says so. The bib
-    // verification path is reached through `qa-sweep` instead (`bib-qa.ts` has no
-    // `import.meta.main` and produces the report `qa-checkers-extended` reads).
-    defineTool({
-      id: "glossary-build",
-      title: "Glossary build",
-      description:
-        "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
-      install: { none: true },
-      invoke: { shell: "bun run folio-assistant-core/scripts/build-glossary.ts" },
-      io: {
-        inputs: [
-          { name: "targetPath", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary." },
-          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Report drift and write nothing." },
-        ],
-        outputs: [
-          { name: "glossary", schema: t("RepoPath"), description: "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root." },
-        ],
-      },
-      // `document-intake`, which is what `Task_L1Sources` refs. It carries NO
-      // input contract, so `check-tools` cannot verify this edge against one —
-      // worth saying plainly rather than letting a clean run imply agreement
-      // that was never tested.
-      satisfies: ["document-intake"],
-      requires: { runtime: ["bun"], network: false },
     }),
 
     // ── The FSH cone, and TWO of three declared contracts refused ─────────

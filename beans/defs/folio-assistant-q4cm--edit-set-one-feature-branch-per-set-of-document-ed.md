@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:20:37Z
+updated_at: 2026-10-06T06:12:56Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-txut
@@ -75,3 +75,13 @@ Known cost, accepted: GitHub does not record the owner's acceptance as a formal 
 
 - [x] the owner-as-author case is decided
 - [ ] the marker format is fixed, and the tool recognises it (test)
+
+## Owner ruling 2026-10-06: how the owner accepts their own edit sets (roast R2)
+
+Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, from three options (recommended first):
+
+1. **CHOSEN: a PR review/comment from the owner carrying a fixed acceptance marker, plus an explicit "merge it".** No second account is needed. GitHub forbids self-approval, so acceptance is recorded as the owner's marked review, not as an Approve.
+2. A second GitHub account in the editor lane (not chosen).
+3. CODEOWNERS with a separate reviewer account (not chosen).
+
+R2 is unblocked: `edit_set_accept` reads the owner's marker on the PR and binds it to the head SHA.

@@ -77,7 +77,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, join, posix, relative, resolve, sep } from "node:path";
 import { compareRoute } from "../../cat-harness/scripts/route-authority.ts";
 import { IG_API_HUB_SCRIPT, IG_API_HUB_TEMPLATE, IG_API_VIEW_SCRIPT, igApiHubData, igApiHubFragment, igApiServed, igApiViewData, igApiViews } from "./ig-api-views.ts";
-import { igFooterData } from "./ig-footer.ts";
+import { IG_CHROME_SCOPE, igFooterData } from "./ig-footer.ts";
 import { JSON_VIEW_SCRIPT, VIEW_PAGE, examplesPage, hasJsonView, historyPage, jsonViewData, mappingsPage, mdText, packageEntries, profileJsonViewData, resourceFacts, resourceTabs, testingPage, type TabPageData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
@@ -336,7 +336,7 @@ const IDENTITY: IgIdentity | undefined = (() => {
  * happen to carry a mirror, and a bare `:root` block would repaint the whole
  * site the moment one of these pages loaded.
  */
-const CHROME_SCOPE = ".st-ig";
+const CHROME_SCOPE = `.${IG_CHROME_SCOPE}`;
 
 /**
  * The IG's own status banner — the blue bar and, while it is a draft, the
@@ -505,12 +505,16 @@ const CSS = `
 .st-stat span{font-size:.75rem;opacity:.75}
 #ig-footer{margin-top:2.5rem;font-size:.85rem}
 #ig-footer p{margin:.4rem 0}
-#ig-footer .ig-footer-band{background:var(--footer-bg-color,transparent);color:var(--footer-text-color,inherit);padding:.5rem 1rem;border-top:1px solid rgba(128,128,128,.35)}
+#ig-footer .ig-footer-band{background:var(--footer-container-bg-color,var(--footer-bg-color,transparent));color:var(--footer-text-color,inherit);padding:.5rem 1rem;border-top:1px solid rgba(128,128,128,.35)}
 #ig-footer .ig-footer-band a{color:var(--footer-hyperlink-text-color,inherit)}
+#ig-footer a[rel~=external]::after{content:" \\2197"}
 `;
 // The footer's band reads the mirrored chrome's `--footer-*` tokens, the
-// Publisher's own footer colours; without an ingested chrome it falls back to
-// the theme's, never to a hand-typed palette.
+// Publisher's own footer colours: the CONTAINER colour first, the dark band
+// the Publisher's text sits on (#1901, the owner's "dark-blue band"), then the
+// outer one. Without an ingested chrome it falls back to the theme's, never
+// to a hand-typed palette. An off-site link is marked with the Publisher's
+// arrow (U+2197), as its footer marks them.
 /**
  * A page for the JUST-THE-DOCS pipeline: front matter, then the body.
  *

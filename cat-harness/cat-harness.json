@@ -750,6 +750,23 @@
       }
     },
     {
+      "id": "site",
+      "path": "site/",
+      "graphTypologies": [
+        "basic-cdn-site"
+      ],
+      "storage": {
+        "branch": "gh-pages",
+        "keyedBy": "route",
+        "tool": "gh-pages"
+      },
+      "derivedFrom": [
+        "docs",
+        "folio"
+      ],
+      "description": "The PUBLISHED SITE, on a CDN that serves files by path only (GitHub Pages). Lives on the `gh-pages` branch, one entry per route (the release root and each `STAGING/<slug>/` preview); never in the checkout, and `site/` is only where a local build lands. Built by `site-build-local` on a machine and by `pages-publish` in CI (two Tools, one skill, `docs-generation`), and deployed by the Tool `storage.tool` names. `derivedFrom` names the renderable graphs THIS instance can reach; every other instance's docs are composed onto it by `mount-instance-docs.ts`, which an instance below cannot name without pointing upward. Declared here, on the harness that composes the site, rather than as a row in a central table (owner, 2026-10-03 and 2026-10-05: special-branches.json is gone; beans rva2, lehh)."
+    },
+    {
       "id": "swimlane-glossary",
       "path": "glossary/",
       "_visualiser_comment": "The auto-docs GLOSSARY INDEX, not `docs/glossary/index.html`. That was the declared value until 2026-09-22 and it was CIRCULAR: `docs/glossary/index.html` IS the state-visualiser's own page for this graph, so the page rendered “This graph is rendered elsewhere … the declaration names a visualiser for it: /glossary/” — pointing at the page you were reading. It was declared to make `published-graphs.md` count the graph as published, which made the count look right and the page say something false. The auto-docs index is a real rendering: every term in the ledgers, each with the definition joined from the role registry. No count here on purpose: this comment said \"44 terms\" while the page showed 46, then 48, then 55 (bean `n5be`, finding 6) — the page states its own count.",

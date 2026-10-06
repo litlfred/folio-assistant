@@ -4901,7 +4901,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A `branch` source keyed by `tip`: `branch-store mount --id <dir-id>` writes the tip's files at the declared path, so every reader finds the directory where it always was; `push` splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the special-branches row the resolver attached — a branch no row declares is refused rather than guessed. A `commit`-keyed branch is read per commit through its own store (`qa-store`), not mounted."
+          "@value": "A `branch` source keyed by `tip`: `branch-store mount --id <dir-id>` writes the tip's files at the declared path, so every reader finds the directory where it always was; `push` splices edits back onto the tip, never forcing, and a same-file race is a conflict. The branch's NAME is the declaring directory's `storage` (or `source`) — a branch no declaration names is refused rather than guessed. A `commit`-keyed branch is read per commit through its own store (`qa-store`), not mounted."
         }
       ],
       "skos:notation": "Task_MountBranchTip",

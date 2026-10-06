@@ -9,6 +9,11 @@
  * 2. A kind claimed by two contributors THROWS (the `contributions.ts` rule).
  * 3. An unfilled kind is an error that names what is missing, never a default.
  * 4. Generic pipeline code names none of the files that fill the slots.
+ *
+ * The tests here whose subject is folio-assistant-sci's contribution (that
+ * this instance fills every pipeline-plugin slot) live in
+ * `folio-assistant-sci/scripts/tests/pipeline-plugins.test.ts` (bean `ho66`):
+ * standing alone, cat-harness has no such contribution to read.
  */
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -23,7 +28,6 @@ import {
 import { loadContributionsSync } from "../../schemas/harness-config";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 import {
-  PIPELINE_PLUGIN_KINDS,
   UnregisteredPipelinePluginError,
   optionalPipelinePlugin,
   pipelinePlugin,
@@ -181,12 +185,6 @@ describe("an unregistered kind", () => {
 });
 
 describe("this repository", () => {
-  it("folio-assistant-sci fills every slot, loaded lazily from the running folio", () => {
-    usePipelinePluginRegistry(undefined);
-    for (const kind of PIPELINE_PLUGIN_KINDS) {
-      expect(() => pipelinePlugin(kind)).not.toThrow();
-    }
-  });
 
   it("generic pipeline code imports none of the modules that fill the slots", () => {
     // The point of the hook: after the move, any of these specifiers in a

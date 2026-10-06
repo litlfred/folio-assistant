@@ -112,6 +112,9 @@ describe("an instance with no bean", () => {
 });
 
 describe("the diagrams declare which operation each step performs", () => {
+  // The order the EDITING process takes them in is pinned beside that
+  // diagram, in folio-assistant-core/scripts/tests/bean-link.test.ts (bean
+  // `ho66`): standing alone, cat-harness has no such diagram.
   test("every bean-marked activity in the shipped diagrams names an op", async () => {
     // Found by NAME through the declared `processes` graphs: each diagram sits
     // with its owner (#1772; placement PR3, bean `63wl`), grouped by concern.
@@ -131,15 +134,6 @@ describe("the diagrams declare which operation each step performs", () => {
       }
     }
     expect(marked).toBe(11);
-  });
-
-  test("the editing process claims, notes, then resolves — in that order", async () => {
-    const model = await loadProcessModel(
-      workflowFile(resolve(import.meta.dir, "../.."), "editing-hci-validation.bpmn"),
-    );
-    expect(model.nodes.get("Task_ClaimBean")!.workPlanOp).toBe("claim");
-    expect(model.nodes.get("Task_LogFindings")!.workPlanOp).toBe("note");
-    expect(model.nodes.get("Task_ResolveBean")!.workPlanOp).toBe("resolve");
   });
 
   test("an op this build does not implement is refused, not ignored", async () => {

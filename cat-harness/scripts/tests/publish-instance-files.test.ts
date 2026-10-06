@@ -1,3 +1,9 @@
+/**
+ * The tests here that read the aggregate repository's own root
+ * (`.github/workflows/docs-site.yml`) live in
+ * `cat-harness-tools/scripts/tests/publish-instance-files-workflows.test.ts`
+ * (bean `ho66`): standing alone, cat-harness has no such root to read.
+ */
 import { describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -81,14 +87,5 @@ describe("served-name collisions are chosen, never won by step order (Phase 4, b
       spawnSync("bun", ["run", script, "--instance", inst, "--out", site(), ...extra], { encoding: "utf-8" }).status;
     expect(run()).toBe(1);
     expect(run("--allow-collision", "bootstrap.json")).toBe(0);
-  });
-
-  test("both workflows name exactly the one collision they chose", () => {
-    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
-      const text = readFileSync(join(REPO_ROOT, ".github", "workflows", wf), "utf-8");
-      const step = text.split("\n").find((l) => /^\s*bun run cat-harness\/scripts\/publish-instance-files\.ts/.test(l));
-      expect({ wf, allow: /--allow-collision\s+(\S+)/.exec(step ?? "")?.[1] }).toEqual({ wf, allow: "bootstrap.json" });
-    }
-    rmSync(tmp, { recursive: true, force: true });
   });
 });

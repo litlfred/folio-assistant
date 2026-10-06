@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 234,
+      "count": 233,
       "unit": "modules"
     }
   },
@@ -1207,22 +1207,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/rendered-impact.test.ts",
-      "instance": "cat-harness",
-      "name": "rendered-impact.test",
-      "graphNode": "undeclared",
-      "summary": "The rendered-impact contract (bean `bnjs`): a build diff, the review list,",
-      "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "instance": "cat-harness",
-      "name": "rendered-impact",
-      "graphNode": "schema",
-      "summary": "What a change does to a RENDERED site: the contract every renderer answers",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/repo-full-name.ts",
       "instance": "cat-harness",
       "name": "repo-full-name",
@@ -1339,6 +1323,14 @@
       "name": "site-indexes",
       "graphNode": "schema",
       "summary": "The published index files the site's viewers read — each `$schema` family",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/site.ts",
+      "instance": "cat-harness",
+      "name": "site",
+      "graphNode": "schema",
+      "summary": "A published static site, as a graph: what a CDN serves, at which routes.",
       "isTest": false
     },
     {
@@ -8284,6 +8276,13 @@
           "optional": true,
           "array": false,
           "doc": "`family` only: where the family is. Absent = this repository, a copy"
+        },
+        {
+          "name": "tool",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"a Tool node id\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The declared Tool that puts content on this store, or mounts it from"
         }
       ],
       "extendsNames": [],
@@ -28180,7 +28179,7 @@
       "name": "WatchedRefSchema",
       "module": "cat-harness/schemas/ref-window.ts",
       "kind": "zod-object",
-      "doc": "A watched ref, as `scripts/special-branches.json` spells it.",
+      "doc": "A watched ref, spelled as a declaring directory's `storage.branch` spells it.",
       "fields": [],
       "extendsNames": [
         "NonBlank"
@@ -29088,237 +29087,6 @@
       "refs": [],
       "unresolved": [],
       "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/rendered-impact.ts#PredictionCheck",
-      "name": "PredictionCheck",
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "missed",
-          "type": "string[]",
-          "optional": false,
-          "array": true,
-          "doc": "Measured to change but not predicted: a cone defect, never a pass."
-        },
-        {
-          "name": "confirmed",
-          "type": "string[]",
-          "optional": false,
-          "array": true,
-          "doc": "Predicted and measured."
-        },
-        {
-          "name": "unconfirmed",
-          "type": "{ path: string; role: RenderedRole }[]",
-          "optional": false,
-          "array": true,
-          "doc": "Predicted, not measured: expected for content pages that load their data (rule 3), suspicious otherwise."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/rendered-impact.ts#RenderedRole"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/rendered-impact.ts#RenderedFile",
-      "name": "RenderedFile",
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema",
-      "name": "RenderedFileSchema",
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "path",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Path in the BUILT site, relative to its root, e.g. `ast/artifact/PlanDefinition-X.html`."
-        },
-        {
-          "name": "change",
-          "type": "z.enum([\"changed\", \"added\", \"removed\"])",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "role",
-          "type": "z.enum(RENDERED_ROLES)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "via",
-          "type": "z.array(z.string()).default([])",
-          "optional": true,
-          "array": true,
-          "doc": "How the change reached this file: the changed input first, then each"
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "RENDERED_ROLES",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/rendered-impact.ts#RenderedImpact",
-      "name": "RenderedImpact",
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema",
-      "name": "RenderedImpactSchema",
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(RENDERED_IMPACT_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "renderer",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The renderer, by its Tool id or script, e.g. `fhir-ig-ast-pages`."
-        },
-        {
-          "name": "method",
-          "type": "z.enum([\"cone\", \"build-diff\"])",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "site",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The site the paths are relative to, as a reader finds it (an instance, a URL path)."
-        },
-        {
-          "name": "base",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "head",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "inputs",
-          "type": "z.array(z.string()).default([])",
-          "optional": true,
-          "array": true,
-          "doc": "The changed input files the renderer was given, relative to its source root."
-        },
-        {
-          "name": "files",
-          "type": "z.array(RenderedFileSchema)",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "undetermined",
-          "type": "z.array(UndeterminedSchema).default([])",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema",
-        "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "RENDERED_IMPACT_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/rendered-impact.ts#RenderedRole",
-      "name": "RenderedRole",
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema",
-      "name": "UndeterminedSchema",
-      "module": "cat-harness/schemas/rendered-impact.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "input",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "reason",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "scope",
-          "type": "z.enum([\"unknown\", \"all\"]).default(\"unknown\")",
-          "optional": true,
-          "array": false,
-          "doc": "`all`: the input can re-render anything (a site config, a shared include)."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
       "exported": true
     },
     {
@@ -31772,6 +31540,311 @@
       "refs": [
         "cat-harness/schemas/site-indexes.ts#Count",
         "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#BasicCdnSite",
+      "name": "BasicCdnSite",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#BasicCdnSiteSchema",
+      "name": "BasicCdnSiteSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "BasicCdnSiteKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "BasicCdnSiteKind"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#CdnSite",
+      "name": "CdnSite",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#CdnSiteKind",
+      "name": "CdnSiteKind",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "A SUBCLASS of {@link BasicCdnSiteKind}: everything a basic site carries,",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#CdnSiteSchema",
+      "name": "CdnSiteSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "CdnSiteKind"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site.ts#CdnSiteKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#HeaderRuleSchema",
+      "name": "HeaderRuleSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "A response header set on paths matching a glob.",
+      "fields": [
+        {
+          "name": "match",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().regex(/^[A-Za-z0-9-]+$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#MimeTypeRuleSchema",
+      "name": "MimeTypeRuleSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "A media type the CDN serves for paths matching a glob.",
+      "fields": [
+        {
+          "name": "match",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "contentType",
+          "type": "z.string().regex(/^[\\w.+-]+\\/[\\w.+-]+$/)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#RedirectRuleSchema",
+      "name": "RedirectRuleSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "A server-side redirect.",
+      "fields": [
+        {
+          "name": "from",
+          "type": "SitePath",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "to",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.union([z.literal(301), z.literal(302), z.literal(307), z.literal(308)])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site.ts#SitePath"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#SiteBuiltFromSchema",
+      "name": "SiteBuiltFromSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "The commit a published site was built from — the back-link every off-main graph carries (bean r6es).",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha",
+          "type": "z.string().regex(/^[0-9a-f]{7,40}$/)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#SitePath",
+      "name": "SitePath",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-scalar",
+      "doc": "A path within the site: relative, no leading slash, ending `/` for a directory route.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#SiteRoutesSchema",
+      "name": "SiteRoutesSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "Where a site's routes sit. `release` is the published root; `previews` is a",
+      "fields": [
+        {
+          "name": "release",
+          "type": "SitePath",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "previews",
+          "type": "SitePath.refine((p) => (p.match(/<slug>/g) ?? []).length === 1, { message: \"the previews route is a template with exact…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "subSites",
+          "type": "z.array(SubSiteSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site.ts#SitePath",
+        "cat-harness/schemas/site.ts#SubSiteSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#siteShape",
+      "name": "siteShape",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "undetermined",
+      "note": "{ /** The site's root URL. */ \"@id\": z.string().url(), routes: SiteRoutesSchema, builtFrom: SiteBuiltFromSchema.optional(), /** The files served — archive entr…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/site.ts#SubSiteSchema",
+      "name": "SubSiteSchema",
+      "module": "cat-harness/schemas/site.ts",
+      "kind": "zod-object",
+      "doc": "One instance's sub-site: the route it answers at, and the instance it is.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "SitePath",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instance",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site.ts#SitePath"
       ],
       "unresolved": [],
       "external": [
@@ -60096,30 +60169,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/rendered-impact.ts#PredictionCheck",
-      "to": "cat-harness/schemas/rendered-impact.ts#RenderedRole",
-      "via": "unconfirmed",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema",
-      "to": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema",
-      "via": "files",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema",
-      "to": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema",
-      "via": "undetermined",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
       "from": "cat-harness/schemas/role-graph.ts#ActorDef",
       "to": "cat-harness/schemas/skill-package.ts#ActorKind",
       "via": "kind",
@@ -60670,6 +60719,54 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site.ts#CdnSiteSchema",
+      "to": "cat-harness/schemas/site.ts#CdnSiteKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site.ts#RedirectRuleSchema",
+      "to": "cat-harness/schemas/site.ts#SitePath",
+      "via": "from",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site.ts#SiteRoutesSchema",
+      "to": "cat-harness/schemas/site.ts#SitePath",
+      "via": "previews",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site.ts#SiteRoutesSchema",
+      "to": "cat-harness/schemas/site.ts#SitePath",
+      "via": "release",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site.ts#SiteRoutesSchema",
+      "to": "cat-harness/schemas/site.ts#SubSiteSchema",
+      "via": "subSites",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site.ts#SubSiteSchema",
+      "to": "cat-harness/schemas/site.ts#SitePath",
+      "via": "path",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/skill-package.ts#ActorDefinitionSchema",

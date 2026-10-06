@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T12:02:21Z
-updated_at: 2026-09-20T12:02:21Z
+updated_at: 2026-10-06T06:36:17Z
 parent: folio-assistant-slw1
 ---
 
@@ -105,3 +105,18 @@ test settles it — does it need a folio to have anything to do? It scans
 - migrating `folio-tabular-records/v1` — both models now exist side by side;
 - what a sheet IS in the document graph (`0lmb`), which still blocks `p67i`'s
   manifest.
+
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
+## Owner ruling 2026-10-06: build BOTH extractors after the content split, against real data
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): wait for real data; CSV now, XLSX later; build both after the split. **The owner chose "build both after the split"** and corrected the premise that no tabular source exists, verbatim: *"note alerady we had tabular data w/ PR comments inport for Ref Arch.  Also DAKs have excel sheets.."*
+
+- **Real sources to build and test against:**
+  - the Public Comment CSV/XLSX import for litlfred/smart-ra (the DPI-H Reference Architecture, bean `v26p`; `folio-assistant-core/schemas/public-comment.ts`);
+  - the DAK Excel workbooks (smart-* IGs). These have several tables per sheet, which is exactly the location-on-sheet case.
+- **Order:** the content split across repos first (owner, 2026-10-06), then CSV and XLSX extractors replacing the stubs, then the `folio-tabular-records/v1` migration. The extractors land in folio-assistant-core.

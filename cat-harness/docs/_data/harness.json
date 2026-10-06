@@ -79,6 +79,7 @@
   },
   "declaredKinds": [
     "attestations",
+    "basic-cdn-site",
     "beans",
     "cat-harness",
     "code",
@@ -141,7 +142,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 924,
+      "count": 916,
       "unit": "beans"
     },
     {
@@ -268,7 +269,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1008,
+      "count": 1005,
       "unit": "documents"
     },
     {
@@ -300,7 +301,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 234,
+      "count": 233,
       "unit": "modules"
     },
     {
@@ -1608,7 +1609,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 18
+          "value": 19
         },
         {
           "id": "kinds",
@@ -1784,6 +1785,14 @@
           ],
           "where": "local",
           "path": "folio-assistant-sci/adapters/"
+        },
+        {
+          "id": "sci-scripts",
+          "kinds": [
+            "code"
+          ],
+          "where": "local",
+          "path": "folio-assistant-sci/scripts/"
         },
         {
           "id": "sci-tools",
@@ -2036,8 +2045,8 @@
     },
     {
       "name": "folio-assistant-core",
-      "title": "folio-assistant-core",
-      "label": "folio-assistant-core",
+      "title": "Folio Assistant Core",
+      "label": "Folio Assistant Core",
       "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph typology itself.",
       "footer": false,
       "needs": [
@@ -2081,24 +2090,24 @@
       "toneFrom": "avatar",
       "reads": "a leaf of paper with lines — the folio itself",
       "genericAvatar": false,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/folio-assistant-core/",
-      "hrefKind": "viewer",
+      "instantiated": true,
+      "href": "/folio-assistant-core/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 17
+          "value": 18
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 16
+          "value": 17
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 8
+          "value": 9
         }
       ],
       "visualisations": [
@@ -2117,6 +2126,11 @@
           "kind": "code",
           "note": "no viewer yet",
           "label": "Code"
+        },
+        {
+          "kind": "docs",
+          "path": "/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/",
+          "label": "Docs"
         },
         {
           "kind": "folio",
@@ -2185,6 +2199,14 @@
         }
       ],
       "subgraphs": [
+        {
+          "id": "folio-assistant-core-docs",
+          "kinds": [
+            "docs"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/docs/"
+        },
         {
           "id": "folio-assistant-core-translations",
           "kinds": [
@@ -2324,8 +2346,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, qa, tools, translation-sources, typologies, validators. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
+        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, qa, tools, translation-sources, typologies, validators. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2610,12 +2631,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 62
+          "value": 63
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 30
+          "value": 31
         },
         {
           "id": "views",
@@ -2634,6 +2655,11 @@
           "within": "docs",
           "note": "no viewer yet",
           "label": "Auto docs"
+        },
+        {
+          "kind": "basic-cdn-site",
+          "note": "no viewer yet",
+          "label": "Basic CDN site"
         },
         {
           "kind": "cat-harness",
@@ -2951,6 +2977,14 @@
           ],
           "where": "local",
           "path": "cat-harness/docs/"
+        },
+        {
+          "id": "site",
+          "kinds": [
+            "basic-cdn-site"
+          ],
+          "where": "local",
+          "path": "cat-harness/site/"
         },
         {
           "id": "swimlane-glossary",
@@ -3282,7 +3316,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 11 graph(s) with no published viewer — auto-docs, code, code-list, doc-group, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 12 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3584,6 +3618,11 @@
         "note": "no viewer yet"
       },
       {
+        "kind": "basic-cdn-site",
+        "label": "Basic CDN site",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "code",
         "label": "Code",
         "note": "no viewer yet"
@@ -3725,6 +3764,93 @@
     ]
   },
   "railScopes": [
+    {
+      "name": "folio-assistant-core",
+      "title": "Folio Assistant Core",
+      "href": "/folio-assistant-core/",
+      "folders": [
+        {
+          "kind": "block-kinds",
+          "label": "Block kinds",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "code",
+          "label": "Code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "docs",
+          "label": "Docs",
+          "path": "/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"
+        },
+        {
+          "kind": "folio",
+          "label": "Folio",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "glossary",
+          "label": "Glossary",
+          "path": "/glossary/"
+        },
+        {
+          "kind": "library",
+          "label": "Library",
+          "path": "/cat-harness/library/folio-assistant-core/"
+        },
+        {
+          "kind": "methodology",
+          "label": "Methodologies",
+          "path": "/methodologies/"
+        },
+        {
+          "kind": "processes",
+          "label": "Processes",
+          "path": "/processes/"
+        },
+        {
+          "kind": "qa",
+          "label": "QA",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "schemas",
+          "label": "Schemas",
+          "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "skills",
+          "label": "Skills",
+          "path": "/cat-harness/auto-docs/index/skills/core-skills/"
+        },
+        {
+          "kind": "tools",
+          "label": "Tools",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "translation-sources",
+          "label": "Translation sources",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "typologies",
+          "label": "Graph typologies",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "validators",
+          "label": "Validators",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "label": "Voices",
+          "path": "/cat-harness/voices/folio-assistant-core/"
+        }
+      ]
+    },
     {
       "name": "smart-immunizations",
       "title": "smart-immunizations",
@@ -4723,7 +4849,7 @@
           },
           {
             "key": "directories",
-            "summary": "15: folio-assistant-sci-qa-checkers, folio-assistant-sci-pipeline-plugins, folio-assistant-sc…"
+            "summary": "16: folio-assistant-sci-qa-checkers, folio-assistant-sci-pipeline-plugins, folio-assistant-sc…"
           },
           {
             "key": "needs",
@@ -4799,8 +4925,8 @@
       },
       {
         "name": "folio-assistant-core",
-        "title": "folio-assistant-core",
-        "group": "checkout",
+        "title": "Folio Assistant Core",
+        "group": "instantiated",
         "declaredIn": "folio-assistant-core/folio-assistant-core.json",
         "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/folio-assistant-core.json",
         "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/folio-assistant-core.json",
@@ -4808,6 +4934,10 @@
           {
             "key": "name",
             "summary": "folio-assistant-core"
+          },
+          {
+            "key": "title",
+            "summary": "Folio Assistant Core"
           },
           {
             "key": "description",
@@ -4835,7 +4965,7 @@
           },
           {
             "key": "directories",
-            "summary": "16: folio-assistant-core-translations, folio-assistant-core-block-typologies, folio-assistant…"
+            "summary": "17: folio-assistant-core-docs, folio-assistant-core-translations, folio-assistant-core-block-…"
           },
           {
             "key": "stickies",
@@ -5045,7 +5175,7 @@
           },
           {
             "key": "directories",
-            "summary": "28: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
+            "summary": "29: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
           },
           {
             "key": "associatedHarnesses",

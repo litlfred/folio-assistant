@@ -6,7 +6,7 @@
 
 The schemas of the content layer's [Node Kinds](https://litlfred.github.io/bootstrap/schemas/#node-kind), kept as their own [Subgraph](https://litlfred.github.io/bootstrap/schemas/#subgraph) until this repository is split.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-schemas`, holding `schemas`, `cat-harness`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-schemas`, holding `schemas`, `cat-harness`.
 
 | file | what it is | used by |
 |---|---|---|
