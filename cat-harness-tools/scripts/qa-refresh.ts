@@ -378,6 +378,38 @@ export function writerSideEffects(before: ReadonlySet<string>, after: ReadonlySe
 }
 
 /**
+ * Run each writer and restore, AFTER EACH ONE, the committed files that became
+ * dirty while it ran (bean `7how`).
+ *
+ * The window used to be the whole run — every writer, minutes — so an edit a
+ * person or another agent made to a clean file at any point during it read as
+ * "a writer rewrote this" and was checked out from `HEAD`. Measured on #2272,
+ * 2026-10-06: an uncommitted fix to `translation-tools.ts` was reverted
+ * mid-run and lost silently. Per writer, the window is that writer's own run,
+ * and every restored path is named with the writer it is charged to, so a
+ * loss can be seen and recovered rather than found later by grep. Commit
+ * source edits before building the working copy: this narrows the hazard, it
+ * cannot remove it, since a write by another process inside one writer's run
+ * is indistinguishable from the writer's own.
+ */
+export function runRestoring<W, R>(
+  writers: readonly W[],
+  run: (w: W) => R,
+  dirty: () => ReadonlySet<string>,
+  restore: (paths: string[]) => void,
+): { run: R; restored: string[] }[] {
+  const out: { run: R; restored: string[] }[] = [];
+  for (const w of writers) {
+    const before = dirty();
+    const r = run(w);
+    const side = writerSideEffects(before, dirty());
+    if (side.length) restore(side);
+    out.push({ run: r, restored: side });
+  }
+  return out;
+}
+
+/**
  * Split the declared writers by whether version control still carries their
  * output — the per-writer form of the two modes (module docblock, bean `tqjj`).
  *
@@ -461,12 +493,14 @@ function main(argv: string[]): number {
   for (const r of roots) mkdirSync(join(repoRoot, r), { recursive: true });
   // A writer may rewrite committed files beside its QA output (bean `72a8`);
   // restore those so the gates judge the tree that was committed.
-  const before = dirtyTracked(repoRoot);
-  for (const w of unbacked) runs.push(runWriter(repoRoot, w));
-  const restore = writerSideEffects(before, dirtyTracked(repoRoot));
+  const restored = runRestoring(unbacked, (w) => runWriter(repoRoot, w), () => dirtyTracked(repoRoot), (paths) =>
+    git(repoRoot, ["checkout", "--", ...paths]),
+  );
+  for (const r of restored) runs.push(r.run);
+  const restore = restored.flatMap((r) => r.restored);
   if (restore.length) {
-    git(repoRoot, ["checkout", "--", ...restore]);
-    console.log(`qa:refresh: restored ${restore.length} committed file(s) a writer rewrote (first: ${restore[0]}) — the working copy adds only ignored files`);
+    console.log(`qa:refresh: restored ${restore.length} committed file(s) a writer rewrote — the working copy adds only ignored files:`);
+    for (const r of restored) for (const p of r.restored) console.log(`  restored ${p}  (rewritten while ${r.run.id} ran)`);
   }
   const report = assess({ mode, inventory: movedInventory(repoRoot, roots), runs, commit, tracked });
   const out = resolve(one("report") ?? join(repoRoot, "build", "qa-refresh.json"));
