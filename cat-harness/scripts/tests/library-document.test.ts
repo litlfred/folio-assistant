@@ -22,17 +22,22 @@ function entry(structure: object, extra: Record<string, string> = {}): string {
 }
 
 const base = {
-  source: { pages: 4 },
-  metadata: { title: "A Report" },
+  _schema: "pdf-structure/v1",
+  doc_id: "r",
+  source: { file: "r.pdf", sha256: "0".repeat(64), bytes: 1, mtime: null, mimetype_sniffed: "application/pdf", mimetype_source: "magic-bytes", pages: 4 },
+  metadata: { title: "A Report", docinfo: {} },
   toc_source: "inferred",
-  diagnostics: { toc_inferred_method: "font", figure_sequence_gaps: ["table 2"] },
+  diagnostics: {
+    pages_without_text: 0, likely_scanned: false, toc_entries: 2, sections: 2, chars_total: 10,
+    toc_inferred_method: "font", figure_sequence_gaps: ["table 2"],
+  },
   toc: [
     { level: 1, title: "Introduction", page: 2, number: "1", source: "inferred", confidence: 0.9, evidence: ["style", "number"], page_label: "1" },
     { level: 1, title: "Methods", page: 3, number: "2", source: "inferred", confidence: 0.55, evidence: ["style"], page_label: "2" },
   ],
   sections: [
-    { id: "sec-000-1-introduction", number: "1", title: "Introduction", level: 1, page_start: 2, page_end: 2, n_words: 3, label_start: "1", label_end: "1" },
-    { id: "sec-001-2-methods", number: "2", title: "Methods", level: 1, page_start: 3, page_end: 4, n_words: 200 },
+    { id: "sec-000-1-introduction", number: "1", title: "Introduction", level: 1, page_start: 2, page_end: 2, n_chars: 15, n_words: 3, label_start: "1", label_end: "1" },
+    { id: "sec-001-2-methods", number: "2", title: "Methods", level: 1, page_start: 3, page_end: 4, n_chars: 1000, n_words: 200 },
   ],
   pages: [{ physical: 1, label: null, source: null, confidence: 0, evidence: [] }, { physical: 2, label: "1", source: "printed", confidence: 0.85, evidence: ["printed", "pdf-labels"] }],
   figures: [{ kind: "table", number: "1", title: "Scores", page: 3, confidence: 0.8, evidence: ["referenced"], page_label: "2" }],

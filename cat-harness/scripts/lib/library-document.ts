@@ -42,6 +42,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { readStructure } from "../../schemas/document-structure.ts";
 
 /** How much of a section's text an extract carries. */
 export const EXTRACT_CHARS = 420;
@@ -156,8 +157,22 @@ export function extractOf(text: string | null, max = EXTRACT_CHARS): { extract: 
  * `structure.json`. `withheld` suppresses every verbatim extract.
  */
 export function readEntryDocument(dir: string, id: string, opts: { withheld?: boolean } = {}): DocumentView | null {
-  const s = readJson<RawStructure>(join(dir, "structure.json"));
-  if (!s || typeof s !== "object") return null;
+  // Through the shared accessor (bean rkqp): it knows every structure
+  // variant. A pdf structure carries the TOC, pages and figures this view
+  // shows; a notebook or text structure shows its sections only.
+  const read = readStructure(dir);
+  if ("reason" in read) return null;
+  const s: RawStructure = read.variant === "pdf"
+    ? (read.raw as unknown as RawStructure)
+    : {
+        metadata: { title: read.title ?? undefined },
+        toc_source: (read.raw as { toc_source?: string }).toc_source,
+        sections: read.sections.map((x) => ({
+          id: x.id, number: x.number, title: x.title, level: x.level, n_words: x.n_words,
+          page_start: x.locator.kind === "pages" ? x.locator.start : null,
+          page_end: x.locator.kind === "pages" ? x.locator.end : null,
+        })),
+      };
   const withheld = !!opts.withheld;
 
   const summaries = new Map<string, { text: string; status: string }>();

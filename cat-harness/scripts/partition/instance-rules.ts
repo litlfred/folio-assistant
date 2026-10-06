@@ -763,6 +763,8 @@ export const RULES: Rule[] = [
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/lib/library-withheld-view.ts", // that viewer's withheld rows + banner (#1794), embedded verbatim
       "scripts/lib/library-address.ts",    // that viewer's entry-IRI path parser (#1881), embedded verbatim
+      "scripts/lib/library-document.ts",   // that viewer's Document panel: structure.json → doc.json (#2302)
+      "scripts/library-keywords.ts",        // the library's LSI keywords per section and document (#2302)
       "scripts/gen-uploads-viz.ts",         // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer

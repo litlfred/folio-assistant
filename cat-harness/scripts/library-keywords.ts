@@ -31,6 +31,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { buildTermMatrix, keywordsOf, tokenize, type Keyword } from "../content/pipeline/lsi.ts";
+import { readStructure } from "../schemas/document-structure.ts";
+import type { PdfStructure } from "../schemas/pdf-structure.ts";
 import { readLibraryGraph } from "./library-graph.ts";
 import { unitsOf } from "./lsi.ts";
 
@@ -79,19 +81,16 @@ export function libraryKeywords(libRoot: string, repoRoot = ROOT): Map<string, K
     bySlug.set(slug, e);
   });
   for (const [slug, e] of bySlug) {
-    const structure = (() => {
-      try {
-        return JSON.parse(readFileSync(join(libRoot, slug, "structure.json"), "utf8"));
-      } catch {
-        return undefined;
-      }
-    })();
-    const titleOf = new Map<string, string>(
-      (structure?.sections ?? []).map((s: { id: string; title: string }) => [s.id, s.title]),
-    );
+    // Headings through the shared accessor (bean rkqp). No structure, or
+    // one that will not read, means no heading evidence — never no keywords.
+    const read = readStructure(join(libRoot, slug));
+    const structure = "reason" in read ? undefined : read;
+    const titleOf = new Map<string, string>((structure?.sections ?? []).map((s) => [s.id, s.title]));
+    const raw = structure?.variant === "pdf" ? (structure.raw as PdfStructure) : undefined;
     const docHeadings: string[] = [
-      ...(structure?.toc ?? []).map((t: { title: string }) => t.title),
-      ...(structure?.figures ?? []).map((f: { title: string }) => f.title),
+      ...(raw?.toc ?? []).map((t) => t.title),
+      ...(raw?.figures ?? []).map((f) => f.title),
+      ...(raw ? [] : [...titleOf.values()]),
     ];
     const sections: Record<string, ScoredKeyword[]> = {};
     for (const [sid, j] of [...e.sections].sort(([a], [b]) => a.localeCompare(b))) {
