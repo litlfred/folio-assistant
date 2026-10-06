@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nf2z
 title: 'WORKFLOW TOOLS SEE NO PROCESS: from the repo root workflow_list reports none — diagrams live in dependencies, the resolver is root-only'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-29T22:32:34Z
-updated_at: 2026-09-29T22:35:14Z
+updated_at: 2026-10-06T19:30:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -22,3 +22,9 @@ Found 2026-09-29 while starting xlg2 (bean `xlg2`, the first real sample-import 
 - [x] the role graph resolves the same way, root first
 - [x] instances are still read from and written to the ROOT's `beans/workflows/`
 - [x] a test: from the repository root `workflow_list` lists `sample-import`, and `workflow_start` resolves a dependency's process
+
+## Summary of Changes
+
+Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
+
+- `bun test cat-harness-tools/scripts/tests/workflow-overlay.test.ts` → pass (the overlay test that box 4 names: `workflow_list` from the root lists `sample-import`).

@@ -3401,12 +3401,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "13 · Cutover: delete the parent's copy"
+          "@value": "13 · Cutover: retire the parent's copy"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences."
+          "@value": "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it (owner, 2026-10-06). Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not."
         }
       ],
       "skos:notation": "Task_Cutover",
