@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 163,
+      "count": 162,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/check-avatar-instances.ts",
@@ -479,10 +479,6 @@
           "names": 3
         },
         {
-          "file": "cat-harness/scripts/special-branches.json",
-          "names": 5
-        },
-        {
           "file": "cat-harness/scripts/staging-banner.ts",
           "names": 3
         },
@@ -894,21 +890,21 @@
       "entries": [
         {
           "instances": 14,
-          "occurrences": 63087,
+          "occurrences": 63084,
           "allowed": 0,
-          "wrongDirection": 4568,
-          "wrongDirectionFiles": 530,
-          "exempt": 14845,
-          "namesRepository": 42420,
+          "wrongDirection": 4565,
+          "wrongDirectionFiles": 529,
+          "exempt": 14843,
+          "namesRepository": 42422,
           "undetermined": 1254,
           "pendingFiles": 43,
-          "pendingOccurrences": 320
+          "pendingOccurrences": 323
         }
       ]
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 945,
+      "count": 940,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -3611,26 +3607,6 @@
           "target": "who-iris"
         },
         {
-          "file": "cat-harness/scripts/special-branches.json",
-          "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness/scripts/special-branches.json",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness/scripts/special-branches.json",
-          "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/scripts/special-branches.json",
-          "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/scripts/special-branches.json",
-          "target": "smart-trust"
-        },
-        {
           "file": "cat-harness/scripts/staging-banner.ts",
           "target": "smart-base"
         },
@@ -4693,5 +4669,5 @@
       ]
     }
   },
-  "total": 1160
+  "total": 1154
 }

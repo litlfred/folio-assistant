@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 933,
+      "count": 935,
       "unit": "beans"
     }
   },
@@ -3263,6 +3263,20 @@
       "updatedAt": "2026-10-05T05:11:15Z",
       "preview": "Owner ruling 2026-10-05: 'trim duplicated steps'. Measured 2026-10-04 on PR #1898's merge rounds: one round cost ~45 min — merge:main incl. its regen 5–10 min; skill:register 1–2 min; a standalone regen after merge:main 4–5 min (redundant, same tree); full local gates ~24 min (1429 s, bun test on 3–4 cores; CI shards 4 ways in ~5 min); fresh-checkout regen no-op 4–5 min (duplicates CI's clean chec",
       "file": "beans/defs/folio-assistant-7xmc--merge-round-trim-write-the-owner-approved-trimmed.md"
+    },
+    {
+      "id": "folio-assistant-7zz1",
+      "title": "STANDALONE: whole-checkout tests move to a declared test home in the top-level folio-assistant instance",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-iirv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T09:15:40Z",
+      "updatedAt": "2026-10-06T09:15:52Z",
+      "preview": "Owner ruling 2026-10-06 ~08:50Z, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze) and recorded on 0r7u: \"Top-level instance\". The parent folio-assistant checkout, which holds every layer, gets a DECLARED test home: a directory in the top-level instance's declaration, never a literal path in a runner. Basis: whatever names every layer belongs at the top, so each layer stays st",
+      "file": "beans/defs/folio-assistant-7zz1--standalone-whole-checkout-tests-move-to-a-declared-te.md"
     },
     {
       "id": "folio-assistant-8107",
@@ -11345,6 +11359,20 @@
       "file": "beans/defs/folio-assistant-uvt0--who-iris-replica-the-locale-band-shifts-the-page-5.md"
     },
     {
+      "id": "folio-assistant-uxn1",
+      "title": "STANDALONE: code assumes cat-harness sits at <repo>/cat-harness (role-graph scenariosSubdir, skill-definitions-dir, gen-navbar-include)",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-iirv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T09:15:52Z",
+      "updatedAt": "2026-10-06T09:15:52Z",
+      "preview": "Cluster R of the cat-harness standalone rehearsal (#2268, ho66): about 10 tests fail standalone because code builds paths as join(repoRoot, 'cat-harness', ...) instead of resolving the instance root from its declaration. Standalone, cat-harness IS the repository root, so no actors are found (role-graph.ts scenariosSubdir) and prov-record fails twice. The same assumption is in skill-definitions-dir",
+      "file": "beans/defs/folio-assistant-uxn1--standalone-code-assumes-cat-harness-sits-at-repoca.md"
+    },
+    {
       "id": "folio-assistant-uyp8",
       "title": "Ingest CODATA as a library dataset with provenance, and the skills/tools to ingest reference datasets",
       "status": "completed",
@@ -14821,14 +14849,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 246,
+        "total": 248,
         "closed": 97,
-        "open": 149,
-        "inProgress": 81,
-        "todo": 67,
+        "open": 151,
+        "inProgress": 82,
+        "todo": 68,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3943089430894309
+        "share": 0.3911290322580645
       },
       {
         "id": "folio-assistant-yg29",
@@ -14847,8 +14875,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 527,
-    "coveredOpen": 524,
+    "openTotal": 529,
+    "coveredOpen": 526,
     "duplicateIds": 0
   }
 }

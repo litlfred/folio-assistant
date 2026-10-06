@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 70 of 70 declared kind(s), 242 gate(s), 77 criteria.",
-      "count": 70,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 72 of 72 declared kind(s), 242 gate(s), 77 criteria.",
+      "count": 72,
       "entries": [
         {
           "kind": "attestations",
@@ -53,6 +53,18 @@
           ],
           "typed": false,
           "hasFiles": true
+        },
+        {
+          "kind": "basic-cdn-site",
+          "state": "stored",
+          "directories": [
+            "cat-harness/site"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
         },
         {
           "kind": "bean-defs",
@@ -288,6 +300,16 @@
           ],
           "typed": true,
           "hasFiles": true
+        },
+        {
+          "kind": "cdn-site",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
         },
         {
           "kind": "code",
@@ -1458,10 +1480,15 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 10,
+      "count": 11,
       "entries": [
         {
           "kind": "binary-release",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "cdn-site",
           "criteria": 0,
           "gates": []
         },
@@ -1528,5 +1555,5 @@
       "entries": []
     }
   },
-  "total": 80
+  "total": 83
 }
