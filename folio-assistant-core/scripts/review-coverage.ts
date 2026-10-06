@@ -14,6 +14,15 @@
  * - `blocks.json`: each head block's current hash;
  * - `review-comments.json`: open defects, and the ingested verdicts.
  *
+ * - `rendered-impact.json` (`--rendered`): the pages the change alters, each
+ *   pinned, and the inputs no renderer could place (bean `bnjs`);
+ * - `rendered-measured.json` (`--measured`): what the build measured and the
+ *   prediction missed. Absent means NOT MEASURED, and the facts say so.
+ *
+ * Every fact is always emitted, because the decision engine refuses a fact it
+ * is not given; `rendered` and `measured` say whether the counts beside them
+ * were computed, so an uncomputed count is never read as 0.
+ *
  * With `--todos`, verdicts committed under the todos graph's declared
  * `review-verdicts` directory are read too. They win over the published copy,
  * as committed comment statuses do.
@@ -40,7 +49,17 @@ import { dirname, join, relative, resolve } from "node:path";
 
 import { TODO_GRAPH_FILE, nodeOfKind, parseTodoGraph } from "../../cat-harness/schemas/todo-graph.js";
 import { ReviewCommentsFileSchema } from "../schemas/review-comment.js";
-import { REVIEW_VERDICT_SCHEMA, ReviewVerdictSchema, computeCoverage, type Coverage, type ReviewVerdict } from "../schemas/review-verdict.js";
+import { missedFiles, RenderedImpactSchema, RenderedMeasuredSchema } from "../../cat-harness/schemas/rendered-impact.js";
+import {
+  REVIEW_VERDICT_SCHEMA,
+  ReviewVerdictSchema,
+  computeCoverage,
+  type Coverage,
+  type MeasuredStatus,
+  type RenderedFacts,
+  type RenderedStatus,
+  type ReviewVerdict,
+} from "../schemas/review-verdict.js";
 import { featureBranch } from "./review-comment-move.js";
 
 export const REVIEW_COVERAGE_SCHEMA = "folio-review-coverage/v1" as const;
@@ -71,10 +90,42 @@ export function readCommittedVerdicts(dir: string): Map<string, ReviewVerdict> {
   return out;
 }
 
+/**
+ * The rendered half, from the build's published files: `rendered-impact.json`
+ * (one impact or an array, one per renderer) and, when the build was
+ * measured, `rendered-measured.json`.
+ */
+export function renderedFacts(impacts: unknown, measured?: unknown): RenderedFacts {
+  const list = (Array.isArray(impacts) ? impacts : [impacts]).map((i) => RenderedImpactSchema.parse(i));
+  const m = measured === undefined ? undefined : RenderedMeasuredSchema.parse(measured);
+  return {
+    files: list.flatMap((i) => i.files),
+    undetermined: list.flatMap((i) => i.undetermined),
+    ...(m ? { measured: { status: m.status, missed: missedFiles(m) } } : {}),
+  };
+}
+
+/** What a `page:` or `input:` verdict may name, each with the pin it is recorded against. */
+export function pinMaps(r: RenderedFacts): { pages: Map<string, string>; inputs: Map<string, string> } {
+  const pages = new Map<string, string>();
+  for (const f of [...r.files, ...(r.measured?.missed ?? [])]) if (f.hash && !pages.has(f.path)) pages.set(f.path, f.hash);
+  const inputs = new Map<string, string>();
+  for (const u of r.undetermined) if (u.hash) inputs.set(u.input, u.hash);
+  return { pages, inputs };
+}
+
 export interface CoverageFile extends Coverage {
   $schema: typeof REVIEW_COVERAGE_SCHEMA;
-  /** Exactly what `workflow_complete` takes for `GW_Covered`. */
-  facts: { uncoveredBlocks: number; openDefects: number };
+  /** Exactly what `workflow_complete` takes for `GW_Covered`: every fact, always. */
+  facts: {
+    uncoveredBlocks: number;
+    openDefects: number;
+    rendered: RenderedStatus;
+    unreviewedPages: number;
+    undeterminedInputs: number;
+    measured: MeasuredStatus;
+    missedPages: number;
+  };
 }
 
 /** The whole computation, with no I/O: tested directly. */
@@ -83,6 +134,7 @@ export function buildCoverage(o: {
   blocks: Record<string, { hash: string }>;
   reviewComments: unknown;
   committed?: ReadonlyMap<string, ReviewVerdict>;
+  rendered?: RenderedFacts;
 }): CoverageFile {
   const rc = ReviewCommentsFileSchema.parse(o.reviewComments);
   const byId = new Map(rc.verdicts.map((v) => [v.id, v]));
@@ -92,8 +144,21 @@ export function buildCoverage(o: {
     blocks: new Map(Object.entries(o.blocks).map(([l, b]) => [l, b.hash])),
     verdicts: [...byId.values()],
     comments: rc.comments,
+    rendered: o.rendered,
   });
-  return { $schema: REVIEW_COVERAGE_SCHEMA, ...c, facts: { uncoveredBlocks: c.uncoveredBlocks, openDefects: c.openDefects } };
+  return {
+    $schema: REVIEW_COVERAGE_SCHEMA,
+    ...c,
+    facts: {
+      uncoveredBlocks: c.uncoveredBlocks,
+      openDefects: c.openDefects,
+      rendered: c.rendered,
+      unreviewedPages: c.unreviewedPages.length,
+      undeterminedInputs: c.undeterminedInputs.length,
+      measured: c.measured,
+      missedPages: c.missedPages.length,
+    },
+  };
 }
 
 /**
@@ -116,6 +181,7 @@ export function writeVerdicts(dir: string, verdicts: readonly ReviewVerdict[]): 
 
 const USAGE = `usage: bun run folio-assistant-core/scripts/review-coverage.ts
   --changeset <changeset.json> --blocks <blocks.json> --comments <review-comments.json>
+  [--rendered <rendered-impact.json> [--measured <rendered-measured.json>]]
   [--out <coverage.json>]
   [--todos <todos graph root>]   read verdicts committed on the feature branch
   [--commit [--base main]]       write the published verdicts into the declared
@@ -140,7 +206,10 @@ if (import.meta.main) {
     const dir = opt("todos") ? verdictsDir(resolve(opt("todos")!)) : undefined;
     const committed = dir ? readCommittedVerdicts(dir) : undefined;
     const reviewComments = read(cm);
-    const f = buildCoverage({ changeset: read(cs), blocks: read(bl), reviewComments, committed });
+    const rendered = opt("rendered") && existsSync(opt("rendered")!)
+      ? renderedFacts(read(opt("rendered")!), opt("measured") && existsSync(opt("measured")!) ? read(opt("measured")!) : undefined)
+      : undefined;
+    const f = buildCoverage({ changeset: read(cs), blocks: read(bl), reviewComments, committed, rendered });
     if (opt("out")) {
       mkdirSync(dirname(resolve(opt("out")!)), { recursive: true });
       writeFileSync(opt("out")!, JSON.stringify(f, null, 2) + "\n");
@@ -151,6 +220,14 @@ if (import.meta.main) {
     );
     for (const l of f.uncovered.slice(0, 20)) console.error(`  · no verdict: ${l}`);
     if (f.uncovered.length > 20) console.error(`  · … and ${f.uncovered.length - 20} more`);
+    if (f.rendered === "absent") console.error("  rendered pages: NOT KNOWN — no rendered-impact.json given");
+    else {
+      console.error(`  rendered pages: ${f.unreviewedPages.length} unreviewed, ${f.undeterminedInputs.length} undetermined input(s) unreviewed`);
+      for (const p of f.unreviewedPages.slice(0, 20)) console.error(`  · page not reviewed: ${p}`);
+      for (const p of f.undeterminedInputs) console.error(`  · input not placed or reviewed: ${p}`);
+    }
+    if (f.measured === "known") for (const p of f.missedPages) console.error(`  · missed by the prediction, not reviewed: ${p}`);
+    else console.error(`  measured: ${f.measured === "not-base" ? "against a before side that is not the base, so missed pages are not counted" : "NOT MEASURED"}`);
     if (branch && dir) {
       const published = ReviewCommentsFileSchema.parse(reviewComments).verdicts.filter((v) => !committed?.has(v.id));
       const paths = writeVerdicts(dir, published).map((p) => relative(process.cwd(), p));

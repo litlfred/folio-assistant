@@ -232,13 +232,37 @@ role: clinical-sme
   touched. The old verdict is kept and shown as "on an earlier version".
 - A verdict on a label the head does not carry is malformed, not recorded.
 
+**Pages and inputs no block reaches** (bean `bnjs`). A page changed by a
+manifest or media file, the comment pages and every FHIR IG page have no
+block to give a verdict on, and an input no renderer could place may have
+changed any page. The same tag takes them, beside or instead of `block:`:
+
+```
+page: dpi-h-ra/index.html
+verdict: ok
+```
+
+```
+input: sushi-config.yaml
+waive: only the version string changed
+```
+
+`page:` names a path in the preview's `rendered-impact.json`, or a page the
+build measured and the prediction missed; `input:` names one of its
+undetermined inputs. Each is pinned to that file's `hash` there, so it
+reopens when an input that reaches it is edited. A page or input the build
+does not list, or a build that published no rendered impact, is reported
+malformed with the reason. See [`rendered-impact`](../../sdlc/sdlc-core/rendered-impact.md).
+
 The `folio-review-comments` Tool ingests verdicts into the same
 `review-comments.json`, as its `verdicts` array
 (`folio-review-verdict/v1`, `folio-assistant-core/schemas/review-verdict.ts`).
 
-**Coverage.** The `folio-review-coverage` Tool computes the two facts
-`GW_Covered` reads (`uncoveredBlocks`, `openDefects`) and prints them as JSON
-on stdout, ready for `workflow_complete`. With `--todos <root> --commit` it
+**Coverage.** The `folio-review-coverage` Tool computes every fact
+`GW_Covered` reads (`uncoveredBlocks`, `openDefects`, and, with `--rendered`
+and `--measured`, the page counts with their `rendered` and `measured`
+statuses) and prints them as JSON on stdout, ready for `workflow_complete`.
+Every fact is always printed, because the engine refuses a missing one. With `--todos <root> --commit` it
 writes the verdicts into the todos graph's declared `review-verdicts`
 directory and commits them to the **feature branch**, as comment statuses
 are, and it refuses the base branch and a detached HEAD. `init-folio`

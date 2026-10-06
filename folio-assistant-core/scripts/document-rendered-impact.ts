@@ -33,6 +33,9 @@
  * | `document-site` | `<slug>/index.html`, `<slug>/media/*`, `outline.json`, `index.html` | a changed block, a document/chapter/section manifest, a media file |
  * | `public-comment-site` | `public-comments/index.html` and the comment notes on each `<slug>/index.html` | the public-comment store |
  *
+ * Every file is pinned (`hash`) to the blobs of the changed inputs that
+ * reach it, at head, so a page verdict counts only for the version reviewed.
+ *
  * ## What it cannot place, and says so
  *
  * A changed file that is neither a block the ChangeSet names, a media file,
@@ -51,6 +54,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import {
+  pinImpact,
   RENDERED_IMPACT_TAG,
   RenderedImpactSchema,
   type RenderedFile,
@@ -193,6 +197,18 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
 
 const readJson = (p: string) => JSON.parse(readFileSync(p, "utf-8"));
 
+/** Each path's blob id at `head`, read in one `git ls-tree`; a path absent there is absent from the map. */
+function gitBlobs(root: string, head: string, paths: string[]): Map<string, string> {
+  const out = new Map<string, string>();
+  if (!paths.length) return out;
+  const text = execFileSync("git", ["-C", root, "ls-tree", "-r", head, "--", ...paths], { encoding: "utf-8" });
+  for (const line of text.split("\n")) {
+    const m = line.match(/^\d+ blob ([0-9a-f]+)\t(.+)$/);
+    if (m) out.set(m[2]!, m[1]!);
+  }
+  return out;
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const arg = (k: string) => {
@@ -214,7 +230,14 @@ if (import.meta.main) {
     : computeChangeSet({ repoRoot: root, folio: arg("--folio") ?? "folio", base: base ?? "origin/main", head: head ?? "HEAD" });
   const olPath = arg("--outline");
   const outline = olPath && existsSync(olPath) ? (readJson(olPath) as OutlineLike) : undefined;
-  const impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site") });
+  // Pinned to the inputs' blobs at head, so a page verdict is about this version (see rendered-impact.ts, "A PIN").
+  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site") });
+  try {
+    const blobs = gitBlobs(root, head ?? "HEAD", changed);
+    impacts = impacts.map((i) => pinImpact(i, (p) => blobs.get(p)));
+  } catch (e) {
+    console.error(`not pinned: ${(e as Error).message.split("\n")[0]}`);
+  }
   const json = JSON.stringify(impacts, null, 2) + "\n";
   const out = arg("--out");
   if (out) writeFileSync(out, json);

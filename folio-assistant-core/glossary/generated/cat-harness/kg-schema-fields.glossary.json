@@ -8638,6 +8638,13 @@
       "status": "candidate"
     },
     {
+      "id": "rendered-impact.renderedfileschema.hash",
+      "prefLabel": "RenderedFileSchema.hash",
+      "definition": "What a review of this file is pinned to (see \"A PIN\"): for a `cone` file, a hash of the blobs of the changed inputs on `via`; for a `build-diff` file, its content hash. Absent when nothing pinned it.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.hash",
+      "status": "candidate"
+    },
+    {
       "id": "rendered-impact.renderedfileschema.path",
       "prefLabel": "RenderedFileSchema.path",
       "definition": "Path in the BUILT site, relative to its root, e.g. `ast/artifact/PlanDefinition-X.html`.",
@@ -8670,6 +8677,27 @@
       "prefLabel": "RenderedImpactSchema.site",
       "definition": "The site the paths are relative to, as a reader finds it (an instance, a URL path).",
       "source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.site",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedmeasuredschema.basecommit",
+      "prefLabel": "RenderedMeasuredSchema.baseCommit",
+      "definition": "The commit the PR's change is measured against.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.baseCommit",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedmeasuredschema.beforecommit",
+      "prefLabel": "RenderedMeasuredSchema.beforeCommit",
+      "definition": "The commit the before side was built from, as its publish manifest records it.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.beforeCommit",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.undeterminedschema.hash",
+      "prefLabel": "UndeterminedSchema.hash",
+      "definition": "The input's blob at head, so a waiver of it is pinned to this version.",
+      "source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.hash",
       "status": "candidate"
     },
     {

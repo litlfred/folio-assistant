@@ -99,10 +99,27 @@ names none above it.
   the review list, not only the pages the author mentions. Use
   [`before-after-preview`](before-after-preview.md) for the pairs, and
   [`visual-diff`](visual-diff.md) for figures.
-- **Gate**: the coverage gate counts every review-list page that has no
-  verdict, as it counts unreviewed blocks. Two cases block approval until a
-  person waives them with a reason: any `missed` file, and any
-  `undetermined` input with `scope: all`.
+- **Measure**: the staging job diffs its build against `main`'s published
+  site (`measure-rendered-impact.ts`, before the banner goes on) and writes
+  `rendered-measured.json`: what changed, and what the prediction MISSED.
+  Only when that site was built from the PR's base does it count
+  (`status: known`); otherwise main's own changes would read as misses
+  (`not-base`). No published main site, no file: "not measured", never
+  "nothing missed".
+- **Gate**: `review-coverage-gate.dmn` reads three page counts beside the
+  block counts, each with a status fact so an uncomputed count is never 0:
+  - `unreviewedPages`: review-list files nobody has reviewed at their
+    current pin. A page is reviewed by a `page:` verdict, or block by block
+    when every block anchored on it has a verdict; a data file goes with a
+    reviewed page that shares its pin.
+  - `undeterminedInputs`: inputs no renderer placed, until an `input:`
+    verdict or waiver (with a reason) says somebody looked.
+  - `missedPages`: measured but not predicted, until a `page:` verdict.
+
+  A pin is the hash of the git blobs of the changed inputs on a file's
+  `via` (`pinImpact`), never the built bytes, which carry a per-build
+  banner. An edit after review reopens exactly the pages it touched.
+  The tag is in [`review-comments`](../../authoring/authoring-core/review-comments.md).
 
 ## Adding a renderer
 
