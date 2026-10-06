@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/Recommendation",
+  "definitions": {
+    "Recommendation": {
+      "type": "object",
+      "properties": {
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "default": "review-committee-member",
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "accepted-modified",
+            "not-accepted",
+            "noted",
+            "deferred"
+          ]
+        },
+        "rationale": {
+          "default": "",
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "by",
+        "code",
+        "at"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-fermat-v46nqs/folio-assistant-core/schema/zod/public-comment/RecommendationSchema.schema.json",
+  "title": "RecommendationSchema",
+  "description": "Generated from `RecommendationSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/laughing-fermat-v46nqs",
+    "sha": "9ee8462e8539d66395bc47d19fd43b46dda547bb",
+    "pr": "2256/merge",
+    "run": "37422819175"
+  }
+}
