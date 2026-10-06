@@ -481,7 +481,7 @@ describe("the default asks the WHOLE gate set — bean `i1q7`, item 3", () => {
   });
 });
 
-// Bean `wczm` item 1: regen-vs-CI parity for the two gates merge trains 2 and 3
+// Bean `wczm` item 1: regen-vs-CI parity for the gates merge trains 2 and 3
 // found unrepairable (#1876, #1883). Each must reach regen from the REAL
 // workflow, with a writer that exists — or regen calls the tree current and CI
 // goes red on it.
@@ -489,7 +489,9 @@ describe("regen can repair what trains 2 and 3 could not — bean wczm", () => {
   const pairs = repairableGates(loadGates(REPO, {}), SCRIPTS);
   for (const [check, writer] of [
     ["check:l1-complete:check", "l1-complete:write"],
-    ["smart-base:smart-kg-l1:check", "smart-base:smart-kg-l1:all"],
+    // The second pair, `smart-base:smart-kg-l1:check` / `:all`, left with
+    // smart-base at the SMART separation cutover (bean `hupw`): the gate now
+    // belongs to litlfred/smart-base, which owns the content it checked.
   ] as const) {
     test(`${check} is a gate regen asks, and ${writer} is its writer`, () => {
       expect(pairs.find((p) => p.check === check)).toEqual({ check, writer });
