@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Participant",
+  "definitions": {
+    "Participant": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "person",
+            "agent"
+          ]
+        },
+        "id": {
+          "description": "Session id, handle or name, where one is known. Absent is normal for a person.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-foaq-fsh-guts-viz-tracked/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+  "title": "ParticipantSchema",
+  "description": "Generated from `ParticipantSchema` in schemas/discussion.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/foaq-fsh-guts-viz-tracked",
+    "sha": "cea8be147257bd778b1d75c6d709eec9822f67d5",
+    "pr": "2315/merge",
+    "run": "37516574837"
+  }
+}

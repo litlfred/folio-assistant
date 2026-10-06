@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/RequirementLevel",
+  "definitions": {
+    "RequirementLevel": {
+      "type": "string",
+      "enum": [
+        "SHALL",
+        "SHOULD",
+        "MAY",
+        "SHALL NOT"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-foaq-fsh-guts-viz-tracked/bootstrap-tools/schema/zod/requirement/RequirementLevelSchema.schema.json",
+  "title": "RequirementLevelSchema",
+  "description": "Generated from `RequirementLevelSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/foaq-fsh-guts-viz-tracked",
+    "sha": "cea8be147257bd778b1d75c6d709eec9822f67d5",
+    "pr": "2315/merge",
+    "run": "37516574837"
+  }
+}

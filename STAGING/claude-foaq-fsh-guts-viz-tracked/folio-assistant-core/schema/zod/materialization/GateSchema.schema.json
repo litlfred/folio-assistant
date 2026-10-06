@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/Gate",
+  "definitions": {
+    "Gate": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "unknown",
+            "refused",
+            "permitted"
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decidedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decidedBy": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "verdict",
+        "basis"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-foaq-fsh-guts-viz-tracked/folio-assistant-core/schema/zod/materialization/GateSchema.schema.json",
+  "title": "GateSchema",
+  "description": "Generated from `GateSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/foaq-fsh-guts-viz-tracked",
+    "sha": "cea8be147257bd778b1d75c6d709eec9822f67d5",
+    "pr": "2315/merge",
+    "run": "37516574837"
+  }
+}

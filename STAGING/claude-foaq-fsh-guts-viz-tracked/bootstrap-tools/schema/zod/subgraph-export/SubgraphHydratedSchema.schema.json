@@ -1,0 +1,157 @@
+{
+  "$ref": "#/definitions/SubgraphHydrated",
+  "definitions": {
+    "SubgraphHydrated": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "pattern": "\\/subgraph\\/(?:[^/]+\\/(?:.+\\/)?)?$"
+        },
+        "@type": {
+          "type": "string",
+          "const": "bootstrap:Subgraph"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "holdsGraph": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^bootstrap:graphTypology\\/[a-z][a-z0-9-]*$"
+          }
+        },
+        "@context": {
+          "type": "string",
+          "format": "uri"
+        },
+        "hasMember": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "@id": {
+                "type": "string",
+                "format": "uri"
+              },
+              "@type": {
+                "type": "string",
+                "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+              }
+            },
+            "required": [
+              "@id",
+              "@type"
+            ],
+            "additionalProperties": {}
+          }
+        },
+        "hasSubgraph": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema0"
+          }
+        }
+      },
+      "required": [
+        "@id",
+        "@type",
+        "name",
+        "path",
+        "@context"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "__schema0": {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "pattern": "\\/subgraph\\/(?:[^/]+\\/(?:.+\\/)?)?$"
+            },
+            "@type": {
+              "type": "string",
+              "const": "bootstrap:Subgraph"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "holdsGraph": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^bootstrap:graphTypology\\/[a-z][a-z0-9-]*$"
+              }
+            },
+            "hasMember": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "@type": {
+                    "type": "string",
+                    "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+                  }
+                },
+                "required": [
+                  "@id",
+                  "@type"
+                ],
+                "additionalProperties": {}
+              }
+            },
+            "hasSubgraph": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/__schema0"
+              }
+            }
+          },
+          "required": [
+            "@id",
+            "@type",
+            "name",
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-foaq-fsh-guts-viz-tracked/bootstrap-tools/schema/zod/subgraph-export/SubgraphHydratedSchema.schema.json",
+  "title": "SubgraphHydratedSchema",
+  "description": "Generated from `SubgraphHydratedSchema` in schemas/subgraph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/foaq-fsh-guts-viz-tracked",
+    "sha": "cea8be147257bd778b1d75c6d709eec9822f67d5",
+    "pr": "2315/merge",
+    "run": "37516574837"
+  }
+}
