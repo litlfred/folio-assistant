@@ -45,6 +45,7 @@ import { join, resolve } from "node:path";
 
 import { buildFshGraph, changeImpact, fileUsers, type FshGraph } from "../../cat-harness/content/pipeline/fsh-cone.ts";
 import {
+  pinImpact,
   RENDERED_IMPACT_TAG,
   RenderedImpactSchema,
   type RenderedFile,
@@ -189,6 +190,18 @@ export function igRenderedImpact(opts: IgImpactOptions): RenderedImpact {
   });
 }
 
+/** Each path's blob id at `head`, read in one `git ls-tree`; a path absent there is absent from the map. */
+function gitBlobs(root: string, head: string, paths: string[]): Map<string, string> {
+  const out = new Map<string, string>();
+  if (!paths.length) return out;
+  const text = execFileSync("git", ["-C", root, "ls-tree", "-r", head, "--", ...paths], { encoding: "utf-8" });
+  for (const line of text.split("\n")) {
+    const m = line.match(/^\d+ blob ([0-9a-f]+)\t(.+)$/);
+    if (m) out.set(m[2]!, m[1]!);
+  }
+  return out;
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const arg = (k: string) => {
@@ -215,7 +228,15 @@ if (import.meta.main) {
     base,
     head,
   });
-  const json = JSON.stringify(impact, null, 2) + "\n";
+  // Pinned to the inputs' blobs at head (rendered-impact.ts, "A PIN"); no git, no pin.
+  let pinned = impact;
+  try {
+    const blobs = gitBlobs(ig, head ?? "HEAD", changed);
+    pinned = pinImpact(impact, (p) => blobs.get(p));
+  } catch (e) {
+    console.error(`not pinned: ${(e as Error).message.split("\n")[0]}`);
+  }
+  const json = JSON.stringify(pinned, null, 2) + "\n";
   const out = arg("--out");
   if (out) writeFileSync(out, json);
   else process.stdout.write(json);
