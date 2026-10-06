@@ -69,6 +69,7 @@ import { readUmlPalette } from "./uml-palette.js";
 import { bothViews, gridLinks, renderSvgs, safeId, sha256, svgStamp, views, type RenderJob } from "./plantuml-render.js";
 import { detangleResultsDir, sidecarFor } from "../schemas/detangle-sidecar.js";
 import { readQaManifest, readQaTree } from "./qa-store.ts";
+import { requireCurrentWorkingCopy } from "./qa-working-copy.ts";
 import { JUDGEMENT_EXIT } from "./qa-results.ts";
 import { spawnSync } from "node:child_process";
 import { glossaryLinksMd, schemasViewPuml } from "./gen-object-model-uml.js";
@@ -898,6 +899,8 @@ function walk(dir: string): string[] {
 // run rewrote the generated files on import (in CI, where the output differs).
 async function main(): Promise<void> {
   const check = process.argv.includes("--check");
+  // Bean `7how`: the `qa` sections are drawn from the copy on disk.
+  requireCurrentWorkingCopy(REPO, "uml:overview");
   const files = await build();
   if (UNDETERMINED.length) {
     // Neither "stale" nor "current", and nothing written: a page drawn over QA

@@ -192,6 +192,7 @@ import {
 import { ReadWriteGate, jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.ts";
 import { TASK_IO, pairIO } from "./task-io.ts";
 import { foldable, settleCovered } from "./pair-cover.ts";
+import { WorkingCopyFailed, ensureWorkingCopy, workingCopyState } from "./qa-working-copy.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
@@ -622,14 +623,27 @@ export async function regenToFixpoint(
   while (passes < maxPasses) {
     passes++;
     opts.onPass?.(passes);
+    // Bean `7how`: the QA working copy is brought up to date with the tree
+    // BEFORE anything reads it. What that changed joins what the last pass
+    // changed — a QA path is an input like any other.
+    const qa = await opts.beforePass?.(passes);
+    const extra = qa === undefined || qa.size === 0 ? undefined : qa;
+    if (extra !== undefined && lastChange !== null && lastChange !== undefined) {
+      lastChange = new Set([...lastChange, ...extra]);
+    }
     const asked: Pair[] = [];
     for (const pair of pairs) {
-      const sel =
+      let sel =
         lastChange === null
           ? opts.firstPass?.(pair)
           : opts.narrow === undefined
             ? undefined
             : opts.narrow.affects(pair, lastChange);
+      // First pass: a pair `--changed` declines is still asked when the
+      // rebuilt QA copy touched something it reads.
+      if (lastChange === null && extra !== undefined && sel !== undefined && !sel.affected) {
+        sel = opts.narrow === undefined ? undefined : opts.narrow.affects(pair, extra);
+      }
       if (sel === undefined || sel.affected) {
         asked.push(pair);
         continue;
@@ -679,6 +693,14 @@ export async function regenToFixpoint(
  */
 export interface FixpointOptions {
   onPass?: (pass: number) => void;
+  /**
+   * Bean `7how`. Awaited at the start of every pass, before any pair is
+   * selected or asked: brings the QA working copy up to date with the tree
+   * and returns the QA paths it changed (empty or `undefined`: none). It
+   * THROWS when the copy could not be built, which ends the run — a pass
+   * over a half-built copy would write generated pages from it.
+   */
+  beforePass?: (pass: number) => Promise<ReadonlySet<string> | undefined> | ReadonlySet<string> | undefined;
   /**
    * `--changed <base>`: whether the FIRST pass asks this pair. A pair it
    * declines was not touched by the change since `<base>`.
@@ -1129,30 +1151,65 @@ if (import.meta.main) {
         console.log(`    skip ${pair.check} — not asked${pass === 1 ? ` (--changed ${changedBase})` : " (unaffected by the last pass)"}: ${why}`)
     : undefined;
 
+  // Bean `7how`. Generators and checks read the QA working copy from disk, so
+  // a pass must never read one built from another tree. Rebuilt before any
+  // pass whose tree moved since the copy's stamp; the paths it changed join
+  // the narrowed fixpoint's change set (`beforePass`).
+  const beforePass = async (n: number): Promise<ReadonlySet<string> | undefined> => {
+    const r = ensureWorkingCopy(repoRoot, { force: n === 1 && process.argv.includes("--no-cache") });
+    if (!r.ran) {
+      if (explain) console.log(`  QA working copy: ${r.why}`);
+      return undefined;
+    }
+    if (!r.ok) {
+      throw new WorkingCopyFailed(
+        `the QA working copy could not be built before pass ${n} (\`${r.step}\` exited ${r.exit ?? "on a signal"}), ` +
+          "and every generator that reads it would write from a partial tree",
+      );
+    }
+    console.log(`  QA working copy rebuilt before pass ${n} (${r.why}): ${r.changed.size} QA file(s) changed`);
+    return r.changed;
+  };
+
   let results: Result[];
   let settled = false;
   if (dryRun) {
+    const st = workingCopyState(repoRoot);
+    if (st.state !== "current") {
+      console.log(
+        `  QA working copy is ${st.state.toUpperCase()} (${st.why}) — a dry run builds nothing, so the verdict of a ` +
+          "check that reads it may be wrong; `bun run qa:working-copy` first",
+      );
+    }
     results = (
       await regenToFixpoint(repairable, asyncRun, 1, { dryRun: true, jobs, skip, report, firstPass, onNotAsked })
     ).results;
   } else {
-    const fx = await regenToFixpoint(repairable, asyncRun, maxPasses, {
-      jobs,
-      skip,
-      report,
-      firstPass,
-      narrow,
-      onNotAsked,
-      onBarren: (n, writers) =>
-        console.log(
-          `  pass ${n} was BARREN — its writer(s) (${writers.join(", ")}) repaired nothing and changed ` +
-            "nothing in the tree (measured), so the next pass would repeat it: settled here",
-        ),
-      onPass: (n) => {
-        digests = new FileDigests(repoRoot);
-        if (explain) console.log(`  pass ${n}:`);
-      },
-    });
+    let fx: Awaited<ReturnType<typeof regenToFixpoint>>;
+    try {
+      fx = await regenToFixpoint(repairable, asyncRun, maxPasses, {
+        jobs,
+        skip,
+        report,
+        firstPass,
+        narrow,
+        onNotAsked,
+        beforePass,
+        onBarren: (n, writers) =>
+          console.log(
+            `  pass ${n} was BARREN — its writer(s) (${writers.join(", ")}) repaired nothing and changed ` +
+              "nothing in the tree (measured), so the next pass would repeat it: settled here",
+          ),
+        onPass: (n) => {
+          digests = new FileDigests(repoRoot);
+          if (explain) console.log(`  pass ${n}:`);
+        },
+      });
+    } catch (e) {
+      if (!(e instanceof WorkingCopyFailed)) throw e;
+      console.error(`\nCOULD NOT DETERMINE — ${e.message}. Fix the failing step, then run regen again. Not a pass.`);
+      process.exit(2);
+    }
     // Bean `i1q7`: a browser-job check that could not be repaired on a machine
     // with no Chromium is `no-browser` — could-not-determine, never a defect.
     const fastChecks = new Set(repairableGates(loadGates(repoRoot, { all: false }), scripts).map((p) => p.check));

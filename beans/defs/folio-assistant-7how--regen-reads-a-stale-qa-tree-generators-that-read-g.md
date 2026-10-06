@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T09:15:31Z
-updated_at: 2026-10-06T19:05:28Z
+updated_at: 2026-10-06T20:27:23Z
 parent: folio-assistant-1xhc
 ---
 
@@ -28,3 +28,20 @@ Measured 2026-10-06 on #2267 (coordinator) and reported independently by session
 - Until then: commit source changes BEFORE `qa:working-copy`.
 
 _2026-10-06T19:05:28Z_ — Claimed by claude/speed-merge-loop — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-06 — in progress on claude/speed-merge-loop (issue #2319)
+
+Dispatched for SPEED of the merge loop. The 6-step PR recipe (state:mount → regen → qa:working-copy → kg:detangle → regen, commit first) exists because of this bean, so fixing it collapses the recipe to one regen.
+
+- [x] qa:working-copy stamps the copy (build/regen-cache/qa-working-copy.json): tracked-tree digest + QA-tree content digest. workingCopyState → current / stale / undetermined; only current skips a build. A failed step removes the stamp.
+- [x] regen: beforePass hook rebuilds the copy before any pass whose tree moved; the QA paths it changed join the narrowed fixpoint's change set (and override a --changed decline in pass 1). A failed build exits 2.
+- [x] gates: rebuilds when NOT CURRENT, not only when absent.
+- [x] tests: cat-harness/scripts/tests/qa-working-copy.test.ts (13), incl. the falsifier that without the hook a regen settles on a page built from the old copy.
+- [ ] measured before/after on a fresh merge of main
+- [x] qa:refresh restore window narrowed to ONE writer's run, every restored path named with its writer (runRestoring). Narrowed, not removed: still commit before qa:working-copy.
+- [x] prepare-merge says regen owns the QA copy.
+- [x] uml:overview and readme:subgraphs make the copy current themselves (skill:register rendered from an absent copy, measured).
+- [x] tree digest is of content (blob ids): a commit no longer stales the stamp.
+
+
+_2026-10-06T20:40Z_ — OPEN FINDING, cause not identified: an uncommitted one-line edit to package.json, made in fa-work at 20:22:1x while `regen --changed` (QA build, then pass 1) was running, was gone when the run ended. The file's mtime was 20:22:19, so it was written right after the edit. It is NOT in qa:refresh's restored list (that list names 8 paths, all docs:pages / qa-sweep side effects). It looks like a lost update (something read package.json before the edit and wrote it after), but grep finds no writer of package.json outside tests. Rule until explained: commit before running regen, exactly as before.
