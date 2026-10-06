@@ -1,0 +1,33 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "scripts/check-l1-complete.ts",
+    "script_hash": "815ff041e0c0"
+  },
+  "subject": {
+    "kind": "library-document",
+    "id": "library/isaitb-2026-interoperability-test-bed-readme"
+  },
+  "families": {
+    "notDerivable": {
+      "summary": "L1 requirements NO ingest arm can produce yet. Not a defect in this entry and not a pass either — nothing has checked them, so this entry is not fully verified. Each names the bean that would make it checkable.",
+      "count": 2,
+      "entries": [
+        {
+          "requirement": "image-descriptions",
+          "detail": "images could not be determined — the source carries 0 image file(s) and 14 inline image reference(s); the text rung keeps text only and extracts no images, so which are figures is not established"
+        },
+        {
+          "requirement": "audio-transcripts",
+          "detail": "no arm builds this yet — bean 1r0p"
+        }
+      ]
+    },
+    "unmet": {
+      "summary": "L1 requirements this entry does not satisfy. A DEFECT in the entry, fixable by re-running the ingest rung that produces the artefact.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 2
+}
