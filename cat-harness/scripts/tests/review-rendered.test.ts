@@ -3,7 +3,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { renderedModel } from "../review-rendered.js";
+import { measuredModel, renderedModel } from "../review-rendered.js";
 
 const impacts = [
   {
@@ -41,5 +41,41 @@ describe("renderedModel", () => {
     const one = renderedModel(impacts[0], null);
     expect(one.rows.length).toBe(3);
     expect(one.rows.every((r) => r.before === undefined)).toBe(true);
+  });
+});
+
+describe("measuredModel (bean ehh6)", () => {
+  const measured = (status: string, missed: string[]) => ({
+    $schema: "rendered-measured/v1", status, baseCommit: "b".repeat(40), beforeCommit: "bcd7e92ab5b841eb",
+    measured: { files: [{ path: "gone.js", change: "removed" }, { path: "a.html", change: "added" }] },
+    check: { missed, confirmed: [], unconfirmed: [] },
+  });
+
+  test("known, with misses: each missed page linked on the preview, in path order; a removed one is not linked", () => {
+    expect(measuredModel(measured("known", ["z/index.html", "gone.js", "a.html"]))).toEqual({
+      state: "missed",
+      missed: [
+        { path: "a.html", change: "added", after: "../a.html" },
+        { path: "gone.js", change: "removed" },
+        { path: "z/index.html", change: "changed", after: "../z/index.html" },
+      ],
+    });
+  });
+
+  test("known, with none: clean", () => {
+    expect(measuredModel(measured("known", [])).state).toBe("clean");
+  });
+
+  test("a before side that is not the base: the pages are shown and the commit named, but nothing is counted missed", () => {
+    // smart-ra#26: main's site was built from bcd7e92, the base was b166ab7.
+    const m = measuredModel(measured("not-base", ["index.html"]));
+    expect(m.state).toBe("not-base");
+    expect(m.beforeCommit).toBe("bcd7e92");
+    expect(m.missed.map((r) => r.path)).toEqual(["index.html"]);
+  });
+
+  test("no file, or one without a check: not measured, never clean", () => {
+    expect(measuredModel(null).state).toBe("not-measured");
+    expect(measuredModel({ status: "known" }).state).toBe("not-measured");
   });
 });
