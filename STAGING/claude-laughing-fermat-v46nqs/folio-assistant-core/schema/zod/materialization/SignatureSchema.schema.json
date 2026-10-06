@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/Signature",
+  "definitions": {
+    "Signature": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-fermat-v46nqs/folio-assistant-core/schema/zod/materialization/SignatureSchema.schema.json",
+  "title": "SignatureSchema",
+  "description": "Generated from `SignatureSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/laughing-fermat-v46nqs",
+    "sha": "c8a1dcd9eef7a858e5a09ce7a8ca61f91314e475",
+    "pr": "2304/merge",
+    "run": "37504660034"
+  }
+}
