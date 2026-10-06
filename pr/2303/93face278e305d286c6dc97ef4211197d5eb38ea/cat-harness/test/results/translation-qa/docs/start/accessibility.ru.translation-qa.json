@@ -1,0 +1,110 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/accessibility",
+  "block": "Accessibility",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/start/accessibility.md"
+  },
+  "po": "translations/ru/start/accessibility.po",
+  "source_hashes": {
+    "md": "26981b601da1",
+    "po": "82573ff7ca85"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "26981b601da1",
+          "po": "82573ff7ca85"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T18:05:46.956Z",
+        "reviewed_sha": "e53d3200cea620ad4959360106e70c9f358ed7b9",
+        "metrics": {
+          "translated": 117,
+          "total": 117,
+          "pct": 100
+        }
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "26981b601da1",
+          "po": "82573ff7ca85"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T18:05:46.959Z",
+        "reviewed_sha": "e53d3200cea620ad4959360106e70c9f358ed7b9",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "SC — absent from: \"Новые критерии успеха WCAG 2.2 — 2.5.7, 2.5.8, 3.3.7\""
+          },
+          {
+            "text": "EU — absent from: \"закупки для государственного сектора ЕС\""
+          },
+          {
+            "text": "US — absent from: \"федеральные закупки США\""
+          },
+          {
+            "text": "US — absent from: \"то же самое для США\""
+          }
+        ],
+        "metrics": {
+          "checked": 117,
+          "missing": 4,
+          "missing_strict": 0,
+          "missing_acronyms": 4,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "4 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/ru/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "26981b601da1",
+          "po": "82573ff7ca85"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "dd72b48d7344",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-10-06T18:05:46.961Z",
+        "reviewed_sha": "e53d3200cea620ad4959360106e70c9f358ed7b9",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 5,
+          "translated": 117
+        },
+        "notes": "5 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-10-06T18:05:46.963Z"
+}
