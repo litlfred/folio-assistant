@@ -175,7 +175,7 @@
   "contentTranslations": [
     {
       "contentType": "ig",
-      "name": "WHO SMART Implementation Guide (L3)",
+      "name": "FHIR Implementation Guide (L3)",
       "formats": [
         {
           "id": "markdown",
@@ -200,9 +200,7 @@
           "extensions": [
             ".json"
           ],
-          "smartBaseScript": "inject_translations.py",
-          "smartBaseInjectRef": "FHIR resource translation section",
-          "notes": "Injects translations as FHIR translation extensions on Coding.display, CodeableConcept.text, etc."
+          "notes": "Translations land as FHIR translation extensions on Coding.display, CodeableConcept.text, etc. No injector is declared at this layer, which must stay WHO-free; an instance above it that has one says so in its own profile."
         }
       ],
       "rtlSupported": true,

@@ -291,7 +291,7 @@
         "processes/library/translation-workflow.bpmn",
         "processes/library/human-translation-workflow.bpmn"
       ],
-      "notes": "Full smart-base translation coverage. PlantUML, SVG, and ArchiMate extractors are the Python originals; TypeScript ports are planned."
+      "notes": "Full smart-base translation coverage. PlantUML, SVG, and ArchiMate extractors are the Python originals; TypeScript ports are planned. The same `inject_translations.py` (its FHIR resource translation section) also injects translations into a WHO IG's FHIR JSON resources; that reference lives here rather than on fhir-harness's `ig` profile because fhir-harness must stay WHO-free."
     }
   ]
 }
