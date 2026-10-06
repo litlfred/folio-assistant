@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-10-06T14:36:04Z
-updated_at: 2026-10-06T14:36:04Z
+updated_at: 2026-10-06T14:55:46Z
 parent: folio-assistant-q4jm
 ---
 
@@ -19,4 +19,7 @@ Two defects:
 - [ ] an incorporated change-set is never re-linked to another PR (test)
 - [ ] only an explicit keyword links a PR to a change-set (test), and the public-comment skill says which
 - [ ] the record writer keeps $schema (test)
-- [ ] smart-ra's CS-236 / CS-237 records restored (owner decides how)
+- [x] smart-ra's CS-236 / CS-237 records restored (d4331c3)
+
+
+_2026-10-06T15:00Z_ — smart-ra CS-236 / CS-237 restored on main by d4331c3 (revert of 5f4ce41), on the owner's instruction.
