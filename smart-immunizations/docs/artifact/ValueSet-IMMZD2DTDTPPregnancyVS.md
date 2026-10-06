@@ -39,10 +39,10 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyVS.schema.json` · [view](ValueSet-IMMZD2DTDTPPregnancyVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD2DTDTPPregnancyVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPPregnancyVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyVS.jsonld` · [view](ValueSet-IMMZD2DTDTPPregnancyVS.jsonld.html) |
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD2DTDTPPregnancyVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD2DTDTPPregnancyVS.jsonld` |
 
 <footer id="ig-footer" data-prev="ValueSet-IMMZD2DTDTPPregnancyStartingWith4DosesVS.html" data-next="ValueSet-IMMZD2DTHepatitisAInactivatedHAV1DoseVS.html" class="st-ig"></footer>
 <script src="../assets/ig-footer.js" defer></script>
