@@ -2,7 +2,7 @@
   "_comment": "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness-tools/scripts/check-standalone.ts.",
   "layers": {
     "cat-harness": {
-      "failed": 192,
+      "failed": 191,
       "failing": [
         "schemas/bootstrap-reading.test.ts > every declaration in this repository is a Knowledge Graph declaration > there are declarations to check",
         "schemas/document-structure.test.ts > structureOf reads every committed structure, each as its own variant > every variant is present in the corpus, so none is vacuous",
@@ -179,8 +179,7 @@
         "scripts/tests/voices-viz.test.ts > the provenance QA flag — a question for a person, not a gate > `house` is never flagged, however its rules cite — the owner's ruling",
         "scripts/tests/voices-viz.test.ts > the reader finds what the declarations say is there > a voice is attributed to the instance that DERIVED it, never to the platform",
         "scripts/tests/workflow-gate.test.ts > the base is strict and the content-type processes are not > the three per-content-type processes are advisory",
-        "scripts/tests/workflow-gate.test.ts > the relaxations this repo actually ships > all of them are legal against the real processes",
-        "scripts/tests/workflow-skill-refs.test.ts > declared diagram paths resolve > every bpmnDiagrams entry names a file that exists"
+        "scripts/tests/workflow-gate.test.ts > the relaxations this repo actually ships > all of them are legal against the real processes"
       ]
     }
   }
