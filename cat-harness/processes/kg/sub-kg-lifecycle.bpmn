@@ -286,8 +286,8 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:documentation>The fresh clone could not be verified. Reported as could-not-check; the in-repo copy is not touched.</bpmn:documentation>
       <bpmn:incoming>F26</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Task_ConfirmCutover" name="12 · Owner confirms:&#10;freeze the in-repo copy in fsh-guts">
-      <bpmn:documentation>The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) move to fsh-guts now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, "1"): the host keeps a FROZEN copy in fsh-guts, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10.</bpmn:documentation>
+    <bpmn:userTask id="Task_ConfirmCutover" name="12 · Owner confirms:&#10;freeze the in-repo copy">
+      <bpmn:documentation>The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) freeze it in the kept trashcan now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, "1"): the host keeps a FROZEN copy in the kept trashcan, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:policy relaxable="false"/>
         <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
@@ -300,11 +300,10 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:documentation>The host consumes the new repository and keeps its own copy, as the owner chose. The cutover can be asked again later.</bpmn:documentation>
       <bpmn:incoming>F28</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Task_Cutover" name="13 · Cutover: move the copy&#10;to fsh-guts/separated/">
-      <bpmn:documentation>Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, to fsh-guts/separated/&lt;name&gt;/ on the fsh-guts branch (skill fsh-guts: a plain mv, git rm --cached, state:push), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory.</bpmn:documentation>
+    <bpmn:userTask id="Task_Cutover" name="13 · Cutover: freeze the&#10;copy in the kept trashcan">
+      <bpmn:documentation>Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, under separated/&lt;name&gt;/ in the kept trashcan, on its own branch (a plain mv, git rm --cached, state:push; the trashcan skill says how), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
-        <bootstrap.processes:skill ref="fsh-guts"/>
         <cat-harness.processes:bean op="resolve"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F29</bpmn:incoming>
@@ -344,7 +343,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
     <bpmn:sequenceFlow id="F26" sourceRef="GW_Fresh" targetRef="End_FreshUnknown" name="could not run"/>
     <bpmn:sequenceFlow id="F27" sourceRef="GW_Fresh" targetRef="Task_ConfirmCutover" name="green"/>
     <bpmn:sequenceFlow id="F28" sourceRef="Task_ConfirmCutover" targetRef="End_Kept" name="keep"/>
-    <bpmn:sequenceFlow id="F29" sourceRef="Task_ConfirmCutover" targetRef="Task_Cutover" name="move to fsh-guts"/>
+    <bpmn:sequenceFlow id="F29" sourceRef="Task_ConfirmCutover" targetRef="Task_Cutover" name="freeze"/>
     <bpmn:sequenceFlow id="F30" sourceRef="Task_Cutover" targetRef="End_Separated"/>
   </bpmn:process>
 
@@ -414,7 +413,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmndi:BPMNEdge id="Edge_F26" bpmnElement="F26"><di:waypoint x="3370" y="510"/><di:waypoint x="3460" y="510"/><bpmndi:BPMNLabel><dc:Bounds x="3385" y="476" width="75" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F27" bpmnElement="F27"><di:waypoint x="3370" y="510"/><di:waypoint x="3400" y="510"/><di:waypoint x="3400" y="690"/><di:waypoint x="3420" y="690"/><bpmndi:BPMNLabel><dc:Bounds x="3355" y="600" width="35" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F28" bpmnElement="F28"><di:waypoint x="3495" y="730"/><di:waypoint x="3495" y="770"/><di:waypoint x="3620" y="770"/><bpmndi:BPMNLabel><dc:Bounds x="3530" y="752" width="30" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_F29" bpmnElement="F29"><di:waypoint x="3570" y="690"/><di:waypoint x="3620" y="690"/><bpmndi:BPMNLabel><dc:Bounds x="3545" y="630" width="100" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F29" bpmnElement="F29"><di:waypoint x="3570" y="690"/><di:waypoint x="3620" y="690"/><bpmndi:BPMNLabel><dc:Bounds x="3576" y="672" width="40" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_F30" bpmnElement="F30"><di:waypoint x="3770" y="690"/><di:waypoint x="3820" y="690"/></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
