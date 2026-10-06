@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/ReleaseAsset",
+  "definitions": {
+    "ReleaseAsset": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "contentType": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "url",
+        "bytes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-releases/ReleaseAssetSchema.schema.json",
+  "title": "ReleaseAssetSchema",
+  "description": "Generated from `ReleaseAssetSchema` in schemas/ig-releases.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/schemas-viewer-bootstrap-kinds",
+    "sha": "c1881e32efe1914601fc1d75ff492de4e7c80a26",
+    "pr": "2279/merge",
+    "run": "37462847518"
+  }
+}
