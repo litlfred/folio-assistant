@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/UnboundSidecar",
+  "definitions": {
+    "UnboundSidecar": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enumeration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "filename",
+        "enumeration",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-artifact-index/UnboundSidecarSchema.schema.json",
+  "title": "UnboundSidecarSchema",
+  "description": "Generated from `UnboundSidecarSchema` in schemas/fhir-artifact-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/awesome-fermi-ua31th-cutover-fsh-guts",
+    "sha": "e6dd92864d5a2155b03728adc058e8e453927f50",
+    "pr": "2322/merge",
+    "run": "37530072337"
+  }
+}
