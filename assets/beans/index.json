@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 935,
+      "count": 939,
       "unit": "beans"
     }
   },
@@ -302,7 +302,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:42:34Z",
-      "updatedAt": "2026-10-06T07:15:08Z",
+      "updatedAt": "2026-10-06T08:49:31Z",
       "preview": "Owner, 2026-10-06, verbatim: *\"do content split propoerly across repos\"*, *\"that needs to be done before F\"*, and *\"not a race to separate.   do it properly.\"* Placement rule: *\"folio-asst-core focused on content authroiung, review pubilcation.   cat-harness on SDLC, tooling, decision making, general methdologies, basic common infra/state mgmt\"*.\n\nStory `rfuq` (S4, direction and placement) owns th",
       "file": "beans/defs/folio-assistant-0r7u--content-split-2026-10-06-authoring-review-and-publ.md"
     },
@@ -2987,6 +2987,20 @@
       "updatedAt": "2026-09-30T20:26:11Z",
       "preview": "**Owner, 2026-09-30:** *\"does not make css/branding/style of\nworldhealthorganization.github.io/smart-trust from\ngithub.com/worldhealthorganization/smart-trust\"*\n\nObserved at <https://litlfred.github.io/folio-assistant/smart-trust/>: dark\nbackground, folio-assistant's left rail and its purple **▾ Folio** handle. The\npublished WHO IG it replicates uses the HL7 IG-publisher template with WHO\nbranding",
       "file": "beans/defs/folio-assistant-7h3u--smart-trust-replica-wears-folio-assistants-chrome.md"
+    },
+    {
+      "id": "folio-assistant-7how",
+      "title": "REGEN READS A STALE QA TREE: generators that read gitignored */test/results write wrong pages unless qa:working-copy ran first",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T09:15:31Z",
+      "updatedAt": "2026-10-06T09:15:31Z",
+      "preview": "Measured 2026-10-06 on #2267 (coordinator) and reported independently by session A, from #2268.\n\n**What happens.** Since #2080 (5hox), the QA results tree is computed and not committed. Some generators read it from disk, at least `uml:overview` and `readme:subgraphs`. A container's local copy can be partial or stale. On #2267 only `kg-qa` was present, so `bun run regen` rewrote the QA overview wit",
+      "file": "beans/defs/folio-assistant-7how--regen-reads-a-stale-qa-tree-generators-that-read-g.md"
     },
     {
       "id": "folio-assistant-7jdm",
@@ -7769,6 +7783,20 @@
       "file": "beans/defs/folio-assistant-kx6i--paper-site-in-the-harness-rendering-yj32-math-lean.md"
     },
     {
+      "id": "folio-assistant-ky3r",
+      "title": "FOREIGN-SITE RAIL SCOPE (#2263): an IG repo's site shows the platform's tile counts, 404 tile links, and the pinned rail covers IG content",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:12:11Z",
+      "updatedAt": "2026-10-06T08:32:30Z",
+      "preview": "Owner, 2026-10-06, verbatim (issue #2263): *\"https://litlfred.github.io/smart-trust/ the beans and todos badges seems to be countts from folio-assistant and not litlfred/smart-trust as expected. links to beans and todos dont work. why not? fix process and skills.\"*\n\n## Done when\n- [ ] root cause named with file:line\n- [ ] a foreign site's tiles, icon row and rail scope describe the FOLIO's instanc",
+      "file": "beans/defs/folio-assistant-ky3r--foreign-site-rail-scope-2263-an-ig-repos-site-show.md"
+    },
+    {
       "id": "folio-assistant-kye5",
       "title": "TWO README GENERATORS claim bootstrap-tools/README.md: folio-assistant's readme:sync:all strips the generated-by notices bootstrap-tools' own writes",
       "status": "in-progress",
@@ -7823,6 +7851,20 @@
       "updatedAt": "2026-10-05T04:57:14Z",
       "preview": "Finish PR #1918 for issue #1900: library cards on the folio glass open their declared view (else the entry page), resize by a corner grip (keys + move-bar buttons as the non-drag path), and x asks first, naming where the card goes back to (library / Todos / the landing sticky's page) via the page's one confirm dialog shared with fsh-guts. Caption uses the index title.\n\n## Done when\n- PR #1918 gree",
       "file": "beans/defs/folio-assistant-l4c5--glass-cards-1900-pr-1918-open-the-visualiser-corne.md"
+    },
+    {
+      "id": "folio-assistant-l8g2",
+      "title": "LOCAL GATES BLIND to reference-direction since 5hox: no local baseline, so check:reference-direction:check reads UNKNOWN locally while CI fails",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T09:07:16Z",
+      "updatedAt": "2026-10-06T09:07:16Z",
+      "preview": "Measured 2026-10-06 by two sessions independently:\n- session F, #2262;\n- the coordinator, #2267, where a comment naming smart-base got through a local run and then failed CI.\n\n**What happens.** `bun run check:reference-direction:check --against main` is CI's gate. It compares against the `qa-reports` baseline (`main/<sha>`). Since #2080 (5hox) moved QA results off main, a container has no local ba",
+      "file": "beans/defs/folio-assistant-l8g2--local-gates-blind-to-reference-direction-since-5ho.md"
     },
     {
       "id": "folio-assistant-l9d5",
@@ -9202,6 +9244,20 @@
       "updatedAt": "2026-10-04T07:23:15Z",
       "preview": "deletion-requires-confirmation. Not before every reader in P3 and gate in P4 is green on the branch.\n\n## Done when\n- [ ] owner's go recorded\n- [ ] files removed; beans/README.md count-line churn (y7b3) gone\n\nProposal: cat-harness/docs/proposals/state-branch-2026-10-02.md\n\n_2026-10-04T06:10:27Z_ — Claimed by claude/beans-off-main-9ofm — pushed to main so sibling sessions see it before this branch h",
       "file": "beans/defs/folio-assistant-p3ny--state-branch-p6-remove-the-moved-state-files-from.md"
+    },
+    {
+      "id": "folio-assistant-p3zo",
+      "title": "AGENT CONTAINERS RUN THE WRONG BUN: the session-start hook should install .bun-version (1.3.14), not leave the container's 1.4.2",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T07:51:12Z",
+      "updatedAt": "2026-10-06T07:51:12Z",
+      "preview": "Follow-up to `3ozg` (completed), which pinned Bun to `.bun-version` (1.3.14) in all 22 CI `setup-bun` sites, **but not in agent containers**.\n\n## The cost, measured 2026-10-06\nThree sessions in one morning were caught by it:\n- Session A: a false `navbar-assets` failure, chased as a main defect;\n- the coordinating session: local gates diverging from CI;\n- Session F: about to hold PR #2262 for a \"ma",
+      "file": "beans/defs/folio-assistant-p3zo--agent-containers-run-the-wrong-bun-the-session-sta.md"
     },
     {
       "id": "folio-assistant-p5wm",
@@ -11361,14 +11417,14 @@
     {
       "id": "folio-assistant-uxn1",
       "title": "STANDALONE: code assumes cat-harness sits at <repo>/cat-harness (role-graph scenariosSubdir, skill-definitions-dir, gen-navbar-include)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T09:15:52Z",
-      "updatedAt": "2026-10-06T09:15:52Z",
+      "updatedAt": "2026-10-06T10:01:36Z",
       "preview": "Cluster R of the cat-harness standalone rehearsal (#2268, ho66): about 10 tests fail standalone because code builds paths as join(repoRoot, 'cat-harness', ...) instead of resolving the instance root from its declaration. Standalone, cat-harness IS the repository root, so no actors are found (role-graph.ts scenariosSubdir) and prov-record fails twice. The same assumption is in skill-definitions-dir",
       "file": "beans/defs/folio-assistant-uxn1--standalone-code-assumes-cat-harness-sits-at-repoca.md"
     },
@@ -14834,14 +14890,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 561,
+        "total": 564,
         "closed": 222,
-        "open": 339,
+        "open": 342,
         "inProgress": 120,
-        "todo": 218,
+        "todo": 221,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.39572192513368987
+        "share": 0.39361702127659576
       },
       {
         "id": "folio-assistant-vuip",
@@ -14849,14 +14905,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 248,
-        "closed": 97,
+        "total": 249,
+        "closed": 98,
         "open": 151,
         "inProgress": 82,
         "todo": 68,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3911290322580645
+        "share": 0.39357429718875503
       },
       {
         "id": "folio-assistant-yg29",
@@ -14875,8 +14931,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 529,
-    "coveredOpen": 526,
+    "openTotal": 532,
+    "coveredOpen": 529,
     "duplicateIds": 0
   }
 }

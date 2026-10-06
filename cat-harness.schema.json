@@ -1190,6 +1190,111 @@
             "minLength": 1
           }
         },
+        "taskIo": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "outputs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "writer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "afterMerge": {
+                "type": "boolean"
+              },
+              "because": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "gateExemptions": {
+          "type": "object",
+          "properties": {
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "match": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "covered-by",
+                      "ci-only",
+                      "no-folio"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "match",
+                  "kind",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "scripts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "script": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "report",
+                      "covered-by",
+                      "no-folio",
+                      "scheduled"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "script",
+                  "kind",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
         "contentAdapters": {
           "type": "array",
           "items": {
@@ -1253,8 +1358,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "3fe5b869705e66e7492f4f464bd4512291c41eba",
+    "sha": "d0b249d22c299add45b3033f4c2eca284188141a",
     "pr": "main",
-    "run": "37446887468"
+    "run": "37451193330"
   }
 }
