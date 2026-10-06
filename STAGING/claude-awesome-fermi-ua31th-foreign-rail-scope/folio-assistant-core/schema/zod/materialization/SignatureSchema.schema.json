@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/Signature",
+  "definitions": {
+    "Signature": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-foreign-rail-scope/folio-assistant-core/schema/zod/materialization/SignatureSchema.schema.json",
+  "title": "SignatureSchema",
+  "description": "Generated from `SignatureSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/awesome-fermi-ua31th-foreign-rail-scope",
+    "sha": "e50faa149045e9901dc3b4db993119c3f0ee4306",
+    "pr": "2265/merge",
+    "run": "37441546455"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FHIR Validation Output",
+  "description": "Output schema for FHIR validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        }
+      }
+    },
+    "publisherResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "qaHtmlPath": {
+          "type": "string"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        },
+        "infoCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "conformanceResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "conformant",
+              "non-conformant"
+            ]
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
+  "staging": {
+    "branch": "claude/awesome-fermi-ua31th-foreign-rail-scope",
+    "sha": "e50faa149045e9901dc3b4db993119c3f0ee4306",
+    "pr": "2265/merge",
+    "run": "37441546455"
+  }
+}
