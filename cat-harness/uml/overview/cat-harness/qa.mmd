@@ -16,6 +16,35 @@ classDiagram
       $schema [1] 'kg-qa-manifest/v1'
       auditor [1] object
     }
+    class cat_harness_qa_block_qa_v1_block_qa_v1["block-qa/v1"] {
+      <<json: BlockQaReport>>
+      $schema [1] 'block-qa/v1'
+      label [1] string
+      kind [1] string
+      paths [1] object
+      source_hashes [1] object
+      criteria [1] map~object[]~
+      updated_at [1] string
+    }
+    class cat_harness_qa_folio_test_run_v1_Case["Case"] {
+      <<json: TestRunSchema>>
+      input [1] any
+      output [1] any
+    }
+    class cat_harness_qa_folio_test_run_v1_folio_test_run_v1["folio-test-run/v1"] {
+      <<json: TestRunSchema>>
+      $schema [1] 'folio-test-run/v1'
+      skill [1] string
+      subject [1] string
+      data [1] object
+      process [1] object
+      outcome [1] map~any~
+      cases [0..*] Case[]
+      requirements [0..*] string[]
+      updated_at [1] string
+      plan [0..1] object
+      sut [0..1] object
+    }
     class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
       <<ts: QaWitness>>
       kind [1] 'script' | 'agent' | 'human'
@@ -42,6 +71,18 @@ classDiagram
       subject [1]  kind: string; id: string 
       families [1] Record~string, QaResultFamily~
       total [1] number
+    }
+    class cat_harness_qa_translation_qa_v1["translation-qa/v1"] {
+      <<ts: TranslationBlockQaReport>>
+      $schema [1] 'translation-qa/v1'
+      label [1] string
+      block [0..1] string
+      locale [1] string
+      paths [1]  md: string; ts?: string 
+      po [1] string
+      source_hashes [1] TranslationFieldHash
+      criteria [1] Record~string, TranslationQaEntry[]~
+      updated_at [1] string
     }
     class cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1["folio-qa-index/v1"] {
       <<json: QaIndexSchema>>
@@ -99,13 +140,36 @@ classDiagram
       inputFingerprint [1] string
       detail [0..1] string
     }
+    class cat_harness_qa_viewer_nav_qa_v1_Page["Page"] {
+      <<json: ViewerNavQaSchema>>
+      path [1] string
+      source [1] string
+      verdict [1] railed | declined | linked | missing
+      reason [0..1] string
+      flags [0..*] enum(8)[]
+    }
+    class cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1["viewer-nav-qa/v1"] {
+      <<json: ViewerNavQaSchema>>
+      $schema [1] 'viewer-nav-qa/v1'
+      root [1] string
+      totals [1] object
+      pages [0..*] Page[]
+    }
   }
+  cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
+  cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
   cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_test_run_v1_Case" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_test_run_v1_folio_test_run_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_qa_witness_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_translation_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_qa_translation_pages_v1_folio_qa_translation_pages_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_detangle_sidecar_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_lsi_index_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_viewer_nav_qa_v1_Page" fa_uml_kind_qa
+  cssClass "cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1" fa_uml_kind_qa
