@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1867 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1876 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 604 terms and is 335 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 605 terms and is 336 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2151</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2151</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2160</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2160</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">604</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">605</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2744,68 +2744,68 @@ TransitionInput.recommendation <span class="fa-gloss-status">candidate, extracte
 <p><code>at</code> defaults to the transition's.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#TransitionInput.recommendation</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.extensions" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.extensions" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.extensions <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>File extensions this format applies to.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extensions</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extensions</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.extractmodule" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.extractmodule" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.extractModule <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>TypeScript module that implements extraction (relative to repo root).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extractModule</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extractModule</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.id" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.id" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Format identifier.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.id</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.id</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.injectmodule" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.injectmodule" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.injectModule <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>TypeScript module that implements injection (relative to repo root).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.injectModule</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.injectModule</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.name" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.name" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.name <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Human-readable name.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.name</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.name</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.notes" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.notes" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.notes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Notes about translating THIS format specifically, as distinct from <code>ContentTypeTranslation.notes</code>, which describes the content type as a whole. &quot;Lean 4 terms stay in English&quot; and &quot;the diagram is re-rendered after injection&quot; are properties of the format, not of the folio.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.notes</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.notes</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.smartbaseextractref" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.smartbaseextractref" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.smartBaseExtractRef <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Smart-base function/line range for extraction.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseExtractRef</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseExtractRef</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.smartbaseinjectref" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.smartbaseinjectref" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.smartBaseInjectRef <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Smart-base function/line range for injection.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseInjectRef</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseInjectRef</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.translatableformatschema.smartbasescript" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.smartbasescript" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.smartBaseScript <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Smart-base Python script that handles this format (reference).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseScript</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation-tools.ts"><code>cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseScript</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--harness-config.translationconfig.defaultlocale" data-fa-state="extracted" data-fa-gloss="">
 TranslationConfig.defaultLocale <span class="fa-gloss-status">candidate, extracted</span>
@@ -3083,6 +3083,13 @@ UnboundSidecarSchema.title <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>Its title, as the enumeration gives it — usually the only human handle on what was missed.</p>
 <p class="fa-gloss-meta">Schema fields of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/schemas/fhir-artifact-index.ts"><code>fhir-harness/schemas/fhir-artifact-index.ts#UnboundSidecarSchema.title</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--rendered-impact.undeterminedschema.scope" data-fa-state="extracted" data-fa-gloss="">
+UndeterminedSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>all</code>: the input can re-render anything (a site config, a shared include).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/rendered-impact.ts"><code>cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.scope</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--formalization-types.universelevel.morphisms" data-fa-state="extracted" data-fa-gloss="">
 UniverseLevel.morphisms <span class="fa-gloss-status">candidate, extracted</span>

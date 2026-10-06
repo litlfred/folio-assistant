@@ -6899,6 +6899,326 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_brief",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Brief, and claim the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the sub-KG is and why it is staged here rather than in a repository of its own, what is already measured, and what would falsify the plan. Claim the bean so a sibling session sees the work."
+        }
+      ],
+      "skos:notation": "Task_Brief",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Brief",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_confirmcreate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "7 · Owner confirms: create the repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Creating a repository is visible outside this one and is not undone by a revert. Numbered options, recommended first: (1) the owner creates it and says when it exists, (2) the agent creates it, only with that permission, (3) not yet. Default if there is no answer: (3), nothing is created. Non-relaxable."
+        }
+      ],
+      "skos:notation": "Task_ConfirmCreate",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_ConfirmCreate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_confirmcutover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "12 · Owner confirms: freeze the in-repo copy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) freeze it in the kept trashcan now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, \"1\"): the host keeps a FROZEN copy in the kept trashcan, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10."
+        }
+      ],
+      "skos:notation": "Task_ConfirmCutover",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_ConfirmCutover",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_createrepo",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "8 · Create the repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The owner creates the repository, or authorises the agent that has the permission to; when that agent is in another environment, the hand-over is one bean and one sentence (agent-handoff). The new repository is read before anything is written to it: empty is a fact to check, not to assume."
+        }
+      ],
+      "skos:notation": "Task_CreateRepo",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_CreateRepo",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_cutover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "13 · Cutover: freeze the copy in the kept trashcan"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, under separated/<name>/ in the kept trashcan, on its own branch (a plain mv, git rm --cached, state:push; the trashcan skill says how), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory."
+        }
+      ],
+      "skos:notation": "Task_Cutover",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Cutover",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_decideleave",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Should it leave now?"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The owner decides, from what is measured, whether the sub-KG starts staging for separation now. Asked as numbered options with the recommended one first and a stated default: keeping it in place is the default, and is a real outcome."
+        }
+      ],
+      "skos:notation": "Task_DecideLeave",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_DecideLeave",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_declare",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "1 · Declare it in place, with its seam"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`<name>/<name>.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `<name>/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Scaffolded by `init-folio --staged <path>`, which writes those two files and nothing at the host root; never `--instance`, which writes a whole repository."
+        }
+      ],
+      "skos:notation": "Task_Declare",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Declare",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_drain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Drain: land, close or re-target the open PRs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Work the pull requests seed:ready named until the source settles, then ask again."
+        }
+      ],
+      "skos:notation": "Task_Drain",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Drain",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_freshclone",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "11 · Verify on a fresh clone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
+        }
+      ],
+      "skos:notation": "Task_FreshClone",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_FreshClone",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_grow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "2 · Grow it in place"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content type's own authoring process runs here, against the staged instance. Many sub-KGs never leave; this task can last as long as the graph does."
+        }
+      ],
+      "skos:notation": "Task_Grow",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Grow",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_pushdown",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "3 · Push generic down first"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Move what is generic into the harness below before the seam is closed, and consolidate what the sub-KG needs into the harness it instantiates. Wrong-direction edges hide in declarations and data as well as imports: run check:import-direction, check:reference-direction and check:process-bindings. Learned from stages A-D of bean n3ni (#1768, #1782, #1783, #1795)."
+        }
+      ],
+      "skos:notation": "Task_PushDown",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_PushDown",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_rehearse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "5 · Rehearse self-contained"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page."
+        }
+      ],
+      "skos:notation": "Task_Rehearse",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Rehearse",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_repoint",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "10 · Re-point: livesAt, seam, submodule or subscription"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the new repository `livesAt` goes (absent means it sits at the root of `repository`) and `platform.ts` points at where the platform now is. The host consumes it as a submodule if it imports its code, or a subscription if it only reads its content, pinned to a commit while staging. Additive: the host keeps its copy."
+        }
+      ],
+      "skos:notation": "Task_Repoint",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Repoint",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "6 · Report what would move, and how it undoes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before the first outward-facing step the agent reports: the files and bytes that would move, the history that comes with them, what in the host changes, and how each step is undone. It never creates a repository on its own initiative."
+        }
+      ],
+      "skos:notation": "Task_Report",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Report",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_seam",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "4 · Route every climb through platform.ts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every platform symbol the sub-KG uses is re-exported from `<name>/platform.ts`, so re-pointing the platform is a one-file edit. A merge from main is where new climbs arrive; reroute them here. Learned from #1767 and #1860."
+        }
+      ],
+      "skos:notation": "Task_Seam",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Seam",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subkglifecycle.task_seed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "9 · Copy the staged contents in, with history"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`git subtree split --prefix=<name>` in the host, then the split branch added to the new repository on a branch, as a draft pull request, never straight to main. The new repository's own root files are a second commit, so the copy stays byte-identical and reviewable. The first fork seed carried 378 commits this way (bean n3ni, stage E)."
+        }
+      ],
+      "skos:notation": "Task_Seed",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Seed",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_subscribekg.call_materialize",
       "@type": "skos:Concept",
       "skos:inScheme": {

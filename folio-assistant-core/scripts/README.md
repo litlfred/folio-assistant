@@ -27,6 +27,8 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm.test.ts`](codemod-refterm.test.ts) | a file |  |
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`dc-render.ts`](dc-render.ts) | a file |  |
+| [`document-rendered-impact.test.ts`](document-rendered-impact.test.ts) | a file |  |
+| [`document-rendered-impact.ts`](document-rendered-impact.ts) | a file |  |
 | [`docx-structure.py`](docx-structure.py) | a file |  |
 | [`docx-structure.test.ts`](docx-structure.test.ts) | a file |  |
 | [`docx-to-folio.test.ts`](docx-to-folio.test.ts) | a file |  |

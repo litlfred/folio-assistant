@@ -16,7 +16,8 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-detanglement",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/graph-rendering",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation",
-            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing"
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sub-kg-lifecycle"
           ],
           "description": "How a graph is RESTRUCTURED — detanglement, sub-graph declaration in place, and extraction when a part of it should leave — and how any graph is DRAWN so the restructuring can be seen (graph-rendering). The complement of kg-navigation, which answers how a graph is READ and has no write, restructure, split or extract operation in it. Split out rather than added to folio-core for the reason the `workflow` package was: folio-core holds 97 skills, and a package that holds everything is one nobody can be pointed at.",
           "hasManifest": true,
@@ -138,6 +139,25 @@
             "sha256": "0fc1a338debc2461ae060e8f52bb35197e79f3fd4fac6e261efa71e27929d47e"
           },
           "title": "LSI indexing — the platform's application of `methodologies/lsi.md`"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sub-kg-lifecycle",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A sub-KG is a knowledge graph staged as a directory inside a harnessed repository, declared as its own instance, that may later leave for a repository of its own. The lifecycle: declare it in place, grow it, stage it for separation (one import seam, the separation guard, a self-contained rehearsal), and then, each behind an explicit owner confirmation, create the repository, copy the staged contents in with history, re-point the declaration, verify on a fresh clone and delete the in-repo copy. Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-06 (beans n3ni, rbz3, kg83, hcpz). The light sibling of kg-separation: use this for a DATA instance that leaves whole, and kg-separation when a graph must split into a content repository and a tools repository.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 282,
+          "instructionsPath": "skills/kg/graph-management/sub-kg-lifecycle.md",
+          "name": "sub-kg-lifecycle",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/985eb47f6a6620b91a1fe60dcbfebfa3f52616d15b876ae9f7171d3fed49cd5d",
+            "bytes": 15464,
+            "sha256": "985eb47f6a6620b91a1fe60dcbfebfa3f52616d15b876ae9f7171d3fed49cd5d"
+          },
+          "title": "Sub-KG lifecycle — staged here, separated later"
         }
       ],
       "holdsGraph": [

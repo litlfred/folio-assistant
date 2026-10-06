@@ -23650,6 +23650,196 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.predictioncheck.confirmed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PredictionCheck.confirmed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Predicted and measured."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.confirmed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.predictioncheck.missed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PredictionCheck.missed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Measured to change but not predicted: a cone defect, never a pass."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.missed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.predictioncheck.unconfirmed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PredictionCheck.unconfirmed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Predicted, not measured: expected for content pages that load their data (rule 3), suspicious otherwise."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.unconfirmed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedfileschema.anchors",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedFileSchema.anchors"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The fragment ids within `path` the change alters, for a page that assembles many units (a document page with an anchor per block). A review list links `path#anchor` for each. Absent when the whole file is the unit, or when a build diff cannot say which part changed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.anchors",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedfileschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedFileSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path in the BUILT site, relative to its root, e.g. `ast/artifact/PlanDefinition-X.html`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedfileschema.via",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedFileSchema.via"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How the change reached this file: the changed input first, then each node the cone went through, e.g. `[\"input/fsh/x.fsh\", \"IMMZD18SBCG\", \"PlanDefinition/IMMZD18SBCG\"]`. Empty for a build diff, which measures that a file changed and cannot say why."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedimpactschema.inputs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedImpactSchema.inputs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The changed input files the renderer was given, relative to its source root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.inputs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedimpactschema.renderer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedImpactSchema.renderer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The renderer, by its Tool id or script, e.g. `fhir-ig-ast-pages`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.renderer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedimpactschema.site",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedImpactSchema.site"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The site the paths are relative to, as a reader finds it (an instance, a URL path)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.site",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.undeterminedschema.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UndeterminedSchema.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`all`: the input can re-render anything (a site config, a shared include)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.actordef.roles",
       "@type": "skos:Concept",
       "skos:inScheme": {

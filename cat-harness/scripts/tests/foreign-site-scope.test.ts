@@ -16,15 +16,25 @@
  *       and no other instance's state graph linked;
  *   (b) no href is left root-relative unless it is the folio's own path,
  *       resolved inside the folio's baseurl.
+ *
+ * And the same rule for a FIGURE that is not a tile (the #2263 follow-up):
+ *
+ *   (c) the platform's translation sweep and index are not shipped as the
+ *       folio's, and the sweep badge is told what to SAY instead
+ *       ("Swept 49/689" on every page of an IG folio's site was the platform's);
+ *   (d) the fsh-guts icon is not this site's trashcan unless the folio links
+ *       its own, so its count is not fetched from a site that has none
+ *       (it showed "?").
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
 import { compose } from "../compose-docs.ts";
 import {
+  HOST_DATA_PROJECTIONS,
   foreignScopeFor,
   isHostProjection,
   rootRelativeLeft,
@@ -138,6 +148,39 @@ describe("the rule, one row per case", () => {
     expect(isHostProjection("assets/harness/tiles.json", "---\nlayout: null\n---\n{{ site.data.harness.tiles | jsonify }}")).toBe(false);
     expect(isHostProjection("assets/img/x.json", '{"a":1}')).toBe(false);
   });
+
+  test("(c) the host's translation sweep and index are projections, by name, on either separator", () => {
+    expect(isHostProjection("_data/translation-qa.json", '{"sweptAt":"x","totalPages":689}')).toBe(true);
+    expect(isHostProjection("_data/translations.json", '{"$schema":"folio-translation-index/v1"}')).toBe(true);
+    expect(isHostProjection("_data\\translations.json", "{}")).toBe(true);
+    expect(isHostProjection("_data/instance-themes.json", '{"instances":[]}')).toBe(false);
+  });
+
+  test("(d) a borrowed icon says WHOSE it is; an own one does not", () => {
+    const row = scopeNavbarRow(
+      { icons: ["fsh-guts", "skills"], hrefs: { "fsh-guts": "/fsh-guts/", skills: "/folio/skills/" } },
+      fakeScope({ kindsOf: (id) => (id === "fsh-guts" ? ["fsh-guts"] : ["skills"]), holdsOf: () => "context" }),
+    ) as { hrefs: Record<string, string>; whose?: Record<string, string> };
+    expect(row.hrefs["fsh-guts"]).toBe(`${BASE}/fsh-guts/`);
+    expect(row.whose?.["fsh-guts"]).toBe("the platform's: folio declares no fsh-guts graph");
+    expect(row.hrefs.skills).toBe("/skills/");
+    expect(row.whose?.skills).toBeUndefined();
+  });
+
+  test("(c, d) foreignSite.absent says what the chrome shows instead of a number", () => {
+    const fish = (href?: string, note?: string) =>
+      (scopeHarnessData(
+        { navbar: { icons: ["fsh-guts"], hrefs: href ? { "fsh-guts": href } : {}, ...(note ? { notes: { "fsh-guts": note } } : {}) } },
+        fakeScope({ kindsOf: () => ["fsh-guts"], holdsOf: () => "context" }),
+      ).foreignSite as { absent: Record<string, string> }).absent;
+    // The platform's trashcan, re-based: not this site's, so no count is fetched here.
+    expect(fish("/fsh-guts/")).toEqual({
+      translationQa: "folio publishes no translation QA sweep on this site",
+      fshGuts: "folio declares no fsh-guts graph",
+    });
+    // The folio's OWN trashcan: its count is this site's to fetch.
+    expect(fish("/folio/fsh-guts/").fshGuts).toBeUndefined();
+  });
 });
 
 describe("smart-trust, against the platform's real harness data", () => {
@@ -156,6 +199,17 @@ describe("smart-trust, against the platform's real harness data", () => {
     expect(out.navbar.hrefs.beans).toBeUndefined();
     expect(out.navbar.hrefs.todos).toBeUndefined();
     expect(out.navbar.notes.beans).toBe("smart-trust declares no beans graph");
+  });
+
+  test("(d) the platform's fsh-guts is a labelled link, and the chrome is told it is not this site's", () => {
+    const o = out as unknown as {
+      navbar: { hrefs: Record<string, string>; whose?: Record<string, string> };
+      foreignSite: { absent: Record<string, string> };
+    };
+    expect(o.navbar.hrefs["fsh-guts"]).toBe(`${BASE}/fsh-guts/`);
+    expect(o.navbar.whose?.["fsh-guts"]).toBe("the platform's: smart-trust declares no fsh-guts graph");
+    expect(o.foreignSite.absent.fshGuts).toBe("smart-trust declares no fsh-guts graph");
+    expect(o.foreignSite.absent.translationQa).toBe("smart-trust publishes no translation QA sweep on this site");
   });
 
   test("(a) the header and the rail scope are smart-trust's", () => {
@@ -186,6 +240,28 @@ describe("the IG site's shell (compose-docs --shell), end to end", () => {
     expect(existsSync(join(out, "assets", "todos", "todo-page.js"))).toBe(true);
   });
 
+  test("(c) the platform's translation sweep and index are not shipped as the folio's", () => {
+    for (const rel of Object.keys(HOST_DATA_PROJECTIONS)) {
+      expect(existsSync(join(out, rel))).toBe(false);
+      expect(r.scoped?.hostProjections).toContain(rel);
+    }
+  });
+
+  test("(c) every data file the shell still carries is chrome — a new projection must be named", () => {
+    // What each remaining `_data/` file is, and why it is not a figure about
+    // the host's pages on the folio's site. A file not listed here fails this
+    // test: it is either a projection (a HOST_DATA_PROJECTIONS row) or chrome
+    // (a row here), and somebody has to say which.
+    const CHROME: Record<string, string> = {
+      "harness.json": "scoped to the folio by scopeHarnessData, not copied",
+      "instance-themes.json": "which theme a URL prefix wears: configuration, read by prefix",
+      "node-kinds.json": "the node-kind vocabulary: context, not a count",
+      "stickies.json": "read only by the platform's landing page (index.md), which a shell does not carry",
+    };
+    const left = readdirSync(join(out, "_data")).filter((f) => f.endsWith(".json"));
+    expect(left.filter((f) => !(f in CHROME))).toEqual([]);
+  });
+
   test("its harness data is scoped: no count, no unresolved root-relative href", () => {
     const d = JSON.parse(readFileSync(join(out, "_data", "harness.json"), "utf-8")) as { tiles: { count?: number }[] };
     expect(d.tiles.filter((t) => t.count !== undefined)).toEqual([]);
@@ -209,5 +285,61 @@ describe("the injected rail (rail-standalone-pages --foreign-site) over a fixtur
     expect(row.hrefs.todos).toBeUndefined();
     expect(row.notes.todos).toBe("smart-trust declares no todos graph");
     expect(rootRelativeLeft(row)).toEqual([]);
+  });
+});
+
+describe("the chrome reads foreignSite.absent (head_custom.html, rendered)", () => {
+  /** head_custom.html rendered with liquidjs, includes stubbed: only the two islands are read. */
+  async function render(data: Record<string, unknown>): Promise<{ sweep: Record<string, unknown>; fishSrc: boolean }> {
+    const { Liquid } = await import("liquidjs");
+    const liquid = new Liquid({
+      jekyllInclude: true,
+      dynamicPartials: false,
+      fs: {
+        readFileSync: () => "",
+        existsSync: () => true,
+        exists: async () => true,
+        readFile: async () => "",
+        resolve: (_r: string, f: string) => f,
+        contains: () => true,
+        dirname: () => "",
+        sep: "/",
+      } as never,
+    });
+    liquid.registerFilter("relative_url", (p: string) => `/ig-folio${p}`);
+    liquid.registerFilter("absolute_url", (p: string) => `https://example.org/ig-folio${p}`);
+    liquid.registerFilter("jsonify", (v: unknown) => JSON.stringify(v ?? null));
+    const src = readFileSync(join(CAT_HARNESS, siteDirFor(CAT_HARNESS), "_includes", "head_custom.html"), "utf-8");
+    const html = await liquid.parseAndRender(src, { site: { baseurl: "/ig-folio", data }, page: { path: "p.md" } });
+    const meta = /id="fa-translation-meta">([\s\S]*?)<\/script>/.exec(html);
+    expect(meta).not.toBeNull();
+    return {
+      sweep: (JSON.parse(meta![1]!) as { sweep: Record<string, unknown> }).sweep,
+      fishSrc: /<meta name="fa-fsh-guts-src"/.test(html.replace(/<!--[\s\S]*?-->/g, "")),
+    };
+  }
+  const absent = { translationQa: "ig-folio publishes no translation QA sweep on this site", fshGuts: "ig-folio declares no fsh-guts graph" };
+
+  test("(c, d) on a folio's site with no sweep of its own: the words, and no fsh-guts fetch", async () => {
+    const r = await render({ harness: { foreignSite: { instance: "ig-folio", absent } } });
+    expect(r.sweep.absent).toBe(absent.translationQa);
+    expect(r.sweep.run).toBe(false);
+    expect(r.fishSrc).toBe(false);
+  });
+
+  test("(c) a folio that publishes its OWN sweep shows its own figure, not the note", async () => {
+    const r = await render({
+      harness: { foreignSite: { instance: "ig-folio", absent } },
+      "translation-qa": { sweptAt: "t", totalPages: 12, pagesWithTranslations: 3, complete: true },
+    });
+    expect(r.sweep.absent).toBeNull();
+    expect(r.sweep.totalPages).toBe(12);
+  });
+
+  test("on the platform's own site nothing changes: no note, and the fsh-guts document is fetched", async () => {
+    const r = await render({ harness: {}, "translation-qa": { sweptAt: "t", totalPages: 689, pagesWithTranslations: 49, complete: true } });
+    expect(r.sweep.absent).toBeNull();
+    expect(r.sweep.pagesWithTranslations).toBe(49);
+    expect(r.fishSrc).toBe(true);
   });
 });

@@ -25,6 +25,7 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
 
 - **Called by:** no call activity names this process
 - **Calls:** [Verify the export before it is deployed](publish-verification.html), [Adopting an upstream version bump](upstream-version-adoption.html)
+- **Names the `kg-separation` skill without calling this process:** [A sub-KG is staged in place, then leaves for its own repository](sub-kg-lifecycle.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram
 - **Skill:** [`kg-separation`](../reference/skill-instructions/kg-separation.html)
 

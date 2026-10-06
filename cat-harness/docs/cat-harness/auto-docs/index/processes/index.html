@@ -165,7 +165,7 @@
 <ul class="subs">
 <li><a href="core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">17</span></li>
 <li><a href="fhir-harness-processes/">fhir-harness-processes</a> <span class="p">fhir-harness/processes</span> <span class="n">3</span></li>
-<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">61</span></li>
+<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">62</span></li>
 <li><a href="sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">2</span></li>
 <li><a href="smart-base-house-processes/">smart-base-house-processes</a> <span class="p">smart-base/processes</span> <span class="n">1</span></li>
 <li><a href="smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
@@ -214,6 +214,10 @@
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>Build and publish a per-slice SQLite file</code></a><br><span class="p">cat-harness/processes/kg/slice-sqlite-publish.bpmn</span></td>
   <td>Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Platform authoring agent · CI/CD Pipeline</div><div class="f"><span class="k">skills</span> kg-export, rendered-verification</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>A sub-KG is staged in place, then leaves for its own repository</code></a><br><span class="p">cat-harness/processes/kg/sub-kg-lifecycle.bpmn</span></td>
+  <td>Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository.<div class="f"><span class="k">activities</span> 16</div><div class="f"><span class="k">lanes</span> Authoring agent · Platform authoring agent · Build pipeline · Administrator (owner)</div><div class="f"><span class="k">skills</span> deletion-requires-confirmation, graph-detanglement, kg-separation, opening-brief, sub-kg-lifecycle, upstream-version-adoption</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/content-acquisition.bpmn"><code>Content acquisition</code></a><br><span class="p">cat-harness/processes/library/content-acquisition.bpmn</span></td>
@@ -445,7 +449,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-change-review.bpmn"><code>Content Change and Review</code></a><br><span class="p">folio-assistant-core/processes/content/content-change-review.bpmn</span></td>
-  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 30</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, before-after-preview, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, review-comments, review-heatmap, staging-review, todo-manager, uses-editorial-review, visual-diff, watch</div></td>
+  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 30</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, before-after-preview, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, rendered-impact, review-comments, review-heatmap, staging-review, todo-manager, uses-editorial-review, visual-diff, watch</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/content-lifecycle.bpmn"><code>Content lifecycle</code></a><br><span class="p">folio-assistant-core/processes/content/content-lifecycle.bpmn</span></td>
