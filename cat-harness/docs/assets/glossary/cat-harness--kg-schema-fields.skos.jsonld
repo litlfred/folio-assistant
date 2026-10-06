@@ -23726,6 +23726,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedfileschema.hash",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedFileSchema.hash"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a review of this file is pinned to (see \"A PIN\"): for a `cone` file, a hash of the blobs of the changed inputs on `via`; for a `build-diff` file, its content hash. Absent when nothing pinned it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.hash",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedfileschema.path",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23818,6 +23837,63 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.site",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedmeasuredschema.basecommit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedMeasuredSchema.baseCommit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The commit the PR's change is measured against."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.baseCommit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedmeasuredschema.beforecommit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedMeasuredSchema.beforeCommit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The commit the before side was built from, as its publish manifest records it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.beforeCommit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.undeterminedschema.hash",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UndeterminedSchema.hash"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The input's blob at head, so a waiver of it is pinned to this version."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.hash",
       "skos:note": "candidate"
     },
     {

@@ -29333,6 +29333,13 @@
           "optional": true,
           "array": true,
           "doc": "The fragment ids within `path` the change alters, for a page that"
+        },
+        {
+          "name": "hash",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a review of this file is pinned to (see \"A PIN\"): for a `cone` file,"
         }
       ],
       "extendsNames": [],
@@ -29436,6 +29443,78 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/rendered-impact.ts#RenderedMeasured",
+      "name": "RenderedMeasured",
+      "module": "cat-harness/schemas/rendered-impact.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema",
+      "name": "RenderedMeasuredSchema",
+      "module": "cat-harness/schemas/rendered-impact.ts",
+      "kind": "zod-object",
+      "doc": "A staging build's measurement of a prediction: the build diff against the",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(RENDERED_MEASURED_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.enum([\"known\", \"not-base\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "baseCommit",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The commit the PR's change is measured against."
+        },
+        {
+          "name": "beforeCommit",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The commit the before side was built from, as its publish manifest records it."
+        },
+        {
+          "name": "measured",
+          "type": "RenderedImpactSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "check",
+          "type": "z.object({ missed: z.array(z.string()), confirmed: z.array(z.string()), unconfirmed: z.array(z.object({ path: z.string(…",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "RENDERED_MEASURED_TAG",
+        "RENDERED_ROLES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/rendered-impact.ts#RenderedRole",
       "name": "RenderedRole",
       "module": "cat-harness/schemas/rendered-impact.ts",
@@ -29472,6 +29551,13 @@
           "optional": true,
           "array": false,
           "doc": "`all`: the input can re-render anything (a site config, a shared include)."
+        },
+        {
+          "name": "hash",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The input's blob at head, so a waiver of it is pinned to this version."
         }
       ],
       "extendsNames": [],
@@ -55093,11 +55179,119 @@
           "type": "string[]",
           "optional": false,
           "array": true,
-          "doc": "Verdicts on an OLDER version of a block, which therefore do not count."
+          "doc": "Verdicts on an OLDER version of what they are on, which therefore do not count."
+        },
+        {
+          "name": "rendered",
+          "type": "RenderedStatus",
+          "optional": false,
+          "array": false,
+          "doc": "Whether a rendered impact was given; when `absent` the three lists below are empty because UNKNOWN."
+        },
+        {
+          "name": "unreviewedPages",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Rendered pages (and data files) on the review list that nobody has reviewed at their current pin."
+        },
+        {
+          "name": "undeterminedInputs",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Inputs no renderer could place, with neither a current verdict nor a waiver."
+        },
+        {
+          "name": "measured",
+          "type": "MeasuredStatus",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the build was measured against its base."
+        },
+        {
+          "name": "missedPages",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Pages the build measured and the prediction missed, not reviewed since. Counted only when `measured` is `known`."
         }
       ],
       "extendsNames": [],
       "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-verdict.ts#MeasuredStatus",
+        "folio-assistant-core/schemas/review-verdict.ts#RenderedStatus"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#MeasuredStatus",
+      "name": "MeasuredStatus",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "type-alias",
+      "doc": "`not-base`: the before side was built from another commit, so its diff is not this change's.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "known",
+        "absent",
+        "not-base"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#RenderedFacts",
+      "name": "RenderedFacts",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "interface",
+      "doc": "The rendered half of coverage, from the build's published files (`rendered-impact.ts`).",
+      "fields": [
+        {
+          "name": "files",
+          "type": "ReadonlyArray<{ path: string; role: string; hash?: string; anchors?: readonly string[] }>",
+          "optional": false,
+          "array": false,
+          "doc": "The predicted files and undetermined inputs, every renderer's, each pinned."
+        },
+        {
+          "name": "undetermined",
+          "type": "ReadonlyArray<{ input: string; hash?: string }>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "measured",
+          "type": "{ status: \"known\" | \"not-base\"; missed: ReadonlyArray<{ path: string; role: string; hash?: string }> }",
+          "optional": true,
+          "array": false,
+          "doc": "The build's measurement, when it was measured."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#RenderedStatus",
+      "name": "RenderedStatus",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "type-alias",
+      "doc": "Whether the rendered half was COMPUTED: a count that was not is never read as 0.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "known",
+        "absent"
+      ],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -55139,7 +55333,15 @@
           "name": "targetLabel",
           "type": "z.string().min(1)",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "A block's label, or a page's or an input's path, as `target` says."
+        },
+        {
+          "name": "target",
+          "type": "z.enum(VERDICT_TARGETS).default(\"block\")",
+          "optional": true,
+          "array": false,
+          "doc": "Absent on verdicts written before pages could be reviewed: those are all on blocks."
         },
         {
           "name": "verdict",
@@ -55159,7 +55361,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The block's content hash when the verdict was given. The verdict counts only while it is current."
+          "doc": "The block's content hash (a page's or input's pin) when the verdict was given. It counts only while current."
         },
         {
           "name": "reviewer",
@@ -55220,6 +55422,7 @@
       "external": [
         "REVIEW_VERDICTS",
         "REVIEW_VERDICT_SCHEMA",
+        "VERDICT_TARGETS",
         "z"
       ],
       "exported": true
@@ -55285,6 +55488,18 @@
           "array": true
         },
         {
+          "name": "pages",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "inputs",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        },
+        {
           "name": "verdict",
           "type": "ReviewVerdictValue",
           "optional": false,
@@ -55308,6 +55523,19 @@
       "refs": [
         "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictValue"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-verdict.ts#VerdictTarget",
+      "name": "VerdictTarget",
+      "module": "folio-assistant-core/schemas/review-verdict.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -60523,6 +60751,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema",
+      "to": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema",
+      "via": "measured",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/role-graph.ts#ActorDef",
       "to": "cat-harness/schemas/skill-package.ts#ActorKind",
       "via": "kind",
@@ -64518,6 +64754,22 @@
       "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
       "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
       "via": "to",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-verdict.ts#Coverage",
+      "to": "folio-assistant-core/schemas/review-verdict.ts#MeasuredStatus",
+      "via": "measured",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-verdict.ts#Coverage",
+      "to": "folio-assistant-core/schemas/review-verdict.ts#RenderedStatus",
+      "via": "rendered",
       "kind": "field",
       "optional": false,
       "array": false

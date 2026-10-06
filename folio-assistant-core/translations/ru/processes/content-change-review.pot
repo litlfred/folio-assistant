@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-change-review\n"
-"POT-Creation-Date: 2026-10-06T09:47:00.550Z\n"
+"POT-Creation-Date: 2026-10-06T14:34:25.989Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:396
 #. Diagram element documentation
-msgid "Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved."
+msgid "Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`, and, where the build published a rendered impact, `unreviewedPages`, `undeterminedInputs` and `missedPages` with their `rendered` and `measured` statuses (skill rendered-impact). Resolved comments are not coverage, and coverage is not approval — that is GW_Approved."
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:22
@@ -231,7 +231,7 @@ msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:395
 #. Diagram label
-msgid "Every changed block reviewed?"
+msgid "Every changed block and page reviewed?"
 msgstr ""
 
 #: ../folio-assistant-core/processes/content/content-change-review.bpmn:328
