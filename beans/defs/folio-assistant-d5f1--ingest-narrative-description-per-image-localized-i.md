@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-29T20:03:12Z
+updated_at: 2026-10-06T06:36:50Z
 parent: folio-assistant-slw1
 ---
 
@@ -260,3 +260,15 @@ document's content.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Owner ruling 2026-10-06: extract, then agent drafts for human confirmation
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): extract + agent drafts; extract only, humans describe; defer. **The owner chose "Extract + agent drafts".**
+
+After the content split, in this order:
+1. Extract images from PDFs. The area-ratio test separates page scans (skipped) from figures (kept); measured 140 scans against 24 figures.
+2. Record each figure in `manifest.jsonld`.
+3. An agent drafts one description per configured language, stamped with its author and **model version** (`iqim`).
+4. Each draft goes to the review queue for human confirmation.
+
+The work lands in folio-assistant-core.

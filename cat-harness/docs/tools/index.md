@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>129</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>72</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>107</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>128</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>71</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>106</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 107 |
+| <span class="tg-tag tg-shell">shell</span> | 106 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 7 |
 
 | installation | tools |
 |---|---|
-| `none` | 120 |
+| `none` | 119 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **72** skills named across **129** tools resolve to a
+Yes — all **71** skills named across **128** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -97,7 +97,6 @@ tool advertising a capability the graph cannot locate.
 | `gates-merged`<br>Gates on the merged tree | Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched. | <span class="tg-tag tg-shell">shell</span> | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 1 in / 1 out |
 | `gh-pages`<br>GitHub Pages (gh-pages) | Push a rendered Knowledge Graph to GitHub Pages at a publication root URL — a staging preview (`STAGING/<slug>/`) or the release root, the same steps either way — and report the push: a status (pushed, not pushed, could not determine) and one message carrying the commit merged onto `gh-pages` and the QA result. Its steps are bootstrap-tools' `render-kg-to-github-pages` process, which first provisions the target: an orphan `gh-pages` branch, then Pages switched on to serve it. | <span class="tg-tag tg-manual">manual</span> | [`render-kg-to-cdn`](../reference/skill-instructions/render-kg-to-cdn.html) | 4 in / 2 out |
 | `github`<br>GitHub | Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none. | <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`coordinate`](../reference/skill-instructions/coordinate.html)<br>[`pickup`](../reference/skill-instructions/pickup.html)<br>[`prepare-merge-auto`](../reference/skill-instructions/prepare-merge-auto.html)<br>[`watch`](../reference/skill-instructions/watch.html) | 3 in / 1 out |
-| `glossary-build`<br>Glossary build | Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change. | <span class="tg-tag tg-shell">shell</span> | [`document-intake`](../reference/skill-instructions/document-intake.html) | 2 in / 1 out |
 | `headless-render-qc`<br>Headless render QC (Playwright) | Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering. | <span class="tg-tag tg-shell">shell</span> | [`rendered-verification`](../reference/skill-instructions/rendered-verification.html) | 1 in / 1 out |
 | `ingest-extended`<br>Ingest, with PDF and image extensions | Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 3 in / 1 out |
 | `ingest-stdlib`<br>Ingest, standard library only | Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 3 in / 1 out |
