@@ -17,6 +17,7 @@
 import { existsSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { instanceDirectoriesForGraph, instanceRootsIn, ownDirectoryById } from "./cat-harness.js";
+import { instanceRootNamed } from "./instance-roots";
 import { CONVENTION_GROUP } from "./convention.js";
 
 /** The subdirectory of a declared `skills` graph that holds JSON `SkillDefinition`s. */
@@ -53,10 +54,12 @@ export function skillDefinitionDirs(repoRoot: string): string[] {
  * `skills` graph, or `undefined` when there is none.
  */
 export function conventionsDir(repoRoot: string): string | undefined {
-  // declared-path-literal: the platform instance, as role-graph.ts's
-  // scenariosSubdir names it; its skills directory by id, since several
-  // directories declare the `skills` kind.
-  const skills = ownDirectoryById(join(repoRoot, "cat-harness"), "skills", "skills");
+  // The platform instance by its declaration, as role-graph.ts's
+  // scenariosSubdir finds it (bean `uxn1`); its skills directory by id, since
+  // several directories declare the `skills` kind.
+  const platform = instanceRootNamed(repoRoot, "cat-harness");
+  if (platform === undefined) return undefined;
+  const skills = ownDirectoryById(platform, "skills", "skills");
   const dir = join(skills, CONVENTION_GROUP);
   return existsSync(dir) ? dir : undefined;
 }
