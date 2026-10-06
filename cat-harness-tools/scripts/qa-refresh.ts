@@ -146,8 +146,16 @@ export const QA_WRITERS: readonly QaWriter[] = [
       `${R}/bootstrap/**`,
       `${R}/bootstrap-tools/**`,
       `${R}/cat-harness-tools/**`,
+      // The hosted instances added after this list was first written
+      // (measured 2026-10-04, bean `72a8`): an instance that declares no `qa`
+      // directory of its own has its KG verdicts written under this root's
+      // `test/results/<instance>/`. Named, not globbed: `*/kg-qa/**` would
+      // also claim the folded `agent-skills/` and `large-datasets/` trees,
+      // which no writer produces, and the record must lose those visibly.
+      `${R}/cat-openapi/**`,
+      `${R}/folio-assistant/**`,
     ],
-    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools)",
+    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, cat-openapi, folio-assistant)",
   },
   { id: "kg:detangle", run: ["kg:detangle"], writes: [`${R}/detangle/**`], because: "detangle measurements per instance graph" },
   { id: "translation:block-qa", run: ["translation:block-qa"], writes: [`${R}/translation-qa/**`], because: "translation verdicts; read by the witnesses below" },
@@ -158,6 +166,12 @@ export const QA_WRITERS: readonly QaWriter[] = [
     because: "script block verdicts over the docs tree; agent verdicts are composed from test/attestations/, which stays on main. Read by the witnesses below",
   },
   { id: "check:l1-complete", run: ["check:l1-complete", "--write"], writes: [`${R}/library-qa/**`], because: "per-library-entry L1 completeness; `--write` is its writer form" },
+  {
+    id: "p2:refusals",
+    run: ["p2:refusals"],
+    writes: ["*/test/results/p2-refusals.qa-results.json"],
+    because: "each IG instance's record of the Publisher pages refused under P2 (bean `jut3`), derived from its artefact index; missing from this list until bean `72a8`, so a computed tree lacked it and `p2:refusals:check` failed",
+  },
   { id: "lsi:index:cat-harness:skills", run: ["lsi:skills"], writes: [`${R}/lsi/cat-harness/skills.lsi.json`, `${R}/tool-runs/lsi-index/cat-harness/skills.tool-run.json`], because: "the skills graph's LSI index and its run record" },
   ...(["cat-harness", "smart-base", "who-iris"] as const).map(
     (inst): QaWriter => ({
@@ -334,6 +348,36 @@ export function trackedQaFiles(repoRoot: string, roots: readonly string[]): stri
   return git(repoRoot, ["ls-files", "-z", "--", ...roots]).split("\0").filter(Boolean);
 }
 
+/** Tracked paths that differ from HEAD, in the index or the working tree. */
+function dirtyTracked(repoRoot: string): Set<string> {
+  return new Set(
+    git(repoRoot, ["status", "--porcelain=v1", "-z", "--untracked-files=no"])
+      .split("\0")
+      .filter(Boolean)
+      .map((l) => l.slice(3)),
+  );
+}
+
+/**
+ * Tracked files a writer rewrote that were clean before it ran — the paths to
+ * restore. Pure, so the rule is tested without a checkout.
+ *
+ * The working copy is the IGNORED tree under the `qa` roots, and producing it
+ * must leave every committed file as the commit has it. Several writers render
+ * more than their QA output: `docs:pages` regenerates the docs projections
+ * (`docs/assets/beans/index.json`, `docs/assets/qa/index.json`) alongside the
+ * witnesses it is listed for, and `qa-sweep` restamps the script sidecars.
+ * Left in place, those edits make the gates that read the committed tree
+ * judge a tree nobody committed: measured 2026-10-04 on #2080, the beans tile
+ * count moved 796 → 805 and `docs:harness:check` went red in CI and green on
+ * every checkout that had not run the working copy (bean `72a8`).
+ *
+ * A path that was already dirty is the person's own edit and is never touched.
+ */
+export function writerSideEffects(before: ReadonlySet<string>, after: ReadonlySet<string>): string[] {
+  return [...after].filter((p) => !before.has(p)).sort();
+}
+
 /**
  * Split the declared writers by whether version control still carries their
  * output — the per-writer form of the two modes (module docblock, bean `tqjj`).
@@ -406,7 +450,25 @@ function main(argv: string[]): number {
         "the commit's own copy is their record, so they do not run (5hox's hash check needs main/<sha> byte-identical to it)",
     );
   }
+  // Every declared results directory exists before any writer runs. This
+  // command IS the computation, so an absent directory here means "not yet
+  // written", never "not computed". Without it, a fresh checkout's first writer
+  // (kg:audit:all) audits each nested instance before anything has created that
+  // instance's directory, so its test-run criteria read `unknown` (bean `2gst`'s
+  // rule for an uncomputed tree), and that critical `unknown` is recorded in the
+  // very sidecars it then writes there. `check:qa-corpus` failed on 8 instances
+  // in CI on #2080 for exactly this. On main the directories exist because their
+  // sidecars are committed; this restores that, nothing more.
+  for (const r of roots) mkdirSync(join(repoRoot, r), { recursive: true });
+  // A writer may rewrite committed files beside its QA output (bean `72a8`);
+  // restore those so the gates judge the tree that was committed.
+  const before = dirtyTracked(repoRoot);
   for (const w of unbacked) runs.push(runWriter(repoRoot, w));
+  const restore = writerSideEffects(before, dirtyTracked(repoRoot));
+  if (restore.length) {
+    git(repoRoot, ["checkout", "--", ...restore]);
+    console.log(`qa:refresh: restored ${restore.length} committed file(s) a writer rewrote (first: ${restore[0]}) — the working copy adds only ignored files`);
+  }
   const report = assess({ mode, inventory: movedInventory(repoRoot, roots), runs, commit, tracked });
   const out = resolve(one("report") ?? join(repoRoot, "build", "qa-refresh.json"));
   mkdirSync(dirname(out), { recursive: true });

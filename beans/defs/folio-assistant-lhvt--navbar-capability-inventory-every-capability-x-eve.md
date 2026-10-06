@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lhvt
 title: 'Navbar capability inventory: every capability x every layout, measured on built pages'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T10:15:18Z
-updated_at: 2026-10-05T11:33:19Z
+updated_at: 2026-10-06T05:55:28Z
 parent: folio-assistant-9rq1
 ---
 
@@ -53,3 +53,6 @@ Capabilities, rendered in Chromium (one sample page per layout: index, architect
 - [x] injectRail links both before </head> on every railed page; head_custom.html loads them before docs-ui.
 - [x] gate: every committed railed page loads navbar-row.js (navbar.test.ts); glyph copies equal docs-ui.js's.
 - [x] e2e: lite row on a bare railed page (links, base prefix, 18px, 56px at rest, no launcher), both load orders end full.
+
+## Summary of Changes — closed on evidence, 2026-10-06
+Both Done-when items are met by the measured table above. Finding 1's fix (navbar-row.js draws a LITE row on railed pages without docs-ui.js) re-measured on gh-pages build.json sha f4f5910 (built 2026-10-06T05:36Z), served from git and rendered in Chromium at 1280x800 and 390x844, session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92: /api/ (TypeDoc, no docs-ui.js) now draws Todos, Beans and fsh-guts in the row, where the table above had 'no — nothing draws it'. Findings 2 and 3 continue in 9rq1 (one mechanism on every layout) and 7ji4 (id-lookup has no rail).

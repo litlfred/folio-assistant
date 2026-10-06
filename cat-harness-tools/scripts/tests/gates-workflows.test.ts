@@ -13,6 +13,7 @@ import { join, resolve } from "node:path";
 
 import {
   GATES_WORKFLOW,
+  PRECONDITION_STEPS,
   STEP_EXEMPTIONS,
   commandsCiRuns,
   gatesFrom,
@@ -196,6 +197,9 @@ describe("a strict reader and a loose one agree", () => {
     const found = new Set([
       ...loadGates(ROOT, { all: true }).map((g) => g.command),
       ...loadUnresolved(ROOT, { all: true }).map((g) => g.command),
+      // The third stated bucket (bean `72a8`): steps the runner performs as a
+      // PRECONDITION — once, before the pool — rather than as gates in it.
+      ...PRECONDITION_STEPS,
     ]);
     // A PUBLISHER job's lines are dropped on purpose, by `publishes` (bean
     // `16ei`): a job holding `contents: write` is not a gate, and `bun run
