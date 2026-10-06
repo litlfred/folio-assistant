@@ -43,6 +43,7 @@ changed input files and returns:
 | field | says |
 |---|---|
 | `files[]` | each rendered file the change alters: `path` in the built site, `change` (changed, added, removed), `role` (content, data, index) and `via`, the chain that reached it |
+| `files[].anchors` | for a page that assembles many units (a document page), the fragment ids the change alters; the review list links `path#anchor` |
 | `undetermined[]` | each input the renderer could NOT place, with its reason, and `scope: all` when it can change any page |
 | `method` | `cone` (predicted before a build) or `build-diff` (measured after one) |
 
@@ -77,7 +78,7 @@ Three rules, each one a refusal:
 | renderer | maps | how | status |
 |---|---|---|---|
 | `fhir-ig-pages` | `.fsh`, `.cql`, `input/pagecontent/*.md` | `fsh-cone` forward cone → SUSHI's `fsh-index.json` → AST artefact page + served JSON; a page → itself and every page that includes it | in the FHIR layer, documented with its AST tooling (`skill_fetch ig-ast-delta`) |
-| document folio | blocks | block ChangeSet (`folio-changeset/v1`) → page anchors | to do (bean `bnjs`) |
+| `document-site`, `public-comment-site` | a block, a document/chapter/section manifest, `media/*`, the public-comment store | loaded from the published `changeset.json` (each changed block's label and file) and `outline.json` (the documents), never from source: a block lands on its document's page, anchored at its label (`anchors`) | in the document layer, with the ChangeSet Tool |
 | docs site | any file | `staging-cone.ts`, refined from directories to pages | to do (bean `bnjs`) |
 
 **Measured on the FHIR renderer** (a real IG, bean `c65n`):

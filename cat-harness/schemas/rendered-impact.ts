@@ -63,6 +63,13 @@ export const RenderedFileSchema = z.object({
    * that a file changed and cannot say why.
    */
   via: z.array(z.string()).default([]),
+  /**
+   * The fragment ids within `path` the change alters, for a page that
+   * assembles many units (a document page with an anchor per block). A review
+   * list links `path#anchor` for each. Absent when the whole file is the unit,
+   * or when a build diff cannot say which part changed.
+   */
+  anchors: z.array(z.string().min(1)).optional(),
 });
 export type RenderedFile = z.infer<typeof RenderedFileSchema>;
 

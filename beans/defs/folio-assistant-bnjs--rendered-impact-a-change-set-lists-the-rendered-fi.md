@@ -17,7 +17,7 @@ Related: q4cm (edit set, accept = approve), c65n (measured FHIR chain), jwox (bl
 - [x] FHIR IG renderer: changed .fsh/.cql/pagecontent -> fsh-cone forward cone -> fsh-index -> AST pages, data, index pages
 - [x] verify the FHIR prediction against the real smart-immunizations build diff (expect the 3 files of c65n)
 - [x] Change Set generalised: refs optional, rendered[] field
-- [ ] document-folio renderer (block ChangeSet -> page anchors), for smart-ra
+- [x] document-folio renderer (block ChangeSet -> page anchors), for smart-ra: loaded from changeset.json + outline.json (owner: "use dynamic loading from the json(ld) KG and existing assets")
 - [ ] docs-site renderer (staging-cone, directory -> pages)
 - [x] skill rendered-impact; update staging-review, before-after-preview, ig-ast-delta, public-comment change-sets
 - [x] process: content-change-review.bpmn names rendered-impact at Compare, Slice and Comment-PR (produce/read/assign)
@@ -33,3 +33,6 @@ Owner, 2026-10-06: "original stays in library/. the presumed workflow is then it
 - Contract + FHIR renderer (187869fa0); verified on smart-immunizations: FSH edit 4 predicted / 3 measured / 0 missed (the 1 unconfirmed is the page that loads its data), page edit exact. 0.34 s vs SUSHI 165 s.
 - Change Set general (24fed58de): refs default [], rendered[] field; 284 smart-ra CS records validate unchanged.
 - Skill rendered-impact registered; content-change-review names it at Compare, Slice and Comment-PR.
+
+## Document renderer (2026-10-06)
+`folio-assistant-core/scripts/document-rendered-impact.ts`: renderers `document-site` and `public-comment-site`, loaded from the published `changeset.json` + `outline.json`, never from source (owner: "use dynamic loading from the json(ld) KG and existing assets"); `files[].anchors` added to the contract for deep links. Verified on litlfred/smart-ra (local test branch, not pushed): one block sentence + one chapter title -> predicted `dpi-h-ra/index.html#prose:1-1-1-dcc314` + `outline.json`, measured the same 2 files, 0 missed, 0 unconfirmed; 0.7 s with the asset, 1.8 s computing the ChangeSet. 7 unit tests.

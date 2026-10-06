@@ -23555,6 +23555,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedfileschema.anchors",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedFileSchema.anchors"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The fragment ids within `path` the change alters, for a page that assembles many units (a document page with an anchor per block). A review list links `path#anchor` for each. Absent when the whole file is the unit, or when a build diff cannot say which part changed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.anchors",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/rendered-impact.renderedfileschema.path",
       "@type": "skos:Concept",
       "skos:inScheme": {
