@@ -259,14 +259,16 @@ read only mirror in fsh-guts"*.
   host keeps a **frozen** copy in [`fsh-guts`](../kg-core/fsh-guts.md), not a
   refreshed mirror and not a deletion. Step 12 asks (1) move to fsh-guts now,
   (2) keep in place until the first release, (3) show the file list first,
-  default (2). Step 13 runs `state:seed --id <id> --cutover --commit`
-  (owner, 2026-10-06, choosing this archive form over plain trees, which
-  CI then audited as live content): it deposits the directory into the
-  instance's fsh-guts as an archive that must extract to the exact tree
-  being removed, with a provenance note (`movedFrom`, `movedOn`,
-  `sourceCommit`, `tree`), and removes the directory from `main` only once
-  the deposit has landed. [`directory-conventions`](../kg-core/directory-conventions.md)
-  carries the rule. The live
+  default (2). Step 13 deposits the directory into the PARENT's fsh-guts
+  as a verified archive, then removes it from `main` (owner, 2026-10-06,
+  choosing this archive form over plain trees, which CI then audited as
+  live content). The deposit is the one `state:seed --cutover` makes for a
+  state graph: an archive that must extract to the exact tree being
+  removed, plus a provenance note (`movedFrom`, `movedOn`, `sourceCommit`,
+  `tree`), and the removal commit is made only once it has landed. A
+  separation targets the parent's fsh-guts rather than the departing
+  instance's, which `--cutover` does not do; the separation mode is
+  follow-up work to #2322. The live
   copy is the submodule or subscription from stage 10; the frozen one is
   never refreshed and never rendered.
 
