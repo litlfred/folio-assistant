@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T19:12:02Z
-updated_at: 2026-10-06T19:12:13Z
+updated_at: 2026-10-06T19:12:48Z
 parent: folio-assistant-7x5n
 ---
 
@@ -25,3 +25,6 @@ litlfred/who-iris builds and checks green on its own; folio-assistant has no who
 
 
 **Owner 2026-10-06: who-iris depends on folio-assistant-core** (its declared `needs`), never on cat-harness directly. So the 7 direct climbs into cat-harness (platform.ts re-exports of cat-harness schemas/scripts, themes/themes.ts + themes.test.ts, scripts/tests/catalogue-links.test.ts, gen-iris-pages.test.ts) are re-routed through folio-assistant-core's own surface (core re-exports what a downstream content instance may use; cat-harness reached transitively), and the pinned package the who-iris repo depends on is folio-assistant-core — the monorepo at a SHA until litlfred/folio-assistant-core is seeded. A check that who-iris imports nothing outside who-iris/ and core's surface is part of this bean.
+
+
+**Owner 2026-10-06, supersedes 'pinned package': who-iris REMOTE MOUNTS its dependency KGs** — folio-assistant-core and core's whole dependency closure (cat-harness, bootstrap, bootstrap-tools, …), resolved transitively from each harness's own declaration. Mechanism: bean 0mpw (a declared directory with a remote source pinned to a SHA; the harness's declaration carries the mount defaults; a downstream folio may override by id). So 0mpw's mount command + overlay resolution is a PREREQUISITE of the who-iris seed standing alone, and becomes the first live use of 0mpw. Imports into core's surface resolve through the mounted paths.
