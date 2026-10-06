@@ -171,5 +171,40 @@
         "reason": "re-derives an IG's artefact index from its PUBLISHED OUTPUT, which this repository does not carry — smart-trust's `gh-pages` is 342,656 files, so no runner here can supply the subject. `check:artifact-index` is wired and covers the half that needs only the repository: that every committed index is a valid `folio-fhir-artifact-index/v1` document, with `count` agreeing with its array and no DAK overlay on an index declaring `dakApi: \"absent\"`. That is DELIBERATELY less than this check would catch — an index that validates can still be stale against an IG that has moved on — and the difference is stated rather than papered over. The script itself exits 2 (\"could not determine\") when the source is absent, never 0, so wiring it would redden CI over a missing clone rather than over a regression. Run it by hand, or from `/prepare-merge`, with the IG checkout as its argument"
       }
     ]
-  }
+  },
+  "contentTranslations": [
+    {
+      "contentType": "ig",
+      "name": "FHIR Implementation Guide (L3)",
+      "formats": [
+        {
+          "id": "markdown",
+          "name": "Markdown (narrative)",
+          "extensions": [
+            ".md"
+          ],
+          "extractModule": "content/pipeline/pot-extract.ts",
+          "injectModule": "content/pipeline/po-inject.ts"
+        },
+        {
+          "id": "fsh",
+          "name": "FSH (FHIR Shorthand)",
+          "extensions": [
+            ".fsh"
+          ],
+          "notes": "FSH translation targets Description, Title, and designation fields. Uses FHIR translation extension."
+        },
+        {
+          "id": "fhir-json",
+          "name": "FHIR JSON resources",
+          "extensions": [
+            ".json"
+          ],
+          "notes": "Translations land as FHIR translation extensions on Coding.display, CodeableConcept.text, etc. No injector is declared at this layer, which must stay WHO-free; an instance above it that has one says so in its own profile."
+        }
+      ],
+      "rtlSupported": true,
+      "notes": "IG Publisher handles some translation via its own PO mechanism. This pipeline handles narrative and FSH."
+    }
+  ]
 }

@@ -179,13 +179,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
-          "instructionLines": 156,
+          "instructionLines": 164,
           "instructionsPath": "skills/fhir-ig-base/fhir-ig-create.md",
           "name": "fhir-ig-create",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/958243f446205dbdeb75a7af02d8e25e013adffff891fac6bb36497103776a2d",
-            "bytes": 7956,
-            "sha256": "958243f446205dbdeb75a7af02d8e25e013adffff891fac6bb36497103776a2d"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2b5953fc14cef37df30a1e14b933795517ec7548efaf2ad46505b8ac64e53eb0",
+            "bytes": 8512,
+            "sha256": "2b5953fc14cef37df30a1e14b933795517ec7548efaf2ad46505b8ac64e53eb0"
           },
           "title": "fhir-ig-create"
         },
@@ -229,17 +229,17 @@
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-build-pipeline",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Read before adding anything to fhir-harness.",
+          "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Also owns the two questions put to the owner when an IG repository is adopted or found publishing on its own: whether automatic gh-pages builds become manual-only, and whether to install the just-the-docs site (default yes). Read before adding anything to fhir-harness, and before onboarding, converting or changing the workflows of an IG repository.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
-          "instructionLines": 168,
+          "instructionLines": 310,
           "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
           "name": "ig-build-pipeline",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f1d6e77687771c8eee93c1e4a3e9e4248756f30ca39214ccbefdbdb83cea8c9a",
-            "bytes": 8688,
-            "sha256": "f1d6e77687771c8eee93c1e4a3e9e4248756f30ca39214ccbefdbdb83cea8c9a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/44ece8715a20d3bea63e2b81619ec5526d6a794e36bc958957e4d12b2be5dad6",
+            "bytes": 16010,
+            "sha256": "44ece8715a20d3bea63e2b81619ec5526d6a794e36bc958957e4d12b2be5dad6"
           },
           "title": "ig-build-pipeline"
         },
@@ -287,13 +287,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
-          "instructionLines": 107,
+          "instructionLines": 112,
           "instructionsPath": "skills/fhir-ig-base/ig-render-jekyll.md",
           "name": "ig-render-jekyll",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f7cd480b8a31dba5768e568bad739cfa6a4f67fc4b77f96223f9f3f04af0abc",
-            "bytes": 4896,
-            "sha256": "8f7cd480b8a31dba5768e568bad739cfa6a4f67fc4b77f96223f9f3f04af0abc"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a79a306d9c5a80f279399cc78046ff01dc2fc6ba7623dda97bbea20124676318",
+            "bytes": 5165,
+            "sha256": "a79a306d9c5a80f279399cc78046ff01dc2fc6ba7623dda97bbea20124676318"
           },
           "title": "ig-render-jekyll"
         },

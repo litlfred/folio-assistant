@@ -18,7 +18,7 @@ Related: q4cm (edit set, accept = approve), c65n (measured FHIR chain), jwox (bl
 - [x] verify the FHIR prediction against the real smart-immunizations build diff (expect the 3 files of c65n)
 - [x] Change Set generalised: refs optional, rendered[] field
 - [x] document-folio renderer (block ChangeSet -> page anchors), for smart-ra: loaded from changeset.json + outline.json (owner: "use dynamic loading from the json(ld) KG and existing assets")
-- [ ] docs-site renderer (staging-cone, directory -> pages)
+- [x] docs-site renderer (staging-cone, directory -> pages): `cat-harness/scripts/docs-rendered-impact.ts`, measured against two local builds (8 predicted / 8 measured / 7 confirmed; the 1 miss is environmental); `diffBuiltSites` now blanks build stamps (826 -> 1 file between two builds of one commit)
 - [x] skill rendered-impact; update staging-review, before-after-preview, ig-ast-delta, public-comment change-sets
 - [x] process: content-change-review.bpmn names rendered-impact at Compare, Slice and Comment-PR (produce/read/assign)
 - [x] gate: the coverage DMN counts unreviewed rendered pages, missed files and site-wide undetermined inputs, once the staging build publishes rendered-impact.json (an input nothing computes is not added)

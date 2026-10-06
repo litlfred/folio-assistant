@@ -68,7 +68,7 @@ interface Meta {
  */
 const PAGE_BADGE =
   `<p><span class="fa-qa-badges fa-page-qa-badges">` +
-  `<button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" ` +
+  `<button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" ` +
   `data-qa-family="translation" data-qa-key="page.translation" ` +
   `data-qa-label="Translation QA" data-qa-noun="page" ` +
   `data-qa-src="${QA_SRC_URL}" data-qa-index="${QA_INDEX_URL}" ` +
@@ -826,5 +826,188 @@ test.describe("on a folio's site the sweep badge is the folio's or says why — 
   test("with no note the platform's own wording stands", async ({ page }) => {
     await serve(page, { lang: "en", availableLocales: [], sweep: { run: false } });
     await expect(page.locator(".fa-sweep-badge")).toContainText("QA: not run");
+  });
+});
+
+/* ── The rest of the chrome on an Arabic page — bean `giiw`, item 2 ───────
+ *
+ * The notice and the coverage/sweep badges were the first round. The audit
+ * that closed it found English chrome still inheriting `dir="rtl"` from <html>
+ * everywhere else docs-ui draws: the actions panel (Page settings among its
+ * views), the glass and its handle, the search band, the sidebar's icon row
+ * and its tooltips, Folders, Pages, ▦ Harnesses, the document index's heading,
+ * the QA panels a badge opens, and the badges themselves — the generated
+ * markup had `direction: ltr` from CSS only, and a translated copy of a
+ * generated page has not even that in its markup.
+ *
+ * Each case asserts the element's nearest `lang` is `en` AND its computed
+ * direction is `ltr`, on a page whose <html> is `dir="rtl"`. The CONTROLS are
+ * the other half: what IS translated (the page's own headings in the index,
+ * `.site-nav`) and the rows whose order should mirror (the icon row, the band)
+ * keep the page's direction, so marking everything English would fail too.
+ *
+ * A sidebar fixture, as `harness-row-alignment.e2e.ts` builds it: the
+ * committed footer include and navbar row data, with `navbar-row.js` inlined.
+ */
+test.describe("on an Arabic page the rest of the chrome is English, laid out as English", () => {
+  const SITE_ABS = join(ROOT, SITE);
+  const ROW_JS = readFileSync(join(SITE_ABS, "assets/js/navbar-row.js"), "utf8");
+  const NAVBAR = (JSON.parse(readFileSync(join(SITE_ABS, "_data/harness.json"), "utf8")) as { navbar: unknown }).navbar;
+  const FOOTER = (() => {
+    const src = readFileSync(join(SITE_ABS, "_includes/generated/navbar-footer.html"), "utf8");
+    const line = src.split("\n").find((l) => l.startsWith('<div class="fa-nav-in">'));
+    if (!line) throw new Error("navbar-footer.html carries no regions line — run `bun run navbar:include`.");
+    return line.replace(/\{\{\s*'([^']*)'\s*\|\s*relative_url\s*\}\}/g, (_m, p: string) => "/folio-assistant" + p);
+  })();
+  /** The page badge as a TRANSLATED copy of a generated page still carries it: no `lang`, no `dir`. */
+  const LEGACY_BADGE = PAGE_BADGE.replace(' lang="en" dir="ltr"', "");
+  const projection = {
+    $schema: "qa-witness/v1",
+    family: "translation",
+    subject: "Harness — translations",
+    sidecars: [],
+    state: "warn",
+    counts: { fail: 0, warn: 1, pass: 0, na: 0, unknown: 0 },
+    criteria: [{ id: "translation-not-echo", result: "warn", locale: "ar", block: "sec:a", witnesses: [] }],
+  };
+  const index = { badges: { "page.translation": { state: "warn", counts: projection.counts } } };
+  const AR_START = "البدء";
+
+  function arabicPage(): string {
+    const meta = { lang: "ar", availableLocales: ["ar", "en"] };
+    return (
+      `<!doctype html><html lang="ar"><head><meta charset="utf-8">` +
+      `<meta name="fa-baseurl" content="/folio-assistant">` +
+      `<style>body{margin:0;background:#fff}` +
+      `.side-bar{position:fixed;top:0;right:0;width:16.5rem;height:100%;display:flex;flex-flow:column nowrap}` +
+      `.site-header{display:flex;align-items:center}.site-title{flex:1}${CSS}</style>` +
+      `<script type="application/json" id="fa-translation-meta">${JSON.stringify(meta)}<\/script>` +
+      `<script type="application/json" id="fa-navbar-row">${JSON.stringify(NAVBAR)}<\/script>` +
+      `</head><body>` +
+      `<div class="side-bar">` +
+      `<div class="site-header"><a class="site-title" href="#"><span class="fa-site-title">C@T Harness</span></a></div>` +
+      `<div class="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search folio-assistant"></div>` +
+      `<div id="search-results" class="search-results"></div></div>` +
+      `<nav class="site-nav" id="site-nav"><ul class="nav-list"><li class="nav-list-item">` +
+      `<a class="nav-list-link" href="#">${AR_START}</a></li></ul></nav>` +
+      `<footer class="site-footer"><input type="checkbox" class="fa-nav-open" id="fa-nav-open">${FOOTER}</footer>` +
+      `</div>` +
+      `<div class="main"><div class="main-content" id="main-content"><h1>Harness</h1>${LEGACY_BADGE}` +
+      // An older generator's inert badge, as `process/ar/evidence.md` still
+      // carries it: no index, so nothing ever paints it.
+      `<p>${AR_START} <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" ` +
+      `title="Content QA: not swept"><span class="fa-qa-tag">QA</span></span></span></p>` +
+      `<h2 id="a">أربعة أمور</h2><h3 id="a1">فرعي</h3>` +
+      `<h2 id="b">الخطوات</h2></div></div>` +
+      `<script>window.jtd={theme:"light",getTheme:function(){return this.theme},setTheme:function(t){this.theme=t}};<\/script>` +
+      `<script>${ROW_JS}<\/script><script>${JS}<\/script></body></html>`
+    );
+  }
+
+  async function open(p: Page): Promise<string[]> {
+    const errors: string[] = [];
+    p.on("pageerror", (e) => errors.push(String(e)));
+    await p.route("http://tr.test/**", (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/page.html")) return route.fulfill({ contentType: "text/html", body: arabicPage() });
+      if (url.endsWith(QA_INDEX_URL)) return route.fulfill({ contentType: "application/json", body: JSON.stringify(index) });
+      if (url.endsWith(QA_SRC_URL)) return route.fulfill({ contentType: "application/json", body: JSON.stringify(projection) });
+      return route.fulfill({ status: 404, body: "not found" });
+    });
+    await p.goto(PAGE_URL);
+    expect(await p.evaluate(() => document.documentElement.dir)).toBe("rtl");
+    return errors;
+  }
+
+  /** Every match's nearest declared language and its computed direction. */
+  async function langDir(p: Page, sel: string): Promise<{ lang: string | null; dir: string }[]> {
+    await expect(p.locator(sel).first()).toBeAttached();
+    return p.locator(sel).evaluateAll((els) =>
+      els.map((e) => {
+        const holder = e.closest("[lang]");
+        return { lang: holder ? holder.getAttribute("lang") : null, dir: getComputedStyle(e).direction };
+      }),
+    );
+  }
+  const ENGLISH = { lang: "en", dir: "ltr" };
+
+  for (const [what, sel] of [
+    ["the actions panel (Page settings is one of its views)", ".fa-tiles"],
+    ["the header's three buttons", ".fa-qr-host > button"],
+    ["the glass", ".fa-sticky-layer"],
+    ["the glass handle (Folio ▾)", ".fa-glass-handle"],
+    ["the search band's search", ".fa-search-home"],
+    ["each icon in the sidebar's row, so its tooltip and count", ".fa-nav-icons > *"],
+    ["the document index's heading", ".fa-doc-index__heading"],
+    ["the document index's sub-section folds", ".fa-doc-index__fold-heading"],
+    ["Folders", ".fa-nav-folders"],
+    ["the Pages heading", ".fa-nav-pages"],
+    ["▦ Harnesses", ".fa-nav-harness-group"],
+    ["the page's TR badge, from a translated copy's markup", '.fa-qa-badge[data-qa-key="page.translation"]'],
+    ["an older generator's inert badge, which nothing paints", ".fa-qa-badge.fa-qa-fam-block"],
+  ] as const) {
+    test(`${what} is marked English and computes ltr`, async ({ page: p }) => {
+      const errors = await open(p);
+      const got = await langDir(p, sel);
+      expect(got.length).toBeGreaterThan(0);
+      for (const g of got) expect(g).toEqual(ENGLISH);
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test("an icon's tooltip sits beside the strip, which is on the RIGHT", async ({ page: p }) => {
+    // Item 3 of the bean. The tooltip's `left` was the strip's width plus a
+    // gap, so on an RTL page — strip docked right — "Beans — 535 open" was
+    // drawn at the page's LEFT edge, a viewport's width from its icon.
+    await open(p);
+    const icon = p.locator(".fa-nav-icons > [data-fa-tip]").first();
+    await icon.hover();
+    const g = await icon.evaluate((e) => {
+      const s = getComputedStyle(e, "::after");
+      const r = e.getBoundingClientRect();
+      // A fixed box's computed insets are RESOLVED, so `right` is a length
+      // even where the rule says `left: auto` — the box's right edge.
+      return { right: parseFloat(s.right), iconLeft: r.left, vw: document.documentElement.clientWidth };
+    });
+    const tipRightEdge = g.vw - g.right;
+    // Its right edge is left of the icon's, and close to it — not across the page.
+    expect(tipRightEdge).toBeLessThanOrEqual(g.iconLeft + 1);
+    expect(g.iconLeft - tipRightEdge).toBeLessThan(400);
+  });
+
+  test("Page settings, opened, is English laid out as English", async ({ page: p }) => {
+    await open(p);
+    // The header's own toggle is hidden once the icon row carries its proxy;
+    // the proxy clicks it, so clicking it directly is the same path.
+    await p.locator(".fa-tiles-toggle").evaluate((b: HTMLElement) => b.click());
+    await p.locator(".fa-tile", { hasText: "Page settings" }).evaluate((b: HTMLElement) => b.click());
+    for (const g of await langDir(p, ".fa-tiles-view .fa-a11y-label")) expect(g).toEqual(ENGLISH);
+  });
+
+  test("the QA panel the TR badge opens is English", async ({ page: p }) => {
+    await open(p);
+    await p.locator('.fa-qa-badge[data-qa-key="page.translation"]').click();
+    for (const g of await langDir(p, ".fa-qa-panel")) expect(g).toEqual(ENGLISH);
+  });
+
+  test("the search leaves the reader's text and the results their own direction", async ({ page: p }) => {
+    await open(p);
+    await expect(p.locator(".fa-search-home input")).toHaveAttribute("dir", "auto");
+    await expect(p.locator(".fa-search-home #search-results")).toHaveAttribute("dir", "auto");
+    await p.locator(".fa-search-peek").click();
+    await p.locator(".fa-search-home input").fill(AR_START);
+    expect(await p.locator(".fa-search-home input").evaluate((e) => getComputedStyle(e).direction)).toBe("rtl");
+  });
+
+  test("what is translated, and the rows that mirror, keep the page's direction", async ({ page: p }) => {
+    await open(p);
+    // The index's ROWS are the page's own (Arabic) headings.
+    for (const g of await langDir(p, ".fa-doc-index__link")) expect(g).toEqual({ lang: "ar", dir: "rtl" });
+    // The page list is translated per locale.
+    for (const g of await langDir(p, ".site-nav")) expect(g).toEqual({ lang: "ar", dir: "rtl" });
+    // Rows whose ORDER is layout mirror with the page.
+    for (const sel of [".fa-nav-icons", ".fa-glass-band"]) {
+      expect(await p.locator(sel).first().evaluate((e) => getComputedStyle(e).direction)).toBe("rtl");
+    }
   });
 });

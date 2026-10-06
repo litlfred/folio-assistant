@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9hfi
 title: 'smart-immunizations codings.html: CodeSystems and ValueSets show ''not rendered: list-simple-*.xhtml'''
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-06T05:56:52Z
-updated_at: 2026-10-06T06:01:00Z
+updated_at: 2026-10-06T15:43:51Z
 parent: folio-assistant-uhkv
 ---
 
@@ -42,3 +42,5 @@ Yes. The index exists from two sources:
 - fhir-harness/scripts/ast-to-artifact-index.ts, which derives the same folio-fhir-artifact-index/v1 from an AST restored with ig-cache.sh restore. It is used by stage-ast-sites.ts but NOT by stage-ig-sites.ts or the fork's folio-site.yml.
 
 So the fix is option (a), with the index as the single input: a list-(simple-)?<kind>.xhtml renderer over the artefact index, whichever source produced it, and no IG Publisher run. One caveat from that script's own docblock: an AST does not carry the Publisher's editorial CATEGORY, so publisherCategory() applies the default grouping by resource type. For CodeSystem and ValueSet lists that default is exact, because the grouping is by type.
+
+_2026-10-06T15:43:51Z_ — Claimed by claude/9hfi-list-simple-renderer — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
