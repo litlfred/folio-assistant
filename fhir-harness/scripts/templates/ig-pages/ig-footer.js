@@ -1,5 +1,8 @@
 // The IG pages' footer, drawn as the IG Publisher draws its own (#1901), and
-// published once at `assets/ig-footer.js` (`visualizer-loading`). A page
+// published once at `assets/ig-footer.js` (`visualizer-loading`) — only for
+// artefact pages that do NOT build into an IG site. In an IG site (`igSite`)
+// the pages flag `ig_footer` instead and the site's own footer include draws
+// them, from the IG's package AND source, so the two cannot differ. A page
 // carries only an empty <footer id="ig-footer"> and, where it has them, its
 // previous and next pages. The IG's publisher, package, FHIR version, build
 // date and licence are read here from `assets/ig-footer.json`, which

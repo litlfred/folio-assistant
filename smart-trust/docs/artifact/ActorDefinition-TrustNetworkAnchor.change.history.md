@@ -3,6 +3,8 @@ title: "Trust Network Anchor — change history"
 description: "Trust Network Anchor - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"ActorDefinition-TrustNetworkAnchor.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ActorDefinition-TrustNetworkAnchor.xml","active":false},{"label":"JSON","href":"ActorDefinition-TrustNetworkAnchor.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ActorDefinition-TrustNetworkAnchor.ttl","active":false}],"heading":"Trust Network Anchor - Change History","sections":[{"text":"History of changes for TrustNetworkAnchor ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

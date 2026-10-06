@@ -3,6 +3,8 @@ title: "WHO GDHCN Trust Domains - UAT — testing"
 description: "ValueSet: WHO GDHCN Trust Domains - UAT - Testing."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-UAT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.xml","active":false},{"label":"JSON","href":"ValueSet-Domains-UAT.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-UAT.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-UAT.jsonld.html","active":false}],"heading":"ValueSet: WHO GDHCN Trust Domains - UAT - Testing","status":"Draft as of 2026-10-01","sections":[{"heading":"Test Plans","text":"No test plans are currently available for the ValueSet."},{"heading":"Test Scripts","text":"No test scripts are currently available for the ValueSet."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

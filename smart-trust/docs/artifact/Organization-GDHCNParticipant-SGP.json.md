@@ -3,6 +3,8 @@ title: "GDHCNParticipant-SGP — JSON"
 description: "The JSON representation of Organization/GDHCNParticipant-SGP."
 nav_exclude: true
 json_view: {"heading":"GDHCNParticipant-SGP - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/Organization-GDHCNParticipant-SGP.json","raw":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-SGP.json","rawName":"Organization-GDHCNParticipant-SGP.json","tabs":[{"label":"Narrative Content","href":"Organization-GDHCNParticipant-SGP.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-SGP.xml","active":false},{"label":"JSON","href":"Organization-GDHCNParticipant-SGP.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-SGP.ttl","active":false}],"script":"../assets/resource-json.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +39,3 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <pre><code class="language-json" data-package="{{ page.json_view.package }}" data-entry="{{ page.json_view.entry }}">Loading JSON source…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.json_view.raw }}">published JSON</a> does not.</p></noscript>
 <script src="{{ page.json_view.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

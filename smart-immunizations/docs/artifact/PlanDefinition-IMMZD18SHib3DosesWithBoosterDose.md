@@ -2,6 +2,10 @@
 title: "IMMZ.D18.S.Hib.3 doses with booster dose schedule — WHO SMART Immunizations artefact"
 description: "PlanDefinition/IMMZD18SHib3DosesWithBoosterDose in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "PlanDefinition-IMMZD18SHib3Doses.html"
+ig_next: "PlanDefinition-IMMZD18SHPV2Doses.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ IMMZ.D18.S.Hib.3 doses with booster dose schedule 3 primary doses with a booster
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18SHib3Doses.html" data-next="PlanDefinition-IMMZD18SHPV2Doses.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

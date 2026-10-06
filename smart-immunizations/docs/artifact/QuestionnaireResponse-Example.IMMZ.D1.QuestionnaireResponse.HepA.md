@@ -2,6 +2,10 @@
 title: "Example QuestionnaireReponse for Capture Client History for Hepatitis A — WHO SMART Immunizations artefact"
 description: "QuestionnaireResponse/Example.IMMZ.D1.QuestionnaireResponse.HepA in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "QuestionnaireResponse-Example.IMMZ.D1.QuestionnaireResponse.Flu.html"
+ig_next: "QuestionnaireResponse-Example.IMMZ.D1.QuestionnaireResponse.HepB.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Example QuestionnaireReponse for IMMZ.D1.Capture or update client history. For p
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="QuestionnaireResponse-Example.IMMZ.D1.QuestionnaireResponse.Flu.html" data-next="QuestionnaireResponse-Example.IMMZ.D1.QuestionnaireResponse.HepB.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

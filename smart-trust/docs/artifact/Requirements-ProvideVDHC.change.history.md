@@ -3,6 +3,8 @@ title: "Provide Verifiable Digital Health Certificate — change history"
 description: "Provide VDHC - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Requirements-ProvideVDHC.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Requirements-ProvideVDHC.xml","active":false},{"label":"JSON","href":"Requirements-ProvideVDHC.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Requirements-ProvideVDHC.ttl","active":false}],"heading":"Provide VDHC - Change History","sections":[{"text":"History of changes for ProvideVDHC ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

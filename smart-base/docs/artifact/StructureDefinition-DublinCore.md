@@ -2,6 +2,10 @@
 title: "Dublin Core Metadata Element Set — WHO SMART Base artefact"
 description: "StructureDefinition/DublinCore in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-DecisionSupportLogicSource.html"
+ig_next: "StructureDefinition-FHIRSchemaBase.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-DublinCore.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-DublinCore.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-DecisionSupportLogicSource.html" data-next="StructureDefinition-FHIRSchemaBase.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

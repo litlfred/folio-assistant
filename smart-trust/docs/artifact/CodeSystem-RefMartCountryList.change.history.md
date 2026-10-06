@@ -3,6 +3,8 @@ title: "WHO RefMart Jurisidiction List — change history"
 description: "RefMartCountryList - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"CodeSystem-RefMartCountryList.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/CodeSystem-RefMartCountryList.xml","active":false},{"label":"JSON","href":"CodeSystem-RefMartCountryList.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/CodeSystem-RefMartCountryList.ttl","active":false}],"heading":"RefMartCountryList - Change History","sections":[{"text":"History of changes for RefMartCountryList ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

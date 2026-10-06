@@ -3,6 +3,8 @@ title: "GDHCNParticipant-SMR-UAT — change history"
 description: "San Marino - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Organization-GDHCNParticipant-SMR-UAT.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-SMR-UAT.xml","active":false},{"label":"JSON","href":"Organization-GDHCNParticipant-SMR-UAT.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Organization-GDHCNParticipant-SMR-UAT.ttl","active":false}],"heading":"San Marino - Change History","sections":[{"text":"History of changes for GDHCNParticipant-SMR-UAT ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -2,6 +2,10 @@
 title: "IMMZ.D5.Determine vaccine(s) to be administered based on contraindications — WHO SMART Immunizations artefact"
 description: "StructureDefinition/IMMZD5 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-IMMZD21.html"
+ig_next: "StructureDefinition-IMMZD7.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D5_Determine_vaccine_s__to_be_administered_based_on_contraindications.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-IMMZD21.html" data-next="StructureDefinition-IMMZD7.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>
