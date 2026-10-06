@@ -147,6 +147,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`state-push.ts`](state-push.ts) | a file |  |
 | [`state-seed.ts`](state-seed.ts) | a file |  |
 | [`state-store.ts`](state-store.ts) | a file |  |
+| [`verify-clone.ts`](verify-clone.ts) | a file |  |
 | [`vocab-mappings.ts`](vocab-mappings.ts) | a file |  |
 | [`witness-conformance.ts`](witness-conformance.ts) | a file |  |
 | [`witness-parity.ts`](witness-parity.ts) | a file |  |

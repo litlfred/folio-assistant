@@ -1485,6 +1485,139 @@ export function formatInitResult(result: InitFolioResult, o: InitFolioOptions | 
   return lines.join("\n");
 }
 
+// ── Staged sub-KG (bean 3tza, owner ruling 1, 2026-10-06) ────────
+
+/**
+ * A sub-KG staged INSIDE a harnessed repository, ahead of (maybe) leaving it.
+ *
+ * Stage 1 of `sub-kg-lifecycle`. `initInstance` scaffolds a whole REPOSITORY —
+ * `AGENTS.md`, `.mcp.json`, a beans store, a session hook, fifteen files
+ * (measured with `--dry-run`, 2026-10-06) — which is right for a new
+ * repository and wrong inside an existing one, where every one of those files
+ * already exists at the host's root and a second copy in a subdirectory is
+ * noise nothing reads. So this writes exactly two files, both under the staged
+ * path, and nothing anywhere else:
+ *
+ * - `<path>/<slug>.json`: the declaration, with `repository` (the PLANNED
+ *   home) different from `livesAt.repository` (the host). That difference is
+ *   what makes it a staged instance: the separation guard and `seed:ready`
+ *   read it, and nothing lists staged instances by hand.
+ * - `<path>/platform.ts`: the import seam, empty. Every platform symbol the
+ *   sub-KG later uses is re-exported from here, so re-pointing the platform on
+ *   separation is a one-file edit (`instance-separation-imports.test.ts`).
+ *
+ * `directories` is `[]` on purpose: declare a directory with its files, in
+ * one commit (bean `dh4f`), never ahead of them.
+ */
+export interface InitStagedOptions {
+  /** The HOST repository's root. */
+  hostDir: string;
+  /** Where the sub-KG sits, relative to the host root. Becomes `livesAt.path`. */
+  path: string;
+  slug: string;
+  title: string;
+  /** The planned home, `owner/name`. */
+  repository: string;
+  /** The host, `owner/name`. Derived from the host's `origin` remote when absent. */
+  hostRepository?: string;
+  /** The instances it stands on. At least one: a staged sub-KG instantiates some harness. */
+  needs: string[];
+  force?: boolean;
+  dryRun?: boolean;
+}
+
+const REPO_FULL_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+function stagedPlatformSeam(o: InitStagedOptions): string {
+  return `/**
+ * The ONE file in ${o.slug} that names where the platform lives.
+ *
+ * ${o.slug} is staged here ahead of becoming its own repository
+ * (\`${o.repository}\`). Every platform symbol it uses is re-exported from this
+ * file, and no other file in the directory imports from outside it, so on the
+ * day it leaves, re-pointing the platform is a one-file edit.
+ * \`instance-separation-imports.test.ts\` holds the rule. Lifecycle:
+ * \`sub-kg-lifecycle\`.
+ *
+ * @module ${o.slug}/platform
+ */
+export {};
+`;
+}
+
+/** Scaffold a staged sub-KG's declaration and import seam, and nothing else. */
+export function initStaged(options: InitStagedOptions): InitFolioResult {
+  const o = options;
+  checkSlug(o.slug);
+  const host = resolve(o.hostDir);
+  const root = resolve(host, o.path);
+  const rel = relative(host, root).split(sep).join("/");
+  if (rel === "" || rel.startsWith("..")) {
+    throw new Error(`--staged path must be a directory INSIDE the host, got '${o.path}'`);
+  }
+  if (!REPO_FULL_NAME.test(o.repository)) throw new Error(`--repository must be owner/name, got '${o.repository}'`);
+  if (o.needs.length === 0) throw new Error("--needs is required: a staged sub-KG instantiates some harness");
+  let hostRepository = o.hostRepository;
+  if (hostRepository === undefined) {
+    const r = spawnSync("git", ["remote", "get-url", "origin"], { cwd: host, stdio: "pipe" });
+    if (r.status !== 0) throw new Error("cannot read the host's origin remote; pass --host-repository owner/name");
+    hostRepository = repoSlug(r.stdout.toString().trim());
+  }
+  if (!REPO_FULL_NAME.test(hostRepository)) throw new Error(`--host-repository must be owner/name, got '${hostRepository}'`);
+  if (hostRepository === o.repository) {
+    throw new Error("the planned --repository is the host: a sub-KG that stays in its host is not staged, it is just a directory");
+  }
+
+  const declaration = {
+    name: o.slug,
+    title: o.title,
+    repository: o.repository,
+    livesAt: { repository: hostRepository, path: rel },
+    version: "0.1.0",
+    needs: o.needs,
+    directories: [],
+  };
+  const files: Array<[string, string]> = [
+    [join(rel, instanceDeclarationFilename(o.slug)), JSON.stringify(declaration, null, 2) + "\n"],
+    [join(rel, "platform.ts"), stagedPlatformSeam(o)],
+  ];
+  const result: InitFolioResult = { created: [], skipped: [], notes: [] };
+  for (const [relPath, content] of files) {
+    const full = join(host, relPath);
+    if (existsSync(full) && !o.force) {
+      result.skipped.push(relPath);
+      continue;
+    }
+    if (!o.dryRun) {
+      mkdirSync(dirname(full), { recursive: true });
+      writeFileSync(full, content, "utf-8");
+    }
+    result.created.push(relPath);
+  }
+  result.notes.push(
+    "Declare each graph directory in the same commit as its first files (bean dh4f).",
+    "Route every import from outside the directory through platform.ts.",
+    "Next stages: sub-kg-lifecycle (skill) / sub-kg-lifecycle.bpmn.",
+  );
+  return result;
+}
+
+/** The report for `--staged`: what was written, under one directory only. */
+export function formatStagedResult(result: InitFolioResult, o: InitStagedOptions): string {
+  const lines = [
+    `Staged sub-KG ${o.slug} (planned home ${o.repository}) at ${o.path}  ·  ${result.created.length} file(s) written`,
+    "",
+  ];
+  for (const f of result.created) lines.push(`  + ${f}`);
+  if (result.skipped.length) {
+    lines.push("", "Left alone (already present — pass --force to overwrite):");
+    for (const f of result.skipped) lines.push(`  = ${f}`);
+  }
+  lines.push("", "Notes:");
+  for (const n of result.notes) lines.push(`  · ${n}`);
+  return lines.join("\n");
+}
+
 // ── CLI ──────────────────────────────────────────────────────────
 
 const USAGE = `init-folio — scaffold a new folio repository
@@ -1505,6 +1638,13 @@ Options:
   --force             Overwrite files that already exist
   --dry-run           Report what would be written
   --skip-vcs          Do not run git init / git submodule add
+  --staged <path>     A sub-KG staged INSIDE the host repo at --dir: writes
+                      only <path>/<slug>.json and <path>/platform.ts
+                      (bean 3tza). Needs --repository and --needs; the slug
+                      defaults to the path's last segment
+  --repository <o/n>  With --staged: the planned home, owner/name
+  --host-repository <o/n>  With --staged: the host (default: origin remote)
+  --needs <name>      With --staged: an instance it stands on. Repeatable
   --help
 `;
 
@@ -1518,7 +1658,8 @@ export function slugify(title: string): string {
 
 type ParsedArgs =
   | { kind: "folio"; options: InitFolioOptions }
-  | { kind: "instance"; options: InitInstanceOptions };
+  | { kind: "instance"; options: InitInstanceOptions }
+  | { kind: "staged"; options: InitStagedOptions };
 
 function parseArgs(argv: string[]): ParsedArgs | "help" {
   const authors: string[] = [];
@@ -1533,6 +1674,10 @@ function parseArgs(argv: string[]): ParsedArgs | "help" {
   let skipVcs = false;
   let instance = false;
   let typeGiven = false;
+  let staged: string | undefined;
+  let repository: string | undefined;
+  let hostRepository: string | undefined;
+  const needs: string[] = [];
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -1565,11 +1710,31 @@ function parseArgs(argv: string[]): ParsedArgs | "help" {
       case "--force": force = true; break;
       case "--dry-run": dryRun = true; break;
       case "--skip-vcs": skipVcs = true; break;
+      case "--staged": staged = next(); break;
+      case "--repository": repository = next(); break;
+      case "--host-repository": hostRepository = next(); break;
+      case "--needs": needs.push(next()); break;
       default: throw new Error(`Unknown option: ${a}`);
     }
   }
 
   if (!title) throw new Error("--title is required");
+  if (staged !== undefined) {
+    // Refused rather than ignored: each of these writes repository-level
+    // files, which is exactly what a staged sub-KG must not get.
+    if (instance || typeGiven || authors.length > 0) {
+      throw new Error("--staged takes no --instance, --type or --author: it writes a declaration and a seam, not a repository or a folio");
+    }
+    if (!repository) throw new Error("--staged needs --repository owner/name (the planned home)");
+    const last = staged.split(/[\\/]/).filter(Boolean).pop() ?? "";
+    return {
+      kind: "staged",
+      options: { hostDir: dir, path: staged, slug: slug ?? last, title, repository, hostRepository, needs, force, dryRun },
+    };
+  }
+  if (repository !== undefined || hostRepository !== undefined || needs.length > 0) {
+    throw new Error("--repository, --host-repository and --needs go with --staged");
+  }
   const common = { targetDir: dir, slug: slug ?? slugify(title), title, link, assistantPath, force, dryRun, skipVcs };
   if (instance) {
     // Refused rather than ignored: a content type passed to a contentless
@@ -1587,6 +1752,11 @@ if (import.meta.main) {
     const parsed = parseArgs(process.argv.slice(2));
     if (parsed === "help") {
       console.log(USAGE);
+      process.exit(0);
+    }
+    if (parsed.kind === "staged") {
+      const result = initStaged(parsed.options);
+      console.log(formatStagedResult(result, parsed.options));
       process.exit(0);
     }
     const result = parsed.kind === "instance" ? initInstance(parsed.options) : initFolio(parsed.options);

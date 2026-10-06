@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sub-kg-lifecycle\n"
-"POT-Creation-Date: 2026-10-06T08:01:22.966Z\n"
+"POT-Creation-Date: 2026-10-06T09:03:23.917Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -16,12 +16,17 @@ msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:114
 #. Diagram element documentation
-msgid "`<name>/<name>.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `<name>/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Not `init-folio`: it writes a whole repository's scaffolding."
+msgid "`<name>/<name>.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `<name>/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Scaffolded by `init-folio --staged <path>`, which writes those two files and nothing at the host root; never `--instance`, which writes a whole repository."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:172
 #. Diagram element documentation
 msgid "`bun run seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page."
+msgstr ""
+
+#: processes/kg/sub-kg-lifecycle.bpmn:270
+#. Diagram element documentation
+msgid "`bun run sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:249
@@ -142,11 +147,6 @@ msgstr ""
 #: processes/kg/sub-kg-lifecycle.bpmn:68
 #. Diagram label
 msgid "Build pipeline"
-msgstr ""
-
-#: processes/kg/sub-kg-lifecycle.bpmn:270
-#. Diagram element documentation
-msgid "Clone the new repository into an empty directory with only what it declares it needs, install, and run its gates. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:333
@@ -316,7 +316,7 @@ msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:290
 #. Diagram element documentation
-msgid "The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable."
+msgid "The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. The owner ruled on 2026-10-06 that the host keeps a read-only copy in fsh-guts instead of deleting it. How that copy maps onto fsh-guts is an open question in bean 3tza; until it is answered, this task is not taken past."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:123

@@ -97,15 +97,16 @@ The lifecycle is [`sub-kg-lifecycle`](../../../cat-harness/skills/kg/graph-manag
 and its process `sub-kg-lifecycle.bpmn`; this is what its stage 1 means for an
 IG.
 
-1. **Declare** `<name>/<name>.json`: `name`, `version`, `repository` (the
-   planned `owner/<name>`), `livesAt` (`{ repository: <this one>, path:
-   <name> }`), `needs: ["fhir-harness"]`, and only the directories that exist.
-   An IG's graphs are typically `ig-ast`, `fhir-artifact-index` and `docs`
-   with `igSite: true`. Do **not** run `init-folio` here: it scaffolds a
+1. **Scaffold the declaration and the seam**:
+   `bun run init-folio --staged <name> --title "<title>" --repository <owner>/<name> --needs fhir-harness`.
+   It writes `<name>/<name>.json` (`repository` is the planned home, and
+   `livesAt` is this repository) and an empty `<name>/platform.ts`, and
+   nothing at the repository's root. Never `--instance` here: that scaffolds a
    whole repository.
-2. **Write `<name>/platform.ts` now**, re-exporting what the IG's code uses
-   from the platform. An empty seam on day one costs nothing; retrofitting one
-   later cost 25 reroutes in one instance.
+2. **Declare the graphs as their files arrive.** An IG's graphs are typically
+   `ig-ast`, `fhir-artifact-index` and `docs` with `igSite: true`. Route
+   every platform import through `platform.ts`: an empty seam on day one
+   costs nothing, and retrofitting one later cost 25 reroutes in one instance.
 3. **Get the IG source**, one of:
    - **authored here**: `sushi-config.yaml` and `input/` under the
      instance, authored with [`l3-fhir-authoring`](../content/fhir-ig-authoring/l3-fhir-authoring.md);
@@ -145,9 +146,9 @@ After the import, declare the instance at the root as in `new-repo` step 3.
 
 1. **Creating a repository because the request said "new".** "A new IG" is
    not "a new repository". Ask.
-2. **Running `init-folio` inside a harnessed repository** for an in-repo IG.
-   It writes `AGENTS.md`, `.mcp.json`, a beans store and a session hook into
-   a subdirectory.
+2. **Running `init-folio --instance` inside a harnessed repository** for an
+   in-repo IG. It writes `AGENTS.md`, `.mcp.json`, a beans store and a
+   session hook into a subdirectory. `--staged` is the in-repo mode.
 3. **Hard-coding a publisher's identity here.** Template, chrome and
    publication target belong to a harness above this one.
 4. **Skipping the seam because the IG has no code yet.** The first test that

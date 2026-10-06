@@ -102,11 +102,20 @@ A directory `<name>/` at the host's root, with `<name>/<name>.json`:
 - **The directory may sit anywhere** — a root sibling is the precedent (the
   owner chose a root sibling over a nested folder on 2026-09-21), but the
   tools read `livesAt.path`, so `folio/<name>/` works the same.
-- **Do not run `init-folio` inside the host.** Even `--instance` writes a
-  repository's worth of scaffolding — `AGENTS.md`, `.mcp.json`, a beans store,
-  a session hook (measured with `--dry-run`, 2026-10-06: 15 files). Write the
-  declaration by hand, modelled on a staged instance already in the checkout.
-  `init-folio` is for stage 8's repository, not for stage 1.
+- **Scaffold it with `init-folio --staged <path>`** (owner ruling 1,
+  2026-10-06):
+
+  ```sh
+  bun run init-folio --staged <path> --title "<title>" \
+    --repository <owner>/<name> --needs <harness>   # --host-repository when origin cannot say
+  ```
+
+  It writes exactly two files, `<path>/<name>.json` and an empty
+  `<path>/platform.ts`, and nothing at the host's root;
+  `init-folio-staged.test.ts` snapshots the whole host tree to hold that.
+  **Never `--instance` inside a host**: it writes a repository's worth of
+  scaffolding (`AGENTS.md`, `.mcp.json`, a beans store, a session hook; 15
+  files, measured with `--dry-run`). `--instance` is for stage 8's repository.
 - **Declare a directory with its files, in one commit** (bean `dh4f`): a
   declared-but-absent directory is scanned as empty and reported clean.
 
@@ -225,8 +234,15 @@ The host keeps its own copy through this stage. The re-point is additive.
 
 ### 11 · Verify on a fresh clone
 
-`git clone` the new repository into an empty directory, add only what it
-declares it needs, install, and run its gates. **The measured falsifier**
+```sh
+bun run sub-kg:verify-clone --repo <owner>/<name> --ref <seeding branch> --text   # exit 0 green, 1 red, 2 unknown
+```
+
+The Tool `sub-kg-verify-clone` (owner ruling 2, 2026-10-06) clones the new
+repository into an empty scratch directory with its submodules (and each
+`--sibling` beside it), installs, and runs its own `gates` script, else its
+`test` script. An empty tree, a failed clone or a repository with no gate is
+`unknown`, never green. **The measured falsifier**
 (#2082): the first seeded fork's test failed with
 `Cannot find module '../../../<harness>/…'`, because nothing in a seed runs
 standalone until the seam is re-pointed. A rehearsal in the host's scratch
@@ -234,13 +250,18 @@ space is not this check; it shares the host's `node_modules` and network.
 
 ## What the week did NOT settle
 
-Each is an owner decision, recorded in bean `3tza` and asked there:
+The owner ruled on three questions on 2026-10-06 (bean `3tza`): *"1 2 y / 3
+read only mirror in fsh-guts"*.
 
-- whether `init-folio` should gain a mode that writes a **staged** declaration
-  (stage 1) instead of a repository;
-- whether stage 11's fresh-clone check becomes a command, as `seed:ready`
-  became one;
-- whether the host deletes its copy at stage 13 or keeps a read-only mirror.
+- **Ruled and built:** `init-folio --staged` (stage 1) and
+  `sub-kg:verify-clone` (stage 11).
+- **Ruled, not yet built: stage 13.** After cutover, the host is to keep a
+  read-only copy in `fsh-guts` rather than delete it. [`fsh-guts`](../kg-core/fsh-guts.md)
+  is the kept trashcan. It holds a one-time relocation with `movedFrom` and
+  `movedOn`, is never rendered, and is stripped from every published graph.
+  It has no notion of a copy refreshed from upstream. How a "mirror" maps onto
+  that is asked in bean `3tza`. Until it is answered, stage 13 waits at its
+  confirmation: deleting nothing is the safe state.
 
 ## Anti-patterns
 
