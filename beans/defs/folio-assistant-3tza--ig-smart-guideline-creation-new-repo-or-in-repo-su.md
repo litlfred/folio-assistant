@@ -26,7 +26,7 @@ Branch `agent/ig-create-subkg` (local, not pushed).
 - [x] `smart-guideline-create` skill in smart-base (the SMART specialisation: layout rulings, fork-first, chrome owner)
 - [x] `sub-kg-lifecycle` skill + `sub-kg-lifecycle.bpmn` in cat-harness, with owner-confirmation before repository creation and before deleting the in-repo copy
 - [x] `getting-started` points to the new route without naming a higher layer
-- [ ] skill:register, skill:register:check, render:bpmn:check, kg:audit:check, typecheck, nearest tests, gates attempted
+- [x] skill:register, skill:register:check, render:bpmn:check, kg:audit:check, typecheck, nearest tests, gates attempted
 
 ## Retrospective steps extracted (sources)
 
@@ -44,3 +44,18 @@ Branch `agent/ig-create-subkg` (local, not pushed).
 | 10 | re-point: subscription for read content, submodule for imported code; platform.ts one-file edit; livesAt drops | separation-arc G5/S8; fnx4 kg:subscribe |
 | 11 | verify from a fresh clone; measured falsifier "Cannot find module ../../../fhir-harness" | #2082, w1gy |
 | 12 | cutover deletes the in-repo copy only on the owner's OK | n3ni F, arc S8, deletion-requires-confirmation |
+
+- [ ] owner answers the open decisions below
+- [ ] PR opened and green (the branch is local only; this session did not push)
+
+## Validation (2026-10-06, branch agent/ig-create-subkg)
+
+skill:register (two passes to a fixed point) and skill:register:check: green. render:bpmn:check: green. kg:audit:check: OK, with no new gated finding. `activity-skill-has-tool` is minor and reported, not gated. `skill-voice-review-current` was not run. typecheck: green. check:process-bindings and check:fhir-harness-exclusions: green. check:reference-direction: no new higher instance named. The 196 nearest tests and bpmn-pot-current pass.
+
+`bun run gates` hit the 9-minute limit inside `bun test`. The one failure it showed is `navbar-assets.test.ts`: the navbar.js bundle differs from the generator, and this branch does not touch it. `regen` left audit:coverage:strict and fsh-guts:viz unrepaired, because the fsh-guts branch is not mounted in this worktree.
+
+## Open decisions for the owner
+
+1. Should `init-folio` gain a `--staged <path>` mode that writes a staged declaration (repository, livesAt, platform.ts) instead of a whole repository? (1) yes, build it *(recommended)*; (2) no, keep it hand-written. Default: (2).
+2. Should stage 11, the fresh-clone check, become a command the way `seed:ready` did? (1) yes *(recommended)*; (2) leave it as a manual step. Default: (2).
+3. After cutover, should the host (1) delete its copy *(recommended)* or (2) keep a read-only mirror? Default: (2), until asked per instance.
