@@ -68,7 +68,7 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
         <bpmn:flowNodeRef>Task_Verify</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Admin" name="Administrator">
-        <bpmn:documentation>The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that deletes the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package.</bpmn:documentation>
+        <bpmn:documentation>The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that retires the parent's copy to fsh-guts. An agent reports and waits at each; none of them may be relaxed by a package.</bpmn:documentation>
         <bpmn:extensionElements>
           <bootstrap.processes:role ref="administrator"/>
         </bpmn:extensionElements>
@@ -282,8 +282,8 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
       <bpmn:incoming>F24</bpmn:incoming>
       <bpmn:outgoing>F25</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:userTask id="Task_Cutover" name="13 · Cutover: delete&#10;the parent's copy">
-      <bpmn:documentation>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences.</bpmn:documentation>
+    <bpmn:userTask id="Task_Cutover" name="13 · Cutover: retire&#10;the parent's copy to fsh-guts">
+      <bpmn:documentation>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It relocates the parent's copy to fsh-guts/separated/&lt;name&gt;/ (frozen, never refreshed, never rendered) rather than deleting it: owner, 2026-10-06, "cutover dirs should go to fsh-guts".</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
         <cat-harness.processes:bean op="resolve"/>

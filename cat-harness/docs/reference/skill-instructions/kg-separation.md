@@ -127,7 +127,7 @@ the work looks finished.
 | 10 | **Seed**: the owner creates the repositories; once the source has settled, seed `main`, then the content and tools as reviewed PRs, with history | `administrator`, then `authoring-agent` | `bun run seed:ready --layer <name> --rehearse` answers `settled` for each layer, at seed time; then the seeding PRs reviewed and green |
 | 11 | **Parent consumes, additively**: pin (a SHA while staging, a version once released), repoint imports, keep the parent's copy | `platform-authoring-agent` | the parent green with the dependency declared; `check:published-refs` |
 | 12 | **First release**: tag, publish `/<version>/` and `/v<major>/` | `publication-manager` | `check:version-bump`; every identifier dereferences ([`publish-verification`](publish-verification.md)) |
-| 13 | **Cutover**: the one commit deleting the parent's copy | `administrator` | only after 11 and 12 are green |
+| 13 | **Cutover**: the one commit retiring the parent's copy to [`fsh-guts`](fsh-guts.md) at `fsh-guts/separated/<name>/`, frozen, never refreshed or rendered: a relocation, not a deletion (owner, 2026-10-06; [`sub-kg-lifecycle`](sub-kg-lifecycle.md) stage 13 has the steps) | `administrator` | only after 11 and 12 are green |
 | 14 | **Independent refinement**: each new release adopted by the parent as a reviewed step | `authoring-agent` | [`upstream-version-adoption`](upstream-version-adoption.md) |
 
 **Nothing is committed to the new repositories before stage 10**, and stage 10
@@ -304,7 +304,8 @@ against the **pinned** version, not the latest.
 
 Until the parent is green with the extraction declared, the extraction is
 additive and the parent keeps its copy; the cutover commit is the one unit
-worth reverting. After a release, a tagged version is never reused: roll back
+worth reverting, and since the copy is RELOCATED to `fsh-guts/separated/<name>/`
+rather than deleted, reverting it restores the files from there. After a release, a tagged version is never reused: roll back
 with a new patch release and move the parent's pin back.
 
 ## Worked example — bootstrap + bootstrap-tools
