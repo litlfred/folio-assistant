@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en"><head><script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script><meta name="renders" content="who-iris/site"><meta name="rendered-by" content="auto-docs-viewer"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Docs — who-iris-site · auto-docs</title><style>
+  :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e6edf3; --muted: #9fb0c0; --edge: #3a4652; --paper: #0f1720; --accent: #6fc4e4; }
+  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
+  a { color: var(--accent); }
+  h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
+  .lede { color: var(--muted); margin: 0 0 1.4rem; }
+  .note { border-left: 4px solid var(--edge); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
+  th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
+  td:first-child { width: 20rem; }
+  /* A repo-relative path is long and has no spaces, so it breaks mid-word
+     unless the breakpoints are named. Slashes are where a reader expects it. */
+  .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
+  .none { color: var(--muted); font-style: italic; }
+  .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
+  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
+  ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  /* display:flow-root CONTAINS the floated count, and it is not cosmetic.
+     .n is float:right and is emitted AFTER the name and the path, so it is
+     floated onto whichever line box it is reached on. At 390 px the longer
+     ids wrap, the float lands on the second line, and a plain block li does
+     not contain a float — so it overflowed into the NEXT row.
+
+     Measured 2026-10-04 on /cat-harness/auto-docs/index/docs/who-iris-docs/
+     at 390 px: the smart-trust-docs li occupied y 721-756 while its own count
+     2153 rendered at y 750-775, i.e. 19 px inside the who-iris-docs row
+     beneath it, beside THAT row's count. Two readings wrong from one overflow
+     — smart-trust showed no count, and who-iris appeared to show "6 2153".
+     overflowX was 0 and no gate was red; only a browser at phone width showed
+     it, which is the gjli lesson again.
+
+     The phone-width block below already fixed the same class of defect for the
+     #da-index TABLE (bean n5be, finding 4). This list was not covered by it
+     and kept the float. */
+  ul.subs li { display: flow-root; padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
+  .fa-table-filter label { font-weight: 600; }
+  .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
+    font: inherit; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 4px; }
+  .fa-table-filter-count { font-size: .875em; opacity: .85; }
+  table[data-fa-filtered] tr[hidden] { display: none !important; }
+  .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  /* ON A PHONE THE TERM SITS ABOVE ITS DEFINITION (bean n5be, finding 4).
+     Two side-by-side columns at 390 px left the term 89 px and broke its path
+     over four lines, and narrow-viewport.css then made the table a sideways
+     scroll box. Each row becomes a block: the name, then the definition at
+     the full width of the screen. By id, so it outranks that file's
+     type selector; the header row is dropped because each cell is now
+     self-evidently what it is. */
+  @media (max-width: 799.98px) {
+    #da-index, #da-index tbody, #da-index tr, #da-index td { display: block; width: auto; }
+    #da-index { mask-image: none; animation: none; overflow: visible; }
+    #da-index thead { display: none; }
+    #da-index td { border-bottom: 0; padding: .25rem 0; overflow-wrap: anywhere; }
+    #da-index tr { border-bottom: 1px solid var(--edge); padding: .5rem 0; }
+  }
+</style><link rel="stylesheet" href="../../../../../assets/css/navbar.css"><script src="../../../../../assets/navbar/rail-1lsvxsa0cub.js" defer></script><script src="../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../assets/css/navbar-row.css"><script src="../../../../../assets/js/navbar-row.js" defer></script><style data-folio-narrow-viewport>
+/* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
+ *
+ * At 390 px, 105 of 249 built pages scrolled sideways (measured 2026-09-24).
+ * The rule here is the bean's: wide content scrolls INSIDE ITS OWN BOX with a
+ * visible cue, and the page itself never pans.
+ *
+ * ONE FILE, TWO WAYS IN. Themed pages link it from `_includes/head_custom.html`.
+ * The standalone viewer pages carry no theme stylesheet at all, so
+ * `withViewerNav` in `scripts/viewer-page.ts` inlines this same file when it
+ * adds the rail. A copy of these rules in each place would be two answers to
+ * "what does a table do at 390 px", free to drift apart.
+ *
+ * Every selector here is written to be safe on both kinds of page: no
+ * `.main-content` scope (a standalone page has none), the navbar excluded by
+ * name, and the theme's own `.table-wrapper` left alone, since it already does
+ * this job for Markdown tables. */
+
+@media (max-width: 799.98px) {
+  /* A table the theme did not wrap: raw HTML from a generator, or one built at
+   * runtime. `display: block` makes the table its own scroll box. Its cells
+   * still lay out as a table inside the anonymous table box. */
+  table:not(.table-wrapper > table):not(.fa-nav table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* THE CUE: the edge that has more content past it fades out. The fade is a
+   * MASK over the table's own pixels, driven by its own scroll position, so
+   * it needs no knowledge of the page's background. A painted cover (the
+   * usual `background-attachment: local` trick) does: the first version used
+   * `Canvas`, and on a page that is dark under a LIGHT scheme it laid a white
+   * band over the first column.
+   *
+   * A table that does not overflow has an inactive scroll timeline, so the
+   * animation has no effect and both fades stay at their initial 0: no cue
+   * where there is nothing to scroll to. A browser without scroll-driven
+   * animations shows no fade, and the table still scrolls. */
+  @supports (animation-timeline: scroll()) {
+    table:not(.table-wrapper > table):not(.fa-nav table) {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+
+  /* A code block scrolls in its own box, which is what `pre` is for. Mermaid
+   * SOURCE sits in a `pre` until the renderer replaces it, and at 390 px a
+   * diagram's source line is longer than the screen. */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Prose that has no break opportunity: a long path in inline code, or a
+   * glossary definition naming one. Breaking the string is better than
+   * widening the page it sits on. */
+  :not(pre) > code,
+  dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+
+</style></head><body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><script type="application/json" id="fa-navbar-row" data-fa-root="../../../../..">{"icons":["close","todos","beans","fsh-guts","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","fsh-guts":"/fsh-guts/"},"notes":{},"folders":[{"kind":"attestations","label":"Attestations","path":"/attestations/"},{"kind":"auto-docs","label":"Auto docs","within":"docs","note":"no viewer yet"},{"kind":"basic-cdn-site","label":"Basic CDN site","note":"no viewer yet"},{"kind":"code","label":"Code","note":"no viewer yet"},{"kind":"code-list","label":"Code lists","note":"no viewer yet"},{"kind":"doc-group","label":"Doc group","within":"docs","note":"no viewer yet"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/docs/"},{"kind":"external-schema","label":"External schemas","path":"/external-schemas/"},{"kind":"folio","label":"Folio","path":"/cat-harness/folio/"},{"kind":"health","label":"Health","path":"/health/"},{"kind":"library","label":"Library","path":"/cat-harness/library/cat-harness/"},{"kind":"methodology","label":"Methodologies","path":"/methodologies/"},{"kind":"policies","label":"Policies","note":"no viewer yet"},{"kind":"processes","label":"Processes","path":"/processes/"},{"kind":"proposals","label":"Proposals","within":"docs","path":"/proposals/"},{"kind":"qa","label":"QA","path":"/qa/"},{"kind":"requirements","label":"Requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","label":"Scenarios","note":"no viewer yet"},{"kind":"schemas","label":"Schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/skills/"},{"kind":"substrate-snapshot","label":"Substrate snapshots","note":"no viewer yet"},{"kind":"swimlane-glossary","label":"Swimlane glossary","path":"/swimlane-glossary/"},{"kind":"tools","label":"Tools","path":"/tools/"},{"kind":"translation-sources","label":"Translation sources","path":"/translation-status/"},{"kind":"uml","label":"UML","note":"no viewer yet"},{"kind":"uploads","label":"Uploads","path":"/uploads/"},{"kind":"validators","label":"Validators","note":"no viewer yet"},{"kind":"vocab-mapping","label":"Vocab mapping","note":"no viewer yet"},{"kind":"voice-vendors","label":"Voice vendors","within":"voices","note":"no viewer yet"},{"kind":"voices","label":"Voices","path":"/cat-harness/voices/cat-harness/"}]}</script><script type="application/json" id="fa-rail" data-fa-root="../../../../.." data-fa-to-root="../../../../..">{"data":"rail-1lsvxsa0cub","here":"/cat-harness/auto-docs/index/docs/who-iris-site/","documentIndex":{"label":"who-iris-site","icon":"§","items":[{"label":"Docs","qualifier":"C@T Harness","icon":"▸","href":"../docs/"},{"label":"Docs","qualifier":"Folio Assistant","icon":"▸","href":"../root-docs/"},{"label":"Docs","qualifier":"SMART Base","icon":"▸","href":"../smart-base-docs/"},{"label":"Docs","qualifier":"SMART Base","icon":"▸","href":"../smart-base-findings/"},{"label":"Docs","qualifier":"smart-immunizations","icon":"▸","href":"../smart-immunizations-docs/"},{"label":"Docs","qualifier":"smart-trust","icon":"▸","href":"../smart-trust-docs/"},{"label":"Docs","qualifier":"WHO IRIS","icon":"▸","href":"../who-iris-docs/"},{"label":"Docs","qualifier":"WHO IRIS","icon":"▸"}],"collapsible":true,"open":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../">C@T Harness</a></nav><script type="application/json" data-fa-visualiser-nav>[{"label":"Docs","qualifier":"C@T Harness","href":"../docs/"},{"label":"Docs","qualifier":"Folio Assistant","href":"../root-docs/"},{"label":"Docs","qualifier":"SMART Base","href":"../smart-base-docs/"},{"label":"Docs","qualifier":"SMART Base","href":"../smart-base-findings/"},{"label":"Docs","qualifier":"smart-immunizations","href":"../smart-immunizations-docs/"},{"label":"Docs","qualifier":"smart-trust","href":"../smart-trust-docs/"},{"label":"Docs","qualifier":"WHO IRIS","href":"../who-iris-docs/"},{"label":"Docs","qualifier":"WHO IRIS"}]</script><div class="wrap"><h1>Docs <span class="p">who-iris-site</span></h1><p class="lede">Derived: every AUTHORED documentation page an instance publishes, with the title and description its own front matter declares. Sub-graph <code>who-iris/site</code>.</p><div class="note"><strong>This is an index, not the documentation.</strong> It says what exists and what each
+  artefact declares about itself. What a process is <em>for</em>, when you would be in it, and
+  what it is not, is authored beside it and reuses these entries rather than restating them —
+  see the <code>auto-docs</code> skill.
+</div><ul class="subs"><li><a href="../docs/">docs</a> <span class="p">cat-harness/docs</span> <span class="n">516</span></li><li><a href="../root-docs/">root-docs</a> <span class="p">docs</span> <span class="n">1</span></li><li><a href="../smart-base-docs/">smart-base-docs</a> <span class="p">smart-base/docs</span> <span class="n">296</span></li><li><a href="../smart-base-findings/">smart-base-findings</a> <span class="p">smart-base/findings</span> <span class="n">4</span></li><li><a href="../smart-immunizations-docs/">smart-immunizations-docs</a> <span class="p">smart-immunizations/docs</span> <span class="n">750</span></li><li><a href="../smart-trust-docs/">smart-trust-docs</a> <span class="p">smart-trust/docs</span> <span class="n">2146</span></li><li><a href="../who-iris-docs/">who-iris-docs</a> <span class="p">who-iris/docs</span> <span class="n">6</span></li><li><strong>who-iris-site</strong> <span class="p">who-iris/site</span> <span class="n">8</span></li></ul><table id="da-index"><thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead><tbody><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/collection-collection-hq-publications.html"><code>collection-collection-hq-publications</code></a><br><span class="p">who-iris/site/collection-collection-hq-publications.html</span></td><td>Publications — ingested IRIS replica</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/collection-collection-wpro-information-products.html"><code>collection-collection-wpro-information-products</code></a><br><span class="p">who-iris/site/collection-collection-wpro-information-products.html</span></td><td>Information products — ingested IRIS replica</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/community-list.html"><code>community-list</code></a><br><span class="p">who-iris/site/community-list.html</span></td><td>List of Communities — ingested IRIS replica</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/index.html"><code>index</code></a><br><span class="p">who-iris/site/index.html</span></td><td>who-iris — ingested IRIS replica</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html"><code>item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec</code></a><br><span class="p">who-iris/site/item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html</span></td><td>Publication and information products style guide — ingested IRIS replica</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html"><code>item-item-63e14c27-7448-41ec-be08-a96a25a47db6</code></a><br><span class="p">who-iris/site/item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html</span></td><td>WHO handbook for guideline development — ingested IRIS replica</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html"><code>item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791</code></a><br><span class="p">who-iris/site/item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html</span></td><td>WHO editorial style manual — ingested IRIS replica</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/site/README.md"><code>README</code></a><br><span class="p">who-iris/site/README.md</span></td><td><span class="none">no description in the artefact</span></td></tr></tbody></table></div><script>
+/* The sub-graph this page indexes. Read by orphanSubjectPages() to establish
+   ownership before pruning — the same line the viewer generators emit. */
+var SCOPE = "who-iris-site";
+</script></body></html>
