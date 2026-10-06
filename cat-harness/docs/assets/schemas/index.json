@@ -458,6 +458,7 @@
       "instance": "cat-harness",
       "name": "document-structure.test",
       "graphNode": "undeclared",
+      "summary": "The tests of this file that read the whole checkout (reads the document",
       "isTest": true
     },
     {
@@ -642,6 +643,7 @@
       "instance": "cat-harness",
       "name": "instance-repositories.test",
       "graphNode": "undeclared",
+      "summary": "The tests of this file that read the whole checkout (reads every instance",
       "isTest": true
     },
     {
@@ -651,6 +653,14 @@
       "graphNode": "schema",
       "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-root-named.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-root-named.test",
+      "graphNode": "undeclared",
+      "summary": "`instanceRootNamed` — one rule for both layouts (bean `uxn1`).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/instance-roots.ts",
@@ -1275,6 +1285,7 @@
       "instance": "cat-harness",
       "name": "section-verdicts.test",
       "graphNode": "undeclared",
+      "summary": "The tests of this file that read the whole checkout (reads who-iris's",
       "isTest": true
     },
     {
@@ -1364,15 +1375,6 @@
       "graphNode": "schema",
       "summary": "`accessibility.json`: a slide deck's accessibility report, written by",
       "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/source-descriptor.test.ts",
-      "instance": "cat-harness",
-      "name": "source-descriptor.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "Every source descriptor in the checkout parses — bean `w5bn`.",
-      "isTest": true
     },
     {
       "module": "cat-harness/schemas/source-descriptor.ts",
