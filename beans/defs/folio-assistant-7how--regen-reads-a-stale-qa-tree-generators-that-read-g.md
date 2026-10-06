@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7how
 title: 'REGEN READS A STALE QA TREE: generators that read gitignored */test/results write wrong pages unless qa:working-copy ran first'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T09:15:31Z
-updated_at: 2026-10-06T11:19:19Z
+updated_at: 2026-10-06T19:05:28Z
 parent: folio-assistant-1xhc
 ---
 
@@ -26,3 +26,5 @@ Measured 2026-10-06 on #2267 (coordinator) and reported independently by session
 
 - [ ] `qa:refresh` restores only paths that a writer in THIS run wrote. Or it refuses to start on a dirty tree, naming the dirty paths. It must never revert a change it did not make.
 - Until then: commit source changes BEFORE `qa:working-copy`.
+
+_2026-10-06T19:05:28Z_ — Claimed by claude/speed-merge-loop — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

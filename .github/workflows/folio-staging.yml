@@ -252,6 +252,45 @@ jobs:
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
+      - name: Find the pull request
+        # A DISPATCHED run has no pull_request event, so until bean `ehh6` it
+        # ran as "PR n/a": no comment, no review-comment ingestion, no
+        # qa-reports fetch. Measured on smart-ra#26, whose staging runs only
+        # by dispatch (owner, 2026-10-06), though GitHub listed the run under
+        # the PR. So a dispatch looks the branch's PR up: an OPEN PR from THIS
+        # repository (a fork's branch of the same name is somebody else's),
+        # and exactly one, or none at all. A lookup that fails is said, and
+        # the run goes on untied, as before.
+        id: pr
+        env:
+          EVENT_PR: ${{ github.event.pull_request.number }}
+          EVENT_BASE: ${{ github.event.pull_request.base.ref }}
+          BRANCH: ${{ steps.slug.outputs.branch }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          if [ -n "$EVENT_PR" ]; then
+            echo "number=$EVENT_PR" >> "$GITHUB_OUTPUT"
+            echo "base=$EVENT_BASE" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! J=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --state open \
+                   --json number,baseRefName,isCrossRepository --jq '[.[] | select(.isCrossRepository | not)]'); then
+            echo "::warning title=pull request::could not list pull requests for $BRANCH; this run is tied to none"
+            exit 0
+          fi
+          case "$(jq length <<<"$J")" in
+            0) echo "no open pull request from $BRANCH: the preview is published, and nothing is commented" ;;
+            1)
+              N=$(jq -r '.[0].number' <<<"$J")
+              case "$N" in ''|*[!0-9]*) echo "::error::pull request number '$N' is not a number"; exit 1 ;; esac
+              echo "number=$N" >> "$GITHUB_OUTPUT"
+              echo "base=$(jq -r '.[0].baseRefName' <<<"$J")" >> "$GITHUB_OUTPUT"
+              echo "dispatched on $BRANCH: pull request #$N"
+              ;;
+            *) echo "::warning title=pull request::$BRANCH has several open pull requests; this run is tied to none" ;;
+          esac
+
       - name: Resolve the base
         # The ChangeSet and the pictures must use the SAME base (bean `5uuf`):
         # before, the ChangeSet read `base_ref` and the pictures read main's
@@ -260,7 +299,7 @@ jobs:
         id: base
         env:
           INPUT_BASE: ${{ inputs.base_ref }}
-          PR_BASE: ${{ github.event.pull_request.base.ref }}
+          PR_BASE: ${{ steps.pr.outputs.base }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           BASE="${INPUT_BASE:-${PR_BASE:-${DEFAULT_BRANCH:-main}}}"
@@ -320,10 +359,13 @@ jobs:
         # source; the review page fetches the result when it is opened. A
         # platform with no renderer writes nothing, and the page and the PR
         # comment then say the list is not known, never that it is empty.
+        # The build command is passed so each builder it runs says what it
+        # reads (bean ehh6): a file none of them reads reaches no page.
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           BASE_REF: ${{ steps.base.outputs.ref }}
           SITE_DIR: ${{ inputs.site_dir }}
+          BUILD_COMMAND: ${{ inputs.build_command }}
         run: |
           set -eu
           R="$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts"
@@ -333,7 +375,7 @@ jobs:
           fi
           bun run "$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts" --root . --base "origin/$BASE_REF" --head HEAD \
             --changeset "$SITE_DIR/changeset.json" --outline "$SITE_DIR/outline.json" \
-            --out "$SITE_DIR/rendered-impact.json"
+            --build-command "$BUILD_COMMAND" --out "$SITE_DIR/rendered-impact.json"
 
       - name: Fetch the folio's QA results from its qa-reports branch
         # Bean `tfqf`, reader audit R60. The folio's derived QA verdicts are
@@ -350,7 +392,7 @@ jobs:
         # preview with none says "QA not available" rather than "unaudited".
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ steps.pr.outputs.number }}
         run: |
           set -u
           if [ -z "$PR" ]; then
@@ -478,7 +520,7 @@ jobs:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           SITE_DIR: ${{ inputs.site_dir }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
-          PR: ${{ github.event.pull_request.number || 'n/a' }}
+          PR: ${{ steps.pr.outputs.number || 'n/a' }}
           BEFORE_URL: ${{ steps.before.outputs.url }}
           BEFORE_LABEL: ${{ steps.before.outputs.label }}
         run: |
@@ -521,13 +563,13 @@ jobs:
         # builds via the preview's previous file (bean `423d`). A failure here
         # fails the build: a preview whose comment list silently went empty
         # would read as "nobody commented".
-        if: github.event_name == 'pull_request'
+        if: steps.pr.outputs.number != ''
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           FOLIO_DIR: ${{ inputs.folio_dir }}
           SITE_DIR: ${{ inputs.site_dir }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ steps.pr.outputs.number }}
           TODOS_DIR: ${{ inputs.todos_dir }}
           GITHUB_TOKEN: ${{ github.token }}
         run: |
@@ -606,9 +648,10 @@ jobs:
           done
 
       - name: Comment staging URL on PR
-        if: github.event_name == 'pull_request'
+        if: steps.pr.outputs.number != ''
         uses: actions/github-script@v9
         env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
           SLUG: ${{ steps.slug.outputs.slug }}
           BRANCH: ${{ steps.slug.outputs.branch }}
           SITE_DIR: ${{ inputs.site_dir }}
@@ -674,14 +717,16 @@ jobs:
             **Branch:** \`${process.env.BRANCH}\`
             ${summary}${rendered}${measuredLine}
             > Compare with [${process.env.BEFORE_LABEL}'s site](${process.env.BEFORE_URL}/) to review changes.`;
-            const comments = await github.rest.issues.listComments({ owner, repo, issue_number: context.issue.number });
+            // From the pull-request step, not `context.issue`: a dispatched run has none.
+            const issue_number = Number(process.env.PR_NUMBER);
+            const comments = await github.rest.issues.listComments({ owner, repo, issue_number });
             const existing = comments.data.find(
               (c) => c.user.login === "github-actions[bot]" && c.body.includes("Folio staging preview deployed"),
             );
             if (existing) {
               await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
             } else {
-              await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
             }
 
   publish-main:
