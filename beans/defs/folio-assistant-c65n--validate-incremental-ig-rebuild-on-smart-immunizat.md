@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-06T06:29:03Z
-updated_at: 2026-10-06T06:29:22Z
+updated_at: 2026-10-06T06:35:41Z
+parent: folio-assistant-uhkv
 ---
 
 Owner request 2026-10-06: on a feature branch of litlfred/smart-immunizations, change one BCG schedule (IMMZD18SBCG) as a test and measure (1) AST rebuild time, (2) dependency-cone calculation time, (3) just-the-docs iterative re-render time, then show before/after screenshots of impacted content pages (index pages excluded).
