@@ -349,9 +349,19 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
         if l.page > 1:
             break
         t = l.text.strip().lower()
-        if re.match(r"^(?:abstract|summary|contents|table of contents|1\.?\s+\S|i\.\s+\S|introduction)\b", t):
+        # "Abstract" opens a paragraph ("Abstract—Existing work ..."); the
+        # others must be the whole line, or a title that merely begins
+        # "Table of Contents Recognition ..." would end the front matter.
+        if (re.match(r"^abstract\b", t)
+                or re.match(r"^(?:summary|contents|table of contents|introduction|"
+                            r"(?:1|i)\.?\s+introduction)\s*$", t)
+                or re.match(r"^(?:1\.?|i\.)\s+[a-z]", t) and len(t) < 60):
             first_opening = (l.y0, l.x0)
             break
+
+    # No section opens on page 1 of a longer document: page 1 is a cover —
+    # title, logos, publisher — and none of it is a section.
+    cover = first_opening is None and n_pages > 4
 
     cands: list[Line] = []
     for l in lines:
@@ -375,7 +385,7 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
             continue
         if RE_NOT_SECTION.match(t):
             continue
-        if l.page == 1 and first_opening and (l.y0, l.x0) < first_opening:
+        if l.page == 1 and (cover or first_opening and (l.y0, l.x0) < first_opening):
             continue
         cands.append(l)
 
@@ -401,7 +411,13 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
             return False
         if sum(c.isdigit() for c in title) > len(title) / 3:
             return False
-        if not re.match(r"^[\W\d]*[A-Z0-9(\"'“]", title) and not num:
+        if re.match(r"^[<>{}\[\]=#/\\|$@]", title):       # markup or code, not prose
+            return False
+        # Body-size bold is also emphasis — and a numbered pseudocode line
+        # ("7 end") — so it must open like a title. Type
+        # set clearly larger than the body needs no such test: reference
+        # manuals head entries with lower-case identifiers ("nextOfKin").
+        if l.size < body + 0.9 and not re.match(r"^[\W\d]*[A-Z0-9(\"'“]", title):
             return False
         return True
 
@@ -438,10 +454,7 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
         num, title = split_number(l.text.strip())
         level = _depth(num) or learned.get(l.style) or rank[l.style]
         out.append(Heading(min(level, max_levels + 2), title.strip(), l.page, num))
-    # Levels are ranks, not sizes: renumber the ones in use from 1 so that a
-    # document whose two largest styles were front matter does not start at 3.
-    used = {lv: i + 1 for i, lv in enumerate(sorted({h.level for h in out}))}
-    out = [h._replace(level=used[h.level]) for h in out]
+    out = tree_levels(out)
     # Keep the first occurrence of an identical heading (a repeated chapter
     # title on a part page, say).
     seen: set[str] = set()
@@ -455,10 +468,31 @@ def font_headings(lines: list[Line], max_levels: int = 4) -> list[Heading]:
     return uniq
 
 
+def tree_levels(heads: list[Heading]) -> list[Heading]:
+    """Re-level as depth in the tree each heading implies.
+
+    The rank of a style is not a depth: a rare style ranked between two
+    common ones (a code fragment, a callout) leaves the real levels at 1, 3
+    and 5. The repair of Bentabet et al. (2019) — the parent is the nearest
+    earlier heading at a strictly shallower rank — gives the depth those
+    ranks actually describe, and a document whose largest styles were front
+    matter starts at 1 rather than 3.
+    """
+    out: list[Heading] = []
+    stack: list[tuple[int, int]] = []          # (rank, depth)
+    for h in heads:
+        while stack and stack[-1][0] >= h.level:
+            stack.pop()
+        depth = stack[-1][1] + 1 if stack else 1
+        stack.append((h.level, depth))
+        out.append(h._replace(level=depth))
+    return out
+
+
 # ---------------------------------------------------------------- method 2: contents page
 
 RE_LEADER = re.compile(r"^(?P<title>.*?\S)\s*(?:[.…·_]\s*){3,}\s*(?P<page>\d{1,4}|[ivxlc]{1,6})\s*$", re.I)
-RE_TRAIL = re.compile(r"^(?P<title>.*?[^\d\s.])\s{1,}(?P<page>\d{1,4})\s*$")
+RE_TRAIL = re.compile(r"^(?P<title>.*?[^\d\s.])\s{1,}(?P<page>\d{1,4}|[ivxl]{1,5})\s*$")
 RE_CONTENTS_TITLE = re.compile(r"^\s*(?:table of )?contents\s*$|^\s*sommaire\s*$|^\s*índice\s*$", re.I)
 
 

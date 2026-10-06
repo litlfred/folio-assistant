@@ -37,8 +37,12 @@ and for the section files' `doc_title`. Keep writing `docinfo`: for a title
 it outranks the guess.
 
 Table of contents comes from the PDF outline when there is one (194 of
-339, 57%) and is otherwise inferred from heading patterns in the text.
-Which route was used is recorded per entry, so a consumer can weight it.
+339, 57%). Otherwise it is inferred from the LAYOUT (`_pdf_headings`): a
+printed contents page if the document has one, else lines set in a heading
+style (size, weight, capitals, numbering). The text-pattern heuristic
+`infer_headings` is the last resort, for OCR'd text, which has no fonts.
+Which route was used is recorded per entry (`source`) and, for an inferred
+TOC, in `diagnostics.toc_inferred_method`, so a consumer can weight it.
 
 Usage:
     pdf-structure.py <pdf> [<pdf>...] [-o OUTDIR] [--no-sections] [--json]
@@ -100,6 +104,11 @@ from _pdf_doc_id import (  # noqa: E402
 # `pdf-pages.py` and `ingest-document.ts --refresh-title`, so the three agree
 # about what a title is.
 from _pdf_title import BROWSER_RE, apply as resolve_title, evidence_from_pdf  # noqa: E402
+
+# The layout-based fallback (issue #2302): headings read from font metrics,
+# or from a printed contents page. Measured against held-out outlines by
+# `toc-benchmark.py`; see docs/guides/toc-extraction.md.
+import _pdf_headings  # noqa: E402
 
 SCHEMA = "pdf-structure/v1"
 
@@ -615,6 +624,29 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
             seen.add(key)
             entries.append(e)
     return entries
+
+
+def infer_toc(path: str, pages: list[str], ocr_used: bool) -> tuple[list[TocEntry], str | None]:
+    """A table of contents for a document with no outline, and the method.
+
+    Layout first, text patterns last. Measured over the 13 corpus PDFs that
+    carry an outline, with the outline hidden and used as the answer key
+    (`toc-benchmark.py`, issue #2302): title F1 0.86 for the layout methods
+    against 0.30 for `infer_headings` alone. The text heuristic stays for
+    OCR'd text, which carries no font metrics, and for a document where the
+    layout finds nothing.
+    """
+    if not ocr_used:
+        try:
+            lines = _pdf_headings.extract_lines(path)
+        except Exception:                       # no layout-capable backend
+            lines = []
+        if lines:
+            heads, method = _pdf_headings.layout_headings(lines)
+            if heads:
+                return [TocEntry(h.level, h.title, h.page, "inferred", h.number) for h in heads], method
+    found = infer_headings(pages)
+    return found, ("regex" if found else None)
 
 
 def looks_like_byline(line: str, abstract_words: set[str]) -> bool:
@@ -1328,7 +1360,10 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     outline = _toc_entries(reader.raw_toc())
     # An inferred table of contents is asked to justify itself; an outline is
     # the document's own answer and is not second-guessed (bean `6xaz`).
-    inferred = [] if outline else infer_headings(pages)
+    inferred: list[TocEntry] = []
+    inferred_method: str | None = None
+    if not outline:
+        inferred, inferred_method = infer_toc(path, pages, ocr_used)
     n_inferred = len(inferred)
     toc_undetermined = inferred_toc_verdict(inferred, len(pages)) if inferred else None
     if toc_undetermined:
@@ -1413,6 +1448,10 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # for every inferred TOC, trusted or not — a number that only
             # appears on failures cannot show you a near miss.
             "toc_inferred_entries": n_inferred,
+            # Which inference produced it: "contents" (a printed contents
+            # page), "font" (heading styles) or "regex" (text patterns, the
+            # last resort). Absent when the outline was used.
+            **({"toc_inferred_method": inferred_method} if inferred_method else {}),
             "sections": len(sections),
             "chars_total": sum(s.n_chars for s in sections),
         },

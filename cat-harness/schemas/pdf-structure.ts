@@ -164,6 +164,12 @@ export const PdfDiagnosticsSchema = z
     likely_scanned: z.boolean(),
     toc_entries: z.number().int().min(0),
     toc_inferred_entries: z.number().int().min(0).optional(),
+    /**
+     * Which inference produced an inferred TOC (issue #2302): a printed
+     * contents page, heading styles read from font metrics, or the
+     * text-pattern heuristic that OCR'd text falls back to.
+     */
+    toc_inferred_method: z.enum(["contents", "font", "regex"]).optional(),
     sections: z.number().int().min(0),
     chars_total: z.number().int().min(0),
   })

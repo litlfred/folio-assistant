@@ -33,6 +33,7 @@ Usage:
     toc-benchmark.py [PDF ...]            # default: every PDF with >= 5 outline entries
     toc-benchmark.py --json out.json      # also write per-document results
     toc-benchmark.py --methods regex,font # choose methods
+    toc-benchmark.py --layout-backend pdfminer   # font metrics from pdfminer.six
 """
 
 from __future__ import annotations
@@ -288,11 +289,11 @@ def default_corpus(root: str) -> list[str]:
     return found
 
 
-def load(path: str) -> Doc:
+def load(path: str, layout_backend: str = "pymupdf") -> Doc:
     with contextlib.redirect_stdout(io.StringIO()):
         backend = PS.open_backend(path, "pymupdf")
         pages = backend.page_texts()
-    return Doc(path, gold_outline(path), H.extract_lines(path, "pymupdf"), pages)
+    return Doc(path, gold_outline(path), H.extract_lines(path, layout_backend), pages)
 
 
 def main() -> int:
@@ -301,13 +302,15 @@ def main() -> int:
     ap.add_argument("--root", default=os.path.abspath(os.path.join(HERE, "..", "..")))
     ap.add_argument("--methods", default=",".join(METHODS))
     ap.add_argument("--json", help="write per-document results here")
+    ap.add_argument("--layout-backend", choices=["pymupdf", "pdfminer"], default="pymupdf",
+                    help="which library reads font metrics (pdfminer.six is MIT; PyMuPDF is AGPL)")
     args = ap.parse_args()
 
     pdfs = args.pdfs or default_corpus(args.root)
     methods = [m for m in args.methods.split(",") if m]
     rows = []
     for path in pdfs:
-        doc = load(path)
+        doc = load(path, args.layout_backend)
         rel = os.path.relpath(path, args.root)
         for m in methods:
             t0 = time.time()
