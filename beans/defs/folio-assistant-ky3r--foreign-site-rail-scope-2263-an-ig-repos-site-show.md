@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T08:12:11Z
-updated_at: 2026-10-06T08:12:26Z
+updated_at: 2026-10-06T08:32:30Z
 parent: folio-assistant-uhkv
 ---
 
@@ -26,3 +26,20 @@ Owner, 2026-10-06, verbatim (issue #2263): *"https://litlfred.github.io/smart-tr
   - No other overlap.
 - **In-progress beans** searched for rail, tile, foreign, folio-site, ig-repo-site, shell, 48a6, mftp: neighbours `mftp` (one IG site at the root) and `48a6` (fork sites drift, status todo) — subject-adjacent, no file overlap with the plan below.
 - **Plan's files**: compose-docs.ts (shell scoping), a new lib module + test, rail-standalone-pages/mount-instance-docs (foreign tiles), docs-ui.css (pinned rail reserves width), the ig-repo-site template, harness-tiles skill + the rail skill. NOT gen-ig-pages/build-ig-site/stage-ig-sites, NOT mountSidebarRail.
+
+
+## Done, 2026-10-06 (PR #2265)
+- [x] root cause: compose-docs --shell (compose-docs.ts:652 isChrome, :689) carried `_data/harness.json` and `assets/*/count.json`; head_custom.html:440, navbar-row.js:220 read them as the folio's own; #2171's rebaseNavbarRow re-based all icons to the platform.
+- [x] scoping: lib/foreign-site-scope.ts; compose-docs --shell --instance; rail-standalone foreign icon row.
+- [x] links: 109 -> 0 bad on smart-trust's menu-business-requirements.html (local rebuild).
+- [x] layout: pinned rail reserves its width (docs-ui.css); 11 -> 0 covered elements.
+- [x] gate + skills: foreign-site-scope.test.ts; harness-tiles, ig-site-links.
+
+## Owner decision, open: what a folio's site shows for a state kind it does not declare
+Context: smart-trust declares no beans or todos graph, and the icon row has slots for both.
+| option | shows | honest about | cost |
+|---|---|---|---|
+| **A, implemented, recommended**: icon inert, no number, accessible name says "smart-trust declares no beans graph" | the slot, greyed | absent is not zero (tile-count); an inert row says why (harness-tiles) | two dead-looking icons on every IG page |
+| B: hide the icon | nothing | absence, silently | "where are the beans" goes unanswered |
+| C: link it to the platform's work plan, labelled "Folio Assistant", no count | the platform's beans | whose they are, only if the label is read | the owner's complaint, softened |
+If nobody answers, A stays.
