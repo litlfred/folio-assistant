@@ -1,0 +1,1236 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2312.07755v1",
+  "title": "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models",
+  "pages": 21,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": "2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-2-related-work"
+    },
+    {
+      "level": 2,
+      "title": "Mobile UI Wireframe",
+      "number": "2.1",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-21-mobile-ui-wireframe"
+    },
+    {
+      "level": 2,
+      "title": "Designing with Natural Language",
+      "number": "2.2",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-22-designing-with-natural-language"
+    },
+    {
+      "level": 2,
+      "title": "Prompting Large Language Models",
+      "number": "2.3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "Approach",
+      "number": "3",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-3-approach"
+    },
+    {
+      "level": 2,
+      "title": "Prepare Dataset of UI Wireframes and Descriptions",
+      "number": "3.1",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-31-prepare-dataset-of-ui-wireframes-and-descript"
+    },
+    {
+      "level": 2,
+      "title": "Fine-tune Large Language Models with Best Practice",
+      "number": "3.2",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-32-fine-tune-large-language-models-with-best-pra"
+    },
+    {
+      "level": 2,
+      "title": "Transform Raw Generation into Beautiful UI Wireframe",
+      "number": "3.3",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-33-transform-raw-generation-into-beautiful-ui-wi"
+    },
+    {
+      "level": 1,
+      "title": "Evaluation",
+      "number": "4",
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-4-evaluation"
+    },
+    {
+      "level": 2,
+      "title": "Research Questions",
+      "number": "4.1",
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-41-research-questions"
+    },
+    {
+      "level": 2,
+      "title": "Testing Data",
+      "number": "4.2",
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-42-testing-data"
+    },
+    {
+      "level": 2,
+      "title": "Annotation Methodology",
+      "number": "4.3",
+      "page": 12,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-43-annotation-methodology"
+    },
+    {
+      "level": 2,
+      "title": "RQ1: Performance of Fine-tuning",
+      "number": "4.4",
+      "page": 12,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-44-rq1-performance-of-fine-tuning"
+    },
+    {
+      "level": 2,
+      "title": "RQ2: Performance of Variations",
+      "number": "4.5",
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-45-rq2-performance-of-variations"
+    },
+    {
+      "level": 1,
+      "title": "User Study",
+      "number": "5",
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-5-user-study"
+    },
+    {
+      "level": 2,
+      "title": "Participants",
+      "number": "5.1",
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-51-participants"
+    },
+    {
+      "level": 2,
+      "title": "Procedure",
+      "number": "5.2",
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-52-procedure"
+    },
+    {
+      "level": 2,
+      "title": "Results",
+      "number": "5.3",
+      "page": 15,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-53-results"
+    },
+    {
+      "level": 1,
+      "title": "Discussion",
+      "number": "6",
+      "page": 17,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-6-discussion"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "7",
+      "page": 18,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-7-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 18,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 233,
+      "summary": {
+        "text": "Title, authors and affiliations (Monash University, UNSW, CSIRO's Data61, ANU) of a paper introducing WireGen, which fine-tunes generative LLMs on thousands of UI examples so that a brief design-intent description yields mid-fidelity wireframes. The abstract reports 77.5% significantly better wireframes than two in-context learning baselines and a user study with 5 designers; CCS concepts and keywords follow.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "mid-fidelity wireframes",
+          "heading": false
+        },
+        {
+          "term": "design intent",
+          "heading": false
+        },
+        {
+          "term": "australia",
+          "heading": false
+        },
+        {
+          "term": "design process",
+          "heading": false
+        },
+        {
+          "term": "wiregen",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "generative",
+          "heading": false
+        },
+        {
+          "term": "university",
+          "heading": false
+        }
+      ],
+      "extract": "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models SIDONG FENG, Monash University, Australia MINGYUE YUAN, University of New South Wales, Australia JIESHAN CHEN, CSIRO’s Data61, Australia ZHENCHANG XING, CSIRO’s Data61 & Australian National University, Australia CHUNYANG CHEN, Monash University, Australia Fig. 1. The overview of WireGen to streamline UI design process with",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 817,
+      "summary": {
+        "text": "Argues that wireframing is a common way to express UI design intent, and that mid-fidelity wireframes add real content and semantic icons to low-fidelity sketches at a higher cost in time and effort, which no previous work has streamlined. Introduces WireGen, which fine-tunes LLMs on Rico UI screens and view hierarchies to generate mid-fidelity wireframes from design-intent descriptions, then post-processes them with semantic icons, text typography and UI guidelines. Reports 77.5% significantly better generations than two in-context learning baselines, 84.5% against three ablation models, and a user study with five professional designers.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "low-fidelity wireframes",
+          "heading": false
+        },
+        {
+          "term": "mid-fidelity wireframes",
+          "heading": false
+        },
+        {
+          "term": "design intent",
+          "heading": false
+        },
+        {
+          "term": "intent descriptions",
+          "heading": false
+        },
+        {
+          "term": "wiregen",
+          "heading": false
+        },
+        {
+          "term": "designers",
+          "heading": false
+        },
+        {
+          "term": "design rules",
+          "heading": false
+        },
+        {
+          "term": "design process",
+          "heading": false
+        }
+      ],
+      "extract": "User Interface (UI) plays a crucial role in today’s desktop software, mobile applications, and online websites. It serves as a visual bridge between a software application and end-users through which they can interact with each other [30, 33]. Good UI designs are essential to the success of a software application and can gain loyalty from the software users [19]. However, designing a good UI can be challenging, even",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-2-related-work",
+      "number": "2",
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 18,
+      "summary": {
+        "text": "A single sentence that breaks off mid-way: the work aims to make designing mobile mid-fidelity UI wireframes easier by prompting with design descriptions.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "We aim to facilitate the design of mobile mid-fidelity UI wireframes by simply prompting the design descriptions using",
+      "extractCut": false
+    },
+    {
+      "id": "sec-002-21-mobile-ui-wireframe",
+      "number": "2.1",
+      "title": "Mobile UI Wireframe",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-003-22-designing-with-natural-language",
+      "number": "2.2",
+      "title": "Designing with Natural Language",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 57,
+      "summary": {
+        "text": "Opens subsection 2.1, \"Mobile UI Wireframe\": wireframing suits creative work because it is highly visual and can be created, manipulated and revised without unnecessary detail. The text breaks off mid-sentence.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "mobile",
+          "heading": false
+        },
+        {
+          "term": "wireframing",
+          "heading": false
+        },
+        {
+          "term": "visual",
+          "heading": false
+        }
+      ],
+      "extract": "2.1 Mobile UI Wireframe Wireframing plays a pivotal role in many types of creative activities because of its highly visual nature and its flexibility for creation and manipulation: designers can create and imagine any kind of visual content, and continuously revise it without being constrained by unnecessary details [36, 49, 79]. Subsequently, mobile UI wireframing is well-suited",
+      "extractCut": false
+    },
+    {
+      "id": "sec-004-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 336,
+      "summary": {
+        "text": "Despite its heading, this block continues the related-work discussion of UI wireframing: tools from SILK to Photoshop, Sketch and Figma support low- to mid-fidelity wireframes, and human-AI co-creation systems such as Swire help designers find inspiration or generate layouts. The authors note that these still require designers to sketch a low-fidelity wireframe and add content, whereas their work generates mid-fidelity wireframes directly from a design-intent description; the block ends by opening subsection 2.2 on bridging natural language and UI screens.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "designers",
+          "heading": false
+        },
+        {
+          "term": "wireframes",
+          "heading": false
+        },
+        {
+          "term": "low-fidelity",
+          "heading": false
+        },
+        {
+          "term": "mid-fidelity",
+          "heading": false
+        },
+        {
+          "term": "inspiration",
+          "heading": false
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "sketch",
+          "heading": false
+        },
+        {
+          "term": "designing",
+          "heading": false
+        }
+      ],
+      "extract": "and rapidly compare alternatives [54, 77]. SILK [48] is the first system that allows designers to create interactive UI prototypes by wireframing. With the essential of UI wireframe as a profession in the UI design process, many academic research [44, 57] and commercial graphic tools including Adobe PhotoShop [2], Sketch [10], and Figma [6] are developed to allow designers to sketch the UI wireframes at multiple",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-3-approach",
+      "number": "3",
+      "title": "Approach",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 787,
+      "summary": {
+        "text": "Reviews work linking natural language and UIs (screen summarisation, alt-text generation) and text-to-image generation, noting that DALLE, Stable Diffusion and MidJourney misspell text and lack design coherence and that a prior UI Generator yields only low-fidelity layouts. Subsection 2.3 describes zero-shot, few-shot and fine-tuned prompting of LLMs and motivates fine-tuning for UI wireframing. Section 3 then outlines WireGen's three phases: data preparation, model fine-tuning and output beautification.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "generative llms",
+          "heading": false
+        },
+        {
+          "term": "fine-tuning phase",
+          "heading": false
+        },
+        {
+          "term": "graphic designs",
+          "heading": false
+        },
+        {
+          "term": "preparation phase",
+          "heading": false
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "few-shot prompts",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "high-level descriptions",
+          "heading": false
+        }
+      ],
+      "extract": "modal information such as the textual content, visual design, hierarchy layout patterns, and app meta-data. Similarly, Screen2Words [75] proposes a screen summarization approach to describe the functionalities of the UI screenshots. Some research specifically generates semantically alt-text labels for UI elements [16, 17, 20, 27, 31, 32, 32, 34, 78]. These studies attempt to learn the latent representation of UIs to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-31-prepare-dataset-of-ui-wireframes-and-descript",
+      "number": "3.1",
+      "title": "Prepare Dataset of UI Wireframes and Descriptions",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1100,
+      "summary": {
+        "text": "Builds a training set by treating Rico's 66k Android UI screens (9.7k apps, 27 categories) as mid-fidelity wireframes and pairing them with Screen2Words descriptions written by 85 professional labelers. Screens are converted to HTML plus a style sheet by a depth-first traversal of the view hierarchy, mapping native classes to HTML tags (Table 1) from the resource_id, class, text, content_desc and bounds properties, with absolute positioning for layout.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "wireframes",
+          "heading": true
+        },
+        {
+          "term": "mid-fidelity wireframes",
+          "heading": false
+        },
+        {
+          "term": "view hierarchy",
+          "heading": false
+        },
+        {
+          "term": "style sheet",
+          "heading": false
+        },
+        {
+          "term": "html syntax",
+          "heading": false
+        },
+        {
+          "term": "html tags",
+          "heading": false
+        },
+        {
+          "term": "html code",
+          "heading": false
+        },
+        {
+          "term": "commonly-used classes",
+          "heading": false
+        }
+      ],
+      "extract": "3.1.1 Mid-fidelity Wireframes and Descriptions. While there are many low-fidelity wireframe datasets available [15, 25, 51, 68, 69], none of the prior work studies on mid-fidelity wireframes. This is because mid-fidelity wireframes go beyond the shape, placeholders, and “lorem ipsum” text of low-fidelity wireframes to include real content, semantic icons, interactive elements, etc. However, manual labeling of",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-32-fine-tune-large-language-models-with-best-pra",
+      "number": "3.2",
+      "title": "Fine-tune Large Language Models with Best Practice",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 721,
+      "summary": {
+        "text": "Fine-tunes with descriptions as input and HTML wireframes as output, and details three sensitive choices: 1,000 training samples selected by app (191 apps, 27 categories) to avoid leakage; the GPT model Turbo (gpt-3.5-turbo), chosen as the most advanced and strong at understanding code; and hyperparameters of learning rate 0.1, batch size 256, 4 epochs, temperature 0.65, a 4,096-token maximum length and </html> as the stop sequence.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "fine-tuning llms",
+          "heading": false
+        },
+        {
+          "term": "html syntax",
+          "heading": false
+        },
+        {
+          "term": "training dataset",
+          "heading": false
+        },
+        {
+          "term": "app categories",
+          "heading": false
+        },
+        {
+          "term": "model selection",
+          "heading": false
+        },
+        {
+          "term": "promising performance",
+          "heading": false
+        },
+        {
+          "term": "turbo",
+          "heading": false
+        },
+        {
+          "term": "pre-trained",
+          "heading": false
+        }
+      ],
+      "extract": "Since the LLMs are not specifically designed to understand the UI design patterns, we fine-tune the LLMs with the natural language description as the input and the UI wireframe in HTML syntax as the output (the same learning objective as the pre-trained model). The implementation of fine-tuning process is not a trivial task [50], which can significantly influence the performance of LLMs. To that end, we summarize",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-33-transform-raw-generation-into-beautiful-ui-wi",
+      "number": "3.3",
+      "title": "Transform Raw Generation into Beautiful UI Wireframe",
+      "level": 2,
+      "pageStart": 9,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1154,
+      "summary": {
+        "text": "Post-processes the raw HTML into usable wireframes in three ways: semantic icons, chosen by prompting the LLM against a top-10 icon-semantics category derived by open coding 4,000 Rico icons; text typography, framed as an optimisation over wrapping and font size that minimises wasted block space; and heuristics for three UI-guideline flaws found in 100 generations, namely occlusion, duplication and out-of-bound elements.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "icon semantics",
+          "heading": false
+        },
+        {
+          "term": "text wrapping",
+          "heading": false
+        },
+        {
+          "term": "font size",
+          "heading": false
+        },
+        {
+          "term": "text typography",
+          "heading": false
+        },
+        {
+          "term": "design flaws",
+          "heading": false
+        },
+        {
+          "term": "html syntax",
+          "heading": false
+        },
+        {
+          "term": "text alignment",
+          "heading": false
+        },
+        {
+          "term": "wireframe",
+          "heading": true
+        }
+      ],
+      "extract": "After fine-tuning process, we prompt the LLMs with a simple description of design intent to generate a HTML syntax of mid-fidelity wireframes. However, programming languages like HTML and CSS are not easy for designers to understand. We wish to hide the programming hardships under-the-hood to reduce the designer’s burden. Besides, the LLMs may not fully capture the intricacies of the design knowledge behind the UI",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-4-evaluation",
+      "number": "4",
+      "title": "Evaluation",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 21,
+      "summary": {
+        "text": "Introduces Section 4, which runs experiments on how effectively the fine-tuned LLMs generate mid-fidelity UI wireframes.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "In this section, we conduct experiments to demonstrate the effectiveness of our fine-tuned LLMs in generating mid- fidelity UI wireframes. 4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-010-41-research-questions",
+      "number": "4.1",
+      "title": "Research Questions",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 78,
+      "summary": {
+        "text": "Poses two research questions: RQ1, whether fine-tuning yields better wireframes than zero-shot and few-shot in-context learning; and RQ2, whether Turbo outperforms the other GPT variants Curie, Babbage and Ada.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "variations",
+          "heading": false
+        },
+        {
+          "term": "fine-tuning",
+          "heading": false
+        },
+        {
+          "term": "turbo",
+          "heading": false
+        }
+      ],
+      "extract": "RQ1: (Performance of Fine-tuning) Does the optimization of fine-tuning correlate with better UI wireframe generations? For RQ1, we evaluate the effectiveness of fine-tuning the LLMs, compared with widely-used in-context learning baseline approaches (e.g., zero-shot and few-shot). RQ2: (Performance of Variations) Do the variations of the LLMs result in better UI wireframes? For RQ2, we present the comparison among",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-42-testing-data",
+      "number": "4.2",
+      "title": "Testing Data",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 12,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 110,
+      "summary": {
+        "text": "The test set is 100 UI textual descriptions, two apps per category, drawn from the Section 3.1 data after removing the 1,000 training samples. The original UI screens are not used as ground truth, because a generated wireframe may be reasonable yet differ from them.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "wireframes",
+          "heading": false
+        },
+        {
+          "term": "collect",
+          "heading": false
+        }
+      ],
+      "extract": "We collect the data as discussed in Section 3.1 as our experimental dataset. Since we leverage 1,000 sample data to fine-tune the LLMs, we first remove these data to avoid potential bias. To evaluate the LLMs’ generalizability and diversity, we randomly select 2 apps from each category. In total, we collect 100 UI textual descriptions as the input prompts to generate UI wireframes. Note that we do not use the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-43-annotation-methodology",
+      "number": "4.3",
+      "title": "Annotation Methodology",
+      "level": 2,
+      "pageStart": 12,
+      "pageEnd": 12,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 129,
+      "summary": {
+        "text": "Two people with UI/UX design and art backgrounds, after 30 minutes reading design books, independently rated shuffled grids of generated wireframes as significantly better or significantly worse without knowing which model produced each; they were paid $20 per hour.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "wireframe designs",
+          "heading": false
+        },
+        {
+          "term": "annotators",
+          "heading": false
+        },
+        {
+          "term": "grid",
+          "heading": false
+        },
+        {
+          "term": "generations",
+          "heading": false
+        }
+      ],
+      "extract": "We recruit two people who had backgrounds in UI/UX design and art practice to rate the UI wireframe designs generated by our LLMs. At the beginning of the experiment, we first give them an introduction to our study and ask them to read UI/UX design books for 30 minutes to deepen the design principles. Given the natural language descriptions and a grid of UI wireframe designs, annotators are then asked to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-44-rq1-performance-of-fine-tuning",
+      "number": "4.4",
+      "title": "RQ1: Performance of Fine-tuning",
+      "level": 2,
+      "pageStart": 12,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 493,
+      "summary": {
+        "text": "Compares WireGen with zero-shot and few-shot prompting (K of 1 to 2 examples) under identical settings. WireGen's generations were rated significantly better 85.5% of the time on average, while zero-shot and few-shot received 51.5% and 44.5% significantly worse ratings, with a Cohen's kappa of 0.32; zero-shot produced relevant elements without regard to layout, and few-shot improved layouts but generalised poorly.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "zero-shot learning",
+          "heading": false
+        },
+        {
+          "term": "wireframe generations",
+          "heading": false
+        },
+        {
+          "term": "few-shot learning",
+          "heading": false
+        },
+        {
+          "term": "in-context learning",
+          "heading": false
+        },
+        {
+          "term": "fine-tuning",
+          "heading": true
+        },
+        {
+          "term": "wiregen",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "ratings",
+          "heading": false
+        }
+      ],
+      "extract": "4.4.1 Baselines. To demonstrate the advantage of fine-tuning to master the domain-specific task of UI wireframe generation, we compare it with two widely-used in-context learning methods as baselines, including zero-shot learning and few-shot learning. Note that all the experiment settings (e.g., model, hyperparameter, etc.) are the same. Zero-shot learning: It predicts the results without any training samples. The",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-45-rq2-performance-of-variations",
+      "number": "4.5",
+      "title": "RQ2: Performance of Variations",
+      "level": 2,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 62,
+      "summary": {
+        "text": "Sets up Curie, Babbage and Ada as the RQ2 baselines, each fine-tuned on the same training data with the same settings as Turbo.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "baselines",
+          "heading": false
+        },
+        {
+          "term": "ada",
+          "heading": false
+        },
+        {
+          "term": "babbage",
+          "heading": false
+        }
+      ],
+      "extract": "4.5.1 Baselines. As our implementation of LLMs GPT offers different models to support different levels of tasks, we set up the other models, including Curie, Babbage, and Ada, as the baselines to compare with our model. To guarantee the fairness of the experiment, we fine-tune these models on the training dataset using the same training settings as discussed in Section 3.2. 4.5.2",
+      "extractCut": false
+    },
+    {
+      "id": "sec-015-53-results",
+      "number": "5.3",
+      "title": "Results",
+      "level": 2,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 216,
+      "summary": {
+        "text": "Turbo was rated significantly better in 76.5% of cases, against 11.5%, 10.5% and 1.5% for Curie, Babbage and Ada; Curie and Babbage mostly produced average wireframes and 81.5% of Ada's were rated significantly worse, with a Cohen's kappa of 0.28. Examples show Turbo generating more detailed elements, such as subtitles under titles, which the authors attribute to it being the most powerful model.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "turbo",
+          "heading": false
+        },
+        {
+          "term": "ada",
+          "heading": false
+        },
+        {
+          "term": "babbage",
+          "heading": false
+        },
+        {
+          "term": "curie",
+          "heading": false
+        },
+        {
+          "term": "baseline models",
+          "heading": false
+        },
+        {
+          "term": "wireframes",
+          "heading": false
+        }
+      ],
+      "extract": "baseline models, e.g., 76.5% vs 11.5%, 10.5%, 1.5% for Curie, Babbage, and Ada, respectively. Both Curie and Babbage show the tendency to generate average UI wireframes (78% and 82.5%), while Ada underperforms with 81.5% of UI wireframes rated to be significantly worse. We report the inter-rater reliability score of 0.28 in Cohen’s kappa, which represents a fair agreement, which we think is valid considering the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-5-user-study",
+      "number": "5",
+      "title": "User Study",
+      "level": 1,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 39,
+      "summary": {
+        "text": "Introduces a user study of how useful the model is in helping designers generate UI wireframes from real-world descriptions, since the same thing can be said in many different words.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "assisting",
+          "heading": false
+        },
+        {
+          "term": "usefulness",
+          "heading": false
+        },
+        {
+          "term": "study",
+          "heading": true
+        }
+      ],
+      "extract": "In language, there are many ways to say the same thing in different words. We conduct a user study to gain insights into the usefulness of our model in assisting designers with UI wireframe generation with real-world descriptions. 5.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-017-51-participants",
+      "number": "5.1",
+      "title": "Participants",
+      "level": 2,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 130,
+      "summary": {
+        "text": "Five UI/UX designers took part, recruited by word of mouth and online advertisements, with 2 to 6 years of experience in visual, interaction and product design at companies of various sizes and at a design-sharing community.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "visual designer",
+          "heading": false
+        },
+        {
+          "term": "interaction designer",
+          "heading": false
+        },
+        {
+          "term": "working experience",
+          "heading": false
+        },
+        {
+          "term": "years",
+          "heading": false
+        }
+      ],
+      "extract": "We invite five UI/UX designers to participate in our experiments by word-of-mouth and through online advertisements on social media and design communities. • P1: Visual designer, 6 years of working experience, now working at a large multinational company, responsible for international app design and design innovation. • P2: Interaction designer/product designer from a medium-sized company, with 4 years of working",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-52-procedure",
+      "number": "5.2",
+      "title": "Procedure",
+      "level": 2,
+      "pageStart": 14,
+      "pageEnd": 17,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1363,
+      "summary": {
+        "text": "In one-hour Zoom sessions, participants generated a login-page wireframe by editing a given prompt, then used WireGen freely on their own scenarios alongside other tools, and rated it on a 5-point scale: effective for inspiration (4.4), relevant to the prompts (4.0) and diverse (3.6). All judged it better than wireframe-sharing, layout-generation and text-to-image tools, and they asked for integration with design software as a plugin and for representative images in place of alt-text.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "asked participants",
+          "heading": false
+        },
+        {
+          "term": "wireframe designs",
+          "heading": false
+        },
+        {
+          "term": "participants appreciated",
+          "heading": false
+        },
+        {
+          "term": "wireframe generations",
+          "heading": false
+        },
+        {
+          "term": "wireframes generated",
+          "heading": false
+        },
+        {
+          "term": "job searching",
+          "heading": false
+        },
+        {
+          "term": "login page",
+          "heading": false
+        },
+        {
+          "term": "layout generation",
+          "heading": false
+        }
+      ],
+      "extract": "The user studies were conducted online via the Zoom platform. Each participant took about one hour to complete. Each study session began with a short interview in which the participants were asked about their professional background 14 Wireframing UI Design Intent with Generative Large Language Models and their experience in designing UI/UX examples. We then gave them an introduction to our study and also an example",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-6-discussion",
+      "number": "6",
+      "title": "Discussion",
+      "level": 1,
+      "pageStart": 17,
+      "pageEnd": 18,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 477,
+      "summary": {
+        "text": "Names limitations and future work: training on only 1,000 samples for budget reasons, post-processing based on a small-scale study of design flaws, and prompts built only from screens and view hierarchies. Proposes multimodal prompts, iterative design through chat, and retrieving similar existing UI designs by encoding generated wireframes with Screen2Vec.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "incorporating semantic",
+          "heading": false
+        },
+        {
+          "term": "design process",
+          "heading": false
+        },
+        {
+          "term": "work focuses",
+          "heading": false
+        },
+        {
+          "term": "login page",
+          "heading": false
+        },
+        {
+          "term": "future work",
+          "heading": false
+        },
+        {
+          "term": "google authentication",
+          "heading": false
+        },
+        {
+          "term": "wireframes",
+          "heading": false
+        },
+        {
+          "term": "designer",
+          "heading": false
+        }
+      ],
+      "extract": "In Section 4 and Section 5, we evaluate and examine WireGen ’s effectiveness and usefulness for automatically generating mid-fidelity UI wireframes from natural language descriptions. We see several opportunities to improve the performance of our LLMs. For example, we see that training on a large dataset can deliver better results. However, due to budget constraints, we only use 1,000 data for training. Once we have",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-7-conclusion",
+      "number": "7",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 18,
+      "pageEnd": 18,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 154,
+      "summary": {
+        "text": "Restates that WireGen fine-tunes LLMs on thousands of UI screens and view hierarchies, generates raw wireframes from design-intent descriptions and post-processes them, and that experiments and a user study show it outperforms baselines and ablated models and is useful in practice.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "wiregen",
+          "heading": false
+        },
+        {
+          "term": "mid-fidelity",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "wireframes",
+          "heading": false
+        },
+        {
+          "term": "outperforming",
+          "heading": false
+        }
+      ],
+      "extract": "This paper introduces WireGen, a new method for exploring human-AI collaboration in mid-fidelity UI wireframe creation. Inspired by the success of generative Large Language Models in creating innovative ideas, we purpose to inherit LLMs’ in-context ability from billions of web resources to create mid-fidelity UI wireframes. Since LLMs are not designed for UI understanding and creation, we fine-tune it with thousands",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 18,
+      "pageEnd": 21,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2304,
+      "summary": {
+        "text": "The paper's numbered reference list of 84 entries: web pages for design and AI tools, followed by academic papers on GUI design and semantics, UI datasets and design search, layout generation, and large language models such as GPT-3.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "chunyang chen",
+          "heading": false
+        },
+        {
+          "term": "sidong feng",
+          "heading": false
+        },
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "zhenchang xing",
+          "heading": false
+        },
+        {
+          "term": "chi conference",
+          "heading": false
+        },
+        {
+          "term": "jieshan chen",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "companion proceedings",
+          "heading": false
+        }
+      ],
+      "extract": "[1] 2023. Absolute, Relative, Fixed Positioning: How Do They Differ? https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/. [2] 2023. Adobe Photoshop | Photo and design software. https://www.adobe.com/products/photoshop.html. [3] 2023. ChatGPT: Optimizing Language Models for Dialogue. https://openai.com/blog/chatgpt/. [4] 2023. DALLE 2, Explained: The Promise and Limitations of a",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "wireframe design",
+      "heading": false
+    },
+    {
+      "term": "mid-fidelity wireframes",
+      "heading": false
+    },
+    {
+      "term": "low-fidelity wireframes",
+      "heading": false
+    },
+    {
+      "term": "wireframe generations",
+      "heading": false
+    },
+    {
+      "term": "generated wireframes",
+      "heading": false
+    },
+    {
+      "term": "design language",
+      "heading": false
+    },
+    {
+      "term": "generative llms",
+      "heading": false
+    },
+    {
+      "term": "design intent",
+      "heading": false
+    },
+    {
+      "term": "fine-tuning llms",
+      "heading": false
+    },
+    {
+      "term": "raw wireframe",
+      "heading": true
+    },
+    {
+      "term": "visual design",
+      "heading": false
+    },
+    {
+      "term": "design inspiration",
+      "heading": false
+    }
+  ]
+}

@@ -1,0 +1,711 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2508.05192v2",
+  "title": "AI-assisted JSON Schema Creation and Mapping",
+  "pages": 5,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Background and Related Work",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-background-and-related-work"
+    },
+    {
+      "level": 2,
+      "title": "JSON and JSON Schema",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-json-and-json-schema"
+    },
+    {
+      "level": 2,
+      "title": "JSON Schema Creation",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-json-schema-creation"
+    },
+    {
+      "level": 2,
+      "title": "Schema Matching and Mapping",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-schema-matching-and-mapping"
+    },
+    {
+      "level": 2,
+      "title": "Large Language Models (LLMs) and Prompt Engineering",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-large-language-models-llms-and-prompt-engineerin"
+    },
+    {
+      "level": 1,
+      "title": "Design and Implementation",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-design-and-implementation"
+    },
+    {
+      "level": 2,
+      "title": "AI-assisted JSON Schema Creation",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-ai-assisted-json-schema-creation"
+    },
+    {
+      "level": 2,
+      "title": "AI-assisted Schema Matching and Mapping",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-ai-assisted-schema-matching-and-mapping"
+    },
+    {
+      "level": 1,
+      "title": "Application Example",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-application-example"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-000-json-schema-creation",
+      "number": null,
+      "title": "JSON Schema Creation",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 233,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "stuttgart",
+          "heading": false
+        },
+        {
+          "term": "schema",
+          "heading": true
+        },
+        {
+          "term": "data integration",
+          "heading": false
+        },
+        {
+          "term": "json",
+          "heading": true
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "biochemistry",
+          "heading": false
+        },
+        {
+          "term": "neubauer",
+          "heading": false
+        },
+        {
+          "term": "pleiss",
+          "heading": false
+        }
+      ],
+      "extract": "1st Felix Neubauer , 3rd Benjamin Uekermann Institute for Parallel and Distributed Systems University of Stuttgart Stuttgart, Germany Felix.Neubauer@ipvs.uni-stuttgart.de, Benjamin.Uekermann@ipvs.uni-stuttgart.de 2nd J¨urgen Pleiss Institute of Biochemistry and Technical Biochemistry University of Stuttgart Stuttgart, Germany Juergen.Pleiss@itb.uni-stuttgart.de Abstract—Model-Driven Engineering (MDE) places models",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 432,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "data models",
+          "heading": false
+        },
+        {
+          "term": "model-driven",
+          "heading": false
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "mde",
+          "heading": false
+        },
+        {
+          "term": "safeguards",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "csv",
+          "heading": false
+        },
+        {
+          "term": "metaconfigurator",
+          "heading": false
+        }
+      ],
+      "extract": "Model-Driven Engineering (MDE) emphasizes the central role of models in the design, development, and operation of systems [1]. In the context of research data management [2]– [4], models are typically expressed as schemas, which define the structure and semantics of datasets. These models enable key functionalities such as instance validation, transformation, code generation, and visualization, and are essential for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-background-and-related-work",
+      "number": null,
+      "title": "Background and Related Work",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 27,
+      "summary": null,
+      "keywords": [],
+      "extract": "This section introduces JSON, JSON Schema and work related to schema creation, schema mapping, large language models (LLMs) and prompt engineering. 1https://github.com/MetaConfigurator/meta-configurator arXiv:2508.05192v2 [cs.SE] 16 Jan 2026",
+      "extractCut": false
+    },
+    {
+      "id": "sec-003-json-and-json-schema",
+      "number": null,
+      "title": "JSON and JSON Schema",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 360,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "json schema",
+          "heading": true
+        },
+        {
+          "term": "schema editor",
+          "heading": false
+        },
+        {
+          "term": "generate schema",
+          "heading": false
+        },
+        {
+          "term": "programming languages",
+          "heading": false
+        },
+        {
+          "term": "metaconfigurator",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "furthermore",
+          "heading": false
+        },
+        {
+          "term": "services",
+          "heading": false
+        }
+      ],
+      "extract": "JSON is a widespread data format for exchanging infor- mation with web services, storing semi-structured documents in NoSQL databases [9], and representing structured content in APIs and configuration files. Its simplicity and human- readability, combined with wide support across programming languages, make it a natural fit for data interchange and machine learning pipelines. JSON Schema, the de-facto standard for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-schema-matching-and-mapping",
+      "number": null,
+      "title": "Schema Matching and Mapping",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 238,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "schema mapping",
+          "heading": true
+        },
+        {
+          "term": "schema matching",
+          "heading": true
+        },
+        {
+          "term": "transform json",
+          "heading": false
+        },
+        {
+          "term": "json documents",
+          "heading": false
+        },
+        {
+          "term": "acc",
+          "heading": false
+        },
+        {
+          "term": "transformation",
+          "heading": false
+        },
+        {
+          "term": "databases",
+          "heading": false
+        },
+        {
+          "term": "approaches",
+          "heading": false
+        }
+      ],
+      "extract": "Integrating data from various sources and in different for- mats poses a significant challenge [20]–[22]. In this work, we study the task of schema mapping: converting an instance from one JSON schema to another. A schema mapping can contain simple property-to-property correspondences or also more expressive logics. JSON to JSON transformation (Jolt)3, is a Java library to transform JSON documents. JSONata4,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-large-language-models-llms-and-prompt-engineerin",
+      "number": null,
+      "title": "Large Language Models (LLMs) and Prompt Engineering",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 142,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt engineering",
+          "heading": true
+        },
+        {
+          "term": "llms",
+          "heading": true
+        },
+        {
+          "term": "input-output",
+          "heading": false
+        },
+        {
+          "term": "improves",
+          "heading": false
+        },
+        {
+          "term": "providing",
+          "heading": false
+        }
+      ],
+      "extract": "LLMs are powerful deep learning models trained on large corpora of text to perform a wide range of natural language processing tasks [27]–[29]. Prompt engineering is the task of optimizing the input prompt for an LLM to get the best results from it. Sahoo et al. [30] performed a systematic survey of prompt engineering techniques. For example, for new tasks without extensive prior training, few-shot training",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-design-and-implementation",
+      "number": null,
+      "title": "Design and Implementation",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 144,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "acc",
+          "heading": false
+        },
+        {
+          "term": "api",
+          "heading": false
+        },
+        {
+          "term": "ai-assisted",
+          "heading": false
+        },
+        {
+          "term": "configurable",
+          "heading": false
+        },
+        {
+          "term": "iii-a",
+          "heading": false
+        }
+      ],
+      "extract": "In this section, we describe the design and implementation of our AI-assisted schema creation (Section III-A) and schema matching (Section III-B) approaches. Our system communicates with LLMs via a configurable endpoint that follows the OpenAI API6. Users may select the desired model via the application’s settings. Prompts are programmatically constructed and transmitted to the API, and the resulting textual outputs",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-ai-assisted-json-schema-creation",
+      "number": null,
+      "title": "AI-assisted JSON Schema Creation",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 280,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "schema creation",
+          "heading": true
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "metaconfigurator",
+          "heading": false
+        },
+        {
+          "term": "modifications",
+          "heading": false
+        },
+        {
+          "term": "llm",
+          "heading": false
+        },
+        {
+          "term": "editing",
+          "heading": false
+        },
+        {
+          "term": "prompt",
+          "heading": false
+        },
+        {
+          "term": "modular",
+          "heading": false
+        }
+      ],
+      "extract": "MetaConfigurator’s modular and extensible architecture en- ables the integration of a new AI assistance view. To enable schema creation and modifications via natural language, we introduce a conversational, chat-like interface. Our hybrid method offers several advantages over pure LLM-based so- lutions: 1) Prompt construction and context management: The tool handles all aspects of prompt engineering. For schema",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-ai-assisted-schema-matching-and-mapping",
+      "number": null,
+      "title": "AI-assisted Schema Matching and Mapping",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 651,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "schema mapping",
+          "heading": true
+        },
+        {
+          "term": "metal salt",
+          "heading": false
+        },
+        {
+          "term": "generated jsonata",
+          "heading": false
+        },
+        {
+          "term": "json schema",
+          "heading": false
+        },
+        {
+          "term": "ligand both",
+          "heading": false
+        },
+        {
+          "term": "mapping rules",
+          "heading": false
+        },
+        {
+          "term": "json document",
+          "heading": false
+        },
+        {
+          "term": "input json",
+          "heading": false
+        }
+      ],
+      "extract": "Schema mapping is performed using human-defined map- ping rules or scripts, traditional automated approaches [23], [25] and recently also using LLMs [26]. We propose and im- plement a new approach, which transforms a JSON document to satisfy a given target schema by first generating schema mapping rules with the help of a LLM and then executing these deterministically. Aside from JSON, MetaConfigurator supports the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-application-example",
+      "number": null,
+      "title": "Application Example",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 469,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "metal salt",
+          "heading": false
+        },
+        {
+          "term": "schema mapping",
+          "heading": false
+        },
+        {
+          "term": "target schema",
+          "heading": false
+        },
+        {
+          "term": "mof",
+          "heading": false
+        },
+        {
+          "term": "json document",
+          "heading": false
+        },
+        {
+          "term": "linker",
+          "heading": false
+        },
+        {
+          "term": "excel table",
+          "heading": false
+        },
+        {
+          "term": "input json",
+          "heading": false
+        }
+      ],
+      "extract": "Chemists have performed chemical synthesis experiments and tracked their inputs and results in an Excel table. They want to apply machine learning and other algorithms on their data, but it is not yet in a suitable format10. MetaConfigurator is used to convert the excel table into a JSON document and automatically infer the corresponding schema. The JSON document and schema, however, are not yet of sufficient",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 189,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "stuttgart",
+          "heading": false
+        },
+        {
+          "term": "instance transformation",
+          "heading": false
+        },
+        {
+          "term": "chemistry",
+          "heading": false
+        },
+        {
+          "term": "germany",
+          "heading": false
+        },
+        {
+          "term": "editing",
+          "heading": false
+        },
+        {
+          "term": "schema",
+          "heading": false
+        },
+        {
+          "term": "enable",
+          "heading": false
+        }
+      ],
+      "extract": "We presented a hybrid approach for schema creation, editing, and instance transformation using large language models, integrated into the open-source tool MetaConfigu- rator. Our method combines modular prompt engineering, targeted context scoping, human-in-the-loop refinement, and post-processing safeguards to enable intuitive and controlled schema modeling. To enable transforming also large document instances to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1117,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "unpublished",
+          "heading": false
+        },
+        {
+          "term": "vol",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "json schema",
+          "heading": false
+        },
+        {
+          "term": "markup language",
+          "heading": false
+        },
+        {
+          "term": "doi",
+          "heading": false
+        },
+        {
+          "term": "integration challenges",
+          "heading": false
+        }
+      ],
+      "extract": "[1] Douglas C. Schmidt, “Guest editor’s introduction: Model-driven engineering,” Computer, vol. 39, no. 2, pp. 25–31, 2006, doi: 10.1109/MC.2006.58. [2] G. Pryor, “Managing research data,” Facet Publishing, 2012, doi: 10.29085/9781856048910. [3] S. Wall, “Data management for researchers: Organize, maintain and share your data for research success,” Archives and Manuscripts, vol. 45, no. 1, pp. 53–55, 2017, doi:",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "json schema",
+      "heading": true
+    },
+    {
+      "term": "schema mapping",
+      "heading": true
+    },
+    {
+      "term": "schema creation",
+      "heading": true
+    },
+    {
+      "term": "schema validation",
+      "heading": false
+    },
+    {
+      "term": "schema editor",
+      "heading": false
+    },
+    {
+      "term": "automated schema",
+      "heading": false
+    },
+    {
+      "term": "generate schema",
+      "heading": false
+    },
+    {
+      "term": "target schema",
+      "heading": false
+    },
+    {
+      "term": "schema matching",
+      "heading": true
+    },
+    {
+      "term": "schema discovery",
+      "heading": false
+    },
+    {
+      "term": "create schema",
+      "heading": false
+    },
+    {
+      "term": "schema inference",
+      "heading": false
+    }
+  ]
+}

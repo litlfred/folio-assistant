@@ -1,0 +1,1058 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2504.07199v3",
+  "title": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog",
+  "pages": 14,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Background",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-background"
+    },
+    {
+      "level": 1,
+      "title": "Source Dataset",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-source-dataset"
+    },
+    {
+      "level": 2,
+      "title": "How are subject annotations obtained?",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-how-are-subject-annotations-obtained"
+    },
+    {
+      "level": 1,
+      "title": "Shared Task Description and Dataset",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-shared-task-description-and-dataset"
+    },
+    {
+      "level": 2,
+      "title": "Dataset Collections",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-dataset-collections"
+    },
+    {
+      "level": 2,
+      "title": "Dataset Format and Statistics",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-dataset-format-and-statistics"
+    },
+    {
+      "level": 1,
+      "title": "Task Setup",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-task-setup"
+    },
+    {
+      "level": 1,
+      "title": "Shared Task Participant Systems",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-shared-task-participant-systems"
+    },
+    {
+      "level": 1,
+      "title": "Shared Task Leaderboard Results",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-shared-task-leaderboard-results"
+    },
+    {
+      "level": 2,
+      "title": "Quantitative Evaluations",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-quantitative-evaluations"
+    },
+    {
+      "level": 2,
+      "title": "Qualitative Evaluations",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-qualitative-evaluations"
+    },
+    {
+      "level": 1,
+      "title": "Discussion",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-discussion"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "TIBKAT media types",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-tibkat-media-types"
+    },
+    {
+      "level": 1,
+      "title": "TIBKAT Language Distribution",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-tibkat-language-distribution"
+    },
+    {
+      "level": 1,
+      "title": "Additional details about the GND",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-additional-details-about-the-gnd"
+    },
+    {
+      "level": 1,
+      "title": "Pilot Task",
+      "number": null,
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-pilot-task"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 110,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "semeval",
+          "heading": false
+        },
+        {
+          "term": "tagging",
+          "heading": false
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "llm-based",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects",
+          "heading": false
+        }
+      ],
+      "extract": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog Jennifer D’Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin, and Diana Slawig TIB Leibniz Information Centre for Science and Technology, Hannover, Germany {firstname.lastname}@tib.eu Abstract We present SemEval-2025 Task 5: LLMs4Subjects, a shared task on auto- mated subject tagging",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 733,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "subject tagging",
+          "heading": false
+        },
+        {
+          "term": "subject classification",
+          "heading": false
+        },
+        {
+          "term": "national library",
+          "heading": false
+        },
+        {
+          "term": "automated subject",
+          "heading": false
+        },
+        {
+          "term": "digital library",
+          "heading": false
+        },
+        {
+          "term": "classifi cation",
+          "heading": false
+        },
+        {
+          "term": "shared task",
+          "heading": false
+        },
+        {
+          "term": "subject indexing",
+          "heading": false
+        }
+      ],
+      "extract": "Subject classification within library systems in- volves organizing books and resources based on their content and subject matter to facilitate easy re- trieval and access. Automated methods for classify- ing scientific texts include Springer Nature’s CSO classifier (Salatino et al., 2019), which uses syn- tactic and semantic analysis to categorize papers based on the Computer Science Ontology (CSO) using abstracts,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-background",
+      "number": null,
+      "title": "Background",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 238,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "authority file",
+          "heading": false
+        },
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "science",
+          "heading": false
+        },
+        {
+          "term": "scientific",
+          "heading": false
+        },
+        {
+          "term": "technology",
+          "heading": false
+        },
+        {
+          "term": "library",
+          "heading": false
+        },
+        {
+          "term": "tibkat",
+          "heading": false
+        }
+      ],
+      "extract": "About TIB. TIB – the Leibniz Information Cen- tre for Science and Technology and University Li- brary – promotes free access to knowledge, infor- mation sharing, and open scientific publications and data. As Germany’s national library for science and technology, including Architecture, Chemistry, Computer Science, Mathematics, and Physics, it maintains a globally unique collection, including audiovisual media and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-source-dataset",
+      "number": null,
+      "title": "Source Dataset",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 141,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "dataset",
+          "heading": true
+        },
+        {
+          "term": "media types",
+          "heading": false
+        },
+        {
+          "term": "shared task",
+          "heading": false
+        },
+        {
+          "term": "excluded",
+          "heading": false
+        },
+        {
+          "term": "records",
+          "heading": false
+        }
+      ],
+      "extract": "We queried the TIBKAT service to restrict its metadata to records containing abstracts and GND subject indexing. The query is fully reproducible via this persistent search link. It returned 189,665 records at the time of dataset creation. The TIB open-access catalog spans nine media types: Book (136,434), Thesis (31,859), Conference (12,212), Report (6,711), Article (2,080), Collection (188), AudioVisualDocument",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-how-are-subject-annotations-obtained",
+      "number": null,
+      "title": "How are subject annotations obtained?",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 252,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "subject cataloging",
+          "heading": false
+        },
+        {
+          "term": "librarians",
+          "heading": false
+        },
+        {
+          "term": "num",
+          "heading": false
+        },
+        {
+          "term": "annotations",
+          "heading": true
+        },
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "statistics",
+          "heading": false
+        },
+        {
+          "term": "libraries",
+          "heading": false
+        }
+      ],
+      "extract": "Subject annotations in the TIB catalog are continuously created by a dedicated team of 1https://www.dnb.de/EN/gnd 2The GND is available for download at https: //www.dnb.de/EN/Professionell/Metadatendienste/ Datenbezug/Gesamtabzuege/gesamtabzuege_node.html. 3https://pypi.org/project/langdetect/ 4Reflecting the real-world nature of the corpus, many records contain mixed-language content and are not reliably",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-shared-task-description-and-dataset",
+      "number": null,
+      "title": "Shared Task Description and Dataset",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 66,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "shared",
+          "heading": true
+        },
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "subjects",
+          "heading": false
+        }
+      ],
+      "extract": "The LLMs4Subjects shared task challenged partic- ipants to develop LLM-based systems for recom- mending relevant subjects from the GND taxonomy to annotate TIB technical records. Given a record’s title and abstract as input, systems were expected to generate a customizable top-k ranked list of rel- evant GND subjects. Since the dataset included records in both English and German, systems were required to support",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-dataset-collections",
+      "number": null,
+      "title": "Dataset Collections",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 194,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "dataset",
+          "heading": true
+        },
+        {
+          "term": "gnd subject",
+          "heading": false
+        },
+        {
+          "term": "participants",
+          "heading": false
+        },
+        {
+          "term": "tib core",
+          "heading": false
+        },
+        {
+          "term": "engineering",
+          "heading": false
+        },
+        {
+          "term": "tib-core",
+          "heading": false
+        },
+        {
+          "term": "all-subjects",
+          "heading": false
+        }
+      ],
+      "extract": "4.1 Dataset Collections all-subjects.5 This dataset comprises the full TIBKAT open-source collection, with predefined splits: 81,937 records for training and 13,666 for development. A detailed dataset overview is avail- 5https://github.com/jd-coderepos/ llms4subjects/tree/main/shared-task-datasets/ TIBKAT/all-subjects able in the shared task repository. Participants also received the accompanying GND subject taxon-",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-dataset-format-and-statistics",
+      "number": null,
+      "title": "Dataset Format and Statistics",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 90,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "main shared-task-datasets",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects blob",
+          "heading": false
+        },
+        {
+          "term": "gnd dataset",
+          "heading": false
+        },
+        {
+          "term": "record",
+          "heading": false
+        }
+      ],
+      "extract": "Both datasets were released in JSON-LD for- mat and include metadata such as title, type, ab- stract, and authors. The key attribute for the task, dcterms:subject, holds the GND subject head- ings assigned to each record. Example records are available in English here and in German here. Ta- ble 1 provides a detailed dataset breakdown. Books were the most common record type in both lan- guage collections, with each",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-task-setup",
+      "number": null,
+      "title": "Task Setup",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 87,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "task",
+          "heading": true
+        },
+        {
+          "term": "teams",
+          "heading": false
+        },
+        {
+          "term": "scription",
+          "heading": false
+        }
+      ],
+      "extract": "The shared task offered multiple communica- tion channels: a dedicated website,9 a Google Group for FAQs, and direct email support (llms4subjects@gmail.com). The organizing team included two Computer Scientists and three TIB subject specialists who supported participants throughout. The task timeline spanned four months, from October 2024 to January 2025. A Declaration of Interest for Participation (DIP) survey",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-shared-task-participant-systems",
+      "number": null,
+      "title": "Shared Task Participant Systems",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2215,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "b-instruct llm",
+          "heading": false
+        },
+        {
+          "term": "subject embeddings",
+          "heading": false
+        },
+        {
+          "term": "cross-encoder re-ranking",
+          "heading": false
+        },
+        {
+          "term": "ruc team",
+          "heading": false
+        },
+        {
+          "term": "shared task",
+          "heading": true
+        },
+        {
+          "term": "llm ensemble",
+          "heading": false
+        },
+        {
+          "term": "gnd subjects",
+          "heading": false
+        },
+        {
+          "term": "transformer embeddings",
+          "heading": false
+        }
+      ],
+      "extract": "The participant systems are described with a focus on their key methodological contributions. Teams are listed in alphabetical order of their names. An overview of the systems is provided in Table 2. 1. Annif (Suominen et al., 2025) The key ideas in this system’s subject tagging approach were: 1) Traditional extreme multi-label text clas- sification (XMTC) implemented in the Annif toolkit (2022) – Using Omikuji",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-shared-task-leaderboard-results",
+      "number": null,
+      "title": "Shared Task Leaderboard Results",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 249,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "shared task",
+          "heading": true
+        },
+        {
+          "term": "f1-score",
+          "heading": false
+        },
+        {
+          "term": "system performance",
+          "heading": false
+        },
+        {
+          "term": "qualitative",
+          "heading": false
+        },
+        {
+          "term": "released",
+          "heading": false
+        },
+        {
+          "term": "metrics",
+          "heading": false
+        },
+        {
+          "term": "correct",
+          "heading": false
+        },
+        {
+          "term": "precision",
+          "heading": false
+        }
+      ],
+      "extract": "In this shared task, we provided two leaderboards: 1) quantitative results and 2) qualitative results. Quantitative Metrics. System performance was evaluated using average precision@k, recall@k, and F1-score@k at multiple cutoffs (k = 5, 10, 15, ..., 50). These metrics were chosen as sub- ject tagging was treated as a bag-of-words among applicable subjects, making precision, recall, and F1-score more suitable. Given",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-quantitative-evaluations",
+      "number": null,
+      "title": "Quantitative Evaluations",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 304,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ruc team",
+          "heading": false
+        },
+        {
+          "term": "top teams",
+          "heading": false
+        },
+        {
+          "term": "recall scores",
+          "heading": false
+        },
+        {
+          "term": "both collections",
+          "heading": false
+        },
+        {
+          "term": "average recall",
+          "heading": false
+        },
+        {
+          "term": "la2i2f",
+          "heading": false
+        },
+        {
+          "term": "tib-core",
+          "heading": false
+        },
+        {
+          "term": "scores across",
+          "heading": false
+        }
+      ],
+      "extract": "The primary evaluation metric was recall, with the overall leaderboard ranking based on average recall scores across k values from 5 to 50. For practical use by subject specialists, systems should predict relevant subjects at lower k values, ideally between 5 and 10, with a maximum of 20. Table 3 presents the results for both collections: all-subjects and tib-core. The top teams consistently predicted over half of",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-qualitative-evaluations",
+      "number": null,
+      "title": "Qualitative Evaluations",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 824,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "qualitative",
+          "heading": true
+        },
+        {
+          "term": "ruc team",
+          "heading": false
+        },
+        {
+          "term": "precision among",
+          "heading": false
+        },
+        {
+          "term": "qualitative eval",
+          "heading": false
+        },
+        {
+          "term": "top teams",
+          "heading": false
+        },
+        {
+          "term": "precision scores",
+          "heading": false
+        },
+        {
+          "term": "average recall",
+          "heading": false
+        },
+        {
+          "term": "case treating",
+          "heading": false
+        }
+      ],
+      "extract": "We now turn to the qualitative manual evaluations from the shared task’s evaluation phase. Table 4 shows results for both qualitative evalua- tion cases. Based on subject librarian assessments, both Y (correct) and I (irrelevant but technically correct) labels were counted as correct in case 1, while only Y was considered correct in case 2. The top 4 teams ranked consistently across both cases, with minor changes",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-discussion",
+      "number": null,
+      "title": "Discussion",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 259,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "assistant api",
+          "heading": false
+        },
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "subject",
+          "heading": false
+        },
+        {
+          "term": "vector",
+          "heading": false
+        },
+        {
+          "term": "prompt",
+          "heading": false
+        },
+        {
+          "term": "openai",
+          "heading": false
+        },
+        {
+          "term": "baseline",
+          "heading": false
+        },
+        {
+          "term": "llm",
+          "heading": false
+        }
+      ],
+      "extract": "To establish a reference point for the LLMs4Subjects shared task, we developed a baseline system using OpenAI’s GPT-4o via the Assistant API.14 Two assistants were configured—one for all-subjects and another for 13The silp_nlp team output was not evaluated qualitatively as it was submitted after the deadline. 14https://platform.openai.com/docs/ api-reference/assistants tib-core—each equipped with the respective GND",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1679,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "semeval task",
+          "heading": false
+        },
+        {
+          "term": "computational linguistics",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "international workshop",
+          "heading": false
+        },
+        {
+          "term": "tional linguistics",
+          "heading": false
+        },
+        {
+          "term": "pages",
+          "heading": false
+        },
+        {
+          "term": "austria",
+          "heading": false
+        }
+      ],
+      "extract": "SemEval-2025 Task 5: LLMs4Subjects presented the first evaluation of LLMs for GND-based sub- ject indexing in bilingual (German/English) techni- cal library records, combining quantitative metrics with expert assessments. The task revealed four key takeaways: multilingual models and training data outperformed monolingual ones (RQ1, RQ2); synthetic data and retrieval-augmented pipelines improved performance,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-tibkat-media-types",
+      "number": null,
+      "title": "TIBKAT media types",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 148,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "media",
+          "heading": true
+        },
+        {
+          "term": "academic",
+          "heading": false
+        },
+        {
+          "term": "written",
+          "heading": false
+        },
+        {
+          "term": "findings",
+          "heading": false
+        },
+        {
+          "term": "audiovisualdocument",
+          "heading": false
+        }
+      ],
+      "extract": "Book: A comprehensive written work published as a volume or a series of volumes. Thesis: A document submitted in support of can- didature for an academic degree or professional qualification, presenting the author’s research and findings. Conference: Proceedings or collections of papers presented at academic conferences or symposiums. Report: Detailed and systematic accounts of re- search findings, often prepared",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-tibkat-language-distribution",
+      "number": null,
+      "title": "TIBKAT Language Distribution",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 123,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "tibkat",
+          "heading": true
+        },
+        {
+          "term": "estonian",
+          "heading": false
+        },
+        {
+          "term": "indonesian",
+          "heading": false
+        }
+      ],
+      "extract": "There are 48 different languages in the TIBKAT with abstracts. Their distributions are listed below. de (German): 108637; en (English): 76735; fr (French): 1741; id (Indonesian): 945; es (Spanish): 311; it (Italian): 294; nl (Dutch): 167; da (Danish): 129; sq (Albanian): 100; ro (Romanian): 93; ca (Catalan): 86; fi (Finnish): 80; so (Somali): 67; sv (Swedish): 65; no (Norwegian): 50; unknown (Unknown): 41; tl",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-additional-details-about-the-gnd",
+      "number": null,
+      "title": "Additional details about the GND",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 278,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "gnd",
+          "heading": true
+        },
+        {
+          "term": "synonyms",
+          "heading": false
+        },
+        {
+          "term": "details",
+          "heading": true
+        },
+        {
+          "term": "topical",
+          "heading": false
+        },
+        {
+          "term": "terms",
+          "heading": false
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "naming",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects",
+          "heading": false
+        }
+      ],
+      "extract": "At TIB, the GND is used as follows. The subject specialists are usually us- ing online services like GND-Explorer (https://explore.gnd.network/) or OGND (https://swb.bsz-bw.de/) for searching the GND. There you can also restrict to Sachbe- griff/Topical term (saz), which is the term class we are using for subject indexing (there are some additional term classes used, like geographical terms (swg), but to start",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-pilot-task",
+      "number": null,
+      "title": "Pilot Task",
+      "level": 1,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 305,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "annif",
+          "heading": false
+        },
+        {
+          "term": "sciences",
+          "heading": false
+        },
+        {
+          "term": "ogy",
+          "heading": false
+        },
+        {
+          "term": "subjects",
+          "heading": false
+        },
+        {
+          "term": "engineering",
+          "heading": false
+        },
+        {
+          "term": "assign",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects",
+          "heading": false
+        }
+      ],
+      "extract": "At TIB, ANNIF has been used in production code since the start of 2024 for the use case of assign- ing items from the TIB portal discovery system to one or several subject facets. The TIB portal em- ploys a multi-stage algorithm to attribute a record to one of the 28 TIB’s different subjects, viz. Ar- chitecture, Civil Engineering, Biochemistry, Biol- ogy, Chemistry, Chemical Engineering, Electrical Engineering,",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "gnd subject",
+      "heading": false
+    },
+    {
+      "term": "tib subject",
+      "heading": false
+    },
+    {
+      "term": "subject tagging",
+      "heading": false
+    },
+    {
+      "term": "subject classification",
+      "heading": false
+    },
+    {
+      "term": "subject embeddings",
+      "heading": false
+    },
+    {
+      "term": "subject indexing",
+      "heading": false
+    },
+    {
+      "term": "task llms4subjects",
+      "heading": false
+    },
+    {
+      "term": "subject taxonomy",
+      "heading": false
+    },
+    {
+      "term": "subject specialists",
+      "heading": false
+    },
+    {
+      "term": "llms4subjects shared",
+      "heading": false
+    },
+    {
+      "term": "relevant subject",
+      "heading": false
+    },
+    {
+      "term": "subject retrieval",
+      "heading": false
+    }
+  ]
+}

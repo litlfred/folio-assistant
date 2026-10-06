@@ -1,0 +1,192 @@
+/* The block content panel — bean lrmo. Tokens only, so it follows the light
+   and dark themes above rather than hardcoding either. */
+#document .seg { margin: .2rem 0 .8rem; }
+#document .seg button[aria-selected="true"] { font-weight: 600; }
+#document .docbody { padding: 0 16px 8px; }
+#document .dockw { padding: 4px 16px; }
+#document p.kw, #document .dockw p.kw { display: inline; margin: 0; }
+#document .docsec p.kw { display: block; margin: 2px 0 6px; }
+#document p.kw .pill { margin: 0 2px 2px 0; }
+#document ul.toc, #document ul.toc ul { list-style: none; margin: 0; padding-left: 1.1rem; }
+#document ul.toc { padding-left: 0; }
+#document ul.toc li { margin: .15rem 0; }
+#document ul.toc li.leaf { padding-left: 1rem; }
+#document ul.toc summary { cursor: pointer; }
+#document td ul { margin: .3rem 0 0; padding-left: 1.1rem; }
+#document .docsec { margin: 0 0 1rem; }
+#document .docsec h3 { margin: .2rem 0 .3rem; font-size: 1rem; }
+#document .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px; }
+#document .sum p { margin: .35rem 0 0; }
+#document td { white-space: normal; vertical-align: top; }
+#blocks details > summary { cursor: pointer; }
+#blocks .block-body { margin: .4rem 0 .2rem; }
+#blocks .block-body pre {
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+  padding: .55rem .7rem; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; font-size: 12.5px; line-height: 1.45; max-height: 22rem; overflow: auto;
+}
+#blocks .block-body .note { margin: .35rem 0 0; font-size: 11.5px; color: var(--muted); }
+/* EXTRACT AND AGENT SUMMARY, SIDE BY SIDE -- owner, 2026-09-24: "the extract
+   of a node is shown, but no agentic summary". Beside, never instead: the
+   extract is the source's words and the summary is an agent's account of
+   them, so a reader must be able to hold one against the other. Two columns
+   where there is room, stacked on a phone, extract first either way. */
+#blocks td { white-space: normal; vertical-align: top; }
+#blocks td.bt { min-width: 15rem; }
+#blocks .pair { display: grid; grid-template-columns: 1fr; gap: .6rem; }
+@media (min-width: 760px) { #blocks .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+#blocks .pair > div { min-width: 0; }
+#blocks .lbl { margin: 0 0 .3rem; font-size: 11.5px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .04em; }
+#blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
+  font-size: 13px; line-height: 1.5; }
+#blocks .sum p { margin: .35rem 0 0; }
+/* A WITHHELD ENTRY -- issue #1794. Said in words, styled as information
+   rather than as an error: not publishing a refused work is the system
+   working, and the banner is there so it is not mistaken for a gap. */
+#blocks .wh-banner { margin: 8px 16px 12px; padding: .6rem .8rem; border: 1px solid var(--info);
+  background: var(--info-soft); border-radius: 8px; font-size: .86rem; line-height: 1.5; }
+#blocks .wh-banner p { margin: 0 0 .35rem; }
+#blocks .wh-banner p:last-child { margin: 0; }
+#blocks .wh-line { color: var(--muted); font-size: .8rem; }
+:root {
+  --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
+  --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
+  --info:#1a5fb4; --info-soft:#e7eefb; --box:#fff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24;
+    --accent:#7fc7a1; --accent-soft:#16291f; --warn:#e0b25e; --warn-soft:#2a2213;
+    --info:#7aa7e8; --info-soft:#1d2937; --box:#1b1f24;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24;
+  --accent:#7fc7a1; --accent-soft:#16291f; --warn:#e0b25e; --warn-soft:#2a2213;
+  --info:#7aa7e8; --info-soft:#1d2937; --box:#1b1f24;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+header { padding:16px; border-bottom:1px solid var(--line); }
+h1 { font-size:1.15rem; margin:0 0 6px; }
+.badges { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; }
+.badge { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-size:.82rem; background:var(--panel); }
+.badge b { font-variant-numeric:tabular-nums; }
+.badge.q b { color:var(--warn); }
+.toolbar { padding:10px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; border-bottom:1px solid var(--line); }
+input, select, button { font:inherit; color:var(--fg); background:var(--box);
+  border:1px solid var(--line); border-radius:6px; padding:6px 9px; }
+input { flex:1 1 200px; min-width:0; }
+.seg { display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+.seg button { border:0; border-radius:0; background:transparent; cursor:pointer; padding:6px 12px; }
+.seg button[aria-pressed="true"] { background:var(--accent-soft); color:var(--fg); font-weight:600; }
+main { padding:0 0 40px; }
+table { border-collapse:collapse; width:100%; font-size:.86rem; }
+th, td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
+th { position:sticky; top:0; background:var(--bg); color:var(--muted); font-size:.74rem;
+  text-transform:uppercase; letter-spacing:.04em; }
+th button { border:0; background:transparent; padding:0; font:inherit; color:inherit;
+  cursor:pointer; text-transform:inherit; letter-spacing:inherit; }
+th button:hover { color:var(--fg); text-decoration:underline; }
+th[aria-sort] button::after { content:" ▲"; }
+th[aria-sort="descending"] button::after { content:" ▼"; }
+td.num { text-align:right; font-variant-numeric:tabular-nums; }
+tbody tr:hover { background:var(--panel); }
+.slug { font-family:ui-monospace, Menlo, monospace; }
+.pill { display:inline-block; font-size:.7rem; padding:1px 7px; border-radius:999px;
+  border:1px solid var(--line); color:var(--muted); }
+.pill.ok { color:var(--accent); background:var(--accent-soft); border-color:var(--accent); }
+.pill.warn { color:var(--warn); background:var(--warn-soft); border-color:var(--warn); }
+.pill.info { color:var(--info); background:var(--info-soft); border-color:var(--info); }
+#desktop { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+  gap:14px; padding:16px; }
+.card { border:1px solid var(--line); border-radius:10px; background:var(--panel);
+  padding:12px; display:flex; flex-direction:column; gap:6px; }
+.card h3 { margin:0; font-size:.92rem; line-height:1.3; }
+.card .slug { font-size:.74rem; color:var(--muted); }
+.card .rows { font-size:.78rem; color:var(--muted); display:grid;
+  grid-template-columns:auto 1fr; gap:1px 8px; margin-top:2px; }
+.card .rows b { color:var(--fg); font-weight:600; font-variant-numeric:tabular-nums; }
+.card .tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.spine { height:6px; border-radius:3px; background:var(--accent); opacity:.65; }
+.empty { color:var(--muted); padding:24px 16px; }
+h2 { font-size:.95rem; margin:24px 16px 4px; }
+p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
+.wrap { overflow:auto; }
+/* THE BOOK'S AVATAR, first in its row -- bean zrvt, issue #1006. A fixed box
+   so a row does not reflow when the cover arrives, and a glyph of the same
+   size when there is no picture, so "no cover" never looks like a broken one. */
+.lib-ava { display:inline-flex; align-items:center; justify-content:center;
+  width:34px; height:46px; margin-right:8px; vertical-align:middle; flex:0 0 auto;
+  border:1px solid var(--line); background:var(--panel); overflow:hidden; }
+.lib-ava img { width:100%; height:100%; object-fit:cover; display:block; }
+.lib-ava svg { width:22px; height:22px; fill:none; stroke:var(--muted); stroke-width:1.6; }
+td.lib-first { white-space:nowrap; }
+.card .lib-ava { width:56px; height:76px; }
+/* THE LISTING FITS MORE OF ITSELF, AND SAYS WHEN IT DOES NOT -- bean gnqa,
+   findings 1 and 2. Measured 2026-10-02 at 1280 px: a 3636 px table in a
+   1224 px box, every cell nowrap, so the title and source path alone were
+   2,000 px and nine of thirteen columns sat past the right edge with
+   nothing on screen saying so. The long TEXT cells now wrap inside a
+   bounded width; the short numeric and pill cells keep nowrap, because a
+   count broken over two lines is harder to read than one scrolled to. */
+#listing td.lib-first { white-space:normal; min-width:13rem; max-width:17rem; }
+#listing td.lib-first .slug { overflow-wrap:anywhere; }
+#listing td.t-title { white-space:normal; min-width:14rem; max-width:22rem; }
+#listing td.t-source { white-space:normal; min-width:9rem; max-width:14rem; }
+#listing td.t-source .slug { overflow-wrap:anywhere; }
+#listing td.t-source .pill { white-space:nowrap; }
+#queue td.slug { white-space:normal; overflow-wrap:anywhere; min-width:12rem; max-width:24rem; }
+/* "Referenced by" OPENS rather than hovers -- finding 6. A title tooltip is
+   unreachable by touch and by keyboard; a details element is both. */
+details.refs > summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; min-height:28px; }
+details.refs > summary::-webkit-details-marker { display:none; }
+details.refs > summary .pill::after { content:" \25B8"; }
+details.refs[open] > summary .pill::after { content:" \25BE"; }
+details.refs ul { margin:.3rem 0 0; padding-left:1rem; font-size:.72rem; color:var(--muted);
+  white-space:normal; overflow-wrap:anywhere; max-width:22rem; }
+/* THE EDGE CUE AT DESKTOP WIDTH. narrow-viewport.css fades a table's
+   overflowing edge below 800 px; above it the scroll box is .wrap, and it
+   had mask-image none. Same mask, same scroll-driven animation, so a box
+   that does not overflow shows no fade. */
+@media (min-width: 800px) {
+  /* The entry's identity stays in view while the reader scrolls to its
+     numbers: the first column is pinned to the scroll box's left edge. */
+  #listing th:first-child, #listing td.lib-first { position:sticky; left:0; z-index:1;
+    background:var(--bg); box-shadow:1px 0 0 var(--line); }
+  #listing th:first-child { z-index:2; }
+  @supports (animation-timeline: scroll()) {
+    /* Right edge only: the pinned first column already shows what is to
+       the left, and a left fade would dim the entry's own name. */
+    #listing.wrap, #queue.wrap {
+      mask-image: linear-gradient(to right,
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+}
+/* ON A PHONE A ROW IS A CARD -- finding 2. At 390 px a sideways-scrolling
+   table showed one column of thirteen: the cover, the slug and a button,
+   none of the metadata the listing exists for. Each row now lays its cells
+   out in a two-column grid, every cell labelled from its own header, and
+   the header row stays as the SORT controls. Overrides narrow-viewport.css
+   by id, which outranks its type selector. */
+@media (max-width: 799.98px) {
+  #listing table, #queue table { display:block; mask-image:none; animation:none; overflow:visible; }
+  #listing thead, #queue thead, #listing tbody, #queue tbody { display:block; }
+  #listing thead tr, #queue thead tr { display:flex; flex-wrap:wrap; gap:2px 12px; padding:6px 10px; }
+  #listing thead th, #queue thead th { position:static; border:0; padding:2px 0; }
+  #listing thead tr::before { content:"Sort by"; font-size:.74rem; color:var(--muted); align-self:center; }
+  #listing tbody tr, #queue tbody tr { display:grid; grid-template-columns:1fr 1fr; gap:2px 10px;
+    padding:10px; border-bottom:1px solid var(--line); }
+  #listing tbody td, #queue tbody td { display:block; border:0; padding:2px 0; white-space:normal;
+    min-width:0; max-width:none; text-align:left; overflow-wrap:anywhere; }
+  #listing td.lib-first, #listing td.t-title, #listing td.t-source, #listing td.t-refs,
+  #queue td.slug { grid-column:1 / -1; }
+  #listing td[data-label]::before, #queue td[data-label]::before { content:attr(data-label);
+    display:block; font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  #listing td.lib-first::before, #listing td.t-title::before { content:none; }
+}
