@@ -1,0 +1,66 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/ingestion/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 460,
+      "instructionsPath": "skills/library/ingestion/document-intake.md",
+      "name": "document-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43b57840f239cb4703309f1c7b72e367402c0e4895c7f1a4b02057eec412e894",
+        "bytes": 20975,
+        "sha256": "43b57840f239cb4703309f1c7b72e367402c0e4895c7f1a4b02057eec412e894"
+      },
+      "title": "Document Intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run ingest`.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 735,
+      "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
+      "name": "l1-document-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c0fe31634e159027f99bc0e7f6e3a24215437eba4dc094266e3dd34dd14f8b2b",
+        "bytes": 42075,
+        "sha256": "c0fe31634e159027f99bc0e7f6e3a24215437eba4dc094266e3dd34dd14f8b2b"
+      },
+      "title": "L1 document ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/tabular-metadata",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 203,
+      "instructionsPath": "skills/library/ingestion/tabular-metadata.md",
+      "name": "tabular-metadata",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e902f9f1910f15dd4c55ca066819f57553ad6e40f7bedba4de41b40756d9e4ab",
+        "bytes": 10720,
+        "sha256": "e902f9f1910f15dd4c55ca066819f57553ad6e40f7bedba4de41b40756d9e4ab"
+      },
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/ingestion",
+  "path": "skills/library/ingestion/"
+}
