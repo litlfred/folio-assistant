@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-10-06T05:56:52Z
-updated_at: 2026-10-06T05:57:44Z
+updated_at: 2026-10-06T06:01:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -35,3 +35,10 @@ The data is already in hand: smart-immunizations/fhir-artifact-index/index.json 
 - (b) run SUSHI and the IG Publisher in the fork's CI: a ~22 min cold build (bean wnhh), it needs packages.fhir.org and tx.fhir.org, and it runs against jut3's aim.
 - (c) scrape WHO's published page: fragile, and it shows upstream content rather than the fork's.
 Awaiting the owner's choice.
+
+## Owner, 2026-10-06: "use AST cache? indexing should be there, no?"
+Yes. The index exists from two sources:
+- smart-immunizations/fhir-artifact-index/index.json, ingested from the published IG, which reaches stageIgSite as opts.artifacts;
+- fhir-harness/scripts/ast-to-artifact-index.ts, which derives the same folio-fhir-artifact-index/v1 from an AST restored with ig-cache.sh restore. It is used by stage-ast-sites.ts but NOT by stage-ig-sites.ts or the fork's folio-site.yml.
+
+So the fix is option (a), with the index as the single input: a list-(simple-)?<kind>.xhtml renderer over the artefact index, whichever source produced it, and no IG Publisher run. One caveat from that script's own docblock: an AST does not carry the Publisher's editorial CATEGORY, so publisherCategory() applies the default grouping by resource type. For CodeSystem and ValueSet lists that default is exact, because the grouping is by type.
