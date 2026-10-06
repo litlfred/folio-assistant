@@ -555,7 +555,13 @@ describe("edit links to the IG's own source (bean `mftp`)", () => {
     const layout = readFileSync(join(d, "out", "_layouts", "default.html"), "utf-8");
     // Per-section: a source-line link and a pre-filled feedback issue.
     expect(layout).toContain('id="ig-source-lines"');
-    expect(layout).toContain("/issues/new?title=");
+    // Built in the browser from the platform's one recipe (bean v433).
+    expect(layout).toContain("function faBlockUrls");
+    expect(layout).toContain('data-fa-link="edit"');
+    const fm = readFileSync(join(d, "out", "concepts.md"), "utf-8");
+    expect(fm).toContain('ig_source_repo: "o/r"');
+    expect(fm).toContain('ig_source_branch: "main"');
+    expect(fm).toContain('ig_source_path: "input/pagecontent/concepts.md"');
     expect(readFileSync(join(d, "out", "concepts.md"), "utf-8")).toContain('ig_source_blob: "https://github.com/o/r/blob/main/input/pagecontent/concepts.md"');
     rmSync(d, { recursive: true, force: true });
   });
