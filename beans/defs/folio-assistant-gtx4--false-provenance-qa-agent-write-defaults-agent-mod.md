@@ -1,10 +1,12 @@
 ---
 # folio-assistant-gtx4
 title: 'FALSE PROVENANCE: qa-agent-write defaults agent_model to a stale literal, writing a model that did not do the work into committed sidecars'
-status: todo
+status: in-progress
+tags:
+  - ready-to-close
 type: bug
 created_at: 2026-10-02T23:52:42Z
-updated_at: 2026-10-02T23:52:42Z
+updated_at: 2026-10-06T22:43:00Z
 parent: folio-assistant-0ipy
 ---
 
@@ -105,10 +107,10 @@ asking") be closed by measurement rather than by removing the ask. That is a
 separate bean's worth of work; recorded here so the connection is not lost.
 
 ## Done when
-- [ ] `agent_model` has no default; omitted when not supplied
-- [ ] a test that a write without `--model` produces a sidecar with no
+- [x] `agent_model` has no default; omitted when not supplied
+- [x] a test that a write without `--model` produces a sidecar with no
       `agent_model`, not a defaulted one
-- [ ] decide `agent_skill`'s default separately, on its own argument
+- [x] decide `agent_skill`'s default separately, on its own argument (kept `local/qa-agent-drain` as truthful self-description when invoked by the drain, as noted in the bean)
 - [x] check whether any committed sidecar already carries the defaulted
       literal — **measured 2026-10-02: ZERO.** `grep -rl 'claude-opus-4-8'
       --include='*.qa.json'` returns nothing, and every one of the 11
@@ -118,3 +120,14 @@ separate bean's worth of work; recorded here so the connection is not lost.
       reason it is worth fixing cheaply now rather than after it has written
       a row nobody can distinguish.
 
+## Evidence
+- Removed stale literal `"claude-opus-4-8"` default for `model` in `cat-harness/src/qa-agent-write.ts`.
+- Conditionally spread `agent_model` in the `reviewer` entry only when `--model` is supplied.
+- Updated usage docblock in `cat-harness/src/qa-agent-write.ts` (`[--model <agent-model>]`).
+- Added tests in `cat-harness/src/qa-agent-write.test.ts`:
+  - `omits agent_model when --model is not supplied (bean gtx4)`
+  - `records agent_model when --model is supplied (bean gtx4)`
+- Verified with `bun test cat-harness/src/qa-agent-write.test.ts` (all 6 tests pass).
+- Verified `bun run typecheck` and `bun run check:retired-front-matter` pass cleanly.
+
+_2026-10-06T22:42:11Z_ — Claimed by claude/gtx4-qa-agent-write-model-default — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
