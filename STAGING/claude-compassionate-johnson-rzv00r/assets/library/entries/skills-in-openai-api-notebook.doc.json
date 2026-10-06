@@ -1,0 +1,461 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "skills-in-openai-api-notebook",
+  "title": "Skills in OpenAI API",
+  "pages": 0,
+  "tocSource": "headings",
+  "tocMethod": null,
+  "toc": [],
+  "sections": [
+    {
+      "id": "s001-skills-in-openai-api",
+      "number": null,
+      "title": "Skills in OpenAI API",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 44,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "skills",
+          "heading": true
+        },
+        {
+          "term": "openai",
+          "heading": true
+        },
+        {
+          "term": "shell",
+          "heading": false
+        }
+      ],
+      "extract": "# Skills in OpenAI API Package a CSV analysis workflow as a skill, upload it, and run it with GPT-6 Astra in hosted shell. You can also expose the same files to a local shell runtime. For the full reference, see the [Skills documentation](https://developers.openai.com/api/docs/guides/tools-skills).",
+      "extractCut": false
+    },
+    {
+      "id": "s002-what-is-a-skill",
+      "number": null,
+      "title": "What is a skill?",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 182,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "shell tool",
+          "heading": false
+        },
+        {
+          "term": "instructions",
+          "heading": false
+        },
+        {
+          "term": "scripts",
+          "heading": false
+        },
+        {
+          "term": "bundle",
+          "heading": false
+        }
+      ],
+      "extract": "## What is a skill? A skill is a reusable bundle of files (instructions + scripts + assets), packaged as a folder and anchored by a required `SKILL.md` manifest. OpenAI copies that bundle into an execution environment so the model can read instructions and run code as needed. In hosted shell, here's what happens when you attach skills to the shell tool environment (`environment.type=\"container_auto\"`): - The service",
+      "extractCut": true
+    },
+    {
+      "id": "s003-when-to-use-skills",
+      "number": null,
+      "title": "When to use skills",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 197,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "skills",
+          "heading": true
+        },
+        {
+          "term": "keep system",
+          "heading": false
+        },
+        {
+          "term": "system prompts",
+          "heading": false
+        },
+        {
+          "term": "live",
+          "heading": false
+        },
+        {
+          "term": "workflow",
+          "heading": false
+        },
+        {
+          "term": "procedure",
+          "heading": false
+        },
+        {
+          "term": "standard",
+          "heading": false
+        }
+      ],
+      "extract": "### When to use skills **Skills are particularly appropriate and powerful when…** 1. **You want a reusable, independently versionable set of behaviors.** Examples: “PowerPoint formatting procedure,” “company-specific report generator,” “standard data-cleaning pipeline.” 2. **Your workflow is highly conditional, or branches like a complex flow chart.** Example: If X → do this; else if Y → do that; plus validation +",
+      "extractCut": true
+    },
+    {
+      "id": "s004-skills-vs-tools-vs-system-prompts",
+      "number": null,
+      "title": "Skills vs. tools vs. system prompts",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 167,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "system prompts",
+          "heading": true
+        },
+        {
+          "term": "side effects",
+          "heading": false
+        },
+        {
+          "term": "tools",
+          "heading": true
+        },
+        {
+          "term": "every turn",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": true
+        },
+        {
+          "term": "procedures",
+          "heading": false
+        }
+      ],
+      "extract": "## Skills vs. tools vs. system prompts System prompts and tool schemas become heavy when the boundary isn’t crisp. Use all three to stay organized and help models perform better. Here’s a simple framework: **System prompt: global behavior and constraints** Use for: - Safety boundaries, tone, refusal style - “Always do X” principles that apply every turn - Small, stable policies Avoid: - Putting long, multi-step",
+      "extractCut": true
+    },
+    {
+      "id": "s005-skill-packaging-skill-md-and-folder-layout",
+      "number": null,
+      "title": "Skill packaging: SKILL.md and folder layout",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 7,
+      "summary": null,
+      "keywords": [],
+      "extract": "## Skill packaging: SKILL.md and folder layout",
+      "extractCut": false
+    },
+    {
+      "id": "s006-folder-structure",
+      "number": null,
+      "title": "Folder structure",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 31,
+      "summary": null,
+      "keywords": [],
+      "extract": "### Folder structure A skill is just a folder bundle. Here's an example: - `SKILL.md` (required) - Scripts, like `*.py`, `*.js` (optional) - Helpers and `requirements.txt` - Assets, templates, sample inputs",
+      "extractCut": false
+    },
+    {
+      "id": "s007-skill-md-frontmatter",
+      "number": null,
+      "title": "SKILL.md frontmatter",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 50,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "frontmatter",
+          "heading": true
+        },
+        {
+          "term": "upload multiple",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": true
+        }
+      ],
+      "extract": "### SKILL.md frontmatter OpenAI models expect names and descriptions to come from frontmatter (important for discovery and routing). Put name and description in the `SKILL.md` frontmatter. Use each API `create` call to upload one skill bundle (one top-level folder) containing exactly one `SKILL.md`/`skill.md`. To upload multiple skills, upload multiple bundles.",
+      "extractCut": false
+    },
+    {
+      "id": "s008-creating-skills-via-api",
+      "number": null,
+      "title": "Creating skills via API",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 147,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "upload zip",
+          "heading": false
+        },
+        {
+          "term": "api",
+          "heading": true
+        },
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "creating",
+          "heading": true
+        }
+      ],
+      "extract": "## Creating skills via API After you assemble your skill in a folder, create the skill with an API call. ### Directory upload or zip upload Use `POST /v1/skills` to upload and validate your skill, extracting name and description from the manifest frontmatter. You can either upload a zip bundle or upload multiple files in your request. **Option A: Upload files (multipart)** ```bash curl --fail-with-body",
+      "extractCut": true
+    },
+    {
+      "id": "s009-mounting-skills-into-execution",
+      "number": null,
+      "title": "Mounting skills into execution",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 76,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "local shell",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": true
+        },
+        {
+          "term": "hosted",
+          "heading": false
+        }
+      ],
+      "extract": "## Mounting skills into execution To use skills in the Responses API, attach them to the shell tool with `tools[].environment.skills`. ### How to reference skills - **Hosted shell** (`environment.type=\"container_auto\"`): use `skill_reference` with a `skill_id` and optional `version`, or an `inline` base64 zip bundle. - **Local shell** (`environment.type=\"local\"`): provide `name`, `description`, and `path` for files",
+      "extractCut": true
+    },
+    {
+      "id": "s010-runnable-example-csv-insights-skill-skill",
+      "number": null,
+      "title": "Runnable example: `csv_insights_skill` Skill",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 996,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "hosted shell",
+          "heading": false
+        },
+        {
+          "term": "local shell",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "live api",
+          "heading": false
+        },
+        {
+          "term": "api request",
+          "heading": false
+        },
+        {
+          "term": "runnable",
+          "heading": true
+        },
+        {
+          "term": "directory containing",
+          "heading": false
+        },
+        {
+          "term": "save",
+          "heading": false
+        }
+      ],
+      "extract": "## Runnable example: `csv_insights_skill` Skill This walkthrough creates files on disk and then runs Python snippets; it is not a notebook to execute with **Run All**. Save the script below as `csv_insights_skill/run.py`. Prerequisites: Python 3.10 or later, `curl`, `zip`, and an `OPENAI_API_KEY` environment variable for a project with access to `gpt-6-astra` and hosted shell. Install the current Python SDK with",
+      "extractCut": true
+    },
+    {
+      "id": "s011-operational-best-practices",
+      "number": null,
+      "title": "Operational best practices",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 480,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "network access",
+          "heading": false
+        },
+        {
+          "term": "skill version",
+          "heading": false
+        },
+        {
+          "term": "add explicit",
+          "heading": false
+        },
+        {
+          "term": "expected outputs",
+          "heading": false
+        },
+        {
+          "term": "pin",
+          "heading": false
+        },
+        {
+          "term": "uploads",
+          "heading": false
+        },
+        {
+          "term": "routing",
+          "heading": false
+        },
+        {
+          "term": "operational",
+          "heading": true
+        }
+      ],
+      "extract": "## Operational best practices **1) Keep skills “discoverable”** * Put a **clear** `name` and `description` in frontmatter. * In `SKILL.md`, include: when to use, how to run, expected outputs, gotchas. - Add explicit routing guidance: “Use when…” vs. “Don’t use when…”, and a few key edge cases, all in `SKILL.md`. - Include negative examples (when the skill should *not* be triggered) alongside positive examples to",
+      "extractCut": true
+    },
+    {
+      "id": "s012-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 143,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "conclusion",
+          "heading": true
+        },
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "prompts",
+          "heading": false
+        },
+        {
+          "term": "pin",
+          "heading": false
+        },
+        {
+          "term": "durable",
+          "heading": false
+        }
+      ],
+      "extract": "## Conclusion Skills are the missing “middle layer” between prompts and tools: **prompts** define always-on behavior, **tools** provide atomic capabilities and side effects, and **skills** package repeatable procedures (instructions + scripts + assets) that the model can **mount and execute only when needed.** **Use skills to keep your system prompts lean and your workflows durable.** Start small—bundle one stable",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "upload zip",
+      "heading": false
+    },
+    {
+      "term": "hosted shell",
+      "heading": false
+    },
+    {
+      "term": "local shell",
+      "heading": false
+    },
+    {
+      "term": "shell tool",
+      "heading": false
+    },
+    {
+      "term": "uploaded skill",
+      "heading": false
+    },
+    {
+      "term": "upload multiple",
+      "heading": false
+    },
+    {
+      "term": "skill version",
+      "heading": false
+    },
+    {
+      "term": "zip bundle",
+      "heading": false
+    },
+    {
+      "term": "live api",
+      "heading": false
+    },
+    {
+      "term": "api call",
+      "heading": false
+    },
+    {
+      "term": "system prompts",
+      "heading": true
+    },
+    {
+      "term": "scripts assets",
+      "heading": false
+    }
+  ]
+}

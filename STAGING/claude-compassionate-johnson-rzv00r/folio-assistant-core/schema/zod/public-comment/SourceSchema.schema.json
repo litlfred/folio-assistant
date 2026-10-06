@@ -1,0 +1,66 @@
+{
+  "$ref": "#/definitions/Source",
+  "definitions": {
+    "Source": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "comment-matrix",
+            "online-form",
+            "narrative",
+            "github",
+            "manual"
+          ]
+        },
+        "batch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "sheet": {
+          "type": "string"
+        },
+        "row": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "entry": {
+          "type": "string"
+        },
+        "series": {
+          "type": "string"
+        },
+        "segment": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "receivedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "channel",
+        "batch"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-compassionate-johnson-rzv00r/folio-assistant-core/schema/zod/public-comment/SourceSchema.schema.json",
+  "title": "SourceSchema",
+  "description": "Generated from `SourceSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/compassionate-johnson-rzv00r",
+    "sha": "bb5a93e77d2a6ab8ba34cae67a043140f0d99051",
+    "pr": "2303/merge",
+    "run": "37539994064"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IG Publication Output",
+  "description": "Output schema for FHIR IG publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "publishedUrl"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    },
+    "releaseBranch": {
+      "type": "string"
+    },
+    "publicationRequestPath": {
+      "type": "string"
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
+  "staging": {
+    "branch": "claude/compassionate-johnson-rzv00r",
+    "sha": "bb5a93e77d2a6ab8ba34cae67a043140f0d99051",
+    "pr": "2303/merge",
+    "run": "37539994064"
+  }
+}
