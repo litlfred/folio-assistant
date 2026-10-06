@@ -1,27 +1,26 @@
 /**
  * The harness data a FOLIO's own site serves, scoped to that folio (#2263).
  *
- * Owner, 2026-10-06, on https://litlfred.github.io/smart-trust/:
- *
- * > the beans and todos badges seems to be countts from folio-assistant and
- * > not litlfred/smart-trust as expected. links to beans and todos dont work.
- * > why not? fix process and skills.
+ * The owner's words, and the site they were said about, are on issue #2263 and
+ * in the `harness-tiles` skill: an IG repository's own site showed the
+ * PLATFORM's bean and todo counts, and its bean and todo links 404'd. This
+ * module names no instance -- the platform does not know its dependents.
  *
  * ## What went wrong
  *
- * An IG repository's own site (`fhir-harness/templates/ig-repo-site/
- * folio-site.yml`) is built inside the platform's chrome: `compose-docs.ts
+ * An IG repository's own site (the IG-repository site template) is built
+ * inside the platform's chrome: `compose-docs.ts
  * --shell` copies the platform's `_data/` and `assets/`. Two of those are not
  * chrome at all — they are PROJECTIONS OF THE PLATFORM'S OWN GRAPHS:
  *
  * - `_data/harness.json` — the tiles (with the platform's baked counts: beans
  *   916, todos 3), the navbar icon row, the rail's folders and scopes, the
  *   harness rows, the site's title. Every path in it is ROOT-relative to the
- *   PLATFORM's site (`/beans/`), so on `/smart-trust/` it resolves to
- *   `/smart-trust/beans/`, which does not exist.
+ *   PLATFORM's site (`/beans/`), so on `/<folio>/` it resolves to
+ *   `/<folio>/beans/`, which does not exist.
  * - `assets/<graph>/count.json` and `index.json` — the platform's bean and
  *   todo indexes, which the icon row's badges fetch from the page's OWN site.
- *   So smart-trust's rail showed folio-assistant's 537 open beans.
+ *   So the folio's rail showed the platform's 537 open beans.
  *
  * `_includes/generated/` was already blanked in a shell for the same reason
  * (#2235 F1); these two were the same kind of thing and were not.
@@ -103,7 +102,7 @@ export function isOwnPath(p: string, scope: Pick<ForeignScope, "instance">): boo
  * instance? A STATE graph is a fact about one instance's work; a kind this
  * module cannot classify is treated the same way, the conservative direction.
  * Ownership is decided by WHERE the link points (`isOwnPath`), never by the
- * folio declaring a kind of the same name: smart-trust declares a `qa`
+ * folio declaring a kind of the same name: an IG folio declares a `qa`
  * directory, and the platform's QA tile is still the platform's QA.
  */
 export function isStateLike(kinds: readonly string[] | undefined, scope: Pick<ForeignScope, "holdsOf">): boolean {
@@ -170,7 +169,7 @@ interface NavbarRow extends Json {
  * The navbar icon row and its folders, scoped. An icon id names its kind
  * (`todos`, `beans`, `fsh-guts`); a folder carries `kind`. A slot with no
  * link keeps its place and SAYS why (`harness-tiles` §"An inert row SAYS
- * why"), so "where are smart-trust's beans" is answered rather than blank.
+ * why"), so "where are this folio's beans" is answered rather than blank.
  */
 export function scopeNavbarRow(row: unknown, scope: ForeignScope): unknown {
   if (!row || typeof row !== "object") return row;
@@ -197,7 +196,7 @@ export function scopeNavbarRow(row: unknown, scope: ForeignScope): unknown {
  * The rail scopes, scoped: only the folio's own, at this site's root. Every
  * other instance's scope names a route that does not exist here, and the
  * platform's root scope would have listed the platform's folders on every
- * folio page ("FOLDERS 29" on smart-trust).
+ * folio page ("FOLDERS 29" on an IG folio's pages).
  */
 export function scopeRailScopes(scopes: unknown, scope: ForeignScope): unknown[] {
   if (!Array.isArray(scopes) || !scope.instance) return [];
