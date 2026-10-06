@@ -405,6 +405,7 @@
           "directories": [
             "cat-harness/docs",
             "docs",
+            "folio-assistant-core/docs",
             "smart-base/docs",
             "smart-base/findings",
             "smart-immunizations/docs",
@@ -527,7 +528,7 @@
         },
         {
           "kind": "fsh-guts",
-          "state": "undetermined",
+          "state": "empty",
           "directories": [
             "fsh-guts"
           ],
@@ -1451,8 +1452,15 @@
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "fsh-guts",
+          "directories": [
+            "fsh-guts"
+          ]
+        }
+      ]
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
@@ -1526,5 +1534,5 @@
       "entries": []
     }
   },
-  "total": 80
+  "total": 81
 }

@@ -1,6 +1,8 @@
 {
   "_comment": "folio-assist-core — THE CONTENT LAYER, in folio-assistant-core/ per the owner (2026-09-20: \"use folio-assistant-core/\") — the DIRECTORY and the declared NAME are BOTH spelled out in full. They were briefly different -- directory `folio-assistant-core`, name `folio-assist-core` -- and this comment went on asserting the short name after the `name` field beside it had already been changed, so the file contradicted itself in adjacent lines. Corrected 2026-09-20. WHAT IS STILL SHORT, DELIBERATELY, IS THE LANDING CARD ID below: a card id is a PUBLISHED IDENTIFIER and does not move with a directory. `landing-sticky.test.ts` says so and bean `8xtj` records the cost of assuming the two are one string -- a session sweeping every spelling at once renamed the card by accident and had to put it back. Main created a folio-assistant-core/ stub the same day; the two were one instance under two paths, and instanceRoots is keyed on the declared name, so the stub and the populated one collided on one key and the stub won. Consolidated here, declared as a real instance on the owner's ruling of 2026-09-20 (\"Create f-a-core/ as a real instance now\"). It declared NO directories when it was created, deliberately, because the modules it would own were still interleaved under cat-harness/ and declaring a directory that is not there is the dh4f defect. They are NOT interleaved any more: bean frs5's branch wrote `schemas/` (dublin-core, catalogue, materialization, library-ref) and `folios/`, and they moved in here rather than staying under a SECOND directory declaring this same name. Two instances with one declared name is not a layout question: `instanceRoots` is keyed on the declared name, so the stub and the populated one were one key and the stub won. The original note read: the modules it will own are still interleaved with the harness's under cat-harness/, and declaring a directory that is not there is the dh4f defect — every consumer then scans nothing and reports a clean run over it. An instance that declares only what it has is honest; one that declares its target layout is a lie a gate cannot catch. scripts/repo-partition.ts is the machine-readable statement of what will move here.",
   "name": "folio-assistant-core",
+  "_title_comment": "The HUMAN display name for the LHS navbar's harness tabs (bean t3n8). Owner, 2026-10-05, picking the label when this instance was instantiated: \"Folio Assistant Core\". `name` stays the machine identifier.",
+  "title": "Folio Assistant Core",
   "repository": "litlfred/folio-assistant-core",
   "livesAt": { "repository": "litlfred/folio-assistant", "path": "folio-assistant-core" },
   "version": "0.1.0",
@@ -83,6 +85,19 @@
     }
   ],
   "directories": [
+    {
+      "id": "folio-assistant-core-docs",
+      "path": "docs/",
+      "instanceRoot": true,
+      "description": "This instance's own reader-facing pages, and the page `/folio-assistant-core/` serves. Added 2026-10-05 with `folio-assistant-core.config.json` (issue #2196, bean c5fm), when the owner asked for the instance to be staged and instantiated so the navbar's Harnesses list shows it. Without a docs directory the harness tile can only open this instance's section of the landing (`/#harness-folio-assistant-core`), and `harness-tiles.ts` reports that as a finding. Authored markdown, composed THROUGH just-the-docs like smart-base's and smart-trust's pages, so it gets the sidebar, search and layout. Declared HERE, in this instance's own file, rather than in the root's or cat-harness's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a composition layer, so declaring it there would overlay this `index.md` onto the site's own.",
+      "graphTypologies": [
+        "docs"
+      ],
+      "composed": true,
+      "tile": {
+        "icon": "docs"
+      }
+    },
     {
       "id": "folio-assistant-core-translations",
       "path": "translations/",
