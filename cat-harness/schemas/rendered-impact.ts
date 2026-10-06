@@ -150,6 +150,32 @@ export function reviewList(impact: RenderedImpact): RenderedFile[] {
 const GENERIC_INDEX = [/(^|\/)assets\/js\/search-data\.json$/, /(^|\/)sitemap\.xml$/, /(^|\/)feed\.xml$/, /(^|\/)robots\.txt$/, /\.map$/];
 export const isGenericIndex = (path: string): boolean => GENERIC_INDEX.some((re) => re.test(path));
 
+/**
+ * Build stamps: bytes a build writes that change on EVERY build and say
+ * nothing about content. Two builds of one commit differ in them, so a diff
+ * that keeps them reports every page as changed, and the prediction check then
+ * calls every page "missed" (measured on this repository's docs site,
+ * 2026-10-06: 826 of its files differed between two builds of one commit,
+ * every one by a `?v=<build time>` cache-buster). They are blanked before
+ * hashing, in text files only.
+ */
+export const BUILD_STAMPS: ReadonlyArray<readonly [RegExp, string]> = [
+  [/\?v=\d{9,}/g, "?v="],
+  [/"generatedAt":\s*"[^"]*"/g, '"generatedAt":""'],
+  // Whether the checkout had uncommitted changes when it was built: a fact
+  // about the machine, never about a page (a local build of an edit is dirty).
+  [/"sourceTreeDirty":\s*(?:true|false)/g, '"sourceTreeDirty":null'],
+];
+const TEXTUAL = /\.(html?|css|js|json|jsonld|xml|txt|svg|md)$/i;
+
+function contentHash(path: string): string {
+  const bytes = readFileSync(path);
+  if (!TEXTUAL.test(path)) return createHash("sha256").update(bytes).digest("hex");
+  let text = bytes.toString("utf-8");
+  for (const [re, blank] of BUILD_STAMPS) text = text.replace(re, blank);
+  return createHash("sha256").update(text).digest("hex");
+}
+
 function walk(root: string): Map<string, string> {
   const out = new Map<string, string>();
   if (!existsSync(root)) return out;
@@ -159,7 +185,7 @@ function walk(root: string): Map<string, string> {
     for (const name of readdirSync(dir)) {
       const p = join(dir, name);
       if (statSync(p).isDirectory()) stack.push(p);
-      else out.set(relative(root, p), createHash("sha256").update(readFileSync(p)).digest("hex"));
+      else out.set(relative(root, p), contentHash(p));
     }
   }
   return out;

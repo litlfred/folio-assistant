@@ -118,4 +118,14 @@
        class="fa-site-mark" width="32" height="32" />
   {%- endif -%}
 {%- endif -%}
-<span class="fa-site-title">{{ h.title | default: site.title }}</span>
+{%- comment -%}
+  The title's OWN language, which the row's direction follows (docs-ui.css,
+  "THE TITLE ROW TAKES ITS TITLE'S DIRECTION"). The harness title is one value
+  on every locale, written in the translation index's source locale, so it
+  is marked as that: left to right on an Arabic page too. Only a title that
+  is itself in a right-to-left language turns the row.
+{%- endcomment -%}
+{%- assign title_lang = site.data.translations.sourceLocale | default: "en" -%}
+{%- assign title_dir = "ltr" -%}
+{%- if title_lang == "ar" or title_lang == "he" or title_lang == "fa" or title_lang == "ur" -%}{%- assign title_dir = "rtl" -%}{%- endif -%}
+<span class="fa-site-title" lang="{{ title_lang }}" dir="{{ title_dir }}">{{ h.title | default: site.title }}</span>

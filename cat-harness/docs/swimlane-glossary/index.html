@@ -1182,6 +1182,17 @@ button.fa-nav-icon {
     else bar.appendChild(host);
 
     if (typeof hooks.after === "function") hooks.after(host, bar);
+    // ENGLISH ON EACH ICON, NOT ON THE ROW — bean `giiw`. Every name, count
+    // phrase and `data-fa-tip` tooltip here is English on every locale, so
+    // on an Arabic page each icon is marked English, which is what lays its
+    // tooltip out left-to-right and tells a screen reader which voice to use.
+    // The ROW keeps the page's direction: the icons' order beside the
+    // mirrored sidebar is layout, and it mirrors with it. After `hooks.after`,
+    // so the light/dark switch it appends is marked too.
+    Array.prototype.forEach.call(host.children, function (icon) {
+      icon.setAttribute("lang", "en");
+      icon.setAttribute("dir", "ltr");
+    });
     holdStripForTips(bar);
     return host;
   }

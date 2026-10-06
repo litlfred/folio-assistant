@@ -24,6 +24,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`portable-path.test.ts`](portable-path.test.ts) | a file |  |
 | [`qa-attestations-criteria.test.ts`](qa-attestations-criteria.test.ts) | a file |  |
 | [`reference-direction-declaration.test.ts`](reference-direction-declaration.test.ts) | a file |  |
+| [`render-exemption.test.ts`](render-exemption.test.ts) | a file |  |
 | [`schema-graph.test.ts`](schema-graph.test.ts) | a file |  |
 | [`skill-overlay.test.ts`](skill-overlay.test.ts) | a file |  |
 | [`spdx-license-expression.test.ts`](spdx-license-expression.test.ts) | a file |  |

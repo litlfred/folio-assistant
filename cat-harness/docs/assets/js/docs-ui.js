@@ -1911,6 +1911,9 @@
       "aria-expanded": "false",
     });
     toggle.innerHTML = TILES_GLYPH; // static markup above, no input involved
+    // The header's three buttons sit in a ROW whose order is the page's; each
+    // one's English name and tooltip is marked on the button (bean `giiw`).
+    chromeText(toggle);
 
     /* ── Two mini-icons, between the title and the launcher ──────────────
      *
@@ -1943,13 +1946,13 @@
      * rebuilt. The mini-button is a shortcut INTO the panel, not a second
      * panel.
      */
-    host.appendChild(buildSchemeMini());
+    host.appendChild(chromeText(buildSchemeMini()));
 
-    var langMini = el("button", {
+    var langMini = chromeText(el("button", {
       type: "button",
       class: "fa-qr-toggle fa-lang-mini",
       "aria-label": "Language",
-    });
+    }));
     langMini.innerHTML = GLOBE_GLYPH;
     langMini.addEventListener("click", function () {
       // Open the launcher first: `showView` hides the grid and renders into
@@ -1963,13 +1966,16 @@
 
     host.appendChild(toggle);
 
-    var panel = el("div", {
+    // ENGLISH AT THE ROOT (bean `giiw`): every caption, view and setting in
+    // this panel is authored here in English and none is translated, so on an
+    // Arabic page it is an English panel, not English laid out right-to-left.
+    var panel = chromeText(el("div", {
       class: "fa-tiles",
       "data-open": "false",
       role: "region",
       "aria-label": "Actions",
       tabindex: "-1",
-    });
+    }));
     var grid = el("div", { class: "fa-tiles-grid", role: "group", "aria-label": "Actions" });
     var view = el("div", { class: "fa-tiles-view", hidden: "hidden" });
     panel.appendChild(grid);
@@ -2099,7 +2105,19 @@
         searchDrop.appendChild(noticeEl);
       }
 
-      searchHome = el("div", { class: "fa-search-home", "data-open": "false" });
+      /* ENGLISH CHROME, READER'S TEXT (bean `giiw`). The magnifier, its
+       * tooltip, the theme's placeholder, the notice and "Search everywhere"
+       * are English on every locale, so the search is marked English at its
+       * root — which also keeps the magnifier on the RIGHT of the field on an
+       * Arabic page, as the owner asked of it (#2201). The two things in it
+       * that are NOT ours are given `dir="auto"`: what the reader types, and
+       * the results, whose titles are pages in whatever language they are.
+       * The search sits in the band's end slot either way; the BAND keeps the
+       * page's direction. */
+      searchHome = chromeText(el("div", { class: "fa-search-home", "data-open": "false" }));
+      Array.prototype.forEach.call(
+        adopted.querySelectorAll("input, #search-results, .search-results"),
+        function (n) { n.setAttribute("dir", "auto"); });
 
       /* The magnifier: the one control, in both states. Its NAME stays
        * "Search" — the state is `aria-expanded`, which is what a screen
@@ -5717,11 +5735,14 @@
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
 
-    var layer = el("div", {
+    // ENGLISH AT THE ROOT (bean `giiw`). Everything on the glass — its sheet,
+    // panels, tile strip, zoom and move bars, and the todos and library items
+    // pulled onto it — is authored in English and translated by no locale.
+    var layer = chromeText(el("div", {
       class: "fa-sticky-layer",
       "aria-live": "polite",
       "data-fa-glass": "closed",
-    });
+    }));
     document.body.appendChild(layer);
     glassLayer = layer;
     var prefs = glassPrefs();
@@ -5749,13 +5770,16 @@
     // ring and the keyboard path are the browser's, and this instance's
     // declared interaction profile is low-dexterity, so the way in is never a
     // pointer-only gesture.
-    var handle = el("button", {
+    // "Folio ▾" is English too, and a sibling of the layer rather than inside
+    // it, so it is marked on its own: on an Arabic page the mark and the word
+    // swapped sides, unlike on every other locale (`giiw`).
+    var handle = chromeText(el("button", {
       type: "button",
       class: "fa-glass-handle",
       "aria-expanded": "false",
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
-    });
+    }));
     // A MARK and a LABEL, not one string, so the stylesheet can size the ▾
     // apart from the word. The accessible name is the aria-label.
     handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
@@ -8862,7 +8886,11 @@
     if (!landing) boardAttrs.hidden = "hidden";
     // A HOME PANEL (bean `pv6g`): its slots are where a pinned todo returns.
     boardAttrs["data-fa-home-panel"] = "todos";
-    var board = el("section", boardAttrs);
+    // English at the root (bean `giiw`): todo summaries, their windows and
+    // the board's controls are English on every locale. Inside the landing
+    // `.fa-sticky-panel` the panel itself already says so (`landing.html`);
+    // the overlay board on any other page needs it said here.
+    var board = chromeText(el("section", boardAttrs));
     var head = el("div", { class: "fa-sticky-board-head" });
 
     /* THE HEADING SURVIVES BARE, VISUALLY HIDDEN.
@@ -9581,7 +9609,8 @@
     var floor = document.getElementById("fa-todo-listing");
     if (!floor || floor.dataset.faCollapsed === "1") return;
     floor.dataset.faCollapsed = "1";
-    var details = el("details", { class: "fa-todo-listing-details" });
+    // English, as the listing it folds is (`todo-listing.ts`; bean `giiw`).
+    var details = chromeText(el("details", { class: "fa-todo-listing-details" }));
     var summary = el(
       "summary",
       { class: "fa-todo-listing-toggle" },
@@ -10671,6 +10700,9 @@
       var tqBadge = el("button", {
         type: "button",
         class: "fa-qa-badge fa-qa-pending fa-qa-fam-translation",
+        // The generated badge's two attributes too (`qaBadgePlaceholder`).
+        lang: CHROME_LANG,
+        dir: "ltr",
         "data-qa-family": "translation",
         "data-qa-key": tq.key || "page.translation",
         "data-qa-label": "Translation QA",
@@ -10990,13 +11022,16 @@
   }
 
   function qaBuildPanel(doc, panelId, badge) {
-    var panel = el("div", {
+    // English at the root (bean `giiw`): the criteria, verdicts and counts are
+    // the QA corpus's English, and the subject is the SOURCE page's title,
+    // which is what the projection was computed over.
+    var panel = chromeText(el("div", {
       class: "fa-qa-panel fa-qa-panel-" + (doc.state || "unswept"),
       id: panelId,
       role: "region",
       "aria-label": "QA detail for " + (doc.subject || "this node"),
       tabindex: "-1"
-    });
+    }));
 
     var head = el("div", { class: "fa-qa-panel-head" });
     head.appendChild(el("strong", null, (badge.getAttribute("aria-label") || "").split(":")[0]));
@@ -11090,7 +11125,7 @@
   }
 
   function qaFail(badge, panelId, src, msg) {
-    var panel = el("div", { class: "fa-qa-panel fa-qa-panel-error", id: panelId, role: "region" });
+    var panel = chromeText(el("div", { class: "fa-qa-panel fa-qa-panel-error", id: panelId, role: "region" }));
     // Loud, and specific about which file could not be read: a panel that opens
     // empty is indistinguishable from a subject with nothing to report.
     panel.appendChild(el("strong", null, "Could not load the QA detail"));
@@ -11278,7 +11313,9 @@
       : label + ": not swept — " + (noun === "page"
         ? "no block on this page carries a translation verdict"
         : "no sidecar for this " + noun);
-    var span = document.createElement("span");
+    // A NEW element, so the button's `lang`/`dir` do not come with it unless
+    // carried: an inert badge is English chrome too (bean `giiw`).
+    var span = chromeText(document.createElement("span"));
     span.className = "fa-qa-badge fa-qa-unswept" +
       (kind === "unavailable" ? " fa-qa-unavailable" : "") +
       (family ? " fa-qa-fam-" + family : "");
@@ -11319,6 +11356,13 @@
    */
   function paintQaBadges(root) {
     var scope = root || document;
+    // English chrome (bean `giiw`). The generator writes `lang`/`dir` into the
+    // markup now; a TRANSLATED copy of a generated page (`process/ar/…`) keeps
+    // the markup it was translated from — which has neither, and on the
+    // committed Arabic copies is an older generator's inert `<span>` with no
+    // index to paint from — and the generator does not rewrite it. So every
+    // badge in scope is marked here, painted or not.
+    Array.prototype.forEach.call(scope.querySelectorAll(".fa-qa-badge"), chromeText);
     var badges = scope.querySelectorAll(".fa-qa-badge[data-qa-index]");
     if (badges.length === 0) return;
 
@@ -11423,7 +11467,12 @@
 
     var box = document.createElement("details");
     box.className = "fa-doc-index";
-    var sum = document.createElement("summary");
+    // ENGLISH HEADING, PAGE'S ROWS (bean `giiw`). "On this page" and "N
+    // sub-sections" are this script's English; the rows are the page's own
+    // headings, which on a translated page are in its language. So the two
+    // summaries are marked, never the box: marking the box would call an
+    // Arabic heading English and lay it out left-to-right.
+    var sum = chromeText(document.createElement("summary"));
     sum.className = "fa-doc-index__heading";
     // textContent throughout: a heading is page content, and this script's own
     // header records that nothing here interpolates into markup.
@@ -11460,7 +11509,7 @@
         if (!section.fold) {
           section.fold = document.createElement("details");
           section.fold.className = "fa-doc-index__fold";
-          section.sum = document.createElement("summary");
+          section.sum = chromeText(document.createElement("summary"));
           section.sum.className = "fa-doc-index__fold-heading";
           section.ul = document.createElement("ul");
           section.ul.className = "fa-doc-index__list fa-doc-index__list--sub";
@@ -11665,7 +11714,9 @@
       // records against its own `open: true`. Here the block sits ABOVE the
       // theme's `.site-nav`, so folding it uncovers the navigation rather
       // than emptying the column. Same rule, different content below it.
-      var box = el("details", { class: "fa-nav-folders" });
+      // English at the root (bean `giiw`): "Folders" and every row are the
+      // declarations' labels, which no locale translates.
+      var box = chromeText(el("details", { class: "fa-nav-folders" }));
       if (scope) box.setAttribute("data-fa-scope", scope.name);
       var sum = el("summary", { class: "fa-nav-folders__heading" }, "Folders");
       var count = el("span", { class: "fa-nav-folders__count" }, String(graphs.length));
@@ -11923,12 +11974,14 @@
     var top = scoped
       ? nav.querySelectorAll(".nav-list-item:not([data-fa-out-of-scope])").length
       : nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
-    var btn = el("button", {
+    // The button is English; the list it folds (`.site-nav`) is the page
+    // titles, translated per locale, so only the button is marked (`giiw`).
+    var btn = chromeText(el("button", {
       type: "button",
       class: "fa-nav-pages",
       "aria-controls": nav.id,
       "aria-expanded": "true",
-    }, "Pages");
+    }, "Pages"));
     btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
     var scope = scoped ? readRailScope() : null;
     if (scope) btn.title = "Pages of " + (scope.title || scope.name);
@@ -12124,6 +12177,10 @@
 
     if (harnesses) {
       harnesses.classList.add("fa-nav-harness-group");
+      // Server-rendered by `navbar.ts` in English — harness names, graph
+      // labels and their descriptions — and marked here, where it is moved
+      // into the scroller, rather than in the generated bundle (`giiw`).
+      chromeText(harnesses);
       middle.appendChild(harnesses);
       mirrorExpanded(harnesses);
       toTopOnOpen(harnesses);
