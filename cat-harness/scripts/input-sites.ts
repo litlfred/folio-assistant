@@ -472,8 +472,24 @@ export class SiteMemo {
     this.memo.set(abs, entry);
     return entry;
   }
+  private globs = new Map<string, string[]>();
+  /** A glob's matches under `root`, memoised for the run: a `**` glob walks the whole tree. */
+  glob(root: string, g: string): string[] {
+    const key = `${root}\0${g}`;
+    let hit = this.globs.get(key);
+    if (hit === undefined) {
+      hit = [...new Bun.Glob(g).scanSync({ cwd: root, onlyFiles: true })].filter(
+        // Tests are never a load target (bun runs them, a check does not), and
+        // packages are covered by `bun.lock`.
+        (f) => !/(^|\/)node_modules\//.test(f) && !/\.test\.[jt]sx?$/.test(f),
+      );
+      this.globs.set(key, hit);
+    }
+    return hit;
+  }
   clear(): void {
     this.memo.clear();
+    this.globs.clear();
   }
 }
 
@@ -520,11 +536,7 @@ export function auditClosure(
     // test's job (`input-sites.test.ts`), since the data is in the tree a
     // {tracked} fingerprint hashes anyway. Tests are never a target: bun runs
     // them, a check does not.
-    for (const g of globs) {
-      for (const f of new Bun.Glob(g).scanSync({ cwd: root, onlyFiles: true })) {
-        if (!/(^|\/)node_modules\//.test(f) && !/\.test\.[jt]sx?$/.test(f)) stack.push({ file: join(root, f), entry });
-      }
-    }
+    for (const g of globs) for (const f of memo.glob(root, g)) stack.push({ file: join(root, f), entry });
   };
   while (stack.length > 0) {
     const { file, entry } = stack.pop()!;

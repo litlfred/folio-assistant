@@ -10,7 +10,7 @@
  * and `scripts` annotations in this repository make to the data they depend on.
  */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 
@@ -322,47 +322,51 @@ describe("annotations hold to the data that chooses their targets", () => {
   const repo = join(import.meta.dir, "..", "..", "..");
   const globMatch = (glob: string, rel: string) => new Bun.Glob(glob).match(rel);
 
-  test("every qa-checker and pipeline-plugin ref lies under harness-config's `imports` globs", () => {
-    const globs = ["*/content/pipeline/plugin-slots.ts", "*/content/pipeline/qa-checkers-*.ts"];
-    const refs: string[] = [];
-    for (const graph of ["qa-checkers", "pipeline-plugins"]) {
-      for (const inst of readdirSync(repo)) {
-        const dir = join(repo, inst, graph);
-        if (!existsSync(dir)) continue;
-        for (const f of readdirSync(dir).filter((n) => n.endsWith(".json"))) {
-          const node = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { check?: string; implementation?: string };
-          const ref = node.check ?? node.implementation;
-          if (ref !== undefined) refs.push(`${inst}/${ref.split("#")[0]}`);
-        }
-      }
-    }
-    expect(refs.length).toBeGreaterThan(0);
-    for (const r of refs) expect(globs.some((g) => globMatch(g, r)), `${r} is outside ${globs.join(", ")}`).toBe(true);
-    const site = scanSource("h.ts", readFileSync(join(repo, "cat-harness/schemas/harness-config.ts"), "utf-8")).find((s) =>
-      Array.isArray(s.verdicts) && s.verdicts.some((v) => v.kind === "imports" && v.globs.includes(globs[0]!)),
+  // Over every file on disk, ignored ones included: a mounted checkout under
+  // an ignored directory can hold an instance the loaders find. None found is
+  // a pass — standalone, a computed load with no data loads nothing.
+  const onDisk = (glob: string) =>
+    [...new Bun.Glob(glob).scanSync({ cwd: repo, onlyFiles: true, dot: false })].filter((f) => !/(^|\/)node_modules\//.test(f));
+  const annotated = (file: string, glob: string) =>
+    scanSource(file, readFileSync(join(repo, file), "utf-8")).some(
+      (s) => Array.isArray(s.verdicts) && s.verdicts.some((v) => v.kind === "imports" && v.globs.includes(glob)),
     );
-    expect(site, "harness-config's tableEntry annotation names these globs").toBeDefined();
+
+  test("every qa-checker and pipeline-plugin ref lies under harness-config's `imports` globs", () => {
+    const globs = ["**/content/pipeline/plugin-slots.ts", "**/content/pipeline/qa-checkers-*.ts"];
+    for (const node of onDisk("**/{qa-checkers,pipeline-plugins}/*.json")) {
+      const raw = JSON.parse(readFileSync(join(repo, node), "utf-8")) as { check?: string; implementation?: string };
+      const ref = raw.check ?? raw.implementation;
+      if (typeof ref !== "string" || !ref.includes("#")) continue;
+      // The ref is relative to the instance root, which holds the graph directory.
+      const target = relative(repo, join(repo, node, "..", "..", ref.split("#")[0]!));
+      expect(globs.some((g) => globMatch(g, target)), `${node}: ${target} is outside ${globs.join(", ")}`).toBe(true);
+    }
+    for (const g of globs) expect(annotated("cat-harness/schemas/harness-config.ts", g), g).toBe(true);
   });
 
-  test("no instance declares a `contributes` module outside `*/contributes.ts`", () => {
-    for (const inst of readdirSync(repo)) {
-      for (const name of [`${inst}.config.json`, `${inst}.json`]) {
-        const f = join(repo, inst, name);
-        if (!existsSync(f)) continue;
-        const spec = (JSON.parse(readFileSync(f, "utf-8")) as { contributes?: string }).contributes;
-        if (spec) expect(globMatch("*/contributes.ts", relative(repo, join(repo, inst, spec)))).toBe(true);
+  test("no instance declares a `contributes` module outside `**/contributes.ts`", () => {
+    for (const decl of onDisk("**/*.{config.json,json}")) {
+      if (decl.split("/").length > 4 || decl.startsWith("cat-harness/docs/") || decl === "package.json") continue;
+      let spec: unknown;
+      try {
+        spec = (JSON.parse(readFileSync(join(repo, decl), "utf-8")) as { contributes?: unknown }).contributes;
+      } catch {
+        continue;
+      }
+      if (typeof spec === "string" && spec !== "") {
+        expect(globMatch("**/contributes.ts", relative(repo, join(repo, decl, "..", spec))), `${decl}: contributes ${spec}`).toBe(true);
       }
     }
+    expect(annotated("cat-harness/schemas/harness-config.ts", "**/contributes.ts")).toBe(true);
   });
 
   test("every instance themes module lies under theme-by-ref's `imports` glob", () => {
-    const found = readdirSync(repo).filter((inst) => existsSync(join(repo, inst, "themes", "themes.ts")));
-    expect(found.length).toBeGreaterThan(0);
-    const all = new Bun.Glob("**/themes.ts").scanSync({ cwd: repo, onlyFiles: true });
-    for (const f of all) {
-      if (/node_modules|\/tests?\//.test(f) || f.startsWith("cat-harness/schemas/")) continue;
-      expect(globMatch("*/themes/themes.ts", f), `${f} would be loaded by theme-by-ref but is outside its glob`).toBe(true);
+    for (const f of onDisk("**/themes.ts")) {
+      if (/\/tests?\//.test(f) || f === "cat-harness/schemas/themes.ts") continue;
+      expect(globMatch("**/themes/themes.ts", f), `${f} would be loaded by theme-by-ref but is outside its glob`).toBe(true);
     }
+    expect(annotated("cat-harness/schemas/theme-by-ref.ts", "**/themes/themes.ts")).toBe(true);
   });
 
   test("skill-register's `scripts` annotation names exactly the verify half of its STEPS", async () => {

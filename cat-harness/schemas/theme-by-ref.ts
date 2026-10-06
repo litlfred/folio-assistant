@@ -82,8 +82,8 @@ export function instanceThemes(repoRoot: string, instance: string): { ok: true; 
     // Synchronous on purpose: every consumer is a generator that resolves
     // themes inline while it builds a page, and Bun's `require` loads a `.ts`
     // module synchronously.
+    // input-site: imports **/themes/themes.ts #28454d5a — an instance's declared themes module; input-sites.test.ts holds every declared one to this glob
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    // input-site: imports */themes/themes.ts #28454d5a — an instance's declared themes module; input-sites.test.ts holds every declared one to this glob
     const mod = require(path) as Record<string, unknown>;
     const list = mod[INSTANCE_THEMES_EXPORT];
     if (Array.isArray(list)) {
