@@ -15,6 +15,8 @@ import {
   NO_WRITER,
   UNGATED_INPUTS,
   WRITER_OVERRIDES,
+  changedPathsOf,
+  commitHint,
   exitCodeFor,
   maxPassesFromArgv,
   REGEN_VERDICT_TAG,
@@ -696,5 +698,37 @@ describe("a caller holding only regen's exit CODE is told the truth (task #62)",
     const comment = readFileSync(join(import.meta.dir, "..", "merge-main-comment.ts"), "utf-8");
     expect(comment).toContain("REGEN_VERDICT_TAG");
     expect(REGEN_VERDICT_TAG).toBe("regen-verdict:");
+  });
+});
+
+describe("the post-merge gaps of 2026-10-05", () => {
+  test("navbar:assets is asked AFTER every viz writer that renders railed pages", () => {
+    const order = UNGATED_INPUTS.map((p) => p.writer);
+    const nav = order.indexOf("navbar:assets");
+    expect(nav, "navbar:assets is an ungated input").toBeGreaterThanOrEqual(0);
+    for (const viz of ["library:viz", "schema:viz", "uploads:viz"]) {
+      expect(order.indexOf(viz), `${viz} is asked before navbar:assets`).toBeLessThan(nav);
+    }
+  });
+
+  test("the commit hint names `git add -A`, warns off a pathspec-limited add, and lists the files", () => {
+    const hint = commitHint(["cat-harness/test/results/lsi/cat-harness/skills.lsi.json", "cat-harness/docs/x.html"]);
+    expect(hint).toContain("`git add -A`");
+    expect(hint).toContain("pathspec-limited");
+    expect(hint).toContain("Changed (2):");
+    expect(hint).toContain("cat-harness/test/results/lsi/cat-harness/skills.lsi.json");
+  });
+
+  test("a hint over many files is capped, and says how many it left out", () => {
+    const hint = commitHint(Array.from({ length: 30 }, (_, i) => `f${i}`));
+    expect(hint).toContain("… and 5 more");
+  });
+
+  test("an unreadable git status is said, never shown as nothing changed", () => {
+    expect(commitHint(undefined)).toContain("could not list");
+  });
+
+  test("porcelain paths: renames report the new path", () => {
+    expect(changedPathsOf(" M a/b.json\nR  old.md -> new.md\n?? c.txt\n")).toEqual(["a/b.json", "new.md", "c.txt"]);
   });
 });

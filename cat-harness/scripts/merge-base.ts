@@ -81,7 +81,9 @@ export interface Plan {
  * clone), runs the full set as before.
  */
 export function regenArgs(forkPoint: string | undefined): string[] {
-  return forkPoint === undefined ? [] : ["--changed", forkPoint];
+  // `--no-mount`: this command has just mounted against the MERGED
+  // declarations (below), and a second mount inside regen would only refetch.
+  return forkPoint === undefined ? ["--no-mount"] : ["--no-mount", "--changed", forkPoint];
 }
 
 /** Split conflicted paths into what a pattern resolves and what it refuses. */

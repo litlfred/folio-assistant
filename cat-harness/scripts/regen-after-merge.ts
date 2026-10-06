@@ -157,6 +157,7 @@
  *   1  at least one check is `unrepaired` or `no-writer` — not staleness
  *   2  the run did not reach a fixed point: COULD NOT DETERMINE, never clean
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -193,6 +194,44 @@ const dryRun = process.argv.includes("--dry-run");
 const fast = process.argv.includes("--fast");
 const all = !fast;
 const explain = process.argv.includes("--explain");
+/** `merge:main` mounts against the merged declarations itself and says so. */
+const mount = !process.argv.includes("--no-mount");
+
+/** Paths from `git status --porcelain` (a rename reports its new path). */
+export function changedPathsOf(porcelain: string): string[] {
+  return porcelain
+    .split("\n")
+    .filter((l) => l.length > 3)
+    .map((l) => l.slice(3).replace(/^.* -> /, ""));
+}
+
+/**
+ * What to say once something was regenerated — names the files and the ONE
+ * command that stages all of them.
+ *
+ * Several generated artefacts are tracked inside a directory `.gitignore`
+ * excludes (`cat-harness/test/results/` holds the LSI and the QA sidecars).
+ * `git add -A` stages a change to such a file; `git add -A <dir>` and
+ * `git add <file>` do not, the second refusing with "paths are ignored". The
+ * old hint said only "commit the regenerated artefacts", and a pathspec-limited
+ * add left the LSI behind — measured 2026-10-05 on #2231, where
+ * `skill:register:check` then failed in CI on a regenerated file that was
+ * sitting uncommitted in the checkout.
+ */
+export function commitHint(paths: string[] | undefined): string {
+  const lines = ["", "Review `git diff`, then stage EVERYTHING regen changed with `git add -A`."];
+  lines.push(
+    "Not `git add -A <dir>` or `git add <file>`: some artefacts are tracked under an ignored directory " +
+      "(cat-harness/test/results/), and a pathspec-limited add skips them.",
+  );
+  if (paths === undefined) lines.push("(could not list the changed files: `git status` failed)");
+  else if (paths.length > 0) {
+    const shown = paths.slice(0, 25);
+    lines.push(`Changed (${paths.length}):`, ...shown.map((p) => `  ${p}`));
+    if (paths.length > shown.length) lines.push(`  … and ${paths.length - shown.length} more`);
+  }
+  return lines.join("\n");
+}
 
 /** The npm script a gate command runs, when it runs exactly one. */
 export function scriptOf(command: string): string | undefined {
@@ -308,6 +347,15 @@ export const UNGATED_INPUTS: readonly { check: string; writer: string }[] = [
   // Measured 2026-10-03: merge-main refused #1804 and #1958 on exactly that,
   // and `bun run uploads:viz` alone turned the check green.
   { check: "uploads:viz:check", writer: "uploads:viz" },
+  // LAST, because it reads what the three above write. Every railed page names
+  // the content-addressed rail data it loads (`assets/navbar/rail-<hash>.js`);
+  // a viz writer that re-renders a page with a changed rail points it at a new
+  // file and leaves the old one named by nothing. `navbar:assets` sweeps those,
+  // but nothing paired it, so the orphan survived regen and failed
+  // `navbar-assets.test.ts` in CI instead — measured 2026-10-05 on #2237,
+  // #2231 and #2234, each after a merge whose regen ran `library:viz` and
+  // `schema:viz` and reported a clean fixed point.
+  { check: "navbar:assets:check", writer: "navbar:assets" },
 ];
 
 /**
@@ -946,6 +994,26 @@ if (import.meta.main) {
   const changedBase = changedBaseFromArgv(process.argv);
   const t0 = performance.now();
 
+  // The branch-kept graphs (bean 9c7h) are read by gates — `fsh-guts:viz:check`
+  // and `audit:coverage:strict` — and an UNMOUNTED one makes them fail in a way
+  // regen used to report as "a real defect, not staleness" and "the declared
+  // writer is not a writer". Neither was true; the checkout simply had not
+  // mounted `cat/cat-harness/fsh-guts`. `merge:main` already mounted before
+  // calling regen, which is why only a bare `bun run regen` met it (measured
+  // 2026-10-06 on #2245). Mount here too: idempotent, and the mounted paths are
+  // ignored. A mount that FAILS leaves every reading of those graphs
+  // undetermined, so the run stops rather than grade them.
+  if (mount && !dryRun) {
+    const m = spawnSync("bun", ["run", "state:mount"], { cwd: repoRoot, stdio: ["ignore", "ignore", "inherit"] });
+    if (m.status !== 0) {
+      console.error(
+        "regen-after-merge: `bun run state:mount` failed, so the checks that read branch-kept graphs " +
+          "cannot be answered. Fix the mount, or pass --no-mount to ask anyway.",
+      );
+      process.exit(2);
+    }
+  }
+
   const gates = loadGates(repoRoot, { all });
   const gated = repairableGates(gates, scripts);
   const extra = UNGATED_INPUTS.filter((p) => !gated.some((g) => g.check === p.check));
@@ -1142,6 +1210,7 @@ if (import.meta.main) {
   if (verdict.code !== 0) process.exit(verdict.code);
   // `--dry-run` changed nothing, so there is nothing to review or commit.
   if (!dryRun && by("regenerated").length > 0) {
-    console.log("\nReview `git diff`, then commit the regenerated artefacts with your merge.");
+    const st = spawnSync("git", ["-C", repoRoot, "status", "--porcelain", "--untracked-files=all"], { encoding: "utf-8" });
+    console.log(commitHint(st.status === 0 ? changedPathsOf(st.stdout) : undefined));
   }
 }

@@ -252,8 +252,8 @@ describe("the change set is MEASURED from git", () => {
 
 describe("merge:main hands regen the fork point, or nothing", () => {
   test("a fork point becomes --changed; none (shallow, --full-regen) is the full run", () => {
-    expect(regenArgs("abc123")).toEqual(["--changed", "abc123"]);
-    expect(regenArgs(undefined)).toEqual([]);
+    expect(regenArgs("abc123")).toEqual(["--no-mount", "--changed", "abc123"]);
+    expect(regenArgs(undefined)).toEqual(["--no-mount"]);
   });
 
   test("the fork-point union sees a path EITHER side changed (bean lxpq's case)", () => {
