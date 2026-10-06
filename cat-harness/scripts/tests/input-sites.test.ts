@@ -253,6 +253,15 @@ describe("the fingerprint refuses what it cannot see", () => {
       expect(hashOf(fp())).not.toBe(before);
     });
 
+    test("a BUILD OUTPUT directory is not hashed — and naming one in source is a site", () => {
+      write("build/report.json", '{"generated_at": 1}\n');
+      const before = hashOf(fp());
+      write("build/report.json", '{"generated_at": 2}\n');
+      expect(hashOf(fp())).toBe(before);
+      write("scripts/lib.ts", 'export const v = () => require("node:fs").readFileSync("build/report.json");\n');
+      isUndetermined(fp(), "scripts/lib.ts:1 (build)");
+    });
+
     test("the input-hash cache itself is not an input", () => {
       const before = hashOf(fp());
       write("build/regen-cache/input-hashes.json", '{"version": 3, "pairs": {}}\n');

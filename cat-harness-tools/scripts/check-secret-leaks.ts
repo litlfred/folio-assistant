@@ -101,6 +101,7 @@ const TEXT = new Set([
   ".toml", ".env", ".txt", ".lean", ".fsh", ".cql", ".bpmn", ".dmn", ".xml", ".html", ".css",
 ]);
 
+// input-site: inert #d555d09b — names a build-output directory only to leave it out of a walk
 const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", ".next", "lake-packages"]);
 
 export interface Leak {

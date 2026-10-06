@@ -90,6 +90,7 @@ import { auditClosure, SiteMemo } from "./input-sites.ts";
 import { inputSiteReached } from "./input-trace.ts";
 
 /** Where the cache lives, relative to the repository root. `build/` is git-ignored. */
+// input-site: inert #9a24257c — names a build-output directory only to leave it out of a walk
 export const CACHE_FILE = join("build", "regen-cache", "input-hashes.json");
 
 /** Bump to invalidate every recorded hash when the fingerprint's recipe changes. */
@@ -370,7 +371,7 @@ export function trackedTreeDigest(root: string, digests: FileDigests): { hash: s
   const ignored = git(["ls-files", "-o", "-i", "--exclude-standard", "--directory", "-z"]);
   if (ignored === undefined) return { undetermined: "could not list the ignored files" };
   for (const entry of split(ignored).sort()) {
-    const r = ignoredDigest(root, entry, h);
+    const r = ignoredDigest(root, entry, h, digests);
     if (r !== undefined) return { undetermined: r };
   }
   return { hash: h.digest("hex") };
@@ -380,8 +381,12 @@ export function trackedTreeDigest(root: string, digests: FileDigests): { hash: s
  * Ignored files are part of "the whole working tree" too: a check that walks a
  * directory with `readdirSync` or `Bun.Glob` reads them whether or not git
  * does — the shape of the `:pages:check` that passed locally on an untracked
- * loader and failed on a clean checkout. So each one's path, size and mtime is
- * hashed (no content read: a touched file costs a skip, never a false one).
+ * loader and failed on a clean checkout. So each one's path and CONTENT is
+ * hashed (memoised by size and mtime, like any file). Content, not mtime:
+ * `gates` rebuilds the QA working copy under `test/results/` before its first
+ * gate, rewriting every file with the bytes it had, and an mtime digest made
+ * that rebuild invalidate every `{tracked}` check — measured 2026-10-06, a
+ * warm `gates` after a warm `regen` skipped 0 of 250.
  *
  * Left out, each for a stated reason:
  * - `node_modules/` at any depth — its content is what `bun.lock` pins, and
@@ -390,9 +395,23 @@ export function trackedTreeDigest(root: string, digests: FileDigests): { hash: s
  * - a directory holding its own `.git` — another checkout (an agent worktree
  *   under `.claude/worktrees/`), which is a different repository's tree.
  */
-function ignoredDigest(root: string, entry: string, h: ReturnType<typeof createHash>): string | undefined {
+/**
+ * Ignored BUILD OUTPUT directories at the top of the tree, left out of the
+ * digest: every regen and gates run rewrites them (a KG export stamped with
+ * its time, the qa:refresh report), so hashing them made every `{tracked}`
+ * check miss — measured 2026-10-06, three such files were the whole
+ * difference across a QA working-copy rebuild. Sound only because a source
+ * line that names one of these directories is an input SITE (`input-sites.ts`,
+ * risk `build`) and must be annotated, so a check that reads a build output is
+ * refused unless a person has read that line.
+ */
+// input-site: inert #5e55a69c — the list of build-output directories the tree digest leaves out; it reads none of them
+export const BUILD_OUTPUT_DIRS = ["build", "_kg", "_site", "dist"] as const;
+
+function ignoredDigest(root: string, entry: string, h: ReturnType<typeof createHash>, digests: FileDigests): string | undefined {
   const rel = entry.replace(/\/$/, "");
   if (/(^|\/)node_modules$/.test(rel) || rel === dirname(CACHE_FILE) || rel === CACHE_FILE) return undefined;
+  if ((BUILD_OUTPUT_DIRS as readonly string[]).includes(rel.split("/")[0]!)) return undefined;
   const walk = (r: string): string | undefined => {
     let st;
     try {
@@ -401,7 +420,12 @@ function ignoredDigest(root: string, entry: string, h: ReturnType<typeof createH
       return undefined; // gone between the listing and the stat: nothing to read
     }
     if (!st.isDirectory()) {
-      if (r !== CACHE_FILE) h.update(`ignored ${r} ${st.size}:${st.mtimeMs}\n`);
+      if (r === CACHE_FILE) return undefined;
+      try {
+        h.update(`ignored ${r} ${digests.digest(r)}\n`);
+      } catch {
+        return undefined; // gone between the stat and the read: nothing left to read
+      }
       return undefined;
     }
     if (/(^|\/)node_modules$/.test(r) || r === dirname(CACHE_FILE) || existsSync(join(root, r, ".git"))) return undefined;

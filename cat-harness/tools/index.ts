@@ -553,6 +553,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       remedies: [{ host: "github.com", none: "pdf.js is fetched from its GitHub release and no copy is vendored; the site builds without the viewer." }],
       io: {
         inputs: [
+          // input-site: inert #5ead75ee — prose naming the directory, in a message or a description
           { name: "site", schema: t("RepoPath"), required: true, arg: { flag: "--site" }, description: "The built site directory, `_site` in both site workflows." },
           { name: "allow", schema: t("Url"), required: true, arg: { flag: "--allow" }, description: "An https URL prefix the viewer may open, ending in `/`. Repeat the flag for more than one. `same-origin-only` is the explicit way to allow none — an omitted flag is a usage error, because a viewer that refuses every CDN document would otherwise ship green." },
           { name: "zip", schema: t("RepoPath"), required: false, arg: { flag: "--zip" }, description: "A local copy of the release zip, for offline runs and tests. Its hash is checked exactly as a download's would be." },
@@ -873,6 +874,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // because that is the arm a caller controls; the other two are
           // defaults, not inputs.
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base the node IRIs are minted against; a preview passes its own." },
+          // input-site: inert #5eaba3b5 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults to `_kg/<stub>.jsonld`, which is build output and gitignored." },
         ],
         outputs: [
@@ -1096,6 +1098,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "screenshot", schema: t("Flag"), required: false, arg: { flag: "--screenshot" }, description: "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate." },
         ],
         outputs: [
+          // input-site: inert #5e83c8da — prose naming the directory, in a message or a description
           { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2." },
         ],
       },
@@ -1575,6 +1578,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
+          // input-site: inert #13384224 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
         ],
         outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
@@ -2082,6 +2086,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "slice", schema: t("Slug"), required: false, arg: { flag: "--slice" }, description: "A slice to build; repeatable. Absent: every slice in the builder's table." },
+          // input-site: inert #8bc2e503 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where the files and `index.json` go; defaults to the gitignored `docs/assets/slices/`. The deploy passes `./_site/assets/slices`." },
           { name: "payloadOut", schema: t("RepoPath"), required: false, arg: { flag: "--payload-out" }, description: "Where the deploy payloads are written (`<hex>` plus its `<hex>.json` sidecar). Never the committed `docs/payload/`." },
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Build twice and verify instead of writing: one sha256, the row digest against the source, an FTS5 phrase query, the payload audit." },
@@ -2229,6 +2234,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [],
         outputs: [
+          // input-site: inert #4279ca6f — prose naming the directory, in a message or a description
           { name: "index", schema: t("RepoPath"), description: "`_site/assets/js/search-data.json` in the assembled site." },
         ],
       },
@@ -2251,9 +2257,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run cat-harness/scripts/search-split.ts --dir _site" },
       io: {
         inputs: [
+          // input-site: inert #a9ab302b — prose naming the directory, in a message or a description
           { name: "index", schema: t("RepoPath"), required: true, description: "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it." },
         ],
         outputs: [
+          // input-site: inert #37afab82 — prose naming the directory, in a message or a description
           { name: "scopes", schema: t("RepoPath"), description: "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope." },
         ],
       },

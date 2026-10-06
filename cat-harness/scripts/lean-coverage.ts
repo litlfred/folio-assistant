@@ -82,6 +82,7 @@ function* walk(dir: string): Generator<string> {
     if (entry.isDirectory()) {
       // Skip nested build / vendored / Lean source dirs
       if (entry.name === "lean" || entry.name === "node_modules" ||
+          // input-site: inert #75d48ebd — names a build-output directory only to leave it out of a walk
           entry.name === ".lake" || entry.name === "build") continue;
       yield* walk(p);
     } else if (entry.isFile() && entry.name.endsWith(".ts")) {
@@ -174,6 +175,7 @@ function* walkLean(dir: string): Generator<string> {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const p = join(dir, entry.name);
     if (entry.isDirectory()) {
+      // input-site: inert #15eaa176 — names a build-output directory only to leave it out of a walk
       if (entry.name === ".lake" || entry.name === "build") continue;
       yield* walkLean(p);
     } else if (entry.isFile() && entry.name.endsWith(".lean")) {

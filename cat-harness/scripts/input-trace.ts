@@ -68,6 +68,7 @@ export function openTrace(root: string): {
   /** What the run reached that its fingerprint does not cover, or `undefined`. `hashedRefs`: the `--against` refs whose baseline identity the fingerprint hashed. */
   reached: (hashedRefs?: readonly string[]) => string | undefined;
 } {
+  // input-site: inert #394ac31a — names a build-output directory only to leave it out of a walk
   const dir = join(root, "build", "regen-cache", "traces");
   mkdirSync(dir, { recursive: true });
   const path = join(dir, `${process.pid}-${++traceSeq}.log`);

@@ -331,6 +331,8 @@ export function blankSource(text: string): string[] {
 const STRING_RISKS: Readonly<Record<string, RegExp>> = {
   network: /["']node:(?:https?|http2|net|dns|tls|dgram)["']/,
   outside: RISKS.outside!,
+  // A build-output directory (`input-hash.ts` BUILD_OUTPUT_DIRS), which the tree digest leaves out.
+  build: /["'`](?:\.\/)?(?:build|_kg|_site|dist)(?:\/[^"'`]*)?["'`]/,
 };
 
 /**

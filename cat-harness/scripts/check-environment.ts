@@ -78,6 +78,7 @@ export type Distortion = {
  * own business. Walking it would also report thousands of paths and take long
  * enough that nobody would run this.
  */
+// input-site: inert #72110b80 — names a build-output directory only to leave it out of a walk
 const SKIP = new Set(["node_modules", ".git", ".lake", "_kg", "dist", ".bun"]);
 
 /**

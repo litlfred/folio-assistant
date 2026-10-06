@@ -69,6 +69,7 @@ export interface Catalogue {
 
 function walk(dir: string, want: (f: string) => boolean, out: string[] = []): string[] {
   for (const e of readdirSync(dir)) {
+    // input-site: inert #a4c66fe8 — names a build-output directory only to leave it out of a walk
     if (e.startsWith(".") || e === "node_modules" || e === "_site") continue;
     const p = join(dir, e);
     let st;

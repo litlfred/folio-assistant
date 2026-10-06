@@ -20,6 +20,7 @@ import { claimsIn, declaredGraphs, historicalPrefixes, type Claim } from "../../
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 
 /** Not ours, or not text. Nothing to derive here. */
+// input-site: inert #2542d3fb — names a build-output directory only to leave it out of a walk
 const SKIP = new Set(["node_modules", ".git", "dist", "build"]);
 
 function markdownFiles(root: string, skip: string[], dir = root, out: string[] = []): string[] {

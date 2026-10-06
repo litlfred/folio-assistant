@@ -149,7 +149,9 @@ export const STALE_FIELDS: readonly StaleField[] = [
 const SKIP_DIRS = new Set([
   "node_modules",
   ".git",
+  // input-site: inert #b44a6f1d — names a build-output directory only to leave it out of a walk
   "dist",
+  // input-site: inert #16b14f5d — names a build-output directory only to leave it out of a walk
   "build",
   ".next",
   "beans",

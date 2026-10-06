@@ -476,6 +476,7 @@ if (import.meta.main) {
   const out =
     outIdx >= 0
       ? argv[outIdx + 1]
+      // input-site: inert #d1a0656a — an OUTPUT path this script writes, never reads
       : join(repoRootFor(ROOT), layer ? `_kg/ns-${layer}.jsonld` : "_kg/ns.jsonld");
 
   const { doc, report } = buildVocabulary(ROOT, layer, argv.includes("--exact"));

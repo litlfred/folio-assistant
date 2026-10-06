@@ -1760,6 +1760,7 @@ export const ROOT = resolve(import.meta.dir, "..", "..");
 // seeing none of the e2e specs or the health sweep.
 export const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "test", "types"];
 
+// input-site: inert #08aab37b — names a build-output directory only to leave it out of a walk
 export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 
 /** This instance's spec, ready to hand to the engine. */

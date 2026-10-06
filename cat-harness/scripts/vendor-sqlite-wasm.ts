@@ -59,6 +59,7 @@ export function vendorProblems(): string[] {
   for (const f of VENDORED) {
     const dest = join(VENDOR_DIR, f);
     if (!existsSync(dest)) problems.push(`${f} is not vendored`);
+    // input-site: inert #10141c67 — names a build-output directory only to leave it out of a walk
     else if (!readFileSync(dest).equals(readFileSync(join(PKG, "dist", f)))) problems.push(`${f} differs from @sqlite.org/sqlite-wasm ${version}`);
   }
   const lic = join(VENDOR_DIR, "LICENSE.txt");
@@ -77,6 +78,7 @@ if (import.meta.main) {
   } else {
     const version = (JSON.parse(readFileSync(join(PKG, "package.json"), "utf-8")) as { version: string }).version;
     mkdirSync(VENDOR_DIR, { recursive: true });
+    // input-site: inert #93736405 — names a build-output directory only to leave it out of a walk
     for (const f of VENDORED) copyFileSync(join(PKG, "dist", f), join(VENDOR_DIR, f));
     writeFileSync(join(VENDOR_DIR, "LICENSE.txt"), license(version));
     console.log(`  · vendored @sqlite.org/sqlite-wasm ${version} → ${VENDOR_DIR}`);

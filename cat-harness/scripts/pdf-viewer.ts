@@ -102,8 +102,11 @@ export const MARKER = "data-fa-pdf-viewer";
  */
 export const KEEP: readonly string[] = [
   "LICENSE",
+  // input-site: inert #2a1b588a — a path inside the downloaded pdf.js archive, not in this tree
   "build/pdf.mjs",
+  // input-site: inert #3109a261 — a path inside the downloaded pdf.js archive, not in this tree
   "build/pdf.worker.mjs",
+  // input-site: inert #aa1ecccc — a path inside the downloaded pdf.js archive, not in this tree
   "build/pdf.sandbox.mjs",
   "web/viewer.html",
   "web/viewer.mjs",

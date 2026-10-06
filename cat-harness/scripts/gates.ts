@@ -440,6 +440,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "check:maintained-artefacts",
     kind: "ci-only",
     reason:
+      // input-site: inert #6c47660d — prose naming the directory, in a message or a description
       "reads the ASSEMBLED `_site/`, which exists only after the site build has run — the " +
       "whole point of the check is that a `maintains` claim is verified against what actually " +
       "shipped, not against the source it was generated from, so there is nothing for a " +
@@ -451,6 +452,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "check:escaped-markup",
     kind: "ci-only",
     reason:
+      // input-site: inert #b4721469 — prose naming the directory, in a message or a description
       "reads the ASSEMBLED `_site/` for the same reason, and the reason is sharper here: what " +
       "it looks for exists ONLY after the markdown conversion. The template that shipped the " +
       "defect was valid HTML — a Liquid whitespace strip welded two attributes together, " +
@@ -669,6 +671,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--dir ./_site`: it cuts the BUILT (or, on a preview, borrowed) search index into per-scope " +
+      // input-site: inert #6918934e — prose naming the directory, in a message or a description
       "indices (bean `m7mn`); there is no `_site` in a checkout. Its scope rule, partition and determinism " +
       "are covered by search-split.test.ts, and its output on every deployed tree by publish-verify's " +
       "`search-scopes` verifier",
@@ -678,12 +681,14 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--site ./_site`: it copies the identifier-lookup client and each declared index into the BUILT " +
+      // input-site: inert #cd9d2ebf — prose naming the directory, in a message or a description
       "site (bean `1br0`); there is no `_site` in a checkout. Covered by publish-id-lookup.test.ts, and on " +
       "every deployed tree by publish-verify's `search-scopes`, which fails a linked lookup the tree lacks",
   },
   {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
+    // input-site: inert #f9c95b4f — prose naming the directory, in a message or a description
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
@@ -703,6 +708,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--site ./_site`: it minifies the BUILT tree as the last pass before a publish, and " +
+      // input-site: inert #50e65645 — prose naming the directory, in a message or a description
       "there is no `_site` in a checkout. Its equivalence rules and its idempotency are covered " +
       "by minify-site.test.ts in `bun test`, and its ORDERING — after every check and rewrite " +
       "that reads the built HTML, two of which decide whether a marker is inside a COMMENT " +
@@ -713,6 +719,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--site ./_site`: it rewrites the BUILT site's `<html>` tags before a deploy (bean " +
+      // input-site: inert #a37730dc — prose naming the directory, in a message or a description
       "`zru7`); there is no `_site` in a checkout, and its logic is covered here by " +
       "set-html-lang.test.ts, which builds pages as strings",
   },
@@ -813,7 +820,9 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:
+      // input-site: inert #87064adb — prose naming the directory, in a message or a description
       "injects the banner into the built `_site` and writes `staging.json` beside it; there is " +
+      // input-site: inert #1cd18d35 — prose naming the directory, in a message or a description
       "no `_site` in a checkout, and the facts it writes (run id, event payload, publish-ref " +
       "listing) exist only in CI. The property it exists for — that the injected bytes do NOT " +
       "depend on the build, which is what lets git deduplicate a preview against its own next " +
@@ -824,6 +833,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "staging-record.ts",
     kind: "ci-only",
     reason:
+      // input-site: inert #4fabf72d — prose naming the directory, in a message or a description
       "writes the preview's `staging-preview` record into the built `_site` at deploy time (bean `6pfo`); " +
       "the PR, issue and the already-published record it updates exist only in CI and on `gh-pages`. " +
       "Its rules — builtAt kept, a retired record refused as live, a corrupt one refused — are in " +
@@ -859,13 +869,16 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     reason: "takes a deploy slug off the event payload; there is no event locally",
   },
   {
+    // input-site: inert #c5cae08f — prose naming the directory, in a message or a description
     match: "--out \"./_site",
     kind: "ci-only",
+    // input-site: inert #bac3cc4a — prose naming the directory, in a message or a description
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
   {
     match: "--out-dir ./_site",
     kind: "ci-only",
+    // input-site: inert #bac3cc4a — prose naming the directory, in a message or a description
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
   {
@@ -876,8 +889,10 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // export wrote into a foreign instance's subdirectory. Same reason, not a
     // new exemption — a step that got to green by being spelled differently
     // would be the thing this ratchet exists to stop.
+    // input-site: inert #4229d23b — prose naming the directory, in a message or a description
     match: '--out-dir "./_site',
     kind: "ci-only",
+    // input-site: inert #bac3cc4a — prose naming the directory, in a message or a description
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
   {
