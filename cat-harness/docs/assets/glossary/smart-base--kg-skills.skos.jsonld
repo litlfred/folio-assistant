@@ -119,6 +119,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-skills/smart-guideline-create",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "smart-guideline-create"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK."
+        }
+      ],
+      "skos:notation": "smart-guideline-create",
+      "dcterms:source": "smart-base/skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-skills/smart-stack-layering",
       "@type": "skos:Concept",
       "skos:inScheme": {

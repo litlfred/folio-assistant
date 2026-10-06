@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sub-KG lifecycle: a knowledge graph staged as a directory inside a harnessed
+  repository, declared as its own instance, that may later leave whole for a
+  repository of its own.
+
+  Source of truth: this file. The SVG under docs/assets/img/workflows/ is
+  generated from it by `bun run render:bpmn`; never hand-edit the SVG.
+
+  Extracted in retrospect, owner 2026-10-06 (bean 3tza), from the staged IG
+  separations of 2026-09-21 to 2026-10-06: beans n3ni (stages A-F), kg83
+  (stage D), rbz3 (fork rehearsal), hcpz (seed:ready); PRs #1767, #1860, #2082.
+  sub-kg-lifecycle.md carries each stage's provenance.
+
+  The light sibling of kg-separation.bpmn. That process splits a graph into a
+  content repository and a tools repository; this one moves a DATA instance
+  whole. The two share their seeding gateway: GW_SeedReady here is the same
+  decision table, decisions/seed-readiness-gate.dmn, and returns the same three
+  outcomes.
+
+  TWO OWNER CONFIRMATIONS, BOTH NON-RELAXABLE. Creating the repository is
+  visible outside this one and is not undone by a revert; deleting the in-repo
+  copy removes a durable artefact. Each is preceded by a report of what would
+  happen, how large it is and how it is undone (deletion-requires-confirmation),
+  and each has a default that changes nothing.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
+                  id="Definitions_Process_SubKgLifecycle" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_SubKgLifecycle">
+    <bpmn:participant id="Participant_Process_SubKgLifecycle" name="A sub-KG is staged in place, then leaves for its own repository" processRef="Process_SubKgLifecycle"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_SubKgLifecycle" name="A sub-KG is staged in place, then leaves for its own repository" isExecutable="false">
+    <bpmn:documentation>Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository. Declared in place with a planned `repository` and a `livesAt` saying where it sits today; staged by one import seam (`&lt;name&gt;/platform.ts`), the separation guard and a self-contained rehearsal; then, each behind an explicit owner confirmation, the repository is created, the staged contents are copied in with their history, the declaration is re-pointed, a fresh clone is verified, and the in-repo copy is deleted.
+
+Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-06 (beans n3ni, kg83, rbz3, hcpz). The light sibling of kg-separation, which splits a graph into a content and a tools repository; this moves a data instance whole, and shares kg-separation's seeding gateway and decision table.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_SubKgLifecycle">
+      <bpmn:lane id="Lane_Agent" name="Authoring agent">
+        <bpmn:documentation>Declares the sub-KG in place and grows it, reports what would move before each irreversible step, drains the open pull requests that keep the source from settling, and copies the staged contents into the new repository with their history.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <bootstrap.processes:role ref="authoring-agent"/>
+        </bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Wanted</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Brief</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Declare</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Grow</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Report</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Drain</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Seed</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Platform" name="Platform authoring agent">
+        <bpmn:documentation>The platform-side stages: pushing generic code and declarations down into the harness below, routing every climb out of the sub-KG through its one import seam, and re-pointing the declaration, the seam and the host's consumption once the new repository exists.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <bootstrap.processes:role ref="platform-authoring-agent"/>
+        </bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_PushDown</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Seam</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Repoint</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Pipeline" name="Build pipeline">
+        <bpmn:documentation>Runs the checks that decide the gateways: the separation guard and the three direction checks, the self-contained rehearsal, the seed-readiness table at seed time, and the gates of the new repository from a fresh clone. A check that could not run stops the process; it is never read as a pass.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <bootstrap.processes:role ref="build-pipeline"/>
+        </bpmn:extensionElements>
+        <bpmn:flowNodeRef>GW_Guard</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Rehearse</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Alone</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Unknown</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_SeedReady</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_SeedUnknown</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_FreshClone</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Fresh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_FreshUnknown</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Admin" name="Administrator (owner)">
+        <bpmn:documentation>The person's decisions: whether the sub-KG leaves at all, whether the new repository may be created, and whether the in-repo copy may be deleted. An agent reports and waits at each, asks with numbered options and a default that changes nothing, and none of the three may be relaxed by a package.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <bootstrap.processes:role ref="administrator"/>
+        </bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_DecideLeave</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Stays</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ConfirmCreate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Declined</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CreateRepo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ConfirmCutover</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Kept</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Cutover</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Separated</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Wanted" name="A sub-KG is wanted&#10;in this repository">
+      <bpmn:documentation>A content type's creation skill asked whether the new graph goes in a new repository or inside this one, and the answer was inside this one. Or a graph already staged here is to be taken through the rest of its lifecycle.</bpmn:documentation>
+      <bpmn:outgoing>F0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Brief" name="Brief, and claim&#10;the bean">
+      <bpmn:documentation>What the sub-KG is and why it is staged here rather than in a repository of its own, what is already measured, and what would falsify the plan. Claim the bean so a sibling session sees the work.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="opening-brief"/>
+        <cat-harness.processes:bean op="claim"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F0</bpmn:incoming>
+      <bpmn:outgoing>F1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Declare" name="1 · Declare it in place,&#10;with its seam">
+      <bpmn:documentation>`&lt;name&gt;/&lt;name&gt;.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `&lt;name&gt;/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Not `init-folio`: it writes a whole repository's scaffolding.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F1</bpmn:incoming>
+      <bpmn:outgoing>F2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Grow" name="2 · Grow it in place">
+      <bpmn:documentation>The content type's own authoring process runs here, against the staged instance. Many sub-KGs never leave; this task can last as long as the graph does.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2</bpmn:incoming>
+      <bpmn:outgoing>F3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="Task_DecideLeave" name="Should it leave&#10;now?">
+      <bpmn:documentation>The owner decides, from what is measured, whether the sub-KG starts staging for separation now. Asked as numbered options with the recommended one first and a stated default: keeping it in place is the default, and is a real outcome.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F3</bpmn:incoming>
+      <bpmn:outgoing>F4</bpmn:outgoing>
+      <bpmn:outgoing>F5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Stays" name="Stays in place">
+      <bpmn:documentation>The sub-KG stays staged in the host. Everything done so far is in place and reversible, and the process can be started again when it should leave.</bpmn:documentation>
+      <bpmn:incoming>F4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_PushDown" name="3 · Push generic&#10;down first">
+      <bpmn:documentation>Move what is generic into the harness below before the seam is closed, and consolidate what the sub-KG needs into the harness it instantiates. Wrong-direction edges hide in declarations and data as well as imports: run check:import-direction, check:reference-direction and check:process-bindings. Learned from stages A-D of bean n3ni (#1768, #1782, #1783, #1795).</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+        <cat-harness.processes:no-call reason="Uses the detanglement practice's direction checks on an instance already declared in place. graph-detanglement.bpmn starts from declaring a tangled sub-graph, which stage 1 of this process has already done."/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F5</bpmn:incoming>
+      <bpmn:outgoing>F6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Seam" name="4 · Route every climb&#10;through platform.ts">
+      <bpmn:documentation>Every platform symbol the sub-KG uses is re-exported from `&lt;name&gt;/platform.ts`, so re-pointing the platform is a one-file edit. A merge from main is where new climbs arrive; reroute them here. Learned from #1767 and #1860.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F6</bpmn:incoming>
+      <bpmn:incoming>F8</bpmn:incoming>
+      <bpmn:incoming>F11</bpmn:incoming>
+      <bpmn:outgoing>F7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Guard" name="Guard green,&#10;no edge up?">
+      <bpmn:documentation>Decided by commands: instance-separation-imports.test.ts (every instance whose repository differs from its livesAt is covered), and the three direction checks adding nothing. Red goes back to the seam.</bpmn:documentation>
+      <bpmn:incoming>F7</bpmn:incoming>
+      <bpmn:outgoing>F8</bpmn:outgoing>
+      <bpmn:outgoing>F9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Rehearse" name="5 · Rehearse&#10;self-contained">
+      <bpmn:documentation>`bun run seed:ready --layer &lt;name&gt; --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F9</bpmn:incoming>
+      <bpmn:outgoing>F10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Alone" name="Green alone?">
+      <bpmn:documentation>Green with only the layer and what it needs present goes on. Red means a climb or a run-time load the guard did not see: back to the seam. If the rehearsal could not run, that is not a pass: stop.</bpmn:documentation>
+      <bpmn:incoming>F10</bpmn:incoming>
+      <bpmn:outgoing>F11</bpmn:outgoing>
+      <bpmn:outgoing>F12</bpmn:outgoing>
+      <bpmn:outgoing>F13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Unknown" name="UNKNOWN: stop.&#10;Not clean">
+      <bpmn:documentation>The rehearsal could not run. Reported as could-not-check, never as green.</bpmn:documentation>
+      <bpmn:incoming>F12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Report" name="6 · Report what would&#10;move, and how it undoes">
+      <bpmn:documentation>Before the first outward-facing step the agent reports: the files and bytes that would move, the history that comes with them, what in the host changes, and how each step is undone. It never creates a repository on its own initiative.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F13</bpmn:incoming>
+      <bpmn:outgoing>F14</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="Task_ConfirmCreate" name="7 · Owner confirms:&#10;create the repository">
+      <bpmn:documentation>Creating a repository is visible outside this one and is not undone by a revert. Numbered options, recommended first: (1) the owner creates it and says when it exists, (2) the agent creates it, only with that permission, (3) not yet. Default if there is no answer: (3), nothing is created. Non-relaxable.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:policy relaxable="false"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F14</bpmn:incoming>
+      <bpmn:outgoing>F15</bpmn:outgoing>
+      <bpmn:outgoing>F16</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Declined" name="Staged, ready&#10;to leave">
+      <bpmn:documentation>Not yet. The sub-KG stays in the host, staged and rehearsed; nothing outside the repository changed.</bpmn:documentation>
+      <bpmn:incoming>F15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_CreateRepo" name="8 · Create the&#10;repository">
+      <bpmn:documentation>The owner creates the repository, or authorises the agent that has the permission to; when that agent is in another environment, the hand-over is one bean and one sentence (agent-handoff). The new repository is read before anything is written to it: empty is a fact to check, not to assume.</bpmn:documentation>
+      <!-- The hand-over to an agent in another environment follows agent-handoff; the questions in the three owner tasks follow interaction-modality. Both are named in sub-kg-lifecycle.md rather than bound here, because they are the asking agent's skills, not the administrator's. -->
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F16</bpmn:incoming>
+      <bpmn:outgoing>F17</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_SeedReady" name="Ready to&#10;seed?">
+      <bpmn:documentation>Asked at seed time, because the tree has moved since the rehearsal: every open pull request over the layer when the copy is taken is orphaned. Computed by decisions/seed-readiness-gate.dmn from the facts `bun run seed:ready --layer &lt;name&gt; --rehearse` gathers; the same table kg-separation uses.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:decision ref="decisions/seed-readiness-gate.dmn#Decision_SeedReadiness"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F17</bpmn:incoming>
+      <bpmn:incoming>F19</bpmn:incoming>
+      <bpmn:outgoing>F18</bpmn:outgoing>
+      <bpmn:outgoing>F20</bpmn:outgoing>
+      <bpmn:outgoing>F21</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Drain" name="Drain: land, close or&#10;re-target the open PRs">
+      <bpmn:documentation>Work the pull requests seed:ready named until the source settles, then ask again.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="kg-separation"/>
+        <cat-harness.processes:no-call reason="Uses only kg-separation's drain rule for the seed-readiness gateway the two processes share. Calling kg-separation.bpmn would run the content/tools pair split this process exists to avoid."/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F18</bpmn:incoming>
+      <bpmn:outgoing>F19</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_SeedUnknown" name="UNKNOWN: do not&#10;seed. Not clean">
+      <bpmn:documentation>A readiness criterion could not be decided. Nothing is copied.</bpmn:documentation>
+      <bpmn:incoming>F20</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Seed" name="9 · Copy the staged&#10;contents in, with history">
+      <bpmn:documentation>`git subtree split --prefix=&lt;name&gt;` in the host, then the split branch added to the new repository on a branch, as a draft pull request, never straight to main. The new repository's own root files are a second commit, so the copy stays byte-identical and reviewable. The first fork seed carried 378 commits this way (bean n3ni, stage E).</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F21</bpmn:incoming>
+      <bpmn:outgoing>F22</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Repoint" name="10 · Re-point: livesAt,&#10;seam, submodule or subscription">
+      <bpmn:documentation>In the new repository `livesAt` goes (absent means it sits at the root of `repository`) and `platform.ts` points at where the platform now is. The host consumes it as a submodule if it imports its code, or a subscription if it only reads its content, pinned to a commit while staging. Additive: the host keeps its copy.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+        <bootstrap.processes:skill ref="upstream-version-adoption"/>
+        <cat-harness.processes:no-call reason="The first pin is set while the new repository is still staging, at a commit, before any release exists. upstream-version-adoption.bpmn adopts a released version, which comes later and is run on its own."/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F22</bpmn:incoming>
+      <bpmn:incoming>F24</bpmn:incoming>
+      <bpmn:outgoing>F23</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_FreshClone" name="11 · Verify on a&#10;fresh clone">
+      <bpmn:documentation>Clone the new repository into an empty directory with only what it declares it needs, install, and run its gates. The measured falsifier (#2082): the first seeded fork failed with "Cannot find module" because nothing in a seed runs standalone until the seam is re-pointed.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F23</bpmn:incoming>
+      <bpmn:outgoing>F25</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Fresh" name="Green from a&#10;fresh clone?">
+      <bpmn:documentation>Green goes to the owner. Red is fixed in the new repository, not in the staged copy, and goes back to the re-point. A clone that could not run is not a pass: stop.</bpmn:documentation>
+      <bpmn:incoming>F25</bpmn:incoming>
+      <bpmn:outgoing>F24</bpmn:outgoing>
+      <bpmn:outgoing>F26</bpmn:outgoing>
+      <bpmn:outgoing>F27</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_FreshUnknown" name="UNKNOWN: stop.&#10;Not clean">
+      <bpmn:documentation>The fresh clone could not be verified. Reported as could-not-check; the in-repo copy is not touched.</bpmn:documentation>
+      <bpmn:incoming>F26</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_ConfirmCutover" name="12 · Owner confirms:&#10;delete the in-repo copy">
+      <bpmn:documentation>The agent reports the files that would go, their size and that the deletion is one revertable commit, then asks: (1) delete now, (2) keep until the first release, (3) show the file list first. Default if there is no answer: (2), nothing is deleted. A green fresh clone is the precondition for asking, not the answer. Non-relaxable.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:policy relaxable="false"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F27</bpmn:incoming>
+      <bpmn:outgoing>F28</bpmn:outgoing>
+      <bpmn:outgoing>F29</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Kept" name="Consumed; in-repo&#10;copy kept">
+      <bpmn:documentation>The host consumes the new repository and keeps its own copy, as the owner chose. The cutover can be asked again later.</bpmn:documentation>
+      <bpmn:incoming>F28</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Cutover" name="13 · Cutover: the one&#10;commit deleting the copy">
+      <bpmn:documentation>The one commit worth reverting, made only on the owner's answer at step 12.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+        <cat-harness.processes:bean op="resolve"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F29</bpmn:incoming>
+      <bpmn:outgoing>F30</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Separated" name="Separated">
+      <bpmn:documentation>The sub-KG lives in its own repository and the host consumes it from there.</bpmn:documentation>
+      <bpmn:incoming>F30</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="F0" sourceRef="Start_Wanted" targetRef="Task_Brief"/>
+    <bpmn:sequenceFlow id="F1" sourceRef="Task_Brief" targetRef="Task_Declare"/>
+    <bpmn:sequenceFlow id="F2" sourceRef="Task_Declare" targetRef="Task_Grow"/>
+    <bpmn:sequenceFlow id="F3" sourceRef="Task_Grow" targetRef="Task_DecideLeave"/>
+    <bpmn:sequenceFlow id="F4" sourceRef="Task_DecideLeave" targetRef="End_Stays" name="stay"/>
+    <bpmn:sequenceFlow id="F5" sourceRef="Task_DecideLeave" targetRef="Task_PushDown" name="leave"/>
+    <bpmn:sequenceFlow id="F6" sourceRef="Task_PushDown" targetRef="Task_Seam"/>
+    <bpmn:sequenceFlow id="F7" sourceRef="Task_Seam" targetRef="GW_Guard"/>
+    <bpmn:sequenceFlow id="F8" sourceRef="GW_Guard" targetRef="Task_Seam" name="red"/>
+    <bpmn:sequenceFlow id="F9" sourceRef="GW_Guard" targetRef="Task_Rehearse" name="green"/>
+    <bpmn:sequenceFlow id="F10" sourceRef="Task_Rehearse" targetRef="GW_Alone"/>
+    <bpmn:sequenceFlow id="F11" sourceRef="GW_Alone" targetRef="Task_Seam" name="red: an unseen climb"/>
+    <bpmn:sequenceFlow id="F12" sourceRef="GW_Alone" targetRef="End_Unknown" name="could not run"/>
+    <bpmn:sequenceFlow id="F13" sourceRef="GW_Alone" targetRef="Task_Report" name="green"/>
+    <bpmn:sequenceFlow id="F14" sourceRef="Task_Report" targetRef="Task_ConfirmCreate"/>
+    <bpmn:sequenceFlow id="F15" sourceRef="Task_ConfirmCreate" targetRef="End_Declined" name="not yet"/>
+    <bpmn:sequenceFlow id="F16" sourceRef="Task_ConfirmCreate" targetRef="Task_CreateRepo" name="confirmed"/>
+    <bpmn:sequenceFlow id="F17" sourceRef="Task_CreateRepo" targetRef="GW_SeedReady"/>
+    <bpmn:sequenceFlow id="F18" sourceRef="GW_SeedReady" targetRef="Task_Drain" name="not yet"/>
+    <bpmn:sequenceFlow id="F19" sourceRef="Task_Drain" targetRef="GW_SeedReady"/>
+    <bpmn:sequenceFlow id="F20" sourceRef="GW_SeedReady" targetRef="End_SeedUnknown" name="unknown"/>
+    <bpmn:sequenceFlow id="F21" sourceRef="GW_SeedReady" targetRef="Task_Seed" name="settled"/>
+    <bpmn:sequenceFlow id="F22" sourceRef="Task_Seed" targetRef="Task_Repoint"/>
+    <bpmn:sequenceFlow id="F23" sourceRef="Task_Repoint" targetRef="Task_FreshClone"/>
+    <bpmn:sequenceFlow id="F24" sourceRef="GW_Fresh" targetRef="Task_Repoint" name="red"/>
+    <bpmn:sequenceFlow id="F25" sourceRef="Task_FreshClone" targetRef="GW_Fresh"/>
+    <bpmn:sequenceFlow id="F26" sourceRef="GW_Fresh" targetRef="End_FreshUnknown" name="could not run"/>
+    <bpmn:sequenceFlow id="F27" sourceRef="GW_Fresh" targetRef="Task_ConfirmCutover" name="green"/>
+    <bpmn:sequenceFlow id="F28" sourceRef="Task_ConfirmCutover" targetRef="End_Kept" name="keep"/>
+    <bpmn:sequenceFlow id="F29" sourceRef="Task_ConfirmCutover" targetRef="Task_Cutover" name="delete"/>
+    <bpmn:sequenceFlow id="F30" sourceRef="Task_Cutover" targetRef="End_Separated"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_Process_SubKgLifecycle">
+    <bpmndi:BPMNPlane id="Plane_Process_SubKgLifecycle" bpmnElement="Collaboration_Process_SubKgLifecycle">
+      <bpmndi:BPMNShape id="Shape_Participant" bpmnElement="Participant_Process_SubKgLifecycle" isHorizontal="true"><dc:Bounds x="160" y="80" width="3760" height="720"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Agent" bpmnElement="Lane_Agent" isHorizontal="true"><dc:Bounds x="190" y="80" width="3730" height="180"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Platform" bpmnElement="Lane_Platform" isHorizontal="true"><dc:Bounds x="190" y="260" width="3730" height="160"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Pipeline" bpmnElement="Lane_Pipeline" isHorizontal="true"><dc:Bounds x="190" y="420" width="3730" height="180"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Admin" bpmnElement="Lane_Admin" isHorizontal="true"><dc:Bounds x="190" y="600" width="3730" height="200"/></bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Shape_Start_Wanted" bpmnElement="Start_Wanted"><dc:Bounds x="240" y="152" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Brief" bpmnElement="Task_Brief"><dc:Bounds x="320" y="130" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Declare" bpmnElement="Task_Declare"><dc:Bounds x="520" y="130" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Grow" bpmnElement="Task_Grow"><dc:Bounds x="720" y="130" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DecideLeave" bpmnElement="Task_DecideLeave"><dc:Bounds x="920" y="650" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Stays" bpmnElement="End_Stays"><dc:Bounds x="1120" y="752" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_PushDown" bpmnElement="Task_PushDown"><dc:Bounds x="1120" y="300" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Seam" bpmnElement="Task_Seam"><dc:Bounds x="1320" y="300" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Guard" bpmnElement="GW_Guard" isMarkerVisible="true"><dc:Bounds x="1520" y="485" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Rehearse" bpmnElement="Task_Rehearse"><dc:Bounds x="1620" y="470" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Alone" bpmnElement="GW_Alone" isMarkerVisible="true"><dc:Bounds x="1820" y="485" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Unknown" bpmnElement="End_Unknown"><dc:Bounds x="1960" y="492" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Report" bpmnElement="Task_Report"><dc:Bounds x="1920" y="130" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_ConfirmCreate" bpmnElement="Task_ConfirmCreate"><dc:Bounds x="2120" y="650" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Declined" bpmnElement="End_Declined"><dc:Bounds x="2320" y="752" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_CreateRepo" bpmnElement="Task_CreateRepo"><dc:Bounds x="2320" y="650" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_SeedReady" bpmnElement="GW_SeedReady" isMarkerVisible="true"><dc:Bounds x="2520" y="485" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Drain" bpmnElement="Task_Drain"><dc:Bounds x="2420" y="130" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_SeedUnknown" bpmnElement="End_SeedUnknown"><dc:Bounds x="2660" y="492" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Seed" bpmnElement="Task_Seed"><dc:Bounds x="2720" y="130" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Repoint" bpmnElement="Task_Repoint"><dc:Bounds x="2920" y="300" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_FreshClone" bpmnElement="Task_FreshClone"><dc:Bounds x="3120" y="470" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Fresh" bpmnElement="GW_Fresh" isMarkerVisible="true"><dc:Bounds x="3320" y="485" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_FreshUnknown" bpmnElement="End_FreshUnknown"><dc:Bounds x="3460" y="492" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_ConfirmCutover" bpmnElement="Task_ConfirmCutover"><dc:Bounds x="3420" y="650" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Kept" bpmnElement="End_Kept"><dc:Bounds x="3620" y="752" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Cutover" bpmnElement="Task_Cutover"><dc:Bounds x="3620" y="650" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Separated" bpmnElement="End_Separated"><dc:Bounds x="3820" y="672" width="36" height="36"/></bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Edge_F0" bpmnElement="F0"><di:waypoint x="276" y="170"/><di:waypoint x="320" y="170"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F1" bpmnElement="F1"><di:waypoint x="470" y="170"/><di:waypoint x="520" y="170"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F2" bpmnElement="F2"><di:waypoint x="670" y="170"/><di:waypoint x="720" y="170"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F3" bpmnElement="F3"><di:waypoint x="870" y="170"/><di:waypoint x="960" y="170"/><di:waypoint x="960" y="650"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F4" bpmnElement="F4"><di:waypoint x="995" y="730"/><di:waypoint x="995" y="770"/><di:waypoint x="1120" y="770"/><bpmndi:BPMNLabel><dc:Bounds x="1030" y="752" width="30" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F5" bpmnElement="F5"><di:waypoint x="1070" y="690"/><di:waypoint x="1095" y="690"/><di:waypoint x="1095" y="340"/><di:waypoint x="1120" y="340"/><bpmndi:BPMNLabel><dc:Bounds x="1100" y="560" width="35" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F6" bpmnElement="F6"><di:waypoint x="1270" y="340"/><di:waypoint x="1320" y="340"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F7" bpmnElement="F7"><di:waypoint x="1470" y="340"/><di:waypoint x="1545" y="340"/><di:waypoint x="1545" y="485"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F8" bpmnElement="F8"><di:waypoint x="1545" y="535"/><di:waypoint x="1545" y="575"/><di:waypoint x="1420" y="575"/><di:waypoint x="1420" y="380"/><bpmndi:BPMNLabel><dc:Bounds x="1470" y="558" width="25" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F9" bpmnElement="F9"><di:waypoint x="1570" y="510"/><di:waypoint x="1620" y="510"/><bpmndi:BPMNLabel><dc:Bounds x="1574" y="492" width="35" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F10" bpmnElement="F10"><di:waypoint x="1770" y="510"/><di:waypoint x="1820" y="510"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F11" bpmnElement="F11"><di:waypoint x="1845" y="535"/><di:waypoint x="1845" y="590"/><di:waypoint x="1370" y="590"/><di:waypoint x="1370" y="380"/><bpmndi:BPMNLabel><dc:Bounds x="1640" y="572" width="120" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F12" bpmnElement="F12"><di:waypoint x="1870" y="510"/><di:waypoint x="1960" y="510"/><bpmndi:BPMNLabel><dc:Bounds x="1880" y="530" width="75" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F13" bpmnElement="F13"><di:waypoint x="1845" y="485"/><di:waypoint x="1845" y="170"/><di:waypoint x="1920" y="170"/><bpmndi:BPMNLabel><dc:Bounds x="1852" y="300" width="35" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F14" bpmnElement="F14"><di:waypoint x="2070" y="170"/><di:waypoint x="2095" y="170"/><di:waypoint x="2095" y="690"/><di:waypoint x="2120" y="690"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F15" bpmnElement="F15"><di:waypoint x="2195" y="730"/><di:waypoint x="2195" y="770"/><di:waypoint x="2320" y="770"/><bpmndi:BPMNLabel><dc:Bounds x="2225" y="752" width="45" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F16" bpmnElement="F16"><di:waypoint x="2270" y="690"/><di:waypoint x="2320" y="690"/><bpmndi:BPMNLabel><dc:Bounds x="2266" y="672" width="58" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F17" bpmnElement="F17"><di:waypoint x="2470" y="690"/><di:waypoint x="2545" y="690"/><di:waypoint x="2545" y="535"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F18" bpmnElement="F18"><di:waypoint x="2545" y="485"/><di:waypoint x="2545" y="210"/><bpmndi:BPMNLabel><dc:Bounds x="2550" y="440" width="45" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F19" bpmnElement="F19"><di:waypoint x="2420" y="170"/><di:waypoint x="2400" y="170"/><di:waypoint x="2400" y="510"/><di:waypoint x="2520" y="510"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F20" bpmnElement="F20"><di:waypoint x="2570" y="510"/><di:waypoint x="2660" y="510"/><bpmndi:BPMNLabel><dc:Bounds x="2610" y="530" width="50" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F21" bpmnElement="F21"><di:waypoint x="2570" y="510"/><di:waypoint x="2600" y="510"/><di:waypoint x="2600" y="240"/><di:waypoint x="2795" y="240"/><di:waypoint x="2795" y="210"/><bpmndi:BPMNLabel><dc:Bounds x="2640" y="222" width="45" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F22" bpmnElement="F22"><di:waypoint x="2870" y="170"/><di:waypoint x="2995" y="170"/><di:waypoint x="2995" y="300"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F23" bpmnElement="F23"><di:waypoint x="3070" y="340"/><di:waypoint x="3195" y="340"/><di:waypoint x="3195" y="470"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F24" bpmnElement="F24"><di:waypoint x="3345" y="535"/><di:waypoint x="3345" y="580"/><di:waypoint x="2995" y="580"/><di:waypoint x="2995" y="380"/><bpmndi:BPMNLabel><dc:Bounds x="3150" y="562" width="25" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F25" bpmnElement="F25"><di:waypoint x="3270" y="510"/><di:waypoint x="3320" y="510"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F26" bpmnElement="F26"><di:waypoint x="3370" y="510"/><di:waypoint x="3460" y="510"/><bpmndi:BPMNLabel><dc:Bounds x="3385" y="476" width="75" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F27" bpmnElement="F27"><di:waypoint x="3370" y="510"/><di:waypoint x="3400" y="510"/><di:waypoint x="3400" y="690"/><di:waypoint x="3420" y="690"/><bpmndi:BPMNLabel><dc:Bounds x="3355" y="600" width="35" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F28" bpmnElement="F28"><di:waypoint x="3495" y="730"/><di:waypoint x="3495" y="770"/><di:waypoint x="3620" y="770"/><bpmndi:BPMNLabel><dc:Bounds x="3530" y="752" width="30" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F29" bpmnElement="F29"><di:waypoint x="3570" y="690"/><di:waypoint x="3620" y="690"/><bpmndi:BPMNLabel><dc:Bounds x="3574" y="672" width="40" height="14"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_F30" bpmnElement="F30"><di:waypoint x="3770" y="690"/><di:waypoint x="3820" y="690"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

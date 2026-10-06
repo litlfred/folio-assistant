@@ -4,6 +4,24 @@
   "@type": "bootstrap:Subgraph",
   "hasMember": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/fhir-ig-create",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#directory/fhir-ig-skills",
+      "instructionLines": 155,
+      "instructionsPath": "skills/fhir-ig-base/fhir-ig-create.md",
+      "name": "fhir-ig-create",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/33427423d9da2ac6f90ecbe1cabf28b5a5cd48197ffdde09e42eac1506575ea6",
+        "bytes": 7803,
+        "sha256": "33427423d9da2ac6f90ecbe1cabf28b5a5cd48197ffdde09e42eac1506575ea6"
+      },
+      "title": "fhir-ig-create"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld#skill/ig-ast-delta",
       "@type": "bootstrap:Skill",
       "ambiguous": false,

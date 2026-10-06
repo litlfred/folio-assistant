@@ -22,10 +22,10 @@ Branch `agent/ig-create-subkg` (local, not pushed).
 ## Done when
 
 - [x] survey recorded here (retrospective steps below)
-- [ ] `fhir-ig-create` skill in fhir-harness (intent question, routes to init-folio or the in-repo sub-KG path), FHIR-generic only
-- [ ] `smart-guideline-create` skill in smart-base (the SMART specialisation: layout rulings, fork-first, chrome owner)
-- [ ] `sub-kg-lifecycle` skill + `sub-kg-lifecycle.bpmn` in cat-harness, with owner-confirmation before repository creation and before deleting the in-repo copy
-- [ ] `getting-started` points to the new route without naming a higher layer
+- [x] `fhir-ig-create` skill in fhir-harness (intent question, routes to init-folio or the in-repo sub-KG path), FHIR-generic only
+- [x] `smart-guideline-create` skill in smart-base (the SMART specialisation: layout rulings, fork-first, chrome owner)
+- [x] `sub-kg-lifecycle` skill + `sub-kg-lifecycle.bpmn` in cat-harness, with owner-confirmation before repository creation and before deleting the in-repo copy
+- [x] `getting-started` points to the new route without naming a higher layer
 - [ ] skill:register, skill:register:check, render:bpmn:check, kg:audit:check, typecheck, nearest tests, gates attempted
 
 ## Retrospective steps extracted (sources)
