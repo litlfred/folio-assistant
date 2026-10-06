@@ -2501,6 +2501,13 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
 
   "fsh-guts": {
+    // A NEW instance keeps its trashcan on `cat/<instance>/fsh-guts`, the way
+    // `beans` and `todos` are kept (owner, 2026-10-06: "cutover dirs should go
+    // to fsh-guts"; `state:seed --cutover` refuses without one). A STORAGE
+    // fact, and independent of `holds` below: the cutover's deposit is a
+    // write the owner confirms, not one a running step makes on its own, so
+    // the kind stays `context`. folio_init only — see the field.
+    newInstanceSource: { kind: "branch", keyedBy: "tip" },
     published: false,
     description:
       "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **THAT IS TRUE AGAIN AS OF 2026-09-23, AND WAS NOT FOR SOME TIME.** The kind also held `proposals/` — the LIVE design corpus, cited as the governing scheme by seven skills and four code modules — so an agent that read this row, learned the kind was throwaway and skipped it had skipped the schemes it needed. That is exactly what happened (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled. **The owner's fix was to move them, not to re-describe the kind** — *\"proposals not in fsh-guts but docs/ for needed &lt;stub&gt;\"* — so proposals now live in the `docs/` of the instance whose stub they concern, published rather than hidden. What remains here is `retired/` and one-off migration `scripts/`, which are what the label always described. **The lesson survives the fix**: a kind whose name tells an agent to skip it must not hold anything an agent needs.",
