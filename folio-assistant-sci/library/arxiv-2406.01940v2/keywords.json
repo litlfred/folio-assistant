@@ -1,0 +1,1475 @@
+{
+  "$schema": "folio-keywords/v1",
+  "entry": "arxiv-2406.01940v2",
+  "corpus": {
+    "library": "folio-assistant-sci/library",
+    "sections": 87,
+    "terms": 1973,
+    "weighting": "log-entropy"
+  },
+  "document": [
+    {
+      "term": "language model",
+      "score": 20.8245,
+      "evidence": []
+    },
+    {
+      "term": "autoformalization model",
+      "score": 20.4299,
+      "evidence": []
+    },
+    {
+      "term": "autoformalization training",
+      "score": 19.9984,
+      "evidence": []
+    },
+    {
+      "term": "forml training",
+      "score": 19.734,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "real test",
+      "score": 19.3718,
+      "evidence": []
+    },
+    {
+      "term": "formal language",
+      "score": 19.3316,
+      "evidence": []
+    },
+    {
+      "term": "language compiler",
+      "score": 19.0012,
+      "evidence": []
+    },
+    {
+      "term": "llms autoformalization",
+      "score": 18.5517,
+      "evidence": []
+    },
+    {
+      "term": "statement autoformalization",
+      "score": 18.4842,
+      "evidence": []
+    },
+    {
+      "term": "basic test",
+      "score": 18.2875,
+      "evidence": []
+    },
+    {
+      "term": "verifier model",
+      "score": 18.2634,
+      "evidence": []
+    },
+    {
+      "term": "autoformalization evaluation",
+      "score": 18.001,
+      "evidence": [
+        "heading"
+      ]
+    }
+  ],
+  "sections": {
+    "sec-000-introduction": [
+      {
+        "term": "coe min",
+        "score": 4.553,
+        "evidence": []
+      },
+      {
+        "term": "map min",
+        "score": 3.3918,
+        "evidence": []
+      },
+      {
+        "term": "real numbers",
+        "score": 2.6302,
+        "evidence": []
+      },
+      {
+        "term": "automated assessment",
+        "score": 1.9834,
+        "evidence": []
+      },
+      {
+        "term": "process-driven autoformalization",
+        "score": 1.903,
+        "evidence": []
+      },
+      {
+        "term": "formal languages",
+        "score": 1.7376,
+        "evidence": []
+      },
+      {
+        "term": "propose process-driven",
+        "score": 1.6171,
+        "evidence": []
+      },
+      {
+        "term": "pda",
+        "score": 1.5572,
+        "evidence": []
+      }
+    ],
+    "sec-001-related-work": [
+      {
+        "term": "machine annotation",
+        "score": 2.1679,
+        "evidence": []
+      },
+      {
+        "term": "recent efforts",
+        "score": 1.7344,
+        "evidence": []
+      },
+      {
+        "term": "osv",
+        "score": 1.0386,
+        "evidence": []
+      },
+      {
+        "term": "wang",
+        "score": 1.0089,
+        "evidence": []
+      },
+      {
+        "term": "psv",
+        "score": 0.9706,
+        "evidence": []
+      },
+      {
+        "term": "llms",
+        "score": 0.8635,
+        "evidence": []
+      },
+      {
+        "term": "utilizes",
+        "score": 0.8428,
+        "evidence": []
+      },
+      {
+        "term": "answer",
+        "score": 0.7715,
+        "evidence": []
+      }
+    ],
+    "sec-002-forml4-dataset-construction": [
+      {
+        "term": "informalizing",
+        "score": 0.5856,
+        "evidence": []
+      },
+      {
+        "term": "post-processing",
+        "score": 0.5856,
+        "evidence": []
+      },
+      {
+        "term": "dataset",
+        "score": 0.553,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "sec-003-informalization": [
+      {
+        "term": "forml",
+        "score": 0.6353,
+        "evidence": []
+      },
+      {
+        "term": "assessment",
+        "score": 0.6059,
+        "evidence": []
+      },
+      {
+        "term": "alongside",
+        "score": 0.5856,
+        "evidence": []
+      }
+    ],
+    "sec-005-curation-process": [
+      {
+        "term": "basic test",
+        "score": 2.5407,
+        "evidence": []
+      },
+      {
+        "term": "real test",
+        "score": 2.3214,
+        "evidence": []
+      },
+      {
+        "term": "random test",
+        "score": 2.2204,
+        "evidence": []
+      },
+      {
+        "term": "high-quality informalization",
+        "score": 2.1589,
+        "evidence": []
+      },
+      {
+        "term": "informalization process",
+        "score": 2.1331,
+        "evidence": []
+      },
+      {
+        "term": "informalization success",
+        "score": 1.9895,
+        "evidence": []
+      },
+      {
+        "term": "check appendix",
+        "score": 1.9241,
+        "evidence": []
+      },
+      {
+        "term": "natural language",
+        "score": 1.8921,
+        "evidence": []
+      }
+    ],
+    "sec-006-comparing-forml4-with-existing-autoformalization": [
+      {
+        "term": "datasets",
+        "score": 1.1078,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "forml",
+        "score": 1.0944,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "autoformalization",
+        "score": 0.8032,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compares",
+        "score": 0.5856,
+        "evidence": []
+      }
+    ],
+    "sec-007-method-process-driven-autoformalization": [
+      {
+        "term": "methodology",
+        "score": 0.5856,
+        "evidence": []
+      },
+      {
+        "term": "presents",
+        "score": 0.5856,
+        "evidence": []
+      },
+      {
+        "term": "enhancing",
+        "score": 0.4526,
+        "evidence": []
+      }
+    ],
+    "sec-008-verification-model": [
+      {
+        "term": "step-level loss",
+        "score": 2.4297,
+        "evidence": []
+      },
+      {
+        "term": "error location",
+        "score": 2.2439,
+        "evidence": []
+      },
+      {
+        "term": "labeling strategy",
+        "score": 1.881,
+        "evidence": []
+      },
+      {
+        "term": "verifier models",
+        "score": 1.7588,
+        "evidence": []
+      },
+      {
+        "term": "compilation outcome",
+        "score": 1.7432,
+        "evidence": []
+      },
+      {
+        "term": "osv model",
+        "score": 1.7136,
+        "evidence": []
+      },
+      {
+        "term": "log",
+        "score": 1.38,
+        "evidence": []
+      },
+      {
+        "term": "final compilation",
+        "score": 1.3089,
+        "evidence": []
+      }
+    ],
+    "sec-009-further-enhancement-with-back-propagated-process": [
+      {
+        "term": "process feedback",
+        "score": 2.8665,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "enhanced autoformalizer",
+        "score": 1.9133,
+        "evidence": []
+      },
+      {
+        "term": "verifier",
+        "score": 0.9881,
+        "evidence": []
+      },
+      {
+        "term": "successful",
+        "score": 0.8428,
+        "evidence": []
+      },
+      {
+        "term": "labels",
+        "score": 0.7838,
+        "evidence": []
+      },
+      {
+        "term": "enhancement",
+        "score": 0.7521,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "step",
+        "score": 0.7264,
+        "evidence": []
+      },
+      {
+        "term": "outputs",
+        "score": 0.6683,
+        "evidence": []
+      }
+    ],
+    "sec-012-experimental-setup": [
+      {
+        "term": "closed-source llms",
+        "score": 1.6795,
+        "evidence": []
+      },
+      {
+        "term": "compiled outputs",
+        "score": 1.5302,
+        "evidence": []
+      },
+      {
+        "term": "experimental",
+        "score": 1.1711,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "finetuned",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "selected",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "test",
+        "score": 0.9052,
+        "evidence": []
+      },
+      {
+        "term": "verifier",
+        "score": 0.8514,
+        "evidence": []
+      },
+      {
+        "term": "openai",
+        "score": 0.8391,
+        "evidence": []
+      }
+    ],
+    "sec-013-enhanced-autoformalizer-performance": [
+      {
+        "term": "rft vea",
+        "score": 2.865,
+        "evidence": []
+      },
+      {
+        "term": "combined rft",
+        "score": 2.7685,
+        "evidence": []
+      },
+      {
+        "term": "autoformalizer",
+        "score": 2.0443,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "semantic alignment",
+        "score": 1.404,
+        "evidence": []
+      },
+      {
+        "term": "ensuring semantic",
+        "score": 1.3661,
+        "evidence": []
+      },
+      {
+        "term": "performance",
+        "score": 1.1794,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "strengths",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "informal statements",
+        "score": 0.9359,
+        "evidence": []
+      }
+    ],
+    "sec-014-further-enhanced-verifier-performance": [
+      {
+        "term": "verifier",
+        "score": 1.8494,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "rft vea",
+        "score": 1.8128,
+        "evidence": []
+      },
+      {
+        "term": "osv",
+        "score": 1.7965,
+        "evidence": []
+      },
+      {
+        "term": "recall",
+        "score": 1.7672,
+        "evidence": []
+      },
+      {
+        "term": "process-supervision training",
+        "score": 1.7506,
+        "evidence": []
+      },
+      {
+        "term": "verifier models",
+        "score": 1.6927,
+        "evidence": []
+      },
+      {
+        "term": "real dataset",
+        "score": 1.5143,
+        "evidence": []
+      },
+      {
+        "term": "psv",
+        "score": 1.4461,
+        "evidence": []
+      }
+    ],
+    "sec-015-human-evaluation-on-autoformalizer-performances": [
+      {
+        "term": "human evaluation",
+        "score": 2.389,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "enhanced autoformalizer",
+        "score": 1.7574,
+        "evidence": []
+      },
+      {
+        "term": "validity",
+        "score": 1.5982,
+        "evidence": []
+      },
+      {
+        "term": "autoformalized sample",
+        "score": 1.4533,
+        "evidence": []
+      },
+      {
+        "term": "semantic alignment",
+        "score": 1.404,
+        "evidence": []
+      },
+      {
+        "term": "pda",
+        "score": 1.3504,
+        "evidence": []
+      },
+      {
+        "term": "dataset split",
+        "score": 1.2227,
+        "evidence": []
+      },
+      {
+        "term": "hypotheses",
+        "score": 1.2117,
+        "evidence": []
+      }
+    ],
+    "sec-016-conclusion": [
+      {
+        "term": "url arxiv",
+        "score": 6.2518,
+        "evidence": []
+      },
+      {
+        "term": "international conference",
+        "score": 6.0455,
+        "evidence": []
+      },
+      {
+        "term": "url net",
+        "score": 5.62,
+        "evidence": []
+      },
+      {
+        "term": "processing systems",
+        "score": 5.0492,
+        "evidence": []
+      },
+      {
+        "term": "url https",
+        "score": 4.771,
+        "evidence": []
+      },
+      {
+        "term": "org abs",
+        "score": 4.717,
+        "evidence": []
+      },
+      {
+        "term": "information processing",
+        "score": 4.5656,
+        "evidence": []
+      },
+      {
+        "term": "arxiv preprint",
+        "score": 4.5133,
+        "evidence": []
+      }
+    ],
+    "sec-017-future-directions": [
+      {
+        "term": "future",
+        "score": 0.8867,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "rft",
+        "score": 0.7174,
+        "evidence": []
+      },
+      {
+        "term": "psv",
+        "score": 0.6625,
+        "evidence": []
+      },
+      {
+        "term": "process-supervision",
+        "score": 0.6059,
+        "evidence": []
+      }
+    ],
+    "sec-018-more-related-works": [
+      {
+        "term": "formal datasets",
+        "score": 1.7225,
+        "evidence": []
+      },
+      {
+        "term": "stands out",
+        "score": 1.6107,
+        "evidence": []
+      },
+      {
+        "term": "reasoning process",
+        "score": 1.5767,
+        "evidence": []
+      },
+      {
+        "term": "formal languages",
+        "score": 1.5731,
+        "evidence": []
+      },
+      {
+        "term": "formal mathematics",
+        "score": 1.3822,
+        "evidence": []
+      },
+      {
+        "term": "problems",
+        "score": 1.144,
+        "evidence": []
+      },
+      {
+        "term": "prompting",
+        "score": 1.1086,
+        "evidence": []
+      },
+      {
+        "term": "works",
+        "score": 1.0453,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "sec-019-detailed-decomposition-strategy": [
+      {
+        "term": "decomposition strategy",
+        "score": 3.7228,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "natural-language problem",
+        "score": 1.8803,
+        "evidence": []
+      },
+      {
+        "term": "natural language",
+        "score": 1.1635,
+        "evidence": []
+      },
+      {
+        "term": "formal statement",
+        "score": 1.104,
+        "evidence": []
+      },
+      {
+        "term": "explaining",
+        "score": 0.9966,
+        "evidence": []
+      },
+      {
+        "term": "subtasks",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "step",
+        "score": 0.9388,
+        "evidence": []
+      },
+      {
+        "term": "term",
+        "score": 0.7709,
+        "evidence": []
+      }
+    ],
+    "sec-020-prompt-for-informalization": [
+      {
+        "term": "property holds",
+        "score": 4.1195,
+        "evidence": []
+      },
+      {
+        "term": "lemma states",
+        "score": 2.2851,
+        "evidence": []
+      },
+      {
+        "term": "tactic combines",
+        "score": 2.0059,
+        "evidence": []
+      },
+      {
+        "term": "congruent",
+        "score": 1.951,
+        "evidence": []
+      },
+      {
+        "term": "natural number",
+        "score": 1.8629,
+        "evidence": []
+      },
+      {
+        "term": "even",
+        "score": 1.7752,
+        "evidence": []
+      },
+      {
+        "term": "natural language",
+        "score": 1.6055,
+        "evidence": []
+      },
+      {
+        "term": "mul",
+        "score": 1.5982,
+        "evidence": []
+      }
+    ],
+    "sec-024-task": [
+      {
+        "term": "natural language",
+        "score": 1.1635,
+        "evidence": []
+      },
+      {
+        "term": "translated",
+        "score": 0.7174,
+        "evidence": []
+      },
+      {
+        "term": "functions",
+        "score": 0.715,
+        "evidence": []
+      }
+    ],
+    "sec-025-file-structure": [
+      {
+        "term": "model output",
+        "score": 1.5887,
+        "evidence": []
+      },
+      {
+        "term": "json files",
+        "score": 1.3748,
+        "evidence": []
+      },
+      {
+        "term": "problem",
+        "score": 0.995,
+        "evidence": []
+      },
+      {
+        "term": "extracted",
+        "score": 0.946,
+        "evidence": []
+      },
+      {
+        "term": "gemini",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "gpt4o",
+        "score": 0.942,
+        "evidence": []
+      }
+    ],
+    "sec-026-quality-criteria": [
+      {
+        "term": "intuitive terms",
+        "score": 1.4427,
+        "evidence": []
+      },
+      {
+        "term": "criteria",
+        "score": 1.0453,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ideal",
+        "score": 0.7715,
+        "evidence": []
+      }
+    ],
+    "sec-027-annotation-results-for-informalization-model-com": [
+      {
+        "term": "model preference",
+        "score": 1.2628,
+        "evidence": []
+      },
+      {
+        "term": "informalization success",
+        "score": 1.0669,
+        "evidence": []
+      },
+      {
+        "term": "comparison",
+        "score": 0.6508,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "sec-028-human-evaluation-pda-dataset-quality": [
+      {
+        "term": "informalization success",
+        "score": 1.5345,
+        "evidence": []
+      },
+      {
+        "term": "selection stage",
+        "score": 1.4296,
+        "evidence": []
+      },
+      {
+        "term": "basic test",
+        "score": 1.3678,
+        "evidence": []
+      },
+      {
+        "term": "four human",
+        "score": 1.3609,
+        "evidence": []
+      },
+      {
+        "term": "random test",
+        "score": 1.3517,
+        "evidence": []
+      },
+      {
+        "term": "success rate",
+        "score": 1.2757,
+        "evidence": []
+      },
+      {
+        "term": "human experts",
+        "score": 1.1434,
+        "evidence": []
+      },
+      {
+        "term": "model selection",
+        "score": 1.0016,
+        "evidence": []
+      }
+    ],
+    "sec-029-case-visualization-in-comparision-with-existing": [
+      {
+        "term": "syntax checking",
+        "score": 1.813,
+        "evidence": []
+      },
+      {
+        "term": "both statements",
+        "score": 0.8986,
+        "evidence": []
+      },
+      {
+        "term": "existing",
+        "score": 0.8709,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mma",
+        "score": 0.795,
+        "evidence": []
+      },
+      {
+        "term": "contrast",
+        "score": 0.7715,
+        "evidence": []
+      },
+      {
+        "term": "feedback",
+        "score": 0.7177,
+        "evidence": []
+      },
+      {
+        "term": "datasets",
+        "score": 0.6989,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "reasoning",
+        "score": 0.6214,
+        "evidence": []
+      }
+    ],
+    "sec-030-human-evaluation-autoformalization-performance-e": [
+      {
+        "term": "sample",
+        "score": 0.6401,
+        "evidence": []
+      },
+      {
+        "term": "minutes",
+        "score": 0.5944,
+        "evidence": []
+      },
+      {
+        "term": "cross-evaluate",
+        "score": 0.5856,
+        "evidence": []
+      }
+    ],
+    "sec-032-training-settings": [
+      {
+        "term": "training hyperparameters",
+        "score": 1.797,
+        "evidence": []
+      },
+      {
+        "term": "max length",
+        "score": 1.7672,
+        "evidence": []
+      },
+      {
+        "term": "coe",
+        "score": 1.5487,
+        "evidence": []
+      },
+      {
+        "term": "angle",
+        "score": 1.4291,
+        "evidence": []
+      },
+      {
+        "term": "learning rate",
+        "score": 1.3469,
+        "evidence": []
+      },
+      {
+        "term": "cosine",
+        "score": 1.2117,
+        "evidence": []
+      },
+      {
+        "term": "natural language",
+        "score": 0.9629,
+        "evidence": []
+      },
+      {
+        "term": "global",
+        "score": 0.942,
+        "evidence": []
+      }
+    ],
+    "sec-033-generation-settings": [
+      {
+        "term": "generation",
+        "score": 1.2053,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "unbiased",
+        "score": 0.9281,
+        "evidence": []
+      },
+      {
+        "term": "settings",
+        "score": 0.8867,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pass",
+        "score": 0.8356,
+        "evidence": []
+      }
+    ],
+    "sec-034-lean-4-compilation": [
+      {
+        "term": "compilation",
+        "score": 1.4852,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "versions",
+        "score": 1.2117,
+        "evidence": []
+      },
+      {
+        "term": "minutes",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "sources",
+        "score": 0.8391,
+        "evidence": []
+      },
+      {
+        "term": "main",
+        "score": 0.8179,
+        "evidence": []
+      },
+      {
+        "term": "time",
+        "score": 0.7845,
+        "evidence": []
+      },
+      {
+        "term": "libraries",
+        "score": 0.6821,
+        "evidence": []
+      },
+      {
+        "term": "tool",
+        "score": 0.6117,
+        "evidence": []
+      }
+    ],
+    "sec-035-comprehensive-evaluation-of-the-enhanced-autofor": [
+      {
+        "term": "enhanced autoformalizer",
+        "score": 3.7694,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "rft verifier",
+        "score": 1.9756,
+        "evidence": []
+      },
+      {
+        "term": "rft vea",
+        "score": 1.7702,
+        "evidence": []
+      },
+      {
+        "term": "further refine",
+        "score": 1.2097,
+        "evidence": []
+      },
+      {
+        "term": "comprehensive",
+        "score": 1.0716,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "comprehensive performance",
+        "score": 0.9383,
+        "evidence": []
+      }
+    ],
+    "sec-036-model-selection-process": [
+      {
+        "term": "selection process",
+        "score": 2.4494,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "model selection",
+        "score": 2.3651,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "translated natural-language",
+        "score": 1.3981,
+        "evidence": []
+      },
+      {
+        "term": "gemini-pro",
+        "score": 1.3633,
+        "evidence": []
+      },
+      {
+        "term": "annotators",
+        "score": 0.8428,
+        "evidence": []
+      },
+      {
+        "term": "both models",
+        "score": 0.8129,
+        "evidence": []
+      }
+    ],
+    "sec-037-detailed-dataset-comparison-analysis": [
+      {
+        "term": "mma",
+        "score": 1.5047,
+        "evidence": []
+      },
+      {
+        "term": "process-driven feedback",
+        "score": 1.4348,
+        "evidence": []
+      },
+      {
+        "term": "workbook",
+        "score": 1.4291,
+        "evidence": []
+      },
+      {
+        "term": "datasets",
+        "score": 1.1078,
+        "evidence": []
+      },
+      {
+        "term": "formal language",
+        "score": 1.0391,
+        "evidence": []
+      },
+      {
+        "term": "benchmarking",
+        "score": 1.0006,
+        "evidence": []
+      },
+      {
+        "term": "forml",
+        "score": 0.9809,
+        "evidence": []
+      },
+      {
+        "term": "easier",
+        "score": 0.942,
+        "evidence": []
+      }
+    ],
+    "sec-038-analysis-for-training-and-test-data-in-forml4": [
+      {
+        "term": "test",
+        "score": 2.8626,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "training data",
+        "score": 2.4493,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "real test",
+        "score": 2.398,
+        "evidence": []
+      },
+      {
+        "term": "test domains",
+        "score": 2.1974,
+        "evidence": []
+      },
+      {
+        "term": "pre-defined lemmas",
+        "score": 1.4432,
+        "evidence": []
+      },
+      {
+        "term": "forml",
+        "score": 1.4145,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "basic terms",
+        "score": 1.3133,
+        "evidence": []
+      },
+      {
+        "term": "mistral",
+        "score": 1.0839,
+        "evidence": []
+      }
+    ],
+    "sec-039-autoformalization-on-real-world-mathematical-rea": [
+      {
+        "term": "math training",
+        "score": 1.5239,
+        "evidence": []
+      },
+      {
+        "term": "gsm8k",
+        "score": 1.4306,
+        "evidence": []
+      },
+      {
+        "term": "sft model",
+        "score": 1.3957,
+        "evidence": []
+      },
+      {
+        "term": "mistral",
+        "score": 1.2583,
+        "evidence": []
+      },
+      {
+        "term": "autoformalization",
+        "score": 0.9325,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "sec-041-data-preprocessing": [
+      {
+        "term": "names",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "removed",
+        "score": 0.8428,
+        "evidence": []
+      },
+      {
+        "term": "test",
+        "score": 0.7003,
+        "evidence": []
+      },
+      {
+        "term": "samples",
+        "score": 0.6213,
+        "evidence": []
+      },
+      {
+        "term": "familiar",
+        "score": 0.5856,
+        "evidence": []
+      }
+    ],
+    "sec-042-dataset-split": [
+      {
+        "term": "basic test",
+        "score": 2.5633,
+        "evidence": []
+      },
+      {
+        "term": "real test",
+        "score": 2.4922,
+        "evidence": []
+      },
+      {
+        "term": "random test",
+        "score": 2.0804,
+        "evidence": []
+      },
+      {
+        "term": "geometry euclidean",
+        "score": 1.5051,
+        "evidence": []
+      },
+      {
+        "term": "math questions",
+        "score": 1.3099,
+        "evidence": []
+      },
+      {
+        "term": "like mathlib",
+        "score": 1.0764,
+        "evidence": []
+      },
+      {
+        "term": "assesses",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "geometrical",
+        "score": 0.8428,
+        "evidence": []
+      }
+    ],
+    "sec-043-data-postprocessing": [
+      {
+        "term": "length",
+        "score": 0.8391,
+        "evidence": []
+      },
+      {
+        "term": "characters",
+        "score": 0.5856,
+        "evidence": []
+      },
+      {
+        "term": "instances",
+        "score": 0.5856,
+        "evidence": []
+      }
+    ],
+    "sec-045-prompt": [
+      {
+        "term": "prompt",
+        "score": 1.8313,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "template",
+        "score": 0.7709,
+        "evidence": []
+      },
+      {
+        "term": "natural language",
+        "score": 0.7134,
+        "evidence": []
+      }
+    ],
+    "sec-046-preprocessing-and-evaluation": [
+      {
+        "term": "pass",
+        "score": 1.5461,
+        "evidence": []
+      },
+      {
+        "term": "greedy",
+        "score": 1.3195,
+        "evidence": []
+      },
+      {
+        "term": "model performance",
+        "score": 1.0506,
+        "evidence": []
+      },
+      {
+        "term": "confidence",
+        "score": 0.942,
+        "evidence": []
+      },
+      {
+        "term": "unbiased",
+        "score": 0.9281,
+        "evidence": []
+      },
+      {
+        "term": "openai",
+        "score": 0.8391,
+        "evidence": []
+      },
+      {
+        "term": "shao",
+        "score": 0.7347,
+        "evidence": []
+      },
+      {
+        "term": "test",
+        "score": 0.7003,
+        "evidence": []
+      }
+    ],
+    "sec-047-detailed-analyses-of-existing-llms-on-forml4": [
+      {
+        "term": "greedy score",
+        "score": 2.1983,
+        "evidence": []
+      },
+      {
+        "term": "closed-source llms",
+        "score": 2.1943,
+        "evidence": []
+      },
+      {
+        "term": "open-source llms",
+        "score": 2.1905,
+        "evidence": []
+      },
+      {
+        "term": "closed-source models",
+        "score": 2.0988,
+        "evidence": []
+      },
+      {
+        "term": "scores across",
+        "score": 1.8755,
+        "evidence": []
+      },
+      {
+        "term": "real test",
+        "score": 1.389,
+        "evidence": []
+      },
+      {
+        "term": "autoformalization tasks",
+        "score": 1.2012,
+        "evidence": []
+      },
+      {
+        "term": "forml",
+        "score": 0.8673,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "sec-front-matter": [
+      {
+        "term": "kong university",
+        "score": 2.8553,
+        "evidence": []
+      },
+      {
+        "term": "hong kong",
+        "score": 2.6768,
+        "evidence": []
+      },
+      {
+        "term": "formal languages",
+        "score": 1.3193,
+        "evidence": []
+      },
+      {
+        "term": "process-driven autoformalization",
+        "score": 1.2994,
+        "evidence": []
+      },
+      {
+        "term": "jing",
+        "score": 0.9331,
+        "evidence": []
+      },
+      {
+        "term": "pda",
+        "score": 0.9003,
+        "evidence": []
+      },
+      {
+        "term": "technology",
+        "score": 0.8428,
+        "evidence": []
+      },
+      {
+        "term": "science",
+        "score": 0.8349,
+        "evidence": []
+      }
+    ]
+  }
+}

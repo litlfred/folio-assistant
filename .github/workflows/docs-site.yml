@@ -258,6 +258,11 @@ jobs:
       # half. `library/` is the subgraph every knowledge-graph reference to a
       # source resolves THROUGH, and until this step nobody could look at it
       # (bean `jbx2`).
+      # Keywords first: the viewer reads keywords.json, and like the projection
+      # they derive from a WHOLE library (one new entry reweights every term),
+      # so they are regenerated here rather than gated (issue #2302).
+      - name: Regenerate library keywords
+        run: bun run library:keywords
       - name: Regenerate the library projection and viewer
         run: bun run library:viz
 

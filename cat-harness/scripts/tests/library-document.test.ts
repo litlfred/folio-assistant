@@ -79,3 +79,18 @@ describe("readEntryDocument", () => {
     expect(r).toEqual({ extract: "alpha beta", cut: true });
   });
 });
+
+describe("keywords in the document view", () => {
+  test("document and section keywords from keywords.json, heading evidence kept; absent file leaves the field absent", () => {
+    const kws = {
+      $schema: "folio-keywords/v1",
+      document: [{ term: "systematic review", score: 2, evidence: ["heading"] }, { term: "grade", score: 1, evidence: [] }],
+      sections: { "sec-001-2-methods": [{ term: "methods", score: 1, evidence: ["heading"] }] },
+    };
+    const d = readEntryDocument(entry(base, { "keywords.json": JSON.stringify(kws) }), "r", { withheld: true })!;
+    expect(d.keywords).toEqual([{ term: "systematic review", heading: true }, { term: "grade", heading: false }]);
+    expect(d.sections[1].keywords).toEqual([{ term: "methods", heading: true }]);
+    expect(d.sections[0].keywords).toEqual([]);
+    expect(readEntryDocument(entry(base), "r")!.keywords).toBeUndefined();
+  });
+});

@@ -568,6 +568,35 @@ For a withheld entry the panel keeps structure, page labels, figure and table
 **captions** (labels, like TOC titles — owner, 2026-10-06) and our summaries,
 and omits only section body extracts.
 
+### Keywords — from the LSI weights, per section and per document (issue #2302)
+
+`bun run library:keywords` writes `library/<slug>/keywords.json`
+(`folio-keywords/v1`) for every entry of every declared library: up to 12 for
+the document and up to 8 per section, fewer for a short section (one per ~20
+content tokens, at least 3). They are read from the **same** log-entropy matrix
+the LSI index is built from (`keywordsOf` in `content/pipeline/lsi.ts`), so a
+keyword means "frequent here, rare across this library" exactly as the index
+does — no second vocabulary. `library:keywords:check` fails on a stale file;
+re-run it after ingesting or re-splitting an entry. The Document panel shows
+them as chips, green where a heading also names the term (`evidence:
+["heading"]`) — the document saying it of itself. Withheld entries show them:
+they are derived terms, like captions, not the text.
+
+What the scoring does, each measured on the who-iris handbook (2026-10-06):
+
+- **Two-word phrases** from truly adjacent tokens said at least twice; a stop
+  word, punctuation, or a line break before a capital (a table cell, a heading)
+  breaks the run — "Development" over "Systematic review team" is two cells,
+  not "development systematic".
+- **A word said once** in a text of 100+ tokens is not a keyword, unless the
+  section's heading names it; heading-named terms score double.
+- **Generic words** the index keeps but that say nothing about a topic
+  ("anyone", "aims", "take", "-ly" adverbs) are excluded from keywords only.
+- **Plurals fold**: "evidence reviews" does not follow "evidence review".
+
+Limits: no part-of-speech tagging, so a rare verb can still surface in a short
+section; a library of fewer than 3 sections gets none.
+
 ### A WITHHELD entry in the viewer — its summary, else the gate, never "no content" (issue #1794)
 
 An entry whose library root's `withheld.json` names it (bean `cw35`) is listed

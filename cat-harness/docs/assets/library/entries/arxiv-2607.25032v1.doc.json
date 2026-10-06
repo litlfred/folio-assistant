@@ -151,6 +151,40 @@
       "labelEnd": null,
       "words": 274,
       "summary": null,
+      "keywords": [
+        {
+          "term": "agent skills",
+          "heading": false
+        },
+        {
+          "term": "hooks",
+          "heading": false
+        },
+        {
+          "term": "software-engineering",
+          "heading": false
+        },
+        {
+          "term": "claude code",
+          "heading": false
+        },
+        {
+          "term": "authoring",
+          "heading": false
+        },
+        {
+          "term": "anthropic",
+          "heading": false
+        },
+        {
+          "term": "together",
+          "heading": false
+        },
+        {
+          "term": "mechanism",
+          "heading": false
+        }
+      ],
       "extract": "Authoring Agent Skills: A Software-Engineering Approach Giuseppe Destefanis Department of Computer Science, University College London g.destefanis@ucl.ac.uk Abstract Agent Skills are an emerging way to extend large language model agents with reusable procedural knowledge that the agent loads on demand. Anthropic introduced Agent Skills and published the format as an open specification supported across several agent",
       "extractCut": true
     },
@@ -165,6 +199,40 @@
       "labelEnd": null,
       "words": 544,
       "summary": null,
+      "keywords": [
+        {
+          "term": "staged loading",
+          "heading": false
+        },
+        {
+          "term": "loading model",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "claude code",
+          "heading": false
+        },
+        {
+          "term": "surrounding",
+          "heading": false
+        },
+        {
+          "term": "behaviour",
+          "heading": false
+        },
+        {
+          "term": "authoring",
+          "heading": false
+        },
+        {
+          "term": "mechanisms",
+          "heading": false
+        }
+      ],
       "extract": "A skill packages a workflow, a set of conventions, domain facts, or a sequence of steps that an agent should follow for a particular kind of task, so that the agent behaves as a specialist without the developer repeating the same guidance in every session. A characteristic property of a skill is that the agent can decide when to apply it, by matching the description, and that decision is probabilistic. There is no",
       "extractCut": true
     },
@@ -179,6 +247,40 @@
       "labelEnd": null,
       "words": 932,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill name",
+          "heading": false
+        },
+        {
+          "term": "agent behaviour",
+          "heading": false
+        },
+        {
+          "term": "bundled files",
+          "heading": false
+        },
+        {
+          "term": "uml class",
+          "heading": false
+        },
+        {
+          "term": "static form",
+          "heading": false
+        },
+        {
+          "term": "usual sense",
+          "heading": false
+        },
+        {
+          "term": "model selects",
+          "heading": false
+        },
+        {
+          "term": "class style",
+          "heading": false
+        }
+      ],
       "extract": "The introduction set out the grounds for treating a skill as a software artefact: ordinary files that can be versioned, an interface and an implementation, composition with other units, and the ways it can fail. Many of the disciplines that apply to ordinary software therefore apply to skills, some directly and some in a modified form, and this note treats authoring as a design activity. Several principles transfer,",
       "extractCut": true
     },
@@ -193,6 +295,28 @@
       "labelEnd": null,
       "words": 156,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "claude skills",
+          "heading": false
+        },
+        {
+          "term": "xml tags",
+          "heading": false
+        },
+        {
+          "term": "holding",
+          "heading": false
+        },
+        {
+          "term": "characters",
+          "heading": false
+        }
+      ],
       "extract": "A skill is a directory on the filesystem that contains a single SKILL.md file and, optionally, supporting files such as reference documents, scripts, and templates. The SKILL.md file has two parts: YAML frontmatter holding a name and a description, and a markdown body holding the instructions. A minimal skill is one SKILL.md with no other files. A larger skill bundles reference material and code alongside it [2]. In",
       "extractCut": true
     },
@@ -207,6 +331,40 @@
       "labelEnd": null,
       "words": 403,
       "summary": null,
+      "keywords": [
+        {
+          "term": "staged loading",
+          "heading": true
+        },
+        {
+          "term": "body enters",
+          "heading": false
+        },
+        {
+          "term": "bundled files",
+          "heading": false
+        },
+        {
+          "term": "reference files",
+          "heading": false
+        },
+        {
+          "term": "context window",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "loaded",
+          "heading": false
+        },
+        {
+          "term": "hundred",
+          "heading": false
+        }
+      ],
       "extract": "Skills use staged loading, described in the documentation as progressive disclosure [2]. The mechanism rests on three levels, shown in Figure 2. The first level is the frontmatter. The name and description of every installed skill are made available to the model at the start of a session, at a cost of roughly one hundred tokens per skill [2]. This is what lets a project hold many skills without paying for all of",
       "extractCut": true
     },
@@ -221,6 +379,28 @@
       "labelEnd": null,
       "words": 174,
       "summary": null,
+      "keywords": [
+        {
+          "term": "invocation",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "description",
+          "heading": true
+        },
+        {
+          "term": "cutting",
+          "heading": false
+        },
+        {
+          "term": "deserves",
+          "heading": false
+        }
+      ],
       "extract": "Because the description is the trigger, it deserves more care than any other part of the skill. Write it in the third person, since it is read by the model as part of its own context, and a first or second person voice can degrade matching. State both what the skill does and when it should be used, and include the concrete terms a relevant task would contain. A description such as “Handles releases” gives the model",
       "extractCut": true
     },
@@ -235,6 +415,40 @@
       "labelEnd": null,
       "words": 428,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "skill reads",
+          "heading": false
+        },
+        {
+          "term": "bundled script",
+          "heading": false
+        },
+        {
+          "term": "reference file",
+          "heading": false
+        },
+        {
+          "term": "partial read",
+          "heading": false
+        },
+        {
+          "term": "anatomy",
+          "heading": true
+        },
+        {
+          "term": "artefacts",
+          "heading": false
+        },
+        {
+          "term": "release-notes",
+          "heading": false
+        }
+      ],
       "extract": "Figure 3 shows the parts of a skill using a generic release-notes example. Inputs that the skill reads are drawn as chips on the left, the numbered steps of the body sit inside the container, and the artefacts the skill produces are chips on the right. The same convention serves any skill: the container is the unit of behaviour, the chips on either side are what it consumes and produces, and the inner boxes are the",
       "extractCut": true
     },
@@ -249,6 +463,40 @@
       "labelEnd": null,
       "words": 495,
       "summary": null,
+      "keywords": [
+        {
+          "term": "slash command",
+          "heading": false
+        },
+        {
+          "term": "command end",
+          "heading": false
+        },
+        {
+          "term": "memory file",
+          "heading": false
+        },
+        {
+          "term": "skill end",
+          "heading": false
+        },
+        {
+          "term": "decides",
+          "heading": false
+        },
+        {
+          "term": "external tool",
+          "heading": false
+        },
+        {
+          "term": "claude code",
+          "heading": false
+        },
+        {
+          "term": "advisory",
+          "heading": false
+        }
+      ],
       "extract": "Skills are one of several mechanisms that change how an agent behaves. They are easy to confuse, and choosing the wrong one is a common source of unreliable behaviour. Two questions separate them: who decides that the mechanism runs, and what guarantee it provides. Table 1 sets out the mechanisms against these two questions, as Claude Code implements them. Analogous 5 mechanisms exist in other tools: the external",
       "extractCut": true
     },
@@ -263,6 +511,40 @@
       "labelEnd": null,
       "words": 554,
       "summary": null,
+      "keywords": [
+        {
+          "term": "event fires",
+          "heading": false
+        },
+        {
+          "term": "hook",
+          "heading": false
+        },
+        {
+          "term": "finishes responding",
+          "heading": false
+        },
+        {
+          "term": "shell command",
+          "heading": false
+        },
+        {
+          "term": "session start",
+          "heading": false
+        },
+        {
+          "term": "during session",
+          "heading": false
+        },
+        {
+          "term": "tool call",
+          "heading": false
+        },
+        {
+          "term": "model finishes",
+          "heading": false
+        }
+      ],
       "extract": "This pairing deserves separate treatment, because it is where guarantees are most often misplaced. On its automatic path a skill is model-invoked and probabilistic; a hook is runtime-invoked and 6 who decides the run strength of effect model-decided user-invoked runtime-guaranteed advisory blocking Skill External tool Subagent Slash command Memory file Hook Figure 4: Schematic positioning of the mechanisms by who",
       "extractCut": true
     },
@@ -277,6 +559,36 @@
       "labelEnd": null,
       "words": 245,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "fails",
+          "heading": false
+        },
+        {
+          "term": "observe",
+          "heading": false
+        },
+        {
+          "term": "write",
+          "heading": false
+        },
+        {
+          "term": "expected",
+          "heading": false
+        },
+        {
+          "term": "instance",
+          "heading": false
+        },
+        {
+          "term": "model",
+          "heading": false
+        }
+      ],
       "extract": "Write evaluations before writing the skill. Run the model on representative tasks without the skill and record where it fails or lacks context. Turn those failures into a small set of test cases with expected behaviours. Measure the baseline without the skill, then write the minimum instructions needed to pass the tests, and iterate against them. This keeps the skill aimed at real gaps rather than imagined ones [3].",
       "extractCut": true
     },
@@ -291,6 +603,32 @@
       "labelEnd": null,
       "words": 198,
       "summary": null,
+      "keywords": [
+        {
+          "term": "leaving",
+          "heading": false
+        },
+        {
+          "term": "matters",
+          "heading": false
+        },
+        {
+          "term": "style",
+          "heading": false
+        },
+        {
+          "term": "patterns",
+          "heading": true
+        },
+        {
+          "term": "output",
+          "heading": false
+        },
+        {
+          "term": "run",
+          "heading": false
+        }
+      ],
       "extract": "For multi-step tasks, give the body an explicit ordered workflow, and for fragile sequences include a checklist the model can copy and tick off as it proceeds. Where output quality depends on validation, build a loop: run a check, fix what it reports, run it again, and proceed only when it passes. For batch or destructive operations, have the model write a plan to a structured file and validate that file with a",
       "extractCut": true
     },
@@ -305,6 +643,24 @@
       "labelEnd": null,
       "words": 116,
       "summary": null,
+      "keywords": [
+        {
+          "term": "carry instructions",
+          "heading": false
+        },
+        {
+          "term": "external content",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "inspected",
+          "heading": false
+        }
+      ],
       "extract": "A skill should be treated as a software dependency. It can carry instructions, scripts, references, and links to external content, and the agent acts on those materials with whatever permissions it holds in the current environment. A skill that fetches external content is a particular concern, since that content can itself carry instructions and can change after the skill was first trusted. 8 So a skill from a third",
       "extractCut": true
     },
@@ -319,10 +675,94 @@
       "labelEnd": null,
       "words": 247,
       "summary": null,
+      "keywords": [
+        {
+          "term": "claude code",
+          "heading": false
+        },
+        {
+          "term": "code documentation",
+          "heading": false
+        },
+        {
+          "term": "claude api",
+          "heading": false
+        },
+        {
+          "term": "agent skills",
+          "heading": false
+        },
+        {
+          "term": "anthropic",
+          "heading": false
+        },
+        {
+          "term": "hooks",
+          "heading": false
+        },
+        {
+          "term": "guidance",
+          "heading": true
+        },
+        {
+          "term": "evaluations",
+          "heading": false
+        }
+      ],
       "extract": "A skill is a software artefact, and the guidance above is an application of ordinary engineering discipline to it. The comparison drawn in UML class style holds for structure, while invocation works differently: the model selects a skill probabilistically, so evaluations carry the weight a type system would in conventional code. A skill is selected by the model on the strength of its description and loaded in",
       "extractCut": true
     }
   ],
   "checks": {},
-  "withheld": false
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "skill loaded",
+      "heading": false
+    },
+    {
+      "term": "reads skill",
+      "heading": false
+    },
+    {
+      "term": "selects skill",
+      "heading": false
+    },
+    {
+      "term": "skill authoring",
+      "heading": false
+    },
+    {
+      "term": "skill name",
+      "heading": false
+    },
+    {
+      "term": "skill sits",
+      "heading": false
+    },
+    {
+      "term": "skill fails",
+      "heading": false
+    },
+    {
+      "term": "skill end",
+      "heading": false
+    },
+    {
+      "term": "bundled files",
+      "heading": false
+    },
+    {
+      "term": "bundled scripts",
+      "heading": false
+    },
+    {
+      "term": "agent behaviour",
+      "heading": false
+    },
+    {
+      "term": "claude skills",
+      "heading": false
+    }
+  ]
 }

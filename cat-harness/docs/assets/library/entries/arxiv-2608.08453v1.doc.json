@@ -250,6 +250,24 @@
       "labelEnd": null,
       "words": 66,
       "summary": null,
+      "keywords": [
+        {
+          "term": "city university",
+          "heading": false
+        },
+        {
+          "term": "graduate center",
+          "heading": false
+        },
+        {
+          "term": "york",
+          "heading": false
+        },
+        {
+          "term": "edu",
+          "heading": false
+        }
+      ],
       "extract": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files Chi Zhang The Graduate Center, City University of New York New York, NY, USA CHI.ZHANG06@gc.cuny.edu Yimin Liu The Ohio State University Columbus, OH, USA yiminliu.career@gmail.com Xinze Chen The Graduate Center, City University of New York New York, NY, USA xinze.chen95@gc.cuny.edu Ping Ji Hunter College, City University of New York New",
       "extractCut": true
     },
@@ -264,6 +282,40 @@
       "labelEnd": null,
       "words": 208,
       "summary": null,
+      "keywords": [
+        {
+          "term": "routing metadata",
+          "heading": false
+        },
+        {
+          "term": "quality-assured generation",
+          "heading": false
+        },
+        {
+          "term": "skills contain",
+          "heading": false
+        },
+        {
+          "term": "agent skills",
+          "heading": false
+        },
+        {
+          "term": "defects",
+          "heading": false
+        },
+        {
+          "term": "repair",
+          "heading": false
+        },
+        {
+          "term": "lightweight",
+          "heading": false
+        },
+        {
+          "term": "safety",
+          "heading": false
+        }
+      ],
       "extract": "Under the current standard, Agent Skills are SKILL.md files that combine instructions with supporting resources, en- abling Large Language Model (LLM) agents to reuse proce- dures beyond a single conversation. Yet many public skills appear to originate from a single task, repository, or conver- sation, even when they are shared as reusable components. We analyze this gap across 138,133 public SKILL.md files from",
       "extractCut": true
     },
@@ -278,6 +330,40 @@
       "labelEnd": null,
       "words": 505,
       "summary": null,
+      "keywords": [
+        {
+          "term": "public skills",
+          "heading": false
+        },
+        {
+          "term": "skill quality",
+          "heading": false
+        },
+        {
+          "term": "agent skills",
+          "heading": false
+        },
+        {
+          "term": "require ments",
+          "heading": false
+        },
+        {
+          "term": "defects",
+          "heading": false
+        },
+        {
+          "term": "reusable",
+          "heading": false
+        },
+        {
+          "term": "diagnosis",
+          "heading": false
+        },
+        {
+          "term": "official",
+          "heading": false
+        }
+      ],
       "extract": "Recently, AI skills have become a practical way to extend Large Language Model (LLM) agents beyond the immediate prompt [6]. Under the Agent Skills standard, a skill is pack- aged as a SKILL.md file: frontmatter tells the agent when to load it, the body gives instructions, and optional files provide scripts, references, or assets [2]. In this form, skills turn task experience into reusable software artifacts. That",
       "extractCut": true
     },
@@ -292,6 +378,7 @@
       "labelEnd": null,
       "words": 0,
       "summary": null,
+      "keywords": [],
       "extract": null,
       "extractCut": false
     },
@@ -306,6 +393,7 @@
       "labelEnd": null,
       "words": 25,
       "summary": null,
+      "keywords": [],
       "extract": "validation, and routing stress test. Section 4 answers the four research questions. Sections 5 and 6 discuss implications and limitations, and Section 7 concludes. 2",
       "extractCut": false
     },
@@ -320,6 +408,7 @@
       "labelEnd": null,
       "words": 1,
       "summary": null,
+      "keywords": [],
       "extract": "2.1",
       "extractCut": false
     },
@@ -334,6 +423,40 @@
       "labelEnd": null,
       "words": 753,
       "summary": null,
+      "keywords": [
+        {
+          "term": "agent skills",
+          "heading": true
+        },
+        {
+          "term": "malicious skills",
+          "heading": false
+        },
+        {
+          "term": "public skills",
+          "heading": false
+        },
+        {
+          "term": "skill quality",
+          "heading": false
+        },
+        {
+          "term": "safety concerns",
+          "heading": false
+        },
+        {
+          "term": "routing",
+          "heading": false
+        },
+        {
+          "term": "body",
+          "heading": false
+        },
+        {
+          "term": "structions",
+          "heading": false
+        }
+      ],
       "extract": "An Agent Skill is a directory containing a SKILL.md file with two parts: YAML (Yet Another Markup Language) frontmat- ter for structured metadata and a Markdown body for in- structions. The frontmatter must include a name (max 64 characters, lowercase alphanumeric and hyphens) and a description (max 1,024 characters) that specifies what the skill does and when to use it [2]. The description serves as the primary",
       "extractCut": true
     },
@@ -348,6 +471,7 @@
       "labelEnd": null,
       "words": 1,
       "summary": null,
+      "keywords": [],
       "extract": "3.1",
       "extractCut": false
     },
@@ -362,6 +486,40 @@
       "labelEnd": null,
       "words": 232,
       "summary": null,
+      "keywords": [
+        {
+          "term": "repository cloning",
+          "heading": false
+        },
+        {
+          "term": "repositories",
+          "heading": false
+        },
+        {
+          "term": "ecosystem-wide",
+          "heading": false
+        },
+        {
+          "term": "case-insensitive",
+          "heading": false
+        },
+        {
+          "term": "github",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "collection",
+          "heading": true
+        },
+        {
+          "term": "registry",
+          "heading": false
+        }
+      ],
       "extract": "To study reuse rather than isolated benchmark performance, we build the dataset from places where skills are actually published and copied. We collected SKILL.md files through GitHub code search, repository cloning, and the agentskills.in registry API. GitHub search used 40+ sharded queries to by- pass the 1,000-result-per-query limit; repository cloning ex- tracted all case-insensitive SKILL.md files from known and",
       "extractCut": true
     },
@@ -376,6 +534,40 @@
       "labelEnd": null,
       "words": 634,
       "summary": null,
+      "keywords": [
+        {
+          "term": "spec clause",
+          "heading": false
+        },
+        {
+          "term": "tier categories",
+          "heading": false
+        },
+        {
+          "term": "persona redefinition",
+          "heading": false
+        },
+        {
+          "term": "pat terns",
+          "heading": false
+        },
+        {
+          "term": "hardcoded credentials",
+          "heading": false
+        },
+        {
+          "term": "platform-specific paths",
+          "heading": false
+        },
+        {
+          "term": "routing",
+          "heading": true
+        },
+        {
+          "term": "oversized bodies",
+          "heading": false
+        }
+      ],
       "extract": "(Section 3.4) and the exemplar analysis (RQ4) to avoid letting one repository dominate. A small enterprise or private-repo bias is unavoidable; we address its external-validity implica- tions in Section 6. We also collected GitHub issues from 12 major agent plat- form repositories using 28 skill-related queries; filtering 6,233 issues yielded 761 relevant issues classified by defect cate- gory. 3.2 Defect Taxonomy",
       "extractCut": true
     },
@@ -390,6 +582,40 @@
       "labelEnd": null,
       "words": 251,
       "summary": null,
+      "keywords": [
+        {
+          "term": "stress test",
+          "heading": false
+        },
+        {
+          "term": "detectors",
+          "heading": false
+        },
+        {
+          "term": "routing",
+          "heading": false
+        },
+        {
+          "term": "fixture",
+          "heading": false
+        },
+        {
+          "term": "length",
+          "heading": false
+        },
+        {
+          "term": "defect",
+          "heading": false
+        },
+        {
+          "term": "lexical",
+          "heading": false
+        },
+        {
+          "term": "queries",
+          "heading": false
+        }
+      ],
       "extract": "We validate detectors with mutation-style SKILL.md fixtures and threshold sensitivity checks. Each of the 31 detectors has a positive fixture that isolates the target defect and a paired negative fixture; all detectors fire only on the posi- tive case. For numeric thresholds (description length, body length, inline-code ratio, code-block count, monolithic-body length), lenient, baseline, and strict settings on a",
       "extractCut": true
     },
@@ -404,6 +630,7 @@
       "labelEnd": null,
       "words": 1,
       "summary": null,
+      "keywords": [],
       "extract": "4.1",
       "extractCut": false
     },
@@ -418,6 +645,28 @@
       "labelEnd": null,
       "words": 138,
       "summary": null,
+      "keywords": [
+        {
+          "term": "ecosystem",
+          "heading": true
+        },
+        {
+          "term": "unmarked",
+          "heading": false
+        },
+        {
+          "term": "contributor",
+          "heading": false
+        },
+        {
+          "term": "ai-generation",
+          "heading": false
+        },
+        {
+          "term": "concentrated",
+          "heading": false
+        }
+      ],
       "extract": "Before examining quality, we first ask what kind of ecosys- tem these public files represent. The answer matters because a reuse problem has different implications in a small cu- rated registry than in a large, heterogeneous collection of repository-local artifacts. We infer platforms from file paths. Claude Code is the largest identifiable platform (18.7%), while generic skills/ directories dominate overall",
       "extractCut": true
     },
@@ -432,6 +681,32 @@
       "labelEnd": null,
       "words": 172,
       "summary": null,
+      "keywords": [
+        {
+          "term": "defects",
+          "heading": true
+        },
+        {
+          "term": "detected defects",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": true
+        },
+        {
+          "term": "prevalent",
+          "heading": true
+        },
+        {
+          "term": "prevalence",
+          "heading": false
+        },
+        {
+          "term": "routing",
+          "heading": false
+        }
+      ],
       "extract": "public skills? The first step is prevalence: if detected defects are rare, reusable-skill quality is mainly an edge-case problem; if they are common, quality control must become part of the skill generation and publication workflow. Of 138,133 skills an- alyzed, 89.3% trigger at least one Tier 1 detector derived from the official Agent Skills specification, and 91.8% have at least one detected defect of any tier.",
       "extractCut": true
     },
@@ -446,6 +721,40 @@
       "labelEnd": null,
       "words": 561,
       "summary": null,
+      "keywords": [
+        {
+          "term": "spec conformance",
+          "heading": false
+        },
+        {
+          "term": "reuse",
+          "heading": true
+        },
+        {
+          "term": "tier",
+          "heading": false
+        },
+        {
+          "term": "stress test",
+          "heading": false
+        },
+        {
+          "term": "defects",
+          "heading": true
+        },
+        {
+          "term": "agent skills",
+          "heading": false
+        },
+        {
+          "term": "reduce discovery",
+          "heading": false
+        },
+        {
+          "term": "checks",
+          "heading": false
+        }
+      ],
       "extract": "Routing defects reduce discovery quality. Prevalence alone does not show whether a defect matters operationally. The most direct reuse failure is that an otherwise useful skill is never selected. Because R1 is both prevalent and tied to startup selection, we test this discovery-stage reuse risk in Table 1. When queries are derived from repository metadata, R1-clean skills achieve 88.5% hit@1 and 0.906 MRR, compared",
       "extractCut": true
     },
@@ -460,6 +769,40 @@
       "labelEnd": null,
       "words": 898,
       "summary": null,
+      "keywords": [
+        {
+          "term": "avg defects",
+          "heading": false
+        },
+        {
+          "term": "detected defects",
+          "heading": false
+        },
+        {
+          "term": "ai-marked skills",
+          "heading": false
+        },
+        {
+          "term": "portability defects",
+          "heading": false
+        },
+        {
+          "term": "unmarked skills",
+          "heading": false
+        },
+        {
+          "term": "safety defects",
+          "heading": false
+        },
+        {
+          "term": "exemplary skills",
+          "heading": false
+        },
+        {
+          "term": "defect rates",
+          "heading": false
+        }
+      ],
       "extract": "associated with reusable skill quality? Cross-platform quality. If defects reflect only individual author mistakes, platform-level patterns should be weak. In- stead, the data suggest that platform conventions and prove- nance signals travel with different skill-quality profiles. Fig- ure 3 reveals statistically significant quality variation across platforms (Kruskal–Wallis 𝐻= 594.17, 𝑝< 10−125). Cursor skills are",
       "extractCut": true
     },
@@ -474,6 +817,7 @@
       "labelEnd": null,
       "words": 31,
       "summary": null,
+      "keywords": [],
       "extract": "Based on prevalence, platform variation, issue corroboration, and exemplar analysis, we derive twelve guidelines (G1– G12). Table 2 maps each guideline to target defects and the percentage of skills affected. 5",
       "extractCut": false
     },
@@ -488,6 +832,40 @@
       "labelEnd": null,
       "words": 1118,
       "summary": null,
+      "keywords": [
+        {
+          "term": "detected defects",
+          "heading": false
+        },
+        {
+          "term": "defects eliminated",
+          "heading": false
+        },
+        {
+          "term": "structural defects",
+          "heading": false
+        },
+        {
+          "term": "critical defects",
+          "heading": false
+        },
+        {
+          "term": "safety bypasses",
+          "heading": false
+        },
+        {
+          "term": "observed defect",
+          "heading": false
+        },
+        {
+          "term": "marginal defect",
+          "heading": false
+        },
+        {
+          "term": "defect instances",
+          "heading": false
+        }
+      ],
       "extract": "The conversation-first provenance hypothesis. Why are detected defect rates so high despite a clear specifica- tion? A reusable skill is not merely a saved prompt; it is a routed, progressively disclosed, executable capability. We propose—and label explicitly as a hypothesis rather than a measured finding—that many public skills are instead ex- tracted from problem-solving conversations: a developer solves a task",
       "extractCut": true
     },
@@ -502,6 +880,40 @@
       "labelEnd": null,
       "words": 685,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skills paths",
+          "heading": false
+        },
+        {
+          "term": "persona redefinition",
+          "heading": false
+        },
+        {
+          "term": "validity",
+          "heading": true
+        },
+        {
+          "term": "plat form",
+          "heading": false
+        },
+        {
+          "term": "generic skills",
+          "heading": false
+        },
+        {
+          "term": "agent skills",
+          "heading": false
+        },
+        {
+          "term": "follow-up work",
+          "heading": false
+        },
+        {
+          "term": "repair experiment",
+          "heading": false
+        }
+      ],
       "extract": "Construct validity. Our defect detectors use regex-based heuristics, which may produce false positives or false nega- tives. We mitigate implementation risk through mutation- style fixture tests and threshold sensitivity analysis, but these checks do not capture every semantic context in which a skill may be used. The risk is highest for the two most context- dependent categories. R5.3 (prompt injection) catches",
       "extractCut": true
     },
@@ -516,6 +928,36 @@
       "labelEnd": null,
       "words": 178,
       "summary": null,
+      "keywords": [
+        {
+          "term": "routing",
+          "heading": false
+        },
+        {
+          "term": "repair",
+          "heading": false
+        },
+        {
+          "term": "lexical",
+          "heading": false
+        },
+        {
+          "term": "safety",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "baseline",
+          "heading": false
+        },
+        {
+          "term": "workflow",
+          "heading": false
+        }
+      ],
       "extract": "We studied what keeps public Agent Skills from becoming reusable agent capabilities. Across 138,133 public SKILL.md files, 89.3% violate at least one official-specification rule and 91.8% contain at least one detected reusability defect under our baseline detector, with the finding stable under lenient and strict thresholds. Routing is the clearest functional bot- tleneck we isolate: skills with clean routing",
       "extractCut": true
     },
@@ -530,10 +972,94 @@
       "labelEnd": null,
       "words": 556,
       "summary": null,
+      "keywords": [
+        {
+          "term": "yimin liu",
+          "heading": false
+        },
+        {
+          "term": "wenbo chen",
+          "heading": false
+        },
+        {
+          "term": "xiaokun chen",
+          "heading": false
+        },
+        {
+          "term": "han chung",
+          "heading": false
+        },
+        {
+          "term": "kai xiao",
+          "heading": false
+        },
+        {
+          "term": "jiankai sun",
+          "heading": false
+        },
+        {
+          "term": "chung lee",
+          "heading": false
+        },
+        {
+          "term": "wang",
+          "heading": false
+        }
+      ],
       "extract": "[1] agent-sh. 2026. agnix: The missing linter and LSP for AI coding assis- tants. Retrieved May 4, 2026 from https://github.com/agent-sh/agnix [2] Agent Skills. [n. d.]. Specification - Agent Skills. Retrieved May 4, 2026 from https://agentskills.io/specification [3] Anthropic. [n. d.]. Extend Claude with skills. Retrieved May 4, 2026 from https://code.claude.com/docs/en/skills [4] Yudong Gao, Zongjie Li,",
       "extractCut": true
     }
   ],
   "checks": {},
-  "withheld": false
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "routing defects",
+      "heading": false
+    },
+    {
+      "term": "agent skills",
+      "heading": true
+    },
+    {
+      "term": "safety defects",
+      "heading": false
+    },
+    {
+      "term": "detected defects",
+      "heading": false
+    },
+    {
+      "term": "public skills",
+      "heading": true
+    },
+    {
+      "term": "skills paths",
+      "heading": false
+    },
+    {
+      "term": "spec-aware skills",
+      "heading": false
+    },
+    {
+      "term": "skills specification",
+      "heading": false
+    },
+    {
+      "term": "routing stress",
+      "heading": true
+    },
+    {
+      "term": "skills work",
+      "heading": false
+    },
+    {
+      "term": "portability defects",
+      "heading": false
+    },
+    {
+      "term": "ai-marked skills",
+      "heading": false
+    }
+  ]
 }

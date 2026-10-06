@@ -145,6 +145,10 @@ export const VIEWER_CSS = `/* The block content panel — bean lrmo. Tokens only
 #document .seg { margin: .2rem 0 .8rem; }
 #document .seg button[aria-selected="true"] { font-weight: 600; }
 #document .docbody { padding: 0 16px 8px; }
+#document .dockw { padding: 4px 16px; }
+#document p.kw, #document .dockw p.kw { display: inline; margin: 0; }
+#document .docsec p.kw { display: block; margin: 2px 0 6px; }
+#document p.kw .pill { margin: 0 2px 2px 0; }
 #document ul.toc, #document ul.toc ul { list-style: none; margin: 0; padding-left: 1.1rem; }
 #document ul.toc { padding-left: 0; }
 #document ul.toc li { margin: .15rem 0; }

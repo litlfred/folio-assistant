@@ -19,6 +19,9 @@
  *   numbering gaps, page-label conflicts.
  * - `summaries.json` (`folio-block-summaries/v1`) — a section's summary, matched
  *   by the section FILE it summarises (`source`), never by position.
+ * - `keywords.json` (`folio-keywords/v1`, `scripts/library-keywords.ts`) — the
+ *   document's and each section's keywords, from the LSI term weights, with
+ *   `heading` evidence where a heading also names the term.
  * - `sections/<id>.md` — an EXTRACT (the opening of the section's text) where
  *   no summary exists. An extract is labelled as one: it is the document's own
  *   words cut short, never our writing about it, and a reader must be able to
@@ -67,10 +70,13 @@ export interface DocSection {
   labelEnd: string | null;
   words: number;
   summary: { text: string; status: string } | null;
+  keywords: DocKeyword[];
   /** The opening of the section's own text; null when withheld or empty. */
   extract: string | null;
   extractCut: boolean;
 }
+
+export interface DocKeyword { term: string; heading: boolean }
 
 export interface DocumentView {
   $schema: "folio-library-document/v1";
@@ -81,6 +87,8 @@ export interface DocumentView {
   tocMethod: string | null;
   toc: DocTocEntry[];
   sections: DocSection[];
+  /** Absent when the entry has no keywords.json — not the same as none found. */
+  keywords?: DocKeyword[];
   pageLabels?: { physical: number; label: string | null; source: string | null; confidence: number }[];
   figures?: { kind: string; number: string; title: string; page: number; pageLabel: string | null; confidence: number; evidence: string[] }[];
   checks: {
@@ -111,6 +119,10 @@ interface RawStructure {
     page_label_conflicts?: { count: number; items: string[] };
   };
 }
+interface RawKeyword { term: string; evidence?: string[] }
+interface RawKeywords { document?: RawKeyword[]; sections?: Record<string, RawKeyword[]> }
+const kw = (ks: RawKeyword[] | undefined): DocKeyword[] =>
+  (ks ?? []).map((k) => ({ term: k.term, heading: (k.evidence ?? []).includes("heading") }));
 interface RawSummaries { summaries?: { source?: string; status?: string; narrative?: { text?: string; status?: string } }[] }
 
 function readJson<T>(path: string): T | undefined {
@@ -158,6 +170,10 @@ export function readEntryDocument(dir: string, id: string, opts: { withheld?: bo
     }
   }
 
+  // Keywords are derived terms, not the document's text, so a withheld entry
+  // shows them too — as it shows its captions.
+  const kj = readJson<RawKeywords>(join(dir, "keywords.json"));
+
   const sections: DocSection[] = (s.sections ?? []).map((x) => {
     const text = withheld ? null : sectionText(join(dir, "sections", `${x.id}.md`));
     const { extract, cut } = extractOf(text);
@@ -172,6 +188,7 @@ export function readEntryDocument(dir: string, id: string, opts: { withheld?: bo
       labelEnd: x.label_end ?? null,
       words: x.n_words ?? 0,
       summary: summaries.get(x.id) ?? null,
+      keywords: kw(kj?.sections?.[x.id]),
       extract,
       extractCut: cut,
     };
@@ -209,6 +226,7 @@ export function readEntryDocument(dir: string, id: string, opts: { withheld?: bo
     checks: {},
     withheld,
   };
+  if (kj) view.keywords = kw(kj.document);
   if (Array.isArray(s.pages)) {
     view.pageLabels = s.pages.map((p) => ({
       physical: p.physical, label: p.label ?? null, source: p.source ?? null, confidence: p.confidence ?? 0,
@@ -320,6 +338,13 @@ function docFigures(d){
         '</td><td>' + pageText(f.page, f.pageLabel) + '</td><td>' + confPill(f.confidence, f.evidence) + '</td></tr>';
     }).join("") + '</tbody></table>';
 }
+function chips(ks){
+  /* A keyword a heading also names is marked: the document saying it of itself. */
+  if (!ks || !ks.length) return "";
+  return '<p class="kw">' + ks.map(function(k){
+    return '<span class="pill' + (k.heading ? ' ok' : '') + '"' + (k.heading ? ' title="also named by a heading"' : '') + '>' + esc(k.term) + '</span>';
+  }).join(" ") + '</p>';
+}
 function docSections(d){
   if (!d.sections.length) return '<p class="empty">No sections.</p>';
   return d.sections.map(function(s){
@@ -331,7 +356,7 @@ function docSections(d){
         ? '<div class="sum"><span class="pill">extract — the section’s own opening text' + (s.extractCut ? ', cut' : '') + '</span><p>' + esc(s.extract) + (s.extractCut ? '…' : '') + '</p></div>'
         : '<p class="note">' + (d.withheld ? 'Withheld — no text published; no summary yet.' : 'No text and no summary.') + '</p>';
     return '<article id="sec-' + esc(s.id) + '" class="docsec"><h3>' + esc((s.number ? s.number + ' ' : '') + s.title) +
-      ' <span class="note">' + range + ' · ' + s.words + ' words</span></h3>' + body + '</article>';
+      ' <span class="note">' + range + ' · ' + s.words + ' words</span></h3>' + chips(s.keywords) + body + '</article>';
   }).join("");
 }
 function docChecks(d){
@@ -366,7 +391,8 @@ function renderDocument(id, d, err){
   el.innerHTML = '<h2>Document — ' + esc(d.title || id) + ' <span class="note">(' + d.pages + ' pages)</span></h2>' +
     '<div class="seg" role="tablist" aria-label="Document view">' + DOC_TABS.map(function(t){
       return '<button type="button" role="tab" aria-selected="' + (t[0] === tab[0]) + '" data-tab="' + t[0] + '">' + esc(t[1]) + '</button>';
-    }).join("") + '</div><div class="docbody" role="tabpanel">' + tab[2](d) + '</div>';
+    }).join("") + '</div>' + (d.keywords && d.keywords.length ? '<div class="dockw"><span class="note">Keywords (LSI):</span> ' + chips(d.keywords) + '</div>' : '') +
+    '<div class="docbody" role="tabpanel">' + tab[2](d) + '</div>';
   Array.prototype.forEach.call(el.querySelectorAll("[data-tab]"), function(b){
     b.addEventListener("click", function(){ DOC_TAB = b.getAttribute("data-tab"); renderDocument(id, DOC, null); });
   });

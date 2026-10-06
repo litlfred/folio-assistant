@@ -1,0 +1,751 @@
+{
+  "$schema": "folio-keywords/v1",
+  "entry": "arxiv-2504.07199v3",
+  "corpus": {
+    "library": "cat-harness/library",
+    "sections": 1697,
+    "terms": 10713,
+    "weighting": "log-entropy"
+  },
+  "document": [
+    {
+      "term": "gnd subject",
+      "score": 21.4413,
+      "evidence": []
+    },
+    {
+      "term": "tib subject",
+      "score": 20.9518,
+      "evidence": []
+    },
+    {
+      "term": "subject tagging",
+      "score": 15.854,
+      "evidence": []
+    },
+    {
+      "term": "subject classification",
+      "score": 15.6142,
+      "evidence": []
+    },
+    {
+      "term": "subject embeddings",
+      "score": 14.5444,
+      "evidence": []
+    },
+    {
+      "term": "subject indexing",
+      "score": 14.4821,
+      "evidence": []
+    },
+    {
+      "term": "task llms4subjects",
+      "score": 14.4076,
+      "evidence": []
+    },
+    {
+      "term": "subject taxonomy",
+      "score": 14.3265,
+      "evidence": []
+    },
+    {
+      "term": "subject specialists",
+      "score": 14.3146,
+      "evidence": []
+    },
+    {
+      "term": "llms4subjects shared",
+      "score": 14.0297,
+      "evidence": []
+    },
+    {
+      "term": "relevant subject",
+      "score": 13.791,
+      "evidence": []
+    },
+    {
+      "term": "subject retrieval",
+      "score": 13.7269,
+      "evidence": []
+    }
+  ],
+  "sections": {
+    "sec-000-introduction": [
+      {
+        "term": "subject tagging",
+        "score": 2.2923,
+        "evidence": []
+      },
+      {
+        "term": "subject classification",
+        "score": 2.0741,
+        "evidence": []
+      },
+      {
+        "term": "national library",
+        "score": 2.0199,
+        "evidence": []
+      },
+      {
+        "term": "automated subject",
+        "score": 1.9267,
+        "evidence": []
+      },
+      {
+        "term": "digital library",
+        "score": 1.9049,
+        "evidence": []
+      },
+      {
+        "term": "classifi cation",
+        "score": 1.8726,
+        "evidence": []
+      },
+      {
+        "term": "shared task",
+        "score": 1.7341,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 1.7224,
+        "evidence": []
+      }
+    ],
+    "sec-001-background": [
+      {
+        "term": "authority file",
+        "score": 1.2519,
+        "evidence": []
+      },
+      {
+        "term": "gnd",
+        "score": 1.1289,
+        "evidence": []
+      },
+      {
+        "term": "tib",
+        "score": 1.0142,
+        "evidence": []
+      },
+      {
+        "term": "science",
+        "score": 0.8755,
+        "evidence": []
+      },
+      {
+        "term": "scientific",
+        "score": 0.7347,
+        "evidence": []
+      },
+      {
+        "term": "technology",
+        "score": 0.7152,
+        "evidence": []
+      },
+      {
+        "term": "library",
+        "score": 0.689,
+        "evidence": []
+      },
+      {
+        "term": "tibkat",
+        "score": 0.6876,
+        "evidence": []
+      }
+    ],
+    "sec-002-source-dataset": [
+      {
+        "term": "dataset",
+        "score": 1.1395,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "media types",
+        "score": 1.057,
+        "evidence": []
+      },
+      {
+        "term": "shared task",
+        "score": 0.9104,
+        "evidence": []
+      },
+      {
+        "term": "excluded",
+        "score": 0.7861,
+        "evidence": []
+      },
+      {
+        "term": "records",
+        "score": 0.7258,
+        "evidence": []
+      }
+    ],
+    "sec-003-how-are-subject-annotations-obtained": [
+      {
+        "term": "subject cataloging",
+        "score": 1.8813,
+        "evidence": []
+      },
+      {
+        "term": "librarians",
+        "score": 0.945,
+        "evidence": []
+      },
+      {
+        "term": "num",
+        "score": 0.8426,
+        "evidence": []
+      },
+      {
+        "term": "annotations",
+        "score": 0.8113,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gnd",
+        "score": 0.8042,
+        "evidence": []
+      },
+      {
+        "term": "tib",
+        "score": 0.6923,
+        "evidence": []
+      },
+      {
+        "term": "statistics",
+        "score": 0.6594,
+        "evidence": []
+      },
+      {
+        "term": "libraries",
+        "score": 0.6401,
+        "evidence": []
+      }
+    ],
+    "sec-004-shared-task-description-and-dataset": [
+      {
+        "term": "shared",
+        "score": 0.65,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gnd",
+        "score": 0.6373,
+        "evidence": []
+      },
+      {
+        "term": "subjects",
+        "score": 0.6319,
+        "evidence": []
+      }
+    ],
+    "sec-005-dataset-collections": [
+      {
+        "term": "dataset",
+        "score": 1.7092,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gnd subject",
+        "score": 1.5817,
+        "evidence": []
+      },
+      {
+        "term": "participants",
+        "score": 1.0706,
+        "evidence": []
+      },
+      {
+        "term": "tib core",
+        "score": 1.0549,
+        "evidence": []
+      },
+      {
+        "term": "engineering",
+        "score": 0.9194,
+        "evidence": []
+      },
+      {
+        "term": "tib-core",
+        "score": 0.8061,
+        "evidence": []
+      },
+      {
+        "term": "all-subjects",
+        "score": 0.8027,
+        "evidence": []
+      }
+    ],
+    "sec-006-dataset-format-and-statistics": [
+      {
+        "term": "main shared-task-datasets",
+        "score": 1.8328,
+        "evidence": []
+      },
+      {
+        "term": "llms4subjects blob",
+        "score": 1.6098,
+        "evidence": []
+      },
+      {
+        "term": "gnd dataset",
+        "score": 1.374,
+        "evidence": []
+      },
+      {
+        "term": "record",
+        "score": 0.7326,
+        "evidence": []
+      }
+    ],
+    "sec-007-task-setup": [
+      {
+        "term": "task",
+        "score": 0.7905,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "teams",
+        "score": 0.703,
+        "evidence": []
+      },
+      {
+        "term": "scription",
+        "score": 0.6285,
+        "evidence": []
+      }
+    ],
+    "sec-008-shared-task-participant-systems": [
+      {
+        "term": "b-instruct llm",
+        "score": 3.4211,
+        "evidence": []
+      },
+      {
+        "term": "subject embeddings",
+        "score": 3.238,
+        "evidence": []
+      },
+      {
+        "term": "cross-encoder re-ranking",
+        "score": 3.0477,
+        "evidence": []
+      },
+      {
+        "term": "ruc team",
+        "score": 2.9912,
+        "evidence": []
+      },
+      {
+        "term": "shared task",
+        "score": 2.9828,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "llm ensemble",
+        "score": 2.956,
+        "evidence": []
+      },
+      {
+        "term": "gnd subjects",
+        "score": 2.9091,
+        "evidence": []
+      },
+      {
+        "term": "transformer embeddings",
+        "score": 2.7796,
+        "evidence": []
+      }
+    ],
+    "sec-009-shared-task-leaderboard-results": [
+      {
+        "term": "shared task",
+        "score": 2.7985,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "f1-score",
+        "score": 0.8989,
+        "evidence": []
+      },
+      {
+        "term": "system performance",
+        "score": 0.884,
+        "evidence": []
+      },
+      {
+        "term": "qualitative",
+        "score": 0.8694,
+        "evidence": []
+      },
+      {
+        "term": "released",
+        "score": 0.8511,
+        "evidence": []
+      },
+      {
+        "term": "metrics",
+        "score": 0.7521,
+        "evidence": []
+      },
+      {
+        "term": "correct",
+        "score": 0.6861,
+        "evidence": []
+      },
+      {
+        "term": "precision",
+        "score": 0.6354,
+        "evidence": []
+      }
+    ],
+    "sec-010-quantitative-evaluations": [
+      {
+        "term": "ruc team",
+        "score": 2.5811,
+        "evidence": []
+      },
+      {
+        "term": "top teams",
+        "score": 2.0505,
+        "evidence": []
+      },
+      {
+        "term": "recall scores",
+        "score": 1.5949,
+        "evidence": []
+      },
+      {
+        "term": "both collections",
+        "score": 1.4281,
+        "evidence": []
+      },
+      {
+        "term": "average recall",
+        "score": 1.3717,
+        "evidence": []
+      },
+      {
+        "term": "la2i2f",
+        "score": 1.319,
+        "evidence": []
+      },
+      {
+        "term": "tib-core",
+        "score": 1.3147,
+        "evidence": []
+      },
+      {
+        "term": "scores across",
+        "score": 1.1568,
+        "evidence": []
+      }
+    ],
+    "sec-011-qualitative-evaluations": [
+      {
+        "term": "qualitative",
+        "score": 2.8882,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ruc team",
+        "score": 2.4093,
+        "evidence": []
+      },
+      {
+        "term": "precision among",
+        "score": 2.299,
+        "evidence": []
+      },
+      {
+        "term": "qualitative eval",
+        "score": 2.2636,
+        "evidence": []
+      },
+      {
+        "term": "top teams",
+        "score": 2.2272,
+        "evidence": []
+      },
+      {
+        "term": "precision scores",
+        "score": 2.1212,
+        "evidence": []
+      },
+      {
+        "term": "average recall",
+        "score": 1.9333,
+        "evidence": []
+      },
+      {
+        "term": "case treating",
+        "score": 1.4894,
+        "evidence": []
+      }
+    ],
+    "sec-012-discussion": [
+      {
+        "term": "assistant api",
+        "score": 1.7912,
+        "evidence": []
+      },
+      {
+        "term": "gnd",
+        "score": 0.9337,
+        "evidence": []
+      },
+      {
+        "term": "subject",
+        "score": 0.6983,
+        "evidence": []
+      },
+      {
+        "term": "vector",
+        "score": 0.6906,
+        "evidence": []
+      },
+      {
+        "term": "prompt",
+        "score": 0.6769,
+        "evidence": []
+      },
+      {
+        "term": "openai",
+        "score": 0.6596,
+        "evidence": []
+      },
+      {
+        "term": "baseline",
+        "score": 0.6229,
+        "evidence": []
+      },
+      {
+        "term": "llm",
+        "score": 0.4932,
+        "evidence": []
+      }
+    ],
+    "sec-013-conclusion": [
+      {
+        "term": "arxiv preprint",
+        "score": 3.6486,
+        "evidence": []
+      },
+      {
+        "term": "semeval task",
+        "score": 3.5545,
+        "evidence": []
+      },
+      {
+        "term": "computational linguistics",
+        "score": 3.2955,
+        "evidence": []
+      },
+      {
+        "term": "international conference",
+        "score": 3.2093,
+        "evidence": []
+      },
+      {
+        "term": "international workshop",
+        "score": 2.9991,
+        "evidence": []
+      },
+      {
+        "term": "tional linguistics",
+        "score": 2.8108,
+        "evidence": []
+      },
+      {
+        "term": "pages",
+        "score": 2.3953,
+        "evidence": []
+      },
+      {
+        "term": "austria",
+        "score": 2.3058,
+        "evidence": []
+      }
+    ],
+    "sec-014-tibkat-media-types": [
+      {
+        "term": "media",
+        "score": 0.7896,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "academic",
+        "score": 0.7434,
+        "evidence": []
+      },
+      {
+        "term": "written",
+        "score": 0.6506,
+        "evidence": []
+      },
+      {
+        "term": "findings",
+        "score": 0.6429,
+        "evidence": []
+      },
+      {
+        "term": "audiovisualdocument",
+        "score": 0.6285,
+        "evidence": []
+      }
+    ],
+    "sec-015-tibkat-language-distribution": [
+      {
+        "term": "tibkat",
+        "score": 0.8676,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "estonian",
+        "score": 0.6285,
+        "evidence": []
+      },
+      {
+        "term": "indonesian",
+        "score": 0.6285,
+        "evidence": []
+      }
+    ],
+    "sec-016-additional-details-about-the-gnd": [
+      {
+        "term": "gnd",
+        "score": 2.4127,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "synonyms",
+        "score": 1.4309,
+        "evidence": []
+      },
+      {
+        "term": "details",
+        "score": 0.8009,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "topical",
+        "score": 0.7706,
+        "evidence": []
+      },
+      {
+        "term": "terms",
+        "score": 0.7608,
+        "evidence": []
+      },
+      {
+        "term": "tib",
+        "score": 0.6923,
+        "evidence": []
+      },
+      {
+        "term": "naming",
+        "score": 0.6648,
+        "evidence": []
+      },
+      {
+        "term": "llms4subjects",
+        "score": 0.6358,
+        "evidence": []
+      }
+    ],
+    "sec-017-pilot-task": [
+      {
+        "term": "tib",
+        "score": 1.2263,
+        "evidence": []
+      },
+      {
+        "term": "annif",
+        "score": 1.2054,
+        "evidence": []
+      },
+      {
+        "term": "sciences",
+        "score": 0.9667,
+        "evidence": []
+      },
+      {
+        "term": "ogy",
+        "score": 0.9428,
+        "evidence": []
+      },
+      {
+        "term": "subjects",
+        "score": 0.9258,
+        "evidence": []
+      },
+      {
+        "term": "engineering",
+        "score": 0.9194,
+        "evidence": []
+      },
+      {
+        "term": "assign",
+        "score": 0.6744,
+        "evidence": []
+      },
+      {
+        "term": "llms4subjects",
+        "score": 0.6358,
+        "evidence": []
+      }
+    ],
+    "sec-front-matter": [
+      {
+        "term": "semeval",
+        "score": 0.8317,
+        "evidence": []
+      },
+      {
+        "term": "tagging",
+        "score": 0.7256,
+        "evidence": []
+      },
+      {
+        "term": "tib",
+        "score": 0.6923,
+        "evidence": []
+      },
+      {
+        "term": "llm-based",
+        "score": 0.6559,
+        "evidence": []
+      },
+      {
+        "term": "llms4subjects",
+        "score": 0.6358,
+        "evidence": []
+      }
+    ]
+  }
+}

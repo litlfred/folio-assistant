@@ -18,6 +18,36 @@
       "labelEnd": null,
       "words": 211,
       "summary": null,
+      "keywords": [
+        {
+          "term": "agent skills",
+          "heading": false
+        },
+        {
+          "term": "antigravity",
+          "heading": false
+        },
+        {
+          "term": "required skill",
+          "heading": false
+        },
+        {
+          "term": "scripts",
+          "heading": false
+        },
+        {
+          "term": "instructions",
+          "heading": false
+        },
+        {
+          "term": "schemas",
+          "heading": false
+        },
+        {
+          "term": "extend",
+          "heading": false
+        }
+      ],
       "extract": "Features Extend Skills Agent Skills AVAILABLE ON: Antigravity 2.0 Antigravity CLI Antigravity IDE Agent skills Skills are an open standard for extending agent capabilities. A skill is a folder containing a SKILL.md file with instructions that the agent can follow when working on specific tasks. What are skills? Skills are reusable packages of knowledge that extend what the agent can do. Each skill contains:",
       "extractCut": true
     },
@@ -32,6 +62,36 @@
       "labelEnd": null,
       "words": 208,
       "summary": null,
+      "keywords": [
+        {
+          "term": "yaml frontmatter",
+          "heading": false
+        },
+        {
+          "term": "reviewing",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "code",
+          "heading": false
+        },
+        {
+          "term": "style",
+          "heading": false
+        },
+        {
+          "term": "follow",
+          "heading": false
+        },
+        {
+          "term": "agent",
+          "heading": false
+        }
+      ],
       "extract": "Manifest format (SKILL.md) Every SKILL.md file begins with YAML frontmatter defining its name and triggering criteria: Frontmatter fields The YAML frontmatter supports the following fields: Field Required Description name No A unique identifier for the skill (lowercase, hyphens for spaces). Defaults to the folder name if not provided. description Yes A clear description of what the skill does and when to use it.",
       "extractCut": true
     },
@@ -46,6 +106,36 @@
       "labelEnd": null,
       "words": 220,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": false
+        },
+        {
+          "term": "agent",
+          "heading": false
+        },
+        {
+          "term": "decides",
+          "heading": false
+        },
+        {
+          "term": "surface",
+          "heading": false
+        },
+        {
+          "term": "descriptions",
+          "heading": false
+        },
+        {
+          "term": "focused",
+          "heading": false
+        },
+        {
+          "term": "scripts",
+          "heading": false
+        }
+      ],
       "extract": "1. Discovery: when a conversation starts, the agent sees a list of available skills with their names and descriptions. 2. Activation: if a skill looks relevant to your task, the agent reads the full SKILL.md content. 3. Execution: the agent follows the skill’s instructions while working on your task. You don’t need to explicitly tell the agent to use a skill—it decides based on context. However, you can mention a",
       "extractCut": true
     },
@@ -60,10 +150,82 @@
       "labelEnd": null,
       "words": 111,
       "summary": null,
+      "keywords": [
+        {
+          "term": "keyboard arrow",
+          "heading": false
+        },
+        {
+          "term": "antigravity",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "locations",
+          "heading": false
+        },
+        {
+          "term": "global",
+          "heading": false
+        }
+      ],
       "extract": "Antigravity 2.0 Antigravity CLI Antigravity IDE Antigravity 2.0 skill locations Antigravity 2.0 loads skills from two primary locations: Location Scope <workspace-root>/.agents/skills/<skill-folder>/ Workspace-specific ~/.gemini/config/skills/<skill-folder>/ Global (all workspaces) Workspace skills: scoped to a single project and committed to version control to share across your engineering team. Global skills:",
       "extractCut": true
     }
   ],
   "checks": {},
-  "withheld": false
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "agent skills",
+      "heading": false
+    },
+    {
+      "term": "google antigravity",
+      "heading": false
+    },
+    {
+      "term": "antigravity docs",
+      "heading": false
+    },
+    {
+      "term": "antigravity ide",
+      "heading": false
+    },
+    {
+      "term": "antigravity cli",
+      "heading": false
+    },
+    {
+      "term": "skill looks",
+      "heading": false
+    },
+    {
+      "term": "skill instructions",
+      "heading": false
+    },
+    {
+      "term": "agent sees",
+      "heading": false
+    },
+    {
+      "term": "available skills",
+      "heading": false
+    },
+    {
+      "term": "agent reads",
+      "heading": false
+    },
+    {
+      "term": "required skill",
+      "heading": false
+    },
+    {
+      "term": "keyboard arrow",
+      "heading": false
+    }
+  ]
 }

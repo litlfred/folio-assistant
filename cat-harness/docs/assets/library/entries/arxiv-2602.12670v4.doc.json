@@ -910,6 +910,40 @@
       "labelEnd": null,
       "words": 554,
       "summary": null,
+      "keywords": [
+        {
+          "term": "harness configurations",
+          "heading": false
+        },
+        {
+          "term": "agent harness",
+          "heading": false
+        },
+        {
+          "term": "curated skills",
+          "heading": false
+        },
+        {
+          "term": "model harness",
+          "heading": false
+        },
+        {
+          "term": "skills applications",
+          "heading": false
+        },
+        {
+          "term": "wang",
+          "heading": false
+        },
+        {
+          "term": "pass rate",
+          "heading": false
+        },
+        {
+          "term": "xiangyi",
+          "heading": false
+        }
+      ],
       "extract": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks Xiangyi Li1,*, Yimin Liu1,2,*, Wenbo Chen3,*,†, Bingran You1,4,*, Zonglin Di5,‡, Yifeng He6,‡, Shenghan Zheng7,‡, Kyoung Whan Choe8,‡, Jiankai Sun9,‡, Shuyi Wang9,‡, Chujun Tao14,‡, Binxu Li10,‡, Xuandong Zhao4,‡, Hejia Geng11, Xiaojun Wu35, Junwei Zhou9, Xiaokun Chen12, Hanwen Xing13, Yubo Li14, Qunhong Zeng9, Di Wang15, Yuanli Wang16, Roey",
       "extractCut": true
     },
@@ -924,6 +958,40 @@
       "labelEnd": null,
       "words": 281,
       "summary": null,
+      "keywords": [
+        {
+          "term": "harness",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "anthropic",
+          "heading": false
+        },
+        {
+          "term": "task",
+          "heading": false
+        },
+        {
+          "term": "agent",
+          "heading": false
+        },
+        {
+          "term": "domain",
+          "heading": false
+        },
+        {
+          "term": "model",
+          "heading": false
+        },
+        {
+          "term": "figure",
+          "heading": false
+        }
+      ],
       "extract": "AI agents are now deployed in production workflows, from software engineering [Anthropic, 2025b, Google, 2025, OpenAI, 2025], where they sustain task horizons of up to 10 hours of human effort, to expertise-heavy domains beyond it. A fundamental tension follows: foundation models provide broad capabilities but lack the procedural knowledge a specialist brings on day one, while fine-tuning each domain is expensive",
       "extractCut": true
     },
@@ -938,6 +1006,24 @@
       "labelEnd": null,
       "words": 121,
       "summary": null,
+      "keywords": [
+        {
+          "term": "contribution",
+          "heading": false
+        },
+        {
+          "term": "augmentation",
+          "heading": false
+        },
+        {
+          "term": "benchflow",
+          "heading": false
+        },
+        {
+          "term": "harness",
+          "heading": false
+        }
+      ],
       "extract": "Our contribution is two-tier: • Narrow contribution: a quantitative answer to “how much do Skills help?” On the 87-task benchmark, evaluated under matched no-Skills and curated-Skills conditions across 18 model– harness configurations, curated Skills lift task-macro pass rate from 33.9% to 50.5% (+16.6 pp; 25.5% normalized gain), with substantial configuration-level heterogeneity (+4.1 to +25.7 pp). • Broad",
       "extractCut": true
     },
@@ -952,6 +1038,40 @@
       "labelEnd": null,
       "words": 1138,
       "summary": null,
+      "keywords": [
+        {
+          "term": "oracle verifier",
+          "heading": false
+        },
+        {
+          "term": "skill augmentation",
+          "heading": false
+        },
+        {
+          "term": "skillsbench task",
+          "heading": false
+        },
+        {
+          "term": "oracle solution",
+          "heading": false
+        },
+        {
+          "term": "augmentation paradigms",
+          "heading": false
+        },
+        {
+          "term": "curated skills",
+          "heading": false
+        },
+        {
+          "term": "skills bundle",
+          "heading": false
+        },
+        {
+          "term": "task submissions",
+          "heading": false
+        }
+      ],
       "extract": "Skill Definition In this paper, we define a Skill as a reusable, file-system-based procedural package for a class of agent tasks. Each Skill contains a required SKILL.md file with natural-language instructions and may optionally include auxiliary resources such as scripts, templates, reference files, or worked examples. Skill Augmentation We use Skill augmentation to refer to the inference-time mechanism by which an",
       "extractCut": true
     },
@@ -966,6 +1086,40 @@
       "labelEnd": null,
       "words": 323,
       "summary": null,
+      "keywords": [
+        {
+          "term": "pass fail",
+          "heading": false
+        },
+        {
+          "term": "task instruction",
+          "heading": false
+        },
+        {
+          "term": "latest aggregate",
+          "heading": false
+        },
+        {
+          "term": "benchflow",
+          "heading": false
+        },
+        {
+          "term": "passvanilla",
+          "heading": false
+        },
+        {
+          "term": "packs",
+          "heading": false
+        },
+        {
+          "term": "condition",
+          "heading": false
+        },
+        {
+          "term": "configuration",
+          "heading": false
+        }
+      ],
       "extract": "Models, harnesses, and conditions. For the latest aggregate in Table 2, we evaluate 18 config- urations across four terminal-agent harnesses: OpenHands, Gemini CLI [Google, 2025], Claude Code [Anthropic, 2025b], and Codex CLI [OpenAI, 2025]. Each task runs under two matched condi- tions: no Skills (the task instruction only) and curated Skills (the task’s full environment/skills/ directory). A third self-generated",
       "extractCut": true
     },
@@ -980,6 +1134,7 @@
       "labelEnd": null,
       "words": 18,
       "summary": null,
+      "keywords": [],
       "extract": "We report aggregate no-Skills vs. curated-Skills efficacy, then analyze Skills design factors, domain effects, and task-level failures. 5.1",
       "extractCut": false
     },
@@ -994,6 +1149,7 @@
       "labelEnd": null,
       "words": 18,
       "summary": null,
+      "keywords": [],
       "extract": "We evaluate each commercial model–harness configuration under matched no-Skills and curated- Skills conditions on all 87 tasks. 5.1.1",
       "extractCut": false
     },
@@ -1008,6 +1164,40 @@
       "labelEnd": null,
       "words": 939,
       "summary": null,
+      "keywords": [
+        {
+          "term": "openhands gemini",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "cli gemini",
+          "heading": false
+        },
+        {
+          "term": "codex gpt",
+          "heading": false
+        },
+        {
+          "term": "harness configurations",
+          "heading": false
+        },
+        {
+          "term": "pass rates",
+          "heading": false
+        },
+        {
+          "term": "resolution rates",
+          "heading": false
+        },
+        {
+          "term": "invocation rate",
+          "heading": false
+        }
+      ],
       "extract": "Table 2 reports pass rates for each model–harness combination, ordered by with-Skills performance. Finding 1: Skills provide broad but non-uniform gains. Every one of the 18 model–harness configurations improves with curated Skills (Figure 1). The average gain is +16.6 pp, but the spread is large (+4.1 to +25.7 pp): most configurations see double-digit gains, while OpenHands + Gemini 3.1 Flash Lite is nearly flat",
       "extractCut": true
     },
@@ -1022,6 +1212,20 @@
       "labelEnd": null,
       "words": 77,
       "summary": null,
+      "keywords": [
+        {
+          "term": "pretraining",
+          "heading": false
+        },
+        {
+          "term": "benefit",
+          "heading": false
+        },
+        {
+          "term": "domains",
+          "heading": false
+        }
+      ],
       "extract": "Finding 5: Skills benefit varies widely across domains. Table 3 shows substantial heterogeneity. Natural Science (+28.8 pp), Media & Content Production (+24.1 pp), and Cybersecurity (+18.9 pp) benefit most; Software Engineering (+11.6 pp) and Mathematics & OR (+9.7 pp) benefit least. Domains requiring specialized procedural knowledge underrepresented in model pretraining (e.g., scientific signal processing, security",
       "extractCut": true
     },
@@ -1036,6 +1240,40 @@
       "labelEnd": null,
       "words": 263,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task-level",
+          "heading": true
+        },
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "outperform",
+          "heading": false
+        },
+        {
+          "term": "openhands",
+          "heading": false
+        },
+        {
+          "term": "exhaustive",
+          "heading": false
+        },
+        {
+          "term": "reaches",
+          "heading": false
+        },
+        {
+          "term": "no-skills",
+          "heading": false
+        },
+        {
+          "term": "minimax",
+          "heading": false
+        }
+      ],
       "extract": "Task-level results reveal high variance in Skills effectiveness: Top Skills beneficiaries. The 10 highest-∆tasks span prefix-cache replay, intrusion detection, SEC filings, wet-lab analysis, hydrology, geoscience, 3D parsing, optimization, and dependency auditing, with mean improvement +67.0 pp. llm-prefix-cache-replay reaches 94.4% from a 1.9% no-Skills pass rate, and dapt-intrusion-detection reaches 81.5% from",
       "extractCut": true
     },
@@ -1050,6 +1288,40 @@
       "labelEnd": null,
       "words": 286,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill authors",
+          "heading": false
+        },
+        {
+          "term": "failure modes",
+          "heading": false
+        },
+        {
+          "term": "harnesses",
+          "heading": false
+        },
+        {
+          "term": "heavy",
+          "heading": false
+        },
+        {
+          "term": "brittle",
+          "heading": false
+        },
+        {
+          "term": "fallback",
+          "heading": false
+        },
+        {
+          "term": "frontmatter",
+          "heading": false
+        },
+        {
+          "term": "appendix",
+          "heading": false
+        }
+      ],
       "extract": "Skills close procedural gaps. Skills are most helpful when success depends on concrete procedures and verifier-facing details (steps, constraints, sanity checks), rather than broad conceptual knowledge. Gains are largest for specialized workflows or brittle formats, and smaller or negative when models already have strong priors or the Skill adds overhead. Harnesses mediate Skills use. Skills efficacy depends not",
       "extractCut": true
     },
@@ -1064,6 +1336,40 @@
       "labelEnd": null,
       "words": 215,
       "summary": null,
+      "keywords": [
+        {
+          "term": "future work",
+          "heading": true
+        },
+        {
+          "term": "determinism",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "gui",
+          "heading": false
+        },
+        {
+          "term": "effects",
+          "heading": false
+        },
+        {
+          "term": "procedural",
+          "heading": false
+        },
+        {
+          "term": "evaluate",
+          "heading": false
+        },
+        {
+          "term": "agents",
+          "heading": false
+        }
+      ],
       "extract": "Coverage and generalization. SKILLSBENCH focuses on terminal-based, containerized tasks for reproducible evaluation, so results may not transfer directly to GUI agents, multi-agent coordination, or very long-horizon workflows. We also evaluate a limited set of models and harnesses whose Skills integration can change over time. A natural extension is multi-modal Skills and protocols for vision-language agents in GUI",
       "extractCut": true
     },
@@ -1078,6 +1384,40 @@
       "labelEnd": null,
       "words": 358,
       "summary": null,
+      "keywords": [
+        {
+          "term": "agent benchmarks",
+          "heading": false
+        },
+        {
+          "term": "procedural augmentation",
+          "heading": false
+        },
+        {
+          "term": "paired evaluation",
+          "heading": false
+        },
+        {
+          "term": "evaluation methodology",
+          "heading": false
+        },
+        {
+          "term": "skillsbench",
+          "heading": false
+        },
+        {
+          "term": "zhou",
+          "heading": false
+        },
+        {
+          "term": "terminal-bench",
+          "heading": false
+        },
+        {
+          "term": "merrill",
+          "heading": false
+        }
+      ],
       "extract": "We situate SKILLSBENCH within agent benchmarks, procedural augmentation, and evaluation methodology. 8 Agent benchmarks. Recent benchmarks evaluate end-to-end agent capability across realistic environ- ments, including Terminal-Bench [Merrill et al., 2026], SWE-bench and follow-ons [Jimenez et al., 2024, Yang et al., 2024, 2025], AgentBench and web/GUI settings [Liu et al., 2023, Zhou et al., 2024b, Koh et al.,",
       "extractCut": true
     },
@@ -1092,6 +1432,40 @@
       "labelEnd": null,
       "words": 1587,
       "summary": null,
+      "keywords": [
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "graham neubig",
+          "heading": false
+        },
+        {
+          "term": "alexander wettig",
+          "heading": false
+        },
+        {
+          "term": "john yang",
+          "heading": false
+        },
+        {
+          "term": "jeffrey zhao",
+          "heading": false
+        },
+        {
+          "term": "language agents",
+          "heading": false
+        },
+        {
+          "term": "xuezhi wang",
+          "heading": false
+        },
+        {
+          "term": "neurips",
+          "heading": false
+        }
+      ],
       "extract": "We introduced SKILLSBENCH, a paired benchmark for evaluating Agent Skills as first-class artifacts. Across the latest 87-task, 18-configuration no-Skills vs. curated-Skills aggregate, curated Skills improve performance substantially but unevenly (+16.6 pp on average; range +4.1 pp to +25.7 pp by configuration). Concise procedural Skills outperform exhaustive documentation, and Skills can partially substitute for",
       "extractCut": true
     },
@@ -1106,6 +1480,20 @@
       "labelEnd": null,
       "words": 68,
       "summary": null,
+      "keywords": [
+        {
+          "term": "ecosystem-wide",
+          "heading": false
+        },
+        {
+          "term": "repository-level",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": false
+        }
+      ],
       "extract": "To contextualize SKILLSBENCH within the broader landscape of agent augmentation, we analyze the same construction snapshot reported in Figure 2: 234,896 direct GitHub/source Skills, 1,773,213 marketplace Skills, and 5,891 partner Skills, yielding 2,014,000 source-partitioned Skills (dedupli- cated within each source, then summed across partitions). When an analysis requires repository-level timestamps or cloned",
       "extractCut": true
     },
@@ -1120,6 +1508,40 @@
       "labelEnd": null,
       "words": 276,
       "summary": null,
+      "keywords": [
+        {
+          "term": "construction snapshot",
+          "heading": false
+        },
+        {
+          "term": "marketplace records",
+          "heading": false
+        },
+        {
+          "term": "repo",
+          "heading": false
+        },
+        {
+          "term": "repositories",
+          "heading": false
+        },
+        {
+          "term": "upstream",
+          "heading": false
+        },
+        {
+          "term": "apr",
+          "heading": false
+        },
+        {
+          "term": "partner",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": false
+        }
+      ],
       "extract": "We aggregate Skills from direct GitHub/source discovery, marketplace records, and partner invento- ries. Each entry records name, description, author, url, source partition, and, when available, the upstream repository pushed_at timestamp. Summed across these source partitions (after dedu- plicating within each), the construction snapshot contains 2,014,000 source-partitioned Skills. This is a renewal of an earlier",
       "extractCut": true
     },
@@ -1134,6 +1556,40 @@
       "labelEnd": null,
       "words": 427,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "bundle size",
+          "heading": false
+        },
+        {
+          "term": "total bundle",
+          "heading": false
+        },
+        {
+          "term": "long tail",
+          "heading": false
+        },
+        {
+          "term": "median",
+          "heading": false
+        },
+        {
+          "term": "testing security",
+          "heading": false
+        },
+        {
+          "term": "percentile",
+          "heading": false
+        },
+        {
+          "term": "content media",
+          "heading": false
+        }
+      ],
       "extract": "Size Distribution. Skill sizes follow a heavy-tailed log-normal distribution (Figure 7). SKILL.md instructions (panel a) have a median of 4.8 KB (∼1.2k tokens at 4 bytes/token; IQR 2.4–9.2 KB), while total bundle size (panel b) has a median of 7.2 KB (∼1.8k tokens; IQR 3.0–17.4 KB). The tail is dramatic: the largest Skill bundle exceeds 1.6 GB. Domain Coverage. Skills span 12 marketplace-assigned categories with",
       "extractCut": true
     },
@@ -1148,6 +1604,28 @@
       "labelEnd": null,
       "words": 223,
       "summary": null,
+      "keywords": [
+        {
+          "term": "quality",
+          "heading": true
+        },
+        {
+          "term": "excluding metadata",
+          "heading": false
+        },
+        {
+          "term": "extensions",
+          "heading": false
+        },
+        {
+          "term": "points",
+          "heading": false
+        },
+        {
+          "term": "presence",
+          "heading": false
+        }
+      ],
       "extract": "We developed a quality scoring rubric based on: 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15+ Number of files in Skill bundle (excluding metadata.json) 0 100K 200K 300K 400K Number of Skills n = 767,430 Median = 1 59.9% have only SKILL.md 86.4% have ≤5 files (a) 0 500K 1M 1.5M 2M 2.5M Number of files (top 12 of 1,825 extensions; 4,272,636 total) .md .py .ts .js .json (no extension) .map .sh .txt .svg .yaml .png 2.21M",
       "extractCut": true
     },
@@ -1162,6 +1640,28 @@
       "labelEnd": null,
       "words": 121,
       "summary": null,
+      "keywords": [
+        {
+          "term": "ecosystem mean",
+          "heading": false
+        },
+        {
+          "term": "benchmark",
+          "heading": true
+        },
+        {
+          "term": "quality",
+          "heading": false
+        },
+        {
+          "term": "informed",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": false
+        }
+      ],
       "extract": "This ecosystem analysis directly informed SKILLSBENCH construction: • Domain selection: Task categories mirror ecosystem coverage, ensuring Skills exist for evaluation • Quality awareness: Ecosystem mean quality of 6.2/12 motivated our leakage audit and authoring guidelines—low-quality Skills would confound efficacy measurement • Skill selection: We selected benchmark Skills from the top quality quartile (score",
       "extractCut": true
     },
@@ -1176,6 +1676,20 @@
       "labelEnd": null,
       "words": 64,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task",
+          "heading": true
+        },
+        {
+          "term": "specification",
+          "heading": true
+        },
+        {
+          "term": "process",
+          "heading": true
+        }
+      ],
       "extract": "This appendix provides full details of the task specification format and quality control process summa- rized in §3. Every task is packaged according to the task.md standard—a single schema-validated document plus the role-named verifier/ and oracle/ directories—whose full specification is given in Appendix C; this section documents the layout as instantiated by SKILLSBENCH and the review process that gates",
       "extractCut": true
     },
@@ -1190,6 +1704,20 @@
       "labelEnd": null,
       "words": 74,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task",
+          "heading": true
+        },
+        {
+          "term": "oracle",
+          "heading": false
+        },
+        {
+          "term": "directory",
+          "heading": true
+        }
+      ],
       "extract": "Each task is a self-contained directory with the following layout: tasks/<task -id >/ task.md # YAML frontmatter + task instruction environment/ 15 Dockerfile # Container setup skills/ # Curated Skills (absent in no -Skills) <skill -name >/ SKILL.md # Required per skill scripts/ # Optional executable code references/ # Optional reference documentation oracle/ solve.sh # Oracle solution (must pass 100%) verifier/",
       "extractCut": true
     },
@@ -1204,6 +1732,20 @@
       "labelEnd": null,
       "words": 83,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task",
+          "heading": true
+        },
+        {
+          "term": "frontmatter",
+          "heading": true
+        },
+        {
+          "term": "medium",
+          "heading": false
+        }
+      ],
       "extract": "Each task specifies metadata and resource limits in the YAML frontmatter of task.md; the task instruction is the document body (Appendix C): --- schema_version : \"1.3\" metadata: author_name: Contributor Name author_email : email@example .com difficulty: medium # easy | medium | hard category: finance -economics tags: [pandas , data -analysis , spreadsheet ] verifier: type: test -script agent: {} environment:",
       "extractCut": true
     },
@@ -1218,6 +1760,28 @@
       "labelEnd": null,
       "words": 117,
       "summary": null,
+      "keywords": [
+        {
+          "term": "logs verifier",
+          "heading": false
+        },
+        {
+          "term": "verifier reward",
+          "heading": false
+        },
+        {
+          "term": "echo logs",
+          "heading": false
+        },
+        {
+          "term": "pytest",
+          "heading": false
+        },
+        {
+          "term": "test outputs",
+          "heading": false
+        }
+      ],
       "extract": "Verification typically uses pytest with the CTRF (Common Test Report Format) output (85 of 87 tasks; the remaining two drive a Python checker script directly); every task’s test.sh writes its reward to /logs/verifier/reward.txt. The canonical test.sh installs dependencies, runs pytest, and writes a binary reward in the minimal pass/fail case: #!/ bin/bash pip3 install --break -system -packages pytest pytest -json",
       "extractCut": true
     },
@@ -1232,6 +1796,28 @@
       "labelEnd": null,
       "words": 131,
       "summary": null,
+      "keywords": [
+        {
+          "term": "review",
+          "heading": true
+        },
+        {
+          "term": "oracle",
+          "heading": false
+        },
+        {
+          "term": "reviewers",
+          "heading": false
+        },
+        {
+          "term": "bench",
+          "heading": false
+        },
+        {
+          "term": "benchmark",
+          "heading": false
+        }
+      ],
       "extract": "Each submitted task undergoes a multi-stage review: 1. Automated CI: Structural validation (bench tasks check), oracle execution (bench eval create –agent oracle, must pass 100%), and AI-detection screening (GPTZero) on the task.md instruction body. 16 2. Maintainer review: Evaluates data validity, task realism, oracle quality, Skill quality, and anti-cheating robustness. Reviewers run benchmark experiments with and",
       "extractCut": true
     },
@@ -1246,6 +1832,20 @@
       "labelEnd": null,
       "words": 89,
       "summary": null,
+      "keywords": [
+        {
+          "term": "oracle",
+          "heading": false
+        },
+        {
+          "term": "task",
+          "heading": false
+        },
+        {
+          "term": "generalizable",
+          "heading": false
+        }
+      ],
       "extract": "All task submissions must satisfy the following requirements before review: □The task.md instruction is human-written (not model-generated); verified via GPTZero and human review □Skills are error-free, factually correct, and generalizable to similar tasks □Task is realistic and grounded in professional workflows □Task requires domain knowledge and is significantly easier with Skills □Outputs are deterministic and",
       "extractCut": true
     },
@@ -1260,6 +1860,32 @@
       "labelEnd": null,
       "words": 140,
       "summary": null,
+      "keywords": [
+        {
+          "term": "multimodal",
+          "heading": false
+        },
+        {
+          "term": "prs",
+          "heading": false
+        },
+        {
+          "term": "maintainers",
+          "heading": false
+        },
+        {
+          "term": "closed",
+          "heading": false
+        },
+        {
+          "term": "rejected",
+          "heading": false
+        },
+        {
+          "term": "oracle",
+          "heading": false
+        }
+      ],
       "extract": "Maintainers evaluate each submission against seven criteria: 1. AI detection: Verify the task.md instruction and configuration are manually written using GPTZero and human review. PRs with intentional grammar errors designed to circumvent AI detectors are closed. 2. Data quality: Data must be real-world and appropriately complex. AI-generated or toy data is rejected. 3. Task validity: Tasks must be grounded in",
       "extractCut": true
     },
@@ -1274,6 +1900,24 @@
       "labelEnd": null,
       "words": 93,
       "summary": null,
+      "keywords": [
+        {
+          "term": "oracle",
+          "heading": false
+        },
+        {
+          "term": "bench",
+          "heading": false
+        },
+        {
+          "term": "checks",
+          "heading": false
+        },
+        {
+          "term": "pipeline",
+          "heading": true
+        }
+      ],
       "extract": "The CI pipeline performs the following checks on each PR: • Structural validation (bench tasks check): Verifies required files exist, the task.md frontmatter schema is valid, Dockerfile builds, and test structure is correct. • Oracle execution (bench eval create –agent oracle): Runs the oracle solution end- to-end and requires 100% test pass rate. • AI-detection screening: Runs GPTZero on the task.md instruction",
       "extractCut": true
     },
@@ -1288,6 +1932,24 @@
       "labelEnd": null,
       "words": 91,
       "summary": null,
+      "keywords": [
+        {
+          "term": "approve",
+          "heading": false
+        },
+        {
+          "term": "report",
+          "heading": true
+        },
+        {
+          "term": "caveats",
+          "heading": false
+        },
+        {
+          "term": "quantified",
+          "heading": false
+        }
+      ],
       "extract": "For each task, reviewers produce a structured report documenting: 17 1. Task metadata: Name, category, difficulty, tags, description, Skills provided, key require- ments. 2. Oracle results: Pass/fail status, reward, tests passed, timing. 3. Agent results: Pass rates per agent-model combination, with and without Skills, including execution time. 4. Skills impact: Quantified comparison of with-Skills vs.",
       "extractCut": true
     },
@@ -1302,6 +1964,24 @@
       "labelEnd": null,
       "words": 94,
       "summary": null,
+      "keywords": [
+        {
+          "term": "review",
+          "heading": true
+        },
+        {
+          "term": "change requested",
+          "heading": false
+        },
+        {
+          "term": "reviewing",
+          "heading": false
+        },
+        {
+          "term": "lifecycle",
+          "heading": true
+        }
+      ],
       "extract": "PRs progress through a defined label-based lifecycle: 1. WIP →Need review: Author signals readiness for initial review. 2. Need review →Reviewing: A maintainer begins active review and benchmark experiments. 3. Reviewing →Change requested / Major change needed / Critical change needed: Issues identified; author must address. 4. Change requested →Take another look: Author responds after changes. 5. Ready to merge",
       "extractCut": true
     },
@@ -1316,6 +1996,20 @@
       "labelEnd": null,
       "words": 83,
       "summary": null,
+      "keywords": [
+        {
+          "term": "criteria",
+          "heading": true
+        },
+        {
+          "term": "parsimony",
+          "heading": false
+        },
+        {
+          "term": "skill-dependent",
+          "heading": false
+        }
+      ],
       "extract": "Tasks are evaluated against the following criteria: • Realistic: Grounded in professional workflows that people in that domain actually perform • Skill-dependent: Significantly easier with Skills than without—tasks solvable without any procedural guidance are rejected • Verifiable: Deterministic outputs testable with programmatic assertions; LLM-as-judge is not used • Composable: Tasks should exercise 3–6 Skills",
       "extractCut": true
     },
@@ -1330,6 +2024,40 @@
       "labelEnd": null,
       "words": 268,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task",
+          "heading": true
+        },
+        {
+          "term": "harbor",
+          "heading": false
+        },
+        {
+          "term": "reference harness",
+          "heading": false
+        },
+        {
+          "term": "standard",
+          "heading": true
+        },
+        {
+          "term": "skillsbench",
+          "heading": false
+        },
+        {
+          "term": "verifier",
+          "heading": false
+        },
+        {
+          "term": "team",
+          "heading": false
+        },
+        {
+          "term": "instruction",
+          "heading": false
+        }
+      ],
       "extract": "We claim in §1 that the paired-evaluation protocol is reusable beyond our own task set: practitioners can run the same harness on their own Skill libraries before shipping. That reuse requires the task package to be portable and versioned. The task.md standard therefore packages a task as a single schema-validated document—YAML frontmatter for configuration, Markdown body for the task instruction—together with",
       "extractCut": true
     },
@@ -1344,6 +2072,7 @@
       "labelEnd": null,
       "words": 19,
       "summary": null,
+      "keywords": [],
       "extract": "(Table 4), and renaming the solution/ and tests/ directories to oracle/ and verifier/ to better reflect their roles. C.1",
       "extractCut": false
     },
@@ -1358,6 +2087,28 @@
       "labelEnd": null,
       "words": 133,
       "summary": null,
+      "keywords": [
+        {
+          "term": "medium",
+          "heading": false
+        },
+        {
+          "term": "network",
+          "heading": false
+        },
+        {
+          "term": "contributor",
+          "heading": false
+        },
+        {
+          "term": "task",
+          "heading": false
+        },
+        {
+          "term": "frontmatter",
+          "heading": false
+        }
+      ],
       "extract": "task.md is a Markdown file whose YAML frontmatter is the task configuration and whose body, immediately following the closing frontmatter delimiter, is the task instruction—no section heading is required. The schema is strict at the top level: unknown keys are rejected at parse time, so a contributor’s task cannot silently lose a configuration field as the schema evolves across harnesses; values within the free-form",
       "extractCut": true
     },
@@ -1372,6 +2123,24 @@
       "labelEnd": null,
       "words": 97,
       "summary": null,
+      "keywords": [
+        {
+          "term": "closed tier",
+          "heading": false
+        },
+        {
+          "term": "controlled",
+          "heading": true
+        },
+        {
+          "term": "difficulty",
+          "heading": false
+        },
+        {
+          "term": "free-form",
+          "heading": false
+        }
+      ],
       "extract": "The metadata block is two-tier. A closed tier—category, task_type, modality, interface, skill_type, and difficulty—draws from controlled vocabularies, of which category and difficulty correspond to the benchmark taxonomy of Appendix M.9; an open tier (tags and free-form Skill names) preserves authoring flexibility. The closed tier is enforced at review time rather than at parse time: metadata is parsed as a",
       "extractCut": true
     },
@@ -1386,6 +2155,40 @@
       "labelEnd": null,
       "words": 267,
       "summary": null,
+      "keywords": [
+        {
+          "term": "verifier strategies",
+          "heading": false
+        },
+        {
+          "term": "test-script",
+          "heading": false
+        },
+        {
+          "term": "allowlist",
+          "heading": false
+        },
+        {
+          "term": "network",
+          "heading": true
+        },
+        {
+          "term": "egress",
+          "heading": false
+        },
+        {
+          "term": "reward",
+          "heading": false
+        },
+        {
+          "term": "txt",
+          "heading": false
+        },
+        {
+          "term": "hosts",
+          "heading": false
+        }
+      ],
       "extract": "Because uncontrolled network egress is a confound for a deterministic verifier, the standard makes egress explicit: access is declared with a single enumerated field, network_mode ∈{no-network, public, allowlist}, rather than a coarse on/off boolean. The allowlist mode requires a non- empty allowed_hosts list—a parse-time error otherwise—so an allowlist declaration is never left under-specified. A task whose data is",
       "extractCut": true
     },
@@ -1400,6 +2203,7 @@
       "labelEnd": null,
       "words": 10,
       "summary": null,
+      "keywords": [],
       "extract": "This appendix expands the experimental setup summarized in §4. D.1",
       "extractCut": false
     },
@@ -1414,6 +2218,40 @@
       "labelEnd": null,
       "words": 228,
       "summary": null,
+      "keywords": [
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "pass fail",
+          "heading": false
+        },
+        {
+          "term": "latest aggregate",
+          "heading": false
+        },
+        {
+          "term": "gemini",
+          "heading": false
+        },
+        {
+          "term": "passvanilla",
+          "heading": false
+        },
+        {
+          "term": "flash",
+          "heading": false
+        },
+        {
+          "term": "gpt",
+          "heading": false
+        },
+        {
+          "term": "pro",
+          "heading": false
+        }
+      ],
       "extract": "We instantiate the SKILLSBENCH protocol across commercial terminal agents and model–harness configurations. The latest aggregate targets a fixed 9,396-slot frame (18 configurations × 87 tasks × 2 conditions × 3 trials), with 9,396 selected public result files currently available. All runs use temperature 0; unscored, stale, or rate-limited rows are tracked as coverage gaps for audit and rerun, while timeout rows are",
       "extractCut": true
     },
@@ -1428,6 +2266,7 @@
       "labelEnd": null,
       "words": 13,
       "summary": null,
+      "keywords": [],
       "extract": "Table 5 presents the 18 model–harness configurations evaluated in the latest aggregate. D.3",
       "extractCut": false
     },
@@ -1442,6 +2281,40 @@
       "labelEnd": null,
       "words": 229,
       "summary": null,
+      "keywords": [
+        {
+          "term": "aws bedrock",
+          "heading": false
+        },
+        {
+          "term": "anthropic aws",
+          "heading": false
+        },
+        {
+          "term": "azure openai",
+          "heading": false
+        },
+        {
+          "term": "openhands",
+          "heading": false
+        },
+        {
+          "term": "gemini cli",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "terminal agent",
+          "heading": false
+        },
+        {
+          "term": "agent harnesses",
+          "heading": false
+        }
+      ],
       "extract": "We evaluate four commercial agent harnesses: • OpenHands: open-source terminal agent harness • Claude Code [Anthropic, 2025b]: Anthropic’s agent with native Skill integration • Gemini CLI [Google, 2025]: Google’s open-source terminal agent • Codex CLI [OpenAI, 2025]: OpenAI’s lightweight coding agent 20 Table 5: Agent harnesses and models evaluated in the latest aggregate. Counts report selected no-Skills /",
       "extractCut": true
     },
@@ -1456,6 +2329,20 @@
       "labelEnd": null,
       "words": 22,
       "summary": null,
+      "keywords": [
+        {
+          "term": "obs",
+          "heading": false
+        },
+        {
+          "term": "str",
+          "heading": false
+        },
+        {
+          "term": "def",
+          "heading": false
+        }
+      ],
       "extract": "Agents interact with the environment through a standardized interface: class BaseAgent(ABC): @abstractmethod def step(self , obs: str) -> str: \"\"\"obs:␣terminal␣output␣->␣action\"\"\" pass D.5",
       "extractCut": false
     },
@@ -1470,6 +2357,20 @@
       "labelEnd": null,
       "words": 64,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "yaml frontmatter",
+          "heading": false
+        },
+        {
+          "term": "skill name",
+          "heading": false
+        }
+      ],
       "extract": "Each Skill is a directory containing a required SKILL.md file with YAML frontmatter and optional bundled resources: skill -name/ SKILL.md # Required: YAML frontmatter + instructions scripts/ # Optional: executable code references/ # Optional: reference documentation The SKILL.md frontmatter specifies the Skill’s name and a one-line description used by agents for skill discovery. The body contains procedural",
       "extractCut": true
     },
@@ -1484,6 +2385,40 @@
       "labelEnd": null,
       "words": 654,
       "summary": null,
+      "keywords": [
+        {
+          "term": "self-generated skills",
+          "heading": true
+        },
+        {
+          "term": "self-generated condition",
+          "heading": true
+        },
+        {
+          "term": "skill packs",
+          "heading": false
+        },
+        {
+          "term": "generated packs",
+          "heading": false
+        },
+        {
+          "term": "dedicated-harness configurations",
+          "heading": false
+        },
+        {
+          "term": "curated skills",
+          "heading": false
+        },
+        {
+          "term": "gemini cli",
+          "heading": false
+        },
+        {
+          "term": "task instruction",
+          "heading": false
+        }
+      ],
       "extract": "The self-generated condition asks whether an agent can replace curated Skills with Skills it authors for itself. Unlike the no-Skills and curated-Skills conditions, it consists of two isolated sessions per 21 task. In the creator session, a clean agent receives the task package with all curated Skills removed and exactly one Skill mounted—Anthropic’s official skill-creator—and is instructed to author skill packs",
       "extractCut": true
     },
@@ -1498,6 +2433,40 @@
       "labelEnd": null,
       "words": 464,
       "summary": null,
+      "keywords": [
+        {
+          "term": "generated pack",
+          "heading": false
+        },
+        {
+          "term": "curated skill",
+          "heading": false
+        },
+        {
+          "term": "pack content",
+          "heading": false
+        },
+        {
+          "term": "self-generated",
+          "heading": true
+        },
+        {
+          "term": "solver",
+          "heading": false
+        },
+        {
+          "term": "unit conversion",
+          "heading": false
+        },
+        {
+          "term": "audit",
+          "heading": true
+        },
+        {
+          "term": "gemini cli",
+          "heading": false
+        }
+      ],
       "extract": "We audited twelve solver trajectories across ten (task, configuration) pairs selected for extreme condition gaps—tasks where curated Skills pass but self-generated fail, the rare cases where self- generated beats no-Skills, and skill-dependent tasks—together with a protocol check comparing trials of the same task. Four mechanisms account for the audited gap: • Generated packs frequently go unused. In the pre-baked",
       "extractCut": true
     },
@@ -1512,6 +2481,28 @@
       "labelEnd": null,
       "words": 111,
       "summary": null,
+      "keywords": [
+        {
+          "term": "openhands",
+          "heading": false
+        },
+        {
+          "term": "openai gpt",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "gemini",
+          "heading": false
+        },
+        {
+          "term": "latest aggregate",
+          "heading": false
+        }
+      ],
       "extract": "Table 7 lists representative model identifiers and harnesses used in the latest aggregate. 23 Table 7: Representative model API identifiers and harnesses in the latest aggregate. Display Name API Model ID Harness Version GPT-5.5 openai/gpt-5.5 OpenHands / Codex CLI GPT-5.4 Mini openai/gpt-5.4-mini OpenHands Claude Opus 4.8 claude-opus-4-8 OpenHands Claude Opus 4.7 claude-opus-4-7 OpenHands / Claude Code Claude",
       "extractCut": true
     },
@@ -1526,6 +2517,20 @@
       "labelEnd": null,
       "words": 68,
       "summary": null,
+      "keywords": [
+        {
+          "term": "gpu",
+          "heading": false
+        },
+        {
+          "term": "containers",
+          "heading": false
+        },
+        {
+          "term": "environment",
+          "heading": true
+        }
+      ],
       "extract": "All tasks run in Docker containers built from an ubuntu:24.04 base image. Per-task resource allocation is specified in the environment block of the task configuration (Appendix C): • CPUs: 1–4 cores (task-dependent) • Memory: 2–10 GB (task-dependent) • Storage: 10 GB (standard across all tasks) • GPU: None (no tasks require GPU) Containers are deleted after each trial (delete: true) to ensure no state leaks between",
       "extractCut": true
     },
@@ -1540,6 +2545,20 @@
       "labelEnd": null,
       "words": 58,
       "summary": null,
+      "keywords": [
+        {
+          "term": "healthy",
+          "heading": false
+        },
+        {
+          "term": "backfill",
+          "heading": false
+        },
+        {
+          "term": "exceeded",
+          "heading": false
+        }
+      ],
       "extract": "• Temperature: 0 (deterministic sampling) • Reasoning effort: Highest available setting for each model • Context management: Sliding window with 8K token limit; oldest turns dropped when exceeded • Run selection: Public result files with complete metadata and healthy verifier-scored pass/fail outcomes are preferred; timeout rows are used only as failure backfill when healthy replacements are unavailable D.10",
       "extractCut": false
     },
@@ -1554,6 +2573,20 @@
       "labelEnd": null,
       "words": 70,
       "summary": null,
+      "keywords": [
+        {
+          "term": "slots",
+          "heading": false
+        },
+        {
+          "term": "conditions",
+          "heading": false
+        },
+        {
+          "term": "concurrent",
+          "heading": false
+        }
+      ],
       "extract": "• Runs per task: three selected public result files for the main no-Skills and curated-Skills conditions • Concurrent trials: 256 for the main conditions • Retry policy: Unscored, stale, or rate-limited runs are audited and rerun • Task scope: 87 tasks in the current released inventory The latest aggregate tracks 9,396 fixed result slots across 18 configurations, 87 tasks, and 2 conditions; 9,396 public result files",
       "extractCut": true
     },
@@ -1568,6 +2601,40 @@
       "labelEnd": null,
       "words": 942,
       "summary": null,
+      "keywords": [
+        {
+          "term": "office",
+          "heading": false
+        },
+        {
+          "term": "industrial",
+          "heading": false
+        },
+        {
+          "term": "cyber",
+          "heading": false
+        },
+        {
+          "term": "curated-skills pass",
+          "heading": false
+        },
+        {
+          "term": "pass rate",
+          "heading": false
+        },
+        {
+          "term": "finance",
+          "heading": false
+        },
+        {
+          "term": "deepseek pro",
+          "heading": false
+        },
+        {
+          "term": "math",
+          "heading": false
+        }
+      ],
       "extract": "Figure 11, Figure 12, and Figure 13 show the task-level pass rates per model across all 87 tasks. Results use the same fixed three-trial denominator as Table 2. Tasks (rows) are sorted by average with-Skills pass rate; models (columns) are sorted by aggregate with-Skills score. 24 OH GPT-5.5 Codex GPT-5.5 Claude Code Opus 4.7 Gemini CLI 3.1 Pro OH GLM 5.1 OH Opus 4.8 OH Kimi K2.6 OH Opus 4.7 OH MiniMax M3 OH Gemini",
       "extractCut": true
     },
@@ -1582,6 +2649,7 @@
       "labelEnd": null,
       "words": 29,
       "summary": null,
+      "keywords": [],
       "extract": "We expand on the design ablations summarized in Finding 5 (§5). All numbers use the latest 87-task, 18-configuration aggregate with the same fixed three-trial denominator as Table 2. F.1",
       "extractCut": false
     },
@@ -1596,6 +2664,20 @@
       "labelEnd": null,
       "words": 55,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "conflicting",
+          "heading": false
+        },
+        {
+          "term": "attached",
+          "heading": false
+        }
+      ],
       "extract": "Table 8: Pass rates by number of Skills attached to a task. One to three Skills remain strongest; ≥4 Skills introduces diminishing returns consistent with cognitive overhead and conflicting guidance. Skills Count N tasks No Skills With Skills ∆abs 1 23 32.2% 50.2% +18.0 2–3 43 34.4% 53.4% +19.0 ≥4 21 34.8% 44.9% +10.1 F.2",
       "extractCut": false
     },
@@ -1610,6 +2692,20 @@
       "labelEnd": null,
       "words": 55,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "complexity",
+          "heading": true
+        },
+        {
+          "term": "comprehensive",
+          "heading": false
+        }
+      ],
       "extract": "Table 9: Pass rates by Skill documentation length. Buckets use total SKILL.md text size with 25th, 50th, and 95th percentile cutpoints. Focused documentation outperforms comprehensive prose. Complexity N tasks No Skills With Skills ∆abs Compact 22 37.6% 56.6% +19.0 Standard 22 19.8% 41.2% +21.5 Detailed 38 39.3% 53.8% +14.5 Comprehensive 5 39.3% 40.0% +0.7 F.3",
       "extractCut": false
     },
@@ -1624,6 +2720,32 @@
       "labelEnd": null,
       "words": 177,
       "summary": null,
+      "keywords": [
+        {
+          "term": "out simpler",
+          "heading": false
+        },
+        {
+          "term": "skill points",
+          "heading": false
+        },
+        {
+          "term": "implication",
+          "heading": false
+        },
+        {
+          "term": "debug",
+          "heading": false
+        },
+        {
+          "term": "debugging",
+          "heading": false
+        },
+        {
+          "term": "tasks",
+          "heading": false
+        }
+      ],
       "extract": "We audited paired (with-Skills, no-Skills) trajectories on tasks with negative deltas. The latest aggregate changes the task ordering, but the same three repeatable patterns remain: • Pattern A: heavyweight pipeline crowds out simpler execution. Tasks: adaptive-cruise-control (−5.6 pp), r2r-mpc-control (−5.6 pp), dynamic-object-aware-egomotion (−1.9 pp). The Skill points agents toward more principled but heavier",
       "extractCut": true
     },
@@ -1638,6 +2760,24 @@
       "labelEnd": null,
       "words": 118,
       "summary": null,
+      "keywords": [
+        {
+          "term": "trajectories",
+          "heading": false
+        },
+        {
+          "term": "verifier",
+          "heading": false
+        },
+        {
+          "term": "pat",
+          "heading": false
+        },
+        {
+          "term": "terns",
+          "heading": false
+        }
+      ],
       "extract": "We audited paired trajectories (with-Skills vs. no-Skills) on the 10 highest-∆ tasks (Top-10 in §5, mean +67.0 pp) to extract concrete authoring patterns. The five pat- terns summarized in §6’s “Implications for Skill authoring” paragraph are: (1) ship an executable script with calibrated defaults rather than only describing the algo- rithm (llm-prefix-cache-replay, sec-financial-report); (2) name the canonical data",
       "extractCut": true
     },
@@ -1652,6 +2792,20 @@
       "labelEnd": null,
       "words": 78,
       "summary": null,
+      "keywords": [
+        {
+          "term": "intervals",
+          "heading": false
+        },
+        {
+          "term": "confidence",
+          "heading": true
+        },
+        {
+          "term": "plotted",
+          "heading": false
+        }
+      ],
       "extract": "For the main result bars in Figure 1 and the Skill Invocation Rate plot in Figure 5, we compute 95% binomial (Wald) confidence intervals as 1.96 p p(1 −p)/n, where p is the corresponding rate and n is the selected public result-file count for that model–harness cell. Resolution-rate intervals are plotted as slightly offset circles within each stacked bar; invocation intervals are plotted as black diamonds with",
       "extractCut": true
     },
@@ -1666,6 +2820,7 @@
       "labelEnd": null,
       "words": 27,
       "summary": null,
+      "keywords": [],
       "extract": "The complete 87-task inventory and updated domain distribution are reported in Table 19. The table is generated from scripts/taxonomy.csv and grouped by the updated 8-domain taxonomy. I",
       "extractCut": false
     },
@@ -1680,6 +2835,40 @@
       "labelEnd": null,
       "words": 472,
       "summary": null,
+      "keywords": [
+        {
+          "term": "deepseek flash",
+          "heading": false
+        },
+        {
+          "term": "deepseek pro",
+          "heading": false
+        },
+        {
+          "term": "openhands",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "flash lite",
+          "heading": false
+        },
+        {
+          "term": "harness configurations",
+          "heading": false
+        },
+        {
+          "term": "curated skills",
+          "heading": false
+        },
+        {
+          "term": "model harness",
+          "heading": false
+        }
+      ],
       "extract": "Table 10 consolidates the latest aggregate results across 18 model–harness configurations and two matched Skills conditions. Scores are computed on the fixed 87 × 3 trial frame per condition, consistent with the task-macro scoring used in the main text; the n column reports current public coverage. Table 10: Comprehensive latest results across model–harness configurations. Pass rates use a fixed 87×3 denominator per",
       "extractCut": true
     },
@@ -1694,6 +2883,32 @@
       "labelEnd": null,
       "words": 227,
       "summary": null,
+      "keywords": [
+        {
+          "term": "openhands",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "gemini",
+          "heading": false
+        },
+        {
+          "term": "slot",
+          "heading": false
+        },
+        {
+          "term": "flash",
+          "heading": false
+        },
+        {
+          "term": "gpt",
+          "heading": false
+        }
+      ],
       "extract": "Table 11: Failure mode distribution by condition in the latest healthy-first diagnostic selection. Fail Rate uses the fixed 4,698-slot condition denominator; mode shares are percentages of that condition’s selected non-solved trials. The selected public coverage spans the full 9,396-slot frame. Condition Fail Rate Timeout Execution Coherence Verification No Skills 66.1% 1.9% 0.0% 7.9% 90.3% With Skills 49.5% 3.1%",
       "extractCut": true
     },
@@ -1708,6 +2923,20 @@
       "labelEnd": null,
       "words": 27,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task-level",
+          "heading": true
+        },
+        {
+          "term": "audits",
+          "heading": false
+        },
+        {
+          "term": "pass-rate",
+          "heading": false
+        }
+      ],
       "extract": "The following task-level audits use verifier-scored pass/fail outcomes to illustrate how curated Skills change agent behavior. They are qualitative supplements to the aggregate pass-rate tables above. J.1",
       "extractCut": false
     },
@@ -1722,6 +2951,40 @@
       "labelEnd": null,
       "words": 333,
       "summary": null,
+      "keywords": [
+        {
+          "term": "pass rate",
+          "heading": false
+        },
+        {
+          "term": "pivot table",
+          "heading": false
+        },
+        {
+          "term": "curated skill",
+          "heading": false
+        },
+        {
+          "term": "comparison methodology",
+          "heading": false
+        },
+        {
+          "term": "filings",
+          "heading": false
+        },
+        {
+          "term": "failed",
+          "heading": false
+        },
+        {
+          "term": "regulatory",
+          "heading": false
+        },
+        {
+          "term": "agents",
+          "heading": false
+        }
+      ],
       "extract": "We present representative examples where curated Skills transformed agent outcomes from failure to success, illustrating the mechanisms through which procedural knowledge improves performance. Skills bridge domain-specific API gaps: sales-pivot-analysis. Without Skills, evaluated agents rarely solved this task, which requires creating Excel pivot tables programmatically from population and income data. Agents",
       "extractCut": true
     },
@@ -1736,6 +2999,40 @@
       "labelEnd": null,
       "words": 401,
       "summary": null,
+      "keywords": [
+        {
+          "term": "tests passed",
+          "heading": false
+        },
+        {
+          "term": "pivot",
+          "heading": false
+        },
+        {
+          "term": "output file",
+          "heading": false
+        },
+        {
+          "term": "formula",
+          "heading": false
+        },
+        {
+          "term": "excel",
+          "heading": false
+        },
+        {
+          "term": "failed",
+          "heading": false
+        },
+        {
+          "term": "failure",
+          "heading": true
+        },
+        {
+          "term": "domain-specific",
+          "heading": false
+        }
+      ],
       "extract": "We present representative examples drawn from verifier test outputs across failed trajectories. Quality Below Threshold: earthquake-plate-calculation. The agent correctly identified the target earthquake event, extracting latitude, longitude, magnitude, and timestamp accurately (7/8 tests passed). However, the computed distance from the nearest plate boundary was 3,562 km instead of the expected 3,878 km—an 8.2%",
       "extractCut": true
     },
@@ -1750,6 +3047,24 @@
       "labelEnd": null,
       "words": 141,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skills",
+          "heading": true
+        },
+        {
+          "term": "skills pass",
+          "heading": false
+        },
+        {
+          "term": "pass rate",
+          "heading": false
+        },
+        {
+          "term": "tasks",
+          "heading": true
+        }
+      ],
       "extract": "Table 13 lists the 10 tasks where Skills produced the largest improvement in pass rate. These tasks share a common pattern: they require domain-specific procedural knowledge (e.g., cache behavior, intrusion detection, financial reporting schemas, scientific data processing pipelines, optimization, and artifact conversion) that is well-suited to being encoded in Skill documents. The average improvement for these",
       "extractCut": true
     },
@@ -1764,6 +3079,28 @@
       "labelEnd": null,
       "words": 196,
       "summary": null,
+      "keywords": [
+        {
+          "term": "invocation rate",
+          "heading": true
+        },
+        {
+          "term": "skill invocation",
+          "heading": true
+        },
+        {
+          "term": "openhands",
+          "heading": false
+        },
+        {
+          "term": "harness-bundled skills",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        }
+      ],
       "extract": "Table 14 reports the exact counts behind Figure 5. Counts include only task-specific Skills shipped under each task’s environment/skills; harness-bundled Skills are treated as part of the harness. Table 14: Skill Invocation Rate by model–harness configuration on curated-Skills trials. Counts require a task-bundled Skill; harness-bundled Skills are excluded. Harness Model Skill Invocation Rate Invoked Resolution Rate",
       "extractCut": true
     },
@@ -1778,6 +3115,24 @@
       "labelEnd": null,
       "words": 126,
       "summary": null,
+      "keywords": [
+        {
+          "term": "per-trial cost",
+          "heading": false
+        },
+        {
+          "term": "token counts",
+          "heading": false
+        },
+        {
+          "term": "litellm",
+          "heading": false
+        },
+        {
+          "term": "priced",
+          "heading": false
+        }
+      ],
       "extract": "This section reports token usage, per-trial cost, and agent wall-clock time for the latest 18- configuration aggregate, computed directly from the selected public result.json files (HF main + PR#11 fixed at a26b2100, across v0.1 and v1.1 submissions) over the same healthy-first three-trial selection used in the main result tables. Each trial records its own token counts and agent-execution timing; where the provider",
       "extractCut": true
     },
@@ -1792,6 +3147,36 @@
       "labelEnd": null,
       "words": 262,
       "summary": null,
+      "keywords": [
+        {
+          "term": "openhands",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "mean total",
+          "heading": false
+        },
+        {
+          "term": "claude code",
+          "heading": false
+        },
+        {
+          "term": "cost",
+          "heading": true
+        },
+        {
+          "term": "total tokens",
+          "heading": false
+        },
+        {
+          "term": "gemini",
+          "heading": false
+        }
+      ],
       "extract": "Table 15 reports mean total tokens per trial (prompt + completion, as recorded by the harness) and mean LiteLLM cost per trial, separately for the no-Skills and curated-Skills conditions. Table 15: Mean per-trial token usage and cost in the latest 18-configuration aggregate, by Skills condition. Tok = mean total tokens per trial (thousands); $ = mean LiteLLM-computed cost per trial. Cells with fewer than 20 usable",
       "extractCut": true
     },
@@ -1806,6 +3191,28 @@
       "labelEnd": null,
       "words": 150,
       "summary": null,
+      "keywords": [
+        {
+          "term": "runtime err",
+          "heading": false
+        },
+        {
+          "term": "verifier error",
+          "heading": false
+        },
+        {
+          "term": "public trials",
+          "heading": false
+        },
+        {
+          "term": "configuration aggregate",
+          "heading": false
+        },
+        {
+          "term": "latest configuration",
+          "heading": false
+        }
+      ],
       "extract": "Table 16: Trial-level outcome distribution in the latest 18-configuration aggregate (N = 9,396 selected public trials), overall and by Skills condition. Attempted = a verifier-scored trial with reward 0; Runtime err. = no scored result (agent/harness/verifier error), counted as reward 0 in the main aggregate. Condition n Solved Partial Attempted Runtime err. No Skills 4,698 31.3% 5.4% 62.7% 0.6% Curated Skills 4,698",
       "extractCut": true
     },
@@ -1820,6 +3227,36 @@
       "labelEnd": null,
       "words": 228,
       "summary": null,
+      "keywords": [
+        {
+          "term": "openhands gemini",
+          "heading": false
+        },
+        {
+          "term": "openhands claude",
+          "heading": false
+        },
+        {
+          "term": "openhands gpt",
+          "heading": false
+        },
+        {
+          "term": "claude opus",
+          "heading": false
+        },
+        {
+          "term": "flash lite",
+          "heading": false
+        },
+        {
+          "term": "configurations",
+          "heading": false
+        },
+        {
+          "term": "trial",
+          "heading": false
+        }
+      ],
       "extract": "Per-trial cost spans roughly two orders of magnitude across the lineup. The cheapest priced con- figurations are OpenHands + Gemini 3.1 Flash Lite ($0.15–0.22) and OpenHands + GPT-5.4 Mini ($0.25–0.30); the Gemini and GPT-5.5 configurations occupy the mid-range ($0.8–3.1 per trial); and the Claude Opus configurations are by far the most expensive—OpenHands + Claude Opus 4.8 at $14.02–22.70 per trial, OpenHands +",
       "extractCut": true
     },
@@ -1834,6 +3271,40 @@
       "labelEnd": null,
       "words": 275,
       "summary": null,
+      "keywords": [
+        {
+          "term": "fleet mean",
+          "heading": false
+        },
+        {
+          "term": "skills fleet",
+          "heading": false
+        },
+        {
+          "term": "deepseek flash",
+          "heading": false
+        },
+        {
+          "term": "deepseek pro",
+          "heading": false
+        },
+        {
+          "term": "gemini cli",
+          "heading": false
+        },
+        {
+          "term": "flash lite",
+          "heading": false
+        },
+        {
+          "term": "agent wall-clock",
+          "heading": false
+        },
+        {
+          "term": "curated skills",
+          "heading": false
+        }
+      ],
       "extract": "Figure 15 plots resolution rate against mean agent wall-clock per task—the agent-execution span of each selected trial (agent runtime only), averaged within each task and then across the 87 tasks—for both Skills conditions, over the same selection as Table 10. Curated Skills lift the fleet mean by +16.6 pp at broadly unchanged agent time; the slower half of the fleet runs faster with Skills (e.g., OpenHands + Claude",
       "extractCut": true
     },
@@ -1848,6 +3319,20 @@
       "labelEnd": null,
       "words": 55,
       "summary": null,
+      "keywords": [
+        {
+          "term": "construction",
+          "heading": true
+        },
+        {
+          "term": "checklists",
+          "heading": false
+        },
+        {
+          "term": "inspected",
+          "heading": false
+        }
+      ],
       "extract": "This appendix collects the construction and quality-control details summarized in §3. It is kept separate from the other appendices so that the benchmark definition, submission process, and leakage safeguards can be inspected as a single unit; the contributor-facing format and PR-level review mechanics (CI commands, checklists, report template, lifecycle) are documented in Appendix B. M.1",
       "extractCut": false
     },
@@ -1862,6 +3347,36 @@
       "labelEnd": null,
       "words": 207,
       "summary": null,
+      "keywords": [
+        {
+          "term": "procedural content",
+          "heading": false
+        },
+        {
+          "term": "factual",
+          "heading": false
+        },
+        {
+          "term": "skill",
+          "heading": true
+        },
+        {
+          "term": "task class",
+          "heading": false
+        },
+        {
+          "term": "boundary",
+          "heading": true
+        },
+        {
+          "term": "optional resources",
+          "heading": false
+        },
+        {
+          "term": "definition",
+          "heading": true
+        }
+      ],
       "extract": "A Skill is an artifact satisfying four operational criteria: • Procedural content: Contains how-to guidance, workflows, standard operating procedures, or domain conventions rather than factual retrieval. • Task-class applicability: Applies to a class of problems rather than a single benchmark instance. • Structured components: Includes a SKILL.md file plus optional resources such as scripts, tem- plates, references,",
       "extractCut": true
     },
@@ -1876,6 +3391,28 @@
       "labelEnd": null,
       "words": 131,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task",
+          "heading": true
+        },
+        {
+          "term": "oracle",
+          "heading": false
+        },
+        {
+          "term": "verifier",
+          "heading": false
+        },
+        {
+          "term": "containerization",
+          "heading": false
+        },
+        {
+          "term": "subdirectory",
+          "heading": false
+        }
+      ],
       "extract": "Each task is a self-contained module with four required components: • Instruction. A human-readable task description specifying the objective, input format, constraints, and expected output. Instructions are written to be solvable by a knowledgeable human without access to the paired Skills, though Skills may substantially reduce time-to-solution. 36 • Environment. A Docker container with task-specific data files",
       "extractCut": true
     },
@@ -1890,6 +3427,20 @@
       "labelEnd": null,
       "words": 57,
       "summary": null,
+      "keywords": [
+        {
+          "term": "community-driven",
+          "heading": false
+        },
+        {
+          "term": "academia",
+          "heading": false
+        },
+        {
+          "term": "maintainers",
+          "heading": false
+        }
+      ],
       "extract": "To maximize domain and workflow diversity, we used a community-driven, open-source contribution model. In total, 142 contributors from academia and industry submitted 400 candidate tasks. We counted submissions that included the full task specification–instruction, environment, oracle, and verifier–along with contributor-assessed difficulty ratings. From this pool, maintainers curated the final evaluated set used in",
       "extractCut": true
     },
@@ -1904,6 +3455,24 @@
       "labelEnd": null,
       "words": 149,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task instructions",
+          "heading": false
+        },
+        {
+          "term": "verification",
+          "heading": false
+        },
+        {
+          "term": "skills",
+          "heading": false
+        },
+        {
+          "term": "tests",
+          "heading": false
+        }
+      ],
       "extract": "Contributors were required to satisfy explicit quality requirements designed to prevent shortcuts and ensure that each task measures Skills efficacy rather than prompt-following. Human-authored instructions. Task instructions must be written by humans, not generated by language models. We enforce this because LLM-generated queries can inherit the distributional biases of the same systems under evaluation and often",
       "extractCut": true
     },
@@ -1918,6 +3487,7 @@
       "labelEnd": null,
       "words": 0,
       "summary": null,
+      "keywords": [],
       "extract": null,
       "extractCut": false
     },
@@ -1932,6 +3502,40 @@
       "labelEnd": null,
       "words": 232,
       "summary": null,
+      "keywords": [
+        {
+          "term": "human review",
+          "heading": true
+        },
+        {
+          "term": "oracle",
+          "heading": false
+        },
+        {
+          "term": "verifier",
+          "heading": false
+        },
+        {
+          "term": "rejected",
+          "heading": false
+        },
+        {
+          "term": "quality",
+          "heading": false
+        },
+        {
+          "term": "benchmark",
+          "heading": false
+        },
+        {
+          "term": "leakage",
+          "heading": false
+        },
+        {
+          "term": "input data",
+          "heading": false
+        }
+      ],
       "extract": "• Structural validation: Required files must be present (task.md with oracle/solve.sh and verifier/test_outputs.py; Appendix B), and directory layout and frontmatter syntax must be valid. • Oracle execution: The reference solution must achieve a 100% verifier pass rate. Tasks with failing oracles are rejected. • Instruction quality: Instructions must be human-written, verified through both human review and GPTZero",
       "extractCut": true
     },
@@ -1946,6 +3550,28 @@
       "labelEnd": null,
       "words": 134,
       "summary": null,
+      "keywords": [
+        {
+          "term": "leakage",
+          "heading": true
+        },
+        {
+          "term": "task-specific",
+          "heading": false
+        },
+        {
+          "term": "benchmark",
+          "heading": false
+        },
+        {
+          "term": "audits",
+          "heading": false
+        },
+        {
+          "term": "skill-solution",
+          "heading": false
+        }
+      ],
       "extract": "To prevent Skills from encoding task-specific solutions, we enforce explicit authoring guidelines and conduct leakage audits. A Claude Code Agent SDK-based validation agent runs in CI to detect potential Skill-solution leakage; failed tasks are rejected. Skills must not contain task-specific file- names, paths, identifiers, constants, magic numbers, values from task specifications, exact command sequences that solve",
       "extractCut": true
     },
@@ -1960,6 +3586,20 @@
       "labelEnd": null,
       "words": 81,
       "summary": null,
+      "keywords": [
+        {
+          "term": "task difficulty",
+          "heading": false
+        },
+        {
+          "term": "completion time",
+          "heading": false
+        },
+        {
+          "term": "estimated",
+          "heading": false
+        }
+      ],
       "extract": "Table 18: Task difficulty stratification based on estimated human completion time in the accepted task pool. Difficulty Tasks Human Time Core 6 (6.9%) <60 min Extended 53 (60.9%) 1–4 hours Extreme 28 (32.2%) >4 hours The current SKILLSBENCH task inventory comprises 87 tasks across 8 domains. Task difficulty is measured by estimated completion time for median specialists in the task domain, without assistance from AI",
       "extractCut": true
     },
@@ -1974,6 +3614,40 @@
       "labelEnd": null,
       "words": 590,
       "summary": null,
+      "keywords": [
+        {
+          "term": "agentic coding",
+          "heading": false
+        },
+        {
+          "term": "reasoning",
+          "heading": false
+        },
+        {
+          "term": "multimodal",
+          "heading": false
+        },
+        {
+          "term": "search research",
+          "heading": false
+        },
+        {
+          "term": "difficulty marker",
+          "heading": false
+        },
+        {
+          "term": "released task",
+          "heading": false
+        },
+        {
+          "term": "taxonomy",
+          "heading": true
+        },
+        {
+          "term": "continued",
+          "heading": false
+        }
+      ],
       "extract": "We classify each released task into one of eight domains. The taxonomy uses broad top-level labels for professional context while preserving finer distinctions in task metadata. Cybersecurity and Media & Content Production are currently below N = 8, so per-domain inferential claims should treat those slices as descriptive until additional tasks are added. Table 19 lists every task in the current 87-task inventory,",
       "extractCut": true
     },
@@ -1988,6 +3662,7 @@
       "labelEnd": null,
       "words": 15,
       "summary": null,
+      "keywords": [],
       "extract": "This appendix expands the concise experimental setup in §4. It is separated from the benchmark-",
       "extractCut": false
     },
@@ -2002,6 +3677,7 @@
       "labelEnd": null,
       "words": 3,
       "summary": null,
+      "keywords": [],
       "extract": "to audit. N.1",
       "extractCut": false
     },
@@ -2016,6 +3692,24 @@
       "labelEnd": null,
       "words": 109,
       "summary": null,
+      "keywords": [
+        {
+          "term": "harness",
+          "heading": true
+        },
+        {
+          "term": "model",
+          "heading": true
+        },
+        {
+          "term": "appendix table",
+          "heading": false
+        },
+        {
+          "term": "harnesses",
+          "heading": false
+        }
+      ],
       "extract": "We evaluate four terminal-agent harnesses in the latest aggregate: OpenHands, Claude Code [An- thropic, 2025b], Codex CLI [OpenAI, 2025], and Gemini CLI [Google, 2025]. Each model is evaluated with the harness shown in Appendix Table 5. All models use temperature 0. The full model identifiers, harness versions, and selected result counts are listed in Appendix Table 5. These commercial harnesses tightly couple model",
       "extractCut": true
     },
@@ -2030,6 +3724,20 @@
       "labelEnd": null,
       "words": 78,
       "summary": null,
+      "keywords": [
+        {
+          "term": "skills",
+          "heading": true
+        },
+        {
+          "term": "environment skills",
+          "heading": false
+        },
+        {
+          "term": "two-condition",
+          "heading": false
+        }
+      ],
       "extract": "Each task in the latest aggregate is evaluated under two matched conditions: • No Skills: The agent receives the task instruction (the task.md body) and task data, but no environment/skills/ content is present. • Curated Skills: The complete environment/skills/ directory is available, including SKILL.md files, examples, scripts, and references. A third condition, self-generated Skills, is evaluated on the three",
       "extractCut": true
     },
@@ -2044,10 +3752,94 @@
       "labelEnd": null,
       "words": 266,
       "summary": null,
+      "keywords": [
+        {
+          "term": "pass fail",
+          "heading": false
+        },
+        {
+          "term": "normalized gain",
+          "heading": false
+        },
+        {
+          "term": "verifier",
+          "heading": false
+        },
+        {
+          "term": "healthy",
+          "heading": false
+        },
+        {
+          "term": "absolute",
+          "heading": false
+        },
+        {
+          "term": "curated-skills",
+          "heading": false
+        },
+        {
+          "term": "task",
+          "heading": false
+        },
+        {
+          "term": "curated",
+          "heading": false
+        }
+      ],
       "extract": "For the curated-Skills condition, task Skills are exposed before the task instruction using each harness’s native loading mechanism. The task environment, input data, resource limits, and verifier are otherwise identical across conditions. The agent interacts with the containerized environment until it submits a final answer or artifact. The verifier then runs deterministic assertions and writes a pass/fail result.",
       "extractCut": true
     }
   ],
   "checks": {},
-  "withheld": false
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "skills pass",
+      "heading": false
+    },
+    {
+      "term": "agent skills",
+      "heading": false
+    },
+    {
+      "term": "curated skills",
+      "heading": false
+    },
+    {
+      "term": "task pass",
+      "heading": false
+    },
+    {
+      "term": "skills across",
+      "heading": true
+    },
+    {
+      "term": "skills condition",
+      "heading": true
+    },
+    {
+      "term": "openhands gemini",
+      "heading": false
+    },
+    {
+      "term": "environment skills",
+      "heading": false
+    },
+    {
+      "term": "self-generated skills",
+      "heading": true
+    },
+    {
+      "term": "task-specific skills",
+      "heading": false
+    },
+    {
+      "term": "skills efficacy",
+      "heading": true
+    },
+    {
+      "term": "skills lift",
+      "heading": false
+    }
+  ]
 }

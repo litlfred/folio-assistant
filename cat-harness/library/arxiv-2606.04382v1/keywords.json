@@ -1,0 +1,870 @@
+{
+  "$schema": "folio-keywords/v1",
+  "entry": "arxiv-2606.04382v1",
+  "corpus": {
+    "library": "cat-harness/library",
+    "sections": 1697,
+    "terms": 10713,
+    "weighting": "log-entropy"
+  },
+  "document": [
+    {
+      "term": "subject headings",
+      "score": 14.9406,
+      "evidence": []
+    },
+    {
+      "term": "gold headings",
+      "score": 13.6569,
+      "evidence": []
+    },
+    {
+      "term": "english headings",
+      "score": 12.7652,
+      "evidence": []
+    },
+    {
+      "term": "exact recall",
+      "score": 11.9655,
+      "evidence": []
+    },
+    {
+      "term": "correct headings",
+      "score": 11.3719,
+      "evidence": []
+    },
+    {
+      "term": "concept-level heading",
+      "score": 10.7447,
+      "evidence": []
+    },
+    {
+      "term": "lcsh assignment",
+      "score": 10.566,
+      "evidence": []
+    },
+    {
+      "term": "identical heading",
+      "score": 9.9643,
+      "evidence": []
+    },
+    {
+      "term": "exact match",
+      "score": 9.9082,
+      "evidence": []
+    },
+    {
+      "term": "subject cataloging",
+      "score": 9.8765,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "evaluation records",
+      "score": 9.5321,
+      "evidence": []
+    },
+    {
+      "term": "subdivided heading",
+      "score": 9.4415,
+      "evidence": []
+    }
+  ],
+  "sections": {
+    "sec-000-introduction": [
+      {
+        "term": "panel",
+        "score": 1.0375,
+        "evidence": []
+      },
+      {
+        "term": "scorer",
+        "score": 0.945,
+        "evidence": []
+      },
+      {
+        "term": "headings",
+        "score": 0.919,
+        "evidence": []
+      },
+      {
+        "term": "demonstration",
+        "score": 0.868,
+        "evidence": []
+      },
+      {
+        "term": "first-stage",
+        "score": 0.8481,
+        "evidence": []
+      },
+      {
+        "term": "metric",
+        "score": 0.816,
+        "evidence": []
+      },
+      {
+        "term": "cross-lingual",
+        "score": 0.7889,
+        "evidence": []
+      },
+      {
+        "term": "consensus",
+        "score": 0.7445,
+        "evidence": []
+      }
+    ],
+    "sec-001-literature-review": [
+      {
+        "term": "literature",
+        "score": 1.2266,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "judgement",
+        "score": 1.1113,
+        "evidence": []
+      },
+      {
+        "term": "stud",
+        "score": 1.0046,
+        "evidence": []
+      },
+      {
+        "term": "zunde",
+        "score": 1.0046,
+        "evidence": []
+      },
+      {
+        "term": "hjørland",
+        "score": 0.9962,
+        "evidence": []
+      },
+      {
+        "term": "subject",
+        "score": 0.9534,
+        "evidence": []
+      },
+      {
+        "term": "leonard",
+        "score": 0.945,
+        "evidence": []
+      },
+      {
+        "term": "consistency",
+        "score": 0.894,
+        "evidence": []
+      }
+    ],
+    "sec-002-automated-subject-indexing": [
+      {
+        "term": "subject indexing",
+        "score": 2.6409,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "automated subject",
+        "score": 2.5019,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chow",
+        "score": 1.1185,
+        "evidence": []
+      },
+      {
+        "term": "lcsh",
+        "score": 1.0967,
+        "evidence": []
+      },
+      {
+        "term": "free-floating",
+        "score": 0.945,
+        "evidence": []
+      },
+      {
+        "term": "mesh",
+        "score": 0.9018,
+        "evidence": []
+      },
+      {
+        "term": "adjacent",
+        "score": 0.8404,
+        "evidence": []
+      },
+      {
+        "term": "golub",
+        "score": 0.8404,
+        "evidence": []
+      }
+    ],
+    "sec-004-the-two-tasks": [
+      {
+        "term": "rerank",
+        "score": 1.1991,
+        "evidence": []
+      },
+      {
+        "term": "bibliographic fields",
+        "score": 1.1364,
+        "evidence": []
+      },
+      {
+        "term": "retrieves",
+        "score": 1.1132,
+        "evidence": []
+      },
+      {
+        "term": "headings",
+        "score": 0.7916,
+        "evidence": []
+      },
+      {
+        "term": "retriever",
+        "score": 0.7478,
+        "evidence": []
+      },
+      {
+        "term": "layer",
+        "score": 0.7099,
+        "evidence": []
+      },
+      {
+        "term": "vocabulary",
+        "score": 0.7069,
+        "evidence": []
+      }
+    ],
+    "sec-005-consensus-ground-truth": [
+      {
+        "term": "ground truth",
+        "score": 3.4447,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consensus",
+        "score": 2.8185,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "peers consensus",
+        "score": 2.3543,
+        "evidence": []
+      },
+      {
+        "term": "independent libraries",
+        "score": 2.1811,
+        "evidence": []
+      },
+      {
+        "term": "same book",
+        "score": 1.6508,
+        "evidence": []
+      },
+      {
+        "term": "agreement reference",
+        "score": 1.5647,
+        "evidence": []
+      },
+      {
+        "term": "heading",
+        "score": 1.3211,
+        "evidence": []
+      },
+      {
+        "term": "jaccard",
+        "score": 1.2815,
+        "evidence": []
+      }
+    ],
+    "sec-006-sources-and-matching": [
+      {
+        "term": "provenance filtering",
+        "score": 1.5356,
+        "evidence": []
+      },
+      {
+        "term": "heading",
+        "score": 1.2503,
+        "evidence": []
+      },
+      {
+        "term": "marc",
+        "score": 1.1764,
+        "evidence": []
+      },
+      {
+        "term": "genre form",
+        "score": 1.1754,
+        "evidence": []
+      },
+      {
+        "term": "agreement among",
+        "score": 1.0731,
+        "evidence": []
+      },
+      {
+        "term": "non-english",
+        "score": 1.0046,
+        "evidence": []
+      },
+      {
+        "term": "lcsh",
+        "score": 0.9851,
+        "evidence": []
+      },
+      {
+        "term": "oclc",
+        "score": 0.945,
+        "evidence": []
+      }
+    ],
+    "sec-007-consensus-views-and-cleaning": [
+      {
+        "term": "views",
+        "score": 1.031,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "heading",
+        "score": 0.9677,
+        "evidence": []
+      },
+      {
+        "term": "unanimous",
+        "score": 0.945,
+        "evidence": []
+      },
+      {
+        "term": "cleaned",
+        "score": 0.6338,
+        "evidence": []
+      }
+    ],
+    "sec-008-balancing-and-splits": [
+      {
+        "term": "music",
+        "score": 0.8697,
+        "evidence": []
+      },
+      {
+        "term": "books",
+        "score": 0.6749,
+        "evidence": []
+      },
+      {
+        "term": "round-robin",
+        "score": 0.6285,
+        "evidence": []
+      },
+      {
+        "term": "skewed",
+        "score": 0.6285,
+        "evidence": []
+      },
+      {
+        "term": "distort",
+        "score": 0.5907,
+        "evidence": []
+      }
+    ],
+    "sec-009-composition": [
+      {
+        "term": "japanese",
+        "score": 0.9962,
+        "evidence": []
+      },
+      {
+        "term": "books",
+        "score": 0.9888,
+        "evidence": []
+      },
+      {
+        "term": "korean",
+        "score": 0.9428,
+        "evidence": []
+      },
+      {
+        "term": "carry",
+        "score": 0.8072,
+        "evidence": []
+      },
+      {
+        "term": "topical",
+        "score": 0.7706,
+        "evidence": []
+      }
+    ],
+    "sec-010-contamination": [
+      {
+        "term": "hashes",
+        "score": 1.0046,
+        "evidence": []
+      },
+      {
+        "term": "hashing",
+        "score": 0.9962,
+        "evidence": []
+      },
+      {
+        "term": "answers",
+        "score": 0.675,
+        "evidence": []
+      },
+      {
+        "term": "public",
+        "score": 0.6512,
+        "evidence": []
+      },
+      {
+        "term": "headings",
+        "score": 0.6273,
+        "evidence": []
+      },
+      {
+        "term": "scoring",
+        "score": 0.6246,
+        "evidence": []
+      }
+    ],
+    "sec-011-metrics": [
+      {
+        "term": "gold heading",
+        "score": 2.9386,
+        "evidence": []
+      },
+      {
+        "term": "reachable gold",
+        "score": 2.7644,
+        "evidence": []
+      },
+      {
+        "term": "𝜅𝑚",
+        "score": 1.5011,
+        "evidence": []
+      },
+      {
+        "term": "scored",
+        "score": 1.0845,
+        "evidence": []
+      },
+      {
+        "term": "every measure",
+        "score": 1.0586,
+        "evidence": []
+      },
+      {
+        "term": "macro-averaged",
+        "score": 1.0046,
+        "evidence": []
+      },
+      {
+        "term": "per-record",
+        "score": 1.0046,
+        "evidence": []
+      },
+      {
+        "term": "r-precision",
+        "score": 1.0046,
+        "evidence": []
+      }
+    ],
+    "sec-012-baselines-and-experimental-setup": [
+      {
+        "term": "on-device embedder",
+        "score": 1.6314,
+        "evidence": []
+      },
+      {
+        "term": "record",
+        "score": 0.7326,
+        "evidence": []
+      },
+      {
+        "term": "neural",
+        "score": 0.6624,
+        "evidence": []
+      },
+      {
+        "term": "embeddinggemma-300m",
+        "score": 0.6338,
+        "evidence": []
+      },
+      {
+        "term": "untouched",
+        "score": 0.6338,
+        "evidence": []
+      }
+    ],
+    "sec-014-fine-tuning-the-on-device-embedder": [
+      {
+        "term": "on-device",
+        "score": 2.4455,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "training pairs",
+        "score": 1.3045,
+        "evidence": []
+      },
+      {
+        "term": "record",
+        "score": 1.0283,
+        "evidence": []
+      },
+      {
+        "term": "backbone",
+        "score": 0.9018,
+        "evidence": []
+      },
+      {
+        "term": "fine-tuning",
+        "score": 0.8945,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "stock",
+        "score": 0.8481,
+        "evidence": []
+      },
+      {
+        "term": "der",
+        "score": 0.767,
+        "evidence": []
+      },
+      {
+        "term": "headings",
+        "score": 0.6273,
+        "evidence": []
+      }
+    ],
+    "sec-016-first-stage-retrieval": [
+      {
+        "term": "first-stage retrieval",
+        "score": 3.1391,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "stock on-device",
+        "score": 2.2929,
+        "evidence": []
+      },
+      {
+        "term": "on-device model",
+        "score": 1.6707,
+        "evidence": []
+      },
+      {
+        "term": "text-embedding-3-large",
+        "score": 0.9492,
+        "evidence": []
+      },
+      {
+        "term": "text-embedding-3-small",
+        "score": 0.945,
+        "evidence": []
+      },
+      {
+        "term": "hosted",
+        "score": 0.9023,
+        "evidence": []
+      },
+      {
+        "term": "ahead",
+        "score": 0.9018,
+        "evidence": []
+      },
+      {
+        "term": "open-vocabulary",
+        "score": 0.9018,
+        "evidence": []
+      }
+    ],
+    "sec-017-the-metric-panel-is-necessary": [
+      {
+        "term": "hosted model",
+        "score": 1.7653,
+        "evidence": []
+      },
+      {
+        "term": "exact recall",
+        "score": 1.7214,
+        "evidence": []
+      },
+      {
+        "term": "ranking flips",
+        "score": 1.6071,
+        "evidence": []
+      },
+      {
+        "term": "panel",
+        "score": 1.4164,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cross-lingual",
+        "score": 1.2867,
+        "evidence": []
+      },
+      {
+        "term": "text-embedding-3-large",
+        "score": 1.1978,
+        "evidence": []
+      },
+      {
+        "term": "wins",
+        "score": 1.1978,
+        "evidence": []
+      },
+      {
+        "term": "fine-tune",
+        "score": 1.1387,
+        "evidence": []
+      }
+    ],
+    "sec-018-discussion": [
+      {
+        "term": "exact recall",
+        "score": 1.752,
+        "evidence": []
+      },
+      {
+        "term": "cataloger",
+        "score": 1.0443,
+        "evidence": []
+      },
+      {
+        "term": "wins",
+        "score": 0.9492,
+        "evidence": []
+      },
+      {
+        "term": "concept",
+        "score": 0.8157,
+        "evidence": []
+      },
+      {
+        "term": "consensus",
+        "score": 0.7445,
+        "evidence": []
+      },
+      {
+        "term": "hosted",
+        "score": 0.7151,
+        "evidence": []
+      },
+      {
+        "term": "fine-tune",
+        "score": 0.6982,
+        "evidence": []
+      },
+      {
+        "term": "cataloging",
+        "score": 0.6768,
+        "evidence": []
+      }
+    ],
+    "sec-019-limitations-and-future-work": [
+      {
+        "term": "future work",
+        "score": 2.1735,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "held-out test",
+        "score": 1.9215,
+        "evidence": []
+      },
+      {
+        "term": "evaluation subset",
+        "score": 1.8036,
+        "evidence": []
+      },
+      {
+        "term": "evaluation server",
+        "score": 1.2061,
+        "evidence": []
+      },
+      {
+        "term": "rerank",
+        "score": 1.1991,
+        "evidence": []
+      },
+      {
+        "term": "lcsh",
+        "score": 0.8485,
+        "evidence": []
+      },
+      {
+        "term": "lcgft",
+        "score": 0.8228,
+        "evidence": []
+      },
+      {
+        "term": "bench",
+        "score": 0.8199,
+        "evidence": []
+      }
+    ],
+    "sec-020-conclusion": [
+      {
+        "term": "standard exam",
+        "score": 1.4569,
+        "evidence": []
+      },
+      {
+        "term": "first-stage",
+        "score": 0.8481,
+        "evidence": []
+      },
+      {
+        "term": "cross-lingual",
+        "score": 0.7889,
+        "evidence": []
+      },
+      {
+        "term": "consensus",
+        "score": 0.7445,
+        "evidence": []
+      },
+      {
+        "term": "panel",
+        "score": 0.7082,
+        "evidence": []
+      },
+      {
+        "term": "subset",
+        "score": 0.59,
+        "evidence": []
+      },
+      {
+        "term": "systems",
+        "score": 0.4366,
+        "evidence": []
+      },
+      {
+        "term": "improve",
+        "score": 0.4321,
+        "evidence": []
+      }
+    ],
+    "sec-021-data-and-code-availability": [
+      {
+        "term": "held-out test",
+        "score": 1.3116,
+        "evidence": []
+      },
+      {
+        "term": "lcshbench",
+        "score": 1.1132,
+        "evidence": []
+      },
+      {
+        "term": "hashes",
+        "score": 0.6338,
+        "evidence": []
+      }
+    ],
+    "sec-022-use-of-generative-ai": [
+      {
+        "term": "automated subject",
+        "score": 1.8878,
+        "evidence": []
+      },
+      {
+        "term": "subject index",
+        "score": 1.7392,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 1.7003,
+        "evidence": []
+      },
+      {
+        "term": "cataloging classification",
+        "score": 1.5216,
+        "evidence": []
+      },
+      {
+        "term": "information science",
+        "score": 1.3246,
+        "evidence": []
+      },
+      {
+        "term": "index ing",
+        "score": 1.2909,
+        "evidence": []
+      },
+      {
+        "term": "language models",
+        "score": 1.1497,
+        "evidence": []
+      },
+      {
+        "term": "proceedings",
+        "score": 1.1073,
+        "evidence": []
+      }
+    ],
+    "sec-front-matter": [
+      {
+        "term": "lcshbench",
+        "score": 1.1132,
+        "evidence": []
+      },
+      {
+        "term": "heading",
+        "score": 0.9677,
+        "evidence": []
+      },
+      {
+        "term": "cataloging",
+        "score": 0.6768,
+        "evidence": []
+      },
+      {
+        "term": "lcsh",
+        "score": 0.6724,
+        "evidence": []
+      },
+      {
+        "term": "libraries",
+        "score": 0.6401,
+        "evidence": []
+      },
+      {
+        "term": "exact",
+        "score": 0.5533,
+        "evidence": []
+      },
+      {
+        "term": "benchmark",
+        "score": 0.549,
+        "evidence": []
+      }
+    ]
+  }
+}

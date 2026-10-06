@@ -602,6 +602,13 @@ function docFigures(d){
         '</td><td>' + pageText(f.page, f.pageLabel) + '</td><td>' + confPill(f.confidence, f.evidence) + '</td></tr>';
     }).join("") + '</tbody></table>';
 }
+function chips(ks){
+  /* A keyword a heading also names is marked: the document saying it of itself. */
+  if (!ks || !ks.length) return "";
+  return '<p class="kw">' + ks.map(function(k){
+    return '<span class="pill' + (k.heading ? ' ok' : '') + '"' + (k.heading ? ' title="also named by a heading"' : '') + '>' + esc(k.term) + '</span>';
+  }).join(" ") + '</p>';
+}
 function docSections(d){
   if (!d.sections.length) return '<p class="empty">No sections.</p>';
   return d.sections.map(function(s){
@@ -613,7 +620,7 @@ function docSections(d){
         ? '<div class="sum"><span class="pill">extract \u2014 the section\u2019s own opening text' + (s.extractCut ? ', cut' : '') + '</span><p>' + esc(s.extract) + (s.extractCut ? '\u2026' : '') + '</p></div>'
         : '<p class="note">' + (d.withheld ? 'Withheld \u2014 no text published; no summary yet.' : 'No text and no summary.') + '</p>';
     return '<article id="sec-' + esc(s.id) + '" class="docsec"><h3>' + esc((s.number ? s.number + ' ' : '') + s.title) +
-      ' <span class="note">' + range + ' \u00B7 ' + s.words + ' words</span></h3>' + body + '</article>';
+      ' <span class="note">' + range + ' \u00B7 ' + s.words + ' words</span></h3>' + chips(s.keywords) + body + '</article>';
   }).join("");
 }
 function docChecks(d){
@@ -648,7 +655,8 @@ function renderDocument(id, d, err){
   el.innerHTML = '<h2>Document \u2014 ' + esc(d.title || id) + ' <span class="note">(' + d.pages + ' pages)</span></h2>' +
     '<div class="seg" role="tablist" aria-label="Document view">' + DOC_TABS.map(function(t){
       return '<button type="button" role="tab" aria-selected="' + (t[0] === tab[0]) + '" data-tab="' + t[0] + '">' + esc(t[1]) + '</button>';
-    }).join("") + '</div><div class="docbody" role="tabpanel">' + tab[2](d) + '</div>';
+    }).join("") + '</div>' + (d.keywords && d.keywords.length ? '<div class="dockw"><span class="note">Keywords (LSI):</span> ' + chips(d.keywords) + '</div>' : '') +
+    '<div class="docbody" role="tabpanel">' + tab[2](d) + '</div>';
   Array.prototype.forEach.call(el.querySelectorAll("[data-tab]"), function(b){
     b.addEventListener("click", function(){ DOC_TAB = b.getAttribute("data-tab"); renderDocument(id, DOC, null); });
   });

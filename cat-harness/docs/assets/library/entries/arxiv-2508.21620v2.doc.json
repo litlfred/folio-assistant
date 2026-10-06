@@ -239,6 +239,7 @@
       "labelEnd": null,
       "words": 6,
       "summary": null,
+      "keywords": [],
       "extract": "Introduction to the Analysis of Probabilistic",
       "extractCut": false
     },
@@ -253,6 +254,40 @@
       "labelEnd": null,
       "words": 419,
       "summary": null,
+      "keywords": [
+        {
+          "term": "decision-making",
+          "heading": true
+        },
+        {
+          "term": "theoretical analyses",
+          "heading": false
+        },
+        {
+          "term": "decision theory",
+          "heading": false
+        },
+        {
+          "term": "utility function",
+          "heading": false
+        },
+        {
+          "term": "probability",
+          "heading": false
+        },
+        {
+          "term": "disease",
+          "heading": false
+        },
+        {
+          "term": "drug",
+          "heading": false
+        },
+        {
+          "term": "frequentist",
+          "heading": false
+        }
+      ],
       "extract": "Agustinus Kristiadi Western University and Vector Institute, Canada https://agustinus.kristia.de Abstract Decision theories offer principled methods for making choices under various types of uncertainty. Algorithms that implement these theories have been success- fully applied to a wide range of real-world problems, including materials and drug discovery. Indeed, they are desirable since they can adaptively gather",
       "extractCut": true
     },
@@ -267,6 +302,40 @@
       "labelEnd": null,
       "words": 324,
       "summary": null,
+      "keywords": [
+        {
+          "term": "god doesn",
+          "heading": false
+        },
+        {
+          "term": "god exists",
+          "heading": false
+        },
+        {
+          "term": "utility function",
+          "heading": false
+        },
+        {
+          "term": "don believe",
+          "heading": false
+        },
+        {
+          "term": "posterior belief",
+          "heading": false
+        },
+        {
+          "term": "bayesian",
+          "heading": true
+        },
+        {
+          "term": "doctor",
+          "heading": false
+        },
+        {
+          "term": "patient",
+          "heading": false
+        }
+      ],
       "extract": "Bayesian statistics assumes that probabilities represent beliefs: “I am 50% sure”, “I am quite confident that this will work”, etc. Decision-making under this framework is then used to take an action based on one’s (e.g., a model’s) belief about the unknown. Indeed, Bayesian decision 1An alternative view, common in the frequentist formalism, is to replace the utility function with a loss function, which, w.l.o.g.,",
       "extractCut": true
     },
@@ -281,6 +350,40 @@
       "labelEnd": null,
       "words": 472,
       "summary": null,
+      "keywords": [
+        {
+          "term": "decision theory",
+          "heading": true
+        },
+        {
+          "term": "frequentist",
+          "heading": true
+        },
+        {
+          "term": "decision function",
+          "heading": false
+        },
+        {
+          "term": "worst-case risk",
+          "heading": false
+        },
+        {
+          "term": "𝑢is",
+          "heading": false
+        },
+        {
+          "term": "disease",
+          "heading": false
+        },
+        {
+          "term": "guideline",
+          "heading": false
+        },
+        {
+          "term": "notice",
+          "heading": false
+        }
+      ],
       "extract": "Frequentist statistics assumes that probabilities represent long-running relative frequency: “What is the occurrence of a disease in a given population?”, “The error rate of this program is 1%”, etc. That is, if we sample the data again and again, what is the proportion of a case of interest? Notice that, here, the data is therefore assumed to be random. Thus, in contrast to the previous section, frequentist",
       "extractCut": true
     },
@@ -295,6 +398,40 @@
       "labelEnd": null,
       "words": 940,
       "summary": null,
+      "keywords": [
+        {
+          "term": "concentration inequalities",
+          "heading": true
+        },
+        {
+          "term": "markov inequality",
+          "heading": false
+        },
+        {
+          "term": "let 𝑋be",
+          "heading": false
+        },
+        {
+          "term": "random event",
+          "heading": false
+        },
+        {
+          "term": "random student",
+          "heading": false
+        },
+        {
+          "term": "tighter bound",
+          "heading": false
+        },
+        {
+          "term": "event argument",
+          "heading": false
+        },
+        {
+          "term": "grade",
+          "heading": false
+        }
+      ],
       "extract": "Let 𝑋be a random variable (r.v.). It is often useful to know how such a r.v. concentrated around a value. Concentration inequalities are the bread-and-butter for theoretical analyses in machine learning (and other fields!). Example 2.1. Let 𝑋indicate the grade of a random student in a given population (e.g. in a class). A concentration inequality is useful to answer the following question: “What is the prevalence",
       "extractCut": true
     },
@@ -309,6 +446,20 @@
       "labelEnd": null,
       "words": 101,
       "summary": null,
+      "keywords": [
+        {
+          "term": "gaussian tail",
+          "heading": true
+        },
+        {
+          "term": "𝑋be gaussian",
+          "heading": false
+        },
+        {
+          "term": "let 𝑋be",
+          "heading": false
+        }
+      ],
       "extract": "For Gaussian random variables, we have the following theorem (Srinivas et al., 2010): Theorem 2.12 (Gaussian Tail Bound). Let 𝑋be a Gaussian r.v. with mean 𝜇and variance 𝜎2. For any 𝛽> 0, P(|𝑋−𝜇| ≥𝛽𝜎) ≤exp \u0010 −𝛽2/2 \u0011 . (2.10) Here is another useful property for Gaussian r.v.s. with nonpositive means: Theorem 2.13 (Gaussian Tail with Nonpositive Mean). Let 𝑋be a Gaussian r.v. with mean 𝜇≤0 and variance 𝜎2.",
       "extractCut": true
     },
@@ -323,6 +474,28 @@
       "labelEnd": null,
       "words": 204,
       "summary": null,
+      "keywords": [
+        {
+          "term": "inequalities",
+          "heading": true
+        },
+        {
+          "term": "concentration inequalities",
+          "heading": false
+        },
+        {
+          "term": "perfect grade",
+          "heading": false
+        },
+        {
+          "term": "jensen inequality",
+          "heading": false
+        },
+        {
+          "term": "𝐴𝑖",
+          "heading": false
+        }
+      ],
       "extract": "In theoretical analysis, concentration inequalities are often paired with other inequalities. Here, we shall see some of the commonly used inequalities. The simplest is the union bound. Theorem 2.14 (Union Bound). Let (𝐴𝑖)𝑛 𝑖=1 be a sequence of random events. Then, P 𝑛[ 𝑖=1 𝐴𝑖 ! ≤ 𝑛 ∑︁ 𝑖=1 P(𝐴𝑖). (2.12) Example 2.15. Suppose the probability of a student getting a perfect 100 grade is at most 0.001.",
       "extractCut": true
     },
@@ -337,6 +510,28 @@
       "labelEnd": null,
       "words": 213,
       "summary": null,
+      "keywords": [
+        {
+          "term": "expected regret",
+          "heading": false
+        },
+        {
+          "term": "𝑎𝑡",
+          "heading": false
+        },
+        {
+          "term": "expected reward",
+          "heading": false
+        },
+        {
+          "term": "frequentist",
+          "heading": true
+        },
+        {
+          "term": "𝑅𝑇",
+          "heading": false
+        }
+      ],
       "extract": "In 𝐾-armed bandit problem, we have 𝐾different actions 𝑎𝑡∈A := {1, . . . , 𝐾} we can perform at each time step 𝑡= 1, . . . ,𝑇. After performing an action 𝑎∈A, the we observe a reward value 𝑟(𝑎) ∈[0, 1] distributed as an unknown reward distribution 𝑝(𝑟| 𝑎). Let 𝜇(𝑎) = E(𝑟(𝑎)) be the unknown expected reward of action 𝑎. Let us also denote 𝑎∗= argmax𝑎∈A 𝜇(𝑎) to be the action with the highest",
       "extractCut": true
     },
@@ -351,6 +546,40 @@
       "labelEnd": null,
       "words": 637,
       "summary": null,
+      "keywords": [
+        {
+          "term": "argmax𝑎 ˆ𝜇",
+          "heading": false
+        },
+        {
+          "term": "𝑟total 𝑟𝑡𝑎",
+          "heading": false
+        },
+        {
+          "term": "𝐾𝑇 log𝑇",
+          "heading": false
+        },
+        {
+          "term": "expected regret",
+          "heading": false
+        },
+        {
+          "term": "regret during",
+          "heading": false
+        },
+        {
+          "term": "union bound",
+          "heading": false
+        },
+        {
+          "term": "𝑅𝑇",
+          "heading": false
+        },
+        {
+          "term": "expected reward",
+          "heading": false
+        }
+      ],
       "extract": "The simplest algorithm is to explore for 𝑁𝐾< 𝑇rounds and exploit for the remaining 𝑇−𝑁 rounds (Lattimore and Szepesvári, 2020). Exploration here means that we try each action 𝑁 times. Meanwhile, exploitation means that we use our estimate of the expected reward of each action, ˆ𝜇(𝑎) = 1/𝑁P𝑁 𝑡=1 𝑟𝑡(𝑎), to pick our estimate of best action ˆ𝑎∗= argmax𝑎∈A ˆ𝜇(𝑎), and always pick this action. The",
       "extractCut": true
     },
@@ -365,6 +594,40 @@
       "labelEnd": null,
       "words": 601,
       "summary": null,
+      "keywords": [
+        {
+          "term": "𝑁𝑡",
+          "heading": false
+        },
+        {
+          "term": "ucb",
+          "heading": true
+        },
+        {
+          "term": "𝑎𝑡",
+          "heading": false
+        },
+        {
+          "term": "ucb algorithm",
+          "heading": false
+        },
+        {
+          "term": "confidence",
+          "heading": true
+        },
+        {
+          "term": "ucb𝑡",
+          "heading": false
+        },
+        {
+          "term": "log𝑇",
+          "heading": false
+        },
+        {
+          "term": "bound",
+          "heading": true
+        }
+      ],
       "extract": "Let us now consider the following decision rule (Auer, 2002): At each time 𝑡= 1, . . . ,𝑇, we pick an action that maximizes the function UCB𝑡(𝑎) = 𝜇𝑡(𝑎) + √︁ (2 log𝑇)/𝑁𝑡(𝑎), (3.3) where 𝜇𝑡(𝑎) = 1/𝑁𝑡(𝑎) P𝑡 𝑖=1 𝑟𝑖(𝑎𝑖)I(𝑎𝑖= 𝑎) is the empirical mean estimate of 𝜇(𝑎) after 𝑡 rounds, and 𝑁𝑡(𝑎) = P𝑡 𝑖=1 I(𝑎𝑡= 𝑎) is the number of times the action 𝑎has been selected. The algorithm is",
       "extractCut": true
     },
@@ -379,6 +642,36 @@
       "labelEnd": null,
       "words": 291,
       "summary": null,
+      "keywords": [
+        {
+          "term": "covariance function",
+          "heading": false
+        },
+        {
+          "term": "𝑥𝑖",
+          "heading": false
+        },
+        {
+          "term": "gaussian",
+          "heading": true
+        },
+        {
+          "term": "kernel",
+          "heading": false
+        },
+        {
+          "term": "gaussian process",
+          "heading": false
+        },
+        {
+          "term": "probability distribution",
+          "heading": false
+        },
+        {
+          "term": "differentiable",
+          "heading": false
+        }
+      ],
       "extract": "Let 𝑓: X →R be a function. When 𝑋is finite, one can think of 𝑓as a collection of function values ( 𝑓(𝑥))𝑥∈X computed across evaluation/context points X. The same intuitive image can be useful to think of 𝑓in the infinite case. A Gaussian process (GP) can be seen as a probability distribution on a function space H = { 𝑓: X →R} (Williams and Rasmussen, 2006). The defining property of a GP is that any finite",
       "extractCut": true
     },
@@ -393,6 +686,20 @@
       "labelEnd": null,
       "words": 164,
       "summary": null,
+      "keywords": [
+        {
+          "term": "𝑥𝑖",
+          "heading": false
+        },
+        {
+          "term": "𝑛𝐼",
+          "heading": false
+        },
+        {
+          "term": "posterior",
+          "heading": true
+        }
+      ],
       "extract": "GPs are useful to make predictions about an unknown function 𝑓. Let D := {(𝑥𝑖, 𝑓(𝑥𝑖))}𝑛 𝑖=1 be a dataset. Assuming a GP prior1 𝑝( 𝑓) = GP(0, 𝑘) over 𝑓, the GP posterior is described through the updated mean and covariance functions 𝜇(· | D) : X →R and 𝑘(·, · | D) : X × X →R, respectively. They are characterized by 𝜇(𝑥| D) = 𝑘(𝑥, 𝑋) \u0010 𝑘(𝑋, 𝑋) + 𝜎2 𝑛𝐼 \u0011−1 𝑌 (4.2) 1In practical applications,",
       "extractCut": true
     },
@@ -407,6 +714,28 @@
       "labelEnd": null,
       "words": 208,
       "summary": null,
+      "keywords": [
+        {
+          "term": "kernel",
+          "heading": true
+        },
+        {
+          "term": "space",
+          "heading": true
+        },
+        {
+          "term": "function space",
+          "heading": false
+        },
+        {
+          "term": "𝑥𝑖",
+          "heading": false
+        },
+        {
+          "term": "posterior means",
+          "heading": false
+        }
+      ],
       "extract": "As mentioned before, a GP defines a probability distribution on a function space. What exactly is that function space? Inspecting (4.2), we see that GP(0, 𝑘) describes a set of posterior means 𝑥↦→ 𝑛 ∑︁ 𝑖=1 𝛼𝑖𝑘(𝑥𝑖, 𝑥) where 𝛼𝑖= \u0010 𝑘(𝑋, 𝑋) + 𝜎2 𝑛𝐼 \u0011−1 𝑌, (4.4) for under all possible dataset D. Note that this set of functions is fully characterized by the choice of the kernel of a GP. Indeed,",
       "extractCut": true
     },
@@ -421,6 +750,40 @@
       "labelEnd": null,
       "words": 392,
       "summary": null,
+      "keywords": [
+        {
+          "term": "information capacity",
+          "heading": true
+        },
+        {
+          "term": "covariance function",
+          "heading": false
+        },
+        {
+          "term": "function 𝑓is",
+          "heading": false
+        },
+        {
+          "term": "𝛾𝑇",
+          "heading": false
+        },
+        {
+          "term": "𝑥𝑡",
+          "heading": false
+        },
+        {
+          "term": "information gain",
+          "heading": false
+        },
+        {
+          "term": "gain through",
+          "heading": false
+        },
+        {
+          "term": "mutual information",
+          "heading": false
+        }
+      ],
       "extract": "Since GPs are useful for learning an unknown function 𝑓through a dataset D, it is useful to know how well we can learn 𝑓with a GP prior GP(0, 𝑘) through noisy observations of 𝑓with noise variance 𝜎2 𝑛. This notion is termed information capacity. Intuitively, the information encoded in the GP prior through the covariance function 𝑘determines the information content of 𝑓, while the noise level 𝜎2 𝑛limits the",
       "extractCut": true
     },
@@ -435,6 +798,20 @@
       "labelEnd": null,
       "words": 81,
       "summary": null,
+      "keywords": [
+        {
+          "term": "borell-tis inequality",
+          "heading": false
+        },
+        {
+          "term": "vaart",
+          "heading": false
+        },
+        {
+          "term": "supremum",
+          "heading": false
+        }
+      ],
       "extract": "The following result, known as (some variant of) the Borell-TIS inequality (Van Der Vaart et al., 1996), is useful to bound the frequency of the supremum of GP sample paths. Theorem 4.2 (Borell-TIS Inequality). Let X be a topological space and let 𝑓∼GP(0, 𝑘) be a sample path of a centered Gaussian process on X. If sup𝑥∈X | 𝑓(𝑥)| finite, then for every 𝜆> 0, P(sup𝑥∈X | 𝑓(𝑥)| ≥𝜆) ≤2 exp −𝜆2 8E\u0000sup𝑥∈X |",
       "extractCut": true
     },
@@ -449,6 +826,40 @@
       "labelEnd": null,
       "words": 498,
       "summary": null,
+      "keywords": [
+        {
+          "term": "bayesian optimization",
+          "heading": true
+        },
+        {
+          "term": "point 𝑥𝑡",
+          "heading": false
+        },
+        {
+          "term": "acquisition function",
+          "heading": false
+        },
+        {
+          "term": "unknown function",
+          "heading": false
+        },
+        {
+          "term": "d𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝑅𝑇",
+          "heading": false
+        },
+        {
+          "term": "discrete",
+          "heading": true
+        },
+        {
+          "term": "𝑟total",
+          "heading": false
+        }
+      ],
       "extract": "To start, we assume the search space (action space in the bandit lingo) X is finite. This is practically very relevant, e.g. in drug and materials discovery applications. In Bayesian optimization (BO), we want to (w.l.o.g.) maximize an unknown function 𝑓: X →R.1 This implies that the maximizer 𝑥∗= argmax𝑥∈X 𝑓(𝑥) is also unknown. While we do not know 𝑓holistically, we assume we can evaluate 𝑓(𝑥) for any 𝑥∈X.",
       "extractCut": true
     },
@@ -463,6 +874,40 @@
       "labelEnd": null,
       "words": 590,
       "summary": null,
+      "keywords": [
+        {
+          "term": "regret bound",
+          "heading": true
+        },
+        {
+          "term": "𝑥𝑡",
+          "heading": false
+        },
+        {
+          "term": "confidence bound",
+          "heading": false
+        },
+        {
+          "term": "gp-ucb",
+          "heading": true
+        },
+        {
+          "term": "union bound",
+          "heading": false
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝐶𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝜇𝑡",
+          "heading": false
+        }
+      ],
       "extract": "This section introduces one technique for proving a regret bound, i.e., a high-probability regret bound. The algorithm and proof are adapted from the seminal work of (Srinivas et al., 2010). Similar to UCB in the bandit setting, we pick an evaluation point 𝑥𝑡by maximizing the upper confidence bound. Since we have a posterior distribution over 𝑓, given by the GP posterior GP(𝜇(· | D𝑡), 𝑘(·, · | D𝑡)), we use it",
       "extractCut": true
     },
@@ -477,6 +922,40 @@
       "labelEnd": null,
       "words": 835,
       "summary": null,
+      "keywords": [
+        {
+          "term": "regret bound",
+          "heading": true
+        },
+        {
+          "term": "expected regret",
+          "heading": true
+        },
+        {
+          "term": "d𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝑥𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝛽𝑇",
+          "heading": false
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝜎𝑡",
+          "heading": false
+        },
+        {
+          "term": "upper confidence",
+          "heading": false
+        }
+      ],
       "extract": "Unlike the previous section, here, we study a different proof technique: showing a regret bound in expectation. I.e., instead of proving a high-probability regret bound, we shall prove the expected regret E(𝑅𝑇). Note that this analysis is weaker than the high-probability analysis one since we only consider the average case, e.g. there might be some unexpected cases/outliers that are not taken into account by the",
       "extractCut": true
     },
@@ -491,6 +970,40 @@
       "labelEnd": null,
       "words": 922,
       "summary": null,
+      "keywords": [
+        {
+          "term": "continuous bayesian",
+          "heading": true
+        },
+        {
+          "term": "bayesian optimization",
+          "heading": true
+        },
+        {
+          "term": "𝑥𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "heading": false
+        },
+        {
+          "term": "regret bound",
+          "heading": false
+        },
+        {
+          "term": "union bound",
+          "heading": false
+        },
+        {
+          "term": "𝜇𝑡",
+          "heading": false
+        },
+        {
+          "term": "𝐸𝑐",
+          "heading": false
+        }
+      ],
       "extract": "We focus on UCB but now assume that the domain X of the unknown function 𝑓: X →R is continuous. The assumption here is that X ⊂[0, 𝑚]𝑑⊂R𝑑compact and convex. This assumption is quite practical since normalization/standardization of inputs (and outputs, for that matter) in continuous BO is standard. The proof strategy here is to obtain a discretization X𝑡 of X at each time step 𝑡. Then, in conjunction with a",
       "extractCut": true
     },
@@ -505,10 +1018,86 @@
       "labelEnd": null,
       "words": 165,
       "summary": null,
+      "keywords": [
+        {
+          "term": "der vaart",
+          "heading": false
+        },
+        {
+          "term": "cambridge university",
+          "heading": false
+        },
+        {
+          "term": "van der",
+          "heading": false
+        },
+        {
+          "term": "university press",
+          "heading": false
+        },
+        {
+          "term": "jon",
+          "heading": false
+        },
+        {
+          "term": "statistics",
+          "heading": false
+        }
+      ],
       "extract": "AK thanks Gustavo Sutter and Tristan Cinquin for their feedback and participation in the reading group based on this monograph. 27 References Peter Auer. Using confidence bounds for exploitation-exploration trade-offs. JMLR, 3(Nov), 2002. Ian Hacking. The emergence of probability: A philosophical study of early ideas about probability, induction and statistical inference. Cambridge University Press, 2006. Tor",
       "extractCut": true
     }
   ],
   "checks": {},
-  "withheld": false
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "regret bound",
+      "heading": true
+    },
+    {
+      "term": "𝑥𝑡 argmax𝑥",
+      "heading": false
+    },
+    {
+      "term": "point 𝑥𝑡",
+      "heading": false
+    },
+    {
+      "term": "unknown function",
+      "heading": false
+    },
+    {
+      "term": "function 𝑓is",
+      "heading": false
+    },
+    {
+      "term": "let 𝑋be",
+      "heading": false
+    },
+    {
+      "term": "mean function",
+      "heading": false
+    },
+    {
+      "term": "expected regret",
+      "heading": true
+    },
+    {
+      "term": "covariance function",
+      "heading": false
+    },
+    {
+      "term": "function space",
+      "heading": false
+    },
+    {
+      "term": "utility function",
+      "heading": false
+    },
+    {
+      "term": "decision function",
+      "heading": false
+    }
+  ]
 }

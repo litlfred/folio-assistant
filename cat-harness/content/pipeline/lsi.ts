@@ -534,6 +534,139 @@ export function dimensionSummaries(index: LsiIndex, dims = 10, perPole = 8): Arr
   return out;
 }
 
+// ─── Keywords (issue #2302) ──────────────────────────────────────────────────
+
+export interface Keyword {
+  term: string;
+  /** The unit's weighted score for it: log(1+tf) × global weight, summed
+   *  over a phrase's words. Comparable within one matrix only. */
+  score: number;
+}
+
+/**
+ * The terms that characterise one unit (or several, pooled), read from the
+ * SAME weighted matrix the index is built from — so a keyword is "frequent
+ * here, rare across this corpus" exactly as the index means it, with no second
+ * vocabulary to drift from it.
+ *
+ * Two-word phrases are offered beside single terms: a pair of adjacent tokens
+ * occurring at least twice in the text, both of whose words are in the
+ * matrix ("systematic review", "conflict interest"). A phrase replaces its
+ * words when it scores at least as well as the better of them, so a list does
+ * not say "systematic", "review" and "systematic review" at once.
+ */
+// Words the index keeps (they do discriminate between texts) but that say
+// nothing about what a text is ABOUT. Measured 2026-10-06 on the who-iris
+// handbook: "anyone", "aims", "take", "produce", "resulting" and "positive"
+// led section keyword lists. A keyword list only, never the index's tokens.
+const KEYWORD_STOP = new Set(
+  ("anyone anything everyone someone something aim aims aimed take takes taken taking make makes made " +
+    "making produce produces produced resulting result results positive negative easy easily well " +
+    "many much several various given give gives need needs needed want wants able possible include " +
+    "includes included including example examples way ways thing things part parts set sets use used " +
+    "uses using new good best better large small high low first second third last next often usually " +
+    "generally particular particularly specific specifically important however therefore thus also " +
+    "within without upon whether while since already always never sometimes rather quite really very " +
+    "interested understanding accurately describe describes described provide provides provided " +
+    "develop develops developed help helps helped show shows shown see seen")
+    .split(" "),
+);
+
+/** How many keywords a text of `tokens` content tokens supports: a 30-word
+ *  section does not have eight things it is about. */
+export function keywordBudget(tokens: number, top: number): number {
+  return Math.max(3, Math.min(top, Math.ceil(tokens / 20)));
+}
+
+/** Plural-insensitive comparison form of a term: "evidence reviews" and
+ *  "evidence review" are one keyword. */
+function fold(term: string): string {
+  return term
+    .split(" ")
+    .map((w) => (w.length > 4 && w.endsWith("s") && !w.endsWith("ss") ? w.slice(0, -1) : w))
+    .join(" ");
+}
+
+/**
+ * `headings` are the text's own statements of its subject — a section's
+ * title. A term every word of which a heading names scores double: the author
+ * saying what the text is about outranks a rare word the text merely uses.
+ */
+export function keywordsOf(m: TermMatrix, cols: number[], texts: string[], top = 8, headings: string[] = []): Keyword[] {
+  const named = new Set(headings.flatMap((h) => tokenize(h)));
+  const score = new Map<number, number>();
+  for (const j of cols) {
+    for (let p = m.A.colPtr[j]; p < m.A.colPtr[j + 1]; p++) {
+      score.set(m.A.rowIdx[p], (score.get(m.A.rowIdx[p]) ?? 0) + m.A.vals[p]);
+    }
+  }
+  const termIdx = new Map(m.terms.map((t, i) => [t, i]));
+  // Token runs that are truly adjacent in the text: a stop word, a short
+  // word or punctuation BREAKS the run, so "evidence and systematic" never
+  // yields the phrase "evidence systematic" (measured: that and "new contain"
+  // came from adjacency computed after stop words were dropped).
+  const tf = new Map<string, number>();
+  const pairs = new Map<string, number>();
+  let tokens = 0;
+  for (const t of texts) {
+    let prev: string | null = null;
+    // A line break ends a run when the next line opens with a capital or a
+    // heading mark: that is a table cell, a heading or a new item, not a
+    // wrapped sentence ("Development" over "Systematic review team" is two
+    // cells of a WHO table, not the phrase "development systematic"). A
+    // wrapped sentence continues in lower case and keeps its run.
+    const pieces = plainText(t)
+      .split(/\n(?=\s*[\p{Lu}#])/u)
+      .flatMap((line) => line.toLowerCase().split(/[.,;:!?()\[\]"“”]+/));
+    for (const piece of pieces) {
+      prev = null;
+      for (const mm of piece.matchAll(/\p{L}[\p{L}\p{N}'-]*\p{L}|\p{L}{2,}/gu)) {
+        const w = mm[0].replace(/'s$/, "");
+        if (w.length < 3 || STOP.has(w)) { prev = null; continue; }
+        tokens++;
+        tf.set(w, (tf.get(w) ?? 0) + 1);
+        if (prev && prev !== w && termIdx.has(prev) && termIdx.has(w)) {
+          const k = `${prev} ${w}`;
+          pairs.set(k, (pairs.get(k) ?? 0) + 1);
+        }
+        prev = w;
+      }
+    }
+  }
+  // In a text of any length, a word said once is weak evidence of what the
+  // text is about — log-entropy alone ranks a rare one-off ("anyone",
+  // "resulting") above the text's subject. Below 100 tokens every word counts.
+  const minTf = tokens >= 100 ? 2 : 1;
+  const single: Keyword[] = [...score]
+    .map(([i, w]) => ({ term: m.terms[i], score: w }))
+    .filter((k) => !KEYWORD_STOP.has(k.term) && !/ly$/.test(k.term))
+    .filter((k) => (tf.get(k.term) ?? 0) >= minTf || named.has(k.term));
+  const byTerm = new Map([...score].map(([i, w]) => [m.terms[i], w]));
+  const phrases: Keyword[] = [...pairs]
+    .filter(([k, c]) => c >= 2 && !k.split(" ").some((w) => KEYWORD_STOP.has(w) || /ly$/.test(w)))
+    .map(([k]) => {
+      const [a, b] = k.split(" ");
+      return { term: k, score: (byTerm.get(a) ?? 0) + (byTerm.get(b) ?? 0) };
+    });
+  const boosted = (k: Keyword): Keyword =>
+    k.term.split(" ").every((w) => named.has(w)) ? { ...k, score: 2 * k.score } : k;
+  const ranked = [...phrases, ...single]
+    .map(boosted)
+    .sort((x, y) => y.score - x.score || x.term.localeCompare(y.term));
+  const out: Keyword[] = [];
+  const covered = new Set<string>();
+  const budget = keywordBudget(tokens, top);
+  for (const k of ranked) {
+    if (out.length >= budget) break;
+    const words = fold(k.term).split(" ");
+    if (words.every((w) => covered.has(w)) || covered.has(fold(k.term))) continue;
+    out.push({ term: k.term, score: Number(k.score.toFixed(4)) });
+    for (const w of words) covered.add(w);
+    covered.add(fold(k.term));
+  }
+  return out;
+}
+
 // ─── Cross-group link proposals (bean `9udd`) ─────────────────────────────────
 
 /** Below this cosine a cross-group pair is not proposed. House number,

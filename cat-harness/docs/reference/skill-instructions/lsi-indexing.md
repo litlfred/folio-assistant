@@ -70,6 +70,19 @@ cosine, 0.75–0.79 with the penalty at K = 5, 10, 20. The page it demoted most
 (HQ p36, mark-up) is central because it is genuinely on-topic. The floor alone
 is what the data supports; it is a house number fitted to 15 examples.
 
+## Keywords — the per-unit view the index used to discard (issue #2302)
+
+The weighted matrix already says which terms characterise each unit; the index
+then reduces it to k dimensions and the per-unit view was gone.
+`keywordsOf(matrix, cols, texts, top, headings)` keeps it: a unit's (or a
+pooled set of units') top terms and two-word phrases, from the same weights.
+Its first consumer is `bun run library:keywords` (per library section and per
+document, written as `keywords.json` and shown in the library viewer); the
+scoring rules and what each fixed are in
+[`l1-document-ingestion`](l1-document-ingestion.md)
+§"Keywords". Reuse it for any unit set the index covers — beans, chapters —
+rather than writing a second term weighting.
+
 ## Correspondence analysis — the parallel track
 
 [`correspondence-analysis`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/correspondence-analysis.md)

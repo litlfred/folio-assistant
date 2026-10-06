@@ -33,6 +33,32 @@ classDiagram
       inspected_at [1] string
       verdicts [1] map~map~object~~
     }
+    class who_iris_library_folio_block_summaries_v1_Superseded["Superseded"] {
+      <<json: BlockSummariesSidecarSchema>>
+      text [1] string | null
+      state [1] not-authored | draft | confirmed | rejected
+      drafted_by [0..1] object
+      drafted_at [0..1] string
+      confirmed_by [0..1] object
+      confirmed_at [0..1] string
+      rejected_by [0..1] object
+      rejected_at [0..1] string
+      rejection_reason [0..1] string
+    }
+    class who_iris_library_folio_block_summaries_v1_Summary["Summary"] {
+      <<json: BlockSummariesSidecarSchema>>
+      block [1] string
+      source [1] string
+      source_hash [1] string
+      narrative [1] object
+      superseded [0..*] Superseded[]
+    }
+    class who_iris_library_folio_block_summaries_v1_folio_block_summaries_v1["folio-block-summaries/v1"] {
+      <<json: BlockSummariesSidecarSchema>>
+      $schema [1] 'folio-block-summaries/v1'
+      entry [1] string
+      summaries [0..*] Summary[]
+    }
     class who_iris_library_folio_withheld_v1_Gate["Gate"] {
       <<json: WithheldSchema>>
       gate [1] string
@@ -419,11 +445,16 @@ classDiagram
     }
   }
   cssClass "who_iris_who_iris_translations_TranslationConfig" fa_uml_kind_translation_sources
+  who_iris_library_folio_block_summaries_v1_Summary *-- "0..*" who_iris_library_folio_block_summaries_v1_Superseded : superseded
+  who_iris_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" who_iris_library_folio_block_summaries_v1_Summary : summaries
   who_iris_library_folio_withheld_v1_Path *-- "1..*" who_iris_library_folio_withheld_v1_Gate : gates
   who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_image_verdicts_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_section_verdicts_v1_folio_section_verdicts_v1" fa_uml_kind_library
+  cssClass "who_iris_library_folio_block_summaries_v1_Superseded" fa_uml_kind_library
+  cssClass "who_iris_library_folio_block_summaries_v1_Summary" fa_uml_kind_library
+  cssClass "who_iris_library_folio_block_summaries_v1_folio_block_summaries_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_Gate" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_Path" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_folio_withheld_v1" fa_uml_kind_library
