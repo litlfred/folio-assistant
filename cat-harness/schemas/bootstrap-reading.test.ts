@@ -4,29 +4,17 @@
  * published vocabulary, the graph-typology registry. They moved out when
  * bootstrap-tools was re-created (bean `xsqm`), because a test of the harness
  * belongs with the harness: bootstrap-tools may import nothing above bootstrap.
+ *
+ * The tests of this file that read the whole checkout (reads every instance
+ * declaration in the checkout) live in
+ * `test/bootstrap-reading-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 
-import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
 import { CLASS_GLOSSES } from "./vocabulary.ts";
 import { BASE_GRAPH_TYPOLOGIES, graphTypologyLayer } from "./graph-typology-registry.ts";
-import { BOOTSTRAP_GRAPH_TYPOLOGIES, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
-
-const REPO_ROOT = join(import.meta.dir, "..", "..");
-
-describe("every declaration in this repository is a Knowledge Graph declaration", () => {
-  const roots = instanceRootsIn(REPO_ROOT);
-  test("there are declarations to check", () => expect(roots.length).toBeGreaterThan(3));
-  for (const root of roots) {
-    test(root.slice(REPO_ROOT.length) || "/", () => {
-      const file = join(root, findDeclarationFile(root)!);
-      const r = KnowledgeGraphDeclarationSchema.safeParse(JSON.parse(readFileSync(file, "utf-8")));
-      expect(r.success ? "ok" : JSON.stringify(r.error.issues.slice(0, 2))).toBe("ok");
-    });
-  }
-});
+import { BOOTSTRAP_GRAPH_TYPOLOGIES, BOOTSTRAP_TERMS } from "../../bootstrap-tools/schemas/graph.ts";
 
 describe("the harness reads bootstrap's terms and kinds as bootstrap states them", () => {
   const own = Object.keys(BOOTSTRAP_GRAPH_TYPOLOGIES);

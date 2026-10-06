@@ -11,13 +11,17 @@
  * them the whole time. They are here because a generator that reports a false
  * finding, and a generator that prints binary onto a page, are the two
  * failures a reader cannot tell from correct output.
+ *
+ * The tests of this file that read the whole checkout (reads the root-declared
+ * `fsh-guts/` graph) live in `test/fsh-guts-viz-checkout.test.ts` (bean
+ * `7zz1`): standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { gutsDir, gutsFiles } from "../gen-fsh-guts-viz.ts";
+import { gutsFiles } from "../gen-fsh-guts-viz.ts";
 
 const TAG = "$schema: folio-fsh-guts/v1";
 const sidecar = (title: string) => `---\n${TAG}\ntitle: "${title}"\nkind: source\n---\n\n# ${title}\n`;
@@ -98,18 +102,6 @@ describe("a title is read from markdown only", () => {
       expect(gutsFiles(dir)[0]?.title).toBe("A retired thing");
     } finally {
       rmSync(dir, { recursive: true, force: true });
-    }
-  });
-});
-
-describe("corpus — the real directory, so a regression cannot pass on fixtures", () => {
-  test("no archived source reads as undeclared, and no title is binary", () => {
-    const files = gutsFiles(gutsDir(join(import.meta.dir, "../../.."))!);
-    const uploads = files.filter((f) => f.group === "uploads");
-    expect(uploads.length).toBeGreaterThan(0);
-    expect(uploads.filter((f) => f.state === "undeclared")).toEqual([]);
-    for (const f of files) {
-      expect(f.title ?? "", `${f.rel} has a binary title`).not.toContain("�");
     }
   });
 });

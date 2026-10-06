@@ -1,8 +1,13 @@
+/**
+ * The tests of this file that read the whole checkout (reads every diagram the
+ * checkout ships, folio-assistant-core's among them) live in
+ * `test/bean-link-checkout.test.ts` (bean `7zz1`): standing alone, cat-harness
+ * has none of it.
+ */
 import { describe, expect, test, beforeEach, afterEach } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
-import { join, resolve } from "path";
-import { workflowFile } from "../known-skills.ts";
+import { join } from "path";
 import { applyWorkPlanOp, findBean, listBeans } from "../../src/workflow/bean-link";
 import { loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
 
@@ -112,29 +117,6 @@ describe("an instance with no bean", () => {
 });
 
 describe("the diagrams declare which operation each step performs", () => {
-  // The order the EDITING process takes them in is pinned beside that
-  // diagram, in folio-assistant-core/scripts/tests/bean-link.test.ts (bean
-  // `ho66`): standing alone, cat-harness has no such diagram.
-  test("every bean-marked activity in the shipped diagrams names an op", async () => {
-    // Found by NAME through the declared `processes` graphs: each diagram sits
-    // with its owner (#1772; placement PR3, bean `63wl`), grouped by concern.
-    let marked = 0;
-    for (const f of ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
-                     "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
-      const file = workflowFile(resolve(import.meta.dir, "../.."), `${f}.bpmn`);
-      const model = await loadProcessModel(file);
-      for (const n of model.nodes.values()) {
-        if (!n.touchesWorkPlan) continue;
-        marked++;
-        // Asserted as a defined string, not just "one of these": an activity
-        // marked as touching the plan whose op is absent would silently do
-        // nothing, and `toContain(undefined)` would not say so clearly.
-        expect(n.workPlanOp).toBeDefined();
-        expect(["claim", "note", "resolve"]).toContain(n.workPlanOp!);
-      }
-    }
-    expect(marked).toBe(11);
-  });
 
   test("an op this build does not implement is refused, not ignored", async () => {
     const dir = mkdtempSync(join(tmpdir(), "bean-op-"));

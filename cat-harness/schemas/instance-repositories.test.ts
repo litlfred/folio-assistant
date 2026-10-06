@@ -1,42 +1,18 @@
+/**
+ * The tests of this file that read the whole checkout (reads every instance
+ * this checkout stages and the repository each declares) live in
+ * `test/instance-repositories-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
+ */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { CatHarnessDeclarationSchema } from "./cat-harness";
-import { instanceRepositories, locationMismatch, repositoryNamespaces, resolveInstance } from "./instance-repositories";
-import { ownNamespace } from "./namespaces";
+import { instanceRepositories } from "./instance-repositories";
 
 const CHECKOUT = resolve(import.meta.dir, "../..");
-
-describe("instance repositories — this checkout (bean 6rmv)", () => {
-  const map = instanceRepositories(CHECKOUT);
-
-  test("every instance declares the repository it is", () => {
-    expect(map.undeclared).toEqual([]);
-    expect(map.entries.length).toBeGreaterThan(1);
-  });
-
-  test("livesAt matches where each instance actually sits", () => {
-    expect(map.entries.map((e) => locationMismatch(e, CHECKOUT)).filter(Boolean)).toEqual([]);
-  });
-
-  test("every livesAt names the checkout's own repository as host", () => {
-    // The instance AT the checkout root — not merely one without `livesAt`:
-    // a submodule instance has none either, and sits at its own root.
-    const host = map.entries.find((e) => resolve(e.root) === CHECKOUT);
-    expect(host).toBeDefined();
-    const hosts = new Set(map.entries.flatMap((e) => (e.livesAt ? [e.livesAt.repository] : [])));
-    expect([...hosts]).toEqual([host!.repository]);
-  });
-
-  test("a reference resolves by owner/repo and, transitionally, by name", () => {
-    const e = map.byName.get("cat-harness")!;
-    expect(resolveInstance(map, e.repository)?.root).toBe(e.root);
-    expect(resolveInstance(map, "cat-harness")?.repository).toBe(e.repository);
-    expect(resolveInstance(map, "nobody/nothing")).toBeUndefined();
-  });
-});
 
 describe("instance references are owner/repo and resolve (bean 6rmv, phase 2)", () => {
   const map = instanceRepositories(CHECKOUT);
@@ -58,26 +34,6 @@ describe("instance references are owner/repo and resolve (bean 6rmv, phase 2)", 
 
   test("every one resolves through the derived map, by owner/repo", () => {
     expect(refs.filter(({ ref }) => !map.byRepository.has(ref))).toEqual([]);
-  });
-});
-
-describe("the owner/repo → namespace map is derived and agrees with the list (bean 6rmv, phase 3)", () => {
-  const ns = repositoryNamespaces(CHECKOUT);
-
-  test("every declared instance has a namespace", () => {
-    expect(ns.size).toBe(instanceRepositories(CHECKOUT).entries.length);
-  });
-
-  // The code list still NAMES each vocabulary namespace, because code reads
-  // them by code; what it may no longer do is SPELL one differently from the
-  // declaration it belongs to. Code → the repository whose namespace it is.
-  const LISTED: Array<[code: string, repository: string]> = [
-    ["cat-bootstrap", "litlfred/bootstrap"],
-    ["cat-harness", "litlfred/cat-harness"],
-    ["folio-assistant-core", "litlfred/folio-assistant-core"],
-  ];
-  test.each(LISTED)("own-namespaces %s is what %s's declaration derives", (code, repository) => {
-    expect(ns.get(repository)).toBe(ownNamespace(code));
   });
 });
 

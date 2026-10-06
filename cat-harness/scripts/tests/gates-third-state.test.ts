@@ -25,6 +25,11 @@
  * `!existsSync` check never fired.
  *
  * @module scripts/tests/gates-third-state.test
+ *
+ * The tests of this file that read the whole checkout (reads the aggregate
+ * root's `.github/workflows/code-quality-gates.yml`) live in
+ * `test/gates-third-state-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -66,13 +71,6 @@ describe("loadGates refuses rather than returning an empty set", () => {
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
-  });
-
-  it("returns a NON-EMPTY set for this repository, so the tests above are not vacuous", () => {
-    // Without this, both assertions could be passing because `loadGates` throws
-    // unconditionally — the "filter over nothing" trap. A real root must work.
-    const root = join(import.meta.dir, "..", "..", "..");
-    expect(loadGates(root, { all: false }).length).toBeGreaterThan(0);
   });
 });
 

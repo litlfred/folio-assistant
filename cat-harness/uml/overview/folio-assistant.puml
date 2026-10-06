@@ -36,6 +36,9 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
 package "folio-assistant/root-tools" as pkg_folio_assistant_root_tools <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_root_tools_code
 }
+package "folio-assistant/folio-assistant-tests" as pkg_folio_assistant_folio_assistant_tests <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_folio_assistant_tests_code
+}
 package "folio-assistant/fsh-guts" as pkg_folio_assistant_fsh_guts <<fsh-guts>> {
   class "FshGutsNode" as folio_assistant_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> #f4f4f1 {
     $schema [1] : 'folio-fsh-guts/v1'
@@ -280,9 +283,10 @@ folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*"
 folio_assistant_memory_MemoryNode *-- "0..*" folio_assistant_memory_AlsoAbout : alsoAbout
 folio_assistant_surveys_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_surveys_folio_session_survey_v1_Axe : axes
 folio_assistant_items_TodoNodeKind *-- "0..*" folio_assistant_items_AlsoAbout : alsoAbout
-' grid: portrait, 4 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools pkg_folio_assistant_fsh_guts pkg_folio_assistant_beans pkg_folio_assistant_todos pkg_folio_assistant_memory pkg_folio_assistant_interaction pkg_folio_assistant_issue_marks pkg_folio_assistant_root_docs pkg_folio_assistant_defs pkg_folio_assistant_archive pkg_folio_assistant_notes pkg_folio_assistant_workflows pkg_folio_assistant_queue pkg_folio_assistant_surveys pkg_folio_assistant_items pkg_folio_assistant_feedback pkg_folio_assistant_boards pkg_folio_assistant_positions
-pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_todos
-pkg_folio_assistant_root_tools -[hidden]down- pkg_folio_assistant_memory
+' grid: portrait, 4 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools pkg_folio_assistant_folio_assistant_tests pkg_folio_assistant_fsh_guts pkg_folio_assistant_beans pkg_folio_assistant_todos pkg_folio_assistant_memory pkg_folio_assistant_interaction pkg_folio_assistant_issue_marks pkg_folio_assistant_root_docs pkg_folio_assistant_defs pkg_folio_assistant_archive pkg_folio_assistant_notes pkg_folio_assistant_workflows pkg_folio_assistant_queue pkg_folio_assistant_surveys pkg_folio_assistant_items pkg_folio_assistant_feedback pkg_folio_assistant_boards pkg_folio_assistant_positions
+pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_beans
+pkg_folio_assistant_root_tools -[hidden]down- pkg_folio_assistant_todos
+pkg_folio_assistant_folio_assistant_tests -[hidden]down- pkg_folio_assistant_memory
 pkg_folio_assistant_fsh_guts -[hidden]down- pkg_folio_assistant_interaction
 pkg_folio_assistant_beans -[hidden]down- pkg_folio_assistant_issue_marks
 pkg_folio_assistant_todos -[hidden]down- pkg_folio_assistant_root_docs

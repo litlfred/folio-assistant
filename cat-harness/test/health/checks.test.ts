@@ -16,7 +16,7 @@
  *
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/feature-staging.yml`) live in
- * `cat-harness-tools/scripts/tests/health-checks-workflows.test.ts` (bean
+ * `test/health-checks-workflows.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { resolve } from "node:path";

@@ -3,6 +3,11 @@
  *
  * Two properties, and both are about a SECOND run rather than a first. A first
  * run is easy to get right and is not where this breaks.
+ *
+ * The tests of this file that read the whole checkout (reads every harness
+ * card the checkout's live board carries) live in
+ * `test/ensure-landing-sticky-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 
@@ -26,11 +31,10 @@ import {
   contributingRoots,
   declaredContributions,
   initiationFromArgv,
-  readLandingStickies,
   readerTextProblems,
 } from "../ensure-landing-sticky.js";
 import { InitiationSchema } from "../../schemas/sticky-contribution.js";
-import { declarationPathIn, instanceRootFor } from "../../schemas/cat-harness.js";
+import { declarationPathIn } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /**
@@ -594,26 +598,5 @@ describe("a harness sticky shows the landing's text, not the author's (ob3m 3)",
     const card = JSON.parse(readFileSync(join(root, "folio", stickyFile("landing")), "utf8")) as { comment: string };
     expect(card.comment).toBe("Only a description.");
     expect(readerTextProblems(root)).toEqual([]);
-  });
-
-  test("the live board: every harness card opens with its declaration's summary", () => {
-    const root = instanceRootFor(join(import.meta.dir, ".."));
-    expect(readerTextProblems(root)).toEqual([]);
-    const cards = new Map(readLandingStickies(root).map((s) => [s.id, s]));
-    let judged = 0;
-    for (const d of declaredContributions(root)) {
-      if (d.contribution.bodyFrom === undefined || d.summary === undefined) continue;
-      const card = cards.get(d.contribution.id);
-      expect(card).toBeDefined();
-      expect(card!.comment.startsWith(d.summary)).toBe(true);
-      for (const w of d.alsoWritten ?? []) expect(card!.comment).toContain(`\`${w}\``);
-      if (d.description !== undefined && d.description !== d.summary) {
-        expect(card!.comment).not.toContain(d.description);
-      }
-      judged += 1;
-    }
-    // folio-assistant and cat-harness both declare a summary. A count of zero
-    // would mean this loop judged nothing and passed over it.
-    expect(judged).toBeGreaterThanOrEqual(2);
   });
 });
