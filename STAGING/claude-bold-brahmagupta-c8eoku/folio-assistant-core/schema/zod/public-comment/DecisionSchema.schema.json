@@ -1,0 +1,75 @@
+{
+  "$ref": "#/definitions/Decision",
+  "definitions": {
+    "Decision": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "accepted-modified",
+            "not-accepted",
+            "noted",
+            "deferred"
+          ]
+        },
+        "reason": {
+          "default": "",
+          "type": "string"
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "changeSet": {
+          "type": "object",
+          "properties": {
+            "branch": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pr": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "stagingUrl": {
+              "type": "string",
+              "format": "uri"
+            },
+            "before": {
+              "type": "string",
+              "format": "uri"
+            },
+            "after": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": [
+            "branch"
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "by",
+        "at"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bold-brahmagupta-c8eoku/folio-assistant-core/schema/zod/public-comment/DecisionSchema.schema.json",
+  "title": "DecisionSchema",
+  "description": "Generated from `DecisionSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/bold-brahmagupta-c8eoku",
+    "sha": "44f1e3bd54613af6b936a485ac94200dc6ed7cc8",
+    "pr": "2316/merge",
+    "run": "37520671472"
+  }
+}
