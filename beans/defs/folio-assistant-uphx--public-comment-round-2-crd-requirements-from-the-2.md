@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T12:31:42Z
-updated_at: 2026-10-06T12:31:59Z
+updated_at: 2026-10-06T14:13:47Z
 parent: folio-assistant-q4jm
 ---
 
@@ -16,3 +16,6 @@ Source: litlfred/smart-ra@9eb6ad3 (Teams transcript .docx + .vtt of the 2026-10-
 - [ ] the two transcripts compared and the result recorded
 - [ ] screenshots from the video at the moments the speakers refer to the screen (video forthcoming)
 - [ ] owner approves, amends or rejects each requirement
+
+
+_2026-10-06T14:20Z_ — Owner: no merging; the chief editor (Chinemerem Eyetan) signs off first. REQ-12 ruled: out of scope = existing `not-accepted` decision with a reason, committee reviews first, no new state. PR #2282 back to draft, ready marker withdrawn.

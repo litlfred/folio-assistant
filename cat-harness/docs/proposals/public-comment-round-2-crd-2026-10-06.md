@@ -2,7 +2,7 @@
 title: "Public comment, round 2: requirements from the chief-editor walkthrough"
 kind: proposal
 summary: >-
-  Proposed 2026-10-06, for the owner's review BEFORE approval: sixteen
+  Proposed 2026-10-06, for the chief editor's sign-off BEFORE approval: sixteen
   requirements and four defects from a 17-minute CRDM walkthrough of the DPI-H
   Reference Architecture public-comment dashboard with its chief editor. Change
   sets get a type axis and a committee axis, new comments are ingested
@@ -13,8 +13,9 @@ summary: >-
 # Public comment, round 2: requirements from the chief-editor walkthrough
 
 **Status: DRAFT, for review before approval.** Nothing here is built, and
-nothing will be until the owner approves, amends or rejects each requirement
-below (CRDM Phase 3, [`crdm-requirements-template`](../../skills/sdlc/crdm/crdm-requirements-template.md)).
+nothing will be until each requirement below is approved, amended or rejected.
+**Sign-off is the chief editor's** (Chinemerem Eyetan): the owner ruled
+2026-10-06 that nothing here merges or is built without it (CRDM Phase 3, [`crdm-requirements-template`](../../skills/sdlc/crdm/crdm-requirements-template.md)).
 
 Issue [#197](https://github.com/litlfred/folio-assistant/issues/197) ·
 bean `uphx` (parent `q4jm`; round 1 was `v26p`) · first customer
@@ -221,14 +222,16 @@ open the PR that implements them.
 it, not because it is new.
 
 **REQ-12: An out-of-scope outcome.** (S)
-Triage SHALL be able to mark a comment, or a change set, as **requesting
-something the reference architecture does not plan to cover**, with a reason,
-distinct from a domain routing.
+A comment, or a change set, that asks for **something the reference
+architecture does not plan to cover** SHALL be decided with the existing
+decision code `not-accepted` and a reason saying it is out of scope. There is
+**no new state and no new code**. The committee still reviews each one before
+the editor decides; out of scope is a decision, not a triage shortcut.
 *Source:* 13:35–13:51; the 29 AI "Core architects" / human "No" disagreements
-measured above. *Open question:* is this the existing decision code
-`not-accepted` with a reason, or a triage outcome before any committee sees
-it? It decides whether a committee spends time on it, so it is the owner's
-call.
+measured above. *Ruled by the owner, 2026-10-06:* "As the existing
+'not-accepted' decision with a reason. No new state, but a committee still
+reviews each one first." *Accept:* an out-of-scope decision is `not-accepted`
+with a reason, and the dashboard can filter on that reason.
 
 ### E. Quality assurance of agent work
 
@@ -305,10 +308,16 @@ the screen:
 
 ## For approval
 
-Each requirement is approved, amended or rejected on its own. Two open
-questions need the owner's ruling before their requirements can be built:
+Each requirement is approved, amended or rejected on its own, and **the
+chief editor signs off** before anything is merged or built (owner,
+2026-10-06).
 
-1. **REQ-12:** is "out of scope" a decision code (`not-accepted` with a
-   reason) or a triage outcome before any committee?
-2. **REQ-01 and REQ-02:** are the committee names exactly the five the editor
+Ruled:
+
+- **REQ-12** (owner, 2026-10-06): out of scope is the existing `not-accepted`
+  decision with a reason, reviewed by a committee first. No new state.
+
+Still open, for the chief editor:
+
+1. **REQ-01 and REQ-02:** are the committee names exactly the five she
    named, with `who` as a sixth? Her own log also has "HWF team".
