@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6lre
 title: 'CI WATCH READS A PARTIAL CHECK SET AS GREEN: 1 of 13 registered, verdict PASS — ask the check SUITES, not only the runs'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-30T16:15:00Z
-updated_at: 2026-10-06T14:30:00Z
+updated_at: 2026-10-06T14:57:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -85,11 +85,11 @@ cost of a red `main`, arrived at by a different route.
 
 ## Done when
 
-- [ ] A commit whose suites are queued with no runs reports **pending**, not
+- [x] A commit whose suites are queued with no runs reports **pending**, not
       pass, and `ci:watch` exits non-zero.
-- [ ] Falsified against live data: poll a commit within seconds of pushing it
+- [x] Falsified against live data: poll a commit within seconds of pushing it
       and watch it refuse, then watch it pass once the suites finish.
-- [ ] The base-branch-name-comparison alternative is written down as
+- [x] The base-branch-name-comparison alternative is written down as
       considered and rejected, so it is not rediscovered as an improvement.
 - [x] `2c2b`'s docblock says "empty" where it means "empty"; the partial case
       gets its own sentence, since the current wording reads as covering it.
@@ -168,4 +168,9 @@ Re-derived on main 713b9d3+:
 - **Docblock:** `check-verdict.ts:45` names the EMPTY case; the 6lre section names the PARTIAL case in its own sentence.
 - **Conflicted head:** `conflictedVerdict` (beans `52cz` and `rwwl`, #2250). Tested at `verdict-for-commit.test.ts:104`.
 - **Reconciliation vs base comparison:** the docblock now has a third design, the REJECTED base-branch comparison, kept distinct from the adopted workflow-file reconciliation (this commit).
-- **Live falsification:** still to do. Poll this PR's head seconds after the push and expect a non-pass, then poll again after the suites finish and expect PASS.
+- **Live falsification (#2286, head e475dee):** I polled `ci:watch e475dee --once` from the moment of the push.
+  - 14:15:51: `PENDING — 1 still running`.
+  - 14:16:10 to 14:18:06: `UNDETERMINED — every registered run is clean, but 1 workflow(s) OWED for this event have no run — a partial check set, not a green one  Code-quality gates`, exit 2. This is exactly the 29b10a68923 shape: one clean run, gates not yet created.
+  - 14:18:18: `PENDING — 14 still running`.
+  - 14:55:54: `PASS — 19 check(s) completed clean, and every workflow owed for this event ran`.
+- The superseded half of the bean is not done, by design. "Base-branch comparison" is recorded as REJECTED design (3) in the docblock rather than adopted, per this bean's own correction.
