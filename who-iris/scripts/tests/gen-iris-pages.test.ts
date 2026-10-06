@@ -31,8 +31,7 @@ import {
   recentOrder,
   requirementsFromSkill,
 } from "../gen-iris-pages.js";
-import { nodes as nodesOf, pngSize } from "../../../folio-assistant-core/scripts/gen-covers.js";
-import { publicationBlockers } from "../../../folio-assistant-core/schemas/materialization.js";
+import { coverNodes as nodesOf, pngSize, publicationBlockers } from "../../platform.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
