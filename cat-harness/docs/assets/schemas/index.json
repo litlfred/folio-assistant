@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 233,
+      "count": 234,
       "unit": "modules"
     }
   },
@@ -651,6 +651,14 @@
       "graphNode": "schema",
       "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-root-named.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-root-named.test",
+      "graphNode": "undeclared",
+      "summary": "`instanceRootNamed` — one rule for both layouts (bean `uxn1`).",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/instance-roots.ts",
@@ -31311,6 +31319,73 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "name": "LocaleStatusSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "locale",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "templates",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "catalogues",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entries",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "translated",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fuzzy",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "untranslated",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "unreadable",
+          "type": "StringList",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count",
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#PageNumber",
       "name": "PageNumber",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -31520,16 +31595,22 @@
         },
         {
           "name": "locales",
-          "type": "z.array( z .object({ locale: z.string().min(1), templates: Count, catalogues: Count, entries: Count, translated: Count,…",
+          "type": "z.array(LocaleStatusSchema)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "instances",
+          "type": "z .array( z .object({ instance: z.string().min(1), scope: z.string(), locales: z.array(LocaleStatusSchema), }) .strict(…",
+          "optional": true,
+          "array": true,
+          "doc": "Every OTHER instance's declared `translation-sources` directory, each"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/site-indexes.ts#Count",
-        "cat-harness/schemas/site-indexes.ts#StringList"
+        "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema"
       ],
       "unresolved": [],
       "external": [
@@ -60668,6 +60749,62 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "catalogues",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "entries",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "fuzzy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "templates",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "translated",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "untranslated",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "unreadable",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "counts",
@@ -60701,15 +60838,15 @@
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#Count",
-      "via": "locales",
+      "to": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
+      "via": "instances",
       "kind": "field",
-      "optional": false,
+      "optional": true,
       "array": true
     },
     {
       "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
-      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "to": "cat-harness/schemas/site-indexes.ts#LocaleStatusSchema",
       "via": "locales",
       "kind": "field",
       "optional": false,
