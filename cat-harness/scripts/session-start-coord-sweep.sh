@@ -27,7 +27,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # below, and WRONG for the data directories that live at the repository root.
 # Two call sites read it as the checkout and silently skipped (bean `46uh`):
 #
-#   - `interaction/interaction.json` — the accessibility profile this sweep
+#   - `cat-harness/memory/interaction.json` — the accessibility profile this sweep
 #     prints FIRST by design, citing WCAG 2.2 SC 3.3.7. It has not printed
 #     since the split, and it fails inside `if [ -f ]`, so the section simply
 #     did not appear. A preference that reaches nobody is a preference the
@@ -54,7 +54,7 @@ flock 200 2>/dev/null || true
 # asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
 # who types with difficulty, "just ask again" is not a small cost.
 # See skills/conduct/conduct-core/interaction-modality.md.
-INTERACTION="$CHECKOUT_ROOT/interaction/interaction.json"
+INTERACTION="$CHECKOUT_ROOT/cat-harness/memory/interaction.json"
 if [ -f "$INTERACTION" ]; then
   echo "## Interaction preferences"
   echo
@@ -64,7 +64,7 @@ if [ -f "$INTERACTION" ]; then
       "- **\(.key)** — profiles: \(.value.profiles | join(", ") | if . == "" then "(none)" else . end)  \n  \(.value.note // "")  \n  _source: \(.value.source // "unrecorded")_"
     ' "$INTERACTION" 2>/dev/null || echo "- (could not parse $INTERACTION — read it by hand)"
   else
-    echo "- jq not installed; read \`interaction/interaction.json\` by hand."
+    echo "- jq not installed; read \`cat-harness/memory/interaction.json\` by hand."
   fi
   echo
 fi
@@ -86,7 +86,7 @@ if command -v jq >/dev/null 2>&1 && [ -f "$INTERACTION" ]; then
     echo "  fall through to the instance's \`defaultLocale\` only after saying so."
   fi
 else
-  echo "- Could not read \`interaction/interaction.json\` — determine from the conversation."
+  echo "- Could not read \`cat-harness/memory/interaction.json\` — determine from the conversation."
 fi
 echo
 # The model's languages are ONE INPUT and never the answer: a model strong in a

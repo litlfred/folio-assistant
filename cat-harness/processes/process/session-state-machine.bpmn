@@ -111,7 +111,7 @@ The distinction between refreshing a timestamp and writing what changed is the d
     </bpmn:exclusiveGateway>
 
     <bpmn:userTask id="A_AskWhoIsActing" name="Ask who is acting">
-      <bpmn:documentation>The one step that needs a person. Asked ONCE and recorded, never re-asked: `interaction/interaction.json` and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7.</bpmn:documentation>
+      <bpmn:documentation>The one step that needs a person. Asked ONCE and recorded, never re-asked: `cat-harness/memory/interaction.json` and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="interaction-modality"/></bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_4</bpmn:outgoing>

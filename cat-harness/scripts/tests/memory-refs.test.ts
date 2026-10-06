@@ -13,6 +13,7 @@ import { join, resolve } from "node:path";
 import { Glob } from "bun";
 
 import { list, mappingList, parseFrontMatter } from "../../schemas/front-matter.ts";
+import { MEMORY_DIRS } from "../agent-memory.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -26,10 +27,13 @@ const roleIds = (): Set<string> => {
 
 describe("memory entries name roles and agents that exist", () => {
   const roles = roleIds();
-  const entries = [...new Glob("**/*.md").scanSync({ cwd: join(REPO, "memory") })]
-    .filter((rel) => rel !== "README.md")
-    .map((rel) => {
-      const text = readFileSync(join(REPO, "memory", rel), "utf-8");
+  // Every declared memory directory (bean `ar1s`: memory is split by the
+  // harness each lesson belongs to), not one path at the repository root.
+  const entries = MEMORY_DIRS()
+    .flatMap((dir) => [...new Glob("**/*.md").scanSync({ cwd: dir })].map((rel) => ({ dir, rel })))
+    .filter(({ rel }) => rel !== "README.md")
+    .map(({ dir, rel }) => {
+      const text = readFileSync(join(dir, rel), "utf-8");
       return { rel, fm: parseFrontMatter(text).fm, refs: mappingList(text, "references") };
     })
     .filter((e) => e.fm["$schema"] === "folio-memory/v1")

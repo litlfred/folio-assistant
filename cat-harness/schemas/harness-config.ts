@@ -292,7 +292,7 @@ export const HarnessDirsSchema = z.object({
   // would make the fallback depend on the thing it is the fallback for. The
   // declaration and this default name the same place on purpose; the
   // `interaction` directory entry carries the other half of that pairing.
-  interaction: z.string().default("interaction/interaction.json"),
+  interaction: z.string().default("cat-harness/memory/interaction.json"),
 });
 
 export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;

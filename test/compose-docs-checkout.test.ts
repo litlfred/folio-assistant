@@ -22,11 +22,13 @@ const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 
 describe("compose-docs reads its layers from the declaration", () => {
 
-  test("the REAL repository declares exactly the two layers this is built on", () => {
+  test("the REAL repository declares exactly the one base layer this is built on", () => {
     // Vacuity guard: every fixture test below would pass against a repository
-    // that had no layers at all.
+    // that had no layers at all. The root's empty `root-docs` overlay was
+    // excised (bean `yywu`, owner 2026-10-06); the overlay mechanism stays,
+    // exercised by the fixtures, for a folio that declares one.
     const { layers, missing } = docsLayers(REPO);
     expect(missing).toEqual([]);
-    expect(layers.map((l) => l.id)).toEqual(["docs", "root-docs"]);
+    expect(layers.map((l) => l.id)).toEqual(["docs"]);
   });
 });

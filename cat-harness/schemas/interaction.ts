@@ -8,7 +8,7 @@
  *
  * ## Why this needed a runnable schema, measured rather than supposed
  *
- * `interaction/interaction.json` is read at the start of every session, and the
+ * `cat-harness/memory/interaction.json` is read at the start of every session, and the
  * reader is **jq inside a shell script** — `scripts/session-start-coord-sweep.sh`,
  * whose failure branch prints `(could not parse … — read it by hand)`. So a
  * malformed node does not fail: it degrades to a line nobody acts on, in the one
@@ -18,7 +18,7 @@
  *
  * The kind declared `schema: "schemas/harness-config.ts"` and that was wrong in
  * a way worth naming: `harness-config.ts` holds the PATH to this file
- * (`interaction: z.string().default("interaction/interaction.json")`), not its
+ * (`interaction: z.string().default("cat-harness/memory/interaction.json")`), not its
  * shape. A pointer to where a fact is *not* written is worse than none, because
  * a reader who follows it concludes the shape is undeclared on purpose.
  *
