@@ -59,3 +59,14 @@ skill:register (two passes to a fixed point) and skill:register:check: green. re
 1. Should `init-folio` gain a `--staged <path>` mode that writes a staged declaration (repository, livesAt, platform.ts) instead of a whole repository? (1) yes, build it *(recommended)*; (2) no, keep it hand-written. Default: (2).
 2. Should stage 11, the fresh-clone check, become a command the way `seed:ready` did? (1) yes *(recommended)*; (2) leave it as a manual step. Default: (2).
 3. After cutover, should the host (1) delete its copy *(recommended)* or (2) keep a read-only mirror? Default: (2), until asked per instance.
+
+## Owner rulings, 2026-10-06 ("1 2 y / 3 read only mirror in fsh-guts")
+
+1. **Yes**: `init-folio --staged <path>` writes the in-repo declaration of a staged sub-KG (its `<name>.json` with `repository` + `livesAt`, its graphs, the import seam), not a whole repository's 15 files.
+2. **Yes**: the fresh-clone check becomes a command (as `seed:ready` did): clone the new repository into a scratch directory, install, run its gates, report.
+3. **After cutover the host keeps a READ-ONLY MIRROR in fsh-guts**: not a deletion, and not a second editable copy. The mirror lives on the fsh-guts surface and is refreshed from the separated repository; a hand edit to it is a defect.
+
+## Todo (from the rulings)
+- [ ] `init-folio --staged <path>`, with a test that it writes the declaration and nothing at the repository level
+- [ ] fresh-clone verification command (`sub-kg:verify-clone` or similar), declared as a Tool, called by the lifecycle's verify task
+- [ ] lifecycle: replace "retire the in-repo copy" with "mirror read-only into fsh-guts"; the owner-confirmation task stays, now before the switch to the mirror

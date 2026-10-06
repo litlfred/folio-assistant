@@ -76,18 +76,16 @@ Three rules, each one a refusal:
 
 | renderer | maps | how | status |
 |---|---|---|---|
-| `fhir-ig-pages` | `.fsh`, `.cql`, `input/pagecontent/*.md` | `fsh-cone` forward cone → SUSHI's `fsh-index.json` → AST artefact page + served JSON; a page → itself and every page that includes it | `fhir-harness/scripts/ig-rendered-impact.ts` |
+| `fhir-ig-pages` | `.fsh`, `.cql`, `input/pagecontent/*.md` | `fsh-cone` forward cone → SUSHI's `fsh-index.json` → AST artefact page + served JSON; a page → itself and every page that includes it | in the FHIR layer, documented with its AST tooling (`skill_fetch ig-ast-delta`) |
 | document folio | blocks | block ChangeSet (`folio-changeset/v1`) → page anchors | to do (bean `bnjs`) |
 | docs site | any file | `staging-cone.ts`, refined from directories to pages | to do (bean `bnjs`) |
 
-**Measured on the FHIR renderer** (smart-immunizations, bean `c65n`):
+**Measured on the FHIR renderer** (a real IG, bean `c65n`):
 - An FSH edit to one PlanDefinition gave 4 predicted files and 3 measured: 0 missed, and 1 unconfirmed (the artefact page, rule 3). It took 0.34 s, against 165 s for SUSHI.
 - A page edit gave 2 predicted and 2 measured: an exact match.
 
-```sh
-bun run fhir-harness/scripts/ig-rendered-impact.ts --ig <IG root> --base origin/main --head HEAD \
-  [--ast <output-ast>] [--site-prefix <instance>] --out rendered-impact.json
-```
+A renderer's command line belongs to the layer that owns it; this layer
+names none above it.
 
 ## In the review process
 

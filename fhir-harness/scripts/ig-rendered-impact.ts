@@ -16,8 +16,8 @@
  * | resource → AST artefact page and served JSON | `gen-ig-pages.ts` (`artifactPageName`), and the AST manifest's `file` when one is given |
  * | `input/pagecontent/<p>.md` → `<p>.html`, and every page that includes it | `build-ig-site.ts` |
  *
- * Measured on smart-immunizations (bean `c65n`): one FSH edit to
- * `IMMZD18SBCG` reached 1 of 722 resources, and the build changed exactly the
+ * Measured on a real IG (bean `c65n`): one FSH edit to
+ * one PlanDefinition reached 1 of 722 resources, and the build changed exactly the
  * served JSON, the AST index and the search index. That case is this module's
  * acceptance test.
  *
