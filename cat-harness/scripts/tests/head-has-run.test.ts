@@ -194,14 +194,33 @@ const HEADS = [
 /**
  * A forge where PR 11 is mergeable and PR 22 is not. A merge ref is named
  * `merge<N>`, and its second parent is PR N's head unless `staleFor` says the
- * ref was built for an earlier head.
+ * ref was built for an earlier head. Its first parent is the default branch's
+ * tip unless `base` says the ref was built on an older one (bean `rwwl`).
  */
+const TIP = "e".repeat(40);
+type BaseMoved = { builtOn: string; onDefault?: boolean; merges?: "clean" | "conflict" | "error" };
 const fakeGit =
-  (heads = HEADS, mergeable = new Set(["11"]), staleFor = new Set<string>()): GitRunner =>
+  (
+    heads = HEADS,
+    mergeable = new Set(["11"]),
+    staleFor = new Set<string>(),
+    base?: BaseMoved,
+  ): GitRunner =>
   (args) => {
     const ref = args[args.length - 1] ?? "";
     if (ref === "refs/pull/*/head") return heads;
     if (args[0] === "fetch") return "";
+    if (args[0] === "ls-remote" && args[1] === "--symref") return `ref: refs/heads/main\tHEAD\n${TIP}\tHEAD\n`;
+    if (args[0] === "rev-parse" && /^merge\d+\^1$/.test(ref)) return base?.builtOn ?? TIP;
+    if (args[0] === "merge-base") {
+      if (base?.onDefault === false) throw new Error("not an ancestor");
+      return "";
+    }
+    if (args[0] === "merge-tree") {
+      if (base?.merges === "conflict") throw Object.assign(new Error("conflict"), { status: 1 });
+      if (base?.merges === "error") throw Object.assign(new Error("fatal"), { status: 128 });
+      return "f".repeat(40);
+    }
     const parent = /^merge(\d+)\^2$/.exec(ref)?.[1];
     if (args[0] === "rev-parse" && parent !== undefined) {
       if (staleFor.has(parent)) return "d".repeat(40);
@@ -239,6 +258,37 @@ describe("sddf — the merge ref is the discriminator, not the clock", () => {
     expect(mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(["11"])))).toBe(
       "unknown",
     );
+  });
+
+  test("a merge ref built for THIS head on an OLD base that now conflicts is `conflicted` (rwwl, #2197)", () => {
+    // Measured 2026-10-06: refs/pull/2197/merge had ^2 = the head and ^1 = an
+    // old main. Reading ^2 alone called it mergeable, so ci:watch printed PASS
+    // on a PR REST called `dirty`.
+    const old = "9".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: old, merges: "conflict" })),
+    ).toBe("conflicted");
+  });
+
+  test("an old base that still merges cleanly is `mergeable` — the forge rebuilds lazily", () => {
+    const old = "9".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: old, merges: "clean" })),
+    ).toBe("mergeable");
+  });
+
+  test("a base that is not the default branch (a stacked PR) is `unknown`, not a guess", () => {
+    const other = "8".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: other, onDefault: false })),
+    ).toBe("unknown");
+  });
+
+  test("a merge-tree that ERRORS (rather than conflicts) is `unknown`, never `conflicted`", () => {
+    const old = "9".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: old, merges: "error" })),
+    ).toBe("unknown");
   });
 
   test("a FAILING probe is `unknown`, never `conflicted`", () => {

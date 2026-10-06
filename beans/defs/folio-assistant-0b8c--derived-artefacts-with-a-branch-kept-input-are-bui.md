@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0b8c
 title: Derived artefacts with a branch-kept input are built at publish, never committed (fsh-guts viewer first)
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-05T18:49:32Z
-updated_at: 2026-10-05T19:00:06Z
+updated_at: 2026-10-06T06:14:10Z
 parent: folio-assistant-nama
 ---
 
@@ -36,3 +36,15 @@ session_018LDBbYU4qjY7tNv4cuHt1e (https://claude.ai/code/session_018LDBbYU4qjY7t
 - `fsh-guts:viz:check` stays in CI and keeps fsh-guts's audit coverage: for a publish-time page it judges that the mounted graph renders, without comparing to a committed copy.
 - visualisationResolves (schemas/cat-harness.ts) is the one rule the readers use (subgraph coverage, harness tiles, viewer-declarations test). docs:harness:check gives the same result with and without a local copy of the page.
 - Skills: directory-conventions §"The storage clock", fsh-guts, merge-conflict-patterns, merge-queue; the wireframe intent was updated too.
+
+
+## Summary of Changes
+
+Landed via branch claude/derive-at-publish (fully merged into main). Derived artefacts whose transitive `derivedFrom` reaches a tip-keyed input are built at publish and never committed; the fsh-guts viewer is the first.
+
+**Closed on evidence, 2026-10-06** (re-measured on main at f44d88fd9, not quoted):
+- [x] `bun run check:derived-from` exits 0: *"nothing committed is derived from a branch; 1 artefact(s) built at publish"*.
+- [x] `derive:publish` runs in `docs-site.yml` and `feature-staging.yml` (and code-quality-gates).
+- [x] `git ls-files cat-harness/docs/fsh-guts/` is empty: the page is untracked.
+- [x] directory-conventions, fsh-guts and merge-conflict-patterns each carry §"The storage clock".
+Status history: opened in-progress, never reopened. Parent `nama` stays open (`lehh` is still in flight).
