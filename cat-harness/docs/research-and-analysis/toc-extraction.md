@@ -81,8 +81,8 @@ distance is too slow at 2,500 nodes) and is averaged over the other 12.
 | `size` | 0.43 | 0.63 | 0.44 | 0.51 | 0.42 | 0.36 | 0.35 | 0.27 |
 | `font` | 0.72 | 0.94 | 0.79 | 0.84 | 0.78 | 0.76 | 0.76 | 0.65 |
 | `contents` | 0.21 | 0.21 | 0.21 | 0.21 | 0.21 | 0.16 | 0.15 | 0.20 |
-| `layout` | 0.85 | 0.96 | 0.89 | 0.91 | 0.88 | 0.82 | 0.82 | 0.77 |
-| **`consensus`** | **0.90** | **0.96** | **0.92** | **0.93** | **0.91** | **0.85** | **0.85** | **0.83** |
+| `layout` | 0.85 | 0.97 | 0.90 | 0.92 | 0.89 | 0.83 | 0.83 | 0.79 |
+| **`consensus`** | **0.89** | **0.97** | **0.92** | **0.94** | **0.92** | **0.86** | **0.85** | **0.84** |
 | `consensus` + Grobid voter | 0.85 | 0.95 | 0.89 | 0.91 | 0.89 | 0.82 | 0.82 | 0.79 |
 | `grobid` | 0.52 | 0.75 | 0.59 | 0.61 | 0.58 | 0.51 | 0.51 | 0.33 |
 
@@ -401,7 +401,7 @@ at. They were scored with the method frozen (no rule changed in response):
 | `regex` (previous fallback) | 0.30 | 0.26 | 0.17 |
 | `size` | 0.44 | 0.55 | 0.36 |
 | `font` | 0.79 | 0.80 | 0.65 |
-| `layout` | 0.89 | 0.82 | 0.70 |
+| `layout` | 0.90 | 0.82 | 0.70 |
 | **`consensus`** | **0.92** | **0.83** | **0.72** |
 
 **The development set overstated the method by about 0.09**, as expected; on

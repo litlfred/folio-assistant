@@ -413,7 +413,11 @@ def font_headings(lines: list[Line], max_levels: int = 4, styles_out: list | Non
     # headings were cut at the line break, each a miss AND an extra.
     pos = {id(l): i for i, l in enumerate(lines)}
     grown: list[Line] = []
+    absorbed: set[int] = set()
     for l in cands:
+        if id(l) in absorbed:
+            grown.append(l)
+            continue
         i = pos[id(l)]
         cur = l
         while i + 1 < len(lines) and len(cur.text) < 200:
@@ -431,12 +435,11 @@ def font_headings(lines: list[Line], max_levels: int = 4, styles_out: list | Non
                 else f"{cur.text} {n.text}"
             cur = Line(cur.page, text, cur.size, cur.bold, cur.italic, cur.caps, cur.font, cur.uniform,
                        min(cur.x0, n.x0), cur.y0, max(cur.x1, n.x1), n.y1, cur.page_height, cur.page_width)
+            absorbed.add(id(n))            # the line appended, by identity
             i += 1
         grown.append(cur)
     # A continuation that was also a candidate in its own right is now part
-    # of the heading above it.
-    absorbed = {id(x) for g, c in zip(grown, cands) if g is not c
-                for x in lines[pos[id(c)] + 1: pos[id(c)] + 1 + g.text.count(" ") + 1]}
+    # of the heading above it, and is not a heading of its own.
     cands = [g for g, c in zip(grown, cands) if id(c) not in absorbed]
 
     # Merge a heading set over two lines: same page and style, close below,
