@@ -6227,6 +6227,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.gateexemptions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.gateExemptions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The CI steps and check scripts of THIS instance that the local gate set deliberately does not run, each with its reason — the rows `cat-harness/scripts/gates.ts` holds as `STEP_EXEMPTIONS` and `SCRIPT_EXEMPTIONS` for the harness's own. Same contract: a reason is required, a step `match` is a substring of the workflow command, a script name is matched exactly. Declared by the owner so the harness need not name a layer above itself (bean `0r7u` step 0)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.gateExemptions",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.glassstrip",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6607,6 +6626,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.taskio",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.taskIo"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this instance's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.taskIo",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.topology",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6984,6 +7022,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.summary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.taskio",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.taskIo"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this instance's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.taskIo",
       "skos:note": "candidate"
     },
     {
@@ -12513,158 +12570,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/document-image.ts#ThresholdBasisSchema.value",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindcoverageschema.from",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindCoverageSchema.from"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Repo-relative path of what was classified."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.from",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindcoverageschema.kind",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindCoverageSchema.kind"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The kind's id."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.kind",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindcoverageschema.method",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindCoverageSchema.method"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The rule, in a sentence a reader can check."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.method",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindcoverageschema.subject",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindCoverageSchema.subject"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The instance whose content was classified."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.subject",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindcoverageschema.unplaced",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindCoverageSchema.unplaced"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "What no rule placed, grouped so the remainder is legible."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema.unplaced",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindschema.extends",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindSchema.extends"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "A parent kind's id; this kind's sections extend the parent's."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.extends",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindschema.generatedby",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindSchema.generatedBy"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Set when the file is generated; names the generator, so a hand edit is visibly a defect."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.generatedBy",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-kind.documentkindschema.structure",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "DocumentKindSchema.structure"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "`fixed`: exactly these sections, every one required. `semi-fixed`: the required sections must be present; others are allowed."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/document-kind.ts#DocumentKindSchema.structure",
       "skos:note": "candidate"
     },
     {
@@ -25110,6 +25015,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.instances",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.instances"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every OTHER instance's declared `translation-sources` directory, each measured on its own (issue #2228). Optional: an index written before the field existed is still a valid index."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.instances",
       "skos:note": "candidate"
     },
     {

@@ -14,7 +14,7 @@ Candidate terms extracted from every Tool node: `title` as the label, `descripti
 
 From: cat-harness 128 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 6 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 169 terms and is 121 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 169 terms and is 122 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -689,7 +689,7 @@ Merge overlap (conflict prediction) <span class="fa-gloss-status">candidate, ext
 Merge train <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Build a train branch from a base SHA: merge each member (a PR number or branch) with <code>merge-base.ts --no-regen</code>, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one <code>bun run regen</code>, <code>check:l1-complete --write</code>, <code>extract-smart-kg-l1.ts --entry</code> for each stale entry, and <code>kg:audit:all:check</code>; then merge <code>origin/main</code>, taking main's side of generated conflicts and regenerating once more. Emits a <code>merge-train-report/v1</code> JSON report. Never pushes, opens or merges a PR.</p>
+<p>Build a train branch from a base SHA: merge each member (a PR number or branch) with <code>merge-base.ts --no-regen</code>, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one <code>bun run regen</code>, <code>check:l1-complete --write</code>, every check an instance declares <code>afterMerge</code> (its declared writer run when red), and <code>kg:audit:all:check</code>; then merge <code>origin/main</code>, taking main's side of generated conflicts and regenerating once more. Emits a <code>merge-train-report/v1</code> JSON report. Never pushes, opens or merges a PR.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#merge-train</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--methodologies-viewer" data-fa-state="extracted" data-fa-gloss="">

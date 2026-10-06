@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T07:15:08Z
+updated_at: 2026-10-06T08:49:31Z
 parent: folio-assistant-7x5n
 ---
 
@@ -67,3 +67,45 @@ Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze with three opti
 - cat-harness-tools aggregates whatever instances are present through `instanceRootsIn`, so no lower layer names a higher one. The same code runs in the monorepo, in a standalone repo, and in the parent.
 - This is the pattern `riit`/`dmx1` used for block kinds and graph typologies.
 - Built after G's and H's content-split moves, as its own PR.
+
+
+## Step 0 part 2, 2026-10-06 ~09:00Z: the owner's ruling, built
+
+Each instance now declares its own tasks; cat-harness(-tools) collects them through `instanceRootsIn`.
+
+- **`taskIo`** (new declaration field): 21 rows moved out of `task-io.ts` into their owners:
+  - core 7
+  - fhir-harness 3
+  - smart-base 5
+  - smart-trust 3
+  - smart-immunizations 1
+  - who-iris 2
+
+  `collectTaskIo` throws on a task declared twice. The composed table is identical to the old one (222 rows, checked by a JSON diff). A test fails if the own table names an upper instance; that test caught `smart-base:diig-figure:check`, which the first pass had missed.
+- **`taskIo[x].writer` / `afterMerge`:** regen's `WRITER_OVERRIDES` and merge-train's smart-kg-l1 repair are now one declared fact. merge-train re-asks every `afterMerge` check and runs its writer when the check is red. This replaces the hard-coded per-entry re-extract and the `parseStaleSmartKgEntries` parser.
+- **`gateExemptions`** (new field): fhir-harness declares its 3 CI-only steps and 3 unwired scripts. `gates.ts` composes them; counts unchanged (74 steps, 45 scripts).
+- **check-secret-leaks:** roots = the fixed 4 plus every present instance's `skills` and `glossary` graphs. That is 12 roots, up from 6, and the scan is still clean (14,668 files).
+- **qa-refresh:** one `lsi index --graph library --needed` writer. `needOf` picks the libraries.
+  - **Correction to the note above:** for `library` graphs, `needOf` today flags exactly cat-harness, smart-base and who-iris, so the old literal was not out of date. It was an upward name, which is why it went.
+
+Still open in step 0: the content-vocabulary contributions (translation-tools core BPMN, the ns.jsonld Tool, jsonld.ts core/sci terms).
+
+
+
+## Owner ruling 2026-10-06 ~08:50Z: whole-checkout tests live at the TOP-LEVEL instance
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, after session A's #2268 brought standalone cat-harness from 392 to 195 failing. The options, recommended first:
+1. top-level instance;
+2. cat-harness-tools (the gnnj precedent);
+3. each upper instance tests itself.
+
+**The owner chose "Top-level instance".**
+
+- The parent folio-assistant checkout, which holds every layer, gets a DECLARED test home: a directory in its declaration, never a literal path in a runner.
+- Whole-checkout tests move there:
+  - Z, the every-instance sweeps;
+  - C, sibling content data;
+  - V, voices;
+  - the B+E aggregate-root reads that #2268 had moved to cat-harness-tools/scripts/tests.
+- Same basis as the orchestration ruling: whatever must name every layer belongs at the top, so each layer stays standalone-green.
+- Relayed to session A (session_01FrpbCpM7BWxGCPsu618MLr) for #2268.
