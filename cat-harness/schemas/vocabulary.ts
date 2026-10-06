@@ -280,6 +280,20 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss:
       "A declared graph typology nothing recognises — reported as its own state, never silently treated as empty.",
   },
+  // ── The content model (bean `0r7u`, owner 2026-10-06) ──────────────────
+  // The node classes every content type shares. Minted here, not in core: the
+  // content-object model is the harness's, and an instance above it types its
+  // own kinds (`Prose`, `Theorem`, `Persona`, …) in its OWN namespace, read off
+  // its `folio-block-kind/v1` nodes rather than listed here.
+  Block: {
+    gloss: "One addressable unit of a folio's content — a paragraph, a theorem, a table — typed further by its block kind.",
+  },
+  SourceDocument: {
+    gloss: "An external source a library holds — a paper, a report, a dataset — that blocks are ingested from and cite.",
+  },
+  WebPage: {
+    gloss: "A page of a published site, as a node whose sections and assets are its parts.",
+  },
 };
 
 /**
@@ -607,6 +621,45 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
 
   detection: { gloss: "How a value was arrived at, where it was inferred rather than declared." },
   ambiguous: { gloss: "That more than one answer matched, and none was chosen." },
+  // ── The content model (bean `0r7u`, owner 2026-10-06) ──────────────────
+  // What CONTENT_CONTEXT (`jsonld.ts`) binds. `blockMeta` and
+  // `archiveFileCount` are renamed from the content context's `meta` and
+  // `fileCount`, which name different things above (a tool's metadata, a
+  // declared directory's file count); the JSON keys are unchanged.
+  label: { gloss: "The authored label a block is referred to by, kept verbatim beside its minted IRI." },
+  kind: { gloss: "A block's kind — the name of the `folio-block-kind/v1` node that classifies it." },
+  uses: { gloss: "A block a reader must have read to follow this one: the editorial prerequisite relation, never derived from proofs." },
+  interprets: { gloss: "The block a remark comments on." },
+  foreshadows: { gloss: "A later block this one prepares the reader for." },
+  proofs: { gloss: "A block that proves this one." },
+  examples: { gloss: "A block that illustrates this one." },
+  tag: { gloss: "A free label grouping blocks across chapters." },
+  defines: { gloss: "A term this block defines." },
+  leanRef: { gloss: "The Lean declaration that formalises this block, as a name rather than a link." },
+  sorryFree: { gloss: "Whether the formal declaration behind this block is complete, with no `sorry`." },
+  text: { gloss: "The path, relative to this document, of the block's prose companion." },
+  leanSource: { gloss: "The path, relative to this document, of the block's Lean companion." },
+  blockMeta: { gloss: "A block's own metadata, kept verbatim as JSON." },
+  licenceRecord: { gloss: "The authored licence record of a library item, including where its licence was searched for." },
+  narrative: { gloss: "A figure's or record's drafted narrative with its attribution, kept verbatim as JSON." },
+  sourceTechnicalMetadata: { gloss: "Technical metadata of an ingested source file, kept verbatim as JSON." },
+  archiveTechnicalMetadata: { gloss: "Technical metadata of an ingested archive, kept verbatim as JSON." },
+  sheets: { gloss: "The shape of each sheet of an ingested workbook, kept verbatim as JSON." },
+  archiveEntries: { gloss: "The entry list of an ingested archive, kept verbatim as JSON." },
+  sheetCount: { gloss: "How many sheets an ingested workbook has." },
+  entryCount: { gloss: "How many entries an ingested archive lists." },
+  archiveFileCount: { gloss: "How many files an ingested archive contains." },
+  directoryCount: { gloss: "How many directories an ingested archive contains." },
+  uncompressedBytes: { gloss: "An ingested archive's size once unpacked, in bytes." },
+  headerVocabulary: { gloss: "Every column header a tabular record carries, as a set, so a search for a header finds the dataset." },
+  headers: { gloss: "A table block's column headers, in order." },
+  file: { gloss: "The path, relative to the block, of a figure's image." },
+  refs: { gloss: "A node an ingested node refers to." },
+  sourceDocument: { gloss: "The source document an ingested node was taken from." },
+  provenance: { gloss: "How an ingested node was produced." },
+  pageStart: { gloss: "The first page of the source an ingested node covers." },
+  pageEnd: { gloss: "The last page of the source an ingested node covers." },
+  strength: { gloss: "The stated strength of an ingested recommendation." },
 };
 
 /**

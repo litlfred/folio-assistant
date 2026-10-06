@@ -39,7 +39,7 @@
  *
  * So `@id` is **minted** by {@link resolveLabel}, which resolves all three
  * authored reference forms to one canonical relative IRI, and the label is
- * additionally preserved verbatim in `folio-assistant-core:label` for grep and round-tripping.
+ * additionally preserved verbatim in `cat-harness:label` for grep and round-tripping.
  * Nothing in `content/**` has to change.
  *
  * ## Why `@id` is relative
@@ -78,7 +78,7 @@ import type { ContributionRegistry } from "./contributions";
  */
 import { z } from "zod";
 
-import { CORE_NS, FOLIO_BASE, ownNamespace } from "./namespaces";
+import { CAT_HARNESS_NS, CORE_NS, FOLIO_BASE, ownNamespace, termCurie } from "./namespaces";
 
 // Content terms are folio-assist-core's, so they hang off core's namespace —
 // the same layer that owns block kinds, voices and the library.
@@ -117,7 +117,7 @@ export const CSVW_NS = "http://www.w3.org/ns/csvw#";
 /**
  * WHO's canonical base for the SMART Guidelines base IG.
  *
- * `smart-base` `sushi-config.yaml` declares `canonical: http://smart.who.int/base`,
+ * The base IG's `sushi-config.yaml` declares `canonical: http://smart.who.int/base`,
  * and its logical models publish under `<canonical>/StructureDefinition/<Name>`.
  */
 export const SMART_BASE_NS = "http://smart.who.int/base/StructureDefinition/";
@@ -186,8 +186,9 @@ export const ContentContextSchema = z.union([
 // ── Block kind → RDF types ───────────────────────────────────────
 
 /**
- * `folio-assistant-core:` type for each block kind, read off its discovered
- * `folio-block-kind/v1` node (`folioType`; bean riit, step 2). These are folio's own classes because
+ * The RDF class for each block kind, read off its discovered
+ * `folio-block-kind/v1` node (`folioType`; bean riit, step 2), and minted in the
+ * namespace of the instance declaring the kind (bean `0r7u`). Our own classes because
  * no published vocabulary distinguishes a theorem from a lemma from a
  * conjecture in the way this project's editorial machinery needs.
  */
@@ -215,20 +216,25 @@ export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = Object.fromEn
  * `corpus_search` where the ingestion pipeline is documented should find the
  * page as readily as they find a block.
  *
- * `folio-assistant-core:WebPage` is a NEW term rather than a borrowed one. schema.org has
+ * `WebPage` is a NEW term rather than a borrowed one, minted in cat-harness's
+ * namespace with the rest of the content model (bean `0r7u`). schema.org has
  * `schema:WebPage`, and this corpus has never used schema.org anywhere — the
  * committed vocabularies are DCTERMS, SPAR (DoCO/DEO/CiTO) and one PROV term.
  * Introducing a whole namespace for one class, when the house rule is
  * "generalising is sound; inventing is not", would be inventing by import. A
- * `folio-assistant-core:` term for a folio-specific concept is what that rule allows.
+ * term of our own for a folio-specific concept is what that rule allows. A
+ * page's nodes are `Block`s, told apart by their DoCO co-type (`doco:Section`
+ * for narrative, `doco:Figure` for an asset): the site is not a folio, so it
+ * borrows no folio's block-kind class (`Prose`, `Figure`), whose namespace is
+ * the declaring instance's (bean `0r7u`).
  *
  * The DoCO half is borrowed and verified: a page is `doco:Section` (its own
  * containment is `dcterms:hasPart`, per the note on `contains` below), an
  * asset node is `doco:Figure` — the same class `diagram` blocks already get.
  */
-export const SITE_PAGE_TYPES = ["folio-assistant-core:WebPage", "doco:Section"] as const;
-export const SITE_NARRATIVE_TYPES = ["folio-assistant-core:Prose", "doco:Section"] as const;
-export const SITE_ASSET_TYPES = ["folio-assistant-core:Figure", "doco:Figure"] as const;
+export const SITE_PAGE_TYPES = [termCurie("WebPage"), "doco:Section"] as const;
+export const SITE_NARRATIVE_TYPES = [termCurie("Block"), "doco:Section"] as const;
+export const SITE_ASSET_TYPES = [termCurie("Block"), "doco:Figure"] as const;
 
 /**
  * Relative IRI for a docs-site node, against {@link DOCS_SITE_BASE}:
@@ -268,7 +274,7 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = Objec
  * Every `@type` for a block, most specific first.
  *
  * A built-in kind is typed from the two tables above. A CONTRIBUTED kind — the
- * `dak` adapter's, which smart-base contributes (bean `1335`) — carries its own
+ * kind a contributed adapter declares (bean `1335`) — carries its own
  * `folioType` and `docoType` on its `BlockKindContribution`, so this reads them
  * from the registry rather than from a table naming another harness's kinds.
  * Built-ins are consulted first, which is the order `register` already
@@ -518,7 +524,7 @@ export function resolveReferenceKey(key: string): string {
 export const CONTENT_CONTEXT = {
   "@version": 1.1,
   "@base": FOLIO_BASE,
-  "folio-assistant-core": CORE_NS,
+  "cat-harness": CAT_HARNESS_NS,
   doco: DOCO_NS,
   deo: DEO_NS,
   cito: CITO_NS,
@@ -531,27 +537,27 @@ export const CONTENT_CONTEXT = {
 
   // Identity. `label` is the authored string, kept verbatim alongside the
   // minted `@id` so a grep hit in .jsonld matches a grep hit in .ts.
-  label: "folio-assistant-core:label",
+  label: termCurie("label"),
   title: "dcterms:title",
-  kind: "folio-assistant-core:kind",
+  kind: termCurie("kind"),
 
   // Editorial relations — folio's own, because no vocabulary models the
   // reader-facing prerequisite relation these encode.
-  uses: { "@id": "folio-assistant-core:uses", "@type": "@id", "@container": "@set" },
-  interprets: { "@id": "folio-assistant-core:interprets", "@type": "@id" },
-  foreshadows: { "@id": "folio-assistant-core:foreshadows", "@type": "@id", "@container": "@set" },
-  proofs: { "@id": "folio-assistant-core:proofs", "@type": "@id", "@container": "@set" },
-  examples: { "@id": "folio-assistant-core:examples", "@type": "@id", "@container": "@set" },
+  uses: { "@id": termCurie("uses"), "@type": "@id", "@container": "@set" },
+  interprets: { "@id": termCurie("interprets"), "@type": "@id" },
+  foreshadows: { "@id": termCurie("foreshadows"), "@type": "@id", "@container": "@set" },
+  proofs: { "@id": termCurie("proofs"), "@type": "@id", "@container": "@set" },
+  examples: { "@id": termCurie("examples"), "@type": "@id", "@container": "@set" },
 
   cites: { "@id": "cito:cites", "@type": "@id", "@container": "@set" },
-  tags: { "@id": "folio-assistant-core:tag", "@container": "@set" },
-  defines: { "@id": "folio-assistant-core:defines", "@container": "@set" },
+  tags: { "@id": termCurie("tag"), "@container": "@set" },
+  defines: { "@id": termCurie("defines"), "@container": "@set" },
 
   // Formal side. `leanRef` stays a literal: a Lean declaration is not a web
   // resource, and minting an IRI for one would imply a dereference that does
   // not exist.
-  leanRef: "folio-assistant-core:leanRef",
-  sorryFree: "folio-assistant-core:sorryFree",
+  leanRef: termCurie("leanRef"),
+  sorryFree: termCurie("sorryFree"),
 
   // Companions, by PATH rather than inlined content. Inlining prose would
   // duplicate the corpus and make every prose edit a two-file diff.
@@ -573,10 +579,10 @@ export const CONTENT_CONTEXT = {
   // are SERVED at a URL an instance declares. Until then any link would be a
   // promise nothing keeps. `check:context-emission` fails if a path is put
   // back under an `@id` term (`checkPathsAreNotLinks`).
-  text: { "@id": "folio-assistant-core:text" },
-  leanSource: { "@id": "folio-assistant-core:leanSource" },
+  text: { "@id": termCurie("text") },
+  leanSource: { "@id": termCurie("leanSource") },
 
-  meta: { "@id": "folio-assistant-core:meta", "@type": "@json" },
+  meta: { "@id": termCurie("blockMeta"), "@type": "@json" },
 
   // A library item's licence, OUT of `meta` (finding D4, bean `gzkt`, owner
   // ruling 2026-10-03). Both bindings are the rows of
@@ -587,7 +593,7 @@ export const CONTENT_CONTEXT = {
   // reason given under "THE SPLIT" below: its `unknown` state and the places
   // searched are a nested structure of ours.
   license: { "@id": "dcterms:license" },
-  licenceRecord: { "@id": "folio-assistant-core:licenceRecord", "@type": "@json" },
+  licenceRecord: { "@id": termCurie("licenceRecord"), "@type": "@json" },
 
   // ── Ingest-arm records, and the narrative they share — bean `yh6u` ──────
   //
@@ -614,27 +620,27 @@ export const CONTENT_CONTEXT = {
   // correctly reports as bound-and-never-emitted.
   $schema: { "@id": "dcterms:conformsTo" },
   format: { "@id": "dcterms:format" },
-  narrative: { "@id": "folio-assistant-core:narrative", "@type": "@json" },
-  source: { "@id": "folio-assistant-core:sourceTechnicalMetadata", "@type": "@json" },
-  archive: { "@id": "folio-assistant-core:archiveTechnicalMetadata", "@type": "@json" },
-  sheets: { "@id": "folio-assistant-core:sheets", "@type": "@json" },
-  entries: { "@id": "folio-assistant-core:archiveEntries", "@type": "@json" },
-  n_sheets: { "@id": "folio-assistant-core:sheetCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
-  n_entries: { "@id": "folio-assistant-core:entryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
-  n_files: { "@id": "folio-assistant-core:fileCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
-  n_directories: { "@id": "folio-assistant-core:directoryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
-  uncompressed_bytes: { "@id": "folio-assistant-core:uncompressedBytes", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  narrative: { "@id": termCurie("narrative"), "@type": "@json" },
+  source: { "@id": termCurie("sourceTechnicalMetadata"), "@type": "@json" },
+  archive: { "@id": termCurie("archiveTechnicalMetadata"), "@type": "@json" },
+  sheets: { "@id": termCurie("sheets"), "@type": "@json" },
+  entries: { "@id": termCurie("archiveEntries"), "@type": "@json" },
+  n_sheets: { "@id": termCurie("sheetCount"), "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_entries: { "@id": termCurie("entryCount"), "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_files: { "@id": termCurie("archiveFileCount"), "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_directories: { "@id": termCurie("directoryCount"), "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  uncompressed_bytes: { "@id": termCurie("uncompressedBytes"), "@type": "http://www.w3.org/2001/XMLSchema#integer" },
   // The findable surface — `p67i`: "a grep for a column header finds the
   // dataset that has it". A SET on the record (deduplicated, sorted); an
   // ordered LIST on a table block, where column order is a fact.
-  header_vocabulary: { "@id": "folio-assistant-core:headerVocabulary", "@container": "@set" },
-  headers: { "@id": "folio-assistant-core:headers", "@container": "@list" },
+  header_vocabulary: { "@id": termCurie("headerVocabulary"), "@container": "@set" },
+  headers: { "@id": termCurie("headers"), "@container": "@list" },
   // A figure block's image, as a path RELATIVE TO THE BLOCK (`../images/…`).
   // A LITERAL, deliberately — `kg-export`'s rule for a path. Coerced to `@id`
   // it would resolve against `@base` rather than against the block, and name
   // `https://litlfred.github.io/images/…`, which is not where the image is. That
   // is what `text` above does today (bean filed with `yh6u`); it is not copied.
-  file: { "@id": "folio-assistant-core:file" },
+  file: { "@id": termCurie("file") },
 
   // Ingest side. Declared in the shared context precisely so that an
   // ingested node and an authored block are the same kind of thing.
@@ -648,13 +654,13 @@ export const CONTENT_CONTEXT = {
   // verified super-property. Generalising is sound; inventing is not.
   // Narrow it to `po:contains` once the namespace can be checked.
   contains: { "@id": "dcterms:hasPart", "@type": "@id", "@container": "@set" },
-  refs: { "@id": "folio-assistant-core:refs", "@type": "@id", "@container": "@set" },
+  refs: { "@id": termCurie("refs"), "@type": "@id", "@container": "@set" },
   derivedFrom: { "@id": "prov:wasDerivedFrom", "@type": "@id" },
-  sourceDocument: { "@id": "folio-assistant-core:sourceDocument", "@type": "@id" },
-  provenance: "folio-assistant-core:provenance",
-  pageStart: "folio-assistant-core:pageStart",
-  pageEnd: "folio-assistant-core:pageEnd",
-  strength: "folio-assistant-core:strength",
+  sourceDocument: { "@id": termCurie("sourceDocument"), "@type": "@id" },
+  provenance: termCurie("provenance"),
+  pageStart: termCurie("pageStart"),
+  pageEnd: termCurie("pageEnd"),
+  strength: termCurie("strength"),
   // No `certainty` term yet. It must bind to FHIR's GRADE value set
   // (`QualityOfEvidenceRating` on HL7 Terminology), and the exact predicate
   // wants checking against a real IG rather than guessed — it lands with the
