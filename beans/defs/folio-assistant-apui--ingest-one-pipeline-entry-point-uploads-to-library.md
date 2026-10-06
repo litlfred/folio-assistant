@@ -1,11 +1,11 @@
 ---
 # folio-assistant-apui
 title: 'INGEST: one pipeline entry point — uploads/ to library/ through a single documented path'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-29T20:03:12Z
+updated_at: 2026-10-06T06:04:37Z
 parent: folio-assistant-slw1
 ---
 
@@ -234,3 +234,16 @@ than gates.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## 2026-10-06 — the promotion half closed (issue #2253, branch claude/goal5-ingest-spine)
+
+Re-measured by running it: staged + promoted uploads/2609.07340v1.pdf into folio-assistant-sci/library. Two defects, both fixed:
+- The printed Next line was `../uploads/X.pdf` (not there from the repo root) with no `--library`. It now echoes the caller's own argv plus `--promote` (`promoteCommand`).
+- The promoted entry failed `gen-library-jsonld --check` (37 nodes), with a manifest @id naming cat-harness. The instance and the title catalogue are read off the entry's LOCATION, and staging is not the destination. `buildEntryNodes(docId, dir, locatedAt)` now mints for the destination, and `--promote` builds the nodes before the copy (refusing if they can't be built) and writes them after.
+
+After the fix: the printed Next line, run verbatim, promoted the entry; `--check` reported 37 nodes up to date, and the @id names folio-assistant-sci. Mutation (revert to libraryInstanceOf(dir)) caught by the new test. `check:l1-complete --write` is no longer a step: verdicts live on qa-reports (0dav).
+
+The whole path is two commands. The test entry was removed afterwards; promoting uploads into a library is the owner's call.
+
+Remaining, NOT in this change: l1-blocks.ts and gen-library-jsonld both write manifest.jsonld + blocks/ (two writers, the first a weaker copy). Promotion now overwrites the staging copy, so the defect is masked rather than removed.

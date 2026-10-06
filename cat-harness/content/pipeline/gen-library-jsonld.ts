@@ -641,15 +641,26 @@ function entryTitle(
   dir: string,
   docId: string,
   pre: Parameters<typeof readTitleCandidates>[2],
+  locatedAt: string = dir,
 ): ManifestTitle | undefined {
-  const read = readTitleCandidates(dir, docId, pre);
+  const read = readTitleCandidates(dir, docId, pre, locatedAt);
   if (read.unreadable.length) return undefined;
   const r = resolveLibraryTitle(read.candidates);
   return { ...r, from: r.source === "slug" ? undefined : read.from[r.source] };
 }
 
-export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
-  const instance = libraryInstanceOf(dir);
+/**
+ * `locatedAt` is where the entry WILL sit when it is not there yet. The
+ * instance a manifest names is read off the entry's location, and a STAGED
+ * entry sits in `ingest-staging/`, which belongs to whichever instance holds
+ * the staging tree — not to the library it is being promoted into. Measured
+ * 2026-10-06 (bean `apui`): a document staged and promoted into
+ * `folio-assistant-sci/library` carried a manifest `@id` naming
+ * `cat-harness`, and `--check` called 37 of its nodes stale. So the files are
+ * READ from `dir` and the identity is minted for `locatedAt`.
+ */
+export function buildEntryNodes(docId: string, dir: string, locatedAt: string = dir): EntryOutcome {
+  const instance = libraryInstanceOf(locatedAt);
   const iri = iriFor(docId, instance);
   // Two ingest rungs reach this walk, and a tabular entry has no Stage A
   // output at all — no `structure.json`, no `sections/*.md` — so it is not a
@@ -670,7 +681,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     const licence = readLicence(dir);
     // A catalogue node names a record that will not read: the title cannot be
     // determined, and the slug over a record that exists is the R8 defect.
-    const titled = entryTitle(dir, docId, { structure: read.raw as Record<string, unknown> });
+    const titled = entryTitle(dir, docId, { structure: read.raw as Record<string, unknown> }, locatedAt);
     if (!titled) return { state: "unreadable", rung };
     return {
       state: "built",
@@ -700,7 +711,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     // A tabular record's `title` is its source FILE name (`tabularShapeOf`),
     // which is never a title. It goes in as a source file so nothing that
     // merely repeats it can be taken for one.
-    const titled = entryTitle(dir, docId, { sourceFiles: shape.title ? [shape.title] : [] });
+    const titled = entryTitle(dir, docId, { sourceFiles: shape.title ? [shape.title] : [] }, locatedAt);
     if (!titled) return { state: "unreadable", rung };
     return {
       state: "built",
@@ -732,7 +743,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     const titled = entryTitle(dir, docId, {
       referenced: record as Record<string, unknown>,
       sourceFiles: src.file ? [src.file] : [],
-    });
+    }, locatedAt);
     if (!titled) return { state: "unreadable", rung };
     const manifest = {
       "@context": CONTENT_DOCUMENT_CONTEXT,
