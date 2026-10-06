@@ -12,7 +12,7 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 129 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 5 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 128 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 6 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 3 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 168 terms and is 121 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -388,12 +388,12 @@ Give every page Jekyll did not lay out the folio-assistant navbar <span class="f
 <p>A LAST pass over the finished site: inject the shared navbar (<code>lib/navbar.ts</code>, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by <code>stage-ig-sites</code>. A page under an <code>igSite</code> instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (<code>data-fa-visualiser-nav</code>) and its label (<code>fa-visualiser-label</code>). Mount routes are left to the mount pass, and a page that declines (<code>folio-navbar: none</code>) is left bare.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#rail-standalone-pages</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--glossary-build" data-fa-state="extracted" data-fa-gloss="">
+<dt id="folio-assistant-core--kg-tools--glossary-build" data-fa-state="extracted" data-fa-gloss="">
 Glossary build <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Build a paper's glossary index from its manifests and render the LaTeX. <code>--check</code> reports drift instead of writing, comparing everything except the <code>generated</code> timestamp so a re-run is not mistaken for a change.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#glossary-build</code></a></p>
+<p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#glossary-build</code></a></p>
 </dd>
 </dl>
 

@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-23T18:10:15Z
-updated_at: 2026-09-29T18:14:48Z
+updated_at: 2026-10-06T06:19:16Z
 parent: folio-assistant-q4jm
 ---
 
@@ -28,3 +28,12 @@ It is the same rule as stale-versus-passing, one level up: a verdict that was ne
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Owner ruling 2026-10-06: the QA-column work waits for #2080
+
+Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, from two options (recommended first):
+
+1. **CHOSEN: hold the heat map's QA-column work until #2080 (5hox, QA results off main) merges.** The column reads per-block QA files that #2080 moves to the `qa-reports` branch, so it is built once, against where the files will live.
+2. Build now and adapt after #2080 (not chosen: the same reader would be reworked twice).
+
+The rest of q4jm (the end-to-end check on folio-test, comments, accept, the large fixture) is not held.
