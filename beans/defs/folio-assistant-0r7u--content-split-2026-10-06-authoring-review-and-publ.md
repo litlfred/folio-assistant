@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-10-06T06:42:34Z
-updated_at: 2026-10-06T08:49:31Z
+updated_at: 2026-10-06T14:09:28Z
 parent: folio-assistant-7x5n
 ---
 
@@ -109,3 +109,14 @@ Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, after session 
   - the B+E aggregate-root reads that #2268 had moved to cat-harness-tools/scripts/tests.
 - Same basis as the orchestration ruling: whatever must name every layer belongs at the top, so each layer stays standalone-green.
 - Relayed to session A (session_01FrpbCpM7BWxGCPsu618MLr) for #2268.
+
+
+## Vocabulary ruling (owner, 2026-10-06)
+
+"Move terms to cat-harness ns (Recommended)". The content-model terms the harness uses get cat-harness IRIs; the old `folio-assistant-core:` IRIs stay resolvable as aliases (`owl:deprecated` + `dcterms:isReplacedBy`, with `owl:equivalentClass` / `owl:equivalentProperty`), so no published `.jsonld` breaks.
+
+Plan, three PRs:
+1. Define the ~40 content-model terms in `vocabulary.ts` at `layer: "harness"`; rename the two that clash with harness terms (`meta`, `fileCount`); add the alias mechanism that emits the deprecated old IRIs.
+2. Switch `CONTENT_CONTEXT` in `jsonld.ts` and the minting sites (`l1-blocks`, `tabular-nodes`, `gen-library-jsonld`) to the new IRIs.
+3. Rewrite `@type` in the committed `.jsonld` files and `folioType` in the block-kind JSONs, one instance per PR.
+Also: the `ns-vocabulary` Tool maintains `folio-assistant-core/ns.jsonld` from cat-harness, an upward path; fix it alongside PR 1.

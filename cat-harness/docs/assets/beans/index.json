@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 943,
+      "count": 951,
       "unit": "beans"
     }
   },
@@ -302,7 +302,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:42:34Z",
-      "updatedAt": "2026-10-06T08:49:31Z",
+      "updatedAt": "2026-10-06T14:09:28Z",
       "preview": "Owner, 2026-10-06, verbatim: *\"do content split propoerly across repos\"*, *\"that needs to be done before F\"*, and *\"not a race to separate.   do it properly.\"* Placement rule: *\"folio-asst-core focused on content authroiung, review pubilcation.   cat-harness on SDLC, tooling, decision making, general methdologies, basic common infra/state mgmt\"*.\n\nStory `rfuq` (S4, direction and placement) owns th",
       "file": "beans/defs/folio-assistant-0r7u--content-split-2026-10-06-authoring-review-and-publ.md"
     },
@@ -2321,6 +2321,20 @@
       "file": "beans/defs/folio-assistant-5uuf--folio-preview-before-side-no-main-site-publish-so.md"
     },
     {
+      "id": "folio-assistant-5uyl",
+      "title": "Extract the immunizations L1 graph from DAK Component 1 into smart-immunizations/library",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ioa4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:58:14Z",
+      "updatedAt": "2026-10-06T09:39:52Z",
+      "preview": "## Done when\n- [x] the DAK PDF is ingested by folio-assistant and its entry placed under smart-immunizations/library/\n- [x] a generic extractor reads Component 1 (§1.1 interventions, §1.2 cited guidance) and resolves each (n) against the reference list\n- [x] the graph validates with smart-kg tools/validate.mjs at WHO main AND the Zod validator in smart-base\n- [ ] every cited reference with a retri",
+      "file": "beans/defs/folio-assistant-5uyl--extract-the-immunizations-l1-graph-from-dak-compon.md"
+    },
+    {
       "id": "folio-assistant-5vo9",
       "title": "ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN",
       "status": "todo",
@@ -3012,7 +3026,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T09:15:31Z",
-      "updatedAt": "2026-10-06T09:15:31Z",
+      "updatedAt": "2026-10-06T11:19:19Z",
       "preview": "Measured 2026-10-06 on #2267 (coordinator) and reported independently by session A, from #2268.\n\n**What happens.** Since #2080 (5hox), the QA results tree is computed and not committed. Some generators read it from disk, at least `uml:overview` and `readme:subgraphs`. A container's local copy can be partial or stale. On #2267 only `kg-qa` was present, so `bun run regen` rewrote the QA overview wit",
       "file": "beans/defs/folio-assistant-7how--regen-reads-a-stale-qa-tree-generators-that-read-g.md"
     },
@@ -3634,7 +3648,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:16:07Z",
-      "updatedAt": "2026-10-02T12:02:31Z",
+      "updatedAt": "2026-10-06T08:27:17Z",
       "preview": "Owner, 2026-10-02 (#1767), option 2 of the smart-kg fold-in: feed smart-kg. smart-kg's README says 'Not built yet: no PDF extractor, so publication and recommendation nodes must currently be authored by hand.' folio-assistant's ingest pipeline already produces sections, outline and page text for each library entry. Build a smart-base tool that turns one ingested guideline (e.g. who-iris/library/97",
       "file": "beans/defs/folio-assistant-8pzh--smart-base-extract-smart-kg-l1-instance-documents.md"
     },
@@ -7140,6 +7154,20 @@
       "file": "beans/defs/folio-assistant-in5a--a-declared-take-base-pattern-cannot-settle-a-gener.md"
     },
     {
+      "id": "folio-assistant-ioa4",
+      "title": "Immunizations L1 knowledge graph from DAK Component 1; smart-kg L1 schema to Zod in smart-base",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:57:58Z",
+      "updatedAt": "2026-10-06T08:58:14Z",
+      "preview": "User request 2026-10-06 (ritikarawlani): (1) use folio-assistant to extract an L1 knowledge graph for immunizations from DAK Component 1 (ISBN 9789240099456, IRIS 10665/380303), conforming to WorldHealthOrganization/smart-kg main (66a9b13), placed at litlfred/smart-immunizations/library; (2) make building a DAK's library always ingest the L1 references Component 1 names (skills + processes); (3) m",
+      "file": "beans/defs/folio-assistant-ioa4--x.md"
+    },
+    {
       "id": "folio-assistant-is8n",
       "title": "Merge refused: #2071 owed CI not green on its head",
       "status": "todo",
@@ -7424,6 +7452,20 @@
       "updatedAt": "2026-09-26T03:34:32Z",
       "preview": "Group 7 of 13 in `d308`. **16 files, 3 entry points.**\n\n`render-latex`, `generate-block-tex`, `generate-main-tex`, `latex-preflight`,\n`latex-overfull-report`, `audit-tex-source`, `validate-tex`, `latexmk-compile`,\n`render-changed-blocks`, `render-on-change`, `render-pre-commit`,\n`render-discovery`, `render-value`, `headless-render-qc`, `refresh-authors-note`,\n`scripts/render-tex/`.\n\n**BPMN:** `aut",
       "file": "beans/defs/folio-assistant-jh2j--tool-713-task-render-latex-pdf-rendering-16-files.md"
+    },
+    {
+      "id": "folio-assistant-jj2w",
+      "title": "Migrate smart-kg L1 schema to Zod in litlfred/smart-base, with FSH logical models + value sets generated from it",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ioa4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:58:15Z",
+      "updatedAt": "2026-10-06T09:39:53Z",
+      "preview": "## Done when\n- [x] the L1 ontology and the graph-document shape are Zod modules in litlfred/smart-base, the single source\n- [x] generators write FSH Logical models, CodeSystems and ValueSets into input/fsh/, plus JSON Schema + ontology JSON; --check fails when stale\n- [x] SUSHI compiles the generated FSH\n- [x] the Zod validator matches validate.mjs on a passing graph and on negative cases\n\n## Prog",
+      "file": "beans/defs/folio-assistant-jj2w--migrate-smart-kg-l1-schema-to-zod-in-litlfredsmart.md"
     },
     {
       "id": "folio-assistant-jo87",
@@ -8659,6 +8701,20 @@
       "file": "beans/defs/folio-assistant-n5be--glossary-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-n7f8",
+      "title": "IG site diagrams (PlantUML sequence/deployment SVGs) get the same pan/zoom/resize viewer as BPMN diagrams",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T10:28:18Z",
+      "updatedAt": "2026-10-06T12:16:59Z",
+      "preview": "Owner, 2026-10-06: \"the diagrams on https://litlfred.github.io/smart-trust/sequence-diagrams.html are now resiable/scrollable like the bpmn diagrams are. tehy should be\" (read as: are NOT, and should be). Screenshot: wide PlantUML SVGs on the IG narrative page overflow and are clipped at the right edge.\n\n## Done when\n- [x] Inline/IMG diagram SVGs on IG site pages get the BPMN viewer's pan, zoom an",
+      "file": "beans/defs/folio-assistant-n7f8--ig-site-diagrams-plantuml-sequencedeployment-svgs.md"
+    },
+    {
       "id": "folio-assistant-nafz",
       "title": "glossary-export walks ONE instance's diagrams while translate-bpmn walks the dependents' too",
       "status": "completed",
@@ -8715,6 +8771,20 @@
       "updatedAt": "2026-09-18T17:18:22Z",
       "preview": "## The defect\n\n`content/pipeline/qa-sweep.ts` short-circuits a criterion with\n`automated: false` straight to `needs-agent` **before** either scoping gate\nruns. So neither `adapters` nor the new `profiles` axis can scope an\nagent-adjudicated criterion — the gates are unreachable for exactly the\ncriteria whose adjudication is most expensive.\n\nFound while building the profile axis (bean `g6yr`, merge",
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
+    },
+    {
+      "id": "folio-assistant-ncvl",
+      "title": "E2E TEST SERVER DIES MID-SHARD: slice-sqlite.e2e.ts hits ERR_CONNECTION_REFUSED, passes on re-run (#2192, #2273)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T11:19:19Z",
+      "updatedAt": "2026-10-06T11:19:19Z",
+      "preview": "Reported 2026-10-06 by session A (session_01FrpbCpM7BWxGCPsu618MLr). On #2273, and on #2192 earlier, `slice-sqlite.e2e.ts` failed with ERR_CONNECTION_REFUSED: the Playwright webServer (`node test-server.mjs`) died partway through the shard. One re-run passed each time.\n\n'Flake' is not a root cause. A server that dies under one spec is a defect either in that spec (a payload or slice size that cras",
+      "file": "beans/defs/folio-assistant-ncvl--e2e-test-server-dies-mid-shard-slice-sqlitee2ets-h.md"
     },
     {
       "id": "folio-assistant-nf2z",
@@ -9383,12 +9453,12 @@
       "title": "smart-base: pin smart-kg (L1/L2 ontology) as a subgraph; document kinds cite its classes",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-qvxh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T06:15:59Z",
-      "updatedAt": "2026-10-02T06:15:59Z",
+      "updatedAt": "2026-10-06T08:27:17Z",
       "preview": "Owner, 2026-10-02 (#1767): 'utilize https://github.com/litlfred/smart-kg for L1 related stuff' and '(perhaps subgraph in smart-base to help define l1 dth etc docs?)'; chose options 1+2.\n\nsmart-kg (fork of WorldHealthOrganization/smart-kg) is a T-Box only: L1 (16 classes), L2 DAK components (13), L2-BPMN, L2-DMN, L3. Owner 2026-09-23 (bean wg7r): 'dont want smart-kg here yet, that is its own repo a",
       "file": "beans/defs/folio-assistant-pebe--smart-base-pin-smart-kg-l1l2-ontology-as-a-subgrap.md"
     },
@@ -9433,6 +9503,20 @@
       "updatedAt": "2026-10-02T06:44:57Z",
       "preview": "## What was measured\n\n`bun run cat-harness/scripts/kg-audit.ts --instance .` exits 1 before auditing\nanything. Measured 2026-09-27 on `main` (b4d85f2cf4) as well as on the branch, so\nit is pre-existing and not introduced by the skill-resolution fix that found it:\n\n    ENOENT: no such file or directory, open '/home/user/package.json'\n      at rootScripts (cat-harness/scripts/pair-claims.ts:181:26)\n",
       "file": "beans/defs/folio-assistant-pgzn--kgaudit-instance-crashes-the-root-instances-reporo.md"
+    },
+    {
+      "id": "folio-assistant-piw1",
+      "title": "DAK library pattern: Component 1 L1 references are always ingested (skill + BPMN)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ioa4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:58:14Z",
+      "updatedAt": "2026-10-06T09:39:53Z",
+      "preview": "## Done when\n- [x] a smart-base skill states the pattern: Component 1 → cited L1 references → library entries → L1 graph\n- [x] l2-dak-authoring.bpmn carries the step, with skill ref, before the work plan is seeded\n- [x] cat-harness library-ingestion points at it\n- [ ] render:bpmn and skill:register gates are green\n\n## Progress 2026-10-06\nSkill dak-l1-library, Task_L1Library in l2-dak-authoring.bpm",
+      "file": "beans/defs/folio-assistant-piw1--dak-library-pattern-component-1-l1-references-are.md"
     },
     {
       "id": "folio-assistant-pnn5",
@@ -10017,6 +10101,20 @@
       "updatedAt": "2026-10-04T07:07:44Z",
       "preview": "Stage B of cat-harness/docs/proposals/smart-separation-2026-10-01.md (#1767). Owner: \"push generic stuff as much as possible into fhir-harness first\".\n\n## Done when\n- [x] B1 ig-menu, ig-chrome, ig-metadata-index schemas (+tests) -> fhir-harness/schemas/; graph-kind registry validators repointed (fhir-harness:...)\n- [x] B2 ingest-ig-menu, ingest-ig-chrome (+test) -> fhir-harness/scripts/\n- [x] B3 w",
       "file": "beans/defs/folio-assistant-r939--smart-separation-stage-b-fhir-generic-ig-schemas-a.md"
+    },
+    {
+      "id": "folio-assistant-r93y",
+      "title": "IG artefact pages: one footer, same facts and links as the IG site pages (#1901 follow-up)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T12:15:12Z",
+      "updatedAt": "2026-10-06T12:15:29Z",
+      "preview": "Follow-up to #1901 / #2264. The artefact pages (gen-ig-pages) draw their own JS footer from assets/ig-footer.json: it lacks the © year (copyrightYear is in sushi-config.yaml, not the package) and its Table of Contents link points at the site root instead of toc.html. Goal: the artefact pages' footer matches the IG site pages' footer exactly — same facts from one source, same links, each link only ",
+      "file": "beans/defs/folio-assistant-r93y--ig-artefact-pages-one-footer-same-facts-and-links.md"
     },
     {
       "id": "folio-assistant-r96p",
@@ -11667,6 +11765,20 @@
       "updatedAt": "2026-10-04T14:02:31Z",
       "preview": "The gate `check:fhir-harness-exclusions` (smart-base/scripts/) was turned on 2026-10-03 in ratchet mode over 9 file×rule pairs (20 graded hits) listed in smart-base/scripts/fhir-harness-exclusions.baseline.ts. Owner ruling 2026-10-03: gate now, clear the hits in a second stream (session https://claude.ai/code/session_01PpaL9j6AhiTfvqnkF7BiaG).\n\n## Done when\n\n- [ ] the WHO test fixtures (4 test fil",
       "file": "beans/defs/folio-assistant-veiu--fhir-harness-clear-the-exclusion-gate-baseline-to.md"
+    },
+    {
+      "id": "folio-assistant-vglq",
+      "title": "FOREIGN-SITE DATA SCOPE (#2263 follow-up): translation and fsh-guts figures on a folio's site describe the folio",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T12:14:15Z",
+      "updatedAt": "2026-10-06T12:14:31Z",
+      "preview": "Follow-up to #2263 / PR #2265 (bean ky3r), which left two defects of the same class open:\n\n1. _data/translation-qa.json and _data/translations.json are copied into a folio's shell by compose-docs --shell, so smart-trust pages show the PLATFORM's 'Swept 49/689' translation badge.\n2. The fsh-guts icon on a folio site fetches its count from the folio's own site, where no fsh-guts document exists, and",
+      "file": "beans/defs/folio-assistant-vglq--foreign-site-data-scope-2263-follow-up-translation.md"
     },
     {
       "id": "folio-assistant-vhqq",
@@ -14946,14 +15058,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 567,
+        "total": 568,
         "closed": 223,
-        "open": 344,
+        "open": 345,
         "inProgress": 122,
-        "todo": 221,
+        "todo": 222,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3932980599647266
+        "share": 0.3926056338028169
       },
       {
         "id": "folio-assistant-vuip",
@@ -14961,14 +15073,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 250,
+        "total": 257,
         "closed": 98,
-        "open": 152,
-        "inProgress": 83,
+        "open": 159,
+        "inProgress": 90,
         "todo": 68,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.392
+        "share": 0.38132295719844356
       },
       {
         "id": "folio-assistant-yg29",
@@ -14987,8 +15099,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 535,
-    "coveredOpen": 532,
+    "openTotal": 543,
+    "coveredOpen": 540,
     "duplicateIds": 0
   }
 }
