@@ -3,8 +3,10 @@
 title: Each instance publishes its own ns document for the block-kind classes it mints
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-06T16:41:00Z
-updated_at: 2026-10-06T16:41:00Z
+updated_at: 2026-10-06T17:23:55Z
+parent: folio-assistant-7x5n
 ---
 
 Follow-up to the vocabulary move (bean 0r7u, owner rulings 2026-10-06): block-kind classes are minted in the declaring instance's namespace (folio-assistant-core:Prose, folio-assistant-sci:Theorem, smart-base:Persona), but no instance publishes a document defining them, so the class IRIs do not dereference. The core ones never did (pre-existing gap); sci and smart-base are new namespaces with no ns document at all.

@@ -3,10 +3,9 @@
  *
  * `CONTENT_CONTEXT` (`jsonld.ts`) is the context cat-harness PUBLISHES, so it
  * binds only cat-harness's own prefix and the external vocabularies. A block's
- * kind class is minted by the instance that declares the kind — `Prose` by
- * folio-assistant-core, `Theorem` by folio-assistant-sci, `Persona` by
- * smart-base (owner ruling 2026-10-06, bean `0r7u`) — and cat-harness may not
- * name them. So each document binds the prefixes its own `@type`s use, in the
+ * kind class is minted in the namespace of the instance that declares the
+ * kind (owner ruling 2026-10-06, bean `0r7u`), and cat-harness may not name
+ * the instances above it. So each document binds the prefixes its own `@type`s use, in the
  * local half of its context, read from the declaring instance's declaration
  * (`instanceNamespace`) rather than from a list here.
  *
@@ -48,9 +47,21 @@ export function instancePrefixes(checkoutRoot: string, folioRoot?: string): Map<
 
 let checkoutPrefixes: Map<string, string> | undefined;
 
-/** {@link instancePrefixes} over the checkout this module sits in, read once. */
+/**
+ * {@link instancePrefixes} over the checkout this module sits in, read once —
+ * plus the test fixture checkout when `FOLIO_FIXTURE_CHECKOUT` names one, the
+ * same convention `declared-nodes.ts` follows: cat-harness standing alone reads
+ * core's and sci's block kinds from the fixture, so it must bind their
+ * prefixes from the fixture too. The real checkout wins on a shared prefix.
+ */
 export function defaultInstancePrefixes(): Map<string, string> {
-  checkoutPrefixes ??= instancePrefixes(checkoutRootFor(dirname(dirname(fileURLToPath(import.meta.url)))));
+  if (checkoutPrefixes === undefined) {
+    const fixture = process.env.FOLIO_FIXTURE_CHECKOUT;
+    checkoutPrefixes = new Map([
+      ...(fixture ? instancePrefixes(fixture) : new Map<string, string>()),
+      ...instancePrefixes(checkoutRootFor(dirname(dirname(fileURLToPath(import.meta.url))))),
+    ]);
+  }
   return checkoutPrefixes;
 }
 

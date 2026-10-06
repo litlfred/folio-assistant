@@ -39,7 +39,7 @@
  *
  * So `@id` is **minted** by {@link resolveLabel}, which resolves all three
  * authored reference forms to one canonical relative IRI, and the label is
- * additionally preserved verbatim in `folio-assistant-core:label` for grep and round-tripping.
+ * additionally preserved verbatim in `cat-harness:label` for grep and round-tripping.
  * Nothing in `content/**` has to change.
  *
  * ## Why `@id` is relative
@@ -117,7 +117,7 @@ export const CSVW_NS = "http://www.w3.org/ns/csvw#";
 /**
  * WHO's canonical base for the SMART Guidelines base IG.
  *
- * `smart-base` `sushi-config.yaml` declares `canonical: http://smart.who.int/base`,
+ * The base IG's `sushi-config.yaml` declares `canonical: http://smart.who.int/base`,
  * and its logical models publish under `<canonical>/StructureDefinition/<Name>`.
  */
 export const SMART_BASE_NS = "http://smart.who.int/base/StructureDefinition/";
@@ -222,17 +222,19 @@ export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = Object.fromEn
  * committed vocabularies are DCTERMS, SPAR (DoCO/DEO/CiTO) and one PROV term.
  * Introducing a whole namespace for one class, when the house rule is
  * "generalising is sound; inventing is not", would be inventing by import. A
- * term of our own for a folio-specific concept is what that rule allows. The
- * narrative and asset classes are the `prose` and `figure` kinds' own, read
- * off their block-kind nodes, so the site names no instance's namespace.
+ * term of our own for a folio-specific concept is what that rule allows. A
+ * page's nodes are `Block`s, told apart by their DoCO co-type (`doco:Section`
+ * for narrative, `doco:Figure` for an asset): the site is not a folio, so it
+ * borrows no folio's block-kind class (`Prose`, `Figure`), whose namespace is
+ * the declaring instance's (bean `0r7u`).
  *
  * The DoCO half is borrowed and verified: a page is `doco:Section` (its own
  * containment is `dcterms:hasPart`, per the note on `contains` below), an
  * asset node is `doco:Figure` — the same class `diagram` blocks already get.
  */
 export const SITE_PAGE_TYPES = [termCurie("WebPage"), "doco:Section"] as const;
-export const SITE_NARRATIVE_TYPES = [BLOCK_KIND_TO_FOLIO_TYPE.prose, "doco:Section"] as const;
-export const SITE_ASSET_TYPES = [BLOCK_KIND_TO_FOLIO_TYPE.figure, "doco:Figure"] as const;
+export const SITE_NARRATIVE_TYPES = [termCurie("Block"), "doco:Section"] as const;
+export const SITE_ASSET_TYPES = [termCurie("Block"), "doco:Figure"] as const;
 
 /**
  * Relative IRI for a docs-site node, against {@link DOCS_SITE_BASE}:
@@ -272,7 +274,7 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = Objec
  * Every `@type` for a block, most specific first.
  *
  * A built-in kind is typed from the two tables above. A CONTRIBUTED kind — the
- * `dak` adapter's, which smart-base contributes (bean `1335`) — carries its own
+ * kind a contributed adapter declares (bean `1335`) — carries its own
  * `folioType` and `docoType` on its `BlockKindContribution`, so this reads them
  * from the registry rather than from a table naming another harness's kinds.
  * Built-ins are consulted first, which is the order `register` already
