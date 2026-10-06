@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 932,
+      "count": 933,
       "unit": "beans"
     }
   },
@@ -2674,7 +2674,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:31:37Z",
-      "updatedAt": "2026-10-06T06:42:37Z",
+      "updatedAt": "2026-10-06T09:02:29Z",
       "preview": "Owner, 2026-10-06: *\"why didnt you know about the tool already? what KG process broke down?\"*\n\n## What happened\nSession https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92 needed SUSHI clean on three IG repositories (owner preference). SUSHI failed: packages.fhir.org is refused by the egress proxy. The agent told the owner \"SUSHI can't run in this container\" and moved on. The owner pointed at ",
       "file": "beans/defs/folio-assistant-6mk7--a-refused-packagesfhirorg-did-not-lead-the-agent-t.md"
     },
@@ -2760,7 +2760,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:12:09Z",
-      "updatedAt": "2026-09-29T20:03:11Z",
+      "updatedAt": "2026-10-06T06:33:19Z",
       "preview": "Measured 2026-09-19 ingesting `uploads/WPR-RDO-2020-003-eng.pdf` (WHO WPRO 'Publication and Information Products Style Guide', 33pp, no embedded outline).\n\n`scripts/pdf-structure.py` inferred 13 sections and wrote 11 of them named after **a different publication**: 'FACILITY LEVEL: Improving hospital planning and management', '1.1 Accountability', '2.1 Goal – Hospitals as a path to UHC'. Those com",
       "file": "beans/defs/folio-assistant-6xaz--pdf-structure-infers-a-toc-from-a-worked-example-a.md"
     },
@@ -4383,7 +4383,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-06T06:00:26Z",
+      "updatedAt": "2026-10-06T06:33:20Z",
       "preview": "## What\n\n`uploads/` and `library/` are two stages of ONE pipeline, but there is no single\nentry point that takes a file across. Today the move is done by\n`scripts/migrate-uploads-to-library.py` plus whatever the ingesting agent\nremembers to run.\n\n## Why it matters more than it looks\n\n**The corpus-grep checklist searches `library/` only.** Anything still in\n`uploads/` is invisible to every \"has the",
       "file": "beans/defs/folio-assistant-apui--ingest-one-pipeline-entry-point-uploads-to-library.md"
     },
@@ -5158,12 +5158,12 @@
       "title": "Migrate dak.json in: the DAK type is ours, and its Logical Model is pending upstream",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T21:36:56Z",
-      "updatedAt": "2026-09-19T06:55:21Z",
+      "updatedAt": "2026-10-06T06:33:19Z",
       "preview": "## The correction this starts from\n\n`dak.json` is **ours**, as part of L2 in `smart-base` — not a third-party file\nwe merely read. An earlier design note in bean `79t3` listed it alongside\n`sushi-config.yaml` as \"not ours to rename\"; that is wrong for `dak.json` and\nstill right for `sushi-config.yaml`, whose name the SUSHI tool owns.\n\nSo `dak.json` is a marker we migrate **in**, not around.\n\n## La",
       "file": "beans/defs/folio-assistant-cz17--migrate-dakjson-in-the-dak-type-is-ours-and-its-lo.md"
     },
@@ -11331,6 +11331,20 @@
       "file": "beans/defs/folio-assistant-upgd--stream-13-goal-1-the-repo-split-and-the-kgs-own-de.md"
     },
     {
+      "id": "folio-assistant-uvt0",
+      "title": "who-iris replica: the locale band shifts the page 52px; make it an overlay (owner: no shift)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T08:56:44Z",
+      "updatedAt": "2026-10-06T08:56:44Z",
+      "preview": "**Owner ruling, 2026-10-06** (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92), option 1 of 3: *\"Overlay, no shift\"*. The language band must not move the replica.\n\n## The defect\nWhen a who-iris replica page carries a `fa-translation-meta` block, `docs-ui.js` puts the locale globe in a band inside the page flow, between `.crumbs` and `<main>`. The band is 40 px tall and pushes `<mai",
+      "file": "beans/defs/folio-assistant-uvt0--who-iris-replica-the-locale-band-shifts-the-page-5.md"
+    },
+    {
       "id": "folio-assistant-uyp8",
       "title": "Ingest CODATA as a library dataset with provenance, and the skills/tools to ingest reference datasets",
       "status": "completed",
@@ -14792,14 +14806,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 560,
+        "total": 561,
         "closed": 222,
-        "open": 338,
+        "open": 339,
         "inProgress": 120,
-        "todo": 217,
+        "todo": 218,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3964285714285714
+        "share": 0.39572192513368987
       },
       {
         "id": "folio-assistant-vuip",
@@ -14833,8 +14847,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 526,
-    "coveredOpen": 523,
+    "openTotal": 527,
+    "coveredOpen": 524,
     "duplicateIds": 0
   }
 }

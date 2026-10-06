@@ -10,8 +10,8 @@
   },
   "families": {
     "enumerating-scripts": {
-      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 83 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
-      "count": 83,
+      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 86 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
+      "count": 86,
       "entries": [
         {
           "file": "cat-harness/scripts/agent-memory.ts",
@@ -29,22 +29,7 @@
           "gitAware": true
         },
         {
-          "file": "cat-harness/scripts/bean-notes.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
           "file": "cat-harness/scripts/beans.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-anchor-names.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-bean-issue-links.ts",
           "seededAtRoot": false,
           "gitAware": false
         },
@@ -54,37 +39,7 @@
           "gitAware": false
         },
         {
-          "file": "cat-harness/scripts/check-bun-runtime.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-command-paths.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-declaration-claims.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-declaration-filename.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
-          "file": "cat-harness/scripts/check-docs-templates.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
           "file": "cat-harness/scripts/check-fallback-roles.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-harness-state.ts",
           "seededAtRoot": false,
           "gitAware": false
         },
@@ -94,79 +49,9 @@
           "gitAware": false
         },
         {
-          "file": "cat-harness/scripts/check-invocation-parity.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-lane-documentation.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
-          "file": "cat-harness/scripts/check-library-qa.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-lockfile-pinning.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
           "file": "cat-harness/scripts/check-methodology-evidence.ts",
           "seededAtRoot": false,
           "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-module-scope-resolution.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-process-bindings.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
-          "file": "cat-harness/scripts/check-process-documentation.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
-          "file": "cat-harness/scripts/check-published-instance-exports.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-qa-reviewer-permission.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-reference-direction.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-rendered-labels.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
-          "file": "cat-harness/scripts/check-secret-leaks.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-source-licence.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
-          "file": "cat-harness/scripts/check-stale-field-advice.ts",
-          "seededAtRoot": false,
-          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/check-subgraphs.ts",
@@ -174,57 +59,7 @@
           "gitAware": true
         },
         {
-          "file": "cat-harness/scripts/check-tabular-stubs.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
           "file": "cat-harness/scripts/check-term-mapping.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-uploads-retired.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-viewer-nav.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-waivers.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-wireframes.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-workflow-injection.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-workflow-paths.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-workflow-refs.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-workflow-script-paths.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/check-workflows.ts",
           "seededAtRoot": false,
           "gitAware": false
         },
@@ -242,11 +77,6 @@
           "file": "cat-harness/scripts/gates.ts",
           "seededAtRoot": false,
           "gitAware": false
-        },
-        {
-          "file": "cat-harness/scripts/gen-auto-docs.ts",
-          "seededAtRoot": false,
-          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/gen-default-boards.ts",
@@ -279,6 +109,16 @@
           "gitAware": false
         },
         {
+          "file": "cat-harness/scripts/gen-navbar-assets.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness/scripts/gen-node-kind-pages.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
           "file": "cat-harness/scripts/gen-schema-docs.ts",
           "seededAtRoot": false,
           "gitAware": false
@@ -287,6 +127,16 @@
           "file": "cat-harness/scripts/gen-skill-docs.ts",
           "seededAtRoot": false,
           "gitAware": false
+        },
+        {
+          "file": "cat-harness/scripts/gen-slice-sqlite.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness/scripts/gen-subgraph-jsonld.ts",
+          "seededAtRoot": false,
+          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/gen-translation-status.ts",
@@ -329,11 +179,6 @@
           "gitAware": false
         },
         {
-          "file": "cat-harness/scripts/milestone-status.ts",
-          "seededAtRoot": false,
-          "gitAware": false
-        },
-        {
           "file": "cat-harness/scripts/narratives.ts",
           "seededAtRoot": false,
           "gitAware": false
@@ -355,11 +200,6 @@
         },
         {
           "file": "cat-harness/scripts/root-scan-census.ts",
-          "seededAtRoot": false,
-          "gitAware": true
-        },
-        {
-          "file": "cat-harness/scripts/seed-ready.ts",
           "seededAtRoot": false,
           "gitAware": true
         },
@@ -400,6 +240,181 @@
         },
         {
           "file": "cat-harness/scripts/translate-bpmn.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/bean-notes.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-anchor-names.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-bean-issue-links.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-bun-runtime.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-command-paths.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-declaration-claims.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-declaration-filename.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-docs-templates.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-harness-state.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-invocation-parity.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-kind-validators.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-lane-documentation.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-library-qa.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-lockfile-pinning.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-module-scope-resolution.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-process-bindings.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-process-documentation.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-published-instance-exports.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-qa-reviewer-permission.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-reference-direction.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-rendered-labels.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-secret-leaks.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-source-licence.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-stale-field-advice.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-tabular-stubs.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-uploads-retired.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-viewer-nav.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-waivers.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-wireframes.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-workflow-injection.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-workflow-paths.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-workflow-script-paths.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-workflows.ts",
+          "seededAtRoot": false,
+          "gitAware": false
+        },
+        {
+          "file": "cat-harness-tools/scripts/gen-auto-docs.ts",
+          "seededAtRoot": false,
+          "gitAware": true
+        },
+        {
+          "file": "cat-harness-tools/scripts/milestone-status.ts",
           "seededAtRoot": false,
           "gitAware": false
         },
@@ -456,13 +471,13 @@
           "instance": "cat-harness",
           "path": "cat-harness/scripts",
           "state": "scanned",
-          "enumerating": 78
+          "enumerating": 46
         },
         {
           "instance": "cat-harness-tools",
           "path": "cat-harness-tools/scripts",
           "state": "scanned",
-          "enumerating": 0
+          "enumerating": 35
         },
         {
           "instance": "cat-openapi",
@@ -521,10 +536,10 @@
       ]
     },
     "seeded-at-root-not-git-aware": {
-      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 83 enumerating scripts in all, across 9 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, cat-openapi, fhir-harness, folio-assistant-core, smart-base, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is a NEW one against a baseline (bean `0dav`).",
+      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 86 enumerating scripts in all, across 9 instance(s)' scripts/ (bootstrap-tools, cat-harness, cat-harness-tools, cat-openapi, fhir-harness, folio-assistant-core, smart-base, smart-trust, who-iris). Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is a NEW one against a baseline (bean `0dav`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 97
+  "total": 100
 }
