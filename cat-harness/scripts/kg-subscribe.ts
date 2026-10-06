@@ -651,7 +651,8 @@ export interface PartView {
   fixity?: "verified" | "mismatch" | "absent";
 }
 
-function viewOf(dir: string, slot: PartView["slot"]): PartView {
+/** One part directory's record, read structurally — {@link PartView}. Exported for `subscribed-trees.ts`. */
+export function viewOf(dir: string, slot: PartView["slot"]): PartView {
   const base: PartView = { dir, slot, state: "unreadable", refused: [], unanswered: [] };
   let r: Record<string, unknown>;
   try {
