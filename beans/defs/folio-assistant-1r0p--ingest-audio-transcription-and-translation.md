@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-20T04:16:04Z
+updated_at: 2026-10-06T06:37:28Z
 parent: folio-assistant-slw1
 ---
 
@@ -119,3 +119,9 @@ from the shape a sidecar usually takes.
 ## 2026-09-23 — the backend is now a choice among declared Tools
 
 `r279` closed on the owner's ruling. The backend options are Tool nodes (`transcribe-whisper-cpp`, `transcribe-faster-whisper`, `transcribe-vosk`), declared but not installed. When the first recording arrives, this bean's first step is to pick one by its `selection` record, install it, declare it in `schemas/python-deps.ts` if it is Python, and re-measure the CI install cost. Until then there is still nothing to transcribe.
+
+## Owner ruling 2026-10-06: defer until real audio exists
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): defer until audio exists; faster-whisper (local); hosted API. **The owner chose "Defer until audio exists".**
+
+The transcription backend is chosen when the first real recording arrives, so it is tested on real speech in a real language. Until then this bean stays parked.

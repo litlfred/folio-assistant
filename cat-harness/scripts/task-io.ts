@@ -240,6 +240,7 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "lint": READ_ONLY,
   "lsi:skills:check": READ_ONLY,
   "methodologies:viz:check": READ_ONLY,
+  "navbar:assets:check": READ_ONLY,
   "navbar:geometry:check": READ_ONLY,
   "navbar:include:check": READ_ONLY,
   "ns:check": READ_ONLY,

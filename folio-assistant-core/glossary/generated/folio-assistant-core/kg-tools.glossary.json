@@ -45,6 +45,14 @@
       "notation": "folio-review-coverage",
       "source": "folio-assistant-core/tools/index.ts#folio-review-coverage",
       "status": "candidate"
+    },
+    {
+      "id": "glossary-build",
+      "prefLabel": "Glossary build",
+      "definition": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
+      "notation": "glossary-build",
+      "source": "folio-assistant-core/tools/index.ts#glossary-build",
+      "status": "candidate"
     }
   ]
 }

@@ -11,7 +11,7 @@ blocked_by:
     - folio-assistant-16ei
 ---
 
-Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, family F3). Refines `oqe3` 3.1b, the LSI and detangle half. Blocked on `16ei`. These readers fail loud today, so this bean is not on the critical path.
+Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, family F3). Refines `oqe3` 3.1b, the LSI and detangle half. As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn. These readers fail loud today, so this bean is not on the critical path.
 
 ## Readers
 - `cat-harness/skills/kg/graph-management/kg-detangle.ts:466-479,546-611`: `detangle/**.detangle.json`, for pinned fields and the orphan sweep (A). Absent today: loud, every group STALE.
@@ -27,7 +27,7 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 - `gen-uml-overview` reads the detangle numbers through `qa-store`, and draws `qa` as stored on the branch.
 
 ## Done when
-- [ ] `kg:detangle:check`, `lsi:skills:check`, `lsi:viz:check` and `uml:overview:check` pass on `main` with `test/results/` absent. **Partly met.** `kg:detangle:check` and `lsi:skills:check` pass. `lsi:viz:check` and `uml:overview:check` exit 2 (UNKNOWN, nothing written), because `qa-reports` holds no `main/<sha>` entry yet. They pass once CI publishes one (`16ei`).
+- [ ] `kg:detangle:check`, `lsi:skills:check`, `lsi:viz:check` and `uml:overview:check` pass on `main` with `test/results/` absent. **Partly met.** `kg:detangle:check` and `lsi:skills:check` pass. `lsi:viz:check` and `uml:overview:check` exit 2 (UNKNOWN, nothing written), because `qa-reports` holds no `main/<sha>` entry yet. CI now publishes `main/<sha>` entries to `qa-reports` (seen 2026-10-06: `main/1b17452d…`, `main/9e43d531…`), so these two are ready to be re-measured.
 - [x] `listToolRuns` over an unfetched store reports `unknown`, not an empty list
 
 
