@@ -151,6 +151,7 @@ classDiagram
       id [1] string
       validates [1] object
       schema [1] string
+      pages [0..1] string
       rationale [0..1] string
     }
   }
@@ -1092,6 +1093,7 @@ classDiagram
       declaredBy [0..1] string
       module [0..1] string
       exportName [0..1] string
+      pages [0..1] object
       holdings [0..*] Holding[]
     }
     class cat_harness_docs_node_kind_index_1_0_0_Unkinded["Unkinded"] {

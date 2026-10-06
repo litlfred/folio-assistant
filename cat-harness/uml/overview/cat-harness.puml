@@ -14,6 +14,7 @@ package "cat-harness/cat-harness-validators" as pkg_cat_harness_cat_harness_vali
     id [1] : string
     validates [1] : object
     schema [1] : string
+    pages [0..1] : string
     rationale [0..1] : string
   }
 }
@@ -844,6 +845,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     declaredBy [0..1] : string
     module [0..1] : string
     exportName [0..1] : string
+    pages [0..1] : object
     holdings [0..*] : Holding[]
   }
   class "Unkinded" as cat_harness_docs_node_kind_index_1_0_0_Unkinded <<json: NodeKindIndexFileKind>> #f4f4f1 {
