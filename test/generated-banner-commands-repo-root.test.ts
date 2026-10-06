@@ -60,13 +60,27 @@
  * **What this gives up, stated rather than implied:** an uncommitted banner change
  * is not checked until it is committed. That is the right trade for a property
  * about what the repository *publishes* — CI tests a commit.
+ *
+ * Moved here from `cat-harness/scripts/tests/generated-banner-commands.test.ts`
+ * to the checkout's own test home `test/` (owner, 2026-10-06: "Throwaway
+ * repository, plus moving the real-repo checks"). Every test in it is a check
+ * of THIS repository: the banners committed at this checkout's `HEAD`, against
+ * the scripts in its root `package.json`. There is no function under test that
+ * a throwaway repository could stand in for — a fixture would only check its
+ * own banners — and standing alone, cat-harness's parent is not a repository,
+ * so `git grep HEAD` there has nothing to read. The path is composed from
+ * ORIGIN_DIR, the directory the tests were written in, so nothing they read
+ * changed.
  */
 import { describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const REPO = join(import.meta.dir, "..", "..", "..");
+/** The directory these tests were written in (`cat-harness/scripts/tests/`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+
+const REPO = join(ORIGIN_DIR, "..", "..", "..");
 
 /** Banner lines in `HEAD`, as `HEAD:<path>:<line>`. ONE subprocess. */
 function bannerLines(): string[] {

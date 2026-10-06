@@ -29825,6 +29825,82 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.remedymatch.invoke",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemedyMatch.invoke"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "That Tool's command, so the answer is runnable without a second lookup."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#RemedyMatch.invoke",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.remedymatch.needed_by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemedyMatch.needed_by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Tool that needed the host."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#RemedyMatch.needed_by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.remedymatch.none",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemedyMatch.none"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stated: no workaround, and why."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#RemedyMatch.none",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.remedymatch.tool",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemedyMatch.tool"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Tool to reach for, when there is one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#RemedyMatch.tool",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.downstream",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29860,6 +29936,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.maintains",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.remedies",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolDefinitionSchema.remedies"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One entry per host this Tool reaches, saying what to do when it is refused. See {@link ToolRemedySchema}. REQUIRED non-empty when `requires.network` is true; `check:tools` enforces it, and resolves every `tool` it names."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.remedies",
       "skos:note": "candidate"
     },
     {
@@ -30183,6 +30278,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolOutputSchema.render",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.toolremedyschema.error",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRemedySchema.error"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Text an agent sees when the host refuses, if it does not name the host — matched as a substring."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolRemedySchema.error",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.toolremedyschema.host",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRemedySchema.host"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The host this Tool reaches, as it appears in a refusal — `packages.fhir.org`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolRemedySchema.host",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.toolremedyschema.none",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRemedySchema.none"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stated: no Tool works around this refusal, and why — or what to do instead."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolRemedySchema.none",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.toolremedyschema.tool",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRemedySchema.tool"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared Tool that does the job without this host. `check:tools` resolves it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolRemedySchema.tool",
       "skos:note": "candidate"
     },
     {

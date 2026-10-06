@@ -307,6 +307,13 @@ classDiagram
     }
   }
   namespace folio_assistant_core__core_tools {
+    class folio_assistant_core_core_tools_Remedy["Remedy"] {
+      <<json: ToolDefinitionSchema>>
+      host [1] string
+      error [0..1] string
+      tool [0..1] string
+      none [0..1] string
+    }
     class folio_assistant_core_core_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
       source [1] string
@@ -324,6 +331,7 @@ classDiagram
       satisfies [1..*] string[]
       selection [0..1] object
       requires [0..1] object
+      remedies [0..*] Remedy[]
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
@@ -557,7 +565,9 @@ classDiagram
   folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" folio_assistant_core_glossary_folio_glossary_v1_Term : terms
   cssClass "folio_assistant_core_glossary_folio_glossary_v1_Term" fa_uml_kind_glossary
   cssClass "folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1" fa_uml_kind_glossary
+  folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Remedy : remedies
   folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
+  cssClass "folio_assistant_core_core_tools_Remedy" fa_uml_kind_tools
   cssClass "folio_assistant_core_core_tools_Maintain" fa_uml_kind_tools
   cssClass "folio_assistant_core_core_tools_ToolDefinition" fa_uml_kind_tools
   cssClass "n_folio_assistant_core_core_adapters_code" fa_uml_kind_code

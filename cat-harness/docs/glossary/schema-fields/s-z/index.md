@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1883 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1892 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 606 terms and is 336 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 611 terms and is 339 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2176</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2176</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2185</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2185</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">606</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">611</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2506,6 +2506,13 @@ ToolDefinitionSchema.maintains <span class="fa-gloss-status">candidate, extracte
 <p>Published artefacts this Tool is authoritative for. See &#123;@link ToolMaintainsSchema}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDefinitionSchema.maintains</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--tool.tooldefinitionschema.remedies" data-fa-state="extracted" data-fa-gloss="">
+ToolDefinitionSchema.remedies <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One entry per host this Tool reaches, saying what to do when it is refused. See &#123;@link ToolRemedySchema}. REQUIRED non-empty when <code>requires.network</code> is true; <code>check:tools</code> enforces it, and resolves every <code>tool</code> it names.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDefinitionSchema.remedies</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--tool.tooldefinitionschema.renders" data-fa-state="extracted" data-fa-gloss="">
 ToolDefinitionSchema.renders <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2659,6 +2666,34 @@ ToolOutputSchema.render <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>How a renderer may place this output in a page. Absent is <code>text</code>. See &#123;@link RENDER_AS}.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolOutputSchema.render</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.toolremedyschema.error" data-fa-state="extracted" data-fa-gloss="">
+ToolRemedySchema.error <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Text an agent sees when the host refuses, if it does not name the host — matched as a substring.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolRemedySchema.error</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.toolremedyschema.host" data-fa-state="extracted" data-fa-gloss="">
+ToolRemedySchema.host <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The host this Tool reaches, as it appears in a refusal — <code>packages.fhir.org</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolRemedySchema.host</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.toolremedyschema.none" data-fa-state="extracted" data-fa-gloss="">
+ToolRemedySchema.none <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Stated: no Tool works around this refusal, and why — or what to do instead.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolRemedySchema.none</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.toolremedyschema.tool" data-fa-state="extracted" data-fa-gloss="">
+ToolRemedySchema.tool <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declared Tool that does the job without this host. <code>check:tools</code> resolves it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolRemedySchema.tool</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tool-run.toolrunrecordschema.detail" data-fa-state="extracted" data-fa-gloss="">
 ToolRunRecordSchema.detail <span class="fa-gloss-status">candidate, extracted</span>
