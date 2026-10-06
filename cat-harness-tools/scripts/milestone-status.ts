@@ -386,7 +386,7 @@ function gateBeanRollover(): Gate {
   }
   // bun prints its own banner line before the script's stdout; take the JSON object.
   const start = r.stdout?.indexOf("{") ?? -1;
-  let summary: { port?: number; adjudicate?: number; could_not_determine?: number } | undefined;
+  let summary: { port?: number; port_superset?: number; adjudicate?: number; could_not_determine?: number } | undefined;
   if (start >= 0) {
     try {
       summary = (JSON.parse(r.stdout!.slice(start)) as { summary?: typeof summary }).summary;
@@ -398,11 +398,12 @@ function gateBeanRollover(): Gate {
     return { id: "bean-rollover", question: "Does any bean edit still need a person?", state: "could-not-determine", value: "beans:rollover's JSON summary could not be read", basis };
   }
   const needsAPerson = summary.adjudicate + summary.could_not_determine;
+  const supersetPart = summary.port_superset ? ` (${summary.port_superset} superset)` : "";
   return {
     id: "bean-rollover",
     question: "Does any bean edit still need a person?",
     state: summary.could_not_determine > 0 ? "could-not-determine" : needsAPerson === 0 ? "clear" : "blocked",
-    value: `${summary.adjudicate} adjudicate · ${summary.could_not_determine} could-not-determine · ${summary.port ?? "?"} portable`,
+    value: `${summary.adjudicate} adjudicate · ${summary.could_not_determine} could-not-determine · ${summary.port ?? "?"} portable${supersetPart}`,
     target: "0 adjudicate and 0 could-not-determine",
     basis,
   };

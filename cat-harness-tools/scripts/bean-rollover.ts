@@ -28,13 +28,14 @@
  * person. This separates them, so the owner can schedule step 2 against a real
  * number instead of 110.
  *
- * ## Four states per authored bean path, and the fourth is never clean
+ * ## Five states per authored bean path, and the fifth is never clean
  *
  * | state | meaning |
  * |---|---|
  * | `already-on-main` | the PR's version matches the base, or its patch applies in reverse to the base — the base has the change |
  * | `port` | the base has not touched this bean since the fork point, so the PR's version can be copied onto the beans branch with nothing to lose |
- * | `adjudicate` | BOTH the PR and the base changed this bean since the fork — a person picks, because either choice drops someone's edit |
+ * | `port-superset` | both sides touched this bean, but one side is a strict superset once `updated_at` is set aside — portable without human adjudication; carries the superset side and the exact diff |
+ * | `adjudicate` | BOTH the PR and the base changed this bean since the fork with divergent edits — a person picks, because either choice drops someone's edit |
  * | `could-not-determine` | git would not answer for this path. **Never reported as portable, never counted clean** |
  *
  * The third state is the one that matters for scheduling and the one a naive
@@ -71,7 +72,7 @@
  * Exit 0 nothing needs porting or adjudicating · 1 some does · 2 could not
  * determine for at least one path, or the PR list could not be read.
  */
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -90,13 +91,22 @@ const SUBGRAPH = (() => {
   return `${relative(ROOT, dir)}/`;
 })();
 
-type State = "already-on-main" | "port" | "adjudicate" | "could-not-determine";
+export type State = "already-on-main" | "port" | "port-superset" | "adjudicate" | "could-not-determine";
 
-interface PathVerdict {
+export interface PathVerdict {
   path: string;
   state: State;
   /** Why, in one line, so a reader need not re-derive it. */
   because: string;
+  /** Which side is the superset, when state is "port-superset". */
+  superset?: "base" | "head";
+  /** The exact diff showing lines added by the superset, when state is "port-superset". */
+  diff?: string;
+}
+
+export interface SupersetResult {
+  side: "base" | "head";
+  diff: string;
 }
 
 interface PrVerdict {
@@ -110,28 +120,117 @@ interface PrVerdict {
 }
 
 /** The blob at `ref:path`, or undefined when the path is absent there. */
-function blob(ref: string, path: string): string | undefined {
-  const r = git(ROOT, ["show", `${ref}:${path}`]);
+export function blob(ref: string, path: string, root = ROOT): string | undefined {
+  const r = git(root, ["show", `${ref}:${path}`]);
   return r.ok ? r.out : undefined;
+}
+
+/**
+ * Strip the `updated_at:` front-matter line so two versions of a bean that
+ * differ only in their timestamp compare equal.
+ */
+export function stripUpdatedAt(text: string): string {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(text);
+  if (!m) return text;
+  const fmRaw = m[1]!;
+  const strippedFm = fmRaw
+    .split(/\r?\n/)
+    .filter((line) => !/^updated_at:\s*/.test(line))
+    .join("\n");
+  const rest = text.slice(m[0].length);
+  return `---\n${strippedFm}\n---\n${rest}`;
+}
+
+/** Whether two versions of a bean differ only in the front-matter `updated_at` field. */
+export function differsOnlyInUpdatedAt(a: string, b: string): boolean {
+  return stripUpdatedAt(a) === stripUpdatedAt(b);
+}
+
+/**
+ * Check if one version of a bean is a strict superset of the other once
+ * `updated_at` is set aside.
+ *
+ * A strict superset means every line of the subset exists in the superset
+ * in identical order with zero deletions, and the superset carries additional
+ * lines.
+ */
+export function checkStrictSuperset(baseText: string, headText: string): SupersetResult | undefined {
+  const cleanB = stripUpdatedAt(baseText);
+  const cleanH = stripUpdatedAt(headText);
+  if (cleanB === cleanH) return undefined;
+
+  const dir = mkdtempSync(join(tmpdir(), "bean-superset-"));
+  try {
+    const pathH = join(dir, "head.md");
+    const pathB = join(dir, "base.md");
+    const normH = cleanH.endsWith("\n") ? cleanH : cleanH + "\n";
+    const normB = cleanB.endsWith("\n") ? cleanB : cleanB + "\n";
+    writeFileSync(pathH, normH);
+    writeFileSync(pathB, normB);
+    const r = spawnSync("git", ["diff", "--no-index", "-u", pathH, pathB], { encoding: "utf-8" });
+    const out = r.stdout ?? "";
+    if (!out) return undefined;
+
+    const lines = out.split("\n");
+    let inHunk = false;
+    let additions = 0;
+    let deletions = 0;
+    const diffLines: string[] = [];
+
+    for (const l of lines) {
+      if (l.startsWith("@@")) {
+        inHunk = true;
+        diffLines.push(l);
+        continue;
+      }
+      if (!inHunk) continue;
+      diffLines.push(l);
+      if (l.startsWith("+") && !l.startsWith("+++")) additions++;
+      else if (l.startsWith("-") && !l.startsWith("---")) deletions++;
+    }
+
+    if (additions > 0 && deletions === 0) {
+      return { side: "base", diff: diffLines.join("\n") };
+    }
+    if (deletions > 0 && additions === 0) {
+      const rHead = spawnSync("git", ["diff", "--no-index", "-u", pathB, pathH], { encoding: "utf-8" });
+      const headOut = rHead.stdout ?? "";
+      const headHunks = headOut.split("\n").filter((l, i, arr) => {
+        const firstHunk = arr.findIndex((x) => x.startsWith("@@"));
+        return firstHunk !== -1 && i >= firstHunk;
+      });
+      return { side: "head", diff: headHunks.join("\n") };
+    }
+    return undefined;
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 }
 
 /**
  * Does `base` already carry the change this PR made to `path`?
  *
  * Two ways, cheapest first: the blobs are equal (or differ only inside
- * generated regions), or the PR's own patch applies in REVERSE to the base's
+ * generated regions or updated_at), or the PR's own patch applies in REVERSE to the base's
  * version — meaning the change is present and the files differ only because
  * the base moved on. The reverse-patch runs in a throwaway index; no working
  * tree is touched. `merge:leftover` established this test.
  */
-function baseCarries(base: string, head: string, fork: string, path: string): boolean | undefined {
-  const b = blob(base, path);
-  const h = blob(head, path);
+export function baseCarries(base: string, head: string, fork: string, path: string, root = ROOT): boolean | undefined {
+  const b = blob(base, path, root);
+  const h = blob(head, path, root);
   if (b === undefined || h === undefined) return b === h ? true : false;
   if (b === h) return true;
+  if (differsOnlyInUpdatedAt(b, h)) return true;
   if (differsOnlyInRegions(b, h)) return true;
 
-  const patch = git(ROOT, ["diff", `${fork}..${head}`, "--", path]);
+  // If head only touched updated_at compared to fork, head made no authored changes
+  const f = blob(fork, path, root);
+  if (f !== undefined && differsOnlyInUpdatedAt(f, h)) {
+    return true;
+  }
+
+  const patch = git(root, ["diff", `${fork}..${head}`, "--", path]);
   if (!patch.ok) return undefined;
   if (patch.out.trim() === "") return true; // the PR did not change it after all
 
@@ -140,7 +239,7 @@ function baseCarries(base: string, head: string, fork: string, path: string): bo
     const r = spawnSync(
       "git",
       ["apply", "--reverse", "--check", "--unidiff-zero", "-"],
-      { cwd: ROOT, input: patch.out, env: { ...process.env, GIT_INDEX_FILE: join(dir, "idx") }, encoding: "utf-8" },
+      { cwd: root, input: patch.out, env: { ...process.env, GIT_INDEX_FILE: join(dir, "idx") }, encoding: "utf-8" },
     );
     if (r.status === null) return undefined;
     return r.status === 0;
@@ -150,25 +249,50 @@ function baseCarries(base: string, head: string, fork: string, path: string): bo
 }
 
 /** Did `base` itself change `path` since the fork point? */
-function baseTouched(base: string, fork: string, path: string): boolean | undefined {
-  const r = git(ROOT, ["diff", "--name-only", `${fork}..${base}`, "--", path]);
-  if (!r.ok) return undefined;
-  return r.out.trim() !== "";
+export function baseTouched(base: string, fork: string, path: string, root = ROOT): boolean | undefined {
+  const b = blob(base, path, root);
+  const f = blob(fork, path, root);
+  if (b === undefined || f === undefined) {
+    const r = git(root, ["diff", "--name-only", `${fork}..${base}`, "--", path]);
+    if (!r.ok) return undefined;
+    return r.out.trim() !== "";
+  }
+  if (b === f) return false;
+  if (differsOnlyInUpdatedAt(b, f)) return false;
+  if (differsOnlyInRegions(b, f)) return false;
+  return true;
 }
 
-function classify(base: string, head: string, fork: string, path: string): PathVerdict {
-  const carries = baseCarries(base, head, fork, path);
+export function classify(base: string, head: string, fork: string, path: string, root = ROOT): PathVerdict {
+  const carries = baseCarries(base, head, fork, path, root);
   if (carries === undefined) {
     return { path, state: "could-not-determine", because: "git would not produce or test the patch for this path" };
   }
   if (carries) {
     return { path, state: "already-on-main", because: "the base carries this change; the files differ only because the base moved on" };
   }
-  const touched = baseTouched(base, fork, path);
+  const touched = baseTouched(base, fork, path, root);
   if (touched === undefined) {
     return { path, state: "could-not-determine", because: "git would not say whether the base changed this path since the fork" };
   }
   if (touched) {
+    const b = blob(base, path, root);
+    const h = blob(head, path, root);
+    if (b !== undefined && h !== undefined) {
+      const superset = checkStrictSuperset(b, h);
+      if (superset) {
+        return {
+          path,
+          state: "port-superset",
+          superset: superset.side,
+          diff: superset.diff,
+          because:
+            superset.side === "base"
+              ? "the base is a strict superset of this PR's version once updated_at is set aside — take-base preserves every edit"
+              : "this PR's version is a strict superset of the base once updated_at is set aside — take-head preserves every edit",
+        };
+      }
+    }
     return {
       path,
       state: "adjudicate",
@@ -248,7 +372,28 @@ function main(): number {
   const undetermined = n("could-not-determine") + verdicts.filter((v) => v.error).length;
 
   if (json) {
-    console.log(JSON.stringify({ $schema: "bean-rollover/v1", base, subgraph: SUBGRAPH, generated_at: new Date().toISOString(), summary: { prs: verdicts.length, authored: all.length, port: n("port"), adjudicate: n("adjudicate"), already_on_main: n("already-on-main"), could_not_determine: n("could-not-determine") }, prs: verdicts }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          $schema: "bean-rollover/v1",
+          base,
+          subgraph: SUBGRAPH,
+          generated_at: new Date().toISOString(),
+          summary: {
+            prs: verdicts.length,
+            authored: all.length,
+            port: n("port"),
+            port_superset: n("port-superset"),
+            adjudicate: n("adjudicate"),
+            already_on_main: n("already-on-main"),
+            could_not_determine: n("could-not-determine"),
+          },
+          prs: verdicts,
+        },
+        null,
+        2,
+      ),
+    );
   } else {
     console.log(`Bean rollover inventory — #1850 step 2, against ${base}\n`);
     for (const v of verdicts.filter((x) => x.authored.length || x.error)) {
@@ -258,15 +403,23 @@ function main(): number {
         continue;
       }
       const c = (s: State) => v.authored.filter((a) => a.state === s).length;
-      console.log(`  ${label.padEnd(7)} ${v.authored.length} authored · port ${c("port")} · adjudicate ${c("adjudicate")} · already-on-main ${c("already-on-main")} · undetermined ${c("could-not-determine")}`);
-      for (const a of v.authored.filter((x) => x.state === "adjudicate" || x.state === "could-not-determine")) {
+      console.log(
+        `  ${label.padEnd(7)} ${v.authored.length} authored · port ${c("port")} · port-superset ${c("port-superset")} · adjudicate ${c("adjudicate")} · already-on-main ${c("already-on-main")} · undetermined ${c("could-not-determine")}`,
+      );
+      for (const a of v.authored.filter((x) => x.state === "adjudicate" || x.state === "port-superset" || x.state === "could-not-determine")) {
         console.log(`            ${a.state.toUpperCase()}  ${a.path}`);
         console.log(`              ${a.because}`);
+        if (a.state === "port-superset" && a.diff) {
+          for (const line of a.diff.split("\n")) {
+            console.log(`                ${line}`);
+          }
+        }
       }
     }
     console.log(`
   ${verdicts.length} PR(s) · ${all.length} authored bean path(s)
     port                ${n("port")}   copy onto the beans branch after the freeze; the PR need not land first
+    port-superset       ${n("port-superset")}   one side is a strict superset — portable without human picking, diff recorded
     adjudicate          ${n("adjudicate")}   both sides changed the bean — a person picks
     already-on-main     ${n("already-on-main")}   nothing to do
     could-not-determine ${n("could-not-determine")}   NOT portable and NOT clean`);
@@ -278,7 +431,7 @@ function main(): number {
   }
 
   if (undetermined > 0) return 2;
-  return n("port") + n("adjudicate") > 0 ? 1 : 0;
+  return n("port") + n("port-superset") + n("adjudicate") > 0 ? 1 : 0;
 }
 
 // Guarded: importing this module must not run a rollover over every open PR

@@ -1,11 +1,12 @@
 ---
 # folio-assistant-r3y6
 title: beans:rollover raises adjudicate where one side is a strict SUPERSET — a false positive a person must not be spent on
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-03T00:13:30Z
-updated_at: 2026-10-03T00:13:30Z
+updated_at: 2026-10-06T21:45:15Z
 parent: folio-assistant-fs43
+tags: [ready-to-close]
 ---
 
 `bun run beans:rollover` (issue #1850 step 2) classifies each authored bean path a PR
@@ -60,10 +61,24 @@ narrower answer is sufficient. Reuse the shape, not a new classifier — a secon
 "what differs" is free to disagree with the first.
 
 ## Done when
-- [ ] `updated_at` is excluded from the comparison, by name, with a test that a change to
+- [x] `updated_at` is excluded from the comparison, by name, with a test that a change to
       ONLY `updated_at` is not an adjudication
-- [ ] a strict-superset side is detected and reported as its own state, never folded into
+- [x] a strict-superset side is detected and reported as its own state, never folded into
       `port` and never auto-resolved
-- [ ] a NEGATIVE control: two genuinely divergent bodies (the `dlqu` case) still report
+- [x] a NEGATIVE control: two genuinely divergent bodies (the `dlqu` case) still report
       `adjudicate`, so the refinement cannot swallow a real one
-- [ ] the exit-code contract still distinguishes "needs a person" from "portable"
+- [x] the exit-code contract still distinguishes "needs a person" from "portable"
+
+_2026-10-06T21:45:13Z_ — Claimed by claude/r3y6-rollover-superset — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+1. **Implemented `stripUpdatedAt` and `differsOnlyInUpdatedAt`**: Excludes front-matter `updated_at:` from comparison. When two versions differ only in `updated_at`, `baseCarries` returns `true` (`already-on-main`) rather than falling through to adjudication.
+2. **Implemented `checkStrictSuperset` and `port-superset` state**: When both `base` and `head` touched a bean since fork, compares normalized clean versions via unified diff. If additions > 0 and deletions == 0, classifies as `port-superset` with `superset: "base" | "head"`, exact diff, and explanation. Not folded into `port` or auto-resolved.
+3. **Exit code and milestone status contract**: `bean-rollover` exits 0 only when all paths are `already-on-main`; exits 1 when paths require porting (`port`, `port-superset`) or human adjudication (`adjudicate`); exits 2 on indeterminate. `milestone-status` does NOT count `port_superset` towards `needsAPerson`.
+4. **Comprehensive test suite** (`cat-harness-tools/scripts/tests/bean-rollover.test.ts`):
+   - `stripUpdatedAt` removes timestamp line and preserves all other front-matter and content.
+   - `differsOnlyInUpdatedAt` returns true for timestamp-only changes, false for content/status changes.
+   - Strict superset on base (PR #1937 case) correctly identified with `superset: "base"`.
+   - Strict superset on head (added evidence) correctly identified with `superset: "head"`.
+   - Negative control (the `dlqu` case) with divergent edits returns `adjudicate`.
+   - Full git repository lifecycle classification test confirms all 12 test assertions pass.
