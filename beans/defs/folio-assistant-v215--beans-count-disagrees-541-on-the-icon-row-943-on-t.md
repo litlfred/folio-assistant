@@ -34,9 +34,9 @@ Beans carries two counts. The icon row shows **541** ("Beans — 541 open"). The
 
 ## Done when
 
-- [ ] The glass tile, the launcher tile and the icon row show the same number for Beans, with the unit "open beans" in each accessible name and tooltip.
-- [ ] The bean board's "open" equals that number.
-- [ ] No count is hardcoded. The single definition lives in `bean-store-read.ts`, and the generators are re-run.
-- [ ] An e2e test fails on the old projections or code and passes on the fix.
-- [ ] There are before and after screenshots at 1280 and 390.
-- [ ] The navbar wireframe's Findings mark this as fixed, citing the PR.
+- [x] The glass tile, the launcher tile and the icon row show the same number for Beans, with the unit "open beans" in each accessible name and tooltip. PR #2312. On the build all three read 540: icon row "Beans — 540 open", and tile title "Beans · Folio Assistant — 540 open beans". On main's build they read 542 and 951.
+- [x] The bean board's "open" equals that number. `work-plan.js` now counts open as `draft + todo + in-progress` and shows a draft count.
+- [x] No count is hardcoded. The single definition lives in `bean-store-read.ts`, and the generators are re-run. `openBeanCount` and `OPEN_BEANS_UNIT` are used by `gen-docs-pages.ts` for both projections. `docs:pages` and `docs:harness` were re-run.
+- [x] An e2e test fails on the old projections or code and passes on the fix. `beans-count-agrees.e2e.ts` fails 4 of 4 on main (951 against 542, and the board at 540 against 542) and passes 4 of 4 here. The unit test is `open-bean-count.test.ts`.
+- [x] There are before and after screenshots at 1280 and 390: `navfix-beans-{before,after}-{1280,390}.png`. Each shows the icon row with its tip on the left, and the glass More panel's Beans tile, outlined, on the right.
+- [x] The navbar wireframe's Findings mark this as fixed, citing the PR (#2312).
