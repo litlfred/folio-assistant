@@ -220,5 +220,78 @@
       "afterMerge": true,
       "because": "`continue`s before `writeFileSync` under `check` — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u). Writer: `--all` rewrites every entry `--check` examines (bean wczm); afterMerge replaces merge-train's hard-coded per-entry re-extract (bean 0r7u)"
     }
-  }
+  },
+  "contentTranslations": [
+    {
+      "contentType": "dak",
+      "name": "WHO SMART Guidelines DAK (L2)",
+      "formats": [
+        {
+          "id": "markdown",
+          "name": "Markdown",
+          "extensions": [
+            ".md"
+          ],
+          "extractModule": "content/pipeline/pot-extract.ts",
+          "injectModule": "content/pipeline/po-inject.ts"
+        },
+        {
+          "id": "plantuml",
+          "name": "PlantUML diagrams",
+          "extensions": [
+            ".puml",
+            ".plantuml"
+          ],
+          "smartBaseScript": "extract_translations.py",
+          "smartBaseExtractRef": "L1–200 (extract_plantuml)",
+          "smartBaseInjectRef": "inject_translations.py L820–933 (inject_plantuml)"
+        },
+        {
+          "id": "svg",
+          "name": "SVG diagrams",
+          "extensions": [
+            ".svg"
+          ],
+          "smartBaseScript": "extract_translations.py",
+          "smartBaseExtractRef": "L200–400 (extract_svg)",
+          "smartBaseInjectRef": "inject_translations.py (inject_svg)"
+        },
+        {
+          "id": "archimate",
+          "name": "ArchiMate models",
+          "extensions": [
+            ".archimate"
+          ],
+          "smartBaseScript": "extract_translations.py",
+          "smartBaseExtractRef": "L400–633 (extract_archimate)",
+          "smartBaseInjectRef": "inject_translations.py (inject_archimate)"
+        },
+        {
+          "id": "excel",
+          "name": "Data dictionaries (Excel)",
+          "extensions": [
+            ".xlsx"
+          ],
+          "notes": "Data dictionary translation uses openpyxl. Column headers and cell values in translatable columns."
+        },
+        {
+          "id": "bpmn",
+          "name": "BPMN process diagrams",
+          "extensions": [
+            ".bpmn"
+          ],
+          "extractModule": "content/pipeline/bpmn-translate.ts",
+          "injectModule": "content/pipeline/bpmn-translate.ts",
+          "notes": "Element names and <documentation>. Ids, sourceRef/targetRef, calledElement and the folio: extensions are NEVER offered for translation — a translated id disconnects the graph and a translated skill ref is exactly the dangling reference check:workflow-refs exists to catch. Re-render with `bun run render:bpmn` after injection. On overflow: measured 2026-09-18, a French set ~18% longer with every authored &#10; break dropped re-wrapped to the same 3 lines, 42px of an 80px task box, because bpmn-js re-wraps regardless. The authored breaks are not load-bearing; if a diagram does overflow, the fix is its shape bounds, not the string."
+        }
+      ],
+      "rtlSupported": true,
+      "bpmnDiagrams": [
+        "processes/content/draft-to-publication.bpmn",
+        "processes/library/translation-workflow.bpmn",
+        "processes/library/human-translation-workflow.bpmn"
+      ],
+      "notes": "Full smart-base translation coverage. PlantUML, SVG, and ArchiMate extractors are the Python originals; TypeScript ports are planned."
+    }
+  ]
 }

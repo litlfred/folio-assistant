@@ -21,245 +21,94 @@
  * Adapter-specific translation tools extend it with format-specific
  * extractors (PlantUML, SVG, ArchiMate, FHIR, FSH, LaTeX, etc.).
  *
- * ## Content type → format mapping
+ * ## Which content types are translatable
  *
- * | Content type | Formats | Smart-base source |
- * |---|---|---|
- * | document | Markdown | extract_translations.py L633–856 |
- * | paper | Markdown + LaTeX | (no smart-base; Lean terms stay English) |
- * | dak (WHO L2) | Markdown + PlantUML + SVG + ArchiMate + Excel | extract_translations.py full |
- * | ig (WHO L3) | Markdown + FSH + FHIR JSON | inject_translations.py FHIR section |
+ * Not listed here. Each instance that owns a content type declares its
+ * profile under `contentTranslations` in its own `<instance>.json` (bean
+ * `0r7u`), and {@link CONTENT_TYPE_TRANSLATIONS} collects whatever instances
+ * are present.
  *
  * @module schemas/translation-tools
  * @graphNode schema
  */
 
-import { z } from "zod";
+import { existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import {
+  checkoutRootFor,
+  ContentTypeTranslationSchema,
+  readDeclaration,
+  TranslatableFormatSchema,
+  type ContentTypeTranslation,
+  type TranslatableFormat,
+} from "./cat-harness.ts";
+import { declarationChain } from "./harness-config.ts";
+import { instanceRootsIn } from "./instance-roots.ts";
 
-// ── Format extractors ───────────────────────────────────────────
-
-/**
- * A translatable format that a content type can declare.
- *
- * Each format maps to an extraction function (source → POT entries)
- * and an injection function (PO entries → target source).
- */
-export const TranslatableFormatSchema = z.object({
-  /** Format identifier. */
-  id: z.string(),
-  /** Human-readable name. */
-  name: z.string(),
-  /** File extensions this format applies to. */
-  extensions: z.array(z.string()),
-  /** Smart-base Python script that handles this format (reference). */
-  smartBaseScript: z.string().optional(),
-  /** Smart-base function/line range for extraction. */
-  smartBaseExtractRef: z.string().optional(),
-  /** Smart-base function/line range for injection. */
-  smartBaseInjectRef: z.string().optional(),
-  /** TypeScript module that implements extraction (relative to repo root). */
-  extractModule: z.string().optional(),
-  /** TypeScript module that implements injection (relative to repo root). */
-  injectModule: z.string().optional(),
-  /**
-   * Notes about translating THIS format specifically, as distinct from
-   * `ContentTypeTranslation.notes`, which describes the content type as a
-   * whole. "Lean 4 terms stay in English" and "the diagram is re-rendered
-   * after injection" are properties of the format, not of the folio.
-   */
-  notes: z.string().optional(),
-});
-
-export type TranslatableFormat = z.infer<typeof TranslatableFormatSchema>;
-
-/**
- * Content-type translation capability declaration.
- *
- * Each content adapter registers one of these to declare what
- * formats it can translate and what scripts handle each format.
- */
-export const ContentTypeTranslationSchema = z.object({
-  /** Content type identifier (matches adapter name). */
-  contentType: z.string(),
-  /** Human-readable name. */
-  name: z.string(),
-  /** Translatable formats this content type supports. */
-  formats: z.array(TranslatableFormatSchema),
-  /** Whether RTL rendering is supported. */
-  rtlSupported: z.boolean().default(false),
-  /** BPMN diagrams that need re-rendering for translation. */
-  bpmnDiagrams: z.array(z.string()).optional(),
-  /** Additional notes about translation for this content type. */
-  notes: z.string().optional(),
-});
-
-export type ContentTypeTranslation = z.infer<typeof ContentTypeTranslationSchema>;
+// The two profile schemas live with the declaration that carries them
+// (`contentTranslations`, bean `0r7u`); re-exported so callers keep one import.
+export { ContentTypeTranslationSchema, TranslatableFormatSchema };
+export type { ContentTypeTranslation, TranslatableFormat };
 
 // ── Registry ────────────────────────────────────────────────────
 
 /**
- * Built-in content type translation declarations.
+ * One instance's declared profile, with the instance that declared it.
  *
- * These map each content type to the formats it handles and the
- * scripts that extract/inject translations for each format.
+ * `declaredBy` is what a path in the profile resolves against: the declaring
+ * instance first, then down its `needs` chain ({@link resolveTranslationPath}).
  */
-export const CONTENT_TYPE_TRANSLATIONS: ContentTypeTranslation[] = [
-  {
-    contentType: "document",
-    name: "Document (generic prose)",
-    formats: [
-      {
-        id: "markdown",
-        name: "Markdown",
-        extensions: [".md"],
-        smartBaseScript: "extract_translations.py",
-        smartBaseExtractRef: "L633–856 (extract_markdown)",
-        smartBaseInjectRef: "inject_translations.py L56–818",
-        extractModule: "content/pipeline/pot-extract.ts",
-        injectModule: "content/pipeline/po-inject.ts",
-      },
-    ],
-    rtlSupported: true,
-    notes: "Base content type. All other types inherit Markdown translation.",
-  },
+export type DeclaredContentTypeTranslation = ContentTypeTranslation & { declaredBy: string };
 
-  {
-    contentType: "paper",
-    name: "Scientific papers & books",
-    formats: [
-      {
-        id: "markdown",
-        name: "Markdown",
-        extensions: [".md"],
-        extractModule: "content/pipeline/pot-extract.ts",
-        injectModule: "content/pipeline/po-inject.ts",
-      },
-      {
-        id: "latex",
-        name: "LaTeX",
-        extensions: [".tex"],
-        notes: "Lean 4 terms and formal math stay in English. Only prose sections are translated.",
-      },
-    ],
-    rtlSupported: false,
-    notes: "LaTeX translation is manual — the pipeline extracts prose from " +
-           "\\section{}, \\paragraph{}, and \\text{} commands but leaves math " +
-           "and Lean terms untouched.",
-  },
+/**
+ * Every present instance's declared `contentTranslations` (bean `0r7u`, step 0
+ * part 3; owner ruling 2026-10-06, "each instance declares its own").
+ *
+ * This was a literal table of four content types (`document`, `paper`, `dak`,
+ * `ig`) here in cat-harness, every one owned by a layer above it. Each now
+ * lives in its owner's `<instance>.json`. A content type declared twice
+ * THROWS: two owners of one profile is a placement defect, not a merge.
+ * Standalone, with no instance above cat-harness present, the list is empty,
+ * and nothing is translatable here, which is true of a layer with no content.
+ */
+export function collectContentTypeTranslations(repoRoot: string): DeclaredContentTypeTranslation[] {
+  const out: DeclaredContentTypeTranslation[] = [];
+  const ownerOf = new Map<string, string>();
+  for (const instance of instanceRootsIn(repoRoot)) {
+    for (const ct of readDeclaration(instance)?.contentTranslations ?? []) {
+      const prior = ownerOf.get(ct.contentType);
+      if (prior !== undefined) {
+        throw new Error(`content type "${ct.contentType}" has a translation profile in both ${prior} and ${instance}`);
+      }
+      ownerOf.set(ct.contentType, instance);
+      out.push({ ...ct, declaredBy: instance });
+    }
+  }
+  return out;
+}
 
-  {
-    contentType: "dak",
-    name: "WHO SMART Guidelines DAK (L2)",
-    formats: [
-      {
-        id: "markdown",
-        name: "Markdown",
-        extensions: [".md"],
-        extractModule: "content/pipeline/pot-extract.ts",
-        injectModule: "content/pipeline/po-inject.ts",
-      },
-      {
-        id: "plantuml",
-        name: "PlantUML diagrams",
-        extensions: [".puml", ".plantuml"],
-        smartBaseScript: "extract_translations.py",
-        smartBaseExtractRef: "L1–200 (extract_plantuml)",
-        smartBaseInjectRef: "inject_translations.py L820–933 (inject_plantuml)",
-      },
-      {
-        id: "svg",
-        name: "SVG diagrams",
-        extensions: [".svg"],
-        smartBaseScript: "extract_translations.py",
-        smartBaseExtractRef: "L200–400 (extract_svg)",
-        smartBaseInjectRef: "inject_translations.py (inject_svg)",
-      },
-      {
-        id: "archimate",
-        name: "ArchiMate models",
-        extensions: [".archimate"],
-        smartBaseScript: "extract_translations.py",
-        smartBaseExtractRef: "L400–633 (extract_archimate)",
-        smartBaseInjectRef: "inject_translations.py (inject_archimate)",
-      },
-      {
-        id: "excel",
-        name: "Data dictionaries (Excel)",
-        extensions: [".xlsx"],
-        notes: "Data dictionary translation uses openpyxl. " +
-               "Column headers and cell values in translatable columns.",
-      },
-      {
-        id: "bpmn",
-        name: "BPMN process diagrams",
-        extensions: [".bpmn"],
-        extractModule: "content/pipeline/bpmn-translate.ts",
-        injectModule: "content/pipeline/bpmn-translate.ts",
-        notes: "Element names and <documentation>. Ids, sourceRef/targetRef, " +
-               "calledElement and the folio: extensions are NEVER offered for " +
-               "translation — a translated id disconnects the graph and a " +
-               "translated skill ref is exactly the dangling reference " +
-               "check:workflow-refs exists to catch. Re-render with " +
-               "`bun run render:bpmn` after injection. On overflow: measured " +
-               "2026-09-18, a French set ~18% longer with every authored " +
-               "&#10; break dropped re-wrapped to the same 3 lines, 42px of " +
-               "an 80px task box, because bpmn-js re-wraps regardless. The " +
-               "authored breaks are not load-bearing; if a diagram does " +
-               "overflow, the fix is its shape bounds, not the string.",
-      },
-    ],
-    rtlSupported: true,
-    bpmnDiagrams: [
-      // Was "processes/publication-workflow.bpmn", which has never
-      // existed — `docs/process/publication-workflow.md` is a PAGE that embeds three
-      // diagrams, and no .bpmn of that name was ever written. The publication
-      // process itself is draft-to-publication ("From corpus to published
-      // folio"), so that is what this entry meant. A path that does not
-      // resolve makes the re-render silently skip it, which reads exactly
-      // like a diagram that needed no work. `check:workflow-refs` now fails
-      // on it.
-      "../folio-assistant-core/processes/content/draft-to-publication.bpmn",
-      "processes/library/translation-workflow.bpmn",
-      "processes/library/human-translation-workflow.bpmn",
-    ],
-    notes: "Full smart-base translation coverage. PlantUML, SVG, and " +
-           "ArchiMate extractors are the Python originals; TypeScript " +
-           "ports are planned.",
-  },
+/**
+ * Where a path a profile names actually is: the declaring instance first, then
+ * each instance it `needs`, nearest first. `undefined` when none holds it.
+ *
+ * The old table spelled a path into another instance as `../<instance>/…`,
+ * relative to cat-harness. One entry named `processes/publication-workflow.bpmn`,
+ * which never existed, so the re-render skipped it silently, and a skipped
+ * diagram looks like one that needed no work. `check:workflow-refs` asks this
+ * function, so a path no instance in the chain holds is still a finding.
+ */
+export function resolveTranslationPath(ct: DeclaredContentTypeTranslation, rel: string): string | undefined {
+  const chain = declarationChain(ct.declaredBy).map((c) => c.root).reverse();
+  for (const root of chain) {
+    const abs = join(root, rel);
+    if (existsSync(abs)) return abs;
+  }
+  return undefined;
+}
 
-  {
-    contentType: "ig",
-    name: "WHO SMART Implementation Guide (L3)",
-    formats: [
-      {
-        id: "markdown",
-        name: "Markdown (narrative)",
-        extensions: [".md"],
-        extractModule: "content/pipeline/pot-extract.ts",
-        injectModule: "content/pipeline/po-inject.ts",
-      },
-      {
-        id: "fsh",
-        name: "FSH (FHIR Shorthand)",
-        extensions: [".fsh"],
-        notes: "FSH translation targets Description, Title, and " +
-               "designation fields. Uses FHIR translation extension.",
-      },
-      {
-        id: "fhir-json",
-        name: "FHIR JSON resources",
-        extensions: [".json"],
-        smartBaseScript: "inject_translations.py",
-        smartBaseInjectRef: "FHIR resource translation section",
-        notes: "Injects translations as FHIR translation extensions " +
-               "on Coding.display, CodeableConcept.text, etc.",
-      },
-    ],
-    rtlSupported: true,
-    notes: "IG Publisher handles some translation via its own PO " +
-           "mechanism. This pipeline handles narrative and FSH.",
-  },
-];
+export const CONTENT_TYPE_TRANSLATIONS: DeclaredContentTypeTranslation[] = collectContentTypeTranslations(
+  checkoutRootFor(dirname(import.meta.dir)),
+);
 
 /**
  * Look up translation capabilities for a content type.

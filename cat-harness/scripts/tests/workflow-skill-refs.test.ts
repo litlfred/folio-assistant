@@ -11,11 +11,9 @@
  * `bun run check:workflow-refs`. This test gates only the unambiguous half.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync } from "node:fs";
 import { join, basename } from "node:path";
 import { loadProcessModel, isActivity } from "../../src/workflow/process-model.ts";
 import { knownSkills as canonicalKnownSkills, workflowFile, workflowFiles } from "../known-skills.js";
-import { resolveImplementingPath } from "../../schemas/harness-config.ts";
 
 const ROOT = join(import.meta.dir, "../..");
 
@@ -53,11 +51,11 @@ describe("declared diagram paths resolve", () => {
     // `docs/process/publication-workflow.md` is a PAGE embedding three diagrams. The
     // re-render skipped it silently, and a skipped diagram is
     // indistinguishable from one that needed no work.
-    const { CONTENT_TYPE_TRANSLATIONS } = await import("../../schemas/translation-tools.ts");
+    const { CONTENT_TYPE_TRANSLATIONS, resolveTranslationPath } = await import("../../schemas/translation-tools.ts");
     const missing: string[] = [];
     for (const ct of CONTENT_TYPE_TRANSLATIONS) {
       for (const rel of ct.bpmnDiagrams ?? []) {
-        if (!existsSync(join(ROOT, rel))) missing.push(`${ct.contentType} → ${rel}`);
+        if (resolveTranslationPath(ct, rel) === undefined) missing.push(`${ct.contentType} → ${rel}`);
       }
     }
     expect(missing).toEqual([]);
@@ -66,12 +64,12 @@ describe("declared diagram paths resolve", () => {
   test("every declared extractModule / injectModule exists", async () => {
     // `bpmn` declared NEITHER while its note described a working re-render,
     // so the capability read as built and was not.
-    const { CONTENT_TYPE_TRANSLATIONS } = await import("../../schemas/translation-tools.ts");
+    const { CONTENT_TYPE_TRANSLATIONS, resolveTranslationPath } = await import("../../schemas/translation-tools.ts");
     const missing: string[] = [];
     for (const ct of CONTENT_TYPE_TRANSLATIONS) {
       for (const f of ct.formats) {
         for (const rel of [f.extractModule, f.injectModule]) {
-          if (rel && resolveImplementingPath(ROOT, rel).state !== "found") missing.push(`${ct.contentType}/${f.id} → ${rel}`);
+          if (rel && resolveTranslationPath(ct, rel) === undefined) missing.push(`${ct.contentType}/${f.id} → ${rel}`);
         }
       }
     }
