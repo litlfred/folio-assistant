@@ -265,7 +265,7 @@ if (import.meta.main) {
   const work = opt("--work");
   const base = opt("--baseurl");
   if (!work || base === undefined) {
-    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>] [--compose-into <docs source>] [--only <instance> [--source <dir>]]");
+    console.error("usage: stage-ig-sites.ts --work <dir> --baseurl <site baseurl> [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>] [--changed-files <file>] [--compose-into <docs source> [--compose-at-root]] [--only <instance> [--source <dir>]]");
     process.exit(2);
   }
   const all = igsToBuild(resolve("."));
@@ -284,6 +284,14 @@ if (import.meta.main) {
   for (const s of skipped) console.error(`skipped ${s}`);
   // The staging cone (bean `4j86`): with `--changed-files`, an IG no changed
   // file reaches is not built. Without it, every IG is, as before.
+  // `--compose-at-root` (with `--compose-into` and `--only`): an IG repository
+  // building its OWN site composes the IG at the root of a chrome-only shell
+  // (`compose-docs --shell`), so it carries the main site's chrome (#2235 F1).
+  const atRoot = process.argv.includes("--compose-at-root");
+  if (atRoot && (!opt("--compose-into") || !opt("--only"))) {
+    console.error("stage-ig-sites: --compose-at-root needs --compose-into and --only (one IG is the whole site)");
+    process.exit(2);
+  }
   const inCone = siteFilter(resolve("."), readChangedFiles(opt("--changed-files")), ["fhir-harness/scripts/stage-ig-sites.ts"]);
   for (const ig of build) {
     const d = inCone(relative(resolve("."), ig.root).split(sep).join("/"));
@@ -309,7 +317,9 @@ if (import.meta.main) {
     const editBase = githubEditBase(ig.repo);
     const r = stageIgSite(src, site, {
       palette: theme.palette,
-      baseurl: `${base.replace(/\/$/, "")}/${ig.instance}${docs ? "" : "/ig"}`,
+      // At the root, the IG IS the site, so its base is the site's own; else
+      // it is mounted under its instance name inside the host site.
+      baseurl: atRoot ? base.replace(/\/$/, "") : `${base.replace(/\/$/, "")}/${ig.instance}${docs ? "" : "/ig"}`,
       plantumlJar: opt("--plantuml-jar"),
       menu: JSON.parse(readFileSync(ig.menuPath, "utf-8")) as IgMenu,
       remoteTheme: opt("--remote-theme"),
@@ -331,8 +341,8 @@ if (import.meta.main) {
     }
     const into = opt("--compose-into");
     if (into) {
-      const c = composeIgSite(site, resolve(into), ig.instance);
-      console.error(`${ig.instance}: composed into ${relative(resolve("."), resolve(into, ig.instance))} — ${c.pages} page(s), ${c.files - c.pages} other file(s), ${c.includes} include(s)`);
+      const c = composeIgSite(site, resolve(into), ig.instance, { atRoot });
+      console.error(`${ig.instance}: composed into ${relative(resolve("."), atRoot ? resolve(into) : resolve(into, ig.instance))} — ${c.pages} page(s), ${c.files - c.pages} other file(s), ${c.includes} include(s)`);
       if (c.collisions.length) {
         console.error(`${ig.instance}: ${c.collisions.length} path(s) already in the host source — refusing two answers for one URL:\n  ${c.collisions.slice(0, 20).join("\n  ")}`);
         process.exit(1);

@@ -32,6 +32,7 @@ import {
   instanceSchemaIndexIri,
   scanInstanceZodSchemas,
   skillIoIri,
+  zodSchemaScanDetermined,
   type InstanceIdentity,
 } from "../harness-schema-export.js";
 import { instanceExportPlan } from "../instance-exports.js";
@@ -269,6 +270,20 @@ describe("public Zod schemas over a fixture instance", () => {
     expect(built.zodScanned).toBe(false);
     expect(built.files[0]![1].omitted).toEqual(["schemas"]);
     expect(built.files[0]![1].unrendered).toEqual(["the schemas directory could not be resolved: x"]);
+  });
+
+  test("the JSON-LD's `omitted` asks the scan's own question, without importing: determined exactly when the scan is", async () => {
+    // `kg-export.ts` keeps `schemas` in a document's `omitted` when this is
+    // false, so the document and its index cannot disagree about it.
+    const ok = fx();
+    expect(zodSchemaScanDetermined(ok)).toBe(true);
+    expect((await scanInstanceZodSchemas(ok)).determined).toBe(true);
+    // A declaration that is present and unreadable: its directories cannot be resolved.
+    const broken = join(fx(), "broken");
+    mkdirSync(broken);
+    writeFileSync(join(broken, "broken.json"), JSON.stringify({ name: "broken", directories: "not a list" }));
+    expect(zodSchemaScanDetermined(broken)).toBe(false);
+    expect((await scanInstanceZodSchemas(broken)).determined).toBe(false);
   });
 
   test("an instance with no schemas directory is a determined zero", async () => {
