@@ -211,6 +211,17 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Generate the mounted SMART IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS of
+        # their forks (folio-assistant.json `remoteMounts`, laid down by the
+        # state:mount step above). Each fork ignores its generated `docs/` and
+        # smart-trust's OpenAPI pages, which folio-assistant's generators write
+        # (gen-ig-pages, gen-openapi-pages), so they are built here, at publish,
+        # and never committed. The OpenAPI half writes into the mounted
+        # `openapi/` directory, which is why it runs only in a publish build:
+        # nothing checks the mount after this step.
+        run: bun run smart:pages:publish
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
         # be current in a commit, so it is never committed: one state:push

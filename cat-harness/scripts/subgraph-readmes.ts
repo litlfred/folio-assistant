@@ -50,6 +50,7 @@ import {
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { defaultGraphTypologies, type GraphTypologyRegistry } from "../schemas/graph-typology-registry.ts";
 import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
+import { mountScopeFor } from "../schemas/remote-mount.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { requireCurrentWorkingCopy } from "./qa-working-copy.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, mayLeaveMain, writeQaResult } from "./qa-results.ts";
@@ -132,6 +133,10 @@ export function harnessInstances(repo: string): InstanceInput[] {
   let processes: ProcessIndex | undefined;
   const index = (): ProcessIndex => (processes ??= processIndex(repo));
   for (const inst of instanceRootsIn(repo)) {
+    // A REMOTE-MOUNTED instance (bean `0mpw`, first consumer `hupw`) is
+    // somebody else's pinned bytes: its READMEs are its own repository's, and
+    // rewriting one here makes `mount:remote:check` read the mount as edited.
+    if (mountScopeFor(inst) !== undefined) continue;
     let decl;
     try {
       decl = readDeclaration(inst);

@@ -12,23 +12,6 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
-              "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, extracting the Component 1 graph, and the two validators it must pass.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "instructionLines": 102,
-              "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
-              "name": "dak-l1-library",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6a89820f2024f97d13f93d2369508cc1278a42835d642fab7117fe72179ee9c8",
-                "bytes": 5292,
-                "sha256": "6a89820f2024f97d13f93d2369508cc1278a42835d642fab7117fe72179ee9c8"
-              },
-              "title": "dak-l1-library"
-            },
-            {
               "@id": "http://smart.who.int/base/smart-base.jsonld#skill/dak-postprocessing",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -128,23 +111,6 @@
                 "sha256": "4c01b4d555c657cbc4ca37d14d7eb851d575db7fe39abbc5b5c42667378403a3"
               },
               "title": "smart-base Toolchain"
-            },
-            {
-              "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-guideline-create",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "instructionLines": 112,
-              "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
-              "name": "smart-guideline-create",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2e0132dfe68daac2e6e0e116760fe016b42d8b8dd48b1276ba9728d3e89625c",
-                "bytes": 5408,
-                "sha256": "f2e0132dfe68daac2e6e0e116760fe016b42d8b8dd48b1276ba9728d3e89625c"
-              },
-              "title": "smart-guideline-create"
             },
             {
               "@id": "http://smart.who.int/base/smart-base.jsonld#skill/smart-stack-layering",

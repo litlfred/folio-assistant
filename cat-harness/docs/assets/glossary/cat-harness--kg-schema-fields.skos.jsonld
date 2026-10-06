@@ -23517,6 +23517,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.undeclared",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.undeclared"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "With an `undeclared: true` override: what was laid down OUTSIDE every declared directory and the declaration file — one tree digest over it, and the declared paths (instance-relative, no trailing slash) the digest leaves out, so the check walks exactly what the mount wrote."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.undeclared",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.upstreamroot",
       "@type": "skos:Concept",
       "skos:inScheme": {

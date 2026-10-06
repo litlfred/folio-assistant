@@ -9,10 +9,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
       "enforcement": "advisory",
-      "flowCount": 22,
+      "flowCount": 21,
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
       "name": "L2 DAK authoring",
-      "nodeCount": 17,
+      "nodeCount": 16,
       "sourcePath": "processes/content/l2-dak-authoring.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
       "startNode": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/StartEvent_Guideline",
@@ -32,7 +32,7 @@
       "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_ScopeDak",
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
       "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library"
+      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",
@@ -187,14 +187,6 @@
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
       "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
       "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/EndEvent_L2Ready"
-    },
-    {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "to": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_SeedBeans"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
@@ -425,22 +417,6 @@
       "touchesWorkPlan": false
     },
     {
-      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:UserTask",
-      "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/dak-l1-library",
-      "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
-      "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
-      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
-      "name": "Build the L1 library from Component 1",
-      "nodeKind": "activity",
-      "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
-      "partOf": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/smart-base.jsonld#role/business-analyst",
-      "relaxable": true,
-      "touchesWorkPlan": false
-    },
-    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:UserTask",
@@ -479,7 +455,7 @@
       "implementedBy": "http://smart.who.int/base/smart-base.jsonld#skill/todo-manager",
       "inLane": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_WorkPlan",
       "inSubgraph": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-house-processes",
-      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "incoming": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B02",
       "name": "Seed the work plan",
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B03",

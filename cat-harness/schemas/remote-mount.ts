@@ -100,6 +100,18 @@ export type MountDefaults = z.infer<typeof MountDefaultsSchema>;
  * is refused at plan time, not dropped). `skip: true` leaves the instance
  * unmounted — the downstream supplies it some other way, and the plan says so
  * rather than reporting it missing.
+ *
+ * `undeclared: true` ALSO lays down everything under the instance's root that
+ * no declared directory claims — its root files (`platform.ts`, `AGENTS.md`,
+ * a tool's config) and its undeclared subdirectories (`schemas/`, `scripts/`).
+ * A declared directory left out of `directories` stays out. It exists for an
+ * instance that predates `mountDefaults` and keeps its code beside its
+ * declared graphs rather than in them — the smart-* forks (bean `hupw`): their
+ * mounted `tools/` imports `../platform.js`, which no declared directory
+ * holds, so a directory-only mount is a layer whose code cannot load. Opt-in,
+ * so a harness that declares its code directories is mounted exactly as it
+ * says. The lock records the rest as ONE digest
+ * ({@link LockedInstanceSchema}.undeclared), checked like a directory's.
  */
 export const MountOverrideSchema = z
   .object({
@@ -108,6 +120,7 @@ export const MountOverrideSchema = z
       .array(z.string().min(1))
       .refine((xs) => new Set(xs).size === xs.length, { message: "override directories: an id appears twice" })
       .optional(),
+    undeclared: z.literal(true).optional(),
     skip: z.literal(true).optional(),
   })
   .strict();
@@ -173,6 +186,20 @@ export const LockedInstanceSchema = z
     pinnedBy: z.enum(["declared", "same-tree", "gitlink"]),
     declaration: z.object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),
     directories: z.array(LockedDirectorySchema),
+    /**
+     * With an `undeclared: true` override: what was laid down OUTSIDE every
+     * declared directory and the declaration file — one tree digest over it,
+     * and the declared paths (instance-relative, no trailing slash) the digest
+     * leaves out, so the check walks exactly what the mount wrote.
+     */
+    undeclared: z
+      .object({
+        treeDigest: z.string().regex(/^[0-9a-f]{64}$/),
+        files: z.number().int().nonnegative(),
+        excludes: z.array(z.string().min(1)),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 export type LockedInstance = z.infer<typeof LockedInstanceSchema>;

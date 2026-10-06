@@ -110,6 +110,12 @@ export interface PlannedInstance {
   pinnedBy: LockedInstance["pinnedBy"];
   declarationFile: string;
   directories: PlannedDirectory[];
+  /**
+   * Set by an `undeclared: true` override: also lay down what lies outside
+   * every declared directory. `excludes` is every declared directory's path
+   * (instance-relative, no trailing slash), mounted or not.
+   */
+  undeclared?: { excludes: string[] };
 }
 
 export type InstanceOutcome =
@@ -320,6 +326,9 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         pinnedBy: q.pinnedBy,
         declarationFile: found.file,
         directories,
+        ...(override?.undeclared
+          ? { undeclared: { excludes: [...new Set(decl.directories.map((d) => strip(d.path)).filter((x) => x && !x.split("/").includes("..")))].sort() } }
+          : {}),
       });
 
       // TRANSITIVELY: each need in the same tree, else as a gitlink there.
@@ -409,11 +418,30 @@ function ensureIgnored(base: string, rel: string): "ignored" | "excluded" | "not
   return "excluded";
 }
 
+/**
+ * The files of an `undeclared` mount, relative to the instance root: every
+ * file there except under a declared directory and except the declaration
+ * itself (`<instance>.json`, locked on its own).
+ */
+function undeclaredFiles(instanceAbs: string, excludes: readonly string[], declarationFile: string): string[] {
+  return treeEntries(instanceAbs).files.filter((f) => f !== declarationFile && !excludes.some((x) => f === x || f.startsWith(`${x}/`)));
+}
+
+function undeclaredDigestOf(instanceAbs: string, excludes: readonly string[], declarationFile: string): { treeDigest: string; files: number } {
+  const files = undeclaredFiles(instanceAbs, excludes, declarationFile);
+  return { treeDigest: treeDigest(instanceAbs, files), files: files.length };
+}
+
 /** Directories of a previously locked instance whose bytes no longer match the lock. */
 function modifiedSince(base: string, locked: LockedInstance): string[] {
-  return locked.directories
+  const out = locked.directories
     .filter((d) => existsSync(join(base, d.path)) && digestOf(join(base, d.path)).treeDigest !== d.treeDigest)
     .map((d) => d.path);
+  const u = locked.undeclared;
+  if (u && existsSync(join(base, locked.path)) && undeclaredDigestOf(join(base, locked.path), u.excludes, locked.declaration.file).treeDigest !== u.treeDigest) {
+    out.push(`${locked.path}/ (outside its declared directories)`);
+  }
+  return out;
 }
 
 export interface MountReport {
@@ -463,12 +491,20 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           continue;
         }
         const tree = trees.get(`${p.repository}@${p.sha}`)!;
-        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => `${d.upstreamPath}/`)]);
+        const work = tree.checkout([
+          p.declarationFile,
+          ...p.directories.map((d) => `${d.upstreamPath}/`),
+          ...(p.undeclared ? [p.upstreamRoot ? `${p.upstreamRoot}/` : "*"] : []),
+        ]);
 
         // Replace what THIS mount put there before — only that.
         if (before) {
           for (const d of before.directories) rmSync(join(plan.instanceRoot, d.path), { recursive: true, force: true });
           rmSync(join(plan.instanceRoot, before.path, `${before.instance}.json`), { force: true });
+          if (before.undeclared) {
+            const at = join(plan.instanceRoot, before.path);
+            for (const f of undeclaredFiles(at, before.undeclared.excludes, before.declaration.file)) rmSync(join(at, f), { force: true });
+          }
         }
         mkdirSync(target, { recursive: true });
         const declText = readFileSync(join(work, p.declarationFile));
@@ -484,6 +520,19 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           const dst = join(plan.instanceRoot, d.path);
           mkdirSync(dirname(dst), { recursive: true });
           cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true });
+        }
+        // Everything outside the declared directories, when the override asks for it.
+        let undeclared: LockedInstance["undeclared"];
+        if (p.undeclared) {
+          const srcRoot = join(work, p.upstreamRoot);
+          const upstreamDecl = p.declarationFile.split("/").pop()!;
+          for (const f of undeclaredFiles(srcRoot, p.undeclared.excludes, upstreamDecl)) {
+            if (f === `${p.instance}.json`) continue;
+            const dst = join(target, f);
+            mkdirSync(dirname(dst), { recursive: true });
+            cpSync(join(srcRoot, f), dst, { verbatimSymlinks: true, force: true });
+          }
+          undeclared = { ...undeclaredDigestOf(target, p.undeclared.excludes, `${p.instance}.json`), excludes: p.undeclared.excludes };
         }
         // Digest AFTER every copy, so a nested directory's digest covers what is on disk.
         for (const d of p.directories) {
@@ -501,15 +550,16 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           pinnedBy: p.pinnedBy,
           declaration: { file: `${p.instance}.json`, sha256: sha256Text(declText) },
           directories: dirs,
+          ...(undeclared ? { undeclared } : {}),
         });
-        const files = dirs.reduce((n, d) => n + d.files, 0);
+        const files = dirs.reduce((n, d) => n + d.files, 0) + (undeclared?.files ?? 0);
         plan.outcomes.push({
           instance: p.instance,
           state: absent.length ? "missing" : "mounted",
           path: p.path,
           detail: absent.length
             ? `declared but absent at ${p.sha.slice(0, 12)}: ${absent.join(", ")} — the rest is mounted`
-            : `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}`,
+            : `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}${undeclared ? ` and ${undeclared.files} file(s) outside them` : ""}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}`,
         });
       } catch (e) {
         plan.outcomes.push({ instance: p.instance, state: "could-not-determine", path: p.path, detail: `mounting threw: ${(e as Error).message}` });
@@ -586,6 +636,12 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
         const abs = join(ds.instanceRoot, d.path);
         if (!existsSync(abs)) bad.push(`${d.path}/ absent`);
         else if (digestOf(abs).treeDigest !== d.treeDigest) bad.push(`${d.path}/ modified`);
+      }
+      if (inst.undeclared) {
+        const at = join(ds.instanceRoot, inst.path);
+        if (undeclaredDigestOf(at, inst.undeclared.excludes, inst.declaration.file).treeDigest !== inst.undeclared.treeDigest) {
+          bad.push(`${inst.path}/ outside its declared directories modified`);
+        }
       }
       outcomes.push(
         bad.length

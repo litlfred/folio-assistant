@@ -2643,16 +2643,20 @@ jobs:
           # validators just checked, so it goes stale when either changes.
           bun run uml:overview:check
           bun run check:artifact-index
-          bun run smart-trust:pages:check
-          # smart-base's landing page and artefact index, from the same generic
-          # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
-          bun run smart-base:pages:check
-          bun run smart-immunizations:pages:check
+          # smart-trust, smart-base and smart-immunizations are REMOTE MOUNTS of
+          # their forks since the cutover (bean hupw), and their `docs/` pages
+          # are built at publish rather than committed, so there is no committed
+          # copy for a `:pages:check` to compare. What is gated is that the
+          # generic generator (fhir-harness/scripts/gen-ig-pages.ts, #1767)
+          # still builds every page from the mounted forks. It writes only the
+          # instances' `docs/`, which the mount leaves out.
+          bun run smart:pages
           # The OpenAPI harness (cat-openapi, bean s4ta): every document an
           # instance's cat-openapi.config.json names is held verbatim and matches
-          # its provenance, and its per-operation pages and IRIs are current.
+          # its provenance. Its per-operation pages are built at publish
+          # (`smart:pages:publish`): they are written into the mounted
+          # `openapi/` directory, which a gate must not edit.
           bun run smart-trust:openapi:check
-          bun run smart-trust:openapi:pages:check
           # A section's computedFrom names a graph its instance declares or
           # inherits (bean qvxh): "computable from these assets" is a claim,
           # and a claim nothing checks is prose.

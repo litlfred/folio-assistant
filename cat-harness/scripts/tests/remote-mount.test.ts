@@ -288,4 +288,47 @@ describe("mount:remote over fixture repositories", () => {
     expect(readFileSync(join(root, "trust/x/a.txt"), "utf-8")).toBe("a\n");
     expect(r.plan.instances[0]).toMatchObject({ upstreamRoot: "shared", path: "trust" });
   });
+
+  test("16. `undeclared: true` also lays down what no declared directory holds, locks it, and catches an edit there", () => {
+    // The smart-* forks (bean hupw): the mounted `tools/` imports `../platform.ts`,
+    // a root file no declared directory holds; `docs/` is declared and left out.
+    const ig = bareRepo(base, "ig", {
+      "nest/ig.json": decl("ig", {
+        livesAt: { repository: "o/ig", path: "ig" },
+        directories: [
+          { id: "ig-tools", path: "tools/", graphTypologies: ["code"] },
+          { id: "ig-docs", path: "docs/", graphTypologies: ["code"] },
+        ],
+      }),
+      "nest/platform.ts": "export const p = 1;\n",
+      "nest/schemas/s.ts": "export const s = 2;\n",
+      "nest/tools/index.ts": 'import { p } from "../platform.ts";\nexport const t = p;\n',
+      "nest/docs/page.md": "# generated\n",
+      "outside.txt": "not the instance's\n",
+    });
+    const local = (r: string): string => (r === "o/ig" ? `file://${ig.bare}` : urlFor(r));
+    const root = downstream({});
+    write(root, {
+      "down.json": decl("down", {
+        remoteMounts: [{ harness: "ig", repository: "o/ig", ref: ig.sha, overrides: { ig: { path: "ig", undeclared: true, directories: ["ig-tools"] } } }],
+      }),
+    });
+    const r = mountRemote({ instanceRoot: root, urlFor: local });
+    expect(summarise(r.plan.outcomes).state).toBe("mounted");
+    expect(readFileSync(join(root, "ig/platform.ts"), "utf-8")).toBe("export const p = 1;\n");
+    expect(existsSync(join(root, "ig/schemas/s.ts"))).toBe(true);
+    expect(existsSync(join(root, "ig/tools/index.ts"))).toBe(true);
+    expect(existsSync(join(root, "ig/docs"))).toBe(false); // declared, not listed: left out
+    expect(existsSync(join(root, "outside.txt"))).toBe(false); // outside the instance
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    expect(lock.instances[0]!.undeclared).toMatchObject({ files: 2, excludes: ["docs", "tools"] });
+    // A generator writing the left-out declared directory is not an edit of the mount ...
+    write(root, { "ig/docs/page.md": "# built here\n" });
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+    // ... an edit to a pinned root file is.
+    write(root, { "ig/platform.ts": "export const p = 2;\n" });
+    const c = checkRemote({ instanceRoot: root });
+    expect(c.state).toBe("missing");
+    expect(c.outcomes.find((o) => o.instance === "ig")!.detail).toContain("outside its declared directories");
+  });
 });

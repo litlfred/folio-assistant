@@ -8666,6 +8666,13 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount.lockedinstanceschema.undeclared",
+      "prefLabel": "LockedInstanceSchema.undeclared",
+      "definition": "With an `undeclared: true` override: what was laid down OUTSIDE every declared directory and the declaration file — one tree digest over it, and the declared paths (instance-relative, no trailing slash) the digest leaves out, so the check walks exactly what the mount wrote.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.undeclared",
+      "status": "candidate"
+    },
+    {
       "id": "remote-mount.lockedinstanceschema.upstreamroot",
       "prefLabel": "LockedInstanceSchema.upstreamRoot",
       "definition": "The instance's root in the upstream repository; `\"\"` is that repository's root.",
