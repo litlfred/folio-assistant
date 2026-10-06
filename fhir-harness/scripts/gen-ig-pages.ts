@@ -991,7 +991,10 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     const r = a.sidecars?.[k];
     const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
     if (!r) return `| ${label} | *not published for this artefact* | |`;
-    const view = (k === "schema" || k === "jsonld") && r.localPath ? ` · [view](${mdCell(r.localPath.split("/").pop()!)}.html)` : "";
+    // `view` only where the view page IS written: the same condition as the
+    // IG API VIEW PAGES loop below. smart-immunizations' index is not served,
+    // so 388 of its artefact pages linked a page that did not exist.
+    const view = (k === "schema" || k === "jsonld") && r.localPath && igApiServable().ok ? ` · [view](${mdCell(r.localPath.split("/").pop()!)}.html)` : "";
     const held = r.localPath ? `\`${mdCell(r.localPath)}\`${view}` : "*by reference*";
     return `| ${label} | <${mdCell(r.url)}> | ${held} |`;
   });
@@ -1440,6 +1443,33 @@ function committed(): Map<string, string> {
 function docsDirectoryId(): string | undefined {
   const norm = (p: string) => resolve(p).replace(/\/+$/, "");
   return readDeclaration(INSTANCE)?.directories?.find((d) => norm(join(INSTANCE, d.path)) === norm(OUT))?.id;
+}
+
+// EVERY SAME-DIRECTORY LINK A GENERATED PAGE MAKES IS TO A PAGE THIS RUN
+// WRITES. A generator that links a page it decided not to write ships a dead
+// link on every artefact page — 388 on smart-immunizations, measured on its
+// published site, 2026-10-05 — and nothing downstream says so: the IG's own
+// pages are not this generator's, so only links within `artifact/` (and the
+// root) are judged here, where every target is one of `pages`.
+{
+  const written = new Set([...pages.keys()].map((k) => k.split(sep).join("/").replace(/\.md$/, ".html")));
+  const dangling: string[] = [];
+  for (const [rel, text] of pages) {
+    if (!/\.(md|html)$/.test(rel)) continue;
+    const dir = rel.split(sep).slice(0, -1).join("/");
+    for (const m of text.matchAll(/(?:\]\(|href=")([^)"#?\s]+\.html)(?:[#?][^)"\s]*)?[)"]/g)) {
+      const target = m[1]!;
+      if (/^[a-z]+:|^\/|^\.\.\//.test(target) || target.includes("{")) continue;
+      const resolved = posix.normalize(dir ? `${dir}/${target}` : target);
+      if (!written.has(resolved)) dangling.push(`${rel.split(sep).join("/")} → ${target}`);
+    }
+  }
+  if (dangling.length > 0) {
+    console.error(`✗ ${dangling.length} link(s) to a page this run does not write:`);
+    for (const d of dangling.slice(0, 10)) console.error(`    ${d}`);
+    if (dangling.length > 10) console.error(`    …and ${dangling.length - 10} more`);
+    process.exit(1);
+  }
 }
 
 if (CHECK) {

@@ -115,6 +115,13 @@ const VIEWERS: Viewer[] = [
     renders: ["document-kinds"],
   },
   {
+    id: "node-kind-pages",
+    title: "Node kind pages",
+    description: "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
+    script: "node-kind:pages",
+    renders: ["todo-items"],
+  },
+  {
     id: "state-viewer",
     title: "State graph viewer",
     description: "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.",

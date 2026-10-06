@@ -637,7 +637,22 @@ export interface ComposeOptions {
    * `carriedInstances`.
    */
   readonly changedFiles?: readonly string[];
+  /**
+   * Compose the CHROME only: the layers' Jekyll machinery (`_config.yml`,
+   * `_includes/`, `_layouts/`, `_sass/`, `_data/`, …) and `assets/`, and no
+   * page and no composed instance. An IG repository's own site composes its
+   * IG INTO this shell, so it is built with the same search box, locale
+   * selector and navbar as the main site rather than with a plain stand-in
+   * layout (#2235 F1). A page is any other path, so it is left out.
+   */
+  readonly shell?: boolean;
 }
+
+/** Is `rel` part of the site's chrome — Jekyll machinery or a static asset — rather than a page? */
+export const isChrome = (rel: string): boolean => {
+  const first = rel.split(/[\\/]/)[0]!;
+  return first.startsWith("_") || first === "assets";
+};
 
 export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): ComposeReport {
   const { layers, missing } = docsLayers(repo);
@@ -654,6 +669,7 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
 
   for (const [i, layer] of layers.entries()) {
     for (const rel of filesUnder(layer.dir)) {
+      if (opts.shell && !isChrome(rel)) continue;
       const isOverlay = i > 0;
       // Withheld BEFORE anything else touches `rel`, so a staging-only page
       // cannot be recorded as supplied, overridden or added. A report that
@@ -664,6 +680,18 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
       }
       const dest = join(out, rel);
       const src = join(layer.dir, rel);
+
+      // A shell carries the host's GENERATED includes EMPTY: they are
+      // projections of the host's own graphs (its harness navbar, its todo
+      // listing), not chrome, and on an IG's own site they linked 400 pages
+      // that site does not have (#2235 F1). The site that adopts the shell
+      // writes its own (`gen-navbar-include --instance`).
+      if (opts.shell && /^_includes[\\/]generated[\\/]/.test(rel)) {
+        mkdirSync(join(dest, ".."), { recursive: true });
+        writeFileSync(dest, "");
+        suppliedBy[rel] = layer.id;
+        continue;
+      }
 
       // MERGED, not shadowed — and only when a lower layer actually supplied
       // one. A YAML round trip drops comments and may reorder keys, so doing
@@ -693,7 +721,7 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
   // Composed instances land UNDER THEIR OWN NAME, after the layers, so an
   // instance cannot shadow a base page by accident: `who-iris/index.md` in a
   // composed tree is `<out>/who-iris/index.md`, never `<out>/index.md`.
-  const composedInst = composedInstances(repo);
+  const composedInst = opts.shell ? [] : composedInstances(repo);
   const carry = carriedInstances(
     composedInst,
     opts.changedFiles,
@@ -802,7 +830,9 @@ if (import.meta.main) {
   // — `VisualisationSchema.publish` carries why the two error directions are
   // not symmetric.
   const staging = argv.includes("--staging");
-  const r = compose(resolve(out), REPO, { staging, changedFiles });
+  const shell = argv.includes("--shell");
+  const r = compose(resolve(out), REPO, { staging, changedFiles, shell });
+  if (shell) console.log("  --shell: the chrome only — Jekyll machinery and assets, no page, no composed instance");
 
   for (const m of r.missing) {
     // A declared layer with no directory is a FINDING, not a skip. It is the

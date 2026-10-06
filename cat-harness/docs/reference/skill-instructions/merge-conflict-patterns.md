@@ -383,12 +383,16 @@ scripts/state-visualizer.ts". **`docs/uploads/index.html` is the viewer OF
 `**/uploads/**` caught it, and #1764 refused on it. First match wins, so the
 viewer entries sit above the refusal.
 
-And `docs/fsh-guts/index.md`, written whole by `fsh-guts:viz`
-(`gen-fsh-guts-viz.ts`, checked by `fsh-guts:viz:check`) from everything under
-`fsh-guts/`. Any PR that archives an upload rewrites it, so two such PRs always
-collide; #1766 refused on it alone on 2026-10-03. Only that one page is
-declared: the archive it renders (`fsh-guts/**`) is kept content and stays
-refused.
+`docs/fsh-guts/index.md` USED to be here: any PR that archived an upload
+rewrote it, so two such PRs always collided (#1766, 2026-10-03). It is no
+longer committed at all. It is derived from `fsh-guts/`, which is kept on a
+branch, so it is built at publish by `derive:publish` (bean `0b8c`, #2230),
+and a merge cannot meet it. That is the general answer for any derived page
+whose input lives on a branch — see
+[`directory-conventions`](directory-conventions.md)
+§"The storage clock" — and is better than a take-base pattern, which only
+makes the collision cheap. The archive itself (`fsh-guts/**`) is kept content
+and stays refused.
 
 ### `viewer-namespace` — take the base, regenerate
 
@@ -473,7 +477,7 @@ generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pag
 
 Bean `8c6v`: **none** of the 17 was named by a pattern, so `classify()`
 returned `refuse / — none —` and the merge handed back for hand-editing the
-files that forbid it. `docs/publication-workflow.md` was one of the **2**
+files that forbid it. `docs/process/publication-workflow.md` was one of the **2**
 refusals on #1888 after **53** of its 55 conflicts had resolved by pattern —
 one undeclared family holding up a 53-file resolution is the all-or-nothing
 rule working as designed, and the gap it exposed.
@@ -518,8 +522,8 @@ matter names `gen-skill-docs.ts`, and `skill-instructions` is declared before
 all three facts.
 
 **The authored neighbour is the source, and it stays refused.**
-`cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md`
-is the hand-written INPUT for `docs/publication-workflow.md`; on #1888 both
+`cat-harness/content/docs/process-publication-workflow/every-workflow-in-the-repo.md`
+is the hand-written INPUT for `docs/process/publication-workflow.md`; on #1888 both
 sides had only *added* rows to it, but a union of additions is a property of
 that instance and not of the path, so the next conflict there could be a
 contested edit. A test pins the pair, and pins that nothing under `content/`

@@ -1,7 +1,10 @@
 #!/usr/bin/env bun
 /**
- * Source-ledger indexer — migrate `bib-qa-verifications.json` to the
+ * Source-ledger indexer — migrate the source ledger's rows to the
  * `source-ledger/v1` shape and seed a row for every document in `uploads/`.
+ * The ledger is read and written through `schemas/bib-attestations.ts`: the
+ * attestation store's `bib-verification` family, or the legacy
+ * `<folio>/bib-qa-verifications.json` while the store has none.
  *
  * ## What this does
  *
@@ -39,17 +42,18 @@
  * @module content/pipeline/source-ledger-index
  */
 
-import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative } from "node:path";
 import type { LedgerEntry, SourceLedger, SourceRef } from "../../schemas/bib-verification";
+import {
+  readSourceLedger,
+  SOURCE_LEDGER_AUTHORITATIVE_FOR,
+  SOURCE_LEDGER_SCHEMA,
+  writeSourceLedger,
+} from "../../schemas/bib-attestations";
 import { directoryForGraph, folioDir, deferResolution} from "../../schemas/cat-harness.js";
 
 const REPO_ROOT = process.env.FOLIO_REPO_ROOT ?? process.cwd();
-const LEDGER_PATH = deferResolution(() => join(folioDir(REPO_ROOT),  "bib-qa-verifications.json"), {
-  moduleUrl: import.meta.url,
-  what: "LEDGER_PATH",
-  under: REPO_ROOT,
-});
 const REFERENCES_PATH = deferResolution(() => join(folioDir(REPO_ROOT),  "schema", "references.ts"), {
   moduleUrl: import.meta.url,
   what: "REFERENCES_PATH",
@@ -62,7 +66,7 @@ const UPLOADS_DIR = deferResolution(() => directoryForGraph(REPO_ROOT, "uploads"
   under: REPO_ROOT,
 });
 
-const SCHEMA_ID = "source-ledger/v1";
+const SCHEMA_ID = SOURCE_LEDGER_SCHEMA;
 
 /** Documents we index.  Anything else in `uploads/` is scaffolding. */
 const SOURCE_EXTENSIONS = [".pdf", ".txt", ".tex", ".djvu", ".epub"];
@@ -189,8 +193,11 @@ function main(): void {
   }
 
   const refs = readReferences();
-  const raw = JSON.parse(readFileSync(LEDGER_PATH(), "utf-8"));
-  const legacy: LegacyEntry[] = raw.entries ?? [];
+  // The ONE reader of the source ledger: the attestation store, or the legacy
+  // file while the store has no `bib-verification` family. It says which.
+  const read = readSourceLedger(REPO_ROOT);
+  console.log(read.note);
+  const legacy = read.ledger.entries as unknown as LegacyEntry[];
 
   const entries: LedgerEntry[] = legacy.map((e) =>
     // Idempotent: a row already carrying `source` is left alone.
@@ -243,11 +250,7 @@ function main(): void {
 
   const ledger: SourceLedger = {
     _schema: SCHEMA_ID,
-    _authoritative_for:
-      "Source document <-> reference join, source-verification status, and " +
-      "relevance triage. Bibliographic metadata lives ONLY in " +
-      "folio/schema/references.ts; this file stores no title, author, " +
-      "year, or DOI.",
+    _authoritative_for: SOURCE_LEDGER_AUTHORITATIVE_FOR,
     entries,
   };
 
@@ -289,8 +292,8 @@ function main(): void {
   }
 
   if (write) {
-    writeFileSync(LEDGER_PATH(), `${JSON.stringify(ledger, null, 2)}\n`);
-    console.log(`\nwrote ${LEDGER_PATH()}`);
+    // Written back to where it was read from (store, or legacy before migration).
+    console.log(`\n${writeSourceLedger(REPO_ROOT, ledger).note}`);
   } else {
     console.log("\n(dry run — pass --write to persist)");
   }

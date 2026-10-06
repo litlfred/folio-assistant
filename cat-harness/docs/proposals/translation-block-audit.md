@@ -69,7 +69,7 @@ means a translated block reaches a reader in some output. "QA'd" means
   block, and `measureBlock` (`:378`) measures only the strings that
   `extractMarkdown` returns. The `.ts` is **hashed** for staleness (`:537`)
   but its text is never measured. One block sidecar exists in the corpus:
-  `test/results/translation-qa/content/docs/crdm-methodology/overview.fr.translation-qa.json`,
+  `test/results/translation-qa/content/docs/process-crdm-methodology/overview.fr.translation-qa.json`,
   a `prose` block.
 - **Injection deletes every blank line in the file**
   (`po-inject.ts:433`), including when nothing is translated. This merges

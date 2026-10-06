@@ -3,6 +3,8 @@ title: "Requirements"
 kind: requirements
 summary: >-
   What the harness promises, one page per shipped feature. Each page is a filed proposal whose front matter is a Requirement.
+parent: ""
+has_children: true
 ---
 
 # Requirements

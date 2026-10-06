@@ -11,5 +11,6 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant
 | file | what it is | used by |
 |---|---|---|
 | [`catalogue.json`](catalogue.json) | Catalogue |  |
+| [`public-comments.json`](public-comments.json) | Public comments |  |
 | [`review-verdicts.json`](review-verdicts.json) | Review verdicts |  |
 <!-- kg:subgraph:end -->

@@ -381,7 +381,7 @@ merges. Merging still needs the explicit confirmation the processes require.
   the pair's label, the status line's SHA and the position
   ([`todo-manager`](todo-manager.md); check before you create).
 - On a folio, a comment tagged `block: <label>` on the PR becomes a
-  `folio-review-comment/v1` todo ([`review-comments`](review-comments.md)).
+  `review-comment/1.0.0` todo ([`review-comments`](review-comments.md)).
 - Feedback on published content goes through
   [`content-feedback`](content-feedback.md).
 - The next round's preview answers each item. Take the same pair again and

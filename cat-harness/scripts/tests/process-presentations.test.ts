@@ -44,7 +44,7 @@ describe("this repository, right now", () => {
     const idx = await processPresentations(ROOT);
     expect(idx.size).toBeGreaterThan(0);
     expect(idx.get("processes/ui/ingest-theme.bpmn")?.map((x) => `${x.page}#${x.node}`)).toEqual([
-      "document-ingestion#ingest-the-theme",
+      "guides/document-ingestion#ingest-the-theme",
     ]);
   });
 

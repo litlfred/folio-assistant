@@ -23,7 +23,7 @@ const base = { repo: "o/r", pr: 7, commit: "c1", blocks, now: "2026-09-23T08:00:
 describe("buildReviewComments", () => {
   it("writes the todo kind itself, with what was not ingested beside it", () => {
     const f = buildReviewComments({ ...base, comments: [pc(1, "block: prose:overview\nWhy?"), pc(2, "thanks"), pc(3, "block: x\nkind: rant")] });
-    expect(f.comments.map((c) => c.$schema)).toEqual(["folio-review-comment/v1"]);
+    expect(f.comments.map((c) => c.$schema)).toEqual(["review-comment/1.0.0"]);
     expect(f.untagged).toBe(1);
     expect(f.malformed).toHaveLength(1);
   });

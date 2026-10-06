@@ -15,7 +15,7 @@ work.
 
 ## The contradiction
 
-`cat-harness/docs/crdm-methodology.md` declares
+`cat-harness/docs/process/crdm-methodology.md` declares
 
     available_locales: ["en","fr"]
 
