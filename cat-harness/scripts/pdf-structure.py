@@ -107,7 +107,7 @@ from _pdf_title import BROWSER_RE, apply as resolve_title, evidence_from_pdf  # 
 
 # The layout-based fallback (issue #2302): headings read from font metrics,
 # or from a printed contents page. Measured against held-out outlines by
-# `toc-benchmark.py`; see docs/guides/toc-extraction.md.
+# `toc-benchmark.py`; see docs/research-and-analysis/toc-extraction.md.
 import _pdf_headings  # noqa: E402
 
 SCHEMA = "pdf-structure/v1"

@@ -8,7 +8,7 @@ reader uses to see a heading — it is set larger, or bolder, than the body —
 so that fallback can only find headings that are NUMBERED or carry one of a
 dozen stock names. This module reads the text WITH its font metrics and
 offers two methods, measured against held-out PDF outlines by
-`toc-benchmark.py` (see `docs/guides/toc-extraction.md` for the numbers):
+`toc-benchmark.py` (see `docs/research-and-analysis/toc-extraction.md` for the numbers):
 
 * `font_headings` — the rule-based tree constructor every open pipeline
   starts from (pdfminer / PyMuPDF layout blocks): find the body type, keep
