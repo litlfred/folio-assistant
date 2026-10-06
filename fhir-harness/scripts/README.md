@@ -25,6 +25,7 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`ig-binary-audit.test.ts`](ig-binary-audit.test.ts) | a file |  |
 | [`ig-binary-audit.ts`](ig-binary-audit.ts) | a file |  |
 | [`ig-cache.sh`](ig-cache.sh) | a file |  |
+| [`ig-footer-parity.test.ts`](ig-footer-parity.test.ts) | a file |  |
 | [`ig-footer.test.ts`](ig-footer.test.ts) | a file |  |
 | [`ig-footer.ts`](ig-footer.ts) | a file |  |
 | [`ig-site-data.test.ts`](ig-site-data.test.ts) | a file |  |
