@@ -101,11 +101,12 @@ describe("a transitive dependency is declared, not inferred", () => {
 });
 
 describe("the two tiers, and what each costs", () => {
-  test("camelot is the only extended entry, and it is the expensive one", () => {
-    expect(depsForTier("extended").map((d) => d.distribution)).toEqual(["camelot-py"]);
+  test("each extended entry carries its measured cost, and camelot is the expensive one", () => {
+    // camelot-py was the only one until vosk (meeting transcription, 2026-10-06).
+    expect(depsForTier("extended").map((d) => d.distribution)).toEqual(["camelot-py", "vosk"]);
     // The reason has to carry the measurement — a tier with no stated cost is
     // a judgement nobody can check.
-    expect(depsForTier("extended")[0].why).toMatch(/\d+ ?MB/);
+    for (const d of depsForTier("extended")) expect(d.why, d.distribution).toMatch(/\d+(\.\d+)? ?MB/);
   });
 
   test("every lean entry is installable by CI's own file", () => {

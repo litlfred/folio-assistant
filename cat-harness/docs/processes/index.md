@@ -141,7 +141,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**129** distinct skill(s) are named by an activity.
+**130** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -152,6 +152,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`bean-blocking`](../reference/skill-instructions/bean-blocking.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
 | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | [`bean-lifecycle.bpmn`](bean-lifecycle.html), [`code-change-review.bpmn`](code-change-review.html), [`merge-refusal.bpmn`](merge-refusal.html), [`merge-train.bpmn`](merge-train.html), [`stalled-agent-triage.bpmn`](stalled-agent-triage.html) |
 | [`before-after-preview`](../reference/skill-instructions/before-after-preview.html) | [`code-change-review.bpmn`](code-change-review.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
+| [`block-actions`](../reference/skill-instructions/block-actions.html) | [`public-comment.bpmn`](public-comment.html) |
 | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | [`board-place-note.bpmn`](board-place-note.html), [`board-relocate.bpmn`](board-relocate.html) |
 | [`board-windows`](../reference/skill-instructions/board-windows.html) | [`board-open-close.bpmn`](board-open-close.html), [`board-relocate.bpmn`](board-relocate.html) |
 | `bootstrap-kg-navigation` | [`complete-initialization.bpmn`](complete-initialization.html), [`initialize-harness.bpmn`](initialize-harness.html) |
