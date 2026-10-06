@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/SourceProvenance",
+  "definitions": {
+    "SourceProvenance": {
+      "type": "object",
+      "properties": {
+        "upstream": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signature": {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "signer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verifiedAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "format",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-dazzling-wright-xshj1s/folio-assistant-core/schema/zod/materialization/SourceProvenanceSchema.schema.json",
+  "title": "SourceProvenanceSchema",
+  "description": "Generated from `SourceProvenanceSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "fd5f3e9e11b2c527475ab3447bc1cd81a848cd88",
+    "pr": "2334/merge",
+    "run": "37533290213"
+  }
+}

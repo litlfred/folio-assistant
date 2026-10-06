@@ -1,0 +1,79 @@
+{
+  "$ref": "#/definitions/AstDependencies",
+  "definitions": {
+    "AstDependencies": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "ig-ast-dependencies/v1"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "targetVersion": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "resolved": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "origin": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "source",
+              "kind",
+              "target",
+              "targetVersion",
+              "resolved",
+              "origin"
+            ],
+            "additionalProperties": {}
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "dependencies"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast/AstDependenciesSchema.schema.json",
+  "title": "AstDependenciesSchema",
+  "description": "Generated from `AstDependenciesSchema` in schemas/ig-ast.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/dazzling-wright-xshj1s",
+    "sha": "fd5f3e9e11b2c527475ab3447bc1cd81a848cd88",
+    "pr": "2334/merge",
+    "run": "37533290213"
+  }
+}
