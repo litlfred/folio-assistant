@@ -1,0 +1,195 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "graph",
+    "id": "kg",
+    "path": null
+  },
+  "source_hash": null,
+  "criteria": {
+    "skill-has-entry-point": {
+      "result": "pass",
+      "findings": []
+    },
+    "consulted-skill-not-performed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-in-role-or-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "dak-postprocessing",
+          "detail": "no role carries \"dak-postprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "dak-preprocessing",
+          "detail": "no role carries \"dak-preprocessing\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "grade",
+          "detail": "no role carries \"grade\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "ig-artifact-ingestion",
+          "detail": "no role carries \"ig-artifact-ingestion\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-base-tools",
+          "detail": "no role carries \"smart-base-tools\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "smart-stack-layering",
+          "detail": "no role carries \"smart-stack-layering\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
+          "where": "toolchain-ownership",
+          "detail": "no role carries \"toolchain-ownership\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`, `smart-base-house-processes` at `processes/`) — a nested instance may name it, and this audit does not read one."
+        }
+      ]
+    },
+    "downstream-tool-declared": {
+      "result": "n/a",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "not evaluated: `downstream-tool-declared` is `repo`-scoped and this run is scoped to smart-base. Its three sources are repository-level, not per instance: the member readers are code in `scripts/downstream-runs.ts`, the publish verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per instance it would judge the platform's members against an instance's Tools and report every one as undeclared."
+        }
+      ]
+    },
+    "manifest-skill-exists": {
+      "result": "pass",
+      "findings": []
+    },
+    "remote-skill-is-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-roles-resolve": {
+      "result": "n/a",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "not evaluated: `actor-roles-resolve` is `repo`-scoped and this run is scoped to smart-base. An actor is declared ONCE for the whole repository (`cat-harness/scenarios/actors/`) while a role is a swimlane inside one instance's diagrams, so this compares a repository-level set against an instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for almost every one of the 36 repository actors, because they name roles the bootstrap graph does not declare. Every one was false."
+        }
+      ]
+    },
+    "actor-capabilities-resolve": {
+      "result": "n/a",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "not evaluated: `actor-capabilities-resolve` is `repo`-scoped and this run is scoped to smart-base. Both sides are repository-level — actors and capabilities (`cat-harness/scenarios/`) are resolved through `repoRootFor`, so `--instance` does not move either. Re-asking per instance would re-derive the root's own answer once per declaration and report the same findings N times."
+        }
+      ]
+    },
+    "actor-permissions-resolve": {
+      "result": "n/a",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "not evaluated: `actor-permissions-resolve` is `repo`-scoped and this run is scoped to smart-base. Same shape as `actor-capabilities-resolve`: actors and `skills/permissions/permissions.json` are both repository-level, so an instance run can only duplicate the root's verdict."
+        }
+      ]
+    },
+    "actor-is-not-a-role": {
+      "result": "n/a",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "not evaluated: `actor-is-not-a-role` is `repo`-scoped and this run is scoped to smart-base. The subject set is `ACTOR_DIR`, resolved through `repoRootFor`, so it is repository-level and `--instance` does not move it. An instance run would re-derive the root's verdict over the same actor files and report the same findings once per declaration."
+        }
+      ]
+    },
+    "story-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-graph-typologies-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-contract-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-skill-resolves": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run qa:refresh`) or fetch it (`bun run qa:fetch`)."
+        }
+      ]
+    },
+    "test-run-conforms": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run qa:refresh`) or fetch it (`bun run qa:fetch`)."
+        }
+      ]
+    },
+    "test-run-checkable": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run qa:refresh`) or fetch it (`bun run qa:fetch`)."
+        }
+      ]
+    },
+    "test-plan-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-case-executed-or-skipped": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-data-hash-present": {
+      "result": "n/a",
+      "findings": []
+    },
+    "test-sut-not-self-judged": {
+      "result": "n/a",
+      "findings": []
+    },
+    "arrow-direction": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-names-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-contract-claimed": {
+      "result": "pass",
+      "findings": []
+    },
+    "nested-instance-audited": {
+      "result": "n/a",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "not evaluated: `nested-instance-audited` is `repo`-scoped and this run is scoped to smart-base. `unreadNestedInstances()` walks from `repoRootFor(root)` to find declarations, so it asks a question ABOUT the repository's set of instances. MEASURED 2026-09-26: it fired 15 inside the bootstrap run, reporting bootstrap's siblings as unread from inside bootstrap — which is the root's question being asked in a place that cannot act on it."
+        }
+      ]
+    },
+    "content-instance-holds-code": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 9,
+    "fail": 1,
+    "n/a": 13,
+    "unknown": 3
+  }
+}
