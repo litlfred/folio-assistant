@@ -11,6 +11,9 @@
  *
  * Node-only: it reads declarations from disk, which is why it is not in
  * `jsonld.ts`.
+ *
+ * @module cat-harness/schemas/content-context
+ * @graphNode none — a function library: it builds a document's context and defines no schema
  */
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
