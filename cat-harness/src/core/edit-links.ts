@@ -205,9 +205,22 @@ export const EDIT_LINKS_RUNTIME = `(() => {
     }
     return cfg;
   };
+  // A link that names a GitHub file but carries no facts (a generator wrote
+  // its href from data, e.g. sourceLinks) gives them up from its own URL.
+  const GH = /^https:\\/\\/github\\.com\\/([^/]+\\/[^/]+)\\/(?:blob|edit)\\/([^/]+)\\/([^#?]+)(?:#L(\\d+))?$/;
+  const adopt = (a) => {
+    const m = GH.exec(a.getAttribute("href") || "");
+    if (!m) return false;
+    a.dataset.repo = m[1]; a.dataset.branch = m[2];
+    a.dataset.src = m[3].split("/").map(decodeURIComponent).join("/");
+    if (m[4]) a.dataset.line = m[4];
+    return true;
+  };
   const ready = (host) => {
     if (host.dataset.ready) return;
-    const c = config();
+    if (!host.dataset.src && !(host.matches("a[data-fa-link]") && adopt(host))) return;
+    const c0 = config();
+    const c = host.dataset.branch ? Object.assign({}, c0, { branch: host.dataset.branch }) : c0;
     if (!c.repo && !host.dataset.repo) return;
     host.dataset.ready = "1";
     const label = host.dataset.block || host.dataset.src;
@@ -216,14 +229,14 @@ export const EDIT_LINKS_RUNTIME = `(() => {
       pageUrl: location.href.split("#")[0] + "#" + encodeURIComponent(label) });
     const links = host.matches("a[data-fa-link]") ? [host] : host.querySelectorAll("a[data-fa-link]");
     // Only this host's own links: a nested host (a Lean link inside a block's row) fills itself.
-    for (const a of links) if (a.closest("[data-src]") === host && u[a.dataset.faLink]) a.href = u[a.dataset.faLink];
+    for (const a of links) if ((a === host || a.closest("[data-src]") === host) && u[a.dataset.faLink]) a.href = u[a.dataset.faLink];
   };
-  const fill = (root) => { for (const h of (root || document).querySelectorAll("[data-src]")) ready(h); };
+  const fill = (root) => { for (const h of (root || document).querySelectorAll("[data-src], a[data-fa-link]")) ready(h); };
   // A page that learns its repository later (the folio site reads it from its outline) says so here.
   const configure = (c) => { cfg = c; };
   window.faEditLinks = { urls: faBlockUrls, fill: fill, configure: configure };
   for (const ev of ["pointerover", "focusin", "touchstart"])
-    document.addEventListener(ev, (e) => { const h = e.target.closest && e.target.closest("[data-src]"); if (h) ready(h); }, { passive: true });
+    document.addEventListener(ev, (e) => { const h = e.target.closest && e.target.closest("[data-src], a[data-fa-link]"); if (h) ready(h); }, { passive: true });
 })();`;
 
 /** The published asset, `cat-harness/docs/assets/js/edit-links.js`: the runtime, as a file. A test holds them equal. */

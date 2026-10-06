@@ -171,9 +171,10 @@ function renderItem(item: TodoIndexItem, opts: TodoListingOptions): string {
   // scheme, and a todo id is a slug (`TodoNodeSchema`).
   if (own !== undefined) links.push(`<a href="${own}">Open this todo</a>`);
   const view = safeHref(item.viewHref);
-  if (view !== undefined) links.push(`<a href="${escapeHtml(view)}">View source</a>`);
+  // data-fa-link: the platform's one recipe rebuilds these from their URLs (edit-links.js, bean v433).
+  if (view !== undefined) links.push(`<a data-fa-link="source" href="${escapeHtml(view)}">View source</a>`);
   const edit = safeHref(item.editHref);
-  if (edit !== undefined) links.push(`<a href="${escapeHtml(edit)}">Edit</a>`);
+  if (edit !== undefined) links.push(`<a data-fa-link="edit" href="${escapeHtml(edit)}">Edit</a>`);
   if (links.length) {
     lines.push(`      <p class="fa-todo-listing-links">${links.join(" &middot; ")}</p>`);
   }

@@ -499,6 +499,8 @@
     if (edit) {
       var a = el("a", {
         class: "fa-workplan-edit",
+        // Rebuilt from the platform's one recipe when edit-links.js is on the page (bean v433).
+        "data-fa-link": "edit",
         href: edit,
         title: "Edit " + editFile,
         "aria-label": "Edit " + editFile,
