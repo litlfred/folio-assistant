@@ -29142,6 +29142,13 @@
           "optional": true,
           "array": true,
           "doc": "How the change reached this file: the changed input first, then each"
+        },
+        {
+          "name": "anchors",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The fragment ids within `path` the change alters, for a page that"
         }
       ],
       "extendsNames": [],

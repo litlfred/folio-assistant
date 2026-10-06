@@ -22,6 +22,24 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     $schema [1] : 'kg-qa-manifest/v1'
     auditor [1] : object
   }
+  class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> #f4e6e6 {
+    kind [1] : 'script' | 'agent' | 'human'
+    id [1] : string
+    version [0..1] : string
+    at [0..1] : string
+    sha [0..1] : string
+    scriptHash [0..1] : string
+    scriptCommitSha [0..1] : string
+    depsHash [0..1] : string
+    model [0..1] : string
+    session [0..1] : string
+    skill [0..1] : string
+    method [0..1] : string
+    freshness [1] : QaFreshness
+    changed [0..1] : string[]
+    notCompared [0..1] : string[]
+    notes [0..1] : string
+  }
   class "qa-results/v1" as cat_harness_qa_qa_results_v1 <<ts: QaResult>> #f4e6e6 {
     $schema [1] : 'qa-results/v1'
     producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }

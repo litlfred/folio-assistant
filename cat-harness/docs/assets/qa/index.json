@@ -1,5 +1,72 @@
 {
+  "tile": {
+    "qa": {
+      "count": 595,
+      "unit": "documents"
+    }
+  },
   "$schema": "folio-qa-graph/v1",
-  "availability": "unknown",
-  "reason": "the derived QA corpus was not in this build (it lives on the `qa-reports` branch and was not fetched), so the qa graph was not counted"
+  "files": 595,
+  "families": [
+    {
+      "schema": "kg-qa/v1",
+      "files": 481,
+      "rollUpField": "totals",
+      "buckets": {
+        "pass": 2725,
+        "fail": 404,
+        "n/a": 1430,
+        "unknown": 9
+      }
+    },
+    {
+      "schema": "folio-detangle-sidecar/v1",
+      "files": 69,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-witness/v1",
+      "files": 22,
+      "rollUpField": "counts",
+      "buckets": {
+        "fail": 20,
+        "warn": 0,
+        "pass": 315,
+        "na": 212,
+        "unknown": 3
+      }
+    },
+    {
+      "schema": "folio-qa-index/v1",
+      "files": 17,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-results/v1",
+      "files": 2,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-lsi-index/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-translation-pages/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-tool-run/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "kg-qa-manifest/v1",
+      "files": 1,
+      "rollUpField": null
+    }
+  ],
+  "unclassified": 0,
+  "unreadable": 0
 }

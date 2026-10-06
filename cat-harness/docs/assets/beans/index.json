@@ -74,7 +74,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T21:42:43Z",
-      "updatedAt": "2026-10-02T21:42:43Z",
+      "updatedAt": "2026-10-04T13:29:38Z",
       "preview": "Owner, 2026-10-02, verbatim: \"i think we also need cat-kg-jsonld in which all of the json(ld) is staged before being published. right now. it is a bit adhoc. bootstrap-tools writes to bootstrap's gh-pages direcrtly i thinkj..... instead (whoever is doing the rendering of the KG):\n* the writer puts <stub>'s new/incremental updates to the json(ld) KG in the <stub>'a cat-kg-json-ld branch\n* the CI ch",
       "file": "beans/defs/folio-assistant-073f--kg-jsonld-staging-each-stub-stages-its-json-ld-on.md"
     },
@@ -1298,12 +1298,12 @@
       "title": "The committed site build under cat-harness/docs/ is 44% of all merge conflicts, and the publish workflow rebuilds it anyway",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T08:34:21Z",
-      "updatedAt": "2026-10-03T08:34:21Z",
+      "updatedAt": "2026-10-04T13:29:55Z",
       "preview": "Owner, 2026-10-03: *\"I want you to examine each of the conflicted PR as they\ncome in to figure out how we can reduce the conflicts/ignore them.\"* This is\nthat measurement, taken over the whole open queue at once rather than per PR,\nbecause the answer is a distribution and not a property of any one PR.\n\n## The measurement\n\nEvery conflicted path of every open non-draft PR, against `main` `d089aca961",
       "file": "beans/defs/folio-assistant-34cm--the-committed-site-build-under-cat-harnessdocs-is.md"
     },
@@ -11459,14 +11459,14 @@
     {
       "id": "folio-assistant-uvt0",
       "title": "who-iris replica: the locale band shifts the page 52px; make it an overlay (owner: no shift)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T08:56:44Z",
-      "updatedAt": "2026-10-06T08:56:44Z",
+      "updatedAt": "2026-10-06T12:30:00Z",
       "preview": "**Owner ruling, 2026-10-06** (session https://claude.ai/code/session_01EcBv3uwKYcnNbCC6BcPG92), option 1 of 3: *\"Overlay, no shift\"*. The language band must not move the replica.\n\n## The defect\nWhen a who-iris replica page carries a `fa-translation-meta` block, `docs-ui.js` puts the locale globe in a band inside the page flow, between `.crumbs` and `<main>`. The band is 40 px tall and pushes `<mai",
       "file": "beans/defs/folio-assistant-uvt0--who-iris-replica-the-locale-band-shifts-the-page-5.md"
     },
@@ -12941,14 +12941,14 @@
     {
       "id": "folio-assistant-y7b3",
       "title": "VOLATILE FIELDS: a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:25:16Z",
-      "updatedAt": "2026-10-01T07:33:12Z",
+      "updatedAt": "2026-10-04T13:34:40Z",
       "preview": "Follow-on to #1658 (bean 52cz, done) and beans oxka / 520m / lxpq (completed). Owner 2026-09-30 chose MEASURE line-level before building a resolver.\n\n## Measured 2026-09-30\n\n300 recent main-into-branch merges on origin/claude/* replayed with git merge-tree (read-only). 235 conflicted; 147 (63%) conflicted ONLY on generated files.\n\nTop four, what the conflicting lines are:\n\n| file | conflicted merg",
       "file": "beans/defs/folio-assistant-y7b3--volatile-fields-a-timestamp-or-total-in-a-committe.md"
     },
@@ -14947,13 +14947,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 567,
-        "closed": 222,
-        "open": 345,
+        "closed": 223,
+        "open": 344,
         "inProgress": 122,
-        "todo": 222,
+        "todo": 221,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.3915343915343915
+        "share": 0.3932980599647266
       },
       {
         "id": "folio-assistant-vuip",
@@ -14987,8 +14987,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 536,
-    "coveredOpen": 533,
+    "openTotal": 535,
+    "coveredOpen": 532,
     "duplicateIds": 0
   }
 }
