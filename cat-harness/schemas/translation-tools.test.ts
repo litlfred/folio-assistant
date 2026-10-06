@@ -47,8 +47,8 @@ describe("translation profiles come from the instances present", () => {
 });
 
 describe("in this checkout", () => {
-  test("each built-in content type is declared by the layer that owns it, never by cat-harness", () => {
-    const owner = Object.fromEntries(CONTENT_TYPE_TRANSLATIONS.map((c) => [c.contentType, c.declaredBy.split("/").pop()]));
-    for (const ct of Object.values(owner)) expect(ct).not.toBe("cat-harness");
+  test("cat-harness declares only its own docs-site profile; every content type is declared by its owner", () => {
+    const own = CONTENT_TYPE_TRANSLATIONS.filter((c) => c.declaredBy.split("/").pop() === "cat-harness").map((c) => c.contentType);
+    expect(own).toEqual(["docs"]);
   });
 });
