@@ -134,13 +134,13 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Is AtomicMass.lean still in sync with its data table?](atomic-mass-drift-check.html) | 1 | — |
 | [Authoring a paper](authoring-a-paper.html) | 9 | — |
 | [DIIG — from a health system bottleneck to a costed implementation plan](diig-investment-path.html) | 9 | — |
-| [L2 DAK authoring](l2-dak-authoring.html) | 10 | — |
+| [L2 DAK authoring](l2-dak-authoring.html) | 11 | — |
 
 ## What runs this skill?
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**126** distinct skill(s) are named by an activity.
+**127** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -176,6 +176,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`crdm-data-model`](../reference/skill-instructions/crdm-data-model.html) | [`crdm-data-model.bpmn`](crdm-data-model.html) |
 | [`crdm-detect`](../reference/skill-instructions/crdm-detect.html) | [`crdm-requirements.bpmn`](crdm-requirements.html) |
 | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | [`crdm-close.bpmn`](crdm-close.html), [`crdm-deliver.bpmn`](crdm-deliver.html), [`crdm-issue-linking.bpmn`](crdm-issue-linking.html), [`crdm-needs.bpmn`](crdm-needs.html), [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html), [`crdm-requirements.bpmn`](crdm-requirements.html), [`crdm-signoff.bpmn`](crdm-signoff.html) |
+| [`dak-l1-library`](../reference/skill-instructions/dak-l1-library.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
 | [`data-modelling`](../reference/skill-instructions/data-modelling.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
 | [`decision-audit`](../reference/skill-instructions/decision-audit.html) | [`crdm-close.bpmn`](crdm-close.html), [`crdm-signoff.bpmn`](crdm-signoff.html), [`options-analysis.bpmn`](options-analysis.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
 | [`decision-comparison`](../reference/skill-instructions/decision-comparison.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
