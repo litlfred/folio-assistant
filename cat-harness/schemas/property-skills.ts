@@ -86,6 +86,8 @@ export const PROPERTY_SKILLS = {
   // reports an unclassified step.
   gateExemptions: { skills: ["prepare-merge"] },
   contentAdapters: { skills: ["content-profiles"] },
+  // Bean `0r7u`: each instance's translation profile per content type it owns.
+  contentTranslations: { skills: ["translation-manager"] },
   liquid: { skills: ["witnessed-values"] },
   // `publishable` was here until 2026-09-24 and the field is gone — replaced
   // by `publication.state`, which is a STATE rather than a boolean. The three
