@@ -6,6 +6,8 @@
  * `evidence: ["heading"]` when every word of the keyword appears in a heading
  * the extraction found: the section's own title for a section keyword, a TOC
  * title or figure caption for a document keyword.
+ *
+ * @graphNode schema
  */
 import { z } from "zod";
 
