@@ -334,10 +334,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T01:23:07.275Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7a2ff7ee203574ad4ba2fe77f9b2421cb01ee29e",
-  "sourceCommitSha": "7a2ff7ee203574ad4ba2fe77f9b2421cb01ee29e",
-  "sourceCommitAt": "2026-10-06T03:07:59+02:00",
+  "generatedAt": "2026-10-06T05:34:46.858Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f4f591029cf2c1e5eb86bc930182d676ffd543e8",
+  "sourceCommitSha": "f4f591029cf2c1e5eb86bc930182d676ffd543e8",
+  "sourceCommitAt": "2026-10-06T07:24:35+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -350,7 +350,7 @@
     "SequenceFlow": 763,
     "Lane": 139,
     "ProcessNode": 738,
-    "Tool": 127,
+    "Tool": 129,
     "Schema": 151,
     "ExternalSchema": 22,
     "GraphTypology": 30,
@@ -29983,6 +29983,135 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/compose-docs",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "compose-docs",
+      "title": "Compose the site's documentation tree from its declared docs layers",
+      "description": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/compose-docs.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The Jekyll source to write (replaced).",
+            "required": true
+          },
+          {
+            "name": "staging",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "A local build or a staging preview: staging-only visualisations are included.",
+            "required": false,
+            "arg": {
+              "flag": "--staging"
+            }
+          },
+          {
+            "name": "changed-files",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The branch's changed paths, one per line: instances it does not reach are stubbed.",
+            "required": false
+          },
+          {
+            "name": "shell",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "The chrome only: Jekyll machinery and assets, no page and no composed instance; generated includes written empty.",
+            "required": false,
+            "arg": {
+              "flag": "--shell"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "files",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Count",
+            "description": "Files composed, with every override, merge, withheld file and carried or stubbed instance named."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/navbar-include",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "navbar-include",
+      "title": "Write the site sidebar's harness navbar include",
+      "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/gen-navbar-include.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if the committed include is stale; write nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The instance whose own site this navbar is for.",
+            "required": false
+          },
+          {
+            "name": "link-root",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "With `--instance`: the main site's URL, for every link that is not this instance's own.",
+            "required": false
+          },
+          {
+            "name": "title",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "With `--instance`: the label the navbar's home row carries.",
+            "required": false
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "With `--instance`: where to write the include (the shell's `_includes/generated/navbar-footer.html`).",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "include",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The include written, or `up to date`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-tiles"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/subgraph-resolve",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "subgraph-resolve",
@@ -44958,8 +45087,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "7a2ff7ee203574ad4ba2fe77f9b2421cb01ee29e",
+    "sha": "f4f591029cf2c1e5eb86bc930182d676ffd543e8",
     "pr": "main",
-    "run": "37397601197"
+    "run": "37418387390"
   }
 }
