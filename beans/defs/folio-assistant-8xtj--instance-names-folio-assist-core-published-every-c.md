@@ -1,12 +1,13 @@
 ---
 # folio-assistant-8xtj
 title: 'INSTANCE NAMES: folio-assist-core published every core term to a path no term names — fixed, plus the 247-reference residue a sweep must not touch'
-status: completed
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-20T19:01:42Z
 updated_at: 2026-10-07T08:14:00Z
 parent: folio-assistant-zzmr
+tags: [ready-to-close]
 ---
 
 Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus): *"fix stub name mismatxhes."*
@@ -191,8 +192,9 @@ with references following because it is a live directory that actually moved.
 That is the opposite case from `folio-assist-core`, which is a *dead* directory
 name whose references are history. Beans were left alone for both.
 
-## Evidence: Closed on 2026-10-07
-- Items 1–3 landed in PR #590 and 2026-09-20 owner ruling (`folio-assistant-sci` long form).
+## Evidence
+The stub rename is re-derivable (`"stub": "cat-harness"` in `cat-harness/cat-harness.json` on main, from #685, merge commit `d96c9ab091`) and item 5's prose edits land with this bean's own PR (#2396); the 2026-10-07 owner reaffirmation is not quoted or linked, so the bean is held at in-progress with the `ready-to-close` tag for the owner to confirm.
+- Items 1–3 landed in PR #590 (merge commit `887ef8b2ff`) and 2026-09-20 owner ruling (`folio-assistant-sci` long form).
 - Item 4 (root-name vs cat-harness stub collision): Landed in PR #685 (`cat-harness` stub renamed to `cat-harness`), reaffirmed by owner ruling 2026-10-07.
 - Item 5 (prose references): Updated live references to `folio-assistant-core` across `serving-renderings.md`, `asset-extraction.md`, `directory-conventions.md`, `kg-export.md`, `package-manifest.json`, and updated `cat-harness.json` comment, while strictly preserving historical bean entries and published landing card id.
 - Item 6 (card id relational guard): Preserved and passing (83/83 in `cat-harness/schemas/landing-sticky.test.ts`).
