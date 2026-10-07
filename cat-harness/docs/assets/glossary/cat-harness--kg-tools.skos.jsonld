@@ -1334,6 +1334,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pin-actions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Pin third-party GitHub Actions to full commit SHAs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Rewrite every third-party `uses: owner/repo@ref` outside the declared staging-only workflows to `@<full commit SHA> # <ref>`, so Dependabot keeps the pair current. A tag resolves to its PEELED commit (an annotated tag's object is never pinned), else a branch head, by `git ls-remote` with argv. A ref that resolves to nothing, or to more than one commit, is refused and reported, never guessed. This repository's own reusable workflows are first-party and left alone. Idempotent."
+        }
+      ],
+      "skos:notation": "pin-actions",
+      "dcterms:source": "cat-harness/tools/index.ts#pin-actions",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/pin-spdx-license-list",
       "@type": "skos:Concept",
       "skos:inScheme": {

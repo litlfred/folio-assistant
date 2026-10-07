@@ -535,6 +535,14 @@
       "status": "candidate"
     },
     {
+      "id": "pin-actions",
+      "prefLabel": "Pin third-party GitHub Actions to full commit SHAs",
+      "definition": "Rewrite every third-party `uses: owner/repo@ref` outside the declared staging-only workflows to `@<full commit SHA> # <ref>`, so Dependabot keeps the pair current. A tag resolves to its PEELED commit (an annotated tag's object is never pinned), else a branch head, by `git ls-remote` with argv. A ref that resolves to nothing, or to more than one commit, is refused and reported, never guessed. This repository's own reusable workflows are first-party and left alone. Idempotent.",
+      "notation": "pin-actions",
+      "source": "cat-harness/tools/index.ts#pin-actions",
+      "status": "candidate"
+    },
+    {
       "id": "pin-spdx-license-list",
       "prefLabel": "Snapshot the SPDX License List at its pinned version",
       "definition": "Read `json/licenses.json` and `json/exceptions.json` from a copy of github.com/spdx/license-list-data at the pinned tag and write `cat-harness/external-schemas/spdx-license-list.terminology.json` (`folio-pinned-terminology/v1`): every licence and exception id with its name and deprecated flag — the offline, version-fixed list `check:source-licence` validates a `licence.json` id against.",

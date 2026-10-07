@@ -45,6 +45,7 @@ off a variable.
 | an archive → a filesystem | a LINK member writes through to its target, which `..`-refusal does not cover | member-TYPE whitelist (`tar tvzf`, accept only `-` and `d`) at the one call site, `tar-member-guard.test.ts` against real archives | **closed at one site** (`6bhf`) |
 | a `.po` catalogue → a render | translated content is authored elsewhere | `scripts/translation/translation_security.py` | exists, unaudited here |
 | content → HTML | XSS in a rendered surface | bean `q2wm`, declared XSS hints on tools and skills | **open** |
+| a third-party action → a runner | a moved tag or rewritten branch runs new code with the job's token and secrets | `bun run actions:pin` (`pin-actions.ts`) pins to a full commit SHA; `security:gate` **blocks** on an unpinned action outside the declared staging-only workflows (owner, 2026-10-07: staging may stay unpinned) | **gated** (`ieum`): 216 pinned, 24 in staging reported |
 
 ## Where to look when adding a check
 
@@ -74,3 +75,10 @@ artefact at all is
 and it governs cases where the path is perfectly safe and the deletion is still
 wrong.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Run the release security gate [security:gate] |
+
