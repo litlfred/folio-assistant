@@ -111,6 +111,7 @@ import { resolveSubgraphSource } from "../schemas/subgraph-source.js";
 import "../schemas/folio-graph-typology.js";
 import { waitFor } from "../src/core/retry.js";
 import { PUSH_BASE_MS, PUSH_CAP_MS } from "./backoff-sleep.js";
+import { inputSiteReached } from "./input-trace.ts";
 
 // ── Constants ────────────────────────────────────────────────────────────
 
@@ -341,6 +342,7 @@ export interface TreeEntry {
 }
 
 function gitTopLevel(cwd = process.cwd()): string {
+  // input-site: store #128d75cd — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
   const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd, encoding: "utf-8" });
   if (r.status !== 0) throw new BranchStoreUsageError(`not inside a git checkout: ${cwd}`);
   return r.stdout.trim();
@@ -348,10 +350,12 @@ function gitTopLevel(cwd = process.cwd()): string {
 
 /** The checkout's own `http.*.extraheader` lines, carried in env (never argv). */
 function authEnvFrom(repoRoot: string): Record<string, string> {
+  // input-site: store #d6d10161 — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
   const r = spawnSync("git", ["config", "--get-regexp", "^http\\..*extraheader$"], { cwd: repoRoot, encoding: "utf-8" });
   if (r.status !== 0 || !r.stdout.trim()) return {};
   const env: Record<string, string> = {};
   const lines = r.stdout.trim().split("\n");
+  // input-site: store #d641fe25 — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
   const base = Number(process.env.GIT_CONFIG_COUNT ?? 0) || 0;
   lines.forEach((line, i) => {
     const sp = line.indexOf(" ");
@@ -430,6 +434,7 @@ export class TreeStore {
     this.refNamespace = opts.refNamespace;
     this.log = opts.log ?? ((l) => console.error(l));
     this.env = {
+      // input-site: store #b3c0797f — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
       ...process.env,
       ...authEnv,
       GIT_TERMINAL_PROMPT: "0",
@@ -443,6 +448,7 @@ export class TreeStore {
     delete this.env.GIT_WORK_TREE;
     delete this.env.GIT_INDEX_FILE;
     if (!existsSync(join(dir, "HEAD"))) {
+      // input-site: store #8d3dda23 — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
       const init = spawnSync("git", ["init", "-q", "--bare", dir], { env: this.env });
       if (init.status !== 0) throw new Error(`git init --bare ${dir} failed: ${init.stderr?.toString()}`);
     }
@@ -452,6 +458,8 @@ export class TreeStore {
   }
 
   git(args: string[], opts: GitOpts = {}): GitResult {
+    // input-site: traced #4d97ae37 — every git call on a store: its remote, its bare repository, its auth
+    inputSiteReached(`branch-store ${this.dir}`);
     const r = spawnSync("git", [`--git-dir=${this.dir}`, ...args], {
       cwd: opts.cwd,
       env: { ...this.env, ...opts.env },
@@ -665,14 +673,18 @@ export class BranchStore extends TreeStore {
       if (!/^(?!-)(?!refs\/)[A-Za-z0-9._/-]+$/.test(b) || b.includes("..")) throw new BranchStoreUsageError(`not a plain branch name: ${b}`);
     }
     const repoRoot = opts.repoRoot ?? gitTopLevel();
+    // input-site: store #9d6d96d2 — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
     let remote = opts.remote ?? process.env.BRANCH_STORE_REMOTE;
     if (!remote) {
+      // input-site: store #68c082a4 — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
       const r = spawnSync("git", ["remote", "get-url", "origin"], { cwd: repoRoot, encoding: "utf-8" });
       if (r.status !== 0) throw new BranchStoreUsageError(`no remote: ${repoRoot} has no \`origin\`; pass remote or BRANCH_STORE_REMOTE`);
       remote = r.stdout.trim();
     }
+    // input-site: store #bfcdb69a — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
     let storeDir = opts.storeDir ?? process.env.BRANCH_STORE_DIR;
     if (!storeDir) {
+      // input-site: store #f48bd6b7 — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
       const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: repoRoot, encoding: "utf-8" });
       if (c.status !== 0) throw new BranchStoreUsageError(`cannot find the git directory of ${repoRoot}`);
       storeDir = join(c.stdout.trim(), "branch-store.git");
@@ -982,6 +994,7 @@ export type PushResult = WriteResult | { state: "refused"; reason: string };
  * edits (review on #1957). Agents here work in worktrees all the time.
  */
 function worktreeGitDir(repoRoot: string): string {
+  // input-site: store #b6ada2f5 — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
   const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-dir"], { cwd: repoRoot, encoding: "utf-8" });
   if (c.status !== 0) throw new BranchStoreUsageError(`cannot find the git directory of ${repoRoot}`);
   return c.stdout.trim();
@@ -1068,6 +1081,7 @@ function ignoredByCheckout(repoRoot: string, into: string, rels: string[]): Set<
   const root = relative(repoRoot, into).split(sep).join("/");
   if (!rels.length || root.startsWith("..")) return out;
   const input = rels.map((r) => `${root}/${r}`).join("\n") + "\n";
+  // input-site: store #24f29a9a — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
   const r = spawnSync("git", ["check-ignore", "-v", "--no-index", "--stdin"], { cwd: repoRoot, input, encoding: "utf-8" });
   for (const line of (r.stdout ?? "").split("\n").filter(Boolean)) {
     const tab = line.indexOf("\t");
@@ -1090,6 +1104,7 @@ export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult
   const into = resolve(repoRoot, opts.into ?? loc.path);
   const relInto = relative(repoRoot, into);
   if (!relInto.startsWith("..")) {
+    // input-site: store #6bf16bae — configures a branch-store read; the read itself goes through TreeStore.git(), which is traced
     const tracked = spawnSync("git", ["ls-files", "--", relInto || "."], { cwd: repoRoot, encoding: "utf-8" });
     if (tracked.status === 0 && tracked.stdout.trim()) {
       return { state: "refused", reason: `${relInto} is still tracked on this checkout's branch, so ${loc.id} has not been cut over to ${loc.branch}; mount it elsewhere with --into` };
