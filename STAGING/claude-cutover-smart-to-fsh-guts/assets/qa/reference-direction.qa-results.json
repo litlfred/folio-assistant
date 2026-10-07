@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "88cd89169fd4"
+    "script_hash": "6cd0c602df94"
   },
   "subject": {
     "kind": "reference-direction",
@@ -128,7 +128,7 @@
         },
         {
           "file": "cat-harness/docs/external-schemas/index.md",
-          "names": 4
+          "names": 3
         },
         {
           "file": "cat-harness/docs/guides/detangle.md",
@@ -866,13 +866,13 @@
       "entries": [
         {
           "instances": 14,
-          "occurrences": 63906,
+          "occurrences": 63933,
           "allowed": 0,
-          "wrongDirection": 4536,
+          "wrongDirection": 4533,
           "wrongDirectionFiles": 514,
-          "exempt": 14335,
+          "exempt": 14363,
           "namesRepository": 43760,
-          "undetermined": 1275,
+          "undetermined": 1277,
           "pendingFiles": 42,
           "pendingOccurrences": 326
         }
@@ -880,7 +880,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 913,
+      "count": 912,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -1573,10 +1573,6 @@
         {
           "file": "cat-harness/docs/external-schemas/index.md",
           "target": "folio-assistant-sci"
-        },
-        {
-          "file": "cat-harness/docs/external-schemas/index.md",
-          "target": "smart-base"
         },
         {
           "file": "cat-harness/docs/guides/detangle.md",
@@ -4537,5 +4533,5 @@
       ]
     }
   },
-  "total": 1121
+  "total": 1120
 }

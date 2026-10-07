@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 72 of 72 declared kind(s), 243 gate(s), 77 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 72 of 72 declared kind(s), 236 gate(s), 77 criteria.",
       "count": 72,
       "entries": [
         {
@@ -335,6 +335,11 @@
             "folio-assistant-core/src",
             "folio-assistant-sci/adapters",
             "folio-assistant-sci/scripts",
+            "smart-base/content",
+            "smart-base/platform",
+            "smart-base/schemas",
+            "smart-base/scripts",
+            "smart-trust/platform",
             "smart-trust/scripts",
             "test",
             "who-iris/id-lookup",
@@ -469,7 +474,6 @@
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
-            "bun run smart-base:dth-terms:check",
             "bun run subscriptions:viz:check",
             "bun run translated-links:check"
           ],
@@ -486,8 +490,7 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:document-kind-sources",
-            "bun run document-kinds:viz:check",
-            "bun run smart-base:document-kinds:check"
+            "bun run document-kinds:viz:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -521,9 +524,7 @@
           "gates": [
             "bun run check:artifact-index",
             "bun run p2:refusals:check",
-            "bun run smart-base:pages:check",
-            "bun run smart-immunizations:pages:check",
-            "bun run smart-trust:pages:check"
+            "bun run smart:pages"
           ],
           "typed": true,
           "hasFiles": true
@@ -629,9 +630,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run smart-base:pages:check",
-            "bun run smart-immunizations:pages:check",
-            "bun run smart-trust:pages:check"
+            "bun run smart:pages"
           ],
           "typed": false,
           "hasFiles": true
@@ -698,8 +697,7 @@
             "bun run check:upload-names:check",
             "bun run check:uploads-retired",
             "bun run gen:jsonld:check",
-            "bun run lsi:skills:check",
-            "bun run smart-base:smart-kg-l1:check"
+            "bun run lsi:skills:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -777,8 +775,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run smart-trust:openapi:check",
-            "bun run smart-trust:openapi:pages:check"
+            "bun run smart-trust:openapi:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -1544,7 +1541,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 243 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 236 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },

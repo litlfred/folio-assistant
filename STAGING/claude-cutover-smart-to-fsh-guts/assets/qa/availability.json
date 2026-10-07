@@ -1,11 +1,12 @@
 {
   "$schema": "folio-qa-availability/v1",
-  "source": "fetched",
+  "source": "fetched-fallback",
   "requested": [
-    "main"
+    "pr/2320/2112ad7a61d5360cf1cb42d03e9c23cb9818f440",
+    "pr/2320"
   ],
-  "key": "main/190ff5d527578e9eac9bac58a6529de07a71314c",
-  "reason": "fetched main/190ff5d527578e9eac9bac58a6529de07a71314c from qa-reports",
+  "key": "pr/2320/602172941d61511ceddc7d854186a5e0a6de746a",
+  "reason": "no entry for the requested ref; fetched pr/2320/602172941d61511ceddc7d854186a5e0a6de746a instead — QA evidence from ANOTHER commit, labelled as such",
   "expected": {
     "witnesses": 221,
     "results": 17
