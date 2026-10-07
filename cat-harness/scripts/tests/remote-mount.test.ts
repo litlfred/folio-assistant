@@ -15,14 +15,16 @@
  */
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
 import { declarationChain } from "../../schemas/harness-config.ts";
 import { instanceRootsIn } from "../../schemas/instance-roots.ts";
 import { RemoteSourceSchema, resolveSubgraphSource } from "../../schemas/subgraph-source.ts";
-import { MountLockSchema, mountedInstanceRoots } from "../../schemas/remote-mount.ts";
+import { MountLockSchema, mountedInstanceRoots, mountedManifests } from "../../schemas/remote-mount.ts";
+import { readScriptTable } from "../../schemas/script-table.ts";
+import { unresolvedVerdict } from "../run-script.ts";
 import { checkRemote, exitCode, mountRemote, planRemote, remoteFanOut, summarise } from "../remote-mount.ts";
 import { run as replayLocks } from "../mount-from-lock.ts";
 import { gitCorpus } from "../../schemas/git-corpus.ts";
@@ -85,7 +87,10 @@ beforeAll(() => {
           { id: "core-scripts", path: "scripts/", graphTypologies: ["code"] },
           { id: "core-docs", path: "docs/", graphTypologies: ["code"] },
         ],
+        // A declared ASSET: the layer's manifest, mounted by reference and locked by sha256 (#2467).
+        assets: [{ id: "manifest", src: "package.json", role: "package-manifest" }],
       }),
+      "core/package.json": JSON.stringify({ name: "core", private: true, checkoutScripts: { "core:run": "bun run core/scripts/run.ts" } }, null, 2) + "\n",
       "core/scripts/run.ts": 'import { answer } from "../../base/schemas/util.ts";\nexport const doubled = answer * 2;\n',
       "core/docs/readme.md": "# core\n",
       "base/base.json": decl("base", {
@@ -392,5 +397,110 @@ describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", ()
     const r = replayLocks(fresh, false);
     expect(r.outcomes[0]!.state).toBe("could-not-determine");
     expect(existsSync(join(fresh, "boot"))).toBe(false);
+  });
+});
+
+/** A fresh downstream holding a copy of what a mount laid down elsewhere, and NO lock: the adopt case. */
+function unlockedCopy(): string {
+  const src = downstream({});
+  mountRemote({ instanceRoot: src, urlFor });
+  const root = downstream({});
+  for (const d of ["core", "base", "boot"]) cpSync(join(src, d), join(root, d), { recursive: true });
+  return root;
+}
+
+describe("adopt if identical (owner, 2026-10-07; #2467)", () => {
+  test("22. an unlocked target identical to the pin is adopted: only the lock is written", () => {
+    const root = unlockedCopy();
+    const before = readFileSync(join(root, "core/scripts/run.ts"), "utf-8");
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    const core = r.plan.outcomes.find((o) => o.instance === "core")!;
+    expect(core).toMatchObject({ state: "mounted", adopted: true });
+    expect(summarise(r.plan.outcomes).state).toBe("mounted");
+    expect(readFileSync(join(root, "core/scripts/run.ts"), "utf-8")).toBe(before);
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    expect(lock.instances.find((i) => i.instance === "core")).toMatchObject({ adopted: true });
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+  });
+
+  test("23. an unlocked target that differs from the pin is refused, the differing paths listed, nothing changed", () => {
+    const root = unlockedCopy();
+    writeFileSync(join(root, "core/scripts/run.ts"), "export const doubled = 0;\n");
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    const core = r.plan.outcomes.find((o) => o.instance === "core")!;
+    expect(core).toMatchObject({ state: "missing", refusal: "not-identical", differing: ["core/scripts/run.ts"] });
+    expect(core.detail).toContain("core/scripts/run.ts");
+    expect(readFileSync(join(root, "core/scripts/run.ts"), "utf-8")).toBe("export const doubled = 0;\n");
+    // the lock carries the same list, so the health check and the mount report agree
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    expect(lock.instances.find((i) => i.instance === "core")).toBeUndefined();
+    expect(lock.unmounted.find((u) => u.instance === "core")).toMatchObject({ refusal: "not-identical", differing: ["core/scripts/run.ts"] });
+  });
+
+  test("24. an extra file under a declared directory is refused, and listed as extra", () => {
+    const root = unlockedCopy();
+    write(root, { "core/scripts/local.ts": "export const mine = 1;\n" });
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    const core = r.plan.outcomes.find((o) => o.instance === "core")!;
+    expect(core).toMatchObject({ state: "missing", refusal: "not-identical", extra: ["core/scripts/local.ts"] });
+    expect(existsSync(join(root, "core/scripts/local.ts"))).toBe(true);
+  });
+
+  test("25. a mismatched ASSET is a differing path too", () => {
+    const root = unlockedCopy();
+    writeFileSync(join(root, "core/package.json"), "{}\n");
+    const core = mountRemote({ instanceRoot: root, urlFor }).plan.outcomes.find((o) => o.instance === "core")!;
+    expect(core).toMatchObject({ refusal: "not-identical", differing: ["core/package.json"] });
+  });
+
+  test("26. tracked files stay refused, adopt or not", () => {
+    const root = unlockedCopy();
+    git(root, "add", "core");
+    const core = mountRemote({ instanceRoot: root, urlFor }).plan.outcomes.find((o) => o.instance === "core")!;
+    expect(core).toMatchObject({ state: "missing", refusal: "tracked" });
+  });
+});
+
+describe("a mounted package.json, by reference (owner, 2026-10-07: Option A; #2467)", () => {
+  test("27. the manifest is mounted as an asset and locked by sha256; the lock replayer verifies it", () => {
+    const root = downstream({});
+    mountRemote({ instanceRoot: root, urlFor });
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    expect(lock.instances.find((i) => i.instance === "core")!.assets).toMatchObject([{ id: "manifest", path: "core/package.json", upstreamPath: "core/package.json" }]);
+    writeFileSync(join(root, "core/package.json"), "{}\n");
+    expect(checkRemote({ instanceRoot: root }).outcomes.find((o) => o.instance === "core")!.detail).toContain("core/package.json modified");
+  });
+
+  test("28. a matching hash: the mounted layer's checkoutScripts are in the table", () => {
+    const root = downstream({});
+    mountRemote({ instanceRoot: root, urlFor });
+    const { table, unresolved } = readScriptTable(root);
+    expect(table.get("core:run")).toMatchObject({ manifest: "core/package.json", command: "bun run core/scripts/run.ts" });
+    expect(unresolved).toEqual([]);
+    expect(mountedManifests(root).find((m) => m.instance === "core")!.state).toBe("verified");
+  });
+
+  test("29. a mismatched hash: unresolvable, never silently absent", () => {
+    const root = downstream({});
+    mountRemote({ instanceRoot: root, urlFor });
+    writeFileSync(join(root, "core/package.json"), JSON.stringify({ checkoutScripts: { "core:run": "echo edited" } }));
+    const { table, unresolved } = readScriptTable(root);
+    expect(table.has("core:run")).toBe(false);
+    expect(unresolved).toMatchObject([{ manifest: "core/package.json", instance: "core", declares: ["core:run"] }]);
+    expect(unresolved[0]!.why).toContain("does not hash to the lock");
+    expect(unresolvedVerdict("core:run", unresolved)).toContain("UNRESOLVED");
+    expect(unresolvedVerdict("nothing-here", unresolved)).toBeUndefined();
+  });
+
+  test("30. no asset in the lock: a manifest on disk is unresolvable; no manifest at all is a determined none", () => {
+    const root = downstream({ overrides: { core: { assets: [] } } });
+    mountRemote({ instanceRoot: root, urlFor });
+    expect(existsSync(join(root, "core/package.json"))).toBe(false);
+    expect(mountedManifests(root).find((m) => m.instance === "core")!.state).toBe("none");
+    expect(readScriptTable(root).unresolved).toEqual([]);
+    write(root, { "core/package.json": { checkoutScripts: { "core:run": "bun run core/scripts/run.ts" } } });
+    const { table, unresolved } = readScriptTable(root);
+    expect(table.has("core:run")).toBe(false);
+    expect(unresolved[0]!.why).toContain("does not list core/package.json as an asset");
   });
 });
