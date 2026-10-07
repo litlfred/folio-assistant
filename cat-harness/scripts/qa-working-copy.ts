@@ -56,12 +56,14 @@ import { dirname, join } from "node:path";
 
 import { CACHE_FILE, FileDigests, cacheEnabled, trackedTreeDigest } from "./input-hash.ts";
 import { movedInventory } from "./qa-verify-moved.ts";
+import { inputSiteReached } from "./input-trace.ts";
 
 /** Where the stamp lives, beside the input-hash cache. `build/` is git-ignored. */
 export const STAMP_PATH = join(dirname(CACHE_FILE), "qa-working-copy.json");
 
 /** The commands that ARE the working copy — the same two CI runs, in order. */
 export const WORKING_COPY_STEPS: readonly (readonly string[])[] = [
+  // input-site: inert #fde1a412 — an OUTPUT path the working-copy build writes, never reads
   ["bun", "run", "cat-harness/scripts/kg-export.ts", "--instance", "./bootstrap", "--out", "build/bootstrap-kg-export.jsonld"],
   ["bun", "run", "qa:refresh"],
 ];
@@ -115,7 +117,7 @@ function readStamp(repoRoot: string): Stamp | undefined {
 export function workingCopyState(repoRoot: string, roots?: string[]): WorkingCopyState {
   const stamp = readStamp(repoRoot);
   if (stamp === undefined) return { state: "stale", why: `no stamp at ${STAMP_PATH} — the copy was never built here by this command` };
-  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot));
+  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot), { ignored: false });
   if ("undetermined" in tree) return { state: "undetermined", why: tree.undetermined };
   if (tree.hash !== stamp.tree) return { state: "stale", why: "the tree changed since the copy was built" };
   let qa: string;
@@ -157,19 +159,23 @@ export function ensureWorkingCopy(repoRoot: string, opts: EnsureOptions = {}): E
   const before = qaTreeDigest(repoRoot, opts.roots).files;
   rmSync(join(repoRoot, STAMP_PATH), { force: true });
   for (const step of opts.steps ?? WORKING_COPY_STEPS) {
+    // input-site: traced #0a259c3d — a build reads the qa-reports store and rewrites the ignored working copy
+    inputSiteReached("qa-working-copy: builds the QA working copy");
     const r = spawnSync(step[0]!, step.slice(1), {
       cwd: repoRoot,
       stdio: opts.stdio ?? "inherit",
+      // input-site: inert #5912f38a — hands the environment on to a build step, whose run is traced on the spawn above
       env: { ...process.env, [BUILDING_ENV]: "1" },
     });
     if (r.status !== 0) return { ran: true, ok: false, why: st.why, exit: r.status, step: step.join(" ") };
   }
-  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot));
+  const tree = trackedTreeDigest(repoRoot, new FileDigests(repoRoot), { ignored: false });
   const after = qaTreeDigest(repoRoot, opts.roots);
   // Undetermined tree: built, but no stamp — the next ensure builds again.
   if (!("undetermined" in tree)) {
     const abs = join(repoRoot, STAMP_PATH);
     mkdirSync(dirname(abs), { recursive: true });
+    // input-site: inert #7f1077da — the stamp's `at`, which workingCopyState never compares
     writeFileSync(abs, JSON.stringify({ tree: tree.hash, qa: after.hash, at: new Date().toISOString() } satisfies Stamp, null, 2) + "\n");
   }
   return { ran: true, ok: true, why: st.why, changed: qaChanged(before, after.files) };
@@ -192,6 +198,7 @@ export const BUILDING_ENV = "QA_WORKING_COPY_BUILDING";
  * Exits 2 (could not determine) when the copy cannot be built.
  */
 export function requireCurrentWorkingCopy(repoRoot: string, who: string): void {
+  // input-site: env QA_WORKING_COPY_BUILDING #6496713b — set by the build for its own steps
   if (process.env[BUILDING_ENV] === "1") return;
   const r = ensureWorkingCopy(repoRoot);
   if (!r.ran) return;
@@ -206,12 +213,14 @@ export function requireCurrentWorkingCopy(repoRoot: string, who: string): void {
 }
 
 function main(argv: string[]): number {
+  // input-site: tree #6e4036ba — rev-parse --show-toplevel: a fact about the checkout
   const root = spawnSync("git", ["rev-parse", "--show-toplevel"], { encoding: "utf-8" }).stdout.trim();
   if (argv.includes("--status")) {
     const s = workingCopyState(root);
     console.log(`qa-working-copy: ${s.state}${"why" in s ? ` — ${s.why}` : ""}`);
     return s.state === "current" ? 0 : s.state === "stale" ? 1 : 2;
   }
+  // input-site: env CI #d4fda250 — cacheEnabled() reads CI to decide --if-stale
   const ifStale = argv.includes("--if-stale") && cacheEnabled(argv, process.env);
   const r = ensureWorkingCopy(root, { force: !ifStale });
   if (!r.ran) {

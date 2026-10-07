@@ -22,7 +22,7 @@ Input schema for content validation.
 | `schemaRefs` | array<string> | no | Schema files to validate against. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-validate/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-validate/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-validate/input.schema.json){: data-fa-link="source" data-src="cat-harness/schemas/skills/content-validate/input.schema.json" data-repo="litlfred/folio-assistant" } · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-validate/input.schema.json){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/schemas/skills/content-validate/input.schema.json" data-repo="litlfred/folio-assistant" }
 
 ## Output
 
@@ -43,4 +43,4 @@ Output schema for content validation results.
 | `location` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-validate/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-validate/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-validate/output.schema.json){: data-fa-link="source" data-src="cat-harness/schemas/skills/content-validate/output.schema.json" data-repo="litlfred/folio-assistant" } · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-validate/output.schema.json){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/schemas/skills/content-validate/output.schema.json" data-repo="litlfred/folio-assistant" }

@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 282,
+      "fileCount": 283,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -3005,10 +3005,11 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow"
               ],
-              "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its six skills — three governing the methodology and three detailing a single phase (needs assessment, the requirements template, impact analysis); its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
+              "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its seven skills — three governing the methodology, three detailing a single phase (needs assessment, the requirements template, impact analysis), and one for eliciting requirements from a recorded walkthrough; its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
               "hasManifest": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
               "name": "crdm",
@@ -3092,6 +3093,25 @@
                 "sha256": "a264005014b9256ea592d10d5b2cc968f2c9de88a63af1bd9cace852a42bc7a3"
               },
               "title": "Phase 1 — Needs assessment (detail)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 96,
+              "instructionsPath": "skills/sdlc/crdm/crdm-recorded-walkthrough.md",
+              "name": "crdm-recorded-walkthrough",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d99a16fe1b1a05ebec9ecf00af0853df2ca3fa43ea1f117a024ae1032bf05bba",
+                "bytes": 5105,
+                "sha256": "d99a16fe1b1a05ebec9ecf00af0853df2ca3fa43ea1f117a024ae1032bf05bba"
+              },
+              "title": "Requirements from a recorded walkthrough"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
@@ -4079,9 +4099,9 @@
               "instructionsPath": "skills/sdlc/sdlc-core/rendered-impact.md",
               "name": "rendered-impact",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1265fcd47257e803e987c8214b17da263570626a00e91c04829bdd1fe24f869f",
-                "bytes": 9409,
-                "sha256": "1265fcd47257e803e987c8214b17da263570626a00e91c04829bdd1fe24f869f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7b1ee0297bbdc1d7862337edaec241fc172949576789705938798ce345a80c2c",
+                "bytes": 9814,
+                "sha256": "7b1ee0297bbdc1d7862337edaec241fc172949576789705938798ce345a80c2c"
               },
               "title": "Rendered impact — which rendered files a Change Set changes"
             },
