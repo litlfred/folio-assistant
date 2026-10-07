@@ -62,7 +62,7 @@ Every instance reached ends in one of three states — mounted, missing, could-n
         Decide first whether you want a remote mount at all: reading another
         graph without holding its code is a SUBSCRIPTION, not a mount.
       </bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="remote-mount"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="remote-mount"/><bootstrap.processes:skill ref="index-config"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_ResolveClosure" name="Resolve the closure&#10;at the pin">

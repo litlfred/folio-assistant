@@ -288,7 +288,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "findings", schema: t("Count"), description: "The index it would write or wrote, and each finding (`unmatched-config`, `unreadable-config`, `landing-undetermined`). Exit 0 written, up to date or planned; 1 stale under --check; 2 could not convert." },
         ],
       },
-      satisfies: ["remote-mount"],
+      satisfies: ["index-config", "remote-mount"],
       requires: { runtime: ["bun"], network: false },
     }),
     defineTool({

@@ -45,10 +45,8 @@ silence.
 **A harness a KG subscription chose is instantiated by the same file**, with
 no local declaration: its declaration is the substrate snapshot `kg:subscribe`
 cached at the pin. `bun run cat kg:instantiate <subscription> <harness>` writes the
-config and the harness's state directories (under an index, the harness must
-also be listed in `instances[]` —
-[`kg-subscription`](../../library/large-datasets/kg-subscription.md)
-§"Instantiating a harness"), and refuses a harness that was not
+config and the harness's state directories (and, under an index, the harness's
+`instances[]` entry — [`index-config`](../../kg/kg-core/index-config.md)), and refuses a harness that was not
 chosen, not declared at the pin, or whose `needs` nothing here holds. The tile
 is drawn from the snapshot (`scripts/subscribed-harnesses.ts`): it links
 nowhere, because nothing of it is published here, and a snapshot that cannot
