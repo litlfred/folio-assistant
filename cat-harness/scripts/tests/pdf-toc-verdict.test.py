@@ -226,6 +226,15 @@ def main() -> int:
                   artefact["diagnostics"].get("toc_inferred_entries", 0) >= 5)
             check("the text is still there — refusing a TREE is not discarding the DOCUMENT",
                   artefact["diagnostics"]["chars_total"] > 500)
+            # Issue #2302, owner 2026-10-07: refused, it falls back to PAGES —
+            # not to one section holding the whole document.
+            check(f"refused, it is split one section per page (got {len(sections)} for "
+                  f"{artefact['source']['pages']} pages)",
+                  artefact.get("granularity") == "page"
+                  and len(sections) == artefact["source"]["pages"]
+                  and sections[0].id == "page-001" and sections[0].title == "Page 1")
+            check("and says why, beside the granularity",
+                  "one section per page" in (artefact.get("structure_note") or ""))
         except ImportError as exc:
             # ONLY a missing backend is an environment fact. Catching `Exception`
             # here reported an AttributeError in this very file as "no usable
@@ -256,6 +265,33 @@ def main() -> int:
             body = open(os.path.join(d, "sections", "sec-001-a.md")).read()
             check(f"a section written from a {src!r} TOC says so",
                   f"toc_source: {src}" in body)
+
+    print("\n9. the second test: mean confidence (issue #2302, owner 2026-10-07)")
+    def scored(confs: list) -> list:
+        return [E(1, f"Heading {i}", 3 + 7 * i, "inferred", None, c) for i, c in enumerate(confs)]
+    check("the floor is the owner's 0.6", pdf.TOC_MIN_MEAN_CONFIDENCE == 0.6)
+    reason, mean = pdf.inferred_toc_trust(scored([0.9, 0.8, 0.7, 0.9, 0.8]), 64)
+    check(f"spread and corroborated: used (mean {mean})", reason is None and mean == 0.82)
+    reason, mean = pdf.inferred_toc_trust(scored([0.6] * 6), 64)
+    check("a mean of exactly 0.6 — style alone, nothing corroborating — passes, as decided",
+          reason is None and mean == 0.6)
+    reason, mean = pdf.inferred_toc_trust(scored([0.55, 0.5, 0.6, 0.5, 0.55]), 64)
+    check(f"below the floor: refused, with the number (got {reason!r})",
+          reason is not None and "0.54" in reason and "0.6" in reason)
+    reason, mean = pdf.inferred_toc_trust(scored([None] * 6), 64)
+    check("an entry with no confidence counts as 0 — a regex-only list never passes",
+          reason is not None and mean == 0.0)
+    reason, mean = pdf.inferred_toc_trust(entries([22] * 11 + [3, 29]), 33)
+    check("concentration is still asked first, and its reason is the one recorded",
+          reason is not None and "%" in reason)
+    check("nothing inferred: nothing to judge and no mean", pdf.inferred_toc_trust([], 10) == (None, None))
+    paged = pdf.split_pages(["Alpha text", "  ", "Gamma"])
+    check("page sections take pdf-pages.py's shape: ids, titles, page ranges",
+          [s.id for s in paged] == ["page-001", "page-002", "page-003"]
+          and [s.title for s in paged] == ["Page 1", "Page 2", "Page 3"]
+          and [(s.page_start, s.page_end) for s in paged] == [(1, 1), (2, 2), (3, 3)])
+    check("a blank page is a determined blank, not a gap",
+          paged[1].text == "_(no text on this page)_")
 
     print("\n6. an outline is never second-guessed, even a CONCENTRATED one")
     # The property, not one document. The handbook's outline is spread over 179

@@ -59,8 +59,8 @@ second's verdicts live on the `qa-reports` branch rather than on `main`.
 
 | rung | when | what it produces |
 |---|---|---|
-| `pdf-structure.py` | the PDF carries an **embedded outline** | real sections, the document's own chapters |
-| `pdf-pages.py` | no outline | one section per **page** |
+| `pdf-structure.py` | any PDF with a text layer | the **outline**'s chapters; with no outline, the **inferred** contents when it is trusted, else one section per **page** (issue #2302) |
+| `pdf-pages.py` | a page tree by hand: `--first-page-label`, or `--from-ocr` text | one section per **page** |
 | `pdf-ocr.py` | text extraction yields almost nothing | a text layer to then page-split |
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
 | `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
@@ -81,7 +81,8 @@ index mistaken for a page number.
 
 - `toc_source: outline` → `pdf-structure` (`9789241548960-eng`, 250 sections)
 - `toc_source: none`, `source.text_source: embedded` → `pdf-pages` (`milnorlink`,
-  `wpr-rdo-2020-003-eng`)
+  `wpr-rdo-2020-003-eng`) — since 2026-10-07 `pdf-structure` makes this split
+  itself, below
 - `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
 
@@ -224,6 +225,34 @@ So `pdf-pages` claims **no** chapter tree and says so in `structure_note`. **A
 page is a determined division; an inferred chapter was not.** Same third-state
 rule the rest of this repository keeps: a structure that could not be determined
 is never rendered as one that was.
+
+### The route `pdf-structure.py` takes itself (issue #2302, owner 2026-10-07)
+
+With no outline, the inferred contents is used only when it passes **both**
+tests, in order (`inferred_toc_trust`):
+
+1. **concentration** (`6xaz`): at most 60% of its entries may start on the two
+   commonest pages — a list read off a page is not the document's structure;
+2. **mean confidence ≥ 0.6** (`TOC_MIN_MEAN_CONFIDENCE`), each entry's
+   confidence being how much independent evidence agreed — a contents page,
+   the body, a heading style, a numbering run.
+
+Otherwise — refused, or nothing inferred — the entry is split **one section per
+page** (`page-001`, "Page 1", the shape `pdf-pages.py` writes), with
+`granularity: "page"`, `toc_source: undetermined` or `none`,
+`toc_undetermined_reason`, and a `structure_note` saying why. Both inputs are
+recorded whether or not they passed: `diagnostics.toc_inferred_entries` and
+`diagnostics.toc_inferred_mean_confidence`. It used to emit **one** section
+holding the whole document, which is determined but uncitable.
+
+**What the floor does and does not catch**, measured 2026-10-07 on the 40
+corpus PDFs with no outline and the 35 with one (outline hidden): every
+consensus TOC scored a mean between 0.60 and 0.94, and the mean is a weak
+predictor of quality — W3C PROV-O scored 0.72 at title F1 0.23. A mean of
+**exactly 0.60** means no entry was corroborated by anything but its style;
+"at least 0.6" lets those through (8 outline-less documents, some fine, some
+not), so read a `font` TOC at 0.60 before citing it. The floor's real work is
+on the `regex` fallback, whose entries carry no confidence and count as 0.
 
 ## What a complete L1 entry holds
 

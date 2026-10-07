@@ -528,6 +528,59 @@ def inferred_toc_verdict(toc: list["TocEntry"], n_pages: int) -> str | None:
     return None
 
 
+# The second test an inferred table of contents must pass: the mean of its
+# entries' confidence (`consensus_headings`). Owner's decision on issue #2302,
+# 2026-10-07: "Use the inferred contents when it passes the cross-check" — the
+# `6xaz` concentration verdict above AND a mean confidence of at least this —
+# "otherwise fall back to page granularity".
+#
+# What the number means, measured on the 40 corpus PDFs of 2026-10-07: an entry
+# scores 0.6 when its heading STYLE alone found it in an unnumbered document,
+# and more when a contents page, a numbering run or another method agrees. So a
+# mean of exactly 0.6 is a list nothing corroborated, which this floor lets
+# through (as decided); an entry with no confidence at all — the regex
+# fallback's — counts as 0, so a regex-only list never passes.
+TOC_MIN_MEAN_CONFIDENCE = 0.6
+
+
+def toc_mean_confidence(toc: list["TocEntry"]) -> float:
+    """Mean confidence of an inferred TOC; an entry without one counts as 0."""
+    if not toc:
+        return 0.0
+    return sum(e.confidence or 0.0 for e in toc) / len(toc)
+
+
+def inferred_toc_trust(toc: list["TocEntry"], n_pages: int) -> tuple[str | None, float | None]:
+    """(reason it may not be used or None, mean confidence) for an inferred TOC.
+
+    The two tests in order: the `6xaz` concentration verdict, then the mean
+    confidence floor. `None, None` for an empty list — there is nothing to
+    trust or distrust, and no mean to report.
+    """
+    if not toc:
+        return None, None
+    mean = round(toc_mean_confidence(toc), 3)
+    reason = inferred_toc_verdict(toc, n_pages)
+    if reason is None and mean < TOC_MIN_MEAN_CONFIDENCE:
+        reason = (f"{len(toc)} inferred entries with mean confidence {mean:.2f}, "
+                  f"below the {TOC_MIN_MEAN_CONFIDENCE} floor — too little evidence agreed")
+    return reason, mean
+
+
+def split_pages(pages: list[str]) -> list[Section]:
+    """One section per physical page — the division that cannot be wrong.
+
+    The shape `pdf-pages.py` writes (`page-001`, "Page 1", a blank page kept
+    as a determined blank), so an entry routed here by `pdf-structure` and one
+    built by that rung are indistinguishable to every reader of `library/`.
+    """
+    out: list[Section] = []
+    for i, text in enumerate(pages, start=1):
+        body = text.strip() or "_(no text on this page)_"
+        out.append(Section(f"page-{i:03d}", None, f"Page {i}", 1, i, i, len(body), len(body.split()), body))
+    return out
+
+
 def _heading_key(e: TocEntry) -> str:
     return f"{e.number or ''}|{e.title.lower()}"
 
@@ -1424,12 +1477,17 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     if not outline:
         inferred, inferred_method = infer_toc(lines, pages)
     n_inferred = len(inferred)
-    toc_undetermined = inferred_toc_verdict(inferred, len(pages)) if inferred else None
+    toc_undetermined, mean_confidence = inferred_toc_trust(inferred, len(pages))
     if toc_undetermined:
         inferred = []
     toc = outline or inferred
     meta = parse_front_matter(pages)
-    sections = split_sections(pages, toc)
+    # No outline and no trusted inference: one section per page rather than one
+    # section holding everything (owner, issue #2302, 2026-10-07). A page is
+    # worse to read than a chapter and better than a chapter that is fiction —
+    # and, unlike the single whole-document section, it can still be cited.
+    paged = not toc and bool(pages)
+    sections = split_pages(pages) if paged else split_sections(pages, toc)
     figures, figure_gaps = infer_figures(path, lines)
     page_rows, label_conflicts = infer_page_labels(path, lines, len(pages))
     label_of = {r["physical"]: r["label"] for r in page_rows if r["label"]}
@@ -1509,6 +1567,13 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
         # Why, in a sentence a person can check, rather than a bare flag. Absent
         # when the TOC was trusted.
         "toc_undetermined_reason": toc_undetermined,
+        # Page granularity, and why, when no contents could be used — the
+        # same two fields `pdf-pages.py` writes for an entry it built.
+        **({"granularity": "page",
+            "structure_note": (
+                "No outline, and no inferred contents could be trusted"
+                + (f" ({toc_undetermined})" if toc_undetermined else "")
+                + ": one section per page.")} if paged else {}),
         # The list of figures and tables, each caption scored by the evidence
         # that agreed: cited in the text, in its numbering run, a graphic on
         # its page, a printed list naming it (`_pdf_figures`, issue #2302).
@@ -1529,6 +1594,8 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # for every inferred TOC, trusted or not — a number that only
             # appears on failures cannot show you a near miss.
             "toc_inferred_entries": n_inferred,
+            # The second test's input, beside the first's, for the same reason.
+            **({"toc_inferred_mean_confidence": mean_confidence} if mean_confidence is not None else {}),
             # Which inference produced it: "contents" (a printed contents
             # page), "font" (heading styles) or "regex" (text patterns, the
             # last resort). Absent when the outline was used.

@@ -217,6 +217,12 @@ export const PdfDiagnosticsSchema = z
     toc_entries: z.number().int().min(0),
     toc_inferred_entries: z.number().int().min(0).optional(),
     /**
+     * Mean confidence of the inferred entries, the input to the second trust
+     * test (issue #2302): below 0.6 the inference is not used and the entry is
+     * split one section per page. Reported whether or not it passed.
+     */
+    toc_inferred_mean_confidence: z.number().min(0).max(1).optional(),
+    /**
      * Which inference produced an inferred TOC (issue #2302): a printed
      * contents page, heading styles read from font metrics, or the
      * text-pattern heuristic that OCR'd text falls back to.

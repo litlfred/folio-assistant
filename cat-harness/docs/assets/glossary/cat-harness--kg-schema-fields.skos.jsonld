@@ -21788,6 +21788,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.toc_inferred_mean_confidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.toc_inferred_mean_confidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mean confidence of the inferred entries, the input to the second trust test (issue #2302): below 0.6 the inference is not used and the entry is split one section per page. Reported whether or not it passed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_inferred_mean_confidence",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.toc_inferred_method",
       "@type": "skos:Concept",
       "skos:inScheme": {
