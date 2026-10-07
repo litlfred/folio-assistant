@@ -24,6 +24,14 @@
  *    rather than moved leaves two documents free to disagree. Either way it
  *    is refused here, before the move, not discovered after.
  *
+ * And one thing is WARNED, never failed (issue #2405, owner decision 3 of
+ * 2026-10-07): **a statement with no `successCriteria`**. The field is
+ * optional in the base while the existing statements are migrated — the
+ * filed pages here AND the `req:*` JSON files in the knowledge graph's
+ * `requirements/` — so a statement without one is a debt to name, not a
+ * defect to refuse. Once the migration bean closes the field becomes
+ * required and this warning becomes the schema's refusal.
+ *
  * The directories are READ FROM THE DECLARATION — whatever the instance
  * declares with the `requirements` and `proposals` graph typologies, at its root or
  * from within `docs/` — never hardcoded. A declared kind with no directory on disk is a failure: a clean
@@ -35,6 +43,7 @@ import { parse as parseYaml } from "yaml";
 
 import { RequirementFields, RequirementSchema } from "../../bootstrap-tools/schemas/requirement.ts";
 import { nestedDirectories, readDeclaration } from "../../cat-harness/schemas/cat-harness.ts";
+import { kgRoots } from "../../cat-harness/scripts/known-skills.ts";
 
 const REPO = join(import.meta.dir, "..", "..");
 const INSTANCE = join(REPO, "cat-harness");
@@ -70,6 +79,21 @@ export function checkRequirementPage(file: string, text: string): Problem[] {
     out.push({ file, message: `id is \`${r.data.id}\` but the file is \`${slug}.md\` — the id is the file name, \`req:${slug}\`` });
   }
   return out;
+}
+
+/**
+ * The statements of one requirement that carry no success criterion — each as
+ * `req:<id>#<key>`. A WARNING, not a problem: see the module docblock.
+ */
+export function statementsWithoutCriteria(req: unknown): string[] {
+  if (!req || typeof req !== "object") return [];
+  const r = req as { id?: unknown; statements?: unknown };
+  if (!Array.isArray(r.statements)) return [];
+  const id = typeof r.id === "string" ? r.id : "req:?";
+  return r.statements
+    .filter((s): s is { key?: unknown; successCriteria?: unknown } => !!s && typeof s === "object")
+    .filter((s) => !Array.isArray(s.successCriteria) || s.successCriteria.length === 0)
+    .map((s) => `${id}#${String(s.key)}`);
 }
 
 /** Slugs present in both sub-graphs. */
@@ -131,6 +155,28 @@ if (import.meta.main) {
   for (const slug of reqSlugs) {
     const file = join(reqDir, `${slug}.md`);
     problems.push(...checkRequirementPage(relative(REPO, file), readFileSync(file, "utf8")));
+  }
+  // The warning half: every statement, filed page or knowledge-graph JSON,
+  // that has no success criterion yet.
+  const missing: string[] = [];
+  for (const slug of reqSlugs) {
+    const fm = frontMatter(readFileSync(join(reqDir, `${slug}.md`), "utf8"));
+    if (fm) missing.push(...statementsWithoutCriteria(requirementPart(fm)));
+  }
+  // declared-path-literal: `requirements/` inside the declared kg root is the
+  // convention `kg-audit` and `validate-skills` read it by.
+  const kgReqDir = join(kgRoots(INSTANCE)[0] ?? join(INSTANCE, "skills"), "requirements");
+  let kgReqFiles = 0;
+  if (existsSync(kgReqDir)) {
+    for (const f of readdirSync(kgReqDir).filter((n) => n.endsWith(".json")).sort()) {
+      kgReqFiles++;
+      missing.push(...statementsWithoutCriteria(JSON.parse(readFileSync(join(kgReqDir, f), "utf8"))));
+    }
+  }
+  if (missing.length > 0) {
+    console.warn(`  ⚠ ${missing.length} statement(s) carry no successCriteria (read ${reqSlugs.length} filed page(s) and ` +
+      `${kgReqFiles} file(s) in ${relative(REPO, kgReqDir)}/) — a warning while the migration runs (#2405 decision 3):`);
+    for (const m of missing) console.warn(`      ${m}`);
   }
   for (const c of collisions(propSlugs, reqSlugs)) {
     problems.push({ file: `${c}.md`, message: "is in BOTH proposals and requirements — a proposal is MOVED when filed, never copied" });
