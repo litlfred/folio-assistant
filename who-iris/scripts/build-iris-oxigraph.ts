@@ -129,7 +129,7 @@ export function mintSkolemUri(handleClean: string, property: string, index: numb
  *
  * URI format: https://iris.who.int/entity/item/{handle_slug}#{property}_{index}
  */
-export function skolemizeJsonLd(node: any, handleClean: string, prefix = 'entity'): any {
+export function skolemizeJsonLd(node: unknown, handleClean: string, prefix = 'entity'): unknown {
   if (Array.isArray(node)) {
     return node.map((item, idx) => {
       if (item && typeof item === 'object' && !item['@id'] && !item['@value']) {
@@ -143,7 +143,7 @@ export function skolemizeJsonLd(node: any, handleClean: string, prefix = 'entity
       return skolemizeJsonLd(item, handleClean, `${prefix}_${idx + 1}`);
     });
   } else if (node && typeof node === 'object') {
-    const res: Record<string, any> = {};
+    const res: Record<string, unknown> = {};
     for (const [key, val] of Object.entries(node)) {
       if (key === '@context') {
         res[key] = val;
@@ -290,7 +290,7 @@ export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<Build
     }
 
     // Solution A: Skolemize anonymous compound nodes before toRDF conversion
-    const skolemized = skolemizeJsonLd(raw, handleClean);
+    const skolemized = skolemizeJsonLd(raw, handleClean) as Parameters<typeof jsonld.toRDF>[0];
     const nquadsText = await jsonld.toRDF(skolemized, { format: 'application/n-quads' });
     const lines = nquadsText.split('\n').filter(Boolean);
 

@@ -235,7 +235,7 @@ describe('WHO-IRIS Oxigraph Multi-Graph MVP', () => {
     expect(fs.existsSync(path.join(TMP_DIST, manifest.tiers.tier1_spine.fileGz))).toBe(true);
 
     const partitions = manifest.tiers.tier2_communities.partitions;
-    for (const p of Object.values(partitions) as any[]) {
+    for (const p of Object.values(partitions) as Array<{ quadCount: number; itemCount: number; fileNq: string; fileGz: string }>) {
       expect(p.quadCount).toBeGreaterThan(0);
       expect(p.itemCount).toBeGreaterThan(0);
       expect(fs.existsSync(path.join(TMP_DIST, p.fileNq))).toBe(true);
