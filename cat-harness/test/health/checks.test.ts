@@ -1465,6 +1465,20 @@ describe("remote-mounts (owner, 2026-10-07; #2467)", () => {
     expect(HealthReportSchema.shape.checks.element.safeParse(r).success).toBe(true);
   });
 
+  it("path-collision and tracked-under-mount fire, each with a person's action", () => {
+    const r = remoteMountsCheck(
+      healthyContext(
+        rows([
+          { ...base, instance: "core", path: "core", state: "path-collision", detail: "`core/` overlaps `core/`, the directory `notes` this checkout declares" },
+          { ...base, instance: "base", path: "base", state: "tracked-under-mount", detail: "1 tracked file(s)", edited: ["base/x.ts"] },
+        ]),
+      ),
+    );
+    expect(r.findings.map((f) => f.metric).sort()).toEqual(["remote-mount-path-collision", "remote-mount-tracked-under-mount"]);
+    expect(r.findings.find((f) => f.metric === "remote-mount-path-collision")!.action).toContain("mount:relocate");
+    expect(r.findings.find((f) => f.metric === "remote-mount-tracked-under-mount")!.action).toContain("upstream");
+  });
+
   it("an unknown probe is unknown, with its reason", () => {
     const r = remoteMountsCheck(healthyContext({ remoteMounts: { state: "unknown", reason: "declaration unreadable" } }));
     expect(r).toMatchObject({ state: "unknown", reason: "declaration unreadable" });

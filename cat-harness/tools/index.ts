@@ -3153,6 +3153,29 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun", "git"], network: true },
       remedies: [{ host: "github.com", none: "The pin's bytes are on GitHub. Offline, `bun run cat mount:remote:check` and `bun run cat mount:lock:check` still judge what is already on disk against the lock." }],
     }),
+    // Bean `t4xb`, owner 2026-10-07: an easy way to move a remote mount whose
+    // default path (`<name>/`) collides with something the downstream has.
+    defineTool({
+      id: "mount-relocate",
+      title: "Relocate a remote mount",
+      description:
+        "Change the directory a remote-mounted instance lands at. The new directory passes the same collision check a mount makes (the downstream's declared directories, the reserved root names, every other mount) and must not already be populated. The path is written as `overrides.<instance>.path` through `writeDeclaredMounts` (index.config.json). A mounted instance that still matches its lock is moved on disk and its lock entry rewritten; a drifted one is refused, nothing changed, until its edits go upstream; an unmounted one is declared at the new path and mounted. `--plan` prints what would change and writes nothing. The harness's route, `<base>/<harness>/<visualizer>/`, does not change.",
+      install: { none: true },
+      invoke: { shell: "bun run cat mount:relocate" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("Slug"), required: true, arg: { positional: 0 }, description: "The mounted instance to move." },
+          { name: "to", schema: t("RepoPath"), required: true, arg: { flag: "--to" }, description: "The new directory, relative to the downstream root." },
+          { name: "plan", schema: t("Flag"), required: false, arg: { flag: "--plan" }, description: "Say what would change; write nothing." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "The steps taken (or planned) and the result. Exit 0 relocated or planned, 1 refused, 2 could not determine." },
+        ],
+      },
+      satisfies: ["pinned-remote-dependency"],
+      requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "Only an UNMOUNTED instance is fetched (to mount it at its new path). A mounted one is moved locally with no network; `--plan` never fetches." }],
+    }),
     defineTool({
       id: "git-submodule",
       title: "git submodule (gitlink pin, commit to move)",

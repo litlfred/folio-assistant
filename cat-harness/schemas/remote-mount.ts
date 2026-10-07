@@ -203,8 +203,11 @@ export const MOUNT_LOCK_SCHEMA = "cat-harness-mount-lock/v1";
  * - `trust`: rule H8 (`schemas/mount-trust.ts`), neither signed nor consented.
  * - `tracked`: the target holds files this checkout tracks.
  * - `absent-at-pin`: a declared directory or asset is not in the pinned tree.
+ * - `path-collision`: the effective mount path overlaps a directory the
+ *   downstream declares, a reserved root name, or another mount's path
+ *   (bean `t4xb`); the fix is `bun run cat mount:relocate`.
  */
-export const MOUNT_REFUSALS = ["not-identical", "trust", "tracked", "absent-at-pin"] as const;
+export const MOUNT_REFUSALS = ["not-identical", "trust", "tracked", "absent-at-pin", "path-collision"] as const;
 export type MountRefusal = (typeof MOUNT_REFUSALS)[number];
 
 /**

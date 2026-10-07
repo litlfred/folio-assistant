@@ -1554,6 +1554,12 @@ jobs:
       - name: Remote mounts replayed from the lock are intact
         run: bun run cat mount:lock:check
 
+      # #2468 (owner-approved 2026-10-07): mounted code is git-ignored and never
+      # committed. No tracked file may sit under any mount's effective path,
+      # read from the declared mounts and the lock. Exit 2 is could-not-determine.
+      - name: No tracked file under a remote mount
+        run: bun run cat check:mount-tracked
+
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
       # on the same reasoning as `check:skills`: it locks in a property this tree

@@ -24,6 +24,11 @@ workflow; each mechanism is a Tool that implements it (owner, 2026-10-07,
 |---|---|
 | `kg-remote-mount` | the dependency is a harness (a KG instance); this repository since #2470 |
 | `git-submodule` | another repository that keeps git submodules |
+| `mount-relocate` | a mount's path collides with something the downstream has (see below) |
+
+Mounts are declared in `index.config.json` (`source.remote`), read and
+written only through `readDeclaredMounts` / `writeDeclaredMounts`
+(`schemas/index-config.ts`); the lock is `index.lock.json`.
 
 The worked example of switching mechanisms under the same workflow is this
 repository: `bootstrap` and `bootstrap-tools` were git submodules until #2470
@@ -78,6 +83,62 @@ moves it. The health check reports it as a measurement and acts on nothing.
 | `git submodule update --init` on a fresh clone | `bun run cat mount:lock` (replays the committed lock) |
 | `.git/modules/<name>` | `<downstream>.mount-lock.json` (committed; the bytes are not) |
 
+## Mount path collisions and relocation
+
+Bean `t4xb` (owner, 2026-10-07). A remote instance lands at its effective
+path: `overrides.<name>.path`, else `<name>/`, in the downstream root, which
+also holds the downstream's own directories. Before anything is laid down,
+`mount:remote` (and so `mount:update`) checks every effective path against:
+
+- a directory the downstream **declares**;
+- a **reserved root name**, from the one declared list
+  `cat-harness/schemas/reserved-root-names.json` (it includes `index`);
+- **another mount's** path.
+
+A collision is refused with `refusal: "path-collision"`. The refusal names both
+claimants and gives the fix. A populated directory that no lock accounts for
+goes through adopt-if-identical first: an identical tree is adopted, and
+anything else is refused with the differing and extra paths and the same fix.
+The `remote-mounts` health check reports `path-collision` as a finding.
+
+The fix is to move the mount, never the other claimant:
+
+```sh
+bun run cat mount:relocate <instance> --to <dir> --plan   # what would change; writes nothing
+bun run cat mount:relocate <instance> --to <dir>
+```
+
+The `mount-relocate` Tool checks `<dir>` the same way and writes the path
+through `writeDeclaredMounts` (index.config.json). Then it does one of three
+things:
+
+- **mounted and clean**: moves the directory and rewrites its lock entry;
+- **drifted**: refuses and changes nothing; move the edits upstream first;
+- **not mounted yet**: declares the new path and mounts there.
+
+**The mount path and the route are separate concerns.** Every visualiser is
+reachable at the canonical `<base>/<harness>/<visualizer>/`. A shorter
+`<base>/<visualizer>/` exists only as an opt-in alias. Relocating the bytes
+on disk does **not** change the harness's URL namespace: the route follows
+the harness's name, not where its bytes sit in a checkout.
+
+## Mounted code is git-ignored
+
+Mount paths are git-ignored. `index.config.json` generates a `.gitignore`
+block for them, and the mounted bytes are never committed. Three consequences:
+
+- **ripgrep, editor search and git-based scanners skip mounted
+  directories.** Search them with `rg --no-ignore`, or in the source
+  repository.
+- **A scanner that must cover mounts reads the lock, not git**: the lock
+  names every mounted instance, its path and its digest.
+- **An edit inside a mount is never committed.** A re-mount refuses it as
+  drift, so move it upstream as a pull request to the fork.
+
+`bun run cat check:mount-tracked` is the gate: no tracked file may sit under
+any mount's effective path, read from the declared mounts and the lock. The
+health check reports the same as `tracked-under-mount`.
+
 ## A future mechanism, not declared
 
 A **remote graph database** could implement the same workflow: pin = a
@@ -90,5 +151,7 @@ is no Tool node for it, because a declared-but-absent mechanism is the
 
 - [`remote-mount`](remote-mount.md): the `kg-remote-mount` mechanism itself,
   the lock, assets, adopt-if-identical and the manifest rule.
+- Bean `t4xb`: mount path and route collisions, `<base>/<harness>/<visualizer>/`
+  canonical and `<base>/<visualizer>/` an opt-in alias.
 - [`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md):
   why drift is reported and never resolved by the tool.

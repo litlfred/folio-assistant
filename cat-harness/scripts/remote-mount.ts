@@ -568,6 +568,57 @@ function lockEntry(base: string, p: PlannedInstance, declText: Buffer, absent: s
   };
 }
 
+// ── Mount-path collisions (bean `t4xb`, owner 2026-10-07) ────────────────────
+
+/** The declared list of reserved root names — read, never restated. */
+export function reservedRootNames(): string[] {
+  const file = join(import.meta.dir, "..", "schemas", "reserved-root-names.json");
+  return (JSON.parse(readFileSync(file, "utf-8")) as { names: string[] }).names;
+}
+
+const overlaps = (a: string, b: string): boolean => a === b || a.startsWith(`${b}/`) || b.startsWith(`${a}/`);
+
+/** The exact command that fixes a collision: move the mount, not the other claimant. */
+export function relocateCommand(instance: string, path: string): string {
+  return `bun run cat mount:relocate ${instance} --to <dir>   (e.g. --to vendor/${path.split("/").pop()})`;
+}
+
+/**
+ * Which of `candidates` (instance → effective mount path, relative to
+ * `instanceRoot`) collide, and with whom: a directory the downstream declares,
+ * a reserved root name, or another candidate. Each message names both
+ * claimants. Reads the declaration and the reserved list; writes nothing.
+ * A populated directory no lock accounts for is NOT judged here: that is
+ * adopt-if-identical's question, asked when the pinned tree is in hand.
+ */
+export function pathCollisions(instanceRoot: string, candidates: ReadonlyArray<{ instance: string; path: string }>): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  const add = (instance: string, msg: string): void => {
+    out.set(instance, [...(out.get(instance) ?? []), msg]);
+  };
+  let declared: Array<{ id: string; path: string }> = [];
+  try {
+    declared = (readDeclaration(instanceRoot)?.directories ?? [])
+      .filter((d) => (d as { scope?: string }).scope !== "repository")
+      .map((d) => ({ id: d.id, path: strip(d.path) }))
+      .filter((d) => d.path !== "" && d.path !== ".");
+  } catch {
+    // an unreadable declaration is `downstreamOf`'s finding; nothing to compare here
+  }
+  const reserved = reservedRootNames();
+  for (const c of candidates) {
+    const p = strip(c.path);
+    for (const d of declared) if (overlaps(p, d.path)) add(c.instance, `\`${p}/\` (mount \`${c.instance}\`) overlaps \`${d.path}/\`, the directory \`${d.id}\` this checkout declares`);
+    const first = p.split("/")[0]!;
+    if (reserved.includes(first)) add(c.instance, `\`${p}/\` (mount \`${c.instance}\`) lands on \`${first}\`, a reserved root name (cat-harness/schemas/reserved-root-names.json)`);
+    for (const o of candidates) {
+      if (o.instance === c.instance) continue;
+      if (overlaps(p, strip(o.path))) add(c.instance, `\`${p}/\` (mount \`${c.instance}\`) overlaps \`${strip(o.path)}/\`, where mount \`${o.instance}\` lands`);
+    }
+  }
+  return out;
+}
+
 /** The sparse-checkout paths that bring one planned instance down. */
 function sparsePaths(p: PlannedInstance): string[] {
   return [p.declarationFile, ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`)), ...p.assets.map((a) => a.upstreamPath)];
@@ -611,6 +662,10 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
     const priorBy = new Map((prior.ok ? prior.lock.instances : []).map((i) => [i.instance, i]));
     const locked: LockedInstance[] = [];
     const untouched = new Set<string>();
+    // Bean `t4xb`: every effective mount path is checked against the
+    // downstream's declared directories, the reserved root names and every
+    // other mount BEFORE anything is laid down.
+    const collisions = pathCollisions(plan.instanceRoot, plan.instances.map((p) => ({ instance: p.instance, path: p.path })));
 
     for (const p of plan.instances) {
       const target = join(plan.instanceRoot, p.path);
@@ -623,6 +678,21 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
       if (!trust.ok) {
         plan.outcomes.push({ instance: p.instance, state: trust.state === "refused" ? "missing" : "could-not-determine", path: p.path, detail: `not mounted: ${trust.detail}`, refusal: "trust" });
         if (before) locked.push(before);
+        continue;
+      }
+      const clash = collisions.get(p.instance);
+      if (clash) {
+        plan.outcomes.push({
+          instance: p.instance,
+          state: "missing",
+          path: p.path,
+          detail: `refused, nothing laid down: ${clash.join("; ")}. Fix: ${relocateCommand(p.instance, p.path)}`,
+          refusal: "path-collision",
+        });
+        if (before) {
+          locked.push(before);
+          untouched.add(p.instance);
+        }
         continue;
       }
       try {
@@ -651,7 +721,7 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
               instance: p.instance,
               state: "missing",
               path: p.path,
-              detail: `\`${p.path}/\` already exists, no lock says this mount put it there, and it is not identical to ${p.repository}@${p.sha.slice(0, 12)} — refused, nothing changed: ${parts.join("; ")}. Move the edits upstream to the fork, or delete or rename the directory, then re-mount`,
+              detail: `\`${p.path}/\` already exists, no lock says this mount put it there, and it is not identical to ${p.repository}@${p.sha.slice(0, 12)} — refused, nothing changed: ${parts.join("; ")}. The other claimant is whatever put \`${p.path}/\` there. Move the edits upstream to the fork, or delete or rename the directory, then re-mount — or mount elsewhere: ${relocateCommand(p.instance, p.path)}`,
               refusal: "not-identical",
               differing,
               extra,

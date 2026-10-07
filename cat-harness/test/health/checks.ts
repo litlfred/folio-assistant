@@ -230,7 +230,7 @@ export interface HealthContext {
 export interface RemoteMountRow {
   downstream: string;
   instance: string;
-  state: "mounted" | "refused-not-identical" | "refused-other" | "modified-since-mount" | "update-available" | "could-not-determine";
+  state: "mounted" | "refused-not-identical" | "refused-other" | "modified-since-mount" | "path-collision" | "tracked-under-mount" | "update-available" | "could-not-determine";
   detail: string;
   path?: string;
   reason?: string;
@@ -1947,6 +1947,26 @@ export const REMOTE_MOUNT_THRESHOLDS: HealthThreshold[] = [
       "the mount, the replayer and `mount:update` all refuse to touch it, so the layer is frozen until a person " +
       "moves the edits upstream or drops them. `major`, not `critical`: the edits are kept, not lost.",
   },
+  {
+    metric: "remote-mount-path-collision",
+    value: 0,
+    unit: "count",
+    severity: "major",
+    basis:
+      "ZERO. Bean `t4xb` (owner, 2026-10-07): a mount's effective path (`path`, else `<name>/`) that overlaps a " +
+      "directory the downstream declares, a reserved root name, or another mount is refused before anything lands, " +
+      "so one collision is one layer that is not there. `major`: the refusal writes nothing.",
+  },
+  {
+    metric: "remote-mount-tracked-under-mount",
+    value: 0,
+    unit: "count",
+    severity: "major",
+    basis:
+      "ZERO. Owner-approved, 2026-10-07 (#2468): mounted code is git-ignored and never committed. A tracked file " +
+      "under a mount path is a commit a re-mount refuses and a reader mistakes for the upstream's. `major`, not " +
+      "`critical`: the file is in history, not lost.",
+  },
 ];
 
 /**
@@ -2023,6 +2043,31 @@ export function remoteMountsCheck(ctx: HealthContext): HealthCheckResult {
         "and re-mounts. Neither the mount nor `mount:update` will overwrite them, and neither does the sweep.",
     });
   }
+  for (const r of of("path-collision")) {
+    findings.push({
+      metric: "remote-mount-path-collision",
+      severity: "major",
+      summary: `${where(r)}: path-collision — ${r.detail}`,
+      action:
+        "A person moves the mount, not the other claimant: `bun run cat mount:relocate <instance> --to <dir>` " +
+        "(add `--plan` to see what changes first). Relocating does not change the harness's route, " +
+        "`<base>/<harness>/<visualizer>/`. The sweep changes nothing.",
+    });
+  }
+  for (const r of of("tracked-under-mount")) {
+    findings.push({
+      metric: "remote-mount-tracked-under-mount",
+      severity: "major",
+      summary: `${where(r)}: tracked-under-mount — ${r.detail}`,
+      action:
+        "A person moves the change upstream as a PR to the fork, then untracks the path (`git rm --cached`) in a " +
+        "commit. Mounted code is git-ignored and never committed. The sweep changes nothing.",
+    });
+  }
+  measurements.push(
+    { metric: "remote-mount-path-collision", value: of("path-collision").length, unit: "count", command },
+    { metric: "remote-mount-tracked-under-mount", value: of("tracked-under-mount").length, unit: "count", command },
+  );
   if (cnd.length) {
     // Three states: a mount that could not be judged is never clean, and
     // outranks the findings beside it (they are kept, not hidden).

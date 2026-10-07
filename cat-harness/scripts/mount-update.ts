@@ -47,14 +47,14 @@
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { checkoutRootFor, readDeclaration } from "../schemas/cat-harness.js";
 import { readDeclaredMounts, writeDeclaredMounts } from "../schemas/index-config.js";
 import { mountLockPathFor, readMountLock, type LockedInstance, type RemoteMount } from "../schemas/remote-mount.js";
-import { declaringInstances, modifiedSince, mountRemote, summarise } from "./remote-mount.ts";
+import { declaringInstances, modifiedSince, mountRemote, pathCollisions, relocateCommand, summarise } from "./remote-mount.ts";
 import { urlFor as lockUrlFor } from "./mount-from-lock.ts";
 import { type UrlFor } from "./remote-tree.ts";
 
@@ -305,7 +305,7 @@ export interface MountHealthRow {
   downstream: string;
   /** The mounted instance, or the mount's harness when the row is about the mount as a whole. */
   instance: string;
-  state: "mounted" | "refused-not-identical" | "refused-other" | "modified-since-mount" | "update-available" | "could-not-determine";
+  state: "mounted" | "refused-not-identical" | "refused-other" | "modified-since-mount" | "path-collision" | "tracked-under-mount" | "update-available" | "could-not-determine";
   detail: string;
   path?: string;
   /** For `refused-other`: `trust` (H8), `tracked`, `absent-at-pin`, or `missing` (the upstream does not hold it). */
@@ -360,6 +360,8 @@ export function mountHealth(instanceRoot: string, opts: { network?: boolean; url
       rows.push({ downstream, instance: u.instance, state: "could-not-determine", detail: u.detail });
     } else if (u.refusal === "not-identical") {
       rows.push({ downstream, instance: u.instance, state: "refused-not-identical", detail: u.detail, differing: u.differing ?? [], extra: u.extra ?? [] });
+    } else if (u.refusal === "path-collision") {
+      rows.push({ downstream, instance: u.instance, state: "path-collision", detail: u.detail });
     } else {
       rows.push({ downstream, instance: u.instance, state: "refused-other", detail: u.detail, reason: u.refusal ?? "missing" });
     }
@@ -380,6 +382,29 @@ export function mountHealth(instanceRoot: string, opts: { network?: boolean; url
     } catch (e) {
       rows.push({ downstream, instance: i.instance, path: i.path, state: "could-not-determine", detail: `could not read: ${(e as Error).message}` });
     }
+  }
+  // Bean `t4xb`: every effective mount path — locked, or declared and not yet
+  // laid down — against the declared directories, the reserved root names and
+  // each other. A collision is reported with the command that fixes it.
+  const effective = [
+    ...lock.lock.instances.map((i) => ({ instance: i.instance, path: i.path })),
+    ...mounts.filter((m) => !lock.lock.instances.some((i) => i.instance === m.harness) && !refusedHere.has(m.harness)).map((m) => ({ instance: m.harness, path: (m.overrides?.[m.harness]?.path ?? m.harness).replace(/\/+$/, "") })),
+  ];
+  for (const [instance, msgs] of pathCollisions(instanceRoot, effective)) {
+    const path = effective.find((e) => e.instance === instance)!.path;
+    rows.push({ downstream, instance, path, state: "path-collision", detail: `${msgs.join("; ")}. Fix: ${relocateCommand(instance, path)}` });
+  }
+  // Mounted code is git-ignored and never committed (#2468): a tracked file
+  // under a mount path is a finding here as well as the `check:mount-tracked` gate.
+  for (const e of effective) {
+    const r = spawnSync("git", ["ls-files", "--", e.path], { cwd: instanceRoot, encoding: "utf-8" });
+    if (r.status !== 0) {
+      if (r.status === 128 && /not a git repository/.test(r.stderr ?? "")) continue; // not a checkout: nothing can be tracked
+      rows.push({ downstream, instance: e.instance, path: e.path, state: "could-not-determine", detail: `git ls-files -- ${e.path} exited ${r.status}` });
+      continue;
+    }
+    const files = r.stdout.split("\n").filter(Boolean);
+    if (files.length) rows.push({ downstream, instance: e.instance, path: e.path, state: "tracked-under-mount", detail: `${files.length} tracked file(s) under \`${e.path}/\`: ${files.slice(0, 10).join(", ")}`, edited: files });
   }
   if (opts.network !== false) {
     for (const m of mounts) {

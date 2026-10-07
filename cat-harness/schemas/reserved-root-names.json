@@ -1,0 +1,4 @@
+{
+  "_comment": "Root directory names a remote mount may never land on (bean t4xb, owner 2026-10-07). ONE declared list, read by the mount-path collision check in scripts/remote-mount.ts and by the remote-mounts health check; never restated as a literal in code. `index` names index.config.json / index.lock.json (RESERVED_INSTANCE_NAMES); the rest are checkout plumbing no declaration owns. A downstream's own DECLARED directories are checked separately, from its declaration.",
+  "names": ["index", "node_modules", "build", "patches", "STAGING"]
+}
