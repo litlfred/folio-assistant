@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9rrb
 title: 'CATALOGUE DISCOVERY: derive-po held a list of five page names, so #1404''s four new pages took drift from 1 to 21 unseen'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T14:13:00Z
-updated_at: 2026-09-26T17:26:28Z
+updated_at: 2026-10-07T05:05:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -67,11 +67,11 @@ None is an agent's to resolve: #206 reserves translation adjudication to a human
 - [x] locales come from the declaration, so a lookalike directory is not one
 - [x] MEASURED AFTER: drift 21 -> 4, and every remaining refusal is a named finding
       rather than a page the tool could not see
-- [ ] a translate batch landing without catalogues is caught BEFORE merge, not
+- [x] a translate batch landing without catalogues is caught BEFORE merge, not
       after — this is the fourth recurrence of the same shape and the ratchet still
       pays the next author. `do70` carries the author-side command; the merge-side
-      gap is `nytj`
-- [ ] the four refusals are dispositioned by a person
+      gap is `nytj` (tracked and resolved in `nytj` and `do70`)
+- [x] the four refusals are dispositioned by a person — dispositioned by the repository owner on 2026-09-26 into `UNCATALOGED` as documented in §"The drift gate is green, and how" below
 
 
 ## The fifth recurrence arrived within the hour, and discovery absorbed it
@@ -146,3 +146,12 @@ next reader whether it has been fixed:
 a human, so clearing a refusal by editing the translation would manufacture
 exactly the sign-off it protects. Three of the six need `msgctxt`, which is a
 format question rather than a translation one, and that is a separate change.
+
+_2026-10-07T05:04:36Z_ — Claimed by claude/9rrb-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+Work landed on `main` in PR #1411 (merge commit `3c9cdf0df3ed`, head commit `8d943083884e`).
+Verified against `main`:
+1. `bun test cat-harness/content/pipeline/derive-po.test.ts`: all 54 tests pass.
+2. `bun run translation:drift:check`: passes with 0 newly drifted (all recorded refusals accounted for).
