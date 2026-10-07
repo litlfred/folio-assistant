@@ -92,11 +92,16 @@ function send(res, status, body, headers) {
  * only that one route is emulated: anything else still 404s, as it should.
  */
 const SITE_ROOT = "/cat-harness/docs";
+// An instance's site directory, relative to the instance root. The one answer is
+// `siteDir()` in cat-harness/schemas/cat-harness.ts; this file runs under plain
+// `node` (playwright's webServer) and cannot import TypeScript, so it names the
+// value once here rather than inline at each use.
+const INSTANCE_SITE_DIR = "docs";
 function mountedPath(pathname) {
   const m = new RegExp(`^${SITE_ROOT}/docs/([a-z0-9][a-z0-9-]*)/(.*)$`).exec(pathname);
   if (!m) return undefined;
-  const candidate = path.resolve(ROOT, m[1], "docs", m[2]);
-  if (!candidate.startsWith(path.join(ROOT, m[1], "docs") + path.sep)) return undefined;
+  const candidate = path.resolve(ROOT, m[1], INSTANCE_SITE_DIR, m[2]);
+  if (!candidate.startsWith(path.join(ROOT, m[1], INSTANCE_SITE_DIR) + path.sep)) return undefined;
   try {
     return fs.statSync(candidate).isFile() ? candidate : undefined;
   } catch {
