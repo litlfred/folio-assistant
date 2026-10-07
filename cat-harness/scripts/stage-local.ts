@@ -123,8 +123,11 @@ export function artifactBundle(files: Map<string, number>): ArtifactBundle {
   return { page: "index.html", files: k.map(([p]) => p).sort(), bytes: k.reduce((a, [, n]) => a + n, 0) + files.get("index.html")!, dropped };
 }
 
-/** Where the bundle carries the platform's own assets. */
-export const PLATFORM_ASSETS = "_platform";
+/**
+ * Where the bundle carries the platform's own assets. Not `_platform`: the
+ * Artifact service reserves top-level names that start with `_`.
+ */
+export const PLATFORM_ASSETS = "platform-assets";
 
 /**
  * The platform assets a page loads from the platform's PUBLISHED site — the
@@ -148,7 +151,7 @@ export function platformAssetRefs(texts: Map<string, string>): { roots: string[]
  * An Artifact runs only scripts from its allowed hosts, so the rail's script
  * and style, loaded from the platform's published site, would not run there.
  * Copy each from the platform checkout's own site directory into
- * `<out>/_platform/assets/` and point every page at the copy. An asset the
+ * `<out>/platform-assets/assets/` and point every page at the copy. An asset the
  * platform does not have is left pointing at the published site.
  */
 function vendorPlatformAssets(out: string, files: string[], platform: string): string[] {
