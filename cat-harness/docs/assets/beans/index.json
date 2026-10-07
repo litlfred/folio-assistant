@@ -3958,7 +3958,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:01:42Z",
-      "updatedAt": "2026-09-20T19:01:42Z",
+      "updatedAt": "2026-10-07T08:14:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus): *\"fix stub name mismatxhes.\"*\n\n**The load-bearing one is fixed; this bean is the residue**, which needs\nper-site judgement rather than a sweep.\n\n## Fixed already — it was breaking a published artefact\n\n`CORE_NS` is `…/folio-assistant-core/ns#`, so every `fac:` term names that\nstem. Both `docs-site.yml` and `feature-staging.yml` published that l",
       "file": "beans/defs/folio-assistant-8xtj--instance-names-folio-assist-core-published-every-c.md"
     },
@@ -9237,14 +9237,14 @@
     {
       "id": "folio-assistant-nba0",
       "title": "QA scoping: automated:false criteria bypass BOTH the adapter and profile gates",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T17:18:22Z",
-      "updatedAt": "2026-09-18T17:18:22Z",
+      "updatedAt": "2026-10-08T00:26:00Z",
       "preview": "## The defect\n\n`content/pipeline/qa-sweep.ts` short-circuits a criterion with\n`automated: false` straight to `needs-agent` **before** either scoping gate\nruns. So neither `adapters` nor the new `profiles` axis can scope an\nagent-adjudicated criterion — the gates are unreachable for exactly the\ncriteria whose adjudication is most expensive.\n\nFound while building the profile axis (bean `g6yr`, merge",
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
     },
@@ -15693,8 +15693,8 @@
         "total": 589,
         "closed": 361,
         "open": 228,
-        "inProgress": 78,
-        "todo": 149,
+        "inProgress": 79,
+        "todo": 148,
         "draft": 1,
         "unclassified": 0,
         "share": 0.6129032258064516
