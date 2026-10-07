@@ -1,0 +1,54 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "tool",
+    "id": "site-search-scopes",
+    "path": null
+  },
+  "source_hash": "991d1b74b630",
+  "criteria": {
+    "tool-invoke-path-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-contract-met": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-io-types-declared": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-args-shell-safe": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-alternative-selectable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-downstream-fresh": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "site-search-scopes",
+          "detail": "\"assets/js/search/manifest.json\" exists only in the assembled site. Judged by publish-verify's `search-scopes` verifier before deployment, not from a checkout."
+        }
+      ]
+    },
+    "tool-maintains-in-tree": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 2,
+    "unknown": 1
+  }
+}
