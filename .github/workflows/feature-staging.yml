@@ -30,6 +30,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
+      - 'cat-harness/scripts/mount-from-lock.ts'  # replays the remote-mount lock (bean nn8e)
+      - 'folio-assistant.mount-lock.json'
       - 'cat-harness/docs/**'
       # An instance's own rendered pages are mounted into the site by
       # mount-instance-docs.ts, so a change to them must rebuild it. Without
@@ -254,7 +256,7 @@ jobs:
     # its own `STAGING/<slug>/` with `keep_files: true`, so a re-clone picks up
     # whoever won and adds this branch's directory beside it.
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -263,9 +265,9 @@ jobs:
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -747,7 +749,7 @@ jobs:
           done < ./_ast-list.txt
 
       - name: Build Jekyll site
-        uses: actions/jekyll-build-pages@v1
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
           source: ./_docs
           destination: ./_site
@@ -1448,7 +1450,7 @@ jobs:
       # absorbing it. The three-attempt rebase loop is kept regardless: the
       # contention BETWEEN sessions is untouched, and is `yzsj`'s ground.
       - name: Check out the publish branch
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: gh-pages
           path: pages
@@ -1468,7 +1470,7 @@ jobs:
       - name: Comment on the PR that the preview is queued
         if: github.event_name == 'pull_request'
         continue-on-error: true
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
           SLUG: ${{ steps.slug.outputs.slug }}
           BRANCH: ${{ steps.slug.outputs.branch }}
@@ -1700,7 +1702,7 @@ jobs:
 
       - name: Comment staging URL on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         # A `script:` block is JavaScript, and `${{ }}` is substituted into its
         # SOURCE TEXT before V8 parses it — so the hazard is the `run:` one in a
         # different language, and one position here is worse than a shell's.
@@ -1785,7 +1787,7 @@ jobs:
       # defaults to the BASE branch — never the fork's head — which is the
       # whole reason that default matters in this job.
       - name: Check out the platform, to write the render log
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # REQUIRED, not an optimisation: `cat-harness/schemas/` imports from
           # the `bootstrap-tools` SUBMODULE, so without it every `bun run` of a
@@ -1815,7 +1817,7 @@ jobs:
       - name: Mount bootstrap and bootstrap-tools from the lock
         run: bun "source/cat-harness/scripts/mount-from-lock.ts" --root "source"
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -1831,7 +1833,7 @@ jobs:
         run: bun run cat state:mount
 
       - name: Check out the publish branch
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: gh-pages
           path: pages
@@ -2048,7 +2050,7 @@ jobs:
 
       - name: Post retention notice (not confirmed)
         if: steps.check.outputs.confirmed == 'false'
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         # Bound rather than interpolated even though this slug IS sanitised — by
         # a `sed` in another step, which nothing checks. Same reasoning as the
         # three `run:` sites in this file, and the gate grades a `script:` block
@@ -2158,7 +2160,7 @@ jobs:
           echo "Confirmed target: STAGING/$SLUG"
 
       - name: Check out the platform, for the liveness preflight
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # The preflight asks whether a branch is an ancestor of the default
           # branch, which a truncated history cannot answer. It says so rather
@@ -2185,7 +2187,7 @@ jobs:
       - name: Mount bootstrap and bootstrap-tools from the lock
         run: bun "source/cat-harness/scripts/mount-from-lock.ts" --root "source"
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -2208,7 +2210,7 @@ jobs:
         run: bun run cat-harness/scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
 
       - name: Check out the publish branch
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: gh-pages
           path: pages

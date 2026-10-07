@@ -324,6 +324,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/ns#glossary/kg-skills/latex-compilation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "latex-compilation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compile LaTeX source documents into PDF using latexmk and pdflatex, with safe shell-escape isolation across trusted and untrusted environments."
+        }
+      ],
+      "skos:notation": "latex-compilation",
+      "dcterms:source": "folio-assistant-sci/skills/content/folio-paper-adapter/latex-compilation.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/ns#glossary/kg-skills/latex-validation",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -48,6 +48,7 @@ import {
   plan,
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { mountScopeFor } from "../schemas/remote-mount.ts";
 import { defaultGraphTypologies, type GraphTypologyRegistry } from "../schemas/graph-typology-registry.ts";
 import { contentIsOffCheckout } from "../schemas/subgraph-source.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
@@ -132,6 +133,9 @@ export function harnessInstances(repo: string): InstanceInput[] {
   let processes: ProcessIndex | undefined;
   const index = (): ProcessIndex => (processes ??= processIndex(repo));
   for (const inst of instanceRootsIn(repo)) {
+    // A remote mount is another repository's bytes (bean `nn8e`): its READMEs
+    // are generated there, and writing here would only break the lock's digest.
+    if (resolve(inst) !== resolve(repo) && mountScopeFor(inst) !== undefined) continue;
     let decl;
     try {
       decl = readDeclaration(inst);

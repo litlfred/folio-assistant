@@ -78,6 +78,7 @@
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import {
+  cpSync,
   copyFileSync,
   existsSync,
   mkdirSync,
@@ -90,6 +91,7 @@ import {
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 
+import { mountScopeFor } from "../../cat-harness/schemas/remote-mount.js";
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { clearCheckoutCache, resolveImplementingPath } from "../../cat-harness/schemas/harness-config.js";
 import { toolsOf } from "../../cat-harness/tools/discover.js";
@@ -849,6 +851,14 @@ export function probeStandalone(
     ws = mkdtempSync(join(tmpdir(), "seed-ready-rehearsal-"));
     for (const d of members) {
       const rel = relative(repoRoot, rootOf(repoRoot, d));
+      // A REMOTE MOUNT (bean `nn8e`) is ignored by git, so `ls-files` lists
+      // nothing for it and the member arrived EMPTY — every test reaching
+      // bootstrap-tools then failed as an artefact of the rehearsal (measured on
+      // fhir-harness, 2026-10-07: 9 of 9). A mount is its repository's whole
+      // tree, so it is copied whole.
+      if (mountScopeFor(rootOf(repoRoot, d)) !== undefined) {
+        cpSync(join(repoRoot, rel), join(ws, rel), { recursive: true, verbatimSymlinks: true, filter: (src) => !src.endsWith("/.git") && !src.includes("/node_modules") });
+      }
       const listed = execFileSync("git", ["-C", repoRoot, "ls-files", "-z", "--recurse-submodules", "--", rel], {
         encoding: "utf-8",
         maxBuffer: 256 * 1024 * 1024,
@@ -861,6 +871,19 @@ export function probeStandalone(
         const dst = join(ws, f);
         mkdirSync(dirname(dst), { recursive: true });
         copyFileSync(src, dst);
+      }
+      // A REMOTE MOUNT is not in this checkout's index at all: since #2470
+      // bootstrap and bootstrap-tools are laid down from the mount lock as
+      // ignored directories, so `ls-files` names none of their files and the
+      // rehearsal ran with no closure — every test failed to import and no
+      // report was written. A mount is a verified copy of one pinned commit,
+      // so its tree as it stands IS what the clone would hold.
+      const src = join(repoRoot, rel);
+      if (listed.length === 0 && rel !== "" && existsSync(src)) {
+        cpSync(src, join(ws, rel), {
+          recursive: true,
+          filter: (p) => !/(^|[\\/])(\.git|node_modules)$/.test(relative(src, p)),
+        });
       }
       // A clone IS a git repository, and tests that ask git for the corpus
       // would otherwise fail as an artefact of the rehearsal (bean `ho66`:

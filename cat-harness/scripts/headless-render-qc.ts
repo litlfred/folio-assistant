@@ -27,7 +27,7 @@ const SAVE_SCREENSHOTS = process.argv.includes("--screenshot");
 
 if (!existsSync(PAPER_JSON)) {
   console.error("No paper.json found. Run: bun run content/pipeline/export-json.ts");
-  process.exit(1);
+  process.exit(2);
 }
 
 const paper = JSON.parse(readFileSync(PAPER_JSON, "utf-8"));

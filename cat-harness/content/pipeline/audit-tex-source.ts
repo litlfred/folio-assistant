@@ -32,7 +32,7 @@
 
 import { folioDirDeferred } from "../../schemas/cat-harness.js";
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from "fs";
-import { resolve, join, relative } from "path";
+import { resolve, join, relative, basename } from "path";
 import { findMathTextSeams } from "./render-latex";
 import { findContentRepoRoot } from "./repo-root";
 
@@ -240,7 +240,9 @@ function auditMathTextSeams(file: string) {
 console.log("Auditing TeX-source hazards...");
 auditReferencesTs();
 const folioRootOf = folioDirDeferred(REPO_ROOT, import.meta.url);
-const mdFiles = walk(folioRootOf(), ".md");
+const mdFiles = walk(folioRootOf(), ".md").filter(
+  (f) => !f.includes("/node_modules/") && !f.includes("/docs/") && basename(f) !== "README.md",
+);
 // Same rule: a report over zero files is not a clean result.
 if (mdFiles.length === 0) {
   console.error(
@@ -248,11 +250,9 @@ if (mdFiles.length === 0) {
     "This audits a FOLIO's content; folio-assistant is the platform.\n" +
     "Run it from the content repo.",
   );
-  process.exit(1);
+  process.exit(2);
 }
 for (const f of mdFiles) {
-  // Skip .md files that are pure docs, not paper content
-  if (f.includes("/node_modules/") || f.includes("/docs/")) continue;
   auditMarkdownTablePipes(f);
   auditMarkdownLinkInTexFence(f);
   auditDoubleSubscripts(f);

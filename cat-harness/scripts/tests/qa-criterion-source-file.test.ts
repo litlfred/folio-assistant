@@ -50,7 +50,7 @@
  * The tests here whose subject is folio-assistant-sci's contribution (the
  * checkers this instance contributes for criteria declared
  * `checker_contributed`) live in
- * `folio-assistant-sci/scripts/tests/qa-criterion-source-file.test.ts` (bean
+ * the checkout's `test/qa-criterion-source-file-sci-checkout.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such contribution to read.
  */
 import { describe, test, expect } from "bun:test";
