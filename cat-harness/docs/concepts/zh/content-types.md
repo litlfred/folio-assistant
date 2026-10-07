@@ -40,11 +40,11 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 每种内容类型都遵循相同的生命周期，该生命周期由通用的 **`content-lifecycle`** 技能包提供：
 
 <div class="bpmn-figure" id="figure-the-content-lifecycle">
-  <img src="../../zh/assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/zh/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="单个 folio 周期的 BPMN 泳道图：项目经理进行规划，规划以 bean 的形式提供初始数据，针对每次提议的变更运行编辑和人机交互（HCI）验证，随后进行集成测试和 QA 全面检查，然后是草稿-审阅-发布；对反馈进行分类并记录为 bean，整个周期要么重复，要么将 folio 归档退役。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG](../../assets/img/workflows/content-lifecycle.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG]({{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }})
 {: .bpmn-source }
 
 | 阶段 | 技能 | 发生的操作 |
@@ -80,17 +80,17 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 - **强制约束**（Enforcement）——`content_profile_check` 会拒绝数学类型、`lean` 字段或同级的 `.lean` 文件，并在每次 `content_validate` 时运行。
 
 相关的技能模式：
-[`document-authoring`](../../reference/skills/document-authoring.html)、
-[`document-structure`](../../reference/skills/document-structure.html)、
-[`normative-statements`](../../reference/skills/normative-statements.html)、
-[`document-publishing`](../../reference/skills/document-publishing.html)。
+[`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }})、
+[`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }})、
+[`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }})、
+[`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }})。
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
-  <img src="../../zh/assets/img/workflows/authoring-a-document.svg"
+  <img src="{{ '/zh/assets/img/workflows/authoring-a-document.svg' | relative_url }}"
        alt="文档创作的 BPMN 泳道图：作者进行规划，规划以 bean 的形式提供初始数据，智能体搭建 folio 脚手架并创作块，构建流水线在验证和渲染为 Markdown、HTML 及 PDF 之前检查声明的配置文件，最后由审阅者把关决定是否发布。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG](../../assets/img/workflows/authoring-a-document.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG]({{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }})
 {: .bpmn-source }
 
 ### 承载规范性陈述
@@ -100,7 +100,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 
 建议、要求或规则是读者所引述、实施者所追踪的块。它需要标签、稳定的标识以及在依赖图中的位置——`theorem`（定理）所拥有的一切——但它断然不是定理，因为没有任何东西去证明它。
 
-目前**不存在作为一等公民的 `recommendation` 块类型**。目前它的载体是一个带有标签和标题的 `prose` 块；[`normative-statements`](../../reference/skill-instructions/normative-statements.html) 技能阐明了该约定及其限制。早期在 `document-intake` 中的指导意见将指南建议映射到 `definition` 上——这早于当前这种内容类型，并且对文档 folio 而言是错误的，因为在文档 folio 中 `definition` 属于数学类型，且其 `lean` 字段是必填项。
+目前**不存在作为一等公民的 `recommendation` 块类型**。目前它的载体是一个带有标签和标题的 `prose` 块；[`normative-statements`]({{ '/reference/skill-instructions/normative-statements.html' | relative_url }}) 技能阐明了该约定及其限制。早期在 `document-intake` 中的指导意见将指南建议映射到 `definition` 上——这早于当前这种内容类型，并且对文档 folio 而言是错误的，因为在文档 folio 中 `definition` 属于数学类型，且其 `lean` 字段是必填项。
 
 ---
 
@@ -117,7 +117,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 
 > **论文就是文档加上包含 Lean 的块。** 上一节中的所有内容在此同样适用：相同的块树、相同的编辑 `uses[]` 图、相同的 QA sidecar、相同的生命周期——以及 Markdown 渲染路径（在未安装 TeX 的机器上起草时即可工作）。正因如此，`paper` 适配器在代码上*继承扩展*了 `document` 适配器。论文所增加的是下方的七种断言为形式化主张的块类型，以及用于检查和排版它们的两个工具链。
 
-- **源模型**（Source model）——内容是由类型化*块*（`definition`、`theorem`、`lemma`、`proof`、`equation`、`prose` 等）构成的树。有关 `Block`、`Chapter` 和 `Paper`，请参阅 [TypeScript API 参考](../../zh/api/)。
+- **源模型**（Source model）——内容是由类型化*块*（`definition`、`theorem`、`lemma`、`proof`、`equation`、`prose` 等）构成的树。有关 `Block`、`Chapter` 和 `Paper`，请参阅 [TypeScript API 参考]({{ '/zh/api/' | relative_url }})。
 - **形式化**（Formalization）——`lean-formalization` 和 `proof-verification` 技能驱动 Lean；每个类定理（theorem-like）块都可以对照其 Lean 对应项进行追踪，且每一个 `sorry` 均可审计。
 - **渲染**（Rendering）——`latex-authoring` 加上论文适配器的 `paper_render_pdf` / `paper_render_html` 工具。
 
@@ -138,9 +138,9 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 其中有两行值得进一步审视。`definition` 是整个划分中最明确的分水岭——它是唯一一个其 `lean` 字段为*必需*而非可选的类型，因此即便配置文件允许，文档 folio 也无法容纳它。而“共享”（`shared`）类型仍然*声明*了一个可选的 `lean`：类型系统允许了配置文件所禁止的内容，这正是为什么 `content_profile_check` 在“该类型是否被允许”之外还有第二条规则。
 
 相关的技能模式：
-[`latex-authoring`](../../reference/skills/latex-authoring.html)、
-[`lean-formalization`](../../reference/skills/lean-formalization.html)、
-[`proof-verification`](../../reference/skills/proof-verification.html)。
+[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }})、
+[`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }})、
+[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }})。
 
 ---
 
@@ -161,17 +161,17 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 - **人物画像、场景、指标、需求**
 
 相关的技能模式：
-[`l2-dak-authoring`](../../reference/skills/l2-dak-authoring.html)、
-[`bpmn-authoring`](../../reference/skills/bpmn-authoring.html)、
-[`dmn-authoring`](../../reference/skills/dmn-authoring.html)、
-[`terminology-management`](../../reference/skills/terminology-management.html)。
+[`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }})、
+[`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }})、
+[`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }})、
+[`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }})。
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
-  <img src="../../zh/assets/img/workflows/l2-dak-authoring.svg"
+  <img src="{{ '/zh/assets/img/workflows/l2-dak-authoring.svg' | relative_url }}"
        alt="L2 DAK 创作的 BPMN 泳道图：并行网关将人物画像、BPMN 流程、DMN 决策逻辑、数据字典和指标分流到业务分析师泳道，同时由术语专家进行绑定，随后临床领域专家（SME）的验证把关 DAK 的组装。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [full-size SVG](../../assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [full-size SVG]({{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }})
 {: .bpmn-source }
 
 ---
@@ -192,17 +192,17 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 - **质量控制**——质控关卡（`quality-control`）
 
 相关的技能模式：
-[`l3-fhir-authoring`](../../reference/skills/l3-fhir-authoring.html)、
-[`fhir-validation`](../../reference/skills/fhir-validation.html)、
-[`ig-publication`](../../reference/skills/ig-publication.html)、
-[`quality-control`](../../reference/skills/quality-control.html)。
+[`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }})、
+[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }})、
+[`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }})、
+[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }})。
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
-  <img src="../../zh/assets/img/workflows/l3-fhir-pipeline.svg"
+  <img src="{{ '/zh/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }}"
        alt="L3 流水线的 BPMN 泳道图：将 L2 映射到 L3、编写 FSH、SUSHI 编译、针对 Profile 进行验证（失败时循环回到 FSH）、将发现的问题记录为 bean 的质控把关、IG Publisher 构建，以及发布 IG 站点。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG](../../assets/img/workflows/l3-fhir-pipeline.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG]({{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }})
 {: .bpmn-source }
 
 ---

@@ -30,7 +30,7 @@ node kinds: the palette vocabulary is shared and only the GEOMETRY varies.
 
 - **Called by:** [L1 document ingestion — a document to the L1 source knowledge graph](l1-document-ingestion.html)
 - **Calls:** [Theme and UI review — at ingestion](theme-ui-review.html)
-- **Presented on:** [Document ingestion — Ingest the theme](../guides/document-ingestion.html#ingest-the-theme)
+- **Presented on:** [Document ingestion — Ingest the theme](../docs/cat-harness/guides/document-ingestion.html#ingest-the-theme)
 
 ## Lanes — who acts
 

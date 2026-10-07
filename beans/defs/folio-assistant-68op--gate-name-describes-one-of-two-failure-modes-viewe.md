@@ -1,11 +1,11 @@
 ---
 # folio-assistant-68op
 title: 'GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: ''viewer pages keep the navbar they had'' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T01:08:12Z
-updated_at: 2026-10-07T01:30:16Z
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-rwmf
 ---
 
@@ -62,15 +62,29 @@ has a "cannot see its subject" path.
 
 ## Done when
 
-[ ] step 1143 renamed to cover both branches (invariant AND audit
-    reachability), without weakening it to something contentless like
-    "viewer-nav check"
-[ ] a sweep over the other step names in code-quality-gates.yml for
-    scripts with a could-not-determine path, reporting which are
-    mis-named rather than renaming them all blind
-[ ] if the sweep finds several, a line in the ci-health or gate-authoring
-    skill: a step name must describe what the CHECK does, because a
-    could-not-determine red wears the same name as a finding
+- [x] step 1143 (line 2069) renamed to cover both branches (invariant AND audit
+      reachability), without weakening it to something contentless like
+      "viewer-nav check": `viewer pages keep the navbar they had, and audit is reachable`
+- [x] a sweep over the other step names in code-quality-gates.yml for
+      scripts with a could-not-determine path, reporting which are
+      mis-named rather than renaming them all blind
+- [x] a line in the ci-health skill (`cat-harness/skills/sdlc/sdlc-core/ci-health.md`):
+      a step name must describe what the CHECK does, because a
+      could-not-determine red wears the same name as a finding
+
+## Evidence
+
+The step is renamed in `.github/workflows/code-quality-gates.yml` (`viewer pages keep the navbar they had, and audit is reachable`), the step-name rule is added to `ci-health.md`, and the sweep below found no other mis-named step; `check:workflows` and `check:viewer-nav` pass on this branch (PR #2348).
+
+### Sweep results over `code-quality-gates.yml`
+Swept all 136 steps in `code-quality-gates.yml`:
+- Most steps running checks with could-not-determine or missing-baseline branches are named descriptively after the subject under test (e.g. `workflow skill refs`, `knowledge-graph audit`, `swimlane definitions`, `tool definitions`).
+- Dual-branch steps already explicitly name both the invariant and the allowance/remedy (e.g. `declared directories exist, or say why not`, `state directories are off main, or recorded as debt`, `every bound prefix is emitted, or declared forward with a reason`, `cat-harness fails standalone no more than its baseline`).
+- The single notable outlier asserting only the passing invariant despite failing when the audit sidecar/baseline is unreachable was `viewer pages keep the navbar they had`.
+- Renamed step to `viewer pages keep the navbar they had, and audit is reachable` in `.github/workflows/code-quality-gates.yml:2069`.
+- Added section "Step names describe what the check does, not merely its passing invariant" to `cat-harness/skills/sdlc/sdlc-core/ci-health.md`.
+- Verified `bun run check:workflows` (36 workflows parse and validate cleanly).
+- Verified `bun run check:viewer-nav` (clean exit 0).
 
 ## Provenance
 

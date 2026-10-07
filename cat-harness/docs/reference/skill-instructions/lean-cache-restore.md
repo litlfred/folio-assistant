@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-sci/skills/content/folio-paper-adapter/lean-cache-restore.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Lean cache: the authoring loop
@@ -137,7 +137,7 @@ cat-harness/scripts/reseed-lean-cache.sh --repo <content-repo> --dry-run
 
 Phased, resumable, and safe by default — seeds to a `-test` branch and
 verifies a restore from a clean clone before it will touch production.
-See [Reseeding the Lean cache](../../guides/reseeding-the-lean-cache.html).
+See [Reseeding the Lean cache](../../docs/cat-harness/guides/reseeding-the-lean-cache.html).
 
 ## Toolchain
 

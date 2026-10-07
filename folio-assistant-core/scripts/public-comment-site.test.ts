@@ -59,7 +59,7 @@ describe("public-comment-site", () => {
   test("comment text is escaped in the dashboard and cannot close the overlay's script", () => {
     const rows = siteComments([comment({ summary: "</script><b>x" })], anchors, { slug: "doc" });
     expect(dashboardHtml(rows, { title: "T", slug: "doc", generated: "g" })).not.toContain("<the>");
-    expect(overlaySnippet(rows)).not.toContain("</script><b>");
+    expect(overlaySnippet(rows, { dashboard: "../d/index.html" })).not.toContain("</script><b>");
   });
 
   test("the count tiles are toggles, and every row carries what they filter on (owner, 2026-10-05)", () => {
