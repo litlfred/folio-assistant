@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:29:09Z
-updated_at: 2026-10-07T19:40:48Z
+updated_at: 2026-10-07T20:15:38Z
 parent: folio-assistant-ieum
 ---
 
@@ -74,3 +74,26 @@ All quotes of CaMeL, DataFilter, DefensiveTokens and GitHub were checked against
 | L2.6 | Nothing broke: no client parses chat tool results. 196 of 197 tests pass; the one failure is an unrelated timeout that passes alone. | — | — |
 
 Scope sweep by the lens: no model call site is missed. `.github/scripts/agent_review.py` is the one sink outside the wired files, and it is listed as **open**.
+
+
+## Adjudication (single adjudicator, read-only, at 091bb58) and what answered it
+
+Of the 9 findings marked answered, **4 held fully** (L1.1, L1.4, L1.5, L2.2) and **5 held partly**. The fixes had introduced **4 new defects**. Every NIST quote checked (about 38) matched the held text. Answered in the commit after this note:
+
+| id | adjudicated | now |
+|---|---|---|
+| L1.2/L1.3 | partly: the only production caller ignored `screened` | **answered**: `workflow_complete` passes the screened `facts` and `note` on |
+| L1.6 | partly: composed combining marks (`ígnore`) passed; entities and %-escapes were rationalised as unreachable | **answered**: NFKD → strip marks → NFKC; entities and %-escapes decoded before matching. Still accepted-as-cost: confusables, base64, splitting across fields, paraphrase |
+| L2.1 | partly: JSON inside a JSON string is not unwrapped; the 5,000-leaf cap was silent | **answered** for the cap (reported as `oversize`). **accepted-as-cost**: doubly encoded JSON |
+| L2.4 | partly: a 4,000-char cut was silent | **answered**: the cut is marked in the note |
+| L2.5 | partly: triage `paper`/`document` ids were raw | **answered** |
+| L3.1, L3.3 | stale: answered by 621577b | **answered** |
+| L3.2 | stale: the primary is held in full | **answered** |
+| L3.4 | half-done: the prior-work text still mapped CaMeL's quarantined LLM onto H9 | **answered**: the skill says the model reader is NOT built |
+| L3.5 | half-done | **answered**: the node has 'where this rendering stops', and house wording moved to the skill |
+| L3.6 | open: the skill claimed security.md lists six boundaries (it lists two); security.md said 'callers must invoke it' | **answered**: both corrected |
+| L4.1 | owner | **owner ruled 2026-10-07: 'pin write-token workflows'**. Built in #2466 (`stagingExempt`: no write token and no `pull_request_target`; both staging workflows pinned) |
+| L4.4 | half-done: defined, not enforced | **open**: the definition is in the skill; enforcement is harness-side, not this repo's code |
+| L4.2, L4.3, L4.5, L4.6, L4.7 | open | **open** (L4.3 partly) |
+
+New defects from the fixes, all **answered**: the silent JSON-leaf cap; the soft hyphen flagging ordinary text (removed from HIDDEN, still folded before matching); the silent note truncation; and text-replace residue in the skill table (stray ' , ', and the owner's H8 ruling mislabelled 'prior work').

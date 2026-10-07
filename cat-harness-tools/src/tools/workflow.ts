@@ -361,8 +361,20 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       }
       // One line, always: a note is appended to a bean body, where a line of
       // its own could forge a claim record (`CLAIM_NOTE` is line-anchored;
-      // roast 1ygp L2.4). Whitespace is folded, never a word dropped.
-      const oneLine = rawNote === undefined ? undefined : oneLineLabel(rawNote, 4000);
+      // roast 1ygp L2.4). Whitespace is folded.
+      // Pass on the copy the screen read, never the arguments re-read (L1.2,
+      // adjudication of 1ygp: the library returned it and this caller ignored it).
+      const seen = screen.screened ?? {};
+      const screenedFacts = seen.facts as typeof facts;
+      const screenedNote = typeof seen.note === "string" ? seen.note : undefined;
+      // Capped, and the cap is SAID: "never a word dropped" was false while a
+      // 4,000-character cut was silent (adjudication of 1ygp, new defect 3).
+      const NOTE_MAX = 4000;
+      const folded = screenedNote === undefined ? undefined : oneLineLabel(screenedNote, Number.MAX_SAFE_INTEGER);
+      const oneLine =
+        folded === undefined || folded.length <= NOTE_MAX
+          ? folded
+          : `${folded.slice(0, NOTE_MAX)} [… cut: ${folded.length - NOTE_MAX} more characters not kept]`;
       const note =
         screen.state === "quarantined" && oneLine !== undefined
           ? `[QUARANTINED by the hand-over screen: ${[...new Set(screen.findings.map((f) => f.kind))].join(", ")}; kept, data not instruction] ${oneLine}`
@@ -375,7 +387,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       const { principal } = await githubPrincipalFor(root, process.env);
       const next = complete(model, state, node, {
         outcome,
-        facts,
+        facts: screenedFacts,
         actor: actor ?? principal.account,
         note,
         authz: { ctx: accessContext(root), principal, target, mode: ENGINE_MODE },

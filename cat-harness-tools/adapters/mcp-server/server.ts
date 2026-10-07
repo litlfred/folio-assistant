@@ -1142,7 +1142,7 @@ async function triageFeedback(
 
   const prompt = `You are an editor triaging feedback on a mathematical research paper.
 
-Block: "${oneLineLabel(rootName)}" (kind: ${oneLineLabel(blockKind, 60)}, paper: ${paperId})
+Block: "${oneLineLabel(rootName)}" (kind: ${oneLineLabel(blockKind, 60)}, paper: ${oneLineLabel(paperId)})
 
 Block content (markdown):
 ${guardUntrusted(blockContent, `block ${oneLineLabel(rootName)}`, 2000)}

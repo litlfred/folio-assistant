@@ -368,7 +368,7 @@ Respond in JSON: {"title": "...", "summary": "...", "categories": [...], "impact
 
     const prompt = `You are an editor triaging feedback on a structured document.
 
-Block: "${oneLineLabel(rootName)}" (kind: ${oneLineLabel(blockKind, 60)}, document: ${itemId})
+Block: "${oneLineLabel(rootName)}" (kind: ${oneLineLabel(blockKind, 60)}, document: ${oneLineLabel(itemId)})
 
 Block content (markdown):
 ${guardUntrusted(blockContent, `block ${oneLineLabel(rootName)}`, 2000)}

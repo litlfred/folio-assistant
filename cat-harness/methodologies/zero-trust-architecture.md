@@ -198,13 +198,12 @@ where the PE denies requests due to insufficient information"*
 - **The score-based trust algorithm is refused.** A score from *"configured
   weights"* reads as a measurement, and the weights are invented. That is
   `methodology-adoption` §"Never quantify a judgement to make it look
-  measured". The platform's decisions are **criteria-based**: refuse unless
-  every declared criterion holds.
-- **NIST's applicability limit is kept.** The tenets do not govern anonymous
-  public participants, and the platform cannot impose its policy on them. Text
-  from such participants (a public commenter, an issue body, a PR comment from
-  a non-collaborator) is therefore handled only as DATA crossing a boundary,
-  never as a subject being granted access. The skill states how.
+  measured". Of NIST's two kinds, only the **criteria-based** trust algorithm
+  is adopted.
+- **NIST's applicability limit is kept as NIST states it.** The tenets do not
+  govern anonymous public participants, and an organisation cannot impose its
+  policy on them. How this platform handles text from such participants is
+  the skill's business, not this node's.
 - **No performance or efficacy claim rests on this source.** SP 800-207 is an
   architecture and guidance document. It reports no evaluation, and none is
   attributed to it here.
