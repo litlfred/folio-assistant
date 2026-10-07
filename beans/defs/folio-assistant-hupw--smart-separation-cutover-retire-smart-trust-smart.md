@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-06T19:10:49Z
-updated_at: 2026-10-06T19:30:28Z
+updated_at: 2026-10-07T19:48:41Z
 parent: folio-assistant-n3ni
 ---
 
@@ -50,3 +50,7 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 - Every overlay warns: needs smart-base / smart-trust / smart-immunizations (root) and smart-base (smart-ig) match no instance.
 - audit:coverage: check:fhir-harness-exclusions 'none of its 1 script path(s) could be read'.
 All of these are expected to clear unchanged once a remote mount lands each fork's smart-base/ at the old local path.
+
+
+## 2026-10-07 — owner sequencing (relayed by session_012qoycyCSGidZqW245vXhze)
+Owner: 'once who-iris done, do smart-* to litlfred/smart-*'. So: g8jp (who-iris cutover) first, then this bean, using the same pattern — seed / remote subscription, site composition repointed, in-tree copy to fsh-guts. smart-ig stays in tree as the 2026-10-06 scope note says, unless the owner says otherwise. Claim is still held by session_01EcBv3uwKYcnNbCC6BcPG92 (branch claude/cutover-smart-to-fsh-guts); check that session and #2320 before taking it over.
