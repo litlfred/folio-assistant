@@ -22,6 +22,10 @@
  */
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { inputSiteReached } from "./input-trace.ts";
+
+import { siteDirFor } from "../schemas/cat-harness.js";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
 
 /**
  * The part of a `WebPage` manifest this reads, declared here rather than
@@ -36,8 +40,15 @@ interface PageManifest {
 
 /** One page section that presents a process. */
 export interface Presentation {
-  /** The page's slug — its published path without `.html`, e.g. `guides/who-smart-ig`. */
+  /** The page's slug, e.g. `guides/who-smart-ig` — its SOURCE path without `.md`. */
   page: string;
+  /**
+   * Where the page is PUBLISHED, site-relative, e.g.
+   * `docs/cat-harness/guides/who-smart-ig.html` — Jekyll's answer, read from
+   * the site's permalink defaults (`lib/jekyll-permalink.ts`). Not the slug:
+   * the docs-folder pages publish under `docs/<instance>/` (bean `kc7k`).
+   */
+  href: string;
   /** The section's pinned anchor id. */
   node: string;
   /** The section's heading, when it has one. */
@@ -64,12 +75,15 @@ export function docsManifests(instanceRoot: string): string[] {
 export async function processPresentations(instanceRoot: string): Promise<Map<string, Presentation[]>> {
   const out = new Map<string, Presentation[]>();
   for (const manifest of docsManifests(instanceRoot)) {
+    // input-site: traced #e8ca3daa — a docs page manifest, loaded by path
+    inputSiteReached("process-presentations: computed load");
     const page = ((await import(manifest)) as { default: PageManifest }).default;
     for (const node of page.nodes) {
       if (node.asset?.kind !== "bpmn") continue;
       const list = out.get(node.asset.source) ?? [];
       list.push({
         page: page.slug,
+        href: publishedPagePath(join(instanceRoot, siteDirFor(instanceRoot)), page.slug),
         node: node.id,
         pageTitle: page.title,
         ...(node.title ? { title: node.title } : {}),
@@ -91,7 +105,7 @@ export async function processPresentations(instanceRoot: string): Promise<Map<st
 export function processTarget(home: string, presentations: readonly Presentation[] | undefined): string {
   if (presentations?.length === 1) {
     const p = presentations[0]!;
-    return `${p.page}.html#${p.node}`;
+    return `${p.href}#${p.node}`;
   }
   return `processes/${home}.html`;
 }

@@ -5,7 +5,7 @@ user story, voice and skill. **schema** holds JSON Schema and external schema. A
 takes on roles, a role carries skills, a task sits in a lane of a role and uses
 a skill, a test run tests a skill, and a QA report audits any kind of subject.
 
-![Harness schemas — UML class diagram generated from the JSON Schemas: packages test, process, scenario and schema, with the classes and relations described in the text above.](../assets/img/uml/harness-schemas.svg)
+![Harness schemas — UML class diagram generated from the JSON Schemas: packages test, process, scenario and schema, with the classes and relations described in the text above.]({{ '/assets/img/uml/harness-schemas.svg' | relative_url }})
 
 <details markdown="1"><summary>The diagram as it appeared on the slide (2026-09-30), without Voice Profile</summary>
 

@@ -5,7 +5,7 @@ The agent renders a PDF (and/or HTML) with the paper adapter.
 > **Assistant:** *(calls `paper_render_pdf`, then `paper_preview`)* Rendered
 > `harmonic-series.pdf` (3 pages). Preview below.
 
-![Mock screenshot: rendered PDF preview in the viewer](../assets/img/mock-viewer.svg)
+![Mock screenshot: rendered PDF preview in the viewer]({{ '/assets/img/mock-viewer.svg' | relative_url }})
 
 You can set rendering preferences (engine, scope, math renderer) via the
 `paper_preferences` tool:

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/staging-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/staging-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/staging-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/staging-review.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/staging-review.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Staging review — before/after comparison
@@ -320,7 +320,7 @@ When reporting changes to the user:
 |---|---|---|---|
 | Landing page | [main](https://litlfred.github.io/folio-assistant/) | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/) | Added French translation badge |
 | French landing | — | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/fr/index.html) | New page |
-| Agent onboarding | [main](https://litlfred.github.io/folio-assistant/guides/agent-onboarding.html) | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/guides/agent-onboarding.html) | Language switcher added |
+| Agent onboarding | [main](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/agent-onboarding.html) | [staging](https://litlfred.github.io/folio-assistant/STAGING/claude-206-staging-preview/docs/cat-harness/guides/agent-onboarding.html) | Language switcher added |
 ```
 
 ## URL construction

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/feature-staging.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/feature-staging.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/feature-staging.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/feature-staging.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/feature-staging.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Feature-branch staging
@@ -308,6 +308,38 @@ When an author requests a content change:
 6. **Iterate** — each push updates the staging deployment with a new SHA
 
 The BPMN for this workflow is `folio-assistant-core/processes/content/content-change-review.bpmn`.
+
+### Staging without waiting for a runner — `stage-local.ts` (#2410)
+
+When the Actions queue is backed up, the agent can build the preview itself:
+it already has the checkout, the platform and bun. Measured 2026-10-07 on
+smart-ra: the staging workflow waited **33 min** for a runner to do 45 s of
+work, and GitHub's Pages deploy then waited **47 min** for about one.
+
+```sh
+bun run cat-harness/scripts/stage-local.ts --repo <folio> [--branch B] [--dry-run]
+bun run cat-harness/scripts/stage-local.ts --repo <folio> --artifact <dir>
+```
+
+- **Default: push to `gh-pages`.** It runs the folio staging workflow's steps,
+  with the inputs read from the folio's own `staging.yml`. It pushes
+  `STAGING/<slug>/` through the same rate-limit gate (§8) and render log. This
+  removes the first wait and **not the second**: Pages deploys on a runner,
+  so say the preview is live once that deploy has run, never sooner.
+- **`--artifact <dir>`: no GitHub at all.** It writes the same build as a
+  bundle for a claude.ai Artifact: `index.html` plus the files listed in
+  `<dir>/artifact.json`. Publish that, and it is live in about a minute,
+  private until shared.
+  - An Artifact holds at most 254 files plus the page per publish. Whole
+    top-level directories are left out to fit, the ones with the most files
+    first. `artifact.json` names each one, and links into a left-out
+    directory 404.
+  - Before publishing a folio whose content belongs to a real organisation
+    (a WHO draft, say), ask the author: an Artifact is a new place that
+    content appears.
+- **Neither replaces the workflow's review data.** The QA sweep, screenshots,
+  review-comment ingestion and the PR comment do not run. The banner says the
+  preview was built locally.
 
 ## Staleness detection
 

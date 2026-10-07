@@ -36,7 +36,7 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>130</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>131</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>72</b><span>skills satisfied</span></div>
 <div class="tg-stat"><b>108</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
@@ -51,16 +51,17 @@ A tool may declare more than one invocation, so these do not sum to the total.
 | <span class="tg-tag tg-shell">shell</span> | 108 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
-| <span class="tg-tag tg-manual">manual</span> | 7 |
+| <span class="tg-tag tg-manual">manual</span> | 8 |
 
 | installation | tools |
 |---|---|
 | `none` | 121 |
 | `cli` | 9 |
+| `container` | 1 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **72** skills named across **130** tools resolve to a
+Yes — all **72** skills named across **131** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -117,6 +118,7 @@ tool advertising a capability the graph cannot locate.
 | `lsi-query`<br>Latent Semantic Indexing over a prose graph | Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`lsi-indexing`](../reference/skill-instructions/lsi-indexing.html) | 3 in / 1 out |
 | `lsi-viewer`<br>Latent semantic index viewer | Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `mcp-capture`<br>What this instance's MCP server serves | Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source. | <span class="tg-tag tg-shell">shell</span> | [`mcp-contract`](../reference/skill-instructions/mcp-contract.html) | 1 in / 1 out |
+| `mcp-server-image`<br>folio MCP server, as a container | Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image `deploy/` serves behind the auth gateway. Run it with `docker run -i --rm paper-assistant --stdio`, or `--http` on port 8080. | <span class="tg-tag tg-manual">manual</span> | [`deployment-auth`](../reference/skill-instructions/deployment-auth.html) | 0 in / 0 out |
 | `merge-leftover`<br>Merge leftover (has a PR's intent landed?) | After a train merged, compare a PR's head with the base path by path and say whether what it still changes is ONLY generated files, generated README regions, or changes the base already carries (its patch applies in reverse to the base): `landed`, `not-landed` with the authored paths still different, or `could-not-determine`, which is never shown as clean. Only reports; closing the PR stays a steward action. | <span class="tg-tag tg-shell">shell</span> | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | 2 in / 1 out |
 | `merge-overlap`<br>Merge overlap (conflict prediction) | For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch `cat-harness/` or `cat-harness-tools/`. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains. | <span class="tg-tag tg-shell">shell</span> | [`coordinate`](../reference/skill-instructions/coordinate.html)<br>[`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | 2 in / 1 out |
 | `merge-train`<br>Merge train | Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR. | <span class="tg-tag tg-shell">shell</span> | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 5 in / 1 out |

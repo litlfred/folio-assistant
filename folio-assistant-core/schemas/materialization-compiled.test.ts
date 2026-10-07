@@ -59,11 +59,11 @@ describe("freshness", () => {
   test("a compiled copy with no expiry is input-bound, not a no-expiry finding", () => {
     const r = compiled();
     expect(r.success).toBe(true);
-    if (r.success) expect(freshness(r.data)).toBe("input-bound");
+    if (r.success) expect(freshness(r.data, new Date())).toBe("input-bound");
   });
   test("a stated expiry still wins", () => {
     const r = compiled({ expiresAt: "2000-01-01T00:00:00Z" });
-    if (r.success) expect(freshness(r.data)).toBe("expired");
+    if (r.success) expect(freshness(r.data, new Date())).toBe("expired");
   });
 });
 

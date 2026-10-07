@@ -13,7 +13,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 هذه الصفحة هي القائمة الرئيسية لكل **مهارة** و**دور** في folio-assistant،
 وتوضح كيفية تناسقها وعملها مع النموذج اللغوي الكبير (LLM). للاطلاع على عقد المدخلات/المخرجات
-محدد الأنواع لكل مهارة، راجع [مرجع مخططات المهارات](../../reference/skills/).
+محدد الأنواع لكل مهارة، راجع [مرجع مخططات المهارات]({{ '/reference/skills/' | relative_url }}).
 
 1. TOC
 {:toc}
@@ -39,14 +39,14 @@ flowchart TD
 1. **المهارة (Skill)** — وحدة عمل موثقة ومحددة بالمخطط (مثل
    `lean-formalization`). يكتشف الوكيل المهارات عبر أداة MCP المسماة `skill_list`
    ويحمّل تعليمات المهارة عبر `skill_fetch`. ولكل مهارة
-   [عقد مدخلات/مخرجات](../../reference/skills/) محدد الأنواع.
+   [عقد مدخلات/مخرجات]({{ '/reference/skills/' | relative_url }}) محدد الأنواع.
 2. **حزمة المهارات (Skill package)** — مجموعة من المهارات المترابطة التي تصرّح أيضًا
    عن تبعات Docker/بيئة التشغيل الخاصة بها (`package-manifest.json`).
 3. **الدور (الفاعل / Role (actor))** — *من* يتصرف الوكيل بصفته. يتخذ **الفاعل** (actor)
    **دورًا** بناءً على مسار BPMN الذي يعمل فيه. أما ما يجوز للفاعل **القيام به** فهو
    سياسة W3C ODRL في `policies/`، وليس خاصية تابعة للدور ذاته. وقبل كل مهمة،
    يتحقق المنفذ من المصادقة، وتعيين الدور، والسياسة، والوصول إلى المحتوى
-   ([`task-authorization`](../../reference/skill-instructions/task-authorization.html))؛
+   ([`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }}))؛
    وتستعلم مسارات HTTP عن السياسات نفسها من خلال `src/core/rbac.ts`.
 4. **القدرة (Capability)** — إمكانية بيئية ملموسة (مثل `latex-compiler`،
    و`lean-toolchain`). تتطلب المهارات قدرات معينة؛ وتستكشفها أداة `check_dependencies`.
@@ -69,8 +69,8 @@ flowchart TD
 | الطبقة | الموقع | الحالة |
 |-------|----------|--------|
 | **التعريف** (الأدوار، القدرات المطلوبة، المتطلبات، أنماط التوجيه، مراحل دورة الحياة، مرجع المخطط) | `.claude/skills/local/<skill>.json` | ✅ جميع مهارات التأليف الـ 22 — تم التحقق منها في التكامل المستمر (CI) عبر `scripts/validate-skills.ts` |
-| **العقد محدد الأنواع** (JSON Schema للمدخلات/المخرجات) | `schemas/skills/<skill>/` | ✅ جميع الـ 22 — راجع [المرجع](../../reference/skills/) |
-| **متن التعليمات** (الدليل النثري الإرشادي الذي يحمّله النموذج اللغوي) — تصفحها في مرجع [تعليمات المهارات](../../reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`، و`skills/folio-*-adapter/*.md`، و`src/skills/*.md` | ✅ مهارات دورة الحياة، والوكيل، وحزمة المنصة، و**folio-document-adapter**؛ ⏳ **نصوص authoring-math / authoring-who-smart-guidelines قيد التحديد (TBD)** (توفر تلك الحزم البيان الرسمي + تعريفات JSON) |
+| **العقد محدد الأنواع** (JSON Schema للمدخلات/المخرجات) | `schemas/skills/<skill>/` | ✅ جميع الـ 22 — راجع [المرجع]({{ site.baseurl }}/reference/skills/) |
+| **متن التعليمات** (الدليل النثري الإرشادي الذي يحمّله النموذج اللغوي) — تصفحها في مرجع [تعليمات المهارات]({{ site.baseurl }}/reference/skill-instructions/) | `skills/authoring/content-lifecycle/*.md`، و`skills/folio-*-adapter/*.md`، و`src/skills/*.md` | ✅ مهارات دورة الحياة، والوكيل، وحزمة المنصة، و**folio-document-adapter**؛ ⏳ **نصوص authoring-math / authoring-who-smart-guidelines قيد التحديد (TBD)** (توفر تلك الحزم البيان الرسمي + تعريفات JSON) |
 | **الحزمة** (تبعات Docker/بيئة التشغيل) | `skills/<package>/package-manifest.json` | ✅ جميع الحزم الأربع |
 
 إذن، *نعم، المهارات موجودة بالفعل* — كتعريفات مهيكلة + مخططات محددة الأنواع، مع توفير
@@ -84,31 +84,31 @@ flowchart TD
 
 | المهارة | المرحلة | الغرض |
 |-------|-------|---------|
-| [`content-plan`](../../reference/skills/content-plan.html) | plan (تخطيط) | تحديد النطاق، والفريق، والجدول الزمني، والحوكمة |
-| [`content-author`](../../reference/skills/content-author.html) | author (تأليف) | إنشاء مخرجات مهيكلة |
-| [`content-validate`](../../reference/skills/content-validate.html) | validate (تحقق) | فحص المخطط + القيود |
-| [`content-review`](../../reference/skills/content-review.html) | review (مراجعة) | المراجعة والاعتماد الرسمي |
-| [`content-test`](../../reference/skills/content-test.html) | test (اختبار) | ضمان جودة شامل من البداية للنهاية / بناء ناجح |
-| [`content-publish`](../../reference/skills/content-publish.html) | publish (نشر) | التصيير والنشر |
-| [`content-feedback`](../../reference/skills/content-feedback.html) | feedback (ملاحظات) | جمع الملاحظات وتصنيفها وتوجيهها |
+| [`content-plan`]({{ site.baseurl }}/reference/skills/content-plan.html) | plan (تخطيط) | تحديد النطاق، والفريق، والجدول الزمني، والحوكمة |
+| [`content-author`]({{ site.baseurl }}/reference/skills/content-author.html) | author (تأليف) | إنشاء مخرجات مهيكلة |
+| [`content-validate`]({{ site.baseurl }}/reference/skills/content-validate.html) | validate (تحقق) | فحص المخطط + القيود |
+| [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) | review (مراجعة) | المراجعة والاعتماد الرسمي |
+| [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) | test (اختبار) | ضمان جودة شامل من البداية للنهاية / بناء ناجح |
+| [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) | publish (نشر) | التصيير والنشر |
+| [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) | feedback (ملاحظات) | جمع الملاحظات وتصنيفها وتوجيهها |
 | `content-retire` | retire (تقاعد) | إيقاف الاستخدام / الأرشفة |
 
 ### المستندات وإرشادات السياسات: `folio-document-adapter`
 
 | المهارة | الغرض |
 |-------|---------|
-| [`document-authoring`](../../reference/skills/document-authoring.html) | إنشاء الكتل ومراجعتها في folio نثري |
-| [`document-structure`](../../reference/skills/document-structure.html) | الفصول والأقسام — إضافة، وحذف، وإعادة ترتيب |
-| [`normative-statements`](../../reference/skills/normative-statements.html) | تضمين توصية أو متطلب أو قاعدة |
-| [`document-publishing`](../../reference/skills/document-publishing.html) | من Markdown إلى HTML / PDF، دون الحاجة إلى TeX |
+| [`document-authoring`]({{ site.baseurl }}/reference/skills/document-authoring.html) | إنشاء الكتل ومراجعتها في folio نثري |
+| [`document-structure`]({{ site.baseurl }}/reference/skills/document-structure.html) | الفصول والأقسام — إضافة، وحذف، وإعادة ترتيب |
+| [`normative-statements`]({{ site.baseurl }}/reference/skills/normative-statements.html) | تضمين توصية أو متطلب أو قاعدة |
+| [`document-publishing`]({{ site.baseurl }}/reference/skills/document-publishing.html) | من Markdown إلى HTML / PDF، دون الحاجة إلى TeX |
 
 ### الأوراق والكتب العلمية: `authoring-math`
 
 | المهارة | الغرض |
 |-------|---------|
-| [`lean-formalization`](../../reference/skills/lean-formalization.html) | الصياغة الرياضية الرسمية للعبارات/البراهين في Lean 4 |
-| [`latex-authoring`](../../reference/skills/latex-authoring.html) | تأليف مستندات LaTeX |
-| [`proof-verification`](../../reference/skills/proof-verification.html) | التحقق من البراهين، وتدقيق `sorry`/المسلّمات |
+| [`lean-formalization`]({{ site.baseurl }}/reference/skills/lean-formalization.html) | الصياغة الرياضية الرسمية للعبارات/البراهين في Lean 4 |
+| [`latex-authoring`]({{ site.baseurl }}/reference/skills/latex-authoring.html) | تأليف مستندات LaTeX |
+| [`proof-verification`]({{ site.baseurl }}/reference/skills/proof-verification.html) | التحقق من البراهين، وتدقيق `sorry`/المسلّمات |
 | `scientific-visualization` | الأشكال والرسوم البيانية |
 | `hypothesis-generation` | اقتراح تخمينات / توجهات بحثية |
 | `scientific-critical-thinking` | المراجعة النقدية والجدلية للحجج |
@@ -117,14 +117,14 @@ flowchart TD
 
 | المهارة | الغرض |
 |-------|---------|
-| [`l2-dak-authoring`](../../reference/skills/l2-dak-authoring.html) | مخرجات DAK للمستوى L2 (قاموس البيانات، وما إلى ذلك) |
-| [`l3-fhir-authoring`](../../reference/skills/l3-fhir-authoring.html) | موارد FHIR للمستوى L3 عبر FSH |
-| [`bpmn-authoring`](../../reference/skills/bpmn-authoring.html) | العمليات التجارية بـ BPMN 2.0 |
-| [`dmn-authoring`](../../reference/skills/dmn-authoring.html) | جداول قرارات DMN |
-| [`terminology-management`](../../reference/skills/terminology-management.html) | أنظمة الترميز / مجموعات القيم |
-| [`fhir-validation`](../../reference/skills/fhir-validation.html) | التحقق مقابل ملفات تعريف FHIR |
-| [`ig-publication`](../../reference/skills/ig-publication.html) | بناء دليل التطبيق (IG) ونشره |
-| [`quality-control`](../../reference/skills/quality-control.html) | بوابات ضمان الجودة (QA gates) |
+| [`l2-dak-authoring`]({{ site.baseurl }}/reference/skills/l2-dak-authoring.html) | مخرجات DAK للمستوى L2 (قاموس البيانات، وما إلى ذلك) |
+| [`l3-fhir-authoring`]({{ site.baseurl }}/reference/skills/l3-fhir-authoring.html) | موارد FHIR للمستوى L3 عبر FSH |
+| [`bpmn-authoring`]({{ site.baseurl }}/reference/skills/bpmn-authoring.html) | العمليات التجارية بـ BPMN 2.0 |
+| [`dmn-authoring`]({{ site.baseurl }}/reference/skills/dmn-authoring.html) | جداول قرارات DMN |
+| [`terminology-management`]({{ site.baseurl }}/reference/skills/terminology-management.html) | أنظمة الترميز / مجموعات القيم |
+| [`fhir-validation`]({{ site.baseurl }}/reference/skills/fhir-validation.html) | التحقق مقابل ملفات تعريف FHIR |
+| [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) | بناء دليل التطبيق (IG) ونشره |
+| [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) | بوابات ضمان الجودة (QA gates) |
 
 ### مهارات الوكيل/المنصة (`src/skills`)
 
@@ -155,7 +155,7 @@ flowchart TD
 ### حزم مهارات المنصة (`skills/folio-core`، و`folio-assistant-core/skills/content/folio-document-adapter`، و`folio-assistant-sci/skills/content/folio-paper-adapter`)
 
 **حزم المنصة** الأكبر، اثنتان منها تم ترحيلهما من مستودع محتوى qou (راجع
-[سجل الترحيل](../../ar/migrations/2026-06-29-platform-skills-migration.html)
+[سجل الترحيل]({{ '/ar/migrations/2026-06-29-platform-skills-migration.html' | relative_url }})
 والمسألة [#27](https://github.com/litlfred/folio-assistant/issues/27)). وتتميز بأنها
 مستقلة عن المحتوى ومصممة لتتم مزامنتها مع أي folio:
 
@@ -168,7 +168,7 @@ flowchart TD
 تم تجاوز مهارات فيزياء QOU غير القابلة للاختزال؛ وتم تعميم الأمثلة الخاصة بـ QOU في البقية. وتشحن كل حزمة ملف `package-manifest.json`.
 
 > يتم توليد **مخططات** المهارات (المدخلات/المخرجات محددة الأنواع لمهارات التأليف)
-> في [مرجع مخططات المهارات](../../reference/skills/) — ولا تحيد أبدًا عما
+> في [مرجع مخططات المهارات]({{ '/reference/skills/' | relative_url }}) — ولا تحيد أبدًا عما
 > يتحقق منه إطار العمل.
 
 ---
@@ -252,8 +252,8 @@ flowchart LR
 ## انظر أيضًا
 
 - [مسار عمل النشر](../../process/ar/publication-workflow.html) — مسارات BPMN: أي مهارة تعمل في أي خطوة، ومن يقرر
-- [تعليمات المهارات](../../reference/skill-instructions/) — النصوص النثرية الإرشادية التي يحمّلها النموذج اللغوي (LLM)
-- [مرجع مخططات المهارات](../../reference/skills/) — المدخلات/المخرجات محددة الأنواع لكل مهارة
+- [تعليمات المهارات]({{ '/reference/skill-instructions/' | relative_url }}) — النصوص النثرية الإرشادية التي يحمّلها النموذج اللغوي (LLM)
+- [مرجع مخططات المهارات]({{ '/reference/skills/' | relative_url }}) — المدخلات/المخرجات محددة الأنواع لكل مهارة
 - [أنواع المحتوى](content-types.html) — المهارات التي يستخدمها كل نوع محتوى
 - [البنية الهندسية](architecture.html) — التحكم في الوصول القائم على الأدوار (RBAC)، والمحولات، وخادم MCP
 - [البدء](../../start/ar/getting-started.html) — تشغيل أول مهارة لك

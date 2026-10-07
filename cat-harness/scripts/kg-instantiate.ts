@@ -197,6 +197,12 @@ export function instantiate(opts: InstantiateOptions): InstantiateResult {
         (subs.length ? `; it subscribes to ${subs.map((s) => `\`${s.id}\``).join(", ")}` : "; it subscribes to nothing — run `bun run kg:subscribe` first"),
     );
   }
+  if (sub.kind === "content") {
+    return refuse(
+      `subscription \`${sub.id}\` is to a CONTENT Knowledge Graph (owner, 2026-10-06): it declares Subgraphs and no harness, ` +
+        `so it contributes no skills, processes or roles and there is nothing to instantiate. Its Subgraphs are materialised with \`kg:materialize\``,
+    );
+  }
   const chosen = sub.harnesses ?? [];
   if (!chosen.includes(opts.harness)) {
     return refuse(

@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Instalar es la parte fácil. Lo que debes ejecutar **antes de hacer push** es
-> [`platform-gates`](../../reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) —
 > que `bun test` pase no significa que los gates hayan pasado, y la lista se deriva del
 > flujo de trabajo de CI en lugar de estar fijada por escrito. Si estás incorporando folio-assistant sobre
 > un repositorio que ya existe, lee primero
-> [`repo-conversion`](../../reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}).
 
 ## Requisitos previos
 
@@ -145,7 +145,7 @@ folio-assistant) y ajústala para tu tipo de contenido:
 ```sh
 # El DESTINO se nombra según tu instancia -- `my-folio.config.json`, no una
 # palabra fija. El archivo de ejemplo conserva su propio nombre: así es como se llama.
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

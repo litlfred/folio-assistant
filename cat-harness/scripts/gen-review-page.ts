@@ -74,7 +74,10 @@
  *
  * A navigation pane sits beside the list, or above it on a narrow screen:
  * - the **outline** of each document, in manifest order, from the preview's
- *   `outline.json`, with word badges per section;
+ *   `outline.json`, with word badges per section. On a page with the harness
+ *   rail it is a section OF THE RAIL (`railOutline`), not a column of the page
+ *   (owner, 2026-10-07: *"i wanted the TOC in the LHS navbar, not LHS of
+ *   displayed content"*); without a rail it stays in the pane;
  * - the **minimap**: one cell per block, a single tab stop, arrow keys to
  *   move, Enter to jump.
  *
@@ -101,7 +104,7 @@
 import { DIFF_RENDERERS } from "../schemas/diff-renderers.js";
 import { cleanRendered, renderInline, renderSideBySide, renderVisual, renderWordDiff } from "./review-renderers.js";
 import { computeHeat, heatBucket, renderHeat } from "./review-heat.js";
-import { crumbFor, renderMinimap, renderOutline } from "./review-nav.js";
+import { crumbFor, railOutline, renderMinimap, renderOutline } from "./review-nav.js";
 import { measuredModel, renderedModel, renderMeasured, renderRendered } from "./review-rendered.js";
 import { wordDiff } from "./word-diff.js";
 import { darkRules } from "./lib/scheme-css.ts";
@@ -573,10 +576,24 @@ const SCRIPT = `
       if (OUTLINE && OUTLINE.documents) {
         var rowBy = {};
         heat.rows.forEach(function (r) { rowBy[r.section] = r; });
-        navPane.appendChild(renderOutline(document, OUTLINE, function (key) {
+        var badgesOf = function (key) {
           var r = rowBy[key];
           return r ? { changed: r.changed, open: r.open, qaFailing: r.qaFailing } : null;
-        }, jumpSection));
+        };
+        // The outline goes in the harness RAIL when the page has one (owner,
+        // 2026-10-07: "TOC in the LHS navbar, not LHS of displayed content");
+        // without a rail, in the page's own pane as before.
+        var railIn = document.querySelector("nav.fa-nav:not([data-fa-rail]) .fa-nav-in");
+        var railHost = railIn && railIn.querySelector(".fa-nav-graphs");
+        if (railIn && !railHost) {
+          // No page section yet: open one where the rail puts it, after its top.
+          railHost = document.createElement("div");
+          railHost.className = "fa-nav-graphs";
+          var top = railIn.querySelector(".fa-nav-top");
+          railIn.insertBefore(railHost, top ? top.nextSibling : railIn.firstChild);
+        }
+        if (railHost) railHost.insertBefore(railOutline(document, OUTLINE, badgesOf, jumpSection), railHost.firstChild);
+        else navPane.appendChild(renderOutline(document, OUTLINE, badgesOf, jumpSection));
         var changeOf = {};
         cs.changes.forEach(function (c) { if (c.change !== "removed") changeOf[c.label] = c.change === "added" ? "added" : "changed"; });
         navPane.appendChild(renderMinimap(document, OUTLINE, function (label) {
@@ -645,6 +662,7 @@ var heatBucket = ${heatBucket.toString()};
 var renderHeat = ${renderHeat.toString()};
 var crumbFor = ${crumbFor.toString()};
 var renderOutline = ${renderOutline.toString()};
+var railOutline = ${railOutline.toString()};
 var renderMinimap = ${renderMinimap.toString()};
 var renderedModel = ${renderedModel.toString()};
 var renderRendered = ${renderRendered.toString()};

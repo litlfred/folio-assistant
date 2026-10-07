@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **Les règles derrière cette page.** L'architecture décrit la forme ; les compétences
 > régissent les décisions. Les adaptateurs par rapport aux profils —
-> [`content-profiles`](../../reference/skill-instructions/content-profiles.html).
+> [`content-profiles`]({{ '/reference/skill-instructions/content-profiles.html' | relative_url }}).
 > L'emplacement d'un nouveau nœud avant sa création —
-> [`placement`](../../reference/skill-instructions/placement.html). L'agencement
+> [`placement`]({{ '/reference/skill-instructions/placement.html' | relative_url }}). L'agencement
 > du dépôt et chaque type de graphe —
-> [`directory-conventions`](../../reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}).
 > Composition et vérification de la surface MCP —
-> [`mcp-assembly`](../../reference/skill-instructions/mcp-assembly.html) et
-> [`mcp-contract`](../../reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`]({{ '/reference/skill-instructions/mcp-assembly.html' | relative_url }}) et
+> [`mcp-contract`]({{ '/reference/skill-instructions/mcp-contract.html' | relative_url }}).
 > En cas de désaccord entre cette page et une compétence, la compétence l'emporte.
 
 folio-assistant est un **serveur MCP** doté d'une couche d'**adaptateurs de contenu** enfichable,
@@ -117,7 +117,7 @@ compétences avec `skill_list` et charge les instructions avec `skill_fetch`. La
 des compétences et des rôles — ainsi que la manière dont ils se composent avec le LLM (RBAC, capacités,
 exigences) — se trouve sur la page [Compétences et rôles](skills.html) ; le contrat
 d'entrée/sortie de chaque compétence est publié dans la
-[Référence des schémas de compétences](../../reference/skills/).
+[Référence des schémas de compétences]({{ '/reference/skills/' | relative_url }}).
 
 ## Le modèle d'objets de contenu
 
@@ -127,7 +127,7 @@ Pour les articles, le contenu est un arbre de **blocs** typés validés à l'ex�
 - `schemas/constraints.ts` — schémas Zod et règles de contraintes
 - `schemas/builders.ts` — constructeurs validés (`definition()`, `theorem()`, …)
 
-Ceux-ci sont documentés dans la [Référence de l'API TypeScript](../../fr/api/) générée.
+Ceux-ci sont documentés dans la [Référence de l'API TypeScript]({{ '/fr/api/' | relative_url }}) générée.
 
 ## Contrôle d'accès — ODRL, vérifié avant chaque tâche
 
@@ -147,7 +147,7 @@ dans `skills/permissions/permissions.json`, les autorisations dans `policies/*.j
 
 Jusqu'au ticket #1207 (23-09-2026), `rbac.ts` était une hiérarchie distincte viewer < collaborator
 < owner et l'exécuteur ne vérifiait rien. La règle de conduite est définie par la compétence
-[`task-authorization`](../../reference/skill-instructions/task-authorization.html).
+[`task-authorization`]({{ '/reference/skill-instructions/task-authorization.html' | relative_url }}).
 
 ## Amorçage du plan de travail (inter-harnais)
 

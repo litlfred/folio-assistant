@@ -1,12 +1,10 @@
 ---
 # folio-assistant-a98i
 title: translate-kg-viewer --extract refreshes every .pot but never syncs the .po stubs
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-19T08:11:21Z
-updated_at: 2026-10-06T19:56:02Z
-tags:
-  - ready-to-close
+updated_at: 2026-10-07T05:09:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -47,5 +45,6 @@ Synced all five by hand: rebuilt each `.po` from its `.pot`, preserving the file
 - Existing string tests in `cat-harness/scripts/tests/kg-viewer-strings.test.ts` pass (17/17).
 - `bun run translate-kg-viewer:check` passes with exit code 0.
 - All fast quality gates (`bun run gates`) pass.
+- Work landed on `main` in PR #2336 (merge commit `cae1f114156ad15b767fd945e1ada57d6c9d8a5b`, head commit `65e199e96a3b`).
 
 _2026-10-06T19:56:02Z_ — Claimed by claude/a98i-translate-kg-viewer-sync-po — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

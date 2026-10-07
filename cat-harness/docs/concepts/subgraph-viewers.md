@@ -37,7 +37,7 @@ instance names as a subgraph needs a visualiser, a documentation entry, and a
 governing skill.** Three separate requirements, because they fail differently
 — nothing renders it, nothing says what it is for, and nothing an agent can
 invoke against it. This page is the second of the three for these two graphs;
-[`schema-management`](../reference/skill-instructions/schema-management.html) and
+[`schema-management`]({{ '/reference/skill-instructions/schema-management.html' | relative_url }}) and
 the library-ingestion skills are the third.
 
 `bootstrap` is exempt from the visualiser requirement and not from the others:
