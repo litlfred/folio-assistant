@@ -101,12 +101,26 @@ permissions:
 # 2026-10-05, 16 of 53 queued runs in this repository were such runs, and
 # the queue they lengthened delayed a fix that main's publish was waiting
 # on (#2233). So a PR's runs share one group and the newer cancels the
-# older. Every other event (a push to main, a dispatch from merge-main) is
-# grouped by its own sha and never cancelled: main's history of verdicts is
-# not thinned.
+# older.
+#
+# A newer push to MAIN now supersedes the older main run the same way — bean
+# `qbco`, issue #2456. This comment said until 2026-10-07 that main's runs
+# were grouped by sha and never cancelled, so that "main's history of
+# verdicts is not thinned". The owner has ruled that it may be thinned
+# ("1y, 2y, 3y, 4y", 2026-10-07): on that day 34 main push runs sat in the
+# queue uncancelled, each a full run over a tree a newer run would judge
+# anyway. The cost is stated, not hidden: a superseded main commit gets no
+# verdict of its own and no `main/<sha>` entry on `qa-reports` (the docs
+# build already falls back to the newest `main` entry, labelled).
+#
+# A `workflow_dispatch` is NOT grouped with them and is never cancelled:
+# merge-main dispatches this workflow on a PR BRANCH to judge the merge
+# commit it pushed there (`merge-main.yml`, "Have CI judge the merge
+# commit"), which is a different question from main's, on a different ref.
+# `merge_group` stays per sha.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.sha }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || (github.event_name == 'push' && github.ref) || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
 
 jobs:
   hygiene:
@@ -461,6 +475,60 @@ jobs:
       - name: tsc --noEmit
         run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
 
+  verdict-reuse:
+    # bpmn-node: Task_VerdictReuse
+    name: Verdict reuse — was this tree already judged green? (not a gate)
+    #
+    # Bean `qbco`, issue #2456 (owner, 2026-10-07: "1y, 2y, 3y, 4y"). A push
+    # to `main` made by the merge button on an up-to-date PR carries a tree
+    # CI has already tested — the PR's merge commit, or the branch head when
+    # merge-main brought `main` in first. `verdict-reuse.sh` looks that run
+    # up through the Actions API and answers `reuse=true` ONLY when a run on
+    # the merged head concluded `success`, recorded the very tree this push
+    # carries, and ran every job a reuse would skip. Then the four `bun test`
+    # shards, the three e2e shards and the standalone ratchet are skipped on
+    # this push, and the job summary names the run whose verdict stands.
+    #
+    # Measured over the 40 merges to `main` before 2026-10-07 20:00Z: 24 had
+    # a run on the merged head that concluded `success` before the merge — the
+    # ceiling for reuse, since a pre-change run recorded no tested tree.
+    #
+    # What is NOT skipped, and why: lint and types, hygiene, `gates-kg`,
+    # `gates-docs`, `gates-unrun` and the skill chain. Several of them judge
+    # the tree AGAINST `main` (`--against main`, the `--base` merge base) or
+    # read the `qa-reports` store, so their answer on `main` is not a function
+    # of the tree alone; and `qa-publish` must still store `main/<sha>`.
+    #
+    # Could-not-determine is never green: any API error, squash merge, missing
+    # record or mismatch is `reuse=false`, and the script exits 0 in every
+    # state, so a crash leaves the output empty and every job runs. It runs
+    # only on `push`; on a PR it is skipped and nothing waits for it.
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      checks: read
+    outputs:
+      reuse: ${{ steps.decide.outputs.reuse }}
+      run_id: ${{ steps.decide.outputs.run_id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # Both parents of the merge commit: the second is the PR head whose
+          # run is looked up, and a dispatch run's tested tree is read from it.
+          fetch-depth: 2
+
+      - name: Decide whether this tree's verdict already exists (bean qbco)
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          WORKFLOW: code-quality-gates.yml
+          PRODUCER_JOB: QA working copy, built once for this run (not a gate)
+        run: bash cat-harness/scripts/verdict-reuse.sh
+
   qa-working-copy:
     # bpmn-node: Task_QaWorkingCopy
     name: QA working copy, built once for this run (not a gate)
@@ -537,6 +605,13 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
+      - name: Record the tree this run tests (bean qbco)
+        # The check run's summary is an API field. A later push to `main`
+        # whose tree is this one reads it here and reuses this run's verdict
+        # (`verdict-reuse.sh`); nothing else reads it.
+        run: |
+          echo "tested-tree: $(git rev-parse 'HEAD^{tree}') (commit $(git rev-parse HEAD))" | tee -a "$GITHUB_STEP_SUMMARY"
+
       - name: Snapshot the checkout before the build (bean jtfk)
         run: bash cat-harness/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
 
@@ -609,8 +684,11 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    needs: qa-working-copy
-    if: ${{ !cancelled() }}
+    # Skipped on a push to `main` whose tree an earlier run already judged
+    # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
+    # the reuse could not be determined, it runs.
+    needs: [qa-working-copy, verdict-reuse]
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -780,7 +858,7 @@ jobs:
     # owner 2026-10-07: "1y, 2y, 3y, 4y") removed them, and branch protection
     # now names the shard checks directly. This one was not part of that
     # ruling and stays.
-    needs: [gates-kg, gates-docs, gates-standalone]
+    needs: [gates-kg, gates-docs, gates-standalone, verdict-reuse]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -789,12 +867,21 @@ jobs:
           KG: ${{ needs.gates-kg.result }}
           DOCS: ${{ needs.gates-docs.result }}
           STANDALONE: ${{ needs.gates-standalone.result }}
+          # `true` only on a push to `main` whose tree an earlier run already
+          # judged green, which is the one case the standalone ratchet is
+          # skipped by design (bean `qbco`); its verdict is that run's.
+          REUSED: ${{ github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true' }}
+          REUSED_RUN: ${{ needs.verdict-reuse.outputs.run_id }}
         # No `gate-shell.sh` here: this job never checks out, so the wrapper
         # does not exist for it. It needs none — the diagnosis is already in
         # the env vars, so it writes its own summary and WHICH part failed
         # reaches `output.summary` (bean `yqc4`).
         run: |
-          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE"
+          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE   reused: $REUSED"
+          if [ "$STANDALONE" = "skipped" ] && [ "$REUSED" = "true" ]; then
+            STANDALONE=success
+            echo "### Standalone ratchet: verdict reused from run $REUSED_RUN (bean \`qbco\`)" >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [ "$KG" != "success" ] || [ "$DOCS" != "success" ] || [ "$STANDALONE" != "success" ]; then
             {
               echo "### ✗ Repository gates"
@@ -2365,6 +2452,11 @@ jobs:
     # cat-harness in a rehearsed sibling layout, so it is as long as the
     # suite it runs; in its own job that time overlaps the other parts
     # instead of adding to them.
+    # Skipped on a push to `main` whose tree an earlier run already judged
+    # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
+    # the reuse could not be determined, it runs.
+    needs: verdict-reuse
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -3393,6 +3485,11 @@ jobs:
     # not stopped by a per-test timeout, and the Actions default is six hours.
     # a shard measured 1m55s-2m37s; 20 is ~8x that, so a red here is a hang, never a slow day.
     timeout-minutes: 20
+    # Skipped on a push to `main` whose tree an earlier run already judged
+    # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
+    # the reuse could not be determined, it runs.
+    needs: verdict-reuse
+    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') }}
     runs-on: ubuntu-latest
     strategy:
       # Every shard reports, so one red shard does not hide another's result.

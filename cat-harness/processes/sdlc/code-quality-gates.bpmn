@@ -35,6 +35,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
         <bpmn:documentation>Joins every job before asking anything, then GW_Hard asks specifically about the HARD gates — the two warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red warn-only step it also ran. No count is given here on purpose: this paragraph carried "seven jobs, five hard" and then "six-and-four", and each was wrong the next time a job was split or folded (beans `om30`, `7fu5`). Count the `# bpmn-node:` lines in the workflow instead.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_VerdictReuse</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Fork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_QaWorkingCopy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Readers</bpmn:flowNodeRef>
@@ -55,8 +56,16 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
     <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&#10;or dispatch">
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:parallelGateway id="GW_Fork" name="Every job,&#10;in parallel">
+    <bpmn:task id="Task_VerdictReuse" name="Verdict reuse: tree&#10;already green? (NOT A GATE)">
+      <bpmn:documentation>Bean `qbco`, issue #2456 (owner, 2026-10-07: "1y, 2y, 3y, 4y"). On a PUSH to `main` only; on any other event it is skipped and nothing waits for it. A merge-button merge of an up-to-date PR carries a tree CI has already tested. `verdict-reuse.sh` looks up the runs of this workflow on the merged head (the merge commit's second parent) and answers `reuse=true` only when one concluded `success`, ran every job a reuse would skip, and tested exactly this tree: for a `pull_request` run, the `tested-tree:` its Task_QaWorkingCopy job wrote into its check run's summary; for a dispatch, the head's own tree. Then the four `bun test` shards (part of Task_TypeScript), the three e2e shards (Task_E2E) and the standalone ratchet (part of Task_RepositoryGates) are skipped on this push, and the summary names the run whose verdict stands. Everything that judges the tree against `main` or reads `qa-reports` still runs. A squash, an API error, a missing record or a mismatch is `reuse=false` and every job runs: could-not-determine is never green. Drawn before the fork because the jobs it can skip wait for it; the others do not. Since the same ruling, a newer push to `main` also cancels an older main run still in progress (the workflow's `concurrency`), so main's verdict history is thinned by decision.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="platform-gates"/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_24</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="GW_Fork" name="Every job,&#10;in parallel">
+      <bpmn:incoming>Flow_24</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
       <bpmn:outgoing>Flow_25</bpmn:outgoing>
@@ -157,7 +166,8 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
     <bpmn:endEvent id="End_Published" name="QA results published&#10;(or skipped, with a reason)">
       <bpmn:incoming>Flow_23</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Change" targetRef="GW_Fork"/>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Change" targetRef="Task_VerdictReuse"/>
+    <bpmn:sequenceFlow id="Flow_24" sourceRef="Task_VerdictReuse" targetRef="GW_Fork"/>
     <bpmn:sequenceFlow id="Flow_1" sourceRef="GW_Fork" targetRef="Task_Hygiene"/>
     <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Readers" targetRef="Task_TypeScript"/>
     <bpmn:sequenceFlow id="Flow_4" sourceRef="GW_Fork" targetRef="Task_E2E"/>
@@ -188,6 +198,9 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
         <dc:Bounds x="122" y="332" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_VerdictReuse" bpmnElement="Task_VerdictReuse">
+        <dc:Bounds x="200" y="310" width="160" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Fork" bpmnElement="GW_Fork">
         <dc:Bounds x="400" y="325" width="50" height="50"/>
@@ -236,6 +249,10 @@ Mechanical throughout. Nothing here waits on a person, which is what makes `buil
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0">
         <di:waypoint x="158" y="350"/>
+        <di:waypoint x="200" y="350"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_24" bpmnElement="Flow_24">
+        <di:waypoint x="360" y="350"/>
         <di:waypoint x="400" y="350"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
