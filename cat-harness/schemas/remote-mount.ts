@@ -89,6 +89,15 @@ export const MountDefaultsSchema = z
       .array(z.string().min(1))
       .refine((xs) => new Set(xs).size === xs.length, { message: "mountDefaults.directories: an id appears twice" })
       .optional(),
+    /**
+     * Mount the WHOLE instance root — every tracked file at the pin, root
+     * files included — instead of its declared directories. For an instance a
+     * downstream reads as a checkout rather than as graphs: `bootstrap` (whose
+     * `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose
+     * `package.json` and `tsconfig.json` do), the two git submodules a remote
+     * mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`.
+     */
+    whole: z.literal(true).optional(),
   })
   .strict();
 export type MountDefaults = z.infer<typeof MountDefaultsSchema>;
@@ -110,6 +119,8 @@ export const MountOverrideSchema = z
       .refine((xs) => new Set(xs).size === xs.length, { message: "override directories: an id appears twice" })
       .optional(),
     skip: z.literal(true).optional(),
+    /** Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored. */
+    whole: z.boolean().optional(),
   })
   .strict();
 export type MountOverride = z.infer<typeof MountOverrideSchema>;
@@ -147,6 +158,13 @@ export const RemoteMountsSchema = z
 // ── The lock ─────────────────────────────────────────────────────────────────
 
 export const MOUNT_LOCK_SCHEMA = "cat-harness-mount-lock/v1";
+
+/**
+ * The directory id a WHOLE-instance mount is locked under: one entry whose
+ * `path` is the instance's mount path and whose `upstreamPath` is its root in
+ * the upstream repository (`.` for that repository's root).
+ */
+export const WHOLE_INSTANCE_ID = "*";
 
 /** The lock's filename, beside the downstream's declaration: `<name>.mount-lock.json`. */
 export function mountLockFilename(instance: string): string {

@@ -41,6 +41,7 @@
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";
+import { mountScopeFor } from "../../schemas/remote-mount.js";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { basename, join, relative, resolve } from "path";
 
@@ -52,6 +53,15 @@ import { basename, join, relative, resolve } from "path";
 export function isSubmoduleRoot(dir: string): boolean {
   const git = join(dir, ".git");
   return existsSync(git) && statSync(git).isFile();
+}
+
+/**
+ * Does another repository own `dir`'s bytes — a submodule, or a REMOTE MOUNT,
+ * the submodule's successor (bean `nn8e`, #2462)? A mount has no `.git` of
+ * its own; the lock that laid it down is what says so.
+ */
+export function isForeignRoot(dir: string): boolean {
+  return isSubmoduleRoot(dir) || mountScopeFor(dir) !== undefined;
 }
 
 import {
@@ -1089,8 +1099,8 @@ if (import.meta.main) {
       // and checking it compares the other repository's generator against
       // this one's — they disagree on bootstrap-tools/README.md (bean `kye5`).
       // Said, not silently dropped: a skipped README is not a current one.
-      if (resolve(root) !== repo && isSubmoduleRoot(root)) {
-        console.log(`${relative(repo, root)}/README.md skipped — a submodule; its own repository generates and checks it (bean kye5).`);
+      if (resolve(root) !== repo && isForeignRoot(root)) {
+        console.log(`${relative(repo, root)}/README.md skipped — a submodule or remote mount; its own repository generates and checks it (bean kye5).`);
         continue;
       }
       try {
