@@ -134,7 +134,7 @@ describe('WHO-IRIS Oxigraph Multi-Graph MVP', () => {
     const queries = JSON.parse(fs.readFileSync(path.join(TMP_DIST, 'queries.json'), 'utf8'));
     const sparql = queries.discoverySearch.sparql;
 
-    const rows = Array.from(engine.store.query(sparql));
+    const rows = Array.from(engine.store.query(sparql) as any) as any[];
     expect(rows.length).toBeGreaterThan(0);
 
     const handles = rows.map(r => r.get('handle').value);

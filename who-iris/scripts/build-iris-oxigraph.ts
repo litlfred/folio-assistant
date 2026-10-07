@@ -292,7 +292,7 @@ export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<Build
     // Solution A: Skolemize anonymous compound nodes before toRDF conversion
     const skolemized = skolemizeJsonLd(raw, handleClean);
     const nquadsText = await jsonld.toRDF(skolemized, { format: 'application/n-quads' });
-    const lines = nquadsText.split('\n').filter(Boolean);
+    const lines = (nquadsText as string).split('\n').filter(Boolean);
 
     for (let line of lines) {
       // W3C RDF 1.1 fallback skolemization for any residual blank nodes

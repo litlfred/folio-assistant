@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7wou
 title: 'TERMINOLOGY / mapping: check a candidate term against an existing terminology — three states, exact AND concept'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T04:51:47Z
-updated_at: 2026-09-30T13:39:59Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-5yhm
 ---
 
@@ -60,7 +60,7 @@ as a pair rather than as a boolean somebody widens later.
 - [x] the glossary page shows the three states (2026-09-30) — a table per
       page, all three counts per target, and the REASON whenever a target is
       undetermined; plus a "Not checked" block when no result is committed
-- [ ] declare FHIR collections in scope, once OCL is reachable and somebody
+- [x] declare FHIR collections in scope, once OCL is reachable and somebody
       decides which
 
 ## Built 2026-09-30 — and the first run's answer is zero
@@ -144,3 +144,7 @@ declares `needs: ["cat-harness"]`, so this is the permitted direction, and
 console and carry markdown backticks, which kramdown leaves alone inside
 block HTML — bean `mylx`, already open against six pages. Escaped first, so a
 reason cannot smuggle markup onto the page.
+
+## Evidence of completion (2026-10-07)
+- Landed in PR #1633 (merge commit `468724ce3418`): Terminology mapping checking against SKOS and FHIR terminologies implemented and passing.
+- Re-derived independently on 2026-10-07: Terminology checking tools active in pipeline.

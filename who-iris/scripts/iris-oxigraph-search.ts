@@ -238,7 +238,7 @@ export class IrisOxigraphEngine {
       ORDER BY DESC(?year) ?title
     `;
 
-    const rawRows = this.store.query(query);
+    const rawRows = this.store.query(query) as any;
     const results: SearchResultItem[] = [];
     for (const row of rawRows) {
       const yearVal = row.get('year')?.value;
@@ -449,7 +449,7 @@ export class IrisOxigraphEngine {
       ORDER BY DESC(?year) ?title
     `;
 
-    const rawRows = this.store.query(query);
+    const rawRows = this.store.query(query) as any;
     const itemMap = new Map<string, SearchResultItem>();
 
     for (const row of rawRows) {
@@ -498,7 +498,7 @@ export class IrisOxigraphEngine {
         FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
       }
     `;
-    for (const r of this.store.query(subjQuery)) {
+    for (const r of (this.store.query(subjQuery) as any)) {
       const val = r.get('subject').value;
       if (!item.subjects.includes(val)) {
         item.subjects.push(val);
@@ -516,7 +516,7 @@ export class IrisOxigraphEngine {
         FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
       }
     `;
-    for (const r of this.store.query(langQuery)) {
+    for (const r of (this.store.query(langQuery) as any)) {
       const val = r.get('lang').value;
       if (!item.languages.includes(val)) {
         item.languages.push(val);
@@ -609,7 +609,7 @@ export class IrisOxigraphEngine {
       `;
     }
 
-    const rows = this.store.query(query);
+    const rows = this.store.query(query) as any;
     const results: FacetResult[] = [];
     for (const row of rows) {
       results.push({
