@@ -26,6 +26,7 @@
  *   decide <ref> --code <decision> --by <login> [--reason ..] [--branch ..] [--pr N]
  *   edit <ref> --branch <b> [--pr N] [--to <author login>] --by <login>   the author's step, human or agentic
  *   incorporate <ref> [--branch <b>] [--pr N] [--staging <url>] --by <login>
+ *   reopen <ref> --by <login> --note "why"   take a decision back (from decided, editing or incorporated)
  *   duplicate <ref> --of <ref> --by <login>
  *   withdraw <ref> --by <login>
  *   github --event <event.json> [--dry-run]
@@ -545,7 +546,13 @@ export interface ImportResult {
   /** Rows a previous copy of the same log already brought in (series, sheet and "No." match). */
   known?: number;
   /** Comments the log had already decided or reviewed, carried as decisions or triage. */
-  fromLog?: { decided: string[]; triaged: string[]; held: Array<{ ref: string; why: string }> };
+  /**
+   * What the log's own status column said. NEVER a decision (owner,
+   * 2026-10-07: "nothing has been decided"): `recorded` are the rows whose
+   * log status reads like a disposition, kept as a note on a triaged
+   * comment for the committee and the editor to see.
+   */
+  fromLog?: { recorded: string[]; triaged: string[] };
 }
 
 const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
@@ -628,7 +635,7 @@ export function importRows(
       : [],
   );
   let skippedKnown = 0;
-  const fromLog = { decided: [] as string[], triaged: [] as string[], held: [] as Array<{ ref: string; why: string }> };
+  const fromLog = { recorded: [] as string[], triaged: [] as string[] };
   let next = existing.reduce((m, c) => Math.max(m, Number(c.public.ref.slice(3))), 0) + 1;
   const created: string[] = [];
   const unplaced: string[] = [];
@@ -689,22 +696,21 @@ export function importRows(
         history: [{ at, transition: "ingest", by: "intake", task: `${ingest.process}#${ingest.task}`, note: `${src.batch}${r.row ? ` row ${r.row}` : ""}` }],
       },
     });
-    // The log's own status, carried rather than re-done: a comment the log
-    // already decided arrives decided, with the log's disposition as the
-    // reason and the log named as who recorded it. One it decided WITHOUT a
-    // reason, where a reason is owed, arrives triaged and is listed as held.
+    // The log's own status is RECORDED, never carried as a decision. It
+    // was, until 2026-10-07: "Accepted" in the master log arrived decided
+    // `by: review-log`, a merge then marked PC-0035/36 incorporated, and the
+    // dashboard counted decisions nobody had made (owner: "nothing has been
+    // decided/incorporated"). Only an editor decides (Task_EditorDecides). So
+    // a disposition-like status triages the comment and says what the log
+    // said, rationale included, for the committee and the editor to weigh.
     let saved = c;
     const move = logStatusMove(r.status);
     const by = "review-log";
     const note = `the log's status was "${r.status}"`;
     if (move && "decide" in move) {
-      if (move.decide !== "accepted" && !r.disposition) {
-        saved = transition(c, "triage", { by, at, note: `${note}, with no rationale; held for the editor` });
-        fromLog.held.push({ ref, why: `"${r.status}" with no rationale` });
-      } else {
-        saved = transition(c, "decide", { by, at, note, decision: { code: move.decide, reason: r.disposition ?? "" } });
-        fromLog.decided.push(ref);
-      }
+      const why = r.disposition ? `; its rationale: ${r.disposition}` : "";
+      saved = transition(c, "triage", { by, at, note: `${note}${why} (recorded, not a decision: the editor decides)` });
+      fromLog.recorded.push(ref);
     } else if (move) {
       saved = transition(c, "triage", { by, at, note });
       fromLog.triaged.push(ref);
@@ -971,8 +977,8 @@ if (import.meta.main) {
             `✓ ${where}${r.created.length} comment(s) ${r.created[0] ?? ""}${r.created.length > 1 ? `…${r.created.at(-1)}` : ""}, ` +
               `${r.unplaced.length} unplaced, ${r.skipped.length} skipped` +
               (r.known ? `, ${r.known} already in from an earlier copy of ${series}` : "") +
-              (log && (log.decided.length || log.triaged.length || log.held.length)
-                ? `; from the log's status: ${log.decided.length} decided, ${log.triaged.length} triaged, ${log.held.length} held (${log.held.map((x) => `${x.ref} ${x.why}`).join("; ")})`
+              (log && (log.recorded.length || log.triaged.length)
+                ? `; from the log's status: ${log.recorded.length} disposition(s) recorded as notes (not decisions), ${log.triaged.length} triaged`
                 : ""),
           );
         }
