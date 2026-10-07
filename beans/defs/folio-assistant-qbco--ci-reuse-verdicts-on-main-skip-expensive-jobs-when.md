@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:39:27Z
-updated_at: 2026-10-07T20:51:46Z
+updated_at: 2026-10-07T21:21:17Z
 parent: folio-assistant-hfag
 ---
 
@@ -20,3 +20,5 @@ _2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://c
 - Measured ceiling: 24 of the 40 merges before 2026-10-07 20:00Z had a green run on the merged head before the merge. Runs made before this change carry no tested-tree record, so reuse starts after merge.
 - On PR runs the job is skipped instantly (observed on run 37683602404), so e2e and standalone do not wait for it.
 - Evidence still owed: one main push after merge showing reuse or a stated no-reuse.
+
+_2026-10-07_: verdict-reuse.sh exercised on 5 paths against a stubbed API, and its job filter against the real API (8/8 on run 37659324493). verdict-reuse was skipped with 0 s queue on PR run 37683602404. Awaiting a main push after merge.
