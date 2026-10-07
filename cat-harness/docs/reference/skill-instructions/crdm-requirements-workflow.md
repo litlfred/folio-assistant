@@ -475,14 +475,14 @@ When a round of implementation is complete (one or more beans resolved):
 
 ## Cross-references
 
-- [CRDM methodology page](https://litlfred.github.io/folio-assistant/crdm-methodology.html) — the documentation page for users
+- [CRDM methodology page](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/crdm-methodology.html) — the documentation page for users
 - [`interaction-modality.md`](interaction-modality.md) §4.1 — context before the question; the ordering rule this workflow runs on
 - [`crdm-detect.md`](crdm-detect.md) — feature-request detection skill
 - [`staging-review.md`](staging-review.md) — before/after staging comparison skill
 - [`todo-manager.md`](todo-manager.md) — bean creation protocol
 - [`bean-coordination.md`](bean-coordination.md) — cross-session bean coordination
 - [`coordinate.md`](coordinate.md) — session coordination
-- [Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html) — the content lifecycle this fits within
+- [Publication workflow](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html) — the content lifecycle this fits within
 - Issue [#203](https://github.com/litlfred/folio-assistant/issues/203)
 {% endraw %}
 
