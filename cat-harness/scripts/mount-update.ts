@@ -52,8 +52,8 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { checkoutRootFor, readDeclaration } from "../schemas/cat-harness.js";
-import { findDeclarationFile } from "../schemas/instance-roots.js";
-import { mountLockFilename, readMountLock, type LockedInstance, type RemoteMount } from "../schemas/remote-mount.js";
+import { readDeclaredMounts, writeDeclaredMounts } from "../schemas/index-config.js";
+import { mountLockPathFor, readMountLock, type LockedInstance, type RemoteMount } from "../schemas/remote-mount.js";
 import { declaringInstances, modifiedSince, mountRemote, summarise } from "./remote-mount.ts";
 import { urlFor as lockUrlFor } from "./mount-from-lock.ts";
 import { type UrlFor } from "./remote-tree.ts";
@@ -138,7 +138,7 @@ export function diffScripts(from: Record<string, string>, to: Record<string, str
 
 /** The lock's instances that THIS mount laid down from ITS repository: what a new pin of that repository moves. */
 function lockedFor(instanceRoot: string, downstream: string, m: RemoteMount): LockedInstance[] | undefined {
-  const r = readMountLock(join(instanceRoot, mountLockFilename(downstream)));
+  const r = readMountLock(mountLockPathFor(instanceRoot, downstream));
   if (!r.ok) return undefined;
   return r.lock.instances.filter((i) => i.via === m.harness && i.repository === m.repository);
 }
@@ -244,14 +244,17 @@ export function applyUpdate(
   consent: { by: string; evidence: string; on?: string },
   opts: { urlFor?: UrlFor } = {},
 ): ApplyResult {
-  const declName = findDeclarationFile(instanceRoot);
-  if (!declName) return { state: "could-not-determine", detail: `${instanceRoot} holds no declaration` };
-  const declFile = resolve(instanceRoot, declName);
   const decl = readDeclaration(instanceRoot);
-  const m = (decl?.remoteMounts ?? []).find((x) => x.harness === harness);
-  if (!decl || !m) return { state: "could-not-determine", detail: `no remote mount named \`${harness}\`` };
-  const lockFile = join(instanceRoot, mountLockFilename(decl.name));
-  const lock = readMountLock(lockFile);
+  if (!decl) return { state: "could-not-determine", detail: `${instanceRoot} holds no declaration` };
+  let declared: ReturnType<typeof readDeclaredMounts>;
+  try {
+    declared = readDeclaredMounts(instanceRoot);
+  } catch (e) {
+    return { state: "could-not-determine", detail: (e as Error).message };
+  }
+  const m = declared.mounts.find((x) => x.harness === harness);
+  if (!m) return { state: "could-not-determine", detail: `no remote mount named \`${harness}\`` };
+  const lock = readMountLock(mountLockPathFor(instanceRoot, decl.name));
   if (!lock.ok) return { state: "could-not-determine", detail: `the lock cannot be read (${lock.why}); run \`bun run cat mount:remote\` before updating` };
   const locked = lock.lock.instances.filter((i) => i.via === harness);
   const edited: string[] = [];
@@ -271,12 +274,17 @@ export function applyUpdate(
   }
   if (absent.length) return { state: "refused", detail: `refused: ${absent.join(", ")} not on disk; run \`bun run cat mount:lock\` so the mounted files match the lock, then update` };
 
-  const raw = JSON.parse(readFileSync(declFile, "utf-8")) as { remoteMounts?: Array<Record<string, unknown>> };
-  const entry = raw.remoteMounts?.find((x) => x.harness === harness);
-  if (!entry) return { state: "could-not-determine", detail: `\`${harness}\` is not in ${declFile}'s own remoteMounts` };
-  entry.ref = tip;
-  entry.trust = { consent: { by: consent.by, on: consent.on ?? new Date().toISOString().slice(0, 10), ref: tip, evidence: consent.evidence } };
-  writeFileSync(declFile, JSON.stringify(raw, null, 2) + "\n");
+  // THE write path for mounts (`schemas/index-config.ts`): it writes
+  // `index.config.json`, and refuses while the declaration still carries
+  // `remoteMounts` (migrate first: `bun run cat index-config:migrate --write`).
+  const next = declared.mounts.map((x) =>
+    x.harness === harness ? { ...x, ref: tip, trust: { consent: { by: consent.by, on: consent.on ?? new Date().toISOString().slice(0, 10), ref: tip, evidence: consent.evidence } } } : x,
+  );
+  try {
+    writeDeclaredMounts(instanceRoot, next);
+  } catch (e) {
+    return { state: "refused", detail: `refused before anything changed: ${(e as Error).message}` };
+  }
   const r = mountRemote({ instanceRoot, urlFor: opts.urlFor ?? defaultUrlFor });
   const mine = r.plan.outcomes.filter((o) => locked.some((i) => i.instance === o.instance) || o.instance === harness);
   const sum = summarise(mine);
@@ -318,10 +326,21 @@ export interface MountHealthRow {
  */
 export function mountHealth(instanceRoot: string, opts: { network?: boolean; urlFor?: UrlFor } = {}): MountHealthRow[] {
   const decl = readDeclaration(instanceRoot);
-  const mounts = decl?.remoteMounts ?? [];
-  if (!decl || mounts.length === 0) return [];
+  if (!decl) return [];
+  let mounts: RemoteMount[];
+  try {
+    mounts = readDeclaredMounts(instanceRoot).mounts;
+  } catch (e) {
+    return [{ downstream: decl.name, instance: "(declaration)", state: "could-not-determine", detail: (e as Error).message }];
+  }
+  if (mounts.length === 0) return [];
   const downstream = decl.name;
-  const lock = readMountLock(join(instanceRoot, mountLockFilename(downstream)));
+  let lock: ReturnType<typeof readMountLock>;
+  try {
+    lock = readMountLock(mountLockPathFor(instanceRoot, downstream));
+  } catch (e) {
+    lock = { ok: false, absent: false, why: (e as Error).message };
+  }
   if (!lock.ok) {
     return mounts.map((m) => ({
       downstream,
@@ -399,7 +418,7 @@ if (import.meta.main) {
   for (const root of roots) {
     const decl = readDeclaration(root);
     if (!decl) continue;
-    for (const m of decl.remoteMounts ?? []) {
+    for (const m of readDeclaredMounts(root).mounts) {
       if (only && m.harness !== only) continue;
       reports.push({ root, downstream: decl.name, r: planUpdate(root, decl.name, m) });
     }

@@ -158,7 +158,7 @@ describe("mount:remote over fixture repositories", () => {
     // boot: read from ITS repository at the gitlink's pin, at its root
     expect(readFileSync(join(root, "boot/schemas/floor.ts"), "utf-8")).toContain("floor");
 
-    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "index.lock.json"), "utf-8")));
     const bootLock = lock.instances.find((i) => i.instance === "boot")!;
     expect(bootLock).toMatchObject({ repository: "o/boot", sha: boot.sha, pinnedBy: "gitlink", upstreamRoot: "" });
     expect(lock.instances.find((i) => i.instance === "base")!.pinnedBy).toBe("same-tree");
@@ -248,7 +248,7 @@ describe("mount:remote over fixture repositories", () => {
     d.remoteMounts[0].ref = "1".repeat(40);
     writeFileSync(file, JSON.stringify(d));
     expect(checkRemote({ instanceRoot: root }).state).toBe("missing");
-    writeFileSync(join(root, "down.mount-lock.json"), "{ not json");
+    writeFileSync(join(root, "index.lock.json"), "{ not json");
     expect(checkRemote({ instanceRoot: root }).state).toBe("could-not-determine");
   });
 
@@ -335,7 +335,7 @@ describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", ()
     expect(existsSync(join(root, "boot/schemas/floor.ts"))).toBe(true);
     // never the fetch's own repository
     expect(existsSync(join(root, "boot/.git"))).toBe(false);
-    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "index.lock.json"), "utf-8")));
     expect(lock.instances.find((i) => i.instance === "boot")!.directories).toMatchObject([{ id: "*", path: "boot", upstreamPath: "." }]);
     expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
   });
@@ -347,7 +347,7 @@ describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", ()
     const fresh = join(base, `fresh-${++n}`);
     mkdirSync(fresh, { recursive: true });
     git(fresh, "init", "-q", "-b", "main");
-    writeFileSync(join(fresh, "down.mount-lock.json"), readFileSync(join(src, "down.mount-lock.json")));
+    writeFileSync(join(fresh, "index.lock.json"), readFileSync(join(src, "index.lock.json")));
     writeFileSync(join(fresh, "down.json"), readFileSync(join(src, "down.json")));
     // serve o/<name> under one prefix, as github.com would
     const srv = join(base, `srv-${n}`, "o");
@@ -390,11 +390,11 @@ describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", ()
     const fresh = join(base, `fresh-${++n}`);
     mkdirSync(fresh, { recursive: true });
     git(fresh, "init", "-q", "-b", "main");
-    const lock = JSON.parse(readFileSync(join(src, "down.mount-lock.json"), "utf-8"));
+    const lock = JSON.parse(readFileSync(join(src, "index.lock.json"), "utf-8"));
     lock.instances = lock.instances.filter((i: { instance: string }) => i.instance === "boot");
     lock.instances[0].repository = `file://${boot.bare}`;
     lock.instances[0].directories[0].treeDigest = "0".repeat(64);
-    writeFileSync(join(fresh, "down.mount-lock.json"), JSON.stringify(lock));
+    writeFileSync(join(fresh, "index.lock.json"), JSON.stringify(lock));
     const r = replayLocks(fresh, false);
     expect(r.outcomes[0]!.state).toBe("could-not-determine");
     expect(existsSync(join(fresh, "boot"))).toBe(false);
@@ -419,7 +419,7 @@ describe("adopt if identical (owner, 2026-10-07; #2467)", () => {
     expect(core).toMatchObject({ state: "mounted", adopted: true });
     expect(summarise(r.plan.outcomes).state).toBe("mounted");
     expect(readFileSync(join(root, "core/scripts/run.ts"), "utf-8")).toBe(before);
-    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "index.lock.json"), "utf-8")));
     expect(lock.instances.find((i) => i.instance === "core")).toMatchObject({ adopted: true });
     expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
   });
@@ -433,7 +433,7 @@ describe("adopt if identical (owner, 2026-10-07; #2467)", () => {
     expect(core.detail).toContain("core/scripts/run.ts");
     expect(readFileSync(join(root, "core/scripts/run.ts"), "utf-8")).toBe("export const doubled = 0;\n");
     // the lock carries the same list, so the health check and the mount report agree
-    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "index.lock.json"), "utf-8")));
     expect(lock.instances.find((i) => i.instance === "core")).toBeUndefined();
     expect(lock.unmounted.find((u) => u.instance === "core")).toMatchObject({ refusal: "not-identical", differing: ["core/scripts/run.ts"] });
   });
@@ -496,7 +496,7 @@ describe("a mounted package.json, by reference (owner, 2026-10-07: Option A; #24
   test("27. the manifest is mounted as an asset and locked by sha256; the lock replayer verifies it", () => {
     const root = downstream({});
     mountRemote({ instanceRoot: root, urlFor });
-    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "index.lock.json"), "utf-8")));
     expect(lock.instances.find((i) => i.instance === "core")!.assets).toMatchObject([{ id: "manifest", path: "core/package.json", upstreamPath: "core/package.json" }]);
     writeFileSync(join(root, "core/package.json"), "{}\n");
     expect(checkRemote({ instanceRoot: root }).outcomes.find((o) => o.instance === "core")!.detail).toContain("core/package.json modified");

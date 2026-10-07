@@ -24,6 +24,8 @@ on:
     branches: [main]
     paths:
       - 'cat-harness/scripts/mount-from-lock.ts'  # replays the remote-mount lock (bean nn8e)
+      - 'index.lock.json'
+      - 'index.config.json'
       - 'folio-assistant.mount-lock.json'
       - 'cat-harness/docs/**'
       # An instance's own rendered pages are mounted into the site by

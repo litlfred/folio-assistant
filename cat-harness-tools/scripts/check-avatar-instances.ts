@@ -52,10 +52,10 @@
  * Exit codes: 0 clean · 1 an instantiated harness has no avatar, or an
  * exemption is stale.
  */
-import { readdirSync } from "node:fs";
 
 import { hasAvatar } from "../../cat-harness/schemas/avatars.js";
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
+import { instantiatedHarnessNames } from "../../cat-harness/schemas/harness-config.js";
 // The HARNESS, not this layer: these scripts moved up in 70lx B2b and read cat-harness.
 import { HARNESS_ROOT } from "./lib/roots.ts";
 
@@ -98,12 +98,14 @@ const REPO = repoRootFor(HARNESS_ROOT);
  */
 export const EXEMPT: Readonly<Record<string, string>> = {};
 
-/** Every instantiated harness: a `<name>.config.json` at the repository root. */
+/**
+ * Every instantiated harness: `index.config.json`'s instances when the root
+ * has one, else each root `<name>.config.json` — `instantiatedHarnessNames`,
+ * the one answer, rather than a sixth copy of the scan (which, re-implemented
+ * here, would have read `index.config.json` as a harness called `index`).
+ */
 export function instantiatedNames(root: string): string[] {
-  return readdirSync(root)
-    .filter((f) => f.endsWith(".config.json"))
-    .map((f) => f.slice(0, -".config.json".length))
-    .sort();
+  return instantiatedHarnessNames(root);
 }
 
 export interface Report {

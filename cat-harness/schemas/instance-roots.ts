@@ -104,6 +104,8 @@ export function findDeclarationFile(dir: string): string | undefined {
   const broken: string[] = [];
   for (const entry of entries) {
     if (!entry.endsWith(DECLARATION_SUFFIX)) continue;
+    // `index.config.json`, `index.lock.json`: the platform's, never a declaration.
+    if (isReservedIndexFile(entry)) continue;
     const stem = entry.slice(0, -DECLARATION_SUFFIX.length);
     if (stem.length === 0) continue;
     let raw: unknown;
@@ -289,4 +291,113 @@ function insideGitCheckout(dir: string): boolean {
     if (existsSync(join(d, ".git"))) return true;
     if (dirname(d) === d) return false;
   }
+}
+
+// ── The instantiation root's CONFIG files, scanned once ──────────────────────
+
+/**
+ * The retired global config name. Not an instance called `harness`; kept so
+ * `check:instance-config` can FIND it, never so a reader can fall back to it.
+ * Defined here (a leaf) and re-exported by `schemas/harness-config.ts`, which
+ * is where every existing importer looks for it.
+ */
+export const LEGACY_HARNESS_CONFIG = "harness.config.json";
+
+/**
+ * `index.config.json` — the instantiation root's INDEX: which harnesses this
+ * checkout instantiates, where each comes from, and which one the site lands
+ * on (`schemas/index-config.ts`, `folio-index-config/v1`).
+ *
+ * It ends in {@link CONFIG_SUFFIX}, so every scan that read "each root
+ * `*.config.json` is a harness" would have read it as a harness called
+ * `index`. That is why the name is RESERVED ({@link RESERVED_INSTANCE_NAMES})
+ * and why the scan below is the one place the suffix is matched.
+ */
+export const INDEX_CONFIG_FILENAME = "index.config.json";
+
+/**
+ * Instance names no harness may take, because a file the platform owns
+ * already spells `<name>.config.json` with them. `index` is the root index.
+ */
+export const RESERVED_INSTANCE_NAMES: readonly string[] = ["index"];
+
+/**
+ * Every `<name>.config.json` directly in `root`, as its stem, sorted — the
+ * retired {@link LEGACY_HARNESS_CONFIG} and the reserved
+ * {@link INDEX_CONFIG_FILENAME} excluded. `[]` when `root` cannot be read.
+ *
+ * THE ONE SCAN. Five scripts each re-implemented it with `readdirSync` and a
+ * suffix test (`check-avatar-instances`, `check-folio-mount`,
+ * `check-instance-config`, `scan-repo-content`, `build-folio-site`), one of
+ * them without the legacy exclusion, and none could have known about the
+ * reserved `index`. A sixth copy is how the reserved name leaks back in.
+ *
+ * This is the FILE set, which is not always the INSTANTIATED set: when the
+ * root carries `index.config.json` that file is authoritative, and
+ * `instantiatedHarnessNames` in `schemas/harness-config.ts` is the answer.
+ */
+export function rootConfigStems(root: string): string[] {
+  let entries: string[];
+  try {
+    entries = readdirSync(root);
+  } catch {
+    return [];
+  }
+  return entries
+    .filter((f) => f.endsWith(CONFIG_SUFFIX) && f !== LEGACY_HARNESS_CONFIG && !isReservedIndexFile(f))
+    .map((f) => f.slice(0, -CONFIG_SUFFIX.length))
+    .filter((n) => n.length > 0 && !RESERVED_INSTANCE_NAMES.includes(n))
+    .sort();
+}
+
+// ── The mount lock's filename, and the transition from the old one ───────────
+
+/**
+ * `index.lock.json` — the GENERATED companion to {@link INDEX_CONFIG_FILENAME}:
+ * what the declared remote mounts resolved to (`cat-harness-mount-lock/v1`,
+ * `schemas/remote-mount.ts`). The owner, 2026-10-07: rename the lock to sit
+ * beside the index it is generated from.
+ */
+export const INDEX_LOCK_FILENAME = "index.lock.json";
+
+/** The lock's retired suffix: `<root-instance>.mount-lock.json`. READ during the transition, never written. */
+export const LEGACY_MOUNT_LOCK_SUFFIX = ".mount-lock.json";
+
+/**
+ * Whether `file`, a name directly in an instantiation root, is one the
+ * platform owns under the reserved `index` stem — `index.config.json`,
+ * `index.lock.json`, `index.json`. No scan may read one as a harness's config
+ * or declaration: the `index` stem is reserved across the board.
+ */
+export function isReservedIndexFile(file: string): boolean {
+  return file === "index.json" || file.startsWith("index.");
+}
+
+/**
+ * The lock file(s) in `dir`, as names: `index.lock.json` when it exists, else
+ * every legacy `*.mount-lock.json` (a downstream folio or an old branch that
+ * has not migrated). BOTH present is a `conflict` and `files` is empty —
+ * merging two locks silently would replay whichever pins happened to win.
+ *
+ * `cat-harness/scripts/mount-from-lock.ts` re-states this rule inline, because
+ * it imports nothing but `node:*` by design; its test holds the two together.
+ */
+export function lockFilesIn(dir: string): { files: string[]; conflict?: string } {
+  let entries: string[];
+  try {
+    entries = readdirSync(dir);
+  } catch {
+    return { files: [] };
+  }
+  const legacy = entries.filter((n) => n.endsWith(LEGACY_MOUNT_LOCK_SUFFIX)).sort();
+  if (entries.includes(INDEX_LOCK_FILENAME)) {
+    if (legacy.length > 0) {
+      return {
+        files: [],
+        conflict: `${join(dir, INDEX_LOCK_FILENAME)} and ${legacy.map((n) => join(dir, n)).join(", ")} both exist — one lock per checkout; keep ${INDEX_LOCK_FILENAME} (\`git mv\` the legacy one over it, or remove the stale one) rather than have two replayed`,
+      };
+    }
+    return { files: [INDEX_LOCK_FILENAME] };
+  }
+  return { files: legacy };
 }

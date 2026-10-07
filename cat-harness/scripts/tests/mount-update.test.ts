@@ -11,6 +11,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSyn
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
+import { readDeclaredMounts, writeDeclaredMounts } from "../../schemas/index-config.ts";
 import { MountLockSchema } from "../../schemas/remote-mount.ts";
 import { AWAITING_CONSENT, applyUpdate, diffScripts, planUpdate, question } from "../mount-update.ts";
 import { mountRemote } from "../remote-mount.ts";
@@ -83,18 +84,14 @@ function downstream(ref: string): string {
   const root = join(base, `down-${++n}`);
   mkdirSync(root, { recursive: true });
   git(root, "init", "-q", "-b", "main");
-  write(root, {
-    "down.json": {
-      name: "down",
-      directories: [],
-      remoteMounts: [{ harness: "core", repository: "o/upd", ref, track: "main", trust: { consent: { by: "owner", on: "2026-10-07", ref, evidence: "test" } } }],
-    },
-  });
+  write(root, { "down.json": { name: "down", directories: [] } });
+  // Mounts live in `index.config.json`, written through THE write path.
+  writeDeclaredMounts(root, [{ harness: "core", repository: "o/upd", ref, track: "main", trust: { consent: { by: "owner", on: "2026-10-07", ref, evidence: "test" } } }]);
   mountRemote({ instanceRoot: root, urlFor });
   return root;
 }
 
-const mountOf = (root: string) => (JSON.parse(readFileSync(join(root, "down.json"), "utf-8")) as { remoteMounts: Array<{ ref: string; track?: string; trust?: { consent?: { by: string; ref: string; evidence: string } } }> }).remoteMounts[0]!;
+const mountOf = (root: string) => readDeclaredMounts(root).mounts[0]!;
 
 describe("mount:update", () => {
   test("up to date: the tracked tip is the pin", () => {
@@ -118,8 +115,8 @@ describe("mount:update", () => {
 
   test("awaiting consent: the CLI prints the question, exits with its own code, and writes nothing", () => {
     const root = downstream(c1);
-    const decl = readFileSync(join(root, "down.json"), "utf-8");
-    const lock = readFileSync(join(root, "down.mount-lock.json"), "utf-8");
+    const decl = readFileSync(join(root, "index.config.json"), "utf-8");
+    const lock = readFileSync(join(root, "index.lock.json"), "utf-8");
     const r = spawnSync(process.execPath, [resolve(import.meta.dir, "../mount-update.ts"), "--root", root], {
       encoding: "utf-8",
       env: { ...process.env, CAT_MOUNT_URL_PREFIX: `file://${srv}` },
@@ -127,8 +124,8 @@ describe("mount:update", () => {
     expect(r.status).toBe(AWAITING_CONSENT);
     expect(r.stdout).toContain(`Update core ${c1.slice(0, 7)} → ${c2.slice(0, 7)}?`);
     expect(r.stdout).toContain("core:new");
-    expect(readFileSync(join(root, "down.json"), "utf-8")).toBe(decl);
-    expect(readFileSync(join(root, "down.mount-lock.json"), "utf-8")).toBe(lock);
+    expect(readFileSync(join(root, "index.config.json"), "utf-8")).toBe(decl);
+    expect(readFileSync(join(root, "index.lock.json"), "utf-8")).toBe(lock);
   });
 
   test("--help says agents never pass the consent flags", () => {
@@ -142,7 +139,7 @@ describe("mount:update", () => {
     const res = applyUpdate(root, "core", c2, { by: "owner", evidence: "issue comment", on: "2026-10-08" }, { urlFor });
     expect(res.state).toBe("applied");
     expect(mountOf(root)).toMatchObject({ ref: c2, track: "main", trust: { consent: { by: "owner", ref: c2, evidence: "issue comment" } } });
-    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "index.lock.json"), "utf-8")));
     expect(lock.mounts[0]!.ref).toBe(c2);
     expect(lock.instances[0]!.sha).toBe(c2);
     expect(readFileSync(join(root, "core/scripts/run.ts"), "utf-8")).toBe("export const v = 2;\n");
@@ -152,12 +149,12 @@ describe("mount:update", () => {
   test("drift: a locally edited mounted file refuses the update, lists the path, and changes nothing", () => {
     const root = downstream(c1);
     writeFileSync(join(root, "core/scripts/run.ts"), "export const v = 99;\n");
-    const decl = readFileSync(join(root, "down.json"), "utf-8");
+    const decl = readFileSync(join(root, "index.config.json"), "utf-8");
     const res = applyUpdate(root, "core", c2, { by: "owner", evidence: "x" }, { urlFor });
     expect(res.state).toBe("refused");
     expect(res.edited).toEqual(["core/scripts"]);
     expect(res.detail).toContain("upstream");
-    expect(readFileSync(join(root, "down.json"), "utf-8")).toBe(decl);
+    expect(readFileSync(join(root, "index.config.json"), "utf-8")).toBe(decl);
     expect(readFileSync(join(root, "core/scripts/run.ts"), "utf-8")).toBe("export const v = 99;\n");
   });
 

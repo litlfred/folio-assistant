@@ -117,14 +117,43 @@ export function digestOf(dir: string): { treeDigest: string; files: number } {
 
 // ── Reading the lock ─────────────────────────────────────────────────────────
 
-/** Every `*.mount-lock.json` beside `root`, parsed structurally. A malformed one is an answer, not a skip. */
-export function readLocks(root: string): { file: string; instances?: LockInstance[]; error?: string }[] {
-  let names: string[];
+/** The lock's name since 2026-10-07: the generated companion to `index.config.json`. */
+export const INDEX_LOCK = "index.lock.json";
+/** The retired name, `<root-instance>.mount-lock.json` — still READ, so a downstream folio or an old branch replays. */
+export const LEGACY_LOCK_SUFFIX = ".mount-lock.json";
+
+/**
+ * The lock file(s) beside `root`: `index.lock.json`, else every legacy
+ * `*.mount-lock.json`. BOTH present is an error naming both, never a merge.
+ *
+ * RESTATED from `lockFilesIn` in `schemas/instance-roots.ts` rather than
+ * imported, because this file imports nothing but `node:*` (the header says
+ * why); `mount-from-lock.test.ts` holds the two to the same answers.
+ */
+export function lockNames(root: string): { names: string[]; conflict?: string } {
+  let entries: string[];
   try {
-    names = readdirSync(root).filter((n) => n.endsWith(".mount-lock.json")).sort();
+    entries = readdirSync(root);
   } catch {
-    return [];
+    return { names: [] };
   }
+  const legacy = entries.filter((n) => n.endsWith(LEGACY_LOCK_SUFFIX)).sort();
+  if (entries.includes(INDEX_LOCK)) {
+    if (legacy.length > 0) {
+      return {
+        names: [],
+        conflict: `${join(root, INDEX_LOCK)} and ${legacy.map((n) => join(root, n)).join(", ")} both exist — one lock per checkout; keep ${INDEX_LOCK} (\`git mv\` the legacy one over it, or remove the stale one) rather than have two replayed`,
+      };
+    }
+    return { names: [INDEX_LOCK] };
+  }
+  return { names: legacy };
+}
+
+/** Every lock beside `root` ({@link lockNames}), parsed structurally. A malformed one — or two that conflict — is an answer, not a skip. */
+export function readLocks(root: string): { file: string; instances?: LockInstance[]; error?: string }[] {
+  const { names, conflict } = lockNames(root);
+  if (conflict !== undefined) return [{ file: join(root, INDEX_LOCK), error: conflict }];
   return names.map((n) => {
     const file = join(root, n);
     try {
@@ -337,7 +366,7 @@ if (import.meta.main) {
   const root = resolve(at >= 0 && argv[at + 1] ? argv[at + 1]! : process.cwd());
   const { outcomes, locks } = run(root, check);
   if (locks === 0) {
-    console.log(`mount:lock: not-enabled — no *.mount-lock.json in ${root}`);
+    console.log(`mount:lock: not-enabled — no ${INDEX_LOCK} (or legacy *${LEGACY_LOCK_SUFFIX}) in ${root}`);
     process.exit(0);
   }
   for (const o of outcomes) console.log(`  ${o.state.padEnd(20)} ${o.instance.padEnd(22)} ${o.detail}`);
