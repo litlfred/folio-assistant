@@ -119,13 +119,13 @@ export function actionPinning(root = ROOT): GateResult[] {
   if (r === undefined) return [{ check: "action-sha-pinning", blocking: true, state: "unknown", detail: "no .github/workflows directory" }];
   const published: GateResult =
     r.unpinned.length === 0
-      ? { check: "action-sha-pinning", blocking: true, state: "pass", detail: `every third-party uses: outside staging-only workflows is SHA-pinned (${r.total} in all)` }
-      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside staging — run \`bun run actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
+      ? { check: "action-sha-pinning", blocking: true, state: "pass", detail: `every third-party uses: outside exempt staging workflows (no write token, no pull_request_target) is SHA-pinned (${r.total} in all)` }
+      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside exempt staging workflows — run \`bun run actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
   const staging: GateResult = {
-    check: "action-sha-pinning (staging-only)",
+    check: "action-sha-pinning (exempt staging)",
     blocking: false,
     state: r.stagingUnpinned.length === 0 ? "pass" : "fail",
-    detail: r.stagingUnpinned.length === 0 ? "staging-only workflows are pinned too" : `${r.stagingUnpinned.length} unpinned in staging-only workflows, allowed by the owner's ruling`,
+    detail: r.stagingUnpinned.length === 0 ? "exempt staging workflows are pinned too, or there are none" : `${r.stagingUnpinned.length} unpinned in exempt staging workflows (no write token), allowed by the owner's ruling`,
   };
   return [published, staging];
 }
