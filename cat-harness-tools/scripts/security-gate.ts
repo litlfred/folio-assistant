@@ -21,12 +21,14 @@
  * | `fail`    | the check ran and refused                 | yes (blocking checks) |
  * | `unknown` | the check could not be run                | yes: could-not-check is never clean |
  *
- * Action SHA pinning BLOCKS for workflows that publish or run on main, and is
- * advisory for staging-only ones (owner, 2026-10-07). An `advisory` check
- * (dependency advisories, staging pinning) is reported in
- * the same three states and never blocks. Pinning was advisory on day one,
- * when 0 of 240 `uses:` lines were pinned; `bun run actions:pin` pinned the
- * 216 outside staging the same day, and only then did it become blocking.
+ * Action SHA pinning BLOCKS for every workflow except a staging-only one that
+ * holds no write token and has no `pull_request_target` trigger, which is
+ * reported as advisory (owner, 2026-10-07, twice: *"unpinned on staging"*,
+ * then *"pin write-token workflows"* once the roast found a staging workflow
+ * that could rewrite the live site; bean `1ygp` L4.1). `stagingExempt` in
+ * `pin-actions.ts` decides that from what the workflow can do, never from its
+ * name. An `advisory` check (dependency advisories, exempt staging pinning)
+ * is reported in the same three states and never blocks.
  *
  * ## Every subprocess is argv, never a shell string
  *
@@ -44,7 +46,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { parseUses, STAGING_ONLY_WORKFLOWS } from "./pin-actions.ts";
+import { parseUses, stagingExempt } from "./pin-actions.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -83,13 +85,13 @@ export function runCheck(script: string, blocking: boolean, root = ROOT): GateRe
 }
 
 /**
- * Third-party `uses:` lines not pinned to a full commit SHA, split by the
- * owner's ruling of 2026-10-07 (*"when published, make it unpinned on
- * staging"*): a workflow that publishes or runs on main must pin, and a
- * staging-only workflow may not. Local (`./`) and `docker://` references are
- * not third-party actions, and this repository's own reusable workflows are
- * first-party. Parsing and the staging set come from `pin-actions.ts`, so the
- * tool that pins and the gate that checks cannot disagree about a line.
+ * Third-party `uses:` lines not pinned to a full commit SHA, split by
+ * {@link stagingExempt}: every workflow must pin unless it is a staging-only
+ * workflow with no write token and no `pull_request_target` trigger. Local
+ * (`./`) and `docker://` references are not third-party actions, and this
+ * repository's own reusable workflows are first-party. Parsing and the
+ * exemption come from `pin-actions.ts`, so the tool that pins and the gate
+ * that checks cannot disagree about a line.
  */
 export function unpinnedActions(root = ROOT): { total: number; unpinned: string[]; stagingUnpinned: string[] } | undefined {
   const dir = join(root, ".github", "workflows");
@@ -98,12 +100,14 @@ export function unpinnedActions(root = ROOT): { total: number; unpinned: string[
   const stagingUnpinned: string[] = [];
   let total = 0;
   for (const f of readdirSync(dir).filter((n) => /\.ya?ml$/.test(n)).sort()) {
-    readFileSync(join(dir, f), "utf-8").split("\n").forEach((line, i) => {
+    const text = readFileSync(join(dir, f), "utf-8");
+    const exempt = stagingExempt(f, text);
+    text.split("\n").forEach((line, i) => {
       const u = parseUses(line);
       if (!u || u.firstParty) return;
       total++;
       if (u.pinned) return;
-      (STAGING_ONLY_WORKFLOWS.has(f) ? stagingUnpinned : unpinned).push(`${f}:${i + 1} ${u.action}@${u.ref}`);
+      (exempt ? stagingUnpinned : unpinned).push(`${f}:${i + 1} ${u.action}@${u.ref}`);
     });
   }
   return { total, unpinned, stagingUnpinned };
