@@ -1,0 +1,94 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/crdm/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+      "@type": "cat-harness:SkillPackage",
+      "name": "crdm"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-data-model",
+      "@type": "bootstrap:Skill",
+      "name": "crdm-data-model",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a37bf4e5f1c2e4fdf323d5cc2e7d703c586fb676a5aa5bd900ff284964be9a2",
+        "bytes": 3682,
+        "sha256": "5a37bf4e5f1c2e4fdf323d5cc2e7d703c586fb676a5aa5bd900ff284964be9a2"
+      },
+      "title": "CRDM — the data-modelling phase"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect",
+      "@type": "bootstrap:Skill",
+      "name": "crdm-detect",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9751d046b9b8f05f31f3aaf635ebcf716eadff1d13900890ddade6063010da3c",
+        "bytes": 14512,
+        "sha256": "9751d046b9b8f05f31f3aaf635ebcf716eadff1d13900890ddade6063010da3c"
+      },
+      "title": "Feature-request detection (CRDM trigger)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis",
+      "@type": "bootstrap:Skill",
+      "name": "crdm-impact-analysis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/be58db421e4305c2da107f4baa4984baa786fae34c1d3a1c0bbd115641a0143d",
+        "bytes": 3843,
+        "sha256": "be58db421e4305c2da107f4baa4984baa786fae34c1d3a1c0bbd115641a0143d"
+      },
+      "title": "Phase 4 — Impact analysis (detail)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment",
+      "@type": "bootstrap:Skill",
+      "name": "crdm-needs-assessment",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a264005014b9256ea592d10d5b2cc968f2c9de88a63af1bd9cace852a42bc7a3",
+        "bytes": 4074,
+        "sha256": "a264005014b9256ea592d10d5b2cc968f2c9de88a63af1bd9cace852a42bc7a3"
+      },
+      "title": "Phase 1 — Needs assessment (detail)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
+      "@type": "bootstrap:Skill",
+      "name": "crdm-recorded-walkthrough",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d99a16fe1b1a05ebec9ecf00af0853df2ca3fa43ea1f117a024ae1032bf05bba",
+        "bytes": 5105,
+        "sha256": "d99a16fe1b1a05ebec9ecf00af0853df2ca3fa43ea1f117a024ae1032bf05bba"
+      },
+      "title": "Requirements from a recorded walkthrough"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
+      "@type": "bootstrap:Skill",
+      "name": "crdm-requirements-template",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eb29de336c429ac5b25b92d5444d9bd0b1f1eac75ee78cf90589aead7f02d843",
+        "bytes": 5994,
+        "sha256": "eb29de336c429ac5b25b92d5444d9bd0b1f1eac75ee78cf90589aead7f02d843"
+      },
+      "title": "Phase 3 — Requirements definition (detail)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow",
+      "@type": "bootstrap:Skill",
+      "name": "crdm-requirements-workflow",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db75db16135fc7f73e01bc459207ba8058461b2d5e58552db93c04bf758e9bcd",
+        "bytes": 27199,
+        "sha256": "db75db16135fc7f73e01bc459207ba8058461b2d5e58552db93c04bf758e9bcd"
+      },
+      "title": "CRDM requirements workflow"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/sdlc/crdm",
+  "path": "skills/sdlc/crdm/"
+}

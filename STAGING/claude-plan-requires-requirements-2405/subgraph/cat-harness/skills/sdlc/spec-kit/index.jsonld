@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/spec-kit/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
+      "@type": "cat-harness:SkillPackage",
+      "name": "spec-kit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
+      "@type": "bootstrap:Skill",
+      "name": "spec-kit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/708f13930ca84b6f3dfc3be1d4507854d234437f575578449544c6e7310da41f",
+        "bytes": 8701,
+        "sha256": "708f13930ca84b6f3dfc3be1d4507854d234437f575578449544c6e7310da41f"
+      },
+      "title": "Spec Kit — spec-driven development"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/sdlc/spec-kit",
+  "path": "skills/sdlc/spec-kit/"
+}
