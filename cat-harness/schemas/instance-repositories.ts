@@ -22,6 +22,7 @@ import { instanceRootsIn, readDeclaration, type InstanceLocation } from "./cat-h
 import { declarationChain } from "./harness-config.js";
 import { LEGACY_FOLIO_NS } from "./namespaces.js";
 import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.js";
+import { mountScopeFor } from "./remote-mount.js";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 
 export interface InstanceRepository {
@@ -136,6 +137,9 @@ export function locationMismatch(entry: InstanceRepository, checkoutRoot: string
   // bootstrap-tools since 2026-09-30 (bean `xsqm`) — sits at that repository's
   // root, which is exactly what an absent `livesAt` says.
   if (entry.livesAt === undefined && ownWorkTreeRoot(entry.root)) return undefined;
+  // ...and so does one a REMOTE MOUNT laid down (the submodule's successor,
+  // bean `nn8e`, #2462): no `.git` of its own, but a lock that put it there.
+  if (entry.livesAt === undefined && mountScopeFor(entry.root) !== undefined) return undefined;
   const actual = relative(resolve(checkoutRoot), entry.root).split("\\").join("/");
   const declared = entry.livesAt?.path ?? "";
   if (actual === declared) return undefined;
