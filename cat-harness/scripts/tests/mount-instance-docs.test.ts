@@ -24,6 +24,8 @@ import { tmpdir } from "os";
 import { join } from "path";
 
 import {
+  igSiteRoots,
+  mountRoutes,
   servedDirectories,
   WITHHELD_FILE,
   publishedAsset,
@@ -210,6 +212,21 @@ describe("which kind answers at the instance's own route", () => {
     // away from an instance it does not concern.
     const { candidates } = withRoutes([m("lone", "docs", true)]);
     expect(candidates.map((c) => c.route).sort()).toEqual(["docs/lone", "lone"]);
+  });
+
+  it("a root already TAKEN by an IG site is not inherited by the next kind", () => {
+    // smart-trust: `docs/` is the declared root AND `igSite`, so it is built
+    // by stage-ig-sites and never reaches `found`. `openapi/` then claimed
+    // `/smart-trust/`, was copied over the IG site, and the mount's rail walk
+    // railed every IG page on top of the side-bar they already carry.
+    const { candidates, undetermined } = withRoutes([m("st", "openapi"), m("st", "library")], new Set(["st"]));
+    expect(candidates.map((c) => c.route).sort()).toEqual(["library/st", "openapi/st"]);
+    expect(undetermined).toEqual([]);
+  });
+
+  it("the real smart-trust declaration mounts nothing at /smart-trust/", () => {
+    expect(igSiteRoots().has("smart-trust")).toBe(true);
+    expect(mountRoutes("cat-harness")).not.toContain("smart-trust");
   });
 
   it("one instance being undetermined does not implicate another", () => {
