@@ -54,13 +54,157 @@
  * Not run: the QA sweep, block screenshots, review-comment ingestion and the
  * PR comment. The banner names the preview as built locally so a reviewer is
  * not told those exist.
+ *
+ * ## `--artifact <dir>`: a preview with no GitHub in the loop
+ *
+ * The second half of the owner's choice: the same build, written as a BUNDLE a
+ * claude.ai Artifact can carry, and nothing pushed. The agent then publishes
+ * `<dir>/index.html` with the files `<dir>/artifact.json` lists; it is live in
+ * about a minute and private until shared. An Artifact holds at most
+ * {@link ARTIFACT_MAX_FILES} files per publish and {@link ARTIFACT_MAX_BYTES}
+ * bytes, so when the site is bigger, whole top-level directories are left out,
+ * the ones holding the most files first (smart-ra's 2,931 node-kind pages
+ * under `en/`), and `artifact.json` names each one left out and how many
+ * files it held: a link into one of them 404s in the Artifact, and a reviewer
+ * is told rather than left to find out.
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
+
+import { siteDirFor } from "../schemas/cat-harness.ts";
 
 import { decide, readTip } from "./staging-push-gate.ts";
+
+/** Files one Artifact publish may carry, the page included (the Artifact tool's limit is 255; one is the page). */
+export const ARTIFACT_MAX_FILES = 254;
+/** Bytes one Artifact publish may carry (the tool's limit is 64 MB; a margin for the page). */
+export const ARTIFACT_MAX_BYTES = 60 * 1024 * 1024;
+
+export interface ArtifactBundle {
+  page: "index.html";
+  /** Published paths, relative to the bundle directory, the page excluded. */
+  files: string[];
+  bytes: number;
+  /** Top-level directories left out to fit, with how many files each held. */
+  dropped: { dir: string; files: number; bytes: number }[];
+}
+
+/**
+ * Which files of a built site fit one Artifact publish. Pure over the listing:
+ * `files` maps each site-relative path to its size. Whole top-level
+ * directories are dropped, most files first, until the rest fits; a site whose
+ * root files alone do not fit is refused.
+ */
+export function artifactBundle(files: Map<string, number>): ArtifactBundle {
+  if (!files.has("index.html")) throw new Error("the site has no index.html to open the Artifact on");
+  const top = new Map<string, { files: number; bytes: number }>();
+  for (const [p, n] of files) {
+    const i = p.indexOf("/");
+    if (i < 0) continue;
+    const d = p.slice(0, i);
+    const t = top.get(d) ?? { files: 0, bytes: 0 };
+    top.set(d, { files: t.files + 1, bytes: t.bytes + n });
+  }
+  const dropped: ArtifactBundle["dropped"] = [];
+  const kept = () => [...files.entries()].filter(([p]) => p !== "index.html" && !dropped.some((d) => p.startsWith(`${d.dir}/`)));
+  const fits = () => {
+    const k = kept();
+    return k.length <= ARTIFACT_MAX_FILES && k.reduce((a, [, n]) => a + n, 0) + (files.get("index.html") ?? 0) <= ARTIFACT_MAX_BYTES;
+  };
+  const order = [...top.entries()].sort((a, b) => b[1].files - a[1].files || b[1].bytes - a[1].bytes || a[0].localeCompare(b[0]));
+  for (const [dir, t] of order) {
+    if (fits()) break;
+    dropped.push({ dir, ...t });
+  }
+  if (!fits()) throw new Error(`even the site's root files exceed one Artifact publish (${ARTIFACT_MAX_FILES} files, ${ARTIFACT_MAX_BYTES} bytes)`);
+  const k = kept();
+  return { page: "index.html", files: k.map(([p]) => p).sort(), bytes: k.reduce((a, [, n]) => a + n, 0) + files.get("index.html")!, dropped };
+}
+
+/**
+ * Where the bundle carries the platform's own assets. Not `_platform`: the
+ * Artifact service reserves top-level names that start with `_`.
+ */
+export const PLATFORM_ASSETS = "platform-assets";
+
+/**
+ * The platform assets a page loads from the platform's PUBLISHED site — the
+ * rail's script and style, `<root>/assets/<path>.js|.css` with `<root>` the
+ * page's `data-fa-root` — and the bundle-relative path each is rewritten to.
+ * Pure over the files' text. Links to other platform PAGES stay as they are:
+ * following one leaves the Artifact, which is what a link should do.
+ */
+export function platformAssetRefs(texts: Map<string, string>): { roots: string[]; assets: string[] } {
+  const roots = new Set<string>();
+  for (const t of texts.values()) for (const m of t.matchAll(/data-fa-root="(https?:\/\/[^"]+)"/g)) roots.add(m[1]!.replace(/\/+$/, ""));
+  const assets = new Set<string>();
+  for (const root of roots) {
+    const esc = root.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    for (const t of texts.values()) for (const m of t.matchAll(new RegExp(`${esc}/assets/([^"'\\s)?#]+\\.(?:js|css))`, "g"))) assets.add(m[1]!);
+  }
+  return { roots: [...roots].sort(), assets: [...assets].sort() };
+}
+
+/**
+ * An Artifact runs only scripts from its allowed hosts, so the rail's script
+ * and style, loaded from the platform's published site, would not run there.
+ * Copy each from the platform checkout's own site directory into
+ * `<out>/platform-assets/assets/` and point every page at the copy. An asset the
+ * platform does not have is left pointing at the published site.
+ */
+function vendorPlatformAssets(out: string, files: string[], platform: string): string[] {
+  const textual = files.filter((f) => /\.(html|css|js)$/.test(f));
+  const texts = new Map(textual.map((f) => [f, readFileSync(join(out, f), "utf-8")] as const));
+  const { roots, assets } = platformAssetRefs(texts);
+  const instances = existsSync(platform) ? readdirSync(platform, { withFileTypes: true }).filter((e) => e.isDirectory() && !e.name.startsWith(".")).map((e) => join(platform, e.name)) : [];
+  const source = (rel: string) => {
+    for (const inst of instances) {
+      let dir: string;
+      try {
+        dir = siteDirFor(inst);
+      } catch {
+        continue;
+      }
+      const f = join(inst, dir, "assets", rel);
+      if (existsSync(f)) return f;
+    }
+    return undefined;
+  };
+  const copied: string[] = [];
+  for (const rel of assets) {
+    const from = source(rel);
+    if (!from) continue;
+    const to = `${PLATFORM_ASSETS}/assets/${rel}`;
+    mkdirSync(dirname(join(out, to)), { recursive: true });
+    cpSync(from, join(out, to));
+    copied.push(to);
+  }
+  for (const [f, t] of texts) {
+    let u = t;
+    for (const to of copied) {
+      const rel = to.slice(`${PLATFORM_ASSETS}/assets/`.length);
+      const local = relative(dirname(join(out, f)), join(out, to)).split("\\").join("/");
+      for (const root of roots) u = u.split(`${root}/assets/${rel}`).join(local);
+    }
+    if (u !== t) writeFileSync(join(out, f), u);
+  }
+  return copied;
+}
+
+function listSite(dir: string): Map<string, number> {
+  const out = new Map<string, number>();
+  const walk = (d: string, rel: string) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const r = rel ? `${rel}/${e.name}` : e.name;
+      if (e.isDirectory()) walk(join(d, e.name), r);
+      else if (e.isFile()) out.set(r, statSync(join(d, e.name)).size);
+    }
+  };
+  walk(dir, "");
+  return out;
+}
 
 /** The staging workflow's inputs this needs, as the folio's own file passes them. */
 export interface StagingInputs {
@@ -142,6 +286,8 @@ export interface StageOptions {
   base?: string;
   runUrl?: string;
   dryRun?: boolean;
+  /** Write an Artifact bundle here instead of pushing. */
+  artifact?: string;
   log?: (s: string) => void;
 }
 
@@ -151,6 +297,8 @@ export interface StageResult {
   pushed: boolean;
   commit?: string;
   site: string;
+  /** With `artifact`: the bundle written, and where. */
+  bundle?: ArtifactBundle & { dir: string };
 }
 
 export async function stageLocal(o: StageOptions): Promise<StageResult> {
@@ -185,9 +333,8 @@ export async function stageLocal(o: StageOptions): Promise<StageResult> {
   // one: found in whichever of the platform's instances carries them, never
   // named here. A platform without them gets no review data, and the review
   // page says so, as the workflow does when it has no renderer.
-  // declared-path-literal: a module path INSIDE another instance of the
-  // platform, probed by `inPlatform` across its instances. No directory
-  // declaration of this layer names it, and naming that layer is the point.
+  // declared-path-literal: a path INSIDE another platform instance, resolved
+  // by inPlatform against each instance's root, never against this one.
   const changeset = inPlatform(platform, "schemas/changeset.ts");
   if (changeset) run(repo, "bun", ["run", changeset, "--folio", inputs.folio_dir, "--base", `origin/${base}`, "--head", "worktree", "--out", join(site, "changeset.json"), "--text-out", join(site, "changeset-text.json")]);
   else log("· this platform has no ChangeSet tool: no review data on this preview");
@@ -206,6 +353,24 @@ export async function stageLocal(o: StageOptions): Promise<StageResult> {
     "--branch-url", `${gh}/tree/${branch}`, "--issues-url", `${gh}/issues`,
     "--run-url", runUrl, "--main-site", pagesRoot, "--before-ref", base,
   ]);
+
+  if (o.artifact) {
+    const out = resolve(o.artifact);
+    const b = artifactBundle(listSite(site));
+    rmSync(out, { recursive: true, force: true });
+    for (const p of [b.page, ...b.files]) {
+      mkdirSync(dirname(join(out, p)), { recursive: true });
+      cpSync(join(site, p), join(out, p));
+    }
+    const vendored = vendorPlatformAssets(out, [b.page, ...b.files], platform);
+    if (b.files.length + vendored.length > ARTIFACT_MAX_FILES) throw new Error(`with the platform's ${vendored.length} asset(s) the bundle exceeds one Artifact publish`);
+    b.files = [...b.files, ...vendored].sort();
+    if (vendored.length) log(`· carried ${vendored.length} platform asset(s) into the bundle: an Artifact loads scripts only from its allowed hosts`);
+    writeFileSync(join(out, "artifact.json"), JSON.stringify({ $schema: "stage-local-artifact/v1", slug, branch, sha, ...b }, null, 1) + "\n");
+    for (const d of b.dropped) log(`· left out ${d.dir}/ (${d.files} files) to fit one Artifact publish; links into it 404 there`);
+    log(`✓ Artifact bundle in ${out}: index.html + ${b.files.length} files, ${(b.bytes / 1048576).toFixed(1)} MB; nothing pushed`);
+    return { slug, url, pushed: false, site, bundle: { ...b, dir: out } };
+  }
 
   if (o.dryRun) {
     log(`✓ built and bannered in ${site}; --dry-run, nothing pushed`);
@@ -273,6 +438,7 @@ if (import.meta.main) {
       ...(opt("base") ? { base: opt("base")! } : {}),
       ...(opt("run-url") ? { runUrl: opt("run-url")! } : {}),
       dryRun: argv.includes("--dry-run"),
+      ...(opt("artifact") ? { artifact: opt("artifact")! } : {}),
     });
     console.log(JSON.stringify(r));
   } catch (e) {
