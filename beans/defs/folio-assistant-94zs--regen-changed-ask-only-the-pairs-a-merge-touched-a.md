@@ -1,11 +1,11 @@
 ---
 # folio-assistant-94zs
 title: 'REGEN --changed: ask only the pairs a merge touched, and narrow the fixpoint''s later passes'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-05T05:12:20Z
-updated_at: 2026-10-06T10:47:25Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-xpcu
 ---
 
@@ -46,3 +46,6 @@ What `task-io.ts` declares today (read): 15 of 121 regen pairs declare `inputs`,
 Measured on `local/regen-speedup` (4312e99c7, load 2-9):
 - The narrowed fixpoint now also settles on a BARREN pass (34aa4e540). Cold regen took 1 pass and 396 s.
 - The base code on the same tree took 3 passes and 787 s (load 3-5).
+
+## Completed on landed evidence
+Landed on main in PR #2156 / merge commit 9409c4a7e2a5 (regen --changed narrow fixpoint passes).

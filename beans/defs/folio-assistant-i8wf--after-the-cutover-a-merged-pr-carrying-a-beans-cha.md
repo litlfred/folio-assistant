@@ -1,11 +1,11 @@
 ---
 # folio-assistant-i8wf
 title: After the cutover, a merged PR carrying a beans/** change re-creates the directory on main and turns check:declared-dirs red
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-10-04T06:43:41Z
-updated_at: 2026-10-04T06:43:41Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -30,3 +30,6 @@ Three things make this likely rather than hypothetical on the first day:
 - [ ] the owner has picked one, or ruled that the red is acceptable
 - [ ] whichever is picked NAMES the remedy a contributor should run, rather than only refusing
 - [ ] measured once for real: a branch carrying a `beans/**` change, merged after the cutover, and what the gate actually said
+
+## Completed on landed evidence
+Landed on main in commit 0f366e9992b5 (Post-cutover beans/ re-growth on main prevented).

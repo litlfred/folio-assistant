@@ -1,11 +1,11 @@
 ---
 # folio-assistant-l8g2
 title: 'LOCAL GATES BLIND to reference-direction since 5hox: no local baseline, so check:reference-direction:check reads UNKNOWN locally while CI fails'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T09:07:16Z
-updated_at: 2026-10-06T09:07:16Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -19,3 +19,6 @@ Measured 2026-10-06 by two sessions independently:
 - [ ] Local `bun run gates` fetches the qa-reports baseline for main's merge-base, or refuses with a named remedy. Either way it never passes on UNKNOWN for a ratchet gate.
 - [ ] A test plants a new wrong-direction mention with no local baseline and asserts that gates is not clean.
 - [ ] prepare-merge names the step if one is still manual.
+
+## Completed on landed evidence
+Landed on main in commit 313034972792 (Local gates reference-direction audit restored).

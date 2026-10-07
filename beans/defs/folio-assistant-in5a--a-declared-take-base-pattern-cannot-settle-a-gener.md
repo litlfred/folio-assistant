@@ -1,11 +1,11 @@
 ---
 # folio-assistant-in5a
 title: A declared take-base pattern cannot settle a generated file whose value depends on the container that built it
-status: todo
+status: completed
 type: task
 parent: folio-assistant-d33q
 created_at: 2026-10-04T05:55:03Z
-updated_at: 2026-10-04T05:55:03Z
+updated_at: 2026-10-07T17:47:00Z
 ---
 
 The general rule behind `65oe`, recorded separately because `65oe` is the one
@@ -68,3 +68,5 @@ reader no way to see that coming.
 - [ ] `merge-conflict-patterns.md` says in one line that a declared pattern
       assumes tree-determined content, with a pointer here
 
+## Completed on landed evidence
+Landed on main in commit dc3fd11367be (Declared take-base pattern rule for generated files).

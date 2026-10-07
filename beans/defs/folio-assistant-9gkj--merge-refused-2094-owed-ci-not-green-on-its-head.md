@@ -1,11 +1,10 @@
 ---
 # folio-assistant-9gkj
 title: 'Merge refused: #2094 owed CI not green on its head'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-07T11:29:30Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-wekz
@@ -41,3 +40,5 @@ Closed on evidence of landed work:
 - PR #2094 was resolved and merged into `main` by `litlfred` in commit `167a180704c5` on 2026-10-04T20:48:40Z.
 - Re-derived independently on 2026-10-07: PR #2094 state is `MERGED` with commit `167a180704c5` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.
