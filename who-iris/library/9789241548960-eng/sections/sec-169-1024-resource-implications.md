@@ -7,6 +7,7 @@ section_number: 10.2.4
 pages: 138-139
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Resource considerations are generally included in the formulation of recommendations, unless there is a deliberate and explicit decision to omit them. 
 In considering resource implications, the GDG can be informed by a formal 

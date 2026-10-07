@@ -282,6 +282,8 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     id [1] : string
     blocks [0..*] : Block[]
   }
+  class "folio-library-document/v1" as cat_harness_docs_folio_library_document_v1_folio_library_document_v1 <<json: LibraryDocumentSchema>> #f4f4f1 {
+  }
   class "Directory" as cat_harness_docs_folio_voices_index_v1_Directory <<json: VoicesIndexSchema>> #f4f4f1 {
     instance [1] : string
     dir [1] : string

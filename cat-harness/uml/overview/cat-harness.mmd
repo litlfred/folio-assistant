@@ -809,6 +809,20 @@ classDiagram
       entry [1] string
       summaries [0..*] Summary[]
     }
+    class cat_harness_library_folio_keywords_v1_Document["Document"] {
+      <<json: KeywordsFileSchema>>
+      term [1] string
+      score [1] number
+      evidence [0..*] heading[]
+    }
+    class cat_harness_library_folio_keywords_v1_folio_keywords_v1["folio-keywords/v1"] {
+      <<json: KeywordsFileSchema>>
+      $schema [1] 'folio-keywords/v1'
+      entry [1] string
+      corpus [1] object
+      document [0..*] Document[]
+      sections [1] map~object[]~
+    }
     class cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1["folio-slides-accessibility/v1"] {
       <<json: SlidesAccessibilitySchema>>
       $schema [1] 'folio-slides-accessibility/v1'
@@ -1153,6 +1167,9 @@ classDiagram
       $schema [1] 'folio-library-entry/v1'
       id [1] string
       blocks [0..*] Block[]
+    }
+    class cat_harness_docs_folio_library_document_v1_folio_library_document_v1["folio-library-document/v1"] {
+      <<json: LibraryDocumentSchema>>
     }
     class cat_harness_docs_folio_voices_index_v1_Directory["Directory"] {
       <<json: VoicesIndexSchema>>
@@ -1765,6 +1782,7 @@ classDiagram
   cssClass "n_cat_harness_uploads_uploads" fa_uml_undetermined
   cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
   cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
+  cat_harness_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" cat_harness_library_folio_keywords_v1_Document : document
   cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" cat_harness_library_folio_referenced_source_v1_Outline : outline
   cssClass "cat_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_image_verdicts_v1" fa_uml_kind_library
@@ -1773,6 +1791,8 @@ classDiagram
   cssClass "cat_harness_library_folio_block_summaries_v1_Superseded" fa_uml_kind_library
   cssClass "cat_harness_library_folio_block_summaries_v1_Summary" fa_uml_kind_library
   cssClass "cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1" fa_uml_kind_library
+  cssClass "cat_harness_library_folio_keywords_v1_Document" fa_uml_kind_library
+  cssClass "cat_harness_library_folio_keywords_v1_folio_keywords_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_referenced_source_v1_Outline" fa_uml_kind_library
   cssClass "cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1" fa_uml_kind_library
@@ -1838,6 +1858,7 @@ classDiagram
   cssClass "cat_harness_docs_folio_library_index_v1_folio_library_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_entry_v1_Block" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_library_entry_v1_folio_library_entry_v1" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_library_document_v1_folio_library_document_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_Directory" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_Source" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_voices_index_v1_ProvenanceFlag" fa_uml_kind_docs

@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant-core/folio-assistant-core-docs" as pkg_folio_assistant_core_folio_assistant_core_docs <<docs>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (13 named): could not determine)" as n_folio_assistant_core_folio_assistant_core_docs_docs
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (14 named): could not determine)" as n_folio_assistant_core_folio_assistant_core_docs_docs
 }
 package "folio-assistant-core/folio-assistant-core-translations" as pkg_folio_assistant_core_folio_assistant_core_translations <<translation-sources>> {
   class "TranslationConfig" as folio_assistant_core_folio_assistant_core_translations_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
@@ -265,6 +265,18 @@ package "folio-assistant-core/core-library" as pkg_folio_assistant_core_core_lib
     attribution [0..1] : Record<string, { inspected_by: unknown; inspected_at: string }>
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "Document" as folio_assistant_core_core_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as folio_assistant_core_core_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
 }
 package "folio-assistant-core/core-methodologies" as pkg_folio_assistant_core_core_methodologies <<methodology>> {
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_methodologies_methodology
@@ -423,6 +435,7 @@ folio_assistant_core_core_schemas_skills_quality_control_output_schema_json_Qual
 folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" folio_assistant_core_glossary_folio_glossary_v1_Term : terms
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Remedy : remedies
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
+folio_assistant_core_core_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" folio_assistant_core_core_library_folio_keywords_v1_Document : document
 folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Source : sources
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Terminology : terminology

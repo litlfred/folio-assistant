@@ -7,6 +7,7 @@ section_number: 10.4
 pages: 140-141
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The strength of a recommendation expresses the degree to which the GDG 
 is confident in the balance between the desirable and undesirable consequences of implementing the recommendation. When a GDG is very certain about this balance (i.e. the desirable consequences clearly outweigh the 
