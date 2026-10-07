@@ -219,22 +219,43 @@ the owner's confirmation.
    step 3. Run the exact-title existence check in
    [`todo-manager.md`](todo-manager.md) §"Check before you create" first —
    `beans create` is not idempotent.
-2. **Start the Pages build and report the URL.** Run
-   `bun run scripts/pages-bootstrap.ts --wait`. It derives the site address,
-   says whether a publish workflow exists, and probes until the site answers.
-   **A `gh-pages` branch must exist before Pages can be switched on** to
-   serve from it (owner, 2026-10-01: *"need to create gh-pages branch before
-   can turn on"*). Provisioning it is the `gh-pages` Tool's subprocess's first
-   step ([`render-kg-to-cdn`](render-kg-to-cdn.md)),
-   not something to improvise here.
-3. **Say which of the three states you got**, and never blur them:
+2. **Provision `gh-pages` — before Pages is switched on.** This is
+   `Task_ProvisionGhPages` in the process, and it carries the semantics of
+   `A_Provision` in bootstrap-tools'
+   [`render-kg-to-github-pages.bpmn`](../../processes/render-kg-to-github-pages.html)
+   (the `gh-pages` Tool's subprocess —
+   [`render-kg-to-cdn`](render-kg-to-cdn.md)):
+   **a `gh-pages` branch must exist before Pages can be switched on** to serve
+   it. Owner, 2026-10-01: *"need to create gh-pages branch before can turn
+   on"*; repeated 2026-10-07: *"need to create gh-pages before can deploy"*
+   (issue #2417). Run
+   `bun run cat-harness/scripts/pages-bootstrap.ts --provision`: it checks
+   `git ls-remote --heads origin gh-pages` and, only if the branch is absent,
+   pushes an orphan `gh-pages` holding a placeholder `index.html` and
+   `.nojekyll`. It is idempotent and never forces a push; without
+   `--provision` the script creates no remote branch, it only reports
+   `unprovisioned` with the exact command. Then switch Pages on with
+   **Source: "Deploy from a branch: gh-pages, / (root)"** — not "GitHub
+   Actions", when the publish workflow pushes `gh-pages` (the script prints
+   the source it expects). **Every publishing route reaches this step**:
+   new-repo, add-folio, and the overlay route through
+   [`repo-conversion`](repo-conversion.md) — including an overlay or new repo
+   that [remote-mounts](remote-mount.md) its dependencies,
+   which never reaches this section by itself.
+3. **Start the Pages build and report the URL.** Run
+   `bun run cat-harness/scripts/pages-bootstrap.ts --wait`. It checks the
+   branch first, derives the site address, says whether a publish workflow
+   exists and which Pages source it needs, and probes until the site answers.
+4. **Say which of the four states you got**, and never blur them:
+   - **unprovisioned** — there is no `gh-pages` branch (exit 3). Go back to
+     step 2; nothing later can succeed until it exists.
    - **live** — hand over the link, and say what is on it.
    - **not-yet** — a measured 404. Give the address, say the first build has
      not landed there yet, and say roughly how long it takes.
    - **unknown** — no URL could be derived, or the probe failed. Say *that*.
      "Should be live shortly" is a claim you do not have evidence for, and an
      author who later finds nothing there has been told something false.
-4. **Tell them the corpus is by reference, and how to change that.** A fresh
+5. **Tell them the corpus is by reference, and how to change that.** A fresh
    harness holds references, not the remote content itself: `who-iris` alone
    is hundreds of gigabytes. When they need part of a remote subgraph locally,
    that is an ask made later, as the need appears. Name the skill
@@ -255,6 +276,10 @@ the owner's confirmation.
 4. **Announcing a Pages URL you have not probed.** See step 5.
 5. **Going straight to `folio_init` because the request seemed obvious.** Every
    one of the five requests seems obvious to the person making it.
+6. **Switching Pages on before `gh-pages` exists, or choosing "GitHub
+   Actions" as the source for a workflow that pushes `gh-pages`.** That was
+   the litlfred/test plan in its #3, caught by the owner and fixed in
+   litlfred/test#5. Step 2 first; the source is "Deploy from a branch".
 {% endraw %}
 
 ## Processes that run this skill
@@ -265,5 +290,5 @@ This skill has its own process: **[Getting started](../../processes/getting-star
 
 | process | step(s) that name it |
 |---|---|
-| [Getting started](../../processes/getting-started.html) | Read the repository facts; Choose from the offered options; Scaffold the folio (folio_init); Start the Pages build and derive the URL; Hand over the live link; Say where it will be; Say it could not be confirmed |
+| [Getting started](../../processes/getting-started.html) | Read the repository facts; Choose from the offered options; Scaffold the folio (folio_init); Provision gh-pages; Start the Pages build and derive the URL; Hand over the live link; Say where it will be; Say it could not be confirmed |
 
