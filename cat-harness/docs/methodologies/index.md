@@ -462,10 +462,10 @@ these.
 
 **Ingested sources:**
 
-- `library/github-docs-actions-secure-use-reference`
-- `library/arxiv-2510.19207v2`
-- `library/arxiv-2507.07974v2`
-- `library/arxiv-2503.18813v2`
+- [`library/github-docs-actions-secure-use-reference`](../cat-harness/library/cat-harness/#cat-harness%2Fgithub-docs-actions-secure-use-reference) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/github-docs-actions-secure-use-reference/README.md)
+- [`library/arxiv-2510.19207v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2510.19207v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2510.19207v2/README.md) · [source](https://arxiv.org/abs/2510.19207v2)
+- [`library/arxiv-2507.07974v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2507.07974v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2507.07974v2/README.md) · [source](https://arxiv.org/abs/2507.07974v2)
+- [`library/arxiv-2503.18813v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2503.18813v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2503.18813v2/README.md) · [source](https://arxiv.org/abs/2503.18813v2)
 
 ## Files in the graph that are not methodology nodes
 
