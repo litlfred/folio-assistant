@@ -5,7 +5,8 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-07T02:44:43Z
+updated_at: 2026-10-07T11:50:25Z
+tags: [ready-to-close]
 parent: folio-assistant-iirv
 blocking:
     - folio-assistant-apcg
@@ -29,13 +30,20 @@ No takeover plan was written; the PR comments carry its state.
 A comment on PR #1898, plus a message to the Merge Manager role.
 
 ## Done when
-- [ ] #1898 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
-- [ ] the owed `pull_request` CI is green on that head
-- [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [ ] `bun run merge:guard 1898` passes all 7 checks, and it lands (or the owner closes it)
+- [x] #1898 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
+- [x] the owed `pull_request` CI is green on that head
+- [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
+- [x] `bun run merge:guard 1898` passes all 7 checks, and it lands (or the owner closes it)
 
 
 ## Attempts
-- 2026-10-04 16:40Z, train merge-train-2026-10-04a (PR #2113): EJECTED. #1898 at 0f70ad8 was signed by session_01VfkKoc and its CI guard passed all 7 checks, but merge-base's take-base resolution of the gitignored-but-tracked `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` failed (\"is in the index, but not at stage 2\"). The fault is the tool (class 8j9e), not the PR. It rides the next train once the resolution is fixed or worked around, or after #2066 takes the LSI trio off main.
+- 2026-10-04 16:40Z, train merge-train-2026-10-04a (PR #2113): EJECTED. #1898 at 0f70ad8 was signed by session_01VfkKoc and its CI guard passed all 7 checks, but merge-base's take-base resolution of the gitignored-but-tracked `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` failed ("is in the index, but not at stage 2"). The fault is the tool (class 8j9e), not the PR. It rides the next train once the resolution is fixed or worked around, or after #2066 takes the LSI trio off main.
 
 _2026-10-07T02:44:43Z_ — Claimed by claude/b8de-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+Closed on evidence of landed work:
+- PR #1898 was resolved and merged into `main` by `litlfred` in commit `f2c1880162e1` on 2026-10-05T11:05:31Z.
+- Re-derived independently on 2026-10-07: PR #1898 state is `MERGED` with commit `f2c1880162e1` present in `main` history.
+

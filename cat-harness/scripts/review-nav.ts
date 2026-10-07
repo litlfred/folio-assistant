@@ -119,6 +119,81 @@ export function renderOutline(
   return nav;
 }
 
+/**
+ * The outline as a section of the harness RAIL, not a column of the page
+ * (owner, 2026-10-07: *"i wanted the TOC in the LHS navbar, not LHS of
+ * displayed content"*). The same rows as {@link renderOutline}, in the rail's
+ * own markup — an open `details.fa-nav-group` whose rows are `.fa-nav-sub`
+ * links — so the rail's stylesheet draws it and its open/close is the rail's.
+ *
+ * A chapter is a label row (`fa-nav-dead fa-nav-kind`), not a link: the rail
+ * gives one level of rows under a section, and a chapter is where its sections
+ * are, not a place to go. A section with something to review jumps to it in
+ * the list; any other links to its anchor on the document page, which the
+ * section key carries after `::` when it is a label (`sec:1-1`).
+ */
+export function railOutline(
+  doc: Document,
+  outline: NavOutline,
+  badges: (key: string) => SectionBadges | null,
+  jump: (key: string) => void,
+): HTMLElement {
+  const group = doc.createElement("details");
+  group.className = "fa-nav-group";
+  group.open = true;
+  const sum = doc.createElement("summary");
+  const glyph = doc.createElement("span");
+  glyph.className = "fa-nav-glyph";
+  glyph.setAttribute("aria-hidden", "true");
+  glyph.textContent = "\u00a7";
+  const lab = doc.createElement("span");
+  lab.className = "fa-nav-label";
+  lab.textContent = "Outline";
+  sum.appendChild(glyph);
+  sum.appendChild(lab);
+  group.appendChild(sum);
+  const sub = doc.createElement("div");
+  sub.className = "fa-nav-sub";
+  const label = (text: string) => {
+    const l = doc.createElement("span");
+    l.className = "fa-nav-label";
+    l.textContent = text;
+    return l;
+  };
+  for (const d of outline.documents) {
+    for (const ch of d.chapters) {
+      const row = doc.createElement("span");
+      row.className = "fa-nav-dead fa-nav-kind";
+      row.appendChild(label(outline.documents.length > 1 ? d.title + " \u203a " + ch.title : ch.title));
+      sub.appendChild(row);
+      for (const s of ch.sections) {
+        const b = badges(s.key);
+        const words: string[] = [];
+        if (b && b.changed) words.push(b.changed + " changed");
+        if (b && b.open) words.push(b.open + " comment" + (b.open > 1 ? "s" : ""));
+        if (b && b.qaFailing) words.push("QA failing");
+        const a = doc.createElement("a");
+        const anchor = s.key.indexOf("::") >= 0 ? s.key.slice(s.key.indexOf("::") + 2) : "";
+        a.href = "../" + d.page + (anchor.indexOf(":") > 0 ? "#" + encodeURIComponent(anchor) : "");
+        a.appendChild(label(s.title));
+        if (words.length) {
+          const q = doc.createElement("span");
+          q.className = "fa-nav-qualifier";
+          q.textContent = " \u00b7 " + words.join(", ");
+          a.lastChild!.appendChild(q);
+          a.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            jump(s.key);
+          });
+        }
+        sub.appendChild(a);
+      }
+    }
+  }
+  group.appendChild(sub);
+  return group;
+}
+
 /** What the minimap knows about one block. */
 export interface BlockMark {
   change: "added" | "changed" | null;
