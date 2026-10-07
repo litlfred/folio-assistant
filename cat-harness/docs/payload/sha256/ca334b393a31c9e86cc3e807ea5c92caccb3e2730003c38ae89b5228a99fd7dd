@@ -109,7 +109,7 @@ run the row's `mvp` commands. For the theme:
 ```sh
 rm -rf _kg _site
 bun test                              # unit tests
-CI=1 bunx playwright test             # a11y, action tiles, sidebar panels, qa panel
+CI=1 bun run test:e2e                 # a11y, action tiles, sidebar panels, qa panel
 bun run cat-harness/scripts/site-links.ts --site ./_site   # every navbar tile resolves in the BUILT site
 ```
 
