@@ -544,6 +544,7 @@ function docsSurface(): DocsSurface | undefined {
 
   const walk = (dir: string): void => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
+      // input-site: inert #768fdcb7 — names a build-output directory only to leave it out of a walk
       if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
@@ -1767,6 +1768,7 @@ function arrowDirection(): KgCriterionEntry {
  */
 function proseNamesResolve(): KgCriterionEntry {
   const repo = REPO_ROOT;
+  // input-site: tree #af526755 — ls-files: the index
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
   if (ls.exitCode !== 0) {
     return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };

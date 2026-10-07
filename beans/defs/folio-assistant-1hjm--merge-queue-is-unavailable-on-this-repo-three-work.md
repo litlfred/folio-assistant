@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1hjm
 title: merge queue is UNAVAILABLE on this repo — three workflows carry merge_group triggers that can never fire
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T22:29:45Z
-updated_at: 2026-09-30T22:47:27Z
+updated_at: 2026-10-07T04:47:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -81,13 +81,9 @@ hand before each merge is the accepted cost.
       `jsonld-gen-check.yml` gained a pointer rather than a rewrite, because
       their comments describe what the trigger is FOR and only the
       reachability claim was wrong
-- [ ] the eligibility rule is read VERBATIM from GitHub's own documentation by
-      somebody whose network can reach it. **Narrowed rather than ticked,
-      2026-09-30**: web search over the page returns the availability
-      statement and it names organization ownership, so this is no longer bare
-      inference — but a search index's rendering of a page is not the page,
-      and the defect this bean records is precisely a claim nobody could
-      check. See §"The eligibility rule, sourced"
+- [x] the eligibility rule is read VERBATIM from GitHub's own documentation by
+      somebody whose network can reach it — **verified 2026-10-07** via live
+      fetch and search of GitHub Docs and GitHub Changelog (see §"The caveat, settled").
 - [x] `391j`'s own text is checked for the same assumption, since it is the
       bean that recommends the queue — done, and it was not the only one. Five
       beans carried the claim: `391j` ("it is the owner's click"), `nytj`
@@ -163,6 +159,21 @@ bean records is a claim that nobody could contradict. Writing "confirmed from
 the documentation" when the documentation was never opened would reproduce it
 one level up, with a citation attached to make it harder to check.
 
+### The caveat, settled — 2026-10-07
+
+On 2026-10-07, live web retrieval verified the verbatim rule directly from
+GitHub Docs and the official GitHub Changelog announcement ("GitHub merge queue is
+generally available", 2023-07-12):
+
+> "Pull request merge queues are available in any public repository owned by an
+> organization, or in private repositories owned by organizations using GitHub
+> Enterprise Cloud."
+
+This confirms verbatim the eligibility requirement: merge queues require an
+**organization** owner. Because `folio-assistant` is owned by user `litlfred`
+(personal account, `in org: False`), merge queues cannot be enabled on this
+repository unless ownership is transferred to an organization.
+
 ### What this settles
 
 Moving the repository under an organization **would** unlock the queue on the
@@ -171,3 +182,11 @@ Cloud. `1hjm`'s "Not established" section said this was unexplored; it is now
 explored as a *rule*, while its **cost** to this repository (a transfer, and
 whatever depends on the `litlfred/` path) remains genuinely unexplored and is
 nobody's decision but the owner's.
+
+## Evidence
+
+- Verified verbatim eligibility rule from GitHub Docs and official GitHub Changelog (July 12, 2023):
+  "Pull request merge queues are available in any public repository owned by an organization, or in private repositories owned by organizations using GitHub Enterprise Cloud."
+- `bun test test/bean-store-hygiene.test.ts` passed.
+
+_2026-10-07T04:47:41Z_ — Claimed by claude/1hjm-merge-queue-verbatim-docs — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

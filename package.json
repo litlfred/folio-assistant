@@ -42,6 +42,7 @@
   ],
   "scripts": {
     "agent-memory": "bun run cat-harness/scripts/agent-memory.ts",
+    "auth:login": "bun run cat-harness-tools/scripts/auth-login.ts",
     "agent-memory:check": "bun run cat-harness/scripts/agent-memory.ts --check",
     "root-scan-census": "bun run cat-harness/scripts/root-scan-census.ts",
     "root-scan-census:check": "bun run cat-harness/scripts/root-scan-census.ts --check --against main",
@@ -276,6 +277,7 @@
     "fsh-guts:viz:check": "bun run cat-harness/scripts/gen-fsh-guts-viz.ts --check",
     "gates": "bun run cat-harness/scripts/gates.ts",
     "gates:list": "bun run cat-harness/scripts/gates.ts --list",
+    "input-hash:coverage": "bun run cat-harness/scripts/input-hash-coverage.ts",
     "gen:jsonld": "bun run cat-harness/scripts/gen-jsonld-context.ts && bun run cat-harness/content/pipeline/gen-block-jsonld.ts && bun run cat-harness/content/pipeline/gen-library-jsonld.ts && bun run cat-harness/content/pipeline/gen-site-jsonld.ts",
     "gen:jsonld:check": "bun run cat-harness/scripts/gen-jsonld-context.ts --check && bun run cat-harness/content/pipeline/gen-block-jsonld.ts --check && bun run cat-harness/content/pipeline/gen-library-jsonld.ts --check && bun run cat-harness/content/pipeline/gen-site-jsonld.ts --check",
     "glossary:check": "bun run cat-harness/scripts/glossary-export.ts --check",

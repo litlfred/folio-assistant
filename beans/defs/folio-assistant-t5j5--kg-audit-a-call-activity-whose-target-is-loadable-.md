@@ -1,12 +1,14 @@
 ---
 # folio-assistant-t5j5
 title: 'kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown'
-status: ready-to-close
+status: in-progress
+tags:
+  - ready-to-close
 type: task
 parent: folio-assistant-zzmr
 priority: normal
 created_at: 2026-10-04T09:08:59Z
-updated_at: 2026-10-07T01:27:00Z
+updated_at: 2026-10-07T06:05:00Z
 ---
 Owner, 2026-10-04: the audit should resolve across instances.
 

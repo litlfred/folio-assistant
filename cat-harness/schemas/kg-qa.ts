@@ -640,6 +640,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // the answer lives.
     summary:
       "A Tool's `maintains` artefact is missing from the published tree. Answerable only against an " +
+      // input-site: inert #c48dc5aa — prose naming the directory, in a message or a description
       "assembled `_site/`, so from a checkout this records `unknown` naming `check:maintained-artefacts` " +
       "as where the answer lives — never `pass`. `n/a` for a Tool that maintains nothing.",
   },

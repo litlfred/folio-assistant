@@ -49,7 +49,7 @@ branch ROOT, outside `STAGING/` so `rm -rf "STAGING/$SLUG"` cannot reach it.
 A full replace does NOT preserve it: `CARRIED_PREFIXES` in
 `restore-staging.ts` carries it across, and `--verify` checks the carry as well
 as the previews. Add a prefix there, never a third code path. Skill:
-[`ui-core/render-logging.md`](../cat-harness/skills/ui/ui-core/render-logging.md).
+[`ui-core/render-logging.md`](../skills/ui/ui-core/render-logging.md).
 
 ## STABLE — two load-bearing properties of `ci-health.yml`
 
@@ -128,7 +128,7 @@ Encode an entailment of the mechanism, or something measured here with the
 command shown. Never "someone said so".
 
 Full rule, the worked case and both lanes:
-[`conduct-core/unverified-constraints.md`](../cat-harness/skills/conduct/conduct-core/unverified-constraints.md).
+[`conduct-core/unverified-constraints.md`](../skills/conduct/conduct-core/unverified-constraints.md).
 
 ## TRAP — never assert on a QA VERDICT from the published corpus
 
