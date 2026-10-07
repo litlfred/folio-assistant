@@ -9533,6 +9533,20 @@
           "doc": "The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases."
         },
         {
+          "name": "upstreamPath",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The repository-relative directory holding the substrate's declaration; absent: the root. See {@link SubscriptionSchema}."
+        },
+        {
+          "name": "kind",
+          "type": "SubscriptionKind",
+          "optional": true,
+          "array": false,
+          "doc": "`content` for a Knowledge Graph with Subgraphs and no harness (owner, 2026-10-06); absent: `substrate`. See {@link SubscriptionSchema}."
+        },
+        {
           "name": "subgraphs",
           "type": "string[]",
           "optional": true,
@@ -9564,7 +9578,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/repo-full-name.ts#RepoFullName"
+        "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+        "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKind"
       ],
       "unresolved": [],
       "external": [],
@@ -9595,6 +9610,20 @@
           "array": false
         },
         {
+          "name": "upstreamPath",
+          "type": "z .string() .regex(/^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$/, \"a repository-relative path,…",
+          "optional": true,
+          "array": false,
+          "doc": "The repository-relative DIRECTORY holding the substrate's declaration,"
+        },
+        {
+          "name": "kind",
+          "type": "SubscriptionKindSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What kind of Knowledge Graph this subscribes to — `substrate` (absent)"
+        },
+        {
           "name": "subgraphs",
           "type": "uniqueStrings(\"subgraphs\").optional()",
           "optional": true,
@@ -9623,7 +9652,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#uniqueStrings",
-        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+        "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKindSchema"
       ],
       "unresolved": [],
       "external": [
@@ -25366,6 +25396,20 @@
           "array": false
         },
         {
+          "name": "toc_inferred_mean_confidence",
+          "type": "z.number().min(0).max(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Mean confidence of the inferred entries, the input to the second trust"
+        },
+        {
+          "name": "toc_inferred_empty_share",
+          "type": "z.number().min(0).max(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Share of the sections an inferred TOC would cut that hold under 50"
+        },
+        {
           "name": "toc_inferred_method",
           "type": "z.enum([\"contents\", \"font\", \"regex\"]).optional()",
           "optional": true,
@@ -37616,6 +37660,32 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKind",
+      "name": "SubscriptionKind",
+      "module": "cat-harness/schemas/substrate-snapshot.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKindSchema",
+      "name": "SubscriptionKindSchema",
+      "module": "cat-harness/schemas/substrate-snapshot.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshot",
       "name": "SubstrateSnapshot",
       "module": "cat-harness/schemas/substrate-snapshot.ts",
@@ -37648,6 +37718,13 @@
           "doc": "The `subscriptions[].id` this snapshot belongs to."
         },
         {
+          "name": "kind",
+          "type": "SubscriptionKindSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "See {@link SUBSCRIPTION_KINDS}. Absent: `substrate`. Written only as `content`."
+        },
+        {
           "name": "repository",
           "type": "RepoFullNameSchema",
           "optional": false,
@@ -37662,10 +37739,10 @@
         },
         {
           "name": "file",
-          "type": "z.string().regex(/^[^/]+\\.json$/)",
+          "type": "z.string().regex(/^(?:[A-Za-z0-9_-][A-Za-z0-9._-]*\\/)*[^/]+\\.json$/)",
           "optional": false,
           "array": false,
-          "doc": "The upstream file, relative to the substrate's repository root: `<name>.json`."
+          "doc": "The upstream file, relative to the substrate's repository root:"
         },
         {
           "name": "raw",
@@ -37697,7 +37774,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+        "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKindSchema"
       ],
       "unresolved": [],
       "external": [
@@ -59191,6 +59269,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/cat-harness.ts#Subscription",
+      "to": "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKind",
+      "via": "kind",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
       "to": "cat-harness/schemas/cat-harness.ts#uniqueStrings",
       "via": "subgraphs",
@@ -59204,6 +59290,14 @@
       "via": "repository",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#SubscriptionSchema",
+      "to": "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -63684,6 +63778,14 @@
       "via": "repository",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema",
+      "to": "cat-harness/schemas/substrate-snapshot.ts#SubscriptionKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {

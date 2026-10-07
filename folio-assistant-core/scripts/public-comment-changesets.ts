@@ -51,6 +51,7 @@
  *   list                         every change-set, its status and issue
  *   body <CS-012>                its rendered issue section
  *   adopt <CS-012> --issue N     make an existing issue its primary one
+ *   reopen <CS-012> --note "why"  back to discussing (closed or incorporated)
  *   check                        the records agree with each other (CI; no network)
  *   reconcile [--dry-run]        every issue agrees with its record (GITHUB_TOKEN)
  *   github --event e.json [--dry-run]   one issue, comment or PR event (the workflow)
@@ -86,6 +87,12 @@ import { applyTag, isCommittee, isEditor, parseGithubTag, Store, tagRefusal } fr
 const dirOf = (store: Store) => join(store.dir, "changesets");
 export const csId = (n: number) => `CS-${String(n).padStart(3, "0")}`;
 const LIVE = (cs: ChangeSet) => cs.status !== "merged";
+
+/** The statuses a reopened issue, or `reopen`, moves back to `discussing`. */
+const REOPENABLE: readonly ChangeSetStatus[] = ["closed", "incorporated"];
+
+/** Settled: no other PR may link it (bean 6xdf). The same set `reopen` undoes. */
+const SETTLED = REOPENABLE;
 
 export function changeSets(store: Store): ChangeSet[] {
   const d = dirOf(store);
@@ -358,6 +365,19 @@ export function parseCommands(text: string): Command[] {
 
 const refsIn = (s: string) => [...new Set([...s.matchAll(/\bPC-?\s*(\d+)\b/gi)].map((m) => formatRef(Number(m[1]))))];
 const csIn = (s: string) => [...new Set([...s.matchAll(/\bCS-?(\d+)\b/gi)].map((m) => csId(Number(m[1]))))];
+
+/**
+ * The change-sets a PR body links, by keyword only: `Closes CS-236`,
+ * `fixes CS-12`, `resolves CS-7`, or a `cs: CS-236, CS-237` line. A PR that
+ * merely MENTIONS an id in prose links nothing (bean 6xdf: smart-ra#24, a pin
+ * bump whose body named CS-236 and CS-237, re-linked both).
+ */
+export function linkedChangeSets(body: string): string[] {
+  const out = new Set<string>();
+  for (const m of body.matchAll(/\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s+CS-?(\d+)\b/gi)) out.add(csId(Number(m[1])));
+  for (const m of body.matchAll(/^\s*cs:\s*(.+)$/gim)) for (const id of csIn(m[1]!)) out.add(id);
+  return [...out];
+}
 
 /** The issues a PR body closes: `Closes #12`, `fixes #3`, `resolves #7`. */
 export function closedIssues(body: string): number[] {
@@ -647,9 +667,19 @@ function onPullRequest(x: Ctx, pr: { number: number; body: string; branch: strin
   const closes = closedIssues(pr.body);
   const ids = new Set<string>();
   for (const cs of live(x)) if (cs.issues.some((i) => closes.includes(i)) || (cs.issue && closes.includes(cs.issue))) ids.add(cs.id);
-  for (const id of csIn(pr.body)) {
+  for (const id of linkedChangeSets(pr.body)) {
     const cs = current(x, id);
     if (cs) ids.add(cs.id);
+  }
+  // A SETTLED change-set (incorporated, or closed) belongs to the PR that
+  // settled it; another PR naming it re-links nothing (bean 6xdf). Reopening
+  // its issue is how it becomes open to a new PR.
+  for (const id of [...ids]) {
+    const cs = find(x, id)!;
+    if (SETTLED.includes(cs.status) && cs.pr?.number !== pr.number) {
+      ids.delete(id);
+      x.out.log.push(`· ${id}: ${cs.status}${cs.pr ? ` by PR #${cs.pr.number}` : ""}; PR #${pr.number} does not re-link it`);
+    }
   }
   for (const id of ids) {
     let cs = find(x, id)!;
@@ -707,7 +737,12 @@ function onIssueState(x: Ctx, n: number, action: "closed" | "reopened") {
   const cs = primaryOf(x, n);
   if (!cs) return;
   if (action === "reopened") {
-    if (cs.status === "closed") {
+    // A person reopening the issue says the change-set is not done, whether
+    // it was closed or marked incorporated. Only `closed` moved back until
+    // 2026-10-07, so reopening smart-ra #10 and #11 left CS-236 and CS-237
+    // `incorporated` with their comments undecided (owner: "nothing has been
+    // decided/incorporated").
+    if (REOPENABLE.includes(cs.status)) {
       render(x, put(x, noted({ ...cs, status: "discussing" }, x.login, x.at, "reopened", x.url)));
       x.out.log.push(`✓ ${cs.id}: discussing again`);
     }
@@ -1049,6 +1084,16 @@ if (import.meta.main) {
         const cs = getChangeSet(store, positional);
         saveChangeSet(store, noted({ ...cs, issue: n, issues: [...new Set([...cs.issues, n])].sort((a, b) => a - b), status: cs.status === "proposed" ? "discussing" : cs.status }, by, at, `#${n} adopted as its issue`));
         console.error(`✓ ${positional} → #${n}`);
+        break;
+      }
+      case "reopen": {
+        // The same move as reopening its issue, for when that event has
+        // already been handled under the old rule.
+        if (!positional) throw new Error('reopen <CS-012> --by <login> [--note "why"]');
+        const cs = getChangeSet(store, positional);
+        if (!REOPENABLE.includes(cs.status)) throw new Error(`${cs.id} is ${cs.status}; only ${REOPENABLE.join(" or ")} reopens`);
+        saveChangeSet(store, noted({ ...cs, status: "discussing" }, by, at, opt("note") ?? "reopened"));
+        console.error(`✓ ${cs.id}: discussing again`);
         break;
       }
       case "check": {

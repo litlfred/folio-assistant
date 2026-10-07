@@ -235,7 +235,7 @@ comments/provides feedback/dispensation information"*):
 | presses **Discuss** on the dashboard (the `change-set` issue form, prefilled with the id) | adopts that issue as the primary one and renders the record at its top; their text stays below |
 | recommends or decides on one of its comments, in any thread | records it, opens the primary issue, and quotes the tag there with a link back |
 | mentions it, or one of its comments, in any issue | links that issue, and opens the primary issue (at most five from one mention; past that it replies with Discuss links instead) |
-| opens a PR that names it or closes one of its issues | records the PR, opens the primary issue if there is none |
+| opens a PR that links it by keyword (`Closes CS-012`, `fixes`/`resolves CS-012`, or a `cs: CS-012` line) or closes one of its issues | records the PR, opens the primary issue if there is none. A bare mention of `CS-012` in prose links nothing, and a change-set already *incorporated* or *closed* is never re-linked to another PR: reopen its issue first |
 | decides through the CLI | nothing at once; the nightly reconcile opens the issue |
 
 **People are disorganised, and that is fine.** Any number of other issues may
@@ -266,7 +266,10 @@ its comments; `pc: PC-0042` first narrows it.
 
 Closing a primary issue by hand while its comments still need a change reopens
 it, with the list. Closing it when every comment is decided without a change
-closes the change-set.
+closes the change-set. Reopening a primary issue puts its change-set back to
+`discussing`, whether it was `closed` or `incorporated`: a person reopening it
+is saying it is not done. `reopen <CS-012> --note "why"` makes the same move
+when the reopen event has already been handled.
 
 ### The issue forms
 
@@ -288,8 +291,9 @@ what they mention.
 
 1. Branch from `main`, named for the change. Open the PR at the first commit
    ([`continual-progress`](continual-progress.md)),
-   with `Closes #<the primary issue>` (or any of its issues, or `CS-012`) in
-   its body.
+   with `Closes #<the primary issue>` (or any of its issues, or
+   `Closes CS-012`, or a `cs: CS-012` line) in its body. Only those keywords
+   link: a PR that mentions the id in passing, a pin bump say, does not.
 2. Opening it moves the change-set to *editing* and its **accepted** comments
    to *editing*, with the branch and PR. Comments not yet decided, or decided
    `not-accepted`/`noted`/`deferred`, do not move.
