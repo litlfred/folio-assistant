@@ -27,7 +27,7 @@
       "mvp": [
         "rm -rf _kg _site",
         "bun test",
-        "CI=1 bunx playwright test",
+        "CI=1 bun run test:e2e",
         "bun run scripts/site-links.ts --site ./_site"
       ]
     },
@@ -35,7 +35,7 @@
       "id": "bun",
       "title": "Bun runtime",
       "repo": "https://github.com/oven-sh/bun",
-      "pinnedIn": "../.bun-version",
+      "pinnedIn": ".bun-version",
       "pattern": "^(\\d+\\.\\d+\\.\\d+)\\s*$",
       "tagPattern": "^bun-v\\d+\\.\\d+\\.\\d+$",
       "tagPrefix": "bun-v",

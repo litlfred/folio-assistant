@@ -1,5 +1,11 @@
+/**
+ * The Playwright config for the checkout's e2e specs, at `cat-harness-tools/`
+ * since bean `ar1s` phase 4 and passed with `-c` by `bun run test:e2e` and CI.
+ *
+ * @covers none — a browser-test runner's configuration, not a graph audit
+ */
 import { defineConfig, devices } from '@playwright/test';
-import { resolveChromium } from './cat-harness/scripts/playwright-chromium';
+import { resolveChromium } from '../cat-harness/scripts/playwright-chromium';
 
 // Which Chromium to launch, decided once and REPORTED. A prebuilt image pins
 // a browser build that the installed @playwright/test may not be the one that
@@ -41,7 +47,7 @@ export default defineConfig({
   // `playwright test` is run from there. A stale `testDir` does not error — it
   // collects ZERO specs and reports a clean run, which is the `dh4f` shape and
   // exactly what a green e2e job over nothing would have looked like.
-  testDir: './cat-harness/test',
+  testDir: '../cat-harness/test',
   // `*.e2e.ts`, not `*.spec.ts`: `bun test` collects `*.spec.*` anywhere in
   // the tree and chokes on Playwright's `test.describe()`. Keeping the two
   // runners on separate conventions is what stops an e2e spec reddening the
@@ -67,7 +73,7 @@ export default defineConfig({
   // with no shell, so an interpolation there reaches the local gate run as
   // literal text (the bean `9zok` shape). Unset means the whole suite.
   shard: parseShard(process.env.E2E_SHARD),
-  globalSetup: './cat-harness/test/e2e-global-setup.ts',
+  globalSetup: '../cat-harness/test/e2e-global-setup.ts',
   // `list` prints to the job log; on CI an HTML report is written BESIDE it so
   // the workflow can keep it as an artifact.
   //
@@ -79,7 +85,12 @@ export default defineConfig({
   //
   // `open: 'never'` because CI has no browser to open it in, and the step that
   // follows uploads the folder rather than serving it.
-  reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
+  reporter: process.env.CI ? [['list'], ['html', { open: 'never', outputFolder: '../playwright-report' }]] : 'list',
+  // Relative paths in this file resolve against ITS directory, which is
+  // `cat-harness-tools/` since bean `ar1s` phase 4 — so the two output
+  // folders are named at the checkout root, where CI uploads and
+  // `.gitignore` ignores them.
+  outputDir: '../test-results',
   use: {
     baseURL: 'http://127.0.0.1:8080',
     headless: true,
@@ -105,6 +116,8 @@ export default defineConfig({
   // `ar1s`, phase 3); it still serves the REPOSITORY root, two levels up.
   webServer: {
     command: 'node cat-harness/test/test-server.mjs',
+    // The command runs in `cwd`, which defaults to this file's directory.
+    cwd: '..',
     port: 8080,
     reuseExistingServer: !process.env.CI,
   },
