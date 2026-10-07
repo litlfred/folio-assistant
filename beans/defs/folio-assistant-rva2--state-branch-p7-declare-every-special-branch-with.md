@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rva2
 title: 'STATE BRANCH P7: declare every special branch with the same field — gh-pages (within folio, keyed by commit, back-link = build.json) and lake-cache/*'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-05T17:17:34Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -151,3 +151,6 @@ _2026-10-05_ — Step 3 begun on #2192. The two shell mirrors read the CONSUMING
 _2026-10-05_ — Step 3 done for lake-cache (#2192): all five lake-cache mirrors read the consuming folio's declaration first — lake-cache.sh (d9dc953a83b6), lake-cache-fetch.sh (02cab3614eae), the two Python mirrors (f963e2b1b968), reseed-lean-cache.sh (b677e885b119). The restore actions and lake-cache-refresh.yml inherit it through `lake-cache.sh resolve-branch`. Remaining before step 4 (delete special-branches.json): the ig-cache / fhir-ast mirrors, and qou carrying branches under the new name (observed, not assumed).
 
 _2026-10-05_ — Box 3 measured, NOT met: `audit:coverage` here reports `basic-cdn-site` (site) and `ig-ast` as `stored` and `lake-cache` as `no-directory` (only qou, a separate repo, declares it). Still undeclared: `merge-queue` (finding above: main still writes beans/queue/), and the route branches `cat/fhir-harness/ig-docs` and `cat/cat-harness/uml-overview`, which belong to beans lbz8 and xsrv (both claimed, in-progress) and are left to them.
+
+## Completed on landed evidence
+Landed on main in PR #2063 / commit 4983ebe9e14e (State branch P7: declare every special branch; regenerate fsh-guts viewer).

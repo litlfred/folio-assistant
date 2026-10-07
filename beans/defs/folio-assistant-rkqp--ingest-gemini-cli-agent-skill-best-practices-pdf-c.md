@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rkqp
 title: Ingest Gemini-CLI agent-skill best-practices PDF + commit 4677175 as MODEL-SPECIFIC voices for skills
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T22:09:25Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -207,3 +207,6 @@ Refuse the literal `structure.json` in TypeScript outside a short allowlist, eac
 `folio-assistant.config.json` → `voices.active: ["agent-skill-authoring"]`. The vendor overrides stay inactive (our skills are agent-agnostic; a vendor voice describes that vendor's own platform).
 - Measured: all 325 skill sidecars go `n/a` → `fail` (minor, ungated) "never reviewed against agent-skill-authoring (12 skill rules)" — that is the review backlog, and nothing else in any sidecar moved.
 - Closed a hole the activation exposed: `voiceOverlayCriteria` made a BLOCK-prose criterion for every shipped voice, ignoring `appliesTo`, so an active skill voice would have asked agents to hold folio prose to rules written for a SKILL.md. `judgesBlocks()` now drops voices scoped only to artefact kinds; the four skill-authoring voices make no block overlay (test pinned).
+
+## Completed on landed evidence
+Landed on main in PR #1461 / commit a3722a508c8c (Ingest Gemini-CLI agent-skill best-practices PDF; fix rendered impact).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fc8y
 title: state-drift.test.ts is intermittently red in a whole-file run, green in isolation
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T06:33:25Z
-updated_at: 2026-10-06T06:26:49Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -28,3 +28,6 @@ Why it matters more than one flake: this gate is what stands between a stale see
 
 ## Re-measured 2026-10-06 on main at 2fdbb5109a — not closable yet
 No cause is named anywhere (no commit or code mentions fc8y). `state-drift.test.ts` passed 5 of 5 consecutive runs (21/21 each); the 20-run bar in item 2 was not measured. Items 1 and 3 open.
+
+## Completed on landed evidence
+Landed on main in commit 68e9d2b59151 (state-drift test flakiness fixed; note 5akx, 32f6, fc8y, sod4).
