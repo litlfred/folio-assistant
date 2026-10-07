@@ -208,6 +208,16 @@ this report's history of `main` is not thinned by cancellations, and a
 A `cancelled` run on a PR's OLDER head is therefore expected and is not a
 finding. The merge guard judges the head, and the head's run is never the
 one cancelled.
+
+## Step names describe what the check does, not merely its passing invariant
+
+A CI step named solely after its passing invariant misdescribes any failure
+where the check could not run or the baseline was absent (bean `68op`).
+A step named `viewer pages keep the navbar they had` that goes red when its audit
+sidecar is absent misleads a reader to investigate page layouts when zero pages
+regressed. Where a check has both a subject-invariant branch and an
+audit/baseline-reachability branch, the step name in the workflow must cover both
+(e.g. `viewer pages keep the navbar they had, and audit is reachable`).
 {% endraw %}
 
 ## Processes that run this skill
