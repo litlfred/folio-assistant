@@ -1,11 +1,11 @@
 ---
 # folio-assistant-qmqg
 title: 'TRANSLATIONS: the convention fallback would have made #1448''s declaration edit a silent no-op'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T06:20:28Z
-updated_at: 2026-09-27T06:38:17Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -158,3 +158,6 @@ That makes the `Done when` list above wrong in its framing. Superseded by:
     tells you what they should refuse
 
 The `init-folio` question stands and is now the second unknown, not the first.
+
+## Completed on landed evidence
+Landed on main in PR #1448 (refactor: move bootstrap's 15 .pot templates to cat-harness/translations/bootstrap/).

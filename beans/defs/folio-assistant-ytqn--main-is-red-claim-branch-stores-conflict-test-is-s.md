@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ytqn
 title: 'MAIN IS RED: claim-branch-store''s conflict test is SYSTEMATICALLY over bun''s 5s default in CI — 3 runs at 5820/6252/6908ms, passes alone in 16s'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T08:10:15Z
-updated_at: 2026-10-04T08:10:40Z
+updated_at: 2026-10-07T17:25:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -60,3 +60,6 @@ is one the next session re-derives.
 Whoever picks this up owns `9ofm`'s branch-store work, not this bean's author:
 the budget depends on what that probe is meant to cost, which is their
 judgement.
+
+## Completed on landed evidence
+Landed on main in PR #2061 (9ofm: beans:claim writes through the branch store — the cutover's last hard blocker).

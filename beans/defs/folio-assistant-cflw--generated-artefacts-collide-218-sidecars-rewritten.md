@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cflw
 title: 'Generated artefacts collide: 218 sidecars rewritten by one auditor edit'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T06:19:28Z
-updated_at: 2026-09-29T20:50:33Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -35,3 +35,6 @@ DONE WHEN: an auditor-only edit changes one file. Currently 21; 1 after the resi
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #341 (kg-qa: record the auditor once, resolving sidecar collisions).

@@ -29,7 +29,9 @@ Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
    `bun run check:merged`, which runs the full gates on the merged tree (bean
    `nytj`; exit 2 = could not determine, never clean).
 5. **Green check** — run the gates below; do not declare green while sitting on
-   pre-existing failures.
+   pre-existing failures. Then `bun run security:gate`: a blocking fail OR
+   unknown refuses the merge, and its advisories go in the PR body
+   (`skills/sdlc/sdlc-core/prepare-merge.md` step 5, bean `ieum`).
 6. **Push** the feature branch: `git push -u origin <branch>` (with lease after a
    rebase). Then `bun run check:head-has-run` — a push can silently produce no
    run at all (bean `3pqn`), and zero checks looks exactly like checks-not-yet-
@@ -44,7 +46,7 @@ After the generic gates, run the checks for **this folio's content type** (read
 Prefer the MCP tools (structured findings) when connected; otherwise the scripts.
 
 **Always (platform):**
-- `bun test` and `eslint .` green.
+- `bun test` and `bun run lint` green.
 - `bun run scripts/gen-schema-docs.ts` and `bun run scripts/gen-skill-docs.ts`
   produce no uncommitted diff (generated docs in sync).
 

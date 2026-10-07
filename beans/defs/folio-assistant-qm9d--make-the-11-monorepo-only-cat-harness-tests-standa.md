@@ -1,10 +1,10 @@
 ---
 # folio-assistant-qm9d
 title: Make the 11 monorepo-only cat-harness tests standalone-safe; baseline 427 -> 416
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-05T06:42:50Z
-updated_at: 2026-10-05T06:42:50Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -33,3 +33,6 @@ Claimed by session_01BccmnVFbtRpKxM39kyVw9q, on branch claude/friendly-bell-xm9l
 - [ ] standalone-baseline.json is back to 416, with these 11 gone
 - [ ] every changed file has 0 fails in the monorepo, and 0 fails among the 11 standalone
 - [ ] CI is green and the PR is signed
+
+## Completed on landed evidence
+Landed on main in commit fb82b441299b (bean qm9d: the 11 monorepo-only tests made standalone-safe).

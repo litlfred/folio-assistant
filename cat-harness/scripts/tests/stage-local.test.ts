@@ -7,7 +7,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { builtSomething, inPlatform, ownerRepoOf, readStagingInputs, slugOf } from "../stage-local.ts";
+import { ARTIFACT_MAX_FILES, artifactBundle, builtSomething, inPlatform, ownerRepoOf, platformAssetRefs, readStagingInputs, slugOf } from "../stage-local.ts";
 
 describe("stage-local", () => {
   test("reads the staging workflow's inputs from the folio's own file, with the workflow's defaults", () => {
@@ -64,5 +64,27 @@ describe("stage-local", () => {
     expect(inPlatform(p, "schemas/changeset.ts")).toBe(join(p, "b-content", "schemas", "changeset.ts"));
     expect(inPlatform(p, "scripts/nothing.ts")).toBeUndefined();
     expect(inPlatform(join(p, "missing"), "x")).toBeUndefined();
+  });
+
+  test("an Artifact bundle keeps the whole site when it fits, and otherwise drops the busiest top-level directories first", () => {
+    const small = new Map([["index.html", 10], ["doc/index.html", 20], ["doc/media/a.png", 30]]);
+    expect(artifactBundle(small)).toEqual({ page: "index.html", files: ["doc/index.html", "doc/media/a.png"], bytes: 60, dropped: [] });
+
+    const big = new Map<string, number>([["index.html", 1], ["doc/index.html", 1], ["lib/x/index.html", 1]]);
+    for (let i = 0; i < 3000; i++) big.set(`en/kind-${i}.html`, 1);
+    const b = artifactBundle(big);
+    expect(b.dropped).toEqual([{ dir: "en", files: 3000, bytes: 3000 }]);
+    expect(b.files).toEqual(["doc/index.html", "lib/x/index.html"]);
+    expect(b.files.length).toBeLessThanOrEqual(ARTIFACT_MAX_FILES);
+
+    expect(() => artifactBundle(new Map([["doc/index.html", 1]]))).toThrow(/no index.html/);
+  });
+
+  test("the platform assets a page loads from the platform's published site are found, and its page links are not", () => {
+    const page = `<script type="application/json" id="fa-rail" data-fa-root="https://o.github.io/p" data-fa-to-root=".."></script>
+<link rel="stylesheet" href="https://o.github.io/p/assets/css/navbar.css"><script src="https://o.github.io/p/assets/js/navbar.js" defer></script>
+<a href="https://o.github.io/p/tools/">Tools</a><script src="https://cdn.example/x.js"></script>`;
+    expect(platformAssetRefs(new Map([["index.html", page]]))).toEqual({ roots: ["https://o.github.io/p"], assets: ["css/navbar.css", "js/navbar.js"] });
+    expect(platformAssetRefs(new Map([["a.html", "<p>no rail</p>"]]))).toEqual({ roots: [], assets: [] });
   });
 });

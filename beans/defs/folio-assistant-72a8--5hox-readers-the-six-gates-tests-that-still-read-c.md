@@ -1,10 +1,10 @@
 ---
 # folio-assistant-72a8
 title: '5hox readers: the six gates + tests that still read committed test/results/ on main after #1801'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-04T09:07:28Z
-updated_at: 2026-10-04T09:07:28Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -17,3 +17,6 @@ Measured 2026-10-04 on main 12b916e with the qa:verify-moved inventory removed (
 - [ ] check:qa-reviewer-permission
 - [ ] check:orphan-verdicts
 - [ ] then 5hox: remove the moved set + regenerate readme:subgraphs / docs:auto / skill:register, gates green
+
+## Completed on landed evidence
+Landed on main in commit 3e50ba761650 (5hox readers: producing QA working copy leaves committed files clean).
