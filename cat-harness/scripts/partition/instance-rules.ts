@@ -1363,6 +1363,9 @@ export const RULES: Rule[] = [
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
       "scripts/pair-cover.ts",              // ...and which regen pairs FOLD into one another's check (bean `8qyc`): a gate whose chain the pool already asks is replaced by its residual. Scheduling only, beside the pool for the same reason
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
+      "scripts/input-sites.ts",             // ...the audit that makes that skip sound: every line of a check's closure that reads what the hash cannot see is annotated or refused (bean `f017`)
+      "scripts/input-trace.ts",             // ...its runtime half: a traced site a recorded run reaches records nothing
+      "scripts/input-hash-coverage.ts",     // ...and the report of which checks may skip and what blocks the rest
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
       "scripts/qa-working-copy.ts",         // ...and the QA working copy's stamp (bean `7how`): which tree the computed QA tree was built from, rebuilt by `regen`/`gates` when stale
       "scripts/measure-merge-round.ts",     // ...and the merge-round yardstick (bean `xpcu`): times the recipe in a scratch worktree, judges nothing
@@ -1371,7 +1374,9 @@ export const RULES: Rule[] = [
       "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
-      "scripts/gen-python-deps.ts",         // writes requirements.txt
+      // `scripts/gen-python-deps.ts` STOOD HERE and moved to
+      // `cat-harness-tools/scripts/` on 2026-10-06 with the requirements files
+      // it writes (bean `ar1s`, phase 3), so it is classified by location now.
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph typology
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
@@ -1773,6 +1778,7 @@ export const ROOT = resolve(import.meta.dir, "..", "..");
 // seeing none of the e2e specs or the health sweep.
 export const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "test", "types"];
 
+// input-site: inert #08aab37b — names a build-output directory only to leave it out of a walk
 export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 
 /** This instance's spec, ready to hand to the engine. */

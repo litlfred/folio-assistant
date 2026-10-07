@@ -4,7 +4,7 @@
 
 # cat-harness-tests
 
-The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.
+The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be. Also holds `test-server.mjs`, the static server `playwright.config.ts` starts as its `webServer` (`node cat-harness/test/test-server.mjs`): it serves the REPOSITORY root on 8080 for every e2e spec here. It sat at the repository root until 2026-10-06 and moved beside the specs it serves (bean `ar1s`, phase 3).
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, holding `code`.
 
@@ -86,6 +86,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`subprocess-links.e2e.ts`](subprocess-links.e2e.ts) | a file |  |
 | [`table-filter.e2e.ts`](table-filter.e2e.ts) | a file |  |
 | [`test-server.e2e.ts`](test-server.e2e.ts) | a file |  |
+| [`test-server.mjs`](test-server.mjs) | a file |  |
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
 | [`todo-page.e2e.ts`](todo-page.e2e.ts) | a file |  |
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |

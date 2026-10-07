@@ -387,6 +387,48 @@ export function readyMarkers(comments: readonly GhComment[]): ReadyMarker[] {
   return out;
 }
 
+/**
+ * Whether a comment is an ACK, queue, or hand-back note posted by the Merge
+ * Manager / steward. Check 2 excludes these comments from ready-flip attribution
+ * so an ACK posted near a ready flip is never mistaken for marking the PR ready
+ * (bean `gdni`).
+ */
+export function isStewardAckComment(body: string | null | undefined): boolean {
+  if (!body) return false;
+  if (/<!--\s*(?:steward|merge):(?:ack|note|queue|hand-back)\s*-->/i.test(body)) {
+    return true;
+  }
+  const text = withoutCode(body).trim();
+  const firstLine = text.split("\n").find((l) => l.trim().length > 0)?.trim() ?? "";
+  return /^(?:#+\s*)?(?:\*\*|__)?(?:(?:merge[- ]queue\s+)?ack\b|\[ack\]|ack:\b|hand-?back\b|handed\s+back|queue\s+entry\b|(?:merge[- ]queue|queued|queueing)\b)/i.test(
+    firstLine,
+  );
+}
+
+/**
+ * A line that claims the author or finishing agent converted the PR out of
+ * draft and marked it ready for review.
+ */
+const READY_CLAIM_LINE_RE =
+  /\b(?:mark(?:ed|ing|s)?\s+(?:it\s+)?ready|re-marked\s+ready|ready[- ]for[- ]review|converted\s+(?:it|this\s+pr\s+)?(?:to\s+draft\s+and\s+back|to\s+ready))\b/i;
+
+/**
+ * Whether a comment explicitly claims converting or marking the PR ready
+ * (e.g. `ready: <sha>`, "Marking ready", "Re-marked ready"). Excludes steward
+ * ACK notes ({@link isStewardAckComment}) and negative statements ("not ready").
+ */
+export function claimsReadyFlip(body: string | null | undefined): boolean {
+  if (!body || isStewardAckComment(body)) return false;
+  const text = withoutCode(body);
+  if (READY_RE.test(text)) return true;
+  for (const raw of text.split("\n")) {
+    if (/^\s*>/.test(raw)) continue;
+    if (/\b(?:not\s+ready|isn't\s+ready|is\s+not\s+ready|unready)\b/i.test(raw)) continue;
+    if (READY_CLAIM_LINE_RE.test(raw)) return true;
+  }
+  return false;
+}
+
 function byTime<T extends { created_at?: string }>(xs: readonly T[]): T[] {
   return [...xs].sort((a, b) => Date.parse(a.created_at ?? "") - Date.parse(b.created_at ?? ""));
 }
@@ -532,19 +574,41 @@ function checkReadyForReview(s: GuardSnapshot, o: GuardOptions): CheckResult {
     return R(2, "ready-for-review", "refuse", `marked ready at ${last.created_at} by \`${actor}\`, the merging actor`, "defect");
   }
   const near = s.comments
-    .map((c) => ({ c, session: signingSession(c.body), dt: Math.abs(Date.parse(c.created_at) - at) }))
-    .filter((x) => x.session && x.dt <= window)
+    .map((c) => ({
+      c,
+      session: signingSession(c.body),
+      dt: Math.abs(Date.parse(c.created_at) - at),
+      isAck: isStewardAckComment(c.body),
+      claims: claimsReadyFlip(c.body),
+    }))
+    .filter((x): x is typeof x & { session: string } => Boolean(x.session) && x.dt <= window)
     .sort((a, b) => a.dt - b.dt);
-  if (separate && o.mergingSession && near.some((x) => x.session === o.mergingSession)) {
-    return R(
-      2,
-      "ready-for-review",
-      "refuse",
-      `marked ready at ${last.created_at} (actor \`${actor}\`) beside a comment signed by the MERGING session \`${o.mergingSession}\`: the steward may not mark a PR ready and then merge it`,
-      "defect",
-    );
+
+  const nonAck = near.filter((x) => !x.isAck);
+  const claiming = nonAck.filter((x) => x.claims);
+  const ownClaim = claiming.find((x) => x.session === own);
+  const ownComment = nonAck.find((x) => x.session === own);
+
+  // Check 2 attributes a ready flip only to a session whose signed comment
+  // claims the flip (e.g. a `marked ready` line) or is the PR's author/takeover
+  // session from the body's session line — never by time proximity to an ACK
+  // (bean `gdni`).
+  const attributed = ownClaim?.session ?? claiming[0]?.session ?? ownComment?.session;
+
+  if (separate && o.mergingSession) {
+    const mergingClaimed = claiming.some((x) => x.session === o.mergingSession);
+    const mergingAttributed = attributed === o.mergingSession;
+    if (mergingClaimed || mergingAttributed) {
+      return R(
+        2,
+        "ready-for-review",
+        "refuse",
+        `marked ready at ${last.created_at} (actor \`${actor}\`) beside a comment signed by the MERGING session \`${o.mergingSession}\`: the steward may not mark a PR ready and then merge it`,
+        "defect",
+      );
+    }
   }
-  const attributed = near[0]?.session;
+
   if (!own || attributed !== own) {
     // Signed by somebody ELSE is a defect; signed by nobody is merely unfinished.
     const kind: RefusalKind = attributed && own ? "defect" : "not-ready";

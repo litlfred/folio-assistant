@@ -1,11 +1,12 @@
 ---
 # folio-assistant-b8de
 title: 'Merge refused: #1898 owed CI not green on its head'
-status: completed
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-07T02:44:45Z
+updated_at: 2026-10-07T11:50:25Z
+tags: [ready-to-close]
 parent: folio-assistant-iirv
 blocking:
     - folio-assistant-apcg

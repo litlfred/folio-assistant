@@ -28,6 +28,9 @@ describe("publish-id-lookup", () => {
       expect(done.map((d) => d.source)).toEqual(sources);
       expect(existsSync(join(site, SITE_DIR, "index.html"))).toBe(true);
       expect(existsSync(join(site, SITE_DIR, "lookup.js"))).toBe(true);
+      const indexHtml = readFileSync(join(site, SITE_DIR, "index.html"), "utf-8");
+      expect(indexHtml).toContain('<meta name="folio-navbar" content="linked">');
+      expect(indexHtml).toContain("data-fa-visualiser-nav");
       for (const s of sources) {
         const from = outDirFor(s);
         const to = join(site, SITE_DIR, s);

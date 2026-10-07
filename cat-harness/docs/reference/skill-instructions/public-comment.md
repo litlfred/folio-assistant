@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-core/skills/content/folio-document-adapter/public-comment.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/content/folio-document-adapter/public-comment.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/content/folio-document-adapter/public-comment.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/content/folio-document-adapter/public-comment.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-core/skills/content/folio-document-adapter/public-comment.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # public-comment
@@ -183,7 +183,14 @@ that (owner: *"no drift of metadata"*):
   the comment;
 - the change-set section at the top of its issue is **rendered** from the
   record, and a hand-edit to it is put back with a pointer to the commands;
-- the dashboard is built from the records.
+- the dashboard is built from the records. It is published per document at
+  `<site>/folio-assistant-core/public-comments/<folio>/<slug>/`, the handler
+  route every viewer follows (`<base>/<handler>/<kind>/<subject>`, the subject
+  being the materialised document's path in the folio); the flat
+  `public-comments/` it had until 2026-10-07 is gone, with no redirect (owner:
+  *"clean break, no deprecated/redirect links"*). `public-comment-route.ts` is
+  the one place that says so: the site, the change-set issues and the
+  rendered-impact predictor all ask it.
 
 The folio's `public-comment.yml` workflow is the **only writer**, one run at a
 time, never cancelled half-way. People and agents ask; it writes. Two gates
@@ -228,7 +235,7 @@ comments/provides feedback/dispensation information"*):
 | presses **Discuss** on the dashboard (the `change-set` issue form, prefilled with the id) | adopts that issue as the primary one and renders the record at its top; their text stays below |
 | recommends or decides on one of its comments, in any thread | records it, opens the primary issue, and quotes the tag there with a link back |
 | mentions it, or one of its comments, in any issue | links that issue, and opens the primary issue (at most five from one mention; past that it replies with Discuss links instead) |
-| opens a PR that names it or closes one of its issues | records the PR, opens the primary issue if there is none |
+| opens a PR that links it by keyword (`Closes CS-012`, `fixes`/`resolves CS-012`, or a `cs: CS-012` line) or closes one of its issues | records the PR, opens the primary issue if there is none. A bare mention of `CS-012` in prose links nothing, and a change-set already *incorporated* or *closed* is never re-linked to another PR: reopen its issue first |
 | decides through the CLI | nothing at once; the nightly reconcile opens the issue |
 
 **People are disorganised, and that is fine.** Any number of other issues may
@@ -259,7 +266,10 @@ its comments; `pc: PC-0042` first narrows it.
 
 Closing a primary issue by hand while its comments still need a change reopens
 it, with the list. Closing it when every comment is decided without a change
-closes the change-set.
+closes the change-set. Reopening a primary issue puts its change-set back to
+`discussing`, whether it was `closed` or `incorporated`: a person reopening it
+is saying it is not done. `reopen <CS-012> --note "why"` makes the same move
+when the reopen event has already been handled.
 
 ### The issue forms
 
@@ -281,8 +291,9 @@ what they mention.
 
 1. Branch from `main`, named for the change. Open the PR at the first commit
    ([`continual-progress`](continual-progress.md)),
-   with `Closes #<the primary issue>` (or any of its issues, or `CS-012`) in
-   its body.
+   with `Closes #<the primary issue>` (or any of its issues, or
+   `Closes CS-012`, or a `cs: CS-012` line) in its body. Only those keywords
+   link: a PR that mentions the id in passing, a pin bump say, does not.
 2. Opening it moves the change-set to *editing* and its **accepted** comments
    to *editing*, with the branch and PR. Comments not yet decided, or decided
    `not-accepted`/`noted`/`deferred`, do not move.
@@ -291,8 +302,32 @@ what they mention.
 4. The staging preview is published to `STAGING/<branch>/`. The dashboard links
    each comment's anchor on `main` (before) and on the preview (after). See
    [`staging-review`](staging-review.md).
-5. Merging moves them to *incorporated* and closes the primary issue. A PR
-   closed without merging puts the change-set back to *discussing*.
+5. Merging moves the accepted comments to *incorporated*. The change-set is
+   *incorporated*, and its primary issue closed, only when **every** comment in
+   it is settled (decided, incorporated, duplicate or withdrawn). If any is
+   still undecided, the change-set stays open and so does its issue, and the
+   workflow log says how many are left. Before 2026-10-06 a merge closed the
+   whole set regardless, which closed CS-236 and CS-237 in smart-ra with 13 of
+   their 15 comments undecided (bean `uphx`, D-1). A PR closed without merging
+   puts the change-set back to *discussing*.
+
+## The dashboard's filters
+
+Status, Type, Section, Search and the count tiles filter **both** tables: the
+comments, and the change-sets above them. A change-set shows when any of its
+comments match, and its count then reads "10 of 18". Before 2026-10-06 they
+moved only the comment table, about 17,000 px below an open change-set table,
+so the chief editor saw filters that "did not change anything".
+
+- **Show its comments** clears every other filter and shows all of that
+  change-set's comments. Any later Status, Type, Section or tile choice
+  replaces it; the search box narrows within it. (It used to persist hidden,
+  which made the Type filter look broken: D-2.)
+- **Every filter change is a history entry**, with the filters in the query
+  string (`?status=open&section=1.1.3`). Back restores the previous view, and
+  the URL of a filtered view can be pasted into an issue or a chat.
+- **Closed** in the Status box means incorporated, duplicate or withdrawn; the
+  page says so above the tiles.
 
 This is the same review loop as any content change
 (`content-change-review.bpmn`), with a different intake. Reuse it rather than
