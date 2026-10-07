@@ -164,13 +164,15 @@ describe("which rung a document needs", () => {
     }
   });
 
-  test("no outline but a text layer selects pdf-pages, and says it infers nothing", () => {
+  test("no outline but a text layer selects pdf-structure, which decides inferred contents vs pages", () => {
+    // Issue #2302 / bean z3rf: pdf-structure.py uses the inferred contents only
+    // when they pass its three trust tests, else one section per page. Routing
+    // to pdf-pages here made those tests unreachable from `bun run ingest`.
     const p = planFor("x.pdf", { outline: 0, chars: 50_000 }, LIB);
-    expect(p.rung).toBe("pdf-pages");
+    expect(p.rung).toBe("pdf-structure");
     expect(p.steps).toHaveLength(1);
-    // The whole point of bean 6xaz: absence of an outline selects PAGE
-    // granularity, it never selects "infer a chapter tree".
-    expect(p.why).toContain("NOT inferred");
+    expect(p.steps[0]![1]).toContain("pdf-structure.py");
+    expect(p.why).toContain("trust tests");
   });
 
   test("no outline and almost no text selects OCR FIRST, then pages", () => {
@@ -181,7 +183,7 @@ describe("which rung a document needs", () => {
   });
 
   test("the OCR threshold is a boundary, not a vibe", () => {
-    expect(planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS }, LIB).rung).toBe("pdf-pages");
+    expect(planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS }, LIB).rung).toBe("pdf-structure");
     expect(planFor("x.pdf", { outline: 0, chars: OCR_THRESHOLD_CHARS - 1 }, LIB).rung).toBe("pdf-ocr+pdf-pages");
   });
 

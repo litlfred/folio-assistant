@@ -20,13 +20,18 @@
  * Read off the four entries already in `library/`, not invented:
  *
  *   toc_source: outline                       -> pdf-structure
- *   toc_source: none, source.text_source: embedded -> pdf-pages
+ *   toc_source: none, source.text_source: embedded -> pdf-structure, which
+ *       infers the contents and keeps them only if they pass its trust tests,
+ *       else writes PAGE granularity (issue #2302; this said pdf-pages until
+ *       2026-10-07, which left #2388's tests unreachable from here)
+ *   a junk outline (8shg), text layer                  -> pdf-pages
  *   toc_source: none, source.text_source: ocr      -> pdf-ocr, then pdf-pages --from-ocr
  *
- * **An inferred chapter tree is refused rather than guessed** -- `6xaz` records
+ * **An inferred chapter tree is never trusted unchecked** -- `6xaz` records
  * two documents where inference was confidently wrong and the output did not
- * show it. So the absence of an outline selects PAGE granularity; it never
- * selects "infer one".
+ * show it. So the absence of an outline selects `pdf-structure`, whose three
+ * tests decide between the inferred contents and PAGE granularity, and says
+ * which in `toc_source` / `granularity`.
  *
  * ## Third state
  *
@@ -767,11 +772,27 @@ function planForPdf(pdf: string, p: Probe, lib: string): Plan {
       ],
     };
   }
+  // No outline at all, but a text layer: `pdf-structure` decides (issue #2302,
+  // bean `z3rf`). It uses the INFERRED contents only when they pass all three
+  // trust tests (the `6xaz` concentration check, mean confidence >= 0.6, at
+  // most 25% empty sections) and otherwise writes one section per page in
+  // `pdf-pages`' shape. Routing here to `pdf-pages` made that decision
+  // unreachable: #2388 merged the tests, and `bun run ingest` never ran them.
+  //
+  // A JUNK outline still goes to `pdf-pages`: `pdf-structure` would read the
+  // outline it found (bean `8shg`), not infer one.
+  if (!junkOutline) {
+    return {
+      rung: "pdf-structure",
+      why:
+        `no outline, ${p.chars} characters of text layer — pdf-structure infers the contents and ` +
+        `uses them only if they pass its trust tests, else PAGE granularity (issue #2302)`,
+      steps: [["python3", pyHelper("pdf-structure.py"), "-o", lib, pdf]],
+    };
+  }
   return {
     rung: "pdf-pages",
-    why:
-      `${junkOutline || "no outline, "}${p.chars} characters of text layer — PAGE granularity. ` +
-      `A chapter tree is NOT inferred (bean 6xaz)`,
+    why: `${junkOutline}${p.chars} characters of text layer — PAGE granularity. A chapter tree is NOT inferred (bean 6xaz)`,
     steps: [["python3", pyHelper("pdf-pages.py"), "-o", lib, pdf]],
   };
 }

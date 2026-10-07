@@ -80,9 +80,13 @@ index mistaken for a page number.
 2026-09-19 over the four entries in `library/`:
 
 - `toc_source: outline` → `pdf-structure` (`9789241548960-eng`, 250 sections)
-- `toc_source: none`, `source.text_source: embedded` → `pdf-pages` (`milnorlink`,
-  `wpr-rdo-2020-003-eng`) — since 2026-10-07 `pdf-structure` makes this split
-  itself, below
+- `toc_source: none`, `source.text_source: embedded` → `pdf-structure`, which
+  keeps its inferred contents only when they pass the trust tests and otherwise
+  writes pages (`wpr-rdo-2020-003-eng` lands on pages that way). The router
+  sent this case to `pdf-pages` until 2026-10-07 (bean `mffs`), so #2388's tests
+  never ran from `bun run ingest`
+- a junk outline (`milnorlink`, bean `8shg`) → `pdf-pages`: `pdf-structure`
+  would read the outline it found rather than infer one
 - `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
 
