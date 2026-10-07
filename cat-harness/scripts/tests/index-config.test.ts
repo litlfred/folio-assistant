@@ -325,6 +325,9 @@ describe("index-config:migrate", () => {
     // different: refused
     writeFileSync(join(r, "down.json"), JSON.stringify(decl("down", { remoteMounts: [{ harness: "b", ...remote("o/other") }] })));
     expect(() => planMigration(r)).toThrow(/BOTH/);
+    // ...unless a person says the declaration is the newer pin
+    applyMigration(r, planMigration(r, { preferDeclaration: true }));
+    expect(readDeclaredMounts(r).mounts.find((m) => m.harness === "b")?.repository).toBe("o/other");
   });
 
   test("a standalone separated repository: its own instance, and an inherited fork config is a FINDING, not an import", () => {

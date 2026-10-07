@@ -68,7 +68,7 @@ import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 import { SubscriptionKindSchema, type SubscriptionKind } from "./substrate-snapshot.js";
-import { MountDefaultsSchema, RemoteMountsSchema, type MountDefaults, type RemoteMount } from "./remote-mount.js";
+import { MountDefaultsSchema, RemoteMountsSchema, readMountLock, type MountDefaults, type RemoteMount } from "./remote-mount.js";
 
 import {
   KgAssetSchema,
@@ -473,6 +473,25 @@ export const InstanceLocationSchema = z
   .strict();
 
 /**
+ * Where this instance gets its upstream/source material (e.g. an IG source in Git).
+ * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+ */
+export const InstanceGitSourceSchema = z
+  .object({
+    kind: z.literal("git"),
+    repository: z.string().min(1),
+    ref: z.string().min(1),
+    path: z.string().optional(),
+  })
+  .strict();
+
+export const InstanceSourceSchema = z.discriminatedUnion("kind", [
+  InstanceGitSourceSchema,
+]);
+export type InstanceSource = z.infer<typeof InstanceSourceSchema>;
+
+
+/**
  * One content adapter an instance ships, as its own declaration states it.
  *
  * `module` is relative to the DECLARING instance's root, and `className` is the
@@ -650,6 +669,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Absent means it already lives at the root of its own repository.
    */
   livesAt?: InstanceLocation;
+  /**
+   * Where this whole instance gets its upstream/source material (e.g. an IG source in Git).
+   * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+   */
+  source?: InstanceSource;
   /**
    * Which half of a kg-separation pair the planned {@link repository} is —
    * see `separation` on {@link CatHarnessDeclarationSchema}. Absent is "has
@@ -3086,6 +3110,11 @@ export const CatHarnessDeclarationSchema = z.object({
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
   /**
+   * Where this whole instance gets its upstream/source material (e.g. an IG source in Git).
+   * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+   */
+  source: InstanceSourceSchema.optional(),
+  /**
    * Which half of a kg-separation pair this instance's planned `repository`
    * is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the
    * code that writes and checks a content repository).
@@ -3995,7 +4024,33 @@ export function forgeLocation(path: string, repoUrl: string, repoRoot?: string):
   for (const s of gitSubmodules(repoRoot)) {
     if (path === s.path || path.startsWith(`${s.path}/`)) return { repoUrl: s.url, path: path.slice(s.path.length + 1) };
   }
+  // Since bean `nn8e` (#2462) those layers are REMOTE MOUNTS, and the lock is
+  // what says where each came from: this checkout's forge holds no copy, so a
+  // link there 404s.
+  for (const m of mountedLocations(repoRoot)) {
+    if (path === m.path || path.startsWith(`${m.path}/`)) {
+      const rest = path.slice(m.path.length + 1);
+      return { repoUrl: m.url, path: [m.upstreamRoot, rest].filter((x) => x.length > 0).join("/") };
+    }
+  }
   return { repoUrl, path };
+}
+
+/**
+ * Each remote-mounted instance's checkout path, forge URL and path in its own
+ * repository, from the root's lock: `index.lock.json`, else the legacy
+ * `*.mount-lock.json` (`lockFilesIn`; both present contributes nothing, and
+ * `mount:lock:check` reports it).
+ */
+export function mountedLocations(repoRoot: string = join(import.meta.dir, "..", "..")): Array<{ path: string; url: string; upstreamRoot: string }> {
+  const names = lockFilesIn(repoRoot).files;
+  const out: Array<{ path: string; url: string; upstreamRoot: string }> = [];
+  for (const f of names) {
+    const r = readMountLock(join(repoRoot, f));
+    if (!r.ok) continue;
+    for (const i of r.lock.instances) out.push({ path: i.path.replace(/\/+$/, ""), url: `https://github.com/${i.repository}`, upstreamRoot: i.upstreamRoot.replace(/^\/+|\/+$/g, "") });
+  }
+  return out;
 }
 
 /**
@@ -6737,7 +6792,7 @@ import "./folio-graph-typology.js";
 // (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
 import "./glossary-graph-typology.js";
 import { ThemeRefSchema, type ThemeRef } from "./theme";
-import { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout } from "./instance-roots";
+import { CONFIG_SUFFIX, DECLARATION_SUFFIX, findDeclarationFile, instanceRootsIn, isForeignCheckout, lockFilesIn } from "./instance-roots";
 // Instance DISCOVERY lives in a leaf module (bean dmx1), so the graph-typology
 // registry can find each harness's declared `kinds/` without importing this
 // file, which imports the registry. Re-exported here so no caller moves.

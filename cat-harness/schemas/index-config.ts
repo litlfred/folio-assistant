@@ -380,7 +380,7 @@ export interface IndexMigration {
  * A remote mount already in the index with the SAME source is dropped from
  * the declaration (a re-run); with a DIFFERENT one it THROWS, naming both.
  */
-export function buildIndexConfig(root: string): IndexMigration {
+export function buildIndexConfig(root: string, opts: { preferDeclaration?: boolean } = {}): IndexMigration {
   const findings: MigrationFinding[] = [];
   const idx = readIndexConfig(root);
   if (idx.state === "unreadable") throw new Error(`${idx.file} is ${idx.why}`);
@@ -412,9 +412,17 @@ export function buildIndexConfig(root: string): IndexMigration {
     const haveRemote = have?.source !== undefined && "remote" in have.source ? have.source.remote : undefined;
     if (haveRemote !== undefined) {
       if (JSON.stringify(sortKeys(haveRemote)) !== JSON.stringify(sortKeys(remote))) {
+        // `--prefer-declaration`: a person has said the declaration is the
+        // newer truth (a re-pin merged from main while this branch moved the
+        // data). Explicit, never the default — the default refuses.
+        if (opts.preferDeclaration) {
+          have!.source = { remote };
+          moved.push(harness);
+          continue;
+        }
         throw new Error(
           `\`${harness}\` is declared remote in BOTH ${idx.file} and ${join(root, declFile!)} \`remoteMounts\`, with different sources — ` +
-            "reconcile by hand; the migration will not pick one",
+            "reconcile by hand, or re-run with `--prefer-declaration` when the declaration is the newer pin; the migration will not pick one on its own",
         );
       }
     } else if (have !== undefined) {

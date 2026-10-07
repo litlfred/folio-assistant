@@ -30020,6 +30020,13 @@
           "optional": true,
           "array": true,
           "doc": "Directory ids, in this instance's own declaration."
+        },
+        {
+          "name": "whole",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Mount the WHOLE instance root — every tracked file at the pin, root"
         }
       ],
       "extendsNames": [],
@@ -30130,6 +30137,13 @@
           "type": "z.literal(true).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "whole",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored."
         }
       ],
       "extendsNames": [],

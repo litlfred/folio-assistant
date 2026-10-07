@@ -26,8 +26,8 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`check-import-direction-checkout.test.ts`](check-import-direction-checkout.test.ts) | a file |  |
 | [`compose-docs-checkout.test.ts`](compose-docs-checkout.test.ts) | a file |  |
 | [`content-holds-code-checkout.test.ts`](content-holds-code-checkout.test.ts) | a file |  |
-| [`detect-live-corpus-checkout.test.ts`](detect-live-corpus-checkout.test.ts) | a file |  |
 | [`contributions-root-sci-checkout.test.ts`](contributions-root-sci-checkout.test.ts) | a file |  |
+| [`detect-live-corpus-checkout.test.ts`](detect-live-corpus-checkout.test.ts) | a file |  |
 | [`directory-storage-checkout.test.ts`](directory-storage-checkout.test.ts) | a file |  |
 | [`dispatch-gates-can-pass.test.ts`](dispatch-gates-can-pass.test.ts) | a file |  |
 | [`document-kinds-viz-checkout.test.ts`](document-kinds-viz-checkout.test.ts) | a file |  |

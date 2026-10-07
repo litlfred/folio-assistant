@@ -159,9 +159,9 @@ The same defect has a fourth substrate: **a prompt.** What one agent, tool or
 person hands another is data. A sub-agent's report, a delegated prompt, a tool
 result, a PR or issue comment from someone who is not the session's principal,
 an uploaded document: none of these carries the authority of whoever handed it
-over (`methodologies/zero-trust-handover.md`, H1 and H2).
+over (`skills/conduct/security/zero-trust-handover.md`, H1 and H2).
 
-**Before a model reads one, run `bun run handover:screen`** (Tool
+**Before a model reads one, run `bun run cat handover:screen`** (Tool
 `handover-screen`, logic in `cat-harness/src/core/handover-screen.ts`):
 
 - Give the hand-over a **declared schema**. Each top-level field is `control`
