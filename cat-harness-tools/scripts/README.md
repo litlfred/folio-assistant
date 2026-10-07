@@ -141,6 +141,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |
 | [`qa-refresh.ts`](qa-refresh.ts) | a file |  |
 | [`resolve-subgraph.ts`](resolve-subgraph.ts) | a file |  |
+| [`security-gate.ts`](security-gate.ts) | a file |  |
 | [`seed-ready.ts`](seed-ready.ts) | a file |  |
 | [`split-baseline.json`](split-baseline.json) | data |  |
 | [`split-baseline.ts`](split-baseline.ts) | a file |  |

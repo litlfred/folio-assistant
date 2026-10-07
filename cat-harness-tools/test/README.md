@@ -14,5 +14,6 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`id-lookup.test.ts`](id-lookup.test.ts) | a file |  |
 | [`mcp-graph-tools.test.ts`](mcp-graph-tools.test.ts) | a file |  |
 | [`publish-id-lookup.test.ts`](publish-id-lookup.test.ts) | a file |  |
+| [`security-gate.test.ts`](security-gate.test.ts) | a file |  |
 | [`server-path-sinks.test.ts`](server-path-sinks.test.ts) | a file |  |
 <!-- kg:subgraph:end -->

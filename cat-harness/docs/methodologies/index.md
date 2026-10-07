@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>25</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>22</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>26</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>23</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>3</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -75,6 +75,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Zero-trust handover — every boundary between agents, skills, tools and graphs is a trust boundary](#zero-trust-handover)**<br>`zero-trust-handover` | **A value crosses from one participant to another and the receiver is about to act on it.** That covers an agent handing work to a sub-agent or a sib… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
 ## Where each one came from
 
@@ -448,6 +449,23 @@ these.
 **Ingested sources:**
 
 - [`library/arxiv-2312.07755v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2312.07755v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2312.07755v1/README.md) · [source](https://arxiv.org/abs/2312.07755v1)
+
+### Zero-trust handover — every boundary between agents, skills, tools and graphs is a trust boundary
+
+<a id="zero-trust-handover"></a>
+
+`zero-trust-handover` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **A value crosses from one participant to another and the receiver is about to act on it.** That covers an agent handing work to a sub-agent or a sibling session, an agent reading a skill's instructions at runtime, an agent reading a tool's output or a corpus file, an MCP request reaching a tool handler, a tool reaching the network, a workflow job consuming another job's output, and an instance resolving a dependency's knowledge graph. It answers *what the receiver must check before acting*, and *which tool owes which guard*. It does NOT decide what an actor is permitted to do (`odrl-policies` and the actor's permissions), describe what a release is made of (`spdx-3`), record who did what (`prov-o-provenance`), or produce a model output safely (`hybrid-llm-deterministic`). It composes with all four.
+
+**Origin.** Zero trust as an architecture is NIST SP 800-207, S. Rose, O. Borchert, S. Mitchell and S. Connelly, "Zero Trust Architecture", August 2020: no implicit trust is granted to a subject because of where it sits on the network, and each access is authorised on its own. That primary is NOT held here yet (it is a US-government work, so it can be ingested in full, which this node recommends). What is held is GitHub's "Secure use reference" for Actions, which applies the same idea to workflows and jobs. Two reports supplied by the owner on 2026-10-07 apply it to agents. They are held as REFERENCE ONLY (all rights reserved; no bytes and no text): Dan Goodin, "MCP for agent-to-agent comms may be the riskiest protocol you've never heard of", Ars Technica, 2026-10-06, on "protocol pivoting" (CVE-2026-97228 at Rapid7, and an SSRF in googleapis/mcp-toolbox); and Dan Goodin, "Millions of AI agents imperiled by critical vulnerability in open source package", Ars Technica, 2026-05-26, on BadHost (CVE-2026-48710, Starlette before 1.0.1).
+
+**Ingested sources:**
+
+- `library/github-docs-actions-secure-use-reference`
+- `library/arxiv-2510.19207v2`
+- `library/arxiv-2507.07974v2`
+- `library/arxiv-2503.18813v2`
 
 ## Files in the graph that are not methodology nodes
 
