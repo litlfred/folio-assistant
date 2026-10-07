@@ -23,7 +23,7 @@ workflow; each mechanism is a Tool that implements it (owner, 2026-10-07,
 | Tool | when |
 |---|---|
 | `kg-remote-mount` | the dependency is a harness (a KG instance); this repository since #2470 |
-| `git-submodule` | another repository that keeps git submodules |
+| `git-submodule` | another repository that keeps git submodules. Available mechanism; not used by folio-assistant (migrated to KG remote mounts in #2470) |
 | `mount-relocate` | a mount's path collides with something the downstream has (see below) |
 
 Mounts are declared in `index.config.json` (`source.remote`), read and
