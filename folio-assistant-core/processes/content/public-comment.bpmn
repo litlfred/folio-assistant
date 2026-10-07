@@ -159,7 +159,10 @@
     </bpmn:task>
     <bpmn:callActivity id="CallActivity_ChangeSet" name="Review the change set on its staging preview" calledElement="Process_ContentChangeReview">
       <bpmn:documentation>The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process.</bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="staging-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="staging-review"/>
+        <cat-harness.processes:adjudication accepts="stands withdrawn"/>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_ToChangeSet</bpmn:incoming>
       <bpmn:outgoing>Flow_ToIncorporate</bpmn:outgoing>
     </bpmn:callActivity>
