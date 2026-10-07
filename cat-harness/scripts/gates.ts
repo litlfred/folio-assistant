@@ -218,6 +218,18 @@ export const PRECONDITION_STEPS: readonly string[] = ["bun run cat qa:working-co
 
 const OWN_STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `nn8e` (#2462): bootstrap/, bootstrap-tools/ and every separated
+    // layer arrive as REMOTE MOUNTS replayed from the committed lock, right
+    // after checkout. A SETUP step with no verdict of its own: the offline
+    // `mount:lock:check` gate judges the result, and remote-mount.test.ts
+    // asserts the replay.
+    match: "/cat-harness/scripts/mount-from-lock.ts",
+    kind: "ci-only",
+    reason:
+      "a SETUP step, not a check: it lays down the remote mounts the committed lock pins (the submodules' successor); " +
+      "a contributor runs `bun run cat mount:lock`, and the session-start hook does it for them",
+  },
+  {
     // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
     // job that reads the repository mounts it after `bun install`. A SETUP
     // step: it fetches over the network and has no verdict of its own; the

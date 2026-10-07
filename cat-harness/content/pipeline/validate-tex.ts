@@ -519,7 +519,7 @@ if (import.meta.main) {
       "This validates a FOLIO's .md content; folio-assistant is the platform.\n" +
       "Run it from the content repo, or pass --paper.",
     );
-    process.exit(1);
+    process.exit(2);
   }
   process.exit(report.errors.length > 0 ? 1 : 0);
 }

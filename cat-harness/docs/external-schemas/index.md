@@ -30,7 +30,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-stat"><b>22</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
 <div class="xs-stat"><b>234</b><span>declared uses</span></div>
-<div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
+<div class="xs-stat"><b>4</b><span>declarations naming no record</span></div>
 </div>
 
 ## The specifications
@@ -69,7 +69,14 @@ being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`
 front-matter list, an `xmlns` binding, and a graph typology whose typing module
 declares the spec (bean `u63y`).
 
-Every declaration names a record on this page.
+**4 declaration(s) name a specification no record has.**
+
+| user | names |
+|---|---|
+| `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `sparql-1.1-query` |
+| `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `w3c-n-quads` |
+| `who-iris/skills/iris-oxigraph.md` | `sparql-1.1-query` |
+| `who-iris/skills/iris-oxigraph.md` | `w3c-n-quads` |
 
 ## Namespaces the corpus uses against the ones it declares
 

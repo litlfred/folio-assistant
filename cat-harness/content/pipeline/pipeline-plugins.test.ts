@@ -12,7 +12,7 @@
  *
  * The tests here whose subject is folio-assistant-sci's contribution (that
  * this instance fills every pipeline-plugin slot) live in
- * `folio-assistant-sci/scripts/tests/pipeline-plugins.test.ts` (bean `ho66`):
+ * the checkout's `test/pipeline-plugins-sci-checkout.test.ts` (bean `ho66`):
  * standing alone, cat-harness has no such contribution to read.
  */
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "bun:test";

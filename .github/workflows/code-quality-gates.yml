@@ -1798,6 +1798,11 @@ jobs:
       - name: Remote mounts match their lock
         run: bun run cat mount:remote:check
 
+      # Bean `nn8e` (#2462): the same lock, read by the node:*-only replayer
+      # that CI and session start use — every locked mount on disk, intact.
+      - name: Remote mounts replayed from the lock are intact
+        run: bun run cat mount:lock:check
+
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
       # on the same reasoning as `check:skills`: it locks in a property this tree
