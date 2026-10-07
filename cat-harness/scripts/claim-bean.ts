@@ -113,6 +113,7 @@ export function joinClaim(repo: string, claim: string, id: string, defaultName: 
   const ff = git(repo, ["merge", "--ff-only", "--quiet", claim]);
   if (ff.code === 0) return { how: "fast-forward" };
   const merged = git(repo, [
+    "-c", "user.name=claim-bean", "-c", "user.email=noreply@anthropic.com",
     "merge", "--no-edit", "--quiet", "-m",
     `Merge the claim of ${id} from ${defaultName}\n\nBrings the claim commit into this branch so later edits to the bean merge\ncleanly (bean 24fa).`,
     claim,
