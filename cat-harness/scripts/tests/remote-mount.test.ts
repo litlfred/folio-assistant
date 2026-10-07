@@ -288,4 +288,35 @@ describe("mount:remote over fixture repositories", () => {
     expect(readFileSync(join(root, "trust/x/a.txt"), "utf-8")).toBe("a\n");
     expect(r.plan.instances[0]).toMatchObject({ upstreamRoot: "shared", path: "trust" });
   });
+
+  test("16. declared assets arrive beside the declaration and are locked; an undeclared root file does not", () => {
+    // The smart-* forks (bean hupw): `assets` names README.md and AGENTS.md,
+    // and nothing declares `stray.ts`.
+    const withAssets = bareRepo(base, "assets", {
+      "nest/doc.json": decl("doc", {
+        livesAt: { repository: "o/assets", path: "doc" },
+        assets: [{ id: "readme", src: "README.md", role: "instance-readme" }, { id: "up", src: "../ROOT.md", role: "x" }],
+        directories: [{ id: "doc-x", path: "x/", graphTypologies: ["code"] }],
+      }),
+      "nest/README.md": "# doc\n",
+      "nest/stray.ts": "export {};\n",
+      "nest/x/a.txt": "a\n",
+      "ROOT.md": "not the instance's\n",
+    });
+    const local = (r: string): string => (r === "o/assets" ? `file://${withAssets.bare}` : urlFor(r));
+    const root = downstream({});
+    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "doc", repository: "o/assets", ref: withAssets.sha }] }) });
+    const r = mountRemote({ instanceRoot: root, urlFor: local });
+    expect(summarise(r.plan.outcomes).state).toBe("mounted");
+    expect(readFileSync(join(root, "doc/README.md"), "utf-8")).toBe("# doc\n");
+    expect(existsSync(join(root, "doc/stray.ts"))).toBe(false); // undeclared: never mounted
+    expect(existsSync(join(root, "ROOT.md"))).toBe(false); // climbs out: never mounted
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    expect(lock.instances[0]!.assets?.map((a) => a.src)).toEqual(["README.md"]);
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+    write(root, { "doc/README.md": "# edited\n" });
+    const c = checkRemote({ instanceRoot: root });
+    expect(c.state).toBe("missing");
+    expect(c.outcomes.find((o) => o.instance === "doc")!.detail).toContain("doc/README.md modified");
+  });
 });

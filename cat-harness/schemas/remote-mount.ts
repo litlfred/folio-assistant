@@ -173,6 +173,17 @@ export const LockedInstanceSchema = z
     pinnedBy: z.enum(["declared", "same-tree", "gitlink"]),
     declaration: z.object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),
     directories: z.array(LockedDirectorySchema),
+    /**
+     * The instance's DECLARED ASSETS (`assets[].src` — its README and
+     * AGENTS.md), each a single file the declaration names and the mount lays
+     * down beside the declaration. Bean `hupw`: a mount without them left
+     * every declared asset of a mounted instance a dangling reference. Only
+     * instance-scoped assets inside the instance are taken; a declared asset
+     * the pinned tree lacks makes the instance `missing`.
+     */
+    assets: z
+      .array(z.object({ src: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict())
+      .optional(),
   })
   .strict();
 export type LockedInstance = z.infer<typeof LockedInstanceSchema>;

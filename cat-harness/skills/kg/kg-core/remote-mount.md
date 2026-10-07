@@ -58,6 +58,13 @@ once by the harness's owner:
 "mountDefaults": { "path": "cat-harness", "directories": ["schemas", "scripts", "skills"] }
 ```
 
+What arrives is what the declaration NAMES: the declaration itself, the
+chosen directories, and the instance-scoped files in its `assets` (its
+README and AGENTS.md). A file the declaration does not name, such as a
+`platform.ts` beside it, never arrives. Code the mounted graphs import has to
+sit in a declared directory (owner, 2026-10-07: "Forks declare it", bean
+`hupw`).
+
 Both fields are optional, and each absence has a meaning:
 
 - `path` absent means the instance's **home path** (`livesAt.path`, else its
