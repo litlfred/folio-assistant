@@ -1,10 +1,10 @@
 ---
 # folio-assistant-lfxa
 title: 'QA: write the proof-no-placeholder-stub checker (and drop the QOU literal from its description)'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-18T17:43:01Z
-updated_at: 2026-09-18T17:43:01Z
+updated_at: 2026-10-07T04:41:20Z
 parent: folio-assistant-1swy
 ---
 
@@ -68,3 +68,5 @@ directions: a real stub fails, a `.lean` with actual content passes.
 
 Measured 2026-09-18 by `bun test` and by reading `qa-sweep.ts:443`. Not
 re-measured since.
+
+_2026-10-07T04:41:20Z_ — Claimed by claude/lfxa-proof-no-placeholder-stub — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -1,10 +1,10 @@
 ---
 # folio-assistant-5gqn
 title: 'MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-27T06:16:21Z
-updated_at: 2026-09-27T06:16:21Z
+updated_at: 2026-10-07T04:36:10Z
 parent: folio-assistant-1swy
 ---
 
@@ -59,3 +59,5 @@ very substitution that bean was written to prevent.
 - [ ] a comment at the `harness.json` entry's absence, or in that test, recording
   WHY it is excluded — otherwise the next author sees three generated JSON files
   with two marked and reads the third as an oversight
+
+_2026-10-07T04:36:10Z_ — Claimed by claude/5gqn-beans-index-gitattributes — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
