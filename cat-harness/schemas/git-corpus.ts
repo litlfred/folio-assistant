@@ -76,6 +76,7 @@ import { Glob } from "bun";
 import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
+import { lockFilesIn } from "./instance-roots";
 
 /**
  * Room for a whole-checkout `ls-files -z`; node's 1 MiB default is not.
@@ -175,12 +176,9 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
  * structurally: this module sits below the lock's schema.
  */
 function mountedUnder(dir: string): string[] {
-  let names: string[];
-  try {
-    names = readdirSync(dir).filter((n) => n.endsWith(".mount-lock.json"));
-  } catch {
-    return [];
-  }
+  // `index.lock.json`, else the legacy `*.mount-lock.json`; both is a conflict
+  // `mount:lock:check` reports, and contributes nothing here.
+  const names = lockFilesIn(dir).files;
   const out = new Set<string>();
   for (const n of names) {
     try {

@@ -45,11 +45,12 @@
  * declaration, so "mounted", "missing" and "could not determine" are three
  * answers and never one.
  */
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { INDEX_LOCK_FILENAME, LEGACY_MOUNT_LOCK_SUFFIX, lockFilesIn } from "./instance-roots.js";
 import { MountTrustSchema } from "./mount-trust.js";
 import { RepoFullNameSchema } from "./repo-full-name.js";
 
@@ -166,9 +167,37 @@ export const MOUNT_LOCK_SCHEMA = "cat-harness-mount-lock/v1";
  */
 export const WHOLE_INSTANCE_ID = "*";
 
-/** The lock's filename, beside the downstream's declaration: `<name>.mount-lock.json`. */
-export function mountLockFilename(instance: string): string {
-  return `${instance}.mount-lock.json`;
+/**
+ * The lock's filename, beside the downstream's index: `index.lock.json` — the
+ * generated companion to `index.config.json` (owner, 2026-10-07). It was
+ * `<name>.mount-lock.json` until then; {@link legacyMountLockFilename} is that
+ * name, READ during the transition and never written.
+ *
+ * The parameter stays so every existing call site reads as it did, and so a
+ * caller still says WHOSE lock it means; the name no longer depends on it.
+ */
+export function mountLockFilename(_instance?: string): string {
+  return INDEX_LOCK_FILENAME;
+}
+
+/** The retired per-instance lock name, `<name>.mount-lock.json`. */
+export function legacyMountLockFilename(instance: string): string {
+  return `${instance}${LEGACY_MOUNT_LOCK_SUFFIX}`;
+}
+
+/**
+ * The lock a reader should open in `dir`: `index.lock.json`, else the
+ * downstream's legacy `<name>.mount-lock.json`. Both present THROWS, naming
+ * both — never a silent pick (see `lockFilesIn` in `instance-roots.ts`).
+ * Returns the path to read even when it does not exist (the new name), so
+ * "absent" is still `readMountLock`'s answer to give.
+ */
+export function mountLockPathFor(dir: string, instance: string): string {
+  const { files, conflict } = lockFilesIn(dir);
+  if (conflict !== undefined) throw new Error(conflict);
+  if (files.includes(INDEX_LOCK_FILENAME)) return join(dir, INDEX_LOCK_FILENAME);
+  const legacy = legacyMountLockFilename(instance);
+  return files.includes(legacy) ? join(dir, legacy) : join(dir, INDEX_LOCK_FILENAME);
 }
 
 export const LockedDirectorySchema = z
@@ -250,12 +279,10 @@ export type MountLock = z.infer<typeof MountLockSchema>;
 export function mountedInstanceRoots(scope: string): Map<string, string> {
   const out = new Map<string, string>();
   const dir = resolve(scope);
-  let names: string[];
-  try {
-    names = readdirSync(dir).filter((n) => n.endsWith(".mount-lock.json")).sort();
-  } catch {
-    return out;
-  }
+  // `index.lock.json`, else the legacy `*.mount-lock.json`. Both present is
+  // `mount:lock:check`'s finding to report; the overlay reads neither rather
+  // than guess which one is true.
+  const names = lockFilesIn(dir).files;
   for (const n of names) {
     const lock = readMountLock(join(dir, n));
     if (!lock.ok) continue;

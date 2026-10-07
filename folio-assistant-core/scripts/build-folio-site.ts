@@ -48,6 +48,7 @@ import { copyFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync,
 import { dirname, join, relative, resolve } from "node:path";
 
 import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
+import { CONFIG_SUFFIX, isReservedIndexFile } from "../../cat-harness/schemas/instance-roots.js";
 import type { Block, Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
 import { kindHeading } from "../../cat-harness/schemas/translation.js";
 import { resolveLiquidValues } from "../../cat-harness/content/pipeline/liquid-values.js";
@@ -232,7 +233,10 @@ export function preambleMacros(paperDir: string): Record<string, string> {
  * than drawn at a guessed URL.
  */
 export function declaredRepository(repoRoot: string): { repository: string; ref: string } | undefined {
-  for (const f of readdirSync(repoRoot).filter((n) => n.endsWith(".json") && !n.endsWith(".config.json"))) {
+  // Not a config, and not a reserved `index.*` file (`index.config.json`,
+  // `index.lock.json`): `CONFIG_SUFFIX` and `isReservedIndexFile` are the
+  // shared rule, so a root scan here cannot read either as a declaration.
+  for (const f of readdirSync(repoRoot).filter((n) => n.endsWith(".json") && !n.endsWith(CONFIG_SUFFIX) && !isReservedIndexFile(n))) {
     try {
       const d = JSON.parse(readFileSync(join(repoRoot, f), "utf-8")) as { name?: string; repository?: string };
       if (d.name && `${d.name}.json` === f && typeof d.repository === "string" && /^[\w.-]+\/[\w.-]+$/.test(d.repository)) {

@@ -48,19 +48,20 @@
  */
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
 
 import { mountTrust } from "../schemas/mount-trust.js";
 import { checkoutRootFor, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
-import { readDeclaredMounts } from "../schemas/index-config.js";
+import { readDeclaredMounts, readIndexConfig, syncIgnoreBlock } from "../schemas/index-config.js";
 import {
   MOUNT_LOCK_SCHEMA,
   MountDefaultsSchema,
   MountPathSchema,
   mountLockFilename,
+  mountLockPathFor,
   readMountLock,
   type LockedInstance,
   type MountLock,
@@ -223,7 +224,7 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
 
   // Instances the downstream checkout ALREADY holds and did not get from a
   // previous mount: those are local, and a mount never lands on them.
-  const prior = readMountLock(join(ds.instanceRoot, mountLockFilename(ds.name)));
+  const prior = readMountLock(mountLockPathFor(ds.instanceRoot, ds.name));
   const previouslyMounted = new Set(prior.ok ? prior.lock.instances.map((i) => i.instance) : []);
   const local = new Map<string, string>();
   for (const root of instanceRootsIn(ds.instanceRoot)) {
@@ -423,10 +424,16 @@ function tracked(base: string, rel: string): boolean {
  * ignore the path nothing is written; otherwise the path goes to this
  * worktree's `info/exclude` — local, never committed — and the report says
  * so, so a folio that wants the rule visible can commit it to `.gitignore`.
+ *
+ * WITH `index.config.json` (`indexed`) nothing goes to `info/exclude`: the
+ * committed `.gitignore` block generated from the index is the rule, and a
+ * path it does not cover is `not-ignored` — reported, never patched locally,
+ * because a local exclude is invisible to every other clone.
  */
-function ensureIgnored(base: string, rel: string): "ignored" | "excluded" | "not-a-checkout" {
+function ensureIgnored(base: string, rel: string, indexed = false): "ignored" | "excluded" | "not-ignored" | "not-a-checkout" {
   if (gitIn(base, ["rev-parse", "--git-dir"]).status !== 0) return "not-a-checkout";
   if (gitIn(base, ["check-ignore", "-q", "--no-index", `${rel}/`]).status === 0) return "ignored";
+  if (indexed) return "not-ignored";
   // `info/exclude` patterns are relative to the top of the worktree, and the
   // downstream instance may sit below it.
   const prefix = gitIn(base, ["rev-parse", "--show-prefix"]).stdout.trim();
@@ -458,6 +465,16 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
     const lockFile = join(plan.instanceRoot, mountLockFilename(plan.downstream));
     const excluded: string[] = [];
     if (plan.mounts.length === 0) return { plan, lockFile, excluded };
+    // The lock moved to `index.lock.json` (owner, 2026-10-07). A legacy
+    // `<name>.mount-lock.json` is RENAMED onto the new name before it is
+    // rewritten — moved, never dropped — so the two never coexist.
+    const legacyLock = mountLockPathFor(plan.instanceRoot, plan.downstream);
+    if (legacyLock !== lockFile && existsSync(legacyLock)) renameSync(legacyLock, lockFile);
+    // With an index, the committed `.gitignore` block is regenerated from it
+    // before anything lands, and `info/exclude` is never written.
+    const idx = readIndexConfig(plan.instanceRoot);
+    const index = idx.state === "ok" ? idx.config : undefined;
+    if (index !== undefined) syncIgnoreBlock(plan.instanceRoot, index);
 
     const prior = readMountLock(lockFile);
     const priorBy = new Map((prior.ok ? prior.lock.instances : []).map((i) => [i.instance, i]));
@@ -529,7 +546,8 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           if (absent.includes(d.id)) continue;
           dirs.push({ id: d.id, path: d.path, upstreamPath: d.upstreamPath, ...digestOf(join(plan.instanceRoot, d.path)) });
         }
-        if (ensureIgnored(plan.instanceRoot, p.path) === "excluded") excluded.push(p.path);
+        const ignored = ensureIgnored(plan.instanceRoot, p.path, index !== undefined);
+        if (ignored === "excluded") excluded.push(p.path);
         locked.push({
           instance: p.instance,
           repository: p.repository,
@@ -544,11 +562,13 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
         const files = dirs.reduce((n, d) => n + d.files, 0);
         plan.outcomes.push({
           instance: p.instance,
-          state: absent.length ? "missing" : "mounted",
+          state: absent.length || ignored === "not-ignored" ? "missing" : "mounted",
           path: p.path,
-          detail: absent.length
-            ? `declared but absent at ${p.sha.slice(0, 12)}: ${absent.join(", ")} — the rest is mounted`
-            : `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}`,
+          detail:
+            (absent.length
+              ? `declared but absent at ${p.sha.slice(0, 12)}: ${absent.join(", ")} — the rest is mounted`
+              : `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}`) +
+            (ignored === "not-ignored" ? ` — but \`${p.path}/\` is NOT ignored: the committed .gitignore index-mounts block does not cover it` : ""),
         });
       } catch (e) {
         plan.outcomes.push({ instance: p.instance, state: "could-not-determine", path: p.path, detail: `mounting threw: ${(e as Error).message}` });
@@ -594,7 +614,12 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
     return { state: "could-not-determine", reason: `could not read the declaration: ${(e as Error).message}`, outcomes: [] };
   }
   if (ds.mounts.length === 0) return { state: "not-enabled", reason: "no `remoteMounts` declared; nothing to check", outcomes: [] };
-  const lockFile = join(ds.instanceRoot, mountLockFilename(ds.name));
+  let lockFile: string;
+  try {
+    lockFile = mountLockPathFor(ds.instanceRoot, ds.name);
+  } catch (e) {
+    return { state: "could-not-determine", reason: (e as Error).message, outcomes: [] };
+  }
   const r = readMountLock(lockFile);
   if (!r.ok) {
     return r.absent

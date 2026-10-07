@@ -6,7 +6,8 @@
  * @graphNode none — a one-shot converter over a checkout's root files; the schema is `schemas/index-config.ts`
  *
  *   bun run cat index-config:migrate                 # print the index it would write, and its findings
- *   bun run cat index-config:migrate --write         # write it, and move `remoteMounts` off the declaration
+ *   bun run cat index-config:migrate --write         # write it, move `remoteMounts` off the declaration,
+ *                                                    # write the .gitignore block, rename the lock to index.lock.json
  *   bun run cat index-config:migrate --check         # exit 1 when --write would change anything
  *   bun run cat index-config:migrate --root <dir>    # any checkout — a separated harness's standalone clone too
  *
@@ -32,11 +33,11 @@
  *
  * Exit codes: 0 written / up to date / planned · 1 stale under `--check` · 2 could not convert.
  */
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { findDeclarationFile } from "../schemas/instance-roots.js";
-import { INDEX_CONFIG_FILENAME, buildIndexConfig, formatIndexConfig, type IndexMigration } from "../schemas/index-config.js";
+import { INDEX_LOCK_FILENAME, findDeclarationFile, lockFilesIn } from "../schemas/instance-roots.js";
+import { INDEX_CONFIG_FILENAME, buildIndexConfig, formatIndexConfig, withIgnoreBlock, type IndexMigration } from "../schemas/index-config.js";
 
 export interface MigrateResult {
   migration: IndexMigration;
@@ -44,6 +45,10 @@ export interface MigrateResult {
   indexText: string;
   /** The declaration's text with `remoteMounts` removed, when it carried any. */
   declaration?: { file: string; text: string };
+  /** `.gitignore` with the generated index-mounts block, when that changes it. */
+  gitignore?: { file: string; text: string };
+  /** The legacy `<name>.mount-lock.json` to rename to `index.lock.json`, when there is one. */
+  lockRename?: { from: string; to: string };
   /** Whether writing would change a file. */
   changes: boolean;
 }
@@ -64,13 +69,37 @@ export function planMigration(root: string): MigrateResult {
     declaration = { file, text: `${JSON.stringify(raw, null, 2)}\n` };
     changes = true;
   }
-  return { migration, indexText, ...(declaration ? { declaration } : {}), changes };
+  // The generated ignore block: one `/<path>/` per remote instance.
+  let gitignore: MigrateResult["gitignore"];
+  const giFile = join(root, ".gitignore");
+  const giText = existsSync(giFile) ? readFileSync(giFile, "utf-8") : "";
+  const giNext = withIgnoreBlock(giText, migration.config, giFile);
+  if (giNext !== giText) {
+    gitignore = { file: giFile, text: giNext };
+    changes = true;
+  }
+
+  // The lock moves to `index.lock.json`. Two legacy locks cannot be renamed
+  // onto one name without choosing, so that is refused rather than merged.
+  let lockRename: MigrateResult["lockRename"];
+  const locks = lockFilesIn(root);
+  if (locks.conflict !== undefined) throw new Error(locks.conflict);
+  const legacy = locks.files.filter((f) => f !== INDEX_LOCK_FILENAME);
+  if (legacy.length > 1) throw new Error(`${root} holds ${legacy.length} legacy locks (${legacy.join(", ")}); rename one to ${INDEX_LOCK_FILENAME} by hand`);
+  if (legacy.length === 1) {
+    lockRename = { from: join(root, legacy[0]!), to: join(root, INDEX_LOCK_FILENAME) };
+    changes = true;
+  }
+  return { migration, indexText, ...(declaration ? { declaration } : {}), ...(gitignore ? { gitignore } : {}), ...(lockRename ? { lockRename } : {}), changes };
 }
 
 /** Write what {@link planMigration} planned. The index first, so a failure leaves the mounts declared somewhere. */
 export function applyMigration(root: string, plan: MigrateResult): void {
   writeFileSync(join(root, INDEX_CONFIG_FILENAME), plan.indexText);
+  if (plan.gitignore) writeFileSync(plan.gitignore.file, plan.gitignore.text);
   if (plan.declaration) writeFileSync(plan.declaration.file, plan.declaration.text);
+  // A rename, so the lock's history follows it (`git` sees the move at commit).
+  if (plan.lockRename) renameSync(plan.lockRename.from, plan.lockRename.to);
 }
 
 function arg(name: string): string | undefined {
@@ -94,11 +123,13 @@ if (import.meta.main) {
   console.log(`  instances: ${migration.config.instances.map((i) => `${i.name}${i.source && "remote" in i.source ? " (remote)" : ""}`).join(", ")}`);
   console.log(`  landing:   ${migration.config.site?.landing ?? "(none — the sole instance, or undetermined)"}`);
   if (migration.moved.length) console.log(`  moved from ${migration.movedFrom}: remoteMounts ${migration.moved.join(", ")}`);
+  if (plan.lockRename) console.log(`  lock:      ${plan.lockRename.from} → ${plan.lockRename.to}`);
+  if (plan.gitignore) console.log(`  .gitignore: the generated index-mounts block is written`);
   for (const f of migration.findings) console.log(`  ⚠ ${f.kind}: ${"file" in f ? `${f.file} — ` : ""}${f.detail}`);
 
   if (check) {
     if (plan.changes) {
-      console.error(`✗ ${INDEX_CONFIG_FILENAME} is stale or the declaration still carries remoteMounts — run \`bun run cat index-config:migrate --write\``);
+      console.error(`✗ ${INDEX_CONFIG_FILENAME}, its .gitignore block or the lock's name is stale, or the declaration still carries remoteMounts — run \`bun run cat index-config:migrate --write\``);
       process.exit(1);
     }
     console.log(`✓ ${INDEX_CONFIG_FILENAME} is current`);

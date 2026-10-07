@@ -40,6 +40,7 @@ import { join, resolve } from "node:path";
 
 import { findDeclarationFile, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceConfigFilename, LEGACY_HARNESS_CONFIG } from "../../cat-harness/schemas/harness-config.js";
+import { rootConfigStems } from "../../cat-harness/schemas/instance-roots.js";
 
 const CHECKOUT = resolve(import.meta.dir, "..", "..");
 
@@ -103,8 +104,9 @@ export function sweep(checkout: string): { findings: Finding[]; expected: Set<st
   }
 
   // A `*.config.json` at the instantiation root that no instance claims.
-  for (const f of readdirSync(checkout)) {
-    if (!f.endsWith(".config.json") || f === LEGACY_HARNESS_CONFIG) continue;
+  // `rootConfigStems` — the one scan, which excludes the retired name and the
+  // reserved `index.config.json` (not an instance's config, so never an orphan).
+  for (const f of rootConfigStems(checkout).map(instanceConfigFilename)) {
     if (expected.has(f)) continue;
     findings.push({
       kind: "orphan",

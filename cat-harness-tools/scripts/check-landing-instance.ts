@@ -26,7 +26,7 @@
 import { resolve } from "node:path";
 
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
-import { resolveLandingInstance, type LandingInstance } from "../../cat-harness/schemas/harness-config.js";
+import { indexAgreement, resolveLandingInstance, type IndexAgreement, type LandingInstance } from "../../cat-harness/schemas/harness-config.js";
 
 /**
  * Resolved from this file, not `process.cwd()` (`check-folio-mount` says why:
@@ -43,14 +43,21 @@ export function formatLanding(r: LandingInstance): { text: string; ok: boolean }
       return { text: `${head}\n  · nothing is instantiated here: no \`<name>.config.json\` at the root, so there is no landing to decide`, ok: true };
     case "instance":
       return {
-        text: `${head}\n  ✓ / is ${r.name}'s landing — ${r.by === "sole" ? "the only instantiated harness, so no flag is needed" : "flagged \"site\": { \"landing\": true }"}`,
+        text: `${head}\n  ✓ / is ${r.name}'s landing — ${
+          r.by === "sole" ? "the only instantiated harness, so no flag is needed" : r.by === "index" ? "index.config.json `site.landing`" : "flagged \"site\": { \"landing\": true }"
+        }`,
         ok: true,
       };
     case "hub":
       return {
-        text: `${head}\n  ✓ / is the neutral hub — ${r.flagged.length} harnesses are flagged (${r.flagged.join(", ")}), so it lists the harnesses and the todos`,
+        text:
+          r.flagged.length === 0
+            ? `${head}\n  ✓ / is the neutral hub — index.config.json says \`site.landing: "hub"\`, so it lists the harnesses and the todos`
+            : `${head}\n  ✓ / is the neutral hub — ${r.flagged.length} harnesses are flagged (${r.flagged.join(", ")}), so it lists the harnesses and the todos`,
         ok: true,
       };
+    case "invalid":
+      return { text: `${head}\n  ✗ ${r.file} cannot decide the landing: ${r.reason}. It is authoritative, so the per-config flags are NOT consulted instead.`, ok: false };
     case "ambiguous":
       return {
         text:
@@ -63,8 +70,34 @@ export function formatLanding(r: LandingInstance): { text: string; ok: boolean }
   }
 }
 
+/**
+ * Whether `index.config.json` and the root `<name>.config.json` files agree.
+ * `undefined` (no index) is fine — the file scan is then the answer. A root
+ * config the index does not import is a FAILURE: under the index it is not
+ * instantiated, and under the old rule it was, so the two rules disagree about
+ * this checkout and nothing should pick silently. An `import` naming a file
+ * that is not there fails too. An instance with no config at all is fine.
+ */
+export function formatAgreement(a: IndexAgreement | undefined): { text: string; ok: boolean } {
+  if (a === undefined) return { text: "index.config.json: absent — the root *.config.json files are the instantiated set", ok: true };
+  const lines = ["index.config.json against the root *.config.json files:"];
+  for (const n of a.unlisted) lines.push(`  ✗ ${n}.config.json is at the root and index.config.json does not list \`${n}\` — list it, or remove the stray config (an inherited fork file?)`);
+  for (const m of a.missingImport) lines.push(`  ✗ \`${m.name}\` imports ${m.file}, which does not exist`);
+  if (a.withoutConfig.length) lines.push(`  · listed with no config to import (fine): ${a.withoutConfig.join(", ")}`);
+  const ok = a.unlisted.length === 0 && a.missingImport.length === 0;
+  if (ok) lines.push("  ✓ every root config is listed, and every import exists");
+  return { text: lines.join("\n"), ok };
+}
+
 if (import.meta.main) {
-  const { text, ok } = formatLanding(resolveLandingInstance(REPO));
-  console.log(text);
-  if (!ok) process.exit(1);
+  const landing = formatLanding(resolveLandingInstance(REPO));
+  console.log(landing.text);
+  let agreement: { text: string; ok: boolean };
+  try {
+    agreement = formatAgreement(indexAgreement(REPO));
+  } catch (e) {
+    agreement = { text: `  ✗ ${(e as Error).message}`, ok: false };
+  }
+  console.log(agreement.text);
+  if (!landing.ok || !agreement.ok) process.exit(1);
 }

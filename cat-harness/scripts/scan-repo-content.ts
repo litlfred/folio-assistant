@@ -42,6 +42,7 @@
 
 import { spawnSync } from "node:child_process";
 import { LEGACY_HARNESS_CONFIG } from "../schemas/harness-config";
+import { CONFIG_SUFFIX, isReservedIndexFile } from "../schemas/instance-roots";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { extname, join, relative, resolve, sep } from "node:path";
 
@@ -136,13 +137,15 @@ const SKIP_FILES = new Set([
 const FOLIO_FILES = new Set([
   LEGACY_HARNESS_CONFIG, "agents.md", "claude.md", "gemini.md", ".mcp.json",
 ]);
-const CONFIG_SUFFIX = ".config.json";
 
 function isSkipped(rel: string): boolean {
   const parts = rel.split("/");
   if (parts.some((p) => SKIP_DIRS.has(p))) return true;
   const base = parts[parts.length - 1]!.toLowerCase();
-  if (parts.length === 1 && base.endsWith(CONFIG_SUFFIX)) return true;
+  // A root `<name>.config.json`, or a reserved `index.*` file the platform
+  // owns (`index.config.json`, `index.lock.json`) — the suffix and the
+  // reservation come from `instance-roots.ts`, not a local copy.
+  if (parts.length === 1 && (base.endsWith(CONFIG_SUFFIX) || isReservedIndexFile(base))) return true;
   if (SKIP_FILES.has(base) || FOLIO_FILES.has(base)) return true;
   // A dotfile sitting at the repo root is configuration, not the author's work.
   if (base.startsWith(".") && parts.length === 1) return true;

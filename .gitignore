@@ -309,10 +309,15 @@ cat-harness/docs/assets/slices/
 # Bean `0b8c`, #2230.
 /cat-harness/docs/fsh-guts/index.md
 
-# Remote mounts (bean nn8e, #2462): laid down from folio-assistant.mount-lock.json by
+# Remote mounts (bean nn8e, #2462): laid down from index.lock.json by
 # `bun run cat mount:lock` — another repository's bytes, never committed here.
+# The block below is GENERATED from index.config.json (one line per remote
+# instance) by `mount:remote`, `index-config:migrate --write` and every
+# writeDeclaredMounts caller; `check:index-config` fails when they disagree.
+# BEGIN index mounts (generated from index.config.json — do not edit)
 /bootstrap/
 /bootstrap-tools/
 /who-iris/
 /fhir-harness/
 /folio-assistant-sci/
+# END index mounts

@@ -91,6 +91,10 @@ if (landingChoice.kind === "ambiguous") {
   );
   process.exit(1);
 }
+if (landingChoice.kind === "invalid") {
+  console.error(`sync-docs-harness: ${landingChoice.file} cannot decide the site's landing page: ${landingChoice.reason}. Run \`bun run cat check:landing-instance\`.`);
+  process.exit(1);
+}
 if (landingChoice.kind === "none") {
   console.error(`sync-docs-harness: nothing is instantiated at ${REPO_ROOT} (no <name>.config.json). Nothing to sync.`);
   process.exit(2);

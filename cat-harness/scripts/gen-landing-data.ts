@@ -36,7 +36,11 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
+import { resolveLandingInstance } from "../schemas/harness-config.js";
+import { instanceRootNamed } from "../schemas/instance-roots.js";
+import { mountedInstanceRoots } from "../schemas/remote-mount.js";
 import {
+  checkoutRootFor,
   instanceRootFor,
   publishedAssetPath,
   readDeclaration,
@@ -51,7 +55,34 @@ import { readLandingStickies } from "./ensure-landing-sticky.js";
 import { isExternalLink } from "../schemas/landing-sticky.js";
 import { publishedHref } from "./lib/jekyll-permalink.ts";
 
-const ROOT = instanceRootFor(import.meta.dir);
+/**
+ * The instance whose landing stickies these are: the site's LANDING instance,
+ * asked of `resolveLandingInstance` (which reads `index.config.json` first),
+ * not this script's own location. Until 2026-10-07 this was
+ * `instanceRootFor(import.meta.dir)` — cat-harness, because that is where the
+ * script lives — which was right only while cat-harness was the landing.
+ *
+ * A hub, or a checkout with nothing instantiated, has no single landing
+ * harness, so the stickies stay this script's own instance's (the site owner)
+ * — the same choice `sync-docs-harness` makes for a hub's sidebar. An
+ * undecidable landing THROWS: `check:landing-instance` is the gate that says
+ * why, and guessing here would render one harness's stickies at another's `/`.
+ * Moving the stickies themselves is bean `1yd7`.
+ */
+function landingRoot(): string {
+  const own = instanceRootFor(import.meta.dir);
+  const checkout = checkoutRootFor(own);
+  const landing = resolveLandingInstance(checkout);
+  if (landing.kind === "ambiguous" || landing.kind === "invalid") {
+    throw new Error(`gen-landing-data: the site's landing is undecided (${landing.kind}) — run \`bun run cat check:landing-instance\``);
+  }
+  if (landing.kind !== "instance") return own;
+  const root = instanceRootNamed(checkout, landing.name) ?? mountedInstanceRoots(checkout).get(landing.name);
+  if (root === undefined) throw new Error(`gen-landing-data: the landing instance \`${landing.name}\` has no root under ${checkout}`);
+  return root;
+}
+
+const ROOT = landingRoot();
 
 /** The forge this checkout points at, or `undefined` when it has none. */
 const REPO_URL = detectRepoUrl(repoRootFor(ROOT));
