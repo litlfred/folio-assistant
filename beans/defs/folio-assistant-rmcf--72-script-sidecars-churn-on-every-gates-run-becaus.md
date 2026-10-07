@@ -9,7 +9,7 @@ updated_at: 2026-09-29T20:52:42Z
 parent: folio-assistant-1xhc
 ---
 
-Measured 2026-09-26 while running `bun run gates` on a clean tree: **72** committed
+Measured 2026-09-26 while running `bun run cat gates` on a clean tree: **72** committed
 script sidecars were rewritten, and the only content change in each was run
 provenance:
 
@@ -74,7 +74,7 @@ has context this bean does not.
 
 - [ ] the owner or the sidecar's owner has chosen between recording less, stamping
       less often, or moving provenance out of the committed file
-- [ ] `bun run gates` on a clean tree in a container whose bun differs from the last
+- [ ] `bun run cat gates` on a clean tree in a container whose bun differs from the last
       pusher's leaves the tree clean, or the churn is deliberate and written down
 
 
@@ -137,7 +137,7 @@ sees the rewrite.
 
 _2026-09-27T05:55Z, cross-reference from bean `3ozg`. A note, not a claim: status untouched, nothing ticked._
 
-**Option 2 is implemented**, on the owner's choice of *"skip no-op writes"* (put to them in the session that filed `3ozg`). `saveQaScriptSidecar` no longer counts `engine_version` as a change, so a script sidecar is rewritten only when its source file, hashes or extra inputs move. The writer this bean never named is `init-folio-qa.test.ts`, which runs a real `qa-sweep`. It was found by bisecting 432 test files. With the fix, `bun run gates` passes 167/167 and ends clean.
+**Option 2 is implemented**, on the owner's choice of *"skip no-op writes"* (put to them in the session that filed `3ozg`). `saveQaScriptSidecar` no longer counts `engine_version` as a change, so a script sidecar is rewritten only when its source file, hashes or extra inputs move. The writer this bean never named is `init-folio-qa.test.ts`, which runs a real `qa-sweep`. It was found by bisecting 432 test files. With the fix, `bun run cat gates` passes 167/167 and ends clean.
 
 Whether this bean closes on that evidence is for its owner, per `bean-coordination` §"Closing a bean whose work has already landed".
 

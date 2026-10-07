@@ -21,5 +21,5 @@ Owner ruling C1 (2026-10-01): tools sit below core. Placement audit: 0 of cat-ha
 - `check:instance-graph`: before ✓ 18 instances, no cycle; after ✓ 18 instances, no cycle.
 - `check:import-direction`: before 0 wrong-direction in every instance (cat-harness-tools 14 files, folio-assistant-core 84); after 0 wrong-direction in every instance (same file counts). Exit 0 both.
 - `check:reference-direction` (advisory, not in CI): wrong-direction before 1702 occurrences / 389 files, after 1699 / 388. Pair `folio-assistant-core -> cat-harness-tools` 2 -> 0 (now the allowed direction); `cat-harness -> cat-harness-tools` 72 -> 71; no new `cat-harness-tools -> *` pair (the flip would have made 3 to core, 3 to sci, 1 to fhir-harness — tools-layer prose reworded so it does not name the layers above it). Unlisted multi-destination files 132 -> 131. After merging main (#1776, S4): 1672 wrong-direction / 379 files, 124 unlisted; still no `cat-harness-tools -> *` or `folio-assistant-core -> cat-harness-tools` pair. It exits 1 both before and after on the PRE-EXISTING PENDING backlog (4 stale entries, 131 unlisted files) — issue #1219 / bean zhg2's question, not this bean's; gates.ts carries it as advisory for exactly that reason.
-- `bun run regen`: 82 current, 1 regenerated (docs:harness), 0 unrepaired.
-- `bun run gates`: see PR #1786 body for the run.
+- `bun run cat regen`: 82 current, 1 regenerated (docs:harness), 0 unrepaired.
+- `bun run cat gates`: see PR #1786 body for the run.

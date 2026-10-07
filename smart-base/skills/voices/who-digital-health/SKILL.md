@@ -22,7 +22,7 @@ section and verbatim quote it was read from. **This file does not restate
 them**, and that is not tidiness: a rule written here as prose beside the same
 rule written there as data is one fact in two places, and the prose copy is the
 one carrying no citation and no pattern. To know what the rules are, read
-`voice.json`, or run `bun run check:voices`.
+`voice.json`, or run `bun run cat check:voices`.
 
 What this file is for is how to USE them.
 

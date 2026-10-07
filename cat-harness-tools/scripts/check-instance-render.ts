@@ -48,8 +48,8 @@
  *   kind it does not own. Exit 1.
  *
  * Usage:
- *   bun run check:instance-render
- *   bun run check:instance-render -- --json
+ *   bun run cat check:instance-render
+ *   bun run cat check:instance-render -- --json
  *
  * @module scripts/check-instance-render
  * @covers docs, cat-harness

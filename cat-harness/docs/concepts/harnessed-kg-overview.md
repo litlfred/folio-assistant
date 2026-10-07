@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: Harnessed Knowledge Graph Overview
 nav_order: 14
 lang: en
@@ -315,7 +315,7 @@ board, a row of agents hangs *beneath* it, and beans lie in every lane.
 [`specification-compiled-agents`]({{ '/methodologies/index.html' | relative_url }}) (which now cites this deck).
 
 > **Partly built:** no BPMN engine is wired in, and the agentic QA/QC report
-> does not exist yet. The mechanical one does: `bun run prov:qaqc`.
+> does not exist yet. The mechanical one does: `bun run cat prov:qaqc`.
 
 ## 8 — Core data models
 {: #slide-08 data-fa-label="sec:harnessed-kg-overview-slide-08" }
@@ -337,7 +337,7 @@ a skill, a test run tests a skill, and a QA report audits any kind of subject.
 
 </details>
 
-**Source:** `bun run uml:overview` regenerates the picture above from the schemas.
+**Source:** `bun run cat uml:overview` regenerates the picture above from the schemas.
 
 > **Misaligned — the snapshot is older:** today's diagram has a **Voice
 > Profile** class that slide 8 does not. The picture above is the current one.

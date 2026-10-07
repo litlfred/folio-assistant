@@ -1180,7 +1180,7 @@ function menuName(label: string): string {
 // ── Build ──────────────────────────────────────────────────────────────
 if (!existsSync(INDEX)) {
   console.error(`could not determine: no artefact index at ${INDEX}`);
-  console.error("  Nothing was rendered, and this is NOT a clean run. Run `bun run ingest:ig` first.");
+  console.error("  Nothing was rendered, and this is NOT a clean run. Run `bun run cat ingest:ig` first.");
   process.exit(2);
 }
 
@@ -1573,7 +1573,7 @@ if (CHECK) {
     console.error(`✗ ${stale.length} page(s) stale or orphaned:`);
     for (const s of stale.slice(0, 10)) console.error(`    ${s}`);
     if (stale.length > 10) console.error(`    …and ${stale.length - 10} more`);
-    console.error(`  Run \`bun run ${INSTANCE_NAME}:pages\`. These pages are generated; never edit them.`);
+    console.error(`  Run \`bun run cat ${INSTANCE_NAME}:pages\`. These pages are generated; never edit them.`);
     process.exit(1);
   }
   console.log(`✓ ${INSTANCE_NAME} docs are current — ${pages.size} page(s) over ${ix.count} artefacts${verdict ? `, read from ${verdict.authority === "both" ? "both copies (the checkout decides)" : `the ${verdict.authority}`}` : ""}`);

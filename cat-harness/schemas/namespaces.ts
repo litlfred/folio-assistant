@@ -15,7 +15,7 @@
  * kinds. Importing it from `jsonld.ts` would have made `agentic-harness`
  * depend on the content model for its own type IRIs: a
  * `harness → folio-assist-core` edge, which is already the largest
- * wrong-direction group `bun run check:partition` reports, and exactly the
+ * wrong-direction group `bun run cat check:partition` reports, and exactly the
  * coupling the five-repo split has to undo.
  *
  * The first attempt at avoiding that was a duplicated constant in the harness

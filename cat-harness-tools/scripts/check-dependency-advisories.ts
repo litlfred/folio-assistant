@@ -38,7 +38,7 @@
  * | `undetermined` | the audit did not produce an answer | `::warning::` + **never** `✓` |
  *
  * **`undetermined` is never rendered as clean.** That is the same three-state
- * rule `check:ci-health` and `bun run health` are built on, and it is the
+ * rule `check:ci-health` and `bun run cat health` are built on, and it is the
  * whole reason this is a script rather than four lines of YAML: bash reaches
  * for `|| true`, and `|| true` is precisely how "could not determine" becomes
  * "fine".

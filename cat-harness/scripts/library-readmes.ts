@@ -23,7 +23,7 @@
  * "library")`), every declared one, as the library viewer finds them — never
  * by path (bean `a02m`).
  *
- * Usage: `bun run library:readmes` · `bun run library:readmes:check`
+ * Usage: `bun run cat library:readmes` · `bun run cat library:readmes:check`
  */
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
@@ -132,7 +132,7 @@ if (import.meta.main) {
     for (const p of stale) console.log(`  ✗ ${relative(REPO, p)} is stale`);
     console.log(`${writes.size} library item README(s); ${stale.length} stale.`);
     if (stale.length) {
-      console.log("Run `bun run library:readmes` and commit.");
+      console.log("Run `bun run cat library:readmes` and commit.");
       process.exit(1);
     }
   } else {

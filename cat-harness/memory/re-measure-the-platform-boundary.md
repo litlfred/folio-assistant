@@ -13,8 +13,8 @@ references:
 | what | command |
 |---|---|
 | folio-specific literals in platform code | grep the change for a paper dir, a title, an owner/repo, a Lake prefix, a workflow filename |
-| README sections a folio can opt into | `bun run readme:sections` |
-| README staleness | `bun run readme:sync:check` |
+| README sections a folio can opt into | `bun run cat readme:sections` |
+| README staleness | `bun run cat readme:sync:check` |
 | block-kind classification totality | read `schemas/block-kinds.ts`; `DOCUMENT_BLOCK_KINDS` must stay derived |
 
 > Relabelled from BASELINE to STABLE, 2026-09-19. `AGENTS.md` defines a

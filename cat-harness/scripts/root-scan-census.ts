@@ -60,9 +60,9 @@
  * sibling session weeks later.
  *
  * Usage:
- *   bun run root-scan-census            # report, write the sidecar
- *   bun run root-scan-census -- --check # judge, write nothing; fail on a NEW exposed scan
- *   bun run root-scan-census -- --check --against main   # ...new against qa-reports
+ *   bun run cat root-scan-census            # report, write the sidecar
+ *   bun run cat root-scan-census -- --check # judge, write nothing; fail on a NEW exposed scan
+ *   bun run cat root-scan-census -- --check --against main   # ...new against qa-reports
  *
  * @module scripts/root-scan-census
  * @covers cat-harness

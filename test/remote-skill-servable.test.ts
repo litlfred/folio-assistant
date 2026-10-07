@@ -9,10 +9,10 @@
  *
  * ## What fails, and what deliberately does not
  *
- * `remote-skill-is-servable` is `major`, so it fails `bun run kg:audit`
+ * `remote-skill-is-servable` is `major`, so it fails `bun run cat kg:audit`
  * (`Worst severity: major`), it is recorded as `fail` in the committed sidecar
  * `test/results/kg-qa/scenarios/kg.kg-qa.json`, and it fails
- * `bun run kg:audit:strict`. It does NOT fail `kg:audit:check`, which gates CI
+ * `bun run cat kg:audit:strict`. It does NOT fail `kg:audit:check`, which gates CI
  * and fires on `critical` only.
  *
  * **That last part is deliberate and is not timidity.** A required check that is

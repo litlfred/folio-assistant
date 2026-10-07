@@ -76,12 +76,12 @@ my own check-in note three times that day. Regenerated in a clean worktree.
       I left it here as an open question for the owner and it was answered on
       2026-09-23, before this bean existed. `nytj` owns the subject, is
       `in-progress` under a holder, and the owner chose both halves: `merge_group:`
-      on the gating workflows plus `bun run check:merged`. Its only open box is a
+      on the gating workflows plus `bun run cat check:merged`. Its only open box is a
       repository SETTING — switching the merge queue on for `main` — which is the
       owner's to flip, not a decision to take.
 
       **And it needs nothing from this bean.** `check-merged.ts` runs
-      `bun run gates` on the merged tree, and `gates.ts` derives its list from
+      `bun run cat gates` on the merged tree, and `gates.ts` derives its list from
       `code-quality-gates.yml`, where `skills:register:check` is now wired. So the
       moment the merge queue is on, an unregistered skill cannot reach `main` —
       automatically, with no further change here. Read rather than assumed:
@@ -118,7 +118,7 @@ wrong.
 
 Two further corrections I took from them:
 
-- **`bun run gates` cannot derive the chain.** `bun test` runs the detangle and
+- **`bun run cat gates` cannot derive the chain.** `bun test` runs the detangle and
   kg-audit writers, so those checks read green by the time they execute — bean
   `ymsu`'s blind spot. Only an isolated run of one check against a known tree
   measures anything.
@@ -276,7 +276,7 @@ I wrote, in this bean and in the PR body and in three check-in notes, that
 
     .github/workflows/code-quality-gates.yml
       line 260   run: bun test                   job `typescript`
-      line 639   run: bun run skill:register:check   job `typescript`  ← same job
+      line 639   run: bun run cat skill:register:check   job `typescript`  ← same job
 
 A failing step skips every step behind it in the same job. `bun test` is red on
 `main` (the 25 uncatalogued translations, bean `ngxj`, and `f6r1` has now shown the
@@ -389,7 +389,7 @@ last box as an owner's pending flip. Bean `1hjm`: the flip does not exist on
 this repository — `Require merge queue` is absent from the ruleset form, and
 `nytj`'s box is now closed not-done for that reason.
 
-**The reading of `check-merged.ts` was right and is unaffected.** `bun run gates`
+**The reading of `check-merged.ts` was right and is unaffected.** `bun run cat gates`
 does derive its list from `code-quality-gates.yml`, and `skills:register:check`
 is in it. What is wrong is only the trigger: that protection arrives via the
 queue, so on this repository `skill:register:check` is enforced on `pull_request`

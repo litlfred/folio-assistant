@@ -22,7 +22,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/glossary/` (inten
 5. **The heading is repetitive.** "Glossary `glossary`", the sub-graph path in the lede and the single sibling row all state the same scope three times before the first term.
 6. **The count differs from the declaration.** The `glossary` declaration's comment says "44 terms", but the page shows 46.
 
-When fixed, re-draw `cat-harness/docs/wireframes/glossary/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/glossary/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

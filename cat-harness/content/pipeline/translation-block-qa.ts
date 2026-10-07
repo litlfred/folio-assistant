@@ -124,7 +124,7 @@ const SELF = "content/pipeline/translation-block-qa.ts";
  * the file moves — the same reason `docs:harness` replaced a path in
  * `sync-docs-harness.ts`.
  */
-const RERUN_COMMAND = "bun run translation:block-qa";
+const RERUN_COMMAND = "bun run cat translation:block-qa";
 
 /**
  * Is the derived translation-qa tree STORED on `qa-reports` (bean `oqe3`)?

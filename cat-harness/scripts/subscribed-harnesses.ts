@@ -60,7 +60,7 @@ export function readSnapshot(instanceRoot: string, decl: { directories?: readonl
   if (!dir) return { state: "absent", reason: `the subscriber declares no \`${SNAPSHOT_GRAPH_TYPOLOGY}\` directory, so no snapshot of \`${s.id}\` can exist` };
   const file = join(dir, `${s.id}${SNAPSHOT_SUFFIX}`);
   if (!existsSync(file)) {
-    return { state: "absent", reason: `no snapshot of \`${s.id}\` at ${file} — run \`bun run kg:subscribe ${s.repository}@${s.ref}\`` };
+    return { state: "absent", reason: `no snapshot of \`${s.id}\` at ${file} — run \`bun run cat kg:subscribe ${s.repository}@${s.ref}\`` };
   }
   let parsed;
   try {

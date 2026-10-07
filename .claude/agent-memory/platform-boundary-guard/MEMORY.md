@@ -1,6 +1,6 @@
 # platform-boundary-guard — memory
 
-**Edit `memory/*.md`, not this file** — `bun run agent-memory` overwrites the
+**Edit `memory/*.md`, not this file** — `bun run cat agent-memory` overwrites the
 region below; outside it is yours. Types: **STABLE** · **TRAP** · **BASELINE**
 (re-measure, never quote). Compact on purpose: every line here is a line of
 the 200-line injection budget the entries need.
@@ -52,8 +52,8 @@ and fix it there rather than restating it back into this file.
 | what | command |
 |---|---|
 | folio-specific literals in platform code | grep the change for a paper dir, a title, an owner/repo, a Lake prefix, a workflow filename |
-| README sections a folio can opt into | `bun run readme:sections` |
-| README staleness | `bun run readme:sync:check` |
+| README sections a folio can opt into | `bun run cat readme:sections` |
+| README staleness | `bun run cat readme:sync:check` |
 | block-kind classification totality | read `schemas/block-kinds.ts`; `DOCUMENT_BLOCK_KINDS` must stay derived |
 
 > Relabelled from BASELINE to STABLE, 2026-09-19. `AGENTS.md` defines a
@@ -64,7 +64,7 @@ and fix it there rather than restating it back into this file.
 
 ## STABLE — the builder shim, and why `folio_init` is generic
 
-`bun run init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
+`bun run cat init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
 `uploads/`, `library/`, manifests, `<name>.config.json`, the `content/schema/`
 builder shim, `AGENTS.md` + `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the
 session-start hook and the beans store.

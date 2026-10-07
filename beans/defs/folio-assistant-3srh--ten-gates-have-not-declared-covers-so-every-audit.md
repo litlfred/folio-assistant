@@ -9,7 +9,7 @@ updated_at: 2026-09-24T13:08:48Z
 parent: folio-assistant-1swy
 ---
 
-`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind
+`bun run cat audit:coverage` (bean `xutg`) reports coverage per declared graph kind
 from `@covers` lines gates carry in their own module docblocks. 118 scripts
 declare; **10 gates have not said**, measured 2026-09-24:
 
@@ -41,7 +41,7 @@ inferred from their titles.
 
 ## Done when
 
-Every gate CI runs has declared, and `bun run audit:coverage:strict` can be
+Every gate CI runs has declared, and `bun run cat audit:coverage:strict` can be
 wired — at which point `--require-all` becomes meaningful and the
 `kinds-unaudited` family stops being an upper bound.
 

@@ -471,7 +471,7 @@ FR-7 says content holds no code. A builder shim (`content/schema/builders.ts` re
 **Context.**
 - For bootstrap, both directories were packed into a 156 KB `bootstrap-split.tar.gz`.
 - `git archive` of `cat-harness/` today is **69.4 MB** gzipped, mostly `library/`.
-- `bun run health` tracks clone size, and the same files remain reachable at the source SHA in history.
+- `bun run cat health` tracks clone size, and the same files remain reachable at the source SHA in history.
 
 **Options:**
 1. **(Rec.) Manifest only.** `fsh-guts/retired/cat-harness-split.md` names the source SHA and lists `git archive <sha> cat-harness`, with no tarball.

@@ -30,7 +30,7 @@ the publish button' should be same"*.
 
 ## The verifier set
 
-`bun run publish:verify -- --dir <built site> [--report out.md]` —
+`bun run cat publish:verify -- --dir <built site> [--report out.md]` —
 `scripts/publish-verify.ts`. Exit 0 pass · 1 a finding · 2 could not tell.
 The caller treats 1 and 2 alike: an unverified release is not a verified one.
 

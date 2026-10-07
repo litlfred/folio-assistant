@@ -183,7 +183,7 @@ export function buildRecord(
     repo: w.repo,
     ref: w.ref,
     wrapper: `remote-packages/${w.file}`,
-    note: "Somebody else's bytes, pinned. Do not edit in place: change the pin in the wrapper and re-run `bun run sync:remote-skills`.",
+    note: "Somebody else's bytes, pinned. Do not edit in place: change the pin in the wrapper and re-run `bun run cat sync:remote-skills`.",
     files,
   };
 }
@@ -266,7 +266,7 @@ export function checkMaterialized(skillsDir: string): string[] {
       const pkg = syncedPackageDir(skillsDir, skill);
       const rec = join(pkg, RECORD_FILE);
       if (!existsSync(rec)) {
-        problems.push(`${w.file}: \`${skill}\` is declared and not materialized — run \`bun run sync:remote-skills\``);
+        problems.push(`${w.file}: \`${skill}\` is declared and not materialized — run \`bun run cat sync:remote-skills\``);
         continue;
       }
       const r = JSON.parse(readFileSync(rec, "utf8")) as { ref?: string; package?: string };

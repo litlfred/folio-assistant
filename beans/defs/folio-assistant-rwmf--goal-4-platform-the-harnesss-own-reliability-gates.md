@@ -183,7 +183,7 @@ because a 7 % residual with no name is how the 62 % accumulated.
 
 - [x] the owner has ruled on the 17 rows above — approved as proposed, or amended
 - [x] the approved re-parents are applied by each epic's owner, or by this lane on the owner's explicit go
-- [x] `bun run check:bean-parents` and `check:bean-rollup` are green after the re-parents
+- [x] `bun run cat check:bean-parents` and `check:bean-rollup` are green after the re-parents
 - [x] the residual (`slw1`, `0lmb`) has a stated home — a fifth milestone, or a row in the table above
 - [x] this milestone's own scope sentence is replaced by the owner's words, or the derivation note above is confirmed as the record — **confirmed by the owner 2026-10-04** ("Keep derived title")
 

@@ -140,7 +140,7 @@ by instruments whose answers were already stale when read.
       four states and what each one means you owe. NOT the same as detecting live
       siblings, which is still unsolved and is noted below.
 - [x] A session arriving into a large gap can find out, before sweeping, whether
-      the sweep already exists: `bun run survey:owed`, answering in four states
+      the sweep already exists: `bun run cat survey:owed`, answering in four states
       with the uncovered delta computed from the recorded edge commits.
 
 
@@ -189,7 +189,7 @@ evidence belongs, not the decision.
 
 ## Settled 2026-09-26 — option 1, and the edge commits are the whole design
 
-The owner chose **publish the survey**. Shipped as `bun run survey:owed` /
+The owner chose **publish the survey**. Shipped as `bun run cat survey:owed` /
 `survey:publish`, with `beans/surveys/` declared in the bean graph and a new
 `session-survey` graph kind (`holds: "state"` — written BY a running session,
 unlike `interaction/` which is `context` because no process writes it;

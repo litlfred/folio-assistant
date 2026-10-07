@@ -658,7 +658,7 @@ if (import.meta.main) {
       } else writeFileSync(at, text);
     }
     if (stale.length) {
-      console.error(`✗ stale: ${stale.join(", ")} — run \`bun run ig-ast:schema\` and commit`);
+      console.error(`✗ stale: ${stale.join(", ")} — run \`bun run cat ig-ast:schema\` and commit`);
       process.exit(1);
     }
     console.log(args.includes("--check") ? "✓ IG AST JSON Schemas and context are current" : `wrote ${Object.keys(igAstSchemaFiles()).length} file(s) to fhir-harness/schemas/`);

@@ -299,7 +299,7 @@ export const ToolRequiresSchema = z.object({
  * stops the agent hunting. Same reason `install.none` and `selection.limits`
  * must be stated rather than omitted.
  *
- * Looked up by {@link remediesFor} and `bun run tools:remedy <host|error>`.
+ * Looked up by {@link remediesFor} and `bun run cat tools:remedy <host|error>`.
  */
 export const ToolRemedySchema = z
   .object({

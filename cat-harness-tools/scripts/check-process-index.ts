@@ -38,7 +38,7 @@
  * Staleness (the files differ from what the generator writes now) is
  * `subgraph:jsonld:check`'s, not this gate's.
  *
- * Usage:  bun run check:process-index
+ * Usage:  bun run cat check:process-index
  * Exit:   0 covered (with any out-of-graph diagrams listed) · 1 a covered
  *         instance's diagram is missing or undocumented, a node is stale, or
  *         the page lost its mount
@@ -119,7 +119,7 @@ export function publishedProcesses(outDir: string = OUT): { processes: Published
   const problems: string[] = [];
   const processes: PublishedProcess[] = [];
   const read = (abs: string, schema: typeof SubgraphIndexSchema | typeof SubgraphHydratedSchema): Doc | undefined => {
-    if (!existsSync(abs)) { problems.push(`${relative(ROOT, abs)} is missing — run \`bun run subgraph:jsonld\``); return undefined; }
+    if (!existsSync(abs)) { problems.push(`${relative(ROOT, abs)} is missing — run \`bun run cat subgraph:jsonld\``); return undefined; }
     const doc = JSON.parse(readFileSync(abs, "utf-8")) as Doc;
     const parsed = schema.safeParse(doc);
     if (!parsed.success) problems.push(`${relative(ROOT, abs)} does not validate: ${parsed.error.issues[0]?.message ?? "unknown"}`);

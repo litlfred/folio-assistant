@@ -24,7 +24,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/external-schemas/
 7. **Mobile: the spec table is four columns in a 358 px column.** "edition" and "how it is used" start off-screen, and nothing says the table scrolls. The 22-row term tables are two columns and fit, but each row repeats the same sentence at 390 px, making the DCMI and BPMN sections several screens of it.
 8. **The notes are single long paragraphs in capitals for emphasis** ("THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT", "NO XSD IS HELD"). The DCMI note is about 900 characters in one block.
 
-When fixed, re-draw `cat-harness/docs/wireframes/external-schemas/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/external-schemas/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

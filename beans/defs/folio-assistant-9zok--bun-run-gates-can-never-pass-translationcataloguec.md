@@ -1,6 +1,6 @@
 ---
 # folio-assistant-9zok
-title: bun run gates can NEVER pass translation:catalogue:check — it scrapes a command whose $base is a shell variable defined on an earlier line of the workflow
+title: bun run cat gates can NEVER pass translation:catalogue:check — it scrapes a command whose $base is a shell variable defined on an earlier line of the workflow
 status: completed
 type: task
 parent: folio-assistant-1xhc
@@ -10,7 +10,7 @@ updated_at: 2026-10-07T04:51:03Z
 
 ## The defect
 
-`AGENTS.md` makes `bun run gates` the STRICT pre-push command, and its whole
+`AGENTS.md` makes `bun run cat gates` the STRICT pre-push command, and its whole
 argument for existing is that `gates.ts` derives its list from
 `.github/workflows/code-quality-gates.yml` so it *"cannot drift from what CI
 actually runs"*. For one gate the derivation is lossy in a way that makes the
@@ -22,7 +22,7 @@ gate unpassable locally, for everyone, always.
 base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
 ...
 if [ -n "$base" ]; then
-  bun run translation:catalogue:check -- --base "$base"
+  bun run cat translation:catalogue:check -- --base "$base"
 ```
 
 `gates.ts` extracts the last line as a standalone command and runs it **without
@@ -45,7 +45,7 @@ the counting are both correct; the command extraction is wrong.**
    `✓ no added file publishes an uncatalogued translation (origin/main...HEAD:
    9 added file(s), 75 published translation(s) known)`.
 2. Run by hand with a real base —
-   `bun run translation:catalogue:check -- --base "$(git merge-base origin/main HEAD)"`
+   `bun run cat translation:catalogue:check -- --base "$(git merge-base origin/main HEAD)"`
    — exits **0**.
 3. The unexpanded `$base` is visible in the log line quoted above.
 
@@ -55,7 +55,7 @@ branch, regardless of the change under test.
 ## Why it matters more than one gate
 
 It makes the STRICT rule unsatisfiable as written: an agent told to read the
-verdict line of `bun run gates` before pushing will always see a red one, and
+verdict line of `bun run cat gates` before pushing will always see a red one, and
 the only ways to proceed are to learn to ignore this specific line — which is
 how a reader stops reading verdict lines at all — or to conclude the tree is
 broken. That is the `1xhc` shape: a gate that cannot pass stops discriminating.

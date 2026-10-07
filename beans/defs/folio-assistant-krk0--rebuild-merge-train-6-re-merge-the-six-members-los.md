@@ -48,10 +48,10 @@ All conflicts across the seven merges fell in generated families — `beans/READ
 `docs/lsi/`, `docs-auto/`, `detangle/`, `kg-qa/`, `term-mapping.qa-results.json`,
 `scripts`/`test`/`docs` READMEs. The merges ran under a guard that ABORTS on any
 conflict outside that set; it never tripped. Each was resolved by taking one side,
-with one `bun run regen` for the whole train as the authority — the `lxpq` rule that a
+with one `bun run cat regen` for the whole train as the authority — the `lxpq` rule that a
 merged generated file must be re-generated, never diff-read.
 
-`bun run regen`: 87 current, 7 regenerated, 0 unrepaired, 0 without a writer, 471s.
+`bun run cat regen`: 87 current, 7 regenerated, 0 unrepaired, 0 without a writer, 471s.
 
 ## Done when
 - [ ] all eight members plus the jsonld branch are ancestors of the train head

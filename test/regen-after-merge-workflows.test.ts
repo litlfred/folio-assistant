@@ -13,7 +13,7 @@
  * standing alone too.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+
 import { join } from "node:path";
 
 import {
@@ -25,6 +25,7 @@ import {
 } from "../cat-harness/scripts/regen-after-merge.ts";
 import { loadGates } from "../cat-harness/scripts/gates.ts";
 import { repoRootFor } from "../cat-harness/schemas/cat-harness.ts";
+import { scriptsOf } from "../cat-harness/schemas/script-table.ts";
 
 /**
  * The directory this test was written in (`cat-harness/scripts/tests/`): every path below
@@ -34,9 +35,7 @@ const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
 
 const INSTANCE = join(ORIGIN_DIR, "..", "..");
 const REPO = repoRootFor(INSTANCE);
-const SCRIPTS = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as {
-  scripts: Record<string, string>;
-}).scripts;
+const SCRIPTS = scriptsOf(REPO);
 
 describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", () => {
   test("the audit-coverage gates are offered, with audit:coverage as their writer", () => {
@@ -71,7 +70,7 @@ describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () =>
 });
 
 describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 5qq3)", () => {
-  const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> };
+  const pkg = { scripts: scriptsOf(REPO) };
 
   test("none of them is a gate — the owner's 2026-09-20 ruling keeps them ungated", () => {
     // If one of these BECOMES a gate, it belongs in the gated set and this list

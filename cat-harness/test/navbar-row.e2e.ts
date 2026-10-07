@@ -86,7 +86,7 @@ if (LIVE === null) {
   // otherwise quietly stop testing the thing it is named for.
   throw new Error(
     "docs/_data/harness.json has navbar:null — cat-harness is the declared floor " +
-      "and must resolve a row. Run `bun run docs:harness`.",
+      "and must resolve a row. Run `bun run cat docs:harness`.",
   );
 }
 

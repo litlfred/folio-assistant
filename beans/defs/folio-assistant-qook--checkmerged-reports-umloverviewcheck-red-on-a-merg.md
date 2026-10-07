@@ -111,7 +111,7 @@ symlinked — the exact pair of environments the bean is about.
 ### The residual `proseMentions` discrepancy: RESOLVED
 
 `cat-harness/test/results/detangle/cat-harness/skills/scientific-critical-thinking.detangle.json`,
-**recomputed** with `bun run kg:detangle` in each environment:
+**recomputed** with `bun run cat kg:detangle` in each environment:
 
 | | proseMentions |
 |---|---|
@@ -130,7 +130,7 @@ looked exactly like diligence.
 ### The `check:merged` box: NOT satisfied, and for a new reason
 
 Run from the symlinked worktree, the guard behaved: no exit 2, no
-"could not determine", straight to `running bun run gates on the merged tree`.
+"could not determine", straight to `running bun run cat gates on the merged tree`.
 So `.gitignore`-without-the-slash did fix what this bean identified.
 
 But `check:merged` still exits **1** on the merged tree, and the reason is not
@@ -256,14 +256,14 @@ not a repair. The shapes, in the order I would try them:
    whoever is in a hurry.
 
 **Consequence until then:** `check:merged` cannot be used as the pre-push gate,
-so a branch must be verified with `bun run gates` on a merged working tree
+so a branch must be verified with `bun run cat gates` on a merged working tree
 instead. That is what I did for the `groupDepthFor` change — and it is strictly
 weaker, because it measures MY checkout rather than a freshly built one.
 
 ## Evidence
 The `check:environment` change is shape 1 of "Not fixed here, and what the fix has to decide" above and lands with this bean's own PR (#2395); the owner ruling cited below is not quoted or linked, and the re-run of `check:merged` on the two recorded trees is not shown, so the bean is held at in-progress with the `ready-to-close` tag for the owner to confirm.
 - Original cause fixed in PR #1444 (`.gitignore` trailing slash removed, preventing phantom git corpus entries in worktrees).
-- Residual `proseMentions` discrepancy resolved on 2026-09-27 (recomputed `bun run kg:detangle` produces byte-identical sidecars).
+- Residual `proseMentions` discrepancy resolved on 2026-09-27 (recomputed `bun run cat kg:detangle` produces byte-identical sidecars).
 - Owner ruling 2026-10-07 applied: `check:environment` distinguishes internal worktree symlinks (created by `check-merged` pointing to the checkout's `node_modules`) from external symlinks, allowing `check:merged` throwaway worktrees to pass environment checks without refusal.
 - Unit tests added and verified in `cat-harness/scripts/tests/check-environment.test.ts`. All 15 tests pass.
 

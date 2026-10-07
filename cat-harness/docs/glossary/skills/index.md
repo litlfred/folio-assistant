@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: Skills"
 parent: Glossary
 nav_order: 1
@@ -875,7 +875,7 @@ formalizer <span class="fa-gloss-status">candidate, extracted</span>
 gate-tree-mutation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Reading <code>bun run gates</code>' &quot;NOT clean&quot; verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?</p>
+<p>Reading <code>bun run cat gates</code>' &quot;NOT clean&quot; verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/gate-tree-mutation.md"><code>cat-harness/skills/sdlc/sdlc-core/gate-tree-mutation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--generalise-the-fix" data-fa-state="extracted" data-fa-gloss="">
@@ -1227,7 +1227,7 @@ l1-coverage <span class="fa-gloss-status">candidate, extracted</span>
 l1-document-ingestion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The detailed method for turning a DOCUMENT in <code>uploads/</code> into a complete L1 entry in <code>library/&lt;bib-slug&gt;/</code> — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic <code>library-ingestion</code> flow; one entry point: <code>bun run ingest</code>.</p>
+<p>The detailed method for turning a DOCUMENT in <code>uploads/</code> into a complete L1 entry in <code>library/&lt;bib-slug&gt;/</code> — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic <code>library-ingestion</code> flow; one entry point: <code>bun run cat ingest</code>.</p>
 <p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md"><code>folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md</code></a></p>
 </dd>
 <dt id="smart-base--kg-skills--l2-dak-authoring" data-fa-state="extracted" data-fa-gloss="">
@@ -1360,7 +1360,7 @@ lean-witness-audit <span class="fa-gloss-status">candidate, extracted</span>
 library-ingestion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in <code>library/&lt;slug&gt;/</code> if it is materialized. The two entry points (a drop in <code>uploads/</code>, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: <code>bun run ingest</code>.</p>
+<p>The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in <code>library/&lt;slug&gt;/</code> if it is materialized. The two entry points (a drop in <code>uploads/</code>, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: <code>bun run cat ingest</code>.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/library-ingestion.md"><code>cat-harness/skills/library/library-core/library-ingestion.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--liquid-templates" data-fa-state="extracted" data-fa-gloss="">
@@ -2267,7 +2267,7 @@ theme-declaration <span class="fa-gloss-status">candidate, extracted</span>
 theme-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Turning a declared theme into CSS — <code>bun run themes:css</code> — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of &quot;still not image&quot; had that one cause.</p>
+<p>Turning a declared theme into CSS — <code>bun run cat themes:css</code> — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of &quot;still not image&quot; had that one cause.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-generation.md"><code>cat-harness/skills/ui/theming/theme-generation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-ui-review" data-fa-state="extracted" data-fa-gloss="">

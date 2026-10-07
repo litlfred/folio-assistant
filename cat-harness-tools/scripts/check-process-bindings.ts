@@ -55,8 +55,8 @@
  * gate turned on red teaches the next agent `|| true`.
  *
  * ```sh
- * bun run check:process-bindings            # report + gate
- * bun run check:process-bindings --shrink   # lower the baseline after a fix
+ * bun run cat check:process-bindings            # report + gate
+ * bun run cat check:process-bindings --shrink   # lower the baseline after a fix
  * ```
  *
  * Tested with planted violations in `tests/check-process-bindings.test.ts`.

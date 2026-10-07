@@ -62,7 +62,7 @@ describe("GitHub Actions workflows", () => {
   }
 
   /**
-   * `code-quality-gates.yml` runs `bun test`, `bun run lint` and
+   * `code-quality-gates.yml` runs `bun test`, `bun run cat lint` and
    * `tsc --noEmit`. Nothing else in this repo does — of 33 workflows, only
    * `atomic-mass-gen-check` and `docs-site` auto-trigger, and neither touches
    * TypeScript.
@@ -155,7 +155,7 @@ describe("GitHub Actions workflows", () => {
       .map((s) => s.run ?? "")
       .join("\n");
     expect(runs).toContain("bun test");
-    expect(runs).toContain("bun run lint");
+    expect(runs).toContain("bun run cat lint");
     expect(runs).toContain("tsc --noEmit");
   });
 });
@@ -333,31 +333,31 @@ describe("every path that publishes or removes a preview also LOGS it", () => {
     const yml = (steps: string): string => `name: t\njobs:\n  j:\n    steps:\n${steps}`;
 
     test("a bean gate with no mount in its job is a finding", () => {
-      const f = beanGateUnmounted(yml("      - run: bun run check:bean-parents\n"), "t.yml");
+      const f = beanGateUnmounted(yml("      - run: bun run cat check:bean-parents\n"), "t.yml");
       expect(f).toHaveLength(1);
       expect(f[0]!.kind).toBe("bean-gate-unmounted");
-      expect(f[0]!.detail).toContain("no `bun run state:mount` step");
+      expect(f[0]!.detail).toContain("no `bun run cat state:mount` step");
     });
 
     test("a mount AFTER the gate is a finding too: the gate still ran over nothing", () => {
-      const f = beanGateUnmounted(yml(`      - run: bun run kg:audit:check\n      - run: bun run ${STATE_MOUNT}\n`), "t.yml");
+      const f = beanGateUnmounted(yml(`      - run: bun run cat kg:audit:check\n      - run: bun run ${STATE_MOUNT}\n`), "t.yml");
       expect(f).toHaveLength(1);
       expect(f[0]!.detail).toContain("BEFORE its `state:mount` step");
     });
 
     test("mounted first: clean", () => {
-      expect(beanGateUnmounted(yml(`      - run: bun run ${STATE_MOUNT}\n      - run: bun run check:bean-rollup\n`), "t.yml")).toEqual([]);
+      expect(beanGateUnmounted(yml(`      - run: bun run ${STATE_MOUNT}\n      - run: bun run cat check:bean-rollup\n`), "t.yml")).toEqual([]);
     });
 
     test("PER JOB — a sibling job's mount does not cover this one", () => {
-      const text = `name: t\njobs:\n  a:\n    steps:\n      - run: bun run ${STATE_MOUNT}\n  b:\n    steps:\n      - run: bun run check:bean-blocks\n`;
+      const text = `name: t\njobs:\n  a:\n    steps:\n      - run: bun run ${STATE_MOUNT}\n  b:\n    steps:\n      - run: bun run cat check:bean-blocks\n`;
       const f = beanGateUnmounted(text, "t.yml");
       expect(f).toHaveLength(1);
       expect(f[0]!.detail).toContain("job `b`");
     });
 
     test("a COMMENT naming a gate is not a gate", () => {
-      expect(beanGateUnmounted(yml("      # bun run check:bean-parents is wired elsewhere\n"), "t.yml")).toEqual([]);
+      expect(beanGateUnmounted(yml("      # bun run cat check:bean-parents is wired elsewhere\n"), "t.yml")).toEqual([]);
     });
 
     test("the real workflows are clean, and the rule reaches every declared reader", () => {

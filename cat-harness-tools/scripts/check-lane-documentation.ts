@@ -68,7 +68,7 @@
  * Usage:
  *   bun run cat-harness/scripts/check-lane-documentation.ts
  *   bun run cat-harness/scripts/check-lane-documentation.ts --json
- *   bun run check:lane-documentation:check   # JUDGE: compute and judge, write nothing (the gate)
+ *   bun run cat check:lane-documentation:check   # JUDGE: compute and judge, write nothing (the gate)
  *
  * Exit (writer): 0 clean, 1 any finding — or zero diagrams, which it has
  * always reported as 1. Judge mode (`--check`, bean `bo44`): 0 clean · 1 any

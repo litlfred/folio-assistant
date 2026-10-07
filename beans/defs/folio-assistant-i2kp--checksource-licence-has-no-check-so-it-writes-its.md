@@ -17,12 +17,12 @@ Handed over mid-flight: the diagnosis is complete and verified, no code written.
 `cat-harness/scripts/check-source-licence.ts`: unless given `--json` it ALWAYS
 calls `writeQaResult(...)`, and it exits non-zero only on `malformed`.
 
-So CI runs `bun run check:source-licence`, the gate WRITES the sidecar, nothing
+So CI runs `bun run cat check:source-licence`, the gate WRITES the sidecar, nothing
 compares the written doc to the committed one, and the committed sidecar can be
 arbitrarily stale while no gate anywhere fails. **A gate that cannot fail on its
 own content.**
 
-Measured 2026-10-01 on `claude/ci-health-immediate`: `bun run gates` passed 196
+Measured 2026-10-01 on `claude/ci-health-immediate`: `bun run cat gates` passed 196
 verdicts and reported NOT CLEAN because this gate wrote
 `test/results/source-licence.qa-results.json` mid-run — three library entries
 `main` had gained. **Only the runner's mutation guard saw it.** CI's own step
@@ -116,7 +116,7 @@ FRESHNESS, and conflating them would hide either.
 times in regen's output" is exactly what a pair that was asked and found
 current looks like, and is not evidence that it was skipped.
 
-At `e1599aed80a` the step is `run: bun run kg:audit:all:check` in the `gates`
+At `e1599aed80a` the step is `run: bun run cat kg:audit:all:check` in the `gates`
 job (the fast set), the script ends in `:check`, and `kg:audit:all` exists, so
 `repairableGates` (the same `endsWith(":check")` test at that commit) forms the
 pair. On the merged tree `repairableGates(loadGates(root), scripts)` returns it

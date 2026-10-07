@@ -13,9 +13,9 @@ A verify/write pair whose CHECK is a judge-mode baseline rather than a byte comp
 MEASURED on the #1898 branch, 2026-10-04, in one worktree, in this order:
 
 1. `regen` run with `fsh-guts/` NOT mounted (main has cut it over, so it is absent from the checkout). It wrote `cat-harness/test/results/audit-coverage.qa-results.json` with `state: "undetermined"` for the fsh-guts row, dropped the `fsh-guts` entry, and `total: 78`.
-2. `bun run state:mount` — `fsh-guts` mounted, 147 files.
+2. `bun run cat state:mount` — `fsh-guts` mounted, 147 files.
 3. `regen` again. Reported **`113 current, 0 regenerated, 0 unrepaired, 0 with a failing writer`**, settled in one pass. `audit:coverage:strict` among the "current".
-4. `bun run audit:coverage` — the WRITER — on that same mounted tree. It rewrote the file: `state: "empty"`, the `fsh-guts` entry restored, `total: 79`. Byte-identical to what `main` carries.
+4. `bun run cat audit:coverage` — the WRITER — on that same mounted tree. It rewrote the file: `state: "empty"`, the `fsh-guts` entry restored, `total: 79`. Byte-identical to what `main` carries.
 
 So step 3 declared current an artefact that step 4 proves the writer disagrees with. The stale copy was the unmounted run output, and nothing in the pipeline noticed.
 

@@ -92,12 +92,12 @@ describe("the gates come from the workflow, not from a list", () => {
     // return -1, which is less than any index — a vacuous pass.
     const test = cmds.findIndex((c) => /^bun test\b/.test(c));
     expect(test).toBeGreaterThanOrEqual(0);
-    expect(test).toBeLessThan(cmds.indexOf("bun run kg:audit:check"));
+    expect(test).toBeLessThan(cmds.indexOf("bun run cat kg:audit:check"));
   });
 
   test("each gate carries the step name the Actions UI shows", () => {
     // So a local failure and a CI failure are findable by the same string.
-    const g = loadGates(ROOT).find((x) => x.command === "bun run ns:check");
+    const g = loadGates(ROOT).find((x) => x.command === "bun run cat ns:check");
     expect(g?.step).toBe("namespace vocabulary is complete");
     // `gates`, not `typescript`, since bean `om30` split the job: `typescript`
     // is lint + typecheck + `bun test`, and every repository gate moved to a
@@ -112,7 +112,7 @@ describe("the gates come from the workflow, not from a list", () => {
   test("every browser-free job contributes, so a split cannot silently shrink the set", () => {
     // The regression this guards is specific and was live for one commit while
     // `om30` was implemented: `FAST_JOBS` named only `typescript`, so moving 43
-    // steps into `gates` dropped them from `bun run gates` entirely — 154 gates
+    // steps into `gates` dropped them from `bun run cat gates` entirely — 154 gates
     // to 6 — while the runner still printed a confident pass over what was
     // left. A subset of the gate set is not the gate set.
     //
@@ -221,7 +221,7 @@ describe("a strict reader and a loose one agree", () => {
     // `check:published-instance-exports` (a gate) already runs the same export.
     // And the step that READS BACK what was published (bean `cxcn`):
     // `check:qa-corpus --github` judges the stored entry, which exists only
-    // after the publish, so it cannot run in `bun run gates`; locally the same
+    // after the publish, so it cannot run in `bun run cat gates`; locally the same
     // check is `check:qa-corpus --dir <tree>` over a `qa:fetch`.
     // And the step that produces the working copy the publish stores (bean
     // `3hk4`): `qa:refresh` RUNS the QA writers when nothing is tracked, so it
@@ -230,7 +230,7 @@ describe("a strict reader and a loose one agree", () => {
       c.includes("qa:publish") ||
       c.includes("qa:refresh") ||
       /kg-export\.ts --instance \.\/bootstrap\b/.test(c) ||
-      c === "bun run check:qa-corpus --github";
+      c === "bun run cat check:qa-corpus --github";
     expect([...published].filter((c) => !named(c))).toEqual([]);
     expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
@@ -251,7 +251,7 @@ describe("every workflow step is accounted for", () => {
     // THE RATCHET, and the reason the table exists. A new workflow step lands
     // in the gate set or in STEP_EXEMPTIONS with a reason, and never in the
     // gap between them — which is where `gen-site-jsonld --check` sat while
-    // `bun run gates --all` passed 46 gates on a tree CI then rejected.
+    // `bun run cat gates --all` passed 46 gates on a tree CI then rejected.
     const missing = unclassifiedSteps(REPO).map((u) => `${u.file}: ${u.step.command}`);
     expect(missing).toEqual([]);
   });

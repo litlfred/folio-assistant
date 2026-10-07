@@ -1,6 +1,6 @@
 ---
 # folio-assistant-zxvh
-title: 'Special-branch size budgets: declared in special-branches.json, checked by bun run health'
+title: 'Special-branch size budgets: declared in special-branches.json, checked by bun run cat health'
 status: completed
 type: task
 priority: normal

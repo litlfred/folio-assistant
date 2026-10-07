@@ -38,7 +38,7 @@ Every field on a waiver exists to keep that true.
   boolean.
 - The `waiver` graph kind, declared over the same directory as `memory` and
   told apart by the `$schema` tag — the owner's *"should be in memories"*.
-- `bun run check:waivers`, wired into `code-quality-gates.yml`.
+- `bun run cat check:waivers`, wired into `code-quality-gates.yml`.
 - Gate pointers in `deletion-requires-confirmation`, `swarm-management`,
   `issue-working`, `bean-coordination` and `AGENTS.md`, so the skill is
   consulted rather than merely present.
@@ -75,4 +75,4 @@ available.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.

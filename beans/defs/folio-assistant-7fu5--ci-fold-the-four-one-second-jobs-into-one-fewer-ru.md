@@ -16,7 +16,7 @@ Owner chose option 1 (2026-10-03): fold them. Into ONE new job, not into gates: 
 ## Done when
 - [ ] one job `hygiene` runs all four; every gate step after the first is `if: ${{ !cancelled() }}`, so a red one masks none (om30); the Rust continue-on-error step is last
 - [ ] code-quality-gates.bpmn: four tasks become Task_Hygiene, which the job claims; SVG regenerated
-- [ ] bun run gates green; CI green; PR ready
+- [ ] bun run cat gates green; CI green; PR ready
 - [ ] measured: runner requests per run 18 → 15
 
 ## Summary of Changes — closed 2026-10-04, landed

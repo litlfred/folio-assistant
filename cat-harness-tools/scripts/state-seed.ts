@@ -8,10 +8,10 @@
  * @covers todos
  *
  * ```sh
- * bun run state:seed --id beans              # refresh the seed, verify, report
- * bun run state:seed --id beans --dry-run    # what it would push, pushing nothing
- * bun run state:seed --id beans --authoritative   # the CUTOVER half: the branch becomes the store
- * bun run state:seed --retire <root> --into <host instance> --repository <url> \\
+ * bun run cat state:seed --id beans              # refresh the seed, verify, report
+ * bun run cat state:seed --id beans --dry-run    # what it would push, pushing nothing
+ * bun run cat state:seed --id beans --authoritative   # the CUTOVER half: the branch becomes the store
+ * bun run cat state:seed --retire <root> --into <host instance> --repository <url> \\
  *   --also <root>.config.json                  # SEPARATION: a whole instance, into the host's fsh-guts
  * ```
  *
@@ -1147,7 +1147,7 @@ if (import.meta.main) {
     const into = named("--into");
     const repository = named("--repository");
     if (!into || !repository) {
-      console.error("usage: bun run state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit] [--repo-root <dir>] [--json]");
+      console.error("usage: bun run cat state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit] [--repo-root <dir>] [--json]");
       process.exit(5);
     }
     const also = argv.flatMap((a, i) => (a === "--also" && argv[i + 1] ? [argv[i + 1]!] : []));
@@ -1159,9 +1159,9 @@ if (import.meta.main) {
   const id = named("--id");
   if (!id) {
     console.error(
-      "usage: bun run state:seed --id <directory id or branch> [--repo-root <dir>] [--from-manifest] [--authoritative] [--dry-run] [--json]\n" +
-        "       bun run state:seed --id <id> --cutover [--commit] [--repo-root <dir>] [--json]\n" +
-        "       bun run state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit]",
+      "usage: bun run cat state:seed --id <directory id or branch> [--repo-root <dir>] [--from-manifest] [--authoritative] [--dry-run] [--json]\n" +
+        "       bun run cat state:seed --id <id> --cutover [--commit] [--repo-root <dir>] [--json]\n" +
+        "       bun run cat state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit]",
     );
     process.exit(5);
   }

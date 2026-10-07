@@ -425,7 +425,7 @@ ${sections.join("\n\n")}
 
 ## Regenerate
 
-\`bun run prov:qaqc\` writes this page and the logs under \`assets/prov/\`. \`bun run check:prov-qaqc\` checks that they are current.
+\`bun run cat prov:qaqc\` writes this page and the logs under \`assets/prov/\`. \`bun run cat check:prov-qaqc\` checks that they are current.
 `;
 }
 
@@ -468,7 +468,7 @@ if (import.meta.main) {
     if (stale.length || orphans.length) {
       for (const p of stale) console.error(`✗ stale: ${relative(REPO, p)}`);
       for (const p of orphans) console.error(`✗ orphan: ${relative(REPO, p)}`);
-      console.error("Run `bun run prov:qaqc` and commit the result.");
+      console.error("Run `bun run cat prov:qaqc` and commit the result.");
       process.exit(1);
     }
     console.log(`✓ PROV-O QA/QC report current: ${summary}`);
