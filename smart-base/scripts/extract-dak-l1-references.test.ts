@@ -5,7 +5,7 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { agreement, chooseList, publicationTypeOf, readCitations, readInterventions, readReferenceLists, titleOf } from "./extract-dak-l1-references.ts";
+import { agreement, chooseList, contextClassification, publicationTypeOf, readCitations, readInterventions, readReferenceLists, titleOf } from "./extract-dak-l1-references.ts";
 
 const page = (path: string, text: string, pdfPage = 1) => ({
   path,
@@ -134,7 +134,17 @@ describe("judgements", () => {
   });
   test("publicationType only from the title's own words", () => {
     expect(publicationTypeOf("WHO recommendations for routine immunization – summary tables")).toBe("summary-table");
-    expect(publicationTypeOf("Leave no one behind: guidance for planning")).toBe("guidance");
+    expect(publicationTypeOf("Leave no one behind: guidance for planning")).toBe("implementation-guidance");
+    // L1 3.0 has no bare "guideline" type: the subtype needs the GRC record.
+    expect(publicationTypeOf("WHO guidelines on hand hygiene")).toBeUndefined();
     expect(publicationTypeOf("Immunization dashboard")).toBeUndefined();
+  });
+});
+
+describe("context", () => {
+  test("§1.2 decides L1 by context, and says which reference and section", () => {
+    const c = contextClassification(31, "1.2 WHO guidelines, recommendations and guidance");
+    expect(c).toMatchObject({ code: "l1", member: true, source: "context" });
+    expect(c.basis).toContain("reference 31");
   });
 });

@@ -212,6 +212,12 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // kept beside it, owner default (bean `8pzh`); its --check keeps it current.
   // `.json`, not `.jsonld`: its @context is smart-kg's, not held here.
   "smart-kg-l1.json",
+  // Two more smart-kg L1 3.0 graphs, same reasons (bean `mffs`): an L1 entry's
+  // layout as specialisations of its library nodes (`l1-specialise.ts`), and a
+  // DAK's Component 1 citations and what they resolve to
+  // (`extract-dak-l1-references.ts`). Each has a --check.
+  "smart-kg-l1-library.json",
+  "smart-kg-l1-dak-references.json",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [

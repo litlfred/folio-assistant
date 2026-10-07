@@ -9,19 +9,32 @@
  * section IS the DAK's L1 bibliography — the documents a library built for the
  * DAK has to hold — and until this script it was read by eye.
  *
- * ## What it emits (smart-kg L1, WHO main `66a9b13`)
+ * ## What it emits (smart-kg L1 3.0, WHO main `3f5e477`, plus smart-base's `l1-library` layer)
  *
- *   external-artifact   one per Component 1 section read (§1.1, §1.2): the
- *                       DAK page that does the citing, addressed by IRI
- *   citation            one per printed `(n)` in §1.2, its text VERBATIM
- *                       (line breaks joined by one space, nothing else
- *                       changed — the rule `extract-smart-kg-l1.ts` follows)
- *   publication         one per distinct reference resolved to
- *   health-intervention one per item §1.1 lists
+ *   citation         one per printed `(n)` in §1.2, its text VERBATIM (line
+ *                    breaks joined by one space, nothing else changed), and the
+ *                    unnumbered source §1.1's lead names, left unresolved
+ *   reference-entry  one per reference a citation's number names
+ *   publication      what an entry resolves to, when that source is L1
+ *   library-node     what an entry resolves to, when the library HOLDS the
+ *                    source and it is not L1 — upstream of L1 (owner, 2026-10-07)
  *
- *   citation  appearsIn      external-artifact   derived
- *   citation  resolvesTo     publication         inferred — see below
- *   health-intervention implementedBy external-artifact  inferred
+ *   citation         numberedAs  reference-entry               derived
+ *   reference-entry  resolvesTo  publication | library-node    inferred
+ *
+ * Until 3.0 this emitted `external-artifact`, `appearsIn` and the §1.1
+ * health interventions with `implementedBy`. 3.0 moved the first three to L2,
+ * and a 3.0 `health-intervention` is a catalogue entry keyed by its code,
+ * which §1.1's bullet list does not print — so none is emitted.
+ *
+ * ## L1 or not is decided, not assumed
+ *
+ * §1.2 introduces its cards as "the WHO guidelines and guidance" the DAK draws
+ * on: a CONTEXT decision that each is L1 ({@link contextClassification}). A
+ * held source's intake may say otherwise — a person's declaration outranks
+ * context — and {@link decideL1} reports the disagreement rather than choosing
+ * silently. `--record-context` writes the context record onto each held
+ * source's intake, once.
  *
  * ## Resolution is a judgement, and is recorded as one
  *
@@ -44,16 +57,16 @@
  *
  * ## Reuse
  *
- * The document envelope, identity rules and serialisation are
- * `extract-smart-kg-l1.ts`'s ({@link readEntry}, {@link publicationId},
- * {@link serialise}, {@link isCurrent}); a publication the library HOLDS takes
- * its properties from that entry's Dublin Core record
- * (`folio-dublin-core/v1`, written by `fetch-dspace-item.ts`), which maps onto
- * the smart-base `KGPublication` model element for element because that model
- * derives from `DublinCore`.
+ * Section reading and serialisation are `extract-smart-kg-l1.ts`'s
+ * ({@link readEntry}, {@link serialise}, {@link isCurrent}); IRIs are smart-kg's
+ * (`l1-kgid.ts`), under the DAK's namespace from `dak.json` for what the DAK
+ * prints (citations, reference entries) and under the WHO-wide L1 namespace for
+ * publications. A publication the library HOLDS is described exactly as
+ * `l1-specialise.ts` describes it ({@link publicationProperties}), so the two
+ * documents name one publication with one node.
  *
- *   bun run smart-base/scripts/extract-dak-l1-references.ts --entry <DAK library entry> [--check]
- *     [--validate <smart-kg checkout>] [--validate-zod <smart-base checkout>]
+ *   bun run smart-base/scripts/extract-dak-l1-references.ts --entry <DAK library entry> [--uploads <dir>]
+ *     [--record-context] [--check] [--validate-zod <smart-base checkout>]
  *
  * Exit: 0 written / current, 1 stale or invalid, 2 usage or unreadable entry.
  *
@@ -61,12 +74,18 @@
  * @covers library
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { DublinCoreRecordSchema, handleFromUrl, ownDeclaredDirectories, readStructure, type DublinCoreRecord } from "../platform.js";
-import { isCurrent, L1_CONTEXT, L1_ONTOLOGY_VERSION, publicationId, readEntry, readIsbn, serialise, type LibraryEntry } from "./extract-smart-kg-l1.ts";
+import { handleFromUrl, IntakeSchema, readStructure, type IntakeClassification } from "../platform.js";
+import { isCurrent, readEntry, serialise, type LibraryEntry as BaseEntry } from "./extract-smart-kg-l1.ts";
+import { artifactId, citationId, dakNamespace, L1_LIBRARY_CONTEXT, L1_V3_ONTOLOGY_VERSION, publicationId, referenceEntryId, sha256 } from "./l1-kgid.ts";
+import { decideL1, LAYER_SCHEME } from "./l1-membership.ts";
+import { dc, heldIntakes, identifiersOf, publicationProperties, type Held } from "./l1-specialise.ts";
+
+/** A library entry, with the checkout it is read from. */
+type LibraryEntry = BaseEntry & { repo: string };
+const CAT_HARNESS_NS = "https://litlfred.github.io/cat-harness/0.1.0/ns#";
 
 /** Written beside the DAK's entry. Not `smart-kg-l1.json`: that name is the recommendation extractor's. */
 export const DAK_L1_FILENAME = "smart-kg-l1-dak-references.json";
@@ -78,6 +97,8 @@ type Derivation = "derived" | "inferred" | "decided";
 interface Evidence {
   location: string;
   quote?: string;
+  by?: string;
+  at?: string;
 }
 export interface Node {
   id: string;
@@ -111,11 +132,9 @@ export interface Doc {
   dak?: Record<string, unknown>;
 }
 
-const sha256 = (s: string | Buffer): string => createHash("sha256").update(s).digest("hex");
 /** The ingested PDF, as `structure.json` recorded it. */
 const sourceOf = (e: LibraryEntry): { file: string; sha256: string } => (e.structure.raw as unknown as { source: { file: string; sha256: string } }).source;
 const joinLines = (lines: string[]): string => lines.map((l) => l.trim()).filter((l) => l !== "").join(" ");
-const slug = (s: string): string => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
 
 // ── Reading the pages ───────────────────────────────────────────────────────
 
@@ -314,23 +333,24 @@ export function chooseList(lists: Reference[][], cites: Citation[]): { list: Ref
 
 // ── What the library holds ──────────────────────────────────────────────────
 
-interface Held {
-  record: DublinCoreRecord;
-  recordPath: string;
-  pdfSha256?: string;
-  entryPath?: string;
+/** A held source: its intake and record, and the library entry its PDF became (by hash). */
+interface HeldSource extends Held {
+  entryDir?: string;
+  manifestIri?: string;
 }
 
-const dc = (rec: DublinCoreRecord, element: string, qualifier?: string): string[] =>
-  rec.fields.filter((f) => f.element === element && f.qualifier === qualifier).flatMap((f) => f.values.map((v) => v.value));
+/** Resolve a library node id against its manifest's `@base`, as JSON-LD would. */
+function manifestIriOf(dir: string): string | undefined {
+  const p = join(dir, "manifest.jsonld");
+  if (!existsSync(p)) return undefined;
+  const m = JSON.parse(readFileSync(p, "utf-8")) as { "@context"?: unknown; "@id": string };
+  const ctx = Array.isArray(m["@context"]) ? m["@context"] : [m["@context"]];
+  const base = ctx.map((c) => (c && typeof c === "object" ? (c as { "@base"?: string })["@base"] : undefined)).find(Boolean);
+  return /^[a-z]+:/i.test(m["@id"]) || !base ? m["@id"] : new URL(m["@id"], base).href;
+}
 
-/** Dublin Core records under `<repo>/uploads/*`, keyed by handle, joined to their library entry by PDF hash. */
-function heldByHandle(repo: string, libraryDirs: string[]): Map<string, Held> {
-  const out = new Map<string, Held>();
-  // The checkout's own `uploads` graph, by its declaration (check:foreign-paths):
-  // the directory belongs to the instance at `repo`, not to smart-base.
-  const [uploads] = ownDeclaredDirectories(repo, "uploads");
-  if (uploads === undefined || !existsSync(uploads)) return out;
+/** Held sources keyed by IRIS handle, joined to their library entry by PDF hash. */
+function heldByHandle(repo: string, libraryDirs: string[], uploadsDir?: string): Map<string, HeldSource> {
   const entryBySha = new Map<string, string>();
   for (const lib of libraryDirs) {
     for (const d of existsSync(lib) ? readdirSync(lib, { withFileTypes: true }) : []) {
@@ -338,20 +358,16 @@ function heldByHandle(repo: string, libraryDirs: string[]): Map<string, Held> {
       const structure = readStructure(join(lib, d.name));
       if ("reason" in structure) continue;
       const sha = (structure.raw as unknown as { source?: { sha256?: string } }).source?.sha256;
-      if (sha) entryBySha.set(sha, relative(repo, join(lib, d.name)));
+      if (sha) entryBySha.set(sha, join(lib, d.name));
     }
   }
-  for (const d of readdirSync(uploads, { withFileTypes: true })) {
-    const intakePath = join(uploads, d.name, "intake.json");
-    if (!d.isDirectory() || !existsSync(intakePath)) continue;
-    const intake = JSON.parse(readFileSync(intakePath, "utf-8"));
-    if (!intake.record) continue;
-    const recordPath = join(uploads, d.name, intake.record);
-    const record = DublinCoreRecordSchema.parse(JSON.parse(readFileSync(recordPath, "utf-8")));
-    const pdfSha256 = intake.files?.find((f: { role?: string }) => f.role === "original-bitstream")?.sha256;
-    for (const uri of dc(record, "identifier", "uri")) {
-      const h = handleFromUrl(uri);
-      if (h) out.set(h, { record, recordPath: relative(repo, recordPath), pdfSha256, entryPath: pdfSha256 ? entryBySha.get(pdfSha256) : undefined });
+  const out = new Map<string, HeldSource>();
+  for (const h of heldIntakes(repo, uploadsDir)) {
+    if (!h.record) continue;
+    const entryDir = h.pdfSha256 ? entryBySha.get(h.pdfSha256) : undefined;
+    for (const uri of dc(h.record, "identifier", "uri")) {
+      const handle = handleFromUrl(uri);
+      if (handle) out.set(handle, { ...h, entryDir, manifestIri: entryDir ? manifestIriOf(entryDir) : undefined });
     }
   }
   return out;
@@ -368,25 +384,46 @@ const yearOf = (ref: string): string | undefined => [...ref.replace(/\(https?:[^
 /** "<title>. <place>: <publisher>; <year>" or, for an undated web page, "<place>: <publisher> (<url>)". */
 const publisherOf = (ref: string): string | undefined => /\.\s+[^.:;]+:\s*([^;:(]+?)\s*[;(]/.exec(ref)?.[1]?.trim();
 
-/** publicationType from the title's own words, and only from them. */
+/**
+ * L1 3.0 publicationType from the title's own words, and only from them. A
+ * guideline's subtype (standard, consolidated, interim…) turns on its GRC
+ * history, which a title does not carry, so "guideline" yields none.
+ */
 export function publicationTypeOf(title: string): string | undefined {
   if (/\bsummary tables?\b/i.test(title)) return "summary-table";
-  if (/\bguidelines?\b/i.test(title)) return "guideline";
-  if (/\bguidance\b/i.test(title)) return "guidance";
+  if (/\bposition papers?\b/i.test(title)) return "position-paper";
   if (/\bclassification\b/i.test(title)) return "classification";
+  if (/\bguidance\b/i.test(title)) return "implementation-guidance";
   return undefined;
 }
 
-export function dakL1Document(entry: LibraryEntry, repo: string, libraryDirs: string[], dakRecord: Held | undefined, generatedAt: string, dakJson?: Record<string, unknown>): { doc: Doc; report: string[] } {
+/** The context decision §1.2 makes about every source it cites. */
+export const contextClassification = (n: number, heading: string): IntakeClassification => ({
+  scheme: LAYER_SCHEME,
+  code: "l1",
+  member: true,
+  source: "context",
+  basis: `cited as reference ${n} in DAK Component 1 ${heading.replace(/\s+/g, " ")} — the WHO guidelines and guidance the DAK draws on (smart-base/scripts/extract-dak-l1-references.ts)`,
+});
+
+export function dakL1Document(
+  entry: LibraryEntry,
+  dakNs: string,
+  held: Map<string, HeldSource>,
+  generatedAt: string,
+  dakJson?: Record<string, unknown>,
+): { doc: Doc; report: string[]; context: { held: HeldSource; record: IntakeClassification }[] } {
   const pages = pagesOf(entry);
   const report: string[] = [];
-  const { isbn } = readIsbn(entry.texts.values());
-  const dakId = publicationId(isbn, sourceOf(entry).sha256);
-  const dakUrl = dakRecord ? dc(dakRecord.record, "identifier", "uri")[0] : undefined;
+  const docId = entry.path.split("/").pop()!;
+  const artifact = artifactId(dakNs, docId);
   const nodes: Node[] = [];
   const edges: Edge[] = [];
+  const context: { held: HeldSource; record: IntakeClassification }[] = [];
   const at = (p: Page, line: number) => `${p.path}:${line}${p.pdfPage ? ` (PDF p. ${p.pdfPage})` : ""}`;
-  const pageIri = (p: Page) => `${dakUrl ?? dakId}${p.pdfPage ? `#page=${p.pdfPage}` : ""}`;
+  const add = (n: Node) => {
+    if (!nodes.some((x) => x.id === n.id)) nodes.push(n);
+  };
 
   // §1.2 — cited guidance
   const { section: s12, citations } = readCitations(pages);
@@ -394,158 +431,148 @@ export function dakL1Document(entry: LibraryEntry, repo: string, libraryDirs: st
   const lists = readReferenceLists(pages);
   const chosen = chooseList(lists, citations);
   if (citations.length && !chosen) report.push(`no numbered list holds every cited number (${[...new Set(citations.map((c) => c.number))].join(", ")})`);
-  const held = heldByHandle(repo, libraryDirs);
 
-  if (s12) {
-    const artId = `${dakId}#component-1.2`;
-    nodes.push({
-      id: artId,
-      type: "external-artifact",
-      label: `DAK Component 1, ${s12.heading}`,
-      properties: { iri: pageIri(s12.page), targetKind: "DAK Component 1 section (L2)" },
+  for (const c of citations) {
+    const ref = chosen?.list.find((r) => r.number === c.number);
+    const score = ref ? agreement(c.text, ref.text) : 0;
+    const weak = !!ref && score < AGREEMENT;
+    const cid = citationId(dakNs, c.text);
+    add({
+      id: cid,
+      type: "citation",
+      label: `${c.text.replace(/\s*\(\d+\)$/, "")} (${c.number})`,
+      properties: { text: c.text, numbering: String(c.number), citationKind: "reference", resolutionStatus: ref ? "resolved" : "unresolved" },
       derivation: "derived",
-      evidence: { location: at(s12.page, s12.line), quote: s12.heading },
+      evidence: { location: at(c.page, c.line), quote: c.text },
       skill: SKILL,
     });
-    const pubs = new Map<number, string>();
-    for (const c of citations) {
-      const ref = chosen?.list.find((r) => r.number === c.number);
-      const score = ref ? agreement(c.text, ref.text) : 0;
-      const resolved = !!ref;
-      const weak = !!ref && score < AGREEMENT;
-      const cid = `${dakId}#citation-${c.number}-${createHash("sha256").update(c.text).digest("hex").slice(0, 8)}`;
-      nodes.push({
-        id: cid,
-        type: "citation",
-        label: `${c.text.replace(/\s*\(\d+\)$/, "")} (${c.number})`,
-        properties: { text: c.text, location: at(c.page, c.line), numbering: String(c.number), resolutionStatus: resolved ? "resolved" : "unresolved" },
-        derivation: "derived",
-        skill: SKILL,
-      });
-      edges.push({ type: "Statement", predicate: "appearsIn", source: cid, target: artId, derivation: "derived", skill: SKILL });
-      if (!ref) {
-        report.push(`(${c.number}) is not in the chosen reference list`);
-        continue;
-      }
-      if (weak) report.push(`(${c.number}) "${c.text}" — title agreement ${score.toFixed(2)} < ${AGREEMENT}: resolved by its number; a person should confirm it`);
-      if (!pubs.has(c.number)) {
-        const url = urlOf(ref.text);
-        const h = url ? handleFromUrl(url) : undefined;
-        const lib = h ? held.get(h) : undefined;
-        const title = titleOf(ref.text);
-        let id: string;
-        let props: Record<string, unknown>;
-        let note = `Read from reference ${c.number} of the DAK's reference list: title = the text before its first full stop, date = the last year outside the URL, url = the parenthesised URL with line-break spaces removed, publisher = the name after "<place>:".`;
-        if (lib) {
-          const isbns = dc(lib.record, "identifier", "isbn").map((v) => v.replace(/\s*\(.*\)\s*$/, "").replace(/[^0-9X]/g, ""));
-          id = isbns[0] ? `urn:isbn:${isbns[0]}` : (url ?? `${dakId}#reference-${c.number}`);
-          props = {
-            title: dc(lib.record, "title")[0] ?? title,
-            creator: dc(lib.record, "contributor", "author"),
-            publisher: dc(lib.record, "publisher")[0],
-            date: dc(lib.record, "date", "issued")[0],
-            identifier: [...dc(lib.record, "identifier", "isbn").map((v) => `ISBN ${v}`), ...dc(lib.record, "identifier", "uri")],
-            language: dc(lib.record, "language", "iso").join(", ") || undefined,
-            rights: dc(lib.record, "rights")[0],
-            url: dc(lib.record, "identifier", "uri")[0] ?? url,
-            ...(lib.pdfSha256 ? { sha256: lib.pdfSha256 } : {}),
-            ...(publicationTypeOf(title) ? { publicationType: publicationTypeOf(title) } : {}),
-          };
-          note = `Held by this library${lib.entryPath ? ` as ${lib.entryPath}` : ""}; properties are its repository Dublin Core record (${lib.recordPath}), matched to reference ${c.number} by handle ${h}. sha256 pins the PDF ingested.`;
-        } else {
-          id = url ?? `${dakId}#reference-${c.number}`;
-          props = { title, ...(yearOf(ref.text) ? { date: yearOf(ref.text) } : {}), ...(publisherOf(ref.text) ? { publisher: publisherOf(ref.text) } : {}), ...(url ? { url } : {}), ...(publicationTypeOf(title) ? { publicationType: publicationTypeOf(title) } : {}) };
-          note += url ? " Not held by this library: no Dublin Core record for it under uploads/." : " Not held, and the reference carries no URL.";
-        }
-        for (const k of Object.keys(props)) if (props[k] === undefined || (Array.isArray(props[k]) && (props[k] as unknown[]).length === 0)) delete props[k];
-        if (props.publicationType) note += ` publicationType "${props.publicationType}" is read from the title's own words.`;
-        nodes.push({ id, type: "publication", label: String(props.title), properties: props, derivation: "inferred", note, evidence: { location: at(ref.page, ref.line), quote: ref.text }, skill: SKILL });
-        pubs.set(c.number, id);
-      }
-      edges.push({
-        type: "Statement",
-        predicate: "resolvesTo",
-        source: cid,
-        target: pubs.get(c.number)!,
+    if (!ref) {
+      report.push(`(${c.number}) is not in the chosen reference list`);
+      continue;
+    }
+    if (weak) report.push(`(${c.number}) "${c.text}" — title agreement ${score.toFixed(2)} < ${AGREEMENT}: resolved by its number; a person should confirm it`);
+    const rid = referenceEntryId(artifact, String(c.number));
+    const url = urlOf(ref.text);
+    edges.push({
+      type: "Statement",
+      predicate: "numberedAs",
+      source: cid,
+      target: rid,
+      derivation: "derived",
+      note: `By the printed number (${c.number}) into the reference list starting ${chosen!.list[0]!.page.path}:${chosen!.list[0]!.line} (chosen of ${lists.length} numbered lists: it holds every cited number, mean title agreement ${chosen!.score.toFixed(2)}); title agreement ${score.toFixed(2)}${weak ? ` — BELOW ${AGREEMENT}: the card describes its source rather than naming it, so a person should confirm it` : ""}.`,
+      skill: SKILL,
+    });
+    if (nodes.some((n) => n.id === rid)) continue;
+
+    // What the entry resolves to: the held source's own decision, with §1.2's context added.
+    const handle = url ? handleFromUrl(url) : undefined;
+    const h = handle ? held.get(handle) : undefined;
+    const ctx = contextClassification(c.number, s12!.heading);
+    let target: string | undefined;
+    let how = "";
+    if (h?.record) {
+      if (!(h.intake.classifications ?? []).some((x) => x.source === "context")) context.push({ held: h, record: ctx });
+      const decision = decideL1({ ...h.intake, classifications: [...(h.intake.classifications ?? []), ctx] }, h.record);
+      for (const d of decision.disagreements) report.push(`(${c.number}) ${d}`);
+      if (decision.status === "member") {
+        target = publicationId(identifiersOf(h.record));
+        add({
+          id: target,
+          type: "publication",
+          label: String(dc(h.record, "title")[0] ?? titleOf(ref.text)),
+          properties: publicationProperties(h.record, h.pdfSha256, decision.publicationType ?? publicationTypeOf(titleOf(ref.text))),
+          derivation: decision.derivation === "decided" ? "decided" : "inferred",
+          note: `Held by this library${h.entryDir ? ` (${h.manifestIri})` : ""}. L1 because ${decision.decidedBy!.source}: ${decision.decidedBy!.basis}. Properties are its repository Dublin Core record (${h.recordPath}); sha256 pins the PDF.`,
+          evidence: { location: h.intakePath, quote: decision.decidedBy!.basis, ...(decision.derivation === "decided" ? { by: decision.decidedBy!.by ?? "unknown", at: (decision.decidedBy!.at ?? "").slice(0, 10) } : {}) },
+          skill: SKILL,
+        });
+        how = `the held source ${h.recordPath}, matched by handle ${handle}; it is L1, so the target is its L1 publication`;
+      } else if (h.manifestIri) {
+        target = h.manifestIri;
+        add({ id: target, type: "library-node", label: `Library entry ${h.entryDir!.split("/").pop()}`, properties: { iri: target, libraryClass: `${CAT_HARNESS_NS}SourceDocument`, entry: h.entryDir!.split("/").pop()! }, derivation: "derived", skill: SKILL });
+        how = `the held source ${h.recordPath}, matched by handle ${handle}; it is ${decision.status === "not-member" ? `not L1 (${decision.decidedBy!.source}: ${decision.decidedBy!.basis})` : "of undetermined membership"}, so the target is its library entry — upstream of L1`;
+      } else report.push(`(${c.number}) held as ${h.recordPath} but not L1 and not ingested — left unresolved`);
+    } else if (url) {
+      const title = titleOf(ref.text);
+      target = publicationId([{ type: "url", value: url }]);
+      const props: Record<string, unknown> = {
+        title,
+        ...(yearOf(ref.text) ? { issued: yearOf(ref.text) } : {}),
+        ...(publisherOf(ref.text) ? { publisher: publisherOf(ref.text) } : {}),
+        identifiers: [{ type: "url", value: url }],
+        url,
+        ...(publicationTypeOf(title) ? { publicationType: publicationTypeOf(title) } : {}),
+      };
+      add({
+        id: target,
+        type: "publication",
+        label: title,
+        properties: props,
         derivation: "inferred",
-        note: `By the printed number (${c.number}) into the reference list starting ${chosen!.list[0]!.page.path}:${chosen!.list[0]!.line} (chosen of ${lists.length} numbered lists: it holds every cited number, mean title agreement ${chosen!.score.toFixed(2)}), title agreement ${score.toFixed(2)}${weak ? ` — BELOW ${AGREEMENT}: the citation's words differ from the reference title, so this rests on the printed number alone and a person should confirm it` : ""}.`,
+        note: `Not held by this library. L1 by context: ${ctx.basis}. Read from reference ${c.number}: title = the text before its first full stop, issued = the last year outside the URL, publisher = the name after "<place>:", url = the parenthesised URL with line-break spaces removed${props.publicationType ? `; publicationType "${props.publicationType}" from the title's own words` : ""}.`,
         evidence: { location: at(ref.page, ref.line), quote: ref.text },
         skill: SKILL,
       });
+      how = "the reference's own URL; the source is not held";
+    } else report.push(`(${c.number}) carries no URL and is not held — left unresolved`);
+
+    add({
+      id: rid,
+      type: "reference-entry",
+      label: `(${c.number})`,
+      properties: { number: String(c.number), text: ref.text, ...(url ? { url } : {}), resolutionStatus: target ? "resolved" : "unresolved" },
+      derivation: "derived",
+      evidence: { location: at(ref.page, ref.line), quote: ref.text },
+      skill: SKILL,
+    });
+    if (target) {
+      edges.push({ type: "Statement", predicate: "resolvesTo", source: rid, target, derivation: "inferred", note: `Resolved through ${how}.`, evidence: { location: at(ref.page, ref.line), quote: ref.text }, skill: SKILL });
     }
   }
 
-  // §1.1 — interventions
-  const { section: s11, items } = readInterventions(pages);
-  if (!s11) report.push("no §1.1 heading found — no health interventions read");
-  if (s11) {
-    const artId = `${dakId}#component-1.1`;
-    nodes.push({
-      id: artId,
-      type: "external-artifact",
-      label: `DAK Component 1, ${s11.heading}`,
-      properties: { iri: pageIri(s11.page), targetKind: "DAK Component 1 section (L2)" },
-      derivation: "derived",
-      evidence: { location: at(s11.page, s11.line), quote: s11.heading },
-      skill: SKILL,
-    });
-    for (const it of items) {
-      const id = `${dakId}#health-intervention-${slug(it.name)}`;
-      nodes.push({ id, type: "health-intervention", label: it.name, properties: { name: it.name, description: it.group }, derivation: "derived", evidence: { location: at(it.page, it.line), quote: it.name }, skill: SKILL });
-      edges.push({
-        type: "Statement",
-        predicate: "implementedBy",
-        source: id,
-        target: artId,
-        derivation: "inferred",
-        note: "Listed in Component 1 §1.1 as an intervention the DAK references; the DAK is the L2 artefact that operationalises it. Listing is the evidence, not a reading of the DAK's workflows.",
-        evidence: { location: at(it.page, it.line), quote: `${it.group} – ${it.name}` },
+  // §1.1's lead names a source without a number: a citation, unresolved.
+  const { section: s11 } = readInterventions(pages);
+  if (s11?.lead) {
+    const m = /based on (WHO [^.]+?)\./i.exec(s11.lead);
+    if (m) {
+      const text = m[1]!;
+      const cand = lists.flat().map((r) => ({ r, s: agreement(text, r.text) })).sort((a, b) => b.s - a.s)[0];
+      add({
+        id: citationId(dakNs, text),
+        type: "citation",
+        label: text,
+        properties: { text, citationKind: "reference", resolutionStatus: "unresolved" },
+        derivation: "derived",
+        note: cand && cand.s >= AGREEMENT ? `Unnumbered (§1.1). Best title match is reference ${cand.r.number} ("${titleOf(cand.r.text)}", agreement ${cand.s.toFixed(2)}); not resolved on words alone.` : "Unnumbered (§1.1), and no reference title agrees with it.",
+        evidence: { location: at(s11.page, s11.line), quote: s11.lead },
         skill: SKILL,
       });
-    }
-    if (s11.lead) {
-      const m = /based on (WHO [^.]+?)\./i.exec(s11.lead);
-      if (m) {
-        const text = m[1]!;
-        const cand = lists.flat().map((r) => ({ r, s: agreement(text, r.text) })).sort((a, b) => b.s - a.s)[0];
-        nodes.push({
-          id: `${dakId}#citation-1.1-${slug(text)}`,
-          type: "citation",
-          label: text,
-          properties: { text, location: at(s11.page, s11.line), resolutionStatus: "unresolved" },
-          derivation: "derived",
-          note: cand && cand.s >= AGREEMENT ? `Unnumbered. Best title match is reference ${cand.r.number} ("${titleOf(cand.r.text)}", agreement ${cand.s.toFixed(2)}); not resolved on words alone.` : "Unnumbered, and no reference title agrees with it.",
-          skill: SKILL,
-        });
-        edges.push({ type: "Statement", predicate: "appearsIn", source: nodes[nodes.length - 1]!.id, target: artId, derivation: "derived", skill: SKILL });
-      }
     }
   }
 
   const pageFiles = [...new Set([...citations.map((c) => c.page), ...(s11 ? [s11.page] : []), ...(chosen ? chosen.list.map((r) => r.page) : [])].map((p) => p.path))];
+  const repo = entry.repo;
   const listing = pageFiles.map((p) => `${sha256(readFileSync(join(repo, p)))}  ${p}`).join("\n") + "\n";
+  const records = [...new Set([...held.values()].filter((h) => nodes.some((n) => n.evidence?.location === h.intakePath || n.id === h.manifestIri)).flatMap((h) => [h.intakePath, ...(h.recordPath ? [h.recordPath] : [])]))].sort();
   const doc: Doc = {
-    "@context": L1_CONTEXT,
-    id: `${dakId}#kg-l1-dak-references`,
+    "@context": L1_LIBRARY_CONTEXT,
+    id: `${artifact}/kg/l1-references`,
     type: "Entity",
-    ontologyVersion: L1_ONTOLOGY_VERSION,
+    ontologyVersion: L1_V3_ONTOLOGY_VERSION,
     generatedAt,
     wasDerivedFrom: [
       { path: sourceOf(entry).file, sha256: sourceOf(entry).sha256, note: "The DAK PDF as hashed at ingest (structure.json); not re-read here." },
       { path: `${entry.path}/structure.json`, sha256: entry.structureSha256 },
-      { path: `${entry.path}/sections/`, sha256: sha256(listing), note: `The ${pageFiles.length} page text(s) read, hashed as a sha256sum listing (<hex>  <path>).` },
-      ...[...new Set([...held.values()].map((h) => h.recordPath))].sort().map((p) => ({ path: p, sha256: sha256(readFileSync(join(repo, p))), note: "A Dublin Core record a held publication's properties were read from." })),
+      { path: `${entry.path}/sections/`, sha256: sha256(listing), note: `The ${pageFiles.length} section text(s) read, hashed as a sha256sum listing (<hex>  <path>).` },
+      ...records.map((p) => ({ path: p, sha256: sha256(readFileSync(join(repo, p))), note: "An intake or Dublin Core record a resolution was read from." })),
     ],
     nodes,
     edges,
     ...(dakJson ? { dak: Object.fromEntries(["id", "name", "title", "version", "status", "canonicalUrl", "publicationUrl"].filter((k) => k in dakJson).map((k) => [k, dakJson[k]])) } : {}),
   };
-  report.unshift(
-    `${citations.length} citation(s) in §1.2 → ${nodes.filter((n) => n.type === "publication").length} publication(s), ` +
-      `${nodes.filter((n) => n.type === "publication" && String(n.note).startsWith("Held")).length} held by the library; ` +
-      `${items.length} intervention(s) in §1.1`,
-  );
-  return { doc, report };
+  const n = (t: string) => nodes.filter((x) => x.type === t).length;
+  report.unshift(`${n("citation")} citation(s), ${n("reference-entry")} reference entr(ies) → ${n("publication")} L1 publication(s), ${n("library-node")} held non-L1 source(s)`);
+  return { doc, report, context };
 }
 
 // ── CLI ─────────────────────────────────────────────────────────────────────
@@ -559,7 +586,7 @@ if (import.meta.main) {
   const opt = (name: string) => (args.includes(name) ? args[args.indexOf(name) + 1] : undefined);
   const entryArg = opt("--entry");
   if (!entryArg) {
-    console.error("usage: extract-dak-l1-references.ts --entry <DAK library entry> [--check] [--validate <smart-kg>] [--validate-zod <smart-base>]");
+    console.error("usage: extract-dak-l1-references.ts --entry <DAK library entry> [--uploads <dir>] [--record-context] [--check] [--validate-zod <smart-base>]");
     process.exit(2);
   }
   const dir = resolve(entryArg);
@@ -569,16 +596,28 @@ if (import.meta.main) {
     console.error(`✗ ${entryArg}: ${entry.reason}`);
     process.exit(2);
   }
-  const library = dirname(dir);
-  const held = heldByHandle(repo, [library]);
-  const dakSha = sourceOf(entry).sha256;
-  const dakRecord = [...held.values()].find((h) => h.pdfSha256 === dakSha);
   const dakJsonPath = join(repo, "dak.json");
   const dakJson = existsSync(dakJsonPath) ? JSON.parse(readFileSync(dakJsonPath, "utf-8")) : undefined;
-  const { doc, report } = dakL1Document(entry, repo, [library], dakRecord, new Date().toISOString().replace(/\.\d+Z$/, "Z"), dakJson);
+  if (!dakJson?.canonicalUrl) {
+    console.error(`✗ ${repo}: no dak.json with a canonicalUrl — the DAK namespace citation IRIs are minted under`);
+    process.exit(2);
+  }
+  const held = heldByHandle(repo, [dirname(dir)], opt("--uploads"));
+  const { doc, report, context } = dakL1Document({ ...entry, repo }, dakNamespace(dakJson.canonicalUrl), held, new Date().toISOString().replace(/\.\d+Z$/, "Z"), dakJson);
+  for (const r of report) console.log(`  ${r}`);
+  // The context decision, written onto each held source's intake once (--record-context).
+  for (const { held: h, record } of context) {
+    if (!args.includes("--record-context")) {
+      console.log(`  context: ${h.intakePath} would record L1 by context (--record-context writes it)`);
+      continue;
+    }
+    const raw = JSON.parse(readFileSync(h.abs.intake, "utf-8"));
+    raw.classifications = [...(raw.classifications ?? []), record];
+    writeFileSync(h.abs.intake, `${JSON.stringify(IntakeSchema.parse(raw), null, 2)}\n`);
+    console.log(`  context: recorded on ${h.intakePath}`);
+  }
   const target = join(dir, DAK_L1_FILENAME);
   const existing = existsSync(target) ? readFileSync(target, "utf-8") : undefined;
-  for (const r of report) console.log(`  ${r}`);
   if (args.includes("--check")) {
     if (!isCurrent(existing, doc as never)) {
       console.error(`✗ ${relative(process.cwd(), target)} is stale — re-run without --check`);
@@ -589,10 +628,6 @@ if (import.meta.main) {
     writeFileSync(target, serialise(doc as never));
     console.log(`wrote ${relative(process.cwd(), target)}`);
   } else console.log(`${relative(process.cwd(), target)} current`);
-  let failed = 0;
-  const kg = opt("--validate");
-  if (kg) failed |= spawnSync("node", [join(kg, "tools", "validate.mjs"), target], { stdio: "inherit" }).status ?? 1;
   const zod = opt("--validate-zod");
-  if (zod) failed |= spawnSync("npx", ["tsx", "src/validate.ts", target], { cwd: join(zod, "kg"), stdio: "inherit" }).status ?? 1;
-  process.exit(failed ? 1 : 0);
+  if (zod) process.exit(spawnSync("npx", ["tsx", "src/validate.ts", target], { cwd: join(zod, "kg"), stdio: "inherit" }).status ?? 1);
 }

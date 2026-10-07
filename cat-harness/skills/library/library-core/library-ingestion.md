@@ -138,6 +138,19 @@ a cited source is acquired (for instance from a DSpace repository); it says so
 in its own authoring skill. This layer owns only the rule: the flow above runs
 once per cited source, and the citing document's graph is regenerated after.
 
+## A second representation sits DOWNSTREAM of the entry
+
+A content type may describe an ingested document a second time, in its own
+schema — a WHO guideline is also an L1 knowledge graph. Owner, 2026-10-07:
+*"Library is upstream to L1. L1 can point upstream but not downstream."* So
+that representation is derived from the entry and points at the entry's nodes
+(the source document, its sections, its blocks); nothing in the library points
+back, and the entry is never rewritten for it. It inherits whatever sectioning
+this flow produced, so a better reader here improves it without a change there.
+Whether a document gets one is recorded on its intake (`classifications`), by
+a person, by the process that acquired it, or by a rule — the content type
+owns which, and its skill says how.
+
 ## Related
 
 - [`directory-conventions`](../../kg/kg-core/directory-conventions.md) — the graph typologies and who declares them; `uploads` and `library` are both declared by this layer
