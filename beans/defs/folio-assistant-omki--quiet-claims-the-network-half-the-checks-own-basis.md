@@ -1,7 +1,7 @@
 ---
 # folio-assistant-omki
 title: 'QUIET CLAIMS, THE NETWORK HALF: the check''s own basis calls its count an upper bound — supply the signal it cannot see'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T16:26:09Z
@@ -121,5 +121,12 @@ refactor rather than a rewrite.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Evidence
+
+- Work landed in PR #1347 (commit `aead2ac38468` and `5891ada72908`).
+- `check-quiet-claim-liveness.ts` is implemented and active in `cat-harness-tools/scripts/check-quiet-claim-liveness.ts`.
+- `bun test cat-harness-tools/scripts/tests/quiet-claim-liveness.test.ts` (16 passing tests).
+- `bun test test/bean-store-hygiene.test.ts` (3 passing tests).
 
 _2026-10-07T04:53:47Z_ — Claimed by claude/omki-close-quiet-claims-network — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

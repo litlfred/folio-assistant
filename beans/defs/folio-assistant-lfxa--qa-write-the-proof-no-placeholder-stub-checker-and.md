@@ -1,10 +1,10 @@
 ---
 # folio-assistant-lfxa
 title: 'QA: write the proof-no-placeholder-stub checker (and drop the QOU literal from its description)'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-18T17:43:01Z
-updated_at: 2026-10-07T04:41:20Z
+updated_at: 2026-10-07T04:43:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -68,5 +68,15 @@ directions: a real stub fails, a `.lean` with actual content passes.
 
 Measured 2026-09-18 by `bun test` and by reading `qa-sweep.ts:443`. Not
 re-measured since.
+
+## Evidence
+
+- Implemented `checkProofNoPlaceholderStub` in `cat-harness/content/pipeline/qa-checkers-vacuity.ts` and registered it in `VACUITY_AUTOMATED_CHECKERS`.
+- Replaced the `QOU...` literal in the description in `cat-harness/content/pipeline/qa-criteria-registry.ts` with generic placeholder stub marker description, set `source_file: "content/pipeline/qa-checkers-vacuity.ts"`, and flipped `automated: true`.
+- Updated `cat-harness/content/pipeline/script-sidecars/proof-no-placeholder-stub.script.json` with new `source_file` and computed `script_hash`.
+- Added unit tests in `cat-harness-tools/scripts/tests/qa-checkers-vacuity.test.ts` covering both directions (bare stubs failing, stubs with imports/docstrings failing, substantive files passing, comments mentioning stub passing, and n/a handling).
+- Ran `bun test cat-harness-tools/scripts/tests/qa-checkers-vacuity.test.ts` (66 pass, 0 fail).
+- Ran `bun test folio-assistant-sci/scripts/tests/qa-criterion-source-file.test.ts cat-harness/scripts/tests/qa-checker-discovery.test.ts` (18 pass, 0 fail).
+- Ran `bun test test/bean-store-hygiene.test.ts` (3 pass, 0 fail).
 
 _2026-10-07T04:41:20Z_ — Claimed by claude/lfxa-proof-no-placeholder-stub — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
