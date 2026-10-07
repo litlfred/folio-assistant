@@ -104,6 +104,11 @@ This closes G4, and gives #1992's D1 the consumer it lacked: audit.
 
 ## Decisions for the owner
 
+**Answered by the owner, 2026-10-07:** T1 = (a), *"T1=1"*. T2, T3 and T4 take the
+recommended options: *"T2-4 ok"*. The owner also widened the scope: test-plan
+execution (the ITB) and internal QA reports must carry the same versioning
+information. See §"Scope widened" below.
+
 | | decision | options | recommended | if unanswered |
 |---|---|---|---|---|
 | **T1** | Where releases and profiles live | (a) **cat-harness, as a declared graph that every layer inherits** · (b) a separate tools repository, mounted like `bootstrap` | **(a) now**; move to (b) if layers start to diverge | (a) |
