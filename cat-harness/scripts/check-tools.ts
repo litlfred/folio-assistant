@@ -155,7 +155,7 @@ export function unresolvedPaths(
     const shell = typeof inv.shell === "string" ? inv.shell : undefined;
     if (shell !== undefined) {
       // `bun run X` where X is a path, or a bare path to a script or workflow.
-      const m = /^(?:bun|bunx) run ([^\s]+)/.exec(shell);
+      const m = /^(?:bun|bunx) run (?:cat )?([^\s]+)/.exec(shell);
       const target = m?.[1] ?? (/^[.\w][\w./-]*\.(?:ts|sh|ya?ml)$/.test(shell) ? shell : undefined);
       // A `package.json` script name, not a path — `check:tools` and friends.
       if (target !== undefined && /\.(?:ts|sh|ya?ml)$/.test(target) && !existsSync(join(REPO, target))) {

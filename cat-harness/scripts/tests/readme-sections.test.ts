@@ -351,7 +351,7 @@ describe("readme:toc — the README's own h2/h3 outline", () => {
       "## `bun run cat gates` — the one to run\n## [Docs](docs/) and **bold** _it_\n",
     );
     expect(h.map((x) => x.text)).toEqual(["bun run cat gates — the one to run", "Docs and bold it"]);
-    expect(h.map((x) => x.anchor)).toEqual(["bun-run-gates--the-one-to-run", "docs-and-bold-it"]);
+    expect(h.map((x) => x.anchor)).toEqual(["bun-run-cat-gates--the-one-to-run", "docs-and-bold-it"]);
   });
 
   test("duplicates get -1, -2 across ALL levels, and a literal `x-1` is bumped past", () => {

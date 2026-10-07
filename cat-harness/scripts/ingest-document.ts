@@ -896,7 +896,7 @@ export function mayPromote(requirements: readonly Requirement[]): boolean {
 export function promoteCommand(argv: readonly string[]): string {
   const quote = (a: string) => (/[\s"'$`\\]/.test(a) ? JSON.stringify(a) : a);
   const kept = argv.filter((a) => a !== "--promote" && a !== "--dry-run");
-  return ["bun", "run", "ingest", ...kept.map(quote), "--promote"].join(" ");
+  return ["bun", "run", "cat", "ingest", ...kept.map(quote), "--promote"].join(" ");
 }
 
 if (import.meta.main) {

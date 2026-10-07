@@ -65,7 +65,7 @@ export const STAMP_PATH = join(dirname(CACHE_FILE), "qa-working-copy.json");
 export const WORKING_COPY_STEPS: readonly (readonly string[])[] = [
   // input-site: inert #fde1a412 — an OUTPUT path the working-copy build writes, never reads
   ["bun", "run", "cat-harness/scripts/kg-export.ts", "--instance", "./bootstrap", "--out", "build/bootstrap-kg-export.jsonld"],
-  ["bun", "run", "qa:refresh"],
+  ["bun", "run", "cat", "qa:refresh"],
 ];
 
 export interface Stamp {

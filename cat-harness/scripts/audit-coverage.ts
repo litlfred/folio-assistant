@@ -488,7 +488,7 @@ export function scriptsFor(command: string, scripts: Record<string, string>): st
       }
     }
     if (depth > 2) return;
-    for (const m of cmd.matchAll(/\bbun(?:x)? run ([\w:.-]+)/g)) {
+    for (const m of cmd.matchAll(/\bbun(?:x)? run (?:cat )?([\w:.-]+)/g)) {
       const name = m[1]!;
       const next = scripts[name];
       if (next !== undefined) walk(next, depth + 1);

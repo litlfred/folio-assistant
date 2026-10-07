@@ -86,7 +86,7 @@ describe("bootstrap is where the checker looks for it", () => {
 
 describe("the checker, run as a command", () => {
   test("exits 0 on this tree and counts BOTH instances' diagrams", async () => {
-    const p = Bun.spawn(["bun", "run", "check:workflow-refs"], {
+    const p = Bun.spawn(["bun", "run", "cat", "check:workflow-refs"], {
       cwd: REPO,
       stdout: "pipe",
       stderr: "pipe",

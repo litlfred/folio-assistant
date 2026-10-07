@@ -514,21 +514,21 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
   // forgets — which is not an omission, and not what a gate is for. Saying
   // "covered-by" here would have been false the moment the gate came out.
   {
-    match: "run schema:viz",
+    match: "run cat schema:viz",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
       "`schema:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
-    match: "run library:viz",
+    match: "run cat library:viz",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
       "`library:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
-    match: "run library:keywords",
+    match: "run cat library:keywords",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
@@ -536,7 +536,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
       "keywords derive from a WHOLE library's term weights (issue #2302)",
   },
   {
-    match: "run uploads:viz",
+    match: "run cat uploads:viz",
     kind: "covered-by",
     reason:
       "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
@@ -547,17 +547,17 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // The WRITER's step in the site build. Its `--check` IS gated — see the
     // reason beside it in code-quality-gates.yml — so this is the ordinary
     // writer-runs-at-deploy case rather than the schema/library exception.
-    match: "run voices:viz",
+    match: "run cat voices:viz",
     kind: "covered-by",
     reason: "`voices:viz:check` is in the gate set; the site build runs the writer at deploy",
   },
   {
-    match: "run handler:index",
+    match: "run cat handler:index",
     kind: "covered-by",
     reason: "`handler:index:check` is in the gate set; the site build runs the writer at deploy",
   },
   {
-    match: "run translation:index",
+    match: "run cat translation:index",
     kind: "covered-by",
     reason: "`translation:index:check` is in the gate set; the site build runs the writer",
   },
@@ -925,7 +925,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     reason: "builds a release tarball; only a release run, dispatched by hand, has anything to pack",
   },
   {
-    match: "run render:bpmn",
+    match: "run cat render:bpmn",
     kind: "covered-by",
     reason: "`render:bpmn:check` is in the gate set; the site build runs the writer",
   },
@@ -1575,7 +1575,7 @@ export function checkScriptNames(root: string): string[] {
  */
 export function commandRunsScript(command: string, script: string): boolean {
   const escaped = script.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp(`(^|\\s)bun run ${escaped}(\\s|$)`).test(command);
+  return new RegExp(`(^|\\s)bun run (?:cat )?${escaped}(\\s|$)`).test(command);
 }
 
 /** Every `bun` command any workflow runs, the gate set included. */
@@ -1933,7 +1933,7 @@ if (import.meta.main) {
   const qaCopy = workingCopyState(ROOT);
   if (qaRoots.length > 0 && qaCopy.state !== "current") {
     console.log(`QA working copy is ${qaCopy.state} (${qaCopy.why}) — producing it first, as CI does:\n`);
-    for (const cmd of [["bun", "run", "qa:working-copy"]]) {
+    for (const cmd of [["bun", "run", "cat", "qa:working-copy"]]) {
       console.log(`$ ${cmd.join(" ")}`);
       const r = spawnSync(cmd[0]!, cmd.slice(1), { cwd: ROOT, stdio: "inherit" });
       if (r.status !== 0) {
@@ -1969,7 +1969,7 @@ if (import.meta.main) {
   const unrun = unrunScripts(ROOT);
   if (unrun.length) {
     console.log("UNRUN — declared in package.json and in NO workflow:");
-    for (const u of unrun) console.log(`  ? bun run ${u}`);
+    for (const u of unrun) console.log(`  ? bun run cat ${u}`);
     console.log("  Wire each into a workflow, or add it to SCRIPT_EXEMPTIONS with a reason.\n");
   }
 

@@ -211,7 +211,7 @@ describe("regen runs to a FIXPOINT, not one pass — bean `14ve`", () => {
 });
 
 describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 5qq3)", () => {
-  const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> };
+  const pkg = { scripts: scriptsOf(REPO) };
 
   test("every pair names two scripts that exist", () => {
     for (const { check, writer } of UNGATED_INPUTS) {

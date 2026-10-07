@@ -1106,7 +1106,7 @@ if (import.meta.main) {
   const checks = new Set(repairable.map((p) => p.check));
   const asyncRun = async (script: string): Promise<boolean> => {
     const trace = checks.has(script) && useCache ? openTrace(repoRoot) : undefined;
-    const ok = (await runCaptured(["bun", "run", script], repoRoot, trace?.env)).code === 0;
+    const ok = (await runCaptured(["bun", "run", "cat", script], repoRoot, trace?.env)).code === 0;
     const reached = trace?.reached(againstRefsOf(scripts, script));
     if (reached !== undefined) traced.set(script, reached);
     // A writer changed files: digests computed before it are of a tree that

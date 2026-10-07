@@ -47,7 +47,8 @@ export type Recipe = "manual" | "merge-main";
 
 /** The steps of one recipe, as argv lists run from the worktree root. `{target}` is substituted. */
 export function recipeSteps(recipe: Recipe, phase: "warm" | "merge"): { name: string; argv: string[] }[] {
-  const bun = (...a: string[]) => ["bun", "run", ...a];
+  // A file runs directly; a script name runs through the checkout-script runner (bean `ar1s` P4).
+  const bun = (...a: string[]) => (a[0]!.includes("/") ? ["bun", "run", ...a] : ["bun", "run", "cat", ...a]);
   if (recipe === "manual") {
     return [
       ...(phase === "merge" ? [{ name: "git-merge", argv: ["git", "-c", "user.email=m@x", "-c", "user.name=m", "merge", "--no-edit", "{target}"] }] : []),

@@ -38,7 +38,7 @@ const REPO = resolve(ORIGIN_DIR, "..", "..", "..");
 // the tests that need the page fail on their own, by name, rather than this
 // hook failing the whole file.
 beforeAll(() => {
-  const r = spawnSync("bun", ["run", "derive:publish"], { cwd: REPO, encoding: "utf8" });
+  const r = spawnSync("bun", ["run", "cat", "derive:publish"], { cwd: REPO, encoding: "utf8" });
   if (r.status !== 0) console.warn(`derive:publish did not build the page (is fsh-guts mounted? \`bun run cat state:mount\`):\n${r.stdout}${r.stderr}`);
 });
 

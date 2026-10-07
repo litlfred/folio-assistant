@@ -48,7 +48,7 @@ const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
 const REPO = repoRootFor(join(ORIGIN_DIR, "..", ".."));
 const SCRIPTS = scriptsOf(REPO);
 
-const runner: Runner = (script) => spawnSync("bun", ["run", script], { cwd: REPO, encoding: "utf-8" }).status === 0;
+const runner: Runner = (script) => spawnSync("bun", ["run", "cat", script], { cwd: REPO, encoding: "utf-8" }).status === 0;
 
 /** The first file in a directory with this suffix, so a rename does not silently skip the case. */
 function firstIn(dir: string, suffix: string): string {

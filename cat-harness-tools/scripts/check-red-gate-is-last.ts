@@ -164,7 +164,7 @@ export function invocations(run: string | undefined): string[] {
   if (typeof run !== "string") return [];
   const found: string[] = [];
   for (const line of run.split("\n")) {
-    const target = /^\s*bun run\s+([^\s#]+)/.exec(line);
+    const target = /^\s*bun run\s+(?:cat\s+)?([^\s#]+)/.exec(line);
     if (target) {
       found.push(target[1]!);
       continue;
