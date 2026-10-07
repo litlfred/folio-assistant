@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ozwb
 title: Mount pass claims /smart-trust/ for openapi and rails the IG site (#2401)
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-07T07:34:06Z
-updated_at: 2026-10-07T08:05:31Z
+updated_at: 2026-10-07T21:05:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -14,4 +14,10 @@ An igSite instance root is skipped by mountable(), so withRoutes hands /<instanc
 ## Done when
 - [x] root cause measured on gh-pages
 - [x] withRoutes reserves igSite roots; tests
-- [ ] PR green
+- [x] PR green
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #2402 (commit `0ecf8742166`):
+- Mount pass correctly claims `/smart-trust/` for openapi without false conflicts.
+- Verified in mount pipeline.

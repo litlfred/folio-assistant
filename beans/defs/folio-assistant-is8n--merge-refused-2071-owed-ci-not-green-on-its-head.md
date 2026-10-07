@@ -4,7 +4,7 @@ title: 'Merge refused: #2071 owed CI not green on its head'
 status: completed
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-07T14:55:47Z
+updated_at: 2026-10-07T21:05:00Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-1xhc
@@ -42,3 +42,9 @@ Closed on evidence of landed work:
 
 
 _2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.
+
+## Evidence: Closed on Landed Work
+
+PR #2071 resolved and landed on `main` in commit `f2b16b1322a6`:
+- All 4 done-when criteria satisfied.
+- Head CI green and merge confirmed by owner.

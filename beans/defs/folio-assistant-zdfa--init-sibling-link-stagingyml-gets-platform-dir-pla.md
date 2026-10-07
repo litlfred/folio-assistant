@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T18:06:56Z
-updated_at: 2026-10-07T14:55:47Z
+updated_at: 2026-10-07T21:05:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -41,3 +41,10 @@ Closed on evidence of landed work:
 
 
 _2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1318 (commit `65829fa426f0`):
+- Sibling link platform resolution in `folio-staging.yml` via `.folio-platform`.
+- Subfolder enclosing repository detection in `init-folio`.
+- 55 unit tests passing.

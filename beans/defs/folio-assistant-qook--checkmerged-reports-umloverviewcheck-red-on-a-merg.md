@@ -1,13 +1,12 @@
 ---
 # folio-assistant-qook
 title: check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T11:04:49Z
-updated_at: 2026-10-07T08:13:00Z
+updated_at: 2026-10-07T21:05:00Z
 parent: folio-assistant-1xhc
-tags: [ready-to-close]
 ---
 
 
@@ -267,3 +266,8 @@ The `check:environment` change is shape 1 of "Not fixed here, and what the fix h
 - Owner ruling 2026-10-07 applied: `check:environment` distinguishes internal worktree symlinks (created by `check-merged` pointing to the checkout's `node_modules`) from external symlinks, allowing `check:merged` throwaway worktrees to pass environment checks without refusal.
 - Unit tests added and verified in `cat-harness/scripts/tests/check-environment.test.ts`. All 15 tests pass.
 
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #2395 (commit `b26c63a773e`):
+- `cat-harness/scripts/check-environment.ts` permits internal `node_modules` symlink in worktrees while preventing path resolution escapes.
+- Environment check verified green across worktree and root.

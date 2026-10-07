@@ -1,11 +1,11 @@
 ---
 # folio-assistant-blgm
 title: 'MERGE PIPELINE TOOLS: merge:train, merge:overlap, merge:leftover replace the steward''s scratch scripts'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T17:22:14Z
-updated_at: 2026-10-02T21:22:55Z
+updated_at: 2026-10-07T21:05:00Z
 parent: folio-assistant-d33q
 ---
 
@@ -16,6 +16,12 @@ Owner approved 2026-10-02. Three commands for the merge steward, replacing scrat
 - merge:leftover — landed / not-landed / could-not-determine for a PR after a train.
 
 ## Done when
-- [ ] three scripts with unit tests on fixtures, package.json scripts, Tool nodes
-- [ ] draft PR open, gates green
-- [ ] PR body carries a Tools section for the merge-queue skill on claude/merge-pipeline-epic
+- [x] three scripts with unit tests on fixtures, package.json scripts, Tool nodes
+- [x] draft PR open, gates green
+- [x] PR body carries a Tools section for the merge-queue skill on claude/merge-pipeline-epic
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in commit `e0839c359b4e`:
+- Merge pipeline tools (`merge:train`, `merge:overlap`, `merge:leftover`) implemented and operational.
+- Verified in local merge tooling.

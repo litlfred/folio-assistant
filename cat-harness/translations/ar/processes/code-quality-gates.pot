@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-quality-gates\n"
-"POT-Creation-Date: 2026-10-07T20:35:47.100Z\n"
+"POT-Creation-Date: 2026-10-07T22:02:31.148Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: processes/sdlc/code-quality-gates.bpmn:99
 #. Diagram element documentation
-msgid "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries `bun run security:gate` (bean `ieum`, owner 2026-10-07: \"security check before release\"): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job."
+msgid "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries `bun run cat security:gate` (bean `ieum`, owner 2026-10-07: \"security check before release\"): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job."
 msgstr ""
 
 #: processes/sdlc/code-quality-gates.bpmn:123
