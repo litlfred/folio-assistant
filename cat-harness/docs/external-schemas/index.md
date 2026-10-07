@@ -27,10 +27,10 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>22</b><span>specifications</span></div>
-<div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>234</b><span>declared uses</span></div>
-<div class="xs-stat"><b>4</b><span>declarations naming no record</span></div>
+<div class="xs-stat"><b>23</b><span>specifications</span></div>
+<div class="xs-stat"><b>107</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>228</b><span>declared uses</span></div>
+<div class="xs-stat"><b>2</b><span>declarations naming no record</span></div>
 </div>
 
 ## The specifications
@@ -47,6 +47,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPDX License List](#spdx-license-list)**<br>`spdx-license-list` | other | [3.29.0](https://spdx.org/licenses/) | `reads` — this repository parses documents written in it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
+| **[RDF 1.1 N-Quads: A line-based syntax for RDF datasets](#w3c-n-quads)**<br>`w3c-n-quads` | W3C | [2014-02-25](https://www.w3.org/TR/n-quads/) | `conforms` — this repository's artefacts are valid against it |
 | **[ODRL Information Model 2.2](#w3c-odrl)**<br>`w3c-odrl` | W3C | [2018-02-15](https://www.w3.org/TR/odrl-model/) | `conforms` — this repository's artefacts are valid against it |
 | **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
 | **[The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model](#w3c-prov-jsonld)**<br>`w3c-prov-jsonld` | W3C | [2024-08-25](https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/) | `conforms` — this repository's artefacts are valid against it |
@@ -69,14 +70,12 @@ being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`
 front-matter list, an `xmlns` binding, and a graph typology whose typing module
 declares the spec (bean `u63y`).
 
-**4 declaration(s) name a specification no record has.**
+**2 declaration(s) name a specification no record has.**
 
 | user | names |
 |---|---|
+| `cat-harness/skills/kg/graph-management/named-query-execution.md` | `sparql-1.1-query` |
 | `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `sparql-1.1-query` |
-| `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `w3c-n-quads` |
-| `who-iris/skills/iris-oxigraph.md` | `sparql-1.1-query` |
-| `who-iris/skills/iris-oxigraph.md` | `w3c-n-quads` |
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -86,7 +85,7 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**25 declared and not in use.** Not a defect on its own: a
+**26 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -107,6 +106,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/2002/12/cal/ical#`
 - `http://www.w3.org/2004/02/skos/core#`
 - `http://www.w3.org/ns/csvw#`
+- `http://www.w3.org/ns/formats/N-Quads`
 - `http://www.w3.org/ns/oa#`
 - `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
@@ -140,7 +140,6 @@ a registry nobody prunes is one that stops describing the repository.
 | [`folio-assistant-core/schemas/dublin-core-render.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core-render.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
-| [`who-iris/skills/iris-dspace.md`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md) | `conformsTo:` front matter |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -235,7 +234,7 @@ graph. That is a determined zero, not an unfilled field.
 | user | declared by |
 |---|---|
 | `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
-| `cat-harness/processes/kg/*.bpmn (8)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (9)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
@@ -243,12 +242,10 @@ graph. That is a determined zero, not an unfilled field.
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
-| `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
-| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
 | `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
@@ -296,18 +293,16 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
-| `cat-harness/processes/kg/*.bpmn (8)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (9)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
 | `cat-harness/processes/ui/*.bpmn (4)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
-| `fhir-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/*.bpmn (1)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/*.bpmn (7)` | `xmlns` binding |
 | `folio-assistant-core/processes/library/*.bpmn (6)` | `xmlns` binding |
 | `folio-assistant-core/processes/ui/*.bpmn (3)` | `xmlns` binding |
-| `folio-assistant-sci/processes/content/*.bpmn (2)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
 | `smart-base/processes/content/*.bpmn (1)` | `xmlns` binding |
 
@@ -335,7 +330,6 @@ graph. That is a determined zero, not an unfilled field.
 | `cat-harness/processes/sdlc/decisions/*.dmn (3)` | `xmlns` binding |
 | `folio-assistant-core/processes/conduct/decisions/*.dmn (2)` | `xmlns` binding |
 | `folio-assistant-core/processes/content/decisions/*.dmn (2)` | `xmlns` binding |
-| `folio-assistant-sci/processes/content/decisions/*.dmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -442,6 +436,32 @@ a subset of the edition rather than a transcription of it.
 | term | what it means here |
 |---|---|
 | `csvw:TableGroup` | derived from the corpus; what this repository does with it is not yet described |
+
+### RDF 1.1 N-Quads: A line-based syntax for RDF datasets {#w3c-n-quads}
+
+`w3c-n-quads` — W3C, edition [2014-02-25](https://www.w3.org/TR/n-quads/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/formats/N-Quads`
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/nquads-distribution.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/nquads-distribution.ts) | `@conformsTo` tag |
+| [`cat-harness/skills/kg/graph-management/named-query-execution.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/named-query-execution.md) | `conformsTo:` front matter |
+| [`cat-harness/skills/kg/graph-management/nquads-distribution.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/nquads-distribution.md) | `conformsTo:` front matter |
+| [`folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md) | `conformsTo:` front matter |
+
+**Operative terms (2).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `nquads:dataset` | line-based serialization of RDF datasets with named graph support |
+| `nquads:statement` | four-element quad: subject, predicate, object, graphLabel |
 
 ### ODRL Information Model 2.2 {#w3c-odrl}
 
