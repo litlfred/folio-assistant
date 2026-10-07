@@ -7,6 +7,7 @@ section_number: 9.6
 pages: 132-133
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Guideline developers review all the information from the systematic review 
 and, if needed, reassess and make a final decision about which outcomes are 
