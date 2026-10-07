@@ -7,6 +7,7 @@ section_number: 8.8
 pages: 118-118
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Regardless of the supplier selected, systematic reviews used to inform WHO 
 recommendations must be developed according to the standards outlined by 

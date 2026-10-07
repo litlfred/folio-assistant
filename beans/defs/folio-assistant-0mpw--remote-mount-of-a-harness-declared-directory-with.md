@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0mpw
 title: 'Remote mount of a harness: declared directory with a remote source, defaults in the harness''s own declaration'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-06T17:55:54Z
-updated_at: 2026-10-06T19:03:15Z
+updated_at: 2026-10-06T22:13:34Z
 parent: folio-assistant-fnx4
 ---
 
@@ -34,3 +34,19 @@ smart-ra builds and serves its harness skills with no submodule, from a pinned r
 
 
 _2026-10-06_ — owner: this pilot is S8's first live run (bean w0at amended: code -> pinned package, KG -> declared remote mount, cutover dirs -> fsh-guts) and is UNBLOCKED from mgxw — smart-ra is already its own repository.
+
+_2026-10-06T22:01:50Z_ — Claimed by claude/remote-mount-0mpw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Progress 2026-10-06 — PR #2326 (session_01GTPSAegNUMWKWUpve56XJS)
+
+Built on branch claude/remote-mount-0mpw:
+- [x] Schema: `mountDefaults` (harness side) and `remoteMounts` with per-instance overrides by id (downstream side) — cat-harness/schemas/remote-mount.ts; `SubgraphSource` gains `kind: "remote"` {repository, ref: 40-char SHA, upstreamPath?}.
+- [x] Resolver into the overlay: `resolveDependencyPath` reads the mount lock instead of `.deps/`; `dependenciesFromNeeds` scopes a mounted instance's siblings via `mountScopeFor`; API `mountedInstanceRoots(scope)`.
+- [x] Mount command (`bun run mount:remote`, `--plan`), transitive closure through `needs` in the pinned tree then gitlinks as pins; lock {repository, sha, treeDigest} + what was not mounted; offline gate `mount:remote:check` (mounted / missing / could-not-determine); wired into `state:mount` so the session-start hook runs it.
+- [x] BPMN `processes/kg/mount-dependency.bpmn` (+ a `remote` flow in mount-subgraph) and skill `remote-mount` (mount vs subscribe vs associate; no submodules, no .deps/).
+- [x] 18 tests over local bare repositories, incl. a cross-instance import and a declaration whose directory is not its name.
+- [ ] init-folio --link remote; pin skill_fetch REFERENCE_PACKAGES; smart-ra pilot — not in #2326.
+
+SUPERSEDED in this bean's design: "Code … comes as a pinned package" — per the owner's later ruling (bean g8jp) code arrives through the remote-mounted declared code directories.
+
+Also: `mount-instance-docs`' `topLevelDeclarations` unions `mountedInstanceRoots`, so a mount an override placed below the top level is published (agreed with #2324's session).

@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-29T18:14:47Z
+updated_at: 2026-10-06T19:30:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -113,3 +113,7 @@ goal does finishing this serve?"* is answered differently.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## 2026-10-06 — the publication step exists: `Process_RenderKgToCdn`
+
+Gate 4 ("publish to CDN, and make accessible") already has an executable process: **`Process_RenderKgToCdn`** in `cat-harness/processes/process/render-kg-to-cdn.bpmn` (bean `7dek`, merged in #1758). It is the one general publish-to-CDN step; `gh-pages` is a Tool with its own subprocess, so the host stays a tool choice reached through `publication.host`, as this bean requires. The four-gate BPMN this bean asks for should **call** that process for gate 4, not draw a second publish step. Recorded so 7dek's last box ("xies updated to name Process_RenderKgToCdn as its publication step") is discharged. No status change: this bean's own Done-when items are untouched.

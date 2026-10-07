@@ -7,6 +7,7 @@ section_number: 2.6.1
 pages: 32-32
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 To produce a high-quality guideline, you will need resources to identify or 
 perform systematic reviews, convene meetings and cover production costs. 

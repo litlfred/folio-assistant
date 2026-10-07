@@ -7,6 +7,7 @@ section_number: null
 pages: 103-103
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 outcomes
 The steering group should list the high-priority key questions and the outcomes which the GDG will use to formulate recommendations.

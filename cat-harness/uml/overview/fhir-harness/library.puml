@@ -15,6 +15,19 @@ package "fhir-harness/library" as pkg_fhir_harness_library <<library>> {
     images [1] : object[] | null
     undetermined_reason [0..1] : string
   }
+  class "Document" as fhir_harness_library_folio_keywords_v1_Document <<json: KeywordsFileSchema>> #f4f4f1 {
+    term [1] : string
+    score [1] : number
+    evidence [0..*] : heading[]
+  }
+  class "folio-keywords/v1" as fhir_harness_library_folio_keywords_v1_folio_keywords_v1 <<json: KeywordsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-keywords/v1'
+    entry [1] : string
+    corpus [1] : object
+    document [0..*] : Document[]
+    sections [1] : map<object[]>
+  }
 }
 
+fhir_harness_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" fhir_harness_library_folio_keywords_v1_Document : document
 @enduml

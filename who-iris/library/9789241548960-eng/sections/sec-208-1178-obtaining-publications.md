@@ -7,6 +7,7 @@ section_number: 11.7.8
 pages: 158-159
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Records that are not available electronically are generally excluded because 
 the timeline of a rapid advice guideline is not compatible with the delays 

@@ -7,6 +7,7 @@ section_number: 4.2
 pages: 51-51
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 To embark on any project or produce any document, including guidelines, 
 its developers need an explicit, thoughtful and comprehensive plan or roadmap. The planning proposal serves several important purposes.

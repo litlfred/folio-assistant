@@ -7,6 +7,7 @@ section_number: 12.4.2
 pages: 174-174
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 At the time of publication, the department should ensure that archiving 
 requirements are met. In headquarters, departments should send the final 

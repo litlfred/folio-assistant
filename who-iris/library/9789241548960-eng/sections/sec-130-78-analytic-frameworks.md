@@ -7,6 +7,7 @@ section_number: 7.8
 pages: 103-104
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A diagram illustrating the components of the intervention or exposure, and 
 its relationship to the population, comparator and outcomes, is an extremely 
