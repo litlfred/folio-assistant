@@ -175,6 +175,13 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      # Bean `ieum`, owner 2026-10-07: "security check before release". Runs after
+      # the mount (as in code-quality-gates, so fixity sees the same tree) and
+      # before anything is built, so a refused gate publishes nothing.
+      # `docs-site-publish.bpmn` Task_SecurityGate.
+      - name: Release security gate
+        run: bun run security:gate
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
         # be current in a commit, so it is never committed: one state:push

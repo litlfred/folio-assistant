@@ -2771,6 +2771,12 @@ jobs:
           bun run check:secret-leaks
           bun run check:lockfile-pinning
           bun run check:qa-reviewer-permission
+          # The release security gate (bean `ieum`, owner 2026-10-07: "security
+          # check before release"): the security checks above, plus third-party
+          # action SHA pinning outside staging-only workflows, as ONE named step
+          # that merge-train's gate call and docs-site's publish both reach.
+          # Until it existed, no merge or publish process named any of them.
+          bun run security:gate
           bun run check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be

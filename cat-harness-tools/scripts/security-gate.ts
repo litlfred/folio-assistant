@@ -39,6 +39,7 @@
  *   bun run security:gate --json     # machine-readable result on stdout
  *
  * @graphNode tool
+ * @covers none — it re-runs other gates by name and reads .github/workflows/, which is not a declared graph typology; the kinds belong to the gates it calls
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";

@@ -33,6 +33,7 @@
  *   bun run actions:pin --dry-run  # report what would change
  *
  * @graphNode tool
+ * @covers none — .github/workflows/ is not a declared graph typology
  */
 import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
