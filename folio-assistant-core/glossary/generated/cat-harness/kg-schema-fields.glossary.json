@@ -9352,6 +9352,20 @@
       "status": "candidate"
     },
     {
+      "id": "script-table.scriptentry.command",
+      "prefLabel": "ScriptEntry.command",
+      "definition": "The command, relative to the checkout root.",
+      "source": "cat-harness/schemas/script-table.ts#ScriptEntry.command",
+      "status": "candidate"
+    },
+    {
+      "id": "script-table.scriptentry.manifest",
+      "prefLabel": "ScriptEntry.manifest",
+      "definition": "The manifest it is declared in, repository-relative (`package.json` for the root).",
+      "source": "cat-harness/schemas/script-table.ts#ScriptEntry.manifest",
+      "status": "candidate"
+    },
+    {
       "id": "section-verdicts.sectionverdictfileschema.verdicts",
       "prefLabel": "SectionVerdictFileSchema.verdicts",
       "definition": "entry slug → section id (the `sections/<id>.md` stem) → verdict.",

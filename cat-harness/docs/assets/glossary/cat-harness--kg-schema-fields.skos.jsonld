@@ -25379,6 +25379,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.scriptentry.command",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScriptEntry.command"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The command, relative to the checkout root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.command",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.scriptentry.manifest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScriptEntry.manifest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The manifest it is declared in, repository-relative (`package.json` for the root)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.manifest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/section-verdicts.sectionverdictfileschema.verdicts",
       "@type": "skos:Concept",
       "skos:inScheme": {

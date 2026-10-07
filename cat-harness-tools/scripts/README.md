@@ -93,6 +93,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`check-requirements.ts`](check-requirements.ts) | a file |  |
 | [`check-retired-front-matter.ts`](check-retired-front-matter.ts) | a file |  |
 | [`check-schema-nodes.ts`](check-schema-nodes.ts) | a file |  |
+| [`check-script-placement.ts`](check-script-placement.ts) | a file |  |
 | [`check-secret-leaks.ts`](check-secret-leaks.ts) | a file |  |
 | [`check-self-discharging-instances.ts`](check-self-discharging-instances.ts) | a file |  |
 | [`check-session-staleness.ts`](check-session-staleness.ts) | a file |  |
