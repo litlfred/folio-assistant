@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-sci/skills/content/authoring-math/latex-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/authoring-math/latex-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/latex-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/authoring-math/latex-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/authoring-math/latex-authoring.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-sci/skills/content/authoring-math/latex-authoring.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # latex-authoring

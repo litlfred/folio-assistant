@@ -1,10 +1,11 @@
 ---
 # folio-assistant-2ee5
 title: 'Merge refused: #1955 handed back'
-status: completed
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-07T02:43:10Z
+updated_at: 2026-10-07T11:42:15Z
+tags: [ready-to-close]
 parent: folio-assistant-whlc
 blocking:
     - folio-assistant-4ak5

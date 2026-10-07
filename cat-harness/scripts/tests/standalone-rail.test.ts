@@ -108,6 +108,28 @@ describe("what it rails", () => {
     expect(html).toContain("a DRAWN sidebar");
     expect(html).toContain('<nav class="fa-nav"');
   });
+
+  test("the id-lookup page gets the rail with linked style and visualiser nav (bean 7ji4)", () => {
+    // The page's own head, inlined: `cat-harness-tools/` is a sibling layer the
+    // standalone cat-harness checkout does not have. That the real page carries
+    // these declarations is asserted where it lives, in publish-id-lookup.test.ts.
+    const root = site();
+    const html =
+      `<!doctype html>\n<html><head>` +
+      `<meta name="folio-navbar" content="linked">` +
+      `<meta name="fa-visualiser-label" content="Lookup">` +
+      `<title>Identifier lookup</title></head><body>` +
+      `<script type="application/json" data-fa-visualiser-nav>[{"label":"Identifier lookup","href":"#f"}]</script>` +
+      `<h1>Identifier lookup</h1></body></html>\n`;
+    mkdirSync(join(root, "id-lookup"), { recursive: true });
+    writeFileSync(join(root, "id-lookup/index.html"), html);
+    run(root);
+    expect(railed(root, "id-lookup/index.html")).toBe(true);
+    const after = readFileSync(join(root, "id-lookup/index.html"), "utf-8");
+    expect(after).toContain("assets/css/navbar.css");
+    expect(after).toContain("assets/js/navbar.js");
+    expect(after).toContain("assets/js/navbar-row.js");
+  });
 });
 
 describe("what it must NOT touch — each failure renders fine and is therefore invisible", () => {

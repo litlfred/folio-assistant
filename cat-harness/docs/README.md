@@ -4,7 +4,7 @@
 
 # docs
 
-Documentation about the [Knowledge Graph](https://litlfred.github.io/bootstrap/schemas/#knowledge-graph) itself: the pages of the published site, some written by people and some generated from the graph.
+Documentation about the [Knowledge Graph](https://litlfred.github.io/bootstrap/schemas/#knowledge-graph) itself: the pages of the published site, some written by people and some generated from the graph. Also holds `reference/harness.config.example.json`, the worked example of an instance config that the installation guide tells a reader to copy into their content repository and that `package.json` `files` ships in the npm tarball — a reference asset, published with the site rather than rendered as a page. It sat at the repository root until 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split).
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 

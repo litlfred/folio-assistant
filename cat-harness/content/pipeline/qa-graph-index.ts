@@ -204,7 +204,12 @@ export function rollUpFieldOf(doc: Record<string, unknown>): "totals" | "counts"
  * The projection a build should publish. `corpusPresent` is the caller's
  * answer, taken BEFORE it wrote into `dir` — see the module note.
  */
-export function projectQaGraph(dir: string, corpusPresent: boolean, reason?: string): QaGraphProjection {
+export function projectQaGraph(
+  dir: string,
+  corpusPresent: boolean,
+  reason?: string,
+  opts?: { exclude?: ReadonlySet<string> },
+): QaGraphProjection {
   if (!corpusPresent) {
     return {
       $schema: QA_GRAPH_INDEX_SCHEMA,
@@ -215,7 +220,7 @@ export function projectQaGraph(dir: string, corpusPresent: boolean, reason?: str
           "so the qa graph was not counted",
     };
   }
-  return readQaGraph(dir);
+  return readQaGraph(dir, opts);
 }
 
 /** Is this projection the "not available" one? */
@@ -224,13 +229,14 @@ export function isQaGraphUnknown(ix: QaGraphProjection): ix is QaGraphUnknown {
 }
 
 /** Read the `qa` graph under `dir` and project it. */
-export function readQaGraph(dir: string): QaGraphIndex {
+export function readQaGraph(dir: string, opts?: { exclude?: ReadonlySet<string> }): QaGraphIndex {
   const acc = new Map<string, { files: number; field: "totals" | "counts" | null; buckets: Record<string, number> }>();
   let unclassified = 0;
   let unreadable = 0;
   let files = 0;
 
   for (const p of jsonFilesIn(dir)) {
+    if (opts?.exclude?.has(p)) continue;
     files += 1;
     let doc: unknown;
     try {
