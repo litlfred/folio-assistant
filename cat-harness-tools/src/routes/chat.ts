@@ -11,6 +11,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import type { ContentAdapter } from "../types.js";
 import { getUserRole, getUserName } from "../core/rbac.js";
 import { log, logDebug } from "../../../cat-harness/src/core/logging.js";
+import { guardUntrusted } from "../../../cat-harness/src/core/handover-screen.js";
 import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
@@ -122,7 +123,8 @@ export async function handleChatPost(
               toolResults.push({
                 type: "tool_result",
                 tool_use_id: toolUseBlock.id,
-                content: result,
+                // A tool result carries corpus and commenter text: data, never instruction (H5, H9; bean `cztn`).
+                content: guardUntrusted(result, `tool ${toolUseBlock.name}`),
               });
             }
             apiMessages.push({ role: "user", content: toolResults });
