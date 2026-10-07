@@ -13,7 +13,7 @@ permalink: /glossary/schema-fields/f-l/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1935 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1937 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
@@ -22,7 +22,7 @@ One of 4 pages of this type, split by the first letter of the label: <a href="{{
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2241</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2241</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2243</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2243</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -733,21 +733,21 @@ GraphExportSchema.comment <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>Says it is generated, and by what (owner, 2026-09-30).</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.comment</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.comment</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--graph-export.graphexportschema.generatedattime" data-fa-state="extracted" data-fa-gloss="">
 GraphExportSchema.generatedAtTime <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>PROV, only when built with <code>--provenance</code>: the publish build, never the tests.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.generatedAtTime</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.generatedAtTime</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--graph-export.graphexportschema.omitted" data-fa-state="extracted" data-fa-gloss="">
 GraphExportSchema.omitted <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Subgraphs declared but whose contents were not read — never an unexplained empty.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.omitted</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/graph-export.ts"><code>bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.omitted</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.graphtypologies" data-fa-state="extracted" data-fa-gloss="">
 GraphNodeDirectory.graphTypologies <span class="fa-gloss-status">candidate, extracted</span>

@@ -129,13 +129,17 @@ export function mintSkolemUri(handleClean: string, property: string, index: numb
  *
  * URI format: https://iris.who.int/entity/item/{handle_slug}#{property}_{index}
  */
-export function skolemizeJsonLd(node: any, handleClean: string, prefix = 'entity'): any {
+/** A JSON-LD value as parsed from JSON. */
+export type JsonLdValue = string | number | boolean | null | JsonLdValue[] | { [key: string]: JsonLdValue };
+
+export function skolemizeJsonLd(node: JsonLdValue, handleClean: string, prefix = 'entity'): JsonLdValue {
   if (Array.isArray(node)) {
     return node.map((item, idx) => {
-      if (item && typeof item === 'object' && !item['@id'] && !item['@value']) {
+      const rec = item as { [key: string]: JsonLdValue };
+      if (item && typeof item === 'object' && !rec['@id'] && !rec['@value']) {
         const mintedId = mintSkolemUri(handleClean, prefix, idx + 1);
         return skolemizeJsonLd(
-          { '@id': mintedId, ...item },
+          { '@id': mintedId, ...rec },
           handleClean,
           `${prefix}_${idx + 1}`
         );
@@ -143,7 +147,7 @@ export function skolemizeJsonLd(node: any, handleClean: string, prefix = 'entity
       return skolemizeJsonLd(item, handleClean, `${prefix}_${idx + 1}`);
     });
   } else if (node && typeof node === 'object') {
-    const res: Record<string, any> = {};
+    const res: { [key: string]: JsonLdValue } = {};
     for (const [key, val] of Object.entries(node)) {
       if (key === '@context') {
         res[key] = val;
@@ -291,7 +295,8 @@ export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<Build
 
     // Solution A: Skolemize anonymous compound nodes before toRDF conversion
     const skolemized = skolemizeJsonLd(raw, handleClean);
-    const nquadsText = await jsonld.toRDF(skolemized, { format: 'application/n-quads' });
+    // With `format` set, toRDF returns the serialized N-Quads string.
+    const nquadsText = (await jsonld.toRDF(skolemized as jsonld.JsonLdDocument, { format: 'application/n-quads' })) as string;
     const lines = nquadsText.split('\n').filter(Boolean);
 
     for (let line of lines) {

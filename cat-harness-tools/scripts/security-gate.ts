@@ -44,6 +44,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { scriptTable, type ScriptEntry } from "../../cat-harness/schemas/script-table.ts";
 import { parseUses, STAGING_ONLY_WORKFLOWS } from "./pin-actions.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
@@ -69,11 +70,21 @@ export const SECURITY_CHECKS: ReadonlyArray<{ script: string; blocking: boolean;
 
 /** Run one package script by NAME, as argv. */
 export function runCheck(script: string, blocking: boolean, root = ROOT): GateResult {
-  const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf-8")) as { scripts?: Record<string, string> };
-  if (!pkg.scripts?.[script]) {
-    return { check: script, blocking, state: "unknown", detail: "no such package.json script: the check could not be run" };
+  // Looked up across the root `scripts` AND every layer's `checkoutScripts`
+  // (#2448). Reading the root manifest alone made every moved check
+  // `unknown`, so the gate refused every run from c2df3a0 on.
+  let entry: ScriptEntry | undefined;
+  try {
+    entry = scriptTable(root).get(script);
+  } catch (e) {
+    return { check: script, blocking, state: "unknown", detail: `the script table could not be read: ${String(e).split("\n")[0]}` };
   }
-  const p = Bun.spawnSync(["bun", "run", script], { cwd: root, stdout: "pipe", stderr: "pipe" });
+  if (!entry) {
+    return { check: script, blocking, state: "unknown", detail: "no such script in any manifest: the check could not be run" };
+  }
+  // A layer's script runs through the `cat` runner; a root one runs directly.
+  const argv = entry.manifest === "package.json" ? ["bun", "run", script] : ["bun", "run", "cat", script];
+  const p = Bun.spawnSync(argv, { cwd: root, stdout: "pipe", stderr: "pipe" });
   // Bun echoes "$ bun run …" on stderr, so prefer the check's own last stdout line.
   const lastLine = (t: string) => t.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("$ ")).pop();
   const tail = (lastLine(p.stdout.toString()) ?? lastLine(p.stderr.toString()) ?? "").slice(0, 300);

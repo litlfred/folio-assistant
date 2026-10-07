@@ -70,3 +70,11 @@ describe("action pinning follows the owner's staging ruling", () => {
     expect(unpinnedActions(root)!.total).toBe(0);
   });
 });
+
+describe("checks moved into a layer's checkoutScripts are still run (#2448)", () => {
+  test("a layer script is found and run, not reported unknown", () => {
+    // check:bun-pin lives in cat-harness-tools/package.json checkoutScripts since #2448.
+    const r = runCheck("check:bun-pin", true);
+    expect(r.state).not.toBe("unknown");
+  });
+});
