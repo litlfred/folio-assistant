@@ -1,10 +1,11 @@
 ---
 # folio-assistant-z3rf
 title: 'Route outline-less PDFs: inferred contents when trusted (6xaz + mean confidence >= 0.6), else page granularity (#2302)'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-10-07T05:08:20Z
-updated_at: 2026-10-07T05:08:20Z
+updated_at: 2026-10-07T10:44:51Z
 parent: folio-assistant-cp3v
 ---
 
@@ -32,3 +33,7 @@ pdf-structure.py routes as above with tests, and the style guide is re-ingested.
   it would replace 33 correct page sections (with draft summaries) by this.
   Decision put to the owner on #2302: a third test (share of empty sections),
   a higher floor, or keep the page tree.
+
+## Summary of Changes
+
+Merged in #2388 (7282e291). When a PDF has no outline, `pdf-structure.py` uses the inferred contents only if they pass three tests in `inferred_toc_trust`: the 6xaz concentration check, mean confidence ≥ 0.6, and at most 25% empty sections. Otherwise it falls back to one section per page (`granularity: "page"` plus a `structure_note`). Two new diagnostics (`toc_inferred_mean_confidence`, `toc_inferred_empty_share`) are in the schema; the tests are sections 9 and 10 of `pdf-toc-verdict.test.py`; the skills `l1-document-ingestion` and `document-intake` were updated. No library entry was re-ingested. Round summary on #2302.

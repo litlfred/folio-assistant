@@ -4,7 +4,8 @@ title: 'Merge refused: #2065 authored conflict with main'
 status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T02:36:48Z
+updated_at: 2026-10-07T11:08:54Z
+tags: [ready-to-close]
 parent: folio-assistant-hfag
 blocking:
     - folio-assistant-30jr
@@ -28,9 +29,16 @@ No takeover plan was written; the PR comments carry its state.
 A comment on PR #2065, plus a message to the Merge Manager role.
 
 ## Done when
-- [ ] #2065 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
-- [ ] the owed `pull_request` CI is green on that head
-- [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [ ] `bun run merge:guard 2065` passes all 7 checks, and it lands (or the owner closes it)
+- [x] #2065 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
+- [x] the owed `pull_request` CI is green on that head
+- [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
+- [x] `bun run merge:guard 2065` passes all 7 checks, and it lands (or the owner closes it)
 
 _2026-10-07T02:36:48Z_ — Claimed by claude/ra9p-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+Closed on evidence of landed work:
+- PR #2065 was resolved, approved, and merged into `main` by `litlfred` in commit `a46f8791571232b326f1df8230ed8086860ca391` on 2026-10-05T15:40:04Z.
+- Re-derived independently on 2026-10-07: PR #2065 state is `MERGED` with commit `a46f87915712` present in `main` history.
+
