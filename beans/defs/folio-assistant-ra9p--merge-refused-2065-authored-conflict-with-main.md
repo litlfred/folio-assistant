@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ra9p
 title: 'Merge refused: #2065 authored conflict with main'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-04T14:30:41Z
+updated_at: 2026-10-07T02:36:48Z
 parent: folio-assistant-hfag
 blocking:
     - folio-assistant-30jr
@@ -32,3 +32,5 @@ A comment on PR #2065, plus a message to the Merge Manager role.
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
 - [ ] `bun run merge:guard 2065` passes all 7 checks, and it lands (or the owner closes it)
+
+_2026-10-07T02:36:48Z_ — Claimed by claude/ra9p-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
