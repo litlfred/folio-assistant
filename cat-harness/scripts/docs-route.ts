@@ -14,15 +14,15 @@
  * `skills` were each both a page and a directory there.
  *
  * It is the addressing rule of 2026-09-20 applied to the one instance it had
- * not reached: `<base-url>/<kind>/<instance>/`. who-iris's documentation was
- * already at `/docs/who-iris/` (`mount-instance-docs.ts`); the built
+ * not reached: `<base-url>/<kind>/<instance>/`. A mounted instance's documentation
+ * was already at `/docs/<instance>/` (`mount-instance-docs.ts`); the built
  * instance's is now at `/docs/<built>/` by the same rule, rather than being
  * the exception that owned the root.
  *
  * ## One answer, read rather than written down
  *
  * The route is the `docs` KIND and the built instance's declared NAME — the
- * same two facts `mount-instance-docs.ts` composes `/docs/who-iris/` from. A
+ * same two facts `mount-instance-docs.ts` composes `/docs/<instance>/` from. A
  * literal `docs/cat-harness` in each workflow step would be a second answer to
  * "where are the docs", free to disagree with the declaration the day the
  * instance is renamed.
