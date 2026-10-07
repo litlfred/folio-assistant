@@ -54,13 +54,85 @@
  * Not run: the QA sweep, block screenshots, review-comment ingestion and the
  * PR comment. The banner names the preview as built locally so a reviewer is
  * not told those exist.
+ *
+ * ## `--artifact <dir>`: a preview with no GitHub in the loop
+ *
+ * The second half of the owner's choice: the same build, written as a BUNDLE a
+ * claude.ai Artifact can carry, and nothing pushed. The agent then publishes
+ * `<dir>/index.html` with the files `<dir>/artifact.json` lists; it is live in
+ * about a minute and private until shared. An Artifact holds at most
+ * {@link ARTIFACT_MAX_FILES} files per publish and {@link ARTIFACT_MAX_BYTES}
+ * bytes, so when the site is bigger, whole top-level directories are left out,
+ * the ones holding the most files first (smart-ra's 2,931 node-kind pages
+ * under `en/`), and `artifact.json` names each one left out and how many
+ * files it held: a link into one of them 404s in the Artifact, and a reviewer
+ * is told rather than left to find out.
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 
 import { decide, readTip } from "./staging-push-gate.ts";
+
+/** Files one Artifact publish may carry, the page included (the Artifact tool's limit is 255; one is the page). */
+export const ARTIFACT_MAX_FILES = 254;
+/** Bytes one Artifact publish may carry (the tool's limit is 64 MB; a margin for the page). */
+export const ARTIFACT_MAX_BYTES = 60 * 1024 * 1024;
+
+export interface ArtifactBundle {
+  page: "index.html";
+  /** Published paths, relative to the bundle directory, the page excluded. */
+  files: string[];
+  bytes: number;
+  /** Top-level directories left out to fit, with how many files each held. */
+  dropped: { dir: string; files: number; bytes: number }[];
+}
+
+/**
+ * Which files of a built site fit one Artifact publish. Pure over the listing:
+ * `files` maps each site-relative path to its size. Whole top-level
+ * directories are dropped, most files first, until the rest fits; a site whose
+ * root files alone do not fit is refused.
+ */
+export function artifactBundle(files: Map<string, number>): ArtifactBundle {
+  if (!files.has("index.html")) throw new Error("the site has no index.html to open the Artifact on");
+  const top = new Map<string, { files: number; bytes: number }>();
+  for (const [p, n] of files) {
+    const i = p.indexOf("/");
+    if (i < 0) continue;
+    const d = p.slice(0, i);
+    const t = top.get(d) ?? { files: 0, bytes: 0 };
+    top.set(d, { files: t.files + 1, bytes: t.bytes + n });
+  }
+  const dropped: ArtifactBundle["dropped"] = [];
+  const kept = () => [...files.entries()].filter(([p]) => p !== "index.html" && !dropped.some((d) => p.startsWith(`${d.dir}/`)));
+  const fits = () => {
+    const k = kept();
+    return k.length <= ARTIFACT_MAX_FILES && k.reduce((a, [, n]) => a + n, 0) + (files.get("index.html") ?? 0) <= ARTIFACT_MAX_BYTES;
+  };
+  const order = [...top.entries()].sort((a, b) => b[1].files - a[1].files || b[1].bytes - a[1].bytes || a[0].localeCompare(b[0]));
+  for (const [dir, t] of order) {
+    if (fits()) break;
+    dropped.push({ dir, ...t });
+  }
+  if (!fits()) throw new Error(`even the site's root files exceed one Artifact publish (${ARTIFACT_MAX_FILES} files, ${ARTIFACT_MAX_BYTES} bytes)`);
+  const k = kept();
+  return { page: "index.html", files: k.map(([p]) => p).sort(), bytes: k.reduce((a, [, n]) => a + n, 0) + files.get("index.html")!, dropped };
+}
+
+function listSite(dir: string): Map<string, number> {
+  const out = new Map<string, number>();
+  const walk = (d: string, rel: string) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const r = rel ? `${rel}/${e.name}` : e.name;
+      if (e.isDirectory()) walk(join(d, e.name), r);
+      else if (e.isFile()) out.set(r, statSync(join(d, e.name)).size);
+    }
+  };
+  walk(dir, "");
+  return out;
+}
 
 /** The staging workflow's inputs this needs, as the folio's own file passes them. */
 export interface StagingInputs {
@@ -142,6 +214,8 @@ export interface StageOptions {
   base?: string;
   runUrl?: string;
   dryRun?: boolean;
+  /** Write an Artifact bundle here instead of pushing. */
+  artifact?: string;
   log?: (s: string) => void;
 }
 
@@ -151,6 +225,8 @@ export interface StageResult {
   pushed: boolean;
   commit?: string;
   site: string;
+  /** With `artifact`: the bundle written, and where. */
+  bundle?: ArtifactBundle & { dir: string };
 }
 
 export async function stageLocal(o: StageOptions): Promise<StageResult> {
@@ -203,6 +279,20 @@ export async function stageLocal(o: StageOptions): Promise<StageResult> {
     "--branch-url", `${gh}/tree/${branch}`, "--issues-url", `${gh}/issues`,
     "--run-url", runUrl, "--main-site", pagesRoot, "--before-ref", base,
   ]);
+
+  if (o.artifact) {
+    const out = resolve(o.artifact);
+    const b = artifactBundle(listSite(site));
+    rmSync(out, { recursive: true, force: true });
+    for (const p of [b.page, ...b.files]) {
+      mkdirSync(dirname(join(out, p)), { recursive: true });
+      cpSync(join(site, p), join(out, p));
+    }
+    writeFileSync(join(out, "artifact.json"), JSON.stringify({ $schema: "stage-local-artifact/v1", slug, branch, sha, ...b }, null, 1) + "\n");
+    for (const d of b.dropped) log(`· left out ${d.dir}/ (${d.files} files) to fit one Artifact publish; links into it 404 there`);
+    log(`✓ Artifact bundle in ${out}: index.html + ${b.files.length} files, ${(b.bytes / 1048576).toFixed(1)} MB; nothing pushed`);
+    return { slug, url, pushed: false, site, bundle: { ...b, dir: out } };
+  }
 
   if (o.dryRun) {
     log(`✓ built and bannered in ${site}; --dry-run, nothing pushed`);
@@ -270,6 +360,7 @@ if (import.meta.main) {
       ...(opt("base") ? { base: opt("base")! } : {}),
       ...(opt("run-url") ? { runUrl: opt("run-url")! } : {}),
       dryRun: argv.includes("--dry-run"),
+      ...(opt("artifact") ? { artifact: opt("artifact")! } : {}),
     });
     console.log(JSON.stringify(r));
   } catch (e) {
