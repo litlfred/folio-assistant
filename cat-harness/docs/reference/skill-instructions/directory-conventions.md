@@ -398,7 +398,7 @@ agentic-harness/          folio-assistant-core/
 ```
 
 `agentic-harness` declares `tools/`, `kg/` and `schemas/`.
-`folio-assist-core` declares **only** `folio/` and inherits the other three.
+`folio-assistant-core` declares **only** `folio/` and inherits the other three.
 
 ### Where a NEW instance puts its code: `<stub>/src` (bean `ylj7`)
 
@@ -1477,7 +1477,7 @@ silently miss half its instructions.
 
 The declaration schema needs the platform's IRI namespace to mint `@type`
 values. That namespace used to live in `schemas/jsonld.ts`, which is
-`folio-assist-core`'s **content** vocabulary — block kinds, DoCO structural
+`folio-assistant-core`'s **content** vocabulary — block kinds, DoCO structural
 types, SPAR citation terms. Importing it would have made `agentic-harness`
 depend on the content model for its own type IRIs: a `harness → core` edge,
 already the largest wrong-direction group `bun run check:partition` reports.
