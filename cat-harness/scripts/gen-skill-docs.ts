@@ -421,6 +421,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // packages when they moved up to their owning instance, by #1702's theme.
   "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
   "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
+  "requirements-planning": "Requirements planning (requirements-planning)",
   ingestion: "Document ingestion methods (ingestion)",
   // Bean `7eak`: rendering catalogue records as standard Dublin Core.
   catalogue: "Catalogue records — Dublin Core renderings (catalogue)",

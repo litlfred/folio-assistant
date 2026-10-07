@@ -24,6 +24,9 @@
         <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Signoff</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CreateBeans</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_RecordSignoff</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_SignoffRecorded</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_SignoffStopped</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_OfferKg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_KgChosen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_RecordKg</bpmn:flowNodeRef>
@@ -42,11 +45,30 @@ what this step records here is a note that the plan now exists.</bpmn:documentat
         <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:task id="BA_Signoff" name="Sign off on
-requirements">
-      <bpmn:documentation>The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf.</bpmn:documentation>
-      <bpmn:extensionElements><bootstrap.processes:skill ref="decision-audit"/></bpmn:extensionElements>
-    </bpmn:task>
+    <bpmn:callActivity id="BA_Signoff" name="Sign off on&#10;requirements" calledElement="Process_Adjudication">
+      <bpmn:documentation>The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf. Since issue #2405 (FR-013) it IS an adjudication: it calls Process_Adjudication with the requirement-set answers, and every answer goes through A_RecordSignoff before anything follows it.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="adjudication"/>
+        <cat-harness.processes:adjudication codes="approve amend reject defer cancel" list="adjudication-requirement-set"/>
+        <cat-harness.processes:fulfilment kinds="person" reason="A sign-off on a requirements document is the requester's decision about their own requirements (issue #2405 FR-011): `approved` and `accepted` need a HUMAN sign-off, which `check:requirements` refuses without, so an agent may not take this step on their behalf. An agent records the decision in A_RecordSignoff; it does not make it."/>
+      </bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:serviceTask id="A_RecordSignoff" name="Record the sign-off as a&#10;requirement-signoff attestation">
+      <bpmn:documentation>THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/&lt;set slug&gt;.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012.
+
+GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="requirement-definition"/>
+        <cat-harness.processes:policy relaxable="false"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="GW_SignoffRecorded" name="Sign-off on the record?">
+      <bpmn:documentation>Computed, never chosen: `decisions/requirement-signoff-recorded.dmn` reads `signoffRecorded` and `signoffOutcome`, which `check:requirements` prints from the set's recorded sign-offs (its signoff-facts flag). `missing` loops back to the record; `proceed` is an approval (as written or amended); `stop` is a recorded reject, defer or cancel.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:decision ref="decisions/requirement-signoff-recorded.dmn#Decision_RequirementSignoffRecorded"/>
+      </bpmn:extensionElements>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_SignoffStopped" name="Not approved — recorded, with its reason"/>
     <bpmn:task id="A_AnnounceBranch" name="Announce the branch
 on the issue">
       <bpmn:documentation>On CREATING the feature branch, comment on the issue:
@@ -81,7 +103,7 @@ The options are DERIVED from the graphs this instance declares in `&lt;name&gt;.
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="kg-contribution-offer"/>
       </bpmn:extensionElements>
-      <bpmn:incoming>SF_Process_CRDM_Signoff_3</bpmn:incoming>
+      <bpmn:incoming>SF_Signoff_Proceed</bpmn:incoming>
       <bpmn:outgoing>SF_Kg_1</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="BA_ChooseKg" name="Choose a destination,&#10;or none">
@@ -115,7 +137,11 @@ The default creates NOTHING. An agent that decides on its own that a requirement
       <bpmn:incoming>SF_Kg_3</bpmn:incoming>
       <bpmn:outgoing>SF_Kg_4</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="SF_Process_CRDM_Signoff_3" sourceRef="BA_Signoff" targetRef="A_OfferKg"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Signoff_3" sourceRef="BA_Signoff" targetRef="A_RecordSignoff"/>
+    <bpmn:sequenceFlow id="SF_Signoff_Gate" sourceRef="A_RecordSignoff" targetRef="GW_SignoffRecorded"/>
+    <bpmn:sequenceFlow id="SF_Signoff_Proceed" name="proceed" sourceRef="GW_SignoffRecorded" targetRef="A_OfferKg"/>
+    <bpmn:sequenceFlow id="SF_Signoff_Stop" name="stop" sourceRef="GW_SignoffRecorded" targetRef="End_SignoffStopped"/>
+    <bpmn:sequenceFlow id="SF_Signoff_Missing" name="missing" sourceRef="GW_SignoffRecorded" targetRef="A_RecordSignoff"/>
     <bpmn:sequenceFlow id="SF_Kg_1" sourceRef="A_OfferKg" targetRef="BA_ChooseKg"/>
     <bpmn:sequenceFlow id="SF_Kg_2" sourceRef="BA_ChooseKg" targetRef="GW_KgChosen"/>
     <bpmn:sequenceFlow id="SF_Kg_3" name="a graph" sourceRef="GW_KgChosen" targetRef="A_RecordKg"/>
@@ -198,9 +224,36 @@ The default creates NOTHING. An agent that decides on its own that a requirement
         <di:waypoint x="710" y="165" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Signoff_3" bpmnElement="SF_Process_CRDM_Signoff_3">
-        <di:waypoint x="850" y="165" />
-        <di:waypoint x="980" y="165" />
-        <di:waypoint x="980" y="295" />
+        <di:waypoint x="780" y="205" />
+        <di:waypoint x="780" y="395" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_A_RecordSignoff" bpmnElement="A_RecordSignoff">
+        <dc:Bounds x="710" y="395" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_SignoffRecorded" bpmnElement="GW_SignoffRecorded" isMarkerVisible="true">
+        <dc:Bounds x="870" y="410" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_SignoffStopped" bpmnElement="End_SignoffStopped">
+        <dc:Bounds x="960" y="417" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_SF_Signoff_Gate" bpmnElement="SF_Signoff_Gate">
+        <di:waypoint x="850" y="435" />
+        <di:waypoint x="870" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Signoff_Proceed" bpmnElement="SF_Signoff_Proceed">
+        <di:waypoint x="895" y="410" />
+        <di:waypoint x="895" y="335" />
+        <di:waypoint x="910" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Signoff_Stop" bpmnElement="SF_Signoff_Stop">
+        <di:waypoint x="920" y="435" />
+        <di:waypoint x="960" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Signoff_Missing" bpmnElement="SF_Signoff_Missing">
+        <di:waypoint x="895" y="460" />
+        <di:waypoint x="895" y="488" />
+        <di:waypoint x="740" y="488" />
+        <di:waypoint x="740" y="475" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Signoff_4" bpmnElement="SF_Process_CRDM_Signoff_4">
         <di:waypoint x="1050" y="335" />

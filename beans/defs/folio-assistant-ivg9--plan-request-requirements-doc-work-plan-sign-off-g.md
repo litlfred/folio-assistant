@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-07T09:36:38Z
-updated_at: 2026-10-07T09:38:09Z
+updated_at: 2026-10-07T10:39:49Z
+parent: folio-assistant-ahvw
 ---
 
 Issue: https://github.com/litlfred/folio-assistant/issues/2405. Owner approved 2026-10-07 ('implement as recommended'): https://github.com/litlfred/folio-assistant/issues/2405#issuecomment-6035163987. Decisions: (1) operation in folio-assistant-core, method in cat-harness (0r7u); (2) a plan request ALWAYS triggers requirements doc + work plan, content requests included; (3) successCriteria optional now, check:requirements warns, migration follow-up bean, then required.
