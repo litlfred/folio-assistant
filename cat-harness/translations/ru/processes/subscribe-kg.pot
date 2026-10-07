@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: subscribe-kg\n"
-"POT-Creation-Date: 2026-10-03T09:58:08.339Z\n"
+"POT-Creation-Date: 2026-10-06T23:51:56.154Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -34,12 +34,12 @@ msgstr ""
 msgid "A substrate is wanted, or a held pin is due to move"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:213
+#: processes/library/subscribe-kg.bpmn:214
 #. Diagram label
 msgid "Another chosen harness not yet instantiated?"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:194
+#: processes/library/subscribe-kg.bpmn:195
 #. Diagram label
 msgid "Another chosen subgraph or asset not yet walked?"
 msgstr ""
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Answered by the subscriber's declaration: an entry with this id already exists or it does not. A new one is recorded and reviewed; an existing one first refreshes every part it already holds against the new pin, because a pin that moved under held bytes would leave their records describing a commit nobody is subscribed to."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:176
+#: processes/library/subscribe-kg.bpmn:177
 #. Diagram label
 msgid "Choose subgraphs, the asset policy, harnesses"
 msgstr ""
@@ -74,12 +74,12 @@ msgstr ""
 msgid "Every CHOICE in the walk is made here and nowhere else: which substrate and at which commit, which of its subgraphs, asset classes and harnesses to hold. The engine never chooses a part on the subscriber's behalf — a subgraph not chosen stays referenced, which is a state, not an omission — and the pre-check on harness needs sends the choice back here rather than resolving it silently."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:187
+#: processes/library/subscribe-kg.bpmn:188
 #. Diagram label
 msgid "Every chosen harness's needs held here?"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:167
+#: processes/library/subscribe-kg.bpmn:168
 #. Diagram element documentation
 msgid "Every subgraph, asset class and harness the cached declaration names, each with its current state — referenced, materialised, unknown, stale, or refused by a gate. Shown whole, because a reader who sees only what was chosen cannot tell \"not offered\" from \"not taken\"."
 msgstr ""
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Fetch the root declaration at the pin, and validate it"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:189
+#: processes/library/subscribe-kg.bpmn:190
 #. Diagram element documentation
 msgid "For each chosen harness, is every instance it `needs` either local to this checkout or itself subscribed? Decided from the two declarations, before any byte moves. `no` goes back to the choice — subscribe the missing dependency first, or leave that harness referenced — because instantiating a harness whose needs cannot load writes a navbar entry that fails check:instance-render."
 msgstr ""
@@ -99,22 +99,22 @@ msgstr ""
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:221
+#: processes/library/subscribe-kg.bpmn:222
 #. Diagram label
 msgid "Instantiate the harness: write its config"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:202
+#: processes/library/subscribe-kg.bpmn:203
 #. Diagram label
 msgid "Materialise the part [materialize-remote]"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:155
+#: processes/library/subscribe-kg.bpmn:156
 #. Diagram label
 msgid "Move the entry's ref and re-cache the declaration"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:252
+#: processes/library/subscribe-kg.bpmn:253
 #. Diagram label
 msgid "moving a held pin"
 msgstr ""
@@ -124,7 +124,7 @@ msgstr ""
 msgid "Name the substrate, pin a full commit SHA"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:251
+#: processes/library/subscribe-kg.bpmn:252
 #. Diagram label
 msgid "new"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "New subscription, or moving a held pin?"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:260
+#: processes/library/subscribe-kg.bpmn:261
 #. Diagram label
 msgid "no — choose again"
 msgstr ""
@@ -144,22 +144,22 @@ msgstr ""
 msgid "No subscription entry is written for a repository that is not a substrate. What is recorded is the reason (non-conforming, no harness, or unreachable) and the pin it was asked at, so a later attempt at a different commit starts from what failed."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:256
+#: processes/library/subscribe-kg.bpmn:257
 #. Diagram label
 msgid "no, all refreshed"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:267
+#: processes/library/subscribe-kg.bpmn:268
 #. Diagram label
 msgid "no, every harness walked"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:264
+#: processes/library/subscribe-kg.bpmn:265
 #. Diagram label
 msgid "no, every part walked"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:248
+#: processes/library/subscribe-kg.bpmn:249
 #. Diagram label
 msgid "no, or could not tell"
 msgstr ""
@@ -169,22 +169,22 @@ msgstr ""
 msgid "Not subscribed, and the record says why"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:233
+#: processes/library/subscribe-kg.bpmn:234
 #. Diagram element documentation
 msgid "One line per offered part: materialised, referenced by choice, or referenced because a gate refused (and which). Nothing new is decided here; it is the account the visualizer and the next refresh read, written once rather than reconstructed from the loop."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:196
+#: processes/library/subscribe-kg.bpmn:197
 #. Diagram element documentation
 msgid "One part at a time, in the order chosen. `yes` hands the next subgraph — or, under an `all` asset policy, the next referenced asset — to the shared subprocess. Under `on-demand`, assets are not walked here at all: each is materialised through the same subprocess when first asked for. `no` moves on to harnesses."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:157
+#: processes/library/subscribe-kg.bpmn:158
 #. Diagram element documentation
 msgid "Only after every held part has been through the refresh. Moving the ref first would make the records of parts not yet refreshed describe a commit the entry no longer names. The cached declaration is replaced so the review that follows shows what the NEW pin offers, including subgraphs that did not exist at the old one."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:231
+#: processes/library/subscribe-kg.bpmn:232
 #. Diagram label
 msgid "Record how the walk ended, part by part"
 msgstr ""
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Refresh the held part [refresh-materialized]"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:165
+#: processes/library/subscribe-kg.bpmn:166
 #. Diagram label
 msgid "Review what the substrate offers"
 msgstr ""
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Subscribe to an external knowledge graph"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:241
+#: processes/library/subscribe-kg.bpmn:242
 #. Diagram label
 msgid "Subscribed, every part in a recorded state"
 msgstr ""
@@ -229,7 +229,7 @@ msgstr ""
 msgid "The `subscriptions` entry in the subscriber's instance declaration — id, repository, ref, and nothing chosen yet — plus a cached copy of the substrate's declaration at the pin. The entry holds the choice and the pin, never state: whether a part is held is answered by its materialisation record, and a second answer here would be free to disagree with it."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:204
+#: processes/library/subscribe-kg.bpmn:205
 #. Diagram element documentation
 msgid "The ONLY way bytes arrive. Purpose first, then the five gates — size, restrictions, copyright, retention, source loss — then fetch with fixity, or stay referenced with the refusing gate's basis recorded. Both ends of that subprocess return here and the walk continues: one part refused is not the subscription refused."
 msgstr ""
@@ -249,7 +249,7 @@ msgstr ""
 msgid "Validates the substrate at the pin, then walks the chosen parts one at a time: each subgraph or asset through the shared materialisation subprocess, each held copy through the shared refresh, each harness by writing its config. Every loop here re-enters its decision after each part, so a refusal on one part is recorded and the walk continues to the next rather than aborting the subscription."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:215
+#: processes/library/subscribe-kg.bpmn:216
 #. Diagram element documentation
 msgid "Walks the chosen harnesses, whose needs the pre-check already found held. `yes` instantiates the next; `no` closes the walk. A harness already instantiated at this pin is skipped rather than rewritten."
 msgstr ""
@@ -264,7 +264,7 @@ msgstr ""
 msgid "Where the subscription is written down: the entry in the subscriber's instance declaration (choice and pin only, never state), the cached copy of the substrate's declaration the visualizer reads offline, and the record of how the walk ended. A refusal lands here with the same weight as a success, so the next caller does not re-litigate it."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:223
+#: processes/library/subscribe-kg.bpmn:224
 #. Diagram element documentation
 msgid "Write `<harness>.config.json` at the repository root, plus the state directories the harness declares. That file is what harness-tiles reads as INSTANTIATED, and it is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere."
 msgstr ""
@@ -274,12 +274,12 @@ msgstr ""
 msgid "Write the entry and cache the declaration"
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:178
+#: processes/library/subscribe-kg.bpmn:179
 #. Diagram element documentation
 msgid "Written to the entry as `subgraphs`, `assets.policy` (none, on-demand or all) and `harnesses`. Choosing is not holding: a chosen subgraph is still referenced until the gates below let it through. Choosing nothing is legitimate — a subscription with no parts chosen is a pinned reference, the case associatedHarnesses covers today."
 msgstr ""
 
-#: processes/library/subscribe-kg.bpmn:249
+#: processes/library/subscribe-kg.bpmn:250
 #. Diagram label
 msgid "yes"
 msgstr ""
