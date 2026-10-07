@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/library/library-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/translation-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/translation-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/translation-manager.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/library/library-core/translation-manager.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Translation manager
@@ -24,7 +24,7 @@ rendering.
 ## Reference
 
 The authoritative documentation is
-[`docs/guides/translation-support.md`](../../guides/translation-support.html). Read it
+[`docs/guides/translation-support.md`](../../docs/cat-harness/guides/translation-support.html). Read it
 before using this skill. This file is the operational checklist, not the
 architecture.
 

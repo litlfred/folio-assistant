@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/harness-requirements.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/harness-requirements.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/harness-requirements.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/harness-requirements.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/harness-requirements.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Harness requirements — what an instance owes for what it declares
@@ -126,6 +126,26 @@ So "which directory holds it" and "which URL serves it" are different
 questions, and a visualiser's declaration answers the first. Do not compose the
 second by hand — that is what produced four incompatible URL shapes across four
 open branches on 2026-09-20.
+
+**The root's own documentation PAGES are the exception to case 1.** Owner,
+2026-10-05 (issue #2188, PR #2189, bean `kc7k`): the pages authored in
+cat-harness's `docs/` folder publish under `<base>/docs/cat-harness/` —
+`concepts/architecture.md` → `<base>/docs/cat-harness/concepts/architecture.html`,
+its locale copy at `<base>/docs/cat-harness/concepts/fr/architecture.html` —
+with no redirects at the old addresses. Nothing else moved: the landing page
+`<base>/` and each locale landing `<base>/fr/`, the instance sites (case 2),
+the viewers (case 3), the kind directories the same tree publishes
+(`<base>/processes/`, `<base>/proposals/` …) and every root export keep their
+URLs.
+
+It is done with `permalink` defaults in that `_config.yml`, beside each
+chapter's `parent`, so `baseurl` stays the site's and Jekyll's `page.url` is
+the one answer. A generator that links to a docs page by its source path asks
+`publishedPagePath` / `publishedHref` (`scripts/lib/jekyll-permalink.ts`)
+rather than swapping `.md` for `.html`; an authored link in a moved page to
+something that stayed is written `{{ '/x' | relative_url }}` (in a table row,
+`{{ site.baseurl }}/x`, whose missing `|` cannot split the cell), because a
+relative one would resolve under `docs/cat-harness/`.
 
 ## Serialisations — the obligation that cannot be waived
 

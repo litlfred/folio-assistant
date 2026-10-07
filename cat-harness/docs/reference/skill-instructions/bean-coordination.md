@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/bean-coordination.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/bean-coordination.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/bean-coordination.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/bean-coordination.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -85,7 +85,7 @@ off limits is a bean a sibling is **mid-flight** on: a claim naming a branch, a
 recent note, an open PR. Closing that is how a session loses work it had not
 finished reporting.
 
-Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-assistant/beans-and-todos.html).
+Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/beans-and-todos.html).
 
 **Operational spec (read these):**
 

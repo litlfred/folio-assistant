@@ -151,20 +151,20 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 агент следует соответствующему рабочему процессу BPMN. Существующие страницы
 документации описывают их подробно:
 
-- **[Процесс публикации](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
+- **[Процесс публикации](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html)** —
   жизненный цикл контента от черновика через валидацию, рендеринг и
   публикацию. Охватывает роли (автор, рецензент, редактор), базовые процессы,
   действия и навыки.
 
-- **[Импорт документов](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
+- **[Импорт документов](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/document-ingestion.html)** —
   как добавленный файл становится источником L1: извлечение структуры, извлечение контента,
   построение графа знаний L1, шлюз полноты.
 
 - **Руководства по написанию:**
-  - [Написание статьи](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
-  - [Написание документа](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
+  - [Написание статьи](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
+  - [Написание документа](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
 
 Оснастка не переопределяет эти рабочие процессы. Она обеспечивает **точку входа** —
 классификацию запроса и маршрутизацию к нужному процессу — и **точку выхода** —
@@ -204,7 +204,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 подпроцессах при контролируемом наложении контекста и памяти — вот три
 вопроса, которые этот репозиторий теперь может сформулировать, но еще не разрешил. План исследований, где
 каждое утверждение помечено как измеренное (measured), решенное (decided) или гипотеза (hypothesis), изложен в
-[`deterministic-and-agentic`](../../reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }}).
 Читайте его именно как план программы: в нем больше гипотез, чем измерений, о чем в нем
 прямо и сообщается.
 
@@ -218,7 +218,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 > **Навык выполнения BPMN (BPMN Execution Skill):** имея Процесс, Контекст, Состояние и Роль, задействовать
 > один или несколько Навыков для выполнения Задачи.
 
-![Выполнение BPMN: от детерминированного к агентному. Цветовая шкала идет от «детерминированного» (синий, слева: управляемое выполнение агентом отдельной задачи) к «агентному» (зеленый, справа: агенты на большинстве или на всех задачах). Слева под значком шестеренки и двигателя: «BPMN Execution Tool: любой движок BPMN с открытым исходным кодом, строгое соблюдение состояния и дорожек», над плоской дорожечной диаграммой жизненного цикла фолио с одной стикер-заметкой, одним кластером beans, человеком и котом-роботом рядом с дорожками. Справа под значком кота-робота: «BPMN Execution Tool: агентный рой с неуправляемым состоянием. Агенты "ослабляют" дорожки, что компенсируется механическими и агентными отчетами QA/QC», над той же диаграммой в перспективном наклоне, с рассыпанными по всем дорожкам beans и множеством котов-роботов под ней.](../../assets/img/bpmn-execution-spectrum.webp)
+![Выполнение BPMN: от детерминированного к агентному. Цветовая шкала идет от «детерминированного» (синий, слева: управляемое выполнение агентом отдельной задачи) к «агентному» (зеленый, справа: агенты на большинстве или на всех задачах). Слева под значком шестеренки и двигателя: «BPMN Execution Tool: любой движок BPMN с открытым исходным кодом, строгое соблюдение состояния и дорожек», над плоской дорожечной диаграммой жизненного цикла фолио с одной стикер-заметкой, одним кластером beans, человеком и котом-роботом рядом с дорожками. Справа под значком кота-робота: «BPMN Execution Tool: агентный рой с неуправляемым состоянием. Агенты "ослабляют" дорожки, что компенсируется механическими и агентными отчетами QA/QC», над той же диаграммой в перспективном наклоне, с рассыпанными по всем дорожкам beans и множеством котов-роботов под ней.]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **Один навык, два вида инструментов (Tool).** Навык одинаков на обоих полюсах: взять
 процесс, контекст, текущее состояние и роль, выбрать навыки и выполнить
@@ -241,7 +241,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) в качестве языка разрешений
 и [W3C PROV-O](https://www.w3.org/TR/prov-o/) в качестве журнала выполнения (владелец,
 2026-09-23; вытекающая отсюда схема —
-[предложение по субъектам, ODRL и PROV-O](../../proposals/odrl-prov-actor-model.html)).
+[предложение по субъектам, ODRL и PROV-O]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})).
 
 **Большинство реальных запусков располагаются между этими полюсами**, причем применительно к отдельным задачам, а не к процессам в целом:
 в [предыдущем разделе](#deterministic-and-agentic) уже подсчитано, какие
@@ -263,7 +263,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 Когда запрос классифицируется как запрос новой функциональности, агент входит в
 **рабочий процесс требований CRDM**
-([полная документация](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
+([полная документация](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/crdm-methodology.html),
 [BPMN](../../../processes/process/crdm-requirements.bpmn)).
 
 Рабочий процесс запросов функциональности — это область, где данный документ об оснастке приносит больше всего

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Phase 1 — Needs assessment (detail)

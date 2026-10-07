@@ -20,6 +20,7 @@
  * `test/library-entry-iri-checkout.test.ts` (bean `7zz1`): standing alone,
  * cat-harness has none of it.
  */
+import { EDIT_LINKS_RUNTIME } from "../../src/core/edit-links.ts";
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -79,7 +80,10 @@ describe("a legacy #key is read once, to be normalised to the path", () => {
   });
   test("normalisation is a replaceState to the entry's path, never a new fragment", () => {
     expect(VIEWER_JS).toContain("history.replaceState(null, \"\", to)");
-    expect(VIEWER_JS).not.toMatch(/"#" \+ encodeURIComponent/);
+    // The viewer's OWN code. The embedded edit-links runtime (bean zcak) puts a
+    // block's address in a feedback issue's body with a fragment; that is a
+    // link written into an issue, not navigation, so it is not this rule's.
+    expect(VIEWER_JS.replace(EDIT_LINKS_RUNTIME, "")).not.toMatch(/"#" \+ encodeURIComponent/);
   });
 });
 
