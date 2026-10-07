@@ -19,10 +19,8 @@ import { gunzipSync } from "node:zlib";
 import oxigraph from "oxigraph";
 import {
   NQuadsDistributionManifestSchema,
-  NamedQueryRequestSchema,
   type NamedQueryRequest,
   type NamedQueryResponse,
-  type NQuadsDistributionManifest,
 } from "../schemas/nquads-distribution.ts";
 
 export class MissingPartitionError extends Error {
@@ -198,7 +196,7 @@ if (import.meta.main) {
     const a = args[i];
     if (a === "--dataset" && args[i + 1]) dataset = args[++i];
     else if (a === "--named" && args[i + 1]) queryName = args[++i];
-    else if (a === "--format" && args[i + 1]) format = args[++i] as any;
+    else if (a === "--format" && args[i + 1]) format = args[++i] as "table" | "json" | "ids";
     else if (a === "--limit" && args[i + 1]) limit = parseInt(args[++i], 10);
     else if (a === "--param" && args[i + 1]) {
       const [k, v] = args[++i].split("=");
@@ -231,8 +229,9 @@ if (import.meta.main) {
       console.log(`Store: ${res.quadsLoaded} quads loaded in ${res.loadTimeMs}ms. Query executed in ${res.executionTimeMs}ms. Rows: ${res.totalRows}\n`);
       console.table(res.rows);
     }
-  } catch (err: any) {
-    console.error(`Error executing query: ${err.message}`);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`Error executing query: ${msg}`);
     process.exit(1);
   }
 }

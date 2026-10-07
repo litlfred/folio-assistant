@@ -68,7 +68,6 @@ async function decompressGzipResponse(response) {
   const ds = new DecompressionStream("gzip");
   const decompressedStream = response.body.pipeThrough(ds);
   const reader = decompressedStream.getReader();
-  const chunks = [];
   const decoder = new TextDecoder("utf-8");
   let result = "";
 
@@ -176,7 +175,7 @@ export class WebNQuadsClient {
         if (partDef) {
           try {
             await this.loadPartition(partDef);
-          } catch (e) {
+          } catch (_e) {
             missing.push(reqId);
           }
         } else {

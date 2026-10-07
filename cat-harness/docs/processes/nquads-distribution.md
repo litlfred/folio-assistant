@@ -20,7 +20,7 @@ CRITICAL INVARIANTS:
 4. GRAPH AVAILABILITY GUARD: Queries declare requiredSubgraphs; execution fails fast with MissingPartitionError rather than silently returning partial query results.
 5. NO COMMITTED BINARY PAYLOADS: `.nq.gz` distribution payloads are gitignored, generated on demand or in CI, and served to Pages via 'served: true'.
 
-_No rendered diagram — run `bun run cat render:bpmn`._
+<img src="../assets/img/workflows/nquads-distribution.svg" alt="BPMN diagram: Package and distribute partitioned W3C N-Quads and named queries" style="max-width:100%">
 
 ## How it connects
 

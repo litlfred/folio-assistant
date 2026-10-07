@@ -479,6 +479,14 @@
       "status": "candidate"
     },
     {
+      "id": "nquads-query",
+      "prefLabel": "N-Quads Named Query Engine",
+      "definition": "Execute an audited, named SPARQL 1.1 query over a partitioned W3C N-Quads dataset distribution (e.g. WHO-IRIS, Beans graph) with graph availability validation.",
+      "notation": "nquads-query",
+      "source": "cat-harness/tools/mcp.ts#nquads-query",
+      "status": "candidate"
+    },
+    {
       "id": "ns-vocabulary",
       "prefLabel": "Namespace vocabulary",
       "definition": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",

@@ -81,3 +81,14 @@ To prevent browser V8 heap exhaustion on edge devices, datasets are never delive
 * **Queries**: `safe_drain_candidates`, `actionable_leaves`, `critical_path_blockers`, `rollup_invariant_violations`, `circular_blockers`.
 * **Declared Served Directory**: `beans/dist/` with `"served": true` in `beans.json`.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Package and distribute partitioned W3C N-Quads and named queries](../../processes/nquads-distribution.html)**.
+
+<img src="../../assets/img/workflows/nquads-distribution.svg" alt="BPMN diagram: Package and distribute partitioned W3C N-Quads and named queries" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Package and distribute partitioned W3C N-Quads and named queries](../../processes/nquads-distribution.html) | Extract & Skolemize RDF Dataset; Stream W3C N-Quads into Subgraph Partitions; Report Budget Finding; Refine Subgraph Splitting; Declare Distribution Manifest & Named Queries; Publish Distribution via 'served: true' to Pages |
+

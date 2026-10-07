@@ -1194,6 +1194,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/nquads-query",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "N-Quads Named Query Engine"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Execute an audited, named SPARQL 1.1 query over a partitioned W3C N-Quads dataset distribution (e.g. WHO-IRIS, Beans graph) with graph availability validation."
+        }
+      ],
+      "skos:notation": "nquads-query",
+      "dcterms:source": "cat-harness/tools/mcp.ts#nquads-query",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/ns-vocabulary",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -1101,6 +1101,153 @@
       "name": "Corpus or graph requires distribution"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution",
+      "@type": "bootstrap:Process",
+      "name": "Execute audited named queries over partitioned W3C N-Quads distributions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_AbortParams",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_AutoFetchNo",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Cannot fetch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_AutoFetchYes",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Can fetch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_Executed",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_FailGuard",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_Fetched",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_GuardCheck",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_GuardMissing",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Missing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_GuardPass",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "All loaded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_ParamsFail",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Invalid"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_ParamsPass",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Valid"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_Req1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_Req2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/flow/Flow_ToCaller",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/lane/Lane_Caller",
+      "@type": "cat-harness:Lane",
+      "name": "Query Caller (CLI / MCP / Web)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/lane/Lane_Engine",
+      "@type": "cat-harness:Lane",
+      "name": "Universal Query Engine Runtime"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/A_BindExecute",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Bind Typed Parameters & Execute SPARQL"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/A_CheckSubgraphs",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check Graph Availability Guard (requiredSubgraphs)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/A_FetchPartitions",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fetch & Ingest Missing Subgraphs (.nq.gz)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/A_FormatResponse",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Format Universal Result Response Envelope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/A_RaiseMissingPartition",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Raise MissingPartitionError (Fail-Closed Guard)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/A_RejectInvalidArgs",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Reject Request with ValidationError"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/A_ValidateParams",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Validate Arguments against Parameter Schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/End_GuardFailed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Query aborted on missing partition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/End_InvalidParams",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Query rejected on invalid arguments"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/End_Success",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Query completed with verified result"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/GW_AutoFetch",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Auto-fetch enabled & source reachable?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/GW_SubgraphsLoaded",
+      "@type": "bootstrap:ProcessNode",
+      "name": "All required subgraphs loaded in store?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/GW_ValidParams",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Arguments valid?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NamedQueryExecution/node/Start_QueryRequest",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Named query requested"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish",
       "@type": "bootstrap:Process",
       "name": "Build and publish a per-slice SQLite file"

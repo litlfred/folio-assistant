@@ -5149,6 +5149,146 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_namedqueryexecution.a_bindexecute",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Bind Typed Parameters & Execute SPARQL"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Safely bind validated parameters into the audited SPARQL template with escaping. Execute SPARQL query against the Oxigraph store."
+        }
+      ],
+      "skos:notation": "A_BindExecute",
+      "dcterms:source": "cat-harness/processes/kg/named-query-execution.bpmn#A_BindExecute",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_namedqueryexecution.a_checksubgraphs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check Graph Availability Guard (requiredSubgraphs)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Inspect query definition requiredSubgraphs list. Verify that each required subgraph is currently loaded into the Oxigraph store."
+        }
+      ],
+      "skos:notation": "A_CheckSubgraphs",
+      "dcterms:source": "cat-harness/processes/kg/named-query-execution.bpmn#A_CheckSubgraphs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_namedqueryexecution.a_fetchpartitions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Fetch & Ingest Missing Subgraphs (.nq.gz)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Fetch missing partition payloads over HTTP (servedRoute) or local files, decompress gzip streams, and ingest quads directly into store."
+        }
+      ],
+      "skos:notation": "A_FetchPartitions",
+      "dcterms:source": "cat-harness/processes/kg/named-query-execution.bpmn#A_FetchPartitions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_namedqueryexecution.a_formatresponse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Format Universal Result Response Envelope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Serialize query results into NamedQueryResponseSchema envelope: queryId, executionTimeMs, rowCount, bindings (for SELECT), boolean (for ASK), or quads (for CONSTRUCT)."
+        }
+      ],
+      "skos:notation": "A_FormatResponse",
+      "dcterms:source": "cat-harness/processes/kg/named-query-execution.bpmn#A_FormatResponse",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_namedqueryexecution.a_raisemissingpartition",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Raise MissingPartitionError (Fail-Closed Guard)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Fail execution fast: throw MissingPartitionError naming the required subgraphs that are absent. Never return silent partial answers."
+        }
+      ],
+      "skos:notation": "A_RaiseMissingPartition",
+      "dcterms:source": "cat-harness/processes/kg/named-query-execution.bpmn#A_RaiseMissingPartition",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_namedqueryexecution.a_rejectinvalidargs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Reject Request with ValidationError"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Abort execution immediately with detailed validation error describing missing or ill-typed arguments."
+        }
+      ],
+      "skos:notation": "A_RejectInvalidArgs",
+      "dcterms:source": "cat-harness/processes/kg/named-query-execution.bpmn#A_RejectInvalidArgs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_namedqueryexecution.a_validateparams",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Validate Arguments against Parameter Schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Look up query definition by queryId in distribution manifest. Validate supplied arguments against parameter types, required fields, and pattern constraints."
+        }
+      ],
+      "skos:notation": "A_ValidateParams",
+      "dcterms:source": "cat-harness/processes/kg/named-query-execution.bpmn#A_ValidateParams",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_narrativecodereview.a_attest",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5346,6 +5486,146 @@
       ],
       "skos:notation": "Task_ReviewTranslation",
       "dcterms:source": "cat-harness/processes/content/review-narrative.bpmn#Task_ReviewTranslation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_nquadsdistribution.a_declaremanifest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Declare Distribution Manifest & Named Queries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write subgraph-manifest.json conforming to folio-nquads-distribution/v1. Declare datasetIri, servedRoute, spine, subgraphs, and audited named SPARQL queries with explicit requiredSubgraphs and typed parameter definitions."
+        }
+      ],
+      "skos:notation": "A_DeclareManifest",
+      "dcterms:source": "cat-harness/processes/kg/nquads-distribution.bpmn#A_DeclareManifest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_nquadsdistribution.a_deploypages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish Distribution via 'served: true' to Pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Publish distribution directory to _site/ via mount-instance-docs.ts respecting 'served: true' declaration. Quads files become accessible identically to web clients and CLI/agent runners."
+        }
+      ],
+      "skos:notation": "A_DeployPages",
+      "dcterms:source": "cat-harness/processes/kg/nquads-distribution.bpmn#A_DeployPages",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_nquadsdistribution.a_extractskolemize",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract & Skolemize RDF Dataset"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Extract the target RDF triples and ensure strict upstream skolemization: transform every blank node into a deterministic IRI under the dataset namespace. Zero blank nodes allowed in serialized N-Quads."
+        }
+      ],
+      "skos:notation": "A_ExtractSkolemize",
+      "dcterms:source": "cat-harness/processes/kg/nquads-distribution.bpmn#A_ExtractSkolemize",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_nquadsdistribution.a_gatecheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CI Gate Verification: Audit Manifest & Schemas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Validate that subgraph-manifest.json conforms to NQuadsDistributionManifestSchema, all referenced partitions exist, and external schema w3c-n-quads is satisfied."
+        }
+      ],
+      "skos:notation": "A_GateCheck",
+      "dcterms:source": "cat-harness/processes/kg/nquads-distribution.bpmn#A_GateCheck",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_nquadsdistribution.a_partitionquads",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stream W3C N-Quads into Subgraph Partitions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Serialize lines conforming to W3C RDF 1.1 N-Quads (subject predicate object graphIri .). Split into Tier 1 Spine (routing backbone) and Tier 2 Subgraphs (communities, domains). Compress each into .nq.gz."
+        }
+      ],
+      "skos:notation": "A_PartitionQuads",
+      "dcterms:source": "cat-harness/processes/kg/nquads-distribution.bpmn#A_PartitionQuads",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_nquadsdistribution.a_reportbudgetexcess",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report Budget Finding; Refine Subgraph Splitting"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Record the oversized partition on the coordinating bean. Refine subgraph partitioning boundary or split into finer subgraphs. Do not ship oversized partition."
+        }
+      ],
+      "skos:notation": "A_ReportBudgetExcess",
+      "dcterms:source": "cat-harness/processes/kg/nquads-distribution.bpmn#A_ReportBudgetExcess",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_nquadsdistribution.a_verifyqueries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Verify Queries via CLI & Test Graph Availability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Execute named queries using scripts/nquads-query.ts and cat-harness-tools/src/tools/nquads-query.ts. Assert that missing partition triggers MissingPartitionError and typed parameters prevent injection."
+        }
+      ],
+      "skos:notation": "A_VerifyQueries",
+      "dcterms:source": "cat-harness/processes/kg/nquads-distribution.bpmn#A_VerifyQueries",
       "skos:note": "candidate"
     },
     {

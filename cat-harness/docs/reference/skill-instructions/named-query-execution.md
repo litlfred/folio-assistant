@@ -56,6 +56,11 @@ The execution contract is defined in [`schemas/nquads-distribution.ts`](https://
   * `integer`: Validated as numeric and suffixed with `^^xsd:integer`.
   * `boolean`: Validated as `"true"^^xsd:boolean` or `"false"^^xsd:boolean`.
 
+### 2.3 Named Graph Pattern Matching
+* **The Contract**: W3C N-Quads explicitly serialize statements into target named graphs (`<subject> <predicate> <object> <graphIri> .`).
+* **The Rule**: In W3C SPARQL 1.1, queries evaluating against named graphs in a dataset store must use graph patterns `GRAPH ?g { ... }` or `GRAPH <targetGraphIri> { ... }`. Evaluating triple patterns outside a `GRAPH` block only matches the default graph, which is empty when statements are partitioned into named subgraphs.
+
+
 ---
 
 ## 3. Triple Context Wiring
@@ -107,3 +112,15 @@ await client.init(); // Loads Tier 1 Spine (who-iris-spine.nq.gz)
 const results = await client.runNamedQuery('search_by_mesh', { term: 'Vaccines' });
 ```
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Execute audited named queries over partitioned W3C N-Quads distributions](../../processes/named-query-execution.html)**.
+
+<img src="../../assets/img/workflows/named-query-execution.svg" alt="BPMN diagram: Execute audited named queries over partitioned W3C N-Quads distributions" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Execute audited named queries over partitioned W3C N-Quads distributions](../../processes/named-query-execution.html) | Validate Arguments against Parameter Schema; Reject Request with ValidationError; Check Graph Availability Guard (requiredSubgraphs); Fetch & Ingest Missing Subgraphs (.nq.gz); Raise MissingPartitionError (Fail-Closed Guard); Bind Typed Parameters & Execute SPARQL; Format Universal Result Response Envelope |
+| [Package and distribute partitioned W3C N-Quads and named queries](../../processes/nquads-distribution.html) | Declare Distribution Manifest & Named Queries; Verify Queries via CLI & Test Graph Availability; CI Gate Verification: Audit Manifest & Schemas |
+

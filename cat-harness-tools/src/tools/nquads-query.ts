@@ -20,7 +20,7 @@ export function registerNQuadsQueryTools(server: McpServer): void {
       dataset: z.string().describe("Path to dataset distribution directory or subgraph-manifest.json"),
       query_name: z.string().describe("Identifier of the named query declared in the distribution manifest"),
       bindings: z
-        .record(z.union([z.string(), z.number(), z.boolean()]))
+        .record(z.string(), z.union([z.string(), z.number(), z.boolean()]))
         .default({})
         .describe("Dictionary of parameter values to bind (?$paramName)"),
       format: z.enum(["table", "json", "ids"]).default("table").describe("Output presentation format"),
