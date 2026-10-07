@@ -1067,7 +1067,7 @@
         if (again) {
           again.focus();
           var end = again.value.length;
-          try { again.setSelectionRange(end, end); } catch (e) { /* not a text field */ }
+          try { again.setSelectionRange(end, end); } catch (_e) { /* not a text field */ }
         }
       }, 150);
     });
@@ -1142,14 +1142,14 @@
       var url = new URL(window.location.href);
       if (QUERY) url.searchParams.set("q", QUERY); else url.searchParams.delete("q");
       window.history.replaceState(null, "", url.toString());
-    } catch (e) { /* a file:// page or no history API — the search still works */ }
+    } catch (_e) { /* a file:// page or no history API — the search still works */ }
   }
 
   function mountWorkPlan() {
     var host = document.querySelector("[data-fa-workplan]");
     if (!host) return;
     var region = FA.region ? FA.region("work-plan") : null;
-    try { QUERY = (new URL(window.location.href).searchParams.get("q") || "").trim(); } catch (e) { QUERY = ""; }
+    try { QUERY = (new URL(window.location.href).searchParams.get("q") || "").trim(); } catch (_e) { QUERY = ""; }
     // A page about ONE graph says so on its container (#2418): the themed
     // `/beans/` page sits under a layout whose head carries `fa-todo-src` for
     // every page, and asking for it would quietly turn the beans view into the

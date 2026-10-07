@@ -581,6 +581,14 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
   outline-offset: 2px;
 }
 .fa-workplan-results .fa-workplan-bean-list { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+/* Each result is a link a reader is expected to click, so it meets the 24px
+   target floor (WCAG 2.2 2.5.8) — rows of 15px text did not, measured. */
+.fa-workplan-results .fa-workplan-bean-row { padding: 0.15rem 0; }
+.fa-workplan-results .fa-workplan-bean-link {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
+}
 .fa-workplan-bean-id {
   font-size: 0.75rem;
   color: var(--fa-wp-ink-2);
@@ -2812,7 +2820,7 @@ button.fa-nav-icon {
         if (again) {
           again.focus();
           var end = again.value.length;
-          try { again.setSelectionRange(end, end); } catch (e) { /* not a text field */ }
+          try { again.setSelectionRange(end, end); } catch (_e) { /* not a text field */ }
         }
       }, 150);
     });
@@ -2887,14 +2895,14 @@ button.fa-nav-icon {
       var url = new URL(window.location.href);
       if (QUERY) url.searchParams.set("q", QUERY); else url.searchParams.delete("q");
       window.history.replaceState(null, "", url.toString());
-    } catch (e) { /* a file:// page or no history API — the search still works */ }
+    } catch (_e) { /* a file:// page or no history API — the search still works */ }
   }
 
   function mountWorkPlan() {
     var host = document.querySelector("[data-fa-workplan]");
     if (!host) return;
     var region = FA.region ? FA.region("work-plan") : null;
-    try { QUERY = (new URL(window.location.href).searchParams.get("q") || "").trim(); } catch (e) { QUERY = ""; }
+    try { QUERY = (new URL(window.location.href).searchParams.get("q") || "").trim(); } catch (_e) { QUERY = ""; }
     // A page about ONE graph says so on its container (#2418): the themed
     // `/beans/` page sits under a layout whose head carries `fa-todo-src` for
     // every page, and asking for it would quietly turn the beans view into the
