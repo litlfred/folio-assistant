@@ -1,12 +1,12 @@
 ---
 # folio-assistant-2q1p
 title: 'RETIRED PREVIEWS COME BACK: the full-replace restore carries _retired as a record but never consults it, so a retirement is undone by the next main-site publish'
-status: todo
+status: in-progress
 type: bug
 priority: high
 parent: folio-assistant-1xhc
 created_at: 2026-10-02T12:00:53Z
-updated_at: 2026-10-02T12:00:53Z
+updated_at: 2026-10-07T05:01:39Z
 ---
 
 Found 2026-10-02 by testing ONE preview retirement before dispatching 57 —
@@ -90,3 +90,5 @@ than a branch where the cleanup commit has already landed cleanly.
 Related: `tcd6` (the cleanup job that could not run at all), `plj1` (the
 full-replace deploy that deleted previews), `6pfo` (the retired-record store),
 `qj9a` (staging size and what `critical` asserts).
+
+_2026-10-07T05:01:39Z_ — Claimed by claude/2q1p-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

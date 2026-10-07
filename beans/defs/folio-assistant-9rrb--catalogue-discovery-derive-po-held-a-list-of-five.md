@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9rrb
 title: 'CATALOGUE DISCOVERY: derive-po held a list of five page names, so #1404''s four new pages took drift from 1 to 21 unseen'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T14:13:00Z
-updated_at: 2026-09-26T17:26:28Z
+updated_at: 2026-10-07T05:04:36Z
 parent: folio-assistant-bzyu
 ---
 
@@ -146,3 +146,5 @@ next reader whether it has been fixed:
 a human, so clearing a refusal by editing the translation would manufacture
 exactly the sign-off it protects. Three of the six need `msgctxt`, which is a
 format question rather than a translation one, and that is a separate change.
+
+_2026-10-07T05:04:36Z_ — Claimed by claude/9rrb-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
