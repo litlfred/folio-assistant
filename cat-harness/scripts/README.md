@@ -13,7 +13,6 @@ _More than 150 files directly here, too many to list, of these kinds: .bat, .gra
 | file | what it is | used by |
 |---|---|---|
 | [`ci/`](ci/) | _nothing declares what this holds_ | |
-| [`docker-latex-build/`](docker-latex-build/) | _nothing declares what this holds_ | |
 | [`eval/`](eval/) | _nothing declares what this holds_ | |
 | [`git-hooks/`](git-hooks/) | _nothing declares what this holds_ | |
 | [`knot-plots/`](knot-plots/) | _nothing declares what this holds_ | |

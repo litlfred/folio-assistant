@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > التثبيت هو النصف الأسهل. ما يجب تشغيله **قبل أن تدفع (push)** هو
-> [`platform-gates`](../../reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) —
 > فاجتياز `bun test` ليس هو اجتياز البوابات، وتُستمد القائمة من
 > سير عمل CI بدلاً من أن تكون مكتوبة نصيًا. وإذا كنت تضع folio-assistant
 > فوق مستودع موجود بالفعل، فاقرأ
-> [`repo-conversion`](../../reference/skill-instructions/repo-conversion.html) أولاً.
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }}) أولاً.
 
 ## المتطلبات الأساسية
 
@@ -145,7 +145,7 @@ folio-assistant) واضبطه وفقًا لنوع المحتوى لديك:
 ```sh
 # The DESTINATION is named for your instance -- `my-folio.config.json`, not a
 # fixed word. The example file keeps its own name: that is what it is called.
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

@@ -380,9 +380,9 @@
       "@type": "bootstrap:Asset",
       "name": "instance-readme",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4ba3998277cae1e2c731c14595b40712bb8f84a829d60ab921526df051f29e76",
-        "bytes": 2928,
-        "sha256": "4ba3998277cae1e2c731c14595b40712bb8f84a829d60ab921526df051f29e76"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f98b2de919842797d92ab44da32107a247b72748d23c7c717792dee549c08907",
+        "bytes": 3000,
+        "sha256": "f98b2de919842797d92ab44da32107a247b72748d23c7c717792dee549c08907"
       },
       "title": "cat-harness"
     },
@@ -555,6 +555,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests",
       "@type": "bootstrap:Subgraph",
       "name": "cat-harness-tests"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-upstream",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-upstream"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-validators",
@@ -2282,6 +2287,12 @@
       "@type": "cat-harness:Tool",
       "name": "mcp-capture",
       "title": "What this instance's MCP server serves"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/mcp-server-image",
+      "@type": "cat-harness:Tool",
+      "name": "mcp-server-image",
+      "title": "folio MCP server, as a container"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/merge-leftover",

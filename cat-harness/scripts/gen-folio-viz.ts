@@ -76,6 +76,7 @@ import {
   siteDirFor,
 } from "../schemas/cat-harness.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { publishedHref } from "./lib/jekyll-permalink.ts";
 import { withRenders } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -176,7 +177,9 @@ export function readFolioGraph(roots: string[], repo?: string): FolioGraph | nul
           links: Array.isArray(raw.links)
             ? (raw.links as Array<Record<string, unknown>>).map((l) => ({
                 label: String(l.label ?? ""),
-                href: String(l.href ?? ""),
+                // Authored as the page's source location; published elsewhere
+                // for the docs-folder pages (bean `kc7k`).
+                href: publishedHref(join(ROOT, siteDirFor(ROOT)), String(l.href ?? "")),
               }))
             : [],
           chars: String(raw.comment ?? raw.text ?? "").length,

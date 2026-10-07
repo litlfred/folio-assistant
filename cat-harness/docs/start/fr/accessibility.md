@@ -21,7 +21,7 @@ page y répond :
 
 Il s'avère qu'il s'agit de la même question posée par deux bouts différents, c'est pourquoi elles
 partagent la même page. La compétence qui l'implémente est
-[`interaction-modality`](../../reference/skill-instructions/interaction-modality.html).
+[`interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }}).
 
 1. TOC
 {:toc}
@@ -123,7 +123,7 @@ effort pour rendre l'éditeur accessible ne peut s'y substituer.
 | | où |
 |---|---|
 | Préférences destinées à l'agent, commitées, lues au démarrage de la session | `interaction/interaction.json`, exposé par `scripts/session-start-coord-sweep.sh` |
-| Les règles suivies par un agent lorsqu'il pose des questions | [`interaction-modality`](../../reference/skill-instructions/interaction-modality.html) |
+| Les règles suivies par un agent lorsqu'il pose des questions | [`interaction-modality`]({{ site.baseurl }}/reference/skill-instructions/interaction-modality.html) |
 | Contrôles destinés aux lecteurs sur ce site | la roue dentée dans l'en-tête de la barre latérale — texte plus grand, contraste plus élevé, liens soulignés, animations réduites |
 | Prise en compte de la réduction des animations sans qu'on le demande | requête média `prefers-reduced-motion`, qui initialise la valeur par défaut du panneau |
 
@@ -218,6 +218,6 @@ Quatre façons de procéder, par ordre d'ambition croissante. Seule la première
 ## Voir aussi
 
 - [Premiers pas](getting-started.html) — la table de décision d'intention en pratique
-- [Compétence `interaction-modality`](../../reference/skill-instructions/interaction-modality.html)
+- [Compétence `interaction-modality`]({{ '/reference/skill-instructions/interaction-modality.html' | relative_url }})
 - [Flux de publication](../../process/fr/publication-workflow.html) — chaque processus au sein du dépôt
-- [Options pour l'état du flux de travail dans beans](../../proposals/workflow-state-in-beans.html)
+- [Options pour l'état du flux de travail dans beans]({{ '/proposals/workflow-state-in-beans.html' | relative_url }})
