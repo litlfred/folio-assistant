@@ -1369,7 +1369,7 @@
     {
       "id": "process_kgseparation.task_consume",
       "prefLabel": "11 · Parent consumes, additively",
-      "definition": "The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared.",
+      "definition": "The parent pins the pair (a commit while staging, a version once released) — a code dependency as a `source.remote` instance in its root `index.config.json` (remote-mount skill), never a submodule — repoints its imports, and keeps its own copy until it is green with the dependency declared.",
       "notation": "Task_Consume",
       "source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Consume",
       "status": "candidate"
@@ -1996,7 +1996,7 @@
     {
       "id": "process_mountdependency.task_declaremount",
       "prefLabel": "Declare the mount: harness, repository, pin",
-      "definition": "`remoteMounts: [{ harness, repository, ref }]` on the downstream's own declaration. `ref` is a full 40-character commit. Overrides, if any, are keyed by instance name and then by directory id — never by path. Decide first whether you want a remote mount at all: reading another graph without holding its code is a SUBSCRIPTION, not a mount.",
+      "definition": "An instance `{ name, source: { remote: { repository, ref } } }` in the downstream's root `index.config.json`, written through `writeDeclaredMounts`. A folio with no index still reads `remoteMounts` on its declaration; both at once is refused. `ref` is a full 40-character commit. Overrides, if any, are keyed by instance name and then by directory id — never by path. The index itself is the index-config skill's. Decide first whether you want a remote mount at all: reading another graph without holding its code is a SUBSCRIPTION, not a mount.",
       "notation": "Task_DeclareMount",
       "source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_DeclareMount",
       "status": "candidate"
@@ -2020,7 +2020,7 @@
     {
       "id": "process_mountdependency.task_writelock",
       "prefLabel": "Write the lock",
-      "definition": "`<instance>.mount-lock.json` beside the downstream's declaration: the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean.",
+      "definition": "`index.lock.json` beside the downstream's `index.config.json` (the legacy `<instance>.mount-lock.json` is still read, and is renamed onto the new name when rewritten; both present is an error): the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean.",
       "notation": "Task_WriteLock",
       "source": "cat-harness/processes/kg/mount-dependency.bpmn#Task_WriteLock",
       "status": "candidate"
@@ -2036,7 +2036,7 @@
     {
       "id": "process_mountsubgraph.task_mountremotepin",
       "prefLabel": "Mount the remote tree at its pin",
-      "definition": "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run cat mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through `remoteMounts`, which expands a whole harness and its closure — `Process_MountDependency`.",
+      "definition": "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run cat mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through a `source.remote` instance in the root `index.config.json` (legacy: `remoteMounts`), which expands a whole harness and its closure — `Process_MountDependency`.",
       "notation": "Task_MountRemotePin",
       "source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountRemotePin",
       "status": "candidate"
@@ -2994,7 +2994,7 @@
     {
       "id": "process_subscribekg.task_instantiate",
       "prefLabel": "Instantiate the harness: write its config",
-      "definition": "Write `<harness>.config.json` at the repository root, plus the state directories the harness declares. That file is what harness-tiles reads as INSTANTIATED, and it is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere.",
+      "definition": "Write `<harness>.config.json` at the repository root, plus the state directories the harness declares, and — where the checkout has a root `index.config.json` — list the harness in its `instances[]`, because the index, not the file, is then what reads as INSTANTIATED (index-config skill); a root config the index does not list fails check:landing-instance. That instantiation is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere.",
       "notation": "Task_Instantiate",
       "source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Instantiate",
       "status": "candidate"

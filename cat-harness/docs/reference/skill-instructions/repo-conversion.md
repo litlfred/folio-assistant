@@ -158,7 +158,7 @@ brings layers in; it does not provision anything on the downstream's remote.
 ### Worked example — litlfred/test
 
 litlfred/test is an overlay that remote-mounts its harness layers
-(`test.mount-lock.json`) and publishes its L1 site from `main` through a
+(its lock is the legacy `test.mount-lock.json` until it converts to `index.config.json` and `index.lock.json`: [`index-config`](../../kg/kg-core/index-config.md)) and publishes its L1 site from `main` through a
 workflow that pushes `gh-pages` (`.github/workflows/l1-kg.yml`). Its first
 plan, in litlfred/test#3, said "Pages source: GitHub Actions" and had no
 provisioning step. The owner caught it. In

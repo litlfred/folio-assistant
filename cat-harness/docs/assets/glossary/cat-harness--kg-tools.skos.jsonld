@@ -654,6 +654,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/index-config-migrate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Convert a checkout to a root index.config.json"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the root `index.config.json` (`folio-index-config/v1`) that says which instances the checkout instantiates, where each comes from (`source.local` or `source.remote`) and which owns `/` (`site.landing`), from the root `*.config.json` files and the declaration's `remoteMounts`. With `--write` it moves `remoteMounts` off the declaration into `source.remote` entries, writes the generated `.gitignore` block, and renames a legacy `<name>.mount-lock.json` to `index.lock.json`. Without a flag it prints the index it would write. Idempotent: a re-run merges what the declaration gained, and refuses an entry the index already holds differently. A root config naming no instance is reported as `unmatched-config` and not imported, because what to do with it is a person's decision."
+        }
+      ],
+      "skos:notation": "index-config-migrate",
+      "dcterms:source": "cat-harness/tools/index.ts#index-config-migrate",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/ingest-extended",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1626,7 +1646,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Lay down each `remoteMounts` harness, and its dependency closure, from another repository at a full commit SHA, and write the mount lock. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches."
+          "@value": "Lay down each declared remote mount — a `source.remote` instance in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches."
         }
       ],
       "skos:notation": "remote-mount",

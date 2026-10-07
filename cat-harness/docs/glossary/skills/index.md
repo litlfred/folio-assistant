@@ -14,7 +14,7 @@ Candidate terms extracted from every skill's front matter: `name` as the label, 
 
 From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 224 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 24 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 55 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 2 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 343 terms and is 264 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 343 terms and is 265 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -1874,7 +1874,7 @@ remark-audit <span class="fa-gloss-status">candidate, extracted</span>
 remote-mount <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: <code>remoteMounts</code> on the downstream and <code>mountDefaults</code> on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no <code>.deps/</code>, the transitive closure through <code>needs</code> and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.</p>
+<p>Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: a <code>source.remote</code> entry in the downstream's root <code>index.config.json</code> (legacy: <code>remoteMounts</code> on its declaration) and <code>mountDefaults</code> on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no <code>.deps/</code>, the transitive closure through <code>needs</code> and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/remote-mount.md"><code>cat-harness/skills/kg/kg-core/remote-mount.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--render-kg-to-cdn" data-fa-state="extracted" data-fa-gloss="">

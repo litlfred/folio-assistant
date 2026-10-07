@@ -1383,6 +1383,12 @@
       "title": "id-lookup"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/index-config",
+      "@type": "cat-harness:Schema",
+      "name": "index-config",
+      "title": "index-config"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/inline-code",
       "@type": "cat-harness:Schema",
       "name": "inline-code",
@@ -2191,6 +2197,12 @@
       "@type": "cat-harness:Tool",
       "name": "headless-render-qc",
       "title": "Headless render QC (Playwright)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/index-config-migrate",
+      "@type": "cat-harness:Tool",
+      "name": "index-config-migrate",
+      "title": "Convert a checkout to a root index.config.json"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/ingest-extended",

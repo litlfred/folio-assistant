@@ -226,8 +226,8 @@ orphaned. Its criteria and thresholds are in
 | what changes | how |
 |---|---|
 | `livesAt` | removed in the new repository — absent means "sits at the root of `repository`" |
-| the seam | `platform.ts` points at wherever the platform now is: a submodule path, or a sibling checkout |
-| the host | **submodule** if the host imports code from the sub-KG; **subscription** (`kg:subscribe`) if it only reads its content (separation arc G5) |
+| the seam | `platform.ts` points at wherever the platform now is: a remote-mounted path, or a sibling checkout |
+| the host | **remote mount** if the host imports code from the sub-KG — a `source.remote` instance in the host's root `index.config.json` ([`remote-mount`](../kg-core/remote-mount.md); never a submodule, owner 2026-10-06); **subscription** (`kg:subscribe`) if it only reads its content (separation arc G5) |
 | pins | the host pins a commit while staging, a version once released ([`upstream-version-adoption`](../../sdlc/sdlc-core/upstream-version-adoption.md)) |
 
 The host keeps its own copy through this stage. The re-point is additive.
@@ -269,7 +269,7 @@ read only mirror in fsh-guts"*.
   separation targets the parent's fsh-guts rather than the departing
   instance's, which `--cutover` does not do; the separation mode is
   follow-up work to #2322. The live
-  copy is the submodule or subscription from stage 10; the frozen one is
+  copy is the remote mount or subscription from stage 10; the frozen one is
   never refreshed and never rendered.
 
 ### How checks treat a frozen subtree

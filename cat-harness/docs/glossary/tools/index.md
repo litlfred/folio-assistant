@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 136 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 137 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 181 terms and is 132 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 182 terms and is 134 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>181</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>181</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>182</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>182</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">181</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">182</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -175,6 +175,13 @@ Content manifest validation <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#content-manifest-validate</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--index-config-migrate" data-fa-state="extracted" data-fa-gloss="">
+Convert a checkout to a root index.config.json <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write the root <code>index.config.json</code> (<code>folio-index-config/v1</code>) that says which instances the checkout instantiates, where each comes from (<code>source.local</code> or <code>source.remote</code>) and which owns <code>/</code> (<code>site.landing</code>), from the root <code>*.config.json</code> files and the declaration's <code>remoteMounts</code>. With <code>--write</code> it moves <code>remoteMounts</code> off the declaration into <code>source.remote</code> entries, writes the generated <code>.gitignore</code> block, and renames a legacy <code>&lt;name&gt;.mount-lock.json</code> to <code>index.lock.json</code>. Without a flag it prints the index it would write. Idempotent: a re-run merges what the declaration gained, and refuses an entry the index already holds differently. A root config naming no instance is reported as <code>unmatched-config</code> and not imported, because what to do with it is a person's decision.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#index-config-migrate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--tabular-csv" data-fa-state="extracted" data-fa-gloss="">
 CSV tabular metadata (STUB) <span class="fa-gloss-status">candidate, extracted</span>
@@ -752,7 +759,7 @@ Mirror FHIR packages from packages.fhir.org into a git repository <span class="f
 Mount remote harnesses at a pinned commit, only when trusted <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Lay down each <code>remoteMounts</code> harness, and its dependency closure, from another repository at a full commit SHA, and write the mount lock. Before anything is checked out, each mount must pass the trust gate (<code>schemas/mount-trust.ts</code>, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. <code>--staging</code> mounts for a preview and needs neither, by the owner's ruling. <code>--check</code> compares the disk against the lock and never fetches.</p>
+<p>Lay down each declared remote mount — a <code>source.remote</code> instance in the root <code>index.config.json</code>, or, in a folio with no index, a <code>remoteMounts</code> entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, <code>index.lock.json</code> (a legacy <code>&lt;name&gt;.mount-lock.json</code> is read, and renamed onto it when rewritten), and, with an index, regenerate the root <code>.gitignore</code> block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through <code>writeDeclaredMounts</code> into <code>index.config.json</code>. Before anything is checked out, each mount must pass the trust gate (<code>schemas/mount-trust.ts</code>, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. <code>--staging</code> mounts for a preview and needs neither, by the owner's ruling. <code>--check</code> compares the disk against the lock and never fetches.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#remote-mount</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-comment-move" data-fa-state="extracted" data-fa-gloss="">

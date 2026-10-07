@@ -824,7 +824,12 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
   keeps those in step). A branch no declaration names is a finding
   (`subgraph-source.test.ts`), never a guess at what to fetch.
 - **The instance config overrides it, by id.** `<instance>.config.json` →
-  `"subgraphSources": { "<dir-id>": <source> }`. The declaration says what the
+  `"subgraphSources": { "<dir-id>": <source> }` — or, when the root
+  `index.config.json` lists the instance, the same field inline on its entry,
+  which overlays the imported file ([`index-config`](index-config.md)).
+  `subgraphSources` moves a declared directory's content. Bringing in a whole
+  instance from another repository is the entry's `source.remote`, which is a
+  different field. The declaration says what the
   subgraph IS; the config says how THIS instantiation is set up, and where
   content is mounted from is that kind of fact. Matched on `id`, never `path`
   — §"Inheritance". The checkout root's config has the last word.

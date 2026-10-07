@@ -6643,6 +6643,27 @@
       "status": "candidate"
     },
     {
+      "id": "harness-config.indexagreement.missingimport",
+      "prefLabel": "IndexAgreement.missingImport",
+      "definition": "An index entry whose `import` names a file that does not exist.",
+      "source": "cat-harness/schemas/harness-config.ts#IndexAgreement.missingImport",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.indexagreement.unlisted",
+      "prefLabel": "IndexAgreement.unlisted",
+      "definition": "A root `<name>.config.json` no index entry imports — instantiated by the old rule, not by the index.",
+      "source": "cat-harness/schemas/harness-config.ts#IndexAgreement.unlisted",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.indexagreement.withoutconfig",
+      "prefLabel": "IndexAgreement.withoutConfig",
+      "definition": "An index entry with no config file to import — a legitimate state, reported so it is seen.",
+      "source": "cat-harness/schemas/harness-config.ts#IndexAgreement.withoutConfig",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.instancegraph.order",
       "prefLabel": "InstanceGraph.order",
       "definition": "Every dependency the root reaches, EACH ONCE, deepest first and the root's direct dependencies last. The root itself is not in it.",
@@ -6822,6 +6843,41 @@
       "prefLabel": "ShardSchema.entries",
       "definition": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes.",
       "source": "cat-harness/schemas/id-lookup.ts#ShardSchema.entries",
+      "status": "candidate"
+    },
+    {
+      "id": "index-config.declaredmounts.file",
+      "prefLabel": "DeclaredMounts.file",
+      "definition": "The file read; absent for `none`.",
+      "source": "cat-harness/schemas/index-config.ts#DeclaredMounts.file",
+      "status": "candidate"
+    },
+    {
+      "id": "index-config.declaredmounts.from",
+      "prefLabel": "DeclaredMounts.from",
+      "definition": "Where they were read from: the index, the declaration's `remoteMounts` (no index), or nowhere.",
+      "source": "cat-harness/schemas/index-config.ts#DeclaredMounts.from",
+      "status": "candidate"
+    },
+    {
+      "id": "index-config.indexmigration.moved",
+      "prefLabel": "IndexMigration.moved",
+      "definition": "The remote mounts moved, by harness.",
+      "source": "cat-harness/schemas/index-config.ts#IndexMigration.moved",
+      "status": "candidate"
+    },
+    {
+      "id": "index-config.indexmigration.movedfrom",
+      "prefLabel": "IndexMigration.movedFrom",
+      "definition": "The declaration file whose `remoteMounts` moved into the index, when any did.",
+      "source": "cat-harness/schemas/index-config.ts#IndexMigration.movedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "index-config.indexsiteschema.landing",
+      "prefLabel": "IndexSiteSchema.landing",
+      "definition": "An instance name, or {@link HUB_LANDING}. Must name an instance this file lists.",
+      "source": "cat-harness/schemas/index-config.ts#IndexSiteSchema.landing",
       "status": "candidate"
     },
     {

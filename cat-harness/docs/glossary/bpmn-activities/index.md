@@ -14,7 +14,7 @@ Candidate terms extracted from every BPMN task and call activity: `name` as the 
 
 From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 444 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 161 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 711 terms and is 582 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 711 terms and is 583 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -88,7 +88,7 @@ be a term this corpus is right to coin.</p>
 11 · Parent consumes, additively <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared.</p>
+<p>The parent pins the pair (a commit while staging, a version once released) — a code dependency as a <code>source.remote</code> instance in its root <code>index.config.json</code> (remote-mount skill), never a submodule — repoints its imports, and keeps its own copy until it is green with the dependency declared.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Consume</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_freshclone" data-fa-state="extracted" data-fa-gloss="">
@@ -1490,7 +1490,7 @@ Declare the model where a tool can read it <span class="fa-gloss-status">candida
 Declare the mount: harness, repository, pin <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>remoteMounts: [&#123; harness, repository, ref }]</code> on the downstream's own declaration. <code>ref</code> is a full 40-character commit. Overrides, if any, are keyed by instance name and then by directory id — never by path. Decide first whether you want a remote mount at all: reading another graph without holding its code is a SUBSCRIPTION, not a mount.</p>
+<p>An instance <code>&#123; name, source: &#123; remote: &#123; repository, ref } } }</code> in the downstream's root <code>index.config.json</code>, written through <code>writeDeclaredMounts</code>. A folio with no index still reads <code>remoteMounts</code> on its declaration; both at once is refused. <code>ref</code> is a full 40-character commit. Overrides, if any, are keyed by instance name and then by directory id — never by path. The index itself is the index-config skill's. Decide first whether you want a remote mount at all: reading another graph without holding its code is a SUBSCRIPTION, not a mount.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_DeclareMount</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_declare" data-fa-state="extracted" data-fa-gloss="">
@@ -2294,7 +2294,7 @@ Inject translations (PO → Markdown) <span class="fa-gloss-status">candidate, e
 Instantiate the harness: write its config <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Write <code>&lt;harness&gt;.config.json</code> at the repository root, plus the state directories the harness declares. That file is what harness-tiles reads as INSTANTIATED, and it is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere.</p>
+<p>Write <code>&lt;harness&gt;.config.json</code> at the repository root, plus the state directories the harness declares, and — where the checkout has a root <code>index.config.json</code> — list the harness in its <code>instances[]</code>, because the index, not the file, is then what reads as INSTANTIATED (index-config skill); a root config the index does not list fails check:landing-instance. That instantiation is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/subscribe-kg.bpmn"><code>cat-harness/processes/library/subscribe-kg.bpmn#Task_Instantiate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_methodologyfromsource.a_integrate" data-fa-state="extracted" data-fa-gloss="">
@@ -2709,7 +2709,7 @@ Mount the branch tip at the declared path <span class="fa-gloss-status">candidat
 Mount the remote tree at its pin <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A <code>remote</code> source (bean <code>0mpw</code>): another repository's tree at a full 40-character commit. <code>bun run cat mount:remote</code> lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through <code>remoteMounts</code>, which expands a whole harness and its closure — <code>Process_MountDependency</code>.</p>
+<p>A <code>remote</code> source (bean <code>0mpw</code>): another repository's tree at a full 40-character commit. <code>bun run cat mount:remote</code> lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through a <code>source.remote</code> instance in the root <code>index.config.json</code> (legacy: <code>remoteMounts</code>), which expands a whole harness and its closure — <code>Process_MountDependency</code>.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountRemotePin</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_l1documentingestion.task_promote" data-fa-state="extracted" data-fa-gloss="">
@@ -5066,7 +5066,7 @@ Write the entry that LEADS — keeping the checker's beneath it <span class="fa-
 Write the lock <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>&lt;instance&gt;.mount-lock.json</code> beside the downstream's declaration: the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean.</p>
+<p><code>index.lock.json</code> beside the downstream's <code>index.config.json</code> (the legacy <code>&lt;instance&gt;.mount-lock.json</code> is still read, and is renamed onto the new name when rewritten; both present is an error): the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-dependency.bpmn"><code>cat-harness/processes/kg/mount-dependency.bpmn#Task_WriteLock</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_boardplacenote.a_createnote" data-fa-state="extracted" data-fa-gloss="">
