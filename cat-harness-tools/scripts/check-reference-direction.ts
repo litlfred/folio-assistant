@@ -476,7 +476,7 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  * Neither file was edited to earn that — the generator was.
  */
 const PENDING: readonly { file: string; names: number }[] = [
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md", names: 4 },
+  { file: "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md", names: 4 }, // declared-path-literal: a finding location, repo-root-relative as `analyse` reports it
   { file: "cat-harness/docs/cat-harness/published-graphs.md", names: 4 }, // declared-path-literal: a finding location, repo-root-relative as `analyse` reports it
   { file: "cat-harness/cat-harness.json", names: 2 },
   { file: "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
