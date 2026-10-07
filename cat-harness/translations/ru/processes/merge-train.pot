@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: merge-train\n"
-"POT-Creation-Date: 2026-10-03T09:58:08.395Z\n"
+"POT-Creation-Date: 2026-10-07T14:52:33.277Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -111,7 +111,7 @@ msgstr ""
 
 #: processes/sdlc/merge-train.bpmn:179
 #. Diagram element documentation
-msgid "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land."
+msgid "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land. The release security gate (`bun run security:gate`, bean `ieum`) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run."
 msgstr ""
 
 #: processes/sdlc/merge-train.bpmn:172
