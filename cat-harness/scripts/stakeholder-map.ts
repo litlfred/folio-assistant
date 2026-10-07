@@ -3,8 +3,8 @@
  * CLI for the stakeholder map — CRDM phase 1's mechanical half.
  *
  * Usage:
- *   bun run stakeholder-map <path>...        explicit paths
- *   bun run stakeholder-map --since <ref>    everything changed since a ref
+ *   bun run cat stakeholder-map <path>...        explicit paths
+ *   bun run cat stakeholder-map --since <ref>    everything changed since a ref
  *
  * See src/impact/stakeholder-map.ts for why this reads skills and BPMN lanes
  * rather than the CODEOWNERS and folio.config fields that were proposed and

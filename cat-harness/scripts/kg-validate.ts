@@ -201,7 +201,7 @@ async function main(): Promise<number> {
   const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
   const lenient = process.argv.includes("--lenient");
   if (args.length === 0) {
-    console.log("usage: bun run kg:validate <path>… [--lenient]");
+    console.log("usage: bun run cat kg:validate <path>… [--lenient]");
     return 2;
   }
 

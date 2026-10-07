@@ -24,7 +24,7 @@ The Zod files are one **authoring tool**. The **Knowledge Graph** is what they g
 - [x] If nothing is left, retire `bootstrap-tools/`: its declaration, the package-manifest entry, the `bootstrap-tools:schemas` script name, and the partition rules
 
 ## Done when
-The generated `bootstrap/schemas/*.schema.json` files are byte-identical before and after (checked by hashing them before and after), nothing under `bootstrap/` changes except where a path is named, and `bun run gates` passes.
+The generated `bootstrap/schemas/*.schema.json` files are byte-identical before and after (checked by hashing them before and after), nothing under `bootstrap/` changes except where a path is named, and `bun run cat gates` passes.
 
 ## Summary of Changes
 

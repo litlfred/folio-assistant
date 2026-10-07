@@ -364,7 +364,7 @@ if (import.meta.main) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
     if (current !== rendered) {
       console.error(
-        `::error::gen-external-schemas-viz: ${PAGE} is stale — run \`bun run external-schemas:viz\``,
+        `::error::gen-external-schemas-viz: ${PAGE} is stale — run \`bun run cat external-schemas:viz\``,
       );
       process.exit(1);
     }

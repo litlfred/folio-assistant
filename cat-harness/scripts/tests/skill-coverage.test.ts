@@ -62,7 +62,7 @@ const ROOT = resolve(import.meta.dir, "../..");
  * Worth knowing rather than repeating: fixing one of these has twice surfaced the
  * next, because the population is every test whose own work approaches the default
  * 5000 ms while inheriting it silently — ~50 of them at half the budget under load.
- * `bun run check:test-budgets` now NAMES them, so the next one need not be found by a red
+ * `bun run cat check:test-budgets` now NAMES them, so the next one need not be found by a red
  * run on somebody's machine.
  */
 const EXPORTED = await buildExport({ baseUrl: "https://example.invalid/fa" });

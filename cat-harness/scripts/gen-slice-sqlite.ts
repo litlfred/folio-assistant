@@ -950,7 +950,7 @@ export function kgData(doc: { "@id": string; "@context": unknown; "@graph": unkn
 
 export const KG_SLICE: SliceDef = {
   slice: "kg",
-  source: { graph: "kg", path: "kg-export (bun run kg:export)" },
+  source: { graph: "kg", path: "kg-export (bun run cat kg:export)" },
   ddl: [
     `CREATE TABLE nodes (
        iri TEXT NOT NULL UNIQUE, type TEXT, types TEXT NOT NULL CHECK (json_valid(types)),

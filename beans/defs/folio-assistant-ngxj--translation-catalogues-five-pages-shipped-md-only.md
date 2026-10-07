@@ -196,7 +196,7 @@ possible, not whether one had been applied.
 ## 2026-09-26T14:35Z — THE GAP HAS GROWN: 25 → 36, and 5 pages → 8
 
 Measured on **pristine `origin/main`** in a clean detached worktree with
-`bun install --frozen-lockfile`, via `bun run translation:drift:check`:
+`bun install --frozen-lockfile`, via `bun run cat translation:drift:check`:
 
     70 translation(s) compared, 36 NEWLY drifted, 0 could not be read,
     0 drifted and recorded, 2 uncatalogued and recorded

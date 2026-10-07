@@ -5,7 +5,7 @@
   repository of its own.
 
   Source of truth: this file. The SVG under docs/assets/img/workflows/ is
-  generated from it by `bun run render:bpmn`; never hand-edit the SVG.
+  generated from it by `bun run cat render:bpmn`; never hand-edit the SVG.
 
   Extracted in retrospect, owner 2026-10-06 (bean 3tza), from the staged IG
   separations of 2026-09-21 to 2026-10-06: beans n3ni (stages A-F), kg83
@@ -169,7 +169,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:outgoing>F9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_Rehearse" name="5 · Rehearse&#10;self-contained">
-      <bpmn:documentation>`bun run seed:ready --layer &lt;name&gt; --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page.</bpmn:documentation>
+      <bpmn:documentation>`bun run cat seed:ready --layer &lt;name&gt; --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
         <cat-harness.processes:bean op="note"/>
@@ -221,7 +221,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:outgoing>F17</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="GW_SeedReady" name="Ready to&#10;seed?">
-      <bpmn:documentation>Asked at seed time, because the tree has moved since the rehearsal: every open pull request over the layer when the copy is taken is orphaned. Computed by decisions/seed-readiness-gate.dmn from the facts `bun run seed:ready --layer &lt;name&gt; --rehearse` gathers; the same table kg-separation uses.</bpmn:documentation>
+      <bpmn:documentation>Asked at seed time, because the tree has moved since the rehearsal: every open pull request over the layer when the copy is taken is orphaned. Computed by decisions/seed-readiness-gate.dmn from the facts `bun run cat seed:ready --layer &lt;name&gt; --rehearse` gathers; the same table kg-separation uses.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:decision ref="decisions/seed-readiness-gate.dmn#Decision_SeedReadiness"/>
       </bpmn:extensionElements>
@@ -267,7 +267,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
       <bpmn:outgoing>F23</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_FreshClone" name="11 · Verify on a&#10;fresh clone">
-      <bpmn:documentation>`bun run sub-kg:verify-clone --repo &lt;owner&gt;/&lt;name&gt; --ref &lt;branch&gt;` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with "Cannot find module" because nothing in a seed runs standalone until the seam is re-pointed.</bpmn:documentation>
+      <bpmn:documentation>`bun run cat sub-kg:verify-clone --repo &lt;owner&gt;/&lt;name&gt; --ref &lt;branch&gt;` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with "Cannot find module" because nothing in a seed runs standalone until the seam is re-pointed.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="sub-kg-lifecycle"/>
         <cat-harness.processes:bean op="note"/>

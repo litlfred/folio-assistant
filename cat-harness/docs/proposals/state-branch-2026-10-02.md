@@ -216,7 +216,7 @@ push, two concurrent disjoint writers both surviving, cold read latency).
   third-party and reads `beans/defs` off disk. The session-start hook mounts the
   `state` branch as a git worktree at `state/` (ignored on `main`), and
   `.beans.yml` points at `state/beans/defs`. `beans` then behaves exactly as
-  today; `bun run state:push` commits and pushes the worktree through the
+  today; `bun run cat state:push` commits and pushes the worktree through the
   library.
 - **A claim becomes global the moment it is written.** `beans:claim` already
   pushes to `main`; it pushes to `state` instead. §"A claim is branch-local" in

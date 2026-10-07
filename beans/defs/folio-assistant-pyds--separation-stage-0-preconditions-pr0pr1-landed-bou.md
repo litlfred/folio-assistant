@@ -18,7 +18,7 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 **Waits on (not linkable yet — not on main):** placement PR0 `ejye` (checkout aggregates, PR0a = `cmsl` steps 2–3, #1704) and PR1 `ybwt` (content-type packages up). Also merge #1728 (who-iris generic DSpace code into `cat-harness/scripts`) first, or the 1a codemod picks it up on rebase.
 
 ## Done when
-- [ ] `w2gr` claimed with `bun run beans:claim`; D1–D6 recorded in it (body-append)
+- [ ] `w2gr` claimed with `bun run cat beans:claim`; D1–D6 recorded in it (body-append)
 - [ ] `ejye` and `ybwt` merged; `classify.py` re-run on main reports ABOVE = 0, and `cat-harness/cat-harness.json` holds no `scope: repository` entry
 - [ ] `check:import-direction` watched RED on a planted `cat-harness → cat-harness-tools` import, and `check:tools-closure` generalised to take an instance name and watched red on a planted violation (falsifier: a planted violation that stays green → stop and fix the gate)
 - [x] baseline recorded in this bean: `bun test` pass count, `mcp:capture` tool list, every generator's `--check` output hash, the `knownSkills` set
@@ -28,7 +28,7 @@ _2026-10-04T14:43:11Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to
 
 ## 2026-10-04 — PR #2101 (session https://claude.ai/code/session_01Ga3HjmX3ag9vTgZWDSmsFi)
 
-- **Baseline recorded** in `cat-harness-tools/scripts/split-baseline.json`, not in this body, so 70lx can compare mechanically (`bun run split:baseline:check`): 20 MCP tools with their inputs, 307 skills, and `bun test` = **21575 pass, 0 fail, 48 skip** from CI run 37212271689 on `993eb9e`. Generator output is NOT hashed: the generated files are committed, so the tree at that sha is the generator baseline (`git diff 993eb9e -- <paths>` after a regen).
+- **Baseline recorded** in `cat-harness-tools/scripts/split-baseline.json`, not in this body, so 70lx can compare mechanically (`bun run cat split:baseline:check`): 20 MCP tools with their inputs, 307 skills, and `bun test` = **21575 pass, 0 fail, 48 skip** from CI run 37212271689 on `993eb9e`. Generator output is NOT hashed: the generated files are committed, so the tree at that sha is the generator baseline (`git diff 993eb9e -- <paths>` after a regen).
 - **Plan documents** are on main: `cat-harness/docs/proposals/cat-harness-tools-split-2026-10-01.md` and `separation-arc-2026-10-01.md`.
 - **Box 3, first half done:** `check:import-direction --all` watched RED on a planted `cat-harness/src` import of `cat-harness-tools` (exit 1, edge named) and green once removed; `check-import-direction.test.ts` now plants it in a scratch tree carrying the REAL `needs`. **Second half open:** `check:tools-closure` lives in the `bootstrap-tools` submodule (a separate repo), and `check:import-direction --all` already gates every instance by its `needs`. Whether generalising it is still wanted is the owner's call.
 - **Box 2:** #1758/#1760 merged, and `cat-harness.json` has 0 `scope: repository` entries. `classify.py` was never committed, so "ABOVE = 0" cannot be re-run as written.

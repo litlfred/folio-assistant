@@ -44,8 +44,8 @@
  * styled as an error.
  *
  * Usage:
- *   bun run library:viz          # write
- *   bun run library:viz:check    # fail if either artefact is stale
+ *   bun run cat library:viz          # write
+ *   bun run cat library:viz:check    # fail if either artefact is stale
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { fragment as folioMountFragment } from "./folio-mount.ts";
@@ -1536,7 +1536,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run library:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat library:viz\``);
     process.exit(1);
   }
 }

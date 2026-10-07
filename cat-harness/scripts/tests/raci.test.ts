@@ -116,7 +116,7 @@ describe("the parser", () => {
 });
 
 /**
- * Bean `3kbd`. The rule is read by two consumers — `bun run check:raci`, which
+ * Bean `3kbd`. The rule is read by two consumers — `bun run cat check:raci`, which
  * gates, and `kg-audit`, which commits a sidecar. Until 2026-09-20 a breach
  * was only ever PRINTED, and a printed verdict cannot distinguish "unsound
  * since the diagram was drawn" from "broken in the commit under review".

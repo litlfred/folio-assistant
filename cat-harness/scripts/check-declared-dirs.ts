@@ -146,7 +146,7 @@ export interface DirFinding {
    * `unmountable` — the entry's content is declared on a branch TIP and no
    * mount can be keyed on it, because it is declared from within another
    * directory and is not `"subgraph": true`. Its own state, not a spelling of
-   * `unmounted`: that one's remedy is `bun run state:mount`, and here that
+   * `unmounted`: that one's remedy is `bun run cat state:mount`, and here that
    * command cannot reach the entry at all, so printing it would send a reader
    * to run something that does nothing. Bean `najo`.
    */
@@ -250,7 +250,7 @@ export function tipPresence(
     detail:
       `is cut over to \`${loc.branch}\` and ${marker ? `its marker points at ${marker.into}, which is gone` : "nothing is mounted here"}, ` +
       `so every reader of this path sees an EMPTY graph rather than an unreachable one. ` +
-      `Mount it (\`bun run state:mount\`); "no content" and "could not reach the content" are different answers.`,
+      `Mount it (\`bun run cat state:mount\`); "no content" and "could not reach the content" are different answers.`,
   };
 }
 
@@ -614,7 +614,7 @@ function offCheckoutFindings(
         detail:
           `declares its content on \`${src.branch}\` (keyed by tip) and is declared FROM WITHIN another ` +
           `directory WITHOUT \`"subgraph": true\`, so \`resolveDirectories\` does not list it, ` +
-          `\`tipLocations\` never sees it and \`bun run state:mount\` cannot reach it. A mount is keyed ` +
+          `\`tipLocations\` never sees it and \`bun run cat state:mount\` cannot reach it. A mount is keyed ` +
           `on a directory ID, and this entry has none at instance level. Mark it \`"subgraph": true\` ` +
           `(bean \`cmsl\`), or move the \`source\` onto the directory that declares it. Reporting this as ` +
           `\`unmounted\` would print a remedy that does not exist.`,

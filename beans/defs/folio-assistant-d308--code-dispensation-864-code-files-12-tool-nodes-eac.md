@@ -217,7 +217,7 @@ document that invites it.
 
 ## CROSS-VALIDATION, 2026-09-20 — and it is the strongest result on this bean
 
-`bun run tools:coverage` was finally run, rather than reasoned around. It tiers
+`bun run cat tools:coverage` was finally run, rather than reasoned around. It tiers
 all 179 uncovered skills by BPMN evidence and reports **tier A = 28 skills**, "a
 `serviceTask` names it, or it has an I/O contract. A Tool is warranted."
 

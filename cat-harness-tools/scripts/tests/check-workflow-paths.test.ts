@@ -44,10 +44,10 @@ describe("invokedPath", () => {
   });
 
   test("an npm SCRIPT NAME is not a path — it is the recommended fix", () => {
-    // `bun run check:ci-health` puts the path in package.json once. Treating
+    // `bun run cat check:ci-health` puts the path in package.json once. Treating
     // it as a path would report the fix as a finding.
-    expect(invokedPath("bun run check:ci-health --out /tmp/x.md")).toBeUndefined();
-    expect(invokedPath("bun run health")).toBeUndefined();
+    expect(invokedPath("bun run cat check:ci-health --out /tmp/x.md")).toBeUndefined();
+    expect(invokedPath("bun run cat health")).toBeUndefined();
   });
 
   test("ignores lines that are not bun invocations", () => {

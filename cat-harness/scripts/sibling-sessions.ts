@@ -50,9 +50,9 @@
  * tell which sweep was wrong.
  *
  * ```sh
- * bun run sessions --since 4h          # this window
- * bun run sessions --since 2026-09-20  # from a date
- * bun run sessions --json
+ * bun run cat sessions --since 4h          # this window
+ * bun run cat sessions --since 2026-09-20  # from a date
+ * bun run cat sessions --json
  * ```
  *
  * @module folio-assistant/scripts/sibling-sessions

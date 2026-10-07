@@ -93,7 +93,7 @@ things a bare "we decided X" loses.
 
 - **Never fewer than two considered options.** If there genuinely was only one,
   the record says *why no alternative existed* — that is a finding about the
-  constraint, not a decision. **This one is checked**: `bun run health` reports
+  constraint, not a decision. **This one is checked**: `bun run cat health` reports
   `bean-thin-decision-records` over the bean store, at `minor`, because it maps
   analytical debt rather than breaking a consumer. It reports the SUBJECT COUNT
   beside it (`bean-decision-records`) on purpose — the finding can only fire on a

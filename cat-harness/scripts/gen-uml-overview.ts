@@ -673,7 +673,7 @@ function computeDetangle(): Map<string, DetangleNumbers> | null {
 function runDetangle(): Map<string, DetangleNumbers> | null {
   // Run the detangler by its package script, which is the one place its path
   // is declared; a path literal here would restate it (check:declared-paths).
-  const r = spawnSync(process.execPath, ["run", "kg:detangle", "--check", "--json"], { cwd: REPO, encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+  const r = spawnSync(process.execPath, ["run", "cat", "kg:detangle", "--check", "--json"], { cwd: REPO, encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
   try {
     const { results } = JSON.parse(r.stdout) as { results: Parameters<typeof sidecarFor>[0][] };
     return new Map(results.map((m) => [m.group, sidecarFor(m)]));
@@ -753,7 +753,7 @@ function page(opts: {
   }
   L.push(
     "",
-    "*Nodes, cohesion, in and out* are the detangler's pinned measurements for the same directory (`bun run kg:detangle`; skill [`graph-detanglement`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-detanglement.md)). *Not measured* means the detangler does not scan that directory, not that it has no edges.",
+    "*Nodes, cohesion, in and out* are the detangler's pinned measurements for the same directory (`bun run cat kg:detangle`; skill [`graph-detanglement`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-detanglement.md)). *Not measured* means the detangler does not scan that directory, not that it has no edges.",
   );
   if (opts.links?.length) {
     L.push("", "## Sub-graphs", "");
@@ -907,7 +907,7 @@ async function main(): Promise<void> {
     // that could not be read would claim what nobody looked at (bean `oq1j`).
     console.error(`UML overview: UNKNOWN — could not determine what ${UNDETERMINED.length} part(s) hold; this is NOT a pass, and nothing was written:`);
     for (const u of UNDETERMINED) console.error(`  ${u}`);
-    console.error("  `bun run qa:fetch` materialises the QA results; `--ref <main|sha|pr/n>` reads another qa-reports entry.");
+    console.error("  `bun run cat qa:fetch` materialises the QA results; `--ref <main|sha|pr/n>` reads another qa-reports entry.");
     process.exit(JUDGEMENT_EXIT.unknown);
   }
   const pumls = [...files].filter(([p]) => p.endsWith(".puml"));

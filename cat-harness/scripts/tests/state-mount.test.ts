@@ -45,7 +45,7 @@ describe("mounting, dispatched on the declared source", () => {
     expect(readFileSync(join(root, "todos/a.md"), "utf-8")).toBe("A\n");
     // Only the subgraph's own files: the branch root's manifest stays on the branch.
     expect(existsSync(join(root, "todos/manifest.json"))).toBe(false);
-    expect(report(r)).toContain("bun run state:push");
+    expect(report(r)).toContain("bun run cat state:push");
   });
 
   test("a clean mount behind the branch is moved forward", () => {

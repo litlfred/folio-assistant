@@ -122,7 +122,7 @@ withdrawn permission from one that never existed.
 
 ## Checked, not trusted
 
-`bun run check:waivers` reads every node under `memory/waivers/` and fails on a
+`bun run cat check:waivers` reads every node under `memory/waivers/` and fails on a
 missing field, a `gate` outside the table above, a scope that names a
 non-existent session or instance, and a waiver over a non-waivable rule. It
 reports expired waivers as **inert**, never as findings — they are history.

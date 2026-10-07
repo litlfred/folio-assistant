@@ -35,7 +35,7 @@
  *   sidecar is not committed. A `qa` or `health` directory that is not in the
  *   checkout is not `absent-directory` either: those kinds leave `main`.
  *
- * Usage: `bun run readme:subgraphs` · `bun run readme:subgraphs:check`
+ * Usage: `bun run cat readme:subgraphs` · `bun run cat readme:subgraphs:check`
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -276,7 +276,7 @@ if (import.meta.main) {
       failOnNew: ["absent-directory", "unresolved-process"],
       baseline: { root: ROOT, stem: "subgraph-readmes", writer: GATE, against },
     });
-    if (stale) console.error("\nRun `bun run readme:subgraphs` and commit.");
+    if (stale) console.error("\nRun `bun run cat readme:subgraphs` and commit.");
     process.exit(stale ? 1 : judged.exit);
   }
 }

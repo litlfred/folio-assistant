@@ -72,4 +72,4 @@ the test.
 
 Falsified: replacing a reason with "we decided not to bother" fails; a kind that
 says nothing fails `--require-all`; a kind claiming both fails outright. Four
-tests. `bun run gates` 145 of 145.
+tests. `bun run cat gates` 145 of 145.

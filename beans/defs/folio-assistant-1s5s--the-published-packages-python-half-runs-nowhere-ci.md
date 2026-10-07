@@ -160,7 +160,7 @@ Merged to `main` as `804866262a8` (PR #1391).
   both jobs, the `python` job's leading.
 - 12 discovery tests over git-repo fixtures.
 
-Verified: merged-tree `bun run gates` **152 of 154** with no tree-guard finding;
+Verified: merged-tree `bun run cat gates` **152 of 154** with no tree-guard finding;
 CI 9 green including e2e. The 2 local / 1 CI red is the `t8g3` drift held red on
 `main` by decision (#1384), not this work.
 

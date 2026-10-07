@@ -6,8 +6,8 @@
  *
  * ## Why it exists
  *
- * Measured on 2026-10-01 on a shared 4-CPU box: `bun run regen` asked ~84
- * verify/write pairs one after another (~25 min), and `bun run gates` ran ~200
+ * Measured on 2026-10-01 on a shared 4-CPU box: `bun run cat regen` asked ~84
+ * verify/write pairs one after another (~25 min), and `bun run cat gates` ran ~200
  * gates one after another (50+ min). Most of that is waiting on one `bun`
  * process at a time while three cores idle.
  *

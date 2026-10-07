@@ -233,7 +233,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "health-report",
     globs: ["**/test/health/results/*.health-report.json"],
     strategy: "take-base",
-    why: "the committed repository health report: a MEASUREMENT of external state (the publish branch, clone size, the work plan) written by `bun run health` and refreshed daily on the base by the health-check workflow, so the base's copy is the newer measurement. check:harness-state judges its producer hash; if the merge changes the producer, `bun run health` rewrites it. Found 2026-10-01 on #1754.",
+    why: "the committed repository health report: a MEASUREMENT of external state (the publish branch, clone size, the work plan) written by `bun run cat health` and refreshed daily on the base by the health-check workflow, so the base's copy is the newer measurement. check:harness-state judges its producer hash; if the merge changes the producer, `bun run cat health` rewrites it. Found 2026-10-01 on #1754.",
   },
   {
     id: "qa-witnesses",
@@ -296,7 +296,7 @@ export const PATTERNS: readonly ConflictPattern[] = [
     id: "standalone-baseline",
     globs: ["**/scripts/standalone-baseline.json"],
     strategy: "take-base",
-    why: "check:standalone's accepted failure list (bean `ho66`, #1977). It conflicts only when BOTH sides changed the list. Take the base's copy and regenerate NOTHING: it is a ratchet, and re-measuring after a merge would write any new standalone failure into the list unreviewed — the thing the gate exists to stop. Fail-closed instead: if this side's change was a new failure, its CI goes red until its author runs `bun run standalone:baseline` deliberately; if it was a fix, nothing is lost but a shorter list, which the check reports.",
+    why: "check:standalone's accepted failure list (bean `ho66`, #1977). It conflicts only when BOTH sides changed the list. Take the base's copy and regenerate NOTHING: it is a ratchet, and re-measuring after a merge would write any new standalone failure into the list unreviewed — the thing the gate exists to stop. Fail-closed instead: if this side's change was a new failure, its CI goes red until its author runs `bun run cat standalone:baseline` deliberately; if it was a fix, nothing is lost but a shorter list, which the check reports.",
   },
   {
     id: "beans",

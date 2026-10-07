@@ -58,11 +58,11 @@ written to enforce, and each has already caught something:
 GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --single-branch --branch gh-pages \
   --filter=blob:none https://github.com/WorldHealthOrganization/smart-trust /tmp/st
 
-bun run ingest:ig -- --source /tmp/st --kind gh-pages --id smart-trust \
+bun run cat ingest:ig -- --source /tmp/st --kind gh-pages --id smart-trust \
   --base https://worldhealthorganization.github.io/smart-trust \
   --out smart-trust --materialize-dak
 
-bun run ingest:ig:check /tmp/st
+bun run cat ingest:ig:check /tmp/st
 ```
 
 `ingest:ig:check` has **three** outcomes, and the third is the point: `0` the

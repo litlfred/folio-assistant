@@ -65,7 +65,7 @@ Tests: `cat-harness/scripts/tests/qa-tree-judge.test.ts` (16).
 - They cover new vs inherited against the working copy and against a real bare remote, entry-miss = one unknown, an unreachable remote = unknown, extraFailing and undetermined, and what each gate grades.
 - CLI runs: an unknown flag and a malformed `--against` each exit 2. kg:audit:check and translation:block-qa:check against a remote with no entry print UNKNOWN, are not gated, and leave `git status` unchanged.
 
-**`bun run gates` with the files ABSENT** (scratch = 2e5c88e52 + 420ab8180, fresh tree): **11 of 206 red, down from 16 of 205.**
+**`bun run cat gates` with the files ABSENT** (scratch = 2e5c88e52 + 420ab8180, fresh tree): **11 of 206 red, down from 16 of 205.**
 - Cleared: `kg:audit:check`, `kg:audit:all:check`, `translation:block-qa:check`, `readme:subgraphs:check` and `bun test`.
 - Remaining, all expected:
   - Group B, waiting for a `main/` entry: `lsi:viz:check`, `uml:overview:check`, `check:qa-reviewer-permission`, `check:orphan-verdicts`, `check:kind-validators:require-all`, `check:declared-paths`.

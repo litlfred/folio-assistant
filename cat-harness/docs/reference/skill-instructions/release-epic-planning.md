@@ -86,7 +86,7 @@ Before moving from draft to pre-release:
 
 - [ ] All must-have features resolved (all child beans completed)
 - [ ] All should-have features either resolved or deferred to next release
-- [ ] CI green on main (`bun run gates`)
+- [ ] CI green on main (`bun run cat gates`)
 - [ ] All changed BPMN diagrams re-rendered
 - [ ] All changed docs pages regenerated
 - [ ] Changelog written (see `release-lifecycle.md`)

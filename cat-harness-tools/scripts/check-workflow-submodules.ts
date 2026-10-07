@@ -84,7 +84,7 @@ const PUBLISH_REF = /^\s*ref:\s*(gh-pages|\$\{\{\s*inputs\.publish_branch\s*\}\}
 /**
  * `bun run <path>` / `bun <path>`, where the path ends in `.ts`, however it is
  * spelled — `source/x.ts`, `../source/x.ts`, `"$PLATFORM_DIR/x.ts"`. A
- * `package.json` script name (`bun run gates`) is NOT matched: those resolve
+ * `package.json` script name (`bun run cat gates`) is NOT matched: those resolve
  * through the checkout's own `package.json` and are covered by whichever
  * checkout that is, which this rule already requires to be complete.
  */

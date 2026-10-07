@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Merge-conflict patterns — what a merge may resolve on its own
 
-`bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the
+`bun run cat merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the
 process it executes, called from `Task_PrepareMerge` in
 `code-change-review.bpmn`. The patterns themselves are data in
 `cat-harness/scripts/merge-conflict-patterns.ts`. This page says what each one
@@ -34,7 +34,7 @@ pattern"*, and *"put in merge process bpmn"*.
    touched. One refusal ABORTS the merge and restores the tree. Resolving nine
    generated files and leaving one authored conflict half-done reads as
    progress, and is not.
-2. **Proved, not assumed.** After resolving, `bun run regen` asks every check
+2. **Proved, not assumed.** After resolving, `bun run cat regen` asks every check
    the CI workflow runs and runs each stale one's writer until the tree
    settles. Anything `unrepaired` aborts the merge. No pattern names its own
    check: the gate set is derived from the workflow and cannot drift, a
@@ -92,7 +92,7 @@ question asked twice. Measured 2026-10-04 on PR #1898's merge rounds, bean
 | `merge:main`, including its own regen | 5–10 min — regen 238–309 s with nothing stale, 601–639 s when a writer runs | THE regen; rule 2 above |
 | `skill:register` | 1–2 min | the derived artefacts the merge left owed |
 | a standalone `regen` after `merge:main` | 4–5 min | **nothing** — same tree, same gate set |
-| full local `bun run gates` | ~24 min (1429 s), nearly all `bun test` (~21.8k tests) on 3–4 local cores | what CI's sharded run says in ~5 min, 4 ways |
+| full local `bun run cat gates` | ~24 min (1429 s), nearly all `bun test` (~21.8k tests) on 3–4 local cores | what CI's sharded run says in ~5 min, 4 ways |
 | `regen` again in a fresh checkout, to prove a no-op | 4–5 min | what CI's own clean checkout already proves |
 
 Three of five rows repeat a measurement somebody else, or the same command,
@@ -104,22 +104,22 @@ has already made. So:
 `take-base`, region or sidecar pattern below, and the merge brought in no
 authored change of yours to reconcile.
 
-1. **`bun run state:mount`, then `bun run merge:main`.** `merge:main`'s regen
+1. **`bun run cat state:mount`, then `bun run cat merge:main`.** `merge:main`'s regen
    IS the regen. Do not run another one after it.
-2. **`bun run skill:register` until `bun run skill:register:check` passes.**
+2. **`bun run cat skill:register` until `bun run cat skill:register:check` passes.**
    The chain can need two passes: one writer's output is another's input.
 3. **Targeted checks, and only these:**
    - `skill:register:check` and `kg:detangle:check` — the two reds a
      generated-only merge actually hit in CI;
    - `subgraph:jsonld:check` — a merge or edit that changes a skill also
      changes its payload hash; `skill:register` does not run
-     `subgraph:jsonld`, so run the writer (`bun run subgraph:jsonld`) when the
+     `subgraph:jsonld`, so run the writer (`bun run cat subgraph:jsonld`) when the
      check is red. Measured on #2139 itself: CI's `gen-slice-sqlite` test
      failed on three edited skills whose payloads the published tree did not
      hold;
    - `check:declared-paths` (never with `--update` here) and
      `check:process-index`;
-   - `bun run typecheck`, and `bun run lint` at **0 errors**;
+   - `bun run typecheck`, and `bun run cat lint` at **0 errors**;
    - **the deletion audit** —
      `git diff --name-status --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'`
      must list only files `main` itself deleted. A gitignored-but-tracked file
@@ -140,13 +140,13 @@ authored change of yours to reconcile.
      with the exit status captured on the next line
      ([`prepare-merge`](prepare-merge.md) step 4).
 4. **Push, never with force.** CI's sharded run is the full gate set. Skip the
-   local full `bun run gates` and the fresh-checkout regen for this kind of
+   local full `bun run cat gates` and the fresh-checkout regen for this kind of
    merge: each repeats something CI does better.
 
 ### When it is NOT generated-only — keep the full local run
 
 **An AUTHORED file conflicted, or the merge touched code** (yours or `main`'s
-reconciled against yours): run the full local `bun run gates` before pushing,
+reconciled against yours): run the full local `bun run cat gates` before pushing,
 and read [`prepare-merge`](prepare-merge.md) §"What a green LOCAL run entitles
 you to claim" before quoting it. The targeted list above is chosen for a merge
 that changed only artefacts with one right answer. A semantic conflict — #2043
@@ -472,7 +472,7 @@ authored blocks under `cat-harness/content/docs/<slug>/` (`docs:pages`, gated
 by `docs:pages:check`). Each one says so in its own front matter:
 
 ```
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 ```
 
 Bean `8c6v`: **none** of the 17 was named by a pattern, so `classify()`
@@ -533,10 +533,10 @@ is claimed at any depth.
 
 `test/health/results/*.health-report.json`. Not a derivation of the tree but a
 **measurement** of external state (publish branch, clone size, the work plan),
-written by `bun run health` and refreshed daily on the base by the
+written by `bun run cat health` and refreshed daily on the base by the
 health-check workflow, so the base's copy is simply the newer measurement and
 a branch's older one carries nothing worth keeping. `check:harness-state`
-judges its producer hash; if the merge changed the producer, `bun run health`
+judges its producer hash; if the merge changed the producer, `bun run cat health`
 rewrites it. Found on the same merge.
 
 ### `qa-witnesses` — take the base, regenerate
@@ -562,7 +562,7 @@ Generated site data indexes under `docs/assets/**/*.json` and `docs/_data/`.
 
 `**/docs/subgraph/**` holds the subgraph JSON-LD indexes. `**/docs/payload/sha256/**`
 holds the content-addressed payloads (`<hex>` is the sha256 of its bytes, with
-a `<hex>.json` sidecar beside it). `bun run subgraph:jsonld` writes both
+a `<hex>.json` sidecar beside it). `bun run cat subgraph:jsonld` writes both
 directories **whole**, and it deletes every file in them that it did not write.
 Any skill edit rewrites an index and moves a payload, so until #2176
 (2026-10-05) every merge of `main` into a PR that edited a skill was refused,
@@ -615,7 +615,7 @@ final `regen`.
 `**/docs/assets/navbar/rail-*.js` is the navbar's shared rail data. Each file
 is named `rail-<hash>.js` after the content hash of the rail JSON it carries
 (`lib/harness-rail.ts`), so a changed rail is a **new** file and the old one is
-orphaned. `bun run navbar:assets` deletes every rail file no committed page
+orphaned. `bun run cat navbar:assets` deletes every rail file no committed page
 names, and `navbar:assets:check` fails on one. Both sides of a merge add their
 own hash, which is why this is `owned-tree` and not `take-base`, for the same
 reason as `subgraph-payload` above. Found 2026-10-06 when #2197's merge was
@@ -734,7 +734,7 @@ Uploaded source material: provenance-bearing input, never regenerated.
 
 `.github/workflows/merge-main.yml` is a second CALLER of the same command,
 never a second resolver (bean `d33q` part B). When `main` moves, it runs
-`bun run merge:main` on every open, same-repository PR labelled `merge-main`
+`bun run cat merge:main` on every open, same-repository PR labelled `merge-main`
 that is behind `main`, one live run per PR (a newer run cancels an older one).
 
 - **It pushes only a proved merge**, as a fast-forward of the branch it checked
@@ -783,7 +783,7 @@ review rather than on its author; leave it off a branch somebody is pushing to.
 ## When a merge-train member is refused: bean, hand back, or dispatch
 
 A merge steward builds a **train**: `merge-base.ts --no-regen` for each
-member, then one `bun run regen`, then one CI run. A member is **refused**
+member, then one `bun run cat regen`, then one CI run. A member is **refused**
 when its merge hits an authored or undeclared conflict, or when the train's
 combined result fails a gate that the member alone did not fail. The steward
 drops it and the train goes on without it. `processes/sdlc/merge-refusal.bpmn`
@@ -847,7 +847,7 @@ PR #1822, head <sha> (the sha the train used), dropped from train
   pattern. Overlaps #1881, which is already in main.
 
 ## Done when
-- [ ] the PR's head merges main with `bun run merge:main` and no refusal, and
+- [ ] the PR's head merges main with `bun run cat merge:main` and no refusal, and
       CI is green on that head
 - [ ] the PR re-enters a train with a new `ready: <sha>`, and lands
 ```

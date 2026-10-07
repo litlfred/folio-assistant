@@ -35,7 +35,7 @@ engine-enforced inside an otherwise agentic run, and that is a property of the
 task, not of the whole diagram.
 
 **Partly built.** No BPMN engine is wired in. The mechanical QA/QC report
-now exists: `bun run prov:qaqc` writes each workflow instance's history as a
+now exists: `bun run cat prov:qaqc` writes each workflow instance's history as a
 PROV-O log and re-checks every step against the ODRL policies, advisory
 (issue #1180, step 5; the `task-authorization` skill). The agentic QA/QC
 report does not exist yet. The rest of this section names the target so the

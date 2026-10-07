@@ -74,7 +74,7 @@
  * is for. Whoever wires the strict gate when coverage reaches zero adds the
  * script and the workflow step in the same change.
  *
- * Usage:  bun run check:workflow-coverage [--auto] [--strict]
+ * Usage:  bun run cat check:workflow-coverage [--auto] [--strict]
  * Exit:   0 clean · 1 a workflow names a diagram that is not there, or drifted
  *         2 a workflow could not be read — COULD NOT DETERMINE
  *         With `--strict`, an uncovered workflow is also exit 1.

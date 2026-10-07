@@ -12,14 +12,14 @@ parent: folio-assistant-1xhc
 Measured on `main` `25bff68c4f3`, 2026-09-30.
 
 ```
-$ bun run check:reference-direction
+$ bun run cat check:reference-direction
 ✗ 1 PENDING entr(y/ies) no longer qualify — delete them
 ✗ 91 file(s) name several instances above them and are not in PENDING
 exit 1
 ```
 
 ```
-$ grep -q "bun run check:reference-direction" .github/workflows/*.yml
+$ grep -q "bun run cat check:reference-direction" .github/workflows/*.yml
 not in any workflow
 ```
 
@@ -47,7 +47,7 @@ the second when the truth is neither.
 
 Not by looking for it. `check:reference-direction` appeared in a sweep of every
 `:check` script in `package.json` while chasing an unrelated CI failure. Nothing
-in the normal loop — `bun run gates`, CI, a PR — would have surfaced it, because
+in the normal loop — `bun run cat gates`, CI, a PR — would have surfaced it, because
 `gates` derives its list from the workflow file and the workflow does not name
 this check.
 

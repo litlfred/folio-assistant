@@ -77,8 +77,8 @@
  * nav entry — a link that resolves to nothing while reading as a section.
  *
  * Usage:
- *   bun run auto:docs          # write
- *   bun run auto:docs --check  # fail if any artefact is stale, or orphaned
+ *   bun run cat auto:docs          # write
+ *   bun run cat auto:docs --check  # fail if any artefact is stale, or orphaned
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
@@ -1580,7 +1580,7 @@ if (import.meta.main) {
   }
 
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run auto:docs\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat auto:docs\``);
     process.exit(1);
   }
   if (check) console.log(`auto-docs: ${TYPES.length} type(s) up to date`);

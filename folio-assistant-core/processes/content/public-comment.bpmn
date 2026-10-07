@@ -3,7 +3,7 @@
   folio-assistant — public comment on a frozen, line-numbered draft.
 
   Source of truth: this file. The SVG under docs/assets/img/workflows/ is
-  generated from it by `bun run render:bpmn` — never hand-edit the SVG.
+  generated from it by `bun run cat render:bpmn` — never hand-edit the SVG.
 
   Every task here is a transition in PUBLIC_COMMENT_TRANSITIONS
   (folio-assistant-core/schemas/public-comment.ts), and a test holds the two

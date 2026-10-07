@@ -25,7 +25,7 @@ Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagra
 
 ## Re-derived and closed by another session, 2026-09-25
 
-Found by `bun run beans:landed` as `done-ticked` — every box ticked, status
+Found by `bun run cat beans:landed` as `done-ticked` — every box ticked, status
 still open. That is the `4d22` orphan shape, and
 [`bean-coordination.md` §"Closing a bean whose work has already landed"](../../cat-harness/skills/sdlc/sdlc-core/bean-coordination.md)
 says a bean closes on evidence re-run by whoever closes it, never on a note.
@@ -37,7 +37,7 @@ and the last commit on `main` touching this bean is its own merge (`5e54c322`).
 **Re-run here, 2026-09-25:**
 
 ```sh
-bun run code-lists:check          # exit 0
+bun run cat code-lists:check          # exit 0
 bun test cat-harness/schemas/code-list.test.ts   # 12 pass, 0 fail
 ```
 
