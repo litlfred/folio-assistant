@@ -239,6 +239,14 @@
       "status": "candidate"
     },
     {
+      "id": "git-submodule",
+      "prefLabel": "git submodule (gitlink pin, commit to move)",
+      "definition": "The same workflow by git's own mechanism, for repositories that keep submodules: status = `git submodule status` plus a fetch of the branch `.gitmodules` names (`git fetch` in the submodule, then `git rev-list --count <gitlink>..origin/<branch>`); plan-update = `git log` and `git diff <gitlink>..origin/<branch>` in the submodule; consent = a PERSON commits the moved gitlink (the commit is the record); apply = `git submodule update --remote <path>` then commit the gitlink; drift = a dirty submodule (`git status` in it), which refuses until its edits are pushed upstream. No wrapper script: git is invoked directly. folio-assistant itself moved from this Tool to `kg-remote-mount` in #2470, the same workflow under a different mechanism.",
+      "notation": "git-submodule",
+      "source": "cat-harness/tools/index.ts#git-submodule",
+      "status": "candidate"
+    },
+    {
       "id": "github",
       "prefLabel": "GitHub",
       "definition": "Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none.",
@@ -292,6 +300,14 @@
       "definition": "Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it.",
       "notation": "kg-graph-export",
       "source": "cat-harness/tools/index.ts#kg-graph-export",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-remote-mount",
+      "prefLabel": "KG remote mount (pinned, locked, consent to move)",
+      "definition": "Mount another repository's harness and its closure at a 40-character pin, locked by digest, and move the pin only on a person's recorded consent. status = `bun run cat mount:remote:check` (disk against lock, offline) plus `bun run cat mount:update` (how far `track` is ahead); plan-update = `bun run cat mount:update` (commits, files under the mounted directories and assets, the declaration diff, and the `package.json` checkoutScripts added, removed and changed; exits 4, awaiting consent, writing nothing); consent = `--yes-consent-by <login> --evidence <text>`, passed only to record a PERSON's answer, never on an agent's initiative; apply = the same call, which writes `ref` and `trust.consent`, re-mounts and re-locks (`bun run cat mount:remote`), and `bun run cat mount:lock` replays a committed lock on a fresh clone; drift = a mounted file that no longer hashes to the lock refuses the update and is listed, and the remedy is upstream first.",
+      "notation": "kg-remote-mount",
+      "source": "cat-harness/tools/index.ts#kg-remote-mount",
       "status": "candidate"
     },
     {

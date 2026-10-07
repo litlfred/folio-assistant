@@ -8785,6 +8785,20 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount.lockedassetschema.path",
+      "prefLabel": "LockedAssetSchema.path",
+      "definition": "Relative to the downstream instance's root.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedAssetSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedassetschema.upstreampath",
+      "prefLabel": "LockedAssetSchema.upstreamPath",
+      "definition": "Where the file is in the upstream repository.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedAssetSchema.upstreamPath",
+      "status": "candidate"
+    },
+    {
       "id": "remote-mount.lockeddirectoryschema.path",
       "prefLabel": "LockedDirectorySchema.path",
       "definition": "Relative to the downstream instance's root, no trailing slash.",
@@ -8803,6 +8817,20 @@
       "prefLabel": "LockedDirectorySchema.upstreamPath",
       "definition": "Where the bytes are in the upstream repository.",
       "source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.adopted",
+      "prefLabel": "LockedInstanceSchema.adopted",
+      "definition": "The bytes were already on disk, identical to the pin, and the mount adopted them rather than writing them.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.adopted",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.assets",
+      "prefLabel": "LockedInstanceSchema.assets",
+      "definition": "Absent in a lock written before assets were mounted, which reads as the empty list.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.assets",
       "status": "candidate"
     },
     {
@@ -8834,6 +8862,13 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount.mountdefaultsschema.assets",
+      "prefLabel": "MountDefaultsSchema.assets",
+      "definition": "Asset ids, in this instance's own `assets`: the single files a mount carries besides its directories, each locked by sha256 (owner, 2026-10-07, \"Option A, by reference\": a mounted instance's `package.json` travels this way, so `bun run cat` can read its `checkoutScripts`). Absent is every asset the instance declares at `instance` scope. A `repository`-scoped asset belongs to the upstream repository, not the instance, and is never mounted.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.assets",
+      "status": "candidate"
+    },
+    {
       "id": "remote-mount.mountdefaultsschema.directories",
       "prefLabel": "MountDefaultsSchema.directories",
       "definition": "Directory ids, in this instance's own declaration.",
@@ -8862,6 +8897,13 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount.mountoverrideschema.assets",
+      "prefLabel": "MountOverrideSchema.assets",
+      "definition": "REPLACES the default asset list, as `directories` does; an undeclared id is refused.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.assets",
+      "status": "candidate"
+    },
+    {
       "id": "remote-mount.mountoverrideschema.whole",
       "prefLabel": "MountOverrideSchema.whole",
       "definition": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored.",
@@ -8880,6 +8922,13 @@
       "prefLabel": "RemoteMountSchema.overrides",
       "definition": "Per-instance overrides across the closure, keyed by instance name.",
       "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.remotemountschema.track",
+      "prefLabel": "RemoteMountSchema.track",
+      "definition": "The upstream branch this mount FOLLOWS for updates: the analogue of `branch =` in `.gitmodules`. It never moves the pin: `ref` stays the one commit mounted, and `bun run cat mount:update` reports how far `track`'s tip is ahead and re-pins only on a person's recorded consent (owner, 2026-10-07; skill `kg-core/pinned-remote-dependency`). Absent: nothing to update from.",
+      "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.track",
       "status": "candidate"
     },
     {
@@ -9419,6 +9468,20 @@
       "prefLabel": "ScriptEntry.manifest",
       "definition": "The manifest it is declared in, repository-relative (`package.json` for the root).",
       "source": "cat-harness/schemas/script-table.ts#ScriptEntry.manifest",
+      "status": "candidate"
+    },
+    {
+      "id": "script-table.unresolvedmanifest.declares",
+      "prefLabel": "UnresolvedManifest.declares",
+      "definition": "The script NAMES the unverified file declares, read so a caller can say \"`x` is declared there but unverified\" instead of \"no script `x`\". Names only: a command from unverified bytes is never returned, let alone run. `undefined` when the file could not be read at all.",
+      "source": "cat-harness/schemas/script-table.ts#UnresolvedManifest.declares",
+      "status": "candidate"
+    },
+    {
+      "id": "script-table.unresolvedmanifest.manifest",
+      "prefLabel": "UnresolvedManifest.manifest",
+      "definition": "Repository-relative: the `package.json`, or the lock that could not be read.",
+      "source": "cat-harness/schemas/script-table.ts#UnresolvedManifest.manifest",
       "status": "candidate"
     },
     {

@@ -23840,6 +23840,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedassetschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedAssetSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relative to the downstream instance's root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedAssetSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedassetschema.upstreampath",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedAssetSchema.upstreamPath"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the file is in the upstream repository."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedAssetSchema.upstreamPath",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockeddirectoryschema.path",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23894,6 +23932,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.adopted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.adopted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The bytes were already on disk, identical to the pin, and the mount adopted them rather than writing them."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.adopted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.assets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absent in a lock written before assets were mounted, which reads as the empty list."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.assets",
       "skos:note": "candidate"
     },
     {
@@ -23973,6 +24049,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountdefaultsschema.assets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountDefaultsSchema.assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Asset ids, in this instance's own `assets`: the single files a mount carries besides its directories, each locked by sha256 (owner, 2026-10-07, \"Option A, by reference\": a mounted instance's `package.json` travels this way, so `bun run cat` can read its `checkoutScripts`). Absent is every asset the instance declares at `instance` scope. A `repository`-scoped asset belongs to the upstream repository, not the instance, and is never mounted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.assets",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountdefaultsschema.directories",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24049,6 +24144,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountoverrideschema.assets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountOverrideSchema.assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "REPLACES the default asset list, as `directories` does; an undeclared id is refused."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.assets",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountoverrideschema.whole",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24103,6 +24217,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.remotemountschema.track",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemoteMountSchema.track"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The upstream branch this mount FOLLOWS for updates: the analogue of `branch =` in `.gitmodules`. It never moves the pin: `ref` stays the one commit mounted, and `bun run cat mount:update` reports how far `track`'s tip is ahead and re-pins only on a person's recorded consent (owner, 2026-10-07; skill `kg-core/pinned-remote-dependency`). Absent: nothing to update from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.track",
       "skos:note": "candidate"
     },
     {
@@ -25566,6 +25699,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.manifest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.unresolvedmanifest.declares",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UnresolvedManifest.declares"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The script NAMES the unverified file declares, read so a caller can say \"`x` is declared there but unverified\" instead of \"no script `x`\". Names only: a command from unverified bytes is never returned, let alone run. `undefined` when the file could not be read at all."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#UnresolvedManifest.declares",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.unresolvedmanifest.manifest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "UnresolvedManifest.manifest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repository-relative: the `package.json`, or the lock that could not be read."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#UnresolvedManifest.manifest",
       "skos:note": "candidate"
     },
     {

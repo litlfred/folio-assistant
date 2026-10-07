@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 135 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 137 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 180 terms and is 132 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 182 terms and is 135 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>180</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>180</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>182</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>182</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">180</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">182</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -395,6 +395,13 @@ Generated index pages <span class="fa-gloss-status">candidate, extracted</span>
 <p>Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#auto-docs-viewer</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--git-submodule" data-fa-state="extracted" data-fa-gloss="">
+git submodule (gitlink pin, commit to move) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The same workflow by git's own mechanism, for repositories that keep submodules: status = <code>git submodule status</code> plus a fetch of the branch <code>.gitmodules</code> names (<code>git fetch</code> in the submodule, then <code>git rev-list --count &lt;gitlink&gt;..origin/&lt;branch&gt;</code>); plan-update = <code>git log</code> and <code>git diff &lt;gitlink&gt;..origin/&lt;branch&gt;</code> in the submodule; consent = a PERSON commits the moved gitlink (the commit is the record); apply = <code>git submodule update --remote &lt;path&gt;</code> then commit the gitlink; drift = a dirty submodule (<code>git status</code> in it), which refuses until its edits are pushed upstream. No wrapper script: git is invoked directly. folio-assistant itself moved from this Tool to <a href="#cat-harness--kg-tools--kg-remote-mount"><code>kg-remote-mount</code></a> in #2470, the same workflow under a different mechanism.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#git-submodule</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--github" data-fa-state="extracted" data-fa-gloss="">
 GitHub <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -537,6 +544,13 @@ JSON-LD prefix check <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-K">K</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-tools--kg-remote-mount" data-fa-state="extracted" data-fa-gloss="">
+KG remote mount (pinned, locked, consent to move) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Mount another repository's harness and its closure at a 40-character pin, locked by digest, and move the pin only on a person's recorded consent. status = <code>bun run cat mount:remote:check</code> (disk against lock, offline) plus <code>bun run cat mount:update</code> (how far <code>track</code> is ahead); plan-update = <code>bun run cat mount:update</code> (commits, files under the mounted directories and assets, the declaration diff, and the <code>package.json</code> checkoutScripts added, removed and changed; exits 4, awaiting consent, writing nothing); consent = <code>--yes-consent-by &lt;login&gt; --evidence &lt;text&gt;</code>, passed only to record a PERSON's answer, never on an agent's initiative; apply = the same call, which writes <code>ref</code> and <code>trust.consent</code>, re-mounts and re-locks (<code>bun run cat mount:remote</code>), and <code>bun run cat mount:lock</code> replays a committed lock on a fresh clone; drift = a mounted file that no longer hashes to the lock refuses the update and is listed, and the remedy is upstream first.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#kg-remote-mount</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--kg-audit" data-fa-state="extracted" data-fa-gloss="">
 Knowledge-graph audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

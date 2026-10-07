@@ -1059,6 +1059,14 @@
       "status": "candidate"
     },
     {
+      "id": "pinned-remote-dependency",
+      "prefLabel": "pinned-remote-dependency",
+      "definition": "The workflow for a dependency held in another repository at a pinned commit, whatever the mechanism: the five operations every mechanism provides (status, plan-update, consent, apply, drift), the rule that consent is always a person's and never an agent's, the three-state rule, and the git-submodule ↔ remote-mount correspondence. Two Tools implement it: `kg-remote-mount` and `git-submodule`. Read before updating a pin, before answering \"is this dependency up to date\", and before choosing a mechanism.",
+      "notation": "pinned-remote-dependency",
+      "source": "cat-harness/skills/kg/kg-core/pinned-remote-dependency.md",
+      "status": "candidate"
+    },
+    {
       "id": "placement",
       "prefLabel": "placement",
       "definition": "Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two \"stub\" conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.",

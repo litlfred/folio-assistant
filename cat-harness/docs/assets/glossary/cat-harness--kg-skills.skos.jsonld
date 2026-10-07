@@ -2594,6 +2594,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/pinned-remote-dependency",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "pinned-remote-dependency"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The workflow for a dependency held in another repository at a pinned commit, whatever the mechanism: the five operations every mechanism provides (status, plan-update, consent, apply, drift), the rule that consent is always a person's and never an agent's, the three-state rule, and the git-submodule ↔ remote-mount correspondence. Two Tools implement it: `kg-remote-mount` and `git-submodule`. Read before updating a pin, before answering \"is this dependency up to date\", and before choosing a mechanism."
+        }
+      ],
+      "skos:notation": "pinned-remote-dependency",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/pinned-remote-dependency.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/placement",
       "@type": "skos:Concept",
       "skos:inScheme": {

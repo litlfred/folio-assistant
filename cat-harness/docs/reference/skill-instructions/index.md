@@ -131,6 +131,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Offering the knowledge graph](kg-contribution-offer.html) | `kg-contribution-offer` | — | Owner, 2026-09-20: *"update CRDM process that when a user is done with |
 | [KG export](kg-export.html) | `kg-export` | — | **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph |
 | [KG → package → distribution → portal](kg-to-portal.html) | `kg-to-portal` | — | A knowledge graph is in a repository. A portal — a Moodle site, a ministry's |
+| [Pinned remote dependency](pinned-remote-dependency.html) | `pinned-remote-dependency` | — | A dependency that lives in another repository is held at **one commit**, and |
 | [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |
 | [Remote-mount a harness](remote-mount.html) | `remote-mount` | — | The owner, 2026-10-06, ruled on how a downstream folio gets the layers it is |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |

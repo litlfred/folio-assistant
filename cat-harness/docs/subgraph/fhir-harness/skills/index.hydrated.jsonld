@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "Two packages. `fhir-client` is SMART on FHIR app launch (`smart-launch`) and FHIR resource operations (`fhir-client-operations`) through the SMARTerFHIR library, authored here against a pinned upstream commit because that repository ships no skill files (issue #556, bean `wlqd`). `fhir-ig-base` is the IG pipeline. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for the AST work: built as a library ON TOP of the Publisher (`ast-export/` on `litlfred/fhir-ig-publisher@claude/ast-export`), with the Library/PlanDefinition/Measure edges supplied beside the publisher's own `DependencyAnalyser`, where upstream leaves them empty. Only page-fragment provenance needs `org.hl7.fhir.core`. `ig-ast-delta` is the consumer half: list, check (`compiledValidity` on the AST's inputs), diff and render deltas between ASTs, every page carrying the provisional mark P3 requires.",
-      "fileCount": 24,
+      "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -237,9 +237,9 @@
           "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
           "name": "ig-build-pipeline",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3e6809c11ec7eb977b06221d89df26888e7a925d5469827630033dfe7378563c",
-            "bytes": 16350,
-            "sha256": "3e6809c11ec7eb977b06221d89df26888e7a925d5469827630033dfe7378563c"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/885c8fdbb2b74687bbd0d852ffeedcce8fea44aca6aa8159df3153d91c1a8b59",
+            "bytes": 16395,
+            "sha256": "885c8fdbb2b74687bbd0d852ffeedcce8fea44aca6aa8159df3153d91c1a8b59"
           },
           "title": "ig-build-pipeline"
         },
@@ -291,9 +291,9 @@
           "instructionsPath": "skills/fhir-ig-base/ig-render-jekyll.md",
           "name": "ig-render-jekyll",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a79a306d9c5a80f279399cc78046ff01dc2fc6ba7623dda97bbea20124676318",
-            "bytes": 5165,
-            "sha256": "a79a306d9c5a80f279399cc78046ff01dc2fc6ba7623dda97bbea20124676318"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa4806b95d0737772da9a1ac428252ef46a89944863230e249b85e0a893d5368",
+            "bytes": 5210,
+            "sha256": "fa4806b95d0737772da9a1ac428252ef46a89944863230e249b85e0a893d5368"
           },
           "title": "ig-render-jekyll"
         },

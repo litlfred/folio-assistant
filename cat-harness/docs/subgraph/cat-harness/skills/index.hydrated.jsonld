@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 284,
+      "fileCount": 285,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -1181,9 +1181,9 @@
               "instructionsPath": "skills/conduct/security/security.md",
               "name": "security",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/072399bffb7e4e8dad94ea7dc3b7049fc7783a1dc3337ccb5ced89f61c13b8b4",
-                "bytes": 6117,
-                "sha256": "072399bffb7e4e8dad94ea7dc3b7049fc7783a1dc3337ccb5ced89f61c13b8b4"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7cfa0c86820af592abc701bfcce646c5db3399197b521fca1d50dc690ebafc3b",
+                "bytes": 6264,
+                "sha256": "7cfa0c86820af592abc701bfcce646c5db3399197b521fca1d50dc690ebafc3b"
               },
               "title": "Security — one question, asked at every boundary"
             }
@@ -1537,6 +1537,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-contribution-offer",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-export",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-to-portal",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pinned-remote-dependency",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/placement",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/remote-mount",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",
@@ -1838,6 +1839,25 @@
               "title": "KG → package → distribution → portal"
             },
             {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/pinned-remote-dependency",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The workflow for a dependency held in another repository at a pinned commit, whatever the mechanism: the five operations every mechanism provides (status, plan-update, consent, apply, drift), the rule that consent is always a person's and never an agent's, the three-state rule, and the git-submodule ↔ remote-mount correspondence. Two Tools implement it: `kg-remote-mount` and `git-submodule`. Read before updating a pin, before answering \"is this dependency up to date\", and before choosing a mechanism.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 95,
+              "instructionsPath": "skills/kg/kg-core/pinned-remote-dependency.md",
+              "name": "pinned-remote-dependency",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c992c40cf4faff82e2c5df7f8d6873f4dff5852a0ca51e1a6551f0df0cbe0f1",
+                "bytes": 5698,
+                "sha256": "4c992c40cf4faff82e2c5df7f8d6873f4dff5852a0ca51e1a6551f0df0cbe0f1"
+              },
+              "title": "Pinned remote dependency"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/placement",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -1865,13 +1885,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 179,
+              "instructionLines": 242,
               "instructionsPath": "skills/kg/kg-core/remote-mount.md",
               "name": "remote-mount",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6c007757d17668e2c7135423d0c950a6ebc24449af5b18c92c8a5cc70da769c9",
-                "bytes": 8417,
-                "sha256": "6c007757d17668e2c7135423d0c950a6ebc24449af5b18c92c8a5cc70da769c9"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1cd1d692640df1ba95d5c30a481c5a526351d707209689039fc24487e42d3094",
+                "bytes": 12329,
+                "sha256": "1cd1d692640df1ba95d5c30a481c5a526351d707209689039fc24487e42d3094"
               },
               "title": "Remote-mount a harness"
             },
