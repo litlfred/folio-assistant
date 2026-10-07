@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6xdf
 title: 'PUBLIC COMMENT: a PR body that merely MENTIONS a change-set id re-links an already-incorporated change-set to it, and the record writer drops $schema'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T14:36:04Z
-updated_at: 2026-10-07T08:02:57Z
+updated_at: 2026-10-07T09:44:54Z
 parent: folio-assistant-q4jm
 ---
 
@@ -27,3 +27,5 @@ _2026-10-06T15:00Z_ — smart-ra CS-236 / CS-237 restored on main by d4331c3 (re
 _2026-10-07T07:49:45Z_ — Claimed by claude/exciting-ptolemy-se2d2a — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 *2026-10-07* — the three remaining items are done on branch claude/exciting-ptolemy-se2d2a: linkedChangeSets() makes only a keyword (Closes/fixes/resolves CS-nnn, or a cs: line) link a PR; a SETTLED (incorporated/closed) change-set is never re-linked; a test holds that the writer keeps $schema. The skill says which keywords link. Tests: public-comment.test.ts, 44 pass.
+
+*2026-10-07* — completed: merged in litlfred/folio-assistant#2403 (b61b125); smart-ra pin bump litlfred/smart-ra#30.
