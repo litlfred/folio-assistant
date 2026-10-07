@@ -1,11 +1,11 @@
 ---
 # folio-assistant-txut
 title: 'REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-29T18:14:49Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -63,3 +63,9 @@ The list is built with DOM APIs only, so a block label can never become markup.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1000 (commit `2a76df611f57`):
+- `cat-harness/scripts/gen-review-page.ts` generates `review/index.html` per folio showing diff against main.
+- Verified in Chromium: change categories, preview links, keyboard navigation (`j`/`k`).

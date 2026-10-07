@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kgho
 title: ci-health.yml fires WEEKLY, so a red main during active work waits up to seven days for the tracking issue
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T23:20:08Z
-updated_at: 2026-09-30T23:21:14Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -159,3 +159,10 @@ Whether a `workflow_run` trigger on a fork-originated run carries the
 permissions this job needs (`issues: write`). Every merge to `main` here is from
 a branch in the same repository, so it does not arise today — recorded rather
 than assumed away.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1725 (commit `27067b3fcb0e`):
+- `workflow_run` trigger added to `ci-health.yml` firing on failure of gating workflows.
+- Suspect-merge attribution implemented with parent commit verified first.
+- `workflow-triggers.test.ts` updated to cover `workflow_run`.
