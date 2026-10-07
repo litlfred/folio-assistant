@@ -340,15 +340,15 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T11:09:40.623Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c7bde619cf6d5ca111d6156d250a8fcbf9838113",
-  "sourceCommitSha": "c7bde619cf6d5ca111d6156d250a8fcbf9838113",
-  "sourceCommitAt": "2026-10-07T12:51:46+02:00",
+  "generatedAt": "2026-10-07T11:29:12.041Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+  "sourceCommitSha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
+  "sourceCommitAt": "2026-10-07T13:14:28+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "GraphTypology": 1,
-    "Subgraph": 6,
+    "Subgraph": 7,
     "Asset": 2
   },
   "@graph": [
@@ -407,7 +407,7 @@
       ],
       "description": "Scripts this layer runs. Holds `lib/roots.ts`, the one place that names the three roots a moved file can mean (HARNESS_ROOT, TOOLS_ROOT, REPO_ROOT), and its test; the harness's own `scripts/` arrives here batch by batch in the code move (bean `70lx`). Also the identifier lookup's pair, moved here from large-datasets when it dissolved into cat-harness (bean `j7ql`, 2026-10-01; D1: code goes to cat-harness-tools): `gen-id-lookup.ts` builds the prefix-sharded lookup over a catalogue's REFERENCED nodes for every instance that declares an `id-lookup` directory, and writes it THERE (`bun run id-lookup`, gated by `id-lookup:check`); `bench-id-lookup.ts` measures it at full catalogue scale on a seeded synthetic corpus (bean `4pm8`). Neither names a corpus: both read the checkout's declarations. And `extract-assets.ts`, the tool behind the harness's `asset-extraction` skill: a container's INDEX into a `folio-extraction/v1` record, moved down from `folio-assistant-core/scripts/` with its contract `cat-harness/schemas/extraction.ts` (bean `tlat`, placement PR5, owner ruling 2 of 2026-09-30).",
       "readmePath": "scripts/README.md",
-      "fileCount": 294,
+      "fileCount": 295,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-scripts"
     },
     {
@@ -462,6 +462,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-src"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-python",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "cat-harness-tools-python",
+      "path": "python/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/code"
+      ],
+      "description": "The Python toolchain's dependency manifests: `requirements.txt` (the LEAN set CI installs, `pip install -r cat-harness-tools/python/requirements.txt` from the checkout root) and `requirements-extended.txt` (declared, deliberately not installed in CI — its cost is stated per entry). GENERATED, never hand-edited: the source is `cat-harness/schemas/python-deps.ts`, whose `requirementsPath` is the one place this location is written, and `bun run deps:python` writes both (`deps:python:check` fails when either is stale). Moved here from the repository root on 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the repo split); dependabot's pip `directory:` names this directory. `code`: a dependency manifest is the toolchain's, the same class as a `package.json`.",
+      "readmePath": "python/README.md",
+      "fileCount": 3,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#directory/cat-harness-tools-python"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
       "name": "agent-instructions",
@@ -482,8 +499,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "c7bde619cf6d5ca111d6156d250a8fcbf9838113",
+    "sha": "8b22cc61a789c1f24c6d11a6a8f6990a1930face",
     "pr": "main",
-    "run": "37610190561"
+    "run": "37612752191"
   }
 }
