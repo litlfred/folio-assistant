@@ -179,6 +179,14 @@ jobs:
       # the mount (as in code-quality-gates, so fixity sees the same tree) and
       # before anything is built, so a refused gate publishes nothing.
       # `docs-site-publish.bpmn` Task_SecurityGate.
+      - name: Produce the QA working copy the security gate reads (bean ieum)
+        # `check:qa-reviewer-permission`, one of the gate's blocking checks,
+        # READS the derived QA results, which are not committed (bean `5hox`).
+        # Without them it fails, and the gate refused every publish from
+        # 91d6a0b on (issue #2459). The same step code-quality-gates runs
+        # before its gates (bean `72a8`).
+        run: bun run qa:working-copy
+
       - name: Release security gate
         run: bun run security:gate
 
