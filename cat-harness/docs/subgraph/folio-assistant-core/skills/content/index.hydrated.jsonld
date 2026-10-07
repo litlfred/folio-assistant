@@ -156,6 +156,53 @@
       ],
       "name": "skills/content/folio-document-adapter",
       "path": "skills/content/folio-document-adapter/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/requirements-planning/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/plan-request-gate",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "When somebody asks for a PLAN — \"plan\", \"approach\", \"proposal\", \"how would you\", \"come up with\" — produce a requirements document and a work plan, post or commit them where the governing methodology says, hand over both as absolute GitHub permalinks, and STOP until sign-off is recorded on the issue. Applies to content requests as much as to feature requests. The operation both requirements methodologies (crdm, spec-kit) point at; neither is replaced by it.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 151,
+          "instructionsPath": "skills/content/requirements-planning/plan-request-gate.md",
+          "name": "plan-request-gate",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544",
+            "bytes": 7712,
+            "sha256": "416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544"
+          },
+          "title": "A plan request stops at a signed-off plan"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/requirement-definition",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "What a requirement IS, said once for both requirements methodologies: a statement, a conformance level, a source, at least one success criterion with its verification method, and a sign-off owner. How that maps onto the `req:` schema's `successCriteria`, onto CRDM's REQ-### and spec-kit's FR/SC, and why a work plan is beans whose `## Done when` is copied from the success criteria of the statements they name.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+          "instructionLines": 141,
+          "instructionsPath": "skills/content/requirements-planning/requirement-definition.md",
+          "name": "requirement-definition",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58",
+            "bytes": 7121,
+            "sha256": "35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58"
+          },
+          "title": "One definition of a requirement"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/content/requirements-planning",
+      "path": "skills/content/requirements-planning/"
     }
   ],
   "holdsGraph": [

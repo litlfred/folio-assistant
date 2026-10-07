@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
-      "fileCount": 81,
+      "fileCount": 85,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -197,6 +197,53 @@
           ],
           "name": "skills/content/folio-document-adapter",
           "path": "skills/content/folio-document-adapter/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/requirements-planning/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/plan-request-gate",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "When somebody asks for a PLAN — \"plan\", \"approach\", \"proposal\", \"how would you\", \"come up with\" — produce a requirements document and a work plan, post or commit them where the governing methodology says, hand over both as absolute GitHub permalinks, and STOP until sign-off is recorded on the issue. Applies to content requests as much as to feature requests. The operation both requirements methodologies (crdm, spec-kit) point at; neither is replaced by it.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 151,
+              "instructionsPath": "skills/content/requirements-planning/plan-request-gate.md",
+              "name": "plan-request-gate",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544",
+                "bytes": 7712,
+                "sha256": "416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544"
+              },
+              "title": "A plan request stops at a signed-off plan"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/requirement-definition",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "What a requirement IS, said once for both requirements methodologies: a statement, a conformance level, a source, at least one success criterion with its verification method, and a sign-off owner. How that maps onto the `req:` schema's `successCriteria`, onto CRDM's REQ-### and spec-kit's FR/SC, and why a work plan is beans whose `## Done when` is copied from the success criteria of the statements they name.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 141,
+              "instructionsPath": "skills/content/requirements-planning/requirement-definition.md",
+              "name": "requirement-definition",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58",
+                "bytes": 7121,
+                "sha256": "35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58"
+              },
+              "title": "One definition of a requirement"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/content/requirements-planning",
+          "path": "skills/content/requirements-planning/"
         }
       ],
       "holdsGraph": [
@@ -424,6 +471,24 @@
                 "sha256": "9ce37cd93fe0c0d7e24fcd8e50b95ce5b94d0a3c842994c77df34804ba82fd7f"
               },
               "title": "Document Intake"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 82,
+              "instructionsPath": "skills/library/ingestion/l1-coverage.md",
+              "name": "l1-coverage",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6a0acc933b91187ce797da9842b507dac1039cd3302ff250748d0591428bc1ad",
+                "bytes": 4167,
+                "sha256": "6a0acc933b91187ce797da9842b507dac1039cd3302ff250748d0591428bc1ad"
+              },
+              "title": "L1 coverage — nothing normative goes missing silently"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",

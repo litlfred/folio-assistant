@@ -38,7 +38,7 @@ a real subprocess in its own file:
 | Phase 4b — prioritization | *(inline in Phase 4 exit)* | dependency-order capability areas, formalize-first rule, BA confirms |
 | Phase 5 — beans + sign-off | `crdm-signoff.bpmn` | requirements become beans, BA signs off, branch announced |
 | Phase 6 — implement + acceptance | `crdm-deliver.bpmn` | implement, review increment, share MVP, take findings |
-| Close-out | `crdm-close.bpmn` | stakeholder sign-off, BA confirmation, then the close |
+| Close-out | `crdm-close.bpmn` | stakeholder sign-off, BA confirmation (an adjudication, recorded as a `requirement-signoff` attestation that moves the set to `accepted`), then the close |
 
 **Nothing about running it changes.** Step ids are unchanged, so
 `workflow_complete` still takes `A_Implement`, `A_Close`, `BA_Signoff` by name;
@@ -291,7 +291,17 @@ content (prose), which must precede its presentation (PDF layout).
 **Input:** requirements + impact analysis reviewed and approved by stakeholders
 
 1. **Post sign-off summary** on the issue — what was agreed, what was deferred
-2. **Create beans** for each implementation unit:
+   — **and record it.** `BA_Signoff` is an adjudication (issue #2405, FR-013):
+   the BA answers `approve`, `amend`, `reject`, `defer` or `cancel`, and
+   `A_RecordSignoff` appends a `requirement-signoff` attestation for the
+   requirement set (who, when, scope, outcome, the stage it moves the set to,
+   the reason, and the permalink to the issue comment). `GW_SignoffRecorded`
+   reads it back, so the phase cannot continue on a sign-off nobody recorded.
+   An agent records the BA's decision; it never makes it.
+2. **Create beans** for each implementation unit — each naming the `req:`
+   statements it delivers, with `## Done when` copied from their success
+   criteria, and listed in the set's `workPlan` (a set at `planned` with no
+   beans is refused):
    - Follow the check-before-create protocol (see `todo-manager.md`)
    - Scope to a single PR-sized unit
    - Reference the parent issue in each bean
@@ -347,6 +357,14 @@ sub-graphs of it.
 |---|---|---|---|
 | Phases 1–5, and while building | `docs/proposals/<slug>.md` | the argument: needs, options, MVP, what was agreed | — |
 | the feature ships | `docs/requirements/<slug>.md` | the promise: its front matter is a `Requirement` | `check:requirements` |
+
+**The directory says what KIND of document it is; the stage is a field**
+(issue #2405, FR-010). The requirements document is a `RequirementSet`
+whose `stage` (`draft` … `accepted`, or `rejected`, `cancelled`,
+`superseded`) is recorded in the set and moved only by a recorded sign-off.
+The directory follows the stage — a set reaching `accepted` is when its
+proposal is filed — but it no longer stands in for it: before this, "where the
+file is" was the only record of a decision, and nothing said who made it.
 
 Both kinds, `proposals` and `requirements`, declare `within: "docs"`. Every
 list of kinds (the navbar's Folders among them) therefore draws them inside
