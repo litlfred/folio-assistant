@@ -130,6 +130,17 @@ files stays refused (`refusal: "tracked"`). An instance the checkout already
 holds as one of its own (found by `instanceRootsIn`, not by a lock) is still
 `local`, not adopted.
 
+## Path collisions
+
+Before anything lands, every effective mount path is checked against the
+downstream's declared directories, the reserved root names
+(`schemas/reserved-root-names.json`) and every other mount (bean `t4xb`). A
+collision is refused (`refusal: "path-collision"`) with both claimants named
+and the fix, `bun run cat mount:relocate <instance> --to <dir>`; see
+[`pinned-remote-dependency`](pinned-remote-dependency.md) §"Mount path
+collisions and relocation". Mount paths are git-ignored, and
+`check:mount-tracked` fails on any tracked file under one.
+
 ## Health
 
 `bun run cat health` carries a `remote-mounts` check reading the declaration,

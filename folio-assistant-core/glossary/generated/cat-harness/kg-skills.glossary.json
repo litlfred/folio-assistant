@@ -734,6 +734,14 @@
       "status": "candidate"
     },
     {
+      "id": "index-config",
+      "prefLabel": "index-config",
+      "definition": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories.",
+      "notation": "index-config",
+      "source": "cat-harness/skills/kg/kg-core/index-config.md",
+      "status": "candidate"
+    },
+    {
       "id": "injection-boundaries",
       "prefLabel": "injection-boundaries",
       "definition": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
@@ -1776,6 +1784,14 @@
       "definition": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
       "notation": "workflow-state",
       "source": "cat-harness/skills/process/workflow/workflow-state.md",
+      "status": "candidate"
+    },
+    {
+      "id": "zero-trust-handover",
+      "prefLabel": "zero-trust-handover",
+      "definition": "How this platform applies zero trust (the zero-trust-architecture methodology, NIST SP 800-207) to every hand-over between agents, skills, tools and graphs: rules H1-H9, the hand-over screen and where it is wired, the remote-mount trust gate, per-tool risk read from a tool's sinks, and the release security gate. A house application, not a methodology: read the node for the method, read this for what to do at a boundary.",
+      "notation": "zero-trust-handover",
+      "source": "cat-harness/skills/conduct/security/zero-trust-handover.md",
       "status": "candidate"
     }
   ]

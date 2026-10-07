@@ -241,7 +241,7 @@
     {
       "id": "git-submodule",
       "prefLabel": "git submodule (gitlink pin, commit to move)",
-      "definition": "The same workflow by git's own mechanism, for repositories that keep submodules: status = `git submodule status` plus a fetch of the branch `.gitmodules` names (`git fetch` in the submodule, then `git rev-list --count <gitlink>..origin/<branch>`); plan-update = `git log` and `git diff <gitlink>..origin/<branch>` in the submodule; consent = a PERSON commits the moved gitlink (the commit is the record); apply = `git submodule update --remote <path>` then commit the gitlink; drift = a dirty submodule (`git status` in it), which refuses until its edits are pushed upstream. No wrapper script: git is invoked directly. folio-assistant itself moved from this Tool to `kg-remote-mount` in #2470, the same workflow under a different mechanism.",
+      "definition": "Status: available mechanism; not used by folio-assistant (migrated to KG remote mounts in #2470). The same workflow by git's own mechanism, for repositories that keep submodules: status = `git submodule status` plus a fetch of the branch `.gitmodules` names (`git fetch` in the submodule, then `git rev-list --count <gitlink>..origin/<branch>`); plan-update = `git log` and `git diff <gitlink>..origin/<branch>` in the submodule; consent = a PERSON commits the moved gitlink (the commit is the record); apply = `git submodule update --remote <path>` then commit the gitlink; drift = a dirty submodule (`git status` in it), which refuses until its edits are pushed upstream. No wrapper script: git is invoked directly. folio-assistant itself moved from this Tool to `kg-remote-mount` in #2470, the same workflow under a different mechanism.",
       "notation": "git-submodule",
       "source": "cat-harness/tools/index.ts#git-submodule",
       "status": "candidate"
@@ -468,6 +468,14 @@
       "definition": "Render the declared methodology graph as one page.",
       "notation": "methodologies-viewer",
       "source": "cat-harness/tools/viewers.ts#methodologies-viewer",
+      "status": "candidate"
+    },
+    {
+      "id": "mount-relocate",
+      "prefLabel": "Relocate a remote mount",
+      "definition": "Change the directory a remote-mounted instance lands at. The new directory passes the same collision check a mount makes (the downstream's declared directories, the reserved root names, every other mount) and must not already be populated. The path is written as `overrides.<instance>.path` through `writeDeclaredMounts` (index.config.json). A mounted instance that still matches its lock is moved on disk and its lock entry rewritten; a drifted one is refused, nothing changed, until its edits go upstream; an unmounted one is declared at the new path and mounted. `--plan` prints what would change and writes nothing. The harness's route, `<base>/<harness>/<visualizer>/`, does not change.",
+      "notation": "mount-relocate",
+      "source": "cat-harness/tools/index.ts#mount-relocate",
       "status": "candidate"
     },
     {

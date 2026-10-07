@@ -221,7 +221,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     }),
     // Bean `ieum`, owner 2026-10-07: "filter inter-agent communication (e.g.
     // handover reports/prompts) for prompt injection as well as any human
-    // input". Rules H3, H5, H9 of methodologies/zero-trust-handover.md.
+    // input". Rules H3, H5, H9 of skills/conduct/security/zero-trust-handover.md.
     defineTool({
       id: "handover-screen",
       title: "Screen a hand-over for injected instructions, field by field",

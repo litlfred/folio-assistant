@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 285,
+      "fileCount": 287,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -1060,9 +1060,9 @@
               "instructionsPath": "skills/conduct/conduct-core/untrusted-input.md",
               "name": "untrusted-input",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/38509184482e5c6a56577dc1b9e7d405109502a978963cb474371b00fab023ed",
-                "bytes": 8856,
-                "sha256": "38509184482e5c6a56577dc1b9e7d405109502a978963cb474371b00fab023ed"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/70a39fe847be331423e14705e469a25f35a4468117d3175ff2699a806610bbff",
+                "bytes": 8870,
+                "sha256": "70a39fe847be331423e14705e469a25f35a4468117d3175ff2699a806610bbff"
               },
               "title": "Untrusted input — the value must never become program text"
             },
@@ -1121,7 +1121,8 @@
               "declaresSkill": [
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment",
-                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security"
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/zero-trust-handover"
               ],
               "description": "The security sub-KG, split on WHERE A VALUE CROSSES A BOUNDARY rather than on attack name. The owner asked for it on 2026-09-25 — \"bean as ceybeesquity sub KG in tools. first is injection et. related skills already man y in folio and smart-base. consolidate\" — and chose scope 2+3: consolidate the scattered pieces AND audit every I/O site. The axis matters: an attack-name split (\"XSS\", \"path traversal\", \"command injection\") files one rule in three places, because the same value crossing the same boundary is all three depending on the sink. A boundary split asks the question a reader actually has at the call site: this value came from outside, what may I do with it? Every entry here existed before the package did and was stranded — `check-workflow-injection.ts` in scripts, `resolveWithin` in one server script, `translation_security.py` in the translation tooling, and the XSS rules in a bean. Beans `6bhf`, `1wef`, `fuzm`, `q2wm`.",
               "hasManifest": true,
@@ -1181,11 +1182,30 @@
               "instructionsPath": "skills/conduct/security/security.md",
               "name": "security",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7cfa0c86820af592abc701bfcce646c5db3399197b521fca1d50dc690ebafc3b",
-                "bytes": 6264,
-                "sha256": "7cfa0c86820af592abc701bfcce646c5db3399197b521fca1d50dc690ebafc3b"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/17cb994f793995f99d403e2870729fc2550a1500d6948fb7841a7695038e39ef",
+                "bytes": 6457,
+                "sha256": "17cb994f793995f99d403e2870729fc2550a1500d6948fb7841a7695038e39ef"
               },
               "title": "Security — one question, asked at every boundary"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/zero-trust-handover",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "How this platform applies zero trust (the zero-trust-architecture methodology, NIST SP 800-207) to every hand-over between agents, skills, tools and graphs: rules H1-H9, the hand-over screen and where it is wired, the remote-mount trust gate, per-tool risk read from a tool's sinks, and the release security gate. A house application, not a methodology: read the node for the method, read this for what to do at a boundary.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 366,
+              "instructionsPath": "skills/conduct/security/zero-trust-handover.md",
+              "name": "zero-trust-handover",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/82f2b7d314eda58fee72081cba38df68888a50e25db15ee6790ac9b4d6ef3b73",
+                "bytes": 25471,
+                "sha256": "82f2b7d314eda58fee72081cba38df68888a50e25db15ee6790ac9b4d6ef3b73"
+              },
+              "title": "Zero-trust handover"
             }
           ],
           "holdsGraph": [
@@ -1532,6 +1552,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements",
+                "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
                 "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-contribution-offer",
@@ -1744,6 +1765,25 @@
               "title": "Harness requirements — what an instance owes for what it declares"
             },
             {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+              "instructionLines": 227,
+              "instructionsPath": "skills/kg/kg-core/index-config.md",
+              "name": "index-config",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/66445491a2e07b9d1fd32a6a5319a79bf7146ccfc6e31ad805610cb5c451a7b9",
+                "bytes": 10741,
+                "sha256": "66445491a2e07b9d1fd32a6a5319a79bf7146ccfc6e31ad805610cb5c451a7b9"
+              },
+              "title": "`index.config.json`: what this checkout instantiates"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -1847,13 +1887,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 95,
+              "instructionLines": 158,
               "instructionsPath": "skills/kg/kg-core/pinned-remote-dependency.md",
               "name": "pinned-remote-dependency",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c992c40cf4faff82e2c5df7f8d6873f4dff5852a0ca51e1a6551f0df0cbe0f1",
-                "bytes": 5698,
-                "sha256": "4c992c40cf4faff82e2c5df7f8d6873f4dff5852a0ca51e1a6551f0df0cbe0f1"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91c200f7d5ee8d94a74c73b8d29c1eac49bc647ff26748e5576bc7bf327ad92e",
+                "bytes": 8889,
+                "sha256": "91c200f7d5ee8d94a74c73b8d29c1eac49bc647ff26748e5576bc7bf327ad92e"
               },
               "title": "Pinned remote dependency"
             },
@@ -1885,13 +1925,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 242,
+              "instructionLines": 253,
               "instructionsPath": "skills/kg/kg-core/remote-mount.md",
               "name": "remote-mount",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1cd1d692640df1ba95d5c30a481c5a526351d707209689039fc24487e42d3094",
-                "bytes": 12329,
-                "sha256": "1cd1d692640df1ba95d5c30a481c5a526351d707209689039fc24487e42d3094"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/605505c3496c19dfa90008831a6ff03aafc2bacfc4871508fcb462ea2e0a3c4d",
+                "bytes": 12896,
+                "sha256": "605505c3496c19dfa90008831a6ff03aafc2bacfc4871508fcb462ea2e0a3c4d"
               },
               "title": "Remote-mount a harness"
             },
@@ -3968,9 +4008,9 @@
               "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
               "name": "prepare-merge",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8e566ddb8928e74de625c381e9ca2469ee6058fa1538b9f43b2c309c60161308",
-                "bytes": 36518,
-                "sha256": "8e566ddb8928e74de625c381e9ca2469ee6058fa1538b9f43b2c309c60161308"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f68f4b1c39c0e85cf17845476af1af995f95681ce73e3a0a0682e4ce7fbb534f",
+                "bytes": 36522,
+                "sha256": "f68f4b1c39c0e85cf17845476af1af995f95681ce73e3a0a0682e4ce7fbb534f"
               },
               "title": "Prepare-merge — get a feature branch ready to land"
             },
@@ -5027,9 +5067,9 @@
               "instructionsPath": "skills/ui/ui-core/ui-accessibility.md",
               "name": "ui-accessibility",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bf3b54cc3dd987e0ec3f12d94dc118d992b2a9436835c7ca1dbf2c5f7e33222e",
-                "bytes": 9701,
-                "sha256": "bf3b54cc3dd987e0ec3f12d94dc118d992b2a9436835c7ca1dbf2c5f7e33222e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1bbb2c02b53c5cff2e628953a0c430214f7fbfd16aeff6a20561d37aaa4e9474",
+                "bytes": 9737,
+                "sha256": "1bbb2c02b53c5cff2e628953a0c430214f7fbfd16aeff6a20561d37aaa4e9474"
               },
               "title": "All UI must follow accessibility guidelines"
             },

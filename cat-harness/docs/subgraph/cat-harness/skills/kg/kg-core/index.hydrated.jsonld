@@ -17,6 +17,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/directory-conventions",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/flushable-containers",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-contribution-offer",
@@ -229,6 +230,25 @@
       "title": "Harness requirements — what an instance owes for what it declares"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/index-config",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "`index.config.json` at an instantiation root says which harnesses the checkout instantiates, where each one comes from (local, or a remote mount pinned to a SHA), how its `<name>.config.json` is imported and overridden, and which harness `/` is. Covers instantiated against declared, landing resolution and its error case, `index.lock.json` and its legacy fallback, the reserved `index` stem, the generated `.gitignore` block and its gate, and `index-config:migrate` for separated repositories.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 227,
+      "instructionsPath": "skills/kg/kg-core/index-config.md",
+      "name": "index-config",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/66445491a2e07b9d1fd32a6a5319a79bf7146ccfc6e31ad805610cb5c451a7b9",
+        "bytes": 10741,
+        "sha256": "66445491a2e07b9d1fd32a6a5319a79bf7146ccfc6e31ad805610cb5c451a7b9"
+      },
+      "title": "`index.config.json`: what this checkout instantiates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
@@ -332,13 +352,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 95,
+      "instructionLines": 158,
       "instructionsPath": "skills/kg/kg-core/pinned-remote-dependency.md",
       "name": "pinned-remote-dependency",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c992c40cf4faff82e2c5df7f8d6873f4dff5852a0ca51e1a6551f0df0cbe0f1",
-        "bytes": 5698,
-        "sha256": "4c992c40cf4faff82e2c5df7f8d6873f4dff5852a0ca51e1a6551f0df0cbe0f1"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91c200f7d5ee8d94a74c73b8d29c1eac49bc647ff26748e5576bc7bf327ad92e",
+        "bytes": 8889,
+        "sha256": "91c200f7d5ee8d94a74c73b8d29c1eac49bc647ff26748e5576bc7bf327ad92e"
       },
       "title": "Pinned remote dependency"
     },
@@ -370,13 +390,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/kg-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-      "instructionLines": 242,
+      "instructionLines": 253,
       "instructionsPath": "skills/kg/kg-core/remote-mount.md",
       "name": "remote-mount",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1cd1d692640df1ba95d5c30a481c5a526351d707209689039fc24487e42d3094",
-        "bytes": 12329,
-        "sha256": "1cd1d692640df1ba95d5c30a481c5a526351d707209689039fc24487e42d3094"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/605505c3496c19dfa90008831a6ff03aafc2bacfc4871508fcb462ea2e0a3c4d",
+        "bytes": 12896,
+        "sha256": "605505c3496c19dfa90008831a6ff03aafc2bacfc4871508fcb462ea2e0a3c4d"
       },
       "title": "Remote-mount a harness"
     },

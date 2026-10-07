@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/a-e/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1946 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1956 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 603 terms and is 347 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 607 terms and is 350 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2252</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2252</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2262</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2262</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">603</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">607</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a></nav>
 
@@ -1761,6 +1761,13 @@ CatHarnessDeclaration.separation <span class="fa-gloss-status">candidate, extrac
 <p>Which half of a kg-separation pair the planned &#123;@link repository} is — see <code>separation</code> on &#123;@link CatHarnessDeclarationSchema}. Absent is &quot;has not said&quot;. Bean <code>eayu</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.separation</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.source" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this whole instance gets its upstream/source material (e.g. an IG source in Git). Bean <code>bamf</code>, owner ruling 2026-10-07: declare IG source in instance declaration.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.source</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.stickies" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.stickies <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1928,6 +1935,13 @@ CatHarnessDeclarationSchema.separation <span class="fa-gloss-status">candidate, 
 <dd>
 <p>Which half of a kg-separation pair this instance's planned <code>repository</code> is: <code>content</code> (files to read — no code, bootstrap FR-7) or <code>tools</code> (the code that writes and checks a content repository).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.source" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where this whole instance gets its upstream/source material (e.g. an IG source in Git). Bean <code>bamf</code>, owner ruling 2026-10-07: declare IG source in instance declaration.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.subscriptions" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.subscriptions <span class="fa-gloss-status">candidate, extracted</span>
@@ -3423,6 +3437,20 @@ DeclaredImage.textRegion <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>The quiet interior a sticky's words sit in, in fractions of this image.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts"><code>cat-harness/schemas/theme.ts#DeclaredImage.textRegion</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--index-config.declaredmounts.file" data-fa-state="extracted" data-fa-gloss="">
+DeclaredMounts.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The file read; absent for <code>none</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/index-config.ts"><code>cat-harness/schemas/index-config.ts#DeclaredMounts.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--index-config.declaredmounts.from" data-fa-state="extracted" data-fa-gloss="">
+DeclaredMounts.from <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where they were read from: the index, the declaration's <code>remoteMounts</code> (no index), or nowhere.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/index-config.ts"><code>cat-harness/schemas/index-config.ts#DeclaredMounts.from</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--harness-config.declaredsubgraph.instancename" data-fa-state="extracted" data-fa-gloss="">
 DeclaredSubgraph.instanceName <span class="fa-gloss-status">candidate, extracted</span>

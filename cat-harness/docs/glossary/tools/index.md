@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 138 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 139 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 183 terms and is 135 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 184 terms and is 136 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>183</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>183</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>184</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>184</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">183</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">184</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -399,7 +399,7 @@ Generated index pages <span class="fa-gloss-status">candidate, extracted</span>
 git submodule (gitlink pin, commit to move) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The same workflow by git's own mechanism, for repositories that keep submodules: status = <code>git submodule status</code> plus a fetch of the branch <code>.gitmodules</code> names (<code>git fetch</code> in the submodule, then <code>git rev-list --count &lt;gitlink&gt;..origin/&lt;branch&gt;</code>); plan-update = <code>git log</code> and <code>git diff &lt;gitlink&gt;..origin/&lt;branch&gt;</code> in the submodule; consent = a PERSON commits the moved gitlink (the commit is the record); apply = <code>git submodule update --remote &lt;path&gt;</code> then commit the gitlink; drift = a dirty submodule (<code>git status</code> in it), which refuses until its edits are pushed upstream. No wrapper script: git is invoked directly. folio-assistant itself moved from this Tool to <a href="#cat-harness--kg-tools--kg-remote-mount"><code>kg-remote-mount</code></a> in #2470, the same workflow under a different mechanism.</p>
+<p>Status: available mechanism; not used by folio-assistant (migrated to KG remote mounts in #2470). The same workflow by git's own mechanism, for repositories that keep submodules: status = <code>git submodule status</code> plus a fetch of the branch <code>.gitmodules</code> names (<code>git fetch</code> in the submodule, then <code>git rev-list --count &lt;gitlink&gt;..origin/&lt;branch&gt;</code>); plan-update = <code>git log</code> and <code>git diff &lt;gitlink&gt;..origin/&lt;branch&gt;</code> in the submodule; consent = a PERSON commits the moved gitlink (the commit is the record); apply = <code>git submodule update --remote &lt;path&gt;</code> then commit the gitlink; drift = a dirty submodule (<code>git status</code> in it), which refuses until its edits are pushed upstream. No wrapper script: git is invoked directly. folio-assistant itself moved from this Tool to <a href="#cat-harness--kg-tools--kg-remote-mount"><code>kg-remote-mount</code></a> in #2470, the same workflow under a different mechanism.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#git-submodule</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--github" data-fa-state="extracted" data-fa-gloss="">
@@ -956,6 +956,13 @@ release-please (declared, not configured here) <span class="fa-gloss-status">can
 <dd>
 <p>Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean <code>frq2</code>).</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#release-please</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--mount-relocate" data-fa-state="extracted" data-fa-gloss="">
+Relocate a remote mount <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Change the directory a remote-mounted instance lands at. The new directory passes the same collision check a mount makes (the downstream's declared directories, the reserved root names, every other mount) and must not already be populated. The path is written as <code>overrides.&lt;instance&gt;.path</code> through <code>writeDeclaredMounts</code> (index.config.json). A mounted instance that still matches its lock is moved on disk and its lock entry rewritten; a drifted one is refused, nothing changed, until its edits go upstream; an unmounted one is declared at the new path and mounted. <code>--plan</code> prints what would change and writes nothing. The harness's route, <code>&lt;base&gt;/&lt;harness&gt;/&lt;visualizer&gt;/</code>, does not change.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#mount-relocate</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--ig-ast-render" data-fa-state="extracted" data-fa-gloss="">
 Render a computed IG AST delta as just-the-docs pages <span class="fa-gloss-status">candidate, extracted</span>
