@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mjl3
 title: 'artefact-verification.json merges are CORRECTLY refused and must stay refused: it reads like a generated sidecar, has no writer, and carries authored reasons'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-03T17:41:35Z
-updated_at: 2026-10-03T17:41:53Z
+updated_at: 2026-10-07T04:31:18Z
 parent: folio-assistant-d33q
 ---
 
@@ -56,3 +56,5 @@ change to `check-artefact-verification.ts`, not to the catalogue.
 The second item is deliberately left open rather than scheduled: nothing today
 wants a writer, and inventing one to make merges cheaper would be adding a
 mechanism to serve the merge tool rather than the gate.
+
+_2026-10-07T04:31:18Z_ — Claimed by claude/mjl3-close-landed-artefact-verification — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1hjm
 title: merge queue is UNAVAILABLE on this repo — three workflows carry merge_group triggers that can never fire
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T22:29:45Z
-updated_at: 2026-09-30T22:47:27Z
+updated_at: 2026-10-07T04:47:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -171,3 +171,5 @@ Cloud. `1hjm`'s "Not established" section said this was unexplored; it is now
 explored as a *rule*, while its **cost** to this repository (a transfer, and
 whatever depends on the `litlfred/` path) remains genuinely unexplored and is
 nobody's decision but the owner's.
+
+_2026-10-07T04:47:41Z_ — Claimed by claude/1hjm-merge-queue-verbatim-docs — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

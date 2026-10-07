@@ -6,8 +6,8 @@ repo. tools need to look external."*
 
 ## Why the query was too narrow rather than missing
 
-The external reader already existed — `fetchRuns()` in
-`cat-harness-tools/scripts/check-ci-health.ts` has always called the GitHub API and
+The external reader already existed — `fetchRuns()` in the
+tools layer's `scripts/check-ci-health.ts` has always called the GitHub API and
 degraded with named reasons. Three properties of a Pages run defeat it at once,
 so all three had to be answered together:
 
