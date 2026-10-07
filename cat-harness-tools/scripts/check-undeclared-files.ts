@@ -75,6 +75,14 @@ import { instanceConfigFilename } from "../../cat-harness/schemas/harness-config
  * sweep exists to catch. Every entry below is a file whose location is fixed
  * by a tool that looks for it there.
  *
+ * Five entries LEFT this list on 2026-10-06 (bean `ar1s`, phase 3), because
+ * their location was a habit rather than a tool's requirement: `requirements*.txt`
+ * moved to `cat-harness-tools/python/`, `upstream-pins.json` to
+ * `cat-harness/upstream/`, `test-server.mjs` to `cat-harness/test/` and
+ * `harness.config.example.json` to `cat-harness/docs/reference/` — each now
+ * inside a DECLARED directory whose description names it, which is a better
+ * account of a file than a line here.
+ *
  * ## The instance configs are COMPUTED, and that is not a pattern either
  *
  * `harness.config.json` was an entry here until 2026-09-20. The config is
@@ -95,12 +103,7 @@ export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   "tsconfig.json": "tsc's project root",
   "eslint.config.mjs": "eslint flat config, root-only",
   "playwright.config.ts": "playwright's project root",
-  "test-server.mjs": "the e2e test server playwright.config.ts starts",
   Dockerfile: "the image build context is the repository",
-  "harness.config.example.json": "the worked example beside it",
-  "upstream-pins.json": "the pinned upstream revisions check-upstream-pins.ts reads",
-  "requirements.txt": "the Python toolchain, read from the root",
-  "requirements-extended.txt": "the optional half of the same",
   "AGENTS.md": "the agent-generic instructions every tool looks for at the root",
   "CLAUDE.md": "the tool-specific stub pointing at AGENTS.md",
   "GEMINI.md": "the same, for another tool",
