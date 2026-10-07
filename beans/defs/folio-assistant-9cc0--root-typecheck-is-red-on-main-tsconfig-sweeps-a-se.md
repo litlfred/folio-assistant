@@ -94,7 +94,7 @@ Run `36238697037` on `75150734ca`, the `TypeScript — tests, lint, types (hard)
 
     step 5  Install dependencies   success
     step 6  bun test               FAILURE   (main's translation:drift, 1 of 11939)
-    step 7  bun run lint           skipped
+    step 7  bun run cat lint           skipped
     step 8  tsc --noEmit           skipped
     …       47 further gate steps  skipped
 

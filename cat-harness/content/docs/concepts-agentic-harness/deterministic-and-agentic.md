@@ -17,7 +17,7 @@ A gateway now says which it is. `<cat-harness.processes:decision>` means a table
 and a hand-supplied outcome is refused; `<cat-harness.processes:judgement reason="…">` means
 somebody's call, with the reason required. Before that marker, "no table
 because this is a judgement" and "no table because nobody wrote one" were
-indistinguishable — and `bun run check:workflow-refs` now prints the three-way
+indistinguishable — and `bun run cat check:workflow-refs` now prints the three-way
 split, so the question *how much of this is decided by a model?* has an answer
 that is counted rather than asserted.
 

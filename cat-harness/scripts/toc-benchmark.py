@@ -385,7 +385,7 @@ def gold_outline(path: str) -> list[H.Heading]:
 def default_corpus(root: str) -> list[str]:
     """Every TRACKED PDF with an outline of five or more entries.
 
-    Tracked, not every file on disk: `bun run state:mount` puts untracked
+    Tracked, not every file on disk: `bun run cat state:mount` puts untracked
     PDFs beside the tracked ones, and a corpus that depends on what was last
     mounted gives a number nobody can reproduce. Pass paths explicitly to
     score others — that is how the held-out set is scored.

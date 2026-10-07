@@ -8,7 +8,7 @@ updated_at: 2026-10-03T01:05:37Z
 parent: folio-assistant-d33q
 ---
 
-`.github/workflows/merge-main.yml` runs `bun run merge:main` on an opted-in **PR branch**
+`.github/workflows/merge-main.yml` runs `bun run cat merge:main` on an opted-in **PR branch**
 when `main` moves, and that command resolves declared conflicts and regenerates. There is
 no counterpart in the other direction: **after a PR merges into `main`, nothing regenerates
 `main`.**

@@ -13,7 +13,7 @@ Found 2026-09-27 while settling `sfjo`'s last item. **Observed in a built site, 
 inferred** — which matters, because `sfjo` carries a correction about exactly the
 opposite mistake (inferring a consequence from a key's name).
 
-## Measured, by building the site with `bun run preview:site`
+## Measured, by building the site with `bun run cat preview:site`
 
     translated pages built                              70
     declaring a `lang` that is NOT their locale         70

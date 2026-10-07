@@ -5,8 +5,8 @@
  * `docs/proposals/kg-subscriptions.md` §"Known substrates" and §"The visualizer".
  *
  * ```sh
- * bun run subscriptions:viz          # write the subscriptions page under this instance's site directory
- * bun run subscriptions:viz:check    # fail when it is stale
+ * bun run cat subscriptions:viz          # write the subscriptions page under this instance's site directory
+ * bun run cat subscriptions:viz:check    # fail when it is stale
  * ```
  *
  * ## Known substrates are DERIVED where a fact exists
@@ -250,7 +250,7 @@ if (import.meta.main) {
   if (check) {
     const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";
     if (current !== text) {
-      console.error(`✗ stale: ${rel}. Run \`bun run subscriptions:viz\` and commit the result.`);
+      console.error(`✗ stale: ${rel}. Run \`bun run cat subscriptions:viz\` and commit the result.`);
       process.exit(1);
     }
     console.log(`✓ ${rel} current: ${substrates.length} known substrate(s), ${cards.length} subscription(s)`);

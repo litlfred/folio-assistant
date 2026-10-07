@@ -195,7 +195,7 @@ Une passerelle (gateway) indique désormais de quoi il s'agit. `<cat-harness.pro
 et qu'un résultat fourni manuellement est refusé ; `<cat-harness.processes:judgement reason="…">` signifie
 qu'il s'agit du jugement de quelqu'un, la raison étant obligatoire. Avant ce marqueur, « pas de table
 parce qu'il s'agit d'un jugement » et « pas de table parce que personne n'en a écrit une » étaient
-indiscernables — et `bun run check:workflow-refs` affiche maintenant la répartition en trois volets,
+indiscernables — et `bun run cat check:workflow-refs` affiche maintenant la répartition en trois volets,
 de sorte que la question *quelle part de tout cela est décidée par un modèle ?* a désormais une réponse
 qui est dénombrée plutôt qu'affirmée.
 
@@ -250,7 +250,7 @@ appliquée par le moteur au sein d'une exécution par ailleurs agentique, et cel
 tâche, non du diagramme dans son ensemble.
 
 **Partiellement construit.** Aucun moteur BPMN n'est encore raccordé. Le rapport mécanique de QA/QC
-existe désormais : `bun run prov:qaqc` écrit l'historique de chaque instance de flux de travail sous la forme
+existe désormais : `bun run cat prov:qaqc` écrit l'historique de chaque instance de flux de travail sous la forme
 d'un journal PROV-O et revérifie chaque étape par rapport aux politiques ODRL, à titre consultatif
 (ticket #1180, étape 5 ; compétence `task-authorization`). Le rapport agentique de QA/QC
 n'existe pas encore. La suite de cette section désigne l'objectif afin que la

@@ -58,7 +58,7 @@ NO BINARY IS COMMITTED. The file is built at deploy from the tree being publishe
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="A_Measure" name="Build it locally and&#10;measure the file">
-      <bpmn:documentation>Run `bun run slice:sqlite -- --slice &lt;name&gt; --out &lt;scratch&gt;` and read the manifest: `bytes`, the row counts, the payload count and bytes, `overBudget`, `duplicateIds` and `findings`. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces.</bpmn:documentation>
+      <bpmn:documentation>Run `bun run cat slice:sqlite -- --slice &lt;name&gt; --out &lt;scratch&gt;` and read the manifest: `bytes`, the row counts, the payload count and bytes, `overBudget`, `duplicateIds` and `findings`. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="kg-export"/>
         <cat-harness.processes:bean op="note"/>

@@ -86,7 +86,7 @@ describe("bootstrap is where the checker looks for it", () => {
 
 describe("the checker, run as a command", () => {
   test("exits 0 on this tree and counts BOTH instances' diagrams", async () => {
-    const p = Bun.spawn(["bun", "run", "check:workflow-refs"], {
+    const p = Bun.spawn(["bun", "run", "cat", "check:workflow-refs"], {
       cwd: REPO,
       stdout: "pipe",
       stderr: "pipe",
@@ -138,7 +138,7 @@ describe("render:bpmn covers bootstrap, whatever the walk's shape", () => {
     const assets = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets", "img", "workflows");
     for (const f of diagrams(BOOTSTRAP)) {
       const svg = join(assets, `${basename(f, ".bpmn")}.svg`);
-      expect(existsSync(svg), `${basename(svg)} is missing — run \`bun run render:bpmn\``).toBe(true);
+      expect(existsSync(svg), `${basename(svg)} is missing — run \`bun run cat render:bpmn\``).toBe(true);
     }
   });
 

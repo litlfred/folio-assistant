@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_MergeBase` · strict · 8 step(s)
 
-Bring the base branch into a pull-request branch: merge, classify every conflicted path before resolving any, refuse the whole merge if one is authored or undeclared, otherwise resolve, regenerate and prove the result with the gate set. CALLED FROM `Task_PrepareMerge` in code-change-review.bpmn, and executed by `bun run merge:main` (cat-harness/scripts/merge-base.ts). Bean `y7b3`, issue #1707. Owner, 2026-10-01: "put in merge process bpmn".
+Bring the base branch into a pull-request branch: merge, classify every conflicted path before resolving any, refuse the whole merge if one is authored or undeclared, otherwise resolve, regenerate and prove the result with the gate set. CALLED FROM `Task_PrepareMerge` in code-change-review.bpmn, and executed by `bun run cat merge:main` (cat-harness/scripts/merge-base.ts). Bean `y7b3`, issue #1707. Owner, 2026-10-01: "put in merge process bpmn".
 
 MEASURED 2026-09-30 over 300 main-into-branch merges: 235 conflicted, 147 (63%) ONLY on generated files, each resolved the same mechanical way. The declared patterns, and why each is or is not automatic, are in the `merge-conflict-patterns` skill.
 
@@ -41,7 +41,7 @@ ALL OR NOTHING: every conflicted path is classified before any is touched, and o
 | **Merge the base in, without committing**<br>`Task_Merge` | merge:main command | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | `git merge --no-ff --no-commit origin/main` on a clean tree (untracked files refuse too, so the final stage cannot sweep in a scratch file). |
 | **Classify every conflicted path against the declared patterns**<br>`Task_Classify` | merge:main command | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | The first matching pattern decides: take-base, generated-regions, qa-sidecar, or refuse. A path no pattern names refuses. |
 | **Resolve each by its declared strategy**<br>`Task_Resolve` | merge:main command | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | qa-sidecar paths first, through `qa:resolve-conflicts`; take-base paths take the base's copy; generated-regions files take the base's side of each hunk, which lies inside a generated region by construction. |
-| **Regenerate, asking every CI gate**<br>`Task_Regen` | merge:main command | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | `bun run regen`: every check/writer pair the CI workflow runs, repeated until the tree settles. |
+| **Regenerate, asking every CI gate**<br>`Task_Regen` | merge:main command | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | `bun run cat regen`: every check/writer pair the CI workflow runs, repeated until the tree settles. |
 | **Commit the merge**<br>`Task_Commit` | merge:main command | [`continual-progress`](../reference/skill-instructions/continual-progress.html) | — |
 | **Abort, restore the tree, list what was refused**<br>`Task_Abort` | merge:main command | [`merge-conflict-patterns`](../reference/skill-instructions/merge-conflict-patterns.html) | `git merge --abort`. Each refused path is listed with its pattern's reason, or "no declared pattern". |
 | **Resolve by hand, then regenerate**<br>`Task_ByHand` | Authoring agent | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | — |

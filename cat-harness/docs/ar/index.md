@@ -53,7 +53,7 @@ beans <id> --status in-progress     # احجزه، بشكل مرئي
 **2. أنشئ أول folio لك.** هذا المستودع هو *المنصة*؛ أما محتواك فيعيش في مستودعه الخاص. أمر واحد يُنشئ هيكله — البيانات الوصفية، والإعلان، وملفات الوكيل، والرابط إلى هنا:
 
 ```sh
-bun run init-folio --help
+bun run cat init-folio --help
 ```
 
 بعد ذلك، يأخذك [البدء]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) مع الكتلة الأولى عبر التحقق والعرض والمراجعة.

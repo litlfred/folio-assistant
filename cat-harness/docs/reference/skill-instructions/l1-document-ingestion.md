@@ -37,8 +37,8 @@ which calls the harness's basic `Process_Ingestion` first and then the four
 ## The whole path is two commands (bean `apui`)
 
 ```sh
-bun run ingest uploads/FILE.pdf --library <lib>            # rung + every derived arm, into ingest-staging/
-bun run ingest uploads/FILE.pdf --library <lib> --promote  # the L1 gate, then into <lib>/<slug>/
+bun run cat ingest uploads/FILE.pdf --library <lib>            # rung + every derived arm, into ingest-staging/
+bun run cat ingest uploads/FILE.pdf --library <lib> --promote  # the L1 gate, then into <lib>/<slug>/
 ```
 
 Staging prints the second line for you, built from **your own arguments** — it
@@ -139,7 +139,7 @@ section's text to a public repository, which breaks that condition. It does so
 silently, because nothing in the text layer says so.
 
 ```sh
-bun run ingest FILE.pdf --reference IDENTITY.json --library <name>
+bun run cat ingest FILE.pdf --reference IDENTITY.json --library <name>
 ```
 
 `IDENTITY.json` holds the title, version, document number, date, publisher,
@@ -201,7 +201,7 @@ for a notebook. What it decides:
   listing, so `sha256sum -c` against a checkout verifies the entry without
   this code.
 
-It is not wired into `bun run ingest`. That command reads a dropped file from
+It is not wired into `bun run cat ingest`. That command reads a dropped file from
 `uploads/`, and text has no magic bytes to route on, so it would have to guess
 from the extension. Routing a dropped `.md` is a separate decision.
 
@@ -282,7 +282,7 @@ library/<bib-slug>/
   ocr/               page-NNN.txt, only where the source was scanned
 ```
 
-`bun run check:l1-complete` is the gate. It reports three states, never two: a
+`bun run cat check:l1-complete` is the gate. It reports three states, never two: a
 requirement **met**, **unmet**, or **not yet derivable** — the last because the
 per-format arms (images, audio, tables, archives) are tracked separately and a
 check that cannot run must not read as a pass. Bean `pn6j`.
@@ -515,7 +515,7 @@ thing — the argument `scrapped` wins on for beans, and the one
 `qa-review.ts`'s `Decision` makes by requiring a note saying why this outcome
 and not another.
 
-### Reviewing: `bun run narratives`
+### Reviewing: `bun run cat narratives`
 
 Numbered list, numbered reasons, because the owner has very limited hand
 function and a review step that demands a typed sentence is one that will not
@@ -523,9 +523,9 @@ happen — at which point `confirmed` means "nobody got round to objecting",
 which is worse than not having the state.
 
 ```sh
-bun run narratives                     # what is waiting on you
-bun run narratives:confirm 1
-bun run narratives:reject 1 --why 2    # or --why-text "..."
+bun run cat narratives                     # what is waiting on you
+bun run cat narratives:confirm 1
+bun run cat narratives:reject 1 --why 2    # or --why-text "..."
 ```
 
 `check:l1-complete`'s `narrative-review` validates every narrative-bearing file.
@@ -553,16 +553,16 @@ state machine above, not a second one: `draft`, `confirmed` by a person only,
 **`source_hash` makes a changed source read as STALE.** It is the sha256 of
 the section text the summariser was shown (`proseBody`). Re-ingest a document
 and any section whose text moved puts its summary back in the queue, marked
-stale. `bun run narratives` shows it and refuses to confirm it.
+stale. `bun run cat narratives` shows it and refuses to confirm it.
 
 **The queue is derived, so nothing enqueues.** Every prose block in every
 declared library is in it until it has a current draft or confirmation. A
 rejected draft is back in it, and its rejection reason travels with it.
 
 ```sh
-bun run summaries                                   # the backlog, per entry
-bun run summaries:next -- --n 5 [--entry <slug>]    # next K blocks WITH their text, as JSON
-bun run summaries:record -- drafts.json             # write drafts; validated, all or nothing
+bun run cat summaries                                   # the backlog, per entry
+bun run cat summaries:next -- --n 5 [--entry <slug>]    # next K blocks WITH their text, as JSON
+bun run cat summaries:record -- drafts.json             # write drafts; validated, all or nothing
 ```
 
 `drafts.json` is `{drafted_by: {kind: "agent", id, model, session}, drafted_at,
@@ -598,7 +598,7 @@ Every entry carrying a `structure.json` gets a **Document** panel in the
 library viewer, built from the ingestion schema by
 `cat-harness/scripts/lib/library-document.ts` and published as
 `assets/library/entries/<id>.doc.json` (`folio-library-document/v1`) by
-`bun run library:viz`. Tabs: **Contents** (the TOC as a tree, collapsed below
+`bun run cat library:viz`. Tabs: **Contents** (the TOC as a tree, collapsed below
 the first level that branches, each inferred entry's confidence, linking to its
 section), **Pages** (physical page, printed label, sections starting, figures),
 **Figures & tables**, **Sections** (the summary, else an *extract* — the
@@ -613,7 +613,7 @@ and omits only section body extracts.
 
 ### Keywords — from the LSI weights, per section and per document (issue #2302)
 
-`bun run library:keywords` writes `library/<slug>/keywords.json`
+`bun run cat library:keywords` writes `library/<slug>/keywords.json`
 (`folio-keywords/v1`) for every entry of every declared library: up to 12 for
 the document and up to 8 per section, fewer for a short section (one per ~20
 content tokens, at least 3). They are read from the **same** log-entropy matrix
@@ -673,7 +673,7 @@ The row and banner code is `scripts/lib/library-withheld-view.ts`, embedded in
 the page verbatim so `library-withheld-view.test.ts` runs the same text the
 browser does; `library-withheld-viewer.e2e.ts` opens the rendered page.
 Drafting the summaries is a separate backlog (bean `r96p`):
-`bun run summaries:next -- --entry <slug>` serves a withheld entry's text to the
+`bun run cat summaries:next -- --entry <slug>` serves a withheld entry's text to the
 summariser like any other.
 
 ### Describing a document's images — and why it is an ARM, not a step you run
@@ -684,11 +684,11 @@ chart. The finer roles come from LOOKING, and that judgement is **data** —
 `<library>/image-verdicts.json`, one entry per image, reviewable line by line.
 
 ```sh
-bun run ingest uploads/FILE.pdf --library <lib>   # stage; reports what is unmet
+bun run cat ingest uploads/FILE.pdf --library <lib>   # stage; reports what is unmet
 # look at ingest-staging/<doc-id>/images/, write the verdicts into
 # <lib>/image-verdicts.json, then:
-bun run ingest uploads/FILE.pdf --library <lib>   # re-stage: the arm applies them
-bun run ingest uploads/FILE.pdf --library <lib> --promote
+bun run cat ingest uploads/FILE.pdf --library <lib>   # re-stage: the arm applies them
+bun run cat ingest uploads/FILE.pdf --library <lib> --promote
 ```
 
 **Re-running `ingest` is the second step, not a separate apply command**, and

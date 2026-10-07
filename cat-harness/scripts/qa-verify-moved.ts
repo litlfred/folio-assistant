@@ -45,8 +45,8 @@
  * `git add` does — so an identical file has an identical id.
  *
  * Usage:
- *   bun run qa:verify-moved --key main/<sha> | pr/<n>/<sha> [--json]
- *   bun run qa:verify-moved --inventory [--json]          # the moved set, counted; reads no branch
+ *   bun run cat qa:verify-moved --key main/<sha> | pr/<n>/<sha> [--json]
+ *   bun run cat qa:verify-moved --inventory [--json]          # the moved set, counted; reads no branch
  *   ... --root <repo-relative dir> (repeatable)           # override the declared roots (tests)
  *   ... --remote URL --branch B --store DIR               # as qa-store
  *

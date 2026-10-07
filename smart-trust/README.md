@@ -41,12 +41,12 @@ lives and holds none of its bytes. The DAK API surface is materialised under
 ## Regenerating
 
 ```sh
-bun run ingest:ig -- --source <path-to-gh-pages> --kind gh-pages \
+bun run cat ingest:ig -- --source <path-to-gh-pages> --kind gh-pages \
   --id smart-trust --base https://worldhealthorganization.github.io/smart-trust \
   --out smart-trust --materialize-dak
 ```
 
-`bun run ingest:ig:check <path-to-gh-pages>` verifies the committed index is
+`bun run cat ingest:ig:check <path-to-gh-pages>` verifies the committed index is
 current. It exits `0` current, `1` stale, `2` source not present — the third
 because "could not check" is never green.
 

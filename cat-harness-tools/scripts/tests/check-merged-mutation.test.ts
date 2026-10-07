@@ -2,7 +2,7 @@
  * `check:merged` must tell its two non-zero cases apart — bean `qook`, second
  * route.
  *
- * `bun run gates` exits 1 both when a gate FAILS and when every gate passes but
+ * `bun run cat gates` exits 1 both when a gate FAILS and when every gate passes but
  * one of them WROTE to the tree (`ymsu`). `check-merged.ts` branched on
  * `gates.status !== 0` alone, so it printed "the MERGED tree fails the gates …
  * regenerate what the failing gates name" for both — naming gates that did not

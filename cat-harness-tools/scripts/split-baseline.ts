@@ -29,8 +29,8 @@
  *   the comparison, and a second copy of it here would be free to drift.
  *
  * ```sh
- * bun run split:baseline           # write split-baseline.json (keeps bunTest)
- * bun run split:baseline --check   # exit 1 if tools or skills differ from it
+ * bun run cat split:baseline           # write split-baseline.json (keeps bunTest)
+ * bun run cat split:baseline --check   # exit 1 if tools or skills differ from it
  * ```
  *
  * `--check` exits 2 when the capture reports a problem or no baseline is

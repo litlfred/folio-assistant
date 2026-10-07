@@ -56,8 +56,8 @@
  * party.
  *
  * Usage:
- *   bun run schema:viz          # write
- *   bun run schema:viz:check    # fail if either artefact is stale
+ *   bun run cat schema:viz          # write
+ *   bun run cat schema:viz:check    # fail if either artefact is stale
  */
 import { rmSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
@@ -1320,7 +1320,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run schema:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat schema:viz\``);
     process.exit(1);
   }
 }

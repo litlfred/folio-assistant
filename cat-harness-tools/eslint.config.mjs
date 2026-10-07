@@ -10,7 +10,7 @@ import tseslint from "typescript-eslint";
  * read as coverage that did not exist.
  *
  * SEVERITY SPLIT. A first run over 194 files found 356 problems. Failing the
- * gate on all of them would make `bun run lint` permanently red, which trains
+ * gate on all of them would make `bun run cat lint` permanently red, which trains
  * everyone to ignore it — exactly how the test suite came to sit at 29
  * permanent failures. So:
  *
@@ -27,7 +27,7 @@ import tseslint from "typescript-eslint";
  *           and `no-this-alias` were drained first, and `no-explicit-any` —
  *           190 of the original 356 — followed. Every rule is an error.
  *
- * Warnings are counted, not hidden. `bun run lint` reports them; the backlog
+ * Warnings are counted, not hidden. `bun run cat lint` reports them; the backlog
  * is visible without being a blocker. Tighten by promoting a rule here once
  * its count reaches zero — and promote it the moment it does, so the count
  * cannot creep back up behind a warning nobody reads.
@@ -38,7 +38,7 @@ export default tseslint.config(
       "node_modules/**",
       // An agent dispatched with worktree isolation puts a COMPLETE SECOND
       // CHECKOUT of this repository under `.claude/worktrees/<id>/`. Without
-      // this, `bun run lint` walks into it and typescript-eslint's project
+      // this, `bun run cat lint` walks into it and typescript-eslint's project
       // service refuses every file there as outside the tsconfig program.
       // Measured 2026-09-30 on a branch whose whole diff was three lines of
       // JSON: 3158 errors, none of them the branch's — and 0 errors with this
@@ -56,7 +56,7 @@ export default tseslint.config(
       // `dist/`, and since `check:published-packages` builds it (bean `rsi6`),
       // that output now exists on any machine that has run the gate set.
       // Root-anchored, this matched only the platform's own build, and
-      // `bun run lint` reported 3 errors in generated CJS nobody wrote.
+      // `bun run cat lint` reported 3 errors in generated CJS nobody wrote.
       "**/dist/**",
       "**/*.d.ts",
       "viewer/**",
@@ -64,7 +64,7 @@ export default tseslint.config(
       "home_page/**",
       // Jekyll + TypeDoc build output. Gitignored, but eslint does not read
       // .gitignore — so without this, anyone who builds the docs site locally
-      // and then runs `bun run lint` gets a wall of errors from TypeDoc's
+      // and then runs `bun run cat lint` gets a wall of errors from TypeDoc's
       // bundled assets.
       "_site/**",
       // Vendored third-party code, committed verbatim with its licence. It is
@@ -93,7 +93,7 @@ export default tseslint.config(
     rules: {
       // ── Errors: invariants that currently HOLD ─────────────────
       // A rule is an error here only once its count is zero, so a red
-      // `bun run lint` always means a regression rather than pre-existing
+      // `bun run cat lint` always means a regression rather than pre-existing
       // debt. Promote a rule from the warn block below when it reaches zero.
       "prefer-const": "error", // driven to 0 (15 auto-fixed)
       // Driven to 0 from 111. Promoting it is the ratchet: the cleanup is

@@ -46,8 +46,8 @@
  * a deploy. This gate does the same.
  *
  * Usage:
- *   bun run check:qa-result-links                 # sources
- *   bun run check:qa-result-links -- --site _site # a built site, sources too
+ *   bun run cat check:qa-result-links                 # sources
+ *   bun run cat check:qa-result-links -- --site _site # a built site, sources too
  *
  * @module scripts/check-qa-result-links
  * @covers qa

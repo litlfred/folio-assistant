@@ -148,7 +148,7 @@
  * dropping six witnesses because the corpus was not fetched is the vacuous
  * rebaseline this gate exists to stop.
  *
- * Usage:  bun run check:declared-paths  [--update]
+ * Usage:  bun run cat check:declared-paths  [--update]
  * Exit:   0 at or under baseline · 1 above it, or a marked literal naming nothing
  *         · 2 a witness could not be checked because its results tree is absent
  *
@@ -711,7 +711,7 @@ if (import.meta.main) {
     for (const r of unverifiable) console.log(`  ? ${r.file}:${r.line}  →  "${r.literal}"`);
     console.log(
       `\nAbsent: ${absentResults.map((d) => relative(root, d)).join(", ")}. Materialise them with\n` +
-        "`bun run qa:fetch --ref main` (or `--ref pr/<n>`) and re-run. Do NOT --update.",
+        "`bun run cat qa:fetch --ref main` (or `--ref pr/<n>`) and re-run. Do NOT --update.",
     );
   }
 
@@ -755,7 +755,7 @@ if (import.meta.main) {
         "fixture names declared directories by necessity, so counting its " +
         "unresolved literals would fire on every new test (measured 2026-09-20 " +
         "— a sibling's schemas/folio-dir.test.ts tripped it with two correct " +
-        "literals). Both are WRITTEN by `bun run check:declared-paths --update`; " +
+        "literals). Both are WRITTEN by `bun run cat check:declared-paths --update`; " +
         "raising a count or dropping a witness is a diff somebody reviews. See " +
         "the module header of scripts/check-declared-paths.ts.",
       files: Object.fromEntries(Object.entries(current).sort(([a], [b]) => a.localeCompare(b))),

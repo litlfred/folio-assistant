@@ -34,8 +34,8 @@
  * moves no page.
  *
  * Usage:
- *   bun run node-kind:pages          # write
- *   bun run node-kind:pages:check    # fail if a page is stale or orphaned
+ *   bun run cat node-kind:pages          # write
+ *   bun run cat node-kind:pages:check    # fail if a page is stale or orphaned
  */
 import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
@@ -536,7 +536,7 @@ if (import.meta.main) {
   const { pages, stale } = await buildNodeKindPages({ instanceRoot: INSTANCE_ROOT, siteRepo, site, built, check, prune: !folio });
   if (!check) console.log(`  ${pages.length} node-kind page(s) under ${LOCALES.join(", ")} in ${relative(process.cwd(), site) || "."}`);
   if (stale > 0) {
-    console.error(`\n${stale} page(s) stale — run \`bun run node-kind:pages\``);
+    console.error(`\n${stale} page(s) stale — run \`bun run cat node-kind:pages\``);
     process.exit(1);
   }
   // Every planned page must resolve, written or checked: the QA half of PR 3.

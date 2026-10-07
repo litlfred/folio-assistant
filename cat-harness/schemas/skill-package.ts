@@ -450,7 +450,7 @@ export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkou
 /**
  * How a remote package's skills are brought in — PERFORMED since 2026-09-24
  * (issue #556, bean `wlqd`) by `scripts/sync-remote-skills.ts`
- * (`bun run sync:remote-skills`).
+ * (`bun run cat sync:remote-skills`).
  *
  * Until then this was declared intent that nothing performed: `shallow-clone`
  * appeared only as a value in {@link RemoteSyncStrategySchema}, and both
@@ -463,7 +463,7 @@ export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkou
  * - a wrapper that declares `sync` must pin a full commit SHA and may not
  *   `autoUpdate` — a skill body is a prompt an agent follows, so an unpinned
  *   one is an unreviewed prompt. {@link RemotePackageRefSchema} refuses both;
- * - `bun run check:remote-skills` fails, offline, when a declared skill is
+ * - `bun run cat check:remote-skills` fails, offline, when a declared skill is
  *   not materialized at its wrapper's pin.
  *
  * The synced skills resolve as LOCAL skills, so `manifest-skill-exists` needs

@@ -2,7 +2,7 @@
 // Mechanical checks for mid-fidelity wireframe candidates (methodology `wiregen`,
 // process `wireframe-design-review`, step "Mechanical checks, both viewports").
 //
-//   bun run wireframe:check <candidate.html>... [--out DIR]   (issue #1023)
+//   bun run cat wireframe:check <candidate.html>... [--out DIR]   (issue #1023)
 //
 // Each candidate is rendered at a WEB and a MOBILE viewport. Per candidate and
 // viewport it records a `script` entry per criterion (pass/fail, never a score):

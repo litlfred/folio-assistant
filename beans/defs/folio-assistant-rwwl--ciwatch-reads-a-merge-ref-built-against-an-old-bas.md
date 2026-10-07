@@ -13,7 +13,7 @@ Found 2026-10-06 while testing bean 6lre against live data (6lre stays with its 
 
 ## The defect, measured
 
-    $ bun run ci:watch --pr 2197 --once
+    $ bun run cat ci:watch --pr 2197 --once
     06:03:22  f75e4edb51d  PASS — 22 check(s) completed clean, and every workflow owed for this event ran
     exit 0
 

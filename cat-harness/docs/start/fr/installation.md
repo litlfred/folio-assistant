@@ -88,8 +88,8 @@ Tout ce dont le script `.sh` a besoin — `bun`, `curl`, `gh`, `elan` — doit s
 `PATH` de Windows, puisque Git Bash en hérite depuis l'appelant. Les scripts qui n'ont de sens
 que sur un hôte Linux (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
 `setup-singular.sh`) n'ont délibérément aucun wrapper. La liste se trouve dans
-`cat-harness/scripts/gen-bat-wrappers.sh` ; `bun run bat:sync` régénère les wrappers
-et `bun run bat:sync:check` fait échouer la CI si l'un d'eux est manquant ou obsolète.
+`cat-harness/scripts/gen-bat-wrappers.sh` ; `bun run cat bat:sync` régénère les wrappers
+et `bun run cat bat:sync:check` fait échouer la CI si l'un d'eux est manquant ou obsolète.
 
 ### Sur Linux/macOS, il existe également un script
 
@@ -108,7 +108,7 @@ indication d'installation pour tout élément manquant :
 ```sh
 bun run cat-harness-tools/src/index.ts --check-deps
 # ou via le script npm
-bun run check-deps
+bun run cat check-deps
 ```
 
 ## Lancer le serveur
@@ -129,11 +129,11 @@ bun run cat-harness-tools/src/index.ts --stdio --repo /path/to/your/content-repo
 Des scripts pratiques sont disponibles dans `package.json` :
 
 ```sh
-bun run start          # par défaut (stdio)
-bun run start:http     # transport HTTP
+bun run cat start          # par défaut (stdio)
+bun run cat start:http     # transport HTTP
 bun run test           # tests unitaires (bun test)
-bun run test:e2e       # tests de bout en bout Playwright
-bun run lint           # eslint
+bun run cat test:e2e       # tests de bout en bout Playwright
+bun run cat lint           # eslint
 ```
 
 ## Configurer pour votre folio
@@ -238,7 +238,7 @@ ses paramètres et réutilisez le même script `SessionStart` :
 ### Tout autre client MCP
 
 Pointez votre client vers la commande stdio ci-dessus, ou exécutez le transport HTTP
-(`bun run start:http`) et connectez-vous via HTTP. Le serveur MCP expose un outil
+(`bun run cat start:http`) et connectez-vous via HTTP. Le serveur MCP expose un outil
 `work_plan_prime` que tout agent connecté via MCP peut appeler pour obtenir une amorce
 du plan de travail en direct identique, quel que soit le harnais.
 

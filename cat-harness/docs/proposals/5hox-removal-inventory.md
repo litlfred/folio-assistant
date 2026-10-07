@@ -30,7 +30,7 @@ The set is not a hand list. It is every file under every directory an instance
 **declares** as a `qa` graph, resolved by `resolveQaLocation` in
 `cat-harness/scripts/qa-store.ts`. That is the same function `qa:publish` uses
 to pick its roots, so the set that leaves `main` is the set the branch receives.
-`bun run qa:verify-moved --inventory` prints it.
+`bun run cat qa:verify-moved --inventory` prints it.
 
 Twelve instances declare a `qa` directory, all at `<instance>/test/results/`:
 
@@ -131,7 +131,7 @@ entries in the repository attributes file, and declare `storage`) is still
 
 ## Hash verification: the dry run
 
-`bun run qa:verify-moved --key <entry>` (`cat-harness/scripts/qa-verify-moved.ts`)
+`bun run cat qa:verify-moved --key <entry>` (`cat-harness/scripts/qa-verify-moved.ts`)
 compares the blob id of every inventoried path in the working tree with the
 same path in a `qa-reports` entry. The entry's ids are read from its trees, so
 no blob is downloaded. It answers one of four states: `identical` (exit 0),
@@ -141,7 +141,7 @@ no blob is downloaded. It answers one of four states: `identical` (exit 0),
 **Dry run, 2026-10-02**, against the newest PR entry on `origin/qa-reports`:
 
 ```
-$ bun run qa:verify-moved --key pr/1801/51e40d7c49e8b8d306dc9739e2de6f229ee58826
+$ bun run cat qa:verify-moved --key pr/1801/51e40d7c49e8b8d306dc9739e2de6f229ee58826
 qa:verify-moved IDENTICAL: all 1186 file(s) identical in pr/1801/51e40d7c49e8b8d306dc9739e2de6f229ee58826
 ```
 
@@ -155,18 +155,18 @@ push to `main`, and that job reaches `main` only when the arc PR merges.
 Against today's `main` head the tool answers UNKNOWN, as it must:
 
 ```
-$ bun run qa:verify-moved --key main/85b9578b630e46d1b82eae3877d915cf05c4591d
+$ bun run cat qa:verify-moved --key main/85b9578b630e46d1b82eae3877d915cf05c4591d
 qa:verify-moved UNKNOWN: entry main/85b9578b… is MISS: no entry main/85b9578b… — an unread entry verifies nothing — this is NOT a pass
 ```
 
 The order this forces: merge the arc without the deletion, and let
 `qa-publish` write `main/<merge-sha>`. Then run
-`bun run qa:verify-moved --key main/<merge-sha>` on that commit, and push the
+`bun run cat qa:verify-moved --key main/<merge-sha>` on that commit, and push the
 deletion only on IDENTICAL.
 
 ## The wiring, and the gates with the files absent
 
-Done on `qa-5hox`, with the files still present. `bun run gates` is green,
+Done on `qa-5hox`, with the files still present. `bun run cat gates` is green,
 apart from `translation:catalogue:check --base`, which runs only in CI.
 
 - All twelve `qa` directories declare
@@ -181,7 +181,7 @@ apart from `translation:catalogue:check --base`, which runs only in CI.
   workflow's run lines, because regen pairs a gate with its writer by script
   name. With no `main/` entry these gates print UNKNOWN and are not gated.
 
-The removal is its own commit. **`bun run gates` with the files absent: 16 of
+The removal is its own commit. **`bun run cat gates` with the files absent: 16 of
 205 red**, in five groups.
 
 | group | gates | why | what clears it |
@@ -226,7 +226,7 @@ are the `agent-skills/` and `large-datasets/` kg-qa trees of instances folded
 away by `j7ql`, so they are orphans. The 106 new files are block verdicts and
 witnesses for docs blocks no hand sweep had reached.
 
-**`bun run gates` with the files absent: 11 of 206 red, down from 16.** Group
+**`bun run cat gates` with the files absent: 11 of 206 red, down from 16.** Group
 A is cleared: `kg:audit:check`, `kg:audit:all:check` and
 `translation:block-qa:check` now compute and judge (bean `oqe3`). `readme:subgraphs:check`
 and `bun test` are green too. `skill:register:check` (×2) is still red, but

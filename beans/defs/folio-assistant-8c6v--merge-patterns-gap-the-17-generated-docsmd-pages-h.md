@@ -17,7 +17,7 @@ and **2 refused**, and both were the same page in its two forms —
 mirror). The mirror's own front matter reads:
 
 ```
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 ```
 
 So a file that declares itself generated and forbids hand-editing is the one a
@@ -89,7 +89,7 @@ gate rather than merely convenient.
       source** `content/docs/publication-workflow/every-workflow-in-the-repo.md`
       stays `refuse` — step 3's "test that the unsafe neighbour is refused,
       not only that the case resolves"
-- [ ] `bun run merge:overlap` re-run shows these 17 no longer counted as
+- [ ] `bun run cat merge:overlap` re-run shows these 17 no longer counted as
       authored
 
 ## What this does NOT claim
@@ -121,4 +121,4 @@ NOT closed: CI has produced zero runs because `main` moved four times during the
 
 _2026-10-03_ — **All four `## Done when` items satisfied.** PR #1971 merged to main by litlfred at 11:14:38Z, merge commit `76cdd687a20`, with the `merge-main` label applied by the Merge Manager (not by this session). `origin/main` now carries 24 PATTERNS entries including `docs-pages`, and all 17 pages classify to it under the BASE's own patterns.
 
-Item 4 verified rather than assumed: `bun run merge:overlap` re-run after the merge lists **none** of the 17 generated pages as an authored path, while the authored source `content/docs/publication-workflow/every-workflow-in-the-repo.md` still appears 16 times — which is correct and deliberate, since that half genuinely needs a person.
+Item 4 verified rather than assumed: `bun run cat merge:overlap` re-run after the merge lists **none** of the 17 generated pages as an authored path, while the authored source `content/docs/publication-workflow/every-workflow-in-the-repo.md` still appears 16 times — which is correct and deliberate, since that half genuinely needs a person.

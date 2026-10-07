@@ -61,9 +61,9 @@
  * makes, because there is no entry for this run to judge.
  *
  * Usage:
- *   bun run check:qa-corpus --dir <tree>      # a tree already fetched (qa:fetch --into <tree>)
- *   bun run check:qa-corpus --ref <ref>       # fetch main | <sha> | pr/<n>[/<sha>] into a temp dir, then judge
- *   bun run check:qa-corpus --github          # CI: the entry this run published
+ *   bun run cat check:qa-corpus --dir <tree>      # a tree already fetched (qa:fetch --into <tree>)
+ *   bun run cat check:qa-corpus --ref <ref>       # fetch main | <sha> | pr/<n>[/<sha>] into a temp dir, then judge
+ *   bun run cat check:qa-corpus --github          # CI: the entry this run published
  *   ... --no-pages                            # judge the tree without this checkout's badge pages
  *
  * @module scripts/check-qa-corpus

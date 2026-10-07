@@ -545,7 +545,7 @@ function main(): void {
   );
 
   if (check && stale > 0) {
-    console.error("Run `bun run translation:status` and commit.");
+    console.error("Run `bun run cat translation:status` and commit.");
     process.exit(1);
   }
 }

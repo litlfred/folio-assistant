@@ -22,7 +22,7 @@ Owner, 2026-10-01: *"is ast export XML? any utility for downstream use to have i
 ## Done (2026-10-01)
 
 - `fhir-harness/schemas/ig-ast.ts`: Zod, all objects open (`.passthrough()`) to fields the Java writer adds first; `authority` is the literal `"cache"`. `readAst` validates through it.
-- Generated and committed beside it: `ig-ast.schema.json`, `ig-ast-dependencies.schema.json`, `ig-ast-plan.schema.json` (draft-07, so ajv 6 here and the Java validators read them), and `ig-ast.context.jsonld`. `bun run ig-ast:schema`, gated by `ig-ast:schema:check` in code-quality-gates.
+- Generated and committed beside it: `ig-ast.schema.json`, `ig-ast-dependencies.schema.json`, `ig-ast-plan.schema.json` (draft-07, so ajv 6 here and the Java validators read them), and `ig-ast.context.jsonld`. `bun run cat ig-ast:schema`, gated by `ig-ast:schema:check` in code-quality-gates.
 - `ig-ast.ts jsonld <ast>`, declared as Tool `ig-ast-jsonld`: resources as nodes with `@id` = canonical (else `urn:fhir:Type/id`), edges as `@id` links.
 - Tests: generated AST files validate under ajv; a non-cache authority is refused by both Zod and the schema; JSON-LD ids and edges; committed files current.
 

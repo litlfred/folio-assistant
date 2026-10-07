@@ -19,7 +19,7 @@ Handover, 2026-10-02.
 - regen after that merge: 93 current, 0 regenerated.
 
 Next:
-- the result of `bun run gates` on 393decf, which is running locally;
+- the result of `bun run cat gates` on 393decf, which is running locally;
 - then mark #1888 ready via POST /repos/litlfred/folio-assistant/pulls/1888/ccr/ready_for_review once CI is green.
 
 3. Bean folio-assistant-zacz, PR #1888, branch claude/merge-refusal-handback. The main merge is complete, with no conflicts outstanding.

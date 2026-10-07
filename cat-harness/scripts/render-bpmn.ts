@@ -125,7 +125,7 @@ const commentFindings = sources.flatMap((f) =>
 if (commentFindings.length > 0) {
   console.error(`${commentFindings.length} malformed XML comment(s) — refusing to render:\n`);
   for (const f of commentFindings) console.error(`  ${f.file}:${f.line}  ${f.detail}`);
-  console.error(`\nRun \`bun run check:xml-comments\` for the full report.`);
+  console.error(`\nRun \`bun run cat check:xml-comments\` for the full report.`);
   process.exit(1);
 }
 
@@ -212,7 +212,7 @@ async function emit(out: string, text: string): Promise<void> {
   const shown = relative(repoRootFor(ROOT), out);
   if (check) {
     if (previous !== text) {
-      console.error(`✗ ${shown} is stale — re-run \`bun run render:bpmn\``);
+      console.error(`✗ ${shown} is stale — re-run \`bun run cat render:bpmn\``);
       stale++;
     } else {
       console.log(`✓ ${shown} up to date`);

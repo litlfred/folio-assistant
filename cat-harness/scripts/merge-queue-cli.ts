@@ -12,12 +12,12 @@
  * it.
  *
  * ```sh
- * bun run merge:queue:read                 # the recorded decisions
- * bun run merge:queue:read --json
- * bun run merge:queue:record --pr 2065 --class standard --rank 3 --rule Rule_HarnessSmallClean \
+ * bun run cat merge:queue:read                 # the recorded decisions
+ * bun run cat merge:queue:read --json
+ * bun run cat merge:queue:record --pr 2065 --class standard --rank 3 --rule Rule_HarnessSmallClean \
  *     --reason "clean, green, unblocks the queue graph" --by https://claude.ai/code/session_…
- * bun run merge:queue:record --pr 2065 --position 1 --reason "owner, 2026-10-04: land it first" --by owner
- * bun run merge:queue:record --file entry.json      # or `-` for stdin
+ * bun run cat merge:queue:record --pr 2065 --position 1 --reason "owner, 2026-10-04: land it first" --by owner
+ * bun run cat merge:queue:record --file entry.json      # or `-` for stdin
  * ```
  *
  * ## Exit codes, and why a read has three failures rather than one
@@ -27,7 +27,7 @@
  *
  * `1` and `4` are different because their remedies are: one says the
  * declaration and the disk disagree, the other says this checkout has not
- * mounted the branch (`bun run state:mount`). Collapsing them prints the wrong
+ * mounted the branch (`bun run cat state:mount`). Collapsing them prints the wrong
  * one, and a reader acting on it would "fix" a declaration that is correct —
  * `dh4f`. Neither is ever exit 0 with an empty table.
  */
@@ -286,7 +286,7 @@ function decideMain(argv: readonly string[], root: string): number {
   }
   const store = readQueueStore(root);
   if (store.state === "unreachable") {
-    console.error(`merge:queue:decide — COULD NOT REACH THE QUEUE (run \`bun run state:mount\`): ${store.reason}`);
+    console.error(`merge:queue:decide — COULD NOT REACH THE QUEUE (run \`bun run cat state:mount\`): ${store.reason}`);
     return EXIT.unreachable;
   }
   if (store.state !== "read") {
@@ -321,7 +321,7 @@ function decideMain(argv: readonly string[], root: string): number {
   }
   console.log(`merge:queue:decide — ${verdict} recorded for #${pr} in ${r.file}${existing ? "" : " (new entry)"}`);
   if (r.push === "skipped") {
-    console.log("--no-push: the decision is in the mount only. Nobody else can see it until `bun run state:push --id queue`.");
+    console.log("--no-push: the decision is in the mount only. Nobody else can see it until `bun run cat state:push --id queue`.");
     return EXIT.ok;
   }
   console.log(`  push: ${r.push.state} — ${r.push.reason}`);
@@ -356,7 +356,7 @@ function recordMain(argv: readonly string[], root: string): number {
   }
   console.log(`merge:queue:record — wrote ${r.file} into ${r.dir}`);
   if (r.push === "skipped") {
-    console.log("--no-push: the entry is in the mount only. It is not visible to anyone until `bun run state:push --id queue`.");
+    console.log("--no-push: the entry is in the mount only. It is not visible to anyone until `bun run cat state:push --id queue`.");
     return EXIT.ok;
   }
   console.log(`  push: ${r.push.state} — ${r.push.reason}`);

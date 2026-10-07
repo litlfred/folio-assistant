@@ -64,8 +64,8 @@
  * pretending to adjudicate the ones that are not.
  *
  * Usage:
- *   bun run check:bean-blocks
- *   bun run check:bean-blocks --list   # ...and name every unstructured bean
+ *   bun run cat check:bean-blocks
+ *   bun run cat check:bean-blocks --list   # ...and name every unstructured bean
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
