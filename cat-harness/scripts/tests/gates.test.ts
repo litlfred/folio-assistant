@@ -10,7 +10,10 @@
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/`) live in
  * `test/gates-workflows.test.ts` (bean `ho66`):
- * standing alone, cat-harness has no such root to read.
+ * standing alone, cat-harness has no such root to read. So does
+ * "every script exemption still names a script that EXISTS": the exemptions
+ * name scripts declared by layers above cat-harness (cat-harness-tools,
+ * smart-base, smart-trust), which only the whole checkout's script table holds.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -147,19 +150,6 @@ describe("every check script is accounted for — the direction nothing asked", 
     // justification is one somebody added to get to green.
     const reasonless = SCRIPT_EXEMPTIONS.filter((e) => !e.reason.trim()).map((e) => e.script);
     expect(reasonless).toEqual([]);
-  });
-
-  test("every script exemption still names a script that EXISTS", () => {
-    // The direction that rots silently, and the one this bean was made of. A
-    // script is renamed or dropped, its exemption stays, and the table
-    // becomes a set of claims about a repository that has moved on. The six
-    // reasons these replaced lived in a YAML comment, where exactly that had
-    // happened: `translate-*:check` was excluded as needing "a translation
-    // toolchain not installed on this runner", and both run clean on a bare
-    // checkout.
-    const names = new Set(checkScriptNames(REPO));
-    const stale = SCRIPT_EXEMPTIONS.filter((e) => !names.has(e.script)).map((e) => e.script);
-    expect(stale).toEqual([]);
   });
 
   test("an exemption matches by exact name, never by prefix", () => {

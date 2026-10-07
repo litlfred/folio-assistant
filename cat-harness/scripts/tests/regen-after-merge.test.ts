@@ -8,7 +8,10 @@
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/code-quality-gates.yml`) live in
  * `test/regen-after-merge-workflows.test.ts` (bean
- * `ho66`): standing alone, cat-harness has no such root to read.
+ * `ho66`): standing alone, cat-harness has no such root to read. So do the
+ * two that assert `WRITER_OVERRIDES` and `NO_WRITER` name real scripts: those
+ * scripts are declared by layers above cat-harness, which only the whole
+ * checkout's script table holds.
  */
 
 import { describe, expect, test } from "bun:test";
@@ -17,7 +20,6 @@ import { join } from "node:path";
 
 import {
   DEFAULT_MAX_PASSES,
-  NO_WRITER,
   UNGATED_INPUTS,
   WRITER_OVERRIDES,
   exitCodeFor,
@@ -135,9 +137,6 @@ describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", ()
     expect(writerFor(SCRIPTS, "translate-bpmn:check")).toBe("translate-bpmn:extract");
     expect(SCRIPTS["translate-bpmn:extract"]).toContain("--extract");
   });
-  test("every override names a writer that exists — a renamed writer is a finding, not a guess", () => {
-    for (const w of Object.values(WRITER_OVERRIDES)) expect(SCRIPTS[w]).toBeDefined();
-  });
 });
 
 describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () => {
@@ -147,16 +146,6 @@ describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () =>
     expect(writerFor(SCRIPTS, "check:prov-qaqc")).toBe("prov:qaqc");
     const pairs = repairableGates([{ job: "j", step: "s", command: "bun run cat check:prov-qaqc" }], SCRIPTS);
     expect(pairs).toEqual([{ check: "check:prov-qaqc", writer: "prov:qaqc" }]);
-  });
-
-  test("the recorded non-writers are real scripts, and none is also paired", () => {
-    for (const check of Object.keys(NO_WRITER)) {
-      expect(SCRIPTS[check]).toBeDefined();
-      expect(WRITER_OVERRIDES[check]).toBeUndefined();
-      // Not guessed from the name either: `check:subgraphs` has a `subgraphs`
-      // script, and it only reports.
-      expect(writerFor(SCRIPTS, check)).toBeUndefined();
-    }
   });
 });
 

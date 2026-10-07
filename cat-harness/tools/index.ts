@@ -1119,12 +1119,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //                           `yean` shape — a mechanism with no skill —
     //                           which is the owner's call to author.
     //
-    // **All three nodes below exit 1 where the house rule wants 2**, and that is
-    // documented rather than silently fixed. `latex-preflight` and
-    // `latex-overfull` above DO exit 2, so the divergence is inside one family.
-    // Changing five scripts' exit codes is a behaviour change the owner should
-    // take deliberately; a node that lies about the exit it will get is worse
-    // than one that records the inconsistency.
+    // **The exit-2 contract across the family** (owner ruling on jh2j):
+    // `validate-tex`, `audit-tex-source`, and `headless-render-qc` (along with
+    // `latexmk-compile.sh` and `generate-main-tex.ts`) exit 2 on
+    // could-not-determine when run in the platform without content or when
+    // inputs are missing, matching `latex-preflight` and `latex-overfull`.
     //
     // None of the skills these satisfy carries an input contract, so
     // `check-tools` cannot verify these edges against one. A clean run does not
@@ -1146,7 +1145,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "warningsLog", schema: t("RepoPath"), required: false, arg: { flag: "--warnings-log" }, description: "Write a QA-compatible log to this path." },
         ],
         outputs: [
-          { name: "report", schema: t("Text"), description: "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 1 — measured. That is a could-not-determine wearing a finding's exit code: this repository carries no folio, so there was nothing to scan. Read the scanned count before reading the verdict." },
+          { name: "report", schema: t("Text"), description: "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 2 — could-not-determine (this repository carries no folio, so there was nothing to scan). Read the scanned count before reading the verdict." },
         ],
       },
       satisfies: ["latex-validation"],
@@ -1170,7 +1169,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Exit 1 on any finding, for use as a gate." },
         ],
         outputs: [
-          { name: "report", schema: t("Text"), description: "Hazards with file and line, plus a committed sidecar. Its refusal is the model of the pair: run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` — then exits 1, where 2 is the house value for could-not-determine. The MESSAGE is right and the exit code is not." },
+          { name: "report", schema: t("Text"), description: "Hazards with file and line, plus a committed sidecar. Run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` and exits 2 (could-not-determine)." },
         ],
       },
       satisfies: ["latex-validation"],
@@ -1190,7 +1189,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         outputs: [
           // input-site: inert #5e83c8da — prose naming the directory, in a message or a description
-          { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2." },
+          { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 2 with `No paper.json found` in the platform (could-not-determine)." },
         ],
       },
       // `rendered-verification`, NOT `html-rendering-qc`. Established by reading
@@ -1205,6 +1204,26 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // downstream where the tree exists. Same posture and same reason as
       // `l1-complete-check`.
       requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
+    defineTool({
+      id: "latexmk-compile",
+      title: "LaTeX compilation (latexmk)",
+      description:
+        "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
+      install: { none: true },
+      invoke: { shell: "cat-harness/scripts/latexmk-compile.sh" },
+      io: {
+        inputs: [
+          { name: "tex", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The TeX source file to compile (e.g. main.tex)." },
+          { name: "args", schema: t("Text"), required: false, description: "Additional arguments to forward to latexmk." },
+        ],
+        outputs: [
+          { name: "pdf", schema: t("RepoPath"), description: "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine)." },
+        ],
+      },
+      satisfies: ["latex-compilation"],
+      requires: { runtime: ["bash", "latexmk", "pdflatex"], network: false },
     }),
 
     // ── The Lean family, which is a FAMILY and not one command ────────────
