@@ -20,6 +20,7 @@ import { join } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "../voices-graph.ts";
 import { projection, viewerHtml } from "../gen-voices-viz.ts";
+import { unscopedSelectors } from "../lib/themed-page.ts";
 import { shippedVoices, overlaySeverityOf } from "../../content/pipeline/voice-criteria.ts";
 import { overlayCriterionId } from "../../content/pipeline/voice-criteria.ts";
 import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
@@ -152,6 +153,16 @@ describe("the viewer page", () => {
     expect(html).not.toContain("`");
   });
 
+  test("it is THEMED, so it carries the site's top band (2026-10-07)", () => {
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).not.toMatch(/<!doctype|<html|<head|<body|<main\b|<header\b|<footer\b/i);
+    expect(html).toContain('<h1 id="vo-title">');
+    expect(unscopedSelectors(html, ".vo-page")).toEqual([]);
+    const sub = viewerHtml("x", "who-iris", ["smart-base", "who-iris"]);
+    expect(sub).toContain('<a href="../smart-base/">smart-base</a>');
+    expect(sub).toContain('<span aria-current="page">who-iris</span>');
+  });
+
   test("it names its own scope, which is what makes pruning safe", () => {
     expect(/var SCOPE = "";/.test(html)).toBe(true);
     expect(/var SCOPE = "who-iris";/.test(viewerHtml("x", "who-iris"))).toBe(true);
@@ -175,10 +186,12 @@ describe("the viewer page", () => {
     expect(html).toContain("This rule cites nothing");
   });
 
-  test("it declares a dark scheme that a `light` override can beat", () => {
-    expect(html).toContain('prefers-color-scheme: dark');
-    expect(html).toContain(':root:not([data-theme="light"])');
-    expect(html).toContain(':root[data-theme="dark"]');
+  test("it is dark by default, and the site's `light` switch beats it", () => {
+    // Themed since 2026-10-07: the site's own switch (`data-fa-scheme`, which
+    // head_custom.html always sets) decides, not the OS media query, and the
+    // site's ground is dark first.
+    expect(html).toMatch(/\.vo-page \{\s*color-scheme:dark;/);
+    expect(html).toContain(':root[data-fa-scheme="light"] .vo-page {');
   });
 });
 
