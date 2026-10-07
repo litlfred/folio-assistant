@@ -13,6 +13,8 @@ import {
   parseMergeTree,
   parseRefusedPaths,
   afterMergeRepairs,
+  checkTestResultsDrops,
+  keepTrackedIgnored,
   simulate,
   verdictOf,
   type TrainReport,
@@ -20,6 +22,8 @@ import {
 import { git as runGit } from "../../../cat-harness/scripts/merge-pipeline-git.ts";
 import { conflicts } from "../milestone-status.ts";
 import { makeRepo, type Repo } from "../../../cat-harness/scripts/tests/merge-pipeline-fixture.ts";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 const GEN = "cat-harness/docs/glossary/index.md";
 
@@ -196,3 +200,68 @@ describe("merge-tree exit status — the negative control (bean 0s6w)", () => {
     expect(sh('echo "base($(git rev-parse --short HEAD)) rc=$?"')).toMatch(/ rc=0$/);
   });
 });
+
+describe("keepTrackedIgnored and checkTestResultsDrops (bean u4up)", () => {
+  let repo: Repo | undefined;
+  afterEach(() => { repo?.cleanup(); repo = undefined; });
+
+  test("keepTrackedIgnored restages a dropped-from-index gitignored file that exists on disk", () => {
+    repo = makeRepo();
+    const filePath = "cat-harness/test/results/skills.lsi.json";
+    repo.commit({
+      ".gitignore": "*/test/results/*\ntest/results/*\n",
+    });
+    const fullPath = join(repo.dir, filePath);
+    mkdirSync(join(repo.dir, "cat-harness/test/results"), { recursive: true });
+    writeFileSync(fullPath, JSON.stringify({ tracked: true }));
+    repo.git("add", "-f", filePath);
+    const baseWithTracked = repo.commit({}, "commit tracked file");
+
+    // Drop from index (simulating a drop or unstage where file remains on disk)
+    repo.git("rm", "--cached", filePath);
+    expect(repo.git("status", "--porcelain")).toContain(`D  ${filePath}`);
+
+    // keepTrackedIgnored restores it to index
+    const kept = keepTrackedIgnored(repo.dir, baseWithTracked);
+    expect(kept).toEqual([filePath]);
+    expect(repo.git("status", "--porcelain")).toBe("");
+  });
+
+  test("checkTestResultsDrops passes when no tracked test/results are dropped", () => {
+    repo = makeRepo();
+    const filePath = "cat-harness/test/results/skills.lsi.json";
+    mkdirSync(join(repo.dir, "cat-harness/test/results"), { recursive: true });
+    writeFileSync(join(repo.dir, filePath), "{}");
+    repo.git("add", "-f", filePath);
+    const base = repo.commit({}, "add tracked results");
+
+    const check = checkTestResultsDrops(repo.dir, base);
+    expect(check.status).toBe("passed");
+    expect(check.exit).toBe(0);
+  });
+
+  test("checkTestResultsDrops fails and verdictOf returns needs-a-person when a tracked test/results file is dropped", () => {
+    repo = makeRepo();
+    const filePath = "cat-harness/test/results/skills.lsi.json";
+    mkdirSync(join(repo.dir, "cat-harness/test/results"), { recursive: true });
+    writeFileSync(join(repo.dir, filePath), "{}");
+    repo.git("add", "-f", filePath);
+    const base = repo.commit({}, "add tracked results");
+
+    repo.git("rm", filePath);
+    repo.git("commit", "-m", "drop tracked results");
+
+    const check = checkTestResultsDrops(repo.dir, base);
+    expect(check.status).toBe("failed");
+    expect(check.exit).toBe(1);
+    expect(check.detail).toContain(filePath);
+
+    const verdict = verdictOf({
+      members: [{ spec: "1", label: "#1", sha: "a", status: "merged" }],
+      checks: [check],
+      main: { ref: "origin/main", sha: "b", status: "merged" },
+    });
+    expect(verdict).toBe("needs-a-person");
+  });
+});
+
