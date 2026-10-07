@@ -58,7 +58,7 @@ const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(INSTANCE_ROOT, "..");
 /** The ONE answer to which Bun this repository runs. Exported so `check:bun-runtime`
  *  names the same file rather than repeating the literal. */
-export const PIN_FILE = "cat-harness-tools/.bun-version";
+export const PIN_FILE = "cat-harness/.bun-version";
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
 
 export interface Finding {

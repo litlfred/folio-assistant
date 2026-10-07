@@ -100,6 +100,7 @@ export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   "package.json": "bun/npm reads it from the repository root",
   "bun.lock": "the lockfile beside package.json",
   "bunfig.toml": "bun's own config, root-only",
+  "tsconfig.json": "tsc's project root — the whole checkout's program, which names every instance, so no one layer may hold it",
   "AGENTS.md": "the agent-generic instructions every tool looks for at the root",
   "CLAUDE.md": "the tool-specific stub pointing at AGENTS.md",
   "GEMINI.md": "the same, for another tool",
