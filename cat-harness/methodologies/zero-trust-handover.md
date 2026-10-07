@@ -21,6 +21,7 @@ evidence:
   - library/github-docs-actions-secure-use-reference
   - library/arxiv-2510.19207v2
   - library/arxiv-2507.07974v2
+  - library/arxiv-2503.18813v2
 applies-when: >
   **A value crosses from one participant to another and the receiver is about
   to act on it.** That covers an agent handing work to a sub-agent or a
@@ -54,6 +55,7 @@ voice. Adoption is the owner's decision.
 | Goodin, Ars Technica 2026-05-26, BadHost / CVE-2026-48710 | 🔗 reference only, <https://arstechnica.com/information-technology/2026/05/millions-of-ai-agents-imperiled-by-critical-vulnerability-in-open-source-package/> | the "authorise on a reconstructed URL" defect class |
 | Rapid7, CVE-2026-97228 vulnerability database entry | 🔗 reference only | that the pivot was assigned a CVE (CVSS v3 2.7); nothing else |
 | Wang, Chen, Alkhudair, Alomair, Wagner, *Defending Against Prompt Injection with DataFilter* (arXiv:2510.19207v2; SaTML 2026) | ✅ `library/arxiv-2510.19207v2` (licence id not established; ingest cleared by the owner) | prior work for H9 and for keeping skill I/O schemas tight (§"Prior work") |
+| Debenedetti, Shumailov, Fan, Hayes, Carlini, Fabian, Kern, Shi, Terzis, Tramèr, *Defeating Prompt Injections by Design* (CaMeL; arXiv:2503.18813v2) | ✅ `library/arxiv-2503.18813v2` (licence id not established; uploaded by the owner) | the strongest prior work: the plan is fixed before any data is seen, a tool-less quarantined reader, per-value capabilities, per-tool policies (§"Prior work") |
 | Chen, Wang, Carlini, Sitawarin, Wagner, *Defending Against Prompt Injection With a Few DefensiveTokens* (arXiv:2507.07974v2; AISec '25) | ✅ `library/arxiv-2507.07974v2`, CC-BY-4.0 | its threat-model boundary, and why it is not adoptable here (§"Prior work") |
 
 **Reported numbers are not imported as facts.** The CVE scores and download
@@ -116,7 +118,10 @@ list:
   as free prose into which content is spliced. A receiver validates the
   brief's shape before starting, and the delegator validates the returned
   report's shape before using it. A report is a claim, verified the way
-  `hybrid-llm-deterministic` verifies any model output.
+  `hybrid-llm-deterministic` verifies any model output. **A report never
+  extends the plan.** It may say the task could not be done, or that it
+  lacked information. It may not name the next tool, fetch or step for the
+  delegator to follow. The plan comes from the principal (CaMeL `sec-007`).
 - **H4. A skill is code.** A skill body that will steer an agent is reviewed
   like code before it is trusted: who changed it, in which reviewed PR, and is
   it the version the instance declared? A skill that arrives through a
@@ -152,7 +157,8 @@ list:
   tool result, and text from a person who is not this session's principal
   (a PR comment, an issue body, a public comment, an uploaded document) are
   screened for injected instructions before a model reads them. The screen
-  works FIELD BY FIELD over a declared schema, never over a free-text blob,
+  works FIELD BY FIELD over a declared schema, never over a free-text blob
+  (the reader that fills the schema has no tools: CaMeL's quarantined LLM),
   which is why skill and tool I/O stays tightly typed. A finding in a field
   that steers control (a tool name, a path, a URL, a command, a next step)
   is REFUSED. A finding in a free-text data field is quarantined: the
@@ -162,9 +168,45 @@ list:
   it reaches (H6), and screening it as an injection would be screening the
   person the session works for.
 
-## Prior work: two prompt-injection defences, read against this pipeline
+## Prior work: three prompt-injection defences, read against this pipeline
 
-The owner supplied both on 2026-10-07 with *"ingest and review for relevance
+**CaMeL (arXiv:2503.18813v2) is the closest to this pipeline, and the
+strongest support for tight I/O schemas.** It is a system-level defence, not
+a model-level one, so it does not depend on a model resisting an attack. It
+has four parts, and each maps onto a rule here:
+
+- **A tool-less quarantined reader with a schema.** The quarantined LLM
+  *"has no tool access and can be used to parse unstructured data into data
+  with a predefined schema"* (`sec-007`, pp. 7–9). That is H3 and H9: a
+  hand-over report or a corpus file is read by something that can't act,
+  into a declared schema, before anything that can act sees it.
+- **The plan never sees the data.** *"the P-LLM only interacts with the user
+  query and not the data returned by tools or with the Q-LLM output"*
+  (`sec-007`). The control flow is fixed from the principal's request, and
+  data flows through variables. This is H1 enforced by construction rather
+  than by asking a model to behave.
+- **The reader can't ask for more.** *"the Q-LLM cannot communicate to the
+  P-LLM what information it needs, as this could be a vector for prompt
+  injections"* (`sec-007`). **Adopted as a hand-over rule:** a sub-agent's
+  report may say *not enough information*, and that is all it may say about
+  the plan. It never proposes next steps, tools or fetches that the
+  delegator then follows (H3).
+- **Capabilities and per-tool policies.** Capabilities are *"tags assigned to
+  each individual value that describe control and data-flow relationships"*
+  (`sec-008`, p. 9), meaning provenance and allowed readers. Security policies
+  are *"functions that define what is and what is not allowed when calling
+  tools"* (`sec-005`, pp. 6–7). That is the per-tool risk assessment below,
+  made executable: a policy per tool over the capabilities of its arguments.
+
+**Its stated limit is why H9 still screens.** CaMeL *"cannot defend against
+text-to-text attacks which have no consequences on the data flow"* (`sec-004`,
+pp. 5–6), such as a distorted summary or an injected phishing link. Isolation
+keeps the plan safe but doesn't keep the text honest, so the field-wise
+screen and the origin label (H5) are kept alongside it. **Not adopted
+wholesale:** CaMeL's custom interpreter is a large build and is recorded as
+a candidate design, not a decision.
+
+The owner supplied the other two on 2026-10-07 with *"ingest and review for relevance
 to increase guards, also as prior work evidence (we try to keep I/O skill
 schema tightly controlled)"*. Results reported in them aren't imported as
 facts here.
@@ -258,6 +300,11 @@ researched or held. Nothing in this node describes it.
 | job-to-job compromise as the model for agent-to-agent | GitHub Secure use reference | proposed |
 | SHA pinning, least-privilege tokens, privileged-trigger rules, dependency review | GitHub Secure use reference | proposed, as `secure-code-authoring` rules |
 | "protocol pivoting" as a separate attack class | Ars Technica, 2026-10-06 | **refused as a class name**: the same report carries a dissent calling it indirect prompt injection, and the boundary split here doesn't need the name |
+| plan fixed from the principal; data never steers it | CaMeL (`sec-007`) | proposed, as H1 and H3 |
+| tool-less quarantined reader filling a declared schema | CaMeL (`sec-007`) | proposed, as H3 and H9 |
+| a report may signal "not enough information" and nothing more about the plan | CaMeL (`sec-007`) | proposed, as H3 |
+| per-value capabilities and per-tool policies | CaMeL (`sec-005`, `sec-008`) | proposed, as the sink-based risk assessment |
+| CaMeL's custom interpreter | CaMeL | **not adopted**: a candidate design, too large to take on without a decision |
 | field-wise screening over a declared schema | DataFilter (`sec-014`) | proposed, as H9 |
 | silent stripping of injected spans | DataFilter | **refused**: refuse-never-repair; quarantine with the original kept instead |
 | provider-released defensive tokens | DefensiveTokens | **refused**: needs access to model embeddings this instance does not have |

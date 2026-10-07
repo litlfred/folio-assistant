@@ -46,7 +46,7 @@ Sources supplied: Ars Technica on MCP "protocol pivoting" (2026-10-06), Ars Tech
 Also supplied for ingestion and relevance review: arXiv:2507.07974v2 (DefensiveTokens), arXiv:2510.19207v2 (DataFilter), and uploads/2503.18813v2.pdf (commit 396fc4a on main).
 
 - [x] ingest arXiv:2507.07974v2 (CC-BY-4.0, stated in the PDF) and arXiv:2510.19207v2 (licence id not established; ingest cleared)
-- [ ] ingest uploads/2503.18813v2.pdf from main
+- [x] ingest uploads/2503.18813v2.pdf from main — CaMeL, `library/arxiv-2503.18813v2`; reviewed into `zero-trust-handover` §"Prior work" and voice rule `scz-report-never-extends-the-plan`
 - [x] relevance review written into `zero-trust-handover` §"Prior work"; H8 (remote-KG mount needs signed provenance or consent) and H9 (field-wise screening of hand-overs and third-party human input); voice rule `scz-screen-handover-fields`
 - [x] `bun run security:gate` (Tool node `security-gate`), named in prepare-merge step 5
 - [ ] screening implementation: generalise `fenced()` (folio-assistant-core/adapters/document/index.ts:124, used by chat alone) into a shared handover screen

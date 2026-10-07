@@ -27,6 +27,12 @@
       "path": "cat-harness/methodologies/zero-trust-handover.md"
     },
     {
+      "title": "Defeating Prompt Injections by Design (CaMeL)",
+      "libraryId": "arxiv-2503.18813v2",
+      "url": "https://arxiv.org/abs/2503.18813v2",
+      "year": 2025
+    },
+    {
       "title": "Defending Against Prompt Injection with DataFilter",
       "libraryId": "arxiv-2510.19207v2",
       "url": "https://arxiv.org/abs/2510.19207v2",
@@ -93,6 +99,19 @@
         "sectionId": "sec-014-handling-structured-data",
         "pages": "6-7",
         "quote": "we parse this JSON input, and recursively filter each key and each value in the JSON object."
+      }
+    },
+    {
+      "id": "scz-report-never-extends-the-plan",
+      "title": "A sub-agent's report never extends the delegator's plan",
+      "description": "The plan comes from the principal's request. Data that comes back (a sub-agent's report, a tool result, a parsed document) fills variables in that plan and never chooses its next step. A report may say the task was done, could not be done, or lacked information. It may not name a tool to call, a URL to fetch, a file to write or a step to take that the delegator then follows. Where a step genuinely depends on data, it is a declared branch whose options were fixed in advance, never an instruction read out of the data.",
+      "category": "methodology",
+      "severity": "critical",
+      "source": {
+        "libraryId": "arxiv-2503.18813v2",
+        "sectionId": "sec-007-the-privileged-and-quarantined-llms",
+        "pages": "7-9",
+        "quote": "the Q-LLM cannot communicate to the P-LLM what information it needs, as this could be a vector for prompt injections"
       }
     },
     {
