@@ -3,8 +3,10 @@
 title: 'Subscriptions vs remote mounts of the same instance: kg:subscribe on cat-harness trips reference-direction; on the root it is refused because root needs the instance'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-07T12:46:47Z
-updated_at: 2026-10-07T12:46:47Z
+updated_at: 2026-10-07T14:07:32Z
+parent: folio-assistant-fnx4
 ---
 
 Found on folio-assistant#2320 (bean `hupw`), 2026-10-07. Owner ruling, about 12:10 UTC: **"Skip for now"**. #2320 lands with the remote mounts only. This bean is where the subscriptions get decided.
