@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/RequirementLevel",
+  "definitions": {
+    "RequirementLevel": {
+      "type": "string",
+      "enum": [
+        "SHALL",
+        "SHOULD",
+        "MAY",
+        "SHALL NOT"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-0kbt-orphan-witness-count/bootstrap-tools/schema/zod/requirement/RequirementLevelSchema.schema.json",
+  "title": "RequirementLevelSchema",
+  "description": "Generated from `RequirementLevelSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/0kbt-orphan-witness-count",
+    "sha": "e79f2aee8db3e934fa78a29dacee3eea3d9ef935",
+    "pr": "2339/merge",
+    "run": "37600366752"
+  }
+}
