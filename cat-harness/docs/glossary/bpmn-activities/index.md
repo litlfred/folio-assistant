@@ -680,7 +680,7 @@ Ask the Requestor: which harness, and where? <span class="fa-gloss-status">candi
 Ask who is acting <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The one step that needs a person. Asked ONCE and recorded, never re-asked: <code>interaction/interaction.json</code> and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7.</p>
+<p>The one step that needs a person. Asked ONCE and recorded, never re-asked: <code>cat-harness/memory/interaction.json</code> and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/session-state-machine.bpmn"><code>cat-harness/processes/process/session-state-machine.bpmn#A_AskWhoIsActing</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_sweep" data-fa-state="extracted" data-fa-gloss="">
