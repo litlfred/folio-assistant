@@ -6,6 +6,14 @@
  * code under test is cat-harness's, imported DOWN; what it is held against is
  * this instance's, so standing alone cat-harness has nothing for these to
  * read. The rest of that file's tests stay there.
+ *
+ * Then moved up again, to the aggregate's `test/` (bean `7zz1`, owner ruling
+ * 2026-10-06 "Top-level instance"): its subject is the WHOLE CHECKOUT — the
+ * repository root's dependency tree, which also carries the `dak-*` checkers
+ * smart-base contributes — so standing alone folio-assistant-sci has no root
+ * for it to load from (`seed:ready --layer folio-assistant-sci --rehearse`,
+ * 2026-10-07). Sci's OWN contribution is held in sci, against a folio that
+ * depends on it (`folio-assistant-sci/scripts/tests/sci-consumer.ts`).
  */
 import { describe, test, expect } from "bun:test";
 
@@ -13,10 +21,14 @@ import {
   criterionSubject,
   discoverBlockCheckers,
   discoverScriptCheckers,
-} from "../../../cat-harness/content/pipeline/qa-checker-discovery.ts";
-import { QA_CRITERIA_REGISTRY } from "../../../cat-harness/content/pipeline/qa-criteria-registry.ts";
-import { loadContributions } from "../../../cat-harness/schemas/harness-config.ts";
-import { ContributionRegistry, type FolioContribution } from "../../../cat-harness/schemas/contributions.ts";
+} from "../cat-harness/content/pipeline/qa-checker-discovery.ts";
+import { QA_CRITERIA_REGISTRY } from "../cat-harness/content/pipeline/qa-criteria-registry.ts";
+import { loadContributions } from "../cat-harness/schemas/harness-config.ts";
+import { ContributionRegistry, type FolioContribution } from "../cat-harness/schemas/contributions.ts";
+import { join } from "node:path";
+
+/** The directory this test was written in (`folio-assistant-sci/scripts/tests/`): every path below is composed from it exactly as it was before the move, so nothing it reads changed. */
+const ORIGIN_DIR = join(import.meta.dir, "../folio-assistant-sci/scripts/tests");
 
 /**
  * The dependency tree, loaded exactly as `qa-sweep` loads it.
@@ -27,7 +39,7 @@ import { ContributionRegistry, type FolioContribution } from "../../../cat-harne
  * dropped it would still pass its shape checks while measuring a discovery run
  * two criteria short.
  */
-const REPO = new URL("../../..", import.meta.url).pathname;
+const REPO = join(ORIGIN_DIR, "../../..");
 const registry = await loadContributions<FolioContribution, ContributionRegistry>(
   REPO,
   new ContributionRegistry(),

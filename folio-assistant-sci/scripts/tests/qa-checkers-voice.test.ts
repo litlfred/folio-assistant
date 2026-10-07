@@ -11,6 +11,7 @@ import { readdirSync } from "fs";
 import { join } from "path";
 import { libraryEntry } from "../../../cat-harness/scripts/tests/library-dirs.ts";
 import { checkEditorializing } from "../../../cat-harness/content/pipeline/qa-checkers-voice.ts";
+import { SCI_ROOT } from "./sci-consumer";
 
 // ── b7yo: the two false positives that survived the profile axis ────
 //
@@ -31,7 +32,9 @@ describe("checkEditorializing — proof economy is not an opinion (bean 2t41)", 
     // throws, which is at least loud; a checker counting zero hits over a
     // directory that is not there would have been worse, because the
     // assertion is a count.
-    const entry = libraryEntry("milnorlink");
+    // Asked of THIS instance: the default root is cat-harness, whose corpus
+    // reached sci only through the checkout around it.
+    const entry = libraryEntry("milnorlink", SCI_ROOT);
     expect(entry, "milnorlink is not in any declared library").toBeDefined();
     const dir = join(entry!, "sections");
     let hits = 0;

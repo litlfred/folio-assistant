@@ -5,17 +5,19 @@
  * folio sees the nodes of the instances it depends on.
  */
 import { describe, expect, test } from "bun:test";
-import { resolve } from "node:path";
 
 import { ContributionRegistry } from "../../../cat-harness/schemas/contributions";
 import { OwnCodeRefSchema, QaCheckerNodeSchema } from "../../../cat-harness/schemas/contribution-nodes";
-import { loadContributionsSync } from "../../../cat-harness/schemas/harness-config";
+import { loadContributionsSync, orderedDependencies } from "../../../cat-harness/schemas/harness-config";
+import { SCI_ROOT, sciRegistrySync } from "../../scripts/tests/sci-consumer";
 import { COST_AUTOMATED_CHECKERS } from "./qa-checkers-cost";
 import { PIPELINE_IMPLEMENTATIONS } from "./plugin-slots";
 
-const REPO_ROOT = resolve(import.meta.dir, "..", "..", "..");
-const withSci = loadContributionsSync(REPO_ROOT, new ContributionRegistry());
-const withoutSci = loadContributionsSync(resolve(REPO_ROOT, "folio-assistant-core"), new ContributionRegistry());
+// A folio that depends on sci, and one whose tree stops at core — found
+// through sci's declared `needs` rather than a path composed above this layer.
+const withSci = sciRegistrySync();
+const coreRoot = orderedDependencies(SCI_ROOT).find((d) => d.dependency.name === "folio-assistant-core")!.rootPath;
+const withoutSci = loadContributionsSync(coreRoot, new ContributionRegistry());
 
 describe("sci's contributions arrive as nodes, through the dependency tree", () => {
   test("every slot in the table is filled, with the table's own implementation", () => {

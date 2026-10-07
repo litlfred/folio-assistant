@@ -13,10 +13,12 @@ import { describe, expect, test } from "bun:test";
 import { join } from "path";
 import { registerServedToolGroups, servedToolGroups } from "../../../cat-harness-tools/src/tool-groups";
 import { FORMAL_EDGES_TOOL } from "./formal-edges-mcp";
+import { sciConsumerRoot } from "../../scripts/tests/sci-consumer";
 
-// The FOLIO root, which is what the server walks from. In this repository that
-// is the repository root, whose dependency tree includes folio-assistant-sci.
-const FOLIO_ROOT = join(import.meta.dir, "..", "..", "..");
+// The FOLIO root, which is what the server walks from: a folio whose
+// dependency tree includes folio-assistant-sci. Not the checkout root above
+// this layer, which standing alone is no folio at all.
+const FOLIO_ROOT = sciConsumerRoot();
 
 /** A server stand-in that records what is registered on it. */
 function recordingServer() {

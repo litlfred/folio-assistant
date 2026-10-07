@@ -7,14 +7,21 @@
  * this instance's, so standing alone cat-harness has nothing for these to
  * read. The rest of that file's tests stay there.
  */
-import { describe, test, expect, afterAll } from "bun:test";
+import { describe, test, expect, afterAll, beforeAll } from "bun:test";
 import { writeFileSync, mkdtempSync, mkdirSync, rmSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import { checkQUsageArchimedeanInCategoricalChapter } from "../../../cat-harness/content/pipeline/qa-checkers-q-usage.ts";
+import { usePipelinePluginRegistry } from "../../../cat-harness/content/pipeline/pipeline-plugins";
+import { useSciPipelinePlugins } from "./sci-consumer";
+
+// The Lean lexer the checker scopes with is sci's contribution: loaded through
+// a folio that depends on sci, not from whatever checkout is running.
+beforeAll(useSciPipelinePlugins);
 
 const DIR = mkdtempSync(join(tmpdir(), "qa-q-usage-"));
 afterAll(() => {
+  usePipelinePluginRegistry(undefined);
   try {
     rmSync(DIR, { recursive: true, force: true });
   } catch {}
