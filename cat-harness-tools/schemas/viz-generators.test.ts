@@ -23,6 +23,7 @@ import { readFileSync } from "node:fs";
 import { basename, join } from "node:path";
 
 import { viewerHtml as schemaViewer, viewerPlacement } from "../../cat-harness/scripts/gen-schema-viz.ts";
+import { unscopedSelectors } from "../../cat-harness/scripts/lib/themed-page.ts";
 import { viewerHtml as libraryShell, VIEWER_CSS, VIEWER_JS } from "../../cat-harness/scripts/gen-library-viz.ts";
 import { readSchemaGraph } from "../../cat-harness/scripts/schema-graph.ts";
 import { readLibraryGraph } from "../../cat-harness/scripts/library-graph.ts";
@@ -55,8 +56,44 @@ const LIBRARY_GRAPH = readLibraryGraph([ROOT, repoRootFor(ROOT)]);
 /** The href a page two levels down uses — what `viewerPlacement` computes. */
 const DATA = "../../assets/schemas/index.json";
 
+/**
+ * The schema viewer is a THEMED page since 2026-10-07 — on the site's
+ * `default` layout, so it carries the top band (search, Folio, language). It
+ * left the standalone-document family below; these are its questions now.
+ */
+describe("the schema viewer", () => {
+  const page = schemaViewer(DATA, "", ["cat-harness", "smart-base"]);
+
+  test("is a themed Jekyll page, not a standalone document", () => {
+    expect(page.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(page).not.toMatch(/<!doctype|<html|<head|<body|<main\b|<header\b/i);
+    expect(page).toContain('<h1 id="sc-title">');
+    expect(page).toContain("</script>");
+    expect(page).toContain("</style>");
+  });
+
+  test("fetches its projection RELATIVE to its own location, with no base URL", () => {
+    expect(page).toContain(DATA);
+    expect(page).not.toContain("https://litlfred.github.io");
+  });
+
+  test("restyles nothing of the theme's, and follows the site's scheme switch", () => {
+    expect(unscopedSelectors(page, ".sc-page")).toEqual([]);
+    expect(page).toMatch(/\.sc-page \{\s*color-scheme: dark;/);
+    expect(page).toContain(':root[data-fa-scheme="light"] .sc-page {');
+  });
+
+  test("lists its subject pages, since the theme's sidebar does not", () => {
+    expect(page).toContain('<a href="smart-base/">smart-base</a>');
+    expect(page).toContain('<span aria-current="page">All instances</span>');
+  });
+
+  test("says so when the projection cannot be read, rather than showing nothing", () => {
+    expect(page).toContain("could not");
+  });
+});
+
 describe.each([
-  ["schema", (h: string) => schemaViewer(h)],
   // What a browser assembles: the library page is a thin shell (#1881) that
   // loads its shared stylesheet and script, so the questions below are asked
   // of the shell WITH what it references, inlined where it references them.

@@ -107,7 +107,15 @@ describe("the file set is derived, not listed", () => {
     // on 2026-09-21, after the trap caught it for the third time in a session.
     // Nothing names it now; the walk finds it.
     expect(sources).toContain("who-iris/scripts/gen-iris-pages.ts");
-    expect(sources).toContain("cat-harness/scripts/gen-schema-viz.ts");
+    expect(sources).toContain("cat-harness/scripts/kg-viewer.ts");
+    // A generator whose pages moved onto the theme's layout (2026-10-07) no
+    // longer builds a standalone page, so it correctly drops out of the set.
+    for (const themed of [
+      "cat-harness/scripts/gen-schema-viz.ts",
+      "cat-harness/scripts/gen-voices-viz.ts",
+      "cat-harness/scripts/gen-uploads-viz.ts",
+      "cat-harness/scripts/gen-document-kinds-viz.ts",
+    ]) expect(sources).not.toContain(themed);
     // And the two the old array could not include, because the old detector
     // reported them falsely.
     expect(sources).toContain("cat-harness-tools/scripts/gen-auto-docs.ts");

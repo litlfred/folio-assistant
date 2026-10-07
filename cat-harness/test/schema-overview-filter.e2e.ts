@@ -34,9 +34,22 @@
  * @module test/schema-overview-filter.e2e
  */
 import { test, expect, type Page } from "@playwright/test";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { serveThemed } from "./themed-stand-in.ts";
 
 /** Served from the repository root by `test-server.mjs`. */
 const PAGE = "/cat-harness/docs/cat-harness/schemas/index.html";
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+
+// The page is THEMED since 2026-10-07: Jekyll front matter and a Liquid raw
+// block, which a browser served the file as-is would print. So its body is
+// served in a stand-in for the site's layout, at its real path, and the
+// projection it fetches still comes from the server.
+test.beforeEach(async ({ page }) => {
+  await serveThemed(page, REPO, PAGE);
+});
 
 /** The caption is the panel's own report; every count below is read from it. */
 const CAP = "#ov-cap";
