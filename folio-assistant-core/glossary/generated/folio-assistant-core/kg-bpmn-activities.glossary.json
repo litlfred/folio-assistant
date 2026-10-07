@@ -849,9 +849,17 @@
     {
       "id": "process_gettingstarted.task_pagesbootstrap",
       "prefLabel": "Start the Pages build and derive the URL",
-      "definition": "scripts/pages-bootstrap.ts: derive the site URL from the git remote or <name>.config.json, report whether a publish workflow exists, and optionally probe until the site answers.",
+      "definition": "scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is `unprovisioned`), derive the site URL from the git remote or <name>.config.json, report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers.",
       "notation": "Task_PagesBootstrap",
       "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_PagesBootstrap",
+      "status": "candidate"
+    },
+    {
+      "id": "process_gettingstarted.task_provisionghpages",
+      "prefLabel": "Provision gh-pages",
+      "definition": "Before Pages is switched on, make sure the gh-pages branch exists — the semantics of A_Provision in bootstrap-tools' render-kg-to-github-pages.bpmn, first half. `git ls-remote --heads origin gh-pages`; if absent, `bun run cat-harness/scripts/pages-bootstrap.ts --provision` pushes an orphan gh-pages holding a placeholder index.html and .nojekyll (idempotent; never forced; the script creates no remote branch without the flag). Then Settings → Pages → \"Deploy from a branch: gh-pages, / (root)\" — not \"GitHub Actions\" when the publish workflow pushes gh-pages. Every publishing path reaches this step: new-repo, overlay and add-folio, and an overlay or new repo that remote-mounts its dependencies (litlfred/test, provisioned at 860f9c2). Owner, 2026-10-01: \"need to create gh-pages branch before can turn on\"; 2026-10-07: \"need to create gh-pages before can deploy\" (#2417).",
+      "notation": "Task_ProvisionGhPages",
+      "source": "folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ProvisionGhPages",
       "status": "candidate"
     },
     {
