@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 508,
+      "count": 507,
       "unit": "open beans"
     }
   },
@@ -11821,14 +11821,14 @@
     {
       "id": "folio-assistant-u4up",
       "title": "merge:train drops gitignored-but-tracked test/results files",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T16:44:20Z",
-      "updatedAt": "2026-10-07T03:09:48Z",
+      "updatedAt": "2026-10-07T05:13:00Z",
       "preview": "Measured 2026-10-04 building merge-train-2026-10-04a (#2113):\n\n1. The built train tree omitted `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` and its tool-run sidecar (tracked on main, gitignored), so `lsi:skills:check` and `lsi:viz:check` went red in CI while green locally. Restored by hand in 1635342194. Same family as 8j9e (#2090 fixed `merge-base.ts`, not the train tool).\n2. Take-b",
       "file": "beans/defs/folio-assistant-u4up--mergetrain-drops-gitignored-but-tracked-testresult.md"
     },
@@ -15631,13 +15631,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 585,
-        "closed": 278,
-        "open": 307,
-        "inProgress": 125,
+        "closed": 279,
+        "open": 306,
+        "inProgress": 124,
         "todo": 181,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4752136752136752
+        "share": 0.47692307692307695
       },
       {
         "id": "folio-assistant-vuip",
@@ -15671,8 +15671,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 508,
-    "coveredOpen": 505,
+    "openTotal": 507,
+    "coveredOpen": 504,
     "duplicateIds": 0
   }
 }
