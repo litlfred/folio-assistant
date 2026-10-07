@@ -52,7 +52,7 @@ on issue">
 
 GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again.</bpmn:documentation>
       <bpmn:extensionElements>
-        <bootstrap.processes:skill ref="requirement-definition"/>
+        <bootstrap.processes:skill ref="adjudication"/>
         <cat-harness.processes:policy relaxable="false"/>
       </bpmn:extensionElements>
     </bpmn:serviceTask>
