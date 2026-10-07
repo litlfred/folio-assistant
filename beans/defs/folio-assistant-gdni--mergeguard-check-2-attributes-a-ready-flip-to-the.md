@@ -1,13 +1,11 @@
 ---
 # folio-assistant-gdni
 title: merge:guard check 2 attributes a ready flip to the steward by time proximity
-status: in-progress
-tags:
-  - ready-to-close
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T19:57:42Z
-updated_at: 2026-10-06T22:40:00Z
+updated_at: 2026-10-07T11:50:40Z
 parent: folio-assistant-d33q
 ---
 

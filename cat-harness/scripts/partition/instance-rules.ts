@@ -331,6 +331,13 @@ export const RULES: Rule[] = [
       // makes is about INSTANCES and where their directories resolve; it
       // opens the files only to copy bytes, and never asks what a page says.
       "scripts/compose-docs.ts",             // docs layers -> one composed tree
+      // Where the built instance's docs pages publish (`docs/<name>`, bean
+      // `kc7k`), and Jekyll's permalink rule that puts them there, read once
+      // for every generator that links to a page by its source path. Both
+      // are about the SITE's addressing, the platform's concern, and neither
+      // reads what a page says.
+      "scripts/docs-route.ts",
+      "scripts/lib/jekyll-permalink.ts",
       // Whether a swimlane DEFINES itself — `name`, `<documentation>`, and
       // both reaching the translation templates. Harness by subject for the
       // same reason as its neighbour above: a lane is a ROLE boundary, which
@@ -1044,6 +1051,10 @@ export const RULES: Rule[] = [
       "scripts/staging-rotate.ts",
       // The staging rate limit (issue #1956) — same family, harness.
       "scripts/staging-push-gate.ts",
+      // A preview built in the agent's checkout (issue #2410): the same family,
+      // and its only import is the gate above. The core builders it runs are
+      // processes it spawns, not modules it imports, so no edge reaches up.
+      "scripts/stage-local.ts",
       // The adapter for an instance that holds no content (bean `zmdo`): the
       // server's fallback when no content adapter is installed above the
       // harness. Harness by definition — it exists for the harness alone.

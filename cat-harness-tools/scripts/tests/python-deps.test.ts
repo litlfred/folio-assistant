@@ -20,7 +20,8 @@ import {
   requirementsPath,
 } from "../../../cat-harness/schemas/python-deps.ts";
 import { checkPythonDeps, scanImports } from "../check-python-deps.ts";
-import { requirementsBody, staleTiers } from "../gen-python-deps.ts";
+import { dockerfileFindings, dockerfileOf, generatedPaths, imageFindings, requirementsBody, staleTiers } from "../gen-python-deps.ts";
+import { tools } from "../../../cat-harness/tools/discover.ts";
 import { HARNESS_ROOT, TOOLS_ROOT } from "../lib/roots.ts";
 
 // TWO ROOTS, because this file asks two questions of two different trees.
@@ -170,5 +171,54 @@ describe("the generated files cannot drift from the declaration", () => {
     // "what is this for" is the question they have.
     const body = readFileSync(join(TOOLS_ROOT, requirementsPath("lean")), "utf-8");
     for (const d of depsForTier("lean")) expect(body).toContain(`# ${d.distribution}:`);
+  });
+});
+
+// Bean `ar1s`, phase 2. The image check used to read the ROOT Dockerfile only —
+// the one image nothing built — and passed vacuously once it was gone. It now
+// reads the images Tools declare, so these prove each rule is CAUGHT.
+describe("every image a Tool declares installs the generated set", () => {
+  const [lean] = generatedPaths();
+  const copy = `COPY ${lean} /tmp/requirements.txt\n`;
+
+  test("the build line names the Dockerfile", () => {
+    expect(dockerfileOf("docker build -t x -f a/b/Dockerfile a/b")).toBe("a/b/Dockerfile");
+    expect(dockerfileOf("docker build --file=a/Dockerfile .")).toBe("a/Dockerfile");
+    expect(dockerfileOf("docker build -t x .")).toBeNull();
+  });
+
+  test("installing the COPYed generated file passes", () => {
+    expect(dockerfileFindings(`FROM x\n${copy}RUN pip3 install --no-cache-dir \\\n    -r /tmp/requirements.txt\n`)).toEqual([]);
+  });
+
+  test("an image with no pip install passes", () => {
+    expect(dockerfileFindings("FROM ubuntu\nRUN apt-get install -y texlive-full\n")).toEqual([]);
+  });
+
+  test("a retyped declared package is a finding, across a continuation", () => {
+    const f = dockerfileFindings(`FROM x\n${copy}RUN pip3 install -r /tmp/requirements.txt\nRUN pip3 install --no-cache-dir \\\n    requests>=2.32\n`);
+    expect(f.some((x) => x.includes("requests>=2.32"))).toBe(true);
+  });
+
+  test("a requirements file that is not the generated one is a finding", () => {
+    const f = dockerfileFindings("FROM x\nCOPY .github/scripts/requirements.txt r.txt\nRUN pip3 install -r r.txt\n");
+    expect(f.some((x) => x.includes("-r r.txt"))).toBe(true);
+    expect(f.some((x) => x.includes("never `-r`"))).toBe(true);
+  });
+
+  test("a wheel or build tool outside the declaration is not a retyped list", () => {
+    expect(dockerfileFindings(`FROM x\n${copy}RUN pip3 install -r /tmp/requirements.txt && pip3 install maturin /tmp/w/x.whl\n`)).toEqual([]);
+  });
+
+  test("a Tool whose Dockerfile is missing is a finding, not a pass", () => {
+    const fake = { id: "gone", install: { container: "docker build -f no/such/Dockerfile ." } } as never;
+    expect(imageFindings([fake])).toEqual([{ tool: "gone", dockerfile: "no/such/Dockerfile", problem: "the Dockerfile does not exist" }]);
+  });
+
+  test("the declared images exist and are clean — and there are some", () => {
+    const defs = tools();
+    // Vacuity guard: with no image declared this test would pass on nothing.
+    expect(defs.filter((t) => t.install.container !== undefined).length).toBeGreaterThan(0);
+    expect(imageFindings(defs)).toEqual([]);
   });
 });

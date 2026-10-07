@@ -1,13 +1,11 @@
 ---
 # folio-assistant-68op
 title: 'GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: ''viewer pages keep the navbar they had'' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed'
-status: in-progress
+status: completed
 type: bug
 priority: normal
-tags:
-  - ready-to-close
 created_at: 2026-10-03T01:08:12Z
-updated_at: 2026-10-07T06:30:00Z
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-rwmf
 ---
 
