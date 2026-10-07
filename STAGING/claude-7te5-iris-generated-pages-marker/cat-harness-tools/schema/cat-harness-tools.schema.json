@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/cat-harness-tools.schema.json",
+  "title": "cat-harness-tools schemas",
+  "description": "The schemas instance `cat-harness-tools` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-7te5-iris-generated-pages-marker/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {},
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "staging": {
+    "branch": "claude/7te5-iris-generated-pages-marker",
+    "sha": "8898729bb9bd19e1ee195f277f3fd5806f53d712",
+    "pr": "2343/merge",
+    "run": "37588741195"
+  }
+}

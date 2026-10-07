@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/Reviewer",
+  "definitions": {
+    "Reviewer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "organisation": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "acknowledge": {
+          "type": "boolean"
+        },
+        "github": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-7te5-iris-generated-pages-marker/folio-assistant-core/schema/zod/public-comment/ReviewerSchema.schema.json",
+  "title": "ReviewerSchema",
+  "description": "Generated from `ReviewerSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/7te5-iris-generated-pages-marker",
+    "sha": "8898729bb9bd19e1ee195f277f3fd5806f53d712",
+    "pr": "2343/merge",
+    "run": "37588741195"
+  }
+}
