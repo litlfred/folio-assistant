@@ -62,8 +62,10 @@ describe("the publish job", () => {
 
   test("is a separate job after the gates, run whatever they concluded, on push and pull_request", () => {
     // The two corpus parts of the repository gates, not the `gates` roll-up,
-    // which also waits for the standalone ratchet (bean `doxj`).
-    expect(job.needs).toEqual(["gates-kg", "gates-docs"]);
+    // which also waits for the standalone ratchet (bean `doxj`) — and the job
+    // that builds the QA working copy once, which it restores and publishes
+    // rather than building a second time (bean `jtfk`).
+    expect(job.needs).toEqual(["gates-kg", "gates-docs", "qa-working-copy"]);
     expect(job.if).toContain("always()");
     expect(job.if).toContain("'push'");
     expect(job.if).toContain("'pull_request'");

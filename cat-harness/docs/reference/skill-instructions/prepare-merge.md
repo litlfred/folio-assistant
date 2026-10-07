@@ -123,7 +123,7 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    counts against a baseline run on the merge-base). Do not call a branch green
    by silently inheriting red.
 
-   **Then run `bun run security:gate`, by name, and quote its result.** It
+   **Then run `bun run cat security:gate`, by name, and quote its result.** It
    runs every security check this repository has (workflow injection, secret
    leaks, lockfile and toolchain pins, QA reviewer permission, materialised
    fixity) plus two advisories, and refuses when a blocking check fails OR

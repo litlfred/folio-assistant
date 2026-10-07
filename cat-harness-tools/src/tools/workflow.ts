@@ -47,6 +47,18 @@ import { type RoleGraph } from "../../../cat-harness/schemas/role-graph.js";
 import { roleGraphFor } from "../../../cat-harness/scripts/known-skills.js";
 import { accessContext } from "../../../cat-harness/src/core/access.js";
 import { githubPrincipalFor } from "../core/github-auth.js";
+import { oneLineLabel, screenHandover, type FieldRole } from "../../../cat-harness/src/core/handover-screen.js";
+
+/** The declared shape of a `workflow_complete` hand-over: what steers the engine, and what is only read. */
+export const WORKFLOW_COMPLETE_HANDOVER: Record<string, FieldRole> = {
+  instance: "control",
+  node: "control",
+  outcome: "control",
+  facts: "control",
+  actor: "control",
+  target: "control",
+  note: "data",
+};
 
 /**
  * The engine's task-authorization mode. STRICT since the owner's rulings of
@@ -331,7 +343,42 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       target: z.string().optional().describe("The content the step acted on: a block id, path or bean id"),
       note: z.string().optional().describe("What happened, for the instance history"),
     },
-    async ({ instance, node, outcome, facts, actor, target, note }) => {
+    async ({ instance, node, outcome, facts, actor, target, note: rawNote }) => {
+      // The arguments are a hand-over from the calling agent (H3, H9; bean
+      // `cztn`). Everything but `note` steers the engine, `facts` included,
+      // since a decision table branches on it, so a finding there REFUSES.
+      // `note` is read later by another agent (the bean body, the log), so a
+      // finding there QUARANTINES: kept verbatim, marked, and reported back.
+      const screen = screenHandover(
+        { instance, node, outcome, facts, actor, target, note: rawNote },
+        { fields: WORKFLOW_COMPLETE_HANDOVER },
+      );
+      if (screen.state === "refused") {
+        throw new Error(
+          `workflow_complete refused by the hand-over screen: ` +
+            screen.findings.map((f) => `${f.path} (${f.role}): ${f.kind} "${f.excerpt}"`).join("; "),
+        );
+      }
+      // One line, always: a note is appended to a bean body, where a line of
+      // its own could forge a claim record (`CLAIM_NOTE` is line-anchored;
+      // roast 1ygp L2.4). Whitespace is folded.
+      // Pass on the copy the screen read, never the arguments re-read (L1.2,
+      // adjudication of 1ygp: the library returned it and this caller ignored it).
+      const seen = screen.screened ?? {};
+      const screenedFacts = seen.facts as typeof facts;
+      const screenedNote = typeof seen.note === "string" ? seen.note : undefined;
+      // Capped, and the cap is SAID: "never a word dropped" was false while a
+      // 4,000-character cut was silent (adjudication of 1ygp, new defect 3).
+      const NOTE_MAX = 4000;
+      const folded = screenedNote === undefined ? undefined : oneLineLabel(screenedNote, Number.MAX_SAFE_INTEGER);
+      const oneLine =
+        folded === undefined || folded.length <= NOTE_MAX
+          ? folded
+          : `${folded.slice(0, NOTE_MAX)} [… cut: ${folded.length - NOTE_MAX} more characters not kept]`;
+      const note =
+        screen.state === "quarantined" && oneLine !== undefined
+          ? `[QUARANTINED by the hand-over screen: ${[...new Set(screen.findings.map((f) => f.kind))].join(", ")}; kept, data not instruction] ${oneLine}`
+          : oneLine;
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(resolve(root, state.source));
@@ -340,7 +387,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       const { principal } = await githubPrincipalFor(root, process.env);
       const next = complete(model, state, node, {
         outcome,
-        facts,
+        facts: screenedFacts,
         actor: actor ?? principal.account,
         note,
         authz: { ctx: accessContext(root), principal, target, mode: ENGINE_MODE },

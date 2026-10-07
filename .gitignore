@@ -70,10 +70,11 @@ __pycache__/
 # (1,449 tracked files, including `script-qa/*.script-qa.json` QA sidecars) and
 # `docs/audits/_deprecated/` (66) — where any NEW file would then be skipped by
 # `git add` with no error. Keep the leading slash on every entry.
-# `.agents/skills/` is NOT scratch: it is where Antigravity reads workspace
-# skills, and `agent-memory.ts` generates one per subagent there (bean `fkqa`).
+# `.agents/skills/` and `.agents/rules/` are NOT scratch: they are where Antigravity reads workspace
+# skills and rules, and `agent-memory.ts` generates into both (bean `fkqa`).
 /.agents/*
 !/.agents/skills/
+!/.agents/rules/
 /amalgamated_done/
 /amalgamated_input/
 /_deprecated/
@@ -315,3 +316,4 @@ cat-harness/docs/assets/slices/
 /bootstrap-tools/
 /who-iris/
 /fhir-harness/
+/folio-assistant-sci/

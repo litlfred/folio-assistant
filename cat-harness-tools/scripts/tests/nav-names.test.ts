@@ -55,7 +55,7 @@ function railedCount(): number {
  * live tree is never edited (the restore-by-copy discipline in
  * `navbar-consistency.test.ts` exists because a restore once went wrong).
  */
-function siteCopy(railed = "cat-harness/schemas/cat-harness/index.html"): { root: string; site: string; files: string[] } {
+function siteCopy(railed = "cat-harness/folio/index.html"): { root: string; site: string; files: string[] } {
   const root = mkdtempSync(join(tmpdir(), "nav-names-"));
   const site = join(root, "site");
   for (const rel of ["_data/harness.json", "_data/stickies.json", "_includes/generated/navbar-footer.html", "_includes/harness_details.html", "_includes/landing.html", railed]) {
@@ -113,8 +113,9 @@ describe("a planted second name fails", () => {
   test("on the RAIL: one row's label changed in a viewer page", () => {
     const c = siteCopy();
     // The row's label lives in the rail's SHARED data now (bean `lnoy`):
-    // plant it in the data file this viewer page names.
-    const page = join(c.site, "cat-harness/schemas/cat-harness/index.html");
+    // plant it in the data file this viewer page names. A page still on the
+    // rail: the schema viewer this used moved onto the site layout (#2418).
+    const page = join(c.site, "cat-harness/folio/index.html");
     const name = /"data":"(rail-[a-z0-9]+)"/.exec(readFileSync(page, "utf-8"))![1]!;
     const data = join(c.site, "assets/navbar", `${name}.js`);
     const body = readFileSync(data, "utf-8");

@@ -51,3 +51,11 @@ Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention,
 
 ## 2026-09-30, later: a staging TEST of smart-trust's own site, on this repository
 The owner asked to see smart-trust's landing page here, on staging, with its existing nav menu. stage-ig-sites.ts builds every IG whose menu.json records its source (of + ref) into /<instance>/ig/ on the feature-staging preview. The long-term home is still the IG's own repository (bean 4475).
+
+## 2026-10-07 — Owner ruling: declare IG source in instance declaration
+Owner ruling 2026-10-07: Declare the IG source in the instance declaration (`source: { kind: "git", ... }`).
+- Extended `CatHarnessDeclarationSchema` in `cat-harness/schemas/cat-harness.ts` with `InstanceSourceSchema` (`InstanceGitSourceSchema`).
+- Declared IG source in `smart-trust/smart-trust.json` and `smart-immunizations/smart-immunizations.json`.
+- Updated `fhir-harness/scripts/stage-ig-sites.ts` (`igsToBuild`) to prioritize the declared instance `source` over `menu.json`.
+- Tested in `fhir-harness/scripts/stage-ig-sites.test.ts`.
+

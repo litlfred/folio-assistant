@@ -42,6 +42,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`kg-folio-asst-2026-09-30/`](kg-folio-asst-2026-09-30/README.md) | described in its own README | |
 | [`landauer-foltz-laham-1998-intro-lsa/`](landauer-foltz-laham-1998-intro-lsa/README.md) | described in its own README | |
 | [`mcp-2026-specification-2026-07-28/`](mcp-2026-specification-2026-07-28/README.md) | described in its own README | |
+| [`nist-sp-800-207/`](nist-sp-800-207/README.md) | described in its own README | |
 | [`omg-2013-bpmn-2-0-2/`](omg-2013-bpmn-2-0-2/README.md) | described in its own README | |
 | [`omg-2024-dmn-1-5/`](omg-2024-dmn-1-5/README.md) | described in its own README | |
 | [`omg-2024-spdx-3-0/`](omg-2024-spdx-3-0/README.md) | described in its own README | |
