@@ -377,7 +377,7 @@
     {
       "id": "process_codequalitygates.task_unrungates",
       "prefLabel": "Registered gates that never run (HARD)",
-      "definition": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard.",
+      "definition": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries `bun run security:gate` (bean `ieum`, owner 2026-10-07: \"security check before release\"): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job.",
       "notation": "Task_UnrunGates",
       "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_UnrunGates",
       "status": "candidate"
@@ -583,9 +583,17 @@
       "status": "candidate"
     },
     {
+      "id": "process_crdm_close.a_recordsignoff",
+      "prefLabel": "Record the sign-off as a requirement-signoff attestation",
+      "definition": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again.",
+      "notation": "A_RecordSignoff",
+      "source": "cat-harness/processes/process/crdm-close.bpmn#A_RecordSignoff",
+      "status": "candidate"
+    },
+    {
       "id": "process_crdm_close.ba_confirm",
       "prefLabel": "Confirm all criteria met",
-      "definition": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so.",
+      "definition": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so. Since issue #2405 (FR-013) it IS an adjudication with the requirement-set answers: an approval here moves the set to `accepted`, which `check:requirements` refuses unless it is a human's and every approved member is `in-force`.",
       "notation": "BA_Confirm",
       "source": "cat-harness/processes/process/crdm-close.bpmn#BA_Confirm",
       "status": "candidate"
@@ -847,6 +855,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_crdm_signoff.a_recordsignoff",
+      "prefLabel": "Record the sign-off as a requirement-signoff attestation",
+      "definition": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again.",
+      "notation": "A_RecordSignoff",
+      "source": "cat-harness/processes/process/crdm-signoff.bpmn#A_RecordSignoff",
+      "status": "candidate"
+    },
+    {
       "id": "process_crdm_signoff.ba_choosekg",
       "prefLabel": "Choose a destination, or none",
       "definition": "A PERSON'S STEP, and `none` is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement \"is really a skill\" has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent.",
@@ -857,7 +873,7 @@
     {
       "id": "process_crdm_signoff.ba_signoff",
       "prefLabel": "Sign off on requirements",
-      "definition": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf.",
+      "definition": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf. Since issue #2405 (FR-013) it IS an adjudication: it calls Process_Adjudication with the requirement-set answers, and every answer goes through A_RecordSignoff before anything follows it.",
       "notation": "BA_Signoff",
       "source": "cat-harness/processes/process/crdm-signoff.bpmn#BA_Signoff",
       "status": "candidate"
@@ -956,6 +972,14 @@
       "definition": "Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried.",
       "notation": "Task_Restore",
       "source": "cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_Restore",
+      "status": "candidate"
+    },
+    {
+      "id": "process_docssite.task_securitygate",
+      "prefLabel": "Run the release security gate [security:gate]",
+      "definition": "`bun run security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set.",
+      "notation": "Task_SecurityGate",
+      "source": "cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_SecurityGate",
       "status": "candidate"
     },
     {
@@ -1789,7 +1813,7 @@
     {
       "id": "process_mergetrain.call_gates",
       "prefLabel": "Run the gate set on the train [code-quality-gates]",
-      "definition": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land.",
+      "definition": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land. The release security gate (`bun run security:gate`, bean `ieum`) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run.",
       "notation": "Call_Gates",
       "source": "cat-harness/processes/sdlc/merge-train.bpmn#Call_Gates",
       "status": "candidate"

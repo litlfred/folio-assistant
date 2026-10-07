@@ -1,11 +1,11 @@
 ---
 # folio-assistant-gnnj
 title: merge-guard check 5 stops waiting on Feature Staging (owner ruling 2026-10-05)
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T07:36:45Z
-updated_at: 2026-10-05T07:36:49Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -19,3 +19,6 @@ Build 225-407 s; runner queue 4-49 s; deploy step (the #1956 gate wait + push) u
 
 ## Done when
 merge-guard tests cover the in-flight, unstarted and finished-red cases; PR green and signed.
+
+## Completed on landed evidence
+Landed on main in PR #2120 / commit 4bbe053605b9 (merge-guard check 5 stops waiting on Feature Staging / lsi:skills over main merge).

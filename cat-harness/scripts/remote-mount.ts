@@ -53,6 +53,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { mountTrust } from "../schemas/mount-trust.js";
 import { checkoutRootFor, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 import {
   MOUNT_LOCK_SCHEMA,
@@ -135,6 +136,12 @@ export interface RemoteMountOptions {
   instanceRoot?: string;
   /** How `owner/repo` becomes a fetch URL — tests serve local bare repositories. */
   urlFor?: UrlFor;
+  /**
+   * `staging` mounts for a preview and needs neither signature nor consent
+   * (owner, 2026-10-07: "staging doesnt need signature"). Anything else is a
+   * real mount and must pass {@link mountTrust}. Default `mount`.
+   */
+  purpose?: "staging" | "mount";
 }
 
 const strip = (p: string): string => p.replace(/\/+$/, "");
@@ -440,6 +447,16 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
     for (const p of plan.instances) {
       const target = join(plan.instanceRoot, p.path);
       const before = priorBy.get(p.instance);
+      // H8, bean `ieum`: a remote graph is mounted only on signed provenance or a
+      // person's consent for this pin; a staging preview needs neither. Checked
+      // BEFORE anything is checked out, so a refused mount writes nothing.
+      const via = plan.mounts.find((m) => m.harness === p.via);
+      const trust = via ? mountTrust(via, opts.purpose ?? "mount") : { ok: false as const, state: "could-not-determine" as const, detail: `no declared mount named \`${p.via}\`` };
+      if (!trust.ok) {
+        plan.outcomes.push({ instance: p.instance, state: trust.state === "refused" ? "missing" : "could-not-determine", path: p.path, detail: `not mounted: ${trust.detail}` });
+        if (before) locked.push(before);
+        continue;
+      }
       try {
         if (before) {
           const changed = modifiedSince(plan.instanceRoot, before);
@@ -646,7 +663,7 @@ export function declaringInstances(checkout: string): { roots: string[]; unreada
  * declaration cannot be read is could-not-determine for the whole fan-out:
  * it may be the one that declares mounts.
  */
-export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?: UrlFor } = {}): { state: CheckResult["state"]; text: string } {
+export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?: UrlFor; purpose?: "staging" | "mount" } = {}): { state: CheckResult["state"]; text: string } {
   const { roots, unreadable } = declaringInstances(checkout);
   const parts: string[] = [];
   const states: CheckResult["state"][] = [];
@@ -660,7 +677,7 @@ export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?:
       states.push(r.state);
       parts.push(reportOutcomes(`Remote mounts — ${root}`, r.state, r.reason, r.outcomes));
     } else {
-      const r = mountRemote({ instanceRoot: root, urlFor: opts.urlFor });
+      const r = mountRemote({ instanceRoot: root, urlFor: opts.urlFor, purpose: opts.purpose });
       const sum = summarise(r.plan.outcomes);
       states.push(sum.state);
       parts.push(reportOutcomes(`Remote mounts — ${root}`, sum.state, sum.reason, r.plan.outcomes));
@@ -676,7 +693,7 @@ if (import.meta.main) {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--instance");
   if (at === -1) {
-    const r = remoteFanOut(checkoutRootFor(process.cwd()), { check: argv.includes("--check") });
+    const r = remoteFanOut(checkoutRootFor(process.cwd()), { check: argv.includes("--check"), purpose: argv.includes("--staging") ? "staging" : "mount" });
     console.log(r.text);
     process.exit(exitCode(r.state));
   }
@@ -691,7 +708,7 @@ if (import.meta.main) {
     console.log(JSON.stringify({ instances: p.instances, outcomes: p.outcomes }, null, 2));
     process.exit(exitCode(p.mounts.length ? summarise(p.outcomes).state : "not-enabled"));
   }
-  const r = mountRemote({ instanceRoot });
+  const r = mountRemote({ instanceRoot, purpose: argv.includes("--staging") ? "staging" : "mount" });
   const state = r.plan.mounts.length ? summarise(r.plan.outcomes).state : "not-enabled";
   console.log(reportOutcomes("Remote mounts", state, state === "not-enabled" ? "no `remoteMounts` declared" : summarise(r.plan.outcomes).reason, r.plan.outcomes));
   if (r.excluded.length) console.log(`\nAdded to this worktree's info/exclude (not committed): ${r.excluded.map((p) => `\`${p}/\``).join(", ")}.`);

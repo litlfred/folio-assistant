@@ -32,19 +32,19 @@ jobs:
     name: Build libhecke_engine_c.so
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: tools/hecke-engine-c -> target
       - name: Build hecke-engine-c
         run: cd tools/hecke-engine-c && cargo build --release
       - name: Upload artefacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: hecke-engine-c
           path: |
@@ -58,12 +58,12 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
@@ -86,14 +86,14 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install Octave + system deps
         run: |
           sudo apt-get update
           sudo apt-get install -y octave octave-dev libgmp-dev libmpfr-dev
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
@@ -119,16 +119,16 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
-      - uses: julia-actions/setup-julia@v3
+      - uses: julia-actions/setup-julia@fa02766e078afaaf09b14210362cee14137e6a32 # v3
         with:
           version: '1.11'
       - name: Run Julia smoke
@@ -149,7 +149,7 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install GAP + system deps
@@ -159,7 +159,7 @@ jobs:
           # the kernel extension's HeckeEngine.c #includes.  Without it
           # `gap` alone installs the runtime only.
           sudo apt-get install -y gap libgap-dev autoconf libtool libgmp-dev libmpfr-dev gcc make
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
@@ -201,16 +201,16 @@ jobs:
     name: Node napi-rs smoke
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: tools/hecke-engine-node -> target
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '20'
       - name: Build native module + run tests
@@ -225,13 +225,13 @@ jobs:
     name: JVM Rust unit tests + Kotlin bindings
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: tools/hecke-engine-jvm -> target
       - name: cargo test + build cdylib
@@ -272,7 +272,7 @@ jobs:
           done
           echo "Kotlin bindings generated with all 9 Phase A+B functions present."
       - name: Upload Kotlin bindings
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: kotlin-bindings
           path: tools/hecke-engine-jvm/bindings/kotlin/
@@ -283,11 +283,11 @@ jobs:
     name: WASM Rust unit tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: tools/hecke-engine-wasm -> target
       - name: cargo test
@@ -305,17 +305,17 @@ jobs:
     name: WASM bundle build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
         with:
           targets: wasm32-unknown-unknown
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           workspaces: tools/hecke-engine-wasm -> target
       - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@v0.4.0
+        uses: jetli/wasm-pack-action@0d096b08b4e5a7de8c28de67e11e945404e9eefa # v0.4.0
         with:
           version: 'v0.13.0'
       - name: wasm-pack build
@@ -326,16 +326,16 @@ jobs:
     name: R extendr smoke
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
           r-version: '4.4'
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
         with:
           # rextendr 0.4 layout: Rust crate lives at src/rust/Cargo.toml,
           # not the package root.
@@ -423,7 +423,7 @@ jobs:
       image: sagemath/sagemath:latest
       options: --user root
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - name: Install pyhecke + qou-substrate from local sources

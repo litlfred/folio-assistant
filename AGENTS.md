@@ -126,8 +126,8 @@ bun run gates               # EVERY fast gate CI runs — run this before you pu
 bun run gates --all         # ...plus the browser jobs
 bun run cat-harness-tools/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
 bun test                    # unit tests
-bunx playwright test        # e2e tests   (npm script: test:e2e)
-eslint .                    # lint
+bun run test:e2e            # e2e tests   (playwright, -c cat-harness-tools/playwright.config.ts)
+bun run lint                # lint  (eslint -c cat-harness-tools/eslint.config.mjs .)
 bun run check-deps                  # probe environment capabilities
 bun run init-folio --help           # scaffold a new folio repository
 bun run readme:sync                 # refresh a folio README's generated sections

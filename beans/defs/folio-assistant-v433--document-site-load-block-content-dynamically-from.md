@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v433
 title: 'DOCUMENT SITE: load block content dynamically from the published graph instead of one multi-MB page (owner: ''dynamic JS load of KG, as should of rest of content'')'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-06T20:28:26Z
-updated_at: 2026-10-06T20:53:10Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -26,3 +26,6 @@ _2026-10-06T21:00Z_ — Built and pushed (01820ca): shell + blocks/NNN.json + fu
 
 
 _2026-10-06T22:00Z_ — Edit/feedback links unified across visualizers (owner: 'make sure feedback/edit links are changed across all harness/visualizers to be dynamic'): recipe moved to cat-harness/src/core/edit-links.ts (acb447c); folio site (8496ba0); IG site (31122d2); docs pages, skill and schema pages (50a4e1e); todos, stickies, harness panel, work-plan dashboards (eae4df6). Left on purpose: public-comment 'Discuss' (a change-set discussion form, not an edit/feedback link on content); bootstrap-tools 'Improve this page' (bootstrap-tools may import only itself; one static link per page).
+
+## Completed
+All 6 acceptance criteria completed and verified. Dynamic block loading implemented and verified for document site.

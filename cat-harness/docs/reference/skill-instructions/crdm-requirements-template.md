@@ -17,6 +17,14 @@ This skill expands the Phase 3 summary in `crdm-requirements-workflow.md`.
 
 ## Requirement format
 
+**One definition, shared with spec-kit** (issue #2405 FR-008): a statement, a
+conformance level, a source, **at least one success criterion with its
+verification method**, and a sign-off owner —
+the `requirement-definition` skill (`skill_fetch requirement-definition`)
+in the content layer. The fields below are CRDM's rendering of it;
+*Acceptance criteria* are the success criteria. A requirement with none is not
+ready to post.
+
 Each requirement has:
 
 | Field | Format | Example |
@@ -24,7 +32,9 @@ Each requirement has:
 | **ID** | `REQ-###` | `REQ-001` |
 | **Title** | Short phrase | "Beans filtered by epic type" |
 | **Description** | Plain language, no jargon | "The agent can filter work items by their type (epic, story, task)" |
-| **Acceptance criteria** | Testable, measurable | "Given an epic with 3 child stories, when filtered by epic, then all 3 appear" |
+| **Conformance** | SHALL / SHOULD / MAY / SHALL NOT | SHALL |
+| **Acceptance criteria** (= success criteria, ≥ 1) | Testable, measurable, each with a key and a verification method (`test` / `inspection` / `review` / `analysis`) | "`SC-1` (test) — Given an epic with 3 child stories, when filtered by epic, then all 3 appear" |
+| **Sign-off owner** | Who says it is met — a named person or role | "The BA" |
 | **Priority** | Must-have / Should-have / Nice-to-have | Must-have |
 | **Source** | Phase 1 needs statement ref | "Needs statement §2 — BA cannot see work grouped by release" |
 | **Impact** | Phase 4 footprint | "Schema: new `type` field on bean. Pipeline: none" |
@@ -50,6 +60,25 @@ Use RFC 2119 in formal statements:
    Given/When/Then or a checkable statement
 4. **Validate with the BA** — read it back. "Does this capture what you
    need? Anything missing?"
+
+## The document is a requirement set (issue #2405, FR-010)
+
+The requirements document as a whole is a **`RequirementSet`**
+(`bootstrap-tools/schemas/requirement-set.ts`, published as
+`bootstrap/schemas/requirement-set.schema.json`): `reqset:<slug>`, the
+methodology, the issue, a **stage** — `draft → proposed → approved → planned →
+in-progress → delivered → accepted`, or `rejected`, `cancelled`, `superseded` —
+its members (`req:` references, each with its own decision), its work plan
+(bean ids) and its sign-offs. Commit it beside the proposal as
+`<slug>.requirement-set.json`, or as a `requirementSet:` key in the proposal's
+front matter; `check:requirements` judges it.
+
+The set's stage and each member's `status` are **independent** — a requirement
+outlives the document that proposed it — with one link enforced: a set is
+`accepted` only when every member it approved is `in-force`. The stage moves
+only through a sign-off (Phase 5's `BA_Signoff`, close-out's `BA_Confirm`),
+and `check:requirements` refuses `approved`/`accepted` without a human
+sign-off, `planned` without beans, and `cancelled` without a reason.
 
 ## Grouping requirements
 
@@ -83,12 +112,16 @@ Format as a markdown checklist:
 
 ### Must-have
 
-- [ ] **REQ-001** — Beans filtered by epic type
-  - _Acceptance:_ Given an epic, when `beans list --type epic`, then only epics appear
+- [ ] **REQ-001** (SHALL) — Beans filtered by epic type
+  - _Source:_ needs statement §2
+  - _Acceptance:_ `SC-1` (test) — Given an epic, when `beans list --type epic`, then only epics appear
+  - _Sign-off owner:_ the BA
   - _Scope:_ 1 bean, 1 PR
 
-- [ ] **REQ-002** — Release lifecycle skill
-  - _Acceptance:_ Skill exists at `cat-harness/skills/process/workflow/release-lifecycle.md`
+- [ ] **REQ-002** (SHALL) — Release lifecycle skill
+  - _Source:_ needs statement §3
+  - _Acceptance:_ `SC-1` (inspection) — Skill exists at `cat-harness/skills/process/workflow/release-lifecycle.md`
+  - _Sign-off owner:_ the BA
   - _Scope:_ 1 bean, 1 PR
 
 ### Should-have
@@ -114,7 +147,7 @@ Requirement (Phase 3)
     ↓ "Impact" field
 Impact assessment (Phase 4)
     ↓ bean reference
-Bean (Phase 5)
+Bean (Phase 5) — names its REQ / req: statements; `## Done when` copied from their acceptance criteria
     ↓ PR link
 PR (Phase 6)
 ```

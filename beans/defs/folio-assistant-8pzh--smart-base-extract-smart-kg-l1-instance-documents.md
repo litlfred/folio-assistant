@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T06:16:07Z
-updated_at: 2026-10-06T08:27:17Z
+updated_at: 2026-10-07T11:04:33Z
 parent: folio-assistant-qvxh
 ---
 
@@ -26,3 +26,5 @@ Owner 2026-10-02: 'keep going' after the storage question went unanswered, so th
 - Item 1 still open: the location was taken by the stated default after the question went unanswered, not decided by the owner.
 - Item 3 still open: nothing records that T3 fidelity is pending a person. The output carries no T3 field, and the extractor has no T3 mention.
 - 1 of 12 `smart-base/library/` entries extracted (12 directories with a `manifest.jsonld`; an earlier report said 14, which was wrong).
+
+2026-10-07 finding (issue #2405, litlfred/test#2): the label-based extractor (`smart-base/scripts/extract-smart-kg-l1.ts`) finds a recommendation only by a printed label ("Recommendation 8:"). WHO vaccine **position papers print no such labels**, so on WER 92(17) (measles, 2017) it finds **0** recommendations. litlfred/test#2 kept the authored L1 YAML for that paper and deferred extractor parity (its REQ-06, SC-06.1/06.2). A generic check that catches this class of miss, by reading the source rather than the labels, now exists in folio-assistant-core: `bun run l1:coverage` (`folio-assistant-core/scripts/l1-coverage.ts`, skill `l1-coverage`). It counts every normative sentence per page and reports captured % and accounted-for %.
