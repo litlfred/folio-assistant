@@ -55,6 +55,7 @@ import { z } from "zod";
 
 import { mountTrust } from "../schemas/mount-trust.js";
 import { checkoutRootFor, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
+import { readDeclaredMounts } from "../schemas/index-config.js";
 import {
   MOUNT_LOCK_SCHEMA,
   MountDefaultsSchema,
@@ -205,7 +206,9 @@ function downstreamOf(opts: RemoteMountOptions): { instanceRoot: string; name: s
   const instanceRoot = resolve(opts.instanceRoot ?? checkoutRootFor(process.cwd()));
   const decl = readDeclaration(instanceRoot);
   if (!decl) throw new Error(`${instanceRoot} holds no instance declaration`);
-  return { instanceRoot, name: decl.name, mounts: decl.remoteMounts ?? [] };
+  // `index.config.json` when the checkout has one, else the declaration's
+  // `remoteMounts` — and BOTH is an error, never a pick (schemas/index-config.ts).
+  return { instanceRoot, name: decl.name, mounts: readDeclaredMounts(instanceRoot).mounts };
 }
 
 /**
@@ -662,13 +665,13 @@ export function reportOutcomes(title: string, state: CheckResult["state"], reaso
 
 // ── Every declaring instance in a checkout (the session-start fan-out) ───────
 
-/** The instances in `checkout` that declare `remoteMounts`. An unreadable declaration is reported, not skipped. */
+/** The instances in `checkout` that declare remote mounts (index or `remoteMounts`). An unreadable declaration or index is reported, not skipped. */
 export function declaringInstances(checkout: string): { roots: string[]; unreadable: Array<{ root: string; why: string }> } {
   const roots: string[] = [];
   const unreadable: Array<{ root: string; why: string }> = [];
   for (const root of instanceRootsIn(checkout)) {
     try {
-      if ((readDeclaration(root)?.remoteMounts ?? []).length > 0) roots.push(root);
+      if (readDeclaredMounts(root).mounts.length > 0) roots.push(root);
     } catch (e) {
       unreadable.push({ root, why: (e as Error).message.split("\n")[0]! });
     }

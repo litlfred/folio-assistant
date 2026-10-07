@@ -290,3 +290,60 @@ function insideGitCheckout(dir: string): boolean {
     if (dirname(d) === d) return false;
   }
 }
+
+// ── The instantiation root's CONFIG files, scanned once ──────────────────────
+
+/**
+ * The retired global config name. Not an instance called `harness`; kept so
+ * `check:instance-config` can FIND it, never so a reader can fall back to it.
+ * Defined here (a leaf) and re-exported by `schemas/harness-config.ts`, which
+ * is where every existing importer looks for it.
+ */
+export const LEGACY_HARNESS_CONFIG = "harness.config.json";
+
+/**
+ * `index.config.json` — the instantiation root's INDEX: which harnesses this
+ * checkout instantiates, where each comes from, and which one the site lands
+ * on (`schemas/index-config.ts`, `folio-index-config/v1`).
+ *
+ * It ends in {@link CONFIG_SUFFIX}, so every scan that read "each root
+ * `*.config.json` is a harness" would have read it as a harness called
+ * `index`. That is why the name is RESERVED ({@link RESERVED_INSTANCE_NAMES})
+ * and why the scan below is the one place the suffix is matched.
+ */
+export const INDEX_CONFIG_FILENAME = "index.config.json";
+
+/**
+ * Instance names no harness may take, because a file the platform owns
+ * already spells `<name>.config.json` with them. `index` is the root index.
+ */
+export const RESERVED_INSTANCE_NAMES: readonly string[] = ["index"];
+
+/**
+ * Every `<name>.config.json` directly in `root`, as its stem, sorted — the
+ * retired {@link LEGACY_HARNESS_CONFIG} and the reserved
+ * {@link INDEX_CONFIG_FILENAME} excluded. `[]` when `root` cannot be read.
+ *
+ * THE ONE SCAN. Five scripts each re-implemented it with `readdirSync` and a
+ * suffix test (`check-avatar-instances`, `check-folio-mount`,
+ * `check-instance-config`, `scan-repo-content`, `build-folio-site`), one of
+ * them without the legacy exclusion, and none could have known about the
+ * reserved `index`. A sixth copy is how the reserved name leaks back in.
+ *
+ * This is the FILE set, which is not always the INSTANTIATED set: when the
+ * root carries `index.config.json` that file is authoritative, and
+ * `instantiatedHarnessNames` in `schemas/harness-config.ts` is the answer.
+ */
+export function rootConfigStems(root: string): string[] {
+  let entries: string[];
+  try {
+    entries = readdirSync(root);
+  } catch {
+    return [];
+  }
+  return entries
+    .filter((f) => f.endsWith(CONFIG_SUFFIX) && f !== LEGACY_HARNESS_CONFIG && f !== INDEX_CONFIG_FILENAME)
+    .map((f) => f.slice(0, -CONFIG_SUFFIX.length))
+    .filter((n) => n.length > 0 && !RESERVED_INSTANCE_NAMES.includes(n))
+    .sort();
+}
