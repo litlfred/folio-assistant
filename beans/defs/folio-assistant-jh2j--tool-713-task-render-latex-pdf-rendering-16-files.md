@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jh2j
 title: 'TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:34:56Z
-updated_at: 2026-09-26T03:34:32Z
+updated_at: 2026-10-08T01:42:00Z
 parent: folio-assistant-d308
 ---
 
@@ -51,8 +51,8 @@ second checklist is free to disagree with the first and this one did.
 - [x] `requires` honest — `chromium` on the Playwright one, `bun` on the others;
       `--compile` notes that pdflatex is NOT claimed by the base `requires`
 - [x] `tool-coverage` reflects it — `rendered-verification` left the uncovered list
-- [ ] **the exit-2 contract across the family** — owner's call, Finding 1
-- [ ] **a skill for compiling, or `latexmk-compile.sh` recorded as unsatisfiable** — owner's call, Finding 2
+- [x] **the exit-2 contract across the family** — owner's call, Finding 1
+- [x] **a skill for compiling, or `latexmk-compile.sh` recorded as unsatisfiable** — owner's call, Finding 2
 
 ---
 

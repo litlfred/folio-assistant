@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 365,
+      "count": 360,
       "unit": "open beans"
     }
   },
@@ -493,14 +493,14 @@
     {
       "id": "folio-assistant-14ve",
       "title": "REGEN NOT A FIXPOINT: bun run cat regen asks each check once, so a check asked before its input's writer runs reports current and stays stale",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T23:42:28Z",
-      "updatedAt": "2026-09-30T21:25:46Z",
+      "updatedAt": "2026-10-08T01:42:00Z",
       "preview": "Measured 2026-09-29 on claude/sharp-einstein-970n6g (PR #1511), after merging main:\n\n- `bun run cat regen` pass 1: \"58 current, 4 regenerated, 0 unrepaired\", exit 0.\n- `navbar:include:check` still failed, and so did `gen-navbar-include.test.ts` (\"the writer is a fixpoint over the real data\").\n- Cause: the navbar include is generated from `cat-harness/docs/_data/harness.json`, which `docs:harness` ",
       "file": "beans/defs/folio-assistant-14ve--regen-not-a-fixpoint-bun-run-regen-asks-each-check.md"
     },
@@ -7890,14 +7890,14 @@
     {
       "id": "folio-assistant-jh2j",
       "title": "TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:34:56Z",
-      "updatedAt": "2026-09-26T03:34:32Z",
+      "updatedAt": "2026-10-08T01:42:00Z",
       "preview": "Group 7 of 13 in `d308`. **16 files, 3 entry points.**\n\n`render-latex`, `generate-block-tex`, `generate-main-tex`, `latex-preflight`,\n`latex-overfull-report`, `audit-tex-source`, `validate-tex`, `latexmk-compile`,\n`render-changed-blocks`, `render-on-change`, `render-pre-commit`,\n`render-discovery`, `render-value`, `headless-render-qc`, `refresh-authors-note`,\n`scripts/render-tex/`.\n\n**BPMN:** `aut",
       "file": "beans/defs/folio-assistant-jh2j--tool-713-task-render-latex-pdf-rendering-16-files.md"
     },
@@ -8945,15 +8945,15 @@
     {
       "id": "folio-assistant-mcsm",
       "title": "Voice docs pages + WHO library ingestion: per-voice documentation, PDF extraction, JSON-LD graph (issue #208 follow-up)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T15:35:23Z",
-      "updatedAt": "2026-10-06T18:26:10Z",
-      "preview": "_2026-10-06_ — recovered from the stray root `.beans/` directory (leftover of the 2026-09-18 `.beans` -> `beans` rename), where the bean tooling could not see it; parented under the INGEST epic. Its work (voice docs pages, WHO library ingestion, issue #208 follow-up) needs re-checking against what has since landed before it is worked or closed.",
+      "updatedAt": "2026-10-08T01:42:00Z",
+      "preview": "_2026-10-06_ — recovered from the stray root `.beans/` directory (leftover of the 2026-09-18 `.beans` -> `beans` rename), where the bean tooling could not see it; parented under the INGEST epic. Its work (voice docs pages, WHO library ingestion, issue #208 follow-up) needs re-checking against what has since landed before it is worked or closed.\n\n*2026-10-08* — Completed. All deliverables landed on",
       "file": "beans/defs/folio-assistant-mcsm--voice-docs-pages-who-library-ingestion-per-voice-d.md"
     },
     {
@@ -9673,14 +9673,14 @@
     {
       "id": "folio-assistant-ojai",
       "title": "INGEST: the first link — a Task, a skill, Tools and a generated page for how a file REACHES uploads/",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T00:00:23Z",
-      "updatedAt": "2026-09-30T00:00:34Z",
+      "updatedAt": "2026-10-08T01:42:00Z",
       "preview": "Owner, 2026-09-29: *\"generate documentation from Tool documentation of the\nupload Task/Skill as first step of document ingestion process.\"*\n\n## Brief — what, why, what is known, how, what would falsify it\n\n**What.** Build the chain the owner asked for, whose first link is missing.\nThere is no Task, no skill and no Tool for the act of *putting a file into\n`uploads/`*, so there is nothing for a gene",
       "file": "beans/defs/folio-assistant-ojai--ingest-the-first-link-a-task-a-skill-tools-and-a-g.md"
     },
@@ -9848,14 +9848,14 @@
     {
       "id": "folio-assistant-ozwb",
       "title": "Mount pass claims /smart-trust/ for openapi and rails the IG site (#2401)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T07:34:06Z",
-      "updatedAt": "2026-10-07T08:05:31Z",
+      "updatedAt": "2026-10-08T01:42:00Z",
       "preview": "An igSite instance root is skipped by mountable(), so withRoutes hands /<instance>/ to the next renderable kind (smart-trust: openapi). The mount then copies openapi over the IG site and rails every IG page, adding navbar.css (body padding-left 56px, .fa-nav-* rules) on top of the Jekyll side-bar. Fix: withRoutes takes rootTaken = igSiteRoots(). Issue #2401.\n\n## Done when\n- [x] root cause measured",
       "file": "beans/defs/folio-assistant-ozwb--mount-pass-claims-smart-trust-for-openapi-and-rail.md"
     },
@@ -15703,13 +15703,13 @@
         "status": "todo",
         "epics": 2,
         "total": 71,
-        "closed": 40,
-        "open": 31,
-        "inProgress": 14,
+        "closed": 42,
+        "open": 29,
+        "inProgress": 12,
         "todo": 17,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.5633802816901409
+        "share": 0.5915492957746479
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15733,13 +15733,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 589,
-        "closed": 376,
-        "open": 213,
-        "inProgress": 64,
+        "closed": 378,
+        "open": 211,
+        "inProgress": 62,
         "todo": 148,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.6383701188455009
+        "share": 0.6417657045840407
       },
       {
         "id": "folio-assistant-vuip",
@@ -15748,13 +15748,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 280,
-        "closed": 167,
-        "open": 113,
-        "inProgress": 55,
+        "closed": 168,
+        "open": 112,
+        "inProgress": 54,
         "todo": 57,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.5964285714285714
+        "share": 0.6
       },
       {
         "id": "folio-assistant-yg29",
@@ -15773,8 +15773,8 @@
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 365,
-    "coveredOpen": 357,
+    "openTotal": 360,
+    "coveredOpen": 352,
     "duplicateIds": 0
   }
 }
