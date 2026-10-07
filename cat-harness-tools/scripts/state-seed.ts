@@ -122,7 +122,7 @@
 import { spawnSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { resolveDirectories, type ResolvedDirectory } from "../../cat-harness/schemas/cat-harness.ts";
 import { FROZEN_SUBTREE_KIND, FSH_GUTS_KIND, FSH_GUTS_SCHEMA_ID } from "../../cat-harness/schemas/fsh-guts.ts";
@@ -1032,7 +1032,29 @@ export function retireInstance(path: string, opts: RetireOptions): RetireResult 
   }
   const head = git(["rev-parse", "HEAD"]).stdout.trim();
   const at = git(["log", "-1", "--format=%ct", head]).stdout.trim();
-  const archived = spawnSync("git", ["archive", "--format=tar.gz", `--mtime=@${at || "0"}`, head, "--", ...all], {
+  // Archive a tree holding ONLY the leaving paths, not `head` itself: `git
+  // archive` applies the archived tree's `.gitattributes`, and the root's
+  // `eol=crlf` on `*.bat` rewrote every Windows wrapper, so the snapshot of
+  // folio-assistant-sci/ extracted to a tree HEAD never held. A temporary
+  // index keeps the real one untouched.
+  const index = join(mkdtempSync(join(tmpdir(), "separation-index-")), "index");
+  const env = { ...process.env, GIT_INDEX_FILE: index };
+  const gi = (args: string[]) => spawnSync("git", args, { cwd: repoRoot, encoding: "utf-8", env });
+  let only = "";
+  try {
+    if (gi(["read-tree", "--empty"]).status !== 0) return { state: "unknown", reason: "git read-tree --empty failed" };
+    // `ls-tree -r` rows are `--index-info` input as they stand, for a file
+    // (an `--also` path) and a directory alike.
+    const rows = gi(["ls-tree", "-r", "-z", head, "--", ...all]);
+    if (rows.status !== 0) return { state: "unknown", reason: `git ls-tree of ${all.join(", ")} failed: ${rows.stderr.trim()}` };
+    const r = spawnSync("git", ["update-index", "-z", "--index-info"], { cwd: repoRoot, encoding: "utf-8", env, input: rows.stdout });
+    if (r.status !== 0) return { state: "unknown", reason: `git update-index of ${all.join(", ")} failed: ${r.stderr.trim()}` };
+    only = gi(["write-tree"]).stdout.trim();
+  } finally {
+    rmSync(dirname(index), { recursive: true, force: true });
+  }
+  if (!only) return { state: "unknown", reason: `could not write a tree of ${all.join(", ")}` };
+  const archived = spawnSync("git", ["archive", "--format=tar.gz", `--mtime=@${at || "0"}`, only], {
     cwd: repoRoot,
     maxBuffer: 1024 * 1024 * 1024,
   });

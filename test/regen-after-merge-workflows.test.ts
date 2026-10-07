@@ -22,6 +22,7 @@ import {
   WRITER_OVERRIDES,
   repairableGates,
   scriptOf,
+  writerFor,
 } from "../cat-harness/scripts/regen-after-merge.ts";
 import { loadGates } from "../cat-harness/scripts/gates.ts";
 import { repoRootFor } from "../cat-harness/schemas/cat-harness.ts";
@@ -44,6 +45,13 @@ describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", ()
       expect(pairs.find((p) => p.check === gate)?.writer).toBe("audit:coverage");
     }
   });
+
+  // Moved from `cat-harness/scripts/tests/regen-after-merge.test.ts`: the
+  // overrides name writers declared by layers above cat-harness, so only the
+  // whole checkout's script table can answer it.
+  test("every override names a writer that exists — a renamed writer is a finding, not a guess", () => {
+    for (const w of Object.values(WRITER_OVERRIDES)) expect(SCRIPTS[w]).toBeDefined();
+  });
 });
 
 describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () => {
@@ -65,6 +73,18 @@ describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () =>
       if (!cmd.endsWith(" --check")) continue;
       if (!byCmd.has(cmd.slice(0, -" --check".length).trim())) continue;
       expect(WRITER_OVERRIDES[c] !== undefined || NO_WRITER[c] !== undefined, `${c} is undecided`).toBe(true);
+    }
+  });
+
+  // Moved from `cat-harness/scripts/tests/regen-after-merge.test.ts`, for the
+  // same reason: the recorded non-writers are scripts declared above cat-harness.
+  test("the recorded non-writers are real scripts, and none is also paired", () => {
+    for (const check of Object.keys(NO_WRITER)) {
+      expect(SCRIPTS[check]).toBeDefined();
+      expect(WRITER_OVERRIDES[check]).toBeUndefined();
+      // Not guessed from the name either: `check:subgraphs` has a `subgraphs`
+      // script, and it only reports.
+      expect(writerFor(SCRIPTS, check)).toBeUndefined();
     }
   });
 });

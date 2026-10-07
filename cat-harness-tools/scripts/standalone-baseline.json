@@ -2,16 +2,10 @@
   "_comment": "Tests that fail when a layer runs alone beside its declared closure (bean `ho66`), keyed `<test file> > <test>`, with `bun test`'s own fail count, which also counts errors between tests. A RATCHET: a failure not listed here is red; a listed one that now passes is reported, with this command, so the list only goes down. WRITTEN by `bun run cat standalone:baseline`; a longer list is a diff somebody reviews. See the module header of cat-harness-tools/scripts/check-standalone.ts.",
   "layers": {
     "cat-harness": {
-      "failed": 23,
+      "failed": 17,
       "failing": [
         "scripts/tests/check-environment.test.ts > this repository, right now > is not distorted — otherwise `bun run cat gates` refuses for everyone",
-        "scripts/tests/detect-live-corpus.test.ts > derivedWriters — no roster > it derives a non-trivial set from THIS repository",
-        "scripts/tests/gates.test.ts > every check script is accounted for — the direction nothing asked > every script exemption still names a script that EXISTS",
-        "scripts/tests/kg-export-sidecars.test.ts > kg-export sidecar subjects are DERIVED from what is committed (bean `v556`) > the real tree: the host, plus every committed foreign sidecar, and no orphan",
-        "scripts/tests/memory-refs.test.ts > memory entries name roles and agents that exist > every agent reference is a declared subagent",
-        "scripts/tests/regen-after-merge.test.ts > a `check:X` gate is paired only by DECLARATION — bean `uju6` > the recorded non-writers are real scripts, and none is also paired",
-        "scripts/tests/regen-after-merge.test.ts > a writer that is not <check minus :check> is DECLARED (bean eowd) > every override names a writer that exists — a renamed writer is a finding, not a guess",
-        "scripts/tests/task-pool.test.ts > task-io declarations > every declared script exists in package.json"
+        "scripts/tests/kg-export-sidecars.test.ts > kg-export sidecar subjects are DERIVED from what is committed (bean `v556`) > the real tree: the host, plus every committed foreign sidecar, and no orphan"
       ]
     }
   }
