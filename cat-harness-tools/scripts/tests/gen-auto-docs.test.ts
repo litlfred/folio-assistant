@@ -214,9 +214,14 @@ describe("a THEMED page, so the layout gives it the top band (2026-10-07)", () =
     expect(fm).not.toContain("{%");
     const body = html.slice(fm.length);
     expect(body.indexOf("{% raw %}")).toBeGreaterThan(-1);
-    // Exactly one endraw — the closing one, at the end. The artefact's own
-    // could otherwise end the raw block early and expose the rest to Liquid.
-    expect(body.match(/\{%-?\s*endraw/g)).toEqual(["{% endraw"]);
+    // The artefact's own endraw could end the raw block early and expose the
+    // rest to Liquid. `escapeForRaw` (lib/liquid-raw.ts) closes the block,
+    // emits the brace through Liquid and reopens it — so once those escape
+    // sequences are taken out, the only endraw left is the closing one.
+    const ESC = '{% endraw %}{{ "{" }}{% raw %}%';
+    const unescaped = body.split(ESC).join("{%");
+    expect(body.split(ESC).length - 1).toBe(2);
+    expect(unescaped.match(/\{%-?\s*endraw/g)).toEqual(["{% endraw", "{%- endraw", "{% endraw"]);
     expect(body.trimEnd().endsWith("{% endraw %}")).toBe(true);
   });
 

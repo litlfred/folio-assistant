@@ -5,7 +5,7 @@
  * Each was a standalone document with its own palette; themed, it styles only
  * inside its wrapper and takes its ground and ink from the theme, so the
  * question is whether its own hues still read against the theme's dark ground
- * and its light one. Served in the layout stand-in (`themed-stand-in.ts`) at
+ * and its light one. Served in the layout stand-in (`support/themed-page.ts`) at
  * the page's real path, so its projection is fetched from the server exactly
  * as on the site.
  *
@@ -16,7 +16,7 @@ import { AxeBuilder } from "@axe-core/playwright";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { serveThemed, THEME_LINK, type Scheme } from "./themed-stand-in.ts";
+import { serveThemedAt, THEME_LINK, type Scheme } from "./support/themed-page.ts";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const DOCS = "/cat-harness/docs";
@@ -37,7 +37,7 @@ for (const pg of PAGES) {
     test(`${pg.name} renders and is WCAG A/AA clean on the ${scheme} ground`, async ({ page }) => {
       const errors: string[] = [];
       page.on("pageerror", (e) => errors.push(String(e)));
-      await serveThemed(page, REPO, pg.path, scheme);
+      await serveThemedAt(page, REPO, pg.path, scheme);
       await page.goto(pg.path);
       const ready = page.locator(pg.ready).first();
       await expect(ready).toBeVisible();

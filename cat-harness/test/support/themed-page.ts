@@ -27,6 +27,8 @@ import { join, resolve, sep } from "node:path";
 
 import type { Page } from "@playwright/test";
 
+import { themedBody } from "../../scripts/lib/themed-page.ts";
+
 /**
  * The theme's ground and body ink in each scheme — the ground as
  * head_custom.html's first-paint block paints it. The LINK ink follows
@@ -58,11 +60,9 @@ export function parseThemed(text: string): ThemedPage | undefined {
     const v = kv[2]!.trim();
     frontMatter[kv[1]!] = v.startsWith('"') ? (JSON.parse(v) as string) : v;
   }
-  const body = text
-    .slice(m[0].length)
-    .replace(/\{%-?\s*raw\s*-?%\}\n?/g, "")
-    .replace(/\{%-?\s*endraw\s*-?%\}\n?/g, "");
-  return { frontMatter, body };
+  // What Liquid would render: the outer raw block unwrapped, and any endraw
+  // the body carries (escaped by `escapeForRaw`) restored.
+  return { frontMatter, body: themedBody(text) };
 }
 
 const esc = (s: string): string =>
@@ -104,4 +104,36 @@ export async function serveThemed(
     if (!themed) return route.fallback();
     return route.fulfill({ status: 200, contentType: "text/html; charset=utf-8", body: layoutStandIn(themed, o) });
   });
+}
+
+/**
+ * The THEME's own link colour in each scheme, as axe reports a foreground —
+ * as opposed to {@link THEME}'s dark link, the stand-in's choice. #2c84fa on
+ * #27262b measures 4.13:1, under AA for body text, on every page of the site;
+ * a spec that serves the theme's real colour sets aside exactly that
+ * foreground on links, so anything a page does to a link is still reported.
+ */
+export const THEME_LINK: Record<Scheme, string> = { dark: "#2c84fa", light: "#7253ed" };
+
+/** The stand-in document around a themed page, with the THEME's real link colour. */
+export function themedShell(page: string, scheme: Scheme = "dark", title = "Themed page"): string {
+  const t = THEME[scheme];
+  return `<!doctype html><html lang="en" data-fa-scheme="${scheme}"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(title)}</title>
+<style>html,body{background:${t.ground};color:${t.ink}}a{color:${THEME_LINK[scheme]}}body{margin:0;font:16px/1.5 system-ui,sans-serif}
+.main-content{max-width:50rem;margin:0 auto;padding:1rem}</style></head><body>
+<main class="main-content" id="main-content">
+${themedBody(page)}
+</main></body></html>`;
+}
+
+/**
+ * Serve ONE committed page at `urlPath` (repository-relative, as
+ * `test-server.mjs` serves it) in {@link themedShell}, and leave every other
+ * request to the server. Call before `page.goto(urlPath)`.
+ */
+export async function serveThemedAt(p: Page, repoRoot: string, urlPath: string, scheme: Scheme = "dark"): Promise<void> {
+  const file = join(repoRoot, urlPath.replace(/^\//, "").replace(/\/$/, "/index.html"));
+  const body = themedShell(readFileSync(file, "utf8"), scheme);
+  await p.route((url) => url.pathname === urlPath, (route) => route.fulfill({ contentType: "text/html", body }));
 }

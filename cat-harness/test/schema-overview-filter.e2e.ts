@@ -37,7 +37,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { serveThemed } from "./themed-stand-in.ts";
+import { serveThemedAt } from "./support/themed-page.ts";
 
 /** Served from the repository root by `test-server.mjs`. */
 const PAGE = "/cat-harness/docs/cat-harness/schemas/index.html";
@@ -48,7 +48,7 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 // served in a stand-in for the site's layout, at its real path, and the
 // projection it fetches still comes from the server.
 test.beforeEach(async ({ page }) => {
-  await serveThemed(page, REPO, PAGE);
+  await serveThemedAt(page, REPO, PAGE);
 });
 
 /** The caption is the panel's own report; every count below is read from it. */
