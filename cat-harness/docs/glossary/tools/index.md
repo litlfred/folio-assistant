@@ -12,9 +12,9 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 129 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 130 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 6 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 171 terms and is 124 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 171 terms and is 123 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -41,6 +41,13 @@ A paper's block graph as UML <span class="fa-gloss-status">candidate, extracted<
 <dd>
 <p>Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#content-graph-uml</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--agent-memory" data-fa-state="extracted" data-fa-gloss="">
+Agent memory assembler <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Assemble every declared <code>memory</code> directory's nodes into each agent's memory, per vendor: Claude Code's <code>.claude/agent-memory/&lt;agent&gt;/MEMORY.md</code> (a marked region, injected when the subagent starts) and Antigravity's workspace skill <code>.agents/skills/&lt;agent&gt;-memory/SKILL.md</code>. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under <code>31ni</code> and not generated.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#agent-memory</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--vocab-map" data-fa-state="extracted" data-fa-gloss="">
 Apply a vocabulary mapping table <span class="fa-gloss-status">candidate, extracted</span>
@@ -80,13 +87,6 @@ beans, by hand <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Read and write the same work plan without the CLI — <code>scripts/beans-fallback.ts</code>, or editing a bean's front matter directly. Equal standing to the CLI, not a degraded mode.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#beans-manual</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-tools--block-actions" data-fa-state="extracted" data-fa-gloss="">
-Block edit and feedback links <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on <code>main</code>, and [feedback] opens a new GitHub issue about the block, from the folio's <code>.github/ISSUE_TEMPLATE/block-feedback.yml</code> when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the <code>block-actions</code> skill (bean <code>uphx</code>, REQ-17).</p>
-<p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#block-actions</code></a></p>
 </dd>
 <dt id="smart-base--kg-tools--bpmn-to-fsh" data-fa-state="extracted" data-fa-gloss="">
 BPMN → FHIR Shorthand <span class="fa-gloss-status">candidate, extracted</span>

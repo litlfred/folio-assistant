@@ -237,6 +237,14 @@
       "graphTypologies": [
         "qa"
       ]
+    },
+    {
+      "id": "memory",
+      "path": "memory/",
+      "description": "Agent memory about content authoring, review and publication: lessons (block kinds, the document render path, normative statements, locale directories) an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each. Read by cat-harness's `agent-memory` assembler alongside every other instance's declared `memory` directory. Split from the repository root's `memory/` on the owner's ruling of 2026-10-06 (bean `ar1s`).",
+      "graphTypologies": [
+        "memory"
+      ]
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first. `cat-harness-tools` added 2026-10-01 on owner ruling C1 (epic 7x5n, bean rmi6): the tool implementation layer sits BELOW this one, so core may use it and it may never use core.",
