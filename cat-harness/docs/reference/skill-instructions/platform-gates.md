@@ -382,6 +382,6 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Run the platform's own gates |
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Import hygiene (HARD) and advisories (WARN-ONLY); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Repository gates (HARD); Registered gates that never run (HARD); Skill-registration chain (UNMASKED) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Verdict reuse: tree already green? (NOT A GATE); Import hygiene (HARD) and advisories (WARN-ONLY); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Repository gates (HARD); Registered gates that never run (HARD); Skill-registration chain (UNMASKED) |
 | [A merge train](../../processes/merge-train.html) | Run the gate set on the train (calls a sub-process) |
 
