@@ -5,7 +5,7 @@ import { describe, expect, test, beforeAll } from 'bun:test';
 import path from 'node:path';
 import fs from 'node:fs';
 import { buildIrisDataset, GRAPH_IRIS_CATALOGUE, GRAPH_IRIS_METADATA } from '../build-iris-oxigraph.ts';
-import { IrisOxigraphEngine } from '../iris-oxigraph-search.ts';
+import { IrisOxigraphEngine, bound, selectRows } from '../iris-oxigraph-search.ts';
 
 const TMP_DIST = path.resolve(import.meta.dir, '..', '..', 'dist', 'oxigraph');
 
@@ -134,10 +134,10 @@ describe('WHO-IRIS Oxigraph Multi-Graph MVP', () => {
     const queries = JSON.parse(fs.readFileSync(path.join(TMP_DIST, 'queries.json'), 'utf8'));
     const sparql = queries.discoverySearch.sparql;
 
-    const rows = Array.from(engine.store.query(sparql));
+    const rows = selectRows(engine.store, sparql);
     expect(rows.length).toBeGreaterThan(0);
 
-    const handles = rows.map(r => r.get('handle').value);
+    const handles = rows.map(r => bound(r, 'handle'));
     expect(handles).toContain('https://hdl.handle.net/10665/332098');
   });
 
@@ -235,7 +235,7 @@ describe('WHO-IRIS Oxigraph Multi-Graph MVP', () => {
     expect(fs.existsSync(path.join(TMP_DIST, manifest.tiers.tier1_spine.fileGz))).toBe(true);
 
     const partitions = manifest.tiers.tier2_communities.partitions;
-    for (const p of Object.values(partitions) as any[]) {
+    for (const p of Object.values(partitions) as { quadCount: number; itemCount: number; fileNq: string; fileGz: string }[]) {
       expect(p.quadCount).toBeGreaterThan(0);
       expect(p.itemCount).toBeGreaterThan(0);
       expect(fs.existsSync(path.join(TMP_DIST, p.fileNq))).toBe(true);
