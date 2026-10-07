@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-core/skills/library/ingestion/document-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/document-intake.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/document-intake.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/document-intake.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-core/skills/library/ingestion/document-intake.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Document Intake
@@ -213,7 +213,7 @@ the corpus-grep checklist reads.
 
 | script | writes | notes |
 |---|---|---|
-| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline or inferred from heading patterns, per-section text split. The page-1 guess is **never** the entry's title: [`l1-document-ingestion`](l1-document-ingestion.md) §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
+| [`cat-harness/scripts/pdf-structure.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (a page-1 title GUESS, authors, arXiv/DOI from the page-1 stamp, and the PDF Info dictionary as `docinfo`), TOC from the PDF outline, or else inferred from the layout (see the note below), per-section text split. The page-1 guess is **never** the entry's title: [`l1-document-ingestion`](l1-document-ingestion.md) §"A manifest's title" gives the order (catalogue record → `referenced.json` → PDF `/Title` → slug) |
 | [`cat-harness/scripts/pdf-ocr.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
 | [`cat-harness/scripts/extract-candidates.py`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
 
@@ -243,6 +243,34 @@ someone time:
   falls back to `pypdf`; the Dockerfile ships `pypdf` only, deliberately, so the
   image stays BSD-licensed against PyMuPDF's AGPL. Check with
   `python3 cat-harness/scripts/pdf-ocr.py --check`.
+* **With no outline, the TOC is inferred from the LAYOUT, and the artefact
+  says how.** `diagnostics.toc_inferred_method` is `contents` (a printed
+  contents page, its page labels moved to physical pages by finding the titles
+  in the body), `font` (lines set in a heading style: larger, bold, capitals or
+  italic, numbered or not) or `regex` (text patterns — the last resort, used
+  for OCR'd text, which has no fonts). Weight a `regex` TOC lowest. Each
+  inferred entry also carries `confidence` (0..1) and `evidence` — which
+  independent checks agreed: listed on the contents page, found in the body
+  near the page it names, set in a heading style, numbered. Trust the high
+  ones; look at the flagged ones before citing them. Measured over the 13
+  corpus PDFs that carry an outline, hidden and used as the answer key: title
+  F1 0.83 for this consensus on 20 held-out PDFs (0.92 on the development set) against 0.26 for text patterns alone (issue
+  #2302). The same artefact carries `figures` — the list of figures and
+  tables, each caption with `confidence` and `evidence` (cited in the text,
+  in its numbering run, a graphic on its page) — with numbering gaps in
+  `diagnostics.figure_sequence_gaps`; and, when the document has a printed
+  contents page, `diagnostics.toc_alignment`: entries the body no longer
+  carries, numbered sections the contents omits, and page mismatches. On a
+  draft, read these as findings about the document. Every page also has a
+  printed label: `pages[]` (physical index, the label a reader sees, which
+  sources agreed), `page_label` on TOC entries and figures, and
+  `label_start`/`label_end` on sections. **Cite the label, not the physical
+  index**; `diagnostics.page_label_conflicts` lists pages where the PDF's
+  own labels disagree with what is printed. Before changing `cat-harness/scripts/_pdf_headings.py`,
+  run `python3 cat-harness/scripts/toc-benchmark.py` before and after: a rule
+  that fixes one document and costs two is visible only there. The numbers,
+  the methods compared and what could not be run are in
+  `cat-harness/docs/research-and-analysis/toc-extraction.md`.
 
 #### For academic papers:
 Same as paper-importer Phase 2 — detect theorem/definition/lemma

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/library/library-core/content-acquisition.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/content-acquisition.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/content-acquisition.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/content-acquisition.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/library/library-core/content-acquisition.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Acquisition is the step before ingestion, and it had no home

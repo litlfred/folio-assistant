@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/ci-health.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/ci-health.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/ci-health.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/ci-health.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/ci-health.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # CI health — a red workflow looks exactly like a green one from in here
@@ -214,6 +214,7 @@ one cancelled.
 
 | process | step(s) that name it |
 |---|---|
+| [Remote-mount a dependency](../../processes/mount-dependency.html) | Check disk against lock against declaration |
 | [Is CI actually working on the default branch?](../../processes/ci-health-watch.html) | Run check:ci-health, WRITING the report file; Ensure the tracking label exists; Close the tracking issue; Open or EDIT the one tracking issue |
 | [Code change and review](../../processes/code-change-review.html) | Root-cause the failure |
 | [Merge the base branch in](../../processes/merge-base.html) | Report what the run found, once |

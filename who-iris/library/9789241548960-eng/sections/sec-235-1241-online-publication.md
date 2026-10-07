@@ -7,6 +7,7 @@ section_number: 12.4.1
 pages: 173-174
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Your guideline can appear on the Internet in a variety of formats. At a minimum, you should contract your designer or typesetter to produce a web-
 ready portable document format (PDF) – a smaller file size than the PDFs 

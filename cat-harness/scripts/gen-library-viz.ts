@@ -56,6 +56,8 @@ import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
 } from "./library-graph.ts";
 import { tally } from "./summaries.ts";
 import { WITHHELD_VIEW_JS } from "./lib/library-withheld-view.ts";
+import { DOCUMENT_VIEW_JS, readEntryDocument } from "./lib/library-document.ts";
+import { EDIT_LINKS_RUNTIME } from "../src/core/edit-links.ts";
 import { ADDRESS_JS } from "./lib/library-address.ts";
 import { LIBRARY_JSONLD_SITE_DIR, libraryAssetSitePath } from "../schemas/library-iri.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
@@ -76,6 +78,11 @@ const VIEWER_TOOL = "library-viewer";
 const ROOT = join(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(ROOT);
 const check = process.argv.includes("--check");
+/** The GitHub repository the entries' source and feedback links point into. */
+const LINK_REPO = (() => {
+  const d = readDeclaration(ROOT) as { livesAt?: { repository?: string }; repository?: string } | undefined;
+  return d?.livesAt?.repository ?? d?.repository;
+})();
 
 /** The projection. Everything the reader found; it is already small. */
 function projection(
@@ -141,6 +148,24 @@ function projection(
  */
 export const VIEWER_CSS = `/* The block content panel — bean lrmo. Tokens only, so it follows the light
    and dark themes above rather than hardcoding either. */
+#document .seg { margin: .2rem 0 .8rem; }
+#document .seg button[aria-selected="true"] { font-weight: 600; }
+#document .docbody { padding: 0 16px 8px; }
+#document .dockw { padding: 4px 16px; }
+#document p.kw, #document .dockw p.kw { display: inline; margin: 0; }
+#document .docsec p.kw { display: block; margin: 2px 0 6px; }
+#document p.kw .pill { margin: 0 2px 2px 0; }
+#document ul.toc, #document ul.toc ul { list-style: none; margin: 0; padding-left: 1.1rem; }
+#document ul.toc { padding-left: 0; }
+#document ul.toc li { margin: .15rem 0; }
+#document ul.toc li.leaf { padding-left: 1rem; }
+#document ul.toc summary { cursor: pointer; }
+#document td ul { margin: .3rem 0 0; padding-left: 1.1rem; }
+#document .docsec { margin: 0 0 1rem; }
+#document .docsec h3 { margin: .2rem 0 .3rem; font-size: 1rem; }
+#document .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px; }
+#document .sum p { margin: .35rem 0 0; }
+#document td { white-space: normal; vertical-align: top; }
 #blocks details > summary { cursor: pointer; }
 #blocks .block-body { margin: .4rem 0 .2rem; }
 #blocks .block-body pre {
@@ -624,6 +649,7 @@ function selectEntry(known){
   }
   document.title = (known.title || known.id) + " \u2014 " + known.instance + " library";
   /* The graph of the thing the reader just opened -- bean 7nvr. */
+  loadDocument(known.id);
   loadBlocks(known.id, known);
 }
 function honourAddress(){
@@ -747,6 +773,10 @@ function summaryLabel(s){
   }
 }
 ${WITHHELD_VIEW_JS}
+/* The shared edit/feedback recipe (bean v433): the Document panel's [source],
+   [feedback] and [edit] links are built by it (bean zcak). */
+${EDIT_LINKS_RUNTIME}
+${DOCUMENT_VIEW_JS}
 function summaryBadge(s){
   var l = summaryLabel(s);
   return '<span class="pill ' + l.cls + '">' + esc(l.t) + '</span>';
@@ -878,6 +908,7 @@ const VIEWER_BODY = `<header>
 <main>
   <section id="listing" class="wrap"></section>
   <section id="desktop" hidden></section>
+  <section id="document" class="wrap" hidden aria-live="polite"></section>
   <section id="blocks" class="wrap" hidden aria-live="polite"></section>
   <h2>Uploads — the queue feeding this</h2>
   <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
@@ -1302,6 +1333,30 @@ if (import.meta.main) {
   // cannot simply fetch the source; a projection is what it reads. (Each
   // entry's MANIFEST is published since #1881 — see the entry pages below —
   // as the `alternate` of the entry's own IRI, not as the viewer's input.)
+  // ── PER-ENTRY DOCUMENT VIEWS (issue #2302, bean `turh`) ──────────────
+  //
+  // The browsable document — TOC, pages with their printed labels, figures
+  // and tables, sections with a summary or an extract, the document checks —
+  // read from the INGESTION SCHEMA (`pdf-structure/v1`), so every library
+  // entry of every instance gets it. Written for every entry: one with no
+  // structure.json gets `{absent: true}`, a determined answer rather than a
+  // 404 the viewer would have to tell apart from a failure.
+  for (const e of g.entries) {
+    // [source] and [feedback] on the document and each section (bean zcak).
+    // No [edit]: an entry is frozen, and this instance materialises none.
+    const doc = readEntryDocument(join(repoRoot, e.dir), e.id, {
+      withheld: !!e.withheld,
+      ...(LINK_REPO ? { links: { repo: LINK_REPO, dir: e.dir } } : {}),
+    });
+    // The entry's resolved title, not the page-1 guess in structure.json
+    // (issue #1794: the guess is never a library entry's title).
+    if (doc && e.title) doc.title = e.title;
+    emit(
+      join(dataDir, "entries", `${e.id}.doc.json`),
+      JSON.stringify(doc ?? { $schema: "folio-library-document/v1", id: e.id, absent: true }, null, 2) + "\n",
+    );
+  }
+
   for (const e of g.entries) {
     const blocks = blocksOf.get(e.id) ?? [];
     // An entry with no blocks still gets a file. The alternative is a 404 the
