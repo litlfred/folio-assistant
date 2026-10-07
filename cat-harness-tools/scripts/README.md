@@ -138,6 +138,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`migrate-bib-attestations.ts`](migrate-bib-attestations.ts) | a file |  |
 | [`migrate-qa-attestations.ts`](migrate-qa-attestations.ts) | a file |  |
 | [`milestone-status.ts`](milestone-status.ts) | a file |  |
+| [`pin-actions.ts`](pin-actions.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |
 | [`qa-refresh.ts`](qa-refresh.ts) | a file |  |
 | [`resolve-subgraph.ts`](resolve-subgraph.ts) | a file |  |
