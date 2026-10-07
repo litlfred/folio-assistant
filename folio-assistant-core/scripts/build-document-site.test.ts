@@ -185,3 +185,19 @@ describe("lazy pages: the block text as data (bean v433)", () => {
     expect(existsSync(join(out, "handbook", "blocks"))).toBe(false);
   });
 });
+
+describe("pageContents — the document's index for the harness rail", () => {
+  test("chapters are rows, their sections the rows' children, each pointing at the label anchor before its heading", async () => {
+    const { pageContents } = await import("./build-document-site.js");
+    const html =
+      `<h1>T</h1>\n<p><a id="chap:a"></a></p>\n<h2>Intro &amp; scope</h2>\n<p><a id="sec:1-1"></a></p>\n<h3>1.1 About</h3>\n` +
+      `<h2>No anchor</h2>\n<p><a id="chap:b"></a></p>\n<h2>Second</h2>\n`;
+    const decl = pageContents(html);
+    const json = JSON.parse(/<script[^>]*data-fa-visualiser-nav[^>]*>([\s\S]*?)<\/script>/.exec(decl)![1]!);
+    expect(json).toEqual([
+      { label: "Intro & scope", href: "#chap:a", items: [{ label: "1.1 About", href: "#sec:1-1" }] },
+      { label: "Second", href: "#chap:b" },
+    ]);
+    expect(pageContents(`<p><a id="chap:a"></a></p>\n<h2>Only</h2>`)).toBe("");
+  });
+});
