@@ -176,7 +176,18 @@ export function depsForTier(tier: DepTier): readonly PythonDep[] {
   return PYTHON_DEPS.filter((d) => d.tier === tier);
 }
 
-/** The generated requirements file for a tier — see `scripts/gen-python-deps.ts`. */
+/**
+ * The generated requirements file for a tier, relative to the TOOL LAYER's
+ * root — see `scripts/gen-python-deps.ts` there, which writes it.
+ *
+ * THE ONE PLACE THE LOCATION IS WRITTEN. The pair sat at the repository root
+ * until 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the
+ * repo split) and now lives in the tool layer's declared `python/` directory,
+ * whose declaration describes it. CI installs the lean file from the checkout
+ * root; dependabot's pip `directory:` names the same place.
+ */
+export const REQUIREMENTS_DIR = "python";
+
 export function requirementsPath(tier: DepTier): string {
-  return tier === "lean" ? "requirements.txt" : "requirements-extended.txt";
+  return `${REQUIREMENTS_DIR}/${tier === "lean" ? "requirements.txt" : "requirements-extended.txt"}`;
 }
