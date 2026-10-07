@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:29:09Z
-updated_at: 2026-10-07T19:34:55Z
+updated_at: 2026-10-07T19:36:48Z
 parent: folio-assistant-ieum
 ---
 
@@ -46,3 +46,17 @@ All quotes of CaMeL, DataFilter, DefensiveTokens and GitHub were checked against
 | L4.5 | The release gate can be emptied: it checks only that the script NAME exists, and runs from the PR's own `package.json`. | major | structural | open |
 | L4.6 | The pin check accepts any 40-hex (no tag comment needed, fork-network commits); flow-mapping `{uses: …}` and `docker://…:latest` are invisible to the parser. | minor | limited | open |
 | L4.7 | The sink table misses mounted symlinks, `GITHUB_ENV`/`GITHUB_OUTPUT`, the Actions cache, executing mounted code, creating routines/triggers, and outbound comments (exfiltration). | major | structural | open |
+
+
+### L1 — bypass and breakage (lens report 2026-10-07)
+
+| # | finding | sev | status |
+|---|---|---|---|
+| L1.1 | Quadratic regex: `^\s*` under `m` and an unbounded `!\[[^\]]*` took 20 s on 60,000 newlines, blocking the event loop. That mattered more once 4f11af4 put the screen on live chat paths. | critical | **answered**: `[ \t]` anchors, bounded classes, a 200,000-char cap reported as `oversize`; now 3 ms |
+| L1.2 | Non-plain values (Map, getter, Proxy, toJSON, String object) were screened as something other than what the receiver sees. | critical | **answered**: a JSON copy is screened and returned as `screened` for the caller to pass on |
+| L1.3 | Check and use read different values (a getter). | major | **answered** by the same copy |
+| L1.4 | A cycle or 20,000-deep nesting threw RangeError, so a caller that catches it fails open. | major | **answered**: refused with a reason |
+| L1.5 | The origin label sat outside the fence, unscreened. | major | **answered**: screened, and replaced when it fires |
+| L1.6 | Evasion: full-width, soft hyphen, combining marks, `<\|im_start\|>`, `**System:**`, `> system:`, `\| python3`, `sudo bash`, `bash -c "$(curl`, `<img src>` exfiltration. | major | **answered** for those forms (NFKC fold, wider patterns). **accepted-as-cost**: confusables (Cyrillic о), HTML entities and %-escapes, base64 bodies, splitting across fields, and paraphrase. A pattern list cannot reach these, and the node says the screen is a tripwire, not a guarantee |
+| L1.7 | False positives that get a screen switched off: emoji ZWJ, RLM in Hebrew, `System: Ubuntu`, the bun install line, `<invoke>` in code samples, "you are now in a bad state". | major | **answered** for ZWJ and RLM/LRM. **accepted-as-cost** for the rest on free text, where a finding only adds a notice and never refuses. **open** for control fields, where it refuses (see L2) |
+| L1.8 | `strict:false` passes undeclared fields as clean; a bad `max` truncated silently and could split a surrogate pair. | minor | **answered** for `max` (RangeError, a cut marker, surrogate-safe). **accepted-as-cost** for `strict:false`: it is an explicit opt-out, and no caller uses it |

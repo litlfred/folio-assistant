@@ -51,7 +51,12 @@ export type FindingKind =
   | "tool-call-syntax"
   | "hidden-unicode"
   | "exfiltration-link"
-  | "shell-payload";
+  | "shell-payload"
+  /** Longer than the screen reads; the tail is unscreened and the receiver is told. */
+  | "oversize";
+
+/** The most a single string is screened over. Bounds the work at any input size. */
+export const SCREEN_MAX_CHARS = 200_000;
 
 export interface TextFinding {
   kind: FindingKind;
@@ -64,15 +69,21 @@ const PATTERNS: ReadonlyArray<{ kind: FindingKind; re: RegExp }> = [
   { kind: "instruction-override", re: /\b(ignore|disregard|forget|override)\b[^.\n]{0,40}\b(previous|prior|above|earlier|all|your|the)\b[^.\n]{0,20}\b(instructions?|prompts?|rules?|directions?|guidelines?|context)\b/i },
   { kind: "instruction-override", re: /\b(new|updated|revised|real|actual)\s+(system\s+)?(instructions?|prompt|directive)s?\s*[:：]/i },
   { kind: "instruction-override", re: /\byou\s+are\s+now\b|\bact\s+as\s+(an?\s+)?(admin|root|system|developer)\b|\bfrom\s+now\s+on,?\s+you\b/i },
-  { kind: "role-spoof", re: /^\s*(#{1,6}\s*)?(system|assistant|developer)\s*(prompt|message)?\s*[:：]/im },
-  { kind: "role-spoof", re: /^\s*(human|assistant|user|system)\s*:\s/m },
+  // `[ \t]`, never `\s`, after `^` under `m`: `\s` matches the newline too, and
+  // `^\s*` then backtracks across every line start, quadratic in the input
+  // (roast 1ygp L1.1: 60,000 newlines took 20 s). A role marker sits on its own line.
+  { kind: "role-spoof", re: /^[ \t>*]*(#{1,6}[ \t]*)?(system|assistant|developer)[ \t]*(prompt|message)?[ \t*]*[:：]/im },
+  { kind: "role-spoof", re: /^[ \t>*]*(human|assistant|user|system)[ \t*]*:[ \t]/m },
+  { kind: "role-spoof", re: /<\|\s*(im_start|im_end|system|endoftext)\b/i },
   { kind: "role-spoof", re: /<\/?\s*(system|system-reminder|assistant|user|developer|instructions?)\b[^>]*>/i },
   { kind: "role-spoof", re: /\[\s*(system|admin|developer)\s*(message|note|override)?\s*\]/i },
-  { kind: "fence-break", re: /<\/?\s*untrusted-content\b/i },
+  { kind: "fence-break", re: /<\s*\/?\s*untrusted[-_ ]content\b/i },
   { kind: "tool-call-syntax", re: /<\/?\s*(function_calls|invoke|tool_use|tool_call|antml:[a-z_]+)\b/i },
   { kind: "tool-call-syntax", re: /"(tool_name|function_call|tool_calls)"\s*:/i },
-  { kind: "exfiltration-link", re: /!\[[^\]]*\]\(\s*https?:\/\/[^)\s]*[?&][^)\s]*=/i },
-  { kind: "shell-payload", re: /\b(curl|wget)\b[^\n|]{0,200}\|\s*(ba|z)?sh\b|\bbase64\s+(-d|--decode)\b[^\n|]{0,80}\|\s*(ba|z)?sh\b/i },
+  // Bounded: `[^\]]*` after `!\[` is quadratic on "![![![…" (L1.1).
+  { kind: "exfiltration-link", re: /!\[[^\]\n]{0,200}\]\(\s*https?:\/\/[^)\s]{0,2000}[?&][^)\s]{0,2000}=/i },
+  { kind: "exfiltration-link", re: /<img\b[^>]{0,500}\bsrc\s*=\s*["']?https?:\/\/[^"'\s>]{0,2000}[?&]/i },
+  { kind: "shell-payload", re: /\b(curl|wget|iwr|invoke-webrequest)\b[^\n|]{0,200}\|\s*(sudo\s+)?((ba|z|da)?sh|python3?|perl|ruby|node|iex)\b|\bbase64\s+(-d|--decode)\b[^\n|]{0,80}\|\s*(sudo\s+)?((ba|z|da)?sh|python3?)\b|\b(ba|z)?sh\s+-c\s+["']?\$\((curl|wget)\b/i },
 ];
 
 /**
@@ -80,7 +91,12 @@ const PATTERNS: ReadonlyArray<{ kind: FindingKind; re: RegExp }> = [
  * overrides and isolates, and the Unicode TAG block that can carry a whole
  * hidden sentence (U+E0000–U+E007F).
  */
-const HIDDEN = /[​-‏‪-‮⁠-⁤⁦-⁩﻿]|[\u{E0000}-\u{E007F}]/u;
+const HIDDEN = /[\u200B\u200C\u202A-\u202E\u2060-\u2064\u2066-\u2069\uFEFF\u00AD\u034F\u180E\u3164\u2800]|[\u{E0000}-\u{E007F}]|[\u{E0100}-\u{E01EF}]/u;
+// Left out on purpose (roast 1ygp L1.7): U+200D, the zero-width joiner every
+// emoji family sequence uses, and U+200E/U+200F, the marks right-to-left text
+// carries. Flagging them flagged ordinary Hebrew and emoji, and a screen that
+// fires on ordinary text is a screen somebody switches off. The overrides and
+// isolates that actually reorder text (U+202A–202E, U+2066–2069) stay.
 
 function visible(s: string): string {
   return [...s]
@@ -90,13 +106,29 @@ function visible(s: string): string {
 }
 
 /** Every finding in one piece of text. Empty means no pattern fired, which is NOT a clearance. */
-export function screenText(text: string): TextFinding[] {
+export function screenText(input: string): TextFinding[] {
   const out: TextFinding[] = [];
+  // Bounded work whatever arrives (L1.1). What lies past the cap is reported,
+  // never silently passed: an unscreened tail is not a screened one.
+  const text = String(input ?? "");
+  const head = text.length > SCREEN_MAX_CHARS ? text.slice(0, SCREEN_MAX_CHARS) : text;
+  if (head.length < text.length) out.push({ kind: "oversize", excerpt: `${text.length} chars; the first ${SCREEN_MAX_CHARS} were screened` });
+  // Match the NFKC form too, with soft hyphens, combining grapheme joiners and
+  // combining marks removed, so full-width letters and a hyphen hidden inside a
+  // word do not slip past (L1.6). Confusable folding (Cyrillic "о" for Latin
+  // "o") is NOT done: it is accepted as a cost, and paraphrase was never in reach.
+  const folded = head.normalize("NFKC").replace(/[\u00AD\u034F]|\p{M}/gu, "");
+  const forms = folded === head ? [head] : [head, folded];
   for (const { kind, re } of PATTERNS) {
-    const m = re.exec(text);
-    if (m) out.push({ kind, excerpt: visible(m[0]) });
+    for (const form of forms) {
+      const m = re.exec(form);
+      if (m) {
+        out.push({ kind, excerpt: visible(m[0]) });
+        break;
+      }
+    }
   }
-  const h = HIDDEN.exec(text);
+  const h = HIDDEN.exec(head);
   if (h) out.push({ kind: "hidden-unicode", excerpt: visible(text.slice(Math.max(0, h.index - 20), h.index + 20)) });
   return out;
 }
@@ -125,6 +157,28 @@ export interface ScreenVerdict {
   findings: FieldFinding[];
   /** Top-level data fields whose content is quarantined. The payload itself is returned unchanged. */
   quarantined: string[];
+  /**
+   * The value that was screened: a plain JSON copy of the payload. A caller
+   * passes THIS on, never the original, because a getter, a Proxy, a `toJSON`
+   * or a Map can show the screen one value and the receiver another (roast
+   * 1ygp L1.2, L1.3). `undefined` when the payload could not be copied.
+   */
+  screened?: Record<string, unknown>;
+}
+
+/** Deeper than this is refused: legitimate hand-overs are shallow, and a deep one exhausts the stack (L1.4). */
+export const SCREEN_MAX_DEPTH = 64;
+
+function depthOf(value: unknown, limit: number): number {
+  let max = 0;
+  const stack: Array<[unknown, number]> = [[value, 0]];
+  while (stack.length) {
+    const [v, d] = stack.pop()!;
+    if (d > max) max = d;
+    if (max > limit) return max;
+    if (v !== null && typeof v === "object") for (const c of Object.values(v as object)) stack.push([c, d + 1]);
+  }
+  return max;
 }
 
 function walk(value: unknown, path: string, visit: (path: string, text: string) => void): void {
@@ -150,15 +204,31 @@ export function screenHandover(payload: unknown, schema: HandoverSchema): Screen
   const quarantined = new Set<string>();
   let refused = false;
 
+  const refuse = (excerpt: string): ScreenVerdict => ({
+    state: "refused",
+    findings: [{ path: "", role: "undeclared", kind: "instruction-override", excerpt }],
+    quarantined: [],
+  });
   if (payload === null || typeof payload !== "object" || Array.isArray(payload)) {
-    return {
-      state: "refused",
-      findings: [{ path: "", role: "undeclared", kind: "instruction-override", excerpt: "a hand-over is a declared object, never a free-text blob" }],
-      quarantined: [],
-    };
+    return refuse("a hand-over is a declared object, never a free-text blob");
+  }
+  // Screen a plain JSON copy, and hand that copy back for the caller to pass
+  // on. Serialising is what the receiver will see anyway; a cycle or a BigInt
+  // cannot be serialised and is refused rather than thrown (L1.2–L1.4).
+  let copy: Record<string, unknown>;
+  try {
+    copy = JSON.parse(JSON.stringify(payload)) as Record<string, unknown>;
+  } catch (e) {
+    return refuse(`the hand-over cannot be serialised (${String(e).split("\n")[0]!.slice(0, 80)})`);
+  }
+  if (copy === null || typeof copy !== "object" || Array.isArray(copy)) {
+    return refuse("the hand-over serialises to something other than an object");
+  }
+  if (depthOf(copy, SCREEN_MAX_DEPTH) > SCREEN_MAX_DEPTH) {
+    return refuse(`the hand-over nests deeper than ${SCREEN_MAX_DEPTH}`);
   }
 
-  for (const [field, value] of Object.entries(payload as Record<string, unknown>)) {
+  for (const [field, value] of Object.entries(copy)) {
     // `hasOwn`, never `schema.fields[field]`: a payload key such as `constructor`
     // would otherwise resolve through the prototype and pass as declared.
     const role: FieldRole | "undeclared" = Object.hasOwn(schema.fields, field) ? schema.fields[field]! : "undeclared";
@@ -176,7 +246,7 @@ export function screenHandover(payload: unknown, schema: HandoverSchema): Screen
   }
 
   const state: ScreenState = refused ? "refused" : quarantined.size > 0 ? "quarantined" : "clean";
-  return { state, findings, quarantined: [...quarantined].sort() };
+  return { state, findings, quarantined: [...quarantined].sort(), screened: copy };
 }
 
 /**
@@ -186,10 +256,18 @@ export function screenHandover(payload: unknown, schema: HandoverSchema): Screen
  * Generalised from the document adapter's `fenced()`, which had one caller.
  */
 export function fenceUntrusted(content: string, origin: string, max = Number.POSITIVE_INFINITY): string {
+  if (max !== Number.POSITIVE_INFINITY && !(Number.isInteger(max) && max > 0)) {
+    throw new RangeError(`fenceUntrusted: max must be a positive integer, got ${max}`);
+  }
   const nonce = randomBytes(9).toString("base64url");
-  const safeOrigin = String(origin).replace(/[^A-Za-z0-9 ._:/#@-]/g, "").slice(0, 120);
-  const body = String(content ?? "")
-    .slice(0, max)
+  // The origin sits OUTSIDE the fence, so it is screened too: a label that
+  // reads like an instruction is replaced, never passed (L1.5).
+  const cleaned = String(origin).replace(/[^A-Za-z0-9 ._:/#@-]/g, "").slice(0, 120);
+  const safeOrigin = screenText(cleaned).length > 0 ? "an unlabelled source (its label was refused by the screen)" : cleaned;
+  const full = String(content ?? "");
+  // Cut on a code point, never inside a surrogate pair, and say that it was cut.
+  const cut = full.length > max ? full.slice(0, /[\uD800-\uDBFF]/.test(full.charAt(max - 1)) ? max - 1 : max) : full;
+  const body = (cut.length < full.length ? `${cut}\n[… cut: ${full.length - cut.length} more characters not shown]` : cut)
     .split(nonce)
     .join("");
   // The origin goes on its own line OUTSIDE the tag, so the tag stays exactly
