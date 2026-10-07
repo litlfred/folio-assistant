@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>135</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>73</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>112</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>136</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>74</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>113</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,20 +48,20 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 112 |
+| <span class="tg-tag tg-shell">shell</span> | 113 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 8 |
 
 | installation | tools |
 |---|---|
-| `none` | 125 |
+| `none` | 126 |
 | `cli` | 9 |
 | `container` | 1 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **73** skills named across **135** tools resolve to a
+Yes — all **74** skills named across **136** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -109,6 +109,7 @@ tool advertising a capability the graph cannot locate.
 | `l1-complete-check`<br>L1 source completeness | Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 1 in / 1 out |
 | `latex-overfull`<br>LaTeX overfull-box report | Turn a pdflatex log's Overfull \hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones. | <span class="tg-tag tg-shell">shell</span> | [`latex-validation`](../reference/skill-instructions/latex-validation.html) | 4 in / 1 out |
 | `latex-preflight`<br>LaTeX preflight | Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build. | <span class="tg-tag tg-shell">shell</span> | [`latex-validation`](../reference/skill-instructions/latex-validation.html) | 2 in / 1 out |
+| `latexmk-compile`<br>LaTeX compilation (latexmk) | Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events. | <span class="tg-tag tg-shell">shell</span> | [`latex-compilation`](../reference/skill-instructions/latex-compilation.html) | 2 in / 1 out |
 | `lean-audit`<br>Lean vacuity audit | Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise. | <span class="tg-tag tg-shell">shell</span> | [`lean-proof-vacuity-audit`](../reference/skill-instructions/lean-proof-vacuity-audit.html) | 4 in / 1 out |
 | `lean-build`<br>Lean build | Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run. | <span class="tg-tag tg-shell">shell</span> | [`lean-build-fix`](../reference/skill-instructions/lean-build-fix.html) | 4 in / 1 out |
 | `lean-coverage`<br>Lean coverage | Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap. | <span class="tg-tag tg-shell">shell</span> | [`lean-completeness-audit`](../reference/skill-instructions/lean-completeness-audit.html) | 4 in / 1 out |

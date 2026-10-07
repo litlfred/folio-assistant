@@ -397,7 +397,7 @@
 <p class="lede">Every rule below was learned by getting it wrong here first. They live in
 <code>who-iris/skills/iris-dspace.md</code> — <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md">read the skill</a> —
 and this page is generated from that file, so the two cannot drift. There are
-<strong>20</strong> of them, against <strong>3</strong> item(s) in the
+<strong>22</strong> of them, against <strong>3</strong> item(s) in the
 catalogue, <strong>3</strong> of which this repository actually holds the bytes for.</p>
 
 <div class="caveat">
@@ -431,6 +431,8 @@ catalogue, <strong>3</strong> of which this repository actually holds the bytes 
 <tr><th class="rid">R18</th><td>Do not &quot;correct&quot; a record that looks wrong</td><td class="why">the English-titled editorial manual really does carry an <strong>Italian</strong> ISBN</td></tr>
 <tr><th class="rid">R19</th><td>A derived figure must round-trip the figure it was derived from</td><td class="why">the site total claimed to be <code>361.55 × 1024³</code> and rendered as <strong>361.56</strong></td></tr>
 <tr><th class="rid">R20</th><td>An item count and a file count are different denominators</td><td class="why">273,559 against 1,057,223 — a fraction built from the wrong one is off by 3.86×</td></tr>
+<tr><th class="rid">R21</th><td><strong>Mint stable URIs at the extractor (Upstream Skolemization)</strong></td><td class="why">Anonymous compound nodes become unresolvable blank nodes downstream; minting <code>https://iris.who.int/entity/item/{handle}#{prop}_{idx}</code> at extraction enables zero-pass graph compilation</td></tr>
+<tr><th class="rid">R22</th><td><strong>Append-only streaming partition writes</strong></td><td class="why">A 300,000 item corpus cannot accumulate uncompressed in working memory; write quads directly to partition file streams</td></tr>
   </tbody>
 </table>
 
