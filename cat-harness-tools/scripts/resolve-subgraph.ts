@@ -3,8 +3,8 @@
  * resolve-subgraph — where a declared subgraph gets its content, as the ONE
  * resolver answers it (bean `l4ay`).
  *
- *   bun run subgraph:resolve <dir-id> [--from <instance-root>] [--json]
- *   bun run subgraph:resolve --all [--json]
+ *   bun run cat subgraph:resolve <dir-id> [--from <instance-root>] [--json]
+ *   bun run cat subgraph:resolve --all [--json]
  *
  * Prints the declaring instance, the entry's path, the resolved source
  * (`directory`, `branch` with its keying, or a branch `family` with its

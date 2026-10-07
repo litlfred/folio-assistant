@@ -22,6 +22,7 @@ import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { scriptsOf } from "../../schemas/script-table.ts";
 
 const BASE = "https://example.invalid/fa";
 
@@ -344,10 +345,8 @@ describe("the gates Tool — one node over a derived list", () => {
     // `invoke.shell` is prose to the schema. The failure it cannot catch is a
     // node naming a script that was renamed or never existed, which an agent
     // discovers by running it.
-    const pkg = JSON.parse(
-      readFileSync(resolve(repoRootFor(INSTANCE), "package.json"), "utf-8"),
-    ) as { scripts: Record<string, string> };
-    expect(gates?.invoke.shell).toBe("bun run gates");
+    const pkg = { scripts: scriptsOf(repoRootFor(INSTANCE)) };
+    expect(gates?.invoke.shell).toBe("bun run cat gates");
     expect(pkg.scripts.gates).toContain("scripts/gates.ts");
   });
 

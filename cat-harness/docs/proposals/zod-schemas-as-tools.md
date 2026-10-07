@@ -80,7 +80,7 @@ not *"66 are dead"*.
 
 The three Zod-flavoured Tools — `cat-harness-schema`, `tool-schema`,
 `tool-types-schema` — are not validators. All three carry
-`invoke: { shell: "bun run kg:schema" }` and `satisfies: ["kg-export"]`: they
+`invoke: { shell: "bun run cat kg:schema" }` and `satisfies: ["kg-export"]`: they
 **publish JSON Schema**. Nothing in the corpus offers *"validate this node
 against the schema for its kind"*.
 

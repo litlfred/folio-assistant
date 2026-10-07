@@ -116,10 +116,10 @@ by claiming a bean. #2042 fixes it; until it merges the cutover must not land.
 2. `git rm -r beans` — 1442 tracked files.
 3. `.gitignore` gains `/beans/`, beside the `state/` entry, with the same note:
    a READ SURFACE, never a commit on this branch.
-4. `bun run state:seed --id beans --authoritative` — the branch half. After it
+4. `bun run cat state:seed --id beans --authoritative` — the branch half. After it
    `state:drift` reports `authoritative` and stops comparing, and `state:seed`
    refuses the branch (one-way, by design).
-5. `bun run state:mount` to bring it back on disk, then the gates.
+5. `bun run cat state:mount` to bring it back on disk, then the gates.
 
 `.beans.yml` is NOT touched (§1). The order matters: 4 before 2 would leave a
 window where neither copy is authoritative, and 2 before 1 leaves a checkout

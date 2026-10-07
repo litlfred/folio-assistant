@@ -9,7 +9,7 @@ updated_at: 2026-09-25T16:37:25Z
 parent: folio-assistant-1xhc
 ---
 
-Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.
+Recorded 2026-09-24 while running `bun run cat gates` on a two-markdown-file diff.
 
 ```
 cat-harness/schemas/viz-generators.test.ts:
@@ -101,7 +101,7 @@ No assertion changed.
 
 ## Re-derived and closed by another session, 2026-09-25
 
-Found by `bun run beans:landed` as `done-ticked`. Closed on evidence re-run
+Found by `bun run cat beans:landed` as `done-ticked`. Closed on evidence re-run
 here, not on the ticks — `bean-coordination.md` §"Closing a bean whose work has
 already landed".
 

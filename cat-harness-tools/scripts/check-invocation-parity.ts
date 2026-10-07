@@ -67,7 +67,7 @@ const INVOCATION = /(?:cat-harness\/|(bootstrap-tools\/))scripts\/([a-z0-9-]+)\.
  * (#1726). They are invoked by declared script name on purpose (`unrunScripts`
  * reads names), so the name is the thing to match.
  */
-const NAMED_CHECK = /\bbun run (check:[a-z0-9:-]+)/g;
+const NAMED_CHECK = /\bbun run (?:cat )?(check:[a-z0-9:-]+)/g;
 
 /**
  * Generators the deploy runs that a preview is not expected to.

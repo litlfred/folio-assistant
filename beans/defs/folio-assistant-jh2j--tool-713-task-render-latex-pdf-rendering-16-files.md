@@ -208,3 +208,22 @@ A checklist here restated that one and diverged from it — it recorded
 so the divergence was a CHANGED GOAL hiding as a duplicate. That is what
 `shadow-checklist` is for, and it is why the remedy was to merge the two rather
 than to tick the original five in place.
+
+---
+
+## 2026-10-07 — Owner rulings resolved: Findings 1 & 2 landed
+
+Completed under owner rulings:
+1. **Finding 1 (Exit 2 contract)**: Harmonised exit 2 on could-not-determine across:
+   - `cat-harness/content/pipeline/audit-tex-source.ts`
+   - `cat-harness/content/pipeline/generate-main-tex.ts`
+   - `cat-harness/content/pipeline/validate-tex.ts`
+   - `cat-harness/scripts/headless-render-qc.ts`
+   - `cat-harness/scripts/latexmk-compile.sh`
+   Verified with `cat-harness/scripts/tests/latex-exit2-contract.test.ts`.
+2. **Finding 2 (`latex-compilation` skill & Tool node)**:
+   - Minted `latex-compilation` skill in `folio-assistant-sci/skills/content/folio-paper-adapter/`.
+   - Added to `folio-assistant-sci`'s `package-manifest.json` and `scenarios/roles.json` (`build-pipeline` role).
+   - Added `latexmk-compile` Tool node in `cat-harness/tools/index.ts` satisfying `latex-compilation`.
+   - Regenerated tools viewer, documentation reference, and glossary via `bun run tools:viz` and `bun run skill:register`.
+

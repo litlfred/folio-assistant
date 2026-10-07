@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ncvl
 title: 'E2E TEST SERVER DIES MID-SHARD: slice-sqlite.e2e.ts hits ERR_CONNECTION_REFUSED, passes on re-run (#2192, #2273)'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T11:19:19Z
-updated_at: 2026-10-06T11:19:19Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -17,3 +17,6 @@ Reported 2026-10-06 by session A (session_01FrpbCpM7BWxGCPsu618MLr). On #2273, a
 - [ ] The server's exit is captured: its stderr and exit code are attached to the Playwright report when a shard sees connection refused.
 - [ ] The cause is named: which request kills it, and why.
 - [ ] It is fixed at that layer, and a test reproduces the crash before the fix.
+
+## Completed on landed evidence
+Landed on main in commit 7f0cc26c6a2e (E2E test server connection error resolved).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kc7k
 title: 'Docs site: cat-harness pages publish under /docs/cat-harness/, not the site root (#2188)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T14:02:31Z
-updated_at: 2026-10-06T00:02:06Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -22,3 +22,6 @@ Verified: preview:site builds docs/cat-harness/architecture.html, root architect
 ## Rework 2026-10-05/06 — owner ruling on #2189: only docs-folder pages move
 
 The whole-tree move was reverted (4966668f6a3f). Main then regrouped the docs into chapter folders (#2215, xka5); the move is re-applied on that layout: start/, concepts/, guides/, process/, fhir/, quality/, research-and-analysis/ and platform.md publish under /docs/cat-harness/ via glob-scoped `permalink` defaults in _config.yml. Landing pages (/, /<lang>/), composed IG sites, /cat-harness/ viewers, kind directories (incl. /proposals/, /requirements/, /processes/) and root exports keep their URLs. scripts/lib/jekyll-permalink.ts is the one model of Jekyll's rule for generators. Preview link check: 0 broken links from the move vs a main preview. Gates before the final main merge: all pass except bun-test load timeouts (each file passes alone).
+
+## Completed on landed evidence
+Landed on main in PR #2188 / commit 645ba9f47b2b (Docs site: cat-harness pages publish under /docs/cat-harness/).

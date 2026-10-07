@@ -5,6 +5,11 @@
  * unchanged is skipped; a pair whose inputs cannot be determined RUNS; pairs
  * with overlapping (or undeclared) outputs never run at the same time; and
  * output comes out in the original order whatever order the work finishes in.
+ *
+ * "every declared script exists in package.json" lives in
+ * `test/task-pool-checkout.test.ts` (bean `ho66`): `TASK_IO` names scripts
+ * declared by layers above cat-harness, which only the whole checkout's
+ * script table holds.
  */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
@@ -496,15 +501,6 @@ describe("--jobs", () => {
 });
 
 describe("task-io declarations", () => {
-  test("every declared script exists in package.json", async () => {
-    const { readFileSync } = await import("node:fs");
-    const { repoRootFor } = await import("../../schemas/cat-harness.ts");
-    const pkg = JSON.parse(readFileSync(join(repoRootFor(join(import.meta.dir, "..", "..")), "package.json"), "utf-8")) as {
-      scripts: Record<string, string>;
-    };
-    for (const name of Object.keys(TASK_IO)) expect(pkg.scripts[name], `${name} is not a script`).toBeDefined();
-  });
-
   test("an undeclared check has no io, so its pair runs alone and is never skipped", () => {
     expect(pairIO("no-such:check")).toBeUndefined();
   });

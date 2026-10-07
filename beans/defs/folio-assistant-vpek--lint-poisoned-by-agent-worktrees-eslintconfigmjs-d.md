@@ -11,7 +11,7 @@ parent: folio-assistant-1xhc
 
 `eslint.config.mjs`'s `ignores` does not cover `.claude/worktrees/**`. A
 worktree-isolated agent puts a **complete second checkout of this repository**
-there, so `bun run lint` walks into it and reports thousands of errors that
+there, so `bun run cat lint` walks into it and reports thousands of errors that
 belong to nobody's diff.
 
 Measured 2026-09-30, on `claude/declare-bootstrap-tools-need`, a branch whose
@@ -66,7 +66,7 @@ list's own comments say so twice:
 
 > Jekyll + TypeDoc build output. **Gitignored, but eslint does not read
 > .gitignore** — so without this, anyone who builds the docs site locally and
-> then runs `bun run lint` gets a wall of errors from TypeDoc's bundled assets.
+> then runs `bun run cat lint` gets a wall of errors from TypeDoc's bundled assets.
 
 That is this defect exactly, one directory over. `.claude/worktrees/` simply
 did not exist when the list was last extended.

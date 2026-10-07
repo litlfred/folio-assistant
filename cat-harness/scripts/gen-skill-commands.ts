@@ -2,7 +2,7 @@
 /**
  * A short slash command for every skill a person may invoke.
  *
- * Usage: `bun run skill:commands` (write) · `bun run skill:commands:check`
+ * Usage: `bun run cat skill:commands` (write) · `bun run cat skill:commands:check`
  *
  * Bean `j6t3`, option A, on the owner's choice of 2026-09-30 ("F + A"). The
  * MCP prompts (`src/tools/skill-prompts.ts`) reach every MCP host but are
@@ -154,9 +154,9 @@ if (import.meta.main) {
   for (const d of r.duplicates) console.log(`✗ ${d.name} is declared by ${d.paths.length} files: ${d.paths.map((p) => relative(repo, p)).join(", ")}`);
   for (const f of r.findings) {
     const why = {
-      missing: "declares user_invocable and has no command — run `bun run skill:commands`",
-      stale: "generated command is stale — run `bun run skill:commands`",
-      orphaned: "generated command whose skill no longer declares user_invocable — run `bun run skill:commands`",
+      missing: "declares user_invocable and has no command — run `bun run cat skill:commands`",
+      stale: "generated command is stale — run `bun run cat skill:commands`",
+      orphaned: "generated command whose skill no longer declares user_invocable — run `bun run cat skill:commands`",
       undeclared: "hand-written command with no user_invocable skill of that name — give the skill `name:` and `user_invocable: true`, or remove the command (a person's call)",
     }[f.kind];
     console.log(`✗ ${f.file}: ${why}`);

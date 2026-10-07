@@ -9,4 +9,4 @@ locally you need:
 | SUSHI (`fsh-sushi`) | compile FSH → FHIR | `npm i -g fsh-sushi` |
 | Jekyll | IG site rendering | `gem install jekyll bundler` |
 
-Run `bun run check-deps` and the agent's `check_dependencies` tool to confirm.
+Run `bun run cat check-deps` and the agent's `check_dependencies` tool to confirm.

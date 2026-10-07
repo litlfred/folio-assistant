@@ -39,8 +39,8 @@ A `.bpmn` with no DI section — no explicit `x`/`y` on its shapes — parses an
 renders **blank**. This is the single most common way a new diagram here
 arrives broken, and it survives review because the XML looks complete.
 
-`bun run render:bpmn` renders every diagram to `docs/assets/img/workflows/`
-with bpmn-js in headless Chromium; `bun run render:bpmn:check` fails when an
+`bun run cat render:bpmn` renders every diagram to `docs/assets/img/workflows/`
+with bpmn-js in headless Chromium; `bun run cat render:bpmn:check` fails when an
 SVG is stale. Run the renderer and look at the SVG before you call a diagram
 done.
 
@@ -52,8 +52,8 @@ is not enabled**. That has consequences for how you author:
 
 - **Every activity carries `<bootstrap.processes:skill ref="…"/>`** naming the skill that
   implements it, and `<cat-harness.processes:bean store="beans/"/>` where it touches the work
-  plan. `bun run check:workflow-refs` fails on a ref that resolves to nothing,
-  and `bun run kg:audit` additionally fails when the named skill exists but no
+  plan. `bun run cat check:workflow-refs` fails on a ref that resolves to nothing,
+  and `bun run cat kg:audit` additionally fails when the named skill exists but no
   package can **serve** it.
 - **Every lane is a role.** Bind it with `<bootstrap.processes:role ref="…"/>` against
   `scenarios/roles.json`. Lane names are free text and sixty of them once
@@ -63,7 +63,7 @@ is not enabled**. That has consequences for how you author:
   first sentence is the diagram's row on the publication-workflow page.
   `kg-export` carries it on the `Process` node as `summary` (the whole text as
   `description`), the page reads it from the published named-subgraph JSON-LD
-  (`bun run subgraph:jsonld`) rather than from anything written by hand, and
+  (`bun run cat subgraph:jsonld`) rather than from anything written by hand, and
   `check:process-index` fails when a declared diagram's node has none. So that sentence says what the process does or answers
   — not who asked for it, which bean or issue it came from, or where the work
   got to. Those belong later in the documentation, or in the bean.

@@ -51,7 +51,7 @@
  *
  * ## Attesting (the re-review mark)
  *
- *   bun run pairs:attest -- --sidecar cat-harness/test/results/kg-qa/processes/ci-health-watch.kg-qa.json \
+ *   bun run cat pairs:attest -- --sidecar cat-harness/test/results/kg-qa/processes/ci-health-watch.kg-qa.json \
  *     --by human --reason "re-read the report step against the new exit codes"
  *
  * rewrites that subject's attestations in the store to the current hashes with who and why,
@@ -289,7 +289,7 @@ if (import.meta.main) {
   const reason = opt("--reason")?.trim();
   if (!sidecar || (by !== "agent" && by !== "human") || !reason) {
     console.error(
-      "usage: bun run pairs:attest -- --sidecar <kg-qa sidecar path> --by agent|human --reason \"…\"\n" +
+      "usage: bun run cat pairs:attest -- --sidecar <kg-qa sidecar path> --by agent|human --reason \"…\"\n" +
         "Both --by and --reason are required: a re-review mark with no reason cannot be reviewed.\n" +
         "The attestation is written to the store (test/attestations/kg-qa/…), not to the sidecar.",
     );
@@ -307,7 +307,7 @@ if (import.meta.main) {
   }
   try {
     const n = attest(where.file, where.storeRoot, by, reason, repoRoot);
-    console.log(`attested ${n} pair(s) in ${relative(repoRoot, where.file)} — now run \`bun run kg:audit\``);
+    console.log(`attested ${n} pair(s) in ${relative(repoRoot, where.file)} — now run \`bun run cat kg:audit\``);
   } catch (e) {
     console.error(e instanceof Error ? e.message : String(e));
     process.exit(1);

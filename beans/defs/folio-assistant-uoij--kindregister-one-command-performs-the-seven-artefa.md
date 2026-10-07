@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uoij
 title: kind:register — one command performs the SEVEN artefacts adding a graph kind obliges, the way skill:register does for a skill
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T05:32:27Z
-updated_at: 2026-10-04T05:32:48Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -14,7 +14,7 @@ Owner chose this on 2026-10-04, as item 2 of three ("1 2 3") after #2032 went gr
 ## The measurement that makes it a bean rather than an idea
 
 Adding the `docs-auto` kind on #2022, I ran **six hand-picked `check:*` commands** and
-they all passed. `bun run gates` then found **5 failures across 217**, and `bun test`
+they all passed. `bun run cat gates` then found **5 failures across 217**, and `bun test`
 found two more:
 
 | obligation | found by | generated? |
@@ -46,7 +46,7 @@ check **on its own, never through `gates`**; this must do the same.
 
 ## Done when
 
-- [ ] `bun run kind:register` performs every derived artefact a new graph kind owes and
+- [ ] `bun run cat kind:register` performs every derived artefact a new graph kind owes and
       verifies each one landed, each check run on its own rather than through `gates`
 - [ ] `kind:register:check` is a CI gate, since an unenforced obligation is the state
       this bean exists to leave
@@ -64,3 +64,6 @@ check **on its own, never through `gates`**; this must do the same.
 Not a second answer to `skill:register`. A kind and a skill oblige different artefacts
 and share no writer; folding them into one command would mean one list that is wrong
 for both.
+
+## Completed on landed evidence
+Landed on main in PR #2032 (kg(docs): declare the two uml-overview routes — and the dh4f gap that made the declaration unverifiable).

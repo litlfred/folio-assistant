@@ -13,7 +13,7 @@
 # heading that is not the one being labelled. Bean `gjli` is the standing
 # accessibility rule.
 #
-# The generator's own output looked correct. `bun run gates --all` was green
+# The generator's own output looked correct. `bun run cat gates --all` was green
 # across the whole defect. Only a build showed it.
 #
 # THE TWO THINGS THAT MAKE A NAIVE BUILD FAIL HERE

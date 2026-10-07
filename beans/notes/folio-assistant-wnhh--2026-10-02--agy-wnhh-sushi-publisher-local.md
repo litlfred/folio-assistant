@@ -80,7 +80,7 @@ The goal is an IG site built from the IG Publisher AST cache, with dynamic resou
   - the e2e output `e2e-out/`;
   - the gate logs;
   - the screenshots `dyn-*.png`.
-  - **Rebuild with:** `bun run smart-trust:ast-site --ig-root <clone> --out <dir>`.
+  - **Rebuild with:** `bun run cat smart-trust:ast-site --ig-root <clone> --out <dir>`.
 - **Running jobs:** none. All background watches have finished.
 
 ### How to resume
@@ -175,7 +175,7 @@ The goal is an IG site built from the IG Publisher AST cache, with dynamic resou
   - the e2e output `e2e-out/`;
   - the gate logs;
   - the screenshots `dyn-*.png`.
-  - **Rebuild with:** `bun run smart-trust:ast-site --ig-root <clone> --out <dir>`.
+  - **Rebuild with:** `bun run cat smart-trust:ast-site --ig-root <clone> --out <dir>`.
 - **Running jobs:** none. All background watches have finished.
 
 ### How to resume

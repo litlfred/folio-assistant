@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wnhh
 title: Run SUSHI + IG Publisher locally (needs packages.fhir.org and tx.fhir.org)
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T17:11:25Z
-updated_at: 2026-10-03T17:55:00Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -136,3 +136,5 @@ Session https://claude.ai/code/session_01PricYFhYhFA5DuMJaWo3CE, on PR #1816. Th
 - **Branch names.** The caches now live at `cat/fhir-harness/fhir-ast/<package>` (#1913's scheme, owner-approved). `ig-cache.sh` and `stage-ast-sites.ts` resolve `cat/fhir-harness/fhir-ast/<pkg>` → `cat-fhir-ast/<pkg>` → `fhir-ast/<pkg>`, and a first seed writes the first.
 - **Still open from *Done when*:** smart-base re-ingested from a fresh `gh-pages` (the fork has none).
 
+## Completed on landed evidence
+Landed on main in PR #1766 (smart-trust IG site in just-the-docs at Publisher parity; IG AST schemas; release pointers; Liquid raw-block fix).

@@ -55,7 +55,7 @@ The merge-gate epic `nok9` (#1887, on main since train 4 / #1893) is the gate se
 The epic's work was **finished and green but stranded**: `main` moved under it while
 its authoring session (`01ToWZR4`) ended, leaving 114 conflicts. 113 were generated
 families; the 114th was a real two-sided edit on `dlqu`, reconciled to keep both the
-owner's `hfag` re-parent and main's claim. One `bun run regen` — 80 current, 15
+owner's `hfag` re-parent and main's claim. One `bun run cat regen` — 80 current, 15
 regenerated, **0 unrepaired**, 0 without a writer.
 
 **Landed on the owner's instruction ("do hfag next", then: land it as-is).** The epic

@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields",
@@ -6626,6 +6626,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this whole instance gets its upstream/source material (e.g. an IG source in Git). Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.source",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.stickies",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -7079,6 +7098,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this whole instance gets its upstream/source material (e.g. an IG source in Git). Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.source",
       "skos:note": "candidate"
     },
     {
@@ -17620,7 +17658,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. Not cloned into `.deps/` (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on the declaration, laid down by `bun run mount:remote` (bean `0mpw`)."
+          "@value": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. Not cloned into `.deps/` (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on the declaration, laid down by `bun run cat mount:remote` (bean `0mpw`)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency.git",
@@ -21104,6 +21142,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountConsentSchema.by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who consented: a person, by the identity they act under here."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.evidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountConsentSchema.evidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the consent was given (an issue comment, a chat session), so it can be read."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.evidence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountConsentSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The pin consented to. Must equal the mount's `ref`; a moved pin asks again."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountsignatureschema.network",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountSignatureSchema.network"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The trust network the key is listed in, e.g. `gdhcn`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.network",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountsignatureschema.signeddigest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountSignatureSchema.signedDigest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What was signed: the pinned declaration's sha256, as the lock records it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.signedDigest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/narrative.narrativeschema.confirmed_by",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23897,6 +24030,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountdefaultsschema.whole",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountDefaultsSchema.whole"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mount the WHOLE instance root — every tracked file at the pin, root files included — instead of its declared directories. For an instance a downstream reads as a checkout rather than as graphs: `bootstrap` (whose `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose `package.json` and `tsconfig.json` do), the two git submodules a remote mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.whole",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountlockschema.mounts",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23935,6 +24087,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountoverrideschema.whole",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountOverrideSchema.whole"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.whole",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.remotemountschema.harness",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23970,6 +24141,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.remotemountschema.trust",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemoteMountSchema.trust"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What makes this mount trusted: a person's consent for THIS pin, or a signature in a declared trust network (`schemas/mount-trust.ts`, bean `ieum`, rule H8). Absent means unsigned and unconsented, and a non-staging mount is then refused rather than fetched."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.trust",
       "skos:note": "candidate"
     },
     {
@@ -25376,6 +25566,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/script-qa.ts#ScriptQaReport.updated_at",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.scriptentry.command",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScriptEntry.command"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The command, relative to the checkout root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.command",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.scriptentry.manifest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScriptEntry.manifest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The manifest it is declared in, repository-relative (`package.json` for the root)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.manifest",
       "skos:note": "candidate"
     },
     {

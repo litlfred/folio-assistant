@@ -310,7 +310,7 @@ if (!QA_CORPUS.present) {
   console.log(
     `  ? the derived QA corpus is ABSENT (${QA_CORPUS.trees.map((t) => relative(INSTANCE_ROOT, t.dir)).join(", ")}): ` +
       `badges say "not available", and assets/qa/index.json says unknown. ` +
-      `Run \`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) first to publish the evidence.`,
+      `Run \`bun run cat qa:fetch --ref main\` (or \`--ref pr/<n>\`) first to publish the evidence.`,
   );
 }
 
@@ -891,7 +891,7 @@ function renderPage(page: WebPage): string {
   // second form. The comment stays — it is what a PERSON reading the source
   // on the forge sees, and it names the manifest this page came from, which
   // the key does not.
-  lines.push(`generated: scripts/gen-docs-pages.ts — do not hand-edit; run \`bun run docs:pages\``);
+  lines.push(`generated: scripts/gen-docs-pages.ts — do not hand-edit; run \`bun run cat docs:pages\``);
   lines.push(`title: ${page.title}`);
   if (page.parent) lines.push(`parent: ${page.parent}`);
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);

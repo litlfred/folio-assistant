@@ -2,9 +2,9 @@
  * The viewer-navbar audit — bean `edx7`, and the owner asked for it directly.
  *
  * ```sh
- * bun run viewer:nav:audit    # write the sidecar
- * bun run check:viewer-nav    # GATED: fail on a REGRESSION and nothing else
- * bun run viewer:nav:strict   # an author's check: staleness and every finding
+ * bun run cat viewer:nav:audit    # write the sidecar
+ * bun run cat check:viewer-nav    # GATED: fail on a REGRESSION and nothing else
+ * bun run cat viewer:nav:strict   # an author's check: staleness and every finding
  * ```
  *
  * ## Why the GATE is regressions only, and this is the `library:viz` ruling
@@ -468,7 +468,7 @@ if (import.meta.main) {
         console.log(`  ? UNKNOWN — the prior verdict (${base.from}) is not a ${VIEWER_NAV_QA_SCHEMA} document; the regression half was not run.`);
       }
       if (base.text !== text && against === undefined) {
-        const line = `${relative(REPO, SIDECAR)} is stale — run \`bun run viewer:nav:audit\``;
+        const line = `${relative(REPO, SIDECAR)} is stale — run \`bun run cat viewer:nav:audit\``;
         // Stale is a FINDING for the author and a NOTE for the gate. See the
         // module header: this sidecar derives from the whole docs tree, so a
         // page added anywhere makes it stale on every open branch at once.

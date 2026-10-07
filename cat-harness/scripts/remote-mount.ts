@@ -12,9 +12,9 @@
  *
  * Bean `0mpw`. Schema and the owner's rulings: `schemas/remote-mount.ts`.
  *
- *   bun run mount:remote              # plan, fetch, mount, write the lock
- *   bun run mount:remote --plan       # resolve the closure and print it; write nothing
- *   bun run mount:remote:check        # disk against lock against declaration — no network
+ *   bun run cat mount:remote              # plan, fetch, mount, write the lock
+ *   bun run cat mount:remote --plan       # resolve the closure and print it; write nothing
+ *   bun run cat mount:remote:check        # disk against lock against declaration — no network
  *
  * `state:mount` runs the mount after the branch mounts, so the session-start
  * hook needs no second entry point.
@@ -53,6 +53,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { mountTrust } from "../schemas/mount-trust.js";
 import { checkoutRootFor, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
 import {
   MOUNT_LOCK_SCHEMA,
@@ -63,9 +64,10 @@ import {
   type LockedInstance,
   type MountLock,
   type RemoteMount,
+  WHOLE_INSTANCE_ID,
 } from "../schemas/remote-mount.js";
 import { contentIsOffCheckout, type SubgraphSource } from "../schemas/subgraph-source.js";
-import { treeDigest, treeEntries } from "./kg-subscribe.ts";
+import { treeDigest, treeEntries } from "./kg-parts.ts";
 import { RemoteTree, type UrlFor } from "./remote-tree.ts";
 
 // ── Reading an upstream declaration STRUCTURALLY ─────────────────────────────
@@ -135,6 +137,12 @@ export interface RemoteMountOptions {
   instanceRoot?: string;
   /** How `owner/repo` becomes a fetch URL — tests serve local bare repositories. */
   urlFor?: UrlFor;
+  /**
+   * `staging` mounts for a preview and needs neither signature nor consent
+   * (owner, 2026-10-07: "staging doesnt need signature"). Anything else is a
+   * real mount and must pass {@link mountTrust}. Default `mount`.
+   */
+  purpose?: "staging" | "mount";
 }
 
 const strip = (p: string): string => p.replace(/\/+$/, "");
@@ -291,8 +299,23 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         continue;
       }
       const byId = new Map(decl.directories.map((d) => [d.id, d]));
-      const ids =
-        override?.directories ??
+      const whole = override?.whole ?? decl.mountDefaults?.whole === true;
+      if (whole) {
+        plan.instances.push({
+          instance: q.name,
+          repository: q.repository,
+          sha: q.sha,
+          upstreamRoot: found.root,
+          path,
+          via: m.harness,
+          pinnedBy: q.pinnedBy,
+          declarationFile: found.file,
+          directories: [{ id: WHOLE_INSTANCE_ID, path, upstreamPath: found.root || "." }],
+        });
+      }
+      const ids = whole
+        ? []
+        : override?.directories ??
         decl.mountDefaults?.directories ??
         decl.directories.filter((d) => !contentIsOffCheckout({ source: d.source as SubgraphSource | undefined, storage: d.storage })).map((d) => d.id);
       const unknown = ids.filter((id) => !byId.has(id));
@@ -305,22 +328,23 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         continue;
       }
       const directories: PlannedDirectory[] = [];
-      for (const id of ids) {
+      if (!whole) for (const id of ids) {
         const d = byId.get(id)!;
         if (strip(d.path).split("/").includes("..")) continue; // a path that climbs out is not this instance's to give
         directories.push({ id, path: joinRel(path, d.path), upstreamPath: joinRel(found.root, d.path) });
       }
-      plan.instances.push({
-        instance: q.name,
-        repository: q.repository,
-        sha: q.sha,
-        upstreamRoot: found.root,
-        path,
-        via: m.harness,
-        pinnedBy: q.pinnedBy,
-        declarationFile: found.file,
-        directories,
-      });
+      if (!whole)
+        plan.instances.push({
+          instance: q.name,
+          repository: q.repository,
+          sha: q.sha,
+          upstreamRoot: found.root,
+          path,
+          via: m.harness,
+          pinnedBy: q.pinnedBy,
+          declarationFile: found.file,
+          directories,
+        });
 
       // TRANSITIVELY: each need in the same tree, else as a gitlink there.
       const modules = gitmodules(tree.readText(".gitmodules"));
@@ -405,7 +429,7 @@ function ensureIgnored(base: string, rel: string): "ignored" | "excluded" | "not
   const prefix = gitIn(base, ["rev-parse", "--show-prefix"]).stdout.trim();
   const file = resolve(base, gitIn(base, ["rev-parse", "--git-path", "info/exclude"]).stdout.trim());
   mkdirSync(dirname(file), { recursive: true });
-  appendFileSync(file, `# remote mount (bean 0mpw) — bun run mount:remote\n/${prefix}${rel}/\n`);
+  appendFileSync(file, `# remote mount (bean 0mpw) — bun run cat mount:remote\n/${prefix}${rel}/\n`);
   return "excluded";
 }
 
@@ -440,6 +464,16 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
     for (const p of plan.instances) {
       const target = join(plan.instanceRoot, p.path);
       const before = priorBy.get(p.instance);
+      // H8, bean `ieum`: a remote graph is mounted only on signed provenance or a
+      // person's consent for this pin; a staging preview needs neither. Checked
+      // BEFORE anything is checked out, so a refused mount writes nothing.
+      const via = plan.mounts.find((m) => m.harness === p.via);
+      const trust = via ? mountTrust(via, opts.purpose ?? "mount") : { ok: false as const, state: "could-not-determine" as const, detail: `no declared mount named \`${p.via}\`` };
+      if (!trust.ok) {
+        plan.outcomes.push({ instance: p.instance, state: trust.state === "refused" ? "missing" : "could-not-determine", path: p.path, detail: `not mounted: ${trust.detail}` });
+        if (before) locked.push(before);
+        continue;
+      }
       try {
         if (before) {
           const changed = modifiedSince(plan.instanceRoot, before);
@@ -463,7 +497,7 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           continue;
         }
         const tree = trees.get(`${p.repository}@${p.sha}`)!;
-        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => `${d.upstreamPath}/`)]);
+        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`))]);
 
         // Replace what THIS mount put there before — only that.
         if (before) {
@@ -483,7 +517,9 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           }
           const dst = join(plan.instanceRoot, d.path);
           mkdirSync(dirname(dst), { recursive: true });
-          cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true });
+          // A whole-instance mount at the upstream's root copies the fetch's
+          // own work tree: its `.git` is the temporary repository, never content.
+          cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true, filter: (from) => !(d.upstreamPath === "." && from === join(src, ".git")) });
         }
         // Digest AFTER every copy, so a nested directory's digest covers what is on disk.
         for (const d of p.directories) {
@@ -559,13 +595,13 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
   const r = readMountLock(lockFile);
   if (!r.ok) {
     return r.absent
-      ? { state: "missing", reason: `\`remoteMounts\` declared and no lock at ${mountLockFilename(ds.name)} — run \`bun run mount:remote\``, outcomes: [] }
+      ? { state: "missing", reason: `\`remoteMounts\` declared and no lock at ${mountLockFilename(ds.name)} — run \`bun run cat mount:remote\``, outcomes: [] }
       : { state: "could-not-determine", reason: r.why, outcomes: [] };
   }
   const want = JSON.stringify(ds.mounts.map((m) => [m.harness, m.repository, m.ref]).sort());
   const have = JSON.stringify(r.lock.mounts.map((m) => [m.harness, m.repository, m.ref]).sort());
   if (want !== have) {
-    return { state: "missing", reason: "the lock was written for different pins than the declaration names — run `bun run mount:remote`", outcomes: [] };
+    return { state: "missing", reason: "the lock was written for different pins than the declaration names — run `bun run cat mount:remote`", outcomes: [] };
   }
   // What the mount reached and did not lay down is carried in the lock, so
   // "the lock lists nothing wrong" is never mistaken for "nothing was wrong".
@@ -646,7 +682,7 @@ export function declaringInstances(checkout: string): { roots: string[]; unreada
  * declaration cannot be read is could-not-determine for the whole fan-out:
  * it may be the one that declares mounts.
  */
-export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?: UrlFor } = {}): { state: CheckResult["state"]; text: string } {
+export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?: UrlFor; purpose?: "staging" | "mount" } = {}): { state: CheckResult["state"]; text: string } {
   const { roots, unreadable } = declaringInstances(checkout);
   const parts: string[] = [];
   const states: CheckResult["state"][] = [];
@@ -660,7 +696,7 @@ export function remoteFanOut(checkout: string, opts: { check?: boolean; urlFor?:
       states.push(r.state);
       parts.push(reportOutcomes(`Remote mounts — ${root}`, r.state, r.reason, r.outcomes));
     } else {
-      const r = mountRemote({ instanceRoot: root, urlFor: opts.urlFor });
+      const r = mountRemote({ instanceRoot: root, urlFor: opts.urlFor, purpose: opts.purpose });
       const sum = summarise(r.plan.outcomes);
       states.push(sum.state);
       parts.push(reportOutcomes(`Remote mounts — ${root}`, sum.state, sum.reason, r.plan.outcomes));
@@ -676,7 +712,7 @@ if (import.meta.main) {
   const argv = process.argv.slice(2);
   const at = argv.indexOf("--instance");
   if (at === -1) {
-    const r = remoteFanOut(checkoutRootFor(process.cwd()), { check: argv.includes("--check") });
+    const r = remoteFanOut(checkoutRootFor(process.cwd()), { check: argv.includes("--check"), purpose: argv.includes("--staging") ? "staging" : "mount" });
     console.log(r.text);
     process.exit(exitCode(r.state));
   }
@@ -691,7 +727,7 @@ if (import.meta.main) {
     console.log(JSON.stringify({ instances: p.instances, outcomes: p.outcomes }, null, 2));
     process.exit(exitCode(p.mounts.length ? summarise(p.outcomes).state : "not-enabled"));
   }
-  const r = mountRemote({ instanceRoot });
+  const r = mountRemote({ instanceRoot, purpose: argv.includes("--staging") ? "staging" : "mount" });
   const state = r.plan.mounts.length ? summarise(r.plan.outcomes).state : "not-enabled";
   console.log(reportOutcomes("Remote mounts", state, state === "not-enabled" ? "no `remoteMounts` declared" : summarise(r.plan.outcomes).reason, r.plan.outcomes));
   if (r.excluded.length) console.log(`\nAdded to this worktree's info/exclude (not committed): ${r.excluded.map((p) => `\`${p}/\``).join(", ")}.`);

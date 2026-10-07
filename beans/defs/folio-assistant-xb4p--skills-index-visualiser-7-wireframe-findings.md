@@ -1,7 +1,7 @@
 ---
 # folio-assistant-xb4p
 title: 'skills-index visualiser: 7 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-skills-index
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:48Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/skills-index/` (i
 6. **The phone layout favours the path.** At 390 px the name and path column takes 147 px on `cat-harness` and the path breaks at any character (`cat-harness/skil / ls/authoring-mat / h/latex-authorin / g.md`). On the one-row siblings it is worse: the path column takes 260 px and the description column is 92 px, so "How a cold agent finds and loads the skill that governs its task." wraps to one or two words a line.
 7. **The small siblings get the same heavy page shell.** `kg-navigation` and `who-iris-skills` have one row each, but they repeat the full lede, note and four-row sibling list above it. At 390 px their only row starts at y ≈ 655.
 
-When fixed, re-draw `cat-harness/docs/wireframes/skills-index/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/skills-index/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 
@@ -48,3 +48,6 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — 5. Markdown shows through (literal backticks): Narrowed since 2026-09-29: 1 of 273 descriptions shows a literal backtick (was 24), and 26 descriptions now render <code>. The one left is a 220-char cut that splits an inline-code span: 'Structural-QA integration watcher … edited uses[] / kind / label'. (idx.mjs, bt.mjs)
 - **STILL-PRESENT** — 6. Phone layout favours the path: On the main skills page at 390, the name+path cell is 89px and the description 255px, and the path breaks anywhere (overflow-wrap:anywhere; 3 lines). The small siblings are still path-heavy: who-iris-skills 180px vs 115px, large-datasets-skills 184px vs 112px. (idx.mjs, idx2.mjs)
 - **STILL-PRESENT** — 7. Small siblings get the same heavy page shell: who-iris-skills (1 row) and large-datasets-skills (3 rows) are still preceded by the lede, the note and the sibling list. At 390 the first row starts at y≈931 (was ≈811). (idx.mjs, idx2.mjs)
+
+## Completed on landed evidence
+Landed on main in PR #1592 (References become links; replica band; dark-theme tag contrast).

@@ -9,7 +9,7 @@ updated_at: 2026-09-24T13:08:49Z
 parent: folio-assistant-1swy
 ---
 
-Measured 2026-09-24 by `bun run audit:coverage` (bean `xutg`). Four declared
+Measured 2026-09-24 by `bun run cat audit:coverage` (bean `xutg`). Four declared
 graph kinds hold files that **no `kg-audit` criterion and no gate declaring
 `@covers` reaches**:
 

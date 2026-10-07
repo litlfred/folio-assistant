@@ -65,6 +65,27 @@ function decl(): { canonicalUrl?: string } {
   }
 }
 
+/**
+ * The publisher-site rules smart-base supplies to fhir-harness's
+ * `fhir-cache-seed-npm`: package-name prefix → `OWNER/REPO[@BRANCH]` of the
+ * repository holding the publisher's published site, where
+ * `<rest-of-name>/<version>/package.tgz` is read.
+ *
+ * fhir-harness knows no publisher (ig-build-pipeline §"What this layer refuses
+ * to know about"; owner ruling 2026-10-07: "parameterize it"), so its default
+ * is empty and this WHO entry is passed in from here. Before #2436 it was a
+ * literal inside the seeder (bean 3ka9); the repository and branch are the
+ * ones that literal named, so WHO packages seed exactly as they did.
+ */
+export const SMART_PUBLISHER_SITE_REPOS: Readonly<Record<string, string>> = Object.freeze({
+  "smart.who.int.": "WorldHealthOrganization/smart-html@main",
+});
+
+/** `SMART_PUBLISHER_SITE_REPOS` as the seeder's `--site-repo` arguments. */
+export function smartSiteRepoArgs(): string[] {
+  return Object.entries(SMART_PUBLISHER_SITE_REPOS).flatMap(([prefix, repo]) => ["--site-repo", `${prefix}=${repo}`]);
+}
+
 export function tools(baseUrl?: string): ToolDefinition[] {
   const B = baseUrl ?? decl().canonicalUrl ?? "";
   const t = (n: Parameters<typeof toolTypeIri>[1]): string => toolTypeIri(B, n);
@@ -245,6 +266,42 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Seconds. The variables are recomputed from scratch on every run; there is no delta path.",
       },
       requires: { runtime: ["python3"], network: false },
+    }),
+
+    // ── The FHIR package-cache seeder, with WHO's publisher site ─────────
+    //
+    // fhir-harness's `fhir-cache-seed-npm` takes publisher-site rules as a
+    // parameter and has none of its own. This is the same seeder invoked with
+    // the rule smart-base owns — the seam the owner chose 2026-10-07.
+    defineTool({
+      id: "smart-fhir-cache-seed",
+      title: "Seed the FHIR package cache, with WHO's published site as a source",
+      description:
+        "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`): `smart.who.int.*` packages are also read from WHO's published-site repository, each fetch verified against the tarball's own package.json. Every other source and check is the seeder's own.",
+      install: { none: true },
+      invoke: {
+        shell: `bun run fhir-harness/scripts/fhir-cache-seed-npm.ts ${smartSiteRepoArgs().join(" ")} [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--missing-out <file>] [--dry-run] [name#version ...]`,
+      },
+      io: {
+        inputs: [
+          { name: "sushi-config", schema: t("FilesystemPath"), required: false, description: "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`." },
+          { name: "cache", schema: t("FilesystemPath"), required: false, description: "Default `~/.fhir/packages`, which SUSHI and the IG Publisher read." },
+        ],
+        outputs: [
+          { name: "installed", schema: t("Count") },
+          { name: "missing", schema: t("Count"), description: "Exit 1 when any is missing, each listed with why." },
+        ],
+      },
+      satisfies: ["ig-publisher-fork"],
+      selection: {
+        when: "Seeding the cache for a WHO SMART IG where packages.fhir.org is unreachable, so `smart.who.int.*` dependencies can also come from WHO's published site.",
+        limits: "The site rule only adds a source; the seeder's trust checks, exact-version rule and missing list are unchanged.",
+        cost: "As `fhir-cache-seed-npm`, plus one `git ls-remote` and one download per `smart.who.int.*` package.",
+      },
+      requires: { runtime: ["bun", "npm", "git"], network: true },
+      remedies: [
+        { host: "github.com", none: "WHO's published-site repository is read from GitHub; with it refused, only npm and `--mirror` remain." },
+      ],
     }),
   ];
 }

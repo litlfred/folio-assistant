@@ -20,9 +20,9 @@
  * recorded by the steward and the facts stay GitHub's.
  *
  * Usage:
- *   bun run merge:steward              # the ordered queue, as a table
- *   bun run merge:steward --json       # the same, machine-readable
- *   bun run merge:steward --base <ref> # order against a ref other than origin/main
+ *   bun run cat merge:steward              # the ordered queue, as a table
+ *   bun run cat merge:steward --json       # the same, machine-readable
+ *   bun run cat merge:steward --base <ref> # order against a ref other than origin/main
  *
  * @module cat-harness/scripts/merge-steward
  * @covers none — a steward's reader over GitHub and the bean store; it judges no declared graph

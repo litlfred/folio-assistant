@@ -473,7 +473,7 @@ describe("a folio's own repository (hp54)", () => {
  */
 describe("separating an instance (--retire)", () => {
   /** Host `h` (fsh-guts on `cat/h/fsh-guts`), an instance `leaf/` inside it, and a fork for the live copy. */
-  function hostWithLeaf(opts: { guts?: boolean } = {}) {
+  function hostWithLeaf(opts: { guts?: boolean; eol?: boolean } = {}) {
     const r = remote();
     run(r.work, "config", "user.name", "t");
     run(r.work, "config", "user.email", "t@t");
@@ -491,6 +491,10 @@ describe("separating an instance (--retire)", () => {
     writeFileSync(join(r.work, "leaf", ".gitignore"), "*.log\n");
     writeFileSync(join(r.work, "leaf", "kept.log"), "tracked despite the ignore\n");
     writeFileSync(join(r.work, "leaf.config.json"), "{}\n");
+    if (opts.eol) {
+      writeFileSync(join(r.work, ".gitattributes"), "*.bat text eol=crlf\n");
+      writeFileSync(join(r.work, "leaf", "w.bat"), "@echo off\nexit /b 0\n");
+    }
     run(r.work, "add", "-A", "-f");
     run(r.work, "commit", "-qm", "host with a leaf instance");
     if (opts.guts !== false) {
@@ -517,6 +521,14 @@ describe("separating an instance (--retire)", () => {
     const t = store.readTreeEntries("fsh-guts/separated");
     return t.state === "hit" ? new Map([...t.files].map(([p, f]) => [p, f.bytes])) : new Map();
   }
+
+  test("a root eol=crlf attribute does not make the snapshot differ from HEAD (folio-assistant-sci, 2026-10-07)", () => {
+    // `git archive HEAD` applied the root's `*.bat eol=crlf`, so the snapshot
+    // held CRLF where the object store held LF and every retire was refused.
+    const r = hostWithLeaf({ eol: true });
+    const d = retire(r);
+    expect(d.state).toBe("would-retire");
+  });
 
   test("dry run deposits nothing and removes nothing", () => {
     const r = hostWithLeaf();

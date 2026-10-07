@@ -23,7 +23,7 @@
  * The client therefore uses `opfs-sahpool` inside its own Worker.
  *
  * The SOURCE is the pinned devDependency `@sqlite.org/sqlite-wasm`. So an
- * upgrade is a `package.json` bump plus `bun run slice:sqlite:vendor`.
+ * upgrade is a `package.json` bump plus `bun run cat slice:sqlite:vendor`.
  * `--check` fails when the vendored bytes differ from the pinned package, which
  * catches a hand-edit and a bump that was never re-vendored.
  *
@@ -71,7 +71,7 @@ if (import.meta.main) {
   if (process.argv.includes("--check")) {
     const p = vendorProblems();
     if (p.length) {
-      for (const x of p) console.error(`  ✗ ${x} — run bun run slice:sqlite:vendor`);
+      for (const x of p) console.error(`  ✗ ${x} — run bun run cat slice:sqlite:vendor`);
       process.exit(1);
     }
     console.log("✓ vendored sqlite-wasm matches the pinned package");

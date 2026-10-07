@@ -152,6 +152,8 @@ this way rather than as advice.
 | **R18** | Do not "correct" a record that looks wrong | the English-titled editorial manual really does carry an **Italian** ISBN |
 | **R19** | A derived figure must round-trip the figure it was derived from | the site total claimed to be `361.55 × 1024³` and rendered as **361.56** |
 | **R20** | An item count and a file count are different denominators | 273,559 against 1,057,223 — a fraction built from the wrong one is off by 3.86× |
+| **R21** | **Mint stable URIs at the extractor (Upstream Skolemization)** | Anonymous compound nodes become unresolvable blank nodes downstream; minting `https://iris.who.int/entity/item/{handle}#{prop}_{idx}` at extraction enables zero-pass graph compilation |
+| **R22** | **Append-only streaming partition writes** | A 300,000 item corpus cannot accumulate uncompressed in working memory; write quads directly to partition file streams |
 
 ### R8 has a worked failure, in this repository
 
@@ -206,7 +208,7 @@ this repository already holds, rasterised by
 That collision is the whole hazard: nothing downstream can tell the two apart
 from the bundle name, so the node has to say.
 
-`folio-assistant-core/scripts/gen-covers.ts` (run as `bun run iris:covers`) is the catalogue half — generic to any DSpace-shaped catalogue since bean `eayu`. It renders only covers
+`folio-assistant-core/scripts/gen-covers.ts` (run as `bun run cat iris:covers`) is the catalogue half — generic to any DSpace-shaped catalogue since bean `eayu`. It renders only covers
 the **catalogue asks for** — a node declares the `THUMBNAIL` bitstream and
 this supplies the bytes, so adding one is a catalogue edit rather than a script
 quietly adding files to the repository. And it **refuses** to write bytes for a

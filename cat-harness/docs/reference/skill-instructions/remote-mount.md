@@ -31,8 +31,8 @@ built on:
 |---|---|
 | the process | [`mount-dependency.bpmn`](../../processes/mount-dependency.html); the per-subgraph view is the `remote` flow of [`mount-subgraph.bpmn`](../../processes/mount-subgraph.html) |
 | the schema | `cat-harness/schemas/remote-mount.ts`, plus the `remote` member of `SubgraphSource` (`schemas/subgraph-source.ts`) |
-| the tool | `bun run mount:remote` (`--plan` to resolve without writing), and `bun run mount:remote:check` (offline) |
-| the entry point | `bun run state:mount`, which the session-start hook already runs |
+| the tool | `bun run cat mount:remote` (`--plan` to resolve without writing), and `bun run cat mount:remote:check` (offline) |
+| the entry point | `bun run cat state:mount`, which the session-start hook already runs |
 
 ## Mount, subscribe or associate: choose first
 
@@ -133,6 +133,26 @@ Every instance ends in exactly one state:
 
 Could-not-determine outranks missing, and missing outranks mounted. **A fetch
 that failed is never an empty layer.**
+
+## Publishing a remote-mounted downstream — provision `gh-pages` first
+
+A mount brings layers into a checkout; it provisions **nothing** on the
+downstream's remote. A downstream that publishes a site needs a `gh-pages`
+branch before GitHub Pages can be switched on, exactly as a new repository
+does. Owner, 2026-10-01: *"need to create gh-pages branch before can turn
+on"*; repeated 2026-10-07: *"need to create gh-pages before can deploy"*
+(issue #2417).
+
+The step is `Task_ProvisionGhPages` ("Provision gh-pages") in the
+getting-started process ([`getting-started`](getting-started.md)
+§5), with the semantics of `A_Provision` in bootstrap-tools'
+[`render-kg-to-github-pages.bpmn`](../../processes/render-kg-to-github-pages.html).
+Run `bun run cat-harness/scripts/pages-bootstrap.ts --provision` (idempotent,
+never forced; without the flag it only reports `unprovisioned` and the exact
+command), then set Pages to **"Deploy from a branch: gh-pages, / (root)"**.
+The worked example is litlfred/test — an overlay with remote mounts, its
+`gh-pages` provisioned as `860f9c2` in litlfred/test#5 — written up in
+[`repo-conversion`](repo-conversion.md) §5.
 
 ## Never
 

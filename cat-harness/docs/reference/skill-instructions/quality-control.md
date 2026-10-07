@@ -71,7 +71,7 @@ cleared, and a QC gate is the last place that should be blurred.
 
 ## What to run
 
-`qa_sweep` for content, `bun run kg:audit` for the process/role/skill graph,
+`qa_sweep` for content, `bun run cat kg:audit` for the process/role/skill graph,
 `fhir-validation` for FHIR conformance. `checklistSections` narrows the pass;
 `findings` and `checklistResults` are what the reviewer reads — not
 `overallResult` alone, which is a summary of them rather than a substitute.

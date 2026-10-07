@@ -159,7 +159,7 @@ additively") done by a general mechanism rather than one-off wiring.
 | 1 | **Schema**: `subscriptions` on the declaration (strict items, `ref` a SHA, `repository` a `RepoFullName`); may not overlap `needs` or `associatedHarnesses` | Zod plus QA check; a malformed entry fails |
 | 2 | **Known substrates** registry: derived rows plus hand rows with `status` | generated file plus `:check`; iHRIS and who-iris present |
 | 3 | **Visualizer** page (read-only, generated) | renders the registry and every subscription; `?` for unknown |
-| 4 | **subscribe** tool: fetch and validate a substrate's declaration at a pin (a sparse, shallow fetch of the root declaration only) | `bun run kg:subscribe <repo>@<sha>` records the entry and cached declaration; a non-substrate is refused with its reason |
+| 4 | **subscribe** tool: fetch and validate a substrate's declaration at a pin (a sparse, shallow fetch of the root declaration only) | `bun run cat kg:subscribe <repo>@<sha>` records the entry and cached declaration; a non-substrate is refused with its reason |
 | 5 | **materialise a subgraph**: `sync-remote-skills` generalised, through `Process_MaterializeRemote` | bytes plus `materialization.json`; `check:materialized-fixity` covers them |
 | 6 | **materialise an asset on demand** | one `library/` asset fetched with its gates answered |
 | 7 | **instantiate a harness** from a subscription | `<harness>.config.json` written; the navbar shows it; `check:instance-render` green |

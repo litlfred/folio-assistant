@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { layoutStandIn, parseThemed } from "./support/themed-page.ts";
 
 /**
  * R30's THREE STATES, bean `j2if`. Owner, 2026-09-21:
@@ -40,6 +41,23 @@ const SITE = siteDirFor(ROOT);
 // `/home/user/folio-assistant/home/user/folio-assistant/...`. A name that
 // lies about a path is a name that gets joined wrongly.
 const SITE_ABS = join(ROOT, SITE);
+/**
+ * A committed library page as the LAYOUT serves it. The pages are THEMED since
+ * 2026-10-07: front matter and a Liquid-raw body, on the site's `default`
+ * layout, which loads `docs-ui.css` and `docs-ui.js` on every page — so the
+ * folio comes from the layout rather than from a mount fragment in the page.
+ * The stand-in (`support/themed-page.ts`) loads the two the same way, from the
+ * site root, where the routes below serve the real files.
+ */
+function asLayoutServesIt(file: string): string {
+  const themed = parseThemed(readFileSync(file, "utf8"));
+  if (!themed) throw new Error(`${file} is not a themed page`);
+  return layoutStandIn(themed, {
+    head: '<link rel="stylesheet" href="/assets/css/docs-ui.css">',
+    tail: '<script src="/assets/js/docs-ui.js"></script>',
+  });
+}
+
 /**
  * The library viewer's SHARED assets (#1881). A library page is a thin shell
  * that loads `assets/library/viewer.css` and `viewer.js`, so a route that
@@ -422,7 +440,7 @@ test.describe("the REAL generated library view, not a fixture", () => {
 const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
 
   const serveReal = async (page: import("@playwright/test").Page) => {
-    const html = readFileSync(VIEW, "utf8");
+    const html = asLayoutServesIt(VIEW);
     const data = existsSync(PROJECTION) ? readFileSync(PROJECTION, "utf8") : "{}";
     await page.route("**/*", async (route) => {
       const url = new URL(route.request().url());
@@ -451,9 +469,16 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
     await page.mouse.move(900, 600);
   };
 
-  test("the generated page exists and carries the mount", () => {
-    expect(existsSync(VIEW), `${VIEW} is missing — run \`bun run library:viz\``).toBe(true);
-    expect(readFileSync(VIEW, "utf8")).toContain("data-fa-folio-mount");
+  test("the generated page exists, and is on the layout that carries the folio", () => {
+    expect(existsSync(VIEW), `${VIEW} is missing — run \`bun run cat library:viz\``).toBe(true);
+    // Themed: the layout loads docs-ui.js, so the page carries no mount of its
+    // own — a second one would load the folio twice.
+    const page = readFileSync(VIEW, "utf8");
+    expect(page.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(page).not.toContain("data-fa-folio-mount");
+    expect(readFileSync(join(SITE_ABS, "_includes", "head_custom.html"), "utf8")).toMatch(
+      /<script src="\{\{ '\/assets\/js\/docs-ui\.js' \| relative_url \}\}[^"]*" defer><\/script>/,
+    );
   });
 
   test("its rows declare themselves, and the folio decorates them", async ({ page }) => {
@@ -464,7 +489,7 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
       .toHaveText("Pull out to folio");
   });
 
-  test("the glass comes down on it — the mount really resolved its root", async ({ page }) => {
+  test("the glass comes down on it — the layout's docs-ui.js mounts it", async ({ page }) => {
     await serveReal(page);
     await expect(page.locator(".fa-glass-handle")).toBeVisible();
   });
@@ -510,7 +535,7 @@ test.describe("an asset's address is its own path IRI", () => {
   const DATA2 = join(SITE_ABS, "assets", "library", "index.json");
 
   const serveView = async (page: import("@playwright/test").Page, hash = "") => {
-    const html = readFileSync(VIEW2, "utf8");
+    const html = asLayoutServesIt(VIEW2);
     const data = readFileSync(DATA2, "utf8");
     await page.route("**/*", async (route) => {
       const url = new URL(route.request().url());

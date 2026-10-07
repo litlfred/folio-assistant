@@ -8,10 +8,10 @@
  * @covers todos
  *
  * ```sh
- * bun run state:seed --id beans              # refresh the seed, verify, report
- * bun run state:seed --id beans --dry-run    # what it would push, pushing nothing
- * bun run state:seed --id beans --authoritative   # the CUTOVER half: the branch becomes the store
- * bun run state:seed --retire <root> --into <host instance> --repository <url> \\
+ * bun run cat state:seed --id beans              # refresh the seed, verify, report
+ * bun run cat state:seed --id beans --dry-run    # what it would push, pushing nothing
+ * bun run cat state:seed --id beans --authoritative   # the CUTOVER half: the branch becomes the store
+ * bun run cat state:seed --retire <root> --into <host instance> --repository <url> \\
  *   --also <root>.config.json                  # SEPARATION: a whole instance, into the host's fsh-guts
  * ```
  *
@@ -122,7 +122,7 @@
 import { spawnSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { resolveDirectories, type ResolvedDirectory } from "../../cat-harness/schemas/cat-harness.ts";
 import { FROZEN_SUBTREE_KIND, FSH_GUTS_KIND, FSH_GUTS_SCHEMA_ID } from "../../cat-harness/schemas/fsh-guts.ts";
@@ -1032,7 +1032,29 @@ export function retireInstance(path: string, opts: RetireOptions): RetireResult 
   }
   const head = git(["rev-parse", "HEAD"]).stdout.trim();
   const at = git(["log", "-1", "--format=%ct", head]).stdout.trim();
-  const archived = spawnSync("git", ["archive", "--format=tar.gz", `--mtime=@${at || "0"}`, head, "--", ...all], {
+  // Archive a tree holding ONLY the leaving paths, not `head` itself: `git
+  // archive` applies the archived tree's `.gitattributes`, and the root's
+  // `eol=crlf` on `*.bat` rewrote every Windows wrapper, so the snapshot of
+  // folio-assistant-sci/ extracted to a tree HEAD never held. A temporary
+  // index keeps the real one untouched.
+  const index = join(mkdtempSync(join(tmpdir(), "separation-index-")), "index");
+  const env = { ...process.env, GIT_INDEX_FILE: index };
+  const gi = (args: string[]) => spawnSync("git", args, { cwd: repoRoot, encoding: "utf-8", env });
+  let only = "";
+  try {
+    if (gi(["read-tree", "--empty"]).status !== 0) return { state: "unknown", reason: "git read-tree --empty failed" };
+    // `ls-tree -r` rows are `--index-info` input as they stand, for a file
+    // (an `--also` path) and a directory alike.
+    const rows = gi(["ls-tree", "-r", "-z", head, "--", ...all]);
+    if (rows.status !== 0) return { state: "unknown", reason: `git ls-tree of ${all.join(", ")} failed: ${rows.stderr.trim()}` };
+    const r = spawnSync("git", ["update-index", "-z", "--index-info"], { cwd: repoRoot, encoding: "utf-8", env, input: rows.stdout });
+    if (r.status !== 0) return { state: "unknown", reason: `git update-index of ${all.join(", ")} failed: ${r.stderr.trim()}` };
+    only = gi(["write-tree"]).stdout.trim();
+  } finally {
+    rmSync(dirname(index), { recursive: true, force: true });
+  }
+  if (!only) return { state: "unknown", reason: `could not write a tree of ${all.join(", ")}` };
+  const archived = spawnSync("git", ["archive", "--format=tar.gz", `--mtime=@${at || "0"}`, only], {
     cwd: repoRoot,
     maxBuffer: 1024 * 1024 * 1024,
   });
@@ -1147,7 +1169,7 @@ if (import.meta.main) {
     const into = named("--into");
     const repository = named("--repository");
     if (!into || !repository) {
-      console.error("usage: bun run state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit] [--repo-root <dir>] [--json]");
+      console.error("usage: bun run cat state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit] [--repo-root <dir>] [--json]");
       process.exit(5);
     }
     const also = argv.flatMap((a, i) => (a === "--also" && argv[i + 1] ? [argv[i + 1]!] : []));
@@ -1159,9 +1181,9 @@ if (import.meta.main) {
   const id = named("--id");
   if (!id) {
     console.error(
-      "usage: bun run state:seed --id <directory id or branch> [--repo-root <dir>] [--from-manifest] [--authoritative] [--dry-run] [--json]\n" +
-        "       bun run state:seed --id <id> --cutover [--commit] [--repo-root <dir>] [--json]\n" +
-        "       bun run state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit]",
+      "usage: bun run cat state:seed --id <directory id or branch> [--repo-root <dir>] [--from-manifest] [--authoritative] [--dry-run] [--json]\n" +
+        "       bun run cat state:seed --id <id> --cutover [--commit] [--repo-root <dir>] [--json]\n" +
+        "       bun run cat state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit]",
     );
     process.exit(5);
   }

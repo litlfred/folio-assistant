@@ -28,11 +28,11 @@
           "heading": false
         },
         {
-          "term": "you're",
+          "term": "capitals",
           "heading": false
         },
         {
-          "term": "capitals",
+          "term": "typescript",
           "heading": false
         }
       ],
@@ -64,7 +64,7 @@
           "heading": true
         },
         {
-          "term": "applications",
+          "term": "connectors",
           "heading": false
         }
       ],
@@ -189,11 +189,11 @@
           "heading": true
         },
         {
-          "term": "security",
+          "term": "safety",
           "heading": true
         },
         {
-          "term": "safety",
+          "term": "security",
           "heading": true
         }
       ],
@@ -257,8 +257,8 @@
           "heading": false
         },
         {
-          "term": "protections",
-          "heading": false
+          "term": "implementation",
+          "heading": true
         }
       ],
       "extract": "### Implementation Guidelines While MCP itself cannot enforce these security principles at the protocol level, implementors **SHOULD**: 1. Build robust consent and authorization flows into their applications 2. Provide clear documentation of security implications 3. Implement appropriate access controls and data protections 4. Follow security best practices in their integrations 5. Consider privacy implications in",
@@ -300,7 +300,7 @@
           "heading": false
         },
         {
-          "term": "stateless",
+          "term": "mcp",
           "heading": false
         }
       ],
@@ -367,12 +367,12 @@
           "heading": false
         },
         {
-          "term": "manages",
-          "heading": false
-        },
-        {
           "term": "clients",
           "heading": true
+        },
+        {
+          "term": "manages",
+          "heading": false
         }
       ],
       "extract": "### Clients Each client is created by the host and communicates with exactly one server: - Communicates with exactly one server - Attaches protocol version and capabilities to every request - Routes protocol messages bidirectionally - Manages subscriptions and notifications - Maintains security boundaries between servers A host application creates and manages multiple clients, with each client having a 1:1",
@@ -431,11 +431,11 @@
           "heading": false
         },
         {
-          "term": "isolation",
+          "term": "servers",
           "heading": false
         },
         {
-          "term": "servers",
+          "term": "isolation",
           "heading": false
         },
         {
@@ -479,7 +479,7 @@
           "heading": false
         },
         {
-          "term": "features",
+          "term": "protocol",
           "heading": false
         }
       ],
@@ -631,7 +631,7 @@
           "heading": false
         },
         {
-          "term": "rfc section",
+          "term": "mcp clients",
           "heading": false
         }
       ],
@@ -674,11 +674,11 @@
           "heading": false
         },
         {
-          "term": "dynamic client",
+          "term": "oauth authorization",
           "heading": false
         },
         {
-          "term": "oauth authorization",
+          "term": "dynamic client",
           "heading": false
         }
       ],
@@ -742,11 +742,11 @@
           "heading": false
         },
         {
-          "term": "https",
+          "term": "cache",
           "heading": false
         },
         {
-          "term": "cache",
+          "term": "https",
           "heading": false
         }
       ],
@@ -832,7 +832,7 @@
           "heading": false
         },
         {
-          "term": "supplied",
+          "term": "registering",
           "heading": false
         }
       ],
@@ -994,7 +994,7 @@
           "heading": true
         },
         {
-          "term": "http-based",
+          "term": "owners",
           "heading": false
         }
       ],
@@ -1054,7 +1054,7 @@
           "heading": false
         },
         {
-          "term": "dynamic client",
+          "term": "authorization server",
           "heading": false
         }
       ],
@@ -1150,7 +1150,7 @@
           "heading": true
         },
         {
-          "term": "endpoints",
+          "term": "advertise",
           "heading": false
         }
       ],
@@ -1214,11 +1214,11 @@
           "heading": false
         },
         {
-          "term": "least privilege",
+          "term": "mcp clients",
           "heading": false
         },
         {
-          "term": "mcp clients",
+          "term": "least privilege",
           "heading": false
         },
         {
@@ -1309,11 +1309,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "resource",
+          "term": "parameter",
           "heading": true
         },
         {
-          "term": "parameter",
+          "term": "resource",
           "heading": true
         },
         {
@@ -1568,7 +1568,7 @@
           "heading": false
         },
         {
-          "term": "determined",
+          "term": "servers",
           "heading": false
         }
       ],
@@ -1748,11 +1748,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "token",
+          "term": "theft",
           "heading": true
         },
         {
-          "term": "theft",
+          "term": "token",
           "heading": true
         },
         {
@@ -1839,12 +1839,12 @@
           "heading": true
         },
         {
-          "term": "attacks",
-          "heading": true
-        },
-        {
           "term": "authorization",
           "heading": false
+        },
+        {
+          "term": "attacks",
+          "heading": true
         }
       ],
       "extract": "## Mix-Up Attacks An attacker that controls one of the authorization servers an MCP client interacts with may attempt to have the client send it an authorization code or token issued by a different, honest authorization server (a mix-up attack, described in [RFC9207 Section 1](https://datatracker.ietf.org/doc/html/rfc9207#section-1)). [Authorization Response",
@@ -1879,7 +1879,7 @@
           "heading": false
         },
         {
-          "term": "phishing",
+          "term": "trusts",
           "heading": false
         }
       ],
@@ -2034,23 +2034,23 @@
           "heading": false
         },
         {
-          "term": "privilege",
-          "heading": true
-        },
-        {
           "term": "upstream",
           "heading": false
+        },
+        {
+          "term": "privilege",
+          "heading": true
         },
         {
           "term": "restriction",
           "heading": true
         },
         {
-          "term": "unauthorized",
+          "term": "issued",
           "heading": false
         },
         {
-          "term": "issued",
+          "term": "oauth",
           "heading": false
         }
       ],
@@ -2129,11 +2129,11 @@
           "heading": true
         },
         {
-          "term": "initiate",
+          "term": "sender",
           "heading": false
         },
         {
-          "term": "sender",
+          "term": "initiate",
           "heading": false
         }
       ],
@@ -2176,7 +2176,7 @@
           "heading": false
         },
         {
-          "term": "operation",
+          "term": "field",
           "heading": false
         }
       ],
@@ -2208,11 +2208,11 @@
           "heading": false
         },
         {
-          "term": "indicates",
+          "term": "polymorphic",
           "heading": false
         },
         {
-          "term": "advertised",
+          "term": "indicates",
           "heading": false
         }
       ],
@@ -2375,7 +2375,7 @@
           "heading": false
         },
         {
-          "term": "identity",
+          "term": "stream",
           "heading": false
         }
       ],
@@ -2403,7 +2403,7 @@
           "heading": false
         },
         {
-          "term": "negotiate",
+          "term": "transport",
           "heading": false
         }
       ],
@@ -2547,7 +2547,7 @@
           "heading": false
         },
         {
-          "term": "implementation",
+          "term": "requirements",
           "heading": true
         }
       ],
@@ -2590,7 +2590,7 @@
           "heading": false
         },
         {
-          "term": "disabled",
+          "term": "dereferenced",
           "heading": false
         }
       ],
@@ -2614,11 +2614,11 @@
           "heading": true
         },
         {
-          "term": "cap",
+          "term": "denial-of-service",
           "heading": false
         },
         {
-          "term": "validator",
+          "term": "cap",
           "heading": false
         }
       ],
@@ -2665,11 +2665,11 @@
           "heading": false
         },
         {
-          "term": "request per-request",
+          "term": "protocol fields",
           "heading": false
         },
         {
-          "term": "protocol fields",
+          "term": "request per-request",
           "heading": false
         },
         {
@@ -2800,7 +2800,7 @@
           "heading": true
         },
         {
-          "term": "disconnect",
+          "term": "stream",
           "heading": false
         }
       ],
@@ -3058,7 +3058,7 @@
           "heading": true
         },
         {
-          "term": "adds",
+          "term": "transports",
           "heading": false
         }
       ],
@@ -3295,12 +3295,12 @@
           "heading": false
         },
         {
-          "term": "integrity",
+          "term": "field",
           "heading": false
         },
         {
-          "term": "workflow",
-          "heading": true
+          "term": "integrity",
+          "heading": false
         }
       ],
       "extract": "#### Server Requirements (Basic Workflow) 1. Servers **MAY** respond to any [supported client request](#supported-requests) with an `InputRequiredResult`. 1. The `InputRequiredResult` **MAY** include an `inputRequests` field. - `inputRequests` keys are server assigned identifiers and **MUST** be unique within the scope of the request. - `inputRequests` values are request objects that **MUST** be one of",
@@ -3387,11 +3387,11 @@
           "heading": true
         },
         {
-          "term": "compromised",
+          "term": "bypass",
           "heading": false
         },
         {
-          "term": "bypass",
+          "term": "alter",
           "heading": false
         }
       ],
@@ -3419,7 +3419,7 @@
           "heading": false
         },
         {
-          "term": "tracking",
+          "term": "messages",
           "heading": false
         }
       ],
@@ -3518,7 +3518,7 @@
           "heading": false
         },
         {
-          "term": "cancels",
+          "term": "stream",
           "heading": false
         }
       ],
@@ -3729,7 +3729,7 @@
       "summary": null,
       "keywords": [
         {
-          "term": "binding",
+          "term": "messages",
           "heading": false
         },
         {
@@ -3737,7 +3737,7 @@
           "heading": false
         },
         {
-          "term": "messages",
+          "term": "binding",
           "heading": false
         },
         {
@@ -3960,12 +3960,12 @@
       "summary": null,
       "keywords": [
         {
-          "term": "patterns mrtr",
-          "heading": false
-        },
-        {
           "term": "messages",
           "heading": true
+        },
+        {
+          "term": "patterns mrtr",
+          "heading": false
         },
         {
           "term": "specification basic",
@@ -4000,7 +4000,7 @@
           "heading": false
         },
         {
-          "term": "puts",
+          "term": "json-rpc",
           "heading": false
         }
       ],
@@ -4080,12 +4080,12 @@
       "summary": null,
       "keywords": [
         {
-          "term": "termination",
-          "heading": true
-        },
-        {
           "term": "restart",
           "heading": false
+        },
+        {
+          "term": "termination",
+          "heading": true
         },
         {
           "term": "unexpected",
@@ -4208,7 +4208,7 @@
           "heading": true
         },
         {
-          "term": "connections",
+          "term": "http",
           "heading": false
         }
       ],
@@ -4248,11 +4248,11 @@
           "heading": false
         },
         {
-          "term": "sse response",
-          "heading": false
+          "term": "messages",
+          "heading": true
         },
         {
-          "term": "response stream",
+          "term": "sse response",
           "heading": false
         }
       ],
@@ -4280,6 +4280,14 @@
           "heading": false
         },
         {
+          "term": "messages",
+          "heading": true
+        },
+        {
+          "term": "line beginning",
+          "heading": false
+        },
+        {
           "term": "specification basic",
           "heading": false
         },
@@ -4288,16 +4296,8 @@
           "heading": false
         },
         {
-          "term": "line beginning",
-          "heading": false
-        },
-        {
           "term": "basic patterns",
           "heading": false
-        },
-        {
-          "term": "messages",
-          "heading": true
         },
         {
           "term": "subscriptions-listen",
@@ -4332,8 +4332,8 @@
           "heading": false
         },
         {
-          "term": "flow",
-          "heading": true
+          "term": "stream",
+          "heading": false
         }
       ],
       "extract": "## Message Flow The following diagrams illustrate the message flows on a single MCP endpoint. **Requests and responses.** Each request is its own POST; the server chooses per request whether to respond with a single JSON object or an SSE stream: ```mermaid sequenceDiagram participant Client participant Server note over Client,Server: Simple response Client->>Server: POST tools/call (JSON-RPC request)",
@@ -4520,19 +4520,19 @@
           "heading": false
         },
         {
-          "term": "reachable",
-          "heading": false
-        },
-        {
           "term": "header",
           "heading": false
         },
         {
-          "term": "annotation",
+          "term": "reachable",
           "heading": false
         },
         {
           "term": "permitted",
+          "heading": false
+        },
+        {
+          "term": "annotation",
           "heading": false
         }
       ],
@@ -4580,7 +4580,7 @@
           "heading": false
         },
         {
-          "term": "decode",
+          "term": "characters",
           "heading": false
         }
       ],
@@ -4600,15 +4600,15 @@
       "summary": null,
       "keywords": [
         {
-          "term": "append",
-          "heading": false
-        },
-        {
           "term": "client",
           "heading": true
         },
         {
           "term": "header",
+          "heading": false
+        },
+        {
+          "term": "append",
           "heading": false
         },
         {
@@ -4720,11 +4720,11 @@
           "heading": false
         },
         {
-          "term": "error response",
+          "term": "error code",
           "heading": false
         },
         {
-          "term": "error code",
+          "term": "error response",
           "heading": false
         }
       ],
@@ -4864,11 +4864,11 @@
           "heading": true
         },
         {
-          "term": "every request",
+          "term": "protocol version",
           "heading": false
         },
         {
-          "term": "protocol version",
+          "term": "every request",
           "heading": false
         }
       ],
@@ -4928,7 +4928,7 @@
           "heading": false
         },
         {
-          "term": "front",
+          "term": "server",
           "heading": false
         }
       ],
@@ -5024,15 +5024,15 @@
           "heading": false
         },
         {
+          "term": "dual-era server",
+          "heading": false
+        },
+        {
           "term": "legacy works",
           "heading": false
         },
         {
           "term": "legacy revision",
-          "heading": false
-        },
-        {
-          "term": "dual-era server",
           "heading": false
         },
         {
@@ -5044,11 +5044,11 @@
           "heading": false
         },
         {
-          "term": "legacy semantics",
+          "term": "modern request",
           "heading": false
         },
         {
-          "term": "modern request",
+          "term": "legacy semantics",
           "heading": false
         }
       ],
@@ -5087,10 +5087,6 @@
           "heading": false
         },
         {
-          "term": "sep",
-          "heading": false
-        },
-        {
           "term": "multi round-trip",
           "heading": false
         },
@@ -5103,6 +5099,10 @@
           "heading": false
         },
         {
+          "term": "sep",
+          "heading": false
+        },
+        {
           "term": "identify themselves",
           "heading": false
         },
@@ -5111,8 +5111,8 @@
           "heading": false
         },
         {
-          "term": "major",
-          "heading": true
+          "term": "replaces",
+          "heading": false
         }
       ],
       "extract": "## Major changes 1. Remove protocol-level sessions and the `Mcp-Session-Id` header from the Streamable HTTP transport. List endpoints (`tools/list`, `resources/list`, `prompts/list`) no longer vary per-connection. Servers that need cross-call state use explicit, server-minted handles passed as ordinary tool arguments ([SEP-2567](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2567)). 2. Make MCP",
@@ -5139,11 +5139,11 @@
           "heading": false
         },
         {
-          "term": "sep",
+          "term": "error code",
           "heading": false
         },
         {
-          "term": "error code",
+          "term": "sep",
           "heading": false
         },
         {
@@ -5151,12 +5151,12 @@
           "heading": true
         },
         {
-          "term": "changes",
-          "heading": true
-        },
-        {
           "term": "issuer",
           "heading": false
+        },
+        {
+          "term": "changes",
+          "heading": true
         },
         {
           "term": "cache",
@@ -5199,11 +5199,11 @@
           "heading": false
         },
         {
-          "term": "sep",
+          "term": "roots",
           "heading": false
         },
         {
-          "term": "roots",
+          "term": "sep",
           "heading": false
         }
       ],
@@ -5308,7 +5308,7 @@
           "heading": false
         },
         {
-          "term": "mode",
+          "term": "servers",
           "heading": false
         }
       ],
@@ -5427,7 +5427,7 @@
           "heading": false
         },
         {
-          "term": "interaction",
+          "term": "url",
           "heading": false
         }
       ],
@@ -5725,11 +5725,11 @@
           "heading": false
         },
         {
-          "term": "unauthorized",
+          "term": "acquired",
           "heading": false
         },
         {
-          "term": "acquired",
+          "term": "implementers",
           "heading": false
         }
       ],
@@ -5817,19 +5817,19 @@
           "heading": false
         },
         {
-          "term": "third-party service",
-          "heading": false
-        },
-        {
           "term": "mcp server",
           "heading": false
         },
         {
-          "term": "third-party resource",
+          "term": "third-party service",
           "heading": false
         },
         {
           "term": "mcp client",
+          "heading": false
+        },
+        {
+          "term": "third-party resource",
           "heading": false
         },
         {
@@ -6000,7 +6000,7 @@
           "heading": true
         },
         {
-          "term": "authoritative",
+          "term": "joe",
           "heading": false
         }
       ],
@@ -6048,27 +6048,27 @@
       "summary": null,
       "keywords": [
         {
-          "term": "phishing",
-          "heading": true
+          "term": "elicitation url",
+          "heading": false
         },
         {
           "term": "third-party authorization",
           "heading": false
         },
         {
-          "term": "elicitation url",
-          "heading": false
+          "term": "phishing",
+          "heading": true
         },
         {
-          "term": "benign server",
-          "heading": false
-        },
-        {
-          "term": "phishing attack",
+          "term": "authorization server",
           "heading": false
         },
         {
           "term": "session cookie",
+          "heading": false
+        },
+        {
+          "term": "benign server",
           "heading": false
         },
         {
@@ -6421,7 +6421,7 @@
           "heading": false
         },
         {
-          "term": "deny",
+          "term": "delivery",
           "heading": false
         }
       ],
@@ -6516,11 +6516,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "creating",
+          "term": "messages",
           "heading": true
         },
         {
-          "term": "messages",
+          "term": "creating",
           "heading": true
         },
         {
@@ -6584,7 +6584,7 @@
           "heading": true
         },
         {
-          "term": "appended",
+          "term": "follow-up",
           "heading": false
         }
       ],
@@ -6663,8 +6663,8 @@
           "heading": false
         },
         {
-          "term": "balance",
-          "heading": true
+          "term": "london",
+          "heading": false
         }
       ],
       "extract": "### Tool Use and Result Balance When using tool use in sampling, every assistant message containing `ToolUseContent` blocks **MUST** be followed by a user message that consists entirely of `ToolResultContent` blocks, with each tool use (e.g. with `id: $id`) matched by a corresponding tool result (with `toolUseId: $id`), before any other message. This requirement ensures: - Tool uses are always resolved before the",
@@ -6702,12 +6702,12 @@
           "heading": true
         },
         {
-          "term": "assistant",
+          "term": "messages",
           "heading": false
         },
         {
-          "term": "message",
-          "heading": true
+          "term": "assistant",
+          "heading": false
         }
       ],
       "extract": "### Message Roles MCP uses two roles: \"user\" and \"assistant\". Tool use requests are sent in CreateMessageResult with the \"assistant\" role. Tool results are sent back in messages with the \"user\" role. Messages with tool results cannot contain other kinds of content.",
@@ -6880,7 +6880,7 @@
           "heading": true
         },
         {
-          "term": "offerings",
+          "term": "careful",
           "heading": false
         }
       ],
@@ -6936,11 +6936,11 @@
           "heading": true
         },
         {
-          "term": "doesn't",
+          "term": "map",
           "heading": false
         },
         {
-          "term": "advisory",
+          "term": "select",
           "heading": false
         }
       ],
@@ -7223,11 +7223,11 @@
           "heading": false
         },
         {
-          "term": "quot",
+          "term": "error",
           "heading": false
         },
         {
-          "term": "error",
+          "term": "quot",
           "heading": false
         }
       ],
@@ -7266,11 +7266,11 @@
           "heading": false
         },
         {
-          "term": "notification",
+          "term": "nbsp",
           "heading": false
         },
         {
-          "term": "nbsp",
+          "term": "notification",
           "heading": false
         }
       ],
@@ -7575,7 +7575,7 @@
           "heading": false
         },
         {
-          "term": "alert",
+          "term": "syslog",
           "heading": false
         }
       ],
@@ -7611,11 +7611,11 @@
           "heading": false
         },
         {
-          "term": "letter",
+          "term": "com",
           "heading": false
         },
         {
-          "term": "com",
+          "term": "letter",
           "heading": false
         }
       ],
@@ -7647,7 +7647,7 @@
           "heading": false
         },
         {
-          "term": "key naming",
+          "term": "subscriptions listen",
           "heading": false
         }
       ],
@@ -8024,7 +8024,7 @@
           "heading": false
         },
         {
-          "term": "unexpected",
+          "term": "nbsp",
           "heading": false
         }
       ],
@@ -8052,6 +8052,10 @@
           "heading": false
         },
         {
+          "term": "code quot",
+          "heading": false
+        },
+        {
           "term": "invalid tool",
           "heading": false
         },
@@ -8060,19 +8064,15 @@
           "heading": false
         },
         {
-          "term": "code quot",
-          "heading": false
-        },
-        {
           "term": "unknown tool",
           "heading": false
         },
         {
-          "term": "tool arguments",
+          "term": "name quot",
           "heading": false
         },
         {
-          "term": "name quot",
+          "term": "tool arguments",
           "heading": false
         }
       ],
@@ -8092,11 +8092,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "message",
+          "term": "error",
           "heading": false
         },
         {
-          "term": "error",
+          "term": "message",
           "heading": false
         },
         {
@@ -8132,11 +8132,11 @@
           "heading": false
         },
         {
-          "term": "message",
+          "term": "error",
           "heading": false
         },
         {
-          "term": "error",
+          "term": "message",
           "heading": false
         },
         {
@@ -8144,7 +8144,7 @@
           "heading": false
         },
         {
-          "term": "unknown",
+          "term": "code",
           "heading": false
         }
       ],
@@ -8223,11 +8223,11 @@
           "heading": false
         },
         {
-          "term": "message",
+          "term": "error",
           "heading": false
         },
         {
-          "term": "error",
+          "term": "message",
           "heading": false
         },
         {
@@ -8373,11 +8373,11 @@
           "heading": false
         },
         {
-          "term": "blob",
+          "term": "mimetype",
           "heading": false
         },
         {
-          "term": "mimetype",
+          "term": "blob",
           "heading": false
         }
       ],
@@ -8504,11 +8504,11 @@
           "heading": false
         },
         {
-          "term": "support rendering",
+          "term": "icon x5b",
           "heading": false
         },
         {
-          "term": "icon x5b",
+          "term": "support rendering",
           "heading": false
         },
         {
@@ -8683,10 +8683,6 @@
           "heading": false
         },
         {
-          "term": "prompt quot",
-          "heading": false
-        },
-        {
           "term": "exampleclient quot",
           "heading": false
         },
@@ -8700,6 +8696,10 @@
         },
         {
           "term": "clientcapabilities quot",
+          "heading": false
+        },
+        {
+          "term": "prompt quot",
           "heading": false
         }
       ],
@@ -8941,11 +8941,11 @@
           "heading": false
         },
         {
-          "term": "action quot",
+          "term": "cancel quot",
           "heading": false
         },
         {
-          "term": "cancel quot",
+          "term": "action quot",
           "heading": false
         },
         {
@@ -9230,11 +9230,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "email quot",
+          "term": "date-time quot",
           "heading": false
         },
         {
-          "term": "date-time quot",
+          "term": "email quot",
           "heading": false
         },
         {
@@ -9294,11 +9294,11 @@
           "heading": false
         },
         {
-          "term": "display labels",
+          "term": "anyof",
           "heading": false
         },
         {
-          "term": "anyof",
+          "term": "display labels",
           "heading": false
         }
       ],
@@ -9366,11 +9366,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "array quot",
+          "term": "string quot",
           "heading": false
         },
         {
-          "term": "string quot",
+          "term": "array quot",
           "heading": false
         },
         {
@@ -9604,11 +9604,11 @@
           "heading": false
         },
         {
-          "term": "connection failed",
+          "term": "logger",
           "heading": false
         },
         {
-          "term": "logger",
+          "term": "connection failed",
           "heading": false
         },
         {
@@ -9703,11 +9703,11 @@
           "heading": false
         },
         {
-          "term": "total",
+          "term": "nbsp",
           "heading": false
         },
         {
-          "term": "nbsp",
+          "term": "total",
           "heading": false
         },
         {
@@ -9805,11 +9805,11 @@
           "heading": false
         },
         {
-          "term": "notifications resources",
+          "term": "list x5f",
           "heading": false
         },
         {
-          "term": "list x5f",
+          "term": "notifications resources",
           "heading": false
         },
         {
@@ -10026,11 +10026,11 @@
           "heading": false
         },
         {
-          "term": "notifications tools",
+          "term": "list x5f",
           "heading": false
         },
         {
-          "term": "list x5f",
+          "term": "notifications tools",
           "heading": false
         },
         {
@@ -10232,11 +10232,11 @@
           "heading": false
         },
         {
-          "term": "params",
+          "term": "x7b",
           "heading": false
         },
         {
-          "term": "x7b",
+          "term": "params",
           "heading": false
         }
       ],
@@ -10340,15 +10340,19 @@
       "summary": null,
       "keywords": [
         {
-          "term": "complete quot",
-          "heading": false
-        },
-        {
           "term": "text quot",
           "heading": false
         },
         {
+          "term": "complete quot",
+          "heading": false
+        },
+        {
           "term": "promptmessage x5b",
+          "heading": false
+        },
+        {
+          "term": "code review",
           "heading": false
         },
         {
@@ -10360,15 +10364,11 @@
           "heading": false
         },
         {
-          "term": "code review",
-          "heading": false
-        },
-        {
           "term": "nbsp",
           "heading": false
         },
         {
-          "term": "x5c",
+          "term": "messages",
           "heading": false
         }
       ],
@@ -11176,11 +11176,11 @@
           "heading": false
         },
         {
-          "term": "support rendering",
+          "term": "icon x5b",
           "heading": false
         },
         {
-          "term": "icon x5b",
+          "term": "support rendering",
           "heading": false
         },
         {
@@ -11196,11 +11196,11 @@
           "heading": false
         },
         {
-          "term": "template",
+          "term": "nbsp",
           "heading": false
         },
         {
-          "term": "nbsp",
+          "term": "template",
           "heading": false
         }
       ],
@@ -11243,15 +11243,15 @@
           "heading": false
         },
         {
-          "term": "operate",
-          "heading": false
-        },
-        {
           "term": "deprecated",
           "heading": false
         },
         {
           "term": "directories",
+          "heading": false
+        },
+        {
+          "term": "x7b",
           "heading": false
         }
       ],
@@ -11275,11 +11275,11 @@
           "heading": false
         },
         {
-          "term": "repository quot",
+          "term": "uri quot",
           "heading": false
         },
         {
-          "term": "uri quot",
+          "term": "repository quot",
           "heading": false
         },
         {
@@ -11418,6 +11418,10 @@
           "heading": false
         },
         {
+          "term": "messages quot",
+          "heading": false
+        },
+        {
           "term": "tooluseid quot",
           "heading": false
         },
@@ -11426,15 +11430,11 @@
           "heading": false
         },
         {
-          "term": "messages quot",
+          "term": "def quot",
           "heading": false
         },
         {
           "term": "none quot",
-          "heading": false
-        },
-        {
-          "term": "tools quot",
           "heading": false
         }
       ],
@@ -11538,11 +11538,11 @@
           "heading": false
         },
         {
-          "term": "means intelligence",
+          "term": "modelhint x5b",
           "heading": false
         },
         {
-          "term": "modelhint x5b",
+          "term": "means intelligence",
           "heading": false
         },
         {
@@ -11550,11 +11550,11 @@
           "heading": false
         },
         {
-          "term": "means cost",
+          "term": "name quot",
           "heading": false
         },
         {
-          "term": "name quot",
+          "term": "means cost",
           "heading": false
         },
         {
@@ -11562,7 +11562,7 @@
           "heading": false
         },
         {
-          "term": "prioritize",
+          "term": "intelligencepriority",
           "heading": false
         }
       ],
@@ -11710,11 +11710,11 @@
           "heading": false
         },
         {
-          "term": "iserror",
+          "term": "nbsp",
           "heading": false
         },
         {
-          "term": "nbsp",
+          "term": "iserror",
           "heading": false
         },
         {
@@ -11766,7 +11766,7 @@
           "heading": false
         },
         {
-          "term": "call",
+          "term": "metaobject",
           "heading": false
         }
       ],
@@ -11813,11 +11813,11 @@
           "heading": false
         },
         {
-          "term": "requestparams",
+          "term": "params",
           "heading": false
         },
         {
-          "term": "params",
+          "term": "requestparams",
           "heading": false
         },
         {
@@ -11849,19 +11849,19 @@
           "heading": false
         },
         {
-          "term": "discoverresult",
-          "heading": false
-        },
-        {
           "term": "jsonrpcresultresponse",
           "heading": false
         },
         {
-          "term": "discover",
+          "term": "discoverresult",
           "heading": false
         },
         {
           "term": "x7b",
+          "heading": false
+        },
+        {
+          "term": "discover",
           "heading": false
         },
         {
@@ -11985,15 +11985,15 @@
           "heading": false
         },
         {
-          "term": "support rendering",
-          "heading": false
-        },
-        {
           "term": "icon x5b",
           "heading": false
         },
         {
           "term": "string intended",
+          "heading": false
+        },
+        {
+          "term": "support rendering",
           "heading": false
         },
         {
@@ -12108,11 +12108,11 @@
           "heading": false
         },
         {
-          "term": "params",
+          "term": "x7b",
           "heading": false
         },
         {
-          "term": "x7b",
+          "term": "params",
           "heading": false
         },
         {
@@ -12172,11 +12172,11 @@
           "heading": false
         },
         {
-          "term": "subscriptionslistenresult",
+          "term": "jsonrpcresultresponse",
           "heading": false
         },
         {
-          "term": "jsonrpcresultresponse",
+          "term": "subscriptionslistenresult",
           "heading": false
         },
         {
@@ -12220,7 +12220,7 @@
           "heading": false
         },
         {
-          "term": "x5f",
+          "term": "nbsp",
           "heading": false
         }
       ],
@@ -12292,7 +12292,7 @@
           "heading": false
         },
         {
-          "term": "subscription",
+          "term": "nbsp",
           "heading": false
         }
       ],
@@ -12347,11 +12347,11 @@
           "heading": false
         },
         {
-          "term": "params",
+          "term": "x7b",
           "heading": false
         },
         {
-          "term": "x7b",
+          "term": "params",
           "heading": false
         }
       ],
@@ -12674,11 +12674,11 @@
           "heading": false
         },
         {
-          "term": "location quot",
+          "term": "type quot",
           "heading": false
         },
         {
-          "term": "type quot",
+          "term": "description quot",
           "heading": false
         },
         {
@@ -12710,11 +12710,11 @@
           "heading": false
         },
         {
-          "term": "tool",
+          "term": "true",
           "heading": false
         },
         {
-          "term": "true",
+          "term": "tool",
           "heading": false
         },
         {
@@ -12889,11 +12889,11 @@
           "heading": true
         },
         {
-          "term": "interacting",
+          "term": "brevity",
           "heading": false
         },
         {
-          "term": "discover",
+          "term": "interacting",
           "heading": false
         }
       ],
@@ -12945,11 +12945,11 @@
       "summary": null,
       "keywords": [
         {
-          "term": "prompts",
+          "term": "declare",
           "heading": false
         },
         {
-          "term": "declare",
+          "term": "prompts",
           "heading": false
         },
         {
@@ -13076,12 +13076,12 @@
       "summary": null,
       "keywords": [
         {
-          "term": "prompt",
-          "heading": true
-        },
-        {
           "term": "optional human-readable",
           "heading": false
+        },
+        {
+          "term": "prompt",
+          "heading": true
         },
         {
           "term": "customization",
@@ -13112,7 +13112,7 @@
           "heading": false
         },
         {
-          "term": "speaker",
+          "term": "messages",
           "heading": false
         }
       ],
@@ -13211,7 +13211,7 @@
           "heading": false
         },
         {
-          "term": "prompt",
+          "term": "messages",
           "heading": false
         }
       ],
@@ -13377,19 +13377,19 @@
           "heading": false
         },
         {
-          "term": "capability",
-          "heading": false
-        },
-        {
           "term": "neither",
           "heading": false
         },
         {
-          "term": "resources",
+          "term": "capability",
           "heading": false
         },
         {
           "term": "vary",
+          "heading": false
+        },
+        {
+          "term": "resources",
           "heading": false
         }
       ],
@@ -13823,7 +13823,7 @@
           "heading": true
         },
         {
-          "term": "sanitize",
+          "term": "checked",
           "heading": false
         },
         {
@@ -13851,11 +13851,11 @@
           "heading": true
         },
         {
-          "term": "querying",
+          "term": "calling",
           "heading": false
         },
         {
-          "term": "calling",
+          "term": "querying",
           "heading": false
         }
       ],
@@ -13919,11 +13919,11 @@
           "heading": false
         },
         {
-          "term": "changed",
+          "term": "ordering",
           "heading": false
         },
         {
-          "term": "vary",
+          "term": "changed",
           "heading": false
         }
       ],
@@ -14061,12 +14061,12 @@
       "summary": null,
       "keywords": [
         {
-          "term": "tool",
-          "heading": true
-        },
-        {
           "term": "json schema",
           "heading": false
+        },
+        {
+          "term": "tool",
+          "heading": true
         },
         {
           "term": "guidelines defaults",
@@ -14109,7 +14109,7 @@
           "heading": false
         },
         {
-          "term": "inclusive",
+          "term": "uniqueness",
           "heading": false
         }
       ],
@@ -14141,11 +14141,11 @@
           "heading": false
         },
         {
-          "term": "tool definition",
+          "term": "header values",
           "heading": false
         },
         {
-          "term": "header values",
+          "term": "tool definition",
           "heading": false
         },
         {
@@ -14258,7 +14258,7 @@
           "heading": false
         },
         {
-          "term": "fetched",
+          "term": "return",
           "heading": false
         }
       ],
@@ -14286,7 +14286,7 @@
           "heading": false
         },
         {
-          "term": "regular",
+          "term": "annotations",
           "heading": false
         }
       ],
@@ -14346,7 +14346,7 @@
           "heading": false
         },
         {
-          "term": "tool",
+          "term": "structured",
           "heading": false
         }
       ],
@@ -14426,6 +14426,10 @@
       "summary": null,
       "keywords": [
         {
+          "term": "shopping cart",
+          "heading": false
+        },
+        {
           "term": "creation tool",
           "heading": false
         },
@@ -14438,19 +14442,15 @@
           "heading": false
         },
         {
-          "term": "cart",
-          "heading": false
-        },
-        {
-          "term": "calls",
-          "heading": false
-        },
-        {
           "term": "lifetime",
           "heading": false
         },
         {
           "term": "ordinary",
+          "heading": false
+        },
+        {
+          "term": "calls",
           "heading": false
         },
         {
@@ -14542,11 +14542,11 @@
           "heading": true
         },
         {
-          "term": "re-fetching",
+          "term": "coexist",
           "heading": false
         },
         {
-          "term": "unnecessary",
+          "term": "re-fetching",
           "heading": false
         }
       ],
@@ -14645,12 +14645,12 @@
           "heading": true
         },
         {
-          "term": "milliseconds",
-          "heading": false
-        },
-        {
           "term": "field",
           "heading": true
+        },
+        {
+          "term": "milliseconds",
+          "heading": false
         }
       ],
       "extract": "### Time-to-Live (TTL) Field The `ttlMs` field is a hint from the server indicating how long, in milliseconds, the client MAY consider the result fresh. Semantics are analogous to HTTP `Cache-Control: max-age`. - If `ttlMs` is `0`, the response **SHOULD** be considered immediately stale. The client MAY re-fetch every time the result is needed. - If `ttlMs` is positive, the client **SHOULD** consider the result fresh",
@@ -14947,7 +14947,7 @@
           "heading": true
         },
         {
-          "term": "completed",
+          "term": "suggestions",
           "heading": false
         }
       ],
@@ -15149,11 +15149,11 @@
           "heading": false
         },
         {
-          "term": "observability",
+          "term": "verbosity",
           "heading": false
         },
         {
-          "term": "logger",
+          "term": "observability",
           "heading": false
         }
       ],
@@ -15224,12 +15224,12 @@
           "heading": false
         },
         {
-          "term": "operation",
-          "heading": false
-        },
-        {
           "term": "log",
           "heading": true
+        },
+        {
+          "term": "operation",
+          "heading": false
         }
       ],
       "extract": "## Log Levels The protocol follows the standard syslog severity levels specified in [RFC 5424](https://datatracker.ietf.org/doc/html/rfc5424#section-6.2.1): | Level | Description | Example Use Case | | --------- | -------------------------------- | -------------------------- | | debug | Detailed debugging information | Function entry/exit points | | info | General informational messages | Operation progress updates",
@@ -15357,8 +15357,8 @@
           "heading": true
         },
         {
-          "term": "implementation",
-          "heading": true
+          "term": "logger",
+          "heading": false
         }
       ],
       "extract": "## Implementation Considerations 1. Servers **SHOULD**: - Rate limit log messages - Include relevant context in data field - Use consistent logger names - Remove sensitive information 2. Clients **MAY**: - Present log messages in the UI - Implement log filtering/search - Display severity visually - Persist log messages",
@@ -15377,15 +15377,15 @@
       "summary": null,
       "keywords": [
         {
-          "term": "monitor",
-          "heading": false
-        },
-        {
-          "term": "secrets",
-          "heading": false
-        },
-        {
           "term": "messages",
+          "heading": false
+        },
+        {
+          "term": "log",
+          "heading": false
+        },
+        {
+          "term": "aid",
           "heading": false
         }
       ],
@@ -15510,12 +15510,12 @@
           "heading": true
         },
         {
-          "term": "operations",
-          "heading": true
-        },
-        {
           "term": "list available",
           "heading": false
+        },
+        {
+          "term": "operations",
+          "heading": true
         }
       ],
       "extract": "## Operations Supporting Pagination The following MCP operations support pagination: - `resources/list` - List available resources - `resources/templates/list` - List resource templates - `prompts/list` - List available prompts - `tools/list` - List available tools",
@@ -15581,15 +15581,7 @@
       "heading": false
     },
     {
-      "term": "user quot",
-      "heading": false
-    },
-    {
       "term": "jsonrpc quot",
-      "heading": false
-    },
-    {
-      "term": "message quot",
       "heading": false
     },
     {
@@ -15597,7 +15589,15 @@
       "heading": false
     },
     {
+      "term": "message quot",
+      "heading": false
+    },
+    {
       "term": "error quot",
+      "heading": false
+    },
+    {
+      "term": "user quot",
       "heading": false
     },
     {
@@ -15609,11 +15609,11 @@
       "heading": false
     },
     {
-      "term": "version quot",
+      "term": "title quot",
       "heading": false
     },
     {
-      "term": "title quot",
+      "term": "version quot",
       "heading": false
     }
   ],

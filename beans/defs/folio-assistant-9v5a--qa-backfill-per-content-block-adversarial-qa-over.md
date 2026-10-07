@@ -56,9 +56,9 @@ decomposition, and that is a smaller change than the question implied.
 
 - [ ] `lvlv` re-parented here and its scope stated as corpus-sweep, not gate
 - [ ] best practice for agentic adversarial QA researched, with sources named
-- [ ] the methodology documented as a skill, registered via `bun run skill:register`
+- [ ] the methodology documented as a skill, registered via `bun run cat skill:register`
 - [ ] open-access literature listed for upload to `library/`
 - [ ] a coverage measurement exists BEFORE any sweep runs, so the backfill's progress
-      is a delta and not an assertion — `bun run audit:coverage` is the existing
+      is a delta and not an assertion — `bun run cat audit:coverage` is the existing
       instrument and already answers "which audits reach which KIND of node"
 - [ ] the owner agrees what coverage level finishes this

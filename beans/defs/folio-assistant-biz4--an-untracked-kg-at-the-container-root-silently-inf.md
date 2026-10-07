@@ -16,7 +16,7 @@ failure or `main`'s. It was neither — it was the container.
 
 ## The measurement
 
-`bun run gates` in this checkout rewrote
+`bun run cat gates` in this checkout rewrote
 `cat-harness/test/results/detangle/cat-harness/schemas.detangle.json`:
 
 ```
@@ -54,7 +54,7 @@ branch separates container state from code.
 
 **It is silent and it is sticky.** Nothing warns that `_kg/` is there; it is
 gitignored, so `git status` is clean; and the inflated number is plausible
-rather than absurd. Every local `bun run gates` in this container has been
+rather than absurd. Every local `bun run cat gates` in this container has been
 rewriting that sidecar, and the only reason it surfaced is that a stop-hook
 flagged the dirty file.
 
@@ -218,7 +218,7 @@ only place the claim can be tested:
 
     du -sh _kg                ->  17M   (grown from the 4.8M this bean recorded)
     committed schemas sidecar ->  size 233, internal 126, cohesion 0.82
-    bun run kg:detangle:check ->  exit 0
+    bun run cat kg:detangle:check ->  exit 0
 
 So the contamination is on disk and no longer reaches the measurement --
 `a0f7719032e`'s `gitCorpus` holds. Marking completed on that evidence rather
@@ -251,7 +251,7 @@ of them makes it worse and the other makes it catchable.
 
 ### The measurement
 
-`bun run skill:register` in this container wrote a **seventh** file beyond the
+`bun run cat skill:register` in this container wrote a **seventh** file beyond the
 six the change actually stales:
 
 ```

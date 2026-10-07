@@ -57,4 +57,4 @@ not re-deciding where `uploads/` lives (`eq01` settled that), and not adding a
 - [ ] a registered skill governs the arrival routes, `skill:register:check` green
 - [ ] Tool node(s) in the `tools` graph carry the documentation
 - [ ] a generator with `--check`, in the gate set, renders that documentation
-- [ ] `bun run gates` green
+- [ ] `bun run cat gates` green

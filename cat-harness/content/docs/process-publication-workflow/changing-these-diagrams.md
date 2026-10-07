@@ -3,9 +3,9 @@ The `.bpmn` files are the source of truth.
 ```sh
 # 1. edit processes/<diagram>.bpmn — in a modeler, or by hand
 # 2. regenerate the SVGs
-bun run render:bpmn
+bun run cat render:bpmn
 # 3. or, in CI, just check they are not stale
-bun run render:bpmn:check
+bun run cat render:bpmn:check
 ```
 
 `render:bpmn` renders each `.bpmn` with [bpmn-js](https://bpmn.io/toolkit/bpmn-js/)

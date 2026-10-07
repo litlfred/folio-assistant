@@ -52,7 +52,7 @@ read, with no sentence saying why it stopped.
 
 ## It is also invisible to every count this repository quotes
 
-`bun run health` reports *"243 open beans (todo + in-progress), past the 150
+`bun run cat health` reports *"243 open beans (todo + in-progress), past the 150
 calibration point"* — 123 + 120, top-level only. `check:bean-parents` globs
 `beans/defs/*.md`. Both are correct about the active store and neither can see
 that 35 open items were moved out of it. A number that cannot fall when work is
@@ -123,7 +123,7 @@ either would have found it.
 
 ### What now holds it
 
-`bun run check:bean-archive`, beside `check:bean-parents` in the gate set:
+`bun run cat check:bean-archive`, beside `check:bean-parents` in the gate set:
 
 1. the `archive` node must be **declared**;
 2. every bean in it must be `completed` or `scrapped` — the invariant the view

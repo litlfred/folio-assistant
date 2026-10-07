@@ -1,11 +1,10 @@
 ---
 # folio-assistant-9f05
 title: 'Merge refused: #2063 not signed (merge:guard checks 3 and 4)'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T11:33:44Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-d33q
 blocking:
     - folio-assistant-0qjq
@@ -31,7 +30,7 @@ A comment on PR #2063, plus a message to the Merge Manager role.
 - [x] #2063 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [x] the owed `pull_request` CI is green on that head
 - [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [x] `bun run merge:guard 2063` passes all 7 checks, and it lands (or the owner closes it)
+- [x] `bun run cat merge:guard 2063` passes all 7 checks, and it lands (or the owner closes it)
 
 _2026-10-07T02:41:19Z_ — Claimed by claude/9f05-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -41,3 +40,5 @@ Closed on evidence of landed work:
 - PR #2063 was resolved and merged into `main` by `litlfred` in commit `1b35d74eaf94` on 2026-10-04T21:28:24Z.
 - Re-derived independently on 2026-10-07: PR #2063 state is `MERGED` with commit `1b35d74eaf94` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

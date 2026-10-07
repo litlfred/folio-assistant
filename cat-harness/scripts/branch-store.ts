@@ -1191,7 +1191,7 @@ export function contentAt(id: string, repoRoot: string = gitTopLevel()): Content
         state: "not-mounted",
         dir,
         branch: at.branch,
-        reason: `${id} is kept on ${at.branch} and is not mounted in this worktree; run \`bun run state:mount\` first`,
+        reason: `${id} is kept on ${at.branch} and is not mounted in this worktree; run \`bun run cat state:mount\` first`,
       };
     }
   }

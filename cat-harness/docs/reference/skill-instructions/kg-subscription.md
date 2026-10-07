@@ -146,7 +146,7 @@ and linked — you do not need its files. Ask for its published
 ([`kg-export`](kg-export.md) §"Named subgraphs"):
 
 ```sh
-bun run kg:materialize --nodes <subscription> <subgraph-path>   # e.g. --nodes cat skills/sdlc
+bun run cat kg:materialize --nodes <subscription> <subgraph-path>   # e.g. --nodes cat skills/sdlc
 ```
 
 - It fetches **one file** at the pin,

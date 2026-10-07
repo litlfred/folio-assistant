@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: Tools"
 parent: Glossary
 nav_order: 2
@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 131 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 136 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 7 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 175 terms and is 127 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 181 terms and is 132 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>175</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>175</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>181</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>181</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">175</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">181</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -378,7 +378,7 @@ FSH dependency cone <span class="fa-gloss-status">candidate, extracted</span>
 Gates on the merged tree <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Build this branch merged with the current base in a throwaway worktree and run the full <code>bun run gates</code> there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.</p>
+<p>Build this branch merged with the current base in a throwaway worktree and run the full <code>bun run cat gates</code> there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#gates-merged</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--ig-pages" data-fa-state="extracted" data-fa-gloss="">
@@ -590,6 +590,13 @@ Latent Semantic Indexing over a prose graph <span class="fa-gloss-status">candid
 <p>Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#lsi-query</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--latexmk-compile" data-fa-state="extracted" data-fa-gloss="">
+LaTeX compilation (latexmk) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#latexmk-compile</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--latex-overfull" data-fa-state="extracted" data-fa-gloss="">
 LaTeX overfull-box report <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -724,7 +731,7 @@ Merge overlap (conflict prediction) <span class="fa-gloss-status">candidate, ext
 Merge train <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Build a train branch from a base SHA: merge each member (a PR number or branch) with <code>merge-base.ts --no-regen</code>, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one <code>bun run regen</code>, <code>check:l1-complete --write</code>, every check an instance declares <code>afterMerge</code> (its declared writer run when red), and <code>kg:audit:all:check</code>; then merge <code>origin/main</code>, taking main's side of generated conflicts and regenerating once more. Emits a <code>merge-train-report/v1</code> JSON report. Never pushes, opens or merges a PR.</p>
+<p>Build a train branch from a base SHA: merge each member (a PR number or branch) with <code>merge-base.ts --no-regen</code>, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one <code>bun run cat regen</code>, <code>check:l1-complete --write</code>, every check an instance declares <code>afterMerge</code> (its declared writer run when red), and <code>kg:audit:all:check</code>; then merge <code>origin/main</code>, taking main's side of generated conflicts and regenerating once more. Emits a <code>merge-train-report/v1</code> JSON report. Never pushes, opens or merges a PR.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#merge-train</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--methodologies-viewer" data-fa-state="extracted" data-fa-gloss="">
@@ -740,6 +747,13 @@ Mirror FHIR packages from packages.fhir.org into a git repository <span class="f
 <dd>
 <p>On a machine that reaches packages.fhir.org, fetch exactly a missing list (from <code>fhir-cache-seed-npm --missing-out</code>), check each tarball names itself exactly, record SHA512SUMS, and commit and push to a git repository that an environment without packages.fhir.org reads with <code>--mirror</code>. The person running it is the trust anchor for what it adds.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#fhir-package-mirror</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--remote-mount" data-fa-state="extracted" data-fa-gloss="">
+Mount remote harnesses at a pinned commit, only when trusted <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Lay down each <code>remoteMounts</code> harness, and its dependency closure, from another repository at a full commit SHA, and write the mount lock. Before anything is checked out, each mount must pass the trust gate (<code>schemas/mount-trust.ts</code>, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. <code>--staging</code> mounts for a preview and needs neither, by the owner's ruling. <code>--check</code> compares the disk against the lock and never fetches.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#remote-mount</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-comment-move" data-fa-state="extracted" data-fa-gloss="">
 Move a review comment's status <span class="fa-gloss-status">candidate, extracted</span>
@@ -815,6 +829,13 @@ Per-slice SQLite builder <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. <code>--check</code> builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#slice-sqlite</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--pin-actions" data-fa-state="extracted" data-fa-gloss="">
+Pin third-party GitHub Actions to full commit SHAs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Rewrite every third-party <code>uses: owner/repo@ref</code> outside the declared staging-only workflows to <code>@&lt;full commit SHA&gt; # &lt;ref&gt;</code>, so Dependabot keeps the pair current. A tag resolves to its PEELED commit (an annotated tag's object is never pinned), else a branch head, by <code>git ls-remote</code> with argv. A ref that resolves to nothing, or to more than one commit, is refused and reported, never guessed. This repository's own reusable workflows are first-party and left alone. Idempotent.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pin-actions</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--ig-ast-plan" data-fa-state="extracted" data-fa-gloss="">
 Plan an incremental IG build from a delta of changed files <span class="fa-gloss-status">candidate, extracted</span>
@@ -950,6 +971,13 @@ Resolve a declared subgraph's content source <span class="fa-gloss-status">candi
 <p>Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's <code>subgraphSources</code> override by id, and which layer answered. The same <code>declaredSubgraph</code> resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#subgraph-resolve</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--security-gate" data-fa-state="extracted" data-fa-gloss="">
+Run every existing security check as one named release step <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Run the repository's security checks — workflow injection, secret leaks, lockfile pinning, the toolchain pin, QA reviewer permission, materialised-asset fixity — plus two advisories (dependency advisories, third-party action SHA pinning), each by name as argv. Every check is reported as pass, fail or unknown; a blocking check that fails OR could not be run refuses the release, because could-not-check is never clean. Advisories are reported and never block. Called by <code>prepare-merge</code> before a push that will merge, and by any publish process before it publishes.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#security-gate</code></a></p>
+</dd>
 </dl>
 
 <h2 id="letter-S">S</h2>
@@ -968,12 +996,26 @@ Schemas viewer <span class="fa-gloss-status">candidate, extracted</span>
 <p>Render each declared schema directory as a page per subject instance, over one shared data index.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#schemas-viewer</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--handover-screen" data-fa-state="extracted" data-fa-gloss="">
+Screen a hand-over for injected instructions, field by field <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Before a model reads a sub-agent's report, a delegated prompt, a tool result or a comment from someone who is not the principal, screen it against a declared schema whose top-level fields are <code>control</code> (steers what the receiver does) or <code>data</code> (content it reads). A finding in a control field, or any field the strict schema does not declare, is REFUSED, so a report cannot extend the delegator's plan. A finding in a data field is QUARANTINED: the original is kept and marked, never stripped. The patterns are a deterministic tripwire (instruction overrides, role and turn spoofs, fence breaks, tool-call syntax, hidden Unicode, exfiltration links, pipe-to-shell), a mitigation and not a guarantee. Exit 0 clean, 1 refused, 3 quarantined, 2 could not determine.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#handover-screen</code></a></p>
+</dd>
 <dt id="fhir-harness--kg-tools--fhir-cache-seed-npm" data-fa-state="extracted" data-fa-gloss="">
 Seed the FHIR package cache from trusted sources (exact versions) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Fill <code>~/.fhir/packages</code> (or <code>--cache</code>) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account <code>grahamegrieve</code> (owner-trusted), publishers' own published-site repositories (the seeder's list, each fetch verified against the tarball's own package.json), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner <code>--mirror</code>. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.</p>
 <p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#fhir-cache-seed-npm</code></a></p>
+</dd>
+<dt id="smart-base--kg-tools--smart-fhir-cache-seed" data-fa-state="extracted" data-fa-gloss="">
+Seed the FHIR package cache, with WHO's published site as a source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Run fhir-harness's <code>fhir-cache-seed-npm</code> with smart-base's publisher-site rules (<code>SMART_PUBLISHER_SITE_REPOS</code>): <code>smart.who.int.*</code> packages are also read from WHO's published-site repository, each fetch verified against the tarball's own package.json. Every other source and check is the seeder's own.</p>
+<p class="fa-gloss-meta">Tools of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/index.ts"><code>smart-base/tools/index.ts#smart-fhir-cache-seed</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--sibling-sessions" data-fa-state="extracted" data-fa-gloss="">
 Sibling sessions in a window <span class="fa-gloss-status">candidate, extracted</span>

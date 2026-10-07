@@ -42,8 +42,8 @@
  *
  * It tests the COMMITTED producer and witness at `HEAD`, so commit first.
  *
- *   bun run witness:parity <witness.json> [...]   # from the folio root
- *   bun run witness:parity --json <witness.json>
+ *   bun run cat witness:parity <witness.json> [...]   # from the folio root
+ *   bun run cat witness:parity --json <witness.json>
  *   options: --timeout <s> (300) · --dirs a,b (sparse dirs; default the
  *            producer's and witness's top-level dirs, plus `tools` and
  *            `scripts` where they exist) · --ignore f1,f2 (extra masked keys)

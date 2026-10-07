@@ -254,7 +254,7 @@ if (import.meta.main) {
     }
     if (bad.length) {
       for (const b of bad) console.error(`  ✗ ${b}`);
-      console.error(`\n${bad.length} glossary template(s) need attention: bun run glossary:pot`);
+      console.error(`\n${bad.length} glossary template(s) need attention: bun run cat glossary:pot`);
       process.exit(1);
     }
     for (const [name, c] of placed) {

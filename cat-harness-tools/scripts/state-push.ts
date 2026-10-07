@@ -5,7 +5,7 @@
  * @module scripts/state-push
  * @graphNode none — the write half of the state mount
  *
- * Bean `2h76`, the `bun run state:push` line. The proposal: *"`bun run
+ * Bean `2h76`, the `bun run cat state:push` line. The proposal: *"`bun run
  * state:push` commits and pushes the worktree through the library."*
  *
  * Rebuilt by bean `nij4` on one implementation: every graph is spliced by
@@ -120,7 +120,7 @@ function pushFanOut(root: string, locations: TipLocation[], opts: PushOptions): 
       if (opts.dryRun) {
         const changes = pendingMountChanges(loc.id, { repoRoot: root });
         if (changes === undefined) {
-          graphs.push({ ...base, state: "refused", reason: `${loc.id} is not mounted; run \`bun run state:mount\` first` });
+          graphs.push({ ...base, state: "refused", reason: `${loc.id} is not mounted; run \`bun run cat state:mount\` first` });
         } else {
           graphs.push({ ...base, state: "would-push", reason: `${changes.length} path(s) would be spliced onto the tip`, changes });
         }
@@ -144,7 +144,7 @@ function pushFanOut(root: string, locations: TipLocation[], opts: PushOptions): 
   // Nothing is mounted at all: not a failure, the same answer the single-mount
   // path gives when `state/` is absent.
   if (stuck.length === n && stuck.every((g) => g.state === "refused" && g.reason.includes("not mounted"))) {
-    return { state: "no-mount", reason: `none of the ${n} declared graph(s) is mounted; run \`bun run state:mount\` first`, graphs };
+    return { state: "no-mount", reason: `none of the ${n} declared graph(s) is mounted; run \`bun run cat state:mount\` first`, graphs };
   }
   if (stuck.length === 0) {
     if (opts.dryRun) {
@@ -182,7 +182,7 @@ export function pushState(opts: PushOptions = {}): PushResult {
   if (opts.id !== undefined) locations = locations.filter((l) => l.id === opts.id);
   if (locations.length === 0) {
     const what = opts.id === undefined ? "no graph is declared at a branch tip or mounted here" : `\`${opts.id}\` is neither declared at a branch tip nor mounted here`;
-    return { state: "no-mount", reason: `${what}; run \`bun run state:mount\` first`, graphs: [] };
+    return { state: "no-mount", reason: `${what}; run \`bun run cat state:mount\` first`, graphs: [] };
   }
   return pushFanOut(root, locations, opts);
 }

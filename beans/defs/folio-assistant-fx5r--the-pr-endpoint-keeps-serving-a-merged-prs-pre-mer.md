@@ -174,7 +174,7 @@ still not written.
 
 ## 2026-09-26 — the general rule, and it caught two sites I had not
 
-`bun run check:stale-field-advice` (`cat-harness/scripts/check-stale-field-advice.ts`),
+`bun run cat check:stale-field-advice` (`cat-harness/scripts/check-stale-field-advice.ts`),
 in `Code-quality gates` beside `check:command-paths`.
 
 **It does not read intent, and that is the design.** "Approvingly" is exactly
@@ -252,7 +252,7 @@ branch: `git merge-base --is-ancestor` confirms both heads.
 | `prepare-merge` and `/watch` checked — already correct | measured, nothing to do |
 | refreshing CI documented as `workflow_dispatch`, not a push | PR #1362 |
 | `h2s9` cross-references this; a wrong error string is worse than an absent one | PR #1362 |
-| **the general rule** — `bun run check:stale-field-advice` | PR #1395 |
+| **the general rule** — `bun run cat check:stale-field-advice` | PR #1395 |
 
 The last one is the one a test could not close, and it found **two sites this
 bean had not**: `pickup.md:79`, the step-1 instruction for picking up a PR,

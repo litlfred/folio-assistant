@@ -120,7 +120,7 @@ turned all 30 into links that resolve nowhere.
 
 745 links across 50 pages repaired by prepending exactly one `../`, each
 verified against disk before it was made. New gate
-`bun run translated-links:check`, registered in CI, with
+`bun run cat translated-links:check`, registered in CI, with
 `translated-links:fix` as its writer. Falsified three ways: strip one `../`
 → exactly one named finding; restore → green; `api/` untouched, 0 diff lines.
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9v4m
 title: 'TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-29T20:52:42Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -13,7 +13,7 @@ Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff =
 
 ## What happened
 
-`bun run gates` failed with ONE test failure:
+`bun run cat gates` failed with ONE test failure:
 
     (fail) the sweep's profile gate, end to end > a paper-only criterion is n/a'd in a document folio, under its OWN outcome [5769.02ms]
 
@@ -146,7 +146,7 @@ shared-path mechanism is not available as the explanation.
 
 ### The instrument note that matters for the next attempt
 
-Both runs were `bun run gates`, which runs `bun test` as one step among 162. So
+Both runs were `bun run cat gates`, which runs `bun test` as one step among 162. So
 each observation costs a full gate run, and the failing one gives no isolation.
 Whoever picks this up should run the single test file in a loop instead — that is
 cheap, and it is the measurement that can distinguish "races against a sibling in
@@ -166,7 +166,7 @@ the same process" from "races against something in the environment".
 ## ISOLATION MEASURED, same day — 12 of 12 pass alone, so the title's hypothesis now has evidence
 
 `cat-harness/scripts/tests/profile-scoping.test.ts`, run on its own, twelve
-consecutive times on the tree where `bun run gates` had just produced the
+consecutive times on the tree where `bun run cat gates` had just produced the
 failure: **12 pass, 0 fail.**
 
 That is the second clause above answered, and it answers it in the direction the
@@ -214,7 +214,7 @@ And this **corrects the conclusion I wrote earlier the same day**, two entries
 above. The isolation measurement was right and my reading of it named the wrong
 variable.
 
-| `bun run gates` | tree at start | failures beyond the accepted `ngxj` red |
+| `bun run cat gates` | tree at start | failures beyond the accepted `ngxj` red |
 |---|---|---|
 | 1 | **dirty** — a regenerated detangle sidecar, uncommitted | `profile-scoping` |
 | 2 | clean | **none** |
@@ -531,3 +531,6 @@ A sibling timeout reproduces on demand in a long-lived agent container, and the 
 **Relevance here:** this bean's failing test was also a ~5.7 s timeout, inside `profile-scoping`, which spawns sweeps that shell out to git. Not proven the same cause, but the same shape: a git-heavy test near the 5 s budget, in a checkout whose object store is fragmented.
 
 **Remedy, and why not applied:** `git repack -a -d` (or `git gc`) collapses the packs. That container had 3.5 GB free against a 4.6 GB pack store, too little to repack safely, so it was not run. **Not a test change:** raising the budget would hide a real environment signal, and skipping the test is never an option.
+
+## Completed on landed evidence
+Landed on main in PR #1699 (Test interference: measured cause for test timeouts in full suite resolved).

@@ -16,7 +16,7 @@ published site sat stale and nothing in the repo said so. Bean `xom7`.
 
 ## What you do
 
-Run `bun run check:ci-health` — each workflow's state on the default branch:
+Run `bun run cat check:ci-health` — each workflow's state on the default branch:
 consecutive failures, days since the last green, whether it has run recently
 at all. Follow its three rules yourself when reading or reporting:
 

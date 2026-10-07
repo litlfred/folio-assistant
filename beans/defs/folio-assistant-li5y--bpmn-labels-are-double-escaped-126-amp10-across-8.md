@@ -198,7 +198,7 @@ what ate it was this repository's own code.
    escaping in element content and were reaching translators verbatim.
 
 Verified end to end on the page: three real paragraphs with blank lines between
-them, zero literal escapes. Clean-tree `bun run gates`: 2 of 162, both the
+them, zero literal escapes. Clean-tree `bun run cat gates`: 2 of 162, both the
 accepted `ngxj` red.
 
 `docs:harness:check` went red on the way and is worth naming, because it is the
@@ -217,7 +217,7 @@ generated title and the sweep moved it. Regenerated, not exempted.
 
 ## VERIFIED ON THE RENDERED SITE — and a count of mine was wrong by two orders of magnitude
 
-2026-09-26, after the sweep landed. `bun run preview:site` built all 75 process
+2026-09-26, after the sweep landed. `bun run cat preview:site` built all 75 process
 pages locally, because the staging preview is unreachable from this container
 (`litlfred.github.io:443` answers 403 CONNECT — an environment network-policy
 denial, the same one already recorded against the WHO IG mirror). So the

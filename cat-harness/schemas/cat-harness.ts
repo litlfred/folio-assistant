@@ -473,6 +473,25 @@ export const InstanceLocationSchema = z
   .strict();
 
 /**
+ * Where this instance gets its upstream/source material (e.g. an IG source in Git).
+ * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+ */
+export const InstanceGitSourceSchema = z
+  .object({
+    kind: z.literal("git"),
+    repository: z.string().min(1),
+    ref: z.string().min(1),
+    path: z.string().optional(),
+  })
+  .strict();
+
+export const InstanceSourceSchema = z.discriminatedUnion("kind", [
+  InstanceGitSourceSchema,
+]);
+export type InstanceSource = z.infer<typeof InstanceSourceSchema>;
+
+
+/**
  * One content adapter an instance ships, as its own declaration states it.
  *
  * `module` is relative to the DECLARING instance's root, and `className` is the
@@ -650,6 +669,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Absent means it already lives at the root of its own repository.
    */
   livesAt?: InstanceLocation;
+  /**
+   * Where this whole instance gets its upstream/source material (e.g. an IG source in Git).
+   * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+   */
+  source?: InstanceSource;
   /**
    * Which half of a kg-separation pair the planned {@link repository} is —
    * see `separation` on {@link CatHarnessDeclarationSchema}. Absent is "has
@@ -3085,6 +3109,11 @@ export const CatHarnessDeclarationSchema = z.object({
   glassStrip: GlassStripSchema.optional(),
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
+  /**
+   * Where this whole instance gets its upstream/source material (e.g. an IG source in Git).
+   * Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration.
+   */
+  source: InstanceSourceSchema.optional(),
   /**
    * Which half of a kg-separation pair this instance's planned `repository`
    * is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the

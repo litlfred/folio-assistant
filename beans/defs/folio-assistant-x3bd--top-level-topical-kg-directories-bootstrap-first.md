@@ -1,11 +1,11 @@
 ---
 # folio-assistant-x3bd
 title: Top-level topical KG directories, bootstrap/ first
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-10-05T13:38:59Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -80,7 +80,7 @@ THERE IS EXACTLY ONE HARDCODE THAT IS NOT A COMPROMISE AT ALL, AND BOOTSTRAP IS 
 
 EVERYTHING ELSE IS A STAND-IN FOR A LOOKUP, AND THE TEST IS ONE QUESTION: COULD A GRAPH ALREADY LOADED HAVE ANSWERED THIS? If yes, the hardcode is debt, permitted but marked. Candidates that will come up: the term namespace (FOLIO_NS is a constant in schemas/namespaces.ts and is the RIGHT shape — one definition, imported, not retyped); the skill-instructions URL (derivable once instructions is in @context and dereferenceable, so hardcoding it now is a temporary stand-in for prerequisite 1 and should say so); and the workflow file's path (bootstrap's own BPMN is named by bootstrap.jsonld, so hardcoding it separately would be a second answer to a question the graph already answers).
 
-THE MECHANISM ALREADY EXISTS IN THIS REPO AND SHOULD BE REUSED RATHER THAN INVENTED. AGENTS.md on the two duplicated harness directories: '.beans.yml because the beans binary is third-party and will never read our schema, and WORKFLOW_DIR in workflow/store.ts because it is on the hot path ... The duplication is unavoidable; an unchecked one is not.' Both are checked by bun run check:harness-dirs. Apply the same pattern: a hardcoded asset path in bootstrap is fine AND IS CHECKED — a test that the literal resolves to a file that exists and, where it is a URL, that it is among the paths the publish step actually produces. kg-export.test.ts already does the URL half for the whole exported graph (the dead-link walk over PUB), so this is an extension of a working check rather than a new one.
+THE MECHANISM ALREADY EXISTS IN THIS REPO AND SHOULD BE REUSED RATHER THAN INVENTED. AGENTS.md on the two duplicated harness directories: '.beans.yml because the beans binary is third-party and will never read our schema, and WORKFLOW_DIR in workflow/store.ts because it is on the hot path ... The duplication is unavoidable; an unchecked one is not.' Both are checked by bun run cat check:harness-dirs. Apply the same pattern: a hardcoded asset path in bootstrap is fine AND IS CHECKED — a test that the literal resolves to a file that exists and, where it is a URL, that it is among the paths the publish step actually produces. kg-export.test.ts already does the URL half for the whole exported graph (the dead-link walk over PUB), so this is an extension of a working check rather than a new one.
 
 AND THE GATE STILL HELD BACK FROM STEP 1 GETS ITS ANSWER FROM THIS. The remaining piece of step 1 is a gate refusing a NEWLY hardcoded workflow path. The open question was what it does about legitimate literals; an allow-list is what this repo warns against. This settles it: the gate refuses a hardcode that a declaration could have answered, and a literal that is a base case declares itself as one and is checked to resolve. Same rule, one sentence, and it is the owner's 'ok but not preferred' made mechanical instead of remembered.
 
@@ -228,3 +228,6 @@ _2026-09-20_ — BOOTSTRAP SIMPLIFIED TO ONE PROCESS, per the owner's spec. READ
 ## 2026-10-05 — the publication rules now have one home (bean `4ak5` item 4)
 
 Which graph each instance publishes, where, under which IRI and schema, and what is stripped (fsh-guts, `published: false` skills, state-graph nodes) now live in `cat-harness/skills/kg/kg-core/instance-publication.md` §"What each instance publishes — graph, address, schema, and what is stripped". This bean's body is left as written; where it and that section disagree, the section is current.
+
+## Completed on landed evidence
+Landed on main in PR #322 (Twelve skills were never published; three readers disagreed about where skills live).

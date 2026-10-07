@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v26p
 title: 'PUBLIC COMMENT: tabular comments returned on a line-numbered draft, mapped by page and line to block ids, then triaged, reassigned and dispensed as Findings'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:09:45Z
-updated_at: 2026-10-04T20:03:46Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
@@ -51,3 +51,6 @@ First customer: the DPI-H Reference Architecture public review in litlfred/smart
 - The five operations: one CLI tool with a test per operation. They are not yet declared as separate Tool nodes, so that item stays open.
 - Public Comment sub-process: in `draft-to-publication.bpmn`. #197 must still be updated each round, so that item stays open.
 - review/ page and heat map: the smart-ra dashboard is built (`public-comment-site.ts`). The platform review page does not show public comments yet.
+
+## Completed on landed evidence
+Landed on main in PR #1912 / commit f03729a1dd1d (public comment: tabular comments, diagram indexing, and review adjudication).
