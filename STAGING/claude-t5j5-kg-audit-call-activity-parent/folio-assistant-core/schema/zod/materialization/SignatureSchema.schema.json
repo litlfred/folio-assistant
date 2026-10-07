@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/Signature",
+  "definitions": {
+    "Signature": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-t5j5-kg-audit-call-activity-parent/folio-assistant-core/schema/zod/materialization/SignatureSchema.schema.json",
+  "title": "SignatureSchema",
+  "description": "Generated from `SignatureSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/t5j5-kg-audit-call-activity-parent",
+    "sha": "83dd3a37a30fd4f612c957b2034a25085e836dee",
+    "pr": "2347/merge",
+    "run": "37603101329"
+  }
+}

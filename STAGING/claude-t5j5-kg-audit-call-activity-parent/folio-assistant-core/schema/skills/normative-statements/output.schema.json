@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Normative Statement Output",
+  "type": "object",
+  "required": [
+    "label",
+    "kind"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "const": "prose",
+      "description": "Always prose today. There is no first-class recommendation kind: adding one means a builder, schema, label prefix, viewer registration, constraint rows and QA criteria, and it is tracked separately rather than half-done. A prose block converts by changing one builder call."
+    },
+    "anchor": {
+      "type": "string",
+      "description": "The HTML anchor emitted for this block, equal to its label."
+    },
+    "citedBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] names this statement."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-t5j5-kg-audit-call-activity-parent/folio-assistant-core/schema/skills/normative-statements/output.schema.json",
+  "staging": {
+    "branch": "claude/t5j5-kg-audit-call-activity-parent",
+    "sha": "83dd3a37a30fd4f612c957b2034a25085e836dee",
+    "pr": "2347/merge",
+    "run": "37603101329"
+  }
+}
