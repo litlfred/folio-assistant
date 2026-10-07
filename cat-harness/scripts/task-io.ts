@@ -349,8 +349,8 @@ export function collectTaskIo(
   const ownerOf = new Map<string, string>(Object.keys(own).map((k) => [k, "cat-harness/scripts/task-io.ts"]));
   for (const instance of instanceRootsIn(repoRoot)) {
     // A REMOTE-MOUNTED instance's `taskIo` names scripts in ITS repository's
-    // package.json, not this checkout's (bean `hupw`: smart-base's gates left
-    // with it), so it contributes nothing here.
+    // package.json, not this checkout's (bean `hupw`: a retired instance's
+    // gates leave with it), so it contributes nothing here.
     if (mountScopeFor(instance) !== undefined) continue;
     const declared = readDeclaration(instance)?.taskIo;
     if (declared === undefined) continue;

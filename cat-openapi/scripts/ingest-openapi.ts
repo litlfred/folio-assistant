@@ -46,8 +46,8 @@ export const CONFIG_FILE = "cat-openapi.config.json";
  * Where the instance keeps its config: beside its declaration, or — for an
  * instance that is REMOTE-MOUNTED, where only declared directories arrive —
  * inside its own declared `openapi` directory. Bean `hupw` (owner,
- * 2026-10-07: "Forks declare it"): the smart-trust fork moved its config into
- * `openapi/` so the mount brings it through a declared path. `undefined` when
+ * 2026-10-07: "Forks declare it"): a fork keeps its config in `openapi/` so
+ * the mount brings it through a declared path. `undefined` when
  * neither holds one.
  */
 export function configPath(instanceRoot: string): string | undefined {

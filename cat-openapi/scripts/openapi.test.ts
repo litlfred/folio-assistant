@@ -3,7 +3,7 @@ import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:f
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { OpenApiConfigSchema, fallbackOperationId, operationsOf, type OpenApiDocument } from "../schemas/openapi.ts";
-import { checkCommitted } from "./ingest-openapi.ts";
+import { checkCommitted, configPath } from "./ingest-openapi.ts";
 import { PAGE_CONFIG_ID, pagesFor } from "./gen-openapi-pages.ts";
 import { thinPageConfigOf } from "../../cat-harness/scripts/thin-page.ts";
 
@@ -32,8 +32,12 @@ describe("operationsOf", () => {
 });
 
 describe("cat-openapi.config.json", () => {
-  it("smart-trust's config parses", () => {
-    expect(OpenApiConfigSchema.safeParse(JSON.parse(readFileSync(join(ROOT, "smart-trust", "cat-openapi.config.json"), "utf8"))).success).toBe(true);
+  it("smart-trust's config is found, and parses", () => {
+    // Inside its declared `openapi/` directory since the cutover (bean hupw):
+    // the instance is a remote mount, which brings declared directories only.
+    const p = configPath(join(ROOT, "smart-trust"));
+    expect(p).toBe(join(ROOT, "smart-trust", "openapi", "cat-openapi.config.json"));
+    expect(OpenApiConfigSchema.safeParse(JSON.parse(readFileSync(p!, "utf8"))).success).toBe(true);
   });
 
   it("refuses a document id declared twice", () => {
@@ -52,7 +56,7 @@ describe("the committed smart-trust gateway API", () => {
     try {
       const inst = join(dir, "smart-trust");
       cpSync(join(ROOT, "smart-trust", "smart-trust.json"), join(inst, "smart-trust.json"));
-      cpSync(join(ROOT, "smart-trust", "cat-openapi.config.json"), join(inst, "cat-openapi.config.json"));
+      // The config travels inside `openapi/`, where the instance keeps it.
       cpSync(join(ROOT, "smart-trust", "openapi"), join(inst, "openapi"), { recursive: true });
       const f = join(inst, "openapi", "gateway.openapi.json");
       writeFileSync(f, readFileSync(f, "utf8").replace("Uploads Trusted Certificate", "Uploads A Certificate"));

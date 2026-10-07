@@ -242,14 +242,14 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
       "kept on a branch; check:derived-from and each writer's own :check (fsh-guts:viz:check) are its verdict",
   },
   {
-    // Bean `hupw`: smart-base, smart-trust and smart-immunizations are remote
-    // mounts of their forks, which ignore the pages folio-assistant generates
-    // for them, so the publish builds write them.
+    // Bean `hupw`: the IG instances are remote mounts of their forks, which
+    // do not commit the pages this checkout generates for them, so the
+    // publish builds write them.
     match: "bun run smart:pages:publish",
     kind: "covered-by",
     reason:
-      "a BUILD step, not a check: it writes the mounted SMART IG instances' docs/ and smart-trust's OpenAPI pages at " +
-      "publish; the gate `smart:pages` (code-quality-gates) runs the same docs generator over the mounts",
+      "a BUILD step, not a check: it writes the mounted IG instances' docs/ and OpenAPI pages at publish; the gate " +
+      "`smart:pages` (code-quality-gates) runs the same docs generator over the mounts",
   },
   {
     // Bean `q8ar`. The deploy-time BUILD of each SQLite slice (beans, todos,

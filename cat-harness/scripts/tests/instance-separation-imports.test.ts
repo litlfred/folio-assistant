@@ -50,6 +50,7 @@ import { dirname, join, relative, resolve } from "node:path";
 
 import { specifiersOf } from "../../../bootstrap-tools/scripts/check-closure.js";
 import { declarationPathIn } from "../../schemas/cat-harness.js";
+import { mountScopeFor } from "../../schemas/remote-mount.js";
 import { inAggregate } from "../../test/support/checkout.js";
 
 const ROOT = resolve(import.meta.dir, "..", "..", "..");
@@ -63,6 +64,9 @@ function stagedInstances(): string[] {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
     const decl = declarationPathIn(join(ROOT, e.name));
     if (!decl || !existsSync(decl)) continue;
+    // A REMOTE-MOUNTED instance is another repository's code, at a pin: it
+    // has left, and its own guard runs there (bean `hupw`).
+    if (mountScopeFor(join(ROOT, e.name)) !== undefined) continue;
     try {
       const d = JSON.parse(readFileSync(decl, "utf-8")) as { repository?: string; livesAt?: { repository?: string } };
       if (d.repository && d.livesAt?.repository && d.repository !== d.livesAt.repository) out.push(e.name);
@@ -130,13 +134,12 @@ const NOT_YET_SHIMMED: Record<string, number> = {};
  * folio-asst-core"* — never on cat-harness directly; a symbol from a lower
  * layer comes through the needed layer's own surface
  * (`folio-assistant-core/scripts/platform.ts`). who-iris is held at zero by
- * being absent from this map. smart-base and smart-trust were measured, not
- * fixed, when the check landed; their cutover (PR #2320) retires both.
+ * being absent from this map. smart-base (31) and smart-trust (2) were
+ * measured, not fixed, when the check landed; their cutover (PR #2320, bean
+ * `hupw`) made both remote mounts, which `stagedInstances` leaves out, so the
+ * map is empty and stays a ceiling for the next staged instance.
  */
-const SHIM_BEYOND_NEEDS: Record<string, number> = {
-  "smart-base": 31,
-  "smart-trust": 2,
-};
+const SHIM_BEYOND_NEEDS: Record<string, number> = {};
 
 /** The instances `instance`'s declaration `needs`. */
 function needsOf(instance: string): string[] {
@@ -173,14 +176,12 @@ describe.skipIf(!inAggregate())("staged instances reach the platform only throug
     expect(Object.keys(NOT_YET_SHIMMED).filter((i) => PLATFORM_LAYERS.has(i))).toEqual([]);
   });
 
-  test("smart-base and smart-trust are covered and route through a shim (the rule is not vacuous)", () => {
-    // smart-trust had no shim from stage D (#1767) until 2026-10-04, and the
-    // opt-in guard let its one climb through — the one PR #2082 measured
-    // failing in the fork. Pinned so that cannot recur quietly.
-    for (const i of ["smart-base", "smart-trust"]) {
-      expect(covered).toContain(i);
-      expect(existsSync(join(ROOT, i, SHIM))).toBe(true);
-    }
+  test("who-iris is covered and routes through a shim (the rule is not vacuous)", () => {
+    // smart-base and smart-trust were pinned here until their cutover (PR
+    // #2320, bean `hupw`) made them remote mounts; who-iris is the staged
+    // instance left, and pinning it keeps the guard from passing over nothing.
+    expect(covered).toContain("who-iris");
+    expect(existsSync(join(ROOT, "who-iris", SHIM))).toBe(true);
   });
 
   test("in every covered instance, no file but platform.ts imports from outside it", () => {
