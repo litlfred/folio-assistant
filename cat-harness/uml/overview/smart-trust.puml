@@ -268,6 +268,17 @@ package "smart-trust/smart-trust-openapi" as pkg_smart_trust_smart_trust_openapi
     operations [1] : integer
     materialization [1] : object
   }
+  class "Document" as smart_trust_smart_trust_openapi_cat_openapi_config_v1_Document <<json: OpenApiConfigSchema>> #f4f4f1 {
+    id [1] : string
+    title [0..1] : string
+    description [0..1] : string
+    source [1] : object
+  }
+  class "cat-openapi-config/v1" as smart_trust_smart_trust_openapi_cat_openapi_config_v1_cat_openapi_config_v1 <<json: OpenApiConfigSchema>> #f4f4f1 {
+    $schema [1] : 'cat-openapi-config/v1'
+    directory [1] : string
+    documents [1..*] : Document[]
+  }
 }
 package "smart-trust/smart-trust-docs" as pkg_smart_trust_smart_trust_docs <<docs, ig-pages>> {
   note "docs: no node schema declared\n(no node here carries a $schema family docs names (14 named): could not determine)" as n_smart_trust_smart_trust_docs_docs
@@ -309,6 +320,7 @@ smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_t
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
 smart_trust_smart_trust_artifact_index_ig_releases_v1_Release *-- "0..*" smart_trust_smart_trust_artifact_index_ig_releases_v1_Asset : assets
 smart_trust_smart_trust_artifact_index_ig_releases_v1_ig_releases_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_ig_releases_v1_Release : releases
+smart_trust_smart_trust_openapi_cat_openapi_config_v1_cat_openapi_config_v1 *-- "1..*" smart_trust_smart_trust_openapi_cat_openapi_config_v1_Document : documents
 ' grid: portrait, 2 column(s) — pkg_smart_trust_smart_trust_ast pkg_smart_trust_smart_trust_artifact_index pkg_smart_trust_smart_trust_openapi pkg_smart_trust_smart_trust_docs pkg_smart_trust_smart_trust_scripts pkg_smart_trust_qa pkg_smart_trust_smart_trust_platform
 pkg_smart_trust_smart_trust_ast -[hidden]down- pkg_smart_trust_smart_trust_openapi
 pkg_smart_trust_smart_trust_artifact_index -[hidden]down- pkg_smart_trust_smart_trust_docs
