@@ -4,12 +4,12 @@
  * into its `openapi` directory — each document VERBATIM, with a
  * `<id>.source.json` recording where it came from.
  *
- * @module cat-openapi/scripts/ingest-openapi
+ * @module cat-harness/openapi/scripts/ingest-openapi
  * @covers openapi
  *
  * Usage:
- *   bun run cat-openapi/scripts/ingest-openapi.ts --instance smart-trust --source <checkout>
- *   bun run cat-openapi/scripts/ingest-openapi.ts --instance smart-trust --check
+ *   bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance smart-trust --source <checkout>
+ *   bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance smart-trust --check
  *
  * `--source` is a local checkout of the document's repository (one config may
  * name several documents from one repository; documents from different
@@ -38,14 +38,40 @@ import {
   type OpenApiConfig,
   type OpenApiProvenance,
 } from "../schemas/openapi.ts";
-import { findDeclarationFile } from "../../cat-harness/schemas/cat-harness.ts";
+import { findDeclarationFile } from "../../schemas/cat-harness.ts";
 
 export const CONFIG_FILE = "cat-openapi.config.json";
 
+/**
+ * Where the instance's config is: at its root, or — where a fork keeps it with
+ * the documents it names — inside a directory the instance declares with graph
+ * typology `openapi`. The root wins; `undefined` when neither holds one. The
+ * file keeps its `cat-openapi.config.json` name after the harness folded into
+ * cat-harness as the `openapi` subgraph (owner, 2026-10-07).
+ */
+export function configPath(instanceRoot: string): string | undefined {
+  const atRoot = join(instanceRoot, CONFIG_FILE);
+  if (existsSync(atRoot)) return atRoot;
+  const found = findDeclarationFile(instanceRoot);
+  if (found === undefined) return undefined;
+  let d: { directories?: Array<{ path?: string; graphTypologies?: string[] }> };
+  try {
+    d = JSON.parse(readFileSync(join(instanceRoot, found), "utf8"));
+  } catch {
+    return undefined;
+  }
+  for (const e of d.directories ?? []) {
+    if (!e.path || !e.graphTypologies?.includes("openapi")) continue;
+    const p = join(instanceRoot, e.path, CONFIG_FILE);
+    if (existsSync(p)) return p;
+  }
+  return undefined;
+}
+
 /** The instance's config, parsed. Throws naming the file when it is absent or invalid. */
 export function readConfig(instanceRoot: string): OpenApiConfig {
-  const p = join(instanceRoot, CONFIG_FILE);
-  if (!existsSync(p)) throw new Error(`${p}: no ${CONFIG_FILE} — this instance does not instantiate cat-openapi`);
+  const p = configPath(instanceRoot) ?? join(instanceRoot, CONFIG_FILE);
+  if (!existsSync(p)) throw new Error(`${p}: no ${CONFIG_FILE} — this instance does not instantiate cat-harness's openapi subgraph`);
   const r = OpenApiConfigSchema.safeParse(JSON.parse(readFileSync(p, "utf8")));
   if (!r.success) throw new Error(`${p}: ${r.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
   return r.data;

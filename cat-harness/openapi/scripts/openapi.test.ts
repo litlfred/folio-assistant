@@ -3,11 +3,11 @@ import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:f
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { OpenApiConfigSchema, fallbackOperationId, operationsOf, type OpenApiDocument } from "../schemas/openapi.ts";
-import { checkCommitted } from "./ingest-openapi.ts";
+import { checkCommitted, configPath } from "./ingest-openapi.ts";
 import { PAGE_CONFIG_ID, pagesFor } from "./gen-openapi-pages.ts";
-import { thinPageConfigOf } from "../../cat-harness/scripts/thin-page.ts";
+import { thinPageConfigOf } from "../../scripts/thin-page.ts";
 
-const ROOT = join(import.meta.dir, "..", "..");
+const ROOT = join(import.meta.dir, "..", "..", "..");
 const doc = (paths: OpenApiDocument["paths"]): OpenApiDocument => ({ openapi: "3.0.1", info: { title: "T", version: "1" }, paths });
 
 describe("operationsOf", () => {
@@ -57,6 +57,24 @@ describe("the committed smart-trust gateway API", () => {
       const f = join(inst, "openapi", "gateway.openapi.json");
       writeFileSync(f, readFileSync(f, "utf8").replace("Uploads Trusted Certificate", "Uploads A Certificate"));
       expect(checkCommitted(inst).join("\n")).toMatch(/does not match its provenance/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("a config kept INSIDE the declared openapi directory is found, and one at the root wins", () => {
+    // A fork keeps `cat-openapi.config.json` beside the documents it names
+    // (`configPath`); the root still wins where both exist.
+    const dir = mkdtempSync(join(tmpdir(), "openapi-"));
+    try {
+      const inst = join(dir, "smart-trust");
+      cpSync(join(ROOT, "smart-trust", "smart-trust.json"), join(inst, "smart-trust.json"));
+      cpSync(join(ROOT, "smart-trust", "openapi"), join(inst, "openapi"), { recursive: true });
+      cpSync(join(ROOT, "smart-trust", "cat-openapi.config.json"), join(inst, "openapi", "cat-openapi.config.json"));
+      expect(configPath(inst)).toBe(join(inst, "openapi", "cat-openapi.config.json"));
+      expect(checkCommitted(inst)).toEqual([]);
+      cpSync(join(ROOT, "smart-trust", "cat-openapi.config.json"), join(inst, "cat-openapi.config.json"));
+      expect(configPath(inst)).toBe(join(inst, "cat-openapi.config.json"));
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

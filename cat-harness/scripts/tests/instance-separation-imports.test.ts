@@ -103,7 +103,6 @@ function climbsOutOf(instance: string): string[] {
 const PLATFORM_LAYERS = new Set([
   "cat-harness",
   "cat-harness-tools",
-  "cat-openapi",
   "fhir-harness",
   "folio-assistant-core",
   "folio-assistant-sci",

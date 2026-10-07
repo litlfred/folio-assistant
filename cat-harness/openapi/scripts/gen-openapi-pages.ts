@@ -4,11 +4,11 @@
  * holds, and for every OPERATION in each — the "page + IRI for each operation"
  * the owner asked for (2026-10-03, bean `s4ta`).
  *
- * @module cat-openapi/scripts/gen-openapi-pages
+ * @module cat-harness/openapi/scripts/gen-openapi-pages
  * @covers openapi
  *
  * Usage:
- *   bun run cat-openapi/scripts/gen-openapi-pages.ts --instance smart-trust [--check]
+ *   bun run cat-harness/openapi/scripts/gen-openapi-pages.ts --instance smart-trust [--check]
  *
  * ## What is written, INSIDE the instance's `openapi` graph
  *
@@ -59,11 +59,11 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { DOCS_SITE_BASE } from "../../cat-harness/schemas/jsonld.ts";
-import { escHtml, thinPageConfigOf, thinPageHtml } from "../../cat-harness/scripts/thin-page.ts";
+import { DOCS_SITE_BASE } from "../../schemas/jsonld.ts";
+import { escHtml, thinPageConfigOf, thinPageHtml } from "../../scripts/thin-page.ts";
 import { OpenApiDocumentSchema, OpenApiProvenanceSchema, operationsOf, type OpenApiOperation } from "../schemas/openapi.ts";
-import { localDirOf, openapiDir, readConfig } from "./ingest-openapi.ts";
-import { findDeclarationFile } from "../../cat-harness/schemas/cat-harness.ts";
+import { CONFIG_FILE, localDirOf, openapiDir, readConfig } from "./ingest-openapi.ts";
+import { findDeclarationFile } from "../../schemas/cat-harness.ts";
 
 /** The config-block id every page written here carries — how a run recognises its own output. */
 export const PAGE_CONFIG_ID = "openapi-page";
@@ -224,7 +224,7 @@ export function pagesFor(instanceRoot: string): Written[] {
  * by what they are, never by where they sit: a thin page declaring
  * {@link PAGE_CONFIG_ID}, a node file (`.jsonld`, or `.json` that is neither a
  * document nor its provenance), or the loader. The ingest's own files and the
- * directory's README are never candidates.
+ * directory's README and config are never candidates.
  */
 function orphans(root: string, wanted: Set<string>): string[] {
   const out: string[] = [];
@@ -236,7 +236,8 @@ function orphans(root: string, wanted: Set<string>): string[] {
         walk(p);
         continue;
       }
-      if (wanted.has(p) || ingested.test(e.name) || e.name === "README.md") continue;
+      // The config, where a fork keeps it beside the documents (`configPath`), is never ours to remove.
+      if (wanted.has(p) || ingested.test(e.name) || e.name === "README.md" || e.name === CONFIG_FILE) continue;
       const ours =
         e.name.endsWith(".jsonld") ||
         e.name.endsWith(".json") ||

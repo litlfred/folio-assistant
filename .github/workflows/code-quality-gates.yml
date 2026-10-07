@@ -2691,7 +2691,7 @@ jobs:
           # generator (fhir-harness/scripts/gen-ig-pages.ts, #1767).
           bun run cat smart-base:pages:check
           bun run cat smart-immunizations:pages:check
-          # The OpenAPI harness (cat-openapi, bean s4ta): every document an
+          # The OpenAPI subgraph (cat-harness/openapi/, bean s4ta): every document an
           # instance's cat-openapi.config.json names is held verbatim and matches
           # its provenance, and its per-operation pages and IRIs are current.
           bun run cat smart-trust:openapi:check

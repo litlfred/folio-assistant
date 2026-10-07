@@ -2,7 +2,7 @@
  * The OpenAPI harness's shapes: what an instance declares, what an ingest
  * records, and how an OpenAPI document's OPERATIONS become nodes with IRIs.
  *
- * @module cat-openapi/schemas/openapi
+ * @module cat-harness/openapi/schemas/openapi
  * @graphNode schema
  *
  * ## The node is the document; the operation is a node inside it
