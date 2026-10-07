@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8xx6
 title: BPMN re-render for translated labels
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-29T18:14:49Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -81,3 +81,6 @@ _2026-09-19T00:41:33Z_ — Checked 2026-09-19 on main at 17dc1e6 — LIVE per th
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #245 (feat: auto full-width diagrams + mechanical QA for recurring findings (#203)).
