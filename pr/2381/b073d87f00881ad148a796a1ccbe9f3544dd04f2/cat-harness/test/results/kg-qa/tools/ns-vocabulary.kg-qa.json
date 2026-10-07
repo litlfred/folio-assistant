@@ -1,0 +1,58 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "tool",
+    "id": "ns-vocabulary",
+    "path": null
+  },
+  "source_hash": "90d134a8e108",
+  "criteria": {
+    "tool-invoke-path-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-contract-met": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-io-types-declared": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-args-shell-safe": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-alternative-selectable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-downstream-fresh": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-maintains-in-tree": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "ns-vocabulary",
+          "detail": "maintains \"cat-harness/ns.jsonld\" — presence is a fact about the assembled site, not this checkout. Answered by `check:maintained-artefacts ./_site` in the docs-site workflow."
+        },
+        {
+          "where": "ns-vocabulary",
+          "detail": "maintains \"folio-assistant-core/ns.jsonld\" — presence is a fact about the assembled site, not this checkout. Answered by `check:maintained-artefacts ./_site` in the docs-site workflow."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 2,
+    "unknown": 1
+  }
+}
