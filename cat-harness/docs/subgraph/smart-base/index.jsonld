@@ -51,6 +51,11 @@
       "name": "smart-base-block-kinds"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-content",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-content"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-content-adapters",
       "@type": "bootstrap:Subgraph",
       "name": "smart-base-content-adapters"
@@ -76,9 +81,24 @@
       "name": "smart-base-findings"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-platform",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-platform"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-qa-checkers",
       "@type": "bootstrap:Subgraph",
       "name": "smart-base-qa-checkers"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-schemas",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-schemas"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-scripts",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-scripts"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-themes",
@@ -123,7 +143,9 @@
     "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/"
   ],
   "holdsGraph": [
-    "bootstrap:graphTypology/processes"
+    "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/scenarios",
+    "bootstrap:graphTypology/skills"
   ],
   "name": "smart-base",
   "path": "./",

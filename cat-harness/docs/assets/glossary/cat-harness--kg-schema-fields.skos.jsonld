@@ -23688,6 +23688,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.assets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.assets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's DECLARED ASSETS (`assets[].src` — its README and AGENTS.md), each a single file the declaration names and the mount lays down beside the declaration. Bean `hupw`: a mount without them left every declared asset of a mounted instance a dangling reference. Only instance-scoped assets inside the instance are taken; a declared asset the pinned tree lacks makes the instance `missing`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.assets",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.path",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23723,25 +23742,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.pinnedBy",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.undeclared",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "LockedInstanceSchema.undeclared"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "With an `undeclared: true` override: what was laid down OUTSIDE every declared directory and the declaration file — one tree digest over it, and the declared paths (instance-relative, no trailing slash) the digest leaves out, so the check walks exactly what the mount wrote."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.undeclared",
       "skos:note": "candidate"
     },
     {

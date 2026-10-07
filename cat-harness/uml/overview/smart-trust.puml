@@ -298,6 +298,9 @@ package "smart-trust/qa" as pkg_smart_trust_qa <<qa>> {
     total [1] : number
   }
 }
+package "smart-trust/smart-trust-platform" as pkg_smart_trust_smart_trust_platform <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_smart_trust_smart_trust_platform_code
+}
 
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_Context : contexts
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound : sidecarsUnbound
@@ -306,9 +309,10 @@ smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_t
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
 smart_trust_smart_trust_artifact_index_ig_releases_v1_Release *-- "0..*" smart_trust_smart_trust_artifact_index_ig_releases_v1_Asset : assets
 smart_trust_smart_trust_artifact_index_ig_releases_v1_ig_releases_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_ig_releases_v1_Release : releases
-' grid: portrait, 2 column(s) — pkg_smart_trust_smart_trust_ast pkg_smart_trust_smart_trust_artifact_index pkg_smart_trust_smart_trust_openapi pkg_smart_trust_smart_trust_docs pkg_smart_trust_smart_trust_scripts pkg_smart_trust_qa
+' grid: portrait, 2 column(s) — pkg_smart_trust_smart_trust_ast pkg_smart_trust_smart_trust_artifact_index pkg_smart_trust_smart_trust_openapi pkg_smart_trust_smart_trust_docs pkg_smart_trust_smart_trust_scripts pkg_smart_trust_qa pkg_smart_trust_smart_trust_platform
 pkg_smart_trust_smart_trust_ast -[hidden]down- pkg_smart_trust_smart_trust_openapi
 pkg_smart_trust_smart_trust_artifact_index -[hidden]down- pkg_smart_trust_smart_trust_docs
 pkg_smart_trust_smart_trust_openapi -[hidden]down- pkg_smart_trust_smart_trust_scripts
 pkg_smart_trust_smart_trust_docs -[hidden]down- pkg_smart_trust_qa
+pkg_smart_trust_smart_trust_scripts -[hidden]down- pkg_smart_trust_smart_trust_platform
 @enduml
