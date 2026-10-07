@@ -161,7 +161,7 @@
  *   1  at least one check is `unrepaired` or `no-writer` — not staleness
  *   2  the run did not reach a fixed point: COULD NOT DETERMINE, never clean
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 
 import { loadGates, type Gate } from "./gates.ts";

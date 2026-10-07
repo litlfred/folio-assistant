@@ -16,7 +16,7 @@
  * standing alone too.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+
 import { join } from "node:path";
 
 import { COVERED } from "../cat-harness/scripts/pair-cover.ts";
@@ -27,7 +27,6 @@ import { scriptsOf } from "../cat-harness/schemas/script-table.ts";
 
 /** The directory this test was written in (`cat-harness-tools/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
 const ORIGIN_DIR = join(import.meta.dir, "../cat-harness-tools/scripts/tests");
-
 
 const REPO = repoRootFor(join(ORIGIN_DIR, "..", "..", "..", "cat-harness"));
 const SCRIPTS = scriptsOf(REPO);

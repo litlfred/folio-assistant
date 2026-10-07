@@ -74,7 +74,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+
 import { join } from "node:path";
 import { scriptsOf } from "../cat-harness/schemas/script-table.ts";
 

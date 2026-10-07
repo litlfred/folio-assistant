@@ -498,7 +498,6 @@ describe("--jobs", () => {
 
 describe("task-io declarations", () => {
   test("every declared script exists in package.json", async () => {
-    const { readFileSync } = await import("node:fs");
     const { repoRootFor } = await import("../../schemas/cat-harness.ts");
     const pkg = { scripts: scriptsOf(repoRootFor(join(import.meta.dir, "..", ".."))) };
     for (const name of Object.keys(TASK_IO)) expect(pkg.scripts[name], `${name} is not a script`).toBeDefined();
