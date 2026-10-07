@@ -81,3 +81,9 @@ Not claiming xpcu (held by the 10-01 session; its branch has no open PR and its 
 
 Where qa:working-copy goes: skill:register 124 s, kg:audit:all 87 s (73 %); 26 other writers ≤ 17 s each.
 The first regen of the warm round 'regenerated' uml:overview from a QA copy it had not built: the 7how defect, seen live.
+
+## 2026-10-06 (late): f017 measured on PR #2327 (`244608c`)
+
+- **regen warm:** 179 s with 62 of 121 pairs skipped (231 s and 13 before). Cold: 404 s.
+- **gates on the same tree:** 136 of 251 gates skipped (10 before).
+- **gates wall time:** 1840 s, nearly unchanged. `bun test` (935 s) and `check:cat-harness-standalone` (338 s) are serial and not skippable, and together they are 1273 s of that. The next speed-up is theirs: v3nf, and test sharding. Details are in bean f017.

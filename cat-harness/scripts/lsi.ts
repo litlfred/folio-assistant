@@ -249,8 +249,10 @@ export function computeIndex(t: GraphTarget, docs?: string[], opts: LsiOptions =
   const hit = key ? computed.get(key) : undefined;
   if (hit) return hit;
   const units = unitsOf(t.absPath, t.graphTypologies, docs);
+  // input-site: inert #c1aef090 — a duration for the log
   const t0 = performance.now();
   const ix = buildLsi(units, opts);
+  // input-site: inert #8a078e0b — a duration for the log
   const ms = Math.round(performance.now() - t0);
   const f = findings(ix);
   const sidecar: LsiSidecar = {

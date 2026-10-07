@@ -99,6 +99,7 @@ async function auditOne(root: string): Promise<Outcome> {
   if (strict) argv.push("--strict");
   if (against !== undefined) argv.push("--against", against);
 
+  // input-site: runs cat-harness/scripts/kg-audit.ts #6dfa6586 — one kg-audit per instance, inheriting this environment
   const p = Bun.spawn(argv, { cwd: REPO, stdout: "pipe", stderr: "pipe" });
   const [out, err] = await Promise.all([new Response(p.stdout).text(), new Response(p.stderr).text()]);
   const code = await p.exited;
