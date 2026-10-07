@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/catalogue/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/dublin-core-renderings",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 164,
+      "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
+      "name": "dublin-core-renderings",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b864303d3daee8372480e64472fdaade599f2432e4c4928c15cd666a19df8360",
+        "bytes": 7442,
+        "sha256": "b864303d3daee8372480e64472fdaade599f2432e4c4928c15cd666a19df8360"
+      },
+      "title": "Dublin Core renderings"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/catalogue",
+  "path": "skills/library/catalogue/"
+}

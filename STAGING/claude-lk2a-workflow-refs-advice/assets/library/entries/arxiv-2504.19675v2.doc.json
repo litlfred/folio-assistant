@@ -1,0 +1,1197 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2504.19675v2",
+  "title": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs",
+  "pages": 8,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Background",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-background"
+    },
+    {
+      "level": 1,
+      "title": "System overview",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-system-overview"
+    },
+    {
+      "level": 2,
+      "title": "Translation of data sets",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-translation-of-data-sets"
+    },
+    {
+      "level": 2,
+      "title": "Synthetic training data",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-synthetic-training-data"
+    },
+    {
+      "level": 1,
+      "title": "Experimental setup",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-experimental-setup"
+    },
+    {
+      "level": 2,
+      "title": "Base projects",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-base-projects"
+    },
+    {
+      "level": 2,
+      "title": "Adding synthetic data",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-adding-synthetic-data"
+    },
+    {
+      "level": 2,
+      "title": "Ensemble projects",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-ensemble-projects"
+    },
+    {
+      "level": 2,
+      "title": "Test set predictions",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-test-set-predictions"
+    },
+    {
+      "level": 1,
+      "title": "Results",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-results"
+    },
+    {
+      "level": 2,
+      "title": "Quantitative evaluation",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-quantitative-evaluation"
+    },
+    {
+      "level": 2,
+      "title": "Qualitative evaluation",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-qualitative-evaluation"
+    },
+    {
+      "level": 2,
+      "title": "Analysis",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-analysis"
+    },
+    {
+      "level": 1,
+      "title": "Conclusions",
+      "number": null,
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-conclusions"
+    },
+    {
+      "level": 1,
+      "title": "Effect of synthetic data",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-effect-of-synthetic-data"
+    },
+    {
+      "level": 1,
+      "title": "Results for base projects",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-results-for-base-projects"
+    },
+    {
+      "level": 1,
+      "title": "Ensemble weights",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-ensemble-weights"
+    },
+    {
+      "level": 1,
+      "title": "Details about LLM usage",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-details-about-llm-usage"
+    },
+    {
+      "level": 2,
+      "title": "Performance",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-performance"
+    },
+    {
+      "level": 2,
+      "title": "Processing example",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-processing-example"
+    },
+    {
+      "level": 2,
+      "title": "Prompt templates",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-prompt-templates"
+    },
+    {
+      "level": 3,
+      "title": "Record translation",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-022-record-translation"
+    },
+    {
+      "level": 3,
+      "title": "Record synthesis",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-023-record-synthesis"
+    },
+    {
+      "level": 3,
+      "title": "GND translation",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-024-gnd-translation"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 156,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "traditional xmtc",
+          "heading": false
+        },
+        {
+          "term": "semeval task",
+          "heading": false
+        },
+        {
+          "term": "subject indexing",
+          "heading": false
+        },
+        {
+          "term": "helsinki",
+          "heading": false
+        },
+        {
+          "term": "annif",
+          "heading": false
+        },
+        {
+          "term": "predictions",
+          "heading": false
+        }
+      ],
+      "extract": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs Osma Suominen and Juho Inkinen and Mona Lehtinen National Library of Finland, University of Helsinki firstname.lastname@helsinki.fi Abstract This paper presents the Annif system in SemEval-2025 Task 5 (LLMs4Subjects), which focussed on subject indexing using large lan- guage models (LLMs). The task required creating subject predictions for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 188,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "subject indexing",
+          "heading": false
+        },
+        {
+          "term": "nlp",
+          "heading": false
+        },
+        {
+          "term": "souza",
+          "heading": false
+        },
+        {
+          "term": "toolkit",
+          "heading": false
+        },
+        {
+          "term": "bibliographic",
+          "heading": false
+        },
+        {
+          "term": "llm-based",
+          "heading": false
+        },
+        {
+          "term": "traditional",
+          "heading": false
+        }
+      ],
+      "extract": "Subject indexing is an important aspect of improv- ing the discoverability of bibliographic databases and digital collections. Systems for automating subject indexing have traditionally been based on natural language processing (NLP) and tra- ditional machine learning (ML) methods. The rise of generative AI and large language mod- els (LLMs) holds some promise to revolutionise many automation tasks, yet producing",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-synthetic-training-data",
+      "number": null,
+      "title": "Synthetic training data",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 116,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "synthetic",
+          "heading": true
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "ranked",
+          "heading": false
+        },
+        {
+          "term": "gory",
+          "heading": false
+        }
+      ],
+      "extract": "LLMs, 3) including XTransformer in an ensemble of algorithms, and 4) generating suggestions us- ing separate monolingual prediction pipelines and merging their results. Our system ranked 1st in the all-subjects cate- gory and 2nd in the tib-core-subjects category in the quantitative evaluation. It was ranked 4th in qualita- tive evaluations. We discovered that our approach, based mainly on traditional NLP and ML,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-background",
+      "number": null,
+      "title": "Background",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 234,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "gnd subjects",
+          "heading": false
+        },
+        {
+          "term": "subject vocabulary",
+          "heading": false
+        },
+        {
+          "term": "subsets",
+          "heading": false
+        },
+        {
+          "term": "all-subjects",
+          "heading": false
+        },
+        {
+          "term": "tib-core-subjects",
+          "heading": false
+        },
+        {
+          "term": "xmtc",
+          "heading": false
+        },
+        {
+          "term": "records",
+          "heading": false
+        }
+      ],
+      "extract": "The task involved developing LLM-based systems that recommend the most relevant subjects from the GND subject vocabulary to tag a given TIBKAT record based on its title and abstract, which is a type of extreme multilabel text classification (XMTC) problem. The organisers provided two variants of the GND subject vocabulary: all-subjects (all 200,035 GND subjects) and tib-core-subjects (a 1https://annif.org",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-system-overview",
+      "number": null,
+      "title": "System overview",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 313,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "xmtc algorithms",
+          "heading": false
+        },
+        {
+          "term": "subject indexing",
+          "heading": false
+        },
+        {
+          "term": "ensembles",
+          "heading": false
+        },
+        {
+          "term": "backend",
+          "heading": false
+        },
+        {
+          "term": "annif",
+          "heading": false
+        },
+        {
+          "term": "scores",
+          "heading": false
+        },
+        {
+          "term": "averaging",
+          "heading": false
+        },
+        {
+          "term": "suggested",
+          "heading": false
+        }
+      ],
+      "extract": "We based our system on the Annif automated sub- ject indexing toolkit. It provides a selection of XMTC algorithms as configurable backends which can be used for subject indexing by setting up projects that define the vocabulary and specific con- figuration settings of a backend. We chose three Annif backends for this task: 1) Omikuji5, an implementation of a family of effi- cient machine learning algorithms for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-translation-of-data-sets",
+      "number": null,
+      "title": "Translation of data sets",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 288,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "german synthetic",
+          "heading": false
+        },
+        {
+          "term": "english synthetic",
+          "heading": false
+        },
+        {
+          "term": "synthetic training",
+          "heading": false
+        },
+        {
+          "term": "gnd preferred",
+          "heading": false
+        },
+        {
+          "term": "training records",
+          "heading": false
+        },
+        {
+          "term": "preferred terms",
+          "heading": false
+        },
+        {
+          "term": "training data",
+          "heading": false
+        },
+        {
+          "term": "b-instruct",
+          "heading": false
+        }
+      ],
+      "extract": "We used the Llama-3.1-8B-Instruct LLM (Grattafiori et al., 2024) for translating the titles and abstracts of all records. Each record was translated separately into a German-only and English-only record (step 1 in Figure 1). More details on LLM processing are given in Appendix D. original records German only English only German synthetic part 1 German synthetic part 2 German synthetic part 3 English synthetic part 1",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-experimental-setup",
+      "number": null,
+      "title": "Experimental setup",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 10,
+      "summary": null,
+      "keywords": [],
+      "extract": "We first set up, trained and evaluated the three kinds",
+      "extractCut": false
+    },
+    {
+      "id": "sec-006-base-projects",
+      "number": null,
+      "title": "Base projects",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 281,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "base projects",
+          "heading": true
+        },
+        {
+          "term": "top suggestions",
+          "heading": false
+        },
+        {
+          "term": "xtrans",
+          "heading": false
+        },
+        {
+          "term": "hyperparameters",
+          "heading": false
+        },
+        {
+          "term": "annif",
+          "heading": false
+        },
+        {
+          "term": "bonsai",
+          "heading": false
+        },
+        {
+          "term": "calculated",
+          "heading": false
+        },
+        {
+          "term": "training",
+          "heading": false
+        }
+      ],
+      "extract": "uation scores, measured against the development set, by exploring various approaches and settings. Once satisfied with the performance of the base projects, we combined them into ensembles that were finally used to produce our system output. For evaluation during system development, we used two common XMTC metrics built in to the Annif toolkit: F1@5 (F1 score calculated using the top 5 suggestions from the system)",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-adding-synthetic-data",
+      "number": null,
+      "title": "Adding synthetic data",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 86,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "synthetic data",
+          "heading": true
+        },
+        {
+          "term": "mllm",
+          "heading": false
+        },
+        {
+          "term": "adding",
+          "heading": true
+        }
+      ],
+      "extract": "We repeated the synthetic data generation process three times per language and GND variant (total 3 × 2 × 2 times). The nDCG@10 scores of the Bonsai projects increased by ~0.02 when adding the first part of synthetic data, but the 2nd and 3rd synthetic sets only increased the scores modestly (see Figure 3 in Appendix A), so we stopped at 1 part original and 3 parts synthetic data. We didn’t use the synthetic data",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-results",
+      "number": null,
+      "title": "Results",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 40,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "projects",
+          "heading": false
+        },
+        {
+          "term": "scores",
+          "heading": false
+        },
+        {
+          "term": "mllm",
+          "heading": false
+        }
+      ],
+      "extract": "did not improve when adding synthetic data. The final evaluation scores for the base projects are shown in Table 3 in Appendix B. The Bon- sai projects achieved the best scores in all cases, followed by XTransformer and MLLM. 4.3",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-ensemble-projects",
+      "number": null,
+      "title": "Ensemble projects",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 390,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "bmx ensembles",
+          "heading": false
+        },
+        {
+          "term": "projects",
+          "heading": true
+        },
+        {
+          "term": "base projects",
+          "heading": false
+        },
+        {
+          "term": "simple ensemble",
+          "heading": false
+        },
+        {
+          "term": "optimised weights",
+          "heading": false
+        },
+        {
+          "term": "bonsai model",
+          "heading": false
+        },
+        {
+          "term": "mllm",
+          "heading": false
+        },
+        {
+          "term": "minor role",
+          "heading": false
+        }
+      ],
+      "extract": "We set up three kinds of ensemble projects that combined the base projects in different ways: two \"BM\" ensembles (simple and neural) combining Bonsai and MLLM, and a \"BMX\" simple ensemble that combines all three base projects (see Figure 2). BM simple ensemble BM neural ensemble BMX simple ensemble Bonsai MLLM XTransformer ensemble/fusion projects regular projects trained on runs 1,2,3 4,5,6 7,8,9 Figure 2: Overview",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-test-set-predictions",
+      "number": null,
+      "title": "Test set predictions",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 112,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "predictions",
+          "heading": true
+        },
+        {
+          "term": "ensemble",
+          "heading": false
+        },
+        {
+          "term": "record",
+          "heading": false
+        }
+      ],
+      "extract": "For both GND variants, teams were allowed to submit up to 10 separate runs (up to 50 subject predictions per test set record). We LLM-translated the test set records to produce German-only and English-only versions of each record. For each of the three ensemble types, we produced three runs: 1) using the German ensemble and the German- only record, 2) using the English ensemble and English-only record, and 3)",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-qualitative-evaluation",
+      "number": null,
+      "title": "Qualitative evaluation",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 7,
+      "summary": null,
+      "keywords": [],
+      "extract": "were performed by the task organisers. 5.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-012-quantitative-evaluation",
+      "number": null,
+      "title": "Quantitative evaluation",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 311,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "qualitative evaluation",
+          "heading": false
+        },
+        {
+          "term": "recall scores",
+          "heading": false
+        },
+        {
+          "term": "average recall",
+          "heading": false
+        },
+        {
+          "term": "considered correct",
+          "heading": false
+        },
+        {
+          "term": "ruc team",
+          "heading": false
+        },
+        {
+          "term": "subject annotations",
+          "heading": false
+        },
+        {
+          "term": "scores across",
+          "heading": false
+        },
+        {
+          "term": "thresholds",
+          "heading": false
+        }
+      ],
+      "extract": "The quantitative evaluation involved comparing the subject predictions with subject annotations in TIBKAT records using precision, recall, and F1 scores (with various thresholds from 5 to 50). The overall ranking was determined by average recall, calculated by averaging the recall scores over all threshold values. Our #9 runs, BMX simple ensem- ble with combined languages (de+en), ranked 1st in the all-subjects",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-analysis",
+      "number": null,
+      "title": "Analysis",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 756,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "bmx ensembles",
+          "heading": false
+        },
+        {
+          "term": "neural ensemble",
+          "heading": false
+        },
+        {
+          "term": "subject predictions",
+          "heading": false
+        },
+        {
+          "term": "bmx simple",
+          "heading": false
+        },
+        {
+          "term": "quantitative evaluations",
+          "heading": false
+        },
+        {
+          "term": "achieved higher",
+          "heading": false
+        },
+        {
+          "term": "systems achieved",
+          "heading": false
+        },
+        {
+          "term": "evaluation scores",
+          "heading": false
+        }
+      ],
+      "extract": "We trained parallel English and German versions of each model, demonstrating successful LLM-based translation of multilingual input data. In all but development set test set Vocab System Run# Ensemble Lang F1@5 nDCG@10 F1@5 Avg recall Rank all Annif (ours) 1 BM simple de 0.3174 0.5459 0.3108 0.5736 2 en 0.3312 0.5677 0.3184 0.5890 3 de+en - - 0.3376 0.6201 4 BM neural de 0.3337* 0.5726* 0.3029 0.5447 5 en 0.3504*",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-conclusions",
+      "number": null,
+      "title": "Conclusions",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 13,
+      "summary": null,
+      "keywords": [],
+      "extract": "In conclusion, our participation in the SemEval- 2025 Task 5 (LLMs4Subjects) provided valuable",
+      "extractCut": false
+    },
+    {
+      "id": "sec-015-performance",
+      "number": null,
+      "title": "Performance",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 491,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "mathias begoin",
+          "heading": false
+        },
+        {
+          "term": "holger israel",
+          "heading": false
+        },
+        {
+          "term": "sameer sadruddin",
+          "heading": false
+        },
+        {
+          "term": "diana slawig",
+          "heading": false
+        },
+        {
+          "term": "jennifer souza",
+          "heading": false
+        },
+        {
+          "term": "subject indexing",
+          "heading": false
+        },
+        {
+          "term": "thank",
+          "heading": false
+        },
+        {
+          "term": "classification",
+          "heading": false
+        }
+      ],
+      "extract": "Annif, particularly when augmented with large lan- guage models (LLMs) for data preparation. By leveraging traditional XMTC algorithms such as Omikuji Bonsai, MLLM, and XTransformer, and enhancing them with LLM-generated synthetic data and translations, we demonstrated competi- tive results across multiple categories. While this task focused only on the resulting quality of the subject indexing, we note that the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-effect-of-synthetic-data",
+      "number": null,
+      "title": "Effect of synthetic data",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 49,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "synthetic",
+          "heading": true
+        },
+        {
+          "term": "synthetic training",
+          "heading": false
+        },
+        {
+          "term": "all-subjects",
+          "heading": false
+        }
+      ],
+      "extract": "Proportions of original + synthetic training data nDCG@10 0.45 0.50 0.55 0.60 1+0 1+1 1+2 1+3 all-subjects / de all-subjects / en tib-core-subjects / de tib-core-subjects / en Figure 3: Effect of adding synthetic training data for Omikuji Bonsai models. The models were evaluated against the development set. B",
+      "extractCut": false
+    },
+    {
+      "id": "sec-017-results-for-base-projects",
+      "number": null,
+      "title": "Results for base projects",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 76,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "xtrans",
+          "heading": false
+        },
+        {
+          "term": "projects",
+          "heading": true
+        },
+        {
+          "term": "mllm",
+          "heading": false
+        }
+      ],
+      "extract": "Vocab Backend Lang F1@5 nDCG@10 all Bonsai de 0.3003 0.5144 en 0.3234 0.5532 MLLM de 0.2428 0.4245 en 0.2281 0.4005 XTrans de 0.2928 0.5056 en 0.3091 0.5326 tib-core Bonsai de 0.2625 0.5233 en 0.2934 0.5807 MLLM de 0.2087 0.4157 en 0.2160 0.4291 XTrans de 0.2552 0.5052 en 0.2761 0.5419 Table 3: Evaluation scores of the base projects measured against the development set. The best scores for each vocabulary and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-ensemble-weights",
+      "number": null,
+      "title": "Ensemble weights",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 59,
+      "summary": null,
+      "keywords": [],
+      "extract": "Type Vocab Lang Bonsai MLLM XTrans BM all de 0.8070 0.1930 - en 0.8377 0.1623 - tib-core de 0.8432 0.1568 - en 0.8729 0.1271 - BMX all de 0.4713 0.1964 0.3323 en 0.5387 0.1417 0.3196 tib-core de 0.4891 0.1837 0.3272 en 0.6197 0.1671 0.2132 Table 4: Optimised weights of the base projects in the BM and BMX ensembles. D",
+      "extractCut": false
+    },
+    {
+      "id": "sec-019-details-about-llm-usage",
+      "number": null,
+      "title": "Details about LLM usage",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 77,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "llm",
+          "heading": true
+        },
+        {
+          "term": "records",
+          "heading": false
+        },
+        {
+          "term": "azure",
+          "heading": false
+        }
+      ],
+      "extract": "We used the vLLM10 inference engine to translate and synthesise records using the Llama-3.1-8B- Instruct LLM. For the processing, we used a single NVIDIA A100 GPU with 80GB VRAM from the University of Helsinki HPC cluster Turso. For translating GND into English, we used the GPT-4o-mini LLM on the Azure OpenAI Service cloud platform. D.1 Performance Using vLLM, we achieved a throughput of ap- proximately 4",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-processing-example",
+      "number": null,
+      "title": "Processing example",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 16,
+      "summary": null,
+      "keywords": [],
+      "extract": "The process of LLM translation and record synthe- sis has been illustrated in Figure 4. D.3",
+      "extractCut": false
+    },
+    {
+      "id": "sec-021-prompt-templates",
+      "number": null,
+      "title": "Prompt templates",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 26,
+      "summary": null,
+      "keywords": [],
+      "extract": "In the following prompt templates, the system prompt is set in italics. Tags in the template were re- placed with relevant information from the records. D.3.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-022-record-translation",
+      "number": null,
+      "title": "Record translation",
+      "level": 3,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 74,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "translating",
+          "heading": false
+        },
+        {
+          "term": "translator",
+          "heading": false
+        },
+        {
+          "term": "text",
+          "heading": false
+        }
+      ],
+      "extract": "This prompt was used to translate records: You are a professional translator specialized in translating bibliographic metadata. Your task is to ensure that the given document title and description are in <LANGUAGE> language, translating the text if necessary. If the text is already in <LANGUAGE>, do not change or summarize it, keep it all as it is. Respond with only the text, nothing else. Give this title and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-023-record-synthesis",
+      "number": null,
+      "title": "Record synthesis",
+      "level": 3,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 76,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "subject keywords",
+          "heading": false
+        },
+        {
+          "term": "document title",
+          "heading": false
+        },
+        {
+          "term": "following subject",
+          "heading": false
+        }
+      ],
+      "extract": "This prompt was used to synthesise new records: You are a professional metadata manager. Your task is to create new bibliographic metadata: document titles and descriptions. Here is an example document title and description in <LANGUAGE> with the following subject keywords: <OLD_KEYWORDS> <TITLE_DESC> Generate a new document title and description in <LANGUAGE>. Respond with only the title and description, nothing",
+      "extractCut": true
+    },
+    {
+      "id": "sec-024-gnd-translation",
+      "number": null,
+      "title": "GND translation",
+      "level": 3,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 659,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "und die",
+          "heading": false
+        },
+        {
+          "term": "flood protection",
+          "heading": false
+        },
+        {
+          "term": "flood risk",
+          "heading": false
+        },
+        {
+          "term": "climate change",
+          "heading": false
+        },
+        {
+          "term": "der",
+          "heading": false
+        },
+        {
+          "term": "des",
+          "heading": false
+        },
+        {
+          "term": "gnd",
+          "heading": true
+        },
+        {
+          "term": "synthetic records",
+          "heading": false
+        }
+      ],
+      "extract": "This prompt was used to translate the GND pre- ferred terms into English in batches of 100 terms: You are a professional translator specialized in translating controlled vocabularies such as information retrieval thesauri and classifications. Your task is to translate terms from the The Gemeinsame Normdatei (GND, Integrated Authority File), a carefully curated thesaurus known for its precise and respectful",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "synthetic records",
+      "heading": false
+    },
+    {
+      "term": "gnd subject",
+      "heading": false
+    },
+    {
+      "term": "annif projects",
+      "heading": false
+    },
+    {
+      "term": "bonsai projects",
+      "heading": false
+    },
+    {
+      "term": "training records",
+      "heading": false
+    },
+    {
+      "term": "subject predictions",
+      "heading": false
+    },
+    {
+      "term": "german synthetic",
+      "heading": false
+    },
+    {
+      "term": "english synthetic",
+      "heading": false
+    },
+    {
+      "term": "xtransformer projects",
+      "heading": false
+    },
+    {
+      "term": "subject indexing",
+      "heading": false
+    },
+    {
+      "term": "tibkat subject",
+      "heading": false
+    },
+    {
+      "term": "evaluation scores",
+      "heading": false
+    }
+  ]
+}

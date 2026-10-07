@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/Ref",
+  "definitions": {
+    "Ref": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "ref",
+        "commit"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lk2a-workflow-refs-advice/folio-assistant-core/schema/zod/changeset/RefSchema.schema.json",
+  "title": "RefSchema",
+  "description": "Generated from `RefSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/lk2a-workflow-refs-advice",
+    "sha": "fedaf9c3c31d5e11f3626c9a541c27187cb242e2",
+    "pr": "2346/merge",
+    "run": "37577982293"
+  }
+}
