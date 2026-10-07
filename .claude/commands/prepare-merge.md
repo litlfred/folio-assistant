@@ -44,7 +44,7 @@ After the generic gates, run the checks for **this folio's content type** (read
 Prefer the MCP tools (structured findings) when connected; otherwise the scripts.
 
 **Always (platform):**
-- `bun test` and `eslint .` green.
+- `bun test` and `bun run lint` green.
 - `bun run scripts/gen-schema-docs.ts` and `bun run scripts/gen-skill-docs.ts`
   produce no uncommitted diff (generated docs in sync).
 

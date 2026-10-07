@@ -816,8 +816,9 @@ export function parseJunitFailures(xml: string): string[] | undefined {
  * scratch workspace as sibling directories — no aggregate declaration at the
  * root — makes each one a git repository, as a clone is, links the
  * checkout's `node_modules` beside them, and runs `bun test`
- * in the layer's directory. The root `package.json`, `tsconfig.json` and
- * `bunfig.toml` are copied too, standing in for the ones each seeded
+ * in the layer's directory. The root `package.json` and `bunfig.toml` are
+ * copied too (`tsconfig.json` is `cat-harness-tools/`'s since bean `ar1s`
+ * phase 4, and `bun test` does not read it), standing in for the ones each seeded
  * repository will carry; none of them is a declaration, so discovery still
  * sees no aggregate.
  *
@@ -878,7 +879,7 @@ export function probeStandalone(
       git(["add", "-A"]);
       git(["commit", "-q", "--allow-empty", "-m", "rehearsal"]);
     }
-    for (const f of ["package.json", "tsconfig.json", "bunfig.toml"]) {
+    for (const f of ["package.json", "bunfig.toml"]) {
       if (existsSync(join(repoRoot, f))) copyFileSync(join(repoRoot, f), join(ws, f));
     }
     if (existsSync(join(repoRoot, "node_modules"))) symlinkSync(join(repoRoot, "node_modules"), join(ws, "node_modules"));

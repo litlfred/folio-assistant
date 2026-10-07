@@ -447,7 +447,7 @@ jobs:
       # names the TS7 launcher by path, which can only be TS7 (same command
       # as the `typecheck` script).
       - name: tsc --noEmit
-        run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
+        run: bun node_modules/typescript7/bin/tsc --noEmit -p cat-harness-tools/tsconfig.json
 
   typescript-test:
     # bpmn-node: Task_TypeScript
@@ -3241,7 +3241,7 @@ jobs:
       - name: playwright test
         env:
           E2E_SHARD: ${{ matrix.shard }}/3
-        run: bunx playwright test
+        run: bunx playwright test -c cat-harness-tools/playwright.config.ts
 
       # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
       #
