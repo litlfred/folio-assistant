@@ -100,18 +100,18 @@ single files named in its own `assets` at instance scope (a
 asset is locked by sha256 and verified by `mount:remote:check`, the replayer
 and the health check like a directory.
 
-That is how a mounted layer's scripts arrive. `bun run cat <name>` and
-`check:script-placement` treat a mounted instance's `package.json`
-`checkoutScripts` as that layer's home **only** when the lock vouches for its
-bytes: listed as an asset whose sha256 matches, or, for a `whole` mount,
-inside the `*` directory whose digest matches. Otherwise the manifest is
-**unresolvable**, a third state: `bun run cat` exits 3 and names the
-manifest instead of saying "no such script", and `check:script-placement`
-fails could-not-determine. A mounted manifest with no `checkoutScripts` at all
-(bootstrap-tools keeps its own `scripts`) is not a home, so scripts running
-its code stay at the root, as they did under the submodule. Nothing is copied
-into this repository's git: the file is fetched at the consented pin and
-hash-locked.
+That is how a mounted layer's scripts arrive. `bun run cat <name>` reads a
+mounted instance's `package.json` `checkoutScripts` **only** when the lock
+vouches for its bytes: listed as an asset whose sha256 matches, or, for a
+`whole` mount (who-iris, fhir-harness), inside the `*` directory whose digest
+matches. Otherwise the manifest is **unresolvable**, a third state: `bun run
+cat` exits 3 and names the manifest instead of saying "no such script", and
+`check:script-placement` fails could-not-determine. A mounted manifest that
+declares no `checkoutScripts` at all (bootstrap-tools keeps its own
+`scripts`) hides no script and is not reported. `check:script-placement`
+does not POLICE a verified mounted manifest: its repository keeps it (bean
+`nn8e`). Nothing is copied into this repository's git: the file is fetched at
+the consented pin and hash-locked.
 
 ## Adopt if identical (owner, 2026-10-07)
 
