@@ -20,6 +20,11 @@
       "harness": "fhir-harness",
       "repository": "litlfred/fhir-harness",
       "ref": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0"
+    },
+    {
+      "harness": "folio-assistant-sci",
+      "repository": "litlfred/folio-assistant-sci",
+      "ref": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490"
     }
   ],
   "instances": [
@@ -134,6 +139,42 @@
           "path": "fhir-harness/README.md",
           "upstreamPath": "README.md",
           "sha256": "49e89965629c8d06cd548dde44f46ec59c8a939fcebf2deb8dd6904560f49013"
+        }
+      ]
+    },
+    {
+      "instance": "folio-assistant-sci",
+      "repository": "litlfred/folio-assistant-sci",
+      "sha": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490",
+      "upstreamRoot": "",
+      "path": "folio-assistant-sci",
+      "via": "folio-assistant-sci",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "folio-assistant-sci.json",
+        "sha256": "a6a831b3af784160fa42ac4eb81abe8603389e5e67ba9bd066b182683117386a"
+      },
+      "directories": [
+        {
+          "id": "*",
+          "path": "folio-assistant-sci",
+          "upstreamPath": ".",
+          "treeDigest": "1f32349d6619cef4a4d79b47bdc900795b6e3a95ceb76f0f45074dda7bd850e4",
+          "files": 624
+        }
+      ],
+      "assets": [
+        {
+          "id": "agent-instructions",
+          "path": "folio-assistant-sci/AGENTS.md",
+          "upstreamPath": "AGENTS.md",
+          "sha256": "8d5cd0b9a6c42f694a433f7c2cf9b3dbabca9bbf34419d75198d3f7d9128709d"
+        },
+        {
+          "id": "readme",
+          "path": "folio-assistant-sci/README.md",
+          "upstreamPath": "README.md",
+          "sha256": "909b73b1d3dd6ff7d77d53732c517967c975cd2f69680d8d6ec26f37b07ceec4"
         }
       ]
     },

@@ -20,7 +20,9 @@ import { join, resolve } from "node:path";
 import {
   GATES_WORKFLOW,
   PRECONDITION_STEPS,
+  SCRIPT_EXEMPTIONS,
   STEP_EXEMPTIONS,
+  checkScriptNames,
   commandsCiRuns,
   gatesFrom,
   unresolvedGatesFrom,
@@ -283,6 +285,23 @@ describe("every check script is accounted for — the direction nothing asked", 
     // a broken reader here fails loudly rather than flooding. Asserted so the
     // clean result above cannot come from an unreadable workflow directory.
     expect(commandsCiRuns(REPO).length).toBeGreaterThan(20);
+  });
+
+  // Moved from `cat-harness/scripts/tests/gates.test.ts`: `SCRIPT_EXEMPTIONS`
+  // names scripts that layers ABOVE cat-harness declare (cat-harness-tools,
+  // smart-base, smart-trust), so only the whole checkout's script table can
+  // answer it — standing alone it read every one of them as stale.
+  test("every script exemption still names a script that EXISTS", () => {
+    // The direction that rots silently, and the one this bean was made of. A
+    // script is renamed or dropped, its exemption stays, and the table
+    // becomes a set of claims about a repository that has moved on. The six
+    // reasons these replaced lived in a YAML comment, where exactly that had
+    // happened: `translate-*:check` was excluded as needing "a translation
+    // toolchain not installed on this runner", and both run clean on a bare
+    // checkout.
+    const names = new Set(checkScriptNames(REPO));
+    const stale = SCRIPT_EXEMPTIONS.filter((e) => !names.has(e.script)).map((e) => e.script);
+    expect(stale).toEqual([]);
   });
 });
 
