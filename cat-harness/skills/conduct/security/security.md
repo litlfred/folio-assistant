@@ -5,6 +5,7 @@ description: >
   already guards each one, and the single rule that unifies them — refuse,
   never repair. Read this before adding a check, so the answer that already
   exists is reused rather than rebuilt in a fourth place.
+consulted: true
 ---
 
 # Security — one question, asked at every boundary

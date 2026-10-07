@@ -183,7 +183,7 @@
     <bpmn:task id="D_Undetermined" name="Record the decision&#10;as still open">
       <bpmn:documentation>An undetermined decision is DATA, not silence. It is recorded with what it waits on and what would settle it, so the next session can tell "nobody has chosen" from "somebody chose and did not write it down" — the same third state bean-blocking keeps for a block with no expiry.</bpmn:documentation>
       <bpmn:extensionElements>
-        <bootstrap.processes:skill ref="bean-blocking"/>
+        <bootstrap.processes:skill ref="decision-audit"/>
         <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F12</bpmn:incoming>

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-y1w9
 title: 'MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T18:34:19Z
-updated_at: 2026-10-07T14:25:44Z
+updated_at: 2026-10-07T16:37:00Z
 parent: folio-assistant-8jt6
 ---
 
@@ -655,3 +655,57 @@ Verification: export still contains **zero** occurrences of `fsh-guts`;
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 
 _2026-10-07T14:25:44Z_ — Claimed by claude/qook-symlink-internal-check — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-07 — Split and bound across separated harnesses and roles, 63 unmodelled → 0, 10 consulted-not-performed → 0
+
+Owner requested: *"work folio-assistant-y1w9 foreground.... need to split across harnesses/repos according to semantic and functionality"*.
+
+### Placement & Semantic Allocation
+The 63 unmodelled skills and 10 `consulted-skill-not-performed` findings across the multi-harness architecture have been resolved strictly following the placement architecture (extensions in dependent `<instance>/scenarios/roles.json` pointing down; base never imports up; pure reference/governance annotated `consulted: true`; performed skills bound to appropriate swimlane roles):
+
+1. **`smart-base` (`smart-base/scenarios/roles.json`)**:
+   - Extended `business-analyst`: `smart-guideline-create`
+   - Extended `clinical-sme`: `grade`
+   - Extended `reviewer`: `grade`
+   - Extended `build-pipeline`: `dak-preprocessing`, `dak-postprocessing`, `ig-artifact-ingestion`, `toolchain-ownership`
+   - Annotated `smart-stack-layering.md`: `consulted: true` (layering architecture reference)
+
+2. **`fhir-harness` (`fhir-harness/scenarios/roles.json`)**:
+   - Extended `publication-manager`: `fhir-ig-create`, `ig-site-theme`, `ig-site-links`, `ig-render-jekyll`
+   - Extended `fhir-modeller`: `fhir-client-operations`, `smart-launch`
+   - Extended `build-pipeline` & `ig-publisher-service`: `ig-build-pipeline`, `ig-binary-artefacts`, `ig-publisher-fork`, `ig-publisher-reduction`
+
+3. **`folio-assistant-sci` (`folio-assistant-sci/scenarios/roles.json`)**:
+   - Extended `lean-authoring-agent`: `lean-formal-edges`
+   - Extended `ingestion-agent`: `reference-dataset-ingestion`
+   - Extended `authoring-agent`: `hypothesis-generation`, `scientific-visualization`
+   - Extended `reviewer`: `scientific-critical-thinking`
+
+4. **`folio-assistant-core` (`folio-assistant-core/scenarios/roles.json`)**:
+   - Extended `librarian`: `dublin-core-renderings`
+
+5. **`who-iris` (`who-iris/skills/iris-dspace.md`)**:
+   - Annotated `iris-dspace.md`: `consulted: true` (DSpace API reference)
+
+6. **`cat-harness` (`cat-harness/scenarios/roles.json`)**:
+   - Marked pure reference/governance as `consulted: true`: `security.md`, `injection-boundaries.md`, `path-containment.md`, `where-does-this-go.md`.
+   - Removed improper `consulted: true` from performed skills: `board-windows.md`, `board-diagram-interchange.md`, `harness-tiles.md`, `crdm-detect.md`, `remote-mount.md`, `data-modelling.md`.
+   - Bound performed skills to appropriate roles:
+     - `business-analyst`: `crdm-impact-analysis`, `crdm-needs-assessment`, `crdm-recorded-walkthrough`, `crdm-requirements-template`, `decision-methodology-selector`, `data-modelling`
+     - `programme-manager`: `release-epic-planning`, `release-lifecycle`, `decision-methodology-selector`
+     - `code-reviewer`: `code-review-process`
+     - `administrator`: `swimlane-glossary`
+     - `session-coordinator`: `agent-handoff`, `prepare-for-handover`, `branch-freshness`, `work-plan-restructure`
+     - `authoring-agent`: `pr-description`, `branch-archaeology`, `generalise-the-fix`, `blocked-build-dependencies`
+     - `platform-authoring-agent`: `artefact-reachability`, `audit-coverage`, `lsi-indexing`, `skill-registration`, `surprise-to-corpus`, `remote-mount`
+     - `docs-authoring-agent`: `auto-docs`, `theme-artefacts`, `theme-contrast`, `theme-declaration`, `theme-generation`, `theming`
+     - `board-renderer`: `visualizer-loading`, `pdf-inline-viewer`, `liquid-templates`, `incremental-render`
+     - `build-pipeline`: `compiled-artefact-cache`, `remote-mount`
+     - `ingestion-agent` & `librarian`: `upload-naming`, `materialize-on-demand`
+   - Updated BPMN process activities (`kg-to-portal.bpmn`, `mount-dependency.bpmn`, `mount-subgraph.bpmn`) to point to performed skills rather than consulted guidelines.
+
+### Verification
+- `bun run kg:audit`: **`skill-in-role-or-process`: 0 findings** (down from 63).
+- `bun run kg:audit`: **`consulted-skill-not-performed`: 0 findings** (down from 10).
+- `bun test cat-harness/scripts/tests/consulted-skills.test.ts`: **5 pass, 0 fail**.
+- `bun test` role tests (`companion-roles`, `fallback-roles`, `workflow-roles`, `actor-role-administration`): **49 pass, 0 fail**.

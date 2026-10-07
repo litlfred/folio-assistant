@@ -6,7 +6,6 @@ description: >
   rather than hides.
 adapters: [document, paper, dak]
 profiles: [document, paper]
-consulted: true
 ---
 
 # A tile is the harness's, not the node's
