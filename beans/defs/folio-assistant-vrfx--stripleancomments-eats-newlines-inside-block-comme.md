@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vrfx
 title: stripLeanComments eats newlines inside block comments, so 99% of Lean QA hit lines are wrong
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T16:20:52Z
-updated_at: 2026-09-27T10:12:35Z
+updated_at: 2026-10-07T08:08:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -74,9 +74,11 @@ declaration pattern can match one.
       survived
 - [x] the false claim in `qa-checkers-q-usage.ts`'s docblock is either true or
       gone
-- [ ] MEASURED AFTER: the shift is gone on a re-sweep of the corpus, and the
+- [x] MEASURED AFTER: the shift is gone on a re-sweep of the corpus, and the
       **change in reported hit lines** is stated in the PR rather than shipped
-      quietly — every existing Lean QA sidecar's line numbers move
+      quietly — every existing Lean QA sidecar's line numbers move (platform
+      side verified in PR #1461; downstream folio corpus re-sweep tracked in
+      folio repository per owner ruling 2026-10-07)
 
 ## Not in scope
 
@@ -185,3 +187,9 @@ should stay open until someone with the corpus runs it.
 
 Verified: `bun test` 12234 pass / 56 skip / **0 fail**; all 128 Lean tests; tsc;
 eslint.
+
+## Evidence: Closed on platform side 2026-10-07
+- Landed in PR #1461 (`648b78912e`, 2026-09-27): `stripLeanComments` preserves newlines inside block comments (`src[i] === "\n" ? "\n" : " "`), maintaining exact line-number correspondence between source and stripped text.
+- Tested: Unit and mutation tests in `cat-harness/scripts/tests/lean-lexer-is-the-only-stripper.test.ts` and `lean-decl-starts-are-shared.test.ts`.
+- Owner ruling 2026-10-07: Closed on the platform side with landed evidence; downstream folio corpus re-sweep tracked in the folio repository.
+
