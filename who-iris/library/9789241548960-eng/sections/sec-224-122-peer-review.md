@@ -7,6 +7,7 @@ section_number: 12.2
 pages: 169-169
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 ■■
 following WHO’s production and publication processes;

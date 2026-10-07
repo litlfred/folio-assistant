@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/ui/theming/theme-declaration.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-declaration.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/theming/theme-declaration.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/theming/theme-declaration.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/ui/theming/theme-declaration.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Declaring a theme

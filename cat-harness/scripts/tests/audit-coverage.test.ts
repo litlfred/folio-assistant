@@ -175,7 +175,7 @@ describe("the report over this repository", () => {
   });
 
   test("the two kinds `3oqj` typed are typed, and their real nodes parse", () => {
-    // The regression this guards: `interaction/interaction.json` is read at the
+    // The regression this guards: `cat-harness/memory/interaction.json` is read at the
     // start of every session by jq in a shell script whose failure branch
     // prints "(could not parse — read it by hand)". A malformed node degrades
     // to a line nobody acts on, so the schema is what makes it fail loudly.

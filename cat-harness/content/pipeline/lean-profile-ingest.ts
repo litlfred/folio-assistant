@@ -45,6 +45,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname, extname, resolve, sep } from "path";
 import { hashFile } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";
+import { inputSiteReached } from "../../scripts/input-trace.ts";
 
 const OUTPUT_REL = "docs/audits/lean-profile.json";
 
@@ -114,6 +115,8 @@ export function entryFresh(repoRoot: string, e: ProfileEntry | undefined): boole
 
 function ingest(repoRoot: string, jsonlPath: string): void {
   const cache = loadProfileCache(repoRoot);
+  // input-site: traced #a456dd98 — stamps an ingested profile; reached only from --ingest
+  inputSiteReached("lean-profile-ingest: clock");
   const now = new Date().toISOString();
   let n = 0;
   for (const line of readFileSync(jsonlPath, "utf-8").trim().split("\n")) {

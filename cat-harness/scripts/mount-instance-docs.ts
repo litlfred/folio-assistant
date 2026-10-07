@@ -115,6 +115,7 @@ import { withSavedScheme } from "./lib/scheme-css.js";
 import { viewersOf } from "./viewer-declarations.js";
 import { translationMetaBlock, withTranslationMeta } from "./lib/translation-meta.ts";
 import { layoutSubscribedInstances, subscribedTrees } from "./subscribed-trees.ts";
+import { mountedInstanceRoots } from "../schemas/remote-mount.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -1186,6 +1187,20 @@ function topLevelDeclarations(repo: string): { dirName: string; dir: string; dec
     } catch {
       // A declaration that does not parse is a FINDING, not a skip — but it is
       // not this script's finding. `kg:schema:check` owns it; here it is noise.
+      continue;
+    }
+  }
+  // A REMOTE MOUNT an override placed below the top level (bean `0mpw`) is
+  // published like any other instance; its lock says where it landed. One at
+  // its default home path is already a top-level directory above.
+  const seen = new Set(out.map((o) => resolve(o.dir)));
+  for (const [, root] of mountedInstanceRoots(repo)) {
+    if (seen.has(resolve(root))) continue;
+    const decl = declarationPathIn(root);
+    if (decl === undefined || !existsSync(decl)) continue;
+    try {
+      out.push({ dirName: posix.basename(root), dir: root, decl: JSON.parse(readFileSync(decl, "utf-8")) });
+    } catch {
       continue;
     }
   }

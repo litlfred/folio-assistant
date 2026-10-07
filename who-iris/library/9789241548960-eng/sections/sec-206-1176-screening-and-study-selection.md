@@ -7,6 +7,7 @@ section_number: 11.7.6
 pages: 158-158
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Standard systematic review methods apply to the process of screening the 
 records retrieved from bibliographic databases and other searches. Records 

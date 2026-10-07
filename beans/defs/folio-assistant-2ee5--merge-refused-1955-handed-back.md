@@ -1,10 +1,10 @@
 ---
 # folio-assistant-2ee5
 title: 'Merge refused: #1955 handed back'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-04T14:30:43Z
+updated_at: 2026-10-07T02:43:07Z
 parent: folio-assistant-whlc
 blocking:
     - folio-assistant-4ak5
@@ -32,3 +32,5 @@ A comment on PR #1955, plus a message to the Merge Manager role.
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
 - [ ] `bun run merge:guard 1955` passes all 7 checks, and it lands (or the owner closes it)
+
+_2026-10-07T02:43:07Z_ — Claimed by claude/2ee5-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

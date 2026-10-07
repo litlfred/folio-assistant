@@ -15,10 +15,11 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow"
           ],
-          "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its six skills — three governing the methodology and three detailing a single phase (needs assessment, the requirements template, impact analysis); its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
+          "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its seven skills — three governing the methodology, three detailing a single phase (needs assessment, the requirements template, impact analysis), and one for eliciting requirements from a recorded walkthrough; its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
           "hasManifest": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
           "name": "crdm",
@@ -104,6 +105,25 @@
           "title": "Phase 1 — Needs assessment (detail)"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 96,
+          "instructionsPath": "skills/sdlc/crdm/crdm-recorded-walkthrough.md",
+          "name": "crdm-recorded-walkthrough",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d99a16fe1b1a05ebec9ecf00af0853df2ca3fa43ea1f117a024ae1032bf05bba",
+            "bytes": 5105,
+            "sha256": "d99a16fe1b1a05ebec9ecf00af0853df2ca3fa43ea1f117a024ae1032bf05bba"
+          },
+          "title": "Requirements from a recorded walkthrough"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -161,6 +181,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
@@ -335,6 +356,25 @@
             "sha256": "05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1"
           },
           "title": "/before-after-preview — show the reviewer the change, not a description of it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 89,
+          "instructionsPath": "skills/sdlc/sdlc-core/blocked-build-dependencies.md",
+          "name": "blocked-build-dependencies",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b11d5494517e5d174c3007cf68afaf103bf79b62519f52305e50b4691ec8fc9",
+            "bytes": 4366,
+            "sha256": "5b11d5494517e5d174c3007cf68afaf103bf79b62519f52305e50b4691ec8fc9"
+          },
+          "title": "Blocked build dependencies — read the refusal before you work around it"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
@@ -705,13 +745,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 135,
+          "instructionLines": 160,
           "instructionsPath": "skills/sdlc/sdlc-core/issue-working.md",
           "name": "issue-working",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c550ccccd4cabab78007087d0d00b2dc4e481251324ed0d05fa5bc58fb21840",
-            "bytes": 6369,
-            "sha256": "4c550ccccd4cabab78007087d0d00b2dc4e481251324ed0d05fa5bc58fb21840"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1aeeed2198defd30060b23ee2d773d747452dd9a667dd32b937e0c72c9bb84f4",
+            "bytes": 7828,
+            "sha256": "1aeeed2198defd30060b23ee2d773d747452dd9a667dd32b937e0c72c9bb84f4"
           },
           "title": "Working an issue — announce, then re-check"
         },
@@ -1069,9 +1109,9 @@
           "instructionsPath": "skills/sdlc/sdlc-core/rendered-impact.md",
           "name": "rendered-impact",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1265fcd47257e803e987c8214b17da263570626a00e91c04829bdd1fe24f869f",
-            "bytes": 9409,
-            "sha256": "1265fcd47257e803e987c8214b17da263570626a00e91c04829bdd1fe24f869f"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a77c58bbe53b3036b7072d61a3fb4ef19c107776cb10e1f94ab2e17de6003b2",
+            "bytes": 9630,
+            "sha256": "0a77c58bbe53b3036b7072d61a3fb4ef19c107776cb10e1f94ab2e17de6003b2"
           },
           "title": "Rendered impact — which rendered files a Change Set changes"
         },

@@ -101,3 +101,33 @@ describe("cross-group link proposals (bean 9udd)", () => {
     expect(strict.belowFloor).toBe(6);
   });
 });
+
+describe("keywordsOf (issue #2302)", () => {
+  // Five units so minDf 2 / maxDfShare 0.5 keep the subject terms.
+  const units = [
+    { id: "a", text: "Systematic review of the evidence.\nA systematic review pools trials. Anyone takes the systematic review further." },
+    { id: "b", text: "Systematic review methods and evidence grading. The systematic review protocol." },
+    { id: "c", text: "Wireframe design for mobile apps. Wireframe design tools." },
+    { id: "d", text: "Wireframe generation with models. Mobile wireframe layouts. Anyone can sketch." },
+    { id: "e", text: "Budget planning and staff time." },
+  ];
+  test("an adjacent pair said twice is a phrase and covers its words; generic words are not keywords", async () => {
+    const { buildTermMatrix, keywordsOf } = await import("./lsi");
+    const m = buildTermMatrix(units);
+    const terms = keywordsOf(m, [0], [units[0].text], 8).map((k) => k.term);
+    expect(terms).toContain("systematic review");
+    expect(terms).not.toContain("systematic");
+    expect(terms).not.toContain("anyone");
+  });
+  test("a heading names a term: it is boosted to the front", async () => {
+    const { buildTermMatrix, keywordsOf } = await import("./lsi");
+    const m = buildTermMatrix(units);
+    const ks = keywordsOf(m, [3], [units[3].text], 8, ["Mobile layouts"]);
+    expect(ks[0].term).toBe("mobile");
+  });
+  test("the budget scales with length: a short text gets at most three", async () => {
+    const { keywordBudget } = await import("./lsi");
+    expect(keywordBudget(10, 8)).toBe(3);
+    expect(keywordBudget(1000, 8)).toBe(8);
+  });
+});

@@ -1,12 +1,12 @@
 ---
 # folio-assistant-t5j5
 title: 'kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown'
-status: todo
+status: in-progress
 type: task
 parent: folio-assistant-zzmr
 priority: normal
 created_at: 2026-10-04T09:08:59Z
-updated_at: 2026-10-04T09:08:59Z
+updated_at: 2026-10-07T00:44:28Z
 ---
 Owner, 2026-10-04: the audit should resolve across instances.
 
@@ -28,3 +28,5 @@ The roll-up moves with it, which is the part that misleads a reader: `qa-witness
 - [ ] a call activity whose target resolves nowhere is still a FAIL, not unknown - the typo case keeps its verdict
 - [ ] `unknown` is left only for what is genuinely undeterminable, per bean 1xhc (a step that did not fire must not look like one that passed)
 - [ ] instance-graph isolation is NOT weakened: the parent may be consulted to ANSWER the question, without declaring the nested instance directories here (the leak instance-graph-isolation.test.ts guards)
+
+_2026-10-07T00:44:28Z_ — Claimed by claude/t5j5-kg-audit-call-activity-parent — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
