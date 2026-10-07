@@ -81,6 +81,13 @@
  * `regenerated` in a run that reached its fixed point — a pair that was
  * skipped keeps the hash it had. `CI` set in the environment disables it, as
  * does `--no-cache`, so CI asks every pair exactly as before.
+ *
+ * CI's own skip is the CI cone (`ci-cone.ts`, bean `4rbc`), built but not yet wired. The
+ * rule there is the one stated here, widened by the owner on 2026-10-07: an
+ * input set is **declared or derived (computed from the run itself, never
+ * stored), never inferred**. The cone derives each check's read set by tracing
+ * main's green run, and reuses {@link fingerprint} without the tree for
+ * everything else.
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
@@ -547,6 +554,13 @@ export function fingerprint(
   io: PairIO | undefined,
   digests: FileDigests = new FileDigests(root),
   baseline?: BaselineResolver,
+  /**
+   * `treeReplayed`: the caller answers git's view of the tree itself, by
+   * replaying every git command the run executed (`ci-cone.ts`, bean `4rbc`),
+   * so a `tree` site does not need a `{tracked}` declaration. Nothing else
+   * may pass it.
+   */
+  opts: { treeReplayed?: boolean } = {},
 ): Fingerprint {
   if (io?.inputs === undefined) return { undetermined: "no input declaration in task-io.ts" };
   const seenScripts = new Set<string>();
@@ -585,7 +599,7 @@ export function fingerprint(
   if (foreign !== undefined) return { undetermined: `${foreign} is not TypeScript/JavaScript, so its reads cannot be audited` };
   const audit = auditClosure(root, entries, digests.sites, undefined, (name) => entryFiles(root, scripts, name));
   if ("undetermined" in audit) return audit;
-  if (audit.needsTree && !wholeTree) {
+  if (audit.needsTree && !wholeTree && opts.treeReplayed !== true) {
     return { undetermined: "a source reads the working tree through git (`tree` site), which only a {tracked} declaration covers" };
   }
   for (const name of audit.envUnset) {
@@ -687,8 +701,9 @@ export function checkFingerprint(
   io: PairIO | undefined,
   digests: FileDigests = new FileDigests(root),
   baseline?: BaselineResolver,
+  opts: { treeReplayed?: boolean } = {},
 ): Fingerprint {
-  return fingerprint(root, scripts, [script], io, digests, baseline);
+  return fingerprint(root, scripts, [script], io, digests, baseline, opts);
 }
 
 /** Whether a check script may be skipped: its inputs hash to its last recorded pass. */
