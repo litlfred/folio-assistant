@@ -10,6 +10,11 @@
       "harness": "bootstrap-tools",
       "repository": "litlfred/bootstrap-tools",
       "ref": "1947e0536a97a9ca447b76edc39de1cf18b1f29e"
+    },
+    {
+      "harness": "who-iris",
+      "repository": "litlfred/who-iris",
+      "ref": "386617f40c26eeb87cab69645661f95b8383d7f6"
     }
   ],
   "instances": [
@@ -56,7 +61,35 @@
           "files": 88
         }
       ]
+    },
+    {
+      "instance": "who-iris",
+      "repository": "litlfred/who-iris",
+      "sha": "386617f40c26eeb87cab69645661f95b8383d7f6",
+      "upstreamRoot": "",
+      "path": "who-iris",
+      "via": "who-iris",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "who-iris.json",
+        "sha256": "3891e8183b8765fa375714ffc44dc5f4c8b1ee89ae65a2ed2300a6e65762f400"
+      },
+      "directories": [
+        {
+          "id": "*",
+          "path": "who-iris",
+          "upstreamPath": ".",
+          "treeDigest": "505accc9e1d8f93dc054ed805c29d0a22931ba9e27796d05a79e35af7f693b0b",
+          "files": 1531
+        }
+      ]
     }
   ],
-  "unmounted": []
+  "unmounted": [
+    {
+      "instance": "folio-assistant-core",
+      "state": "local",
+      "detail": "held by this checkout; not mounted over"
+    }
+  ]
 }

@@ -10,13 +10,15 @@
  * current when the comment is on the same line, so pinning does not freeze a
  * version.
  *
- * ## Which workflows must pin: the owner's ruling, 2026-10-07
+ * ## Which workflows must pin: the owner's rulings, 2026-10-07
  *
- * *"when published, make it unpinned on staging"*. A workflow that publishes
- * or runs on `main` MUST pin. A staging-only workflow MAY stay unpinned, so a
- * preview can track a moving action. The staging-only set is declared below
- * ({@link STAGING_ONLY_WORKFLOWS}), never inferred from a file name, so adding
- * a workflow to it is a reviewed one-line change.
+ * First *"when published, make it unpinned on staging"*; then, once the roast
+ * (bean `1ygp`, L4.1) found a staging workflow holding `contents: write` on
+ * `pull_request_target` and pushing to the branch that serves the live site,
+ * *"pin write-token workflows"*. So every workflow pins, except one listed in
+ * {@link STAGING_ONLY_WORKFLOWS} that also passes {@link stagingExempt}: no
+ * write permission, and no `pull_request_target` trigger. The list is a
+ * reviewed one-line change, and the list alone never grants the exemption.
  *
  * **First-party reusable workflows** (`<this repo>/.github/workflows/x.yml@main`)
  * are not third-party code and are left as they are.
@@ -29,8 +31,8 @@
  * and reported, because pinning to a guess would be a silent repair.
  *
  * Usage:
- *   bun run actions:pin            # rewrite workflows in place
- *   bun run actions:pin --dry-run  # report what would change
+ *   bun run cat actions:pin            # rewrite workflows in place
+ *   bun run cat actions:pin --dry-run  # report what would change
  *
  * @graphNode tool
  * @covers none — .github/workflows/ is not a declared graph typology
@@ -41,8 +43,32 @@ import { join, resolve } from "node:path";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
-/** Workflows that only ever build a staging preview. The owner's ruling: these may stay unpinned. */
+/**
+ * Workflows that only ever build a staging preview: CANDIDATES for the
+ * unpinned exemption, never granted it by name alone. See {@link stagingExempt}.
+ */
 export const STAGING_ONLY_WORKFLOWS: ReadonlySet<string> = new Set(["feature-staging.yml", "folio-staging.yml"]);
+
+/**
+ * May this workflow keep its actions unpinned? The owner's two rulings,
+ * 2026-10-07: *"when published, make it unpinned on staging"*, and, once the
+ * roast (bean `1ygp`, L4.1) showed `feature-staging.yml` holds `contents:
+ * write` on `pull_request_target` and pushes to the branch that serves the
+ * live site, *"pin write-token workflows"*.
+ *
+ * So the exemption is decided from what the workflow can DO, never from its
+ * name: a listed staging workflow is exempt only when it has no
+ * `pull_request_target` trigger (which runs with the base repository's token
+ * and secrets) and grants no `write` permission anywhere. A file name is a
+ * label anyone can give a publishing step.
+ */
+export function stagingExempt(file: string, text: string): boolean {
+  if (!STAGING_ONLY_WORKFLOWS.has(file)) return false;
+  // Anchored at line start, so a comment that mentions the trigger does not count.
+  const privilegedTrigger = /^[ \t]*pull_request_target[ \t]*:/m.test(text);
+  const writes = /^[ \t]*[a-z-]+[ \t]*:[ \t]*write\b/m.test(text) || /^[ \t]*permissions[ \t]*:[ \t]*write-all\b/m.test(text);
+  return !privilegedTrigger && !writes;
+}
 
 /** This repository, whose own reusable workflows are first-party. */
 export const FIRST_PARTY = "litlfred/folio-assistant";
@@ -110,9 +136,10 @@ export function pinWorkflows(root = ROOT, opts: { dryRun?: boolean; lsRemote?: t
   const cache = new Map<string, { sha: string } | { refused: string }>();
   const results: PinResult[] = [];
   for (const f of readdirSync(dir).filter((n) => /\.ya?ml$/.test(n)).sort()) {
-    if (STAGING_ONLY_WORKFLOWS.has(f)) continue;
     const path = join(dir, f);
-    const lines = readFileSync(path, "utf-8").split("\n");
+    const text = readFileSync(path, "utf-8");
+    if (stagingExempt(f, text)) continue;
+    const lines = text.split("\n");
     const r: PinResult = { file: f, pinned: 0, refused: [] };
     lines.forEach((line, i) => {
       const u = parseUses(line);
@@ -148,6 +175,6 @@ if (import.meta.main) {
     if (r.pinned) console.log(`${dryRun ? "would pin" : "pinned"} ${r.pinned} in ${r.file}`);
   }
   for (const x of refused) console.log(`✗ refused ${x}`);
-  console.log(`\n${dryRun ? "would pin" : "pinned"} ${pinned}; refused ${refused.length}. Staging-only workflows left as they are: ${[...STAGING_ONLY_WORKFLOWS].join(", ")}.`);
+  console.log(`\n${dryRun ? "would pin" : "pinned"} ${pinned}; refused ${refused.length}. Exempt (staging-only, no write token, no pull_request_target): ${[...STAGING_ONLY_WORKFLOWS].filter((f) => stagingExempt(f, readFileSync(join(ROOT, ".github", "workflows", f), "utf-8"))).join(", ") || "none"}.`);
   process.exit(refused.length > 0 ? 1 : 0);
 }
