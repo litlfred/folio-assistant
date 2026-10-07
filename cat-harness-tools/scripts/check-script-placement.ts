@@ -22,7 +22,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
-import { scriptTable } from "../../cat-harness/schemas/script-table.ts";
+import { mountedInstanceRoots } from "../../cat-harness/schemas/remote-mount.ts";
+import { readScriptTable } from "../../cat-harness/schemas/script-table.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -41,6 +42,16 @@ export function layersOf(repo: string): Map<string, string[]> {
       : [];
     out.set(relative(repo, inst), needs);
   }
+  // A remote-mounted layer an override moved below the first level: found by
+  // its lock, and a layer of this checkout like any other (its manifest is
+  // then read only through a matching asset lock; see `script-table.ts`).
+  for (const [name, abs] of mountedInstanceRoots(repo)) {
+    const rel = relative(repo, abs);
+    if (out.has(rel)) continue;
+    const decl = join(abs, `${name}.json`);
+    const needs = existsSync(decl) ? (((JSON.parse(readFileSync(decl, "utf-8")) as { needs?: unknown[] }).needs ?? []).filter((n): n is string => typeof n === "string")) : [];
+    out.set(rel, needs);
+  }
   return out;
 }
 
@@ -57,25 +68,51 @@ export function ownerOf(command: string, layers: Map<string, string[]>): string 
   return owners.length === 1 ? `${owners[0]}/package.json` : "package.json";
 }
 
-if (import.meta.main) {
-  const layers = layersOf(REPO);
-  let table;
+export interface PlacementVerdict {
+  /** 0 placed, 1 a script in the wrong manifest (or a name declared twice), 2 a manifest could not be resolved. */
+  exit: 0 | 1 | 2;
+  lines: string[];
+}
+
+/**
+ * Judge every script's placement. A remote-mounted layer's manifest counts as
+ * that layer's home only through a matching asset lock
+ * (`schemas/script-table.ts`); one that cannot be vouched for is reported as
+ * could-not-determine, never skipped as if it held nothing, and outranks a
+ * misplacement because its scripts were not judged at all.
+ */
+export function placementVerdict(repo: string): PlacementVerdict {
+  const layers = layersOf(repo);
+  let read: ReturnType<typeof readScriptTable>;
   try {
-    table = scriptTable(REPO);
+    read = readScriptTable(repo);
   } catch (e) {
-    console.error(`✗ ${(e as Error).message}`);
-    process.exit(1);
+    return { exit: 1, lines: [`✗ ${(e as Error).message}`] };
   }
+  const { table, unresolved } = read;
   const wrong: string[] = [];
   for (const e of table.values()) {
     if (e.name === "cat" && e.manifest === "package.json") continue; // the runner itself
     const want = ownerOf(e.command, layers);
     if (want !== e.manifest) wrong.push(`  ${e.name}: in ${e.manifest}, belongs in ${want}\n      ${e.command}`);
   }
+  const lines: string[] = [];
   if (wrong.length > 0) {
-    console.error(`✗ ${wrong.length} script(s) in the wrong manifest:\n${wrong.join("\n")}`);
-    console.error("  A layer's scripts go in its package.json under `checkoutScripts`; the root keeps only what runs no single layer.");
-    process.exit(1);
+    lines.push(`✗ ${wrong.length} script(s) in the wrong manifest:\n${wrong.join("\n")}`);
+    lines.push("  A layer's scripts go in its package.json under `checkoutScripts`; the root keeps only what runs no single layer.");
   }
-  console.log(`✓ ${table.size} script(s), each in the manifest of the layer it runs`);
+  if (unresolved.length > 0) {
+    lines.push(`❔ could not determine: ${unresolved.length} remote-mounted manifest(s) no mount lock vouches for; their scripts were not judged:`);
+    for (const u of unresolved) lines.push(`  ${u.manifest}${u.instance ? ` (mounted \`${u.instance}\`)` : ""}: ${u.why}`);
+    lines.push("  Re-mount so the lock carries the manifest as an asset (`bun run cat mount:remote`), or move the edits upstream.");
+    return { exit: 2, lines };
+  }
+  if (wrong.length > 0) return { exit: 1, lines };
+  return { exit: 0, lines: [`✓ ${table.size} script(s), each in the manifest of the layer it runs`] };
+}
+
+if (import.meta.main) {
+  const v = placementVerdict(REPO);
+  for (const l of v.lines) (v.exit === 0 ? console.log : console.error)(l);
+  process.exit(v.exit);
 }

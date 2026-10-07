@@ -45,6 +45,7 @@
  * declaration, so "mounted", "missing" and "could not determine" are three
  * answers and never one.
  */
+import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
@@ -89,6 +90,19 @@ export const MountDefaultsSchema = z
       .array(z.string().min(1))
       .refine((xs) => new Set(xs).size === xs.length, { message: "mountDefaults.directories: an id appears twice" })
       .optional(),
+    /**
+     * Asset ids, in this instance's own `assets`: the single files a mount
+     * carries besides its directories, each locked by sha256 (owner,
+     * 2026-10-07, "Option A, by reference": a mounted instance's `package.json`
+     * travels this way, so `bun run cat` can read its `checkoutScripts`).
+     * Absent is every asset the instance declares at `instance` scope. A
+     * `repository`-scoped asset belongs to the upstream repository, not the
+     * instance, and is never mounted.
+     */
+    assets: z
+      .array(z.string().min(1))
+      .refine((xs) => new Set(xs).size === xs.length, { message: "mountDefaults.assets: an id appears twice" })
+      .optional(),
   })
   .strict();
 export type MountDefaults = z.infer<typeof MountDefaultsSchema>;
@@ -108,6 +122,11 @@ export const MountOverrideSchema = z
     directories: z
       .array(z.string().min(1))
       .refine((xs) => new Set(xs).size === xs.length, { message: "override directories: an id appears twice" })
+      .optional(),
+    /** REPLACES the default asset list, as `directories` does; an undeclared id is refused. */
+    assets: z
+      .array(z.string().min(1))
+      .refine((xs) => new Set(xs).size === xs.length, { message: "override assets: an id appears twice" })
       .optional(),
     skip: z.literal(true).optional(),
   })
@@ -148,6 +167,21 @@ export const RemoteMountsSchema = z
 
 export const MOUNT_LOCK_SCHEMA = "cat-harness-mount-lock/v1";
 
+/**
+ * Why a planned mount was not laid down, when it was refused rather than
+ * failed. The mount report and the `remote-mounts` health check read this
+ * one value, so the two cannot disagree about why.
+ *
+ * - `not-identical`: the target existed with no lock, and adopting it was
+ *   refused because its bytes are not the pin's (owner, 2026-10-07, "adopt if
+ *   identical"). The differing and extra paths travel with it.
+ * - `trust`: rule H8 (`schemas/mount-trust.ts`), neither signed nor consented.
+ * - `tracked`: the target holds files this checkout tracks.
+ * - `absent-at-pin`: a declared directory or asset is not in the pinned tree.
+ */
+export const MOUNT_REFUSALS = ["not-identical", "trust", "tracked", "absent-at-pin"] as const;
+export type MountRefusal = (typeof MOUNT_REFUSALS)[number];
+
 /** The lock's filename, beside the downstream's declaration: `<name>.mount-lock.json`. */
 export function mountLockFilename(instance: string): string {
   return `${instance}.mount-lock.json`;
@@ -166,6 +200,23 @@ export const LockedDirectorySchema = z
   })
   .strict();
 
+/**
+ * One declared ASSET a mount carried: a single file, locked by its sha256.
+ * The script table reads a mounted instance's `package.json` only through
+ * one of these whose bytes still hash to it (`schemas/script-table.ts`).
+ */
+export const LockedAssetSchema = z
+  .object({
+    id: z.string().min(1),
+    /** Relative to the downstream instance's root. */
+    path: z.string().min(1),
+    /** Where the file is in the upstream repository. */
+    upstreamPath: z.string().min(1),
+    sha256: z.string().regex(/^[0-9a-f]{64}$/),
+  })
+  .strict();
+export type LockedAsset = z.infer<typeof LockedAssetSchema>;
+
 export const LockedInstanceSchema = z
   .object({
     instance: InstanceNameSchema,
@@ -181,6 +232,10 @@ export const LockedInstanceSchema = z
     pinnedBy: z.enum(["declared", "same-tree", "gitlink"]),
     declaration: z.object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),
     directories: z.array(LockedDirectorySchema),
+    /** Absent in a lock written before assets were mounted, which reads as the empty list. */
+    assets: z.array(LockedAssetSchema).default([]),
+    /** The bytes were already on disk, identical to the pin, and the mount adopted them rather than writing them. */
+    adopted: z.literal(true).optional(),
   })
   .strict();
 export type LockedInstance = z.infer<typeof LockedInstanceSchema>;
@@ -204,6 +259,12 @@ export const MountLockSchema = z
             instance: InstanceNameSchema,
             state: z.enum(["local", "skipped", "missing", "could-not-determine"]),
             detail: z.string(),
+            /** Why a planned mount was not laid down; see {@link MOUNT_REFUSALS}. */
+            refusal: z.enum(MOUNT_REFUSALS).optional(),
+            /** For `not-identical`: paths whose bytes differ from the pin, or that the pin has and the disk lacks. */
+            differing: z.array(z.string()).optional(),
+            /** For `not-identical`: files under a declared directory that the pin does not have. */
+            extra: z.array(z.string()).optional(),
           })
           .strict(),
       )
@@ -278,4 +339,82 @@ export function readMountLock(file: string): { ok: true; lock: MountLock } | { o
   const p = MountLockSchema.safeParse(raw);
   if (!p.success) return { ok: false, absent: false, why: `${file} is not a ${MOUNT_LOCK_SCHEMA} lock: ${p.error.issues[0]?.message ?? "invalid"}` };
   return { ok: true, lock: p.data };
+}
+
+// ── A mounted instance's package.json (owner, 2026-10-07: "Option A, by reference") ──
+
+/** The manifest a layer's checkout scripts live in, relative to its root. */
+export const PACKAGE_MANIFEST = "package.json";
+
+/**
+ * What a mounted instance's `package.json` may be trusted for.
+ *
+ * - `verified`: the lock lists it as an asset and its bytes hash to the lock,
+ *   so its `checkoutScripts` are that layer's scripts.
+ * - `none`: the lock lists no such asset AND none is on disk. That is a
+ *   determined absence: a mounted instance with no scripts is an answer.
+ * - `unresolvable`: anything else. A `package.json` is on disk that no lock
+ *   vouches for, or a locked one is gone or edited, or the lock itself cannot
+ *   be read. Its scripts are neither read nor reported absent; a caller says
+ *   it could not resolve them.
+ */
+export type MountedManifest =
+  | { state: "verified"; instance: string; root: string; manifest: string }
+  | { state: "none"; instance: string; root: string }
+  | { state: "unresolvable"; instance?: string; root?: string; manifest: string; why: string };
+
+/**
+ * Every instance the locks in `scope` mounted, with what its `package.json`
+ * may be trusted for. `scope` is a downstream instance's root, where its lock
+ * sits. Reads lock files and hashes one file per instance; never the network.
+ */
+export function mountedManifests(scope: string): MountedManifest[] {
+  const out: MountedManifest[] = [];
+  const dir = resolve(scope);
+  let names: string[];
+  try {
+    names = readdirSync(dir).filter((n) => n.endsWith(".mount-lock.json")).sort();
+  } catch {
+    return out;
+  }
+  for (const n of names) {
+    const r = readMountLock(join(dir, n));
+    if (!r.ok) {
+      // Which instances it mounted is exactly what cannot be read, so the
+      // lock itself is the unresolvable subject.
+      out.push({ state: "unresolvable", manifest: join(dir, n), why: r.why });
+      continue;
+    }
+    for (const inst of r.lock.instances) {
+      const root = join(dir, inst.path);
+      const want = `${inst.path.replace(/\/+$/, "")}/${PACKAGE_MANIFEST}`;
+      const asset = inst.assets.find((a) => a.path.replace(/\/+$/, "") === want);
+      const file = join(root, PACKAGE_MANIFEST);
+      if (!asset) {
+        out.push(
+          existsSync(file)
+            ? { state: "unresolvable", instance: inst.instance, root, manifest: file, why: `${n} does not list ${want} as an asset, so nothing vouches for its bytes` }
+            : { state: "none", instance: inst.instance, root },
+        );
+        continue;
+      }
+      if (!existsSync(file)) {
+        out.push({ state: "unresolvable", instance: inst.instance, root, manifest: file, why: `${want} is locked as an asset in ${n} but is not on disk` });
+        continue;
+      }
+      let sha: string;
+      try {
+        sha = createHash("sha256").update(readFileSync(file)).digest("hex");
+      } catch (e) {
+        out.push({ state: "unresolvable", instance: inst.instance, root, manifest: file, why: `${want} could not be read: ${(e as Error).message}` });
+        continue;
+      }
+      out.push(
+        sha === asset.sha256
+          ? { state: "verified", instance: inst.instance, root, manifest: file }
+          : { state: "unresolvable", instance: inst.instance, root, manifest: file, why: `${want} does not hash to the lock in ${n}: edited since it was mounted` },
+      );
+    }
+  }
+  return out;
 }

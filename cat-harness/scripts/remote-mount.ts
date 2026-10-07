@@ -48,7 +48,7 @@
  */
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readlinkSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
@@ -61,8 +61,10 @@ import {
   MountPathSchema,
   mountLockFilename,
   readMountLock,
+  type LockedAsset,
   type LockedInstance,
   type MountLock,
+  type MountRefusal,
   type RemoteMount,
 } from "../schemas/remote-mount.js";
 import { contentIsOffCheckout, type SubgraphSource } from "../schemas/subgraph-source.js";
@@ -86,6 +88,9 @@ const UpstreamDeclarationSchema = z
     mountDefaults: MountDefaultsSchema.optional(),
     directories: z
       .array(z.object({ id: z.string().min(1), path: z.string().min(1), source: z.unknown().optional(), storage: z.unknown().optional() }).passthrough())
+      .default([]),
+    assets: z
+      .array(z.object({ id: z.string().min(1), src: z.string().min(1), scope: z.string().optional() }).passthrough())
       .default([]),
   })
   .passthrough();
@@ -111,16 +116,38 @@ export interface PlannedInstance {
   pinnedBy: LockedInstance["pinnedBy"];
   declarationFile: string;
   directories: PlannedDirectory[];
+  /** Declared single files carried with the directories, each locked by sha256. */
+  assets: PlannedAsset[];
+}
+
+export interface PlannedAsset {
+  id: string;
+  /** Checkout-relative. */
+  path: string;
+  /** Upstream-relative. */
+  upstreamPath: string;
+}
+
+/**
+ * Why a planned mount was refused, and for `not-identical` the paths that
+ * stopped the adoption. The lock's `unmounted` entry carries the same fields,
+ * so the mount report and the `remote-mounts` health check agree.
+ */
+export interface Refused {
+  refusal?: MountRefusal;
+  differing?: string[];
+  extra?: string[];
 }
 
 export type InstanceOutcome =
-  | { instance: string; state: "mounted"; path: string; detail: string }
+  /** `adopted`: the bytes were already on disk, identical to the pin; the mount wrote only the lock. */
+  | { instance: string; state: "mounted"; path: string; detail: string; adopted?: true }
   /** The downstream holds this instance itself; nothing was mounted over it. */
   | { instance: string; state: "local"; path: string; detail: string }
   /** An override said `skip`. */
   | { instance: string; state: "skipped"; detail: string }
-  | { instance: string; state: "missing"; path?: string; detail: string }
-  | { instance: string; state: "could-not-determine"; path?: string; detail: string };
+  | ({ instance: string; state: "missing"; path?: string; detail: string } & Refused)
+  | ({ instance: string; state: "could-not-determine"; path?: string; detail: string } & Refused);
 
 export interface Plan {
   /** Absolute root of the declaring (downstream) instance. */
@@ -317,6 +344,27 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         if (strip(d.path).split("/").includes("..")) continue; // a path that climbs out is not this instance's to give
         directories.push({ id, path: joinRel(path, d.path), upstreamPath: joinRel(found.root, d.path) });
       }
+      // Declared ASSETS: single files, each locked by sha256. Only the
+      // instance's own: a `repository`-scoped asset is the upstream repository's.
+      const ownAssets = decl.assets.filter((a) => a.scope !== "repository");
+      const assetById = new Map(ownAssets.map((a) => [a.id, a]));
+      const assetIds = override?.assets ?? decl.mountDefaults?.assets ?? ownAssets.map((a) => a.id);
+      const unknownAssets = assetIds.filter((id) => !assetById.has(id));
+      if (unknownAssets.length) {
+        plan.outcomes.push({
+          instance: q.name,
+          state: "could-not-determine",
+          detail: `asset \`${unknownAssets.join("`, `")}\` named for mounting but not declared at instance scope by \`${q.name}\` at ${q.sha.slice(0, 12)}`,
+        });
+        continue;
+      }
+      const assets: PlannedAsset[] = [];
+      for (const id of assetIds) {
+        const a = assetById.get(id)!;
+        const src = strip(a.src);
+        if (src.startsWith("/") || src.split("/").includes("..")) continue; // not this instance's to give
+        assets.push({ id, path: joinRel(path, src), upstreamPath: joinRel(found.root, src) });
+      }
       plan.instances.push({
         instance: q.name,
         repository: q.repository,
@@ -327,6 +375,7 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         pinnedBy: q.pinnedBy,
         declarationFile: found.file,
         directories,
+        assets,
       });
 
       // TRANSITIVELY: each need in the same tree, else as a gitlink there.
@@ -416,11 +465,100 @@ function ensureIgnored(base: string, rel: string): "ignored" | "excluded" | "not
   return "excluded";
 }
 
-/** Directories of a previously locked instance whose bytes no longer match the lock. */
-function modifiedSince(base: string, locked: LockedInstance): string[] {
-  return locked.directories
+/**
+ * Paths of a previously locked instance whose bytes no longer match the lock:
+ * edited directories (with the edited files inside them where the lock's
+ * digest can be re-derived), and edited assets. Absent paths are not edits.
+ */
+export function modifiedSince(base: string, locked: LockedInstance): string[] {
+  const dirs = locked.directories
     .filter((d) => existsSync(join(base, d.path)) && digestOf(join(base, d.path)).treeDigest !== d.treeDigest)
     .map((d) => d.path);
+  const assets = (locked.assets ?? [])
+    .filter((a) => existsSync(join(base, a.path)) && sha256Text(readFileSync(join(base, a.path))) !== a.sha256)
+    .map((a) => a.path);
+  return [...dirs, ...assets];
+}
+
+/** `file → sha256` for every file under `dir`, relative paths. Symbolic links as `link:<target>`. */
+function fileHashes(dir: string): Map<string, string> {
+  const out = new Map<string, string>();
+  if (!existsSync(dir)) return out;
+  const { files, links } = treeEntries(dir);
+  for (const f of files) out.set(f, sha256Text(readFileSync(join(dir, f))));
+  for (const l of links) out.set(l, `link:${readlinkSync(join(dir, l))}`);
+  return out;
+}
+
+/**
+ * Adopt-if-identical (owner, 2026-10-07): compare what is on disk against the
+ * pinned checkout `work`, file by file. `differing` is every path whose bytes
+ * are not the pin's, or that the pin has and the disk lacks; `extra` is every
+ * file under a declared directory that the pin does not have. Reads only.
+ */
+export function compareWithPin(base: string, work: string, p: PlannedInstance): { differing: string[]; extra: string[] } {
+  const differing: string[] = [];
+  const extra: string[] = [];
+  // The declaration is part of what the lock vouches for.
+  const declDisk = join(base, p.path, `${p.instance}.json`);
+  const declPin = join(work, p.declarationFile);
+  if (!existsSync(declDisk) || sha256Text(readFileSync(declDisk)) !== sha256Text(readFileSync(declPin))) differing.push(`${p.path}/${p.instance}.json`);
+  for (const d of p.directories) {
+    const pin = fileHashes(join(work, d.upstreamPath));
+    const disk = fileHashes(join(base, d.path));
+    for (const [f, h] of pin) if (disk.get(f) !== h) differing.push(`${d.path}/${f}`);
+    for (const f of disk.keys()) if (!pin.has(f)) extra.push(`${d.path}/${f}`);
+  }
+  for (const a of p.assets) {
+    const pin = join(work, a.upstreamPath);
+    const disk = join(base, a.path);
+    if (!existsSync(pin)) {
+      if (existsSync(disk)) extra.push(a.path);
+      continue;
+    }
+    if (!existsSync(disk) || sha256Text(readFileSync(disk)) !== sha256Text(readFileSync(pin))) differing.push(a.path);
+  }
+  return { differing: differing.sort(), extra: extra.sort() };
+}
+
+/** At most `n` paths for a one-line detail; the full list travels in the outcome's fields. */
+function listPaths(paths: string[], n = 12): string {
+  return paths.length <= n ? paths.join(", ") : `${paths.slice(0, n).join(", ")} and ${paths.length - n} more`;
+}
+
+/** Lay the planned directories and assets down from `work`, or adopt them in place, and return the lock entry. */
+function lockEntry(base: string, p: PlannedInstance, declText: Buffer, absent: string[], adopted: boolean): LockedInstance {
+  const dirs: LockedInstance["directories"] = [];
+  for (const d of p.directories) {
+    if (absent.includes(d.id)) continue;
+    dirs.push({ id: d.id, path: d.path, upstreamPath: d.upstreamPath, ...digestOf(join(base, d.path)) });
+  }
+  const assets: LockedAsset[] = [];
+  for (const a of p.assets) {
+    if (absent.includes(`asset:${a.id}`)) continue;
+    assets.push({ id: a.id, path: a.path, upstreamPath: a.upstreamPath, sha256: sha256Text(readFileSync(join(base, a.path))) });
+  }
+  return {
+    instance: p.instance,
+    repository: p.repository,
+    sha: p.sha,
+    upstreamRoot: p.upstreamRoot,
+    path: p.path,
+    via: p.via,
+    pinnedBy: p.pinnedBy,
+    declaration: { file: `${p.instance}.json`, sha256: sha256Text(declText) },
+    directories: dirs,
+    assets,
+    ...(adopted ? { adopted: true as const } : {}),
+  };
+}
+
+/** What the pinned tree does not have, as directory ids and `asset:<id>`. */
+function absentAtPin(work: string, p: PlannedInstance): string[] {
+  return [
+    ...p.directories.filter((d) => !existsSync(join(work, d.upstreamPath))).map((d) => d.id),
+    ...p.assets.filter((a) => !existsSync(join(work, a.upstreamPath))).map((a) => `asset:${a.id}`),
+  ];
 }
 
 export interface MountReport {
