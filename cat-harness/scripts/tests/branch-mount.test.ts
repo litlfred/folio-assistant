@@ -150,6 +150,17 @@ describe("mount", () => {
     expect(mountTip(LOC, opts).state).toBe("refused");
     expect(readFileSync(join(root, "fsh-guts/retired/a.md"), "utf-8")).toBe("edited\n");
   });
+
+  test("refuses a non-tip keying with a reason naming the keying (bean 5akx)", () => {
+    const f = fixture();
+    const { opts } = f.checkout("a");
+    const routeLoc: TipLocation = { ...LOC, id: "uml-overview", keyedBy: "route" };
+    const r = mountTip(routeLoc, opts);
+    expect(r.state).toBe("refused");
+    if (r.state === "refused") {
+      expect(r.reason).toContain("keyed by route, not tip");
+    }
+  });
 });
 
 describe("push", () => {

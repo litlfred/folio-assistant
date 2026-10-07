@@ -54,7 +54,8 @@
  * @covers schemas
  * @graphNode tool
  */
-import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -261,6 +262,23 @@ export function importsPackage(dir: string, name: string): boolean {
 }
 
 /**
+ * In a git worktree or regular checkout, find the parent checkout root.
+ * Returns undefined if not in a git repository or if git rev-parse fails.
+ */
+function commonRepoRoot(root: string): string | undefined {
+  try {
+    const c = spawnSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: root, encoding: "utf-8" });
+    if (c.status !== 0) return undefined;
+    const gitDir = c.stdout.trim();
+    if (!gitDir) return undefined;
+    const base = gitDir.endsWith("/.git") ? gitDir.slice(0, -5) : gitDir.endsWith("/.git/") ? gitDir.slice(0, -6) : dirname(gitDir);
+    return realpathSync(base);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * Every distortion in this checkout, or `[]` when the environment is honest.
  *
  * A nested install that shadows nothing its own sources import is NOT returned —
@@ -273,16 +291,25 @@ export function distortions(root: string): Distortion[] {
   // a path that is not in the repository. Checked with `lstat`, because `stat`
   // follows the link and reports the directory it points at — which is exactly
   // the substitution being looked for.
+  //
+  // However, check:merged creates a throwaway worktree and symlinks the parent checkout's
+  // node_modules into it by design to avoid a second install. An internal symlink whose
+  // target resolves within the parent repository checkout is permitted (owner ruling 2026-10-07).
   const rootModules = join(root, "node_modules");
   if (existsSync(rootModules)) {
     try {
       if (lstatSync(rootModules).isSymbolicLink()) {
-        out.push({
-          path: "node_modules",
-          effect:
-            "the root `node_modules` is a SYMLINK, so any tool that resolves a real path through it reports a location this repository does not contain",
-          bean: "qook",
-        });
+        const target = realpathSync(rootModules);
+        const parentRoot = commonRepoRoot(root);
+        const isInternal = parentRoot && (target === join(parentRoot, "node_modules") || target.startsWith(parentRoot + "/"));
+        if (!isInternal) {
+          out.push({
+            path: "node_modules",
+            effect:
+              "the root `node_modules` is a SYMLINK pointing outside this repository checkout, so any tool that resolves a real path through it reports a location this repository does not contain",
+            bean: "qook",
+          });
+        }
       }
     } catch {
       /* unreadable is nothing to say */
