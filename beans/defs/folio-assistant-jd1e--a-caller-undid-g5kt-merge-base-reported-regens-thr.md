@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jd1e
 title: 'A CALLER UNDID g5kt: merge-base reported regen''s three verdicts as one, so could-not-determine reached the author as a defect in their branch'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T13:11:35Z
-updated_at: 2026-10-04T13:13:49Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -166,3 +166,8 @@ finding supports, and an unmaintained declaration is how `dh4f` happens.
 What the finding does support: when `merge-base.ts` gains a shell-out to a
 tool, check that tool's exit codes. Three good patterns to copy are named
 above.
+
+## Completed on landed evidence
+
+- Implementation landed on `main` in PR #2086 (commit `47ac43a1601f` / `adb59aafd6f3`): flattener / multi-state tool exit codes preserved in `merge-base.ts`, preventing false positive defect reports.
+- Verified on `origin/main`.

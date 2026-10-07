@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c5fm
 title: 'Instantiate folio-assistant-core: config at root so the navbar lists it; declare its docs/'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T14:53:55Z
-updated_at: 2026-10-05T16:21:39Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -17,3 +17,8 @@ Issue #2196. Owner 2026-10-05 asked whether folio-assistant-core/ is staged and 
 - Declared folio-assistant-core-docs (docs/, composed, instanceRoot) with an authored index.md, so the tile goes to /folio-assistant-core/ instead of /#harness-folio-assistant-core.
 - Regenerated everything downstream: harness.json, the navbar include, auto-docs, viewer-nav, readme:subgraphs, subgraph:jsonld, uml:overview, the default board and the docs-index wireframe covers.
 - preview:site build: the navbar order is folio-assistant, smart-trust, smart-base, who-iris, folio-assistant-core, cat-harness, bootstrap. /folio-assistant-core/ renders.
+
+## Completed on landed evidence
+
+- Implementation landed on `main` in PR #2197 (commit `f17aaf093412`): `folio-assistant-core` config instantiated at root with declared docs and navbar entry.
+- Verified on `origin/main`.
