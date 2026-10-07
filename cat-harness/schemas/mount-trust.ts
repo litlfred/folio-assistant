@@ -28,9 +28,8 @@
  *
  * **An unverified signature is not trust.** Accepting a signature this code
  * cannot check would turn "signed" into a label anyone can write. Until a
- * verifier for the declared network exists (GDHCN is the named example, and
- * `smart-trust`'s ingested WHO SMART Trust material is where its trust-list
- * model lives), a signature-only mount is `could-not-determine`, which
+ * verifier for the declared network exists (GDHCN is the named example; its
+ * trust-list model belongs to an instance above this layer), a signature-only mount is `could-not-determine`, which
  * never mounts.
  */
 import { z } from "zod";
