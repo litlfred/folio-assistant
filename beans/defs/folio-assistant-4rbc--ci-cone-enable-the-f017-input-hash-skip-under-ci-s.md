@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:39:28Z
-updated_at: 2026-10-07T19:39:38Z
+updated_at: 2026-10-07T22:34:12Z
 parent: folio-assistant-hfag
 ---
 
@@ -148,3 +148,7 @@ The owner paused CI and rendering during the separation (~20:50Z), so everything
 - `gate-shell.test.ts`: 28 pass.
 
 **To wire it in later:** add the restore, prepare and save steps to the gate jobs, as the `ci-cone.ts` module comment says. Commit `c6dc9b5cdd2` of PR #2458 has them for `gates-kg` and `gates-docs`.
+
+## 2026-10-07T22:34:11Z: owner ruling — merge as tooling, CI wiring deferred
+
+After the measurement above (net ~10 s per PR; tracing `kg:audit*` costs main minutes), the owner chose option 1 of 3 ("go on all", 2026-10-07 ~22:30Z): **merge the cone tooling, the two defect fixes (tracer-flips-verdict, build-output-read-as-instance) and the rule text, without wiring `ci-cone` into code-quality-gates.yml.** This bean stays open: its goal "enable in CI" is unmet until `kg:audit*` and `skill:register:check` can be recorded (see "What would make it pay").
