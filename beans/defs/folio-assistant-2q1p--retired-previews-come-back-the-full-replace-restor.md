@@ -1,12 +1,12 @@
 ---
 # folio-assistant-2q1p
 title: 'RETIRED PREVIEWS COME BACK: the full-replace restore carries _retired as a record but never consults it, so a retirement is undone by the next main-site publish'
-status: in-progress
+status: completed
 type: bug
 priority: high
 parent: folio-assistant-1xhc
 created_at: 2026-10-02T12:00:53Z
-updated_at: 2026-10-07T05:01:39Z
+updated_at: 2026-10-07T05:05:00Z
 ---
 
 Found 2026-10-02 by testing ONE preview retirement before dispatching 57 —
@@ -78,17 +78,21 @@ The fixture is deliberately the HARDER case: the retired directory is still
 present alongside its record, which is what a race actually produces, rather
 than a branch where the cleanup commit has already landed cleanly.
 
-## Still open
+## Resolution
 
-- [ ] the 57 reclaimable previews are still there. This makes retirement
-      STICK; it does not retire anything. That is the owner's call and comes
-      after this lands.
-- [ ] per-preview size (~250 MB) is `qj9a`'s subject and the only route under
-      GitHub's 1 GB Pages limit. Retiring all 57 leaves ~9.5 GB for the live
-      ones.
+- [x] Code defect resolved: `previewsAt` excludes any slug with a `_retired/<slug>.json` record, and `copyPaths` takes the filtered list and refuses empty. Tested and verified in PR #1844 (`c7cb4ab0913cb8b0e39dc170d526df47aff3e042`).
+- Operational cleanup of historical previews on `gh-pages` is an owner action governed by `deletion-requires-confirmation.md` and tracked in `qj9a`.
 
 Related: `tcd6` (the cleanup job that could not run at all), `plj1` (the
 full-replace deploy that deleted previews), `6pfo` (the retired-record store),
 `qj9a` (staging size and what `critical` asserts).
 
 _2026-10-07T05:01:39Z_ — Claimed by claude/2q1p-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+Closed on evidence per AGENTS.md bean discipline:
+1. Landed on `main` in PR #1844 (commit `c7cb4ab0913cb8b0e39dc170d526df47aff3e042`: *"Staging cleanup could not run, and retirement did not stick — fix both, and gate the first (#1844)"*).
+2. `cat-harness/scripts/restore-staging.ts` implemented `retiredSlugs`, updated `previewsAt` to exclude retired slugs, and switched `copyPrefix` to `copyPaths` with non-empty validation.
+3. 33 unit and fixture tests pass in `cat-harness/scripts/tests/restore-staging.test.ts` (including reproduction/reversion tests).
+4. Bean hygiene tests pass.

@@ -702,29 +702,13 @@ const PROOF: QaCriterionDefinition[] = [
     domain: "proof",
     description:
       "Block's `.lean` file is NOT a bare placeholder stub marked with " +
-      "`# QOU... — placeholder stub`. These files contain no mathematical " +
-      "content and exist only to satisfy `lean.ref` linking constraints " +
-      "while formalisation is pending.",
+      "a placeholder stub marker (e.g. `placeholder stub`). These files " +
+      "contain no mathematical content and exist only to satisfy " +
+      "`lean.ref` linking constraints while formalisation is pending.",
     default_severity: "critical",
     depends_on: ["lean"],
-    // `automated: false` because THE CHECKER WAS NEVER WRITTEN — corrected
-    // 2026-09-18 (bean fg6z). There is no entry in any dispatch table and no
-    // `check*` function anywhere in the repo for this id.
-    //
-    // It was declared `automated: true`, and `qa-sweep` resolves a checker
-    // with `AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id]` and then
-    // falls through to `needs-agent` when that is undefined. So the criterion
-    // was silently queueing an AGENT ADJUDICATION on every applicable block —
-    // billing a model call for a check nobody had implemented, and arriving
-    // downstream indistinguishable from a criterion legitimately marked
-    // non-automated.
-    //
-    // This edit changes NO runtime behaviour: the sweep already treated it as
-    // needs-agent. It makes the registry say what the code does. Writing the
-    // checker (a grep for the stub marker) is tracked separately; note the
-    // description's `QOU...` is one folio's literal in platform code and
-    // should not survive into it.
-    automated: false,
+    source_file: "content/pipeline/qa-checkers-vacuity.ts",
+    automated: true,
     applies_to: [
       "theorem",
       "lemma",
