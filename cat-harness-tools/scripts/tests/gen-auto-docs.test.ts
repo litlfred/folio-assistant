@@ -168,6 +168,64 @@ describe("the emitted page", () => {
   });
 });
 
+describe("a THEMED page, so the layout gives it the top band (2026-10-07)", () => {
+  const pages = [
+    autoDocPage(TYPES[0]!, [{ path: "a/b.md", name: "b" }], "x", "a/", []),
+    levelPage("index", [{ seg: "skills", title: "Skills", detail: "d", count: 1 }]),
+  ];
+
+  it("is on the default layout, excluded from the nav, with a quoted title", () => {
+    for (const html of pages) {
+      expect(html.startsWith("---\nlayout: default\ntitle: \"")).toBe(true);
+      expect(html).toMatch(/^nav_exclude: true$/m);
+    }
+  });
+
+  it("is not a document of its own, and declares no rail", () => {
+    // The theme's sidebar is the navigation; a page with a <head> would be
+    // standalone again and lose the band.
+    for (const html of pages) {
+      expect(html).not.toMatch(/<!doctype|<html|<head|<body/i);
+      expect(html).not.toContain("fa-nav");
+      expect(html).toContain('<h1 id="da-title">');
+      expect(html).toContain('<div class="da-page">');
+    }
+  });
+
+  it("styles nothing outside its own wrapper", () => {
+    // A rule on body, :root or a bare `a` would restyle the theme page.
+    for (const html of pages) {
+      const css = /<style>([\s\S]*?)<\/style>/.exec(html)![1]!.replace(/\/\*[\s\S]*?\*\//g, "");
+      for (const sel of css.matchAll(/(?:^|})\s*([^{}@]+)\{/g)) {
+        for (const one of sel[1]!.split(",")) expect(one.trim().startsWith(".da-page")).toBe(true);
+      }
+    }
+  });
+
+  it("keeps the body Liquid-raw, with the front matter outside it", () => {
+    const html = autoDocPage(
+      TYPES[0]!,
+      [{ path: "a/b.md", name: "b", summary: "uses {{ x }} and {% endraw %} and {%- endraw -%}" }],
+      "x",
+      "a/",
+      [],
+    );
+    const fm = /^---\n[\s\S]*?\n---\n/.exec(html)![0];
+    expect(fm).not.toContain("{%");
+    const body = html.slice(fm.length);
+    expect(body.indexOf("{% raw %}")).toBeGreaterThan(-1);
+    // Exactly one endraw — the closing one, at the end. The artefact's own
+    // could otherwise end the raw block early and expose the rest to Liquid.
+    expect(body.match(/\{%-?\s*endraw/g)).toEqual(["{% endraw"]);
+    expect(body.trimEnd().endsWith("{% endraw %}")).toBe(true);
+  });
+
+  it("a title with a quote still parses as one YAML scalar", () => {
+    const html = autoDocPage({ ...TYPES[0]!, title: 'Say "hi"' }, [], "", undefined, []);
+    expect(html).toContain('title: "Say \\"hi\\" · auto-docs"');
+  });
+});
+
 describe("what is published", () => {
   it("a sub-graph page exists for who-iris, the sparse case", () => {
     // The owner asked for the handler to be exercised on who-iris, which

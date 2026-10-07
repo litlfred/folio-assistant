@@ -116,11 +116,12 @@ describe("the file set is derived, not listed", () => {
       "cat-harness/scripts/gen-uploads-viz.ts",
       "cat-harness/scripts/gen-document-kinds-viz.ts",
       "cat-harness/scripts/gen-translation-status.ts",
+      "cat-harness-tools/scripts/gen-auto-docs.ts",
     ]) expect(sources).not.toContain(themed);
-    // And the two the old array could not include, because the old detector
-    // reported them falsely.
-    expect(sources).toContain("cat-harness-tools/scripts/gen-auto-docs.ts");
+    // And the one the old array could not include, because the old detector
+    // reported it falsely.
     expect(sources).toContain("cat-harness/scripts/dak-pdf.ts");
+    expect(sources).not.toContain("cat-harness-tools/scripts/gen-auto-docs.ts");
   });
 
   test("it excludes tests, and THIS file is why", () => {

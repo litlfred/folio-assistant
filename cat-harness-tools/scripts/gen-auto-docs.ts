@@ -99,14 +99,10 @@ import {
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { checkoutDirectories } from "../../cat-harness/schemas/harness-config.ts";
 import { gitFiles } from "../../cat-harness/schemas/git-corpus.ts";
-import { makeEmit } from "../../cat-harness/scripts/viewer-page.ts";
-import { railNames } from "../../cat-harness/scripts/mount-instance-docs.ts";
-import { harnessTitle, kindTitle } from "../../cat-harness/scripts/lib/nav-label.ts";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 import { skillPageHref, skillPagesOf } from "../../cat-harness/scripts/lib/skill-pages.ts";
 import { ownElementPattern } from "../../cat-harness/schemas/namespaces.js";
-import { renderedPath, withRenders } from "../../cat-harness/scripts/viewer-declarations.js";
-import { visualiserNavDeclaration } from "../../cat-harness/scripts/lib/navbar.ts";
+import { renderedPath, withRendersFrontMatter } from "../../cat-harness/scripts/viewer-declarations.js";
 import { publishPlan } from "../../cat-harness/scripts/derive-at-publish.ts";
 import { HARNESS_ROOT } from "./lib/roots.ts";
 
@@ -930,34 +926,41 @@ const blobUrl = (path: string): string => {
 };
 
 /**
- * The chrome every page here shares.
+ * The chrome every page here shares — SCOPED to `.da-page`, because these are
+ * THEMED pages now.
  *
  * Extracted when the LEVEL pages were added (bean `06e3`): two renderers with
  * two copies of one stylesheet is two answers to what this looks like, and the
  * copy that is not edited is the one a reader meets first.
+ *
+ * Until 2026-10-07 every page here was a standalone document with its own
+ * paper, ink and accent, and so the one family on the site with no top band
+ * (search, Folio, language): `docs-ui.js` builds the band, and it reaches only
+ * pages on the theme's `default` layout. On the layout, a rule on `body`,
+ * `:root` or `a` would restyle the THEME, so there are none: every selector
+ * sits under the wrapper, and colour comes from the theme through
+ * `currentColor`, opacity and a neutral translucent edge, which read on the
+ * dark ground and the light one alike. Muted text is held at opacity 0.9,
+ * which keeps the theme's light-scheme body ink above 4.5:1 on white.
  */
 const PAGE_CSS = `<style>
-  :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink: #e6edf3; --muted: #9fb0c0; --edge: #3a4652; --paper: #0f1720; --accent: #6fc4e4; }
-  }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .wrap { max-width: 68rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
-  a { color: var(--accent); }
-  h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
-  .lede { color: var(--muted); margin: 0 0 1.4rem; }
-  .note { border-left: 4px solid var(--edge); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; color: var(--muted); }
-  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
-  th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
-  th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
-  td:first-child { width: 20rem; }
+  .da-page h1 { margin: 0 0 .3rem; }
+  .da-page .lede { opacity: .9; margin: 0 0 1.4rem; }
+  .da-page .note { border-left: 4px solid rgba(127,127,127,.4); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; }
+  .da-page table { display: table; width: 100%; border-collapse: collapse; font-size: .95rem; }
+  .da-page th, .da-page td { text-align: left; padding: .6rem .6rem; border: 0; border-bottom: 1px solid rgba(127,127,127,.4); vertical-align: top; background: transparent; }
+  .da-page th { background: rgba(127,127,127,.12); }
+  .da-page td:first-child { width: 20rem; }
   /* A repo-relative path is long and has no spaces, so it breaks mid-word
      unless the breakpoints are named. Slashes are where a reader expects it. */
-  .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
-  .none { color: var(--muted); font-style: italic; }
-  .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
-  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
-  ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  .da-page .p { opacity: .9; font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
+  .da-page .none { opacity: .9; font-style: italic; }
+  .da-page .f { margin-top: .35rem; font-size: .85rem; opacity: .9; }
+  .da-page .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
+  .da-page ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  /* The theme puts a bullet before every list item in .main-content; this
+     list is rows, not bullets. */
+  .da-page ul.subs > li::before { content: none; }
   /* display:flow-root CONTAINS the floated count, and it is not cosmetic.
      .n is float:right and is emitted AFTER the name and the path, so it is
      floated onto whichever line box it is reached on. At 390 px the longer
@@ -975,14 +978,14 @@ const PAGE_CSS = `<style>
      The phone-width block below already fixed the same class of defect for the
      #da-index TABLE (bean n5be, finding 4). This list was not covered by it
      and kept the float. */
-  ul.subs li { display: flow-root; padding: .3rem 0; border-bottom: 1px solid var(--edge); }
-  .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
-  .fa-table-filter label { font-weight: 600; }
-  .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
+  .da-page ul.subs li { display: flow-root; margin: 0; padding: .3rem 0; border-bottom: 1px solid rgba(127,127,127,.4); }
+  .da-page .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
+  .da-page .fa-table-filter label { font-weight: 600; }
+  .da-page .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
     font: inherit; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 4px; }
-  .fa-table-filter-count { font-size: .875em; opacity: .85; }
-  table[data-fa-filtered] tr[hidden] { display: none !important; }
-  .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .da-page .fa-table-filter-count { font-size: .875em; opacity: .9; }
+  .da-page table[data-fa-filtered] tr[hidden] { display: none !important; }
+  .da-page .n { float: right; opacity: .9; font-variant-numeric: tabular-nums; }
   /* ON A PHONE THE TERM SITS ABOVE ITS DEFINITION (bean n5be, finding 4).
      Two side-by-side columns at 390 px left the term 89 px and broke its path
      over four lines, and narrow-viewport.css then made the table a sideways
@@ -991,31 +994,33 @@ const PAGE_CSS = `<style>
      type selector; the header row is dropped because each cell is now
      self-evidently what it is. */
   @media (max-width: 799.98px) {
-    #da-index, #da-index tbody, #da-index tr, #da-index td { display: block; width: auto; }
-    #da-index { mask-image: none; animation: none; overflow: visible; }
-    #da-index thead { display: none; }
-    #da-index td { border-bottom: 0; padding: .25rem 0; overflow-wrap: anywhere; }
-    #da-index tr { border-bottom: 1px solid var(--edge); padding: .5rem 0; }
+    .da-page #da-index, .da-page #da-index tbody, .da-page #da-index tr, .da-page #da-index td { display: block; width: auto; min-width: 0; }
+    .da-page #da-index { mask-image: none; animation: none; overflow: visible; }
+    .da-page #da-index thead { display: none; }
+    .da-page #da-index td { border-bottom: 0; padding: .25rem 0; overflow-wrap: anywhere; }
+    .da-page #da-index tr { border-bottom: 1px solid rgba(127,127,127,.4); padding: .5rem 0; }
   }
 </style>`;
 
 /**
- * The table filter, for a page that does not load `docs-ui.js` (bean `0fua`).
+ * The table filter, written into the page rather than left to `docs-ui.js`
+ * (bean `0fua`).
  *
  * The site-wide filter (`mountTableFilters` in `docs-ui.js`, #1592) reached the
- * processes and tools pages and NOT these: a auto-docs page is standalone HTML,
+ * processes and tools pages and NOT these while they were standalone HTML,
  * which is why the 2026-09-30 re-run found the glossary's 48 rows and the skills
- * index's 273 still unfilterable. Same threshold, label, matching (every word
- * typed must appear) and live "N of M rows" count, so a reader meets one
- * control across the site rather than two that behave differently.
+ * index's 273 still unfilterable. They are on the theme's layout now, so
+ * `docs-ui.js` does load — and it skips a table already carrying
+ * `data-fa-filtered`, so the page's own box is the only one. Kept here so the
+ * filter works on the committed file with no site script at all, and so
+ * there is exactly one control. Same threshold, label, matching (every word
+ * typed must appear) and live "N of M rows" count as the site-wide one.
  *
  * NO BACKTICKS AND NO DOLLAR-BRACE in the script: it is interpolated into a
  * template literal.
  */
 const TABLE_FILTER_MIN = 25;
 
-/** The most entries a rail section lists before the table filter takes over (#1757). */
-const RAIL_ITEMS_MAX = 60;
 const TABLE_FILTER_BOX = `<div class="fa-table-filter">
 <label for="fa-table-filter-0">Filter this table</label>
 <input type="search" id="fa-table-filter-0" autocomplete="off" spellcheck="false" aria-describedby="fa-table-filter-0-count">
@@ -1077,7 +1082,7 @@ export function autoDocPage(
   items: AutoDocItem[],
   scope: string,
   scopePath: string | undefined,
-  siblings: Array<{ id: string; path: string; count: number; qualifier?: string }>,
+  siblings: Array<{ id: string; path: string; count: number }>,
   refs?: CodeRefs,
 ): string {
   // A description naming ANOTHER artefact on this page links to its row (bean
@@ -1132,42 +1137,15 @@ export function autoDocPage(
     )
     .join("\n");
 
-  // THE RAIL SECTION (#1757): the sibling sub-graphs, as the page's own list
-  // above already gives them, with THIS one's entries beneath it. Entries only
-  // up to a size a 248px column can hold; past it the table's filter is the
-  // way in, and a rail of 270 rows is the page again.
-  const railNav = visualiserNavDeclaration(
-    (siblings.length ? siblings : [{ id: scope || type.title, path: "", count: items.length }]).map((s) => {
-      const isHere = siblings.length === 0 || s.id === scope;
-      const kids = isHere && items.length <= RAIL_ITEMS_MAX
-        ? items.filter((i) => keyOf(i)).map((i) => ({ label: i.name, href: `#${rowId(i)}` }))
-        : [];
-      // ONE NAME PER DESTINATION (bean `ob3m` finding 6): a sub-graph page is
-      // the same destination the Graphs group and the landing call by its
-      // graph typology's name ("Docs", "Swimlane glossary"), so its row says that, with the harness that
-      // declares the directory as the qualifier. The directory id stays in
-      // the page's own list above, where it is a path rather than a name.
-      return {
-        label: kindTitle(type.graph),
-        ...(s.qualifier ? { qualifier: s.qualifier } : {}),
-        ...(isHere ? {} : { href: `${up}${s.id}/` }),
-        ...(kids.length ? { items: kids } : {}),
-      };
-    }),
-  );
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(type.title)}${scope ? ` — ${esc(scope)}` : ""} · auto-docs</title>
-${PAGE_CSS}
-</head>
-<body>
-${railNav}
-<div class="wrap">
-<h1>${esc(type.title)}${scope ? ` <span class="p">${esc(scope)}</span>` : ""}</h1>
+  // NO RAIL OF ITS OWN (2026-10-07). This page was standalone and declared a
+  // rail section (#1757) listing the sibling sub-graphs and this one's rows.
+  // On the theme's layout the theme's sidebar is the navigation, and a second
+  // rail inside the content column would be two answers to "where can I go".
+  // The sibling list below and the table's filter remain the way in.
+  return themedPage(
+    `${type.title}${scope ? ` — ${scope}` : ""} · auto-docs`,
+    `<div class="da-page">
+<h1 id="da-title">${esc(type.title)}${scope ? ` <span class="p">${esc(scope)}</span>` : ""}</h1>
 <p class="lede">Derived: ${esc(type.extracts)}.${scopePath ? ` Sub-graph <code>${esc(scopePath)}</code>${siblings.length <= 1 ? `, ${items.length} ${items.length === 1 ? "entry" : "entries"}` : ""}.` : ""}</p>
 
 <div class="note">
@@ -1197,10 +1175,8 @@ ${rows || '<tr><td colspan="2" class="none">Nothing in scope.</td></tr>'}
    ownership before pruning — the same line the viewer generators emit. */
 var SCOPE = "${scope}";
 </script>
-${items.length > TABLE_FILTER_MIN ? TABLE_FILTER_SCRIPT : ""}
-</body>
-</html>
-`;
+${items.length > TABLE_FILTER_MIN ? TABLE_FILTER_SCRIPT : ""}`,
+  );
 }
 
 /** One built type, as a LEVEL page needs to describe it. */
@@ -1245,18 +1221,10 @@ export function levelPage(prefix: string, children: readonly LevelChild[]): stri
     )
     .join("\n");
 
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(here)} · auto-docs</title>
-${PAGE_CSS}
-</head>
-<body>
-${visualiserNavDeclaration(children.map((c) => ({ label: c.title, href: `${c.seg}/` })))}
-<div class="wrap">
-<h1>auto-docs${prefix ? ` <span class="p">${esc(prefix)}</span>` : ""}</h1>
+  return themedPage(
+    `${here} · auto-docs`,
+    `<div class="da-page">
+<h1 id="da-title">auto-docs${prefix ? ` <span class="p">${esc(prefix)}</span>` : ""}</h1>
 <p class="lede">Derived documentation over a declared sub-graph. Each entry below is
 generated from the repository on every build, so it is what the tree actually holds
 rather than what anybody remembered.</p>
@@ -1276,46 +1244,59 @@ ${rows || '<li class="none">Nothing is built under this level.</li>'}
 /* The level this page indexes. Read by orphanSubjectPages() to establish
    ownership before pruning — the same line every other page here emits. */
 var SCOPE = "${esc(prefix === "" ? "auto-docs" : prefix.split("/").pop()!)}";
-</script>
-</body>
-</html>
+</script>`,
+  );
+}
+
+/** A YAML double-quoted scalar: the two characters it treats specially, escaped. */
+function yamlQuoted(s: string): string {
+  return `"${s.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+}
+
+/**
+ * Wrap a page body as a THEMED Jekyll page (2026-10-07).
+ *
+ * Every page here was a standalone `<!DOCTYPE html>` document, so the one
+ * family on the site without the top band — search, Folio, language — which
+ * `docs-ui.js` builds and `_includes/head_custom.html` delivers only to pages
+ * on the theme's `default` layout. The state dashboards were moved onto the
+ * layout the same way (`state-visualizer.ts`, `page()`); this is that shape:
+ * front matter with a quoted title and `nav_exclude`, a generated-by note,
+ * then the scoped stylesheet and the body.
+ *
+ * **The body is LIQUID-RAW.** On the layout Jekyll runs Liquid over the file,
+ * and an artefact's own description may carry a double brace or a brace-percent
+ * — which would be evaluated, or fail the build. So the body sits between raw
+ * and endraw tags, with the front matter outside them; and the one sequence
+ * that could close the raw block early, a brace-percent opening an endraw
+ * tag, has its percent written as an entity, which renders the same.
+ *
+ * `renders` / `rendered-by` go into the front matter afterwards, through
+ * `withRendersFrontMatter`, which is how `viewerPages` reads a themed page.
+ */
+export function themedPage(title: string, body: string): string {
+  const safe = `${PAGE_CSS}\n${body}`.replace(/\{%(-?\s*endraw)/g, "{&#37;$1");
+  return `---
+layout: default
+title: ${yamlQuoted(title)}
+nav_exclude: true
+---
+<!--
+  GENERATED by cat-harness-tools/scripts/gen-auto-docs.ts: the next run of
+  bun run auto:docs overwrites it, and auto:docs --check fails on the
+  difference. A hand-edit here is a change nothing else in the tree knows about.
+-->
+{% raw %}
+${safe}
+{% endraw %}
 `;
 }
 
 let stale = 0;
 
 /**
- * The name of the harness that declares the directory at `absPath`: the
- * deepest instance root above it, called what `_data/harness.json` calls it
- * (bean `ob3m` finding 6). `undefined` when no instance root holds it.
- */
-function ownerName(absPath: string): string | undefined {
-  const root = instanceRootsIn(REPO_ROOT)
-    .filter((r) => absPath === r || absPath.startsWith(`${r}/`))
-    .sort((a, b) => b.length - a.length)[0];
-  if (root === undefined) return undefined;
-  const decl = readDeclaration(root);
-  if (!decl) return undefined;
-  return railNames(basename(ROOT), decl.name).harness ?? harnessTitle(decl);
-}
-
-/**
- * THE NAVBAR IS APPLIED HERE — bean `edx7`, at this generator's single write.
- *
- * Its sub-pages are keyed by DIRECTORY ID (`who-iris-skills`), not by instance
- * name, so the rail lists this instance's graphs. Stripping `-skills` to yield
- * `who-iris` would be a second answer to a question the directory declaration
- * already answers, and silently wrong on the first id that ends in those
- * characters for another reason.
- */
-/**
- * Write a file that is NOT a page — same staleness contract as {@link emit},
- * without the viewer-nav wrapper.
- *
- * `emit` runs its content through `withViewerNav`, which injects the site's
- * navigation. That is right for a page and a corruption for a JSON manifest,
- * so the two are separate functions rather than one with a flag: a flag would
- * let a future caller wrap a manifest by forgetting to pass it.
+ * Write one generated file — a page or the manifest — checking rather than
+ * writing under `--check`, where a difference is counted as stale.
  */
 function emitRaw(path: string, content: string): void {
   if (check) {
@@ -1381,20 +1362,13 @@ function autoDocsManifest(): string {
   )}\n`;
 }
 
-// THROUGH `makeEmit`, like every viewer generator: the rail is drawn from
-// shared data (bean `lnoy`, owner: "4. Option 3 everywhere"), and the shared
-// file is checked or written under the same contract as the page.
-let emitRailed: ((path: string, content: string) => void) | undefined;
+// THROUGH `emitRaw`, since 2026-10-07. Every page here was written through
+// `makeEmit`, which injects the harness rail into a STANDALONE page — and
+// passes a page with front matter through unchanged, because the theme's
+// sidebar is its navigation. These pages are themed now, so there is no rail
+// to inject and nothing for the wrapper to do; one writer, one contract.
 function emit(path: string, content: string): void {
-  emitRailed ??= makeEmit({
-    check,
-    quiet: true,
-    onStale: () => {
-      stale++;
-    },
-    nav: { built: basename(ROOT), docsRoot: join(ROOT, siteDirFor(ROOT)) },
-  });
-  emitRailed(path, content);
+  emitRaw(path, content);
 }
 
 if (import.meta.main) {
@@ -1423,8 +1397,7 @@ if (import.meta.main) {
     const populated = [...byDir.keys()].sort((a, b) => a.localeCompare(b, "en"));
     const siblings = populated.map((id) => {
       const d = dirs.find((x) => x.id === id);
-      const qualifier = d ? ownerName(d.absPath) : undefined;
-      return { id, path: d?.path ?? "", count: byDir.get(id)!.length, ...(qualifier ? { qualifier } : {}) };
+      return { id, path: d?.path ?? "", count: byDir.get(id)!.length };
     });
 
     // Each page says which directories it draws (#1168 B7a-2): every
@@ -1438,13 +1411,13 @@ if (import.meta.main) {
     const skillPages = skillPagesOf(REPO_ROOT);
     emit(
       join(pageDir, "index.html"),
-      withRenders(autoDocPage(type, items, "", undefined, siblings, codeRefsFor(site, pageDir, REPO_ROOT, skillPages)), drawn(populated), VIEWER_TOOL),
+      withRendersFrontMatter(autoDocPage(type, items, "", undefined, siblings, codeRefsFor(site, pageDir, REPO_ROOT, skillPages)), drawn(populated), VIEWER_TOOL),
     );
     for (const id of populated) {
       const sub = viewerPlacement(site, `${handler}/auto-docs/${type.id}/${id}`, "auto-docs");
       emit(
         join(sub.pageDir, "index.html"),
-        withRenders(
+        withRendersFrontMatter(
           autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings, codeRefsFor(site, sub.pageDir, REPO_ROOT, skillPages)),
           drawn([id]),
           VIEWER_TOOL,
