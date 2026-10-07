@@ -226,7 +226,7 @@ Each step is its own PR with its own QA, and missing QA is a failure:
    - `raci.md`.
 5. **The QA/QC report over PROV-O**: the agentic end's mitigation, which is the
    first real consumer of all this.
-   *Built 2026-09-24: `scripts/prov-qaqc.ts` (`bun run prov:qaqc`, gated by
+   *Built 2026-09-24: `scripts/prov-qaqc.ts` (`bun run cat prov:qaqc`, gated by
    `check:prov-qaqc`), tested in `scripts/tests/prov-qaqc.test.ts`. It reuses
    `authorizeTask`, `laneBinding` and `ProvActivitySchema` rather than
    restating them. `cat-harness:underPolicy` now takes an array, because

@@ -9,7 +9,7 @@ updated_at: 2026-09-30T16:12:48Z
 parent: folio-assistant-zzmr
 ---
 
-Found 2026-09-26 resolving #1290's conflicts in a worktree named `pr1290` (session_01ERf1yH3k69x37rXCrb6GYt). `bun run library:viz` wrote `"uploadInstance": "pr1290"` into 12 entries of `cat-harness/docs/assets/library/index.json` and emitted a page at `cat-harness/docs/cat-harness/library/pr1290/index.html`. Caught before push; regenerated from a directory named `folio-assistant`, after which all 12 read `folio-assistant`.
+Found 2026-09-26 resolving #1290's conflicts in a worktree named `pr1290` (session_01ERf1yH3k69x37rXCrb6GYt). `bun run cat library:viz` wrote `"uploadInstance": "pr1290"` into 12 entries of `cat-harness/docs/assets/library/index.json` and emitted a page at `cat-harness/docs/cat-harness/library/pr1290/index.html`. Caught before push; regenerated from a directory named `folio-assistant`, after which all 12 read `folio-assistant`.
 
 ## Where
 

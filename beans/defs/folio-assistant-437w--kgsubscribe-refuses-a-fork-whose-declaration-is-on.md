@@ -11,7 +11,7 @@ parent: folio-assistant-fnx4
 
 ## Why
 
-The owner ruled 2026-10-06 that smart-trust, smart-base and smart-immunizations leave folio-assistant the way who-iris did: each fork is authoritative and folio-assistant keeps a REMOTE subscription to it via `kg:subscribe`, pinned, no submodules. Today `bun run kg:subscribe` refuses all three with `not-a-substrate: the root carries no Knowledge Graph declaration`, because each fork nests its declaration one level down (`smart-base/smart-trust.json`, `smart-base/smart-immunizations.json`, `smart-base/smart-base.json`) and the directory name is not always the instance name. Blocks cutover PR #2320. Companion to PR #2326 (remote mounts), which names the same field `upstreamPath`.
+The owner ruled 2026-10-06 that smart-trust, smart-base and smart-immunizations leave folio-assistant the way who-iris did: each fork is authoritative and folio-assistant keeps a REMOTE subscription to it via `kg:subscribe`, pinned, no submodules. Today `bun run cat kg:subscribe` refuses all three with `not-a-substrate: the root carries no Knowledge Graph declaration`, because each fork nests its declaration one level down (`smart-base/smart-trust.json`, `smart-base/smart-immunizations.json`, `smart-base/smart-base.json`) and the directory name is not always the instance name. Blocks cutover PR #2320. Companion to PR #2326 (remote mounts), which names the same field `upstreamPath`.
 
 ## Done when
 

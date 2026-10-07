@@ -84,7 +84,7 @@ const PUBLISH_REF = /^\s*ref:\s*(gh-pages|\$\{\{\s*inputs\.publish_branch\s*\}\}
 /**
  * `bun run <path>` / `bun <path>`, where the path ends in `.ts`, however it is
  * spelled — `source/x.ts`, `../source/x.ts`, `"$PLATFORM_DIR/x.ts"`. A
- * `package.json` script name (`bun run gates`) is NOT matched: those resolve
+ * `package.json` script name (`bun run cat gates`) is NOT matched: those resolve
  * through the checkout's own `package.json` and are covered by whichever
  * checkout that is, which this rule already requires to be complete.
  */
@@ -163,10 +163,22 @@ export function checkoutsOf(job: Job): CheckoutStep[] {
       block.push(next);
     }
     const pathLine = block.find((l) => /^\s*path:\s*\S/.test(l));
+    const path = /^\s*path:\s*["']?([^"'\s]+)/.exec(pathLine ?? "")?.[1];
+    // Since bean `nn8e` (#2462) `bootstrap/` and `bootstrap-tools/` are REMOTE
+    // MOUNTS, not submodules: the checkout is served by a later step in the
+    // same job that replays the lock into the same path. `submodules:` alone
+    // no longer supplies them — there is no `.gitmodules` to read.
+    const root = (path ?? ".").replace(/\/+$/, "");
+    const mounted = job.lines
+      .slice(i + 1)
+      .some((l) => {
+        const m = /mount-from-lock\.ts["']?\s+--root\s+["']?([^"'\s;]+)/.exec(l);
+        return m?.[1] !== undefined && m[1].replace(/\/+$/, "") === root;
+      });
     out.push({
       line: job.start + i + 1,
-      path: /^\s*path:\s*["']?([^"'\s]+)/.exec(pathLine ?? "")?.[1],
-      submodules: block.some((l) => /^\s*submodules:\s*(true|recursive)\s*$/.test(l)),
+      path,
+      submodules: mounted,
       publish: block.some((l) => PUBLISH_REF.test(l)),
     });
   }
@@ -217,9 +229,9 @@ export function auditWorkflow(
         job: job.name,
         line: c.line,
         detail:
-          `checkout has no \`submodules\`, and this job runs ${runs.length} platform ` +
-          `script(s) (first: \`${runs[0]?.script ?? "?"}\` at line ${runs[0]?.line ?? 0}) — ` +
-          `one reaching \`cat-harness/schemas/\` dies on \`bootstrap-tools\``,
+          `checkout is not followed by a lock replay (\`bun <path>/cat-harness/scripts/mount-from-lock.ts --root <path>\`), ` +
+          `and this job runs ${runs.length} platform script(s) (first: \`${runs[0]?.script ?? "?"}\` at line ${runs[0]?.line ?? 0}) — ` +
+          `one reaching \`cat-harness/schemas/\` dies on \`bootstrap-tools\`, which is a remote mount (bean nn8e)`,
       });
     }
   }
@@ -247,7 +259,7 @@ if (import.meta.main) {
     console.log(`  ✗ ${f.workflow} › ${f.job} (line ${f.line}): ${f.detail}`);
   }
   if (findings.length === 0) {
-    console.log("  ✓ every job that runs a platform script checked out its submodules");
+    console.log("  ✓ every job that runs a platform script mounts bootstrap and bootstrap-tools from the lock");
   }
   if (composites.length > 0) {
     console.log(

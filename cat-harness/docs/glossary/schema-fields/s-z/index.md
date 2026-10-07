@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: Schema fields, S–Z"
 parent: "Glossary: Schema fields"
 grand_parent: Glossary
@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1933 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1937 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 625 terms and is 348 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 627 terms and is 349 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2239</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2239</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2243</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2243</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">625</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">627</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -58,6 +58,20 @@ ScoredKeywordSchema.score <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>Comparable within one library's matrix only.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/library-keywords.ts"><code>cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema.score</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--script-table.scriptentry.command" data-fa-state="extracted" data-fa-gloss="">
+ScriptEntry.command <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The command, relative to the checkout root.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/script-table.ts"><code>cat-harness/schemas/script-table.ts#ScriptEntry.command</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--script-table.scriptentry.manifest" data-fa-state="extracted" data-fa-gloss="">
+ScriptEntry.manifest <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The manifest it is declared in, repository-relative (<code>package.json</code> for the root).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/script-table.ts"><code>cat-harness/schemas/script-table.ts#ScriptEntry.manifest</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--script-qa.scriptqareport.dollar-schema" data-fa-state="extracted" data-fa-gloss="">
 ScriptQaReport.$schema <span class="fa-gloss-status">candidate, extracted</span>
@@ -386,42 +400,42 @@ SignOffSchema.actor <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The declared actor this signer acted as, when the harness declares actors.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.actor</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.actor</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--requirement-set.signoffschema.evidence" data-fa-state="extracted" data-fa-gloss="">
 SignOffSchema.evidence <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where the decision can be read: a link to the comment it was made in.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.evidence</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.evidence</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--requirement-set.signoffschema.id" data-fa-state="extracted" data-fa-gloss="">
 SignOffSchema.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Stable identifier — a login, an agent's name, a script path.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.id</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.id</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--requirement-set.signoffschema.reason" data-fa-state="extracted" data-fa-gloss="">
 SignOffSchema.reason <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Why — the dispensation, in the signer's words or quoting them.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.reason</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.reason</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--requirement-set.signoffschema.scope" data-fa-state="extracted" data-fa-gloss="">
 SignOffSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The set's id, or a member's reference.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.scope</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.scope</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--requirement-set.signoffschema.stage" data-fa-state="extracted" data-fa-gloss="">
 SignOffSchema.stage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The stage this sign-off moves the set to, when its scope is the set.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.stage</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement-set.ts"><code>bootstrap-tools/schemas/requirement-set.ts#SignOffSchema.stage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.simulatorblock.defaultview" data-fa-state="extracted" data-fa-gloss="">
 SimulatorBlock.defaultView <span class="fa-gloss-status">candidate, extracted</span>
@@ -1282,7 +1296,7 @@ SubgraphNodeBase.holdsGraph <span class="fa-gloss-status">candidate, extracted</
 </dt>
 <dd>
 <p>The graph typologies it holds, as bootstrap's graph-typology individuals.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.holdsGraph</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.holdsGraph</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--subgraph-manifest.subgraphnodebase.holdsgraph" data-fa-state="extracted" data-fa-gloss="">
 SubgraphNodeBase.holdsGraph <span class="fa-gloss-status">candidate, extracted</span>
@@ -1296,7 +1310,7 @@ SubgraphNodeBase.name <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The repository's or harness's name at the two top levels; the instance-relative path below them.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.name</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.name</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--subgraph-manifest.subgraphnodebase.name" data-fa-state="extracted" data-fa-gloss="">
 SubgraphNodeBase.name <span class="fa-gloss-status">candidate, extracted</span>
@@ -1310,7 +1324,7 @@ SubgraphNodeBase.path <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Instance-relative, ending in <code>/</code>; <code>./</code> at the two top levels.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.path</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/subgraph-export.ts"><code>bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.path</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subgraphrelation.children" data-fa-state="extracted" data-fa-gloss="">
 SubgraphRelation.children <span class="fa-gloss-status">candidate, extracted</span>
@@ -1464,14 +1478,14 @@ SuccessCriterionSchema.criterion <span class="fa-gloss-status">candidate, extrac
 </dt>
 <dd>
 <p>One sentence a reviewer can say yes or no to, without asking what it means.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement.ts"><code>bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.criterion</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement.ts"><code>bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.criterion</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-schema-fields--requirement.successcriterionschema.key" data-fa-state="extracted" data-fa-gloss="">
 SuccessCriterionSchema.key <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Unique within its statement; <code>req:&lt;id&gt;#&lt;statement&gt;/&lt;key&gt;</code> is its address.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/requirement.ts"><code>bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.key</code></a></p>
+<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/requirement.ts"><code>bootstrap-tools/schemas/requirement.ts#SuccessCriterionSchema.key</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--session-survey.surveyaxisschema.axis" data-fa-state="extracted" data-fa-gloss="">
 SurveyAxisSchema.axis <span class="fa-gloss-status">candidate, extracted</span>

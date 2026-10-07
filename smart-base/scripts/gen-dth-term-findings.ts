@@ -134,7 +134,7 @@ const norm = (s: string): string => s.replace(/\s+/g, " ").trim();
 /** The findings page's sentence about the figure's SVG: a link once it exists, the bean until then. */
 function svgSentence(fig: { svg?: string; svgBean: string }): string {
   if (!fig.svg) return `An SVG rendering from the DIIG's vector layer is bean \`${fig.svgBean}\`.`;
-  return `Its SVG rendering is [\`${fig.svg.split("/").pop()}\`](../${fig.svg.replace(/^smart-base\//, "")}) (bean \`${fig.svgBean}\`). It is drawn from the DIIG PDF's own vector layer, never by hand, and records its source (the PDF's sha256, the page and the crop) in its \`<metadata>\`; \`bun run smart-base:diig-figure:check\` fails if the drawing is edited or the crop drifts.`;
+  return `Its SVG rendering is [\`${fig.svg.split("/").pop()}\`](../${fig.svg.replace(/^smart-base\//, "")}) (bean \`${fig.svgBean}\`). It is drawn from the DIIG PDF's own vector layer, never by hand, and records its source (the PDF's sha256, the page and the crop) in its \`<metadata>\`; \`bun run cat smart-base:diig-figure:check\` fails if the drawing is edited or the crop drifts.`;
 }
 
 export function sectionText(raw: string): string {
@@ -268,7 +268,7 @@ if (import.meta.main) {
   if (check) {
     const have = existsSync(OUT) ? readFileSync(OUT, "utf8") : "";
     if (have !== page) {
-      console.error(`✗ ${OUT.slice(ROOT.length + 1)} is stale — run: bun run smart-base:dth-terms`);
+      console.error(`✗ ${OUT.slice(ROOT.length + 1)} is stale — run: bun run cat smart-base:dth-terms`);
       process.exit(1);
     }
     console.log(`✓ ${OUT.slice(ROOT.length + 1)} current; ${terms.length} conflicting terms, ${allQuotes(f).length} quotes match their sources`);

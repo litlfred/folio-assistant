@@ -31,9 +31,9 @@
  * It only reports. Closing a PR stays a steward action.
  *
  * Usage:
- *   bun run merge:leftover -- 1234                 # PR head vs origin/main
- *   bun run merge:leftover -- 1234:<sha>           # a pinned head
- *   bun run merge:leftover -- origin/claude/x --base origin/main --no-fetch
+ *   bun run cat merge:leftover -- 1234                 # PR head vs origin/main
+ *   bun run cat merge:leftover -- 1234:<sha>           # a pinned head
+ *   bun run cat merge:leftover -- origin/claude/x --base origin/main --no-fetch
  *
  * Exit 0 landed · 1 not-landed · 2 could-not-determine.
  */

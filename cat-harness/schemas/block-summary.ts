@@ -25,7 +25,7 @@
  * `rejected`, with `drafted_by` an {@link AttributionSchema} that must name its
  * `model` when the author is an agent, and `confirmed_by` that must be a
  * human. Nothing here restates those rules, so nothing here can drift from
- * them. `bun run narratives` reviews these drafts exactly as it reviews image
+ * them. `bun run cat narratives` reviews these drafts exactly as it reviews image
  * descriptions.
  *
  * ## `source_hash` — so a changed source reads as STALE, not as right

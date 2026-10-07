@@ -15,7 +15,7 @@ parent: folio-assistant-fs43
 
 > the bean store is cut over to its branch and mounted at …, so pushing a claim to the default branch would land it where no reader looks. Claim through the branch store instead (bean 9ofm: **this script's own migration row is still open**).
 
-So after the cutover `bun run beans:claim <id>` returns `unknown` for **every** session. `AGENTS.md` and `bean-coordination` both require a claim before durable work, and the session-start sweep tells an agent to claim one. A repository where claiming is impossible is worse than one where it races: the race is visible and recoverable, the refusal makes every session either stop or work unclaimed — which is the 2026-09-18 failure (two merged PRs' worth of work, unclaimed) by construction rather than by oversight.
+So after the cutover `bun run cat beans:claim <id>` returns `unknown` for **every** session. `AGENTS.md` and `bean-coordination` both require a claim before durable work, and the session-start sweep tells an agent to claim one. A repository where claiming is impossible is worse than one where it races: the race is visible and recoverable, the refusal makes every session either stop or work unclaimed — which is the 2026-09-18 failure (two merged PRs' worth of work, unclaimed) by construction rather than by oversight.
 
 ## What the writer has to do
 

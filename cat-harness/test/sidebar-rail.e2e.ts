@@ -60,7 +60,7 @@ const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), 
   railScopes?: { name: string; title: string; href: string; folders: Folder[] }[];
 };
 if (HARNESS.navbar === null || HARNESS.navbar === undefined) {
-  throw new Error("docs/_data/harness.json has no navbar row. Run `bun run docs:harness`.");
+  throw new Error("docs/_data/harness.json has no navbar row. Run `bun run cat docs:harness`.");
 }
 
 /** The generated footer include, canonical branch, Liquid resolved. */
@@ -373,7 +373,7 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
 });
 
 test.describe("the rail is scoped to the instance being viewed (#1902)", () => {
-  test.skip(!SCOPE, "docs/_data/harness.json declares no railScopes -- run `bun run docs:harness`");
+  test.skip(!SCOPE, "docs/_data/harness.json declares no railScopes -- run `bun run cat docs:harness`");
 
   test("PAGES lists the instance's own table of contents, not the whole site", async ({ page }) => {
     const errors = await load(page, true);

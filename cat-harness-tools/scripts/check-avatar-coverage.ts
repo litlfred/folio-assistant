@@ -30,8 +30,8 @@
  * attention on the cell that can actually be empty.
  *
  * Usage:
- *   bun run check:avatar-coverage          # report, write the sidecar, exit 0
- *   bun run check:avatar-coverage:check    # JUDGE: compute and judge, write nothing (the gate)
+ *   bun run cat check:avatar-coverage          # report, write the sidecar, exit 0
+ *   bun run cat check:avatar-coverage:check    # JUDGE: compute and judge, write nothing (the gate)
  *
  * Exit codes: the writer exits 0. Judge mode (`--check`, bean `bo44`): 0 clean
  * · 1 a declared kind has no avatar, or the trash state is not derived · 2 no
@@ -169,7 +169,7 @@ export function avatarCoverageDocument(c: Coverage, derived: boolean): QaResult 
           `fail, which would read as coverage while measuring nothing.`,
         entries: derived
           ? []
-          : [{ note: "avatars.css carries no [data-fa-trash] rule — run `bun run avatars:css`" }],
+          : [{ note: "avatars.css carries no [data-fa-trash] rule — run `bun run cat avatars:css`" }],
       },
     },
   });

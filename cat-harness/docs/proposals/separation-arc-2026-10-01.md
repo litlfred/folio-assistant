@@ -170,11 +170,11 @@ stalling the way the last five did.
 3. **Collision rule:** S5 and the S4 placement PRs each touch a large share of
    the tree. **Run at most one of them at a time.** S0, S2 and the S3 PRs are
    disjoint and run in parallel.
-4. **Claim first:** `bun run beans:claim <id>` before any edit. The claim
+4. **Claim first:** `bun run cat beans:claim <id>` before any edit. The claim
    commits to `main`, so keep both sides at the merge.
 5. **The merge cycle every agent runs:** merge main,
-   `git submodule update --init --recursive`, `bun run regen` until it reports
-   0, `bun run gates`, push. Run `state:visualizer` last.
+   `git submodule update --init --recursive`, `bun run cat regen` until it reports
+   0, `bun run cat gates`, push. Run `state:visualizer` last.
 6. **Merging:** owner ruling 2026-10-01: "yes you may merge green PRs". An agent merges once **every job** on its current head is green and the PR is mergeable. Not before. Merging before CI finishes is **not** authorised; earlier sessions did that on an instruction specific to them.
 7. **Report shape:** the agent ends with a table of the checklist lines it
    ticked, each with its evidence (sha, run id, bean id), and the lines it

@@ -43,7 +43,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="BPMN 流程：用户请求创建一个 folio；智能体检测交互模态，读取仓库事实，并由基于 folio-intent.dmn 计算得出的排他网关路由到五个分支之一——ask、overlay、new-repo、add-folio，或是交接给内容创作。脚手架为工作计划提供初始数据，随后 Pages 构建报告 live、not-yet 或 unknown。">
 </figure>
-<p class="bpmn-source"><em>来源：<code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — 该 SVG 由 <code>bun run render:bpmn</code> 生成。</em></p>
+<p class="bpmn-source"><em>来源：<code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — 该 SVG 由 <code>bun run cat render:bpmn</code> 生成。</em></p>
 
 ### 三项事实
 
@@ -120,7 +120,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 请按照[安装](installation.html)进行操作，然后运行：
 
 ```sh
-bun run check-deps
+bun run cat check-deps
 ```
 
 终端应当报告 `bun` 已存在。你的内容类型所需但尚未安装的任何依赖都会列出相应的安装提示——例如文档（document）类 folio 完全不需要任何 Lean 或 TeX 相关的依赖行。
@@ -146,8 +146,8 @@ bun run check-deps
 在 `overlay` 分支上，智能体在触碰任何内容之前都会先行观察：
 
 ```sh
-bun run scan:repo            # 只读报告
-bun run scan:repo -- --json  # 相同内容，以事实形式输出
+bun run cat scan:repo            # 只读报告
+bun run cat scan:repo -- --json  # 相同内容，以事实形式输出
 ```
 
 它会将发现的内容分类到**三**个存储桶中——`library`（其他人编写的源资料）、`content`（在此处撰写的散文正文）以及 `unclassified`（未分类）。
@@ -169,8 +169,8 @@ bun run scan:repo -- --json  # 相同内容，以事实形式输出
 创建 folio 的最终成果应该是一个链接。在搭建脚手架后立即运行：
 
 ```sh
-bun run pages:bootstrap            # 推导地址，生成报告，不进行网络探测
-bun run pages:bootstrap -- --wait  # 持续探测直至站点响应（有时间限制）
+bun run cat pages:bootstrap            # 推导地址，生成报告，不进行网络探测
+bun run cat pages:bootstrap -- --wait  # 持续探测直至站点响应（有时间限制）
 ```
 
 它会从 `harness.config.json` 或 `origin` 远端推导地址，根据发布工作流的*实际作用*而非其命名来识别它们，并报告以下三者之一：
@@ -226,8 +226,8 @@ bun run pages:bootstrap -- --wait  # 持续探测直至站点响应（有时间�
 然后运行：
 
 ```sh
-bun run docs:harness         # 将声明推送到 docs/_data/
-bun run docs:harness -- --check   # ……如果内容过时则报错（用于 CI）
+bun run cat docs:harness         # 将声明推送到 docs/_data/
+bun run cat docs:harness -- --check   # ……如果内容过时则报错（用于 CI）
 ```
 
 ### 它绝不会做的三件事

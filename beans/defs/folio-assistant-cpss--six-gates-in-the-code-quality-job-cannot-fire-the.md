@@ -128,7 +128,7 @@ Measured on `4c86165bdd`, `.github/workflows/code-quality-gates.yml`:
 | step `gates that were registered and never run` begins | 928 | — |
 | `set -e` | 930 | no `set +e`, no `\|\| true`, no `if`, no `continue-on-error` anywhere in the block |
 | `bun run` invocations in the step, all at indent 10 | 931–1418 | **106** |
-| `bun run translation:drift:check` | 952 | the **3rd** of the 106 |
+| `bun run cat translation:drift:check` | 952 | the **3rd** of the 106 |
 | invocations after it, which cannot execute | 955–1418 | **103** |
 
 So the unreachable surface is **103 gates inside the step, plus the 5 whole
@@ -145,7 +145,7 @@ it.
   `4c86165bdd` declared `translated-links:check`. CI never reported that red and
   cannot report the fix; the repair is verified **locally only** (`exit 0`,
   measured 18:33Z). A sibling session found the same red the same way, by
-  running `bun run gates` by hand.
+  running `bun run cat gates` by hand.
 
 That is the cost stated without an analogy: **a gate merged into this batch is a
 gate that does not run, and its author gets a green PR saying otherwise.** The

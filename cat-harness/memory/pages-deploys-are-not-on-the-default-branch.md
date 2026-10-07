@@ -50,7 +50,7 @@ which also makes a repository publishing from `main` report `main`.
 ## The measurement to repeat, never to quote
 
 ```sh
-bun run check:ci-health           # the Pages section prints under CI health
+bun run cat check:ci-health           # the Pages section prints under CI health
 ```
 
 51/100 cancelled with 25 self-inflicted was one afternoon. Re-run it.

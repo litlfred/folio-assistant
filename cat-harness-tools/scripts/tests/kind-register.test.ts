@@ -7,7 +7,7 @@
  *
  * The command's value is that it names **the kind**, where every underlying
  * check names a generated file. Measured on #2022: adding `auto-docs`, six
- * hand-picked `check:*` commands passed while `bun run gates` found 5 failures
+ * hand-picked `check:*` commands passed while `bun run cat gates` found 5 failures
  * across 217 and `bun test` found two more — and not one of those failures said
  * "auto-docs". So the assertions below are about the KIND appearing in the
  * finding, not about any artefact's content.

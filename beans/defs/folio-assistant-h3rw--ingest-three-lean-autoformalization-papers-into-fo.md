@@ -22,7 +22,7 @@ Owner: 'review and ingest into skills and methodologies for lean formalziation a
 - Ingested arXiv:2601.22554v1 (LeanArchitect), arXiv:2406.01940v2 (Process-Driven Autoformalization) and arXiv:2602.16554v1 (MerLean) into `folio-assistant-sci/library/`, L1 complete and promoted; all 15 extracted images opened and given verdicts (8 figure, 6 decorative, 1 logo), every narrative a draft.
 - Declared `folio-assistant-sci/methodologies/` (in `folio-assistant-sci.json` as `sci-methodologies`, and repository-scoped in `cat-harness/cat-harness.json` as `folio-assistant-sci-methodologies`) and wrote one methodology node per paper: `blueprint-driven-formalization`, `process-driven-autoformalization`, `bidirectional-agentic-autoformalization`.
 - Pointed six existing Lean skills at them (lean-formalization, lean-generation, lean-formal-graph, proof-narrative-lean-equivalence, lean-proof-vacuity-audit, lean-build-fix) without restating the nodes.
-- Regenerated the derived artefacts; `bun run gates` 171/171 green.
+- Regenerated the derived artefacts; `bun run cat gates` 171/171 green.
 
 ## Open for the owner
 

@@ -37,6 +37,6 @@ The roll-up moves with it, which is the part that misleads a reader: `qa-witness
 - Updated schema summary and comment in `cat-harness/schemas/kg-qa.ts`.
 - Verified on `folio-assistant-core` that cross-instance calls to `cat-harness` now pass with evidence.
 - Verified test suite `test/kg-audit-call-activity-parent.test.ts` (4/4 pass; moved from `cat-harness/scripts/tests/` because it reads the whole checkout).
-- Passed full `bun run gates` suite (251 gates passed).
+- Passed full `bun run cat gates` suite (251 gates passed).
 
 _2026-10-07T00:44:28Z_ — Claimed by claude/t5j5-kg-audit-call-activity-parent — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

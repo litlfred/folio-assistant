@@ -13,11 +13,16 @@
  * 2026-09-27 and both held. Recorded here so the next reader knows the
  * falsifier exists and how to re-run it, rather than inferring it from a
  * passing unit suite.
+ *
+ * Its vacuity control over the real script table — "it derives a non-trivial
+ * set from THIS repository" — lives in `test/detect-live-corpus-checkout.test.ts`
+ * (bean `ho66`): the writer it pins, `auto:docs`, is declared by
+ * cat-harness-tools, which a standalone cat-harness does not hold.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import { derivedWriters, differingPaths } from "../detect-live-corpus.ts";
 
@@ -62,15 +67,5 @@ describe("derivedWriters — no roster", () => {
     );
     expect(derivedWriters(dir)).toEqual(["auto:docs"]);
     rmSync(dir, { recursive: true, force: true });
-  });
-
-  test("it derives a non-trivial set from THIS repository", () => {
-    // The vacuity control. A probe over zero writers reports "0 live" and has
-    // measured nothing — the shape every check here is required to rule out.
-    const writers = derivedWriters(resolve(import.meta.dir, "../../.."));
-    expect(writers.length).toBeGreaterThan(20);
-    // And it finds itself, which is the point of deriving rather than listing:
-    // the probe's own subject list grows when somebody adds a writer.
-    expect(writers).toContain("auto:docs");
   });
 });

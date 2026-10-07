@@ -270,7 +270,7 @@ if (check) {
     console.log(`stickies.json is up to date (${stickies.length} sticky/ies)`);
     process.exit(0);
   }
-  console.error("docs/_data/stickies.json is stale — run `bun run landing:data` and commit");
+  console.error("docs/_data/stickies.json is stale — run `bun run cat landing:data` and commit");
   process.exit(1);
 }
 

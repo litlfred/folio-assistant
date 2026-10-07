@@ -1,6 +1,6 @@
 ---
 # folio-assistant-3ozg
-title: bun test rewrites 72 committed script-sidecars, so bun run gates reports NOT clean on every branch, main included
+title: bun test rewrites 72 committed script-sidecars, so bun run cat gates reports NOT clean on every branch, main included
 status: completed
 type: bug
 priority: normal
@@ -23,7 +23,7 @@ Nothing else in the tree changes. The writer is `saveQaScriptSidecar` (`qa-utils
 
 ## Why it matters
 
-`bun run gates` has a tree-mutation detector, which is how bean `ymsu` was made visible. It therefore ends *'every gate passed, and the run is NOT clean — 1 gate(s) changed the tree'* with exit 1, on every branch, pristine main included. A signal that is always red is one people stop reading, and then it cannot report the next real in-run repair, which is the `ymsu` failure class this detector exists for. This is the same class as `ymsu` (in-progress, another session's), but a different writer, and `ymsu` does not mention these files.
+`bun run cat gates` has a tree-mutation detector, which is how bean `ymsu` was made visible. It therefore ends *'every gate passed, and the run is NOT clean — 1 gate(s) changed the tree'* with exit 1, on every branch, pristine main included. A signal that is always red is one people stop reading, and then it cannot report the next real in-run repair, which is the `ymsu` failure class this detector exists for. This is the same class as `ymsu` (in-progress, another session's), but a different writer, and `ymsu` does not mention these files.
 
 ## Not yet isolated
 
@@ -33,7 +33,7 @@ Run alone, none of these writes the sidecars: `qa-review`, `profile-conformance-
 
 - [x] the test that triggers the write is named — `init-folio-qa.test.ts`, by bisection (below)
 - [x] the volatile fields stop causing writes — `saveQaScriptSidecar` no longer counts `engine_version` as a change (owner chose this over a temp-root override for the test alone)
-- [x] `bun run gates` ends clean — 167 of 167, exit 0, no tree mutation (measured on this branch, based on main)
+- [x] `bun run cat gates` ends clean — 167 of 167, exit 0, no tree mutation (measured on this branch, based on main)
 
 _2026-09-27T05:19:35Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -142,7 +142,7 @@ so a behind pin does not redden CI.
 - **"it writes into a temp directory, or the three volatile fields stop being
   committed"** — neither. The fields stay, and the difference that made them move
   is gone instead.
-- **"`bun run gates` on pristine main ends clean, not 'NOT clean'"** — **in CI,
+- **"`bun run cat gates` on pristine main ends clean, not 'NOT clean'"** — **in CI,
   yes**, once CI runs 1.3.14. **In an agent container whose Bun differs, no.**
   This container runs 1.3.11, so `bun test` here still rewrites 72 files. The pin
   cannot reach a container image the repository does not control.
@@ -181,7 +181,7 @@ pointer here rather than the reverse.
 Worth noting that THREE beans reached this population independently within a
 day — `3ozg`, `rmcf`, and `ymsu` for a different defect over the same files.
 That is not three people being careless; it is what an always-red signal does:
-every session that runs `bun run gates` on a clean tree sees it, and nothing
+every session that runs `bun run cat gates` on a clean tree sees it, and nothing
 told them it was already written down.
 
 ## Named, 2026-09-27: `init-folio-qa.test.ts`, and why
@@ -199,7 +199,7 @@ The cause was already half-fixed: `saveQaScriptSidecar` skipped a write when not
 
 - `engine_version` is dropped from the comparison, together with the two `last_run_*` fields. All three describe the run rather than the checker, and no reader uses a script sidecar's `engine_version` for freshness.
 - The test that asserted *"DOES rewrite when the engine version changes"* now asserts the opposite, and its comment says why the reversal was made. A new test checks that a real content change still records the engine it ran under.
-- Verified: the sidecar tests pass 9/9; `init-folio-qa.test.ts` now leaves 0 sidecars changed; and `bun run gates` passes 167/167 and ends clean, which it has not done on any branch while this bean was open.
+- Verified: the sidecar tests pass 9/9; `init-folio-qa.test.ts` now leaves 0 sidecars changed; and `bun run cat gates` passes 167/167 and ends clean, which it has not done on any branch while this bean was open.
 
 **This implements `rmcf`'s option 2** (stamp only on a real change), on the owner's choice of "skip no-op writes" put to them in this session. It was built before the cross-reference above was seen, and arrived at the same remedy independently. `rmcf`'s option 1 (stop recording `engine_version`) is NOT taken: the field is still written whenever a real change writes, so a reader still sees the engine of the last content change. The `sfjo` caution holds too: this fix means there is no churn left to commit or discard.
 
@@ -334,7 +334,7 @@ radius.** My extra hypothesis was never needed and was not established.
 Remedy 4 — *"always discarded locally"* — relies on the agent being able to SEE the
 churn at the moment it commits, and there is a timing window where it cannot:
 
-1. `bun run gates` is started in the BACKGROUND while other work continues.
+1. `bun run cat gates` is started in the BACKGROUND while other work continues.
 2. `git status --porcelain` is checked — clean, because the run has not reached the
    writer yet.
 3. The run reaches `saveQaScriptSidecar` and rewrites the sidecars.
@@ -348,7 +348,7 @@ amended before any push. What nearly hid it is the inspection idiom itself —
 — the filter that makes the churn tolerable day to day is the same filter that
 hides it at the moment it matters, and it is the pipeline remedy 4 invites. The
 same run was contaminated a second way: committing a file while gates was live made
-the detector report `bun run lint` as having "reverted" a path, attributing an
+the detector report `bun run cat lint` as having "reverted" a path, attributing an
 agent's own commit to a gate.
 
 This is an argument for the pin reaching agent containers too — the open question
@@ -364,12 +364,12 @@ reach an agent container — with four options, and chose **keep `1.3.14`, add a
 guard**: a check that says the running Bun differs from the pin, so an agent is told
 at session start instead of finding out in a diff.
 
-`bun run check:bun-runtime`, and a `## Bun runtime vs the pin` section in
+`bun run cat check:bun-runtime`, and a `## Bun runtime vs the pin` section in
 `session-start-coord-sweep.sh`. On this container it prints, derived from the corpus
 rather than quoted from this bean:
 
     This container runs Bun 1.3.11; .bun-version pins 1.3.14.
-    bun test and bun run gates will rewrite 72 of 86 committed script sidecars here
+    bun test and bun run cat gates will rewrite 72 of 86 committed script sidecars here
 
 **It is deliberately NOT a gate**, and the reason is the one that made the churn
 worth fixing. `check:bun-pin` asks a question about the CORPUS — do the 22
@@ -398,7 +398,7 @@ matches and in an agent container it always mismatches.
 
 It closes the window in remedy 4 that no `git status` could: the agent is told before
 step 1, not asked to notice between steps 2 and 4. It does **not** stop the churn —
-72 files still move on every sweep here — so `bun run gates` is still locally 'NOT
+72 files still move on every sweep here — so `bun run cat gates` is still locally 'NOT
 clean' and the boxes above stay unticked. Repinning to `1.3.11` remains the option
 that would make both CI and agent containers clean; it was declined in favour of
 keeping the artefacts' own engine, and that is recorded rather than re-argued.
@@ -508,7 +508,7 @@ fail, and `platform-gates` keeps a 20-line pointer.
 ### The three boxes are still unticked, and this does not tick them
 
 Nothing here names the triggering test, nothing moves the write to a temp
-directory, and `bun run gates` in this container still rewrites 72 files. What
+directory, and `bun run cat gates` in this container still rewrites 72 files. What
 changed is that a session that sees it now finds it written down instead of
 filing it a fourth time.
 
@@ -519,7 +519,7 @@ rather than editing, because the reasoning is what a next session reads.
 
 **False now, fixed by #1452:** *"nothing here names the triggering test"* — it is
 `init-folio-qa.test.ts`, bisected over 432 files, and the entry above this one
-says so. And *"`bun run gates` in this container still rewrites 72 files"* — it
+says so. And *"`bun run cat gates` in this container still rewrites 72 files"* — it
 does not; `engine_version` no longer counts as substantive.
 
 **Never right:** my justification for keeping it substantive, carried into #1442,

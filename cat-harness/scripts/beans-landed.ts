@@ -3,9 +3,9 @@
  * Open beans whose work has already merged — REPORTED, never closed.
  *
  * Usage:
- *   bun run beans:landed          # strong findings, then a count of the rest
- *   bun run beans:landed --all    # every finding
- *   bun run beans:landed --days 60
+ *   bun run cat beans:landed          # strong findings, then a count of the rest
+ *   bun run cat beans:landed --all    # every finding
+ *   bun run cat beans:landed --days 60
  *
  * Bean `4d22`. The PR merges, the agent then commits the bean's completion to
  * the branch, then re-branches from the new `main`, and that completion commit

@@ -188,7 +188,7 @@ describe("coverage.process — declared, absent, and could-not-determine", async
   test("a diagram found but never rendered also says COULD NOT DETERMINE", () => {
     const un = at("unrendered");
     expect(un).toContain("Could not determine:");
-    expect(un).toContain("run `bun run render:bpmn`");
+    expect(un).toContain("run `bun run cat render:bpmn`");
     // The SOURCE still resolves, so this is not the unresolved-process finding:
     // a missing render is a stale checkout, a missing diagram is a wrong
     // declaration, and merging them would send a reader to the wrong repair.

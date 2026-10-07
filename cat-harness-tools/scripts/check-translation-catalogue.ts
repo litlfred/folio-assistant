@@ -71,12 +71,12 @@
  * `translation-drift.ts` guards with its own `NothingCompared`.
  *
  * ```sh
- * bun run translation:catalogue:check                 # against origin/main
- * bun run translation:catalogue:check -- --staged     # pre-commit
- * bun run translation:catalogue:check -- --since HEAD~5
- * bun run translation:catalogue:check -- --base <sha>  # two dots; no merge base needed
- * CATALOGUE_BASE_SHA=<sha> bun run translation:catalogue:check   # how CI passes it
- * bun run translation:catalogue:check -- --warn       # report, exit 0
+ * bun run cat translation:catalogue:check                 # against origin/main
+ * bun run cat translation:catalogue:check -- --staged     # pre-commit
+ * bun run cat translation:catalogue:check -- --since HEAD~5
+ * bun run cat translation:catalogue:check -- --base <sha>  # two dots; no merge base needed
+ * CATALOGUE_BASE_SHA=<sha> bun run cat translation:catalogue:check   # how CI passes it
+ * bun run cat translation:catalogue:check -- --warn       # report, exit 0
  * ```
  *
  * ## Why there is no `--check` flag, and no `artefact-verification` entry
@@ -207,7 +207,7 @@ export function addedFiles(
  * `audit-coverage`'s committed sidecar, which was recording the truth.
  *
  * One command line in the step is therefore not a tidiness preference — it is
- * what makes `bun run gates` run what CI runs, which is the entire premise of
+ * what makes `bun run cat gates` run what CI runs, which is the entire premise of
  * deriving the local gate set from the workflow.
  *
  * **An empty string is `undefined`, not a ref.** GitHub expands

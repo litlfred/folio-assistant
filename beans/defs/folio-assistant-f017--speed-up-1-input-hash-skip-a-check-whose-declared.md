@@ -12,7 +12,7 @@ parent: folio-assistant-7x5n
 Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 1 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: parallel checks, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.
 
 ## What
-Each verify/write pair that `bun run regen` / `bun run gates` runs records a hash of its declared INPUTS (the files it reads plus its own script) next to its output. When the hash is unchanged since the last green run, the check is skipped and reported as `skipped (inputs unchanged)` — a distinct state, never rendered as `current`.
+Each verify/write pair that `bun run cat regen` / `bun run cat gates` runs records a hash of its declared INPUTS (the files it reads plus its own script) next to its output. When the hash is unchanged since the last green run, the check is skipped and reported as `skipped (inputs unchanged)` — a distinct state, never rendered as `current`.
 
 ## Why
 A merge → regen → gates cycle takes ~50–80 min of agent wall-clock on a loaded 4-core box (d33q's measurement, 2026-10-01) while main moves every ~3 min. Most pairs' inputs do not change between two rounds of the same branch.
@@ -63,7 +63,7 @@ Work is on branch `claude/f017-input-hash-coverage`, PR #2327, issue #2325.
 - **Runtime trace (`input-trace.ts`).** A site that no check is known to reach is `traced`. A recorded run that reaches it records nothing.
   - qa-store reads report the ref they read. A run is tolerated only when every ref it read is a hashed `--against` baseline.
 - **Also hashed:** bun and git versions, the runtime env, and the ignored files under `{tracked}`.
-- **Coverage:** 164 of 222 declared tasks can now skip (15 before). Run `bun run input-hash:coverage` to see the list.
+- **Coverage:** 164 of 222 declared tasks can now skip (15 before). Run `bun run cat input-hash:coverage` to see the list.
 - **Two old skips were unsound:**
   - `skill:register:check` spawns `uml:overview:check`, which reads the network.
   - `lsi:viz:check` reads the qa-reports branch at `main` when its indexes are not checked out.

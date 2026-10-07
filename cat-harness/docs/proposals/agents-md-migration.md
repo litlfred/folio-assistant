@@ -91,7 +91,7 @@ workflow' rule 2.)"*. The section is still DEBT — `AGENTS.md` holds 64 lines o
 rationale the skill does not — but it is a consolidation, not a rescue.
 
 **"52 skill files cite non-existent `AGENTS.md` sections."** The real numbers,
-from `bun run check:agents-xref`: **54** files mention `AGENTS.md`, **20** cite a
+from `bun run cat check:agents-xref`: **54** files mention `AGENTS.md`, **20** cite a
 named section, **2** resolve here, **2** name a folio's file, **16** are
 unresolved. And "non-existent" is the wrong word — see below.
 

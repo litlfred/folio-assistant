@@ -12,7 +12,7 @@
  * Editorial Style Manual says "`-ize` … is preferred" on page 14. Nothing in a
  * type system catches a confident invention; a resolvable citation does.
  *
- *     bun run check:voices
+ *     bun run cat check:voices
  *
  * @module scripts/check-voices
  * @covers voices, voice-vendors

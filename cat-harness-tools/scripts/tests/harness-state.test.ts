@@ -27,7 +27,7 @@ import { checkerHash } from "../../../cat-harness/test/health/run.js";
 
 // `interactionProfilesRead` reads every declared code and skill directory into
 // memory: about 15,000 files, 4.1-4.5 s alone on a quiet container, and 7.2 s
-// under `bun run gates`, against bun's 5 s default. The walk IS the check (a
+// under `bun run cat gates`, against bun's 5 s default. The walk IS the check (a
 // profile is honoured only if the corpus names it), so the budget is raised
 // rather than the corpus narrowed — the same remedy main took for
 // claim-branch-store in 6582859.

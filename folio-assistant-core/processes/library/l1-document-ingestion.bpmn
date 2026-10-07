@@ -4,7 +4,7 @@
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-  by `bun run render:bpmn` — never hand-edit the SVG.
+  by `bun run cat render:bpmn` — never hand-edit the SVG.
 
   The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
   that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
@@ -31,7 +31,7 @@
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-  by `bun run render:bpmn` — never hand-edit the SVG.
+  by `bun run cat render:bpmn` — never hand-edit the SVG.
 
   The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
   that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
@@ -211,9 +211,9 @@ the summary queue
 
 Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches.
 
-What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`.
+What an agent doing ingestion work does here is DRAIN a few: `bun run cat summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run cat summaries:record` writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`.
 
-ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.</bpmn:documentation>
+ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run cat narratives`.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="l1-document-ingestion"/>
       </bpmn:extensionElements>

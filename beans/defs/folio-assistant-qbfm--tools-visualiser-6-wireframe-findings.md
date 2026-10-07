@@ -22,7 +22,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/tools/` (intent.m
 5. **The "▾ Folio" handle overlaps the top of the content column at both widths.** It is fixed at top centre (`.fa-glass-handle`, `min-height: 3.25rem`). At 390 px it sits over the theme's top bar. (→ `folio-assistant-015u`)
 6. **"On this page" (4 entries) exists only in the opened sidebar.** At rest the strip hides the page index, so on a page this long the section list is two interactions away.
 
-When fixed, re-draw `cat-harness/docs/wireframes/tools/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/tools/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

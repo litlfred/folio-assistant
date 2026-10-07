@@ -9,7 +9,7 @@ updated_at: 2026-09-30T15:01:31Z
 parent: folio-assistant-slw1
 ---
 
-Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.
+Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run cat ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.
 
 ## Done when
 - [ ] slides-structure.py rung + ingest-document.ts routing + tests

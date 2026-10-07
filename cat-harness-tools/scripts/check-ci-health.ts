@@ -2,9 +2,9 @@
  * Report whether each workflow is actually passing on the default branch.
  *
  * ```sh
- * bun run check:ci-health            # human-readable, exit 1 if anything is red
- * bun run check:ci-health --markdown # the block the session-start sweep prints
- * bun run check:ci-health --warn     # report only, never fail
+ * bun run cat check:ci-health            # human-readable, exit 1 if anything is red
+ * bun run cat check:ci-health --markdown # the block the session-start sweep prints
+ * bun run cat check:ci-health --warn     # report only, never fail
  * ```
  *
  * One API call. `GET /actions/runs?branch=<default>&per_page=100` returns the

@@ -188,7 +188,7 @@ should not be implied by ticking it:
 **Re-derived from the REMOTE**, not from a checkout, and in a separate command
 from the fetch: a worktree at `origin/main` = `c11e16651f5`.
 
-    bun run check:l1-complete
+    bun run cat check:l1-complete
     EXIT=0 — 23 document(s) ✓, 0 ✗
 
 All eleven `agent-skills/library/` documents pass, the seven this bean blocked

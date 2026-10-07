@@ -65,7 +65,7 @@ describe("a minimal instance exports through the same code path", () => {
   });
 
   test("the root instance still exports everything it did", async () => {
-    // The refactor's own guard. `bun run kg:export` output was verified
+    // The refactor's own guard. `bun run cat kg:export` output was verified
     // byte-identical apart from `generatedAt`; this keeps the shape pinned
     // without pinning a COUNT, which would make "it still works" and
     // "somebody deleted a diagram" indistinguishable.

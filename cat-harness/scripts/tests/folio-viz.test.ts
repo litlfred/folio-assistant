@@ -85,7 +85,7 @@ describe("the generated artefacts are the ones declared", () => {
   const page = join(SITE, "cat-harness", "folio", "index.html");
   const data = join(SITE, "assets", "folio", "index.json");
 
-  test("both exist — run `bun run folio:viz` if not", () => {
+  test("both exist — run `bun run cat folio:viz` if not", () => {
     expect(existsSync(page), `${page} missing`).toBe(true);
     expect(existsSync(data), `${data} missing`).toBe(true);
   });

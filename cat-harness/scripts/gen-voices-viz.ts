@@ -41,8 +41,8 @@
  * this repository keeps paying for.
  *
  * Usage:
- *   bun run voices:viz          # write
- *   bun run voices:viz:check    # fail if either artefact is stale
+ *   bun run cat voices:viz          # write
+ *   bun run cat voices:viz:check    # fail if either artefact is stale
  */
 import { existsSync, rmSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
@@ -547,7 +547,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run voices:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat voices:viz\``);
     process.exit(1);
   }
 }

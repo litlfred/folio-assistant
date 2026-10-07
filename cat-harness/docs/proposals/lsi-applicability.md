@@ -52,7 +52,7 @@ retrieval aid, so every output here is a proposal (method refusals 1–4).
 
 ### 2.3 QA
 
-`bun run lsi:audit` — which declared prose graphs need an index, and is each
+`bun run cat lsi:audit` — which declared prose graphs need an index, and is each
 fresh. First run: **8 graphs** met the threshold (≥ 100 units, ≥ 20,000 words;
 a house number, basis stated in `scripts/lsi.ts`). After this PR: `who-iris/library`
 and `cat-harness/skills` **pass**; `cat-harness/beans` is **n/a by design**
@@ -62,7 +62,7 @@ and `cat-harness/skills` **pass**; `cat-harness/beans` is **n/a by design**
 
 ### 2.4 The work plan — epics
 
-`bun run lsi:epics` over **1,061 beans** (every status), 21 open epics as
+`bun run cat lsi:epics` over **1,061 beans** (every status), 21 open epics as
 classes. Full output: [`lsi-epic-filing-2026-09-29.md`](lsi-epic-filing-2026-09-29.md).
 
 - **The store is already well filed**: 7 of 254 open beans have no epic.
@@ -116,6 +116,6 @@ who-iris and skills, this page and the epic proposal.
 | B | **Ingestion QA step** | run `narrowDimensions` + `nearDuplicates` as a sidecar when a library document is ingested (`library-ingestion`) | small–medium; one BPMN task | do second |
 | C | **`--latent` on `graph-search` + an MCP `lsi_query` Tool node** | agents get vocabulary-gap search where they already search, as a separate provenance | medium; a Tool node + satisfies | do third |
 | D | Fold `lsi-index-fresh` into `kg:audit` as a sidecar criterion | the verdict joins the audited record, like `check:raci` did (bean `3kbd`) | medium; kg:audit sidecar churn, and PR #1472 is reshaping kg:audit now | after #1472 lands |
-| E | Index the five remaining graphs | `bun run lsi index` per graph; `docs` is 434k words (~10 s) | trivial compute, large sidecars to review | after deciding sidecar size policy |
+| E | Index the five remaining graphs | `bun run cat lsi index` per graph; `docs` is 434k words (~10 s) | trivial compute, large sidecars to review | after deciding sidecar size policy |
 | F | Apply the epic proposal | `beans update --parent` for the 7 unfiled, scrap-with-pointer for confirmed duplicates | owner review per bean | owner decides |
 | G | **Correspondence analysis as its own method node** — ✅ **built and measured 2026-09-29** | `methodologies/correspondence-analysis.md`, `content/pipeline/ca.ts` (tested on Qi et al.'s Table 1). On the pre-refiling bean store: CA-raw 146 vs LSI-raw 136 of 250 (the paper's direction, McNemar p = 0.17); vs log-entropy LSI p = 0.71. Removes the margin dimension (who-iris dim 1: LSI 342/342 one side, CA 46/296) but its leading dimensions go to outliers | done | parallel track; LSI stays the filing default |

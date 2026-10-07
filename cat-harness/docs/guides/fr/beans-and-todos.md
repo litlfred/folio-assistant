@@ -99,7 +99,7 @@ Deux mécanismes différents peuvent modifier un bean, et une étape qui les con
 
 Il ne s'agit pas d'une distinction théorique. Une activité dans le diagramme CRDM comportait `<cat-harness.processes:bean action="create"/>` — `action`, là où le moteur attend `op` — si bien qu'elle a été analysée comme une absence totale d'opération. L'étape annonçait que la validation produisait des beans, n'exécutait rien, et le faisait silencieusement jusqu'à ce que quelqu'un lise le parseur.
 
-**Lorsque vous ajoutez une étape marquée pour les beans,** utilisez l'une des trois opérations implémentées par le moteur, et précisez dans la documentation de l'étape quelles parties relèvent des propres appels CLI de l'agent. `bun run check:workflow-refs` détectera une référence de compétence qui ne se résout pas ; il ne peut en revanche pas intercepter un attribut plausible que le moteur ne lit jamais.
+**Lorsque vous ajoutez une étape marquée pour les beans,** utilisez l'une des trois opérations implémentées par le moteur, et précisez dans la documentation de l'étape quelles parties relèvent des propres appels CLI de l'agent. `bun run cat check:workflow-refs` détectera une référence de compétence qui ne se résout pas ; il ne peut en revanche pas intercepter un attribut plausible que le moteur ne lit jamais.
 
 ## Tâches humaines — pas encore construites
 {: #human-todos data-fa-label="sec:beans-and-todos-human-todos" }

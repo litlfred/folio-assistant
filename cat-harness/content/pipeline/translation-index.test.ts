@@ -452,7 +452,7 @@ describe("this repository's own corpus", () => {
     const r = checkTranslationIndex(INSTANCE_ROOT);
     const bad = r.findings.filter((f) => f.severity !== "note").map((f) => `${f.where}: ${f.message}`);
     expect(bad).toEqual([]);
-    expect(r.state, `run: bun run translation:index`).toBe("ok");
+    expect(r.state, `run: bun run cat translation:index`).toBe("ok");
   });
 
   it("the published index names a source page that really exists", () => {

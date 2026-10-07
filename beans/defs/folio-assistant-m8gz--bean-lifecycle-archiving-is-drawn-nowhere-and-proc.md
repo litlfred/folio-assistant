@@ -102,7 +102,7 @@ A corpus test loads every diagram in the repository, with a vacuity guard on
 the file count — it is what found the 19, and a fixture-only test would not
 have.
 
-`bun run gates` — 122 of 122.
+`bun run cat gates` — 122 of 122.
 
 ## Still open, and the first one is the owner's
 

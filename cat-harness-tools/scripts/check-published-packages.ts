@@ -64,7 +64,7 @@
  * passed" must never render identically.
  *
  * Usage:
- *   bun run check:published-packages
+ *   bun run cat check:published-packages
  *
  * @covers cat-harness
  */
