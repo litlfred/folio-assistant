@@ -21,8 +21,8 @@
  *
  * ## What is asserted
  *
- * Not that the check passes — it cannot. `smart-trust`'s index records its
- * source as a REMOTE gh-pages build, so there is no local directory to diff and
+ * Not that the check passes — it cannot. An index that records its source as
+ * a REMOTE gh-pages build has no local directory to diff, so
  * `--check` has no input. A checker with no input that exited 0 would be the
  * `dh4f` shape, a clean run over a corpus it never saw.
  *
@@ -32,53 +32,44 @@
  *
  * @module fhir-harness/scripts/ingest-ig-invocation.test
  */
-import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
-import { scriptsOf } from "../../cat-harness/schemas/script-table.ts";
+import { afterAll, beforeAll, describe, expect, it } from "bun:test";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
-const REPO = resolve(import.meta.dir, "..", "..");
-const SCRIPT = "fhir-harness/scripts/ingest-ig-artifacts.ts";
+/**
+ * The script by its own absolute path, so nothing here depends on the layout
+ * around this layer: it used to run `fhir-harness/scripts/…` from the
+ * checkout root, which holds only where fhir-harness is a subdirectory.
+ */
+const SCRIPT = join(import.meta.dir, "ingest-ig-artifacts.ts");
+
+/**
+ * An instance whose committed index records a REMOTE source — smart-trust's
+ * shape, built here so this layer reads no instance above it. smart-trust's
+ * own half (its registered `ingest:ig:check` and its real index) is in
+ * `test/ingest-ig-invocation-checkout.test.ts` (bean `7zz1`): standing alone,
+ * fhir-harness has neither.
+ */
+const REMOTE_ORIGIN = "https://example.org/some-ig/";
+let fixture: string;
+beforeAll(() => {
+  fixture = mkdtempSync(join(tmpdir(), "ingest-ig-invocation-"));
+  mkdirSync(join(fixture, "remote-ig", "fhir-artifact-index"), { recursive: true });
+  writeFileSync(join(fixture, "remote-ig", "fhir-artifact-index", "index.json"), JSON.stringify({ source: { of: REMOTE_ORIGIN } }));
+  mkdirSync(join(fixture, "no-index"), { recursive: true });
+});
+afterAll(() => rmSync(fixture, { recursive: true, force: true }));
 
 const run = (args: string[]) => {
-  const p = Bun.spawnSync(["bun", "run", SCRIPT, ...args], { cwd: REPO });
+  const p = Bun.spawnSync(["bun", "run", SCRIPT, ...args], { cwd: fixture });
   return { code: p.exitCode, err: new TextDecoder().decode(p.stderr) };
 };
 
-describe("the registered invocation is well-formed", () => {
-  const scripts = scriptsOf(REPO);
-
-  /**
-   * A GENERIC "NO DANGLING VALUE-TAKING FLAG" CHECK IS NOT HERE, and it was
-   * attempted twice. Recorded so it is not built a third time blind.
-   *
-   * **Attempt 1** flagged any script ending in a bare `--flag`. **56 do**, and
-   * nearly all are correct: `--check`, `--list`, `--strict`, `--http`,
-   * `--dry-run` take no value, so ending in one is the normal shape. "Ends in
-   * a flag" was never the defect.
-   *
-   * **Attempt 2** tried to DERIVE which flags take a value — a flag seen
-   * followed by a non-flag token somewhere in the corpus. That classified
-   * `--check` as value-taking, because a chained command reads
-   * `… --check && bun run …` and `&&` is not a flag. **43 false positives**,
-   * including this file's own subject.
-   *
-   * Both failed the same way: the property is about each TARGET SCRIPT's flag
-   * semantics, and `package.json` does not carry them. Getting it right needs
-   * each script's own argument parser, which is a different piece of work from
-   * fixing one malformed invocation — and a guard that fires on 43 correct
-   * scripts is worse than none, because it trains its reader to skip it.
-   *
-   * What is asserted instead is narrow and true: THIS invocation does not end
-   * in `--source`, the flag that actually takes a value here. The behavioural
-   * tests below are the real guard, and they hold whatever the command line
-   * looks like.
-   */
-  it("ingest:ig:check does not end in a flag that needs a value", () => {
-    expect(scripts["ingest:ig:check"]).toBeDefined();
-    expect(scripts["ingest:ig:check"]!.trim()).not.toMatch(/--source$/);
-  });
-});
+// "the registered invocation is well-formed" asserted smart-trust's own
+// `ingest:ig:check` script — smart-trust's manifest, not this layer's — and
+// moved, with its record of the two failed generic attempts, to
+// `test/ingest-ig-invocation-checkout.test.ts`.
 
 describe("the two failures are told apart", () => {
   it("a genuine misinvocation gets the usage string and exits 2", () => {
@@ -88,23 +79,26 @@ describe("the two failures are told apart", () => {
   });
 
   it("but a missing LOCAL SOURCE names the index and its remote origin", () => {
-    // The true state in this repository, and it is not operator error: the
-    // platform carries no IG build, only the committed index describing one.
-    const r = run(["--out", "smart-trust", "--check"]);
+    // Not operator error: the index exists and says where its build lives;
+    // there is simply nothing on disk to diff.
+    const r = run(["--out", "remote-ig", "--check"]);
     expect(r.code).toBe(1);
-    expect(r.err).toContain("smart-trust/fhir-artifact-index/index.json");
-    // The origin the index RECORDS, read from it rather than restated: it was
-    // WHO's published site until 2026-10-01, when the owner made the fork the
-    // source (bean `jut3`), and a literal here broke on that re-ingest.
-    const recorded = (JSON.parse(readFileSync(join(REPO, "smart-trust/fhir-artifact-index/index.json"), "utf-8")) as { source: { of: string } }).source.of;
-    expect(r.err).toContain(recorded);
+    expect(r.err).toContain(join("remote-ig", "fhir-artifact-index", "index.json"));
+    expect(r.err).toContain(REMOTE_ORIGIN);
     expect(r.err).not.toContain("usage: ingest-ig-artifacts.ts");
+  });
+
+  it("an --out whose index names no source is not a pass either", () => {
+    const r = run(["--out", "no-index", "--check"]);
+    expect(r.code).toBe(1);
+    expect(r.err).toContain("records no source");
   });
 
   it("and it never exits 0 with nothing to check", () => {
     // A checker with no input reporting a clean corpus is the `dh4f` shape.
-    // Both branches above are non-zero; this pins that neither drifts to 0.
+    // Every branch above is non-zero; this pins that none drifts to 0.
     expect(run(["--check"]).code).not.toBe(0);
-    expect(run(["--out", "smart-trust", "--check"]).code).not.toBe(0);
+    expect(run(["--out", "remote-ig", "--check"]).code).not.toBe(0);
+    expect(run(["--out", "no-index", "--check"]).code).not.toBe(0);
   });
 });
