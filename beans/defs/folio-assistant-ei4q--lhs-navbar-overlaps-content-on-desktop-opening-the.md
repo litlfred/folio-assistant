@@ -50,3 +50,4 @@ Implemented desktop content shrinkage when the LHS navbar rail opens, preserving
 ## Notes
 
 _2026-10-07T14:41:32Z_ — Claimed by claude/qook-symlink-internal-check — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+_2026-10-07T15:51:00Z_ — Implementation complete and verified across both desktop reflow and mobile drawer modes. PR #2435 opened on branch `claude/ei4q-navbar-overlap`. Tagged `ready-to-close` for owner confirmation.
