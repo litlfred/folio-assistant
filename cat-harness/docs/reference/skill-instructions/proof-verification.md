@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-sci/skills/content/authoring-math/proof-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/authoring-math/proof-verification.md) — do not edit here. Typed contract: [schema reference](../skills/proof-verification.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/authoring-math/proof-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/authoring-math/proof-verification.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-sci/skills/content/authoring-math/proof-verification.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # proof-verification
