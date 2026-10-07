@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-06T19:10:49Z
-updated_at: 2026-10-06T19:43:03Z
+updated_at: 2026-10-07T00:13:29Z
 parent: folio-assistant-n3ni
 ---
 
@@ -65,3 +65,12 @@ From #2326's author (0mpw), relayed by the coordinator:
 - **needs:** smart-ig and cat-openapi stay local; smart-base needs fhir-harness, also local.
 - **Before wiring:** `bun run mount:remote --plan --instance <dir>` on #2326's branch. It writes nothing.
 - A separate PR is making `kg:subscribe` honour `upstreamPath`, so the subscriptions can be recorded as well (blocker 3).
+
+
+
+## Resume 2026-10-07 (after #2338, #2326)
+- Hand relocation dropped; merged main, smart-* restored, then `state:seed --retire` x3. Deposits on cat/cat-harness/fsh-guts: 97d73c90ea9a (smart-trust), db93ce92251c (smart-base), 5b9476327d60 (smart-immunizations). Removal commits on this branch: c53e5656ccba, b8b42866e2b3, a92cb27fbf94.
+- remoteMounts at the three pins, overrides path=<name>, directories minus <name>-docs, and a new `undeclared: true` override (remote-mount.ts): the forks keep platform.ts/schemas/scripts/content beside their declared graphs; a directory-only mount could not load smart-base/tools.
+- Pages: `smart:pages` gate; `smart:pages:publish` in docs-site and feature-staging. Pages built from the mounts are byte-identical to main's committed copies (docs/README.md aside); OpenAPI pages identical too.
+- **Blocker: the smart-base fork pin 8e16a06d22fe lags main.** 1155 files differ from main's last smart-base (block-kinds still `folio-assistant-core:` namespaced, pre-#2307), and 4 files main had are absent (dak-l1-library.md, smart-guideline-create.md, extract-dak-l1-references.ts + test). smart-trust differs in 2 files (platform.ts, scripts/tests/pages-markdown.test.ts); smart-immunizations matches. Four bun tests stay red until the fork is synced to main's retired state and re-pinned: block-kind namespace, paper typing, context emission (fhir), the process-index committed page.
+- Subscriptions: all three need #2330 (on main kg:subscribe judges only the root declaration; smart-base dry run: not-a-substrate).
