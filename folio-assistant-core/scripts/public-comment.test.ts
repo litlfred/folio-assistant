@@ -554,6 +554,17 @@ describe("change-sets and their issues (issue #2183)", () => {
     expect(m.log.join("\n")).toContain("1 of 2 comment(s) are not decided");
   });
 
+  test("reopening an incorporated change-set's issue puts it back to discussing (CS-236/237)", async () => {
+    const s = store();
+    const f = fake();
+    await run(s, comment(50, "ed", "pc: PC-0001, PC-0002\ndecide: accepted\n\nYes."), f);
+    await run(s, { action: "closed", sender: { login: "au" }, pull_request: { number: 12, body: "Closes #50", head: { ref: "cs-001" }, merged: true, state: "closed", html_url: "https://github.com/o/r/pull/12" } }, f);
+    const cs = getChangeSet(s, "CS-001");
+    expect(cs.status).toBe("incorporated");
+    await run(s, { action: "reopened", sender: { login: "ed" }, issue: { number: cs.issue!, html_url: url(cs.issue!) } }, f);
+    expect(getChangeSet(s, "CS-001").status).toBe("discussing");
+  });
+
   test("a primary issue closed by hand: reopened while comments still need a change; closed when none do", async () => {
     const s = store();
     const f = fake();

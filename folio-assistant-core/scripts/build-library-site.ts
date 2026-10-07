@@ -39,6 +39,7 @@ import { folioDir, readDeclaration } from "../../cat-harness/schemas/cat-harness
 import { readEntryDocument, DOCUMENT_VIEW_JS, type DocumentView, type EntryLinks } from "../../cat-harness/scripts/lib/library-document.ts";
 import { VIEWER_CSS } from "../../cat-harness/scripts/gen-library-viz.ts";
 import { EDIT_LINKS_RUNTIME } from "../../cat-harness/src/core/edit-links.js";
+import { visualiserNavDeclaration, type VisualiserNavEntry } from "../../cat-harness/scripts/lib/navbar.js";
 import { defaultBlockActions } from "./build-document-site.js";
 
 /** This instance: the HANDLER segment of every page it publishes. */
@@ -158,8 +159,28 @@ ${script}
 `;
 }
 
+/**
+ * The entry's contents, declared for the harness rail (owner, 2026-10-07:
+ * *"LHS navbar should show page TOCs"*). The page draws its sections by
+ * script, so the rail finds no heading to index at build time; the view's
+ * own section list is the index. Top-level sections are rows and the next
+ * level their children, one level, as the declaration allows; each opens the
+ * Sections tab at that section (`#sec-<id>`, honoured by the Document view).
+ */
+export function entryContents(view: DocumentView): string {
+  const top = Math.min(...view.sections.map((s) => s.level));
+  const entries: VisualiserNavEntry[] = [];
+  for (const s of view.sections) {
+    const row = { label: `${s.number ? `${s.number} ` : ""}${s.title}`, href: `#sec-${encodeURIComponent(s.id)}` };
+    const parent = entries[entries.length - 1];
+    if (s.level === top) entries.push(row);
+    else if (s.level === top + 1 && parent) parent.items = [...(parent.items ?? []), row];
+  }
+  return entries.length < 2 ? "" : visualiserNavDeclaration(entries);
+}
+
 /** The entry page: the Document view, loaded from its JSON beside the page. */
-function entryPage(id: string, title: string): string {
+function entryPage(id: string, title: string, contents = ""): string {
   const js = `
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
@@ -173,7 +194,7 @@ loadDocument(${JSON.stringify(id)});
     `<p><a href="../">Library</a></p>
 <h1>${esc(title)}</h1>
 <p class="note">A frozen source: the library keeps it exactly as published. Edits are made in the folio, and each section's ✎ edit opens the folio block made from it.</p>
-<section id="document"><p class="note">Loading the document…</p></section>
+<section id="document"><p class="note">Loading the document…</p></section>${contents}
 <noscript><p>This page draws the document from <a href="entries/${esc(encodeURIComponent(id))}.doc.json">its JSON</a>; it needs JavaScript.</p></noscript>`,
     `<script>${js}</script>`,
   );
@@ -196,7 +217,7 @@ export function buildLibrarySite(repoRoot: string, outDir: string, opts: { repo?
       const at = join(outDir, HANDLER, basename(lib), name);
       mkdirSync(join(at, "entries"), { recursive: true });
       writeFileSync(join(at, "entries", `${name}.doc.json`), JSON.stringify(view) + "\n");
-      writeFileSync(join(at, "index.html"), entryPage(name, title));
+      writeFileSync(join(at, "index.html"), entryPage(name, title, entryContents(view)));
       result.entries.push({ seg: basename(lib), id: name, title, pages: view.pages, sections: view.sections.length, editable: view.sections.filter((s) => s.edit).length });
     }
   }

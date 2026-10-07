@@ -9,9 +9,10 @@
  * changed.
  */
 import { describe, expect, test } from "bun:test";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { gutsDir, gutsFiles } from "../cat-harness/scripts/gen-fsh-guts-viz.ts";
+import { gutsDir, gutsFiles, page } from "../cat-harness/scripts/gen-fsh-guts-viz.ts";
 
 /** The directory these tests were written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move, so nothing they read changed. */
 const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
@@ -24,6 +25,26 @@ describe("corpus — the real directory, so a regression cannot pass on fixtures
     expect(uploads.filter((f) => f.state === "undeclared")).toEqual([]);
     for (const f of files) {
       expect(f.title ?? "", `${f.rel} has a binary title`).not.toContain("�");
+    }
+  });
+
+  test("a stray untracked file in the mount does not change the page", () => {
+    const root = join(ORIGIN_DIR, "../../..");
+    const dir = gutsDir(root)!;
+    expect(dir).toBeDefined();
+    const before = gutsFiles(dir, root);
+    const beforePage = page(before, "https://example.com/fsh-guts");
+
+    const stray = join(dir, "logs", `stray-test-${Date.now()}.json`);
+    mkdirSync(join(dir, "logs"), { recursive: true });
+    writeFileSync(stray, '{"untracked":true}\n');
+    try {
+      const after = gutsFiles(dir, root);
+      expect(after.map((f) => f.rel)).toEqual(before.map((f) => f.rel));
+      const afterPage = page(after, "https://example.com/fsh-guts");
+      expect(afterPage).toBe(beforePage);
+    } finally {
+      rmSync(stray, { force: true });
     }
   });
 });
