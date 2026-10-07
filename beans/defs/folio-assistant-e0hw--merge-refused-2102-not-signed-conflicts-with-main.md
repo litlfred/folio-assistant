@@ -1,10 +1,10 @@
 ---
 # folio-assistant-e0hw
 title: 'Merge refused: #2102 not signed; conflicts with main in generated paths'
-status: todo
+status: completed
 type: bug
 created_at: 2026-10-04T15:07:55Z
-updated_at: 2026-10-04T15:07:55Z
+updated_at: 2026-10-07T02:39:00Z
 parent: folio-assistant-whlc
 blocking:
     - folio-assistant-4ak5
@@ -24,7 +24,16 @@ PR #2102 (two bean notes on 4ak5 and yj6r; no code), opened 15:01Z on 2026-10-04
 A comment on PR #2102, plus a message to the Merge Manager role.
 
 ## Done when
-- [ ] main merged in (merge commit), `bun run beans:notes` regenerated, pushed by hand
-- [ ] owed CI green on that head
-- [ ] `ready-to-merge` label and a signed `ready: <head sha>`
-- [ ] the owner approves, `merge:guard 2102` passes all 7 checks, and it lands
+- [x] main merged in (merge commit), `bun run beans:notes` regenerated, pushed by hand
+- [x] owed CI green on that head
+- [x] `ready-to-merge` label and a signed `ready: <head sha>`
+- [x] the owner approves, `merge:guard 2102` passes all 7 checks, and it lands
+
+_2026-10-07T02:38:58Z_ — Claimed by claude/e0hw-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+Closed on evidence of landed work:
+- PR #2102 was merged into `main` by `litlfred` in commit `554b9ef86a21` on 2026-10-04T17:37:35Z.
+- Re-derived independently on 2026-10-07: PR #2102 state is `MERGED` with commit `554b9ef86a21` present in `main` history.
+
