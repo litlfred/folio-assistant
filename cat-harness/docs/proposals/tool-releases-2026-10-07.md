@@ -116,6 +116,91 @@ information. See §"Scope widened" below.
 | **T3** | Where an SBOM goes | (a) **a generated artefact on request, not committed** · (b) committed per profile | **(a)**, matching the SPDX proposal's D3 | (a) |
 | **T4** | First tools | (a) **PlantUML + its JRE, and graphviz**: the case that failed today · (b) all at once, including sushi, latex and lean | **(a)**: prove the shape on one real failure, then add the others | (a) |
 
+## Scope widened: one run context for every run and report
+
+The owner, 2026-10-07: *"test plan execution (the ITB Interoperability Test
+Bed, see WHO/WHO-ITB), internal QA reports should also have the same
+versioning information attached along with it. how can we consolidate these
+various needs into single (small set of) schema(s) referenced by these
+processes/skills"*.
+
+### What a survey of the run and report schemas found
+
+Nine families of run and report records exist. Each stores **the same few
+facts under different names**, and no sub-schema is shared between the
+families:
+
+| fact | spelled as |
+|---|---|
+| the checker's hash | `script_hash` (kg-qa manifest, block-qa reviewer, qa-script, health-report) |
+| the checker's version | `engine_version`, `reviewer.version`, `by.version` |
+| the commit under test | `source.commit`, `reviewed_sha`, `script_commit_sha`, `last_run_sha`, the qa-store `source` |
+| the input hashes | `inputFingerprint`, `data`/`process.hash`, `source_hash(es)` |
+
+- **Tool versions:** only `qa-report/v1` records any, in its FHIR-specific
+  `toolchain` block.
+- **Runtimes, platform commit, mounts:** no record holds a runtime (bun,
+  node, JRE), the platform commit or the mount-lock digest.
+- **PROV:** no record links to a PROV activity.
+- **`folio-security-gate/v1`:** records no versioning at all.
+- **The ITB:** nothing is implemented. The only ITB material is the GITB
+  README held in `fhir-harness/library/`, prose mentions, and beans `y4uj`
+  and `18p1`.
+
+### The proposal: three schemas, not one per report
+
+1. **`folio-tool-release/v1`** (§1 above): one external tool at one version.
+2. **`folio-tool-profile/v1`** (§2 above): a named set of tool releases.
+3. **`folio-run-context/v1`, new**: *what this run ran on*, stated once:
+   - `platform`: the commit SHA of the checkout that ran;
+   - `mounts`: the mount-lock digest, plus each mounted instance's pinned SHA,
+     reusing `CommitShaSchema` and `LockedInstanceSchema`;
+   - `profile`: the tool profile's name and digest;
+   - `releases[]`: every tool and runtime release that was resolved, as
+     `name@version` plus sha256, reusing `ReleaseDigestSchema`. The
+     `could-not-provision` state from §3 applies here too;
+   - `invoker`: the script, model or person that ran it, as `kind`, `id`,
+     `version` and `script_hash`. This one field replaces the four spellings
+     in the table above;
+   - `inputs[]`: hash bases, reusing `HashBasisSchema` from `test-run.ts`;
+   - `prov`: the id of the PROV activity, which records the context as
+     `prov:used`.
+
+**Every run and report record carries one optional field,
+`runContext: { sha256 }`**, a reference to its context by digest:
+- `folio-tool-run`;
+- `folio-test-run` and `test-report`;
+- the `kg-qa` manifest;
+- `block-qa` and `qa-script`;
+- `health-report`;
+- the `qa-reports` manifest;
+- `folio-security-gate`.
+
+**The context itself is written once per run.** A run-level record (a tool
+run, a test run, the `qa-reports` manifest) holds it. One sweep writes
+thousands of `block-qa` sidecars, and they all cite one context rather than
+each repeating it.
+
+**The ITB is an export, like SPDX.** A test run maps to a GITB TestResult /
+TAR, with the run context in the report's context section, and is generated
+by a `test:itb-export`. Nothing is authored beside it. This follows from the
+owner's PROV-first ruling, and from the fact that GITB reads only TAR, not
+these schemas. `qa-report/v1`'s `toolchain` block becomes a projection of
+the run context: it is read from the context, not written separately.
+
+**Migration is additive.** The existing fields stay valid. A checker that
+supplies a run context may drop its own copies in a later version bump. Each
+schema's `$schema` id stays unchanged until then, so no stored record is
+invalidated.
+
+### Decisions on the widened scope
+
+| | decision | options | recommended | if unanswered |
+|---|---|---|---|---|
+| **C1** | How a report carries the context | (a) **by reference: `runContext: {sha256}`, with the context written once per run** · (b) embedded in full in every record · (c) only through a PROV link | **(a)**: deduplicates thousands of sidecars, and stays checkable | (a) |
+| **C2** | The ITB | (a) **a generated GITB TAR export from `folio-test-run`** · (b) a native `itb-result` schema | **(a)**: TAR is GITB's own format, so authoring a second one would be a parallel record | (a) |
+| **C3** | Which record kinds come first | (a) **tool-run, test-run and the qa-reports manifest**, the three run-level records · (b) every family at once | **(a)**: the others then cite those contexts | (a) |
+
 ## Order of work, if signed off
 
 1. Schemas `folio-tool-release/v1` and `folio-tool-profile/v1`, reusing
@@ -128,6 +213,9 @@ information. See §"Scope widened" below.
 5. More tools: graphviz, sushi (Node), the latex image by digest, and the lean
    toolchain file.
 6. `upstream-pins` gains tool releases, so "behind" is reported per release.
+7. `folio-run-context/v1` and the optional `runContext` reference, written by
+   the three run-level records (C3), then cited by the report families.
+8. `test:itb-export`: a GITB TAR generated from `folio-test-run`.
 
 ## What would change this
 
