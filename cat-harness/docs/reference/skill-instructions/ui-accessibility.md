@@ -156,7 +156,7 @@ on the region, and a count announced when a filter changes the list.
 ## How to check it
 
 `test/a11y.e2e.ts` is the worked example and the gate. It runs in CI as the
-`End-to-end + accessibility (hard)` job.
+`End-to-end + accessibility, shard i/3` jobs (one required check per shard).
 
 ```sh
 bun run cat test:e2e cat-harness/test/a11y.e2e.ts
