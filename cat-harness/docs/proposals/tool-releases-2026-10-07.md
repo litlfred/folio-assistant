@@ -195,6 +195,8 @@ invalidated.
 
 ### Decisions on the widened scope
 
+**Answered by the owner, 2026-10-07:** C1 = (a), *"A reference by sha256"*. C2 and C3 have not been answered and stand at their defaults.
+
 | | decision | options | recommended | if unanswered |
 |---|---|---|---|---|
 | **C1** | How a report carries the context | (a) **by reference: `runContext: {sha256}`, with the context written once per run** · (b) embedded in full in every record · (c) only through a PROV link | **(a)**: deduplicates thousands of sidecars, and stays checkable | (a) |
