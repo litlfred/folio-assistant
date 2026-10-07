@@ -547,6 +547,17 @@ You can map out sequence blockers using:
   `--body-file`** — it replaces the whole body, silently, exit 0:
   §"Check before you UPDATE".
 
+**4. A bean that delivers a requirement copies its success criteria**
+When a bean is part of a work plan — it delivers one or more `req:` statements
+(or a plan's `REQ-###` / `FR-###`) — it names them in its body and its
+`## Done when` is **copied from their success criteria**, one checkbox per
+criterion, with the criterion's key (issue #2405 FR-007). Closing the bean is
+then judging those criteria. The bean ids are also listed in the requirement
+set's `workPlan` — a set at `planned` with none is refused by
+`check:requirements` (issue #2405, FR-010/FR-012). The rule and an example are in the content layer's
+the `requirement-definition` skill (`skill_fetch requirement-definition`)
+§"The work plan is beans".
+
 ## Archiving — two dispositions, and they answer different questions
 
 `beans archive` moves every `completed` or `scrapped` bean out of the working

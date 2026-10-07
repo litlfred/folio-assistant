@@ -354,6 +354,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
 | [public-comment](public-comment.html) | `public-comment` | — | > Skill id: `public-comment` · Package: `folio-document-adapter` · Process: |
 
+## Requirements planning (requirements-planning)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [A plan request stops at a signed-off plan](plan-request-gate.html) | `plan-request-gate` | — | Issue [#2405](https://github.com/litlfred/folio-assistant/issues/2405), owner |
+| [One definition of a requirement](requirement-definition.html) | `requirement-definition` | — | Issue [#2405](https://github.com/litlfred/folio-assistant/issues/2405) FR-007 |
+
 ## Catalogue records — Dublin Core renderings (catalogue)
 
 | Skill | Id | Schema | Summary |
@@ -378,6 +385,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
+| [L1 coverage](l1-coverage.html) | `l1-coverage` | — | Issue [#2405](https://github.com/litlfred/folio-assistant/issues/2405) FR-009: |
 | [L1 document ingestion](l1-document-ingestion.html) | `l1-document-ingestion` | — | **This is a refinement, not the entry point.** The harness's |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 
