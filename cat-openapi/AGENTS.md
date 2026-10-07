@@ -17,7 +17,10 @@ operation says is a fix upstream, then a re-ingest.
 
 1. A directory of graph typology `openapi`, `served: true`, in its `<instance>.json`.
 2. `cat-openapi.config.json` at its own root, naming that directory and each
-   document's source (`schemas/openapi.ts`, `OpenApiConfigSchema`).
+   document's source (`schemas/openapi.ts`, `OpenApiConfigSchema`). An
+   instance that is remote-mounted keeps it inside that `openapi` directory
+   instead, because a mount brings declared directories only
+   (`configPath`, bean `hupw`).
 3. `cat-openapi` in its `needs`.
 
 Then `ingest-openapi.ts --instance <dir> --source <checkout>` brings the bytes

@@ -62,7 +62,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { DOCS_SITE_BASE } from "../../cat-harness/schemas/jsonld.ts";
 import { escHtml, thinPageConfigOf, thinPageHtml } from "../../cat-harness/scripts/thin-page.ts";
 import { OpenApiDocumentSchema, OpenApiProvenanceSchema, operationsOf, type OpenApiOperation } from "../schemas/openapi.ts";
-import { localDirOf, openapiDir, readConfig } from "./ingest-openapi.ts";
+import { CONFIG_FILE, localDirOf, openapiDir, readConfig } from "./ingest-openapi.ts";
 import { findDeclarationFile } from "../../cat-harness/schemas/cat-harness.ts";
 
 /** The config-block id every page written here carries — how a run recognises its own output. */
@@ -236,7 +236,7 @@ function orphans(root: string, wanted: Set<string>): string[] {
         walk(p);
         continue;
       }
-      if (wanted.has(p) || ingested.test(e.name) || e.name === "README.md") continue;
+      if (wanted.has(p) || ingested.test(e.name) || e.name === "README.md" || e.name === CONFIG_FILE) continue;
       const ours =
         e.name.endsWith(".jsonld") ||
         e.name.endsWith(".json") ||

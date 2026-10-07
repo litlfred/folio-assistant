@@ -175,16 +175,15 @@
     "smart-trust",
     "who-iris"
   ],
-  "_remoteMounts_comment": "THE SMART SEPARATION CUTOVER (bean hupw, owner 2026-10-06: 'smart-immz, smart-trust, smart-base'; 'All three now'). The three FHIR IG instances left this repository for their forks litlfred/<name>, and their in-repo copies were retired to fsh-guts/separated/<name>.tar.gz by `state:seed --retire`. They come back here as REMOTE MOUNTS at pinned SHAs, never submodules, so the checkout's `needs`, the site composition and the gates that read them see the same paths they always did. In each fork the declaration sits at `smart-base/<name>.json`, one directory down, so each override puts the instance at its old home path explicitly rather than relying on the fork's `livesAt.path`. smart-ig stays local ('leave smart-ig for now').",
+  "_remoteMounts_comment": "THE SMART SEPARATION CUTOVER (bean hupw, owner 2026-10-06: 'smart-immz, smart-trust, smart-base'; 'All three now'). The three FHIR IG instances left this repository for their forks litlfred/<name>, and their in-repo copies were retired to fsh-guts/separated/<name>.tar.gz by `state:seed --retire`. They come back here as REMOTE MOUNTS at pinned SHAs, never submodules, so the checkout's `needs`, the site composition and the gates that read them see the same paths they always did. In each fork the declaration sits at `smart-base/<name>.json`, one directory down, so each override puts the instance at its old home path explicitly rather than relying on the fork's `livesAt.path`. Each override lists every declared directory except `<name>-docs`: the forks do not commit the pages folio-assistant generates for them (`smart:pages`). The code the mounted graphs import is DECLARED in each fork (owner 2026-10-07: 'Forks declare it'), so it arrives through declared paths only. smart-ig stays local ('leave smart-ig for now').",
   "remoteMounts": [
     {
       "harness": "smart-base",
       "repository": "litlfred/smart-base",
-      "ref": "8e16a06d22fe0b06edebb29ba5c5504bce12cb15",
+      "ref": "162cac10c8d3cbd382feaaf95c922a5d0f3e69f9",
       "overrides": {
         "smart-base": {
           "path": "smart-base",
-          "undeclared": true,
           "directories": [
             "smart-base-qa-checkers",
             "smart-base-block-kinds",
@@ -199,7 +198,13 @@
             "smart-base-themes",
             "smart-base-document-kinds",
             "smart-base-findings",
-            "smart-base-external-schemas"
+            "smart-base-external-schemas",
+            "smart-base-platform",
+            "smart-base-schemas",
+            "smart-base-content",
+            "smart-base-scripts",
+            "smart-base-skills",
+            "smart-base-scenarios"
           ]
         }
       }
@@ -207,15 +212,15 @@
     {
       "harness": "smart-trust",
       "repository": "litlfred/smart-trust",
-      "ref": "02cb3002ffeb15b8836523d23fcca411325434bc",
+      "ref": "f23ca7098371fb06428ba7fc7efe4eabd0ae0db7",
       "overrides": {
         "smart-trust": {
           "path": "smart-trust",
-          "undeclared": true,
           "directories": [
             "smart-trust-artifact-index",
             "smart-trust-openapi",
-            "smart-trust-scripts"
+            "smart-trust-scripts",
+            "smart-trust-platform"
           ]
         }
       }
@@ -227,7 +232,6 @@
       "overrides": {
         "smart-immunizations": {
           "path": "smart-immunizations",
-          "undeclared": true,
           "directories": [
             "smart-immunizations-artifact-index"
           ]

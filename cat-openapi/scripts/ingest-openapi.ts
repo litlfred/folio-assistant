@@ -42,9 +42,36 @@ import { findDeclarationFile } from "../../cat-harness/schemas/cat-harness.ts";
 
 export const CONFIG_FILE = "cat-openapi.config.json";
 
+/**
+ * Where the instance keeps its config: beside its declaration, or — for an
+ * instance that is REMOTE-MOUNTED, where only declared directories arrive —
+ * inside its own declared `openapi` directory. Bean `hupw` (owner,
+ * 2026-10-07: "Forks declare it"): the smart-trust fork moved its config into
+ * `openapi/` so the mount brings it through a declared path. `undefined` when
+ * neither holds one.
+ */
+export function configPath(instanceRoot: string): string | undefined {
+  const beside = join(instanceRoot, CONFIG_FILE);
+  if (existsSync(beside)) return beside;
+  const found = findDeclarationFile(instanceRoot);
+  if (found === undefined) return undefined;
+  let d: { directories?: Array<{ path: string; graphTypologies?: string[] }> };
+  try {
+    d = JSON.parse(readFileSync(join(instanceRoot, found), "utf8"));
+  } catch {
+    return undefined;
+  }
+  for (const dir of d.directories ?? []) {
+    if (!dir.graphTypologies?.includes("openapi")) continue;
+    const inside = join(instanceRoot, dir.path, CONFIG_FILE);
+    if (existsSync(inside)) return inside;
+  }
+  return undefined;
+}
+
 /** The instance's config, parsed. Throws naming the file when it is absent or invalid. */
 export function readConfig(instanceRoot: string): OpenApiConfig {
-  const p = join(instanceRoot, CONFIG_FILE);
+  const p = configPath(instanceRoot) ?? join(instanceRoot, CONFIG_FILE);
   if (!existsSync(p)) throw new Error(`${p}: no ${CONFIG_FILE} — this instance does not instantiate cat-openapi`);
   const r = OpenApiConfigSchema.safeParse(JSON.parse(readFileSync(p, "utf8")));
   if (!r.success) throw new Error(`${p}: ${r.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
