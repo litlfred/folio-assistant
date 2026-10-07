@@ -728,6 +728,18 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_24",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_25",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_26",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -783,6 +795,11 @@
       "name": "GW_Join"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Readers",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every reader of the QA tree"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "bootstrap:ProcessNode",
       "name": "Pull request, push to main, or dispatch"
@@ -803,6 +820,11 @@
       "name": "Publish QA results to qa-reports (NOT A GATE)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaWorkingCopy",
+      "@type": "bootstrap:ProcessNode",
+      "name": "QA working copy, built once (NOT A GATE)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
       "@type": "bootstrap:ProcessNode",
       "name": "Repository gates (HARD)"
@@ -821,6 +843,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_UnrunGates",
       "@type": "bootstrap:ProcessNode",
       "name": "Registered gates that never run (HARD)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_VerdictReuse",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Verdict reuse: tree already green? (NOT A GATE)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication",

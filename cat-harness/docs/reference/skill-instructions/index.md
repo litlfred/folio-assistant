@@ -366,6 +366,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
+| [Oxigraph Multi-Graph Static Search & Catalog Discovery](oxigraph-catalogue-search.html) | `oxigraph-catalogue-search` | — | This skill defines the generic, platform-level architecture for querying library catalogue hierarchy |
 
 ## Cataloguing methods (cataloguing)
 
@@ -424,6 +425,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+| [Oxigraph Multi-Graph Search & Discovery for WHO IRIS](iris-oxigraph.html) | `iris-oxigraph` | — | This skill defines how to use **Oxigraph** (in-memory WASM on the client, and native in Bun/Node on  |
 
 ## Mathematical authoring (authoring-math)
 
