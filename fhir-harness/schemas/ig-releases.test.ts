@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { type GitHubRelease, IgReleasesSchema, releasesFromGitHub } from "./ig-releases.ts";
+import { type GitHubRelease, releasesFromGitHub } from "./ig-releases.ts";
 
 const gh = (over: Partial<GitHubRelease>): GitHubRelease => ({
   tag_name: "v1",
@@ -36,10 +36,8 @@ describe("ig-releases/v1", () => {
     expect(() => releasesFromGitHub("o/r", "2026-10-02", [gh({ assets: [{ ...a, digest: "md5:x" }] })])).toThrow();
   });
 
-  test("the committed records validate", async () => {
-    for (const inst of ["smart-base", "smart-trust"]) {
-      const f = Bun.file(`${import.meta.dir}/../../${inst}/fhir-artifact-index/releases.json`);
-      expect(IgReleasesSchema.safeParse(await f.json()).success).toBe(true);
-    }
-  });
+  // "the committed records validate" read smart-base's and smart-trust's
+  // `releases.json` — two instances ABOVE this layer, so it failed standing
+  // alone. It lives in `test/ig-releases-checkout.test.ts` now (bean `7zz1`'s
+  // rule: whatever names a layer above belongs at the top).
 });

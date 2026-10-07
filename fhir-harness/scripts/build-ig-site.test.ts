@@ -369,23 +369,72 @@ describe("copyDocsInto: a front-matter-only page declares something ABOUT a gene
   });
 });
 
+// Synthetic instances in a temp "repository", so this layer tests the
+// mechanism without naming an instance above it. The same two properties over
+// the REAL smart-* instances live in `test/build-ig-site-checkout.test.ts`
+// (bean `7zz1`): standing alone, fhir-harness has none of them.
+//
+// `leaf` → `mid` → `base` is the shape smart-trust → smart-ig → smart-base
+// has: two hops, the middle one declaring no theme.
+const THEME_TS = join(import.meta.dir, "..", "..", "cat-harness", "schemas", "theme.ts");
+const BASE_THEME = `import { ResolvedThemeSchema } from ${JSON.stringify(THEME_TS)};
+export const INSTANCE_THEMES = [ResolvedThemeSchema.parse({
+  $schema: "folio-theme/v1", kind: "webpage", id: "base-web", name: "Base",
+  palette: { surface: "#ffffff", ink: "#111111", edge: "#cccccc", accent: "#0066aa" },
+  layouts: {
+    laptop: { minWidth: "1000px", padding: "1rem", fontScale: 1 },
+    mobile: { minWidth: "100%", padding: "1rem", fontScale: 1 },
+    card: { minWidth: "200px", padding: "1rem", fontScale: 1 },
+  },
+})];
+`;
+
+let fixtureRoot: string;
+beforeAll(() => {
+  fixtureRoot = mkdtempSync(join(tmpdir(), "ig-instances-"));
+  mkdirSync(join(fixtureRoot, ".git"));
+  const instance = (name: string, decl: Record<string, unknown>): string => {
+    const at = join(fixtureRoot, name);
+    mkdirSync(at, { recursive: true });
+    writeFileSync(join(at, `${name}.json`), JSON.stringify({ name, version: "0.1.0", directories: [], ...decl }, null, 2));
+    return at;
+  };
+  const base = instance("base", {
+    directories: [
+      { id: "base-themes", path: "themes/", graphTypologies: ["themes"] },
+      { id: "base-docs", path: "docs/", graphTypologies: ["docs"], igSite: true },
+    ],
+  });
+  mkdirSync(join(base, "themes"), { recursive: true });
+  writeFileSync(join(base, "themes", "themes.ts"), BASE_THEME);
+  instance("mid", { needs: ["base"] });
+  instance("leaf", { needs: ["mid"], directories: [{ id: "leaf-docs", path: "docs/", graphTypologies: ["docs"], igSite: true }] });
+  instance("plain", { directories: [{ id: "plain-docs", path: "docs/", graphTypologies: ["docs"] }] });
+});
+afterAll(() => rmSync(fixtureRoot, { recursive: true, force: true }));
+
 describe("igSiteDocs", () => {
   test("only an instance that DECLARES igSite builds its IG site at its root", () => {
-    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-trust"))).toBe(join(import.meta.dir, "..", "..", "smart-trust", "docs/"));
-    // Every smart-* IG with a menu does, the same way (owner: "no drift issues").
-    expect(igSiteDocs(join(import.meta.dir, "..", "..", "smart-base"))).toBe(join(import.meta.dir, "..", "..", "smart-base", "docs/"));
-    // An instance that holds no IG does not.
-    expect(igSiteDocs(join(import.meta.dir, "..", "..", "who-iris"))).toBeUndefined();
+    expect(igSiteDocs(join(fixtureRoot, "leaf"))).toBe(join(fixtureRoot, "leaf", "docs/"));
+    expect(igSiteDocs(join(fixtureRoot, "base"))).toBe(join(fixtureRoot, "base", "docs/"));
+    // A docs directory that does not declare igSite is not one.
+    expect(igSiteDocs(join(fixtureRoot, "plain"))).toBeUndefined();
+    // Nor is an instance with no docs directory at all.
+    expect(igSiteDocs(join(fixtureRoot, "mid"))).toBeUndefined();
   });
 });
 
 describe("webpagePalette inherits along needs (bean `mftp`)", () => {
-  test("smart-trust declares no theme and wears smart-base's, found through smart-ig", () => {
-    const root = join(import.meta.dir, "..", "..");
-    const t = webpagePalette(root, "smart-trust");
-    expect(t.palette).toBeDefined();
-    expect(t.note).toContain("inherited from smart-base");
-    expect(webpagePalette(root, "smart-base").note).not.toContain("inherited");
+  test("an instance that declares no theme wears the nearest one along its needs, through one that declares none", () => {
+    const t = webpagePalette(fixtureRoot, "leaf");
+    expect(t.palette?.accent).toBe("#0066aa");
+    expect(t.note).toContain("inherited from base");
+    expect(webpagePalette(fixtureRoot, "base").note).not.toContain("inherited");
+  });
+  test("with no theme anywhere along its needs, there is no palette, and the note says why", () => {
+    const t = webpagePalette(fixtureRoot, "plain");
+    expect(t.palette).toBeUndefined();
+    expect(t.note).toContain("no webpage theme");
   });
 });
 
