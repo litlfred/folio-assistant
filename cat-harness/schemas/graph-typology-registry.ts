@@ -998,6 +998,12 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
       "folio-library-entry/v1": { generated: true },
+      // The per-entry DOCUMENT view (issue #2302): TOC, pages, figures,
+      // sections with summaries and keywords, checks — read from the
+      // ingestion schema by lib/library-document.ts. Same writer again, and a
+      // separate family for the same reason as the entry graph: fetched only
+      // when one entry is opened.
+      "folio-library-document/v1": { generated: true },
       "folio-voices-index/v1": { generated: true },
       "folio-graph-projection/v1": { generated: true },
       // The media-type sidecar beside each content-addressed payload under
@@ -2042,6 +2048,9 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.
       "folio-block-summaries/v1": {},
+      // An entry's LSI keywords, per section and per document (issue #2302).
+      // Derived from the whole library's term weights by library-keywords.ts.
+      "folio-keywords/v1": { generated: true },
       // What the site mount must not publish from this directory (bean `cw35`).
       // Written by the instance's generator from its licence gates; the mount
       // validates it with this schema and refuses to mount if it cannot.

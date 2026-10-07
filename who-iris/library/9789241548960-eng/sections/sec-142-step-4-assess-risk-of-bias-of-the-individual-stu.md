@@ -7,6 +7,7 @@ section_number: null
 pages: 113-114
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Each study included in a systematic review should be assessed for risk of bias. 
 The main types of bias for intervention studies include selection, attrition, 

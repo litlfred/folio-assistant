@@ -7,6 +7,7 @@ section_number: 11.7.9
 pages: 159-159
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Before starting data extraction, it is important to carefully consider what 
 specific information the GDG will need to make its decisions so that only 

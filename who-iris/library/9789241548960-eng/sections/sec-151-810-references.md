@@ -7,6 +7,7 @@ section_number: 8.10
 pages: 118-121
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 1.	
 Glossary of terms in The Cochrane Collaboration. Version 4.2.5. Oxford: The Cochrane 

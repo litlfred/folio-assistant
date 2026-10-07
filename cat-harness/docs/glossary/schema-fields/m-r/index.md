@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1908 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1918 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 563 terms and is 317 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 572 terms and is 323 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2201</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2211</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2211</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">563</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">572</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -1415,6 +1415,34 @@ PDCrossing.strands <span class="fa-gloss-status">candidate, extracted</span>
 <p>Four strand indices meeting at the crossing [i, j, k, l].</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#PDCrossing.strands</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfdiagnosticsschema.figure_sequence_gaps" data-fa-state="extracted" data-fa-gloss="">
+PdfDiagnosticsSchema.figure_sequence_gaps <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Numbers missing from a caption run, e.g. &quot;table 2.1&quot; beside a Table 2.2.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.figure_sequence_gaps</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfdiagnosticsschema.page_label_conflicts" data-fa-state="extracted" data-fa-gloss="">
+PdfDiagnosticsSchema.page_label_conflicts <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Pages where label sources disagree, e.g. /PageLabels &quot;3&quot; against a printed &quot;iii&quot;.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.page_label_conflicts</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfdiagnosticsschema.toc_alignment" data-fa-state="extracted" data-fa-gloss="">
+PdfDiagnosticsSchema.toc_alignment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where a printed contents page and the body disagree (issue #2302) — drafts drift. Present only when the document has a contents page. Each list is capped; <code>count</code> is the full number.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_alignment</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfdiagnosticsschema.toc_inferred_method" data-fa-state="extracted" data-fa-gloss="">
+PdfDiagnosticsSchema.toc_inferred_method <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which inference produced an inferred TOC (issue #2302): a printed contents page, heading styles read from font metrics, or the text-pattern heuristic that OCR'd text falls back to.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_inferred_method</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--pdf-structure.pdfmetadataschema.title_correction" data-fa-state="extracted" data-fa-gloss="">
 PdfMetadataSchema.title_correction <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1450,12 +1478,33 @@ PdfMetadataSchema.title_verified <span class="fa-gloss-status">candidate, extrac
 <p>False when no source corroborated the title: the raw title was kept, not guessed at.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema.title_verified</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfsectionschema.label_start" data-fa-state="extracted" data-fa-gloss="">
+PdfSectionSchema.label_start <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Printed labels of page_start / page_end, where known (issue #2302).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfSectionSchema.label_start</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.figures" data-fa-state="extracted" data-fa-gloss="">
+PdfStructureSchema.figures <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The list of figures and tables, cross-checked (issue #2302).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.figures</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.granularity" data-fa-state="extracted" data-fa-gloss="">
 PdfStructureSchema.granularity <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><code>page</code>: written by <code>pdf-pages.py</code>, one section per page. <code>slide</code>: written by <code>slides-structure.py</code>, one section per slide (bean <code>scfh</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.pages" data-fa-state="extracted" data-fa-gloss="">
+PdfStructureSchema.pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every physical page with its printed label (issue #2302).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.pages</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.structure_note" data-fa-state="extracted" data-fa-gloss="">
 PdfStructureSchema.structure_note <span class="fa-gloss-status">candidate, extracted</span>
@@ -1470,6 +1519,20 @@ PdfStructureSchema.toc_undetermined_reason <span class="fa-gloss-status">candida
 <dd>
 <p>Why an inferred TOC was not trusted, in a sentence a person can check.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.toc_undetermined_reason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdftocentryschema.confidence" data-fa-state="extracted" data-fa-gloss="">
+PdfTocEntrySchema.confidence <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Inferred entries only (issue #2302): how sure the inference is, 0..1, and which independent evidence agreed — a printed contents page, the entry found in the body, a heading style, a section number, another extractor. Null on an outline entry, which is not scored.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.confidence</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pdf-structure.pdftocentryschema.page_label" data-fa-state="extracted" data-fa-gloss="">
+PdfTocEntrySchema.page_label <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The printed label of <code>page</code> (&quot;iv&quot;, &quot;23&quot;), where known; <code>page</code> is physical.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.page_label</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.permissiondef.includedin" data-fa-state="extracted" data-fa-gloss="">
 PermissionDef.includedIn <span class="fa-gloss-status">candidate, extracted</span>

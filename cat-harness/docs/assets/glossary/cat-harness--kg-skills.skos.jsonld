@@ -289,6 +289,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/blocked-build-dependencies",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "blocked-build-dependencies"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead."
+        }
+      ],
+      "skos:notation": "blocked-build-dependencies",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/blocked-build-dependencies.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/board-diagram-interchange",
       "@type": "skos:Concept",
       "skos:inScheme": {

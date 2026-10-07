@@ -7,6 +7,7 @@ section_number: 2.8
 pages: 34-36
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 1.	
 WHO reform [website]. Geneva: World Health Organization; 2014 (http://www.who.int/

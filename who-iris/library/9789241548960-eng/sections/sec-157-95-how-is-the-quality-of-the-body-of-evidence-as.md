@@ -7,6 +7,7 @@ section_number: 9.5
 pages: 124-125
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 for intervention studies?
 GRADE categorizes the quality of the evidence as high, moderate, low or 

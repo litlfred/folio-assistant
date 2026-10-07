@@ -7,6 +7,7 @@ section_number: 4
 pages: 51-52
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 39
 Third, a carefully constructed planning proposal makes it more likely that 
