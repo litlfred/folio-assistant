@@ -6,7 +6,8 @@
  *
  * Run after `build-document-site.ts`, over the same `--out`:
  *
- *   <out>/public-comments/index.html   the dashboard
+ *   <out>/folio-assistant-core/public-comments/folio/<slug>/index.html   the dashboard
+ *                                    (`public-comment-route.ts`: <handler>/<kind>/<subject>)
  *   <out>/<slug>/index.html            gains a comment note at each anchored block
  *
  * ## Why the data is inlined, not fetched
@@ -34,6 +35,7 @@ import type { ReviewAnchors } from "./docx-to-folio.js";
 import { type ChangeSet, DECISION_LABELS, IN_EDIT_STATUSES, OPEN_STATUSES, type PublicComment } from "../schemas/public-comment.js";
 import { changeSets, discussUrl } from "./public-comment-changesets.js";
 import { Store } from "./public-comment.js";
+import { dashboardRoute, toSiteRoot } from "./public-comment-route.js";
 import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
 
 /** `folio-staging.yml`'s slug rule, step `slug`. */
@@ -67,8 +69,9 @@ export interface SiteComment {
 export function siteComments(
   all: PublicComment[],
   anchors: ReviewAnchors,
-  opts: { slug: string; site?: string; repo?: string; storeDir?: string; changeSets?: ChangeSet[] },
+  opts: { slug: string; site?: string; repo?: string; storeDir?: string; changeSets?: ChangeSet[]; toRoot?: string },
 ): SiteComment[] {
+  const toRoot = opts.toRoot ?? "../";
   const inSets = new Map<string, SiteComment["changeSets"]>();
   for (const cs of opts.changeSets ?? [])
     if (cs.status !== "merged") for (const r of cs.refs) (inSets.get(r) ?? inSets.set(r, []).get(r)!).push({ id: cs.id, title: cs.title, status: cs.status, ...(cs.issue ? { issue: cs.issue } : {}) });
@@ -108,7 +111,7 @@ export function siteComments(
       ...(p.decision ? { decision: { code: p.decision.code, label: DECISION_LABELS[p.decision.code], reason: p.decision.reason, by: p.decision.by } } : {}),
       changeSets: inSets.get(p.ref) ?? [],
       links: {
-        ...(c.targetLabel ? { document: `../${opts.slug}/index.html${frag}` } : {}),
+        ...(c.targetLabel ? { document: `${toRoot}${opts.slug}/index.html${frag}` } : {}),
         ...(site && c.targetLabel && cs ? { before: `${site}/${opts.slug}/index.html${frag}` } : {}),
         ...(cs ? { after: cs.stagingUrl ? `${cs.stagingUrl.replace(/\/$/, "")}/${opts.slug}/index.html${frag}` : site ? `${site}/STAGING/${stagingSlug(cs.branch)}/${opts.slug}/index.html${frag}` : undefined } : {}),
         ...(cs?.pr && opts.repo ? { pr: `https://github.com/${opts.repo}/pull/${cs.pr}` } : {}),
@@ -160,7 +163,7 @@ const STYLE = `
 `;
 
 /** The dashboard. Filters run in the page; with scripts off the full table still renders. */
-export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string; repo?: string; changeSets?: ChangeSet[] }): string {
+export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string; repo?: string; changeSets?: ChangeSet[]; toRoot?: string }): string {
   const issueLink = (n: number) => (meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/issues/${n}">#${n}</a>` : `#${n}`);
   // A change-set with an issue links it; one without offers to open it, which
   // is the moment it gets one (issue #2183: "dont create issue until someone
@@ -225,7 +228,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
 </head>
 <body>
 <main>
-<p><a href="../${esc(meta.slug)}/index.html">← ${esc(meta.title)}</a></p>
+<p><a href="${esc(meta.toRoot ?? "../")}${esc(meta.slug)}/index.html">← ${esc(meta.title)}</a></p>
 <h1>Public comments</h1>
 <p class="muted">Generated ${esc(meta.generated)} from the comment store. Open = not yet decided. Editing = decided, and the change is being made on a feature branch. Closed = incorporated, duplicate or withdrawn.</p>
 <div class="tiles" role="group" aria-label="Filter by count">
@@ -444,7 +447,7 @@ export function notesByTarget(rows: SiteComment[]) {
  * counts and change-sets, and the list is fetched from that file the first
  * time a note is opened: 545 KB less on the DPI-H document.
  */
-export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issues?: Record<string, number>; notesUrl?: string } = {}): string {
+export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issues?: Record<string, number>; notesUrl?: string; dashboard: string }): string {
   const byTarget = notesByTarget(rows);
   const head = Object.fromEntries(
     Object.entries(byTarget).map(([label, list]) => [
@@ -455,7 +458,7 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
   const json = JSON.stringify({ head, lists: opts.notesUrl ? null : byTarget, url: opts.notesUrl ?? null }).replace(/</g, "\\u003c");
   // The change-sets' issues, so a block's [feedback] can point at the
   // discussion that already exists (REQ-17, bean uphx).
-  const meta = JSON.stringify({ repo: opts.repo ?? "", issues: opts.issues ?? {} }).replace(/</g, "\\u003c");
+  const meta = JSON.stringify({ repo: opts.repo ?? "", issues: opts.issues ?? {}, dashboard: opts.dashboard }).replace(/</g, "\\u003c");
   return `
 <style>
   .pc-note { border-left:4px solid var(--link,#0b5cad); margin:.4rem 0 .8rem; padding:.2rem .7rem; font-size:.9rem; background:color-mix(in srgb, currentColor 4%, transparent); }
@@ -480,9 +483,9 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
   // built the first time the note is opened. Blocks are done in small batches
   // in idle time, so the page never freezes, and a #fragment target is
   // re-scrolled to once at the end because the notes above it moved it.
-  const item = (c) => "<li><a href=\\"../public-comments/index.html#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
+  const item = (c) => "<li><a href=\\"" + esc(meta.dashboard) + "#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
     (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") +
-    (c.sets ? " · " + c.sets.map((id) => "<a href=\\"../public-comments/index.html#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") +
+    (c.sets ? " · " + c.sets.map((id) => "<a href=\\"" + esc(meta.dashboard) + "#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") +
     " — " + esc(c.summary) + "</li>";
   const note = (label, h) => {
     const a = document.getElementById(label);
@@ -527,7 +530,7 @@ export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issue
   idle(batch);
   const bar = document.createElement("div");
   bar.className = "pc-bar";
-  bar.innerHTML = '<a href="../public-comments/index.html">Public comments</a>: ' + total + " shown in this document, " + open + " open";
+  bar.innerHTML = '<a href="' + esc(meta.dashboard) + '">Public comments</a>: ' + total + " shown in this document, " + open + " open";
   const main = document.querySelector("main") || document.body;
   main.prepend(bar);
 })();
@@ -540,8 +543,11 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   const cfg = store.config() as ReturnType<Store["config"]> & { title?: string };
   const anchors = store.anchors();
   const sets = changeSets(store);
+  const route = dashboardRoute(repo, cfg.document);
+  const toRoot = toSiteRoot(route);
   const rows = siteComments(store.all(), anchors, {
     changeSets: sets,
+    toRoot,
     slug: cfg.document,
     site: cfg.site,
     repo: cfg.repo,
@@ -559,15 +565,16 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
     // A lazy page fetches its notes' lists; the one-page version carries them.
     const lazy = html.includes('id="fa-blocks"');
     if (lazy) writeFileSync(join(out, cfg.document, "pc-notes.json"), JSON.stringify(notesByTarget(rows)));
-    writeFileSync(f, html.replace("</body>", `${overlaySnippet(rows, { ...(cfg.repo ? { repo: cfg.repo } : {}), issues, ...(lazy ? { notesUrl: "pc-notes.json" } : {}) })}</body>`));
+    writeFileSync(f, html.replace("</body>", `${overlaySnippet(rows, { ...(cfg.repo ? { repo: cfg.repo } : {}), issues, dashboard: `../${route}/index.html`, ...(lazy ? { notesUrl: "pc-notes.json" } : {}) })}</body>`));
   }
-  mkdirSync(join(out, "public-comments"), { recursive: true });
+  const dash = join(out, route);
+  mkdirSync(dash, { recursive: true });
   writeFileSync(
-    join(out, "public-comments", "index.html"),
-    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, ...(cfg.repo ? { repo: cfg.repo } : {}), changeSets: sets, generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
+    join(dash, "index.html"),
+    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, toRoot, ...(cfg.repo ? { repo: cfg.repo } : {}), changeSets: sets, generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
   );
-  writeFileSync(join(out, "public-comments", "comments.json"), JSON.stringify(rows, null, 1) + "\n");
-  return { comments: rows.length, open: rows.filter((r) => r.phase === "open").length };
+  writeFileSync(join(dash, "comments.json"), JSON.stringify(rows, null, 1) + "\n");
+  return { route, comments: rows.length, open: rows.filter((r) => r.phase === "open").length };
 }
 
 /**
@@ -598,7 +605,7 @@ if (import.meta.main) {
   const repo = resolve(opt("repo") ?? process.cwd());
   try {
     const r = buildPublicCommentSite(repo, resolve(repo, opt("out") ?? "_site"), opt("store"));
-    console.error(`✓ public comments: ${r.comments} (${r.open} open) → public-comments/index.html`);
+    console.error(`✓ public comments: ${r.comments} (${r.open} open) → ${r.route}/index.html`);
   } catch (e) {
     console.error(`✗ ${(e as Error).message}`);
     process.exit(1);

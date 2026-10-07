@@ -31,7 +31,7 @@
  * | renderer | writes | reached by |
  * |---|---|---|
  * | `document-site` | `<slug>/index.html`, `<slug>/media/*`, `outline.json`, `index.html` | a changed block, a document/chapter/section manifest, a media file |
- * | `public-comment-site` | `public-comments/index.html` and the comment notes on each `<slug>/index.html` | the public-comment store |
+ * | `public-comment-site` | each document's dashboard, `folio-assistant-core/public-comments/<folio>/<slug>/index.html`, and the comment notes on each `<slug>/index.html` | the public-comment store |
  *
  * A large document's page is LAZY (bean v433), and `outline.json` says so
  * (`lazy`): `index.html` is then a shell of headings and placeholders, the
@@ -82,6 +82,7 @@
  *
  * @module folio-assistant-core/scripts/document-rendered-impact
  */
+import { HANDLER, KIND } from "./public-comment-route.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -234,11 +235,12 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
   for (const f of opts.changed) {
     if (COMMENT_STORE.test(f)) {
       pcInputs.push(f);
-      add(pc, { path: `${pre}public-comments/index.html`, change: "changed", role: "content", via: [f] });
       // A comment's note sits beside its block on its document's page; which
       // document a comment targets is in the comment, not the path, so every
       // document page is listed: safe, and with one document, exact.
       for (const slug of [...slugs].sort()) {
+        // The document's dashboard, at the handler route (public-comment-route.ts).
+        add(pc, { path: `${pre}${HANDLER}/${KIND}/${folio || "folio"}/${slug}/index.html`, change: "changed", role: "content", via: [f] });
         add(pc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via: [f] });
         const lz = lazy.get(slug);
         if (lz) {

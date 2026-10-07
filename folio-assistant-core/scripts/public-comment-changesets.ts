@@ -66,6 +66,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { dashboardRoute } from "./public-comment-route.js";
 import {
   CHANGE_SET_SCHEMA,
   CHANGING_DECISIONS,
@@ -225,20 +226,21 @@ export function discussUrl(repo: string, cs: Pick<ChangeSet, "id" | "title">): s
 export function renderSection(cs: ChangeSet, store: Store): string {
   const cfg = store.config();
   const site = (cfg.site ?? "").replace(/\/$/, "");
+  const dash = `${site}/${dashboardRoute(store.repo, cfg.document)}/`;
   const byRef = new Map(store.all().map((c) => [c.public.ref, c]));
   const rows = cs.refs.map((ref) => {
     const c = byRef.get(ref);
     if (!c) return `| ${ref} | | (not in the store) | | |`;
     const label = c.public.anchor.targetLabel;
     const where = label ? (site ? `[${cell(clip(c.public.citation.raw || label, 40))}](${site}/${cfg.document}/#${label})` : cell(label)) : "whole document";
-    const refLink = site ? `[${ref}](${site}/public-comments/#${ref})` : ref;
+    const refLink = site ? `[${ref}](${dash}#${ref})` : ref;
     const state = c.public.decision ? `${c.status}: **${c.public.decision.code}**` : c.status;
     return `| ${refLink} | ${where} | ${state} | ${cell(clip(c.public.text, 200))} | ${cell(clip(c.public.suggestedRevision ?? "", 140))} |`;
   });
   const others = cs.issues.filter((n) => n !== cs.issue);
   return [
     sectionStart(cs.id),
-    `> **Change-set ${cs.id}** · ${cs.status} · ${cs.refs.length} comment(s)${site ? ` · [dashboard](${site}/public-comments/#${cs.id})` : ""}`,
+    `> **Change-set ${cs.id}** · ${cs.status} · ${cs.refs.length} comment(s)${site ? ` · [dashboard](${dash}#${cs.id})` : ""}`,
     "> This section is written from the change-set's record, so an edit to it here is replaced. Change it with the commands below; discuss it anywhere in this issue.",
     "",
     "### Requirements",

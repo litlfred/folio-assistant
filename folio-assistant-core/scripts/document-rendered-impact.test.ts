@@ -68,7 +68,7 @@ describe("documentRenderedImpact — files the ChangeSet does not name", () => {
   test("the comment store is the public-comment renderer's: the dashboard and every document page", () => {
     const out = run(["review/public-comment/comments/PC-0001.json"]);
     expect(out.map((i) => i.renderer)).toEqual([DOCUMENT_RENDERER, PUBLIC_COMMENT_RENDERER]);
-    expect(out[1].files.map(line)).toEqual(["content:doc/index.html", "content:other/index.html", "content:public-comments/index.html"]);
+    expect(out[1].files.map(line)).toEqual(["content:doc/index.html", "content:folio-assistant-core/public-comments/folio/doc/index.html", "content:folio-assistant-core/public-comments/folio/other/index.html", "content:other/index.html"]);
   });
 
   test("anything else is undetermined with scope all, never no change", () => {
