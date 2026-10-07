@@ -119,6 +119,16 @@ export function ownerRepoOf(remote: string): string | undefined {
   return /github\.com[/:]([^/]+\/[^/]+?)(?:\.git)?\/?$/.exec(remote.trim())?.[1];
 }
 
+/** `<instance>/<rel>` in the first of the platform's top-level directories that has it, or undefined. */
+export function inPlatform(platform: string, rel: string): string | undefined {
+  if (!existsSync(platform)) return undefined;
+  for (const d of readdirSync(platform, { withFileTypes: true }).filter((e) => e.isDirectory() && !e.name.startsWith(".")).map((e) => e.name).sort()) {
+    const f = join(platform, d, rel);
+    if (existsSync(f)) return f;
+  }
+  return undefined;
+}
+
 const git = (cwd: string, args: string[]) => execFileSync("git", ["-C", cwd, ...args], { encoding: "utf-8" }).trim();
 
 function run(cwd: string, cmd: string, args: string[], env: NodeJS.ProcessEnv = {}): void {
@@ -171,9 +181,15 @@ export async function stageLocal(o: StageOptions): Promise<StageResult> {
   run(repo, "bun", ["run", join(platform, "cat-harness/scripts/rail-standalone-pages.ts"), "--site", site, "--built", "cat-harness", "--foreign-site", "--home-label", name]);
 
   git(repo, ["fetch", "-q", "origin", base]);
-  run(repo, "bun", ["run", join(platform, "folio-assistant-core/schemas/changeset.ts"), "--folio", inputs.folio_dir, "--base", `origin/${base}`, "--head", "worktree", "--out", join(site, "changeset.json"), "--text-out", join(site, "changeset-text.json")]);
-  const impact = join(platform, "folio-assistant-core/scripts/document-rendered-impact.ts");
-  if (existsSync(impact)) {
+  // The ChangeSet and the rendered impact are a content layer's, above this
+  // one: found in whichever of the platform's instances carries them, never
+  // named here. A platform without them gets no review data, and the review
+  // page says so, as the workflow does when it has no renderer.
+  const changeset = inPlatform(platform, "schemas/changeset.ts");
+  if (changeset) run(repo, "bun", ["run", changeset, "--folio", inputs.folio_dir, "--base", `origin/${base}`, "--head", "worktree", "--out", join(site, "changeset.json"), "--text-out", join(site, "changeset-text.json")]);
+  else log("· this platform has no ChangeSet tool: no review data on this preview");
+  const impact = inPlatform(platform, "scripts/document-rendered-impact.ts");
+  if (changeset && impact) {
     run(repo, "bun", ["run", impact, "--root", ".", "--base", `origin/${base}`, "--head", "HEAD", "--changeset", join(site, "changeset.json"), "--outline", join(site, "outline.json"), "--build-command", inputs.build_command, "--out", join(site, "rendered-impact.json")]);
   }
 
