@@ -3098,5 +3098,62 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
     }),
 
+    // ── The two mechanisms of `pinned-remote-dependency` (owner, 2026-10-07,
+    // PR #2468): the workflow is the skill, and each mechanism is a Tool that
+    // maps its five operations (status, plan-update, consent, apply, drift).
+    // A remote graph database is named in the skill as a FUTURE third
+    // mechanism and deliberately has no node here: declared-but-absent is the
+    // `dh4f` defect.
+    defineTool({
+      id: "kg-remote-mount",
+      title: "KG remote mount (pinned, locked, consent to move)",
+      description:
+        "Mount another repository's harness and its closure at a 40-character pin, locked by digest, and move the pin only on a person's recorded consent. status = `bun run cat mount:remote:check` (disk against lock, offline) plus `bun run cat mount:update` (how far `track` is ahead); plan-update = `bun run cat mount:update` (commits, files under the mounted directories and assets, the declaration diff, and the `package.json` checkoutScripts added, removed and changed; exits 4, awaiting consent, writing nothing); consent = `--yes-consent-by <login> --evidence <text>`, passed only to record a PERSON's answer, never on an agent's initiative; apply = the same call, which writes `ref` and `trust.consent`, re-mounts and re-locks (`bun run cat mount:remote`), and `bun run cat mount:lock` replays a committed lock on a fresh clone; drift = a mounted file that no longer hashes to the lock refuses the update and is listed, and the remedy is upstream first.",
+      install: { none: true },
+      invoke: { shell: "bun run cat mount:update" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("Slug"), required: false, arg: { flag: "--instance" }, description: "One mount, by its harness name. Absent: every mount with `track`." },
+          { name: "root", schema: t("RepoPath"), required: false, arg: { flag: "--root" }, description: "The declaring (downstream) instance root. Absent: every declaring instance in the checkout." },
+          { name: "consentBy", schema: t("Text"), required: false, arg: { flag: "--yes-consent-by" }, description: "The PERSON who approved the tip just shown. An agent passes it only to record that person's answer." },
+          { name: "evidence", schema: t("Text"), required: false, arg: { flag: "--evidence" }, description: "Where the person approved (an issue comment, a chat message). Required with --yes-consent-by." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Per mount: up to date, update available with the plan and the question, or could not determine. Exit 0 up to date or applied, 1 refused (drift), 2 could not determine, 4 awaiting consent." },
+        ],
+      },
+      satisfies: ["pinned-remote-dependency", "remote-mount"],
+      selection: {
+        when: "The dependency is a harness (a KG instance) another repository holds, and this checkout builds on it: the folio-assistant layers since #2470.",
+        limits: "Lays down only what the harness declares (directories, assets, or the whole instance); the bytes are never committed here, so a fresh clone needs `bun run cat mount:lock` before it runs platform code.",
+        cost: "A blobless fetch per pin and per update check; seconds for a small repository.",
+      },
+      requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "The pin's bytes are on GitHub. Offline, `bun run cat mount:remote:check` and `bun run cat mount:lock:check` still judge what is already on disk against the lock." }],
+    }),
+    defineTool({
+      id: "git-submodule",
+      title: "git submodule (gitlink pin, commit to move)",
+      description:
+        "The same workflow by git's own mechanism, for repositories that keep submodules: status = `git submodule status` plus a fetch of the branch `.gitmodules` names (`git fetch` in the submodule, then `git rev-list --count <gitlink>..origin/<branch>`); plan-update = `git log` and `git diff <gitlink>..origin/<branch>` in the submodule; consent = a PERSON commits the moved gitlink (the commit is the record); apply = `git submodule update --remote <path>` then commit the gitlink; drift = a dirty submodule (`git status` in it), which refuses until its edits are pushed upstream. No wrapper script: git is invoked directly. folio-assistant itself moved from this Tool to `kg-remote-mount` in #2470, the same workflow under a different mechanism.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "path", schema: t("RepoPath"), required: true, description: "The submodule's path in the superproject." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "The submodule's gitlink, its branch's tip, the commits between, and whether it is dirty." },
+        ],
+      },
+      satisfies: ["pinned-remote-dependency"],
+      selection: {
+        when: "Another repository that keeps its dependencies as git submodules. Not this one: the owner ruled out submodules here (2026-10-06).",
+        limits: "Consent is implicit in who committed the gitlink; nothing records evidence beside it. A submodule is a whole repository, never part of one.",
+        cost: "A fetch of the submodule's history.",
+      },
+      requires: { runtime: ["git"], network: true },
+      remedies: [{ host: "github.com", none: "A submodule's newer commits are on its remote. Offline, `git submodule status` still reports the gitlink and a dirty submodule." }],
+    }),
   ];
 }

@@ -33,7 +33,8 @@ built on:
 |---|---|
 | the process | [`mount-dependency.bpmn`](../../../processes/kg/mount-dependency.bpmn); the per-subgraph view is the `remote` flow of [`mount-subgraph.bpmn`](../../../processes/kg/mount-subgraph.bpmn) |
 | the schema | `cat-harness/schemas/remote-mount.ts`, plus the `remote` member of `SubgraphSource` (`schemas/subgraph-source.ts`) |
-| the tool | `bun run cat mount:remote` (`--plan` to resolve without writing), and `bun run cat mount:remote:check` (offline) |
+| the tool | `bun run cat mount:remote` (`--plan` to resolve without writing), `bun run cat mount:remote:check` (offline), `bun run cat mount:lock` (replay a committed lock on a fresh clone) and `bun run cat mount:update` (move a pin, on consent) |
+| the update workflow | [`pinned-remote-dependency`](pinned-remote-dependency.md): status, plan-update, consent, apply, drift, and the git-submodule correspondence |
 | the entry point | `bun run cat state:mount`, which the session-start hook already runs |
 
 ## Mount, subscribe or associate: choose first
@@ -81,7 +82,66 @@ Both fields are optional, and each absence has a meaning:
 - `path` moves an instance.
 - `directories` replaces its default list. An id the instance does not declare
   is refused, not dropped.
+- `assets` replaces its default asset list (see below), with the same rule.
+- `whole` mounts every tracked file at the instance root as one `*` directory.
 - `skip` leaves it unmounted, and the lock records it as an answer.
+
+A mount may also carry `track`, a branch name: the `branch =` of
+`.gitmodules`. It never moves `ref`; `bun run cat mount:update` reports how
+far the branch is ahead and re-pins only on a person's consent
+([`pinned-remote-dependency`](pinned-remote-dependency.md)).
+
+## Assets, and a mounted `package.json` (owner, 2026-10-07: "Option A, by reference")
+
+Besides its directories, a mount carries the harness's declared **assets**:
+single files named in its own `assets` at instance scope (a
+`repository`-scoped asset is the upstream repository's and is never mounted).
+`mountDefaults.assets` or an override's `assets` narrows the list by id. Each
+asset is locked by sha256 and verified by `mount:remote:check`, the replayer
+and the health check like a directory.
+
+That is how a mounted layer's scripts arrive. `bun run cat <name>` and
+`check:script-placement` treat a mounted instance's `package.json`
+`checkoutScripts` as that layer's home **only** when the lock vouches for its
+bytes: listed as an asset whose sha256 matches, or, for a `whole` mount,
+inside the `*` directory whose digest matches. Otherwise the manifest is
+**unresolvable**, a third state: `bun run cat` exits 3 and names the
+manifest instead of saying "no such script", and `check:script-placement`
+fails could-not-determine. A mounted manifest with no `checkoutScripts` at all
+(bootstrap-tools keeps its own `scripts`) is not a home, so scripts running
+its code stay at the root, as they did under the submodule. Nothing is copied
+into this repository's git: the file is fetched at the consented pin and
+hash-locked.
+
+## Adopt if identical (owner, 2026-10-07)
+
+When the target of a planned instance already exists and no lock says this
+mount put it there, `mount:remote` fetches the pinned tree and compares, file
+by file, every declared directory, every declared asset and the declaration
+with what is on disk, and requires no extra file under a declared directory.
+
+- **All identical**: the lock entry is written (`adopted: true`) and the
+  instance is `mounted`. Only the lock is written.
+- **Anything else**: refused, `refusal: "not-identical"`, with `differing`
+  (bytes differ, or the pin has a file the disk lacks) and `extra` (files the
+  pin does not have). The same lists go into the lock's `unmounted` entry,
+  so the mount report and the `remote-mounts` health check agree.
+
+It never overwrites or deletes anything, and a target holding **tracked**
+files stays refused (`refusal: "tracked"`). An instance the checkout already
+holds as one of its own (found by `instanceRootsIn`, not by a lock) is still
+`local`, not adopted.
+
+## Health
+
+`bun run cat health` carries a `remote-mounts` check reading the declaration,
+the lock and the disk. Each mounted instance is one of: mounted and matching
+the lock; refused-not-identical (with the differing and extra paths);
+refused-other (trust, tracked, absent at the pin); modified-since-mount (the
+edited paths); or could-not-determine, which is never clean. A tracked
+mount's distance behind its branch is a measurement, not a finding. Every
+finding's action is a person's: move the edits upstream to the fork, or
+delete or rename the directory and re-mount. The check acts on nothing.
 
 ## Why the default path is the home path
 
@@ -164,7 +224,10 @@ The worked example is litlfred/test — an overlay with remote mounts, its
   to throw it away.** A re-mount leaves edited bytes untouched and reports them
   as missing. Move the edit upstream, or delete the directory and re-mount.
 - **Never mount over tracked files**, or over a directory that no lock says
-  this mount made. Both are refused.
+  this mount made, unless it is byte-identical to the pin (adopted, nothing
+  written but the lock). Anything else is refused, with the paths listed.
+- **Never pass `mount:update`'s consent flags on an agent's own
+  initiative.** They record a person's answer.
 - **Never read `missing` or `could-not-determine` as "that layer has nothing
   in it".** A layer that is not mounted is absent from every overlay.
 
