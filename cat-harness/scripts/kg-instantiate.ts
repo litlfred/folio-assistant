@@ -87,6 +87,7 @@ import {
   repoRootFor,
 } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
+import { INDEX_CONFIG_FILENAME, addIndexInstance, readIndexConfig } from "../schemas/index-config.js";
 import { type HarnessDeclaration, harnessDeclarationIn, readSnapshot } from "./subscribed-harnesses.js";
 
 const INSTANCE = join(import.meta.dir, "..");
@@ -294,6 +295,13 @@ export function instantiate(opts: InstantiateOptions): InstantiateResult {
   };
   written.push(configFile);
   if (!opts.dryRun) writeFileSync(configFile, `${JSON.stringify(config, null, 2)}\n`);
+  // With an `index.config.json` at the root, instantiation is its entry: the
+  // config alone would be an unlisted root config, which
+  // `check:landing-instance` fails on (skill `index-config`).
+  if (readIndexConfig(root).state === "ok") {
+    written.push(join(root, INDEX_CONFIG_FILENAME));
+    if (!opts.dryRun) addIndexInstance(root, { name: opts.harness });
+  }
   return { ok: true, state: "instantiated", configFile, stateDirs, written };
 }
 

@@ -100,9 +100,12 @@ describe("rootInstanceName — never the clone's folder name", () => {
 });
 
 describe("this repository", () => {
-  test("lands on cat-harness, flagged — `/` is unchanged", () => {
+  test("lands on cat-harness, named by index.config.json — `/` is unchanged", () => {
+    // Since 2026-10-07 the root `index.config.json` names the landing
+    // (`site.landing: "cat-harness"`); cat-harness.config.json still carries
+    // the flag, and both say the same thing.
     const r = resolveLandingInstance(join(import.meta.dir, "..", ".."));
     expect(r.kind === "instance" && r.name).toBe("cat-harness");
-    expect(r.kind === "instance" && r.by).toBe("flag");
+    expect(r.kind === "instance" && r.by).toBe("index");
   });
 });
