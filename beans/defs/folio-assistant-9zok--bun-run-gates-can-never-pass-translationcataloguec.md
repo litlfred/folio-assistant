@@ -1,7 +1,7 @@
 ---
 # folio-assistant-9zok
 title: bun run gates can NEVER pass translation:catalogue:check — it scrapes a command whose $base is a shell variable defined on an earlier line of the workflow
-status: in-progress
+status: completed
 type: task
 parent: folio-assistant-1xhc
 created_at: 2026-10-02T18:56:04Z
@@ -62,15 +62,36 @@ broken. That is the `1xhc` shape: a gate that cannot pass stops discriminating.
 
 ## Done when
 
-- [ ] `gates.ts` either carries the `base` derivation with the command, or skips
+- [x] `gates.ts` either carries the `base` derivation with the command, or skips
       a command whose text contains an unexpandable shell variable and reports
       it as **not run** rather than as failed. Not-run and failed are different
       facts and this is exactly the distinction the rest of the runner keeps.
-- [ ] a check that no extracted gate command contains `$`-interpolation the
+      (Landed in commit `dd9eccd24d37` / PR #1915).
+- [x] a check that no extracted gate command contains `$`-interpolation the
       runner cannot satisfy, so the next workflow edit of this shape is caught
       at the point it is introduced rather than read as a content failure.
+      (Guarded by `cat-harness/scripts/tests/gates.test.ts` and
+      `test/gates-workflows.test.ts`).
 
 Found while running `gates` for bean `bbv3`. NOT caused by that change: it
 reproduces with the gate's own no-argument variant green in the same run.
+
+## Resolution
+
+Landed in PR #1915 (commit `dd9eccd24d37`):
+- `gates.ts` implements `carriesUnexpandedVariable`, `runnableGatesFrom`, and
+  `unresolvedGatesFrom`. Commands referencing unexpandable shell variables (such
+  as `$base`) are excluded from runnable gates and reported under
+  "COULD NOT BE EXTRACTED — not run, and not counted clean".
+- Comprehensive unit and integration tests added in
+  `cat-harness/scripts/tests/gates.test.ts` and `test/gates-workflows.test.ts`,
+  asserting clean partitioning, reporting of unresolved gates, and that no
+  unaccounted unrun commands exist.
+
+## Evidence
+
+- Commit `dd9eccd24d37` ("gates: a command whose shell variable was discarded is not a runnable gate (#1915)") on `main`.
+- `bun test cat-harness/scripts/tests/gates.test.ts test/gates-workflows.test.ts` (32 passing tests).
+- `bun test test/bean-store-hygiene.test.ts` (3 passing tests).
 
 _2026-10-07T04:51:03Z_ — Claimed by claude/9zok-gates-unresolved-variable — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
