@@ -13,6 +13,27 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import oxigraph from 'oxigraph';
 
+/**
+ * Run a SPARQL SELECT. `Store.query` is typed as the union over every query
+ * form (SELECT rows, ASK boolean, CONSTRUCT quads, serialized string), so a
+ * SELECT caller narrows it here, and anything else is an error, not an empty
+ * result.
+ */
+export function selectRows(store: oxigraph.Store, query: string): Map<string, oxigraph.Term>[] {
+  const out = store.query(query);
+  if (!Array.isArray(out) || (out.length > 0 && !(out[0] instanceof Map))) {
+    throw new Error('expected SELECT solutions from a SPARQL query');
+  }
+  return out as Map<string, oxigraph.Term>[];
+}
+
+/** The value a SELECT row binds to a variable the query always binds (not OPTIONAL). */
+export function bound(row: Map<string, oxigraph.Term>, name: string): string {
+  const term = row.get(name);
+  if (!term || !('value' in term)) throw new Error(`SPARQL row does not bind ?${name}`);
+  return term.value;
+}
+
 export interface ComplexSearchCriteria {
   text?: string;
   creator?: string;
@@ -238,14 +259,14 @@ export class IrisOxigraphEngine {
       ORDER BY DESC(?year) ?title
     `;
 
-    const rawRows = this.store.query(query);
+    const rawRows = selectRows(this.store, query);
     const results: SearchResultItem[] = [];
     for (const row of rawRows) {
       const yearVal = row.get('year')?.value;
       const pdfBytesVal = row.get('pdfBytes')?.value;
       results.push({
-        handle: row.get('handle').value,
-        title: row.get('title').value,
+        handle: bound(row, 'handle'),
+        title: bound(row, 'title'),
         creator: row.get('creator')?.value,
         issued: row.get('issued')?.value,
         year: yearVal ? parseInt(yearVal, 10) : undefined,
@@ -449,17 +470,17 @@ export class IrisOxigraphEngine {
       ORDER BY DESC(?year) ?title
     `;
 
-    const rawRows = this.store.query(query);
+    const rawRows = selectRows(this.store, query);
     const itemMap = new Map<string, SearchResultItem>();
 
     for (const row of rawRows) {
-      const handle = row.get('handle').value;
+      const handle = bound(row, 'handle');
       if (!itemMap.has(handle)) {
         const issued = row.get('issued')?.value;
         const yearVal = row.get('year')?.value;
         itemMap.set(handle, {
           handle,
-          title: row.get('title').value,
+          title: bound(row, 'title'),
           creator: row.get('creator')?.value,
           issued,
           year: yearVal ? parseInt(yearVal, 10) : undefined,
@@ -469,7 +490,7 @@ export class IrisOxigraphEngine {
           subjects: [],
           languages: [],
           pdfName: row.get('pdfName')?.value,
-          pdfBytes: row.get('pdfBytes')?.value ? parseInt(row.get('pdfBytes').value, 10) : undefined,
+          pdfBytes: row.get('pdfBytes')?.value ? parseInt(row.get('pdfBytes')!.value, 10) : undefined,
           copyrightGate: row.get('copyrightGate')?.value,
           govdoc: row.get('govdoc')?.value,
           isbn: row.get('isbn')?.value
@@ -498,8 +519,8 @@ export class IrisOxigraphEngine {
         FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
       }
     `;
-    for (const r of this.store.query(subjQuery)) {
-      const val = r.get('subject').value;
+    for (const r of selectRows(this.store, subjQuery)) {
+      const val = bound(r, 'subject');
       if (!item.subjects.includes(val)) {
         item.subjects.push(val);
       }
@@ -516,8 +537,8 @@ export class IrisOxigraphEngine {
         FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
       }
     `;
-    for (const r of this.store.query(langQuery)) {
-      const val = r.get('lang').value;
+    for (const r of selectRows(this.store, langQuery)) {
+      const val = bound(r, 'lang');
       if (!item.languages.includes(val)) {
         item.languages.push(val);
       }
@@ -609,13 +630,13 @@ export class IrisOxigraphEngine {
       `;
     }
 
-    const rows = this.store.query(query);
+    const rows = selectRows(this.store, query);
     const results: FacetResult[] = [];
     for (const row of rows) {
       results.push({
         facet: facetName,
-        value: row.get('val').value,
-        count: parseInt(row.get('count').value, 10)
+        value: bound(row, 'val'),
+        count: parseInt(bound(row, 'count'), 10)
       });
     }
     return results;
