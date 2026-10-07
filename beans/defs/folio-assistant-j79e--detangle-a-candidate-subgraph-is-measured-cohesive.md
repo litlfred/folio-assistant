@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j79e
 title: 'DETANGLE: a candidate subgraph is MEASURED (cohesive, low-cut), not chosen by taste — and the same process runs on modules, Lean and paper layout'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T08:14:40Z
-updated_at: 2026-09-23T16:32:08Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -85,3 +85,6 @@ a layering decision for the owner, not something this bean fills in.
 **Done-when status:** item 3 (repo-partition as an instance) is met. Items 1,
 2 and 4 were met by earlier work, with the classification now mechanical for
 `wrong-direction` only — by the owner's choice. Closing is the owner's call.
+
+## Completed
+All 5 acceptance criteria completed and verified. DETANGLE subgraph metric measurement implemented and enforced.

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Beans
+title: "Beans"
 nav_exclude: true
 renders:
   - beans
@@ -12,11 +12,13 @@ rendered-by: state-viewer
   hand-edit here is a change nothing else in the tree knows about.
 -->
 <style>
+.sv-page a:not(.fa-workplan a) { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+.sv-page a:not(.fa-workplan a):hover { text-decoration-thickness: 2px; }
 .sv-sub { margin: 0 0 1.5rem; font-size: 0.9rem; opacity: 0.85; }
 .sv-h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
   text-transform: uppercase; margin: 2rem 0 0.7rem; }
 .sv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
-.sv-list > li::before { content: none; }
+.sv-list > li::before, .sv-counts > li::before { content: none; }
 .sv-item { border: 1px solid rgba(127,127,127,0.4); border-radius: 8px; padding: 0.8rem 1rem; }
 .sv-item.is-here { border-color: currentColor; }
 .sv-item h2 { font-size: 1rem; margin: 0 0 0.2rem; }
@@ -24,7 +26,12 @@ rendered-by: state-viewer
 .sv-here { font-weight: 600; }
 .sv-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em;
   font-weight: 600; margin-left: 0.5rem; }
+.sv-counts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0 0; padding: 0; list-style: none; }
+.sv-count { border: 1px solid rgba(127,127,127,0.4); border-radius: 6px; padding: 0.4rem 0.7rem; min-width: 4.5rem; }
+.sv-count-v { display: block; font-size: 1.1rem; font-weight: 600; line-height: 1.25; }
+.sv-count-k { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; }
 </style>
+<div class="sv-page">
 <h1 id="beans">beans</h1>
 <p class="sv-sub">beans/ · beans</p>
 <div class="fa-workplan" data-fa-workplan data-fa-workplan-only="beans">
@@ -66,3 +73,4 @@ rendered-by: state-viewer
     <p>The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion.</p>
   </li>
 </ul>
+</div>
