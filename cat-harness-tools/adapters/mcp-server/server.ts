@@ -1050,7 +1050,7 @@ async function characterizeBranchChanges(diff: PaperDiff): Promise<BranchCharact
     return desc;
   }).join("\n");
 
-  const prompt = `You are a mathematical paper assistant. Characterize the changes between branch "${oneLineLabel(diff.base)}" and "${oneLineLabel(diff.head)}" for paper "${diff.paperId}".
+  const prompt = `You are a mathematical paper assistant. Characterize the changes between branch "${oneLineLabel(diff.base)}" and "${oneLineLabel(diff.head)}" for paper "${oneLineLabel(diff.paperId)}".
 
 Summary: +${diff.summary.added} added, -${diff.summary.removed} removed, ~${diff.summary.changed} changed, ${diff.summary.unchanged} unchanged blocks.
 
@@ -1151,7 +1151,7 @@ Feedback:
 - Priority: ${oneLineLabel(todo.priority, 40)}
 - Summary and detail, as the commenter wrote them:
 ${guardUntrusted(`Summary: ${todo.summary}\nDetail: ${todo.comment || "(none)"}`, "a feedback commenter")}
-- Assignee: ${todo.assignee}
+- Assignee: ${oneLineLabel(todo.assignee, 120)}
 
 Respond in JSON with exactly these fields:
 - "assessment": 1-2 sentence editorial assessment of the feedback
@@ -2808,7 +2808,7 @@ These become clickable buttons so users don't have to type. Make them specific t
           // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
           "folio": "The user is on the **folio landing page** — browsing the list of available papers. They may want an overview or help choosing what to read.",
         };
-        systemPrompt += `\n\n## Current view\n${viewDescriptions[vm] || `The user is in the **${vm}** view.`}`;
+        systemPrompt += `\n\n## Current view\n${viewDescriptions[vm] || `The user is in the **${oneLineLabel(vm, 60)}** view.`}`;
       }
 
       // Add context about the current block if available
@@ -2825,7 +2825,7 @@ These become clickable buttons so users don't have to type. Make them specific t
           systemPrompt += `\n\nBlocks currently visible on screen:\n${vbList}`;
         }
         if (ctx.paperId) {
-          systemPrompt += `\n\nPaper ID: ${ctx.paperId}`;
+          systemPrompt += `\n\nPaper ID: ${oneLineLabel(ctx.paperId)}`;
           // Eagerly fetch todos for the context block so LLM has them immediately
           if (ctx.blockLabel) {
             const rootName = ctx.blockLabel.replace(/^(def|thm|lem|prop|cor|rem|ex|conj):/, "");

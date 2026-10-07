@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:29:09Z
-updated_at: 2026-10-07T19:36:48Z
+updated_at: 2026-10-07T19:40:48Z
 parent: folio-assistant-ieum
 ---
 
@@ -60,3 +60,17 @@ All quotes of CaMeL, DataFilter, DefensiveTokens and GitHub were checked against
 | L1.6 | Evasion: full-width, soft hyphen, combining marks, `<\|im_start\|>`, `**System:**`, `> system:`, `\| python3`, `sudo bash`, `bash -c "$(curl`, `<img src>` exfiltration. | major | **answered** for those forms (NFKC fold, wider patterns). **accepted-as-cost**: confusables (Cyrillic о), HTML entities and %-escapes, base64 bodies, splitting across fields, and paraphrase. A pattern list cannot reach these, and the node says the screen is a tripwire, not a guarantee |
 | L1.7 | False positives that get a screen switched off: emoji ZWJ, RLM in Hebrew, `System: Ubuntu`, the bun install line, `<invoke>` in code samples, "you are now in a bad state". | major | **answered** for ZWJ and RLM/LRM. **accepted-as-cost** for the rest on free text, where a finding only adds a notice and never refuses. **open** for control fields, where it refuses (see L2) |
 | L1.8 | `strict:false` passes undeclared fields as clean; a bad `max` truncated silently and could split a surrogate pair. | minor | **answered** for `max` (RangeError, a cut marker, surrogate-safe). **accepted-as-cost** for `strict:false`: it is an explicit opt-out, and no caller uses it |
+
+
+### L2 — the wiring (generalise-the-fix, move 2)
+
+| # | finding | sev | status |
+|---|---|---|---|
+| L2.1 | Tool results and todo lists are JSON, where `\n` and `\"` hide line-anchored patterns, so the quarantine notice never fired on the main review-comment path (`get_todos`). The fence did still apply. | major | **answered**: `guardUntrusted` also screens the string leaves of JSON content |
+| L2.2 | Raw fields: legacy triage `Assignee` (commenter text), chat `viewMode` and `Paper ID`. | major | **answered**: `oneLineLabel` on all three |
+| L2.3 | `workflow_complete` refuses a legitimate control value that reads as prose (`ex:ignore-previous-instructions`, `facts:{finding:"…ignore all previous…"}`). There are 0 hits in this repo; real DMN facts are enums and numbers. | minor | **accepted-as-cost**: a fact that a decision table branches on should be an enum, not prose; record prose in the note |
+| L2.4 | The `[QUARANTINED]` prefix covered only the first line, and a multi-line note could forge a line-anchored claim record (`CLAIM_NOTE`). This predates the wiring. | minor | **answered**: notes are folded to one line before they are written |
+| L2.5 | `oneLineLabel` on git refs changes nothing practical; `paperId` and `documentId` were raw. | minor | **answered**: ids wrapped for consistency |
+| L2.6 | Nothing broke: no client parses chat tool results. 196 of 197 tests pass; the one failure is an unrelated timeout that passes alone. | — | — |
+
+Scope sweep by the lens: no model call site is missed. `.github/scripts/agent_review.py` is the one sink outside the wired files, and it is listed as **open**.

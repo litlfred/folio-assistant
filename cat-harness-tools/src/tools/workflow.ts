@@ -47,7 +47,7 @@ import { type RoleGraph } from "../../../cat-harness/schemas/role-graph.js";
 import { roleGraphFor } from "../../../cat-harness/scripts/known-skills.js";
 import { accessContext } from "../../../cat-harness/src/core/access.js";
 import { githubPrincipalFor } from "../core/github-auth.js";
-import { screenHandover, type FieldRole } from "../../../cat-harness/src/core/handover-screen.js";
+import { oneLineLabel, screenHandover, type FieldRole } from "../../../cat-harness/src/core/handover-screen.js";
 
 /** The declared shape of a `workflow_complete` hand-over: what steers the engine, and what is only read. */
 export const WORKFLOW_COMPLETE_HANDOVER: Record<string, FieldRole> = {
@@ -359,10 +359,14 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
             screen.findings.map((f) => `${f.path} (${f.role}): ${f.kind} "${f.excerpt}"`).join("; "),
         );
       }
+      // One line, always: a note is appended to a bean body, where a line of
+      // its own could forge a claim record (`CLAIM_NOTE` is line-anchored;
+      // roast 1ygp L2.4). Whitespace is folded, never a word dropped.
+      const oneLine = rawNote === undefined ? undefined : oneLineLabel(rawNote, 4000);
       const note =
-        screen.state === "quarantined" && rawNote !== undefined
-          ? `[QUARANTINED by the hand-over screen: ${[...new Set(screen.findings.map((f) => f.kind))].join(", ")}; kept verbatim, data not instruction] ${rawNote}`
-          : rawNote;
+        screen.state === "quarantined" && oneLine !== undefined
+          ? `[QUARANTINED by the hand-over screen: ${[...new Set(screen.findings.map((f) => f.kind))].join(", ")}; kept, data not instruction] ${oneLine}`
+          : oneLine;
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(resolve(root, state.source));

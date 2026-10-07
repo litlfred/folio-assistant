@@ -292,7 +292,7 @@ export class DocumentContent implements ContentSource {
       })
       .join("\n");
 
-    const prompt = `Characterize the changes between branch "${oneLineLabel(diff.base)}" and "${oneLineLabel(diff.head)}" for document "${diff.documentId}".
+    const prompt = `Characterize the changes between branch "${oneLineLabel(diff.base)}" and "${oneLineLabel(diff.head)}" for document "${oneLineLabel(diff.documentId)}".
 
 Summary: +${diff.summary.added} added, -${diff.summary.removed} removed, ~${diff.summary.changed} changed, ${diff.summary.unchanged} unchanged blocks.
 
