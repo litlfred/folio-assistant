@@ -1,0 +1,275 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    }
+  },
+  "@id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-08-26T08:29:23.017196Z",
+  "@graph": [
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A",
+      "name": "Point of service",
+      "fhir:code": "A",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A1",
+      "name": "Communication systems",
+      "fhir:code": "A1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A2",
+      "name": "Community-based information systems",
+      "fhir:code": "A2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A3",
+      "name": "Decision support systems",
+      "fhir:code": "A3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A4",
+      "name": "Diagnostics information systems",
+      "fhir:code": "A4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A5",
+      "name": "Electronic medical record systems",
+      "fhir:code": "A5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A6",
+      "name": "Laboratory information systems",
+      "fhir:code": "A6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A7",
+      "name": "Personal health records",
+      "fhir:code": "A7",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A8",
+      "name": "Pharmacy information systems",
+      "fhir:code": "A8",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#A9",
+      "name": "Telehealth systems",
+      "fhir:code": "A9",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B",
+      "name": "Health system/Provider administration",
+      "fhir:code": "B",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B1",
+      "name": "Blood bank information management systems",
+      "fhir:code": "B1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B2",
+      "name": "Health finance-related information systems",
+      "fhir:code": "B2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B3",
+      "name": "Health program monitoring systems",
+      "fhir:code": "B3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B4",
+      "name": "Human resource information systems",
+      "fhir:code": "B4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B5",
+      "name": "Learning and training systems",
+      "fhir:code": "B5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B6",
+      "name": "Logistics management information systems (LMIS)",
+      "fhir:code": "B6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B7",
+      "name": "Patient Administration systems",
+      "fhir:code": "B7",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#B8",
+      "name": "Research information systems",
+      "fhir:code": "B8",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C",
+      "name": "Registries and Directories",
+      "fhir:code": "C",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C1",
+      "name": "Census and population information systems",
+      "fhir:code": "C1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C2",
+      "name": "Civil registration and vital statistics (CRVS) systems",
+      "fhir:code": "C2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C3",
+      "name": "Facility management information systems",
+      "fhir:code": "C3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C4",
+      "name": "(Health) Facility registries",
+      "fhir:code": "C4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C5",
+      "name": "Health worker registry",
+      "fhir:code": "C5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C6",
+      "name": "Identification registries and directories",
+      "fhir:code": "C6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C7",
+      "name": "Immunization information systems",
+      "fhir:code": "C7",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C8",
+      "name": "Master patient index",
+      "fhir:code": "C8",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C9",
+      "name": "Product catalogues",
+      "fhir:code": "C9",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C10",
+      "name": "Public Key directories",
+      "fhir:code": "C10",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#C11",
+      "name": "Terminology and classification systems",
+      "fhir:code": "C11",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D",
+      "name": "Data Management services",
+      "fhir:code": "D",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D1",
+      "name": "Analytics Systems",
+      "fhir:code": "D1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D2",
+      "name": "Data interchange and interoperability",
+      "fhir:code": "D2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D3",
+      "name": "Data warehouses",
+      "fhir:code": "D3",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D4",
+      "name": "Environmental monitoring systems",
+      "fhir:code": "D4",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D5",
+      "name": "Geographic information systems (GIS)",
+      "fhir:code": "D5",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D6",
+      "name": "Health Management Information systems (HMIS)",
+      "fhir:code": "D6",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D7",
+      "name": "Knowledge management systems",
+      "fhir:code": "D7",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#D8",
+      "name": "Shared Health Record and Health Information Repository",
+      "fhir:code": "D8",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#E",
+      "name": "Surveillance and Response",
+      "fhir:code": "E",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#E1",
+      "name": "Emergency preparedness and response systems",
+      "fhir:code": "E1",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    },
+    {
+      "id": "http://smart.who.int/base/ValueSet-CDSCv2.jsonld#E2",
+      "name": "Public health and disease surveillance systems",
+      "fhir:code": "E2",
+      "fhir:CodeSystem": "http://smart.who.int/base/CodeSystem-CDSCv2"
+    }
+  ]
+}

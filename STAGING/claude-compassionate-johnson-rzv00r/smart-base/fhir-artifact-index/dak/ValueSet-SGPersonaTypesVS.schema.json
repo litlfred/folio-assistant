@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-SGPersonaTypesVS.schema.json",
+  "title": "Smart Guidelines Persona Types Value Set Schema",
+  "description": "JSON Schema for Smart Guidelines Persona Types Value Set ValueSet codes. Generated from FHIR expansions using IRI format.",
+  "type": "string",
+  "enum": [
+    "http://smart.who.int/base/CodeSystem/SGPersonaTypes#key",
+    "http://smart.who.int/base/CodeSystem/SGPersonaTypes#related",
+    "http://smart.who.int/base/CodeSystem/SGPersonaTypes#system",
+    "http://smart.who.int/base/CodeSystem/SGPersonaTypes#hardware"
+  ],
+  "narrative": "This schema validates IRI-formatted codes for the Smart Guidelines Persona Types Value Set ValueSet. Each enum value includes the system URI in the format {systemuri}#{code} to match JSON-LD enumeration IRIs. Display values are available at http://smart.who.int/base/ValueSet-SGPersonaTypesVS.displays.json. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "fhir:displays": "http://smart.who.int/base/ValueSet-SGPersonaTypesVS.displays.json",
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/SGPersonaTypesVS",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-08-26T08:29:22.806764"
+}
