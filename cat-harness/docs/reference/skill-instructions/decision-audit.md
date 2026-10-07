@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/decision-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/decision-audit.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/decision-audit.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/decision-audit.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/decision-audit.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # A decision is not a finding, and neither is a substitute for the other
@@ -100,8 +100,6 @@ are good.
 
 | process | step(s) that name it |
 |---|---|
-| [CRDM close-out](../../processes/crdm-close.html) | Confirm all criteria met |
-| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Sign off on requirements |
 | [Options analysis](../../processes/options-analysis.html) | Record the recommendation AND the rejected options |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Adopt, hold or decline |
 | [Content Change and Review](../../processes/content-change-review.html) | Approve |

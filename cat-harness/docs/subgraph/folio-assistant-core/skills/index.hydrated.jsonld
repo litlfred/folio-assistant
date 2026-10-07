@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
-      "fileCount": 80,
+      "fileCount": 85,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -79,6 +79,24 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 157,
+              "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
+              "name": "block-actions",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/36523bf229f512b032cc74470963106b3d05689e949abd268e97d36bdc8b5da8",
+                "bytes": 8307,
+                "sha256": "36523bf229f512b032cc74470963106b3d05689e949abd268e97d36bdc8b5da8"
+              },
+              "title": "Block actions: [edit] and [feedback] on every block"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-authoring",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -105,14 +123,14 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
-              "instructionLines": 82,
+              "instructionLines": 115,
               "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
               "name": "document-publishing",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/078453880e1c8cb5171ed7069cde0a704bffba019244d475def34a99c062512d",
-                "bytes": 3397,
-                "sha256": "078453880e1c8cb5171ed7069cde0a704bffba019244d475def34a99c062512d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/275daac470176c81c1251a78d39ae218a04c95426d98f0f753f9a62b0afc3261",
+                "bytes": 5414,
+                "sha256": "275daac470176c81c1251a78d39ae218a04c95426d98f0f753f9a62b0afc3261"
               },
               "title": "document-publishing"
             },
@@ -162,14 +180,14 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
-              "instructionLines": 310,
+              "instructionLines": 345,
               "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
               "name": "public-comment",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/153ad2fafc3b24dc78cfcc834c7c0f69c9a4388e9683f2cd45335af87fa7ffc8",
-                "bytes": 16941,
-                "sha256": "153ad2fafc3b24dc78cfcc834c7c0f69c9a4388e9683f2cd45335af87fa7ffc8"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e4d52d30a78aa11c087c3a86cca3b900e3fb4f0859d09d6234ebb923c98b4283",
+                "bytes": 19536,
+                "sha256": "e4d52d30a78aa11c087c3a86cca3b900e3fb4f0859d09d6234ebb923c98b4283"
               },
               "title": "public-comment"
             }
@@ -179,6 +197,53 @@
           ],
           "name": "skills/content/folio-document-adapter",
           "path": "skills/content/folio-document-adapter/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/requirements-planning/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/plan-request-gate",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "When somebody asks for a PLAN — \"plan\", \"approach\", \"proposal\", \"how would you\", \"come up with\" — produce a requirements document and a work plan, post or commit them where the governing methodology says, hand over both as absolute GitHub permalinks, and STOP until sign-off is recorded on the issue. Applies to content requests as much as to feature requests. The operation both requirements methodologies (crdm, spec-kit) point at; neither is replaced by it.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 151,
+              "instructionsPath": "skills/content/requirements-planning/plan-request-gate.md",
+              "name": "plan-request-gate",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544",
+                "bytes": 7712,
+                "sha256": "416da2f14f568836dcd2c106c1452421186bf3d4634a5928eec0ea06a5e71544"
+              },
+              "title": "A plan request stops at a signed-off plan"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/requirement-definition",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "What a requirement IS, said once for both requirements methodologies: a statement, a conformance level, a source, at least one success criterion with its verification method, and a sign-off owner. How that maps onto the `req:` schema's `successCriteria`, onto CRDM's REQ-### and spec-kit's FR/SC, and why a work plan is beans whose `## Done when` is copied from the success criteria of the statements they name.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 141,
+              "instructionsPath": "skills/content/requirements-planning/requirement-definition.md",
+              "name": "requirement-definition",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58",
+                "bytes": 7121,
+                "sha256": "35baa8c21e25fbd966e756a8a273ad59776d57f721e6010a807065f267d4be58"
+              },
+              "title": "One definition of a requirement"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/content/requirements-planning",
+          "path": "skills/content/requirements-planning/"
         }
       ],
       "holdsGraph": [
@@ -397,15 +462,33 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-              "instructionLines": 488,
+              "instructionLines": 493,
               "instructionsPath": "skills/library/ingestion/document-intake.md",
               "name": "document-intake",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9ce37cd93fe0c0d7e24fcd8e50b95ce5b94d0a3c842994c77df34804ba82fd7f",
-                "bytes": 23138,
-                "sha256": "9ce37cd93fe0c0d7e24fcd8e50b95ce5b94d0a3c842994c77df34804ba82fd7f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/674c0b5e37e6ce1a13a3b367b7467d7ce01ebe3d13aeeb80b6fb74a1cc2d5555",
+                "bytes": 23507,
+                "sha256": "674c0b5e37e6ce1a13a3b367b7467d7ce01ebe3d13aeeb80b6fb74a1cc2d5555"
               },
               "title": "Document Intake"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-coverage",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 82,
+              "instructionsPath": "skills/library/ingestion/l1-coverage.md",
+              "name": "l1-coverage",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6a0acc933b91187ce797da9842b507dac1039cd3302ff250748d0591428bc1ad",
+                "bytes": 4167,
+                "sha256": "6a0acc933b91187ce797da9842b507dac1039cd3302ff250748d0591428bc1ad"
+              },
+              "title": "L1 coverage — nothing normative goes missing silently"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",
@@ -415,13 +498,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-              "instructionLines": 796,
+              "instructionLines": 839,
               "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
               "name": "l1-document-ingestion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6aa3801237a3e2a943143b3a4e1d54b2256d04a0e55aa20783f8c852d12c24d7",
-                "bytes": 45415,
-                "sha256": "6aa3801237a3e2a943143b3a4e1d54b2256d04a0e55aa20783f8c852d12c24d7"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c6e18a6fd4be1bd1efb98776d20905af59556e94438cf09df146f11faba1b8e9",
+                "bytes": 48172,
+                "sha256": "c6e18a6fd4be1bd1efb98776d20905af59556e94438cf09df146f11faba1b8e9"
               },
               "title": "L1 document ingestion"
             },

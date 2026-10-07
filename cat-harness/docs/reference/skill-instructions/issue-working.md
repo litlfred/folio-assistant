@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/issue-working.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/issue-working.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/issue-working.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/issue-working.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/issue-working.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Working an issue — announce, then re-check
@@ -115,6 +115,20 @@ update rather than a restatement of it. Measured on issue #2302 (2026-10-06):
 the owner asked for an issue update three times in one session — after the
 method comparison, after the figures work, and again for overall status —
 each time because the last one was hours and several milestones old.
+
+## A sign-off on the issue becomes a record
+
+Issue #2405 (FR-011). When a requirements document is signed off on its issue
+— approved, amended, rejected, deferred or cancelled — the comment is the
+**evidence**, not the record. The record is a `requirement-signoff`
+attestation in the `attestations` graph
+(`test/attestations/requirement-signoff/<set>.attestations.json`): who
+(`kind`, `id`, `actor`), `at`, `scope`, `outcome`, the `stage` it moves the
+requirement set to, the `reason`, and `evidence` — the comment's permalink,
+`…/issues/<n>#issuecomment-<id>`. A sign-off given in chat is quoted on the
+issue first, dated, so the evidence link exists. The agent writes the record
+of a person's decision; it never writes one for a decision nobody made, and
+`check:requirements` refuses `approved` or `accepted` without a `human` one.
 
 ## Before you publish that something does not exist (STRICT)
 

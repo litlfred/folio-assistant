@@ -149,6 +149,17 @@ describe("instantiate: writes the config and the state directories", () => {
 });
 
 describe("instantiate: refusals, each with its reason", () => {
+  test("a CONTENT subscription has nothing to instantiate (owner, 2026-10-06)", async () => {
+    const c = checkout();
+    const content = { name: "ig", directories: [{ id: "ig-docs", path: "docs/", graphTypologies: ["docs"] }] };
+    const r0 = await subscribe({ target: `litlfred/ig@${SHA}`, instance: c.host, fetch: serve(content) });
+    expect(r0.ok && r0.entry.kind).toBe("content");
+    const r = instantiate({ subscription: "ig", harness: "ig", instance: c.host });
+    expect(!r.ok && r.state).toBe("refused");
+    expect(!r.ok && r.reason).toMatch(/CONTENT Knowledge Graph/);
+    expect(existsSync(join(c.repo, "ig.config.json"))).toBe(false);
+  });
+
   test("no such subscription", async () => {
     const c = checkout();
     await subscribed(c);

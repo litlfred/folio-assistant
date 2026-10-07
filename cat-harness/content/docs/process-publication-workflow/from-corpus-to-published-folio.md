@@ -15,17 +15,17 @@ Three things to note:
 
 | Activity | Lane | Skill |
 |----------|------|-------|
-| Open or claim the release bean | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
-| Build the draft publication | Corpus + build pipeline | [`content-publish`](../reference/skills/content-publish.html) |
-| Run publication QA gates | Corpus + build pipeline | [`content-test`](../reference/skills/content-test.html) · [`quality-control`](../reference/skills/quality-control.html) |
+| Open or claim the release bean | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
+| Build the draft publication | Corpus + build pipeline | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Run publication QA gates | Corpus + build pipeline | [`content-test`]({{ site.baseurl }}/reference/skills/content-test.html) · [`quality-control`]({{ site.baseurl }}/reference/skills/quality-control.html) |
 | Editing and HCI validation | Editors + authoring agents | call activity → [diagram 3](#editing-and-the-hci-validation-gate) |
-| Circulate the draft | Publication manager | [`content-review`](../reference/skills/content-review.html) |
-| Review the draft publication | Review team | [`content-review`](../reference/skills/content-review.html) |
-| Clinical / scientific sign-off | SMEs | [`content-review`](../reference/skills/content-review.html) |
-| Open beans for the change requests | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) · [`content-feedback`](../reference/skills/content-feedback.html) |
-| Authorise the release | Programme manager | [`content-publish`](../reference/skills/content-publish.html) |
-| Version, tag and publish | Publication manager | [`content-publish`](../reference/skills/content-publish.html) · [`ig-publication`](../reference/skills/ig-publication.html) |
-| Close the release beans | Work plan | [`todo-manager`](../reference/skill-instructions/todo-manager.html) |
+| Circulate the draft | Publication manager | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Review the draft publication | Review team | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Clinical / scientific sign-off | SMEs | [`content-review`]({{ site.baseurl }}/reference/skills/content-review.html) |
+| Open beans for the change requests | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) · [`content-feedback`]({{ site.baseurl }}/reference/skills/content-feedback.html) |
+| Authorise the release | Programme manager | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) |
+| Version, tag and publish | Publication manager | [`content-publish`]({{ site.baseurl }}/reference/skills/content-publish.html) · [`ig-publication`]({{ site.baseurl }}/reference/skills/ig-publication.html) |
+| Close the release beans | Work plan | [`todo-manager`]({{ site.baseurl }}/reference/skill-instructions/todo-manager.html) |
 
 This diagram implements the `req:content-lifecycle` phase gates —
 `validate-before-review`, `review-before-test`, `test-before-publish`,

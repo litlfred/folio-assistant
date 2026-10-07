@@ -28,6 +28,12 @@
  * Tool, and governed by the `review-comments` skill, on the owner's ruling
  * *"make sure it is a Skill/Tool so process can be modified later"*: the
  * staging workflow only calls it.
+ *
+ * ## `block-actions` — bean `uphx`, REQ-17
+ *
+ * [edit] and [feedback] on every block of a document: the owner asked for it
+ * as common core functionality (2026-10-06), so the document build draws the
+ * links and this Tool hands them to an agent.
  */
 import { defineTool, type ToolDefinition } from "../../cat-harness/schemas/tool.js";
 import { toolTypeIri } from "../../cat-harness/schemas/tool-types.js";
@@ -61,6 +67,35 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "Renders only records a catalogue item names. Fields with no DCMI term keep a minted predicate in JSON-LD and are reduced to their DC element in XML. A non-`dc` schema field cannot appear in XML at all, and is listed in a header comment. Not OAI-PMH `oai_dc`.",
         cost: "Milliseconds per record. Reads the catalogue nodes and records; no network.",
+      },
+    }),
+    defineTool({
+      id: "block-actions",
+      title: "Block edit and feedback links",
+      description:
+        "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill (bean `uphx`, REQ-17).",
+      install: { none: true },
+      invoke: { shell: "bun run folio-assistant-core/scripts/block-actions.ts" },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio's repository root. Default: the working directory." },
+          { name: "block", schema: t("NodeId"), required: false, arg: { flag: "--block" }, description: "One block's label. Absent: every block of every document. A label no block has exits 1." },
+          { name: "github", schema: t("RepoFullName"), required: false, arg: { flag: "--github" }, description: "`owner/name` on GitHub. Default `GITHUB_REPOSITORY`, else the checkout's `origin`. None at all exits 2: no links rather than broken ones." },
+          { name: "edit-branch", schema: t("Branch"), required: false, arg: { flag: "--edit-branch" }, description: "The branch [edit] opens. Default `main`." },
+          { name: "issue-template", schema: t("RepoPath"), required: false, arg: { flag: "--issue-template" }, description: "The issue form's file name under `.github/ISSUE_TEMPLATE/`. Default `block-feedback.yml`, used only if the folio has it." },
+        ],
+        outputs: [
+          { name: "links", schema: t("RepoPath"), description: "JSON on stdout: one `{ label, source, section, edit, feedback }` per block. A one-line summary goes to stderr." },
+        ],
+      },
+      satisfies: ["block-actions"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "A reader, reviewer or agent wants to propose a change to, or give feedback on, one block of a document folio, and needs the link that lands on that block rather than on the repository.",
+        limits:
+          "Builds URLs; it writes nothing to GitHub. Only labelled blocks get links. The issue form's fields are read by a line scan for `id:`, so a form must declare its ids plainly.",
+        cost: "Milliseconds: one walk of the document manifests. No network.",
       },
     }),
     defineTool({
@@ -189,6 +224,34 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "Counts only what reviewers recorded as verdicts. A block nobody tagged is uncovered even if somebody read it. A verdict on an older hash is reported as stale and not counted.",
         cost: "Reads three JSON files and one directory; one git commit with `--commit`.",
+      },
+    }),
+    defineTool({
+      id: "l1-coverage",
+      title: "L1 extraction coverage",
+      description:
+        "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009.",
+      install: { none: true },
+      invoke: { shell: "bun run folio-assistant-core/scripts/l1-coverage.ts" },
+      io: {
+        inputs: [
+          { name: "text", schema: t("RepoPath"), required: true, arg: { flag: "--text" }, description: "The publication's body text, page-tagged: `{\"pages\":[{\"page\":n,\"text\":\"…\"}]}` JSON, or plain text with a form feed between pages (what `pdftotext` writes). Headers, references and tables of contents are stripped by the caller." },
+          { name: "captured", schema: t("RepoPath"), required: true, arg: { flag: "--captured" }, description: "JSON `[{\"id\",\"text\"}]`: every statement the extraction captured, verbatim." },
+          { name: "exclusions", schema: t("RepoPath"), required: false, arg: { flag: "--exclusions" }, description: "JSON `[{location|text, reason, signedOffBy?, signedOffAt?}]`. An exclusion without `signedOffBy` is a proposal and leaves its sentence unaccounted." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write the report; stdout when absent." },
+        ],
+        outputs: [
+          { name: "report", schema: t("RepoPath"), description: "An `l1-coverage-report/v1` JSON report: definitionVersion, matchMethod, source and graph sha256, totals, pages[] and sentences[]. A per-page table goes to stderr." },
+        ],
+      },
+      satisfies: ["l1-coverage"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "An L1 extraction of a publication (recommendations, remarks, schedule entries) is about to be reviewed or promoted, and somebody needs to know — rather than assume — that no normative sentence was silently missed.",
+        limits:
+          "Matching is normalised substring, so a paraphrased capture reads as unaccounted. Body-text filtering is the caller's. The marker list is English.",
+        cost: "Reads three files; no network.",
       },
     }),
     // Moved here from cat-harness/tools/index.ts on 2026-10-06 (bean `0r7u`

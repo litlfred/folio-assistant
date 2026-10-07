@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > 安装只是相对容易的一半。在**推送之前**需要运行的是
-> [`platform-gates`](../../reference/skill-instructions/platform-gates.html) ——
+> [`platform-gates`]({{ '/reference/skill-instructions/platform-gates.html' | relative_url }}) ——
 > `bun test` 通过并不代表关卡通过，而且关卡列表是从 CI
 > 工作流中派生出来的，而非写死的规程。如果你是在已有仓库之上搭建
 > folio-assistant，请先阅读
-> [`repo-conversion`](../../reference/skill-instructions/repo-conversion.html)。
+> [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.html' | relative_url }})。
 
 ## 前置要求
 
@@ -117,7 +117,7 @@ bun run lint           # eslint
 ```sh
 # 目标文件名以你的实例命名 —— 例如 `my-folio.config.json`，而不是一个固定单词。
 # 示例文件保留其自身名称：这就是它的称谓。
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

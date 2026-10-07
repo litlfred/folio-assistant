@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/turn-reporting.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/turn-reporting.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/turn-reporting.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/turn-reporting.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/turn-reporting.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Turn reporting — say which bean you are on, every turn
@@ -165,6 +165,16 @@ overruled.
 
 **7. Report unclaimed work as unclaimed.** If you did durable work without a
 bean, say so and open one; that omission is the failure this exists to catch.
+
+**8. A link to a file is an absolute GitHub permalink** —
+`https://github.com/<owner>/<repo>/blob/<sha>/<path>`, pinned to a commit sha,
+never a repo-relative path and never a branch. A repo-relative path is not
+clickable when the reader's working directory is not that repository, and a
+branch link shows whatever was pushed since the reader was asked to look
+(issue #2405 FR-003, observed in the session that raised it). The rule and its
+reasons live with the plan-request operation, in the content layer:
+the `plan-request-gate` skill (`skill_fetch plan-request-gate`)
+§"Hand over both as permalinks".
 
 ### The worked failure
 

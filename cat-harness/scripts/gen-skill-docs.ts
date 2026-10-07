@@ -23,6 +23,8 @@
  * @covers skills, docs
  */
 
+import { markdownEditLink, repoOf } from "../src/core/edit-links.js";
+import { detectRepoUrl } from "../src/core/git-refs.js";
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
@@ -32,6 +34,10 @@ import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 import { stripInlineCode } from "../schemas/inline-code.ts";
 import { wrapRaw } from "./lib/liquid-raw.ts";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
+
+/** The repository the edit links name: this checkout's origin, else folio-assistant (bean v433). */
+const SKILL_DOCS_REPO = repoOf(detectRepoUrl(process.cwd()));
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -416,6 +422,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // packages when they moved up to their owning instance, by #1702's theme.
   "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
   "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
+  "requirements-planning": "Requirements planning (requirements-planning)",
   ingestion: "Document ingestion methods (ingestion)",
   // Bean `7eak`: rendering catalogue records as standard Dublin Core.
   catalogue: "Catalogue records — Dublin Core renderings (catalogue)",
@@ -854,8 +861,10 @@ function publishedLocation(
   //    `.md` only: an asset under the site tree is served at its own path.
   const fromSite = relative(SITE_ROOT, abs).split(sep).join("/");
   if (!fromSite.startsWith("../")) {
+    // A page's PUBLISHED path is Jekyll's answer, not its source path: the
+    // docs-folder pages publish under `docs/<instance>/` (bean `kc7k`).
     return fromSite.endsWith(".md")
-      ? `../../${fromSite.slice(0, -".md".length)}.html`
+      ? `../../${publishedPagePath(SITE_ROOT, fromSite)}`
       : `../../${fromSite}`;
   }
 
@@ -1060,7 +1069,7 @@ async function main(): Promise<void> {
       // so a reader who spotted a typo had to navigate to the file, find the
       // pencil, and then edit. This is the same target, one click instead of
       // three.
-      const editUrl = `https://github.com/litlfred/folio-assistant/edit/main/${sourcePath}`;
+      // The link itself is built by markdownEditLink below (bean v433).
 
       const page: string[] = [];
       page.push("---");
@@ -1112,7 +1121,7 @@ async function main(): Promise<void> {
       // are opposite instructions, and running them into one sentence is how
       // a reader ends up editing the generated copy anyway.
       if (sourcePath !== undefined) {
-        page.push(`> [${EDIT_GLYPH} Edit this page's source](${editUrl}){: .fa-edit-source }`);
+        page.push(`> ${markdownEditLink({ repo: SKILL_DOCS_REPO }, { source: sourcePath, text: `${EDIT_GLYPH} Edit this page's source`, className: "fa-edit-source" })}`);
       } else {
         page.push("> The source is not in this repository, so there is no edit link.");
       }
@@ -1151,7 +1160,7 @@ async function main(): Promise<void> {
   idx.push("");
   idx.push("For each skill's *typed input/output contract*, see the");
   idx.push("[Skill schema reference](../skills/); for the conceptual overview of skills,");
-  idx.push("roles, and how they compose with the LLM, see [Skills & roles](../../skills.html).");
+  idx.push(`roles, and how they compose with the LLM, see [Skills & roles](../../${publishedPagePath(SITE_ROOT, "skills")}).`);
   idx.push("");
   for (const group of GROUPS) {
     const rows = indexRows[group.category];

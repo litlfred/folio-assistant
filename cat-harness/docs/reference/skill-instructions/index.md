@@ -218,6 +218,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | [schema](../skills/crdm-detect.html) | Detect when a user request is a **feature request** (platform capability change) |
 | [Phase 4](crdm-impact-analysis.html) | `crdm-impact-analysis` | — | This skill expands the Phase 4 summary in `crdm-requirements-workflow.md`. |
 | [Phase 1](crdm-needs-assessment.html) | `crdm-needs-assessment` | — | This skill expands the Phase 1 summary in `crdm-requirements-workflow.md`. |
+| [Requirements from a recorded walkthrough](crdm-recorded-walkthrough.html) | `crdm-recorded-walkthrough` | — | A walkthrough recording is the best source a CRDM round can have: the |
 | [Phase 3](crdm-requirements-template.html) | `crdm-requirements-template` | — | This skill expands the Phase 3 summary in `crdm-requirements-workflow.md`. |
 | [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
 
@@ -346,11 +347,19 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Block actions: [edit] and [feedback] on every block](block-actions.html) | `block-actions` | — | A reader who finds something wrong in a block should be one click from |
 | [document-authoring](document-authoring.html) | `document-authoring` | [schema](../skills/document-authoring.html) | Author a **document** folio: policy guidance, a standard, a report, a |
 | [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |
 | [normative-statements](normative-statements.html) | `normative-statements` | [schema](../skills/normative-statements.html) | Carry a **recommendation, requirement or rule** in a document folio — the |
 | [public-comment](public-comment.html) | `public-comment` | — | > Skill id: `public-comment` · Package: `folio-document-adapter` · Process: |
+
+## Requirements planning (requirements-planning)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [A plan request stops at a signed-off plan](plan-request-gate.html) | `plan-request-gate` | — | Issue [#2405](https://github.com/litlfred/folio-assistant/issues/2405), owner |
+| [One definition of a requirement](requirement-definition.html) | `requirement-definition` | — | Issue [#2405](https://github.com/litlfred/folio-assistant/issues/2405) FR-007 |
 
 ## Catalogue records — Dublin Core renderings (catalogue)
 
@@ -376,6 +385,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
+| [L1 coverage](l1-coverage.html) | `l1-coverage` | — | Issue [#2405](https://github.com/litlfred/folio-assistant/issues/2405) FR-009: |
 | [L1 document ingestion](l1-document-ingestion.html) | `l1-document-ingestion` | — | **This is a refinement, not the entry point.** The harness's |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 

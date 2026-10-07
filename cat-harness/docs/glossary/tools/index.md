@@ -12,14 +12,14 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 130 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 6 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 131 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 8 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 171 terms and is 123 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 175 terms and is 127 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>171</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>171</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>175</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>175</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">171</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">175</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -88,6 +88,13 @@ beans, by hand <span class="fa-gloss-status">candidate, extracted</span>
 <p>Read and write the same work plan without the CLI — <code>scripts/beans-fallback.ts</code>, or editing a bean's front matter directly. Equal standing to the CLI, not a degraded mode.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#beans-manual</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-tools--block-actions" data-fa-state="extracted" data-fa-gloss="">
+Block edit and feedback links <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on <code>main</code>, and [feedback] opens a new GitHub issue about the block, from the folio's <code>.github/ISSUE_TEMPLATE/block-feedback.yml</code> when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the <code>block-actions</code> skill (bean <code>uphx</code>, REQ-17).</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#block-actions</code></a></p>
+</dd>
 <dt id="smart-base--kg-tools--bpmn-to-fsh" data-fa-state="extracted" data-fa-gloss="">
 BPMN → FHIR Shorthand <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -127,6 +134,13 @@ Build the Latent Semantic Indexing index of a prose graph <span class="fa-gloss-
 
 <h2 id="letter-C">C</h2>
 <dl class="fa-gloss">
+<dt id="folio-assistant-sci--kg-tools--latex-image" data-fa-state="extracted" data-fa-gloss="">
+Compile LaTeX in a container <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Compile a rendered paper's <code>main.tex</code> with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#latex-image</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--workflow-complete" data-fa-state="extracted" data-fa-gloss="">
 Complete a step <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -313,6 +327,13 @@ Folio ChangeSet <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>What changed in a folio between two git refs, block by block: each block added, removed, or changed — and for a changed block, every aspect that applies (renamed, prose, manifest, moved). Keyed on the block label, which the <code>id-unique</code> / <code>id-stable</code> QA criteria guard, not on file paths.</p>
 <p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#folio-changeset</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--mcp-server-image" data-fa-state="extracted" data-fa-gloss="">
+folio MCP server, as a container <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image <code>deploy/</code> serves behind the auth gateway. Run it with <code>docker run -i --rm paper-assistant --stdio</code>, or <code>--http</code> on port 8080.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#mcp-server-image</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-comments" data-fa-state="extracted" data-fa-gloss="">
 Folio review comments <span class="fa-gloss-status">candidate, extracted</span>
@@ -534,6 +555,13 @@ Knowledge-graph export <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-L">L</h2>
 <dl class="fa-gloss">
+<dt id="folio-assistant-core--kg-tools--l1-coverage" data-fa-state="extracted" data-fa-gloss="">
+L1 extraction coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Of the normative sentences in a publication (the closed marker list of smart-kg's <code>docs/COVERAGE.md</code> §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009.</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#l1-coverage</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--l1-complete-check" data-fa-state="extracted" data-fa-gloss="">
 L1 source completeness <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/adjudication.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/adjudication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/adjudication.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/adjudication.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Adjudication — judgement, when the mechanism ran out of facts
@@ -85,6 +85,17 @@ So the split is **at the judgement**:
 |---|---|---|
 | entry condition, untainted dispatch, person-or-agent restriction | `adjudication.bpmn` | it must not vary, and restating it per caller is how it drifts |
 | the three QA-criterion outcomes, `A_RecordEntry`, the dispensation | `criterion-adjudication.bpmn` | it depends on what was asked |
+| a requirements document's sign-off: `approve amend reject defer cancel` (code list `adjudication-requirement-set`), `A_RecordSignoff`, `GW_SignoffRecorded` | `crdm-signoff.bpmn` (`BA_Signoff`), `crdm-close.bpmn` (`BA_Confirm`); spec-kit's adjudicated status by the same codes | the answer moves a requirement SET's stage (issue #2405, FR-013) |
+
+**The requirement-set caller records before it branches.** Every answer goes
+to `A_RecordSignoff`, which appends a `requirement-signoff` attestation (the
+`attestations` graph, `test/attestations/requirement-signoff/<set>.attestations.json`):
+who — `kind`, `id`, `actor`, the QA reviewer's identity fields — when, about
+what (the set or one member), the outcome, the stage it moves the set to, the
+reason and the permalink to the issue comment. `GW_SignoffRecorded` then reads
+the record BACK through `decisions/requirement-signoff-recorded.dmn`, with facts
+`check:requirements --signoff-facts <reqset:slug>` computes from the store, so a
+sign-off nobody recorded loops back rather than proceeding (SC-008).
 
 ### What that means when you call it
 
@@ -281,6 +292,8 @@ This skill has its own process: **[Adjudication](../../processes/adjudication.ht
 | [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
 | [Refresh materialized remote content](../../processes/refresh-materialized.html) | Adjudicate the conflict (calls a sub-process) |
 | [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
+| [CRDM close-out](../../processes/crdm-close.html) | Confirm all criteria met (calls a sub-process); Record the sign-off as a requirement-signoff attestation |
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Sign off on requirements (calls a sub-process); Record the sign-off as a requirement-signoff attestation |
 | [Adjudication](../../processes/adjudication.html) | Adjudicate the disagreement |
 | [Criterion adjudication](../../processes/criterion-adjudication.html) | Adjudicate the criterion disagreement (calls a sub-process); Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker's beneath it |
 | [Content Change and Review](../../processes/content-change-review.html) | Adjudicate the disagreement (calls a sub-process) |
