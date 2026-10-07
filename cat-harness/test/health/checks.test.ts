@@ -45,6 +45,8 @@ import {
   stagingSizeCheck,
   stagingSlug,
   todoStoreCheck,
+  remoteMountsCheck,
+  type RemoteMountRow,
   type BeanEvidence,
   type BranchEvidenceSet,
   type HealthContext,
@@ -74,6 +76,7 @@ function healthyContext(over: Partial<HealthContext> = {}): HealthContext {
     },
     todos: { state: "ok", value: [{ id: "t1", status: "open", createdAt: "2026-09-18" }] },
     specialBranches: { state: "ok", value: { rows: [], command: "fixture" } },
+    remoteMounts: { state: "ok", value: { rows: [], command: "fixture" } },
     ...over,
   };
 }
@@ -1407,5 +1410,63 @@ describe("membersFor — the table's resolution rule", () => {
   });
   it("nothing on the remote is a determined absence", () => {
     expect(membersFor(row("family", "cat/x/auto-docs/"), ["main"])).toEqual({ refs: [] });
+  });
+});
+
+describe("remote-mounts (owner, 2026-10-07; #2467)", () => {
+  const rows = (r: RemoteMountRow[]): Partial<HealthContext> => ({ remoteMounts: { state: "ok", value: { rows: r, command: "fixture" } } });
+  const base = { downstream: "down", detail: "d" };
+
+  it("no mounts declared is a determined clean", () => {
+    expect(remoteMountsCheck(healthyContext()).state).toBe("ok");
+  });
+
+  it("mounted and matching is clean; update-available is a measurement, never a finding", () => {
+    const r = remoteMountsCheck(
+      healthyContext(rows([{ ...base, instance: "core", state: "mounted" }, { ...base, instance: "core", state: "update-available", behind: 3, track: "main" }])),
+    );
+    expect(r.state).toBe("ok");
+    expect(r.measurements.find((m) => m.metric === "remote-mount-behind:core")).toMatchObject({ value: 3, unit: "commits" });
+  });
+
+  it("refused-not-identical fires, naming the differing and extra paths, and its action is a person's", () => {
+    const r = remoteMountsCheck(
+      healthyContext(rows([{ ...base, instance: "core", path: "core", state: "refused-not-identical", differing: ["core/scripts/run.ts"], extra: ["core/scripts/mine.ts"] }])),
+    );
+    expect(r.state).toBe("finding");
+    expect(r.findings[0]).toMatchObject({ metric: "remote-mount-refused-not-identical", severity: "major" });
+    expect(r.findings[0]!.summary).toContain("core/scripts/run.ts");
+    expect(r.findings[0]!.summary).toContain("core/scripts/mine.ts");
+    expect(r.findings[0]!.action).toContain("move the edits upstream");
+    expect(r.findings[0]!.action).toContain("delete or rename");
+  });
+
+  it("refused for trust, tracked or an absent directory each fire as refused-other", () => {
+    for (const reason of ["trust", "tracked", "absent-at-pin"]) {
+      const r = remoteMountsCheck(healthyContext(rows([{ ...base, instance: "core", state: "refused-other", reason }])));
+      expect(r.findings[0]).toMatchObject({ metric: "remote-mount-refused-other" });
+      expect(r.findings[0]!.summary).toContain(reason);
+    }
+  });
+
+  it("modified-since-mount fires, listing the edited paths", () => {
+    const r = remoteMountsCheck(healthyContext(rows([{ ...base, instance: "base", state: "modified-since-mount", edited: ["base/schemas"] }])));
+    expect(r.findings[0]).toMatchObject({ metric: "remote-mount-modified-since-mount" });
+    expect(r.findings[0]!.summary).toContain("base/schemas");
+  });
+
+  it("could-not-determine is never clean, and keeps the findings beside it", () => {
+    const r = remoteMountsCheck(
+      healthyContext(rows([{ ...base, instance: "a", state: "could-not-determine", detail: "no lock" }, { ...base, instance: "b", state: "modified-since-mount", edited: ["b/x"] }])),
+    );
+    expect(r.state).toBe("unknown");
+    expect(r.reason).toContain("no lock");
+    expect(r.findings).toHaveLength(1);
+    expect(HealthReportSchema.shape.checks.element.safeParse(r).success).toBe(true);
+  });
+
+  it("an unknown probe is unknown, with its reason", () => {
+    const r = remoteMountsCheck(healthyContext({ remoteMounts: { state: "unknown", reason: "declaration unreadable" } }));
+    expect(r).toMatchObject({ state: "unknown", reason: "declaration unreadable" });
   });
 });

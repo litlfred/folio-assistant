@@ -174,6 +174,7 @@ describe("the issue body", () => {
       beans: { state: "ok", value: [{ id: "b1", title: "one", status: "todo" }] },
       todos: { state: "ok", value: [] },
       specialBranches: { state: "ok", value: { rows: [], command: "fixture" } },
+      remoteMounts: { state: "ok", value: { rows: [], command: "fixture" } },
     };
   }
 

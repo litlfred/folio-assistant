@@ -45,6 +45,8 @@ import {
   nodeOfKind as todoNodeOfKind,
   parseTodoGraph,
 } from "../../schemas/todo-graph.ts";
+import { mountHealth } from "../../scripts/mount-update.ts";
+import { declaringInstances } from "../../scripts/remote-mount.ts";
 import {
   stagingSlug,
   type BranchEvidence,
@@ -55,6 +57,7 @@ import type {
   DoneWhenState,
   HealthContext,
   Probe,
+  RemoteMountEvidence,
   RepoSizeEvidence,
   SpecialBranchBudget,
   SpecialBranchEvidence,
@@ -995,6 +998,24 @@ export function probeSpecialBranches(o: SpecialBranchProbeOptions): Probe<Specia
 }
 
 /** Gather everything the registry needs. Never throws; every failure is a `reason`. */
+/**
+ * Every remote mount any instance in the checkout declares, judged from the
+ * lock and the disk, plus each tracked branch's distance (network). An
+ * unreadable declaration is `unknown` for the whole probe: it may be the one
+ * that declares mounts. Reads only; never mounts, never fetches into the
+ * checkout.
+ */
+export function probeRemoteMounts(repoRoot: string, opts: { network?: boolean } = {}): Probe<RemoteMountEvidence> {
+  try {
+    const { roots, unreadable } = declaringInstances(repoRoot);
+    if (unreadable.length) return { state: "unknown", reason: `unreadable declaration(s), which may declare mounts: ${unreadable.map((u) => `${u.root}: ${u.why}`).join("; ")}` };
+    const rows = roots.flatMap((r) => mountHealth(r, { network: opts.network }));
+    return { state: "ok", value: { rows, command: "remoteMounts × <name>.mount-lock.json × disk (scripts/mount-update.ts mountHealth)" } };
+  } catch (e) {
+    return { state: "unknown", reason: `could not read the remote mounts: ${(e as Error).message}` };
+  }
+}
+
 export async function gatherContext(o: GatherOptions): Promise<HealthContext> {
   const slug = originSlug(o.repoRoot);
   const remote = o.remote ?? "origin";
@@ -1025,6 +1046,7 @@ export async function gatherContext(o: GatherOptions): Promise<HealthContext> {
     repoSize: probeRepoSize(o.repoRoot),
     beans: probeBeans(o.repoRoot),
     todos: probeTodos(o.repoRoot),
+    remoteMounts: probeRemoteMounts(o.repoRoot),
     // Last, after every probe that reads `FETCH_HEAD`, although it fetches into
     // private refs and would not disturb them anyway.
     specialBranches: probeSpecialBranches({

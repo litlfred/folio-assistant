@@ -25,6 +25,7 @@ import { RemoteSourceSchema, resolveSubgraphSource } from "../../schemas/subgrap
 import { MountLockSchema, mountedInstanceRoots, mountedManifests } from "../../schemas/remote-mount.ts";
 import { readScriptTable } from "../../schemas/script-table.ts";
 import { unresolvedVerdict } from "../run-script.ts";
+import { mountHealth } from "../mount-update.ts";
 import { checkRemote, exitCode, mountRemote, planRemote, remoteFanOut, summarise } from "../remote-mount.ts";
 import { run as replayLocks } from "../mount-from-lock.ts";
 import { gitCorpus } from "../../schemas/git-corpus.ts";
@@ -451,6 +452,36 @@ describe("adopt if identical (owner, 2026-10-07; #2467)", () => {
     writeFileSync(join(root, "core/package.json"), "{}\n");
     const core = mountRemote({ instanceRoot: root, urlFor }).plan.outcomes.find((o) => o.instance === "core")!;
     expect(core).toMatchObject({ refusal: "not-identical", differing: ["core/package.json"] });
+  });
+
+  test("25b. the health rows and the mount report agree: same state, same paths", () => {
+    const root = unlockedCopy();
+    writeFileSync(join(root, "core/scripts/run.ts"), "export const doubled = 0;\n");
+    write(root, { "core/scripts/local.ts": "x\n" });
+    const core = mountRemote({ instanceRoot: root, urlFor }).plan.outcomes.find((o) => o.instance === "core")! as { differing?: string[]; extra?: string[] };
+    const rows = mountHealth(root, { network: false });
+    const row = rows.find((r) => r.instance === "core")!;
+    expect(row).toMatchObject({ state: "refused-not-identical", differing: core.differing, extra: core.extra });
+    expect(row.differing).toEqual(["core/scripts/run.ts"]);
+    expect(row.extra).toEqual(["core/scripts/local.ts"]);
+    // `base` and `boot` sit in the copy as instances of the checkout, so the
+    // closure reads them as LOCAL (unchanged rule): an answer, not a mount row.
+    expect(rows.map((r) => r.instance)).toEqual(["core"]);
+  });
+
+  test("25d. health: mounted and matching, then modified-since-mount with the edited path", () => {
+    const root = downstream({});
+    mountRemote({ instanceRoot: root, urlFor });
+    expect(mountHealth(root, { network: false }).every((r) => r.state === "mounted")).toBe(true);
+    writeFileSync(join(root, "base/schemas/util.ts"), "export const answer = 0;\n");
+    expect(mountHealth(root, { network: false }).find((r) => r.instance === "base")).toMatchObject({ state: "modified-since-mount", edited: ["base/schemas"] });
+  });
+
+  test("25c. health: a refused trust is refused-other; no lock is could-not-determine", () => {
+    const root = downstream({ trust: undefined });
+    expect(mountHealth(root, { network: false })[0]).toMatchObject({ state: "could-not-determine" });
+    mountRemote({ instanceRoot: root, urlFor });
+    expect(mountHealth(root, { network: false }).find((r) => r.instance === "core")).toMatchObject({ state: "refused-other", reason: "trust" });
   });
 
   test("26. tracked files stay refused, adopt or not", () => {

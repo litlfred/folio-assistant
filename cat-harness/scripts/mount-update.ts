@@ -46,6 +46,7 @@
  * did not mount · 2 could not determine · 4 awaiting consent.
  */
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -283,6 +284,97 @@ export function applyUpdate(
     ? { state: "applied", detail: `re-pinned \`${harness}\` to ${tip.slice(0, 12)} on ${consent.by}'s consent, re-mounted and re-locked: ${sum.reason}` }
     : { state: sum.state === "could-not-determine" ? "could-not-determine" : "refused", detail: `re-pinned \`${harness}\` to ${tip.slice(0, 12)}, but the re-mount did not mount: ${mine.map((o) => `${o.instance} ${o.state}: ${o.detail}`).join("; ")}` };
 }
+
+// ── Health (the `remote-mounts` check's evidence) ────────────────────────────
+
+/**
+ * One row of the `remote-mounts` health check. Read from the declaration, the
+ * lock and the disk; for a mount with `track`, also the tracked branch's tip.
+ * Never writes.
+ */
+export interface MountHealthRow {
+  /** The declaring (downstream) instance. */
+  downstream: string;
+  /** The mounted instance, or the mount's harness when the row is about the mount as a whole. */
+  instance: string;
+  state: "mounted" | "refused-not-identical" | "refused-other" | "modified-since-mount" | "update-available" | "could-not-determine";
+  detail: string;
+  path?: string;
+  /** For `refused-other`: `trust` (H8), `tracked`, `absent-at-pin`, or `missing` (the upstream does not hold it). */
+  reason?: string;
+  differing?: string[];
+  extra?: string[];
+  /** For `modified-since-mount`: the mounted paths whose bytes no longer match the lock. */
+  edited?: string[];
+  /** For `update-available`. */
+  behind?: number;
+  track?: string;
+}
+
+/**
+ * The health of every remote mount `instanceRoot` declares. `network: false`
+ * skips the tracked-branch question (and says so in no row: an untracked
+ * check is simply not asked). Reads only.
+ */
+export function mountHealth(instanceRoot: string, opts: { network?: boolean; urlFor?: UrlFor } = {}): MountHealthRow[] {
+  const decl = readDeclaration(instanceRoot);
+  const mounts = decl?.remoteMounts ?? [];
+  if (!decl || mounts.length === 0) return [];
+  const downstream = decl.name;
+  const lock = readMountLock(join(instanceRoot, mountLockFilename(downstream)));
+  if (!lock.ok) {
+    return mounts.map((m) => ({
+      downstream,
+      instance: m.harness,
+      state: "could-not-determine" as const,
+      detail: lock.absent ? "declared, and no lock: never mounted here — run `bun run cat mount:remote`" : `the lock cannot be read: ${lock.why}`,
+    }));
+  }
+  const rows: MountHealthRow[] = [];
+  const stale = new Set(mounts.filter((m) => !lock.lock.mounts.some((l) => l.harness === m.harness && l.repository === m.repository && l.ref === m.ref)).map((m) => m.harness));
+  for (const h of stale) rows.push({ downstream, instance: h, state: "could-not-determine", detail: "the lock was written for another pin than the declaration names — run `bun run cat mount:remote`" });
+  const refusedHere = new Set<string>();
+  for (const u of lock.lock.unmounted) {
+    if (u.state === "local" || u.state === "skipped") continue; // answers, not mounts this downstream lays down
+    refusedHere.add(u.instance);
+    if (u.state === "could-not-determine" && u.refusal === undefined) {
+      rows.push({ downstream, instance: u.instance, state: "could-not-determine", detail: u.detail });
+    } else if (u.refusal === "not-identical") {
+      rows.push({ downstream, instance: u.instance, state: "refused-not-identical", detail: u.detail, differing: u.differing ?? [], extra: u.extra ?? [] });
+    } else {
+      rows.push({ downstream, instance: u.instance, state: "refused-other", detail: u.detail, reason: u.refusal ?? "missing" });
+    }
+  }
+  for (const i of lock.lock.instances) {
+    if (refusedHere.has(i.instance) || stale.has(i.via)) continue;
+    try {
+      const edited = modifiedSince(instanceRoot, i);
+      const d = join(instanceRoot, i.path, i.declaration.file);
+      const absent: string[] = [];
+      if (!existsSync(d)) absent.push(`${i.path}/${i.declaration.file}`);
+      else if (sha256(readFileSync(d)) !== i.declaration.sha256) edited.push(`${i.path}/${i.declaration.file}`);
+      for (const dir of i.directories) if (!existsSync(join(instanceRoot, dir.path))) absent.push(dir.path);
+      for (const a of i.assets ?? []) if (!existsSync(join(instanceRoot, a.path))) absent.push(a.path);
+      if (edited.length) rows.push({ downstream, instance: i.instance, path: i.path, state: "modified-since-mount", detail: `${edited.join(", ")} no longer match the lock`, edited });
+      else if (absent.length) rows.push({ downstream, instance: i.instance, path: i.path, state: "could-not-determine", detail: `locked but not laid down here (${absent.join(", ")}) — run \`bun run cat mount:lock\`` });
+      else rows.push({ downstream, instance: i.instance, path: i.path, state: "mounted", detail: `${i.repository}@${i.sha.slice(0, 12)}, matching the lock` });
+    } catch (e) {
+      rows.push({ downstream, instance: i.instance, path: i.path, state: "could-not-determine", detail: `could not read: ${(e as Error).message}` });
+    }
+  }
+  if (opts.network !== false) {
+    for (const m of mounts) {
+      if (!m.track) continue;
+      const r = planUpdate(instanceRoot, downstream, m, opts.urlFor ?? defaultUrlFor);
+      if (r.state === "could-not-determine") rows.push({ downstream, instance: m.harness, state: "could-not-determine", detail: `\`${m.track}\`: ${r.reason}`, track: m.track });
+      else if (r.state === "update-available")
+        rows.push({ downstream, instance: m.harness, state: "update-available", detail: `${r.behind} commits behind \`${m.track}\` (${m.ref.slice(0, 12)} → ${r.tip!.slice(0, 12)})`, behind: r.behind, track: m.track });
+    }
+  }
+  return rows;
+}
+
+const sha256 = (b: Buffer): string => createHash("sha256").update(b).digest("hex");
 
 if (import.meta.main) {
   const argv = process.argv.slice(2);

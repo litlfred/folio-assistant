@@ -219,6 +219,31 @@ export interface HealthContext {
   todos: Probe<TodoEvidence[]>;
   /** Every special branch the declaration names, with its budget and tip size. */
   specialBranches: Probe<SpecialBranchEvidence>;
+  /** Every declared remote mount, judged against its lock and the disk (and, with `track`, its branch). */
+  remoteMounts: Probe<RemoteMountEvidence>;
+}
+
+/**
+ * One remote mount's state, as `mountHealth` in `scripts/mount-update.ts`
+ * reports it. Restated as a type here so a fixture stays a literal.
+ */
+export interface RemoteMountRow {
+  downstream: string;
+  instance: string;
+  state: "mounted" | "refused-not-identical" | "refused-other" | "modified-since-mount" | "update-available" | "could-not-determine";
+  detail: string;
+  path?: string;
+  reason?: string;
+  differing?: string[];
+  extra?: string[];
+  edited?: string[];
+  behind?: number;
+  track?: string;
+}
+
+export interface RemoteMountEvidence {
+  rows: RemoteMountRow[];
+  command: string;
 }
 
 /** A special branch's size budget, as `branch-budgets.json` states it. */
@@ -1888,6 +1913,132 @@ export function todoStoreCheck(ctx: HealthContext): HealthCheckResult {
   return settle(id, summary, TODO_THRESHOLDS, measurements, findings);
 }
 
+// ── Remote mounts ───────────────────────────────────────────────
+
+export const REMOTE_MOUNT_THRESHOLDS: HealthThreshold[] = [
+  {
+    metric: "remote-mount-refused-not-identical",
+    value: 0,
+    unit: "count",
+    severity: "major",
+    basis:
+      "ZERO, not a calibration. Owner, 2026-10-07 (#2467, \"adopt if identical\"): a mount target that exists " +
+      "with no lock is adopted only when it is byte-identical to the pin; otherwise the mount refuses and the " +
+      "layer is absent from every overlay. One refusal is one missing layer. `major` rather than `critical` " +
+      "because the refusal writes nothing, so nothing is being lost — the bytes on disk are left as they are.",
+  },
+  {
+    metric: "remote-mount-refused-other",
+    value: 0,
+    unit: "count",
+    severity: "major",
+    basis:
+      "ZERO, for the same reason: a mount refused on trust (rule H8, no consent or signature for the pin), on " +
+      "tracked files, or on a declared directory absent at the pin is a layer that is not there. `major`: " +
+      "nothing is overwritten, so nothing is being lost.",
+  },
+  {
+    metric: "remote-mount-modified-since-mount",
+    value: 0,
+    unit: "count",
+    severity: "major",
+    basis:
+      "ZERO. A mounted directory whose bytes no longer hash to the lock holds edits that exist nowhere upstream; " +
+      "the mount, the replayer and `mount:update` all refuse to touch it, so the layer is frozen until a person " +
+      "moves the edits upstream or drops them. `major`, not `critical`: the edits are kept, not lost.",
+  },
+];
+
+/**
+ * Every declared remote mount: mounted and matching the lock, refused (with
+ * why, and for not-identical the differing and extra paths), modified since
+ * it was mounted, or could not be determined. `update-available` is reported
+ * as a measurement and is not a finding: a pin behind its tracked branch is
+ * the pin working as intended, until a person consents to move it.
+ *
+ * Owner, 2026-10-07 (#2467, PR #2468). The rows come from the same lock
+ * entries the mount report writes, so the two cannot disagree.
+ */
+export function remoteMountsCheck(ctx: HealthContext): HealthCheckResult {
+  const id = "remote-mounts";
+  const summary =
+    "Each declared remote mount against its lock and the disk: mounted, refused (not identical, trust, tracked, " +
+    "absent at the pin), modified since it was mounted, or could not be determined; and how far a tracked mount " +
+    "is behind its branch (informational).";
+  if (ctx.remoteMounts.state === "unknown") return unknownResult(id, summary, REMOTE_MOUNT_THRESHOLDS, ctx.remoteMounts.reason);
+  const { rows, command } = ctx.remoteMounts.value;
+  const of = (s: RemoteMountRow["state"]): RemoteMountRow[] => rows.filter((r) => r.state === s);
+  const notIdentical = of("refused-not-identical");
+  const other = of("refused-other");
+  const modified = of("modified-since-mount");
+  const cnd = of("could-not-determine");
+  const measurements: HealthMeasurement[] = [
+    { metric: "remote-mount-mounted", value: of("mounted").length, unit: "count", command },
+    { metric: "remote-mount-refused-not-identical", value: notIdentical.length, unit: "count", command },
+    { metric: "remote-mount-refused-other", value: other.length, unit: "count", command },
+    { metric: "remote-mount-modified-since-mount", value: modified.length, unit: "count", command },
+    { metric: "remote-mount-could-not-determine", value: cnd.length, unit: "count", command },
+    // Informational: how far each tracked mount is behind. Never a finding.
+    ...of("update-available").map((r) => ({
+      metric: `remote-mount-behind:${r.instance}`,
+      value: r.behind ?? 0,
+      unit: "commits",
+      command: `git rev-list --count <pin>..${r.track ?? "<track>"} (bun run cat mount:update)`,
+    })),
+  ];
+  const where = (r: RemoteMountRow): string => `\`${r.instance}\`${r.path ? ` at \`${r.path}/\`` : ""} (declared by \`${r.downstream}\`)`;
+  const list = (xs: string[] | undefined): string => (xs && xs.length ? (xs.length > 12 ? `${xs.slice(0, 12).join(", ")} and ${xs.length - 12} more` : xs.join(", ")) : "none");
+  const findings: HealthFinding[] = [];
+  for (const r of notIdentical) {
+    findings.push({
+      metric: "remote-mount-refused-not-identical",
+      severity: "major",
+      summary: `${where(r)}: refused-not-identical — the directory exists, no lock put it there, and it is not the pin's bytes. Differing: ${list(r.differing)}. Extra: ${list(r.extra)}.`,
+      action:
+        "A person decides whose bytes these are: move the edits upstream as a PR to the fork, or delete or rename " +
+        "the directory, then re-mount with `bun run cat mount:remote`. The sweep changes nothing.",
+    });
+  }
+  for (const r of other) {
+    const why =
+      r.reason === "trust"
+        ? "a person records consent for this exact pin in the declaration's `trust.consent` (an agent never does), then re-mount"
+        : r.reason === "tracked"
+          ? "move the tracked files out of the mount path (or rename the directory) in a commit, then re-mount"
+          : "fix the upstream declaration at the fork or choose a pin that holds the directory, then re-mount";
+    findings.push({
+      metric: "remote-mount-refused-other",
+      severity: "major",
+      summary: `${where(r)}: refused (${r.reason ?? "other"}) — ${r.detail}`,
+      action: `A person acts: ${why}. The sweep changes nothing.`,
+    });
+  }
+  for (const r of modified) {
+    findings.push({
+      metric: "remote-mount-modified-since-mount",
+      severity: "major",
+      summary: `${where(r)}: modified-since-mount — ${list(r.edited)} no longer match the lock.`,
+      action:
+        "A person moves the edits upstream as a PR to the fork and re-mounts, or deletes or renames the directory " +
+        "and re-mounts. Neither the mount nor `mount:update` will overwrite them, and neither does the sweep.",
+    });
+  }
+  if (cnd.length) {
+    // Three states: a mount that could not be judged is never clean, and
+    // outranks the findings beside it (they are kept, not hidden).
+    return {
+      id,
+      state: "unknown",
+      summary,
+      thresholds: REMOTE_MOUNT_THRESHOLDS,
+      measurements,
+      findings,
+      reason: cnd.map((r) => `${where(r)}: ${r.detail}`).join("; "),
+    };
+  }
+  return settle(id, summary, REMOTE_MOUNT_THRESHOLDS, measurements, findings);
+}
+
 // ── The registry ────────────────────────────────────────────────
 
 /**
@@ -1951,6 +2102,13 @@ export const HEALTH_CHECKS: readonly {
     id: "todo-store",
     summary: "Open and stale items in the human todo store.",
     run: todoStoreCheck,
+  },
+  {
+    id: "remote-mounts",
+    summary:
+      "Each declared remote mount against its lock: mounted, refused (not identical / trust / tracked / absent), " +
+      "modified since mount, or could not determine; tracked mounts' distance behind, informational. Acts on nothing.",
+    run: remoteMountsCheck,
   },
 ];
 
