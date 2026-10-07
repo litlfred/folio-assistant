@@ -116,7 +116,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Is the incremental IG AST what a full build would have produced?](ig-ast-delta-review.html) | 4 | — |
 | [Incremental IG build](ig-incremental-build.html) | 19 | — |
 | [L3 FHIR IG pipeline](l3-fhir-pipeline.html) | 8 | — |
-| [Getting started](getting-started.html) | 12 | — |
+| [Getting started](getting-started.html) | 13 | — |
 | [Authoring a document](authoring-a-document.html) | 9 | — |
 | [Content Change and Review](content-change-review.html) | 30 | — |
 | [Content lifecycle](content-lifecycle.html) | 8 | — |
