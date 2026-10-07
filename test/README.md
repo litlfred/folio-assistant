@@ -27,6 +27,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`compose-docs-checkout.test.ts`](compose-docs-checkout.test.ts) | a file |  |
 | [`content-holds-code-checkout.test.ts`](content-holds-code-checkout.test.ts) | a file |  |
 | [`detect-live-corpus-checkout.test.ts`](detect-live-corpus-checkout.test.ts) | a file |  |
+| [`contributions-root-sci-checkout.test.ts`](contributions-root-sci-checkout.test.ts) | a file |  |
 | [`directory-storage-checkout.test.ts`](directory-storage-checkout.test.ts) | a file |  |
 | [`dispatch-gates-can-pass.test.ts`](dispatch-gates-can-pass.test.ts) | a file |  |
 | [`document-kinds-viz-checkout.test.ts`](document-kinds-viz-checkout.test.ts) | a file |  |
@@ -77,12 +78,15 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`ns-document-resolves.test.ts`](ns-document-resolves.test.ts) | a file |  |
 | [`pair-cover-workflows.test.ts`](pair-cover-workflows.test.ts) | a file |  |
 | [`partition-names-checkout.test.ts`](partition-names-checkout.test.ts) | a file |  |
+| [`pipeline-plugins-sci-checkout.test.ts`](pipeline-plugins-sci-checkout.test.ts) | a file |  |
 | [`placement-pr1-content-up.test.ts`](placement-pr1-content-up.test.ts) | a file |  |
 | [`processes-viz-checkout.test.ts`](processes-viz-checkout.test.ts) | a file |  |
 | [`property-skills-checkout.test.ts`](property-skills-checkout.test.ts) | a file |  |
 | [`prov-jsonld-checkout.test.ts`](prov-jsonld-checkout.test.ts) | a file |  |
 | [`prov-qaqc-checkout.test.ts`](prov-qaqc-checkout.test.ts) | a file |  |
 | [`publish-instance-files-workflows.test.ts`](publish-instance-files-workflows.test.ts) | a file |  |
+| [`qa-checker-discovery-sci-checkout.test.ts`](qa-checker-discovery-sci-checkout.test.ts) | a file |  |
+| [`qa-criterion-source-file-sci-checkout.test.ts`](qa-criterion-source-file-sci-checkout.test.ts) | a file |  |
 | [`qa-results-workflows.test.ts`](qa-results-workflows.test.ts) | a file |  |
 | [`readme-sections-checkout.test.ts`](readme-sections-checkout.test.ts) | a file |  |
 | [`regen-after-merge-workflows.test.ts`](regen-after-merge-workflows.test.ts) | a file |  |

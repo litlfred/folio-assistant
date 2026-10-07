@@ -6,29 +6,35 @@
  * The code under test is cat-harness's, imported DOWN; what it is held against
  * is this instance's, so standing alone cat-harness has nothing for these to
  * read. The rest of that file's tests stay there.
+ *
+ * Then moved up again, to the aggregate's `test/` (bean `7zz1`, owner ruling
+ * 2026-10-06 "Top-level instance"): it walks EVERY instance in the checkout
+ * and the repository root's dependency tree, which also carries the `dak-*`
+ * checkers smart-base contributes, so standing alone folio-assistant-sci has
+ * neither (`seed:ready --layer folio-assistant-sci --rehearse`, 2026-10-07).
  */
 import { describe, test, expect } from "bun:test";
 import { readFileSync, readdirSync, existsSync } from "fs";
 import { resolve, join } from "path";
 
-import { QA_CRITERIA_REGISTRY } from "../../../cat-harness/content/pipeline/qa-criteria-registry.ts";
-import { checkerFunctionName } from "../../../cat-harness/content/pipeline/qa-checker-discovery.ts";
+import { QA_CRITERIA_REGISTRY } from "../cat-harness/content/pipeline/qa-criteria-registry.ts";
+import { checkerFunctionName } from "../cat-harness/content/pipeline/qa-checker-discovery.ts";
 import {
   isCriterionSourceMiss,
   resolveCriterionSource,
-} from "../../../cat-harness/content/pipeline/criterion-source.ts";
-import { instanceRootsIn } from "../../../cat-harness/schemas/cat-harness.ts";
-import { loadContributions } from "../../../cat-harness/schemas/harness-config.ts";
+} from "../cat-harness/content/pipeline/criterion-source.ts";
+import { instanceRootsIn } from "../cat-harness/schemas/cat-harness.ts";
+import { loadContributions } from "../cat-harness/schemas/harness-config.ts";
 import {
   ContributionRegistry,
   type FolioContribution,
-} from "../../../cat-harness/schemas/contributions.ts";
+} from "../cat-harness/schemas/contributions.ts";
 
 /**
  * The directory this test was written in (`cat-harness/scripts/tests/`): every path below
  * is composed from it exactly as it was before the move, so nothing it reads changed.
  */
-const ORIGIN_DIR = join(import.meta.dir, "../../../cat-harness/scripts/tests");
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
 
 const ROOT = resolve(ORIGIN_DIR, "../..");
 const REPO = resolve(ROOT, "..");
