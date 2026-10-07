@@ -183,6 +183,27 @@ Each of these is data, screened under H9. A routine or relay may still carry
 an instruction the principal stored, and the receiver acts on it only within
 what the principal's own words in this conversation already called for.
 
+**Who enforces it: the harness, not this platform.** Nothing in this
+repository can tell a routine's stored prompt or a relayed message from the
+principal's own words, because the turn metadata that says where a user turn
+came from belongs to the harness and never reaches the code here. So the
+list above is applied by the agent, from what the harness tells it about the
+turn, and this section is guidance rather than a check. Saying otherwise
+would be the false assurance roast `1ygp` L4.3 found in the word `clean`.
+
+Measured 2026-10-07 by searching the TypeScript tree for `send_message`,
+`webhook`, `trigger` and `routine`: **no code here takes text from a routine,
+a relay or a webhook and puts it in front of a model.** The nearest in-code
+sites are third-party comments, and those are treated as data:
+- `folio-assistant-core/scripts/review-comments.ts` ingests tagged PR
+  comments verbatim into todos, run by the `issue_comment` job of
+  `folio-staging.yml`. Nothing reads them as instruction there; the model
+  reads them later through `guardUntrusted` (feedback triage, the chat's open
+  todos; §"Where the screen is wired").
+- `merge-guard.yml` reacts to `issue_comment`, but the comment text goes to a
+  deterministic checker (`cat-harness/scripts/merge-guard.ts`), which reads a
+  `ready:` marker and never a model.
+
 ## Where the screen is wired (bean `cztn`)
 
 Measured from the code on 2026-10-07, not guessed. Every in-code call that
@@ -197,7 +218,17 @@ pattern fires) or `screenHandover` (a declared structure):
 | document adapter system prompt (`folio-assistant-core/adapters/document/index.ts`) | selection and block markdown | `guardUntrusted` |
 | feedback triage, both copies | the commenter's summary and detail, block markdown, assignee | `guardUntrusted`, `oneLineLabel` |
 | branch characterization, both copies | changed-block titles, branch and document ids | `guardUntrusted`, `oneLineLabel` |
-| `workflow_complete` (MCP) | the calling agent's arguments, later read from the bean body by the next agent | `screenHandover`: control fields refuse, the note quarantines and is folded to one line |
+| `workflow_complete` (MCP) | the calling agent's arguments, later read from the bean body by the next agent | `screenHandover`: control fields refuse, and `instance`, `node`, `target` and `outcome` must also match an id, path or label pattern; the note quarantines and is folded to one line |
+
+**A control field's VALUE can be constrained, and an id-shaped one should
+be** (roast `1ygp` L4.3). The patterns catch text shaped like an
+instruction. They cannot tell a tool name the receiver should run from one it
+should not, so `{ nextTool: "merge_pull_request" }` screened `clean`. A
+schema field may be declared `{ role, pattern?, oneOf? }` instead of the bare
+role, and a value outside the constraint is refused on a control field
+(quarantined on a data one). The CLI prints `clean` with the meaning *"no
+pattern fired (not a clearance)"*; the state keeps its name because renaming
+it would break every caller that branches on it.
 
 **Review comments and `/api/feedback` are guarded where a model reads them,
 not where they are ingested.** The defect was at the model boundary, so that
@@ -312,6 +343,11 @@ risk follows from what it can **do** with an input. These are its sinks:
 | model prompt | dispatch, QA agents, summarisers | H1, H5 |
 | git write / PR / merge | merge-train, bean writers, publishers | least privilege; automation never approves itself |
 | secret / credential | signing, publishing | never logged, never in argv, never in a structured blob |
+| mounted symlinks copied verbatim | `remote-mount.ts`, `mount-from-lock.ts`, `remote-tree.ts` (`cpSync` with `verbatimSymlinks`) | every link target resolved and checked to stay inside the mount before anything reads through it ([`path-containment`](path-containment.md)); H8 for the tree itself |
+| `GITHUB_ENV` / `GITHUB_OUTPUT` writes, and the Actions cache | workflow steps, `lake-cache-restore` | no free text written to `GITHUB_ENV` (it sets the next step's environment), outputs consumed through `env:` and never `${{ }}` in `run:` (`check:workflow-injection`); a cache key no untrusted ref can write and a trusted run then restores |
+| executing mounted code or skills | a mounted graph's scripts, skill bodies an agent follows | H4 and H8: run or follow only what is pinned AND trusted or consented; a mount is data until then |
+| creating routines or triggers (persistence) | an agent's scheduled-task and trigger tools, CI schedules | only on the principal's own request, never from text found in data (H1); the stored prompt is data when it fires (§"Who the principal is") |
+| outbound comments and messages (exfiltration) | issue and PR comments, session messages, tracking-issue edits | H1 and H5 on what goes OUT: no secret, no fenced untrusted content copied out unasked, no link that encodes data in its query |
 
 **The assessment is a declared property of the Tool node** (which sinks it
 reaches, and from which inputs), and the QA criterion asks whether each sink
