@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 371,
+      "count": 365,
       "unit": "open beans"
     }
   },
@@ -4561,15 +4561,15 @@
     {
       "id": "folio-assistant-afu3",
       "title": "SEARCH PINNED: the magnifier stays on screen at every scroll position (#1732)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T00:56:04Z",
-      "updatedAt": "2026-10-01T00:56:04Z",
-      "preview": "Owner, 2026-10-01: the search magnifier should ALWAYS be on screen, mid-page included. Issue #1732, follow-up to #1715/#1720. Branch claude/search-pinned.",
+      "updatedAt": "2026-10-08T01:35:00Z",
+      "preview": "Owner, 2026-10-01: the search magnifier should ALWAYS be on screen, mid-page included. Issue #1732, follow-up to #1715/#1720. Branch claude/search-pinned.\n\n## Evidence (2026-10-08)\nLanded on `main` in PR #1732 (commit `49828a5686a3`):\n- `.fa-search-home` is `position: sticky`.\n- Magnifier remains visible across scroll positions.\n- Covered by E2E test `cat-harness/test/search-pinned.e2e.ts`.\nClosed",
       "file": "beans/defs/folio-assistant-afu3--search-pinned-the-magnifier-stays-on-screen-at-eve.md"
     },
     {
@@ -6672,14 +6672,14 @@
     {
       "id": "folio-assistant-g5kt",
       "title": "REGEN FIXPOINT CAP IS SILENT: a run that does not converge prints CAP REACHED and exits 0, and the 3-pass default is below the measured need",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T07:15:24Z",
-      "updatedAt": "2026-10-04T07:22:48Z",
+      "updatedAt": "2026-10-08T01:35:00Z",
       "preview": "Follow-on to 14ve, which fixed 'one pass only'. Two defects remain in the same loop.\n\n1. SILENT NON-CONVERGENCE (the 1xhc shape). regen-after-merge.ts computes `settled` and prints '— CAP REACHED: the last pass still ran a writer, so the tree may not be settled', then exits on `unrepaired + no-writer` ONLY. `settled` is never consulted. So a run that genuinely could not reach a fixed point exits 0",
       "file": "beans/defs/folio-assistant-g5kt--regen-fixpoint-cap-is-silent-a-run-that-does-not-c.md"
     },
@@ -7618,7 +7618,7 @@
     {
       "id": "folio-assistant-iwtn",
       "title": "BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-88mg",
@@ -7860,7 +7860,7 @@
     {
       "id": "folio-assistant-jd1e",
       "title": "A CALLER UNDID g5kt: merge-base reported regen's three verdicts as one, so could-not-determine reached the author as a defect in their branch",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -8163,7 +8163,7 @@
     {
       "id": "folio-assistant-kfkh",
       "title": "A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -10011,7 +10011,7 @@
     {
       "id": "folio-assistant-pesg",
       "title": "A review re-derived a finding the instrument had already computed, and got it wrong",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
@@ -15733,13 +15733,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 589,
-        "closed": 370,
-        "open": 219,
-        "inProgress": 70,
+        "closed": 376,
+        "open": 213,
+        "inProgress": 64,
         "todo": 148,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.6281833616298812
+        "share": 0.6383701188455009
       },
       {
         "id": "folio-assistant-vuip",
@@ -15773,8 +15773,8 @@
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 371,
-    "coveredOpen": 363,
+    "openTotal": 365,
+    "coveredOpen": 357,
     "duplicateIds": 0
   }
 }

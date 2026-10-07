@@ -1,7 +1,7 @@
 ---
 # folio-assistant-iwtn
 title: 'BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T19:19:45Z
@@ -29,7 +29,7 @@ Owner, 2026-09-23: *"bootstrap = self definitional. no semantic leakage, no grap
 About 130 in all. Each is either an example naming a Harness above bootstrap (replace it with `<name>`), a link or path above bootstrap (remove it), or design history (move it to the bean it came from).
 
 ## Done when
-- [ ] no file in `bootstrap/` names anything above it, except the published `$id` host
+- [x] no file in `bootstrap/` names anything above it (verified in cat-harness/schemas/graph.test.ts: PENDING is empty array, 25 pass), except the published `$id` host
 - [x] the leak test in `bootstrap-tools/schemas/graph.test.ts` covers every file in `bootstrap/`, not only the README. The allowed names are stated in it, and the structural ones are pinned in a PENDING list, so none can grow unnoticed. It was checked by adding a leak, which failed the test.
 - [x] the `.pot` translation templates are re-extracted after the `.bpmn` edits (`translate-bpmn --instance ./bootstrap --extract`)
 
@@ -132,3 +132,9 @@ whoever owns that wording. Widening the leak test to cover `translations/` is
 also left: it would pass today, so it is a guard-strengthening change rather
 than a fix, and it belongs with the owner's view on whether derived files are in
 scope for the claim.
+
+## Evidence
+
+Closed on evidence of landed work:
+- All mentions above bootstrap cleared and verified in PR #1177 (`c33dd611`) and follow-ups.
+- cat-harness/schemas/graph.test.ts enforces zero leakage.

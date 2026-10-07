@@ -55,3 +55,9 @@ The viewer already exists and is generic, not BPMN-specific: `mountFigure` / `mo
 
 ## Completed
 All 5 acceptance criteria completed and verified. Pan/zoom/resize viewer for IG diagrams implemented and verified.
+
+## Evidence
+
+Closed on evidence of landed work:
+- All changes landed on `main` in PR #2276 (`1480c5bf9219`) on 2026-10-06.
+- Diagram viewer now handles PlantUML <object> and <img> diagrams with zoom/pan/keyboard support.

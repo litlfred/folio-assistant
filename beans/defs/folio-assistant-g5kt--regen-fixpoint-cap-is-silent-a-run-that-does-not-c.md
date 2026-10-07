@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g5kt
 title: 'REGEN FIXPOINT CAP IS SILENT: a run that does not converge prints CAP REACHED and exits 0, and the 3-pass default is below the measured need'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T07:15:24Z
-updated_at: 2026-10-04T07:22:48Z
+updated_at: 2026-10-08T01:35:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -19,11 +19,11 @@ MEASURED, so it is NOT part of this bean: the derivation itself is sound. repair
 
 ## Done when
 
-[ ] the CLI exits non-zero when the run did not settle, naming it as could-not-determine rather than clean
-[ ] the default bound is above the measured need and is settable (--max-passes)
-[ ] the exit decision is a pure, exported, tested function rather than inline CLI logic
-[ ] a test asserts a chain needing three writer-passes settles under the default and does NOT under 3
-[ ] the derivation census test is widened from the fast set to the whole gate set
+- [x] the CLI exits non-zero when the run did not settle, naming it as could-not-determine rather than clean
+- [x] the default bound is above the measured need and is settable (--max-passes)
+- [x] the exit decision is a pure, exported, tested function rather than inline CLI logic
+- [x] a test asserts a chain needing three writer-passes settles under the default and does NOT under 3
+- [x] the derivation census test is widened from the fast set to the whole gate set
 
 
 ## Done, 2026-10-04 — PR #2060
@@ -35,6 +35,9 @@ MEASURED, so it is NOT part of this bean: the derivation itself is sound. repair
 [x] the derivation census test is widened from the fast set to the whole gate set
 
 Evidence: `docs:harness:check` and `readme:subgraphs:check` each reproduced stale and repaired by the DERIVED pair (passes=2, settled, clean, no residual diff). 41 tests pass in regen-after-merge.test.ts; typecheck and eslint clean.
+
+## Landed Evidence (2026-10-08)
+Landed on `main` in PR #2060 (merge commit `5c86256f1896`). All 5 done-when items satisfied and verified. Closed on landed evidence per `bean-coordination.md`.
 
 One correction the suite forced, worth keeping: `not settled` means UNVERIFIED, not stale. At the cap the last pass may have just repaired the chain, so the tree can be correct while no pass confirmed it. Reporting it as stale would be as unevidenced as reporting it clean.
 

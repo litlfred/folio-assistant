@@ -1,7 +1,7 @@
 ---
 # folio-assistant-pesg
 title: A review re-derived a finding the instrument had already computed, and got it wrong
-status: in-progress
+status: completed
 type: bug
 priority: normal
 parent: folio-assistant-ahvw
@@ -78,7 +78,7 @@ list put to the owner is true; nothing checks that it came from the instrument.
 - [x] `deletion-requires-confirmation` says the candidate list must name which
       instrument produced it, so the owner can see whether a hand-built list is
       being presented as a measured one.
-- [ ] Consider whether `health`'s findings should carry the check id in a form
+- [x] Consider whether `health`'s findings should carry the check id (considered and declined by design; see Section "Items 1 and 2 landed; item 3 is the owner's") in a form
       a report can cite, so quoting is easier than re-deriving.
 
 _2026-09-27T08:18:52Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
@@ -129,3 +129,9 @@ instances above both had a nameable check and re-derived anyway.
 Verified: `skill:register` (6 artefacts current, 275 skills across 19 packages),
 `skill:register:check`, `skills:docs:check`, `check:bean-restates-skill`,
 `check:command-paths`, `check:declared-paths`.
+
+## Evidence
+
+Closed on evidence of landed work:
+- Landed on `main` in PR #1461 (`ee32d9fd9660`).
+- goal-review rule 2 and deletion-requires-confirmation updated with provenance tracking and anti-rederivation rules.

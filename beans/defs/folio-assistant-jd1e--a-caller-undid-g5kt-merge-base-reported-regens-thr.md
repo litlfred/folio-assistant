@@ -1,7 +1,7 @@
 ---
 # folio-assistant-jd1e
 title: 'A CALLER UNDID g5kt: merge-base reported regen''s three verdicts as one, so could-not-determine reached the author as a defect in their branch'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T13:11:35Z
@@ -166,3 +166,9 @@ finding supports, and an unmaintained declaration is how `dh4f` happens.
 What the finding does support: when `merge-base.ts` gains a shell-out to a
 tool, check that tool's exit codes. Three good patterns to copy are named
 above.
+
+## Evidence
+
+Closed on evidence of landed work:
+- Landed on `main` in PR #2086 (`47ac43a1601f`).
+- merge-base decoded regen verdicts, tested with REGEN_VERDICT_TAG and regenExitMeaning.
