@@ -356,15 +356,15 @@ rendered-by: auto-docs-viewer
   <td>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where rev…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Designer · Feedback providers · Adjudicator</div><div class="f"><span class="k">skills</span> wireframe-design-review</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-ast-delta-review.bpmn"><code>Is the incremental IG AST what a full build would have produced?</code></a><br><span class="p">fhir-harness/processes/content/ig-ast-delta-review.bpmn</span></td>
+  <td><a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-delta-review.bpmn"><code>Is the incremental IG AST what a full build would have produced?</code></a><br><span class="p">fhir-harness/processes/content/ig-ast-delta-review.bpmn</span></td>
   <td>The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Incremental build (system) · QC reviewer · Work plan — beans (shared by humans and agents)</div><div class="f"><span class="k">skills</span> ig-ast-delta, todo-manager</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">fhir-harness/processes/content/ig-incremental-build.bpmn</span></td>
+  <td><a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">fhir-harness/processes/content/ig-incremental-build.bpmn</span></td>
   <td>A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy.<div class="f"><span class="k">activities</span> 19</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/processes/content/l3-fhir-pipeline.bpmn"><code>L3 FHIR IG pipeline</code></a><br><span class="p">fhir-harness/processes/content/l3-fhir-pipeline.bpmn</span></td>
+  <td><a href="https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn"><code>L3 FHIR IG pipeline</code></a><br><span class="p">fhir-harness/processes/content/l3-fhir-pipeline.bpmn</span></td>
   <td>How a WHO SMART Guidelines L3 FHIR Implementation Guide is modelled, built with SUSHI, the validator and the IG Publisher, reviewed and published.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> FHIR modeller · Work plan — beans (shared by humans and agents) · Build pipeline — SUSHI · validator · IG Publisher · QC reviewer · Publication manager</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l2-dak-authoring, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
 <tr>
@@ -436,11 +436,11 @@ rendered-by: auto-docs-viewer
   <td>Moving open content to the trashcan from the board, with the reader's confirmation in front of the move and not behind it.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reader · Board renderer</div><div class="f"><span class="k">skills</span> board-diagram-interchange, board-windows, deletion-requires-confirmation</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn"><code>Is AtomicMass.lean still in sync with its data table?</code></a><br><span class="p">folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/atomic-mass-drift-check.bpmn"><code>Is AtomicMass.lean still in sync with its data table?</code></a><br><span class="p">folio-assistant-sci/processes/content/atomic-mass-drift-check.bpmn</span></td>
   <td>Check that <code>AtomicMass.lean</code> is still in sync with the data table it is generated from.<div class="f"><span class="k">activities</span> 1</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>Authoring a paper</code></a><br><span class="p">folio-assistant-sci/processes/content/authoring-a-paper.bpmn</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/authoring-a-paper.bpmn"><code>Authoring a paper</code></a><br><span class="p">folio-assistant-sci/processes/content/authoring-a-paper.bpmn</span></td>
   <td>How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Author (person) · Work plan — beans (shared by humans and agents) · Authoring agent (system) · Lean toolchain (lean-mcp) · Build pipeline — validate · render · publish · Reviewer / SME</div><div class="f"><span class="k">skills</span> content-author, content-plan, content-publish, content-review, content-validate, latex-authoring, lean-formalization, proof-verification, todo-manager</div></td>
 </tr>
 <tr>
