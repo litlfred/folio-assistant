@@ -28,7 +28,7 @@ Owner, 2026-09-23: *"misfiled smart-kg/methodologies/grade.md, needs to be part 
 
 - [x] placement confirmed with the owner (skill + code lists here, vs. hand over to the smart-kg repo)
 - [x] GRADE content lives in its confirmed home; the enumerations are code lists that `check:code-lists` validates
-- [x] no `smart-kg/` directory and no `smart-kg-methodologies` declaration; `bun run gates` green (declared-but-absent is bean dh4f's defect, so the declaration goes with the directory)
+- [x] no `smart-kg/` directory and no `smart-kg-methodologies` declaration; `bun run cat gates` green (declared-but-absent is bean dh4f's defect, so the declaration goes with the directory)
 
 ## Summary of Changes
 
@@ -47,5 +47,5 @@ Owner, 2026-09-23: *"misfiled smart-kg/methodologies/grade.md, needs to be part 
 - **References:** present-tense references now name `smart-base/methodologies/` or state the move (schemas, check scripts, `directory-conventions`, `graph-detanglement` and its BPMN and `.pot`s, `smart-l1`, and the `smart-base` AGENTS.md sibling table).
 - **Left alone on purpose:** architecture docs, the partition instance list and the `contributions.ts` diamond, all of which describe the FUTURE smart-kg repository.
 - **Tests:** the "repository-scoped directory" example moved to `smart-base-methodologies` / `diig`, with each non-vacuity guard kept.
-- **Checks:** `bun run gates` fails only on the known local-only `.claude/worktrees` items. `code-lists:check` passes.
+- **Checks:** `bun run cat gates` fails only on the known local-only `.claude/worktrees` items. `code-lists:check` passes.
 - **Follow-up filed:** `7h1c`. `publish-verify` counts the code-lists document as "not ours" because its context binds only SKOS; it expands clean, checked by hand.

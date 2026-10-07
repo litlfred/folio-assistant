@@ -47,8 +47,8 @@
  * (machine-written verdicts about the files that ARE scanned).
  *
  * ```sh
- * bun run check:fhir-harness-exclusions            # report + gate
- * bun run check:fhir-harness-exclusions --shrink   # lower the baseline after a fix
+ * bun run cat check:fhir-harness-exclusions            # report + gate
+ * bun run cat check:fhir-harness-exclusions --shrink   # lower the baseline after a fix
  * ```
  *
  * Tested with planted violations in `check-fhir-harness-exclusions.test.ts`.

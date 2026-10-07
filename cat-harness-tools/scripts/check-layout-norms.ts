@@ -64,10 +64,10 @@
  * shrinking list.
  *
  * Usage:
- *   bun run check:layout-norms
- *   bun run check:layout-norms -- --update    # rewrite the baseline
- *   bun run check:layout-norms -- --json      # sidecar only
- *   bun run check:layout-norms:check          # JUDGE: compute and judge, write nothing (the gate)
+ *   bun run cat check:layout-norms
+ *   bun run cat check:layout-norms -- --update    # rewrite the baseline
+ *   bun run cat check:layout-norms -- --json      # sidecar only
+ *   bun run cat check:layout-norms:check          # JUDGE: compute and judge, write nothing (the gate)
  *
  * Exit: 0 clean (or only known pairs), 1 a pair not in the baseline,
  *       2 could not determine. Judge mode (`--check`, bean `bo44`) keeps the
@@ -285,7 +285,7 @@ if (import.meta.main) {
           _comment:
             "Nested declared directories that EXIST and are not yet resolved. Not intended layout — " +
             "see scripts/check-layout-norms.ts. Anything not listed here fails the check, so this file " +
-            "only ever shrinks. Written by `bun run check:layout-norms -- --update`.",
+            "only ever shrinks. Written by `bun run cat check:layout-norms -- --update`.",
           pairs: r.found,
         },
         null,

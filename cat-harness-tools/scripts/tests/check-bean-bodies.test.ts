@@ -106,8 +106,8 @@ describe("splitChecklist — the separator that was missing", () => {
 describe("overlap", () => {
   test("containment, not equality — the real copies were not verbatim", () => {
     // `fgnw`'s appended copy dropped a parenthetical; `9x17`'s paraphrased.
-    const a = words("`bun run health` reports claims without activity in the window");
-    const b = words("`bun run health` (or the goal-review sweep) reports claims without activity in the window");
+    const a = words("`bun run cat health` reports claims without activity in the window");
+    const b = words("`bun run cat health` (or the goal-review sweep) reports claims without activity in the window");
     expect(overlap(a, b)).toBe(1);
   });
 

@@ -39,9 +39,9 @@ describe("a BASELINE must carry its provenance", () => {
   test("a baseline WITH command, date and result parses", () => {
     const m = mk({
       label: "baseline",
-      measured: { command: "bun run kg:audit", date: "2026-09-19", result: "fail 0" },
+      measured: { command: "bun run cat kg:audit", date: "2026-09-19", result: "fail 0" },
     });
-    expect(m.measured?.command).toBe("bun run kg:audit");
+    expect(m.measured?.command).toBe("bun run cat kg:audit");
   });
 
   test("STABLE and TRAP need no provenance — they are not numbers", () => {

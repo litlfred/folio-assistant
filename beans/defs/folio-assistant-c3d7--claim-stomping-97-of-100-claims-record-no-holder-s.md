@@ -11,7 +11,7 @@ parent: folio-assistant-ahvw
 
 Found while acting on the owner's decision (2026-09-25) to *"add the
 re-read-before-claim rule"*. **The rule is already implemented** — `35nj` built
-`bun run beans:claim`, which reads the default branch first and has an
+`bun run cat beans:claim`, which reads the default branch first and has an
 `already-claimed` outcome that refuses and names the holder. This bean is the
 hole that makes it vacuous for almost the whole store.
 
@@ -44,7 +44,7 @@ fix rather than the code:
 
 | document | what it tells an agent to claim with |
 |---|---|
-| `bean-coordination.md` §100 | `bun run beans:claim <id>` — correct |
+| `bean-coordination.md` §100 | `bun run cat beans:claim <id>` — correct |
 | `todo-manager.md:121`, `:415` | `beans update <id> --status in-progress` |
 | `session-intent.md:111`, `:132` | `beans update <id> --status in-progress` |
 | `AGENTS.md:218` | `beans <id> --status in-progress` — and this one **exits 1** |
@@ -76,7 +76,7 @@ it, and so does any hand-edited bean.
 
 ## Done when
 
-- [x] every document that tells an agent how to CLAIM names `bun run beans:claim`;
+- [x] every document that tells an agent how to CLAIM names `bun run cat beans:claim`;
       `beans update` stays documented for the transitions that are not claims
       (close, `--body-append`, `--blocked-by`)
 - [x] `AGENTS.md`'s claim line no longer exits 1 — measured, `beans <id> --status`
@@ -99,7 +99,7 @@ bean.
 ## Summary of Changes — re-derived and closed 2026-09-26
 
 Shipped in [PR #1350](https://github.com/litlfred/folio-assistant/pull/1350),
-merged. **This bean was itself caught by `bun run beans:landed` as an orphan** —
+merged. **This bean was itself caught by `bun run cat beans:landed` as an orphan** —
 named in a merged PR title with 0 of 5 boxes ticked — which is the `4d22` shape
 it exists to prevent, produced by the session that wrote it. Recorded rather
 than quietly corrected.
@@ -109,12 +109,12 @@ Every box below re-run against merged `main`, not ticked from memory:
 | box | how it was re-derived |
 |---|---|
 | all claim docs name `beans:claim` | `beans:claim` in AGENTS.md (2), todo-manager (4), session-intent (3), bean-coordination (3). The two remaining `beans update … in-progress` hits are the explanatory *"not this"* text, checked by reading them |
-| AGENTS.md's claim line no longer exits 1 | line 218 is `bun run beans:claim <id>`; the bare `beans <id> --status` still exits **1**, run just now |
+| AGENTS.md's claim line no longer exits 1 | line 218 is `bun run cat beans:claim <id>`; the bare `beans <id> --status` still exits **1**, run just now |
 | no-holder is its own non-zero outcome | `claim-bean.ts:258` returns `held-unknown`, `:403` maps it to exit **4** |
 | `--dry-run` never claims a push in the past tense | the success sentence occurs twice: `:351` is the legitimate `pushed` message, `:242` is a COMMENT describing the old bug. Verified by reading both, not by the count |
 | a mutation over each new branch is caught by a NAMED test | 15 pass in `claim-bean.test.ts`; 6 of 6 mutations caught, each by a named test |
 
-**End-to-end, against the real store.** `bun run beans:claim folio-assistant-6lb8
+**End-to-end, against the real store.** `bun run cat beans:claim folio-assistant-6lb8
 --dry-run` — a bean a sibling holds:
 
 ```

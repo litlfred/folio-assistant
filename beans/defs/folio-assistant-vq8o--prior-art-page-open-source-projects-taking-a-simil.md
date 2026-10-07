@@ -13,7 +13,7 @@ User asked (2026-09-23) whether other open-source projects take a similar approa
 
 ## Done when
 - [x] cat-harness/docs/research-and-analysis/prior-art.md exists (moved there on the owner's ask, new section), each project verified online with licence and what overlaps / differs
-- [x] `bun run gates` — 136 pass
+- [x] `bun run cat gates` — 136 pass
 - [x] PR open against main — #1211 (issue #1210)
 
 ## Summary of Changes

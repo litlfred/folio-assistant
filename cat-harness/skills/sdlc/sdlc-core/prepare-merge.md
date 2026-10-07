@@ -56,25 +56,25 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
      `git push --force-with-lease` — never a bare `--force` (it clobbers sibling
      pushes).
    **A conflict in a generated QA sidecar has a command** —
-   `bun run qa:resolve-conflicts`. A conflict in `test/attestations/` is a
+   `bun run cat qa:resolve-conflicts`. A conflict in `test/attestations/` is a
    judgement and has none. See §"Conflicts in `test/results/` and
    `test/attestations/`" below before resolving either by hand.
 
-   **Merge with `bun run merge:main`, never a plain `git merge` followed by
+   **Merge with `bun run cat merge:main`, never a plain `git merge` followed by
    regen.** It resolves every conflict a declared pattern covers (glossaries,
    translated glossaries, UML, viewer pages, site data, QA sidecars), refuses
    the rest with the tree restored, and runs regen on the result. A plain
    `git merge` stops on those same generated files, one by one (measured
    2026-10-06, bean `xpcu`).
 
-   **And after EVERY base merge, conflicted or not, run `bun run regen`.**
+   **And after EVERY base merge, conflicted or not, run `bun run cat regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
    §"A clean merge can produce a wrong artefact" below. **If you merged with
-   `bun run merge:main`, its regen already was that run — do not run a second
+   `bun run cat merge:main`, its regen already was that run — do not run a second
    one.** For a merge whose conflicts were all generated, the round is
    [`merge-conflict-patterns`](merge-conflict-patterns.md) §"A merge round —
    run each check ONCE": targeted checks and a push, with CI's sharded run as
-   the full gate set in place of a local `bun run gates` or `check:merged`.
+   the full gate set in place of a local `bun run cat gates` or `check:merged`.
    An authored conflict, or a merge that touched code, still owes both.
 4. **Prove it merges cleanly** (no assumptions):
    - `git merge-base --is-ancestor origin/<base> HEAD` → success means a clean
@@ -105,9 +105,9 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
      fixtures — this very skill tripped that check when it was first run).
    - **A clean text merge is not a clean state.** `merge-tree` answers "do
      the files conflict?", not "do the gates pass on the result?". Before
-     asking for a merge, run **`bun run check:merged`**: it builds the merge
+     asking for a merge, run **`bun run cat check:merged`**: it builds the merge
      with the current base in a throwaway worktree and runs the full
-     `bun run gates` there (exit 0 passes, 1 fails, 2 could not determine —
+     `bun run cat gates` there (exit 0 passes, 1 fails, 2 could not determine —
      never read as clean). Bean `nytj`: three times on 2026-09-23 a
      generated measurement was green on the branch, green on the base,
      merged without a conflict, and stale on the result.
@@ -125,7 +125,7 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
    runs every security check this repository has (workflow injection, secret
    leaks, lockfile and toolchain pins, QA reviewer permission, materialised
    fixity) plus two advisories, and refuses when a blocking check fails OR
-   could not be run. Most of those checks are also inside `bun run gates`;
+   could not be run. Most of those checks are also inside `bun run cat gates`;
    the point of naming them here is that until 2026-10-07 **no merge or
    publish step named any security check**, so a release was covered only if
    the CI run before it happened to be the right one (bean `ieum`). Its
@@ -181,7 +181,7 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
    would read as "reviewed".
 6. **Push** the feature branch (retry/backoff as in step 2):
    `git push -u origin <branch>`. Then **ask whether the push produced a run**:
-   `bun run check:head-has-run`.
+   `bun run cat check:head-has-run`.
 
    This does not change what you do next — step 7 dispatches either way. It
    changes what you can honestly SAY. A push here can silently produce no run
@@ -272,7 +272,7 @@ And what it does **not** entitle, each with what it costs:
   new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it —
   or, for a script owned by an instance above cat-harness, a
   `gateExemptions.scripts` row in that instance's `<instance>.json`, bean `0r7u`).
-  Neither is visible to any of the three. `bun run gates` derives its list from
+  Neither is visible to any of the three. `bun run cat gates` derives its list from
   the workflow, which is why it cannot drift from what CI runs.
 - **"Nothing is failing, so nothing is wrong."** A *conflicted* head produces no
   merge ref, so `pull_request` workflows never fire and the PR shows **zero**
@@ -300,8 +300,8 @@ dependencies rather than borrowing them.
 
 ## A clean merge can produce a wrong artefact (STRICT)
 
-**`bun run regen` after every base merge.** Not only after a conflicted one —
-after every one. `bun run merge:main` runs it as part of the merge, so after
+**`bun run cat regen` after every base merge.** Not only after a conflicted one —
+after every one. `bun run cat merge:main` runs it as part of the merge, so after
 `merge:main` it has already happened once and a second run re-asks the same
 tree (4–5 min, measured 2026-10-04).
 
@@ -327,22 +327,22 @@ So the rule is not "resolve conflicts carefully". It is:
 > you need to.** The merged file looks plausible from either side, which is
 > exactly what let this one through.
 
-`bun run regen` does it by asking each gate first, so its output is the set of
+`bun run cat regen` does it by asking each gate first, so its output is the set of
 artefacts the merge actually broke rather than a wholesale rewrite:
 
 ```sh
-bun run regen                   # repair what is stale in the whole gate set
-bun run regen --fast            # ...only the jobs that install no browser
-bun run regen --dry-run         # report what is stale, change nothing
-bun run regen --changed <base>  # ask only the pairs whose inputs changed since <base>
-bun run regen --explain         # say, per pair, why it was asked or not
+bun run cat regen                   # repair what is stale in the whole gate set
+bun run cat regen --fast            # ...only the jobs that install no browser
+bun run cat regen --dry-run         # report what is stale, change nothing
+bun run cat regen --changed <base>  # ask only the pairs whose inputs changed since <base>
+bun run cat regen --explain         # say, per pair, why it was asked or not
 ```
 
 **The QA working copy is part of the run — do not build it by hand around
 regen** (bean `7how`, issue #2319). Generators such as `uml:overview` and
 `readme:subgraphs` read the computed, ignored `*/test/results/` tree. Before
 every pass regen asks the copy's stamp
-(`bun run qa:working-copy -- --status`) whether it was built from the tree as
+(`bun run cat qa:working-copy -- --status`) whether it was built from the tree as
 it stands, and rebuilds it if not. The paths that rebuild changed join the
 pass's change set, so any pair that reads them is asked again. A failed build
 exits 2, and regen never grades a pass over a half-built copy. The recipe that
@@ -359,7 +359,7 @@ check with **no writer**.
 declared inputs, script sources and commands meet none of the paths changed
 since `<base>` (plus the working tree) is **not asked**: its answer is its
 answer at `<base>`. Undeclared and `{tracked}` pairs are always asked, as is
-any pair whose inputs cannot be determined. `bun run merge:main` passes the
+any pair whose inputs cannot be determined. `bun run cat merge:main` passes the
 merge's **fork point**, so a skipped pair is one NEITHER side touched, and it is
 current if the fork point, the branch tip or the base tip was current.
 `merge:main -- --full-regen` asks every pair. Separately, every pass after
@@ -383,7 +383,7 @@ is how.** Measured on PR #1968, 2026-10-03:
    the checkout still sat at `c5e5e254`.
 3. During conflict resolution, `git add -A` staged that stale checkout as the
    submodule's state, rolling **both** submodules back in the merge commit.
-4. `bun run regen` then ran against the old tools and "repaired" ~130
+4. `bun run cat regen` then ran against the old tools and "repaired" ~130
    generated files to their pre-bump form, stripping the generator banners
    `main` had just added. CI went red on a typecheck error
    (`generatedBanner` is not exported) in code the PR never touched.
@@ -425,7 +425,7 @@ nothing about what the merge broke.
 
 | tree | holds | durable home | on a conflict |
 |---|---|---|---|
-| `<instance>/test/results/**` | DERIVED verdicts — every `script` entry | the orphan `qa-reports` branch, `main/<sha>/` and `pr/<n>/<sha>/`, written by the CI job `qa-publish` | **regenerate**: `bun run qa:resolve-conflicts`, then `bun run regen` |
+| `<instance>/test/results/**` | DERIVED verdicts — every `script` entry | the orphan `qa-reports` branch, `main/<sha>/` and `pr/<n>/<sha>/`, written by the CI job `qa-publish` | **regenerate**: `bun run cat qa:resolve-conflicts`, then `bun run cat regen` |
 | `<instance>/test/attestations/**` | JUDGEMENTS — every agent, human and baseline-pair attestation, `qa-attestations/v1` | `main`, as authored content | **a person reads both sides**; never regenerated, never "take ours" |
 
 The `test/results/` files are still committed on `main` until bean `5hox`
@@ -440,7 +440,7 @@ judgements that disagree, and `qa:attestations:migrate` refuses that case for
 the same reason — reconciling them is a person's call. `qa:resolve-conflicts`
 leaves it untouched and unstaged, because it resolves only under the declared
 `qa` graph. Keep both sides' entries unless they are the same judgement; then
-run `bun run qa:attestations:migrate:check`, which exits 1 if a judgement is
+run `bun run cat qa:attestations:migrate:check`, which exits 1 if a judgement is
 still only in a derived file.
 
 **Measured, not impressionistic.** Across one working session on PR #773 and
@@ -448,13 +448,13 @@ its successor: **four base merges, four conflicts, every one in a committed
 generated QA sidecar and none in authored code.** Bean `520m`.
 
 ```sh
-bun run qa:resolve-conflicts             # resolve what is safe, report the rest
-bun run qa:resolve-conflicts --dry-run   # say what it would do, change nothing
-bun run qa:resolve-conflicts --explain   # ...and why, per file
+bun run cat qa:resolve-conflicts             # resolve what is safe, report the rest
+bun run cat qa:resolve-conflicts --dry-run   # say what it would do, change nothing
+bun run cat qa:resolve-conflicts --explain   # ...and why, per file
 ```
 
 **Why regenerating is a resolution and not a guess.** Both writers are
-idempotent — `bun run translation:block-qa` and `bun run kg:audit` over an
+idempotent — `bun run cat translation:block-qa` and `bun run cat kg:audit` over an
 unchanged tree write nothing, because `sameScriptVerdict` keeps a reproduced
 entry verbatim and ignores `reviewed_at`, `reviewed_sha` and
 `script_commit_sha`. So a sidecar is a pure function of the tree, and the
@@ -482,7 +482,7 @@ that cannot be read — a corrupt store reads UNKNOWN, and unknown is never
 resolved as clean. It checks the same predicate again *after* regenerating,
 and leaves every conflict outside the declared `qa` graph untouched and
 unstaged. **If it refuses one, move the judgement into the store first**
-(`bun run qa:attestations:migrate`, or let a writer move it on its next save)
+(`bun run cat qa:attestations:migrate`, or let a writer move it on its next save)
 and re-run — do not hand-edit the derived file.
 
 And the habit this guards: a conflict an agent resolves without reading teaches

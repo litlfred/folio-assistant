@@ -3,9 +3,9 @@
  * A bean's STATUS must agree with its own subtree — and the stale-claim sweep.
  *
  * ```sh
- * bun run check:bean-rollup            # the gate
- * bun run check:bean-rollup -- --sweep # + the claim-age report (never fails)
- * bun run check:bean-rollup -- --json
+ * bun run cat check:bean-rollup            # the gate
+ * bun run cat check:bean-rollup -- --sweep # + the claim-age report (never fails)
+ * bun run cat check:bean-rollup -- --json
  * ```
  *
  * Bean `kpcl`, issue #956. `in-progress` is the status every sibling session

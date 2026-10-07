@@ -105,7 +105,7 @@ line each with a measured effect in both directions, and this is a parser change
       changes NO msgid — the property that makes a catalogue survive an edit
 - [x] the msgids this merges away are obsoleted in the existing `.po` files with
       tooling, not dropped. **41, not 3785** — see the measurement below; the
-      tooling is `bun run translation:obsolete`, gated by
+      tooling is `bun run cat translation:obsolete`, gated by
       `translation:obsolete:check`.
 - [x] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
 - [x] checked against a folio other than this one — extraction is shared.
@@ -323,4 +323,4 @@ visible without recursing.
 
 Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
 
-- `bun run translation:obsolete:check` → exit 0: every comparable catalogue's msgids are still in its source (box 5's tooling and gate).
+- `bun run cat translation:obsolete:check` → exit 0: every comparable catalogue's msgids are still in its source (box 5's tooling and gate).

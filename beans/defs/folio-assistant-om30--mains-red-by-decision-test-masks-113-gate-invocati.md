@@ -117,7 +117,7 @@ Measured in this container, not reasoned about. `cat-harness/schemas/block-qa-sc
     node_modules/   created 2026-09-26 09:30:30
     dist/           created 2026-09-26 09:30:31
 
-**Both were created by a gate, partway through a `bun run gates` run.** So inside a
+**Both were created by a gate, partway through a `bun run cat gates` run.** So inside a
 single run the corpus CHANGES underneath the gate set: everything before that instant
 scans 227 tracked files, everything after scans 1441.
 
@@ -138,8 +138,8 @@ with it and a fresh runner would not.
 
 The second run's guard report is a **false positive**, and I caused it:
 
-    · bun run check:fallback-roles        wrote     ("??")  beans/defs/…om30….md
-    · bun run translation:block-qa:check  reverted  (was "??")  beans/defs/…om30….md
+    · bun run cat check:fallback-roles        wrote     ("??")  beans/defs/…om30….md
+    · bun run cat translation:block-qa:check  reverted  (was "??")  beans/defs/…om30….md
 
 Neither gate touched that file. I created this bean and then committed it **while the
 gates were running**, so `git status` went `??` → absent and the guard attributed
@@ -157,7 +157,7 @@ That is a third state, not a defence, which is the shape this repo already prefe
 
 ## Verdict on this branch, for the record
 
-`bun run gates` — **2 of 154 failed**, verified by NAME: `bun test`
+`bun run cat gates` — **2 of 154 failed**, verified by NAME: `bun test`
 (`no NEW drift, and nothing unreadable`) and `translation:drift:check`. Both are the
 same `t8g3` drift that is red on `main` by the owner's decision. `uml:overview:check`
 green. Nothing on this branch fails that main does not.
@@ -191,7 +191,7 @@ range whose end boundary a regex had put 25 lines early, so it cut off part of t
 job. **Wrong, not stale** — the title and the body both said 113, and so did a commit
 message, a PR comment and what I told the owner.
 
-And the 45 masked steps **include `bun run lint` and `tsc --noEmit`**. So `main` has
+And the 45 masked steps **include `bun run cat lint` and `tsc --noEmit`**. So `main` has
 not been linted or typechecked in CI for as long as the drift has been red. That is
 worse than this bean claimed, and it changed the fix: my first draft of the split left
 lint and tsc behind `bun test`, still masked. They run FIRST now and `bun test` runs
@@ -209,7 +209,7 @@ reveal a heap of them.** 150 gate commands ran in a clean throwaway worktree wit
 condition. **Exactly one failed:** `translation:drift:check`, the same t8g3 drift. The
 masked region is otherwise clean.
 
-`FAST_JOBS` had to learn the new job or `bun run gates` would have shrunk **154 -> 6**
+`FAST_JOBS` had to learn the new job or `bun run cat gates` would have shrunk **154 -> 6**
 while printing a confident pass. A new test asserts both jobs contribute.
 
 ### SEVEN derived artefacts from one .bpmn edit, in dependency order
@@ -232,7 +232,7 @@ rounds, each caught by a DIFFERENT instrument — `check:workflow-coverage`,
 of them names a `.bpmn` file in its failure. **I shipped two instances of `ymsu`'s
 class inside the commit whose message was about that class.**
 
-`bun run skill:register` exists because the same was true of adding a skill. A
+`bun run cat skill:register` exists because the same was true of adding a skill. A
 `bpmn:register` of that shape is the obvious follow-up; **not built**, because whether
 seven steps deserve one command is the owner's call, and guessing is how the last such
 list came out wrong three times.
@@ -257,7 +257,7 @@ block nothing.
 ## The full gate set, and a blind spot in the verification method itself
 
 Three pushes each surfaced one further failure. Cause: I picked the verification
-subset by hand each time — the same mistake AGENTS.md records about `bun run gates`.
+subset by hand each time — the same mistake AGENTS.md records about `bun run cat gates`.
 **A subset of the gate set is not the gate set**, and that applies to a list I compose
 as much as to one in a file.
 
@@ -359,7 +359,7 @@ which is a second argument for that patch beyond tidiness.
 
 ## CI END STATE, confirmed by name on `34af74d5bb9`
 
-**`typescript`** — `bun run lint` ✓, **`tsc --noEmit` ✓ (first time in this PR)**, then
+**`typescript`** — `bun run cat lint` ✓, **`tsc --noEmit` ✓ (first time in this PR)**, then
 `bun test`: **11880 pass / 44 skip / 1 fail**, the one being `the real corpus — and the
 gate can actually fail > no NEW drift, and nothing unreadable`.
 

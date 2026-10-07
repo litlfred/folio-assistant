@@ -16,11 +16,11 @@ parent: Skill instructions
 One command, before you commit:
 
 ```sh
-bun run skill:register
+bun run cat skill:register
 ```
 
 It generates everything derived from the skill and verifies each artefact
-landed. `bun run skill:register:check` is the same question without writing, and
+landed. `bun run cat skill:register:check` is the same question without writing, and
 it is a gate — a skill that arrives undeclared fails CI.
 
 **`skill:register`, singular.** Two commands one letter apart existed between
@@ -77,7 +77,7 @@ retired key — see below) or reports and leaves alone.
 to assert the artefact landed. That second pass is the point: a writer can exit 0
 over an artefact it failed to update, and only the `:check` form catches it.
 
-**Do not re-derive the chain through `bun run gates`.** `bun test` runs the
+**Do not re-derive the chain through `bun run cat gates`.** `bun test` runs the
 detangle and `kg-audit` writers, so by the time those checks execute the
 artefacts are already repaired — bean `ymsu`'s blind spot. A chain measured
 through `gates` comes out two steps short, and both omissions look correct.

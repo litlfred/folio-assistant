@@ -446,7 +446,7 @@ the bean is the argument for the constraint list.
 
 ## Verified
 
-`bun run gates` — **136 of 136 green**, after merging `main` at `b54de4d9`.
+`bun run cat gates` — **136 of 136 green**, after merging `main` at `b54de4d9`.
 
 Before that merge it was 134 of 136, and both failures were **pre-existing** —
 each confirmed red by stashing this change and running on a clean tree
@@ -524,4 +524,4 @@ broken link by restating should say so.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.

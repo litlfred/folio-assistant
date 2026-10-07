@@ -11,7 +11,7 @@ parent: folio-assistant-1xhc
 
 ## How this surfaced
 
-`bun run check:ci-health` on `main`, 2026-10-04. The Pages half of that report
+`bun run cat check:ci-health` on `main`, 2026-10-04. The Pages half of that report
 exists precisely because a Pages build outcome is a fact GitHub holds *about*
 this repository rather than one the repository holds, so it is asked fresh and
 cached nowhere. It said:
@@ -278,7 +278,7 @@ and the PR itself are the channel.
 
 ### What the decision table says, unprompted
 
-`bun run merge:steward` evaluated `merge-priority.dmn#Decision_MergePriority`
+`bun run cat merge:steward` evaluated `merge-priority.dmn#Decision_MergePriority`
 against `origin/main`:
 
     pr 2063  route "hand back"  class hand-back  rank 90  rule Rule_Refused

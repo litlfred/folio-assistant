@@ -23,8 +23,8 @@ git clone https://github.com/litlfred/folio-assistant.git
 cd folio-assistant
 bun install
 bun test          # модульные тесты
-bun run lint      # eslint
-bun run test:e2e      # e2e (test:e2e)
+bun run cat lint      # eslint
+bun run cat test:e2e      # e2e (test:e2e)
 ```
 
 ## План работы с `beans`

@@ -78,7 +78,7 @@ test("the fixtures are what they claim: the generated page has a block, the deri
   // Every case below is vacuous if the strip did nothing: the mount-time
   // block would then be ignored in favour of the page's own. So the premise
   // is asserted rather than assumed.
-  expect(PAGE, `${PAGE_FILE} is missing — run \`bun run iris:pages\``).not.toBe("");
+  expect(PAGE, `${PAGE_FILE} is missing — run \`bun run cat iris:pages\``).not.toBe("");
   expect(PAGE).toContain(`id="${TRANSLATION_META_ID}"`);
   expect(UNTRANSLATED).not.toContain(`id="${TRANSLATION_META_ID}"`);
   expect(MOUNTED_UNTRANSLATED).toContain('"availableLocales":[]');

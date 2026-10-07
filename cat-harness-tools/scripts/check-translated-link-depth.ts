@@ -54,9 +54,9 @@
  * `../` too many). This is 745 with one `../` too few.
  *
  * Usage:
- *   bun run translated-links:check   # non-zero if any translated page's link
+ *   bun run cat translated-links:check   # non-zero if any translated page's link
  *                                    # resolves at its SOURCE depth but not its own
- *   bun run translated-links:fix     # prepend exactly one `../` to each, verified
+ *   bun run cat translated-links:fix     # prepend exactly one `../` to each, verified
  *
  * `docs` is the graph typology this audits — `cat-harness.json` declares `docs/`
  * with `graphs: ["docs"]`, and the locale subtrees this walks are part of it.
@@ -290,7 +290,7 @@ if (import.meta.main) {
     if (report.findings.length > shown.length) {
       console.error(`  …and ${report.findings.length - shown.length} more`);
     }
-    console.error("\nRun `bun run translated-links:fix` and commit the result.");
+    console.error("\nRun `bun run cat translated-links:fix` and commit the result.");
     process.exit(1);
   }
 

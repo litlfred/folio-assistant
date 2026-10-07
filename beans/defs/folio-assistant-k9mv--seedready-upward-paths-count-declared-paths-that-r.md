@@ -28,4 +28,4 @@ Owner's choice, 2026-10-04, from three options (re-aim / make discovery see sibl
 Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
 
 - `Rule_UpwardPaths` is present in `cat-harness/processes/kg/decisions/seed-readiness-gate.dmn` on main (box 2's rename).
-- `bun run gates` on the bookkeeping branch (main + bean edits) is green; it includes the seed-readiness tests.
+- `bun run cat gates` on the bookkeeping branch (main + bean edits) is green; it includes the seed-readiness tests.

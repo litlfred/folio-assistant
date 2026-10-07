@@ -61,7 +61,7 @@ describe("judgePair — location", () => {
 describe("judgePair — bun run", () => {
   test("a known script holds; an unknown one is undetermined, never false", () => {
     const r = repo();
-    const p = skill(r, "Run `bun run kg:audit` then `bun run validate-refs`.");
+    const p = skill(r, "Run `bun run cat kg:audit` then `bun run validate-refs`.");
     expect(outcomes(judgePair(r, p, new Set(["kg:audit"])))).toEqual(["script:holds", "script:undetermined"]);
   });
 

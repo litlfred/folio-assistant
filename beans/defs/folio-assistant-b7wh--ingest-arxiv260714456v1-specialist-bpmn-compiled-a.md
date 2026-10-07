@@ -101,6 +101,6 @@ are intact.
 
 - [x] promoted, L1 complete, 14 descriptions from inspection
 - [x] methodology node with `evidence:`, skill on the processes subgraph
-- [x] `bun run gates` 136/136
+- [x] `bun run cat gates` 136/136
 - [ ] issue + PR
 - [ ] owner merges

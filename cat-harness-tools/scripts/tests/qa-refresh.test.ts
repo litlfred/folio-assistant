@@ -24,7 +24,7 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -32,6 +32,7 @@ import { QA_WRITERS, assess, claimants, globToRegExp, mayRestore, runRestoring, 
 import { clearQaCache, publishQa, readQaManifest, refreshReportComplete, REFRESH_SCHEMA, type QaStoreOptions } from "../../../cat-harness/scripts/qa-store.ts";
 import { movedRoots, type MovedInventory } from "../../../cat-harness/scripts/qa-verify-moved.ts";
 import { HARNESS_ROOT } from "../lib/roots.ts";
+import { scriptsOf } from "../../../cat-harness/schemas/script-table.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const STORE_CLI = join(HARNESS_ROOT, "scripts", "qa-store.ts");
@@ -65,7 +66,7 @@ describe("the declaration", () => {
   test("ids are unique, and every writer names a script package.json or the tree has", () => {
     const ids = QA_WRITERS.map((w) => w.id);
     expect(new Set(ids).size).toBe(ids.length);
-    const scripts = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> }).scripts;
+    const scripts = scriptsOf(REPO);
     for (const w of QA_WRITERS) {
       if (w.run === "external") continue;
       const head = w.run[0]!;

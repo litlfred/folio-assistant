@@ -60,7 +60,7 @@ SUSHI and the Publisher resolve the IG's `dependencies:` from
 broken IG and is not one — the packages can be had another way:
 
 ```sh
-bun run tools:remedy packages.fhir.org        # → fhir-cache-seed-npm, with its command
+bun run cat tools:remedy packages.fhir.org        # → fhir-cache-seed-npm, with its command
 ```
 
 Ask the Tool graph rather than this paragraph: every network-dependent Tool

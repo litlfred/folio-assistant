@@ -34,7 +34,7 @@ const PLATFORM_ROOT = resolve(import.meta.dir, "..");
  * repository, so it may not import them.
  *
  * **Reclassifying them without this table makes the count worse, measured.**
- * `bun run check:partition` on `d26a96fd`: the three content routes in the
+ * `bun run cat check:partition` on `d26a96fd`: the three content routes in the
  * harness give 10 wrong-direction edges; moved to core they give 11, because
  * `src/server.ts`, `src/index.ts` and `src/routes/chat.ts` then cross the line
  * to MOUNT them. They are content handlers mounted by a harness composition

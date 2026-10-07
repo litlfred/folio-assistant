@@ -5,9 +5,9 @@
  * @module scripts/check-node-kinds
  * @covers cat-harness, typologies — it resolves every declared family's validator and records which are node kinds
  *
- *   bun run node-kinds                       write cat-harness/docs/_data/node-kinds.json
- *   bun run node-kinds:check                 fail on a stale index, a NEW unkinded family, or an id collision
- *   bun run node-kinds --accept-unkinded     write, admitting new unkinded families to the baseline
+ *   bun run cat node-kinds                       write cat-harness/docs/_data/node-kinds.json
+ *   bun run cat node-kinds:check                 fail on a stale index, a NEW unkinded family, or an id collision
+ *   bun run cat node-kinds --accept-unkinded     write, admitting new unkinded families to the baseline
  *
  * ## The index is derived; the baseline is not
  *
@@ -78,7 +78,7 @@ async function main(): Promise<number> {
   if (fresh.length > 0 && !accept) {
     console.log(`\n✗ ${fresh.length} NEW famil(ies) with no node kind — declare a nodeKind() and point the family's validator node at it:`);
     for (const k of fresh) console.log(`    ${k}`);
-    console.log(`  (or, deliberately, \`bun run node-kinds --accept-unkinded\` to baseline it)`);
+    console.log(`  (or, deliberately, \`bun run cat node-kinds --accept-unkinded\` to baseline it)`);
     failed = true;
   }
 
@@ -86,7 +86,7 @@ async function main(): Promise<number> {
   if (check) {
     if (prior === undefined || readFileSync(INDEX_PATH, "utf-8") !== want) {
       const gone = prior ? prior.unkinded.length - index.unkinded.filter((u) => !fresh.includes(unkindedKey(u))).length : 0;
-      console.log(`\n✗ ${at} is stale${gone > 0 ? ` — ${gone} baselined famil(ies) became node kinds` : ""}. Run \`bun run node-kinds\` and commit.`);
+      console.log(`\n✗ ${at} is stale${gone > 0 ? ` — ${gone} baselined famil(ies) became node kinds` : ""}. Run \`bun run cat node-kinds\` and commit.`);
       failed = true;
     }
     if (!failed) console.log(`\n✓ ${at} is current, no new family is unkinded, and no id collides.`);

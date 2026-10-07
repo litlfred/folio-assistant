@@ -115,7 +115,7 @@ Three places, all required:
 naming your branch:
 
 ```sh
-bun run beans:claim <id>
+bun run cat beans:claim <id>
 ```
 
 A claim goes through `beans:claim`, not `beans update`: it reads the default
@@ -139,13 +139,13 @@ log to keep in step with it.
 - **Do not create a `Session: …` milestone or epic.** This step used to say
   to, and in the `qou` folio 292 of 353 epics were the result (bean `8unf`):
   a session is a LOG, and its log is the PR body (part c) plus a bean note on
-  each bean worked (`bun run beans:note <id>`, keyed by branch). Full
+  each bean worked (`bun run cat beans:note <id>`, keyed by branch). Full
   reasoning: [`todo-manager`](todo-manager.md) §"A session is a log, not a
   parent".
 - For each NEW task you pick up, create it under the epic whose subject it is:
   `beans create "<Task>" --type task --parent <subject-epic-id>`, then claim
   it.
-If working on an existing bean, run `bun run beans:claim <id>` — not
+If working on an existing bean, run `bun run cat beans:claim <id>` — not
 `beans update`, per the note above.
 
 **c. PR body** — at branch-open, the PR body must include:
@@ -253,7 +253,7 @@ or partial result):
    handoff letter.
 2. Read the bean discussion/comments (`beans show <id>`) — that's the technical state.
 3. Read the partial PR (if open) — that's the code state.
-4. Declare your intent normally (claim the bean and add a note to it — `bun run beans:note <id>` — saying you picked it up and where you will start; no session bean).
+4. Declare your intent normally (claim the bean and add a note to it — `bun run cat beans:note <id>` — saying you picked it up and where you will start; no session bean).
 5. Re-run the collision review in `coordinate` §"Starting new work" before
    your first edit, and add the result to the bean.
 

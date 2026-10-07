@@ -56,6 +56,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 // The HARNESS, not this layer: these scripts moved up in 70lx B2b and read cat-harness.
 import { HARNESS_ROOT } from "./lib/roots.ts";
+import { scriptsOf } from "../../cat-harness/schemas/script-table.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const DECL = join(HARNESS_ROOT, "scripts", "artefact-verification.json");
@@ -81,9 +82,7 @@ export interface ArtefactCheck {
 
 /** Every check that runs a generator in `--check` mode. Derived, never listed. */
 export function deriveArtefactChecks(root: string = ROOT): ArtefactCheck[] {
-  const scripts = (JSON.parse(readFileSync(join(root, "package.json"), "utf-8")) as {
-    scripts?: Record<string, string>;
-  }).scripts ?? {};
+  const scripts = scriptsOf(root);
   const out: ArtefactCheck[] = [];
   for (const [check, cmd] of Object.entries(scripts)) {
     if (!cmd.includes("--check")) continue;
@@ -128,9 +127,7 @@ const WRITES_QA_RESULT = new RegExp("(?<!function )\\bwrite" + "QaResult\\(");
  * noisy is one nobody reads.
  */
 export function deriveUncheckedGenerators(root: string = ROOT): string[] {
-  const scripts = (JSON.parse(readFileSync(join(root, "package.json"), "utf-8")) as {
-    scripts?: Record<string, string>;
-  }).scripts ?? {};
+  const scripts = scriptsOf(root);
   const referenced = new Map<string, boolean>();
   for (const cmd of Object.values(scripts)) {
     for (const m of cmd.matchAll(/([a-zA-Z0-9/._-]+\.ts)\b/g)) {

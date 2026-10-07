@@ -30,7 +30,7 @@
  * reads; otherwise the fingerprint is undetermined and the script RUNS. So a
  * `{tracked}` declaration can cost skips, never correctness, and the old rule
  * ("declare only what you have read") is enforced rather than remembered.
- * `bun run input-hash:coverage` says which declared scripts can skip and what
+ * `bun run cat input-hash:coverage` says which declared scripts can skip and what
  * blocks the rest; `--sites <file>` prints the pins.
  *
  * - prefer `{tracked}` to a hand-picked glob list: a narrower list is a claim
@@ -40,7 +40,7 @@
  *
  * ## How these entries were chosen — measured, 2026-10-01
  *
- * - `inputs`: the slowest pairs of a timed `bun run regen` (4 shared CPUs, load
+ * - `inputs`: the slowest pairs of a timed `bun run cat regen` (4 shared CPUs, load
  *   average 6–11 from other sessions; 1634 s, 2 passes). Each one's `--check`
  *   path was READ for writes, and its import closure scanned for environment,
  *   network and clock reads. Left out on purpose despite their cost:
@@ -382,7 +382,7 @@ export function pairIO(check: string): PairIO | undefined {
 
 /** Whether a gate command runs exactly one script that declares it writes nothing. */
 export function gateReadsOnly(command: string): boolean {
-  const m = /^bun run ([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
+  const m = /^bun run (?:cat )?([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
   if (m === null) return false;
   const io = TASK_IO[m[1]!];
   return io?.outputs !== undefined && io.outputs.length === 0;

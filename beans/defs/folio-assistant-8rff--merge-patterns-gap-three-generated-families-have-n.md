@@ -73,7 +73,7 @@ refused, not only that the case resolves*:
    `*.json`. That was this bean's own stated caution and it is now pinned
    instead of reasoned about.
 
-**Verified effect.** `bun run merge:overlap` re-run over the open PRs:
+**Verified effect.** `bun run cat merge:overlap` re-run over the open PRs:
 **zero** occurrences of any of the three families in an `authored_overlap`
 list, where this bean measured 19 pairs overlapping ONLY on them.
 

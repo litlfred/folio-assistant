@@ -13,7 +13,7 @@ Measured 2026-09-22 while trying to ingest the MADR source (`adr/madr`, MIT OR C
 ## The pipeline cannot terminate for an archive
 
 ```
-$ bun run ingest cat-harness/uploads/adr-madr-2026-09-22.zip --library library
+$ bun run cat ingest cat-harness/uploads/adr-madr-2026-09-22.zip --library library
   rung: archive  —  sniffed application/zip, entries listed as data, not extracted
   ok  adr-madr-2026-09-22   7 file(s), 1 dir(s)  [zip]
   2 requirement(s) still to satisfy:
@@ -28,7 +28,7 @@ $ bun run cat-harness/scripts/l1-blocks.ts -o cat-harness/ingest-staging/adr-mad
 
 But `l1-blocks.ts`, the arm that produces `manifest.jsonld`, **derives everything from `structure.json`**, which only the pdf rungs write. So an archive stages and can never be promoted. `mayPromote` requires every requirement met; two of them have no arm that can satisfy them for this rung.
 
-**This is `l1-blocks.ts`'s own founding defect, one rung along.** That module exists because *"`bun run ingest` could stage a document and nothing could ever promote one"* — the same sentence is true of the archive rung today.
+**This is `l1-blocks.ts`'s own founding defect, one rung along.** That module exists because *"`bun run cat ingest` could stage a document and nothing could ever promote one"* — the same sentence is true of the archive rung today.
 
 ## The second half: there is no rung for plain text at all
 

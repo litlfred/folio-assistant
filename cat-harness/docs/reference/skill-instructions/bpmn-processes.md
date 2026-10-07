@@ -109,7 +109,7 @@ a HIGHER instance holds is a wrong-direction edge, the same as an upward
 import: the diagram cannot be lifted into its own repository without the layer
 above it.
 
-`bun run check:process-bindings` gates it, with the same `allowedFromNeeds`
+`bun run cat check:process-bindings` gates it, with the same `allowedFromNeeds`
 direction as `check:import-direction` and `check:reference-direction`.
 **`skill-ref-resolves` does not catch this, and that is why the gate exists:**
 it resolves against `knownSkills(root)`, which in a pre-split checkout is

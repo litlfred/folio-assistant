@@ -12,12 +12,12 @@ references:
     id: ci-health-watcher
 ---
 Nothing about workflow state should ever be quoted from this file. Run
-`bun run check:ci-health` and report what it returns today.
+`bun run cat check:ci-health` and report what it returns today.
 
 | what | command |
 |---|---|
-| per-workflow state on default branch | `bun run check:ci-health` |
-| workflow trigger policy | `bun run check:workflow-policy` |
+| per-workflow state on default branch | `bun run cat check:ci-health` |
+| workflow trigger policy | `bun run cat check:workflow-policy` |
 | the tracking issue | issues labelled `ci-health` |
 
 <!-- detail -->
