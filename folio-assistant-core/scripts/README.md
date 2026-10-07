@@ -20,6 +20,8 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`build-glossary-skos.test.ts`](build-glossary-skos.test.ts) | a file |  |
 | [`build-glossary-usage.test.ts`](build-glossary-usage.test.ts) | a file |  |
 | [`build-glossary.ts`](build-glossary.ts) | a file |  |
+| [`build-library-site.test.ts`](build-library-site.test.ts) | a file |  |
+| [`build-library-site.ts`](build-library-site.ts) | a file |  |
 | [`cache-index.test.ts`](cache-index.test.ts) | a file |  |
 | [`cache-index.ts`](cache-index.ts) | a file |  |
 | [`check-catalogue.ts`](check-catalogue.ts) | a file |  |
@@ -58,6 +60,7 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`public-comment-changesets.ts`](public-comment-changesets.ts) | a file |  |
 | [`public-comment-pages.test.ts`](public-comment-pages.test.ts) | a file |  |
 | [`public-comment-pages.ts`](public-comment-pages.ts) | a file |  |
+| [`public-comment-route.ts`](public-comment-route.ts) | a file |  |
 | [`public-comment-site.test.ts`](public-comment-site.test.ts) | a file |  |
 | [`public-comment-site.ts`](public-comment-site.ts) | a file |  |
 | [`public-comment.test.ts`](public-comment.test.ts) | a file |  |
@@ -77,5 +80,6 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`stage-folio-local.ts`](stage-folio-local.ts) | a file |  |
 | [`folio-site-assets/`](folio-site-assets/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
+| [`test-fixtures/`](test-fixtures/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

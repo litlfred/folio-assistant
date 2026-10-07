@@ -9,7 +9,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } fro
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { buildLibrarySite, HANDLER, materialisedEdits, siteReads } from "./build-library-site.js";
+import { buildLibrarySite, entryContents, entryView, HANDLER, materialisedEdits, siteReads } from "./build-library-site.js";
 
 const ENTRY = "review-v1";
 const FIXTURE = join(import.meta.dir, "test-fixtures", "library-structure.json");
@@ -78,5 +78,16 @@ describe("build-library-site (bean zcak)", () => {
   test("it says what it reads: the library and the folio", () => {
     const d = scaffold();
     expect(siteReads(d)).toEqual(["library", "folio"]);
+  });
+
+  test("the page declares its sections to the rail: top level as rows, the next level as their children", () => {
+    const d = scaffold();
+    const view = entryView(d, join(d, "library", ENTRY), "o/r")!;
+    const decl = entryContents(view);
+    const json = JSON.parse(/<script[^>]*data-fa-visualiser-nav[^>]*>([\s\S]*?)<\/script>/.exec(decl)![1]!);
+    expect(json.length).toBeGreaterThanOrEqual(1);
+    expect(json[0].href).toMatch(/^#sec-/);
+    buildLibrarySite(d, join(d, "_s"), { repo: "o/r" });
+    expect(readFileSync(join(d, "_s", HANDLER, "library", ENTRY, "index.html"), "utf-8")).toContain("data-fa-visualiser-nav");
   });
 });
