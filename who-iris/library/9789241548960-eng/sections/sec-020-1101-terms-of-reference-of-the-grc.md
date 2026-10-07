@@ -7,6 +7,7 @@ section_number: 1.10.1
 pages: 24-25
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 All WHO publications containing recommendations must be approved by 
 the GRC according to WHO policies and procedures (4). The GRC reviews 

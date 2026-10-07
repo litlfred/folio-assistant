@@ -1,10 +1,10 @@
 ---
 # folio-assistant-9gkj
 title: 'Merge refused: #2094 owed CI not green on its head'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-04T14:30:43Z
+updated_at: 2026-10-07T02:40:30Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-wekz
@@ -32,3 +32,5 @@ A comment on PR #2094, plus a message to the Merge Manager role.
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
 - [ ] `bun run merge:guard 2094` passes all 7 checks, and it lands (or the owner closes it)
+
+_2026-10-07T02:40:30Z_ — Claimed by claude/9gkj-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

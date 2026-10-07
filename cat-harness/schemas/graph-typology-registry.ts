@@ -998,6 +998,12 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
       "folio-library-entry/v1": { generated: true },
+      // The per-entry DOCUMENT view (issue #2302): TOC, pages, figures,
+      // sections with summaries and keywords, checks — read from the
+      // ingestion schema by lib/library-document.ts. Same writer again, and a
+      // separate family for the same reason as the entry graph: fetched only
+      // when one entry is opened.
+      "folio-library-document/v1": { generated: true },
       "folio-voices-index/v1": { generated: true },
       "folio-graph-projection/v1": { generated: true },
       // The media-type sidecar beside each content-addressed payload under
@@ -2042,6 +2048,9 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.
       "folio-block-summaries/v1": {},
+      // An entry's LSI keywords, per section and per document (issue #2302).
+      // Derived from the whole library's term weights by library-keywords.ts.
+      "folio-keywords/v1": { generated: true },
       // What the site mount must not publish from this directory (bean `cw35`).
       // Written by the instance's generator from its licence gates; the mount
       // validates it with this schema and refuses to mount if it cannot.
@@ -2501,6 +2510,13 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
 
   "fsh-guts": {
+    // A NEW instance keeps its trashcan on `cat/<instance>/fsh-guts`, the way
+    // `beans` and `todos` are kept (owner, 2026-10-06: "cutover dirs should go
+    // to fsh-guts"; `state:seed --cutover` refuses without one). A STORAGE
+    // fact, and independent of `holds` below: the cutover's deposit is a
+    // write the owner confirms, not one a running step makes on its own, so
+    // the kind stays `context`. folio_init only — see the field.
+    newInstanceSource: { kind: "branch", keyedBy: "tip" },
     published: false,
     description:
       "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **THAT IS TRUE AGAIN AS OF 2026-09-23, AND WAS NOT FOR SOME TIME.** The kind also held `proposals/` — the LIVE design corpus, cited as the governing scheme by seven skills and four code modules — so an agent that read this row, learned the kind was throwaway and skipped it had skipped the schemes it needed. That is exactly what happened (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled. **The owner's fix was to move them, not to re-describe the kind** — *\"proposals not in fsh-guts but docs/ for needed &lt;stub&gt;\"* — so proposals now live in the `docs/` of the instance whose stub they concern, published rather than hidden. What remains here is `retired/` and one-off migration `scripts/`, which are what the label always described. **The lesson survives the fix**: a kind whose name tells an agent to skip it must not hold anything an agent needs.",

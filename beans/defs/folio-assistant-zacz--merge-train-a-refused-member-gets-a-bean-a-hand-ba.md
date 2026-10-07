@@ -1,10 +1,10 @@
 ---
 # folio-assistant-zacz
 title: 'Merge train: a refused member gets a bean, a hand-back with a fail condition, or a dispatch'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-02T16:59:06Z
-updated_at: 2026-10-02T16:59:06Z
+updated_at: 2026-10-06T19:30:00Z
 parent: folio-assistant-nok9
 ---
 
@@ -60,3 +60,11 @@ evidence of a `pull_request` run.
 Reading (1) as "green" is what bean `9x9r` measured, and this session made
 that exact error before `check:head-has-run` caught it: the dispatched runs
 were read as the owed runs because the job NAMES all matched.
+
+## Summary of Changes
+
+Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
+
+- `cat-harness/processes/sdlc/merge-refusal.bpmn` exists on main (box 2).
+- `render:bpmn:check` → exit 0. `skill:register:check` and `readme:subgraphs:check` pass inside `bun run gates` on the bookkeeping branch (box 3).
+- The refused-member process ran on real cases afterwards: `58ro` and `z9hh` are refusal beans that it opened and that closed when their PRs (#1977, #2093) landed.
