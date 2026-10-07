@@ -5,10 +5,19 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:39:27Z
-updated_at: 2026-10-07T19:39:38Z
+updated_at: 2026-10-07T20:51:45Z
 parent: folio-assistant-hfag
 ---
 
 Issue #2456. Owner approved 2026-10-07 ~19:40Z ("1y, 2y, 3y, 4y"). Measurements in the issue body.
 
 _2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).
+
+## Done on claude/ci-runner-budget (PR #2457), 2026-10-07
+
+- New job `qa-working-copy` runs `bun run cat qa:working-copy` once. `cat-harness/scripts/qa-working-copy-bundle.sh` snapshots the checkout before and after and packs EVERYTHING that changed (files, new dirs, deletions), with a sha256 manifest whose own hash is the job output. Measured locally: the build touches ~2,600 paths, well outside `test/results/`, so a directory list would have been partial.
+- The 8 readers (4 test shards, gates-kg, gates-docs, gates-unrun, skill-registration-chain) `needs:` it with `if: !cancelled()`. Each checks the producer succeeded, downloads, checks the manifest hash, extracts, and runs `sha256sum -c` in place. A failed build makes them red, never skipped.
+- qa-publish restores the same copy instead of running qa:refresh (470 s on run 37659324493). It keeps the kg-export producer step, then `verify`s the copy is unchanged (the sidecar is deterministic: two local runs gave one sha256). It publishes with the producer's `build/qa-refresh.json`.
+- BPMN: Task_QaWorkingCopy + GW_Readers; SVG and .pot regenerated; qa-reports-ci.test.ts updated.
+- Commits 7702652e6f3, 71c444d0737 (+ regen 03f203c71c9).
+- Evidence still owed: the PR's CI run as the after-measurement (before/after table in the PR body).
