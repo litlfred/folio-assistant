@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 375,
+      "count": 377,
       "unit": "open beans"
     }
   },
@@ -864,14 +864,14 @@
     {
       "id": "folio-assistant-1ygp",
       "title": "ROAST: adversarial pass over the hand-over screen, its wiring and the zero-trust-handover methodology before adoption",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ieum",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T19:29:09Z",
-      "updatedAt": "2026-10-07T21:38:22Z",
+      "updatedAt": "2026-10-07T22:13:50Z",
       "preview": "Owner 2026-10-07: 'include adversarial analysis (general process we have)'. The process: lens fan-out plus an adjudicator (devils-advocate-watcher, Slot C), then generalise-the-fix move 2 on the wiring. Findings are recorded HERE with a status (answered / open / accepted-as-cost), because a printed objection is gone (v048).\n\n## Done when\n- [x] lenses run, adjudicated\n- [x] every surviving finding ",
       "file": "beans/defs/folio-assistant-1ygp--roast-adversarial-pass-over-the-hand-over-screen-i.md"
     },
@@ -1634,6 +1634,20 @@
       "updatedAt": "2026-09-30T20:04:55Z",
       "preview": "## The ruling, owner 2026-09-30\n\nAsked *\"KGraph needs better name? CatHarness? … what is bootstrap's? consistent? why not just CatHarness? why need graph?\"*, then chose **\"Drop per-kind classes\"** over renaming.\n\n## Why (measured 2026-09-30)\n\n- bootstrap has no class per kind: a kind is a word (`skills`, `processes`) and one `bootstrap:GraphKind` individual, `bootstrap:graphKind/<kind>`; a declare",
       "file": "beans/defs/folio-assistant-3r47--drop-the-per-kind-graph-classes-kgraph-skillgraph.md"
+    },
+    {
+      "id": "folio-assistant-3sbm",
+      "title": "TOOL RELEASES + PROFILES: named, versioned, hashed tool sets with per-tool runtimes; PROV-O log of what each run used; SPDX 3 as export",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T22:13:50Z",
+      "updatedAt": "2026-10-07T22:17:25Z",
+      "preview": "Issue #2481. Owner 2026-10-07: 'need named/versioned releases + sha of software. it's not a gate per se, but a logging of what version of the Tool was used for audit purpose'; 'different tools may need different instances of java, so cannot pin java globally'. Owner chose PROV log + SPDX export. Closes G4 of the SPDX proposal (bean sd5v); answers D1's missing consumer (bean ffv7).\n\n## Done when\n- ",
+      "file": "beans/defs/folio-assistant-3sbm--tool-releases-profiles-named-versioned-hashed-tool.md"
     },
     {
       "id": "folio-assistant-3sm2",
@@ -15758,8 +15772,8 @@
         "share": 1
       }
     ],
-    "orphanOpen": 4,
-    "openTotal": 375,
+    "orphanOpen": 6,
+    "openTotal": 377,
     "coveredOpen": 368,
     "duplicateIds": 0
   }
