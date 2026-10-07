@@ -93,7 +93,8 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   deo: "discourse ELEMENTS — `deo:Introduction`, `deo:Conclusion` and the rest, on a paper's rhetorical blocks. Bound with `doco` as its companion vocabulary and waiting on the same thing: a folio with blocks.",
   oa: "Web Annotation — the shape a todo, a review note or a translation comment takes when it is published as an annotation on a block. `bzyu` and the todo-review workflow are where it lands.",
   csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype; its record is plain JSON (`tabular.csvw.json`, bean `792y`) and `toCsvw()` derives a CSVW document carrying CSVW's OWN context, not this one. So nothing in this graph speaks `csvw:` yet — a folio whose table blocks link their CSVW description is what would.",
-  // NO `fhir` ENTRY, and its removal is the check doing its job.
+  fhir: "FHIR artefact indexes. They left this repository's commit with the IG instances that hold them (bean `hupw`, PR #2320): those are REMOTE MOUNTS now, laid down at a pinned SHA and never tracked, so git's corpus here no longer speaks `fhir:` while the mounted indexes still do. An IG instance committed here again is what would emit it, and the stale-forward warning below says so the day it happens.",
+  // `fhir` WAS UNDECLARED HERE until the cutover, and why is worth keeping.
   //
   // It was forward-declared on the reason "emitted by an IG folio's export,
   // never by the platform" — true when written, and false since this

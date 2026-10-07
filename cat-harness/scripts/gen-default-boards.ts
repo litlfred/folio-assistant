@@ -52,7 +52,7 @@ import { BOARD_SCHEMA_TAG, wholeFolioBoard } from "../schemas/board.js";
 import { isExemptFrom, readDeclaration } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
-import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
+import { checkoutTopLevelDirs } from "../schemas/git-corpus.ts";
 import { TODO_ROOT } from "./todos.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -117,7 +117,7 @@ if (import.meta.main) {
   // drops anything without a declaration. The walk was contaminated and the
   // artefact was not — which is luck a reader cannot see from the walk, and
   // the argument for asking git here rather than trusting the filter behind.
-  const names = gitTopLevelDirs(REPO_ROOT).names;
+  const names = checkoutTopLevelDirs(REPO_ROOT).names;
   const owed = harnessesOwedABoard(REPO_ROOT, names);
 
   let stale = 0;

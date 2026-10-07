@@ -432,6 +432,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
+
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
       - name: bun run lint
@@ -528,6 +537,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
 
       - name: Produce the QA working copy this job reads (bean 72a8)
         # The derived QA results are not committed (bean `5hox`): their record is
@@ -776,6 +794,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
 
       - name: Produce the QA working copy this job reads (bean 72a8)
         # The derived QA results are not committed (bean `5hox`): their record is
@@ -1371,6 +1398,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
 
       - name: Produce the QA working copy this job reads (bean 72a8)
         # As in gates-kg: `test/results/` is not committed (bean `5hox`), and
@@ -2252,6 +2288,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
+
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
       # its declared closure, laid out as sibling git repositories, `bun test`
       # run in cat-harness. 459 tests fail there today, most of them correct
@@ -2333,6 +2378,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
 
       - name: Produce the QA working copy this job reads (bean 72a8)
         # The derived QA results are not committed (bean `5hox`): their record is
@@ -3191,6 +3245,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
+
       # Chromium's download, cached across shards and runs — bean `doxj`.
       # "Install Chromium" measured 22 s in EACH of the three shards (main run
       # 37253911158). Keyed on the EXACT `@playwright/test` version package.json
@@ -3354,6 +3417,15 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
+
       - name: Produce the QA working copy this job reads (bean 72a8)
         # The derived QA results are not committed (bean `5hox`): their record is
         # the `qa-reports` branch and `test/results/` is gitignored. The gates and
@@ -3485,6 +3557,15 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
+
+      - name: Build the mounted IG instances' pages (bean hupw)
+        # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
+        # (the state:mount step above lays them down). Their docs/ pages are
+        # built from the mount rather than committed, and the viewer index,
+        # the navbar tiles and their tests read them, so they are built here,
+        # straight after the mount. It writes only each instance's docs/,
+        # which the mount leaves out, so the mount still checks clean.
+        run: bun run smart:pages
 
       # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
       # owner ruling 2026-10-01: keep the file, give it a producer). Both

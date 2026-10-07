@@ -37,7 +37,7 @@ import { join } from "node:path";
 
 import { FhirArtifactIndexSchema, materializationCensus } from "../schemas/fhir-artifact-index.js";
 import { declarationPathIn, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
-import { gitTopLevelDirs } from "../../cat-harness/schemas/git-corpus.js";
+import { checkoutTopLevelDirs } from "../../cat-harness/schemas/git-corpus.js";
 
 const ROOT = repoRootFor(join(import.meta.dir, ".."));
 
@@ -57,7 +57,7 @@ const ROOT = repoRootFor(join(import.meta.dir, ".."));
  */
 function declaredIndexes(): string[] {
   const out: string[] = [];
-  for (const entry of gitTopLevelDirs(ROOT).names) {
+  for (const entry of checkoutTopLevelDirs(ROOT).names) {
     // RESOLVED, never composed: since #695 an instance declares itself in
     // `<name>.config.json`, so there is no single filename to join. Composing
     // one is how a reader stops seeing every instance the moment the

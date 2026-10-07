@@ -77,6 +77,8 @@ import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
+import { mountedInstanceRoots } from "./remote-mount.js";
+
 /**
  * Room for a whole-checkout `ls-files -z`; node's 1 MiB default is not.
  *
@@ -446,4 +448,28 @@ export function gitTopLevelDirs(root: string): { names: string[]; source: "git" 
     }
   }
   return { names: [...names].sort(), source: "git" };
+}
+
+/**
+ * {@link gitTopLevelDirs} plus every top-level directory a REMOTE MOUNT laid
+ * down (bean `0mpw`), read from the checkout's mount lock.
+ *
+ * Bean `hupw`, the first real consumer: once the IG instances became remote
+ * mounts, git no longer tracked them — on purpose, the mounted bytes are never
+ * committed — and every caller that asked git which instances the checkout
+ * holds dropped them. The site lost their navbar entries, rail scopes and
+ * artefact-index checks with no error, because "not tracked" read as "not
+ * here". A mounted directory is DECLARED (`remoteMounts`, and the lock that
+ * resolved it), so it is accounted for by the declaration rather than by a
+ * walk, which keeps the property `gitTopLevelDirs` exists for: a gitignored
+ * directory nobody declared is still never admitted.
+ */
+export function checkoutTopLevelDirs(root: string): { names: string[]; source: "git" | "walk" } {
+  const base = gitTopLevelDirs(root);
+  const names = new Set(base.names);
+  for (const abs of mountedInstanceRoots(root).values()) {
+    const first = relative(root, abs).split(sep)[0];
+    if (first && !first.startsWith(".") && !first.startsWith("..")) names.add(first);
+  }
+  return { names: [...names].sort(), source: base.source };
 }
