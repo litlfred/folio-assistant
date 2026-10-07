@@ -21,11 +21,12 @@
  * | `fail`    | the check ran and refused                 | yes (blocking checks) |
  * | `unknown` | the check could not be run                | yes: could-not-check is never clean |
  *
- * An `advisory` check (dependency advisories, action pinning) is reported in
- * the same three states and never blocks, because each is a known backlog
- * whose blocking threshold is the owner's decision (0 of 240 `uses:` lines
- * are SHA-pinned today; turning that into a blocker on day one would block
- * every release).
+ * Action SHA pinning BLOCKS for workflows that publish or run on main, and is
+ * advisory for staging-only ones (owner, 2026-10-07). An `advisory` check
+ * (dependency advisories, staging pinning) is reported in
+ * the same three states and never blocks. Pinning was advisory on day one,
+ * when 0 of 240 `uses:` lines were pinned; `bun run actions:pin` pinned the
+ * 216 outside staging the same day, and only then did it become blocking.
  *
  * ## Every subprocess is argv, never a shell string
  *
@@ -41,6 +42,8 @@
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+
+import { parseUses, STAGING_ONLY_WORKFLOWS } from "./pin-actions.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -78,37 +81,52 @@ export function runCheck(script: string, blocking: boolean, root = ROOT): GateRe
   return { check: script, blocking, state: "fail", detail: tail };
 }
 
-const SHA = /@[0-9a-f]{40}(\s|$)/;
 /**
- * Third-party `uses:` lines not pinned to a full commit SHA. Local
- * (`./`) and `docker://` references are not third-party actions.
+ * Third-party `uses:` lines not pinned to a full commit SHA, split by the
+ * owner's ruling of 2026-10-07 (*"when published, make it unpinned on
+ * staging"*): a workflow that publishes or runs on main must pin, and a
+ * staging-only workflow may not. Local (`./`) and `docker://` references are
+ * not third-party actions, and this repository's own reusable workflows are
+ * first-party. Parsing and the staging set come from `pin-actions.ts`, so the
+ * tool that pins and the gate that checks cannot disagree about a line.
  */
-export function unpinnedActions(root = ROOT): { total: number; unpinned: string[] } | undefined {
+export function unpinnedActions(root = ROOT): { total: number; unpinned: string[]; stagingUnpinned: string[] } | undefined {
   const dir = join(root, ".github", "workflows");
   if (!existsSync(dir)) return undefined;
   const unpinned: string[] = [];
+  const stagingUnpinned: string[] = [];
   let total = 0;
   for (const f of readdirSync(dir).filter((n) => /\.ya?ml$/.test(n)).sort()) {
     readFileSync(join(dir, f), "utf-8").split("\n").forEach((line, i) => {
-      const m = /^\s*-?\s*uses:\s*["']?([^\s"'#]+)/.exec(line);
-      if (!m || m[1]!.startsWith("./") || m[1]!.startsWith("docker://")) return;
+      const u = parseUses(line);
+      if (!u || u.firstParty) return;
       total++;
-      if (!SHA.test(line.replace(/["']/g, " "))) unpinned.push(`${f}:${i + 1} ${m[1]}`);
+      if (u.pinned) return;
+      (STAGING_ONLY_WORKFLOWS.has(f) ? stagingUnpinned : unpinned).push(`${f}:${i + 1} ${u.action}@${u.ref}`);
     });
   }
-  return { total, unpinned };
+  return { total, unpinned, stagingUnpinned };
 }
 
-export function actionPinning(root = ROOT): GateResult {
+/** Blocking for published workflows; staging-only workflows are reported, never blocking. */
+export function actionPinning(root = ROOT): GateResult[] {
   const r = unpinnedActions(root);
-  if (r === undefined) return { check: "action-sha-pinning", blocking: false, state: "unknown", detail: "no .github/workflows directory" };
-  return r.unpinned.length === 0
-    ? { check: "action-sha-pinning", blocking: false, state: "pass", detail: `${r.total} third-party uses:, all SHA-pinned` }
-    : { check: "action-sha-pinning", blocking: false, state: "fail", detail: `${r.unpinned.length} of ${r.total} third-party uses: are not pinned to a full commit SHA` };
+  if (r === undefined) return [{ check: "action-sha-pinning", blocking: true, state: "unknown", detail: "no .github/workflows directory" }];
+  const published: GateResult =
+    r.unpinned.length === 0
+      ? { check: "action-sha-pinning", blocking: true, state: "pass", detail: `every third-party uses: outside staging-only workflows is SHA-pinned (${r.total} in all)` }
+      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside staging — run \`bun run actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
+  const staging: GateResult = {
+    check: "action-sha-pinning (staging-only)",
+    blocking: false,
+    state: r.stagingUnpinned.length === 0 ? "pass" : "fail",
+    detail: r.stagingUnpinned.length === 0 ? "staging-only workflows are pinned too" : `${r.stagingUnpinned.length} unpinned in staging-only workflows, allowed by the owner's ruling`,
+  };
+  return [published, staging];
 }
 
 export function securityGate(root = ROOT): GateResult[] {
-  return [...SECURITY_CHECKS.map((c) => runCheck(c.script, c.blocking, root)), actionPinning(root)];
+  return [...SECURITY_CHECKS.map((c) => runCheck(c.script, c.blocking, root)), ...actionPinning(root)];
 }
 
 /** A release proceeds only when no BLOCKING check failed or could not be run. */

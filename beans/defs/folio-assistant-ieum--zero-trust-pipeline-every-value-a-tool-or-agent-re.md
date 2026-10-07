@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-07T05:56:11Z
-updated_at: 2026-10-07T09:30:09Z
+updated_at: 2026-10-07T11:04:08Z
 ---
 
 ## The ask, owner 2026-10-07 — verbatim
@@ -87,3 +87,17 @@ The owner asked for it to be done in this session. Measured:
 Static leads ruled out: `detect-live-corpus.ts` (`git checkout -- .`) refuses a dirty tree and is not a gate. The MCP server's branch-switch `discard` also runs `git clean -fd`, which would have deleted the untracked files, and those survived.
 
 What differs from the lost run: it carried several modified INPUT files (package.json, tools/index.ts, a voice, a methodology, a bean) where the probe carried one inert file. A step keyed on what changed, or something outside gates in that window, remains possible. **Status: unknown, not cleared.** Advice stands: commit before running gates.
+
+
+## Owner decision, 2026-10-07 — all four next items
+
+> 1 2 (staging doesnt need singautre) 3 (when published, make it unpinned on staging) 4
+
+Read as follows. Recorded so a misreading can be corrected in one place:
+- **1** build the shared hand-over screen
+- **2** the remote-KG trust gate. **A staging preview needs no signature**; a real mount or a publish needs a signature or consent.
+- **3** SHA-pin actions. **Pinning is required where a workflow publishes or runs on main; a staging-only workflow may stay unpinned.** The pin check blocks on the first kind and is advisory on the second.
+- **4** a `security:gate` task in the publish/merge BPMN
+
+
+- [x] **3 done:** `bun run actions:pin` (Tool `pin-actions`) pinned 216 third-party `uses:` to full commit SHAs (an annotated tag pins to its peeled commit), leaving `feature-staging.yml` and `folio-staging.yml` unpinned per the ruling. `security:gate` now BLOCKS on an unpinned action outside staging-only workflows; the 24 in staging are advisory.

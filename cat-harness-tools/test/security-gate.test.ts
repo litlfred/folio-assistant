@@ -45,10 +45,28 @@ describe("security:gate", () => {
     const r = unpinnedActions(repo(wf))!;
     expect(r.total).toBe(3);
     expect(r.unpinned.map((u) => u.split(" ")[1])).toEqual(["actions/checkout@v4", "owner/short@0123456"]);
-    expect(actionPinning(repo(wf)).state).toBe("fail");
+    expect(actionPinning(repo(wf))[0]!.state).toBe("fail");
   });
 
   test("no workflows directory is unknown, not pass", () => {
-    expect(actionPinning(repo()).state).toBe("unknown");
+    expect(actionPinning(repo())[0]!.state).toBe("unknown");
+  });
+});
+
+describe("action pinning follows the owner's staging ruling", () => {
+  test("an unpinned action BLOCKS outside staging and is advisory in a staging-only workflow", () => {
+    const root = repo("    steps:\n      - uses: actions/checkout@v4\n");
+    writeFileSync(join(root, ".github", "workflows", "feature-staging.yml"), "    steps:\n      - uses: actions/checkout@v4\n");
+    const [published, staging] = actionPinning(root);
+    expect(published!.blocking).toBe(true);
+    expect(published!.state).toBe("fail");
+    expect(staging!.blocking).toBe(false);
+    expect(staging!.state).toBe("fail");
+    expect(blocks([published!, staging!])).toHaveLength(1);
+  });
+
+  test("first-party reusable workflows are not third-party", () => {
+    const root = repo("    uses: litlfred/folio-assistant/.github/workflows/publish.yml@main\n");
+    expect(unpinnedActions(root)!.total).toBe(0);
   });
 });
