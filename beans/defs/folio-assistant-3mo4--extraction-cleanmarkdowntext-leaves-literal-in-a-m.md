@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3mo4
 title: 'EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T12:53:23Z
-updated_at: 2026-09-27T08:07:11Z
+updated_at: 2026-10-07T05:07:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -63,9 +63,8 @@ different cause.
       `**` that is not part of prose — and the count is reported, since the
       current 47 includes legitimate glob patterns (`content/**/*.lean`) that must
       NOT be touched
-- [ ] the msgids this changes are obsoleted in the existing `.po` files with
-      tooling, alongside `6b8u`'s additions, `ig4a`'s removals and `lvk9`'s 3785 —
-      one rewrite of the catalogues, not four
+- [x] the msgids this changes are obsoleted in the existing `.po` files with
+      tooling — landed in PR #1439 (12 stale msgids marked `#~` alongside 16 regenerated `.pot` files; see §"Done-when item 4 is PARTLY done" and §"The whitespace question is ANSWERED" below)
 
 ## Not in scope
 
@@ -164,3 +163,12 @@ behaviour.
 So the item is CLOSED as decided-against rather than left open. The test pins
 `"and  both"` with the reason in its body, which is now a recorded decision rather
 than a deferral.
+
+## Evidence
+
+Work landed on `main` in PR #1439 (merge commit `42a91c2004ed`, head commits `aa0d4278dcc2`, `f820a08dbd2e`).
+PR #1439 merge description explicitly records `3mo4  literal asterisks in msgids — 209 fixed, 0 content lost` as closed.
+Verified against `main`:
+1. `bun test cat-harness/content/pipeline/translation.test.ts`: all 70 tests pass (including 8 tests specifically asserting `cleanMarkdownText — emphasis around a code span (bean 3mo4)`).
+2. Real corpus check: no msgid in the real corpus carries a run of four asterisks.
+
