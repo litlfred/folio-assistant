@@ -83,6 +83,7 @@ package "cat-harness/subscriptions" as pkg_cat_harness_subscriptions <<substrate
   class "SubstrateSnapshot" as cat_harness_subscriptions_SubstrateSnapshot <<json: SubstrateSnapshotSchema>> #f4f4f1 {
     $schema [1] : 'folio-substrate-snapshot/v1'
     subscription [1] : string
+    kind [0..1] : substrate | content
     repository [1] : string
     ref [1] : string
     file [1] : string
