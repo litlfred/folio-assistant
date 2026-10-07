@@ -50,6 +50,12 @@
 cat-harness/docs/glossary/index.md                      linguist-generated=true -diff -merge
 cat-harness/docs/cat-harness/auto-docs/**               linguist-generated=true -diff -merge
 cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true -diff -merge
+# Bean `5gqn`. Rewritten whole by `gen-docs-pages.ts` from `beans/defs/`; reads nothing
+# back, and gated in CI by `docs:pages:check`.
+# NOTE: `cat-harness/docs/_data/harness.json` is deliberately NOT marked here:
+# `sync-docs-harness.ts` carries the previous repo URL forward when git remote is
+# unknown, so `-merge` would discard it silently.
+cat-harness/docs/assets/beans/index.json                linguist-generated=true -diff -merge
 # UNTRACKED on `main` since bean `tqjj` (2026-10-04), and the entry is kept on
 # purpose. A branch opened before that change still carries the file, and the
 # attribute is what makes its one conflict against a base that deleted it a
