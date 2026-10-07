@@ -186,12 +186,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `fhir-artifact-index`
 
-0 of 3 published.
+3 of 3 published.
 {: .fa-hx-dim }
 
-- SMART Base — *declared, not published*
-- smart-immunizations — *declared, not published*
-- smart-trust — *declared, not published*
+- [SMART Base]({{ '/smart-base/artifacts.html' | relative_url }})
+- [smart-immunizations]({{ '/smart-immunizations/artifacts.html' | relative_url }})
+- [smart-trust]({{ '/smart-trust/artifacts.html' | relative_url }})
 
 ### `folio`
 
