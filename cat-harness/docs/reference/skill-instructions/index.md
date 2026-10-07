@@ -88,6 +88,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Injection](injection-boundaries.html) | `injection-boundaries` | — |   run: \| |
 | [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
 | [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
+| [Zero-trust handover](zero-trust-handover.html) | `zero-trust-handover` | — | **This is a skill: this platform's application of a method, not the method.** |
 
 ## Platform core (folio-core)
 
@@ -424,6 +425,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+| [Oxigraph Multi-Graph Search & Discovery for WHO IRIS](iris-oxigraph.html) | `iris-oxigraph` | — | This skill defines how to use **Oxigraph** (in-memory WASM on the client, and native in Bun/Node on  |
 
 ## Mathematical authoring (authoring-math)
 
