@@ -103,7 +103,6 @@ export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   "tsconfig.json": "tsc's project root",
   "eslint.config.mjs": "eslint flat config, root-only",
   "playwright.config.ts": "playwright's project root",
-  Dockerfile: "the image build context is the repository",
   "AGENTS.md": "the agent-generic instructions every tool looks for at the root",
   "CLAUDE.md": "the tool-specific stub pointing at AGENTS.md",
   "GEMINI.md": "the same, for another tool",

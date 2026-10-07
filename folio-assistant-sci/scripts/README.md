@@ -10,5 +10,6 @@ Part of [folio-assistant-sci](../README.md) 0.1.0, declared as `sci-scripts`, ho
 
 | file | what it is | used by |
 |---|---|---|
+| [`docker-latex-build/`](docker-latex-build/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->
