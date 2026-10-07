@@ -47,16 +47,48 @@ import { type RoleGraph } from "../../../cat-harness/schemas/role-graph.js";
 import { roleGraphFor } from "../../../cat-harness/scripts/known-skills.js";
 import { accessContext } from "../../../cat-harness/src/core/access.js";
 import { githubPrincipalFor } from "../core/github-auth.js";
-import { oneLineLabel, screenHandover, type FieldRole } from "../../../cat-harness/src/core/handover-screen.js";
+import { oneLineLabel, screenHandover, type FieldSpec } from "../../../cat-harness/src/core/handover-screen.js";
 
-/** The declared shape of a `workflow_complete` hand-over: what steers the engine, and what is only read. */
-export const WORKFLOW_COMPLETE_HANDOVER: Record<string, FieldRole> = {
-  instance: "control",
-  node: "control",
-  outcome: "control",
+/**
+ * An instance id as `instanceId` mints it (`crdm--folio-assistant-6lb8`,
+ * `merge-train--train-6`): no slash, no `..`, no leading dot, since it is
+ * joined into a path under `beans/workflows/` by the store.
+ */
+export const WORKFLOW_INSTANCE_ID = /^(?!.*\.\.)[A-Za-z0-9][A-Za-z0-9_.-]{0,199}$/;
+/** A BPMN node id: an XML NCName without the colon (`Task_DraftEdit`, `Gateway_Ready`). */
+export const WORKFLOW_NODE_ID = /^[A-Za-z_][A-Za-z0-9_.-]{0,199}$/;
+/**
+ * The content a step acted on: a block id, a repo-relative path or a bean id
+ * (`folio-assistant-1ygp`, `content/ch3/def-x.ts`). No whitespace, no `..`,
+ * never absolute, never `~`.
+ */
+export const WORKFLOW_TARGET = /^(?!.*\.\.)[A-Za-z0-9_@#][A-Za-z0-9_.\/@#:+=-]{0,299}$/;
+/**
+ * A decision outcome. It is matched against the gateway's FLOW LABELS, and
+ * those are prose rather than ids (`no, or unknown`, `rejected,\nattempts
+ * left`), so this is a label pattern, not an id pattern: at most 160
+ * characters, starting with a letter, digit, `[` or `(`, no control character
+ * but a line break, and none of `<>{}`$\|`. Every sequence-flow label in the
+ * repository's diagrams matched it when it was written. The engine then
+ * refuses any outcome that is not one of the gateway's labels, which is the
+ * real allow-list; this is the screen's own bound in front of it.
+ */
+export const WORKFLOW_OUTCOME = /^(?=[\s\S]{1,160}$)(?![\s\S]*[<>{}`$\\|])[\p{L}\p{N}[(][^\p{Cc}]*(?:\n[^\p{Cc}]+)*$/u;
+
+/**
+ * The declared shape of a `workflow_complete` hand-over: what steers the
+ * engine, and what is only read. The id-shaped control fields carry a VALUE
+ * constraint (roast 1ygp L4.3): the patterns alone passed any well-formed word.
+ * `facts` is an object a decision table reads and `actor` is free text kept in
+ * the history only (authorization is on the GitHub principal), so neither has one.
+ */
+export const WORKFLOW_COMPLETE_HANDOVER: Record<string, FieldSpec> = {
+  instance: { role: "control", pattern: WORKFLOW_INSTANCE_ID },
+  node: { role: "control", pattern: WORKFLOW_NODE_ID },
+  outcome: { role: "control", pattern: WORKFLOW_OUTCOME },
   facts: "control",
   actor: "control",
-  target: "control",
+  target: { role: "control", pattern: WORKFLOW_TARGET },
   note: "data",
 };
 
