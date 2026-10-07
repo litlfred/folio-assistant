@@ -1,13 +1,13 @@
 ---
 # folio-assistant-zlmp
 title: Drain the wrong-direction import edges so the repo split can cut
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-10-04T09:56:46Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -474,3 +474,6 @@ gating nobody.
 
 Left `in-progress`, unchanged, for exactly the reason §Status gives. What is
 withdrawn is its position in the path, not its status.
+
+## Completed on evidence
+Verified at 0 wrong-direction import edges and 0 unassigned modules via bun run cat check:partition.

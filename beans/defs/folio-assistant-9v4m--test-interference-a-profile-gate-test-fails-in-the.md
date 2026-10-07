@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9v4m
 title: 'TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-29T20:52:42Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -531,3 +531,6 @@ A sibling timeout reproduces on demand in a long-lived agent container, and the 
 **Relevance here:** this bean's failing test was also a ~5.7 s timeout, inside `profile-scoping`, which spawns sweeps that shell out to git. Not proven the same cause, but the same shape: a git-heavy test near the 5 s budget, in a checkout whose object store is fragmented.
 
 **Remedy, and why not applied:** `git repack -a -d` (or `git gc`) collapses the packs. That container had 3.5 GB free against a 4.6 GB pack store, too little to repack safely, so it was not run. **Not a test change:** raising the budget would hide a real environment signal, and skipping the test is never an option.
+
+## Completed on landed evidence
+Landed on main in PR #1699 (Test interference: measured cause for test timeouts in full suite resolved).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-z1x6
 title: 'PAGE WEIGHT: post-build HTML minification, and nav_exclude for the generated reference sections (#1885)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T16:51:57Z
-updated_at: 2026-10-02T17:53:49Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -181,3 +181,6 @@ sweeping those into my commit is what the shared-tree rule exists to prevent.
 Whoever ships this branch runs `skill:register` after the last skill edit
 lands — possibly twice, since that command's own output warns the chain is not
 at a fixed point.
+
+## Completed on landed evidence
+Landed on main in PR #1889 (R4 scoped to the board + post-build HTML minification (−63.3 MiB)).

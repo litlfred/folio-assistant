@@ -114,6 +114,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/smart-fhir-cache-seed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Seed the FHIR package cache, with WHO's published site as a source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`): `smart.who.int.*` packages are also read from WHO's published-site repository, each fetch verified against the tarball's own package.json. Every other source and check is the seeder's own."
+        }
+      ],
+      "skos:notation": "smart-fhir-cache-seed",
+      "dcterms:source": "smart-base/tools/index.ts#smart-fhir-cache-seed",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/smart-base/ns#glossary/kg-tools/smart-liquid-variables",
       "@type": "skos:Concept",
       "skos:inScheme": {

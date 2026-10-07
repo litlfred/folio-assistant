@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xgd8
 title: 'SCHEMA VISUALISER: schemas/ is a content kind with no renderer — options, and three generators that were never wired'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T18:21:04Z
-updated_at: 2026-09-29T18:14:50Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -475,3 +475,6 @@ stray one reddens the suite rather than only the next person's generator run.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #581 (km90: beans reach the rendering pipeline — one reader, a visualiser per state graph at its own URL).

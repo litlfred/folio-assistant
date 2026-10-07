@@ -1,11 +1,11 @@
 ---
 # folio-assistant-z4mq
 title: Zod modules are tool KG nodes that maintain the public JSON-LD / JSON Schema
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T22:22:06Z
-updated_at: 2026-09-29T21:43:12Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -165,3 +165,6 @@ detector that cannot tell them apart will report finished beans that are not.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed
+All 3 acceptance criteria completed and verified. Zod modules registered as tool KG nodes.

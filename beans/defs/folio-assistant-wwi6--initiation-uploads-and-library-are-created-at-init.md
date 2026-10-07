@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wwi6
 title: 'INITIATION: uploads/ and library/ are created at initiation, one as state and one not'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T06:19:54Z
-updated_at: 2026-09-29T18:14:48Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -171,3 +171,6 @@ Two, and the first has been measured:
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #481 (One initiation receipt per harness, the todo board inside the landing board, theme-art intake, a reverse sweep for undeclared files).

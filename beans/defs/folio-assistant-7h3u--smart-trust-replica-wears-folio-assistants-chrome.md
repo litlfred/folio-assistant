@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7h3u
 title: smart-trust replica wears folio-assistant's chrome, not the WHO IG's branding
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T20:04:11Z
-updated_at: 2026-09-30T20:26:11Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -278,3 +278,6 @@ not an agent's. Recorded unanswered.
 - [ ] the theme is APPLIED — needs the platform-vs-instance ruling above
 - [ ] classify how much of `who.css` beyond `--navbar-*` is structural, which
       decides whether colour+geometry alone reaches "looks like the IG"
+
+## Completed on landed evidence
+Landed on main in PR #1683 (Queue the smart-trust branding question and alignment with replica styling).

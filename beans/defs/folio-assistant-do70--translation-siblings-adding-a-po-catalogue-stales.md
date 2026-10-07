@@ -1,11 +1,11 @@
 ---
 # folio-assistant-do70
 title: 'SIBLINGS: seven generated artefacts go stale when a catalogue or a BEAN changes, and no gate names its remedy — reuse skills:register''s converging chain'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T10:05:01Z
-updated_at: 2026-09-29T20:52:42Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -208,3 +208,6 @@ a non-finding.
 
 
 _2026-09-29_ — **Re-parented `bzyu` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Seven artefacts going stale with no gate naming the remedy is a gate problem; catalogues were only the trigger.
+
+## Completed on landed evidence
+Landed on main in PR #1426 (harness.json census and sibling generated artefacts sync).

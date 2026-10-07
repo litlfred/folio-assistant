@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uoij
 title: kind:register — one command performs the SEVEN artefacts adding a graph kind obliges, the way skill:register does for a skill
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T05:32:27Z
-updated_at: 2026-10-04T05:32:48Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -64,3 +64,6 @@ check **on its own, never through `gates`**; this must do the same.
 Not a second answer to `skill:register`. A kind and a skill oblige different artefacts
 and share no writer; folding them into one command would mean one list that is wrong
 for both.
+
+## Completed on landed evidence
+Landed on main in PR #2032 (kg(docs): declare the two uml-overview routes — and the dh4f gap that made the declaration unverifiable).

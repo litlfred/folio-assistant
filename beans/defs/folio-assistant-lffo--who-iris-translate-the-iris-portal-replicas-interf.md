@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lffo
 title: 'who-iris: translate the IRIS portal replica''s interface into ar, es, fr, ru, zh (#2228)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T18:46:23Z
-updated_at: 2026-10-06T07:45:49Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -858,3 +858,6 @@ _2026-10-06T15:44:31Z_ — Claimed by claude/lffo-who-iris-ui-l10n — on the br
 - The `folio-mount`, `mounted-locale` and `search-band` e2e files: 42/42 passed.
 
 **Still not done here:** the first box above. A person, or an independent checker, still has to sign off the five catalogues. The pdf.js viewer's caption ("Search, page jump, print and download are in the viewer's toolbar…") is still English on every translated item page. It comes from the platform's `pdfViewer`, not from `SITE_STRINGS`, so translating it is a platform change and is left out of this bean.
+
+## Completed on landed evidence
+Landed on main in PR #2290 (who-iris: bidi-isolate record data on the translated portal interface).

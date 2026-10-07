@@ -1,11 +1,11 @@
 ---
 # folio-assistant-70lx
 title: 'Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-04T15:59:51Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pyds
@@ -62,3 +62,6 @@ _2026-10-01T19:46:46Z_ — Claimed by claude/70lx-b0 — pushed to main so sibli
 - **`no-content-adapter.ts` joins the move set** rather than needing a type split: its only importers are `src/index.ts` and `src/tool-groups.test.ts`, both moving, and it is the only staying-side importer of `src/types.ts`.
 
 **For B1 (the move):** `server.ts` passes `PLATFORM_ROOT` (its own instance) as the tool groups' root. After the move that must be the **declaring** root, `cat-harness` (where `tools/` lives), not `cat-harness-tools` — routes keep `PLATFORM_ROOT`, since they move with the server. `capture-mcp-tools.ts`'s `TOOL_MODULES` moves with the server and stays relative to it. Baseline to compare against: `bun run cat split:baseline:check` (pyds, #2101).
+
+## Completed on landed evidence
+Landed on main in PR #2146 (Separation stage 1a: stage cat-harness-tools/ as a sibling instance and move unambiguous code).

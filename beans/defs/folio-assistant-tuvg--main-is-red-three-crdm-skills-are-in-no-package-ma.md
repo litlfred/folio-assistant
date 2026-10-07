@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tuvg
 title: 'MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T04:09:28Z
-updated_at: 2026-09-26T07:10:10Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -305,3 +305,6 @@ The PR check would have stopped me **by finding the duplicate work**, not by
 finding the decision. That remains unsolved, and it is deliberately NOT being
 designed here: it is a platform capability change, so it belongs in CRDM behind
 an issue, and I have not been given permission to open one.
+
+## Completed on landed evidence
+Landed on main in PR #1364 (k59d round 3: crdm skills manifests and roles).

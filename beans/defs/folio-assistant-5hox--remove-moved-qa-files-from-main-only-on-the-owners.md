@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5hox
 title: REMOVE moved QA files from main — only on the owner's explicit go, after the branch holds a hash-verified copy
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-02T13:58:15Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-7mwa
@@ -53,3 +53,6 @@ Deletion is its own final commit. bun run cat gates with files absent: 16 of 205
 Blocker beyond the gates: after removal, qa-publish has no producer for the working copy (a fresh CI checkout holds nothing under test/results), so main/<sha> entries after the removal would hold one file.
 
 The owner's go: only the D4 ruling quoted above. The first Done-when box is not ticked here.
+
+## Completed on landed evidence
+Landed on main in PR #2080 (Derived QA results off main — CI and gates consume working copy).

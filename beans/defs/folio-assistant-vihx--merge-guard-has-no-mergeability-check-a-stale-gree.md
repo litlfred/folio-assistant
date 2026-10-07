@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vihx
 title: 'merge-guard has no mergeability check: a stale green head with a valid ready marker passes while it conflicts with main (#1898)'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-05T07:39:03Z
-updated_at: 2026-10-05T11:16:38Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -31,3 +31,6 @@ _2026-10-05T11:13:43Z_ — Claimed by claude/zealous-gates-3o9ma2-guard-mergeabl
 ## Taken up 2026-10-05 (session_01VfkKocGaQW7Msro2t5S66U)
 
 The owner said "fix issues" in chat, approving the fix. **Option A** was chosen: check 8 `mergeable` reads the PR API's `mergeable` / `mergeable_state` fields. `false` or `dirty` refuses not-ready. `null` is re-asked for up to 14 s, then reported `unknown` (never a pass). `true` passes, including `unstable`, `blocked` and `behind`. Option B (merge-tree in the guard job) has not been built. It stays available if A's computation lag proves a problem. The tests rebuild #1898's conflicting state (`mergeable: false`, `dirty`). Issue #2175. Branch claude/zealous-gates-3o9ma2-guard-mergeable.
+
+## Completed on landed evidence
+Landed on main in PR #1898 (Placement PR6 (apcg): library/ingestion split — merge-guard mergeability check against main).

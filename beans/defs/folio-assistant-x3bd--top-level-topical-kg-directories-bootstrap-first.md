@@ -1,11 +1,11 @@
 ---
 # folio-assistant-x3bd
 title: Top-level topical KG directories, bootstrap/ first
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T05:59:28Z
-updated_at: 2026-10-05T13:38:59Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -228,3 +228,6 @@ _2026-09-20_ — BOOTSTRAP SIMPLIFIED TO ONE PROCESS, per the owner's spec. READ
 ## 2026-10-05 — the publication rules now have one home (bean `4ak5` item 4)
 
 Which graph each instance publishes, where, under which IRI and schema, and what is stripped (fsh-guts, `published: false` skills, state-graph nodes) now live in `cat-harness/skills/kg/kg-core/instance-publication.md` §"What each instance publishes — graph, address, schema, and what is stripped". This bean's body is left as written; where it and that section disagree, the section is current.
+
+## Completed on landed evidence
+Landed on main in PR #322 (Twelve skills were never published; three readers disagreed about where skills live).

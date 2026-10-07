@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vbxp
 title: 'DIRECTION SIDECAR: check:reference-direction printed a verdict and committed nothing, so ''never audited'' and ''audited clean'' were indistinguishable'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T09:23:19Z
-updated_at: 2026-09-30T09:43:22Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -96,3 +96,6 @@ Claimed by this session (branch `claude/zhg2-direction-sidecar`) on 2026-09-30. 
 `audit:coverage` on this axis: **0 mentions before, 0 after**, measured both times. Its gate universe is the CI set and this script is in no workflow (`vzo5`); the `@covers computed` line makes the coverage DECLARED rather than `undeclared` on the day the axis is wired.
 
 Multi-destination-unlisted is **76** on today's main, not the 75 `gates.ts` records — main drifted. This branch moves no verdict count.
+
+## Completed on landed evidence
+Landed on main in PR #1560 (vbxp: the reference-direction axis gets a committed sidecar).

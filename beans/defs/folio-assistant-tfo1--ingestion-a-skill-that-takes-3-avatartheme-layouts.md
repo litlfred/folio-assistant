@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tfo1
 title: 'INGESTION: a skill that takes 3 avatar/theme layouts, checks them, and says why it refused'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-20T06:31:08Z
-updated_at: 2026-09-29T18:14:48Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-o3xy
 blocking:
     - folio-assistant-d3yq
@@ -241,3 +241,6 @@ board reflecting which harnesses fired.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Completed on landed evidence
+Landed on main in PR #481 (5fe9b498); architecture theme set completed and check:theme-art:check CI gate wired.

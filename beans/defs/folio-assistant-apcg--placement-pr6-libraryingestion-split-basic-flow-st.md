@@ -1,11 +1,11 @@
 ---
 # folio-assistant-apcg
 title: 'Placement PR6: library/ingestion split — basic flow stays in the harness, l1-document-ingestion goes to core'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-02T17:53:42Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-63wl
@@ -34,3 +34,6 @@ _2026-10-02_ — **Coordination review before the first edit** (owner rule, `coo
 - In-progress beans naming these files: `2i5f`, `5yhm`, `7wou` (terminology; touch `glossary-terms`/`term-disagreement`, which STAY in the harness), `a8wy`, `scfh`, `rkqp`, `x80s`, `ojai`, `yg29` (mention library-ingestion/document-ingestion by name; no open PR found on their branches), `yj6r`, `d308`, `wggr`, `x3bd` — no file-level conflict found.
 
 Re-derived from the current tree: library-ingestion.md is **870** lines (the 553 above predates later additions); the ingest-* diagrams are in `cat-harness/processes/library/` (PR3 regroup); core already has `skills/library/{ingestion,catalogue}/` (PR1, bean 7eak).
+
+## Completed on landed evidence
+Landed on main in PR #1898 (Placement PR6: library/ingestion split — basic flow stays in cat-harness).

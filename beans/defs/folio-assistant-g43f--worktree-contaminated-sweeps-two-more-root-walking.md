@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g43f
 title: 'WORKTREE-CONTAMINATED SWEEPS: two more root-walking checks descend into .claude/worktrees and redden bun test for every concurrent session — vpek''s general question, answered yes'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-10-03T18:00:00Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -366,3 +366,6 @@ asserting `checkoutRootFor`, `rootForScope`, `findPublishWorkflows`,
 assertion on the checkout the test runs in.
 
 - [x] Whether the root instance should read the checkout's `.claude/skills` (0 → 4, including a bogus `SKILL`). Owner, 2026-10-04: "do g43f". It does, and a `.claude/skills/<group>/` holding only Claude Code's `SKILL.md` loader stub is not a group of skills: **0 → 3** (`bean-coordination`, `todo-manager`, both stubs of corpus skills, and `language-trap-agent-audit`). The stub rule is scoped to `.claude/skills` only — elsewhere `SKILL.md` is a skill's own file (who-iris's voices), and excluding it globally dropped three of them from `kg:audit` (measured, then reverted). Regression in `instance-roots-worktrees.test.ts`; `kg:audit:all:check` 14/14 clean.
+
+## Completed on landed evidence
+Landed on main in commit 25b66768c08e (known-skills: root instance reads its own .claude/skills; SKILL.md-only group is a loader stub).

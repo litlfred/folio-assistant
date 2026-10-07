@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 509,
+      "count": 505,
       "unit": "open beans"
     }
   },
@@ -1951,7 +1951,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T14:46:51Z",
       "updatedAt": "2026-09-29T20:50:32Z",
-      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/730\n\nOwner request 2026-09-21: align folio-assistant with github/spec-kit; no development before a spec exists; all specs in one template; specs posted as GitHub issue comments; oversized changes split into multiple issues so human adjudication on the PR stays feasible; follow industry standards for the split.\n\n## Blocking decision\nmethodol",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/730\n\nOwner request 2026-09-21: align folio-assistant with github/spec-kit; no development before a spec exists; all specs in one template; specs posted as GitHub issue comments; oversized changes split into multiple issues so human adjudication on the PR stays feasible; follow industry standards for the split.\n\n## Blocking decision — RESOLV",
       "file": "beans/defs/folio-assistant-4kq7--adopt-githubspec-kit-spec-before-code-gate-one-spe.md"
     },
     {
@@ -3180,7 +3180,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T09:15:31Z",
-      "updatedAt": "2026-10-06T20:27:23Z",
+      "updatedAt": "2026-10-07T14:54:46Z",
       "preview": "Measured 2026-10-06 on #2267 (coordinator) and reported independently by session A, from #2268.\n\n**What happens.** Since #2080 (5hox), the QA results tree is computed and not committed. Some generators read it from disk, at least `uml:overview` and `readme:subgraphs`. A container's local copy can be partial or stale. On #2267 only `kg-qa` was present, so `bun run cat regen` rewrote the QA overview wit",
       "file": "beans/defs/folio-assistant-7how--regen-reads-a-stale-qa-tree-generators-that-read-g.md"
     },
@@ -9435,14 +9435,14 @@
     {
       "id": "folio-assistant-obhe",
       "title": "merge-main's notification rule has no skill home — ci-health.md carries the doctrine and names only one instance",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T06:09:01Z",
-      "updatedAt": "2026-10-07T02:51:01Z",
+      "updatedAt": "2026-10-07T02:59:30Z",
       "preview": "Spun out of `03nl` (PR #2046) rather than widened into it.\n\n## What is already true\n\n`skills/sdlc/sdlc-core/ci-health.md` §\"A report is only read by someone in the\nroom\" ALREADY carries the doctrine this change is an instance of: one tracking\nissue **edited in place**, because *\"an edit does not notify, so a long outage\nstays one unread item rather than a stream\"*, and *\"it deliberately does not\ns",
       "file": "beans/defs/folio-assistant-obhe--merge-mains-notification-rule-has-no-skill-home-ci.md"
     },
@@ -9738,15 +9738,15 @@
     {
       "id": "folio-assistant-p3yl",
       "title": "IG repo onboarding asks two owner questions: disable automatic gh-pages builds? just-the-docs site (default yes)?",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T16:21:43Z",
-      "updatedAt": "2026-10-06T16:21:43Z",
-      "preview": "Owner, 2026-10-06: \"make this part of the process/skill. if gh-pages is being populated, ask use if disable. ask use if they want justthedocs rendering (default is yes)\". Follows #2291 (folio-site template manual-only) and #1901. Rule lives in fhir-harness ig-build-pipeline; fhir-ig-create and ig-render-jekyll point to it.\n\n## Done when\n- [ ] the rule is in one skill with detect / ask-disable / as",
+      "updatedAt": "2026-10-07T14:15:00Z",
+      "preview": "Owner, 2026-10-06: \"make this part of the process/skill. if gh-pages is being populated, ask use if disable. ask use if they want justthedocs rendering (default is yes)\". Follows #2291 (folio-site template manual-only) and #1901. Rule lives in fhir-harness ig-build-pipeline; fhir-ig-create and ig-render-jekyll point to it.\n\n## Done when\n- [x] the rule is in one skill with detect / ask-disable / as",
       "file": "beans/defs/folio-assistant-p3yl--ig-repo-onboarding-asks-two-owner-questions-disabl.md"
     },
     {
@@ -11807,14 +11807,14 @@
     {
       "id": "folio-assistant-u4up",
       "title": "merge:train drops gitignored-but-tracked test/results files",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T16:44:20Z",
-      "updatedAt": "2026-10-07T03:09:48Z",
+      "updatedAt": "2026-10-07T05:13:00Z",
       "preview": "Measured 2026-10-04 building merge-train-2026-10-04a (#2113):\n\n1. The built train tree omitted `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` and its tool-run sidecar (tracked on main, gitignored), so `lsi:skills:check` and `lsi:viz:check` went red in CI while green locally. Restored by hand in 1635342194. Same family as 8j9e (#2090 fixed `merge-base.ts`, not the train tool).\n2. Take-b",
       "file": "beans/defs/folio-assistant-u4up--mergetrain-drops-gitignored-but-tracked-testresult.md"
     },
@@ -13852,14 +13852,14 @@
     {
       "id": "folio-assistant-yqc4",
       "title": "CI observability: a failing e2e job is opaque to anyone who cannot reach the log host",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:56:51Z",
-      "updatedAt": "2026-10-03T14:14:54Z",
+      "updatedAt": "2026-10-07T14:15:00Z",
       "preview": "## Brief\n\nOwner, 2026-10-03: *\"Have the workflow upload the Playwright report on failure — right\nnow a red E2E job is opaque to any agent that can't reach the log host.\"*\n\n## The defect\n\nA red `End-to-end + accessibility` job carried its diagnosis in exactly one place: the\nrun log, on `productionresultssa14.blob.core.windows.net`. A cloud session whose network\npolicy denies that host sees only the",
       "file": "beans/defs/folio-assistant-yqc4--ci-observability-a-failing-e2e-job-is-opaque-to-an.md"
     },
@@ -15617,13 +15617,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 585,
-        "closed": 277,
-        "open": 308,
-        "inProgress": 126,
+        "closed": 280,
+        "open": 305,
+        "inProgress": 123,
         "todo": 181,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4735042735042735
+        "share": 0.47863247863247865
       },
       {
         "id": "folio-assistant-vuip",
@@ -15632,13 +15632,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 275,
-        "closed": 117,
-        "open": 158,
-        "inProgress": 91,
+        "closed": 118,
+        "open": 157,
+        "inProgress": 90,
         "todo": 66,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4254545454545455
+        "share": 0.4290909090909091
       },
       {
         "id": "folio-assistant-yg29",
@@ -15657,8 +15657,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 509,
-    "coveredOpen": 506,
+    "openTotal": 505,
+    "coveredOpen": 502,
     "duplicateIds": 0
   }
 }

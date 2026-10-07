@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v625
 title: 'MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T05:10:48Z
-updated_at: 2026-09-26T14:02:01Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -348,3 +348,6 @@ more. Both places that said so — the BPMN documentation and the workflow comme
 — were corrected in the same change rather than left to rot, because a job whose
 stated reason is false is a job somebody deletes for the right reason on the
 wrong evidence.
+
+## Completed on landed evidence
+Landed on main in PR #1378 (main was red: six skills landed unregistered — and registering one is a six-step chain).
