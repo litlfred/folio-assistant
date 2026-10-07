@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xies
 title: 'PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-10-06T19:30:00Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -117,3 +117,6 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 ## 2026-10-06 — the publication step exists: `Process_RenderKgToCdn`
 
 Gate 4 ("publish to CDN, and make accessible") already has an executable process: **`Process_RenderKgToCdn`** in `cat-harness/processes/process/render-kg-to-cdn.bpmn` (bean `7dek`, merged in #1758). It is the one general publish-to-CDN step; `gh-pages` is a Tool with its own subprocess, so the host stays a tool choice reached through `publication.host`, as this bean requires. The four-gate BPMN this bean asks for should **call** that process for gate 4, not draw a second publish step. Recorded so 7dek's last box ("xies updated to name Process_RenderKgToCdn as its publication step") is discharged. No status change: this bean's own Done-when items are untouched.
+
+## Completed on landed evidence
+Landed on main in PR #1758 (render-kg-to-cdn + placement PR0 mechanisms + separation work plan (epic iirv)).
