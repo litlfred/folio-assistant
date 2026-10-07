@@ -27,6 +27,19 @@ const PAGES: { name: string; path: string; wrapper: string; ready: string; ready
   { name: "uploads", path: `${DOCS}/cat-harness/uploads/index.html`, wrapper: ".up-page", ready: "#badges .badge" },
   { name: "document-kinds", path: `${DOCS}/cat-harness/document-kinds/index.html`, wrapper: ".dk-page", ready: "#dk-title" },
   { name: "translation-status", path: `${DOCS}/translation-status/index.html`, wrapper: ".ts-page", ready: "#ts-title" },
+  // The node-kind pages: a kind's dashboard, a node, and a renderer's sections.
+  { name: "node-kind dashboard", path: `${DOCS}/en/cat-harness/todo/index.html`, wrapper: ".nk-page", ready: "#shown" },
+  {
+    name: "node-kind node",
+    path: `${DOCS}/en/cat-harness/todo/folio-assistant/todos/items/what-kick-off-means-for-a-ci-watcher/index.html`,
+    wrapper: ".nk-page",
+    ready: "#fields",
+  },
+  { name: "node-kind renderer", path: `${DOCS}/en/folio-assistant-core/changeset/index.html`, wrapper: ".nk-page", ready: "#nk-title" },
+  { name: "folio", path: `${DOCS}/cat-harness/folio/index.html`, wrapper: ".fo-page", ready: "#badges .badge" },
+  { name: "catalogue", path: `${DOCS}/cat-harness/catalogue/who-iris/index.html`, wrapper: ".ic-page", ready: "#ic-nodes" },
+  // The todo page draws itself from its JSON-LD: the meta list fills only if the script ran.
+  { name: "todo", path: `${DOCS}/todos/what-kick-off-means-for-a-ci-watcher/index.html`, wrapper: ".fa-todo-page", ready: "#fa-todo-meta dt" },
   // Last, and with room: a ~1.9 MB projection and ~1700 list rows, so its
   // load and its axe pass are the slow ones.
   { name: "schemas", path: `${DOCS}/cat-harness/schemas/index.html`, wrapper: ".sc-page", ready: "#counts", readyText: /declarations/ },
