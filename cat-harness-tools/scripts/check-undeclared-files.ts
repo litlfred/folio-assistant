@@ -66,6 +66,7 @@ import { join, relative } from "node:path";
 
 import { findDeclarationFile, instanceRootFor, readDeclaration, repoRootFor, rootForScope } from "../../cat-harness/schemas/cat-harness.js";
 import { instanceConfigFilename } from "../../cat-harness/schemas/harness-config.js";
+import { mountLockFilename } from "../../cat-harness/schemas/remote-mount.js";
 
 /**
  * Repository-level files that belong at the root, each with why.
@@ -123,6 +124,9 @@ export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   // committed from it today — it holds one dotfile — so this is an
   // inconsistency to raise, not a defect to fix inside a sweep.
   "test-results": "playwright's outputDir, created by a run (note: not gitignored, unlike _kg/)",
+  // `bun patch` writes here and package.json's `patchedDependencies` names the
+  // file relative to itself, so the directory sits beside package.json.
+  patches: "bun's patchedDependencies, resolved relative to package.json",
 };
 
 /**
@@ -224,7 +228,12 @@ export function instanceConfigNames(repoRoot: string): Map<string, string> {
       continue; // unreadable ⇒ no claim
     }
     if (name !== undefined) {
-      out.set(instanceConfigFilename(name), `the config of the instance declared at ${relative(repoRoot, r) || "."}`);
+      const at = relative(repoRoot, r) || ".";
+      out.set(instanceConfigFilename(name), `the config of the instance declared at ${at}`);
+      // The remote-mount lock is named the same way and for the same reason:
+      // `mount:remote` writes `<instance>.mount-lock.json` beside the
+      // declaration, and `mount:lock` reads it from there.
+      out.set(mountLockFilename(name), `the remote-mount lock of the instance declared at ${at}`);
     }
   }
   return out;
