@@ -1,0 +1,50 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "lean-formal-edges",
+    "path": "skills/lean/lean-formal-edges.md"
+  },
+  "source_hash": "9535a1bf2adb",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "agent-skill-authoring",
+          "detail": "never reviewed against the agent-skill-authoring voice (12 skill rule(s)) — `bun run voice:review`"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 2,
+    "unknown": 0
+  }
+}
