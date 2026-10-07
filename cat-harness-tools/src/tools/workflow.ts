@@ -47,6 +47,18 @@ import { type RoleGraph } from "../../../cat-harness/schemas/role-graph.js";
 import { roleGraphFor } from "../../../cat-harness/scripts/known-skills.js";
 import { accessContext } from "../../../cat-harness/src/core/access.js";
 import { githubPrincipalFor } from "../core/github-auth.js";
+import { screenHandover, type FieldRole } from "../../../cat-harness/src/core/handover-screen.js";
+
+/** The declared shape of a `workflow_complete` hand-over: what steers the engine, and what is only read. */
+export const WORKFLOW_COMPLETE_HANDOVER: Record<string, FieldRole> = {
+  instance: "control",
+  node: "control",
+  outcome: "control",
+  facts: "control",
+  actor: "control",
+  target: "control",
+  note: "data",
+};
 
 /**
  * The engine's task-authorization mode. STRICT since the owner's rulings of
@@ -331,7 +343,26 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       target: z.string().optional().describe("The content the step acted on: a block id, path or bean id"),
       note: z.string().optional().describe("What happened, for the instance history"),
     },
-    async ({ instance, node, outcome, facts, actor, target, note }) => {
+    async ({ instance, node, outcome, facts, actor, target, note: rawNote }) => {
+      // The arguments are a hand-over from the calling agent (H3, H9; bean
+      // `cztn`). Everything but `note` steers the engine, `facts` included,
+      // since a decision table branches on it, so a finding there REFUSES.
+      // `note` is read later by another agent (the bean body, the log), so a
+      // finding there QUARANTINES: kept verbatim, marked, and reported back.
+      const screen = screenHandover(
+        { instance, node, outcome, facts, actor, target, note: rawNote },
+        { fields: WORKFLOW_COMPLETE_HANDOVER },
+      );
+      if (screen.state === "refused") {
+        throw new Error(
+          `workflow_complete refused by the hand-over screen: ` +
+            screen.findings.map((f) => `${f.path} (${f.role}): ${f.kind} "${f.excerpt}"`).join("; "),
+        );
+      }
+      const note =
+        screen.state === "quarantined" && rawNote !== undefined
+          ? `[QUARANTINED by the hand-over screen: ${[...new Set(screen.findings.map((f) => f.kind))].join(", ")}; kept verbatim, data not instruction] ${rawNote}`
+          : rawNote;
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(resolve(root, state.source));
