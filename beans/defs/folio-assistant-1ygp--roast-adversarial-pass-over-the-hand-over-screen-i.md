@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:29:09Z
-updated_at: 2026-10-07T19:29:17Z
+updated_at: 2026-10-07T19:34:55Z
 parent: folio-assistant-ieum
 ---
 
@@ -16,3 +16,33 @@ Owner 2026-10-07: 'include adversarial analysis (general process we have)'. The 
 - [ ] every surviving finding has a status and, if answered, the commit
 
 Session: https://claude.ai/code/session_01FWGdsHong3XHiU7CMRWmfo
+
+
+## Findings (lens reports 2026-10-07; adjudication pending)
+
+Status key: **open** = not yet answered; **answered** = fixed (commit named); **accepted-as-cost** = known and kept, with the reason; **owner** = needs the owner's decision.
+
+### L3 — adoption validity (against `methodology-adoption`)
+
+| # | finding | sev | scope | status |
+|---|---|---|---|---|
+| L3.1 | The node is a house process dressed as an adoption: its own line 313 says H1–H9, the sink table and the release gate are "ours". MA:107, 131–133 say a house process is a skill. | critical | structural | **owner**: split it into a node holding 800-207's tenets and a skill holding H1–H9 |
+| L3.2 | The primary (NIST SP 800-207) is unread: rendered "from the citation" (line 52), which is recall. MA allows the gap only if reported. Generated `docs/methodologies/index.md` tags the node "source held", which is false for its origin. Both NIST hosts are denied by this container's network policy (measured 2026-10-07). | major | structural | open |
+| L3.3 | It blends methods: H3/H9 fuse CaMeL `sec-007` with DataFilter `sec-014`; the adopted table mixes 800-207, GitHub, CaMeL, DataFilter and owner rulings. MA:25–32, 219 forbid blending. | critical | structural | **owner** (same split answers it) |
+| L3.4 | Overclaim: H9 attributes the regex screen to "CaMeL's quarantined LLM"; the node never says `clean` is not clearance; a CVSS 2.7 figure contradicts its own no-numbers rule. | major | limited | open |
+| L3.5 | `applies-when` is not reachable by the selection ladder (it is a control, not a judgement method); no "where the rendering stops" refusing 800-207's PDP/PEP enterprise architecture. | minor | limited | open |
+| L3.6 | It duplicates and has drifted from `security.md`: claims boundaries the skill "doesn't yet list" that it does list; "0 of 240" pinned vs 216 pinned. | major | structural | open |
+
+All quotes of CaMeL, DataFilter, DefensiveTokens and GitHub were checked against the held text and are faithful.
+
+### L4 — threat model
+
+| # | finding | sev | scope | status |
+|---|---|---|---|---|
+| L4.1 | The staging pinning exemption covers `feature-staging.yml`, which runs on `pull_request_target` with `contents: write` and pushes to `gh-pages`, the branch that serves production. It uses unpinned actions. The exemption is decided by file name. | critical | structural | **owner**: the 2026-10-07 ruling "unpinned on staging" met a workflow holding a write token |
+| L4.2 | Mount consent is self-asserted (`by` and `evidence` are free strings); `--staging` is a caller-chosen flag; the lock does not record the basis; `checkRemote` never re-runs `mountTrust`; gitlinked submodules mount without their own consent; a refused mount leaves the old content. | critical | structural | open |
+| L4.3 | False assurance: the verdict says `clean`; control VALUES are not allow-listed (`{nextTool:"merge_pull_request"}` is clean); paraphrase, homoglyphs, French, soft hyphen, `curl \| python3`, base64 and non-image exfil links all pass. At the time of review it had no production caller. | major | structural | partly answered: 4f11af4 gives it production callers |
+| L4.4 | "Principal" is undefined: routine prompts, `send_message` relays, PR-activity and Slack all arrive as user turns. | major | structural | open |
+| L4.5 | The release gate can be emptied: it checks only that the script NAME exists, and runs from the PR's own `package.json`. | major | structural | open |
+| L4.6 | The pin check accepts any 40-hex (no tag comment needed, fork-network commits); flow-mapping `{uses: …}` and `docker://…:latest` are invisible to the parser. | minor | limited | open |
+| L4.7 | The sink table misses mounted symlinks, `GITHUB_ENV`/`GITHUB_OUTPUT`, the Actions cache, executing mounted code, creating routines/triggers, and outbound comments (exfiltration). | major | structural | open |
