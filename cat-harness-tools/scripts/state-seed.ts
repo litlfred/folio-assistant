@@ -1043,10 +1043,12 @@ export function retireInstance(path: string, opts: RetireOptions): RetireResult 
   let only = "";
   try {
     if (gi(["read-tree", "--empty"]).status !== 0) return { state: "unknown", reason: "git read-tree --empty failed" };
-    for (const p of paths) {
-      const r = gi(["read-tree", `--prefix=${p.path}/`, p.id]);
-      if (r.status !== 0) return { state: "unknown", reason: `git read-tree of ${p.path} failed: ${r.stderr.trim()}` };
-    }
+    // `ls-tree -r` rows are `--index-info` input as they stand, for a file
+    // (an `--also` path) and a directory alike.
+    const rows = gi(["ls-tree", "-r", "-z", head, "--", ...all]);
+    if (rows.status !== 0) return { state: "unknown", reason: `git ls-tree of ${all.join(", ")} failed: ${rows.stderr.trim()}` };
+    const r = spawnSync("git", ["update-index", "-z", "--index-info"], { cwd: repoRoot, encoding: "utf-8", env, input: rows.stdout });
+    if (r.status !== 0) return { state: "unknown", reason: `git update-index of ${all.join(", ")} failed: ${r.stderr.trim()}` };
     only = gi(["write-tree"]).stdout.trim();
   } finally {
     rmSync(dirname(index), { recursive: true, force: true });
