@@ -228,21 +228,27 @@ is never rendered as one that was.
 
 ### The route `pdf-structure.py` takes itself (issue #2302, owner 2026-10-07)
 
-With no outline, the inferred contents is used only when it passes **both**
+With no outline, the inferred contents is used only when it passes **all three**
 tests, in order (`inferred_toc_trust`):
 
 1. **concentration** (`6xaz`): at most 60% of its entries may start on the two
    commonest pages — a list read off a page is not the document's structure;
 2. **mean confidence ≥ 0.6** (`TOC_MIN_MEAN_CONFIDENCE`), each entry's
    confidence being how much independent evidence agreed — a contents page,
-   the body, a heading style, a numbering run.
+   the body, a heading style, a numbering run;
+3. **headings with bodies** (owner, 2026-10-07): from 5 sections up, no more
+   than 25% of the sections the tree would cut may hold under 50 characters
+   (`TOC_MAX_EMPTY_SHARE`, `TOC_EMPTY_SECTION_CHARS`), front matter not
+   counted — a tree of empty sections is logo lettering, a sample table's
+   column heads or a cover's address block, not chapters.
 
 Otherwise — refused, or nothing inferred — the entry is split **one section per
 page** (`page-001`, "Page 1", the shape `pdf-pages.py` writes), with
 `granularity: "page"`, `toc_source: undetermined` or `none`,
 `toc_undetermined_reason`, and a `structure_note` saying why. Both inputs are
 recorded whether or not they passed: `diagnostics.toc_inferred_entries` and
-`diagnostics.toc_inferred_mean_confidence`. It used to emit **one** section
+`diagnostics.toc_inferred_mean_confidence` and
+`diagnostics.toc_inferred_empty_share`. It used to emit **one** section
 holding the whole document, which is determined but uncitable.
 
 **What the floor does and does not catch**, measured 2026-10-07 on the 40
@@ -253,6 +259,14 @@ predictor of quality — W3C PROV-O scored 0.72 at title F1 0.23. A mean of
 "at least 0.6" lets those through (8 outline-less documents, some fine, some
 not), so read a `font` TOC at 0.60 before citing it. The floor's real work is
 on the `regex` fallback, whose entries carry no confidence and count as 0.
+
+**The third test is the one that catches a poor font tree**, measured on 72
+corpus PDFs the same day: every inferred tree with title F1 ≥ 0.7 had at most
+20% empty sections, and the only document newly refused at 25% was
+`WPR-RDO-2020-003-eng` (48%: 18 empty sections of logo text and table heads,
+mean confidence 0.602, which the first two tests passed). Known miss: a poor
+tree at 22.5% (`strauch-carbno`, title F1 0.36) is too close to the good ones
+to separate by this measure.
 
 ## What a complete L1 entry holds
 

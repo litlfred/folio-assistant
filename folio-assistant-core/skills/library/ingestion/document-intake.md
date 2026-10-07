@@ -251,8 +251,9 @@ someone time:
   independent checks agreed: listed on the contents page, found in the body
   near the page it names, set in a heading style, numbered. Trust the high
   ones; look at the flagged ones before citing them. An inferred TOC is used
-  only when it passes the concentration check and its mean confidence is at
-  least 0.6; otherwise the entry is split one section per page
+  only when it passes the concentration check, its mean confidence is at
+  least 0.6, and no more than a quarter of the sections it would cut are
+  empty; otherwise the entry is split one section per page
   (`granularity: "page"`, with the reason in `structure_note`) —
   `l1-document-ingestion` §"The route `pdf-structure.py` takes itself". Measured over the 13
   corpus PDFs that carry an outline, hidden and used as the answer key: title

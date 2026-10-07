@@ -269,22 +269,54 @@ def main() -> int:
     print("\n9. the second test: mean confidence (issue #2302, owner 2026-10-07)")
     def scored(confs: list) -> list:
         return [E(1, f"Heading {i}", 3 + 7 * i, "inferred", None, c) for i, c in enumerate(confs)]
+
+    def doc(n: int, bodies: list[str] | None = None) -> list[str]:
+        """Heading i opening page 3+7i with a body under it, in at least 64 pages."""
+        pages = [""] * max(64, 7 * n + 3)
+        for i in range(n):
+            body = (bodies or [])[i] if bodies else "Body text of this chapter. " * 8
+            pages[2 + 7 * i] = f"Heading {i}\n{body}"
+        return pages
+
     check("the floor is the owner's 0.6", pdf.TOC_MIN_MEAN_CONFIDENCE == 0.6)
-    reason, mean = pdf.inferred_toc_trust(scored([0.9, 0.8, 0.7, 0.9, 0.8]), 64)
-    check(f"spread and corroborated: used (mean {mean})", reason is None and mean == 0.82)
-    reason, mean = pdf.inferred_toc_trust(scored([0.6] * 6), 64)
+    reason, mean, share = pdf.inferred_toc_trust(scored([0.9, 0.8, 0.7, 0.9, 0.8]), doc(5))
+    check(f"spread, corroborated, with bodies: used (mean {mean}, empty {share})",
+          reason is None and mean == 0.82 and share == 0.0)
+    reason, mean, _ = pdf.inferred_toc_trust(scored([0.6] * 6), doc(6))
     check("a mean of exactly 0.6 — style alone, nothing corroborating — passes, as decided",
           reason is None and mean == 0.6)
-    reason, mean = pdf.inferred_toc_trust(scored([0.55, 0.5, 0.6, 0.5, 0.55]), 64)
+    reason, mean, _ = pdf.inferred_toc_trust(scored([0.55, 0.5, 0.6, 0.5, 0.55]), doc(5))
     check(f"below the floor: refused, with the number (got {reason!r})",
           reason is not None and "0.54" in reason and "0.6" in reason)
-    reason, mean = pdf.inferred_toc_trust(scored([None] * 6), 64)
+    reason, mean, _ = pdf.inferred_toc_trust(scored([None] * 6), doc(6))
     check("an entry with no confidence counts as 0 — a regex-only list never passes",
           reason is not None and mean == 0.0)
-    reason, mean = pdf.inferred_toc_trust(entries([22] * 11 + [3, 29]), 33)
+    reason, _, _ = pdf.inferred_toc_trust(entries([22] * 11 + [3, 29]), [""] * 33)
     check("concentration is still asked first, and its reason is the one recorded",
           reason is not None and "%" in reason)
-    check("nothing inferred: nothing to judge and no mean", pdf.inferred_toc_trust([], 10) == (None, None))
+    check("nothing inferred: nothing to judge and nothing to report",
+          pdf.inferred_toc_trust([], [""] * 10) == (None, None, None))
+
+    print("\n10. the third test: headings without bodies (issue #2302, owner 2026-10-07)")
+    check("the cut is the measured 25% of sections under 50 characters",
+          pdf.TOC_MAX_EMPTY_SHARE == 0.25 and pdf.TOC_EMPTY_SECTION_CHARS == 50)
+    full = "Body text of this chapter. " * 8
+    # 3 of 8 empty = 37.5%: the WPR style guide's shape (43%).
+    reason, mean, share = pdf.inferred_toc_trust(
+        scored([0.7] * 8), doc(8, [full, "", full, "", full, "", full, full]))
+    check(f"over 25% empty: refused, saying why (got {share}, {reason!r})",
+          reason is not None and share == 0.375 and "headings without bodies" in reason)
+    # 2 of 10 = 20%: the highest share any good tree in the corpus showed.
+    reason, _, share = pdf.inferred_toc_trust(
+        scored([0.7] * 8 + [0.7, 0.7]), doc(10, [full] * 8 + ["", ""]))
+    check(f"at 20% — the best real tree's share — it is used (got {share})",
+          reason is None and share == 0.2)
+    reason, _, share = pdf.inferred_toc_trust(scored([0.7] * 4), doc(4, [full, "", "", full]))
+    check(f"under five sections there is too little to judge (got {share}, used anyway)",
+          reason is None and share == 0.5)
+    reason, _, _ = pdf.inferred_toc_trust(scored([0.5] * 8), doc(8, [""] * 8))
+    check("the earlier test's reason wins when both fail — one reason, the first",
+          reason is not None and "confidence" in reason)
     paged = pdf.split_pages(["Alpha text", "  ", "Gamma"])
     check("page sections take pdf-pages.py's shape: ids, titles, page ranges",
           [s.id for s in paged] == ["page-001", "page-002", "page-003"]

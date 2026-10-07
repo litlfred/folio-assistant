@@ -16,7 +16,8 @@ Owner decision on #2302 (2026-10-07): option 1. A PDF with no outline uses its i
 - [x] Schema + diagnostics (mean confidence recorded)
 - [x] Tests
 - [x] Skill: document-intake / l1-document-ingestion
-- [ ] Re-ingest wpr-rdo-2020-003-eng — HELD, waiting on the owner (see Findings)
+- [x] wpr-rdo-2020-003-eng: owner chose the third test (2026-10-07); the guide now routes to PAGES (48% empty sections), which its committed 33-page tree already is — no re-ingest, summaries kept
+- [x] Third test: empty-section share, measured (72 PDFs) before fixing 25% / 50 chars
 ## Done when
 pdf-structure.py routes as above with tests, and the style guide is re-ingested.
 

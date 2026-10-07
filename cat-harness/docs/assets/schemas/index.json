@@ -25373,6 +25373,13 @@
           "doc": "Mean confidence of the inferred entries, the input to the second trust"
         },
         {
+          "name": "toc_inferred_empty_share",
+          "type": "z.number().min(0).max(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Share of the sections an inferred TOC would cut that hold under 50"
+        },
+        {
           "name": "toc_inferred_method",
           "type": "z.enum([\"contents\", \"font\", \"regex\"]).optional()",
           "optional": true,

@@ -543,6 +543,33 @@ def inferred_toc_verdict(toc: list["TocEntry"], n_pages: int) -> str | None:
 TOC_MIN_MEAN_CONFIDENCE = 0.6
 
 
+# The third test (owner, issue #2302, 2026-10-07: "Add a third test"): a tree
+# whose sections come out EMPTY is headings without bodies — logo lettering, a
+# sample table's column heads, a cover's address block — not chapters. Refused
+# when more than this share of its sections hold fewer than
+# TOC_EMPTY_SECTION_CHARS characters, front matter not counted.
+#
+# Measured 2026-10-07 on 72 corpus PDFs (35 with an outline, hidden and used as
+# the answer key): every inferred tree with title F1 >= 0.7 had at most 20% of
+# its sections under 50 characters (the highest, 2608.08453v1 at 0.20, F1 1.0).
+# Above 25% sat WPR-RDO-2020-003-eng (43%: 18 empty sections of logo text and
+# table heads, mean confidence 0.602, which the first two tests passed) and
+# three documents those tests already refuse. So at 25% the WPR style guide is
+# the one document newly refused, and no good tree is. Known miss: a poor tree
+# at 22.5% (strauch-carbno, F1 0.36) sits too near the good ones to separate.
+TOC_MAX_EMPTY_SHARE = 0.25
+TOC_EMPTY_SECTION_CHARS = 50
+
+
+def toc_empty_share(sections: list["Section"]) -> tuple[float, int]:
+    """(share of sections under TOC_EMPTY_SECTION_CHARS, how many were judged),
+    front matter excluded — it is the text before the first heading, not one."""
+    body = [x for x in sections if x.id != "sec-front-matter"]
+    if not body:
+        return 0.0, 0
+    return sum(1 for x in body if x.n_chars < TOC_EMPTY_SECTION_CHARS) / len(body), len(body)
+
+
 def toc_mean_confidence(toc: list["TocEntry"]) -> float:
     """Mean confidence of an inferred TOC; an entry without one counts as 0."""
     if not toc:
@@ -550,21 +577,30 @@ def toc_mean_confidence(toc: list["TocEntry"]) -> float:
     return sum(e.confidence or 0.0 for e in toc) / len(toc)
 
 
-def inferred_toc_trust(toc: list["TocEntry"], n_pages: int) -> tuple[str | None, float | None]:
-    """(reason it may not be used or None, mean confidence) for an inferred TOC.
+def inferred_toc_trust(toc: list["TocEntry"], pages: list[str]) -> tuple[str | None, float | None, float | None]:
+    """(reason it may not be used or None, mean confidence, empty-section
+    share) for an inferred TOC over the document's page texts.
 
-    The two tests in order: the `6xaz` concentration verdict, then the mean
-    confidence floor. `None, None` for an empty list — there is nothing to
-    trust or distrust, and no mean to report.
+    The three tests in order: the `6xaz` concentration verdict, the mean
+    confidence floor, then the share of empty sections the tree would cut
+    (judged from TOC_MIN_ENTRIES_FOR_VERDICT sections up, as concentration
+    is). The first reason found is the one recorded. All `None` for an empty
+    list — there is nothing to trust or distrust, and nothing to report.
     """
     if not toc:
-        return None, None
+        return None, None, None
     mean = round(toc_mean_confidence(toc), 3)
-    reason = inferred_toc_verdict(toc, n_pages)
+    share, judged = toc_empty_share(split_sections(pages, toc))
+    share = round(share, 3)
+    reason = inferred_toc_verdict(toc, len(pages))
     if reason is None and mean < TOC_MIN_MEAN_CONFIDENCE:
         reason = (f"{len(toc)} inferred entries with mean confidence {mean:.2f}, "
                   f"below the {TOC_MIN_MEAN_CONFIDENCE} floor — too little evidence agreed")
-    return reason, mean
+    if reason is None and judged >= TOC_MIN_ENTRIES_FOR_VERDICT and share > TOC_MAX_EMPTY_SHARE:
+        reason = (f"{share:.0%} of the {judged} sections it would cut hold under "
+                  f"{TOC_EMPTY_SECTION_CHARS} characters (more than {TOC_MAX_EMPTY_SHARE:.0%}) — "
+                  f"headings without bodies, not chapters")
+    return reason, mean, share
 
 
 def split_pages(pages: list[str]) -> list[Section]:
@@ -1477,7 +1513,7 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     if not outline:
         inferred, inferred_method = infer_toc(lines, pages)
     n_inferred = len(inferred)
-    toc_undetermined, mean_confidence = inferred_toc_trust(inferred, len(pages))
+    toc_undetermined, mean_confidence, empty_share = inferred_toc_trust(inferred, pages)
     if toc_undetermined:
         inferred = []
     toc = outline or inferred
@@ -1596,6 +1632,8 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
             "toc_inferred_entries": n_inferred,
             # The second test's input, beside the first's, for the same reason.
             **({"toc_inferred_mean_confidence": mean_confidence} if mean_confidence is not None else {}),
+            # And the third's: the share of empty sections the tree would cut.
+            **({"toc_inferred_empty_share": empty_share} if empty_share is not None else {}),
             # Which inference produced it: "contents" (a printed contents
             # page), "font" (heading styles) or "regex" (text patterns, the
             # last resort). Absent when the outline was used.
