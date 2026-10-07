@@ -28,6 +28,7 @@
  * error, not a precedence rule — two answers to one name is the drift this
  * table must not hide.
  *
+ * @graphNode none — functions that read the script table; no schema
  * @covers none — a reader of the script table, not a graph audit
  */
 import { existsSync, readFileSync } from "node:fs";
