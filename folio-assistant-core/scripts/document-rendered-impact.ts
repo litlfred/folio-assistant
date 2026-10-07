@@ -96,6 +96,7 @@ import {
   type RenderedImpact,
 } from "../../cat-harness/schemas/rendered-impact.js";
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
+import { STRUCTURE_FILENAME } from "../../cat-harness/schemas/document-structure.js";
 import { gitBlobs } from "../../cat-harness/scripts/git-blobs.js";
 import { ChangeSetSchema, computeChangeSet, type ChangeSet } from "../schemas/changeset.js";
 
@@ -259,7 +260,7 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
       const [entry, ...rest] = f.slice(libDir.length + 1).split("/");
       if (entry && rest.length) {
         libInputs.push(f);
-        libraryFiles(libDir, entry, [f], rest.join("/") === "structure.json");
+        libraryFiles(libDir, entry, [f], rest.join("/") === STRUCTURE_FILENAME);
         continue;
       }
     }
