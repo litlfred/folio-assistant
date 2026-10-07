@@ -1,11 +1,11 @@
 ---
 # folio-assistant-p11x
 title: 'check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T09:52:20Z
-updated_at: 2026-09-30T11:01:23Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -304,3 +304,6 @@ Worth noting for whoever takes it: `check:tools-closure` guards imports
 *leaving* `bootstrap-tools`, and this bean's gate guards edges between scanned
 instances. Neither guards `cat-harness → bootstrap-tools`, which is how 20
 imports sit between two gates that each look like they would have caught them.
+
+## Completed on landed evidence
+Landed on main in PR #1580 (Option 2: check:partition scoped to cat-harness/ and detangle cross-instance edge check added).
