@@ -233,50 +233,30 @@ one cancelled.
 
 ## A green step can be a SKIPPED one: the CI cone
 
-On a pull request, a `bun run <check>` step in a gate job can print
-`SKIPPED — inputs unchanged since <sha>` and exit 0 without running the check
-(bean `4rbc`, issue #2456). The job summary lists every such step under
-**CI cone**, with the main commit it relies on. **Read it as "not asked here",
-never as "passed here".** The verdict it relies on is main's, at that sha.
+`cat-harness/scripts/ci-cone.ts` (bean `4rbc`, issue #2456) lets a pull request skip a `bun run cat <check>` gate step whose inputs are unchanged since main's last green run. Such a step prints `SKIPPED — inputs unchanged since <sha>`, and the job summary lists it under **CI cone**. **Read it as "not asked here", never as "passed here".**
 
-**The rule it follows: an input set is declared or derived, never inferred.**
-Owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no extra
-data fields"*.
+**It is built but NOT wired into the workflow.** Measured 2026-10-07 on the 53 candidate steps of `gates-kg` and `gates-docs`:
+- **It saves almost nothing.** The 36 checks it could record skip on a beans-only or one-script PR, but they are the cheap ones: about 30 runner-seconds a run. Deciding costs about 0.5 s a step, roughly 22 s for those steps.
+- **Recording would slow main a lot.** The expensive checks cannot be recorded: `kg:audit:check` and `kg:audit:all:check` read the `qa-reports` store, and `skill:register:check` has an unannotated site. Tracing them anyway would add minutes to every main run (`kg:audit:all:check`: 74 s untraced, 782 s traced).
+
+Wire it in when those checks become recordable. Bean `4rbc` records what that takes.
+
+**The rule it follows: an input set is declared or derived, never inferred.** Owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no extra data fields"*.
 - **Declared** is a `task-io` row. It is checked by the input-site audit.
-- **Derived** is computed from the run itself and never stored as authored
-  data. A green run on main traces each candidate check under `strace` and
-  records what that run read: the files, the directory listings, the absent
-  paths it probed, and the git commands it ran. A PR skips the check only when
-  all of these hold:
-  - every recorded path is byte-for-byte the same;
-  - every git command answers the same;
-  - the script fingerprint is the same: its import closure, the audited
-    environment, the tool versions and the `--against` baseline.
+- **Derived** is computed from the run itself and never stored as authored data. A green run on main traces the check under `strace` and records what that run read: the files, the directory listings, the absent paths it probed, and the read-only git commands it ran, with their answers. A PR skips the check only when every recorded path and every git answer is the same, and so is the script fingerprint (import closure, audited environment, tools and `--against` baseline).
 - **Inferred** is a guess about what a check reads. It is never used.
 
-**Why the derived set is enough.** The verdict and its read set come from the
-same run. Take a PR run whose code and recorded inputs are identical to main's.
-It takes the same path, so it reads the same files and gives the same answer.
-A data-dependent read is covered by the same argument: the file that chose the
-path is one of the recorded inputs.
+**Why the derived set is enough.** The verdict and its read set come from the same run. A PR run with the same code and the same recorded inputs takes the same path, so it reads the same files and gives the same answer. A data-dependent read is covered by the same argument: the file that chose the path is one of the recorded inputs.
 
-**What a trace cannot enumerate is never skipped.** Each of these is recorded
-as undetermined, so the check always runs:
+**What a trace cannot enumerate is never skipped.** Each of these is recorded as undetermined, so the check always runs:
 - a write inside the checkout;
 - a git command that is not read-only;
 - a traced input site the run reached;
 - a relative path with no known directory;
+- a trace over 256 MiB;
 - more than 20,000 paths.
 
-**There is still no `paths:` filter on the workflow.** A filter is how a gate
-stops covering the file that broke it. The cone skips a check only on evidence
-about that check's own inputs.
-
-**One step is still not checked, and it is listed for you.** A skipped step
-did not run on this tree. When a skip looks wrong:
-1. Open the PR's job summary and find the main sha named there.
-2. Run the check locally with `bun run <check>`. A local run never skips
-   against CI's records.
+A failed traced run is asked again untraced, so the verdict is always the check's own.
 
 ## Step names describe what the check does, not merely its passing invariant
 

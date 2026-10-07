@@ -40,8 +40,8 @@
  * - **never add a narrower list to get a CI skip.** The rule is "declared or
  *   derived (computed from the run itself, never stored), never inferred"
  *   (owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no
- *   extra data fields"*). In CI the narrow set is DERIVED: `ci-cone.ts`
- *   traces a `{tracked}` check's green run on main and records what it read
+ *   extra data fields"*). The narrow set is DERIVED instead: `ci-cone.ts`
+ *   traces a `{tracked}` check's green run and records what it read
  *   (bean `4rbc`). A row here only makes a check a candidate.
  *
  * ## How these entries were chosen — measured, 2026-10-01

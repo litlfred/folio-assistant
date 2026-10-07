@@ -73,3 +73,78 @@ After the measurement above, the owner chose option 1, *"1y"*: narrow inputs, ve
    - a check not declared `{tracked}` in task-io.
 
    One change to f017 itself: a `tree` site no longer forces `{tracked}` when the caller replays git. Only the cone passes that option.
+
+## 2026-10-07 (late): measured. Built and tested, and NOT wired into CI, because enabling it would cost more than it saves
+
+The owner paused CI and rendering during the separation (~20:50Z), so everything below was measured locally.
+
+**Setup.** On this branch, after merging main @ `ecf8af69e03`, I recorded every `{tracked}` single-command gate step of `gates-kg` and `gates-docs`: 45 distinct scripts once 8 slow, unrecordable ones were set aside. I then asked `decide` for each under four PR shapes. Bun 1.3.14, 4 shared CPUs. The QA working copy could not be built locally, because `skill:register` failed inside `qa:refresh` on main's own stale state.
+
+| PR shape | skipped | CI step-seconds skipped* |
+|---|---|---|
+| same tree | 36 of 45 | 32 s |
+| a bean file edited (`beans/defs/README.md`) | 34 | 29 s |
+| a new bean file added | 31 | 28 s |
+| one gate script edited (`check-workflow-policy.ts`) | 34 | 28 s |
+
+\* Each step's duration in main's green run 37668903964.
+
+**What ran, and why:**
+- **Bean edit:** `handler:index:check` and `lsi:viz:check` read that README.
+- **Bean add:**
+  - `check:declared-dirs`, `check:rendered-labels:check`, `check:structure-accessor` and `lsi:viz:check` list `beans/defs`.
+  - `handler:index:check` reads the README.
+- **Script edit:**
+  - `check:workflow-policy`, because its own script changed.
+  - `check:structure-accessor`, which reads every `.ts` under the tree.
+
+**Not recordable:**
+- **The whole-tree walkers (over 20,000 paths):** `check:process-documentation`, `check:lane-documentation:check`, `check:prov-qaqc`, `iri:sync:check`.
+- **Reached a `git-refs` traced site:** `check:agent-entry-links`, `readme:sync:all:check`, `readme:sync:root:check`, `voices:viz:check`.
+- **Undetermined before tracing:** `upload-step:docs:check`, from a stale pin in `cat-harness/tools/index.ts:1192` that is on main.
+- **The expensive checks:**
+  - `kg:audit:check` (71 s): reads the qa-reports store.
+  - `kg:audit:all:check` (74 s): same reason.
+  - `root-scan-census:check`: same reason.
+  - `check:viewer-nav`: same reason.
+  - `skill:register:check`: unannotated site in mounted `bootstrap-tools/scripts/export-graph.ts:400`.
+  - `audit:coverage:*`: unannotated site in `check-environment.ts:270`.
+  - `readme:subgraphs:check`: red locally.
+
+**Why it is not enabled:**
+- **Savings:** about 30 runner-seconds per PR run across the two jobs.
+- **Cost on PRs:** `decide` takes about 0.48 s a step, 21.7 s for the 45. Net, about 10 s saved per PR run.
+- **Cost on main:** tracing the 45 took 259 s against 37 s untraced, and the slow checks are traced too: `kg:audit:all:check` went from 74 s to 782 s and `kg:audit:check` from 71 s to 259 s, and neither records. Recording would make every main run several minutes slower.
+- The approach still holds. It is cheap only for checks that are already cheap.
+
+**Two defects found and fixed on the way, both in this PR:**
+1. **A recorder crash could change a verdict.** `kg:audit:all:check` passed, then the recorder aborted (exit 134) while parsing its trace. Now:
+   - a trace over 256 MiB is undetermined;
+   - a failed traced run is re-run untraced, and that run's exit is the verdict;
+   - `gate-shell` re-runs a step whose recorder died by a signal.
+2. **Build output was read as an instance.** `instanceRootsIn` read `build/qa-refresh.json`, which is stamped with its commit, as a candidate instance declaration. That made a build product an input of every check that discovers instances, so none of them could ever skip. The build-output directories (`BUILD_OUTPUT_DIRS`) are no longer scanned. Before the fix, 20 checks skipped on the same tree; after it, 36.
+
+**What it would take to make the cone worth wiring in:**
+- **`kg:audit:check` and `kg:audit:all:check` recordable.** Their qa-reports reads would be hashed as an `--against`-style baseline identity rather than refused as a traced site. They are 47 s and 54 s of CI steps.
+- **`skill:register:check` recordable.** It needs the mounted `bootstrap-tools/scripts/export-graph.ts:400` spawn annotated (upstream), and is about 55 s of CI.
+- **A cheaper record on main.**
+  - Trace only checks that recorded last time, or whose last record failed only because the fingerprint moved.
+  - Or replace `strace` with a preloaded fs shim; `strace -f` costs 3–10x.
+- **The 255 s QA working-copy step.** It is the real cost of a gate job, and the cone cannot skip it unless every reader in the job skips.
+
+**Tests (local):**
+- `ci-cone.test.ts`: 29 pass, with the falsifiers under a real `strace`:
+  - a traced file edited;
+  - a data-dependent read redirected;
+  - a probed absent path created;
+  - a file added to a listed directory;
+  - the script edited;
+  - an imported module edited;
+  - `package.json` edited;
+  - a moved `--against` baseline;
+  - a git `ls-files` answer changed by a tracked file under its pathspec.
+
+  Each of these makes the check RUN. A file the check never read does not.
+- `gate-shell.test.ts`: 28 pass.
+
+**To wire it in later:** add the restore, prepare and save steps to the gate jobs, as the `ci-cone.ts` module comment says. Commit `c6dc9b5cdd2` of PR #2458 has them for `gates-kg` and `gates-docs`.

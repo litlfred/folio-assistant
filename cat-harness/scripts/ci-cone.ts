@@ -29,6 +29,18 @@
  *    state of every recorded path. It skips only on an exact match, and says
  *    `SKIPPED — inputs unchanged since <sha>`, never "passed".
  *
+ * ## Not wired into the workflow yet (measured 2026-10-07)
+ *
+ * The 36 of 53 `gates-kg` / `gates-docs` candidates it can record are the
+ * cheap ones, about 30 runner-seconds of skips against about 22 s of
+ * deciding. The expensive checks are not recordable yet: `kg:audit*` read the
+ * `qa-reports` store, and `skill:register:check` has an unannotated site.
+ * Tracing them would add minutes to every main run. To wire it in, add to
+ * each gate job a restore step for `build/ci-cone` (key
+ * `ci-cone-v1-<job>-<base sha>`, restore-keys `ci-cone-v1-<job>-`), a step
+ * running `bun cat-harness/scripts/ci-cone.ts prepare`, and a save step on a
+ * green push to main. `gate-shell.sh` already does the rest. Bean `4rbc`.
+ *
  * ## Why an exact match is enough
  *
  * The verdict and its read set come from the same run, so there is no

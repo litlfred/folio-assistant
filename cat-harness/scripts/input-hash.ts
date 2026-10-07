@@ -82,7 +82,7 @@
  * skipped keeps the hash it had. `CI` set in the environment disables it, as
  * does `--no-cache`, so CI asks every pair exactly as before.
  *
- * CI has its own skip instead: the CI cone (`ci-cone.ts`, bean `4rbc`). The
+ * CI's own skip is the CI cone (`ci-cone.ts`, bean `4rbc`), built but not yet wired. The
  * rule there is the one stated here, widened by the owner on 2026-10-07: an
  * input set is **declared or derived (computed from the run itself, never
  * stored), never inferred**. The cone derives each check's read set by tracing
