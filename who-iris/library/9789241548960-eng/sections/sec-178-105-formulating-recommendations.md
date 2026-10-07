@@ -7,6 +7,7 @@ section_number: 10.5
 pages: 142-142
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The evidence-to-recommendation tables depict not only the evidence and 
 judgements leading to a recommendation, but also the justifications for the 

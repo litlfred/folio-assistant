@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-01T06:29:56Z
-updated_at: 2026-10-06T23:37:30Z
+updated_at: 2026-10-07T05:55:00Z
 parent: folio-assistant-o3xy
 tags:
   - ready-to-close

@@ -7,6 +7,7 @@ section_number: 5.4
 pages: 62-62
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 determinants into each step in guideline development
 Equity, human rights, gender and the social determinants of health must 

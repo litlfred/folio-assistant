@@ -7,9 +7,8 @@ section_number: 7.1.1
 pages: 89-90
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
-foreground questions directly inform and underpin recommendations.
-7.1.1 Background questions
 These questions pertain to important background information on the issues 
 under consideration and their context. They do not relate to evidence of the 
 type that directly informs recommendations, but they do lead to information 
