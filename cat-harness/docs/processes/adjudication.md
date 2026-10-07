@@ -25,9 +25,9 @@ What stays shared is what must not vary: the entry condition nobody may declare 
 
 ## How it connects
 
-- **Called by:** [Refresh materialized remote content](refresh-materialized.html), [Translation Workflow](translation-workflow.html), [Criterion adjudication](criterion-adjudication.html), [Content Change and Review](content-change-review.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html)
+- **Called by:** [Refresh materialized remote content](refresh-materialized.html), [Translation Workflow](translation-workflow.html), [CRDM close-out](crdm-close.html), [CRDM Phase 5 — beans and sign-off](crdm-signoff.html), [Criterion adjudication](criterion-adjudication.html), [Content Change and Review](content-change-review.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html)
 - **Calls:** none
-- **Names the `adjudication` skill without calling this process:** [Criterion adjudication](criterion-adjudication.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Names the `adjudication` skill without calling this process:** [CRDM close-out](crdm-close.html), [CRDM Phase 5 — beans and sign-off](crdm-signoff.html), [Criterion adjudication](criterion-adjudication.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram
 - **Skill:** [`adjudication`](../reference/skill-instructions/adjudication.html)
 

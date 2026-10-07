@@ -15,7 +15,7 @@ import {
 } from "../../../bootstrap-tools/schemas/requirement.ts";
 import { RequirementSchema as HarnessRequirementSchema } from "../../../cat-harness/schemas/skill-package.ts";
 import { TestRunSchema } from "../../../cat-harness/schemas/test-run.ts";
-import { checkRequirementPage, collisions, declaredDirFor } from "../check-requirements.ts";
+import { checkRequirementPage, collisions, declaredDirFor, statementsWithoutCriteria } from "../check-requirements.ts";
 import { bootstrapSchemaDirs, bootstrapSchemaSources, scan } from "../../../bootstrap-tools/scripts/check-bootstrap-concepts.ts";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
@@ -81,6 +81,34 @@ describe("the bootstrap Requirement", () => {
     expect(RequirementSchema.safeParse({ ...base, id: "Glass Navigation" }).success).toBe(false);
   });
 
+  test("a statement MAY carry success criteria (issue #2405 — optional until migrated)", () => {
+    const withSc = structuredClone(base) as Record<string, unknown> & typeof base;
+    (withSc.statements[0] as Record<string, unknown>).successCriteria = [
+      { key: "pinch", criterion: "A two-finger pinch on the glass changes its zoom.", verification: "test" },
+    ];
+    expect(RequirementSchema.safeParse(withSc).success).toBe(true);
+    expect(RequirementSchema.safeParse(base).success).toBe(true); // still optional
+  });
+
+  test("…and when it does: at least one, a known verification method, keys unique", () => {
+    const sc = (v: unknown) => {
+      const b = structuredClone(base);
+      (b.statements[0] as Record<string, unknown>).successCriteria = v;
+      return RequirementSchema.safeParse(b).success;
+    };
+    expect(sc([])).toBe(false);
+    expect(sc([{ key: "a", criterion: "x", verification: "vibes" }])).toBe(false);
+    expect(sc([{ key: "a", criterion: "x", verification: "review" }, { key: "a", criterion: "y", verification: "test" }])).toBe(false);
+    expect(sc([{ key: "a", criterion: "x", verification: "review" }, { key: "b", criterion: "y", verification: "analysis" }])).toBe(true);
+  });
+
+  test("a reference may name one success criterion of a statement", () => {
+    expect(requirementRef("req:glass-navigation", "zoom", "pinch")).toBe("req:glass-navigation#zoom/pinch");
+    expect(RequirementRefSchema.safeParse("req:glass-navigation#zoom/pinch").success).toBe(true);
+    expect(RequirementRefSchema.safeParse("req:glass-navigation/pinch").success).toBe(false);
+    expect(RequirementRefSchema.safeParse("req:glass-navigation#zoom/").success).toBe(false);
+  });
+
   test("a reference names a requirement, or one statement in it", () => {
     expect(requirementRef("req:glass-navigation", "zoom")).toBe("req:glass-navigation#zoom");
     expect(RequirementRefSchema.safeParse("req:glass-navigation").success).toBe(true);
@@ -94,6 +122,17 @@ describe("the PUBLISHED schema refuses what the Zod refuses (FR-7: bootstrap hol
   const validate = new Ajv({ allErrors: true }).compile(published);
   test("a valid requirement passes", () => {
     expect(validate(base)).toBe(true);
+  });
+  test("success criteria: optional, but never empty and never an unknown method", () => {
+    const sc = (v: unknown) => {
+      const b = structuredClone(base);
+      (b.statements[0] as Record<string, unknown>).successCriteria = v;
+      return validate(b);
+    };
+    expect(sc([{ key: "pinch", criterion: "A pinch zooms.", verification: "test" }])).toBe(true);
+    expect(sc([])).toBe(false);
+    expect(sc([{ key: "pinch", criterion: "A pinch zooms.", verification: "vibes" }])).toBe(false);
+    expect(sc([{ key: "pinch", verification: "test" }])).toBe(false);
   });
   test("a non-functional statement cannot want", () => {
     const bad = structuredClone(base);
@@ -171,6 +210,13 @@ describe("check:requirements", () => {
   test("the id is the file name", () => {
     const p = checkRequirementPage("other-name.md", page(valid));
     expect(p.map((x) => x.message).join()).toContain("req:other-name");
+  });
+  test("a statement without success criteria is WARNED, not failed (#2405 decision 3)", () => {
+    expect(checkRequirementPage("glass-navigation.md", page(valid))).toEqual([]);
+    expect(statementsWithoutCriteria(base)).toEqual(["req:glass-navigation#zoom", "req:glass-navigation#no-drag-only"]);
+    const b = structuredClone(base);
+    for (const s of b.statements) (s as Record<string, unknown>).successCriteria = [{ key: "a", criterion: "x", verification: "review" }];
+    expect(statementsWithoutCriteria(b)).toEqual([]);
   });
   test("no front matter is no requirement", () => {
     expect(checkRequirementPage("x.md", "# nothing")).toHaveLength(1);

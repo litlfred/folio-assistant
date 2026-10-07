@@ -27262,6 +27262,53 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/qa-attestations.ts#RequirementSignoffAttestations",
+      "name": "RequirementSignoffAttestations",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-attestations.ts#RequirementSignoffAttestationsSchema",
+      "name": "RequirementSignoffAttestationsSchema",
+      "module": "cat-harness/schemas/qa-attestations.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "family",
+          "type": "z.literal(REQUIREMENT_SIGNOFF_FAMILY)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "signoffs",
+          "type": "z.array(SignOffSchema).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "QaAttestationsBaseSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "REQUIREMENT_SIGNOFF_FAMILY",
+        "SignOffSchema",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/qa-attestations.ts#TranslationAttestationsSchema",
       "name": "TranslationAttestationsSchema",
       "module": "cat-harness/schemas/qa-attestations.ts",
@@ -61849,6 +61896,14 @@
       "to": "cat-harness/schemas/qa-attestations.ts#AttestationSubjectSchema",
       "via": "subject",
       "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-attestations.ts#RequirementSignoffAttestationsSchema",
+      "to": "cat-harness/schemas/qa-attestations.ts#QaAttestationsBaseSchema",
+      "via": "",
+      "kind": "extends",
       "optional": false,
       "array": false
     },

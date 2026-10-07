@@ -116,4 +116,4 @@ package only adds the *authoring* skills unique to the type.
 - [ ] JSON Schemas under `schemas/skills/<skill>/`
 - [ ] `bun run scripts/gen-schema-docs.ts` regenerated
 - [ ] Capabilities probed by `check_dependencies`
-- [ ] Tests (`bun test`) and lint (`eslint .`) green
+- [ ] Tests (`bun test`) and lint (`bun run lint`) green

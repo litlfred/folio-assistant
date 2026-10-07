@@ -13,6 +13,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `code-lists`, holding `co
 | [`adjudication-content-finding.json`](adjudication-content-finding.json) | Disputed review finding outcomes |  |
 | [`adjudication-criterion.json`](adjudication-criterion.json) | Criterion adjudication outcomes |  |
 | [`adjudication-materialized-conflict.json`](adjudication-materialized-conflict.json) | Materialized-copy conflict outcomes |  |
+| [`adjudication-requirement-set.json`](adjudication-requirement-set.json) | Requirement-set sign-off outcomes |  |
 | [`adjudication-translation-drift.json`](adjudication-translation-drift.json) | Round-trip drift outcomes |  |
 | [`adjudication-translation-passage.json`](adjudication-translation-passage.json) | Flagged translation passage outcomes |  |
 | [`concern-group.json`](concern-group.json) | Concern groups |  |

@@ -24,7 +24,7 @@ cd folio-assistant
 bun install
 bun test          # модульные тесты
 bun run lint      # eslint
-bunx playwright test   # e2e (test:e2e)
+bun run test:e2e      # e2e (test:e2e)
 ```
 
 ## План работы с `beans`

@@ -164,7 +164,7 @@
 
 <ul class="subs">
 <li><a href="core-processes/">core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">4</span></li>
-<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">7</span></li>
+<li><a href="processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">8</span></li>
 <li><a href="sci-processes/">sci-processes</a> <span class="p">folio-assistant-sci/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -189,6 +189,10 @@
   <td>Could not determine. NOT &quot;not yet&quot; — a malformed declaration is a fault, and answering it with the convention would report a guess as an answer.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/process/decisions/requirement-signoff-recorded.dmn"><code>Is the sign-off recorded, and does it let the work proceed?</code></a><br><span class="p">cat-harness/processes/process/decisions/requirement-signoff-recorded.dmn</span></td>
+  <td>No attestation: the judgement was not written down, so nothing may follow it.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/decisions/merge-priority.dmn"><code>Where does this PR go?</code></a><br><span class="p">cat-harness/processes/sdlc/decisions/merge-priority.dmn</span></td>
   <td>(e) The owner placed it. The queue entry carries the position and the reason; a reason is required by the schema.</td>
 </tr>
@@ -206,7 +210,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/conduct/decisions/pages-live-gate.dmn"><code>Is the published site answering?</code></a><br><span class="p">folio-assistant-core/processes/conduct/decisions/pages-live-gate.dmn</span></td>
-  <td>No gh-pages branch, and the route deploys from it. Provision it first (A_ProvisionGhPages); Pages cannot be switched on until it exists.</td>
+  <td>No URL to report and none to probe. Say so; do not guess one from the folio name.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/content/decisions/draft-qa-gate.dmn"><code>Draft QA green?</code></a><br><span class="p">folio-assistant-core/processes/content/decisions/draft-qa-gate.dmn</span></td>

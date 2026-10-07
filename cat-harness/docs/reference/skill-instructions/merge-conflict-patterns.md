@@ -119,7 +119,7 @@ authored change of yours to reconcile.
      hold;
    - `check:declared-paths` (never with `--update` here) and
      `check:process-index`;
-   - `bun run typecheck`, and `eslint .` at **0 errors**;
+   - `bun run typecheck`, and `bun run lint` at **0 errors**;
    - **the deletion audit** —
      `git diff --name-status --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'`
      must list only files `main` itself deleted. A gitignored-but-tracked file
