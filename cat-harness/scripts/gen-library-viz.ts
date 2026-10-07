@@ -57,6 +57,7 @@ import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
 import { tally } from "./summaries.ts";
 import { WITHHELD_VIEW_JS } from "./lib/library-withheld-view.ts";
 import { DOCUMENT_VIEW_JS, readEntryDocument } from "./lib/library-document.ts";
+import { EDIT_LINKS_RUNTIME } from "../src/core/edit-links.ts";
 import { ADDRESS_JS } from "./lib/library-address.ts";
 import { LIBRARY_JSONLD_SITE_DIR, libraryAssetSitePath } from "../schemas/library-iri.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
@@ -77,6 +78,11 @@ const VIEWER_TOOL = "library-viewer";
 const ROOT = join(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(ROOT);
 const check = process.argv.includes("--check");
+/** The GitHub repository the entries' source and feedback links point into. */
+const LINK_REPO = (() => {
+  const d = readDeclaration(ROOT) as { livesAt?: { repository?: string }; repository?: string } | undefined;
+  return d?.livesAt?.repository ?? d?.repository;
+})();
 
 /** The projection. Everything the reader found; it is already small. */
 function projection(
@@ -767,6 +773,9 @@ function summaryLabel(s){
   }
 }
 ${WITHHELD_VIEW_JS}
+/* The shared edit/feedback recipe (bean v433): the Document panel's [source],
+   [feedback] and [edit] links are built by it (bean zcak). */
+${EDIT_LINKS_RUNTIME}
 ${DOCUMENT_VIEW_JS}
 function summaryBadge(s){
   var l = summaryLabel(s);
@@ -1333,7 +1342,12 @@ if (import.meta.main) {
   // structure.json gets `{absent: true}`, a determined answer rather than a
   // 404 the viewer would have to tell apart from a failure.
   for (const e of g.entries) {
-    const doc = readEntryDocument(join(repoRoot, e.dir), e.id, { withheld: !!e.withheld });
+    // [source] and [feedback] on the document and each section (bean zcak).
+    // No [edit]: an entry is frozen, and this instance materialises none.
+    const doc = readEntryDocument(join(repoRoot, e.dir), e.id, {
+      withheld: !!e.withheld,
+      ...(LINK_REPO ? { links: { repo: LINK_REPO, dir: e.dir } } : {}),
+    });
     // The entry's resolved title, not the page-1 guess in structure.json
     // (issue #1794: the guess is never a library entry's title).
     if (doc && e.title) doc.title = e.title;
