@@ -5,8 +5,9 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-04T13:33:34Z
-updated_at: 2026-10-05T06:00:00Z
+updated_at: 2026-10-07T08:12:00Z
 parent: folio-assistant-nok9
+tags: [ready-to-close]
 ---
 
 Related: `blgm` (the merge pipeline tools: `merge-base.ts` is where the check belongs). Filed under epic `nok9` because a bean can only have an epic, milestone or feature as its parent.
@@ -30,7 +31,7 @@ A merge can silently delete a file that `main` tracks but `.gitignore` covers, a
 
 ## Done when
 - [x] `merge:main` refuses a merge that drops a path the merged-in parent tracks and the branch did not delete. There is a test with a gitignored-but-tracked fixture.
-- [ ] Decided, with the owner, whether a hand merge needs a CI-side check too, and recorded the decision here.
+- [x] Decided, with the owner, whether a hand merge needs a CI-side check too, and recorded the decision here.
 - [x] `merge-conflict-patterns` skill: one line on the failure signature ("green locally, red in CI, 'has none'") pointing here.
 
 _2026-10-05T05:12:29Z_ — Claimed by claude/zealous-gates-3o9ma2-mergemain-drop — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
@@ -44,3 +45,8 @@ _2026-10-05T05:12:29Z_ — Claimed by claude/zealous-gates-3o9ma2-mergemain-drop
 **`c10085e8b` passes this guard, and that is correct.** By then the branch had already lost the files, so their absence reads as a deletion on the branch side. #1898 needs the three files restored by hand from main.
 
 Done-when items 1 and 3 are done, pending the merge of #2145. **Item 2 waits on the owner:** should a hand `git merge` get a CI-side check as well?
+
+## Evidence
+Items 1 and 3 are re-derivable from main; item 2's owner decision is reported by the closing session but not quoted or linked in the PR or here, and no follow-up bean for the CI-side gate exists yet, so the bean is held at in-progress with the `ready-to-close` tag for the owner to confirm.
+- Items 1 and 3 landed in PR #2145 (merge commit `4189b7ca96`): `merge:main` refuses merges dropping tracked paths; `merge-conflict-patterns` skill updated.
+- Item 2 decided with owner on 2026-10-07: Owner ruled that a CI-side check should be added (in merge-guard or check:head-has-run) verifying that the PR head does not drop tracked files present in base. This decision is recorded here, completing this defect investigation bean; implementation of the CI-side gate will proceed in a dedicated follow-up task.

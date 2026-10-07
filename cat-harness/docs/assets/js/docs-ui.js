@@ -3704,6 +3704,8 @@
       var link = el("a", {
         class: "fa-board-window-control fa-node-edit",
         "data-fa-control": control.id,
+        // The platform's one link recipe rebuilds it on pointer/focus (edit-links.js, bean v433).
+        "data-fa-link": control.id === "view" ? "source" : "edit",
         href: safeHref(control.id === "view" ? todo.viewHref : todo.editHref),
         "aria-label": control.label + " — " + todo.summary,
         title: control.label,
@@ -4448,6 +4450,7 @@
     if (todo.viewHref) {
       var v = el("a", {
         class: "fa-node-edit fa-sticky-view",
+        "data-fa-link": "source",
         href: safeHref(todo.viewHref),
         title: "View this todo's source on GitHub",
         // No visible text, so the label and the title are BOTH needed and are
@@ -4461,6 +4464,7 @@
     if (todo.editHref) {
       var e = el("a", {
         class: "fa-node-edit fa-sticky-edit",
+        "data-fa-link": "edit",
         href: safeHref(todo.editHref),
         title: "Edit this todo's markdown on GitHub",
         "aria-label": "Edit " + todo.summary,
@@ -4566,6 +4570,8 @@
         title: link.title,
         "aria-label": link.label,
       });
+      // view and edit are GitHub links the platform's one recipe rebuilds (edit-links.js, bean v433).
+      if (pair[0] !== "page") a.setAttribute("data-fa-link", pair[0] === "view" ? "source" : "edit");
       a.innerHTML = pair[1];
       row.appendChild(a);
     });
@@ -7749,6 +7755,8 @@
         c.properties.forEach(function (p) { skillsFor[p.key] = p; });
         var buttons = [];
 
+        // An edit link the platform's one recipe rebuilds (edit-links.js, bean v433).
+        function editLink(a) { a.setAttribute("data-fa-link", "edit"); return a; }
         function link(href, text, label) {
           var a = el("a", { href: safeHref(href), class: "fa-hc-link" }, text);
           if (label) a.setAttribute("aria-label", label);
@@ -7803,7 +7811,7 @@
           var acts = el("p", { class: "fa-hc-actions" });
           if (kind === "associated") {
             acts.appendChild(link(item.url, "Open ↗", "Open " + item.title + " (its own site)"));
-            if (item.editHref) acts.appendChild(link(item.editHref, "✎ Its repository", "Edit " + item.title + " in its own repository"));
+            if (item.editHref) acts.appendChild(editLink(link(item.editHref, "✎ Its repository", "Edit " + item.title + " in its own repository")));
             detail.appendChild(acts);
             var rows = [
               { key: "name", value: item.name },
@@ -7822,7 +7830,7 @@
             detail.appendChild(el("p", { class: "fa-hc-note" },
               "Associated: referenced, never loaded. Nothing here builds or copies it."));
           } else {
-            if (item.editHref) acts.appendChild(link(item.editHref, "✎ Edit " + item.declaredIn, "Edit " + item.title + "'s declaration, " + item.declaredIn));
+            if (item.editHref) acts.appendChild(editLink(link(item.editHref, "✎ Edit " + item.declaredIn, "Edit " + item.title + "'s declaration, " + item.declaredIn)));
             else acts.appendChild(el("span", { class: "fa-hc-note" }, item.declaredIn));
             detail.appendChild(acts);
             var declared = {};

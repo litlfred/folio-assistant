@@ -13,7 +13,7 @@ A **Tool** is one concrete way to exercise a capability. A **skill** states
 that capability generically. They are two graphs, and this page is about the
 first one.
 
-[Browse the 69 tools](../tools/){: .btn .btn-primary }
+[Browse the 69 tools]({{ '/tools/' | relative_url }}){: .btn .btn-primary }
 
 ---
 
@@ -76,7 +76,7 @@ Tool nodes are `.ts` calling `defineTool`, not JSON. A malformed node fails at
 `tsc` and in the editor rather than at CI, and the JSON-LD and JSON Schema
 renderings are generated from them.
 
-This is why the [generated view](../tools/) *imports* the graph rather than
+This is why the [generated view]({{ '/tools/' | relative_url }}) *imports* the graph rather than
 parsing the source. A generator that re-read the files would be a second,
 weaker reader of them — free to disagree with the one the server uses, and
 with no type checker behind it.

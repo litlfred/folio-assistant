@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7pp6
 title: A column-0 pseudo-tag in a published markdown source is caught only AFTER merge — five hand-fixes and no gate
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-01T06:29:56Z
-updated_at: 2026-10-06T23:37:28Z
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-o3xy
 ---
 
@@ -72,13 +72,13 @@ a check that gets switched off."*
 
 ## Done when
 
-1. [ ] A source-side check flags a column-0 non-HTML pseudo-tag in published
+1. [x] A source-side check flags a column-0 non-HTML pseudo-tag in published
        markdown, excusing autolinks, real HTML and fenced regions.
-2. [ ] It is wired into `code-quality-gates.yml`, so `bun run gates` runs it and
+2. [x] It is wired into `code-quality-gates.yml`, so `bun run gates` runs it and
        a PR fails instead of main.
-3. [ ] Falsified against the REAL historical defect: re-plant `<slide>`, watch
+3. [x] Falsified against the REAL historical defect: re-plant `<slide>`, watch
        it fire, restore, watch it pass.
-4. [ ] The latent `library/` instance is recorded rather than covered, with the
+4. [x] The latent `library/` instance is recorded rather than covered, with the
        0-of-1460 measurement that says why.
 
 ## Not in scope
@@ -167,3 +167,15 @@ widened past the problem. If `library/` ever publishes, add its directories to
 the `--source` argument list and this becomes the first finding.
 
 _2026-10-06T23:37:28Z_ — Claimed by claude/7pp6-close-landed-escaped-markup-source — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+1. Implementation landed in commit `02f16ae98bb52a1662accaff24699f6f5a271283` via PR #1743 ("A column-0 pseudo-tag in a published source now fails the PR, not main (#1743)").
+2. `check:escaped-markup` gained `--source` mode, wired into `code-quality-gates.yml` and `package.json` (`check:escaped-markup:source`).
+3. Re-derived and re-tested clean source execution:
+   `bun run check:escaped-markup:source`
+   Result: `✓ no markdown source line opens a raw HTML block, across 759 source(s)` (exit 0).
+4. Re-tested and verified regression tests:
+   `bun test ./cat-harness-tools/scripts/tests/escaped-markup-source.test.ts`
+   Result: 13 pass, 0 fail, 25 expect() calls across all real-world edge cases.
+5. All repository quality checks pass: `bun run typecheck`, `bun run lint` (0 errors), `bun run check:retired-front-matter`, `bun run check:bean-parents`.

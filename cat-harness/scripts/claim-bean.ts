@@ -54,6 +54,24 @@
  * because the second attempt may discover the bean is now claimed by that other
  * session — which is the correct answer, not a conflict to force past.
  *
+ * ## The claim then joins YOUR branch's history (bean `24fa`, owner option 1)
+ *
+ * A claim that lives only on the default branch conflicts with the branch that
+ * made it: the branch edits the same bean next (works it, completes it), and
+ * both sides diverge from a merge base that predates the claim — `updated_at`
+ * always, the end of the body usually. Copying the claim's TEXT onto the branch
+ * (`mirrorClaimNote`) was not enough: measured on #2344, the copy was byte-
+ * identical and the bean still conflicted on both. And a conflicted PR gets no
+ * CI at all, so it can never turn green (#2376: seven PRs at once).
+ *
+ * So after a successful push the claim COMMIT is brought into the caller's
+ * branch ({@link joinClaim}): a fast-forward when the branch has no commits of
+ * its own yet (the usual case — claim before work), otherwise a merge commit.
+ * The claim is then part of the branch's merge base and later edits merge
+ * cleanly. When it cannot be done safely — a detached checkout, local edits in
+ * the way, or a merge that would conflict — nothing is left half-done: the merge
+ * is aborted, the old text mirror is applied instead, and the outcome says so.
+ *
  * Usage:
  * ```sh
  * bun run cat-harness/scripts/claim-bean.ts <bean-id>            # claim on the default branch
@@ -75,6 +93,37 @@ import { graphReadPath } from "./graph-read.ts";
 
 /** The claim line `noteBean` just appended, exactly as it was written. */
 const CLAIM_NOTE = /^_\d{4}-\d{2}-\d{2}T[\d:]+Z_ — Claimed by \S+ —.*$/m;
+
+/** How {@link joinClaim} brought the claim to the caller's branch, or why it did not. */
+export interface JoinResult {
+  how: "fast-forward" | "merged" | "not-joined";
+  /** Why not, when `not-joined`. */
+  reason?: string;
+}
+
+/**
+ * Bring the pushed claim COMMIT into the branch checked out in `repo` (bean
+ * `24fa`). A fast-forward when the branch has nothing of its own, else a merge
+ * commit; a merge that does not complete is aborted, so the branch is exactly
+ * as it was. Never rewrites history and never forces anything.
+ */
+export function joinClaim(repo: string, claim: string, id: string, defaultName: string): JoinResult {
+  const head = git(repo, ["symbolic-ref", "-q", "--short", "HEAD"]);
+  if (head.code !== 0) return { how: "not-joined", reason: "the checkout is detached, so there is no branch to bring the claim into" };
+  const ff = git(repo, ["merge", "--ff-only", "--quiet", claim]);
+  if (ff.code === 0) return { how: "fast-forward" };
+  const merged = git(repo, [
+    "-c", "user.name=claim-bean", "-c", "user.email=noreply@anthropic.com",
+    "merge", "--no-edit", "--quiet", "-m",
+    `Merge the claim of ${id} from ${defaultName}\n\nBrings the claim commit into this branch so later edits to the bean merge\ncleanly (bean 24fa).`,
+    claim,
+  ]);
+  if (merged.code === 0) return { how: "merged" };
+  // Leave the branch exactly as it was: abort whatever the merge started.
+  git(repo, ["merge", "--abort"]);
+  const why = `${merged.err.trim()} ${merged.out.trim()}`.trim().split("\n")[0];
+  return { how: "not-joined", reason: `merging ${defaultName}'s claim commit into ${head.out.trim()} did not complete (${why}); merge ${defaultName} in yourself before editing the bean` };
+}
 
 /**
  * Copy the claim note from what was PUSHED onto the local branch, byte for byte.
@@ -104,8 +153,8 @@ const CLAIM_NOTE = /^_\d{4}-\d{2}-\d{2}T[\d:]+Z_ — Claimed by \S+ —.*$/m;
  * the merge base (merging the default branch in after claiming) removes it,
  * and that is the session's decision rather than this tool's.
  *
- * Not committed, for the reason the status mirror gives: a tool that commits to
- * your branch behind your back is worse than the problem.
+ * Now the FALLBACK, used only when {@link joinClaim} cannot bring the claim
+ * commit in: it narrows the conflict, it does not remove it.
  */
 export function mirrorClaimNote(repo: string, work: string, id: string): "mirrored" | "already-there" | "no-note" {
   const from = findBean(work, id);
@@ -147,6 +196,8 @@ export interface ClaimOutcome {
   reason?: string;
   /** Attempts spent. 2+ means a real race happened. */
   attempts: number;
+  /** How a pushed claim reached the caller's branch (bean `24fa`); see {@link joinClaim}. */
+  joined?: JoinResult["how"];
 }
 
 interface Ran {
@@ -528,33 +579,25 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
       const target = absoluteRemote(repo, configured);
       const pushed = git(work, ["push", target, `HEAD:refs/heads/${def}`]);
       if (pushed.code === 0) {
-        // MIRROR IT LOCALLY, and this is a correctness fix rather than a
-        // convenience.
-        //
-        // The claim lands on the default branch; the caller's own checkout is
-        // untouched and still says `todo`. Measured by using the tool: after a
-        // successful claim of `t373`, `origin/main` said `in-progress` and the
-        // working tree said `todo`. Committing that stale copy on the feature
-        // branch and merging it would have **reverted the claim** — the branch's
-        // older value wins as an ordinary content change, so the tool would have
-        // quietly undone its own work at merge time.
-        //
-        // Writing the same status locally makes the two agree, so the merge is a
-        // no-op for this field instead of a regression. It is deliberately NOT
-        // committed here: what to commit and when is the session's business, and
-        // a tool that commits to your branch behind your back is worse than the
-        // problem.
+        // BRING THE CLAIM INTO THIS BRANCH (bean `24fa`, owner option 1). The
+        // claim landed on the default branch; until the branch has that commit
+        // in its history, the branch's next edit to the bean conflicts with it,
+        // and a conflicted PR gets no CI. See `joinClaim`.
+        const claim = git(work, ["rev-parse", "HEAD"]).out.trim();
+        const joined = joinClaim(repo, claim, id, def);
+        if (joined.how !== "not-joined") return { state: "pushed", attempts, joined: joined.how };
+        // FALLBACK: today's text mirror. Without at least this, committing the
+        // branch's stale `todo` and merging would REVERT the claim (measured on
+        // `t373`). Not committed: the session decides what to commit.
         try {
           updateBean(repo, id, { status: "in-progress" });
-          // Bean `24fa`: the note as well as the status, copied from what was
-          // pushed so the two are byte-identical. See `mirrorClaimNote`.
           mirrorClaimNote(repo, work, id);
         } catch {
           // The push already succeeded, which is the durable half. A local
           // write failing is worth reporting, not worth undoing a landed claim.
-          return { state: "pushed", attempts, reason: "claimed on the default branch, but the local copy could not be updated — `git fetch` and check before committing this bean" };
+          return { state: "pushed", attempts, joined: "not-joined", reason: `${joined.reason}; and the local copy could not be updated — \`git fetch\` and check before committing this bean` };
         }
-        return { state: "pushed", attempts };
+        return { state: "pushed", attempts, joined: "not-joined", reason: joined.reason };
       }
 
       const why = `${pushed.err.trim()}\n${pushed.out.trim()}`.trim();
@@ -601,7 +644,13 @@ export function wrongCheckout(root: string, branch: string): string | undefined 
 export function describe(o: ClaimOutcome, id: string): string {
   switch (o.state) {
     case "pushed":
-      return o.reason ?? `claimed ${id} on the default branch — every session can see it now${o.attempts > 1 ? ` (after ${o.attempts} attempts; a sibling claim landed mid-flight)` : ""}`;
+    {
+      const claimed = `claimed ${id} on the default branch — every session can see it now${o.attempts > 1 ? ` (after ${o.attempts} attempts; a sibling claim landed mid-flight)` : ""}`;
+      if (o.joined === "fast-forward" || o.joined === "merged") {
+        return `${claimed}, and the claim commit is in this branch (${o.joined === "merged" ? "merge commit" : "fast-forward"}), so later edits to the bean merge cleanly`;
+      }
+      return o.reason === undefined ? claimed : `${claimed} — but NOT in this branch's history: ${o.reason}`;
+    }
     case "held-unknown":
       return (
         `${id} is already in-progress on the default branch, and NOBODY RECORDED A HOLDER — so this cannot tell

@@ -61,12 +61,18 @@ const FILES: Record<string, { type: string; body: string }> = {
   },
 };
 
-async function open(page: Page): Promise<void> {
+// The same page with a drawn harness rail, as rail-standalone-pages leaves it.
+FILES["/preview/railed/"] = {
+  type: "text/html",
+  body: reviewPageHtml().replace(/<body([^>]*)>/, '<body$1><nav class="fa-nav" aria-label="folio-assistant"><div class="fa-nav-in"><div class="fa-nav-top"></div><div class="fa-nav-bottom"></div></div></nav>'),
+};
+
+async function open(page: Page, at = "review"): Promise<void> {
   await page.route(`${ORIGIN}/**`, (route) => {
     const f = FILES[new URL(route.request().url()).pathname];
     return f ? route.fulfill({ status: 200, contentType: f.type, body: f.body }) : route.fulfill({ status: 404, body: "" });
   });
-  await page.goto(`${ORIGIN}/preview/review/`);
+  await page.goto(`${ORIGIN}/preview/${at}/`);
   await page.waitForFunction(() => !document.getElementById("status")!.textContent!.startsWith("Loading"));
 }
 
@@ -116,6 +122,20 @@ test.describe("review navigation, keyboard only (eb4l)", () => {
     expect(rows).toEqual(["Section A 2 changed, 1 comment", "Quiet", "Section C 1 changed, 1 comment"]);
     await page.locator("nav.outline button", { hasText: "Section C" }).focus();
     await page.keyboard.press("Enter");
+    expect(await page.evaluate(() => document.activeElement?.getAttribute("data-section"))).toBe("doc/two::sec:c");
+  });
+
+  test("with a harness rail, the outline is a section OF THE RAIL, not a column of the page (owner, 2026-10-07)", async ({ page }) => {
+    await open(page, "railed");
+    expect(await page.locator("#navpane nav.outline").count()).toBe(0);
+    const group = page.locator("nav.fa-nav .fa-nav-graphs details.fa-nav-group[open]");
+    await expect(group.locator("summary")).toHaveText("\u00a7Outline");
+    const rows = await group.locator(".fa-nav-sub > *").evaluateAll((ls) => ls.map((l) => l.textContent!.replace(/\s+/g, " ").trim()));
+    expect(rows).toEqual(["One", "Section A · 2 changed, 1 comment", "Quiet", "Two", "Section C · 1 changed, 1 comment"]);
+    // A quiet section links to its anchor on the document page.
+    expect(await group.locator("a", { hasText: "Quiet" }).getAttribute("href")).toMatch(/#sec%3Aquiet$/);
+    // One with something to review jumps to it in the list.
+    await group.locator("a", { hasText: "Section C" }).click();
     expect(await page.evaluate(() => document.activeElement?.getAttribute("data-section"))).toBe("doc/two::sec:c");
   });
 

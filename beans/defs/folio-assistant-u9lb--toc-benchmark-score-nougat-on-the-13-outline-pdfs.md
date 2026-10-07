@@ -3,9 +3,10 @@
 title: 'TOC benchmark: score Nougat on the 13 outline PDFs (needs huggingface.co) (#2302)'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-06T18:05:01Z
-updated_at: 2026-10-06T18:05:01Z
-parent: folio-assistant-slw1
+updated_at: 2026-10-07T10:57:08Z
+parent: folio-assistant-cp3v
 ---
 
 Follow-up to bean cp3v / PR #2303 (issue #2302). Needs an agent with network access to huggingface.co (Nougat weights); the cp3v session's container is denied it.
