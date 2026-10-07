@@ -129,6 +129,11 @@
       "name": "translation-sources"
     },
     {
+      "@id": "cat-harness:graphTypology/typologies",
+      "@type": "bootstrap:GraphTypology",
+      "name": "typologies"
+    },
+    {
       "@id": "cat-harness:graphTypology/uml",
       "@type": "bootstrap:GraphTypology",
       "name": "uml"
@@ -2812,11 +2817,13 @@
     }
   ],
   "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/openapi/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/"
   ],
   "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness",
     "bootstrap:graphTypology/processes",
     "bootstrap:graphTypology/scenarios",
     "bootstrap:graphTypology/skills"

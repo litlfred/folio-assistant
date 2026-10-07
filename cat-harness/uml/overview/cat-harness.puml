@@ -1169,6 +1169,9 @@ package "cat-harness/cat-harness-deploy" as pkg_cat_harness_cat_harness_deploy <
 package "cat-harness/cat-harness-upstream" as pkg_cat_harness_cat_harness_upstream <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_cat_harness_upstream_code
 }
+package "cat-harness/openapi" as pkg_cat_harness_openapi <<cat-harness>> {
+  note "cat-harness: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_openapi_cat_harness
+}
 package "cat-harness/memory" as pkg_cat_harness_memory <<memory, waiver, interaction>> {
   class "AlsoAbout" as cat_harness_memory_AlsoAbout <<json: MemoryNodeSchema>> #f6eedf {
     kind [1] : 'block'
@@ -1492,6 +1495,52 @@ package "cat-harness/uml-overview-pages" as pkg_cat_harness_uml_overview_pages <
 package "cat-harness/uml-overview-svgs" as pkg_cat_harness_uml_overview_svgs <<auto-docs>> {
   note "auto-docs: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_uml_overview_svgs_auto_docs
 }
+package "cat-harness/openapi-validators" as pkg_cat_harness_openapi_validators <<validators>> {
+  class "folio-validator/v1" as cat_harness_openapi_validators_folio_validator_v1_folio_validator_v1 <<json: ValidatorNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-validator/v1'
+    id [1] : string
+    validates [1] : object
+    schema [1] : string
+    pages [0..1] : string
+    rationale [0..1] : string
+  }
+}
+package "cat-harness/openapi-typologies" as pkg_cat_harness_openapi_typologies <<typologies>> {
+  class "folio-graph-typology/v1" as cat_harness_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1 <<json: GraphTypologyNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-typology/v1'
+    kind [1] : string
+    title [0..1] : string
+    layer [0..1] : 'core'
+    perInstance [0..1] : true
+    newInstanceSource [0..1] : object
+    renderable [1] : boolean
+    recordsWork [0..1] : boolean
+    holds [1] : content | context | state | derived
+    summary [1] : string
+    schema [0..1] : string
+    validator [0..1] : string
+    validatorNotApplicable [0..1] : string
+    nodeSchemas [0..1] : map<object>
+    declarationFile [0..1] : string
+    concernGroups [0..1] : true
+    within [0..1] : string
+    avatar [0..1] : object
+    tileIcon [0..1] : string
+    published [0..1] : false
+    skillBearing [0..1] : true
+    kgContent [0..1] : true
+    description [0..1] : string
+    renderableNote [0..1] : string
+    anyLayer [0..1] : true
+    rationale [0..1] : string
+  }
+}
+package "cat-harness/openapi-schemas" as pkg_cat_harness_openapi_schemas <<schemas>> {
+  note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (4 named): could not determine)" as n_cat_harness_openapi_schemas_schemas
+}
+package "cat-harness/openapi-scripts" as pkg_cat_harness_openapi_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_openapi_scripts_code
+}
 
 cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Remedy : remedies
 cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
@@ -1582,7 +1631,7 @@ cat_harness_agent_skill_authoring_openai_VoiceProfile *-- "1..*" cat_harness_age
 cat_harness_agent_skill_authoring_openai_Rule *-- "0..*" cat_harness_agent_skill_authoring_openai_Pattern : patterns
 cat_harness_agent_skill_authoring_openai_Rule *-- "0..*" cat_harness_agent_skill_authoring_openai_Terminology : terminology
 cat_harness_agent_skill_authoring_openai_VoiceProfile *-- "1..*" cat_harness_agent_skill_authoring_openai_Rule : rules
-' grid: portrait, 6 column(s) — pkg_cat_harness_cat_harness_validators pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_subscriptions pkg_cat_harness_code_lists pkg_cat_harness_vocab_mappings pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_skills pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_attestations pkg_cat_harness_health pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_docs pkg_cat_harness_site pkg_cat_harness_swimlane_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_templates pkg_cat_harness_cat_harness_deploy pkg_cat_harness_cat_harness_upstream pkg_cat_harness_memory pkg_cat_harness_voices pkg_cat_harness_vendors pkg_cat_harness_agent_skill_authoring_claude pkg_cat_harness_agent_skill_authoring_gemini_cli pkg_cat_harness_agent_skill_authoring_openai pkg_cat_harness_proposals pkg_cat_harness_requirements pkg_cat_harness_start pkg_cat_harness_concepts pkg_cat_harness_guides pkg_cat_harness_process pkg_cat_harness_fhir pkg_cat_harness_auto_docs pkg_cat_harness_glossary pkg_cat_harness_index_dmn pkg_cat_harness_index_docs pkg_cat_harness_index_processes pkg_cat_harness_index_roles pkg_cat_harness_index_schemas pkg_cat_harness_index_skills pkg_cat_harness_index_tasks pkg_cat_harness_index_tools pkg_cat_harness_uml_overview_pages pkg_cat_harness_uml_overview_svgs
+' grid: portrait, 6 column(s) — pkg_cat_harness_cat_harness_validators pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_subscriptions pkg_cat_harness_code_lists pkg_cat_harness_vocab_mappings pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_skills pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_attestations pkg_cat_harness_health pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_docs pkg_cat_harness_site pkg_cat_harness_swimlane_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_templates pkg_cat_harness_cat_harness_deploy pkg_cat_harness_cat_harness_upstream pkg_cat_harness_openapi pkg_cat_harness_memory pkg_cat_harness_voices pkg_cat_harness_vendors pkg_cat_harness_agent_skill_authoring_claude pkg_cat_harness_agent_skill_authoring_gemini_cli pkg_cat_harness_agent_skill_authoring_openai pkg_cat_harness_proposals pkg_cat_harness_requirements pkg_cat_harness_start pkg_cat_harness_concepts pkg_cat_harness_guides pkg_cat_harness_process pkg_cat_harness_fhir pkg_cat_harness_auto_docs pkg_cat_harness_glossary pkg_cat_harness_index_dmn pkg_cat_harness_index_docs pkg_cat_harness_index_processes pkg_cat_harness_index_roles pkg_cat_harness_index_schemas pkg_cat_harness_index_skills pkg_cat_harness_index_tasks pkg_cat_harness_index_tools pkg_cat_harness_uml_overview_pages pkg_cat_harness_uml_overview_svgs pkg_cat_harness_openapi_validators pkg_cat_harness_openapi_typologies pkg_cat_harness_openapi_schemas pkg_cat_harness_openapi_scripts
 pkg_cat_harness_cat_harness_validators -[hidden]down- pkg_cat_harness_schemas
 pkg_cat_harness_tools -[hidden]down- pkg_cat_harness_uml
 pkg_cat_harness_external_schemas -[hidden]down- pkg_cat_harness_skills
@@ -1607,12 +1656,13 @@ pkg_cat_harness_docs -[hidden]down- pkg_cat_harness_cat_harness_tests
 pkg_cat_harness_site -[hidden]down- pkg_cat_harness_folio_templates
 pkg_cat_harness_swimlane_glossary -[hidden]down- pkg_cat_harness_cat_harness_deploy
 pkg_cat_harness_cat_harness_scripts -[hidden]down- pkg_cat_harness_cat_harness_upstream
-pkg_cat_harness_cat_harness_src -[hidden]down- pkg_cat_harness_memory
-pkg_cat_harness_cat_harness_adapters -[hidden]down- pkg_cat_harness_voices
-pkg_cat_harness_cat_harness_tests -[hidden]down- pkg_cat_harness_vendors
-pkg_cat_harness_folio_templates -[hidden]down- pkg_cat_harness_agent_skill_authoring_claude
-pkg_cat_harness_cat_harness_deploy -[hidden]down- pkg_cat_harness_agent_skill_authoring_gemini_cli
-pkg_cat_harness_cat_harness_upstream -[hidden]down- pkg_cat_harness_agent_skill_authoring_openai
+pkg_cat_harness_cat_harness_src -[hidden]down- pkg_cat_harness_openapi
+pkg_cat_harness_cat_harness_adapters -[hidden]down- pkg_cat_harness_memory
+pkg_cat_harness_cat_harness_tests -[hidden]down- pkg_cat_harness_voices
+pkg_cat_harness_folio_templates -[hidden]down- pkg_cat_harness_vendors
+pkg_cat_harness_cat_harness_deploy -[hidden]down- pkg_cat_harness_agent_skill_authoring_claude
+pkg_cat_harness_cat_harness_upstream -[hidden]down- pkg_cat_harness_agent_skill_authoring_gemini_cli
+pkg_cat_harness_openapi -[hidden]down- pkg_cat_harness_agent_skill_authoring_openai
 pkg_cat_harness_memory -[hidden]down- pkg_cat_harness_proposals
 pkg_cat_harness_voices -[hidden]down- pkg_cat_harness_requirements
 pkg_cat_harness_vendors -[hidden]down- pkg_cat_harness_start
@@ -1632,4 +1682,8 @@ pkg_cat_harness_index_dmn -[hidden]down- pkg_cat_harness_index_tasks
 pkg_cat_harness_index_docs -[hidden]down- pkg_cat_harness_index_tools
 pkg_cat_harness_index_processes -[hidden]down- pkg_cat_harness_uml_overview_pages
 pkg_cat_harness_index_roles -[hidden]down- pkg_cat_harness_uml_overview_svgs
+pkg_cat_harness_index_schemas -[hidden]down- pkg_cat_harness_openapi_validators
+pkg_cat_harness_index_skills -[hidden]down- pkg_cat_harness_openapi_typologies
+pkg_cat_harness_index_tasks -[hidden]down- pkg_cat_harness_openapi_schemas
+pkg_cat_harness_index_tools -[hidden]down- pkg_cat_harness_openapi_scripts
 @enduml

@@ -8050,6 +8050,97 @@
       "status": "candidate"
     },
     {
+      "id": "openapi.openapiconfigdocumentschema.description",
+      "prefLabel": "OpenApiConfigDocumentSchema.description",
+      "definition": "One sentence on what this API is and why this instance holds it.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.description",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiconfigdocumentschema.id",
+      "prefLabel": "OpenApiConfigDocumentSchema.id",
+      "definition": "The document's id: its file stem, its page directory and its IRI segment.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiconfigdocumentschema.title",
+      "prefLabel": "OpenApiConfigDocumentSchema.title",
+      "definition": "What a reader calls it. Absent, the document's own `info.title` is used.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiconfigschema.directory",
+      "prefLabel": "OpenApiConfigSchema.directory",
+      "definition": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema.directory",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapioperation.declaredid",
+      "prefLabel": "OpenApiOperation.declaredId",
+      "definition": "Whether {@link id} is the document's own `operationId`.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.declaredId",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapioperation.id",
+      "prefLabel": "OpenApiOperation.id",
+      "definition": "The node id: `operationId`, or `<method>-<path>` made filename-safe.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.id",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.file",
+      "prefLabel": "OpenApiProvenanceSchema.file",
+      "definition": "The document file beside this one.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.materialization",
+      "prefLabel": "OpenApiProvenanceSchema.materialization",
+      "definition": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.openapi",
+      "prefLabel": "OpenApiProvenanceSchema.openapi",
+      "definition": "The document's `openapi` version, and its `info.title` / `info.version`, as published.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.openapi",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapiprovenanceschema.operations",
+      "prefLabel": "OpenApiProvenanceSchema.operations",
+      "definition": "How many operations it holds — every one of which gets a page.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.operations",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapisourceschema.path",
+      "prefLabel": "OpenApiSourceSchema.path",
+      "definition": "Path of the document inside that repository.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapisourceschema.ref",
+      "prefLabel": "OpenApiSourceSchema.ref",
+      "definition": "Branch, tag or commit to read it from. The ingest records the commit it resolved to.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "openapi.openapisourceschema.repository",
+      "prefLabel": "OpenApiSourceSchema.repository",
+      "definition": "`owner/repo` on GitHub.",
+      "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.repository",
+      "status": "candidate"
+    },
+    {
       "id": "panel-chrome.panelcontrol.because",
       "prefLabel": "PanelControl.because",
       "definition": "Why this control exists, for whoever is deciding whether to keep it.",
@@ -8841,6 +8932,13 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount.mountdefaultsschema.whole",
+      "prefLabel": "MountDefaultsSchema.whole",
+      "definition": "Mount the WHOLE instance root — every tracked file at the pin, root files included — instead of its declared directories. For an instance a downstream reads as a checkout rather than as graphs: `bootstrap` (whose `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose `package.json` and `tsconfig.json` do), the two git submodules a remote mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.whole",
+      "status": "candidate"
+    },
+    {
       "id": "remote-mount.mountlockschema.mounts",
       "prefLabel": "MountLockSchema.mounts",
       "definition": "The `remoteMounts` it was written for, so a changed pin reads as stale.",
@@ -8852,6 +8950,13 @@
       "prefLabel": "MountLockSchema.unmounted",
       "definition": "What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over an instance the mount never laid down. `local` and `skipped` are recorded too: they are answers, and a reader should see them as such.",
       "source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.mountoverrideschema.whole",
+      "prefLabel": "MountOverrideSchema.whole",
+      "definition": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.whole",
       "status": "candidate"
     },
     {

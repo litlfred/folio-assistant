@@ -14,7 +14,6 @@ Part of [C@T Harness](../../../README.md) 0.1.0, declared as `uml-overview-pages
 | [`bootstrap.md`](bootstrap.md) | UML — bootstrap |  |
 | [`cat-harness-tools.md`](cat-harness-tools.md) | UML — cat-harness-tools |  |
 | [`cat-harness.md`](cat-harness.md) | UML — cat-harness |  |
-| [`cat-openapi.md`](cat-openapi.md) | UML — cat-openapi |  |
 | [`fhir-harness.md`](fhir-harness.md) | UML — fhir-harness |  |
 | [`folio-assistant-core.md`](folio-assistant-core.md) | UML — folio-assistant-core |  |
 | [`folio-assistant-sci.md`](folio-assistant-sci.md) | UML — folio-assistant-sci |  |
@@ -29,7 +28,6 @@ Part of [C@T Harness](../../../README.md) 0.1.0, declared as `uml-overview-pages
 | [`bootstrap-tools/`](bootstrap-tools/) | _nothing declares what this holds_ | |
 | [`cat-harness/`](cat-harness/) | _nothing declares what this holds_ | |
 | [`cat-harness-tools/`](cat-harness-tools/) | _nothing declares what this holds_ | |
-| [`cat-openapi/`](cat-openapi/) | _nothing declares what this holds_ | |
 | [`fhir-harness/`](fhir-harness/) | _nothing declares what this holds_ | |
 | [`folio-assistant/`](folio-assistant/) | _nothing declares what this holds_ | |
 | [`folio-assistant-core/`](folio-assistant-core/) | _nothing declares what this holds_ | |

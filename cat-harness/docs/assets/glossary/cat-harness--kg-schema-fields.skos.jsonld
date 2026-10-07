@@ -21845,6 +21845,253 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigdocumentschema.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigDocumentSchema.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One sentence on what this API is and why this instance holds it."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigdocumentschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigDocumentSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document's id: its file stem, its page directory and its IRI segment."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigdocumentschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigDocumentSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a reader calls it. Absent, the document's own `info.title` is used."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiconfigschema.directory",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiConfigSchema.directory"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `<instance>.json` directory id of graph typology `openapi` the documents are ingested into."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiConfigSchema.directory",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapioperation.declaredid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiOperation.declaredId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether {@link id} is the document's own `operationId`."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.declaredId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapioperation.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiOperation.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The node id: `operationId`, or `<method>-<path>` made filename-safe."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiOperation.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document file beside this one."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.materialization",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.materialization"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.openapi",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.openapi"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document's `openapi` version, and its `info.title` / `info.version`, as published."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.openapi",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapiprovenanceschema.operations",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiProvenanceSchema.operations"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many operations it holds — every one of which gets a page."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.operations",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapisourceschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiSourceSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Path of the document inside that repository."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapisourceschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiSourceSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Branch, tag or commit to read it from. The ingest records the commit it resolved to."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/openapi.openapisourceschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "OpenApiSourceSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`owner/repo` on GitHub."
+        }
+      ],
+      "dcterms:source": "cat-harness/openapi/schemas/openapi.ts#OpenApiSourceSchema.repository",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/panel-chrome.panelcontrol.because",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23992,6 +24239,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountdefaultsschema.whole",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountDefaultsSchema.whole"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mount the WHOLE instance root — every tracked file at the pin, root files included — instead of its declared directories. For an instance a downstream reads as a checkout rather than as graphs: `bootstrap` (whose `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose `package.json` and `tsconfig.json` do), the two git submodules a remote mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.whole",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountlockschema.mounts",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24027,6 +24293,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountoverrideschema.whole",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountOverrideSchema.whole"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.whole",
       "skos:note": "candidate"
     },
     {
