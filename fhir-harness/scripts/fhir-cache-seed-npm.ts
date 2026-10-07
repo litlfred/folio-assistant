@@ -12,9 +12,9 @@
  * Sources, tried in order for each package:
  *   1. the cache itself (already present and verified);
  *   2. npm, account `grahamegrieve` (owner, 2026-09-30: trusted);
- *   3. a publisher's own published-site repository on GitHub, for package names
- *      under a prefix given with `--site-repo` (none built in: this layer names
- *      no publisher, so the layer that knows one passes it in);
+ *   3. a publisher's published-site repository on GitHub, for package-name prefixes
+ *      the caller maps with --site-repo (none by default: which publisher owns which
+ *      prefix is the instance's to say, not this layer's);
  *   4. a template's own repository (from FHIR/ig-registry or explicit --template-repo);
  *   5. `--mirror`: directory or git repository of `<name>#<version>.tgz` with SHA512SUMS.
  *
@@ -409,34 +409,23 @@ export function fromMirror(
 }
 
 /**
- * A publisher's published-site repository: packages named `<prefix><path>` are
- * at `<path>/<version>/package.tgz` on `branch` of `repo`.
- *
- * Passed in, never built in — fhir-harness names no publisher
- * (`check:fhir-harness-exclusions`), so the layer that knows one supplies it.
+ * Fetch `<name>#<version>` from a publisher's published-site repository, at
+ * `<rest-of-name>/<version>/package.tgz`, where `siteRepos` maps a package-name
+ * prefix (e.g. `"org.example."`) to `OWNER/REPO` or `OWNER/REPO@BRANCH`
+ * (default branch `main`). The longest matching prefix wins; no match is null.
  */
-export interface SiteRepo {
-  prefix: string;
-  repo: string;
-  branch: string;
-}
-
-/** `PREFIX=OWNER/REPO[@BRANCH]`, branch defaulting to `main`; `null` if malformed. */
-export function parseSiteRepo(spec: string): SiteRepo | null {
-  const m = /^([A-Za-z0-9._-]+\.)=([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)(?:@([A-Za-z0-9._\/-]+))?$/.exec(spec);
-  if (!m) return null;
-  return { prefix: m[1], repo: m[2], branch: m[3] ?? "main" };
-}
-
 export async function fromSite(
   name: string,
   version: string,
-  sites: readonly SiteRepo[] = [],
+  siteRepos: Record<string, string> = {},
 ): Promise<{ data: Buffer; provenance: Record<string, unknown> } | null> {
-  const site = sites.find((s) => name.startsWith(s.prefix));
-  if (!site) return null;
-  const rel = `${name.slice(site.prefix.length)}/${version}/package.tgz`;
-  const { repo, branch } = site;
+  const prefix = Object.keys(siteRepos)
+    .filter((p) => p && name.startsWith(p) && name.length > p.length)
+    .sort((a, b) => b.length - a.length)[0];
+  if (!prefix) return null;
+  const [repo, branch = "main"] = siteRepos[prefix].split("@");
+  if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !/^[\w./-]+$/.test(branch)) return null;
+  const rel = `${name.slice(prefix.length)}/${version}/package.tgz`;
   const commit = remoteCommit(`https://github.com/${repo}`, branch);
   if (!commit) return null;
   const url = `https://raw.githubusercontent.com/${repo}/${commit}/${rel}`;
@@ -575,7 +564,8 @@ export interface SeedOptions {
   mirrorCommit?: string;
   missingOut?: string;
   templateRepos?: Record<string, string>;
-  siteRepos?: SiteRepo[];
+  /** Package-name prefix → `OWNER/REPO[@BRANCH]` of the publisher's site repository. */
+  siteRepos?: Record<string, string>;
   wanted?: string[];
   logger?: {
     log: (msg: string) => void;
@@ -607,6 +597,7 @@ export async function seedFhirCache(options: SeedOptions): Promise<SeedResult> {
   const mirrorSpec = options.mirror;
   const missingOut = options.missingOut;
   const templateOverrides = options.templateRepos || {};
+  const siteRepos = options.siteRepos || {};
 
   const wanted: string[] = [];
   if (sushiConfig) {
@@ -760,7 +751,7 @@ export async function seedFhirCache(options: SeedOptions): Promise<SeedResult> {
 
       // 3. publisher site repo
       if (pj === null && exact(version)) {
-        const siteRes = await fromSite(name, version, options.siteRepos ?? []);
+        const siteRes = await fromSite(name, version, siteRepos);
         if (siteRes) {
           if (dry) {
             installed.push({ spec, how: "would install from site" });
@@ -872,7 +863,7 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
   let mirrorCommit: string | undefined;
   let missingOut: string | undefined;
   const templateRepos: Record<string, string> = {};
-  const siteRepos: SiteRepo[] = [];
+  const siteRepos: Record<string, string> = {};
   const wanted: string[] = [];
 
   const it = argv[Symbol.iterator]();
@@ -907,9 +898,8 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
     } else if (a === "--site-repo") {
       next = it.next();
       if (!next.done) {
-        const site = parseSiteRepo(next.value);
-        if (site) siteRepos.push(site);
-        else console.error(`--site-repo: expected PREFIX=OWNER/REPO[@BRANCH], got '${next.value}'`);
+        const [k, v] = next.value.split("=");
+        if (k && v) siteRepos[k] = v;
       }
     } else if (a.includes("#")) {
       wanted.push(a);
