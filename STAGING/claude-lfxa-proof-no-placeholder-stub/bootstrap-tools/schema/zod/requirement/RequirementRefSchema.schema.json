@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/RequirementRef",
+  "definitions": {
+    "RequirementRef": {
+      "type": "string",
+      "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*)?$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lfxa-proof-no-placeholder-stub/bootstrap-tools/schema/zod/requirement/RequirementRefSchema.schema.json",
+  "title": "RequirementRefSchema",
+  "description": "Generated from `RequirementRefSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/lfxa-proof-no-placeholder-stub",
+    "sha": "6a9095e0ee1a6a49f4c6ab4e4b4f422e9ea2a1d6",
+    "pr": "2368/merge",
+    "run": "37572875378"
+  }
+}
