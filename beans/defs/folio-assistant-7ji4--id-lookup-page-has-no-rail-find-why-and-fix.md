@@ -1,12 +1,11 @@
 ---
 # folio-assistant-7ji4
 title: 'id-lookup page has no rail: find why and fix'
-status: in-progress
+status: completed
 type: task
-tags:
-  - ready-to-close
+priority: normal
 created_at: 2026-10-05T15:23:55Z
-updated_at: 2026-10-06T19:15:00Z
+updated_at: 2026-10-07T11:50:40Z
 parent: folio-assistant-9rq1
 ---
 
