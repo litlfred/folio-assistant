@@ -377,7 +377,7 @@
     {
       "id": "process_codequalitygates.task_unrungates",
       "prefLabel": "Registered gates that never run (HARD)",
-      "definition": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries `bun run security:gate` (bean `ieum`, owner 2026-10-07: \"security check before release\"): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job.",
+      "definition": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries `bun run cat security:gate` (bean `ieum`, owner 2026-10-07: \"security check before release\"): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job.",
       "notation": "Task_UnrunGates",
       "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_UnrunGates",
       "status": "candidate"
@@ -977,7 +977,7 @@
     {
       "id": "process_docssite.task_securitygate",
       "prefLabel": "Run the release security gate [security:gate]",
-      "definition": "`bun run security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set.",
+      "definition": "`bun run cat security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set.",
       "notation": "Task_SecurityGate",
       "source": "cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_SecurityGate",
       "status": "candidate"
@@ -1813,7 +1813,7 @@
     {
       "id": "process_mergetrain.call_gates",
       "prefLabel": "Run the gate set on the train [code-quality-gates]",
-      "definition": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land. The release security gate (`bun run security:gate`, bean `ieum`) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run.",
+      "definition": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land. The release security gate (`bun run cat security:gate`, bean `ieum`) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run.",
       "notation": "Call_Gates",
       "source": "cat-harness/processes/sdlc/merge-train.bpmn#Call_Gates",
       "status": "candidate"

@@ -837,6 +837,68 @@
         "saw": "the same mascot, repeated on page 7 on a transparent (black-rendered) background",
         "draft": "A soft, felt-textured 3D cartoon camel with one hump, standing in three-quarter view, with three small tortoises riding on it: one on its head and two along its back. It is the paper's CaMeL mascot and carries no technical content. A repeat of the title-page image."
       }
+    },
+    "nist-sp-800-207": {
+      "img-p014-1": {
+        "role": "figure",
+        "saw": "Figure 1: Zero Trust Access — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "A workstation on the left joins by a two-headed arrow, across a span labelled 'Untrusted Zone', to a rounded box 'Policy Decision/Enforcement Point (PDP/PEP)'. That box joins, across a span labelled 'Implicit Trust Zone', to a cylinder 'Resource (System, Data or Application)'. The figure's point is that the implicit trust zone behind the PDP/PEP should be as small as possible: everything before it is untrusted, and access is decided at that one point."
+      },
+      "img-p018-1": {
+        "role": "figure",
+        "saw": "Figure 2: Core Zero Trust Logical Components — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "A rounded frame split by a dashed line into a Control Plane above and a Data Plane below. In the control plane a 'Policy Decision Point' groups a Policy Engine over a Policy Administrator. In the data plane, Subject goes to System, then an 'Untrusted' arrow goes to the Policy Enforcement Point, then a 'Trusted' arrow goes to an Enterprise Resource cylinder; dashed arrows link the PEP and the Policy Administrator. Grey arrows from the left feed in a CDM System, Industry Compliance, Threat Intelligence and Activity Logs; from the right they feed in Data Access Policy, PKI, ID Management and a SIEM System."
+      },
+      "img-p023-1": {
+        "role": "figure",
+        "saw": "Figure 3: Device Agent/Gateway Model — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "Control plane: a Policy Engine linked both ways to a Policy Administrator. Data plane: a Subject goes to an Enterprise System holding an 'Agent', which talks both ways to a 'Gateway' fronting a 'Data Resource'. The Agent and the Gateway each link up to the Policy Administrator. The agent on the device and the gateway at the resource are the two PEP halves."
+      },
+      "img-p024-1": {
+        "role": "figure",
+        "saw": "Figure 4: Enclave Gateway Model — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "The same planes as Figure 3, but the Gateway sits at the edge of a cloud-shaped 'Resource Enclave' holding a stack of several 'Resource' boxes. The Subject's Enterprise System, with its Agent, reaches them through that one gateway, and both the agent and the gateway link to the Policy Administrator. One gateway protects a group of resources rather than one."
+      },
+      "img-p025-1": {
+        "role": "figure",
+        "saw": "Figure 5: Resource Portal Model — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "Control plane: Policy Engine over Policy Administrator. Data plane: Subject, then System, then a 'Gateway Portal', then a 'Data Resource', with two-headed arrows between them. Only the Gateway Portal links up to the Policy Administrator. There is no agent on the subject's system: the portal is the single PEP."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "Figure 6: Application Sandboxes — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "An 'Asset/Device' with an OS layer at the bottom and two 'Sandbox' compartments above it, each holding a 'Trusted App'. An arrow runs from a separate 'PEP' box at the top down into each trusted app. The trusted applications run compartmentalised on a possibly compromised asset and talk only to their PEPs."
+      },
+      "img-p027-1": {
+        "role": "figure",
+        "saw": "Figure 7: Trust Algorithm Input — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "Five grey arrows feed one large downward arrow labelled 'Trust Algorithm'. From top to bottom they are: 'Access Request'; 'Subject Database and History'; 'Asset Database'; 'Resource Policy Requirements', each of the last three drawn beside a database cylinder; and 'Threat Intelligence and Logs', beside a cloud. These are the inputs the trust algorithm weighs for each access decision."
+      },
+      "img-p033-1": {
+        "role": "figure",
+        "saw": "Figure 8: Enterprise with Remote Employees — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "A network sketch: a central 'Internet' cloud linked to a 'Branch Site' with two users, a 'Teleworker' user with a home wireless router, 'Cloud Services' (a server and database in a cloud), and an 'Enterprise HQ' oval with three users. Users and resources are spread across locations, none of which can be assumed trusted."
+      },
+      "img-p033-2": {
+        "role": "figure",
+        "saw": "Figure 9: Multi-cloud Use Case — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "'Cloud Provider A' holds a Database, linked by a two-headed arrow to a 'Web Front End' in 'Cloud Provider B'. A workstation in an 'Enterprise Network' box connects to the web front end. Two clouds host the parts of one service, and access between them is mediated without going back through the enterprise network."
+      },
+      "img-p034-1": {
+        "role": "figure",
+        "saw": "Figure 10: Enterprise with Nonemployee Access — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "An 'Enterprise Campus Network' holds an Internal App Server, a Database, several Employees, a 'Contracted HVAC' system with a 'Contractor Service Tech', and a dark 'Conference Center' with Visitors and one Employee. Solid arrows run from the employees, including the one in the conference center, to the database. Dashed arrows run from the contractor and from the visitors out to the Internet. Non-employees share the campus but reach only the internet or their contracted asset."
+      },
+      "img-p035-1": {
+        "role": "figure",
+        "saw": "Figure 11: Cross-Enterprise Collaboration — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "'Enterprise A' holds databases DB1 and DB2 and a local user who reaches both. Two users in 'Enterprise B' reach across to DB1 in Enterprise A; one of them also points at DB2, and that arrow ends at a bold X. Access is granted per resource to the outside partner: DB1 yes, DB2 refused."
+      },
+      "img-p046-1": {
+        "role": "figure",
+        "saw": "Figure 12: ZTA Deployment Cycle — viewed 2026-10-07 by the session agent on a contact sheet of the extracted rasters, matched to its caption by page",
+        "draft": "Top band 'RMF Steps': Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor, with an 'Expansion of Strategy' arrow from Monitor back to Prepare. Bottom band: 'Assessment' (System Inventory, User Inventory, Business Process Review), then 'Risk Assessment & Policy Development', then 'Deployment', then 'Operations', with a 'Change/Upgrade/Migration Feedback' arrow from Operations back to Assessment. A zero-trust migration is shown as a cycle laid against the NIST Risk Management Framework."
+      }
     }
   },
   "attribution": {

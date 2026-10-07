@@ -58,7 +58,7 @@ Mechanical throughout. There is no human lane, which is what makes `build-pipeli
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_SecurityGate" name="Run the release&#10;security gate&#10;[security:gate]">
-      <bpmn:documentation>`bun run security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: "security check before release"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set.</bpmn:documentation>
+      <bpmn:documentation>`bun run cat security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: "security check before release"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="security"/>
       </bpmn:extensionElements>
