@@ -503,4 +503,15 @@ describe("a mounted package.json, by reference (owner, 2026-10-07: Option A; #24
     expect(table.has("core:run")).toBe(false);
     expect(unresolved[0]!.why).toContain("does not list core/package.json as an asset");
   });
+
+  test("31. a WHOLE-instance mount vouches for its manifest through the `*` digest; an edit makes it unresolvable", () => {
+    const root = downstream({ overrides: { core: { whole: true, assets: [] } } });
+    mountRemote({ instanceRoot: root, urlFor });
+    expect(mountedManifests(root).find((m) => m.instance === "core")!.state).toBe("verified");
+    expect(readScriptTable(root).table.get("core:run")?.manifest).toBe("core/package.json");
+    writeFileSync(join(root, "core/docs/readme.md"), "edited\n");
+    const m = mountedManifests(root).find((x) => x.instance === "core")!;
+    expect(m.state).toBe("unresolvable");
+    expect(readScriptTable(root).table.has("core:run")).toBe(false);
+  });
 });

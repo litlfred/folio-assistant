@@ -23,9 +23,17 @@ import { basename, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
 import { mountedManifests } from "../../cat-harness/schemas/remote-mount.ts";
-import { readScriptTable } from "../../cat-harness/schemas/script-table.ts";
+import { CHECKOUT_SCRIPTS_KEY, readScriptTable } from "../../cat-harness/schemas/script-table.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
+
+function declaresCheckoutScripts(manifest: string): boolean {
+  try {
+    return CHECKOUT_SCRIPTS_KEY in (JSON.parse(readFileSync(manifest, "utf-8")) as object);
+  } catch {
+    return false;
+  }
+}
 
 /** The layers of this repository (not submodules), each with its declared `needs`. */
 export function layersOf(repo: string): Map<string, string[]> {
@@ -52,7 +60,11 @@ export function layersOf(repo: string): Map<string, string[]> {
     for (const m of mountedManifests(scope)) {
       if (m.root === undefined) continue;
       const rel = relative(repo, m.root);
-      if (m.state === "verified") verified.set(rel, m.instance);
+      // Verified AND opted in: an upstream whose manifest carries no
+      // `checkoutScripts` (bootstrap-tools keeps its own `scripts`) has not
+      // made itself a home for this checkout's scripts, and a script running
+      // its code stays at the root, as it did under the submodule.
+      if (m.state === "verified" && declaresCheckoutScripts(m.manifest)) verified.set(rel, m.instance);
       else out.delete(rel);
     }
   }

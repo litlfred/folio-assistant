@@ -47,7 +47,7 @@
  */
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { z } from "zod";
 
@@ -156,6 +156,19 @@ export const RemoteMountSchema = z
     harness: InstanceNameSchema,
     repository: RepoFullNameSchema,
     ref: CommitShaSchema,
+    /**
+     * The upstream branch this mount FOLLOWS for updates: the analogue of
+     * `branch =` in `.gitmodules`. It never moves the pin: `ref` stays the one
+     * commit mounted, and `bun run cat mount:update` reports how far `track`'s
+     * tip is ahead and re-pins only on a person's recorded consent (owner,
+     * 2026-10-07; skill `kg-core/pinned-remote-dependency`). Absent: nothing to
+     * update from.
+     */
+    track: z
+      .string()
+      .regex(/^[A-Za-z0-9._/-]+$/, "a branch name")
+      .refine((b) => !b.startsWith("-") && !b.split("/").some((s) => s === "" || s === "." || s === ".." || s.endsWith(".lock")), "a branch name")
+      .optional(),
     /** Per-instance overrides across the closure, keyed by instance name. */
     overrides: z.record(InstanceNameSchema, MountOverrideSchema).optional(),
     note: z.string().min(1).optional(),
@@ -382,6 +395,29 @@ export type MountedManifest =
   | { state: "unresolvable"; instance?: string; root?: string; manifest: string; why: string };
 
 /**
+ * The lock's `treeDigest` of a directory: sha256 over the sorted
+ * `<sha256>  <file>` listing, symbolic links skipped. Restated from
+ * `scripts/kg-parts.ts` (as `scripts/mount-from-lock.ts` restates it) because
+ * a schema module does not import a script; `remote-mount.test.ts` holds the
+ * three to one answer.
+ */
+export function wholeDigest(dir: string): string {
+  const files: string[] = [];
+  const walk = (d: string): void => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name);
+      if (e.isSymbolicLink()) continue;
+      if (e.isDirectory()) walk(p);
+      else if (e.isFile()) files.push(relative(dir, p).split("\\").join("/"));
+    }
+  };
+  walk(dir);
+  files.sort();
+  const listing = files.map((f) => `${createHash("sha256").update(readFileSync(join(dir, f))).digest("hex")}  ${f}\n`).join("");
+  return createHash("sha256").update(listing).digest("hex");
+}
+
+/**
  * Every instance the locks in `scope` mounted, with what its `package.json`
  * may be trusted for. `scope` is a downstream instance's root, where its lock
  * sits. Reads lock files and hashes one file per instance; never the network.
@@ -408,6 +444,26 @@ export function mountedManifests(scope: string): MountedManifest[] {
       const want = `${inst.path.replace(/\/+$/, "")}/${PACKAGE_MANIFEST}`;
       const asset = inst.assets.find((a) => a.path.replace(/\/+$/, "") === want);
       const file = join(root, PACKAGE_MANIFEST);
+      // A WHOLE-instance mount already carries the manifest inside its one
+      // `*` directory, and that directory's digest vouches for every byte of
+      // it. The asset path is for a mount of declared directories, which
+      // would otherwise not carry the file at all.
+      const whole = inst.directories.find((d) => d.id === WHOLE_INSTANCE_ID && d.path.replace(/\/+$/, "") === inst.path.replace(/\/+$/, ""));
+      if (!asset && whole && existsSync(file)) {
+        let digest: string;
+        try {
+          digest = wholeDigest(root);
+        } catch (e) {
+          out.push({ state: "unresolvable", instance: inst.instance, root, manifest: file, why: `${inst.path}/ could not be hashed: ${(e as Error).message}` });
+          continue;
+        }
+        out.push(
+          digest === whole.treeDigest
+            ? { state: "verified", instance: inst.instance, root, manifest: file }
+            : { state: "unresolvable", instance: inst.instance, root, manifest: file, why: `${inst.path}/ (a whole-instance mount) no longer hashes to the lock in ${n}: edited since it was mounted` },
+        );
+        continue;
+      }
       if (!asset) {
         out.push(
           existsSync(file)
