@@ -221,7 +221,7 @@ not yet instantiated?">
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_Instantiate" name="Instantiate the harness:
 write its config">
-      <bpmn:documentation>Write `&lt;harness&gt;.config.json` at the repository root, plus the state directories the harness declares. That file is what harness-tiles reads as INSTANTIATED, and it is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere.</bpmn:documentation>
+      <bpmn:documentation>Write `&lt;harness&gt;.config.json` at the repository root, plus the state directories the harness declares, and — where the checkout has a root `index.config.json` — list the harness in its `instances[]`, because the index, not the file, is then what reads as INSTANTIATED (index-config skill); a root config the index does not list fails check:landing-instance. That instantiation is what puts the harness in the navbar's bottom region. check:instance-render must be green on the result; a config that renders nothing is an entry pointing nowhere.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="kg-subscription" />
         <cat-harness.processes:bean />

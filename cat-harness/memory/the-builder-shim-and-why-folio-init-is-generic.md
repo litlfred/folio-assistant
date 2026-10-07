@@ -11,7 +11,8 @@ references:
     id: platform-boundary-guard
 ---
 `bun run cat init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
-`uploads/`, `library/`, manifests, `<name>.config.json`, the `content/schema/`
+`uploads/`, `library/`, manifests, `<name>.config.json`, the root
+`index.config.json` that instantiates it (skill `index-config`), the `content/schema/`
 builder shim, `AGENTS.md` + `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the
 session-start hook and the beans store.
 

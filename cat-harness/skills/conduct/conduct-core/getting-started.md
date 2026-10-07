@@ -85,8 +85,10 @@ a two-word request and a wrong repository.
 Three facts, and nothing else. Gather them by looking, not by asking:
 
 ```sh
-# isFolio — is the working directory already a folio?
-test -f harness.config.json && echo isFolio=true || echo isFolio=false
+# isFolio — does an instantiated config here declare a contentType?
+#   The root <name>.config.json files, and index.config.json, whose instances
+#   may carry contentType inline (index-config skill).
+grep -lq '"contentType"' ./*.config.json 2>/dev/null && echo isFolio=true || echo isFolio=false
 
 # repoHasContent — does the tree hold somebody's project, as opposed to being bare?
 #   Ignore VCS bookkeeping and editor droppings; count anything else.
@@ -110,13 +112,16 @@ that sentence is what the five requests have in common.
 > that carried it. Bean `79t3`.
 >
 > **`folio` and `harness` are different types, and the distinction is load-
-> bearing here.** The declaration says *this is an instance*; `harness.config.json`
-> says *this authors folio content*. `cat-harness/` carries the first and not
+> bearing here.** The declaration says *this is an instance*; a config that
+> declares `contentType` says *this authors folio content*. That config is a root
+> `<name>.config.json`, or its entry in `index.config.json`, where inline fields
+> overlay the imported file ([`index-config`](../../kg/kg-core/index-config.md)).
+> Listing an instance in the index makes it instantiated, not a folio. `cat-harness/` carries the first and not
 > the second — it is a harness and is **not** a folio, which is the
 > platform-not-content rule as a fact about two files. `isFolio` is exactly
 > membership of `folio`, which is what this table has always meant by it: the
-> DMN documents the input as *"harness.config.json exists in the working
-> directory"*.
+> DMN documents the input as a config in the working directory that *declares*
+> a `contentType`, not its mere presence.
 >
 > So a repository being several things at once does **not** perturb the five
 > branches. They key on folio-ness alone, and a folio that is also a DAK takes

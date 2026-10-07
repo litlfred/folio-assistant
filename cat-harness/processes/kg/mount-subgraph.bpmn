@@ -92,7 +92,8 @@ The gateway is on the source KIND, and its flows are the only places the kinds d
         40-character commit. `bun run cat mount:remote` lays it down at the declared
         path and locks its tree digest; it is never written back, because the
         bytes are somebody else's at somebody else's pin. Usually reached
-        through `remoteMounts`, which expands a whole harness and its closure —
+        through a `source.remote` instance in the root `index.config.json`
+        (legacy: `remoteMounts`), which expands a whole harness and its closure —
         `Process_MountDependency`.
       </bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="remote-mount"/></bpmn:extensionElements>
