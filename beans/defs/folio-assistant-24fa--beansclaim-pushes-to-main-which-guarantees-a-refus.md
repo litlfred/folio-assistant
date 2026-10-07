@@ -1,11 +1,11 @@
 ---
 # folio-assistant-24fa
 title: beans:claim pushes to main, which GUARANTEES a refuse-class conflict on the claiming branch's own completion
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T00:43:10Z
-updated_at: 2026-10-03T09:24:35Z
+updated_at: 2026-10-07T05:10:32Z
 parent: folio-assistant-d33q
 ---
 
@@ -112,3 +112,15 @@ question, and not an argument for any particular answer: a claim that
 announces on `main` is exactly what makes it visible to a sibling session, which
 is the thing `bean-coordination` wants. The cost is now measured, so the
 trade-off can be decided rather than estimated.
+
+_2026-10-07T05:10:06Z_ — Claimed by claude/laughing-ramanujan-uripip — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Decided 2026-10-07 (owner, option 1 of #2376)
+
+After a successful push, beans:claim brings the claim commit into the claiming branch: fast-forward with no commits of its own, merge commit otherwise; a detached checkout, local edits in the way, or a conflicting merge aborts cleanly and falls back to the text mirror, and the outcome says so. Copying the text was measured insufficient on #2344 (byte-identical copy, still conflicted on updated_at and the body end), and a conflicted PR gets no CI (#2376, seven PRs).
+
+## Done when
+- [x] claim-bean.ts joins the claim commit (joinClaim); describe() says how, or why not.
+- [x] Tests: fast-forward, merge commit, fallback, and the end-to-end claim→complete→merge main that fails on the old code.
+- [x] merge-conflict-patterns skill updated.
+- [ ] Merged, and the next claim from a fresh branch fast-forwards in real use.

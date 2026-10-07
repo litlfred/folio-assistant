@@ -1,10 +1,11 @@
 ---
 # folio-assistant-e0hw
 title: 'Merge refused: #2102 not signed; conflicts with main in generated paths'
-status: completed
+status: in-progress
 type: bug
 created_at: 2026-10-04T15:07:55Z
-updated_at: 2026-10-07T02:39:00Z
+updated_at: 2026-10-07T11:21:16Z
+tags: [ready-to-close]
 parent: folio-assistant-whlc
 blocking:
     - folio-assistant-4ak5

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/conduct/conduct-core/communication-language.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/communication-language.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/conduct-core/communication-language.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/conduct-core/communication-language.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/conduct/conduct-core/communication-language.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # The language you communicate in
