@@ -2,6 +2,10 @@
 title: "GDHCNParticipantDID-SGP-All — WHO SMART Trust artefact"
 description: "Endpoint/GDHCNParticipantDID-SGP-All in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Endpoint-GDHCNParticipantDID-SAU-UAT-SCA.html"
+ig_next: "Endpoint-GDHCNParticipantDID-SGP-DEV-All.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Singapore Trustlist (DID v2) - All keys did:web:tng-cdn.who.int:v2:trustlist:-:S
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
-
-<footer id="ig-footer" data-prev="Endpoint-GDHCNParticipantDID-SAU-UAT-SCA.html" data-next="Endpoint-GDHCNParticipantDID-SGP-DEV-All.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -2,6 +2,10 @@
 title: "Mapping from CDSC v1 to Services and Application Types v2 — WHO SMART Base artefact"
 description: "ConceptMap/CDSCv1toCDSCv2 in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ConceptMap-CDHIv2Hierarchy.html"
+ig_next: "Questionnaire-DAK.DT.IMMZ.D2.DT.BCGQuestionnaire.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Mapping from the Classification of Digital Health System Categories v1 (CDSCv1, 
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ConceptMap-CDHIv2Hierarchy.html" data-next="Questionnaire-DAK.DT.IMMZ.D2.DT.BCGQuestionnaire.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -295,7 +295,14 @@
     "index": "{{ '/assets/qa/' | append: _tr_slug | append: '/qa-index.json' | relative_url }}",
     "list": "{{ '/assets/qa/translation-qa-pages.json' | relative_url }}"
   },
-  "sweep": {
+  "sweep": {%- comment -%}
+    `absent` is set only on a FOLIO's site whose build published no sweep of
+    its own (#2263 follow-up). The shell leaves the platform's sweep out, and
+    `run: false` alone would say "not run" -- a claim about the folio that
+    nobody made. `foreignSite.absent.translationQa` is the words instead
+    (`lib/foreign-site-scope.ts`); `null` everywhere else.
+  {%- endcomment -%}{
+    "absent": {% if site.data.translation-qa %}null{% else %}{{ site.data.harness.foreignSite.absent.translationQa | jsonify }}{% endif %},
     "run": {% if site.data.translation-qa %}true{% else %}false{% endif %},
     "sweptAt": "{{ site.data.translation-qa.sweptAt | default: '' }}",
     "totalPages": {{ site.data.translation-qa.totalPages | default: 0 }},
@@ -575,7 +582,16 @@
   fetch that fails is reported rather than shown as an empty trashcan —
   "nothing discarded" and "could not read the document" are opposite facts.
 -->
+<!--
+  NOT on a folio's site that does not link its OWN fsh-guts (#2263 follow-up):
+  there this path is the folio's, where no document is published, and the
+  fetch's 404 painted "?" -- an error -- on the fish. With no meta the count is
+  ABSENT, and the row's fish is a link or an inert icon saying why
+  (`foreignSite.absent.fshGuts`, `lib/foreign-site-scope.ts`).
+-->
+{%- unless site.data.harness.foreignSite.absent.fshGuts %}
 <meta name="fa-fsh-guts-src" content="{{ '/fsh-guts.json' | relative_url }}">
+{%- endunless %}
 <!--
   ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
   failure, not a performance one.

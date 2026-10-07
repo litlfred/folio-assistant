@@ -5,6 +5,8 @@ did:web:tng-cdn.who.int:v2:trustlist:-:ARM:DSC
 resolvable at https://tng-cdn.who.int/v2/trustlist/-/ARM/DSC/did.json - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-ARM-DSC.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-ARM-DSC.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-ARM-DSC.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-ARM-DSC.ttl","active":false}],"heading":"Armenia Trustlist (DID v2) - Document Signing Certificates\ndid:web:tng-cdn.who.int:v2:trustlist:-:ARM:DSC\nresolvable at https://tng-cdn.who.int/v2/trustlist/-/ARM/DSC/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-ARM-DSC ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

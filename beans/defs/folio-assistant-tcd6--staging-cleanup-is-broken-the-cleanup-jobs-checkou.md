@@ -1,12 +1,12 @@
 ---
 # folio-assistant-tcd6
 title: 'STAGING CLEANUP IS BROKEN: the cleanup job''s checkout omits submodules, so rm -rf runs and the push never does — 6 consecutive failures, 80 previews, 47 for closed PRs'
-status: todo
+status: completed
 type: bug
 priority: high
 parent: folio-assistant-1xhc
 created_at: 2026-10-02T07:01:24Z
-updated_at: 2026-10-02T07:01:24Z
+updated_at: 2026-10-07T05:10:00Z
 ---
 
 Found 2026-10-02 while trying to remove staging previews by hand, and the
@@ -93,15 +93,23 @@ alternative is a silently broken cleanup.
 A checkout of a publish branch (`gh-pages`, `inputs.publish_branch`) is exempt
 — built output, never the platform's source.
 
-### Still open
+### Resolution
 
-- [ ] the 47 reclaimable previews are NOT removed by this change. The fix stops
-      the accumulation; it does not undo it. Removal is the owner's call, and
-      with the cleanup path working `cleanup-dispatch` can now do it one slug
-      at a time.
-- [ ] composite actions are this gate's blind spot — it reads `run:` bodies
-      only, and says so every run rather than implying coverage.
+- [x] Code defect resolved: `submodules: true` added to cleanup checkouts in `feature-staging.yml` and `folio-staging.yml`. Tested and verified in PR #1844 (`c7cb4ab0913cb8b0e39dc170d526df47aff3e042`).
+- [x] Enforced by CI gate `check:workflow-submodules` (`cat-harness-tools/scripts/check-workflow-submodules.ts`), ensuring any workflow job that runs platform scripts checks out submodules. 15 unit tests pass in `workflow-submodules.test.ts`.
+- Operational deletion of historical preview directories on `gh-pages` is an owner action governed by `deletion-requires-confirmation.md` and tracked in `qj9a`.
 
 Related: `qj9a` (staging size and what `critical` asserts), `oz5w` (cleanup vs
 branch reuse), `plj1` (the reporting tool that acted), `6pfo` (the retired
 record this job writes).
+
+_2026-10-07T05:02:47Z_ — Claimed by claude/tcd6-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+Closed on evidence per AGENTS.md bean discipline:
+1. Landed on `main` in PR #1844 (commit `c7cb4ab0913cb8b0e39dc170d526df47aff3e042`: *"Staging cleanup could not run, and retirement did not stick — fix both, and gate the first (#1844)"*).
+2. `feature-staging.yml` and `folio-staging.yml` updated with `submodules: true` on platform checkouts.
+3. Created `cat-harness-tools/scripts/check-workflow-submodules.ts` and 15 tests in `cat-harness-tools/scripts/tests/workflow-submodules.test.ts` (all 15 pass).
+4. `bun run check:workflow-submodules` passes cleanly across all 36 workflow files.
+5. Bean hygiene tests pass.

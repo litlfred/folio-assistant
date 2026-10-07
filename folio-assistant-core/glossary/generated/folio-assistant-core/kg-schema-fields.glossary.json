@@ -1022,6 +1022,20 @@
       "status": "candidate"
     },
     {
+      "id": "review-verdict.coverage.measured",
+      "prefLabel": "Coverage.measured",
+      "definition": "Whether the build was measured against its base.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.measured",
+      "status": "candidate"
+    },
+    {
+      "id": "review-verdict.coverage.missedpages",
+      "prefLabel": "Coverage.missedPages",
+      "definition": "Pages the build measured and the prediction missed, not reviewed since. Counted only when `measured` is `known`.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.missedPages",
+      "status": "candidate"
+    },
+    {
       "id": "review-verdict.coverage.opendefects",
       "prefLabel": "Coverage.openDefects",
       "definition": "`GW_Covered`'s fact: review comments of kind `defect` still open or addressed.",
@@ -1029,9 +1043,16 @@
       "status": "candidate"
     },
     {
+      "id": "review-verdict.coverage.rendered",
+      "prefLabel": "Coverage.rendered",
+      "definition": "Whether a rendered impact was given; when `absent` the three lists below are empty because UNKNOWN.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.rendered",
+      "status": "candidate"
+    },
+    {
       "id": "review-verdict.coverage.stale",
       "prefLabel": "Coverage.stale",
-      "definition": "Verdicts on an OLDER version of a block, which therefore do not count.",
+      "definition": "Verdicts on an OLDER version of what they are on, which therefore do not count.",
       "source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.stale",
       "status": "candidate"
     },
@@ -1050,9 +1071,37 @@
       "status": "candidate"
     },
     {
+      "id": "review-verdict.coverage.undeterminedinputs",
+      "prefLabel": "Coverage.undeterminedInputs",
+      "definition": "Inputs no renderer could place, with neither a current verdict nor a waiver.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.undeterminedInputs",
+      "status": "candidate"
+    },
+    {
+      "id": "review-verdict.coverage.unreviewedpages",
+      "prefLabel": "Coverage.unreviewedPages",
+      "definition": "Rendered pages (and data files) on the review list that nobody has reviewed at their current pin.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.unreviewedPages",
+      "status": "candidate"
+    },
+    {
+      "id": "review-verdict.renderedfacts.files",
+      "prefLabel": "RenderedFacts.files",
+      "definition": "The predicted files and undetermined inputs, every renderer's, each pinned.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#RenderedFacts.files",
+      "status": "candidate"
+    },
+    {
+      "id": "review-verdict.renderedfacts.measured",
+      "prefLabel": "RenderedFacts.measured",
+      "definition": "The build's measurement, when it was measured.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#RenderedFacts.measured",
+      "status": "candidate"
+    },
+    {
       "id": "review-verdict.reviewverdictschema.blockhash",
       "prefLabel": "ReviewVerdictSchema.blockHash",
-      "definition": "The block's content hash when the verdict was given. The verdict counts only while it is current.",
+      "definition": "The block's content hash (a page's or input's pin) when the verdict was given. It counts only while current.",
       "source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.blockHash",
       "status": "candidate"
     },
@@ -1089,6 +1138,20 @@
       "prefLabel": "ReviewVerdictSchema.role",
       "definition": "The lane they reviewed in: a role id from `roles.json`.",
       "source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.role",
+      "status": "candidate"
+    },
+    {
+      "id": "review-verdict.reviewverdictschema.target",
+      "prefLabel": "ReviewVerdictSchema.target",
+      "definition": "Absent on verdicts written before pages could be reviewed: those are all on blocks.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.target",
+      "status": "candidate"
+    },
+    {
+      "id": "review-verdict.reviewverdictschema.targetlabel",
+      "prefLabel": "ReviewVerdictSchema.targetLabel",
+      "definition": "A block's label, or a page's or an input's path, as `target` says.",
+      "source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.targetLabel",
       "status": "candidate"
     },
     {

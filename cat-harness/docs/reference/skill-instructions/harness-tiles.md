@@ -510,6 +510,26 @@ leaves out every `assets/**.json` that declares a headline `tile` count, the
 same way it already blanked `_includes/generated/` (#2235 F1). A badge whose
 file 404s renders as ABSENT, with no number, which is the honest answer.
 
+**A figure that is not a tile follows the same rule.** Two outlived the
+first fix, both found on the same smart-trust page: the title's translation
+badge read *"Swept 49/689"*, which is the platform's sweep of its own 689
+pages, and the fsh-guts fish read *"?"*. Each is in the table below with what
+the folio's site shows instead.
+
+| figure | it came from | on a folio's site it | count |
+|---|---|---|---|
+| the translation sweep badge | `_data/translation-qa.json`, the platform's | the shell leaves the file out; the badge stays, inert, reading *"QA: not published"*, and says why: *"smart-trust publishes no translation QA sweep on this site"* | **none**, and not *"not run"*, which would be a claim about the folio |
+| the navbar's locale swap | `_data/translations.json`, the platform's index of its own pages | the shell leaves the file out; the index reads as `null`, *"could not determine"*, and the navbar stays as built (it had rewritten the folio's Home to `/<folio>/fr/`, a 404) | n/a |
+| the fsh-guts fish | a button whose count is fetched from **this** site's `/fsh-guts.json` | the button is drawn only when the folio links its OWN fsh-guts; otherwise the fish is the row's re-based link, named *"the platform's: smart-trust declares no fsh-guts graph"*, or an inert icon with the note | **none**, never *"?"*: `?` means the read failed, and nothing was there to read |
+
+A folio that publishes its own sweep, or its own fsh-guts document, gets its
+own figure back with no further change: the chrome reads whatever the site
+carries, and `foreignSite.absent` (written by `scopeHarnessData`) only supplies
+the words for when it carries nothing. The two `_data/` files are named in
+`HOST_DATA_PROJECTIONS` rather than recognised by shape, since neither
+declares what it describes. `foreign-site-scope.test.ts` fails on a shell
+that carries a `_data/` file nobody has classified as chrome or projection.
+
 **The pinned rail reserves its width.** On the same page the open rail covered
 the IG's breadcrumb, menu bar and heading (*"…s Requirements"*). Hover and
 focus still open the bar over the page, because they are a peek. Pinning is a
@@ -517,8 +537,11 @@ choice to keep it open, so `.main` moves over (`docs-ui.css`).
 
 **The gate is `foreign-site-scope.test.ts`.** It runs both foreign-site passes
 over a folio and asserts (a) no tile carries another instance's count or
-links its state graph, and (b) no href is left root-relative unless it is
-the folio's own path. Nothing caught this earlier because every check ran on
+links its state graph, (b) no href is left root-relative unless it is
+the folio's own path, (c) the platform's translation sweep and index are
+not shipped and the rendered `head_custom.html` hands the badge its words,
+and (d) the fish fetches no count from a site that has no fsh-guts. The
+client halves are in `translation-badges.e2e.ts` and `navbar-row.e2e.ts`. Nothing caught this earlier because every check ran on
 the platform's own site, where the platform's tiles are right by
 construction. **A check of a page's chrome has to run on a site that is not
 the platform's.**

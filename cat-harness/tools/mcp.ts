@@ -326,6 +326,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       },
       satisfies: ["task-authorization", "deployment-auth"],
       requires: { network: true },
+      remedies: [{ host: "api.github.com", none: "The caller's GitHub role is GitHub's answer; without it the role is unknown and nothing is granted on it." }],
     }),
 
     defineTool({

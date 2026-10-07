@@ -5,6 +5,8 @@ did:web:tng-cdn.who.int:v2:trustlist:-:BEN:DSC
 resolvable at https://tng-cdn.who.int/v2/trustlist/-/BEN/DSC/did.json - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-BEN-DSC.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-BEN-DSC.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-BEN-DSC.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-BEN-DSC.ttl","active":false}],"heading":"Benin Trustlist (DID v2) - Document Signing Certificates\ndid:web:tng-cdn.who.int:v2:trustlist:-:BEN:DSC\nresolvable at https://tng-cdn.who.int/v2/trustlist/-/BEN/DSC/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-BEN-DSC ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

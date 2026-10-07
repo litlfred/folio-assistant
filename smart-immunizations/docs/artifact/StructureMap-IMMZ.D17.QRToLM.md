@@ -2,6 +2,10 @@
 title: "IMMZ.D17.QRToLM — WHO SMART Immunizations artefact"
 description: "StructureMap/IMMZ.D17.QRToLM in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureMap-IMMZ.D17.QRToBundle.html"
+ig_next: "StructureMap-IMMZ.D5.LMToBundle.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Immunization Report AEFI - Transform QuestionnaireResponse to Logical Model
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="StructureMap-IMMZ.D17.QRToBundle.html" data-next="StructureMap-IMMZ.D5.LMToBundle.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

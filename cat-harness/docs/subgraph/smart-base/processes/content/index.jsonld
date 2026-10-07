@@ -95,6 +95,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/flow/B22",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/lane/Lane_Analyst",
       "@type": "cat-harness:Lane",
       "name": "Business analyst"
@@ -173,6 +177,11 @@
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Indicators",
       "@type": "bootstrap:ProcessNode",
       "name": "Indicators and requirements"
+    },
+    {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_L1Library",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build the L1 library from Component 1"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld#process/Process_L2Dak/node/Task_Personas",

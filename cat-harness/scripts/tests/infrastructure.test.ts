@@ -6,7 +6,7 @@
  *
  * The tests here that read the aggregate repository's own root (the
  * `.gitignore`, the CI workflows and cat-harness-tools' MCP Dockerfile) live
- * in `cat-harness-tools/scripts/tests/infrastructure-repo-root.test.ts` (bean
+ * in `test/infrastructure-repo-root.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 

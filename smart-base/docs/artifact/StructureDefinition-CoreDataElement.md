@@ -2,6 +2,10 @@
 title: "Core Data Element (DAK) — WHO SMART Base artefact"
 description: "StructureDefinition/CoreDataElement in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-BusinessProcessWorkflowSource.html"
+ig_next: "StructureDefinition-CoreDataElementSource.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-base/schemas/StructureDefinition-CoreDataElement.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-CoreDataElement.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-BusinessProcessWorkflowSource.html" data-next="StructureDefinition-CoreDataElementSource.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

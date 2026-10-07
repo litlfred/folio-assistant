@@ -192,6 +192,18 @@ export function exitCodeFor(state: VerdictState): 0 | 1 | 2 {
 //     from `.github/workflows/`"*. A second answer to one question, free to
 //     disagree with the first, is the defect this repository names most often.
 //
+// And one design was REJECTED, and must not be rediscovered as an improvement:
+//
+//  3. Comparing against the check names the BASE BRANCH's tip carries. It
+//     reads like (2) and is not. The base's names are a fact about a
+//     DIFFERENT tree: a PR that adds, renames or path-filters a workflow owes
+//     a different set, and a base whose own run was cancelled or never
+//     dispatched owes nothing it could report. The owed set comes from
+//     `.github/workflows/*.yml` IN THE TREE BEING JUDGED — `code-quality-gates.yml`
+//     declares `on: pull_request` in plain sight at that commit — which is a
+//     fact rather than a guess. Reconciliation is adopted; base comparison is
+//     not, and the two are different designs.
+//
 // So this function takes the answers as INPUTS. `coverageFor`, `scanTriggers`
 // and `mergeStateForHead` compute them, and the caller wires them in. If you
 // are about to add a scan or a fetch here, you are rebuilding (2).

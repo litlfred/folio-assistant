@@ -2,6 +2,10 @@
 title: "IMMZ.C4.Create client record — WHO SMART Immunizations artefact"
 description: "StructureDefinition/IMMZC4 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-IMMZVaccineBrand.html"
+ig_next: "StructureDefinition-IMMZD1.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_C4_Create_client_record.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_C4_Create_client_record.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-IMMZVaccineBrand.html" data-next="StructureDefinition-IMMZD1.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

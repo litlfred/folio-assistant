@@ -2,6 +2,10 @@
 title: "IMMZD5DTMeningococcalElements — WHO SMART Immunizations artefact"
 description: "Library/IMMZD5DTMeningococcalElements in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Library-IMMZD5DTMeningococcalContraindicationsLogic.html"
+ig_next: "Library-IMMZD5DTMeningococcalEncounterElements.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ This library defines context-independent elements for Meningococcal used through
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="Library-IMMZD5DTMeningococcalContraindicationsLogic.html" data-next="Library-IMMZD5DTMeningococcalEncounterElements.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -1,12 +1,12 @@
 ---
 # folio-assistant-0kbt
 title: 'gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run'
-status: todo
+status: in-progress
 type: bug
 parent: folio-assistant-1swy
 priority: normal
 created_at: 2026-10-04T09:39:59Z
-updated_at: 2026-10-04T09:39:59Z
+updated_at: 2026-10-06T21:52:57Z
 ---
 The `qa` tile and `assets/qa/index.json` are projected BEFORE the orphan sweep removes witness files whose section no longer exists, so one run after a section is renamed or removed publishes a count that includes a file that run itself deleted.
 
@@ -28,3 +28,5 @@ WHY IT MATTERS more than the arithmetic: the inflated bucket was a `fail`. A rea
 - [ ] the orphan sweep runs BEFORE the qa projection, or the projection excludes paths the sweep has queued
 - [ ] a test writes an orphan witness, runs the generator once, and asserts the published count matches the tree the run leaves behind - not the tree it started from
 - [ ] idempotence is pinned: two consecutive runs on an unchanged tree publish identical counts
+
+_2026-10-06T21:52:57Z_ — Claimed by claude/0kbt-orphan-witness-count — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

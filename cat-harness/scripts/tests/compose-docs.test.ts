@@ -22,6 +22,11 @@
  * composed tree, sees one file, and cannot tell an override from the only
  * copy. So "it overrode" and "it SAID it overrode" are separate assertions,
  * and a composer that did the first without the second would pass one of them.
+ *
+ * The tests of this file that read the whole checkout (reads the root
+ * instance's declaration, which declares the `root-docs` layer) live in
+ * `test/compose-docs-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from "node:fs";
@@ -107,14 +112,6 @@ describe("compose-docs reads its layers from the declaration", () => {
     expect(layers.map((l) => l.id)).toEqual(["docs"]);
     expect(missing.map((l) => l.id)).toEqual(["root-docs"]);
     rmSync(root, { recursive: true, force: true });
-  });
-
-  test("the REAL repository declares exactly the two layers this is built on", () => {
-    // Vacuity guard: every fixture test below would pass against a repository
-    // that had no layers at all.
-    const { layers, missing } = docsLayers(REPO);
-    expect(missing).toEqual([]);
-    expect(layers.map((l) => l.id)).toEqual(["docs", "root-docs"]);
   });
 });
 

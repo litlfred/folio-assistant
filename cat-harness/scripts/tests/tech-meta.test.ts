@@ -7,12 +7,15 @@
  * drifts, which is what `rlp5` records about `slugify`.
  *
  * @module scripts/tests/tech-meta
+ *
+ * The tests of this file that read the whole checkout (reads a who-iris
+ * library entry) live in `test/tech-meta-checkout.test.ts` (bean `7zz1`):
+ * standing alone, cat-harness has none of it.
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, join, resolve } from "node:path";
-import { libraryEntry } from "./library-dirs.ts";
+import { join, resolve } from "node:path";
 
 import { refreshMeta } from "../ingest-document.ts";
 
@@ -97,33 +100,6 @@ describe("the mechanical facts", () => {
     const b = techMeta(fileWith("two.pdf", "%PDF-1.4 same"));
     expect(a.sha256).toBe(b.sha256);
     expect(a.file).not.toBe(b.file);
-  });
-
-  test("the real corpus agrees with what pdf-structure recorded independently", () => {
-    // pdf-structure.py computed these digests with its own implementation
-    // before this module existed. Agreement is the cross-check.
-    // READ from the declaration: the corpus moved to `who-iris/` in bean
-    // `frs5`, and `cat` on a missing file returns empty stdout, so composing
-    // the path here would have turned a moved document into a JSON parse
-    // error rather than a clear "not found".
-    const entry = libraryEntry("who-pub-tps-931");
-    expect(entry, "who-pub-tps-931 is not in any declared library").toBeDefined();
-    const s = JSON.parse(readFileSync(join(entry!, "structure.json"), "utf-8")) as {
-      source: { sha256: string; file: string };
-    };
-    // The SOURCE path is derived too, and it has to be: bean `yl5w` moved
-    // this PDF out of `cat-harness/uploads/` and into the folio beside its own
-    // intake, and the line here was `join(ROOT, "uploads/WHO_PUB_TPS_93.1.pdf")`
-    // — a literal, in the one test whose own comment says asserting a spelling
-    // of a location is what re-pins the next relocation. `structure.json`
-    // records the source FILENAME, and the library entry says which instance and slug,
-    // so the upload sits at `<instance>/uploads/<slug>/<basename>` with nothing
-    // spelled out here.
-    const slug = basename(entry!);
-    const instance = resolve(entry!, "..", "..");
-    const pdf = join(instance, "uploads", slug, s.source.file);
-    expect(existsSync(pdf), `the ingested source for ${slug} is not at ${pdf}`).toBe(true);
-    expect(techMeta(pdf).sha256).toBe(s.source.sha256);
   });
 });
 

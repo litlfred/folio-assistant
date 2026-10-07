@@ -3,6 +3,8 @@ title: "Scheme Information — change history"
 description: "Logical Model: SchemeInformation - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Content","href":"StructureDefinition-SchemeInformation.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-SchemeInformation-mappings.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.xml","active":false},{"label":"JSON","href":"StructureDefinition-SchemeInformation.profile.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-SchemeInformation.schema.json.html","active":false}],"heading":"Logical Model: SchemeInformation - Change History","status":"Draft as of 2026-10-01","sections":[{"text":"Changes in the SchemeInformation logical model."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

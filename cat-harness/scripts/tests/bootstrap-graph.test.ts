@@ -16,7 +16,7 @@
  *
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/docs-site.yml` and the checkout's git index) live in
- * `cat-harness-tools/scripts/tests/bootstrap-graph-repo-root.test.ts` (bean
+ * `test/bootstrap-graph-repo-root.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

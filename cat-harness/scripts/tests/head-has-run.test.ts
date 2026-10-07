@@ -11,12 +11,17 @@
  * The first draft failed that on its own terms: `deadbeef…` reported "has NO
  * workflow run of any kind", because an id GitHub never heard of returns an
  * empty list exactly as a dropped event does. That case is pinned below.
+ *
+ * The git half — resolving a commit, and whether it is pushed — is asserted
+ * over a throwaway repository whose `HEAD` and `origin/main` are set by the
+ * fixture (`test/support/git-fixture.ts`), not over this checkout: standing
+ * alone, cat-harness has no `origin`, and these are logic over whatever
+ * repository they are handed.
  */
-import { describe, expect, test } from "bun:test";
-import { execFileSync } from "node:child_process";
+import { afterAll, describe, expect, test } from "bun:test";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import {
   pushedState,
@@ -29,9 +34,15 @@ import {
   runsForHead,
   type GitRunner,
 } from "../check-head-has-run.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 
-const REPO = repoRootFor(resolve(import.meta.dir, "..", ".."));
+/**
+ * A throwaway repository with one commit on `main`, an `origin`, and that
+ * commit recorded as `origin/main` — what a pushed branch leaves behind.
+ */
+const FIXTURE = gitFixtureRepo({ pushed: true });
+const REPO = FIXTURE.root;
+afterAll(() => FIXTURE.cleanup());
 
 /** A fetch that answers with `runs` and never touches the network. */
 const stub = (runs: unknown[], init: { ok?: boolean; status?: number } = {}) =>
@@ -134,7 +145,7 @@ describe("the commit is resolved HERE before GitHub is asked", () => {
 
 describe("pushed or not, because the two need different advice", () => {
   test("a commit on a remote-tracking ref reads as pushed", () => {
-    // Asserted against `origin/main`, which any clone that can run this has.
+    // Asserted against `origin/main`, which the fixture records as pushed.
     const sha = resolveCommit(REPO, "origin/main") ?? resolveCommit(REPO, "HEAD")!;
     // `toBe("pushed")`, NOT `not.toBe("not-pushed")`. Bean `y0n2`: the third
     // state exists precisely so a git failure cannot pass as either answer, and
@@ -146,13 +157,12 @@ describe("pushed or not, because the two need different advice", () => {
   test("a commit in a fresh repo with no remote reads as NOT pushed", () => {
     // Telling somebody "GitHub dropped your event" when they simply have not
     // pushed is how a warning gets ignored.
-    const root = mkdtempSync(join(tmpdir(), "headrun-"));
-    const g = (...a: string[]) => execFileSync("git", ["-C", root, ...a], { stdio: "ignore" });
-    g("init", "-q");
-    g("config", "user.email", "t@e");
-    g("config", "user.name", "t");
-    g("commit", "-q", "--allow-empty", "-m", "only commit");
-    expect(pushedState(root, resolveCommit(root, "HEAD")!)).toBe("not-pushed");
+    const fresh = gitFixtureRepo({ remote: null });
+    try {
+      expect(pushedState(fresh.root, resolveCommit(fresh.root, "HEAD")!)).toBe("not-pushed");
+    } finally {
+      fresh.cleanup();
+    }
   });
 
   test("git unable to answer is `cannot-tell`, NOT `not-pushed`", () => {

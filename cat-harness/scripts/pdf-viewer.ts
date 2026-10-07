@@ -54,6 +54,7 @@ import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, wri
 import { tmpdir } from "os";
 import { join } from "path";
 import { spawnSync } from "child_process";
+import { inputSiteReached } from "./input-trace.ts";
 
 /** The pinned pdf.js release. `upstream-pins.json` reads this line by pattern. */
 export const PDFJS_VERSION = "6.4.299";
@@ -101,8 +102,11 @@ export const MARKER = "data-fa-pdf-viewer";
  */
 export const KEEP: readonly string[] = [
   "LICENSE",
+  // input-site: inert #2a1b588a — a path inside the downloaded pdf.js archive, not in this tree
   "build/pdf.mjs",
+  // input-site: inert #3109a261 — a path inside the downloaded pdf.js archive, not in this tree
   "build/pdf.worker.mjs",
+  // input-site: inert #aa1ecccc — a path inside the downloaded pdf.js archive, not in this tree
   "build/pdf.sandbox.mjs",
   "web/viewer.html",
   "web/viewer.mjs",
@@ -217,10 +221,14 @@ export async function install(opts: { site: string; allow: readonly string[]; zi
   if (got !== PDFJS_SHA256) {
     throw new Error(`pdf-viewer: ${PDFJS_ZIP_URL} hashed ${got}, pinned ${PDFJS_SHA256}. Refusing to install.`);
   }
+  // input-site: traced #b1917bb3 — a work directory for the download
+  inputSiteReached("pdf-viewer: tmpdir");
   const work = mkdtempSync(join(tmpdir(), "pdfjs-"));
   try {
     const zipPath = join(work, "pdfjs.zip");
     writeFileSync(zipPath, bytes);
+    // input-site: traced #f9d79865 — unpacks the download
+    inputSiteReached("pdf-viewer: unzip");
     const unzip = spawnSync("unzip", ["-q", zipPath, "-d", join(work, "x")], { stdio: "inherit" });
     if (unzip.status !== 0) throw new Error("pdf-viewer: unzip failed");
     const out = join(opts.site, VIEWER_DIR);
@@ -240,6 +248,8 @@ export async function install(opts: { site: string; allow: readonly string[]; zi
 }
 
 async function fetchOrThrow(url: string): Promise<Response> {
+  // input-site: traced #f91418c6 — downloads pdf.js
+  inputSiteReached("pdf-viewer: network");
   const r = await fetch(url);
   if (!r.ok) throw new Error(`pdf-viewer: GET ${url} → ${r.status}`);
   return r;

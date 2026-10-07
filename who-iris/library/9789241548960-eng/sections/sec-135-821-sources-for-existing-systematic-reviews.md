@@ -7,6 +7,7 @@ section_number: 8.2.1
 pages: 106-107
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The search for existing systematic reviews in bibliographic databases, such 
 as Medline and EMBASE, should be comprehensive and conducted on the 
@@ -21,7 +22,8 @@ way as search strategies for identifying primary studies (see Section 8.3.2).
 The Cochrane Collaboration, a large global network that produces systematic reviews, is a nongovernmental organization in official relations with 
 WHO  (4). The responsible technical officer should search The Cochrane 
 Library for existing reviews and for the protocols of reviews that are under 
-development. In addition, the Cochrane Collaboration may be able to idenChapter 8 
+development. In addition, the Cochrane Collaboration may be able to iden
+Chapter 8 
 Evidence retrieval and synthesis
 95
 tify forthcoming reviews or planned updates of existing reviews that have not 

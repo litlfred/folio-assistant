@@ -1,10 +1,10 @@
 ---
 # folio-assistant-lk2a
 title: check:workflow-refs sends the reader to bean bvuk, which is COMPLETED and archived — the finding is live, the attribution is stale
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-02T23:32:19Z
-updated_at: 2026-10-02T23:32:19Z
+updated_at: 2026-10-06T23:45:15Z
 parent: folio-assistant-0ipy
 ---
 
@@ -52,3 +52,5 @@ header, where it is correct as history.
       are accurate as such
 - [ ] check whether any OTHER advice string in the gate set points at a
       closed bean; this is a class, not one line
+
+_2026-10-06T23:45:15Z_ — Claimed by claude/lk2a-workflow-refs-advice — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

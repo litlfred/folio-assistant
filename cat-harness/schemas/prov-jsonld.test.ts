@@ -1,6 +1,10 @@
 /**
  * PROV-JSONLD emission: the falsifier for beans `jcet` / `9y9j` is a real
  * processor — expand what we emit and see links where PROV-O says nodes.
+ *
+ * The tests of this file that read the whole checkout (reads who-iris's IRIS
+ * catalogue) live in `test/prov-jsonld-checkout.test.ts` (bean `7zz1`):
+ * standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { resolve } from "node:path";
@@ -98,13 +102,6 @@ describe("prov:used — catalogue items linked at their Handle (owner 2026-10-01
   const book = addressBook(REPO);
   const used = (items: string[]): ProvActivity =>
     ({ ...activity("owner", "authoring-agent", "code-change-review#T"), "prov:used": items }) as ProvActivity;
-
-  test("a catalogued IRIS item expands to its Handle IRI as a link", async () => {
-    const { document, unaddressed } = provJsonldDocument("t--x", [used(["item/18892cf3-5a4f-42a4-923c-a93f4a594dec"])], book);
-    expect(unaddressed).toEqual([]);
-    const act = (await expanded(document)).find((n) => (n["@type"] as string[] | undefined)?.includes(`${P}Activity`))!;
-    expect(act[`${P}used`]).toEqual([{ "@id": "https://hdl.handle.net/10665/332098" }]);
-  });
 
   test("an item nobody catalogues stays a literal, with the reason", async () => {
     const { document, unaddressed } = provJsonldDocument("t--x", [used(["item/not-catalogued"])], book);

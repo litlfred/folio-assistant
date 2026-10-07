@@ -190,6 +190,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Seconds per IG plus the clone; the Jekyll build is the caller's.",
       },
       requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "It clones each IG's source repository from GitHub; no declared Tool stages an IG without it." }],
     }),
     defineTool({
       id: "ingest-ig-menu",
@@ -407,6 +408,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "A full IG build: minutes to tens of minutes.",
       },
       requires: { runtime: ["java", "maven", "sushi", "jekyll"], network: true },
+      remedies: [
+        { host: "packages.fhir.org", tool: "fhir-cache-seed-npm" },
+        { host: "tx.fhir.org", none: "No declared Tool replaces the terminology server. The HL7 IG Publisher's own `-tx n/a` skips terminology validation, at the cost of not validating it." },
+        { host: "repo1.maven.org", none: "The Maven build needs Maven Central; a populated `~/.m2` from an earlier build is the only other source." },
+      ],
     }),
 
     defineTool({
@@ -460,6 +466,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "A Publisher run over the cone, plus loading the cache package.",
       },
       requires: { runtime: ["java", "sushi"], network: true },
+      remedies: [
+        { host: "packages.fhir.org", tool: "fhir-cache-seed-npm" },
+        { host: "tx.fhir.org", none: "No declared Tool replaces the terminology server. The HL7 IG Publisher's own `-tx n/a` skips terminology validation, at the cost of not validating it." },
+        { host: "repo1.maven.org", none: "The Maven build needs Maven Central; a populated `~/.m2` from an earlier build is the only other source." },
+      ],
     }),
 
     defineTool({
@@ -480,6 +491,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Two full IG builds, three with `--byte-identical`.",
       },
       requires: { runtime: ["java", "maven", "sushi", "jekyll", "python3", "git"], network: true },
+      remedies: [{ host: "packages.fhir.org", tool: "fhir-cache-seed-npm" }],
     }),
 
     defineTool({
@@ -510,6 +522,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One download per package; the core packages are tens of megabytes.",
       },
       requires: { runtime: ["python3", "npm", "git"], network: true },
+      remedies: [
+        { host: "registry.npmjs.org", none: "npm is a trust anchor this Tool reads. The other route is an owner mirror (`--mirror`), filled by `fhir-package-mirror` on a machine that reaches packages.fhir.org." },
+        { host: "github.com", none: "Publishers' site and template repositories are read from GitHub; with it refused, only npm and `--mirror` remain." },
+      ],
     }),
 
     defineTool({
@@ -533,6 +549,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One download per package; terminology packages are megabytes each.",
       },
       requires: { runtime: ["bash", "curl", "python3", "git"], network: true },
+      remedies: [{ host: "packages.fhir.org", none: "It exists to run where packages.fhir.org IS reachable — a local networked agent, for instance — and the mirror it fills is what `fhir-cache-seed-npm --mirror` reads here." }],
     }),
 
     defineTool({
@@ -648,6 +665,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["compiled-artefact-cache", "ig-ast-delta"],
       requires: { runtime: ["bash", "git"], network: true },
+      remedies: [
+        { host: "packages.fhir.org", tool: "fhir-cache-seed-npm" },
+        { host: "tx.fhir.org", none: "No declared Tool replaces the terminology server. The HL7 IG Publisher's own `-tx n/a` skips terminology validation, at the cost of not validating it." },
+      ],
     }),
 
     defineTool({
@@ -714,6 +735,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One GitHub API call per 100 releases.",
       },
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "api.github.com", none: "Pass `--from <releases.json>`, saved where GitHub is reachable." }],
     }),
   ];
 }

@@ -114,7 +114,8 @@ import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
 import { coneForCheckout, type ConeDecision } from "./staging-cone.ts";
 import { DOCS_SITE_BASE } from "../schemas/jsonld.js";
-import { foreignScopeFor, isHostProjection, scopeHarnessData } from "./lib/foreign-site-scope.ts";
+import { foreignScopeFor, isHostProjection, scopeHarnessData, scopeSiteConfig } from "./lib/foreign-site-scope.ts";
+import { subscribedTrees } from "./subscribed-trees.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -255,9 +256,10 @@ export interface ComposedInstance {
  */
 export function composedInstances(repo = REPO): ComposedInstance[] {
   const out: ComposedInstance[] = [];
+  const subscribers: { dir: string; decl: Parameters<typeof subscribedTrees>[0][number]["decl"] }[] = [];
+  const staged = new Set<string>();
   for (const e of readdirSync(repo, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
-    if (e.name === "cat-harness") continue;
     const declPath = declarationPathIn(join(repo, e.name));
     if (!declPath || !existsSync(declPath)) continue;
     let d: { name?: string; directories?: (DeclEntry & { composed?: boolean })[] };
@@ -268,12 +270,28 @@ export function composedInstances(repo = REPO): ComposedInstance[] {
       // declaration, and reporting it here would be a second voice on it.
       continue;
     }
+    staged.add(d.name ?? e.name);
+    if (Array.isArray((d as { subscriptions?: unknown }).subscriptions)) {
+      subscribers.push({ dir: join(repo, e.name), decl: { ...d, name: d.name ?? e.name } as (typeof subscribers)[number]["decl"] });
+    }
+    // The base layer's own directories are never composed under its name (see
+    // above) — but its SUBSCRIPTIONS are read, so it was not skipped earlier.
+    if (e.name === "cat-harness") continue;
     for (const entry of d.directories ?? []) {
       if (!entry.path || entry.composed !== true) continue;
       const abs = join(repo, e.name, entry.path);
       if (!existsSync(abs)) continue;
       out.push({ instance: d.name ?? e.name, dir: abs, under: d.name ?? e.name, root: e.name });
     }
+  }
+  // A SUBSCRIBED instance's composed directories, from the tree this checkout
+  // holds (bean `g8jp`). Only `held` ones: a chosen directory that is not held
+  // is `mount-instance-docs`' finding, which fails the build, and reporting it
+  // here too would be a second voice on it. A subscribed instance also staged
+  // in the tree is composed from the staged copy alone.
+  for (const t of subscribedTrees(subscribers)) {
+    if (t.state !== "held" || !t.instance || !t.tree || t.entry?.["composed"] !== true || staged.has(t.instance)) continue;
+    out.push({ instance: t.instance, dir: t.tree, under: t.instance, root: relative(repo, t.tree).split(sep).join("/") });
   }
   return out.sort((a, b) => a.under.localeCompare(b.under));
 }
@@ -657,7 +675,8 @@ export interface ComposeOptions {
   /**
    * WHOSE site a shell is for (#2263). A shell's `_data/harness.json` is
    * re-scoped to that folio (`lib/foreign-site-scope.ts`), and the platform's
-   * count projections under `assets/` are left out. Omitted on a shell, the
+   * count projections under `assets/`, and its translation sweep and index
+   * under `_data/`, are left out. Omitted on a shell, the
    * folio is unknown and the scoping still runs, with no instance: nothing is
    * then the folio's own, so every state tile is unlinked and every platform
    * tile re-based — never the platform's numbers on someone else's page.
@@ -715,8 +734,11 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
       // and todo indexes, their `count.json`, the library and QA indexes. On
       // an IG's site the icon row fetched them as that site's own, and
       // smart-trust showed folio-assistant's 537 open beans. Left out, they
-      // 404 there, which the badge reads as ABSENT -- not as zero.
-      if (opts.shell && /^assets[\\/].+\.json$/.test(rel) && isHostProjection(rel, readFileSync(src, "utf-8"))) {
+      // 404 there, which the badge reads as ABSENT -- not as zero. The same
+      // goes for the host's translation sweep and index under `_data/`
+      // (`HOST_DATA_PROJECTIONS`): "Swept 49/689" on a folio's page was the
+      // platform's sweep.
+      if (opts.shell && /^(assets|_data)[\\/].+\.json$/.test(rel) && isHostProjection(rel, readFileSync(src, "utf-8"))) {
         delete suppliedBy[rel];
         rmSync(dest, { force: true });
         hostProjections.push(rel);
@@ -799,16 +821,29 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
   // after the layers so it scopes the merged result, once.
   let scoped: ComposeReport["scoped"];
   if (opts.shell) {
+    const scope = foreignScopeFor(repo, {
+      ...(opts.foreign?.instance ? { instance: opts.foreign.instance } : {}),
+      platformBase: opts.foreign?.platformBase ?? DOCS_SITE_BASE,
+      ...(opts.foreign?.title ? { title: opts.foreign.title } : {}),
+    });
     const data = join(out, "_data", "harness.json");
     if (existsSync(data)) {
-      const scope = foreignScopeFor(repo, {
-        ...(opts.foreign?.instance ? { instance: opts.foreign.instance } : {}),
-        platformBase: opts.foreign?.platformBase ?? DOCS_SITE_BASE,
-        ...(opts.foreign?.title ? { title: opts.foreign.title } : {}),
-      });
       const next = scopeHarnessData(JSON.parse(readFileSync(data, "utf-8")), scope);
       writeFileSync(data, `${JSON.stringify(next, null, 2)}\n`);
       scoped = { instance: scope.instance, platformBase: scope.platformBase, hostProjections: [...new Set(hostProjections)].sort() };
+    }
+    // The platform's `footer_content` describes the platform (its name, its
+    // licences); on a folio's site it read as the folio's own. Replaced by a
+    // line naming the folio and what built it, with no licence the folio did
+    // not declare. Only in a shell, so the platform's own build keeps its
+    // bytes (the byte-identity property `MERGE_RATHER_THAN_SHADOW` protects).
+    const config = join(out, "_config.yml");
+    if (existsSync(config)) {
+      const before = parseYaml(readFileSync(config, "utf-8")) as Record<string, unknown> | null;
+      if (before && typeof before === "object") {
+        const after = scopeSiteConfig(before, scope);
+        if (after !== before) writeFileSync(config, stringifyYaml(after));
+      }
     }
   }
 

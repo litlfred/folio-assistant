@@ -2,6 +2,10 @@
 title: "IMMZ.Z.DE3 ValueSet for Diphtheria-containing vaccines — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZ.Z.DE3 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZ.Z.DE29.html"
+ig_next: "ValueSet-IMMZ.Z.DE30.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE3.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZ.Z.DE3.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.DE3.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.DE3.jsonld` |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZ.Z.DE29.html" data-next="ValueSet-IMMZ.Z.DE30.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

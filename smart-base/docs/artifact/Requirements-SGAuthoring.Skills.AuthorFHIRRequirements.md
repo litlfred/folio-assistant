@@ -2,6 +2,10 @@
 title: "Can author FHIR requirements — WHO SMART Base artefact"
 description: "Requirements/SGAuthoring.Skills.AuthorFHIRRequirements in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Requirements-SGAuthoring.Skills.AuthorFHIRProfiles.html"
+ig_next: "Requirements-SGAuthoring.Skills.AuthorFunctionalRequirements.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Capability to create FHIR Requirements resources from L2 functional and non-func
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="Requirements-SGAuthoring.Skills.AuthorFHIRProfiles.html" data-next="Requirements-SGAuthoring.Skills.AuthorFunctionalRequirements.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -289,6 +289,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/blocked-build-dependencies",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "blocked-build-dependencies"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead."
+        }
+      ],
+      "skos:notation": "blocked-build-dependencies",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/blocked-build-dependencies.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/board-diagram-interchange",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2924,6 +2944,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/remote-mount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "remote-mount"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw."
+        }
+      ],
+      "skos:notation": "remote-mount",
+      "dcterms:source": "cat-harness/skills/kg/kg-core/remote-mount.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/render-kg-to-cdn",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2976,6 +3016,26 @@
       ],
       "skos:notation": "render-order",
       "dcterms:source": "cat-harness/skills/ui/ui-core/render-order.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/rendered-impact",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "rendered-impact"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency cone, before any build; a build diff then confirms the prediction. Use when opening or reviewing a Change Set PR, when asked \"which pages does this change\", when a prediction and a build disagree, or when adding a renderer."
+        }
+      ],
+      "skos:notation": "rendered-impact",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/rendered-impact.md",
       "skos:note": "candidate"
     },
     {
@@ -3406,6 +3466,26 @@
       ],
       "skos:notation": "stalled-agent-triage",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/stalled-agent-triage.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/sub-kg-lifecycle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "sub-kg-lifecycle"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A sub-KG is a knowledge graph staged as a directory inside a harnessed repository, declared as its own instance, that may later leave for a repository of its own. The lifecycle: declare it in place, grow it, stage it for separation (one import seam, the separation guard, a self-contained rehearsal), and then, each behind an explicit owner confirmation, create the repository, copy the staged contents in with history, re-point the declaration, verify on a fresh clone and delete the in-repo copy. Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-06 (beans n3ni, rbz3, kg83, hcpz). The light sibling of kg-separation: use this for a DATA instance that leaves whole, and kg-separation when a graph must split into a content repository and a tools repository."
+        }
+      ],
+      "skos:notation": "sub-kg-lifecycle",
+      "dcterms:source": "cat-harness/skills/kg/graph-management/sub-kg-lifecycle.md",
       "skos:note": "candidate"
     },
     {

@@ -3,6 +3,8 @@ title: "WHO GDHCN Connection Types — JSON-LD"
 description: "The JSON-LD sidecar of ValueSet/ConnectionTypes, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON-LD","file":"ValueSet-ConnectionTypes.jsonld","src":"../fhir-artifact-index/dak/ValueSet-ConnectionTypes.jsonld","artifact":{"title":"WHO GDHCN Connection Types","page":"ValueSet-ConnectionTypes.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-ConnectionTypes.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-ConnectionTypes.xml","active":false},{"label":"JSON","href":"ValueSet-ConnectionTypes.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-ConnectionTypes.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-ConnectionTypes.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-ConnectionTypes.jsonld.html","active":true}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

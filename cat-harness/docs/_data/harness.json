@@ -142,8 +142,8 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 916,
-      "unit": "beans"
+      "count": 522,
+      "unit": "open beans"
     },
     {
       "id": "docs",
@@ -158,8 +158,7 @@
       ],
       "href": "/cat-harness/auto-docs/index/docs/docs/",
       "hidden": false,
-      "icon": "docs",
-      "showQualifier": true
+      "icon": "docs"
     },
     {
       "id": "external-schemas",
@@ -269,23 +268,8 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1005,
+      "count": 1111,
       "unit": "documents"
-    },
-    {
-      "id": "root-docs",
-      "directory": "root-docs",
-      "title": "Docs",
-      "qualifier": "Folio Assistant",
-      "ref": "cat-harness/docs/cat-harness/auto-docs/index/docs/root-docs/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/auto-docs/index/docs/root-docs/",
-      "hidden": false,
-      "showQualifier": true
     },
     {
       "id": "schemas",
@@ -301,7 +285,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 234,
+      "count": 240,
       "unit": "modules"
     },
     {
@@ -395,7 +379,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 30,
+      "count": 35,
       "unit": "waiting"
     }
   ],
@@ -476,17 +460,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 19
+          "value": 16
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 19
+          "value": 15
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 6
+          "value": 5
         }
       ],
       "visualisations": [
@@ -521,30 +505,15 @@
           "label": "Code"
         },
         {
-          "kind": "docs",
-          "path": "/cat-harness/auto-docs/index/docs/root-docs/",
-          "label": "Docs"
-        },
-        {
           "kind": "fsh-guts",
           "path": "/fsh-guts/",
           "stagingOnly": true,
           "label": "FSH guts"
         },
         {
-          "kind": "interaction",
-          "note": "no viewer yet",
-          "label": "Interaction"
-        },
-        {
           "kind": "issue-marks",
           "path": "/issue-marks/",
           "label": "Issue marks"
-        },
-        {
-          "kind": "memory",
-          "note": "no viewer yet",
-          "label": "Memory"
         },
         {
           "kind": "merge-queue",
@@ -577,11 +546,6 @@
           "label": "Uploads"
         },
         {
-          "kind": "waiver",
-          "note": "no viewer yet",
-          "label": "Waivers"
-        },
-        {
           "kind": "workflow-state",
           "note": "no viewer yet",
           "label": "Workflow state"
@@ -597,12 +561,12 @@
           "path": "uploads/"
         },
         {
-          "id": "root-tools",
+          "id": "folio-assistant-tests",
           "kinds": [
             "code"
           ],
           "where": "local",
-          "path": "tools/"
+          "path": "test/"
         },
         {
           "id": "fsh-guts",
@@ -629,37 +593,12 @@
           "path": "todos/"
         },
         {
-          "id": "memory",
-          "kinds": [
-            "memory",
-            "waiver"
-          ],
-          "where": "local",
-          "path": "memory/"
-        },
-        {
-          "id": "interaction",
-          "kinds": [
-            "interaction"
-          ],
-          "where": "local",
-          "path": "interaction/"
-        },
-        {
           "id": "issue-marks",
           "kinds": [
             "issue-marks"
           ],
           "where": "local",
           "path": "issue-marks/"
-        },
-        {
-          "id": "root-docs",
-          "kinds": [
-            "docs"
-          ],
-          "where": "local",
-          "path": "docs/"
         },
         {
           "id": "defs",
@@ -743,7 +682,7 @@
         }
       ],
       "findings": [
-        "folio-assistant: declares 13 graph(s) with no published viewer — bean-defs, bean-notes, board-positions, boards, code, interaction, memory, merge-queue, session-survey, todo-feedback, todo-items, waiver, workflow-state. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: declares 10 graph(s) with no published viewer — bean-defs, bean-notes, board-positions, boards, code, merge-queue, session-survey, todo-feedback, todo-items, workflow-state. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
@@ -2097,12 +2036,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 18
+          "value": 19
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 17
+          "value": 18
         },
         {
           "id": "views",
@@ -2146,6 +2085,11 @@
           "kind": "library",
           "path": "/cat-harness/library/folio-assistant-core/",
           "label": "Library"
+        },
+        {
+          "kind": "memory",
+          "note": "no viewer yet",
+          "label": "Memory"
         },
         {
           "kind": "methodology",
@@ -2337,6 +2281,14 @@
           "path": "folio-assistant-core/test/results/"
         },
         {
+          "id": "memory",
+          "kinds": [
+            "memory"
+          ],
+          "where": "local",
+          "path": "folio-assistant-core/memory/"
+        },
+        {
           "id": "voices",
           "kinds": [
             "voices"
@@ -2346,7 +2298,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 7 graph(s) with no published viewer — block-kinds, code, folio, qa, tools, typologies, validators. Declared and not rendered is a gap, not a dead link."
+        "folio-assistant-core: declares 8 graph(s) with no published viewer — block-kinds, code, folio, memory, qa, tools, typologies, validators. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2631,12 +2583,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 63
+          "value": 64
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 31
+          "value": 34
         },
         {
           "id": "views",
@@ -2704,9 +2656,19 @@
           "label": "Health"
         },
         {
+          "kind": "interaction",
+          "note": "no viewer yet",
+          "label": "Interaction"
+        },
+        {
           "kind": "library",
           "path": "/cat-harness/library/cat-harness/",
           "label": "Library"
+        },
+        {
+          "kind": "memory",
+          "note": "no viewer yet",
+          "label": "Memory"
         },
         {
           "kind": "methodology",
@@ -2806,6 +2768,11 @@
           "kind": "voices",
           "path": "/cat-harness/voices/cat-harness/",
           "label": "Voices"
+        },
+        {
+          "kind": "waiver",
+          "note": "no viewer yet",
+          "label": "Waivers"
         }
       ],
       "subgraphs": [
@@ -3041,6 +3008,16 @@
           ],
           "where": "local",
           "path": "cat-harness/deploy/"
+        },
+        {
+          "id": "memory",
+          "kinds": [
+            "memory",
+            "waiver",
+            "interaction"
+          ],
+          "where": "local",
+          "path": "cat-harness/memory/"
         },
         {
           "id": "docs/proposals",
@@ -3316,7 +3293,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 12 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 15 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, interaction, memory, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3659,9 +3636,19 @@
         "path": "/health/"
       },
       {
+        "kind": "interaction",
+        "label": "Interaction",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "library",
         "label": "Library",
         "path": "/cat-harness/library/cat-harness/"
+      },
+      {
+        "kind": "memory",
+        "label": "Memory",
+        "note": "no viewer yet"
       },
       {
         "kind": "methodology",
@@ -3760,6 +3747,11 @@
         "kind": "voices",
         "label": "Voices",
         "path": "/cat-harness/voices/cat-harness/"
+      },
+      {
+        "kind": "waiver",
+        "label": "Waivers",
+        "note": "no viewer yet"
       }
     ]
   },
@@ -3798,6 +3790,11 @@
           "kind": "library",
           "label": "Library",
           "path": "/cat-harness/library/folio-assistant-core/"
+        },
+        {
+          "kind": "memory",
+          "label": "Memory",
+          "note": "no viewer yet"
         },
         {
           "kind": "methodology",
@@ -4424,6 +4421,24 @@
         ]
       },
       {
+        "key": "mountDefaults",
+        "skills": [
+          {
+            "name": "remote-mount",
+            "path": "/reference/skill-instructions/remote-mount.html"
+          }
+        ]
+      },
+      {
+        "key": "remoteMounts",
+        "skills": [
+          {
+            "name": "remote-mount",
+            "path": "/reference/skill-instructions/remote-mount.html"
+          }
+        ]
+      },
+      {
         "key": "stickies",
         "skills": [
           {
@@ -4477,6 +4492,15 @@
           {
             "name": "content-profiles",
             "path": "/reference/skill-instructions/content-profiles.html"
+          }
+        ]
+      },
+      {
+        "key": "contentTranslations",
+        "skills": [
+          {
+            "name": "translation-manager",
+            "path": "/reference/skill-instructions/translation-manager.html"
           }
         ]
       },
@@ -4555,7 +4579,7 @@
           },
           {
             "key": "directories",
-            "summary": "9: uploads, root-tools, fsh-guts, beans, todos, memory, interaction, issue-marks, root-docs"
+            "summary": "6: uploads, folio-assistant-tests, fsh-guts, beans, todos, issue-marks"
           },
           {
             "key": "stickies",
@@ -4774,6 +4798,10 @@
             "summary": "{ smart-base:diig-figure:check, smart-base:pages:check, smart-base:document-kinds:check, smart-base:dth-terms:check, smart-base:smart-kg-l1:check }"
           },
           {
+            "key": "contentTranslations",
+            "summary": "1: WHO SMART Guidelines DAK (L2)"
+          },
+          {
             "key": "version",
             "summary": "0.1.0"
           }
@@ -4894,6 +4922,10 @@
             "summary": "1 entry"
           },
           {
+            "key": "contentTranslations",
+            "summary": "1: Scientific papers & books"
+          },
+          {
             "key": "version",
             "summary": "0.1.0"
           }
@@ -4956,6 +4988,10 @@
             "summary": "{ steps, scripts }"
           },
           {
+            "key": "contentTranslations",
+            "summary": "1: FHIR Implementation Guide (L3)"
+          },
+          {
             "key": "liquid",
             "summary": "{ prefix, passThrough }"
           },
@@ -5007,7 +5043,7 @@
           },
           {
             "key": "directories",
-            "summary": "17: folio-assistant-core-docs, folio-assistant-core-translations, folio-assistant-core-block-…"
+            "summary": "18: folio-assistant-core-docs, folio-assistant-core-translations, folio-assistant-core-block-…"
           },
           {
             "key": "stickies",
@@ -5024,6 +5060,10 @@
           {
             "key": "contentAdapters",
             "summary": "1 entry"
+          },
+          {
+            "key": "contentTranslations",
+            "summary": "1: Document (generic prose)"
           },
           {
             "key": "version",
@@ -5221,7 +5261,7 @@
           },
           {
             "key": "directories",
-            "summary": "29: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
+            "summary": "30: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
           },
           {
             "key": "associatedHarnesses",
@@ -5238,6 +5278,10 @@
           {
             "key": "needs",
             "summary": "bootstrap, bootstrap-tools"
+          },
+          {
+            "key": "contentTranslations",
+            "summary": "1: Docs site (Markdown)"
           },
           {
             "key": "version",

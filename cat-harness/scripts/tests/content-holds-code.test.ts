@@ -2,16 +2,18 @@
  * `content-instance-holds-code` — watched failing before it is trusted
  * (kg-separation precondition 3: a boundary gate that has never failed on a
  * planted violation has not been shown to guard anything). Bean `eayu`.
+ *
+ * The tests of this file that read the whole checkout (judges the content
+ * instances of this checkout, who-iris among them) live in
+ * `test/content-holds-code-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import { codeFiles, contentCodeFindings, contentInstanceCode } from "../content-holds-code.ts";
-import { KG_CRITERIA_BY_ID } from "../../schemas/kg-qa.ts";
-
-const REPO = resolve(import.meta.dir, "..", "..", "..");
 
 /** A temp repository holding `name/` with its declaration, plus any siblings. */
 function plant(decls: Record<string, Record<string, unknown>>): string {
@@ -75,38 +77,5 @@ describe("contentInstanceCode — planted", () => {
     const repo = plant({ inst: { separation: "content" } });
     const v = contentInstanceCode(join(repo, "inst"), () => undefined);
     expect(v.state).toBe("unknown");
-  });
-});
-
-describe("contentInstanceCode — this checkout", () => {
-  // Owner ruling 2026-10-01: a QA WARNING, not a failure — but one that still
-  // NAMES every file. Bean `eayu`.
-  test("who-iris is a QA warning, naming its six IRIS-specific code files", () => {
-    expect(KG_CRITERIA_BY_ID["content-instance-holds-code"]?.severity).toBe("minor");
-    const v = contentInstanceCode(join(REPO, "who-iris"));
-    expect(v.state).toBe("judged");
-    if (v.state !== "judged") return;
-    expect(v.files).toEqual([
-      // The platform shim (issue #2228): the one file that names where the
-      // platform lives, so the climbs out of who-iris are in one place.
-      "platform.ts",
-      "scripts/gen-iris-pages.ts",
-      "scripts/tests/catalogue-links.test.ts",
-      "scripts/tests/gen-iris-pages.test.ts",
-      "themes/themes.test.ts",
-      "themes/themes.ts",
-    ]);
-    expect(contentCodeFindings(v).map((f) => f.where)).toEqual(v.files);
-    // The generic code left: none of the moved files may reappear here.
-    expect(v.files.some((f) => /check-catalogue|gen-covers|lib\/bytes|lib\/local-path/.test(f))).toBe(false);
-  });
-
-  test("bootstrap — the content half of a real pair — passes", () => {
-    const v = contentInstanceCode(join(REPO, "bootstrap"));
-    expect(v).toMatchObject({ state: "judged", files: [] });
-  });
-
-  test("a platform instance that has not said is n/a", () => {
-    expect(contentInstanceCode(join(REPO, "cat-harness")).state).toBe("n/a");
   });
 });

@@ -36,6 +36,7 @@ import { readBeanStore } from "./bean-store-read.ts";
 import { classify } from "./merge-conflict-patterns.ts";
 import { readyMarkers, type GhComment } from "./merge-guard.ts";
 import { holdInForce, readQueueEntries } from "./merge-queue-store.ts";
+import { releaseCovers, type MergeQueueEntry } from "../schemas/merge-queue.ts";
 import {
   deriveFacts,
   loadPriorityTable,
@@ -218,8 +219,10 @@ async function main(): Promise<void> {
   const refusedSet = new Set<number>();
   const conflictState = new Map<number, string>();
   const missingByPr = new Map<number, string[]>();
+  const headByPr = new Map<number, string>();
 
   for (const p of candidates) {
+    headByPr.set(p.number, p.head.sha);
     const files = gh(`repos/${REPO}/pulls/${p.number}/files?per_page=100`) as
       | { filename: string; additions: number; deletions: number }[]
       | null;
@@ -271,7 +274,12 @@ async function main(): Promise<void> {
   const overridden = new Set<number>();
   const positions = new Map<number, number>();
   const heldUntil = new Map<number, string>();
+  // A person's merge decision, read back against the LIVE head (bean `ixmq`):
+  // a release given for a different commit is void, and says so.
+  const releaseByPr = new Map<number, string>();
   for (const { entry: e } of queue) {
+    const head = headByPr.get(e.pr);
+    if (head !== undefined) releaseByPr.set(e.pr, releaseState(e, head));
     if (e.placement.kind === "override") {
       overridden.add(e.pr);
       positions.set(e.pr, e.placement.position);
@@ -308,6 +316,7 @@ async function main(): Promise<void> {
             missingGating: missingByPr.get(p.pr) ?? [],
             ...(positions.has(p.pr) ? { overridePosition: positions.get(p.pr) } : {}),
             ...(heldUntil.has(p.pr) ? { heldUntil: heldUntil.get(p.pr) } : {}),
+            release: releaseByPr.get(p.pr) ?? "none",
             ...(handBack.has(p.pr) ? { handBackBean: handBack.get(p.pr) } : {}),
           })),
         },
@@ -326,7 +335,8 @@ async function main(): Promise<void> {
   // decisions were not read" are different facts and this is where a steward
   // would notice the second. `readQueueEntries` throws for the unreachable
   // case, so a zero here is a determined zero.
-  console.log(`  ${queue.length} recorded queue decision(s) read back: ${overridden.size} override(s), ${heldUntil.size} live hold(s)`);
+  const released = [...releaseByPr.values()].filter((v) => v.startsWith("merge@")).length;
+  console.log(`  ${queue.length} recorded queue decision(s) read back: ${overridden.size} override(s), ${heldUntil.size} live hold(s), ${released} human release(s) covering the live head`);
   console.log("");
   console.log("  #     route      class        rank  train  conflict   CI               rule");
   for (const p of ordered) {
@@ -335,6 +345,8 @@ async function main(): Promise<void> {
     const ciText = ci === "missing-required" ? `missing-required(${miss.length})` : ci;
     const held = heldUntil.get(p.pr);
     if (held !== undefined) console.log(`  ${p.pr} is HELD until ${held} by a recorded decision — not taken into a train`);
+    const rel = releaseByPr.get(p.pr);
+    if (rel !== undefined && rel !== "none") console.log(`  ${p.pr} release: ${rel}`);
     console.log(
       `  ${String(p.pr).padEnd(6)}${String(p.route).padEnd(11)}${String(p.class).padEnd(13)}${String(p.rank).padEnd(6)}${String(p.train ?? "-").padEnd(7)}${String(conflictState.get(p.pr)).padEnd(11)}${ciText.padEnd(17)}${p.rule}`,
     );
@@ -362,3 +374,15 @@ async function main(): Promise<void> {
 // command — the parser test took 38s and called the GitHub API before it
 // asserted anything.
 if (import.meta.main) await main();
+
+/**
+ * One PR's human release, as the steward prints it: `none`, `merge@<sha>`
+ * (covers the live head), `do-not-merge`, or `VOID` with both commits named.
+ */
+export function releaseState(entry: Pick<MergeQueueEntry, "release">, head: string): string {
+  const c = releaseCovers(entry, head);
+  if (c.ok) return `merge@${head.slice(0, 12)} (${entry.release!.decidedBy})`;
+  if (c.why === "none") return "none";
+  if (c.why === "do-not-merge") return `do-not-merge — ${c.detail}`;
+  return `VOID — ${c.detail}`;
+}

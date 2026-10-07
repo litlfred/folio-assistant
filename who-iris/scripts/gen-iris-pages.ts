@@ -454,6 +454,80 @@ function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
+/*
+ * RECORD DATA IS DIRECTION-ISOLATED FROM THE INTERFACE AROUND IT (bean `lffo`).
+ *
+ * The interface is translated; the records are not — a title, an author, a
+ * citation, a collection's name stay as WHO published them. On a right-to-left
+ * page that leaves Latin runs sitting inside Arabic sentences, and the Unicode
+ * bidi algorithm then resolves the neutral characters at the seam against the
+ * PAGE's direction. Measured on the ar home page before this: the WPRO item's
+ * citation line rendered as `(12-05-2020 :تاريخ النشر ,WPR/RDO/2020/003)`, and
+ * each abstract's truncation ellipsis landed at the left.
+ *
+ * Two shapes, chosen by where the value sits:
+ *
+ * - **Inline**, inside a translated sentence or beside a label: {@link data}
+ *   wraps it in `<bdi>`, whose direction defaults to `auto`.
+ * - **A whole block** (a heading, an abstract): {@link dataBlock} sets
+ *   `dir="auto"` on the element itself, so it aligns by its own first strong
+ *   character rather than the page's.
+ *
+ * `auto`, never `ltr`: a record field is not guaranteed to be English, and an
+ * Arabic title on the English page needs the same isolation the other way.
+ * `lang` only where it is KNOWN — the record's own `dc.language.iso` — and only
+ * where it differs from the page's, so a screen reader switches voice for an
+ * English title on the Arabic page and the English page gains no noise. A node
+ * with no record gets isolation and no `lang`: guessing one would be a claim
+ * the catalogue does not make.
+ *
+ * Values interpolated into an ATTRIBUTE (`title=`, `alt=`) are not wrapped —
+ * markup there is text, and an attribute has no direction of its own to fix.
+ */
+
+/** ` lang="…"` for a value whose language is known and is not the page's; otherwise nothing. */
+function langAttr(lang: string | undefined): string {
+  return lang !== undefined && lang !== LOCALE ? ` lang="${esc(lang)}"` : "";
+}
+
+/** Record data in running text: escaped, isolated, and language-tagged where known. */
+function data(s: string, lang?: string): string {
+  return `<bdi${langAttr(lang)}>${esc(s)}</bdi>`;
+}
+
+/**
+ * A breadcrumb's text. A crumb that names a node (`record` set) is record data
+ * and isolated like any other; an interface crumb ("Home") is translated text
+ * in the page's own direction and is left as it is.
+ */
+function crumbLabel(c: { label: string; record?: { lang?: string } }): string {
+  return c.record === undefined ? esc(c.label) : data(c.label, c.record.lang);
+}
+
+/** The attributes for an element whose whole content is record data. */
+function dataBlock(lang?: string): string {
+  return ` dir="auto"${langAttr(lang)}`;
+}
+
+/**
+ * The language a node's own record declares — `dc.language.iso` — or nothing.
+ *
+ * Shape-checked as a BCP 47 primary tag with optional subtags, because the
+ * value is emitted into a `lang` attribute and a malformed one is worse than
+ * none: a reader's tools act on it.
+ */
+function langOf(n: Node): string | undefined {
+  const iso = dc(n, "language", "iso")[0]?.trim();
+  return iso !== undefined && /^[a-z]{2,3}(-[A-Za-z0-9]{1,8})*$/.test(iso) ? iso : undefined;
+}
+
+/**
+ * The language of a catalogue NOTE: English. Notes are not WHO's data — they
+ * are written in this repository, in its working language, by whoever
+ * catalogued the node — so unlike a record field this one is known.
+ */
+const NOTE_LANG = "en";
+
 /**
  * Bytes, in the units that round-trip the source.
  *
@@ -589,7 +663,7 @@ function linkOrWithheld(a: NonNullable<ReturnType<typeof assetHref>>, withSize: 
   }
   return (
     `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">${t("via CDN")}</a>` +
-    (withSize ? ` &middot; <code>${esc(mb(a.bytes))}</code>` : "")
+    (withSize ? ` &middot; <code class="ui">${esc(mb(a.bytes))}</code>` : "")
   );
 }
 
@@ -1186,7 +1260,7 @@ const FOLIO_MOUNT = folioMountFragment(FOLIO_ROUTE);
  */
 function page(
   title: string,
-  crumbs: { label: string; href?: string }[],
+  crumbs: { label: string; href?: string; record?: { lang?: string } }[],
   body: string,
   /**
    * WHICH SITE THIS PAGE IS ON, which is now three answers rather than two.
@@ -1228,8 +1302,8 @@ function page(
   const crumbHtml = crumbs
     .map((c, i) =>
       i === crumbs.length - 1 || c.href === undefined
-        ? `<span class="here">${esc(c.label)}</span>`
-        : `<a href="${esc(c.href)}">${esc(c.label)}</a>`,
+        ? `<span class="here">${crumbLabel(c)}</span>`
+        : `<a href="${esc(c.href)}">${crumbLabel(c)}</a>`,
     )
     .join('<span class="sep">•</span>');
 
@@ -1305,6 +1379,11 @@ function page(
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -1464,7 +1543,7 @@ function page(
     border-radius: 3px;
     background: var(--iris-accent);
     color: #fff;
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
   .search-remote-box {
     border-top: 1px solid var(--iris-edge);
@@ -1632,8 +1711,8 @@ ${body}
 
 <footer class="mast"><div class="wrap">
   <p>${t("<strong>Ingested replica.</strong> Rendered from {catalogue} by {generator}. Layout after {iris}; every figure on this page is read out of the catalogue, not copied from a screenshot.", {
-    catalogue: "<code>who-iris/catalogue/</code>",
-    generator: "<code>who-iris/scripts/gen-iris-pages.ts</code>",
+    catalogue: "<code dir=\"ltr\">who-iris/catalogue/</code>",
+    generator: "<code dir=\"ltr\">who-iris/scripts/gen-iris-pages.ts</code>",
     iris: `<a href="https://iris.who.int/community-list">iris.who.int</a>`,
   })}</p>
   <div class="rule"></div>
@@ -1862,7 +1941,7 @@ function communityList(all: Node[]): string {
             .map((k) => {
               const inIt = items.filter((i) => i.parents.some((p) => p.includes(k.id)));
               const held = inIt.filter((i) => assetHref(i)).length;
-              return `<li><a href="collection-${esc(slug(k.id))}.html">${esc(k.title)}</a>
+              return `<li><a href="collection-${esc(slug(k.id))}.html">${data(k.title)}</a>
                 ${stateBadge(k.materialization?.state ?? "unknown")}
                 <span class="note" style="margin:0;margin-inline-start:.4rem;display:inline">${t("{modelled} item(s) modelled, {held} held here", { modelled: num(inIt.length), held: num(held) })}</span></li>`;
             })
@@ -1871,7 +1950,7 @@ function communityList(all: Node[]): string {
 
       return `<li>
   <div class="row"><span class="chev" aria-hidden="true">&rsaquo;</span>
-    <span class="title"><a href="${esc(m?.provenance?.upstream ?? "https://iris.who.int/")}">${esc(c.title)}</a>
+    <span class="title"><a href="${esc(m?.provenance?.upstream ?? "https://iris.who.int/")}">${data(c.title)}</a>
     ${stateBadge(m?.state ?? "unknown")}</span></div>
   <p class="note">${known}</p>
   ${kids}
@@ -1884,7 +1963,7 @@ function communityList(all: Node[]): string {
   const table = held
     .map(
       ({ n, a }) => `<tr>
-  <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br>
+  <td><a href="item-${esc(slug(n.id))}.html">${data(n.title, langOf(n))}</a><br>
       <code>${esc(n.libraryId ?? n.id)}</code></td>
   <td>${collectionCell(n, all)}</td>
   <td>${stateBadge("materialized")}</td>
@@ -2024,9 +2103,9 @@ function collectionCell(n: Node, all: Node[]): string {
   return collections
     .map(
       (c) =>
-        `<a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a>` +
+        `<a href="collection-${esc(slug(c.id))}.html">${data(c.title)}</a>` +
         (containers.filter((x) => x.flavour === "community").length
-          ? `<br><code>${t("in {communities}", { communities: esc(containers.filter((x) => x.flavour === "community").map((x) => x.title).join(" / ")) })}</code>`
+          ? `<br><code class="ui">${t("in {communities}", { communities: data(containers.filter((x) => x.flavour === "community").map((x) => x.title).join(" / ")) })}</code>`
           : ""),
     )
     .join("<br>");
@@ -2131,9 +2210,9 @@ function metadataCell(n: Node): string {
   if (!existsSync(abs)) return `<span class="none">${t("declared, but missing on disk")}</span>`;
   const rel = encPath(`who-iris/${n.metadataRef}`);
   const bytes = readFileSync(abs, "utf-8").length;
-  return `<a href="${esc(`${RAW}/${rel}`)}">${t("Download {file}", { file: esc(n.metadataRef.split("/").pop()!) })}</a>
+  return `<a href="${esc(`${RAW}/${rel}`)}">${t("Download {file}", { file: data(n.metadataRef.split("/").pop()!) })}</a>
       <br><a class="cdn" href="${esc(`${CDN}/${rel}`)}">${t("via CDN")}</a>
-      <br><code>${t("qualified Dublin Core · {size} KB", { size: num(bytes / 1024, 1) })}</code>`;
+      <br><code class="ui">${t("qualified Dublin Core · {size} KB", { size: num(bytes / 1024, 1) })}</code>`;
 }
 
 /**
@@ -2187,7 +2266,7 @@ function collectionPage(c: Node, all: Node[]): string {
     .map((n) => {
       const a = assetHref(n);
       return `<tr>
-  <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br><code>${esc(n.libraryId ?? n.id)}</code></td>
+  <td><a href="item-${esc(slug(n.id))}.html">${data(n.title, langOf(n))}</a><br><code>${esc(n.libraryId ?? n.id)}</code></td>
   <td>${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</td>
   <td class="dl">${upstreamCell(n)}</td>
   <td class="dl">${a ? linkOrWithheld(a, true) : t("not held here")}</td>
@@ -2196,12 +2275,12 @@ function collectionPage(c: Node, all: Node[]): string {
     })
     .join("\n");
 
-  return `<h1>${esc(c.title)}</h1>
+  return `<h1${dataBlock()}>${esc(c.title)}</h1>
 <p>${t("Permanent URI for this collection")}
-  ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">${t("none recorded")}</span>`}
+  ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${data(c.materialization.provenance.upstream)}</a>` : `<span class="none">${t("none recorded")}</span>`}
   ${stateBadge(c.materialization?.state ?? "unknown")}</p>
 
-${c.materialization?.note ? `<div class="caveat"><p>${t("<strong>How this node was established.</strong> {note}", { note: withInlineCode(c.materialization.note, esc) })}</p></div>` : ""}
+${c.materialization?.note ? `<div class="caveat"><p>${t("<strong>How this node was established.</strong> {note}", { note: `<bdi${langAttr(NOTE_LANG)}>${withInlineCode(c.materialization.note, esc)}</bdi>` })}</p></div>` : ""}
 
 <h2>${t("Items in this Collection")}</h2>
 <p>${t("Now showing 1 – {n} of {n} <em>modelled</em>. The upstream collection is larger; this catalogue holds what was materialised, and says so per row.", { n: num(items.length) })}</p>
@@ -2259,12 +2338,12 @@ function itemPage(n: Node, all: Node[]): string {
     )
     .join("\n");
 
-  return `<h1>${esc(n.title)}</h1>
+  return `<h1${dataBlock(langOf(n))}>${esc(n.title)}</h1>
 <p>${t("Permanent URI for this item")}
-  ${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : `<span class="none">${t("none recorded — ingested from a local copy, not resolved from IRIS")}</span>`}
+  ${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${data(sourceOf(n)!)}</a>` : `<span class="none">${t("none recorded — ingested from a local copy, not resolved from IRIS")}</span>`}
   ${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</p>
 
-${named.length ? `<p class="note" style="margin-inline-start:0">${t("In: {path}", { path: named.map((p) => esc(p.title)).join(" &rsaquo; ") })}</p>` : ""}
+${named.length ? `<p class="note" style="margin-inline-start:0">${t("In: {path}", { path: named.map((p) => data(p.title)).join(" &rsaquo; ") })}</p>` : ""}
 
 <h2>${t("Files")}</h2>
 <table class="items">
@@ -2278,12 +2357,12 @@ ${readHere(n, a)}<h3>${t("Both links, as asked for")}</h3>
 <table class="items">
 <thead><tr><th>${t("Where")}</th><th>${t("Link")}</th></tr></thead>
 <tbody>
-<tr><td>${t("Upstream, at WHO")}</td><td>${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : t("none recorded")}</td></tr>
+<tr><td>${t("Upstream, at WHO")}</td><td>${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${data(sourceOf(n)!)}</a>` : t("none recorded")}</td></tr>
 <tr><td>${t("Held here, in folio-assistant")}</td>
     <td>${a ? linkOrWithheld(a, false) : t("not held")}</td></tr>
 <tr><td>${t("In collection")}</td><td>${collectionCell(n, all)}</td></tr>
 <tr><td>${t("Ingested text (L1)")}</td>
-    <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
+    <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections"><bdi dir="ltr">who-iris/library/${esc(n.libraryId)}/sections/</bdi></a>` : "—"}</td></tr>
 <tr><td>${t("Dublin Core record")}</td><td>${metadataCell(n)}</td></tr>
 <tr><td>${t("Dublin Core renderings")}</td><td>${renderingsCell(n)}</td></tr>
 </tbody>
@@ -2393,6 +2472,7 @@ function landingPage(all: Node[]): string {
           href: `item-${slug(n.id)}.html`,
           badge: t("Item"),
           meta,
+          lang: langOf(n) !== LOCALE ? langOf(n) : undefined,
           abstract: abstract.slice(0, 240),
           text,
         };
@@ -2460,7 +2540,7 @@ ${submissions}
     collections: num(collections.length),
   })}</li>
 ${collections
-  .map((c) => `  <li>${t("{link} — collection", { link: `<a href="collection-${esc(slug(c.id))}.html">${esc(c.title)}</a>` })}</li>`)
+  .map((c) => `  <li>${t("{link} — collection", { link: `<a href="collection-${esc(slug(c.id))}.html">${data(c.title)}</a>` })}</li>`)
   .join("\n")}
 </ul>
 
@@ -2530,15 +2610,17 @@ ${collections
       html += "<ul class=\\"search-results-list\\" style=\\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\\">";
       for (var m = 0; m < matches.length; m++) {
         var it = matches[m];
+        // The record's own language, where it differs from the page's (bean lffo).
+        var la = it.lang ? " lang=\\"" + it.lang + "\\"" : "";
         html += "<li class=\\"search-result-item\\" style=\\"padding:0.6rem 0.8rem;border:1px solid var(--iris-edge);border-radius:4px;background:var(--iris-wash);\\">";
-        html += "<div><span class=\\"search-result-badge\\" style=\\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-right:0.5rem;\\">" + escapeHtml(it.badge) + "</span>";
-        html += "<a href=\\"" + it.href + "\\" style=\\"font-weight:600;font-size:1.02rem;\\">" + highlight(it.title, terms) + "</a></div>";
+        html += "<div><span class=\\"search-result-badge\\" style=\\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-inline-end:0.5rem;\\">" + escapeHtml(it.badge) + "</span>";
+        html += "<a href=\\"" + it.href + "\\" dir=\\"auto\\"" + la + " style=\\"font-weight:600;font-size:1.02rem;\\">" + highlight(it.title, terms) + "</a></div>";
         if (it.meta) {
-          html += "<div class=\\"search-result-meta\\" style=\\"font-size:0.88rem;color:var(--iris-muted);margin-top:0.25rem;\\">" + highlight(it.meta, terms) + "</div>";
+          html += "<div class=\\"search-result-meta\\" dir=\\"auto\\"" + la + " style=\\"font-size:0.88rem;color:var(--iris-muted);margin-top:0.25rem;\\">" + highlight(it.meta, terms) + "</div>";
         }
         if (it.abstract) {
           var snip = it.abstract.length > 180 ? it.abstract.slice(0, 180) + "…" : it.abstract;
-          html += "<div class=\\"search-result-meta\\" style=\\"font-size:0.88rem;color:var(--iris-ink);margin-top:0.35rem;\\">" + highlight(snip, terms) + "</div>";
+          html += "<div class=\\"search-result-meta\\" dir=\\"auto\\"" + la + " style=\\"font-size:0.88rem;color:var(--iris-ink);margin-top:0.35rem;\\">" + highlight(snip, terms) + "</div>";
         }
         html += "</li>";
       }
@@ -2602,10 +2684,11 @@ function submission(n: Node): string {
   const issued = day(dc(n, "date", "issued")[0]);
   const abstract = dc(n, "description", "abstract")[0];
   const cite = dc(n, "identifier", "citation")[0] ?? dc(n, "identifier", "govdoc")[0];
+  const lang = langOf(n);
 
   const byline = [
-    authors.length ? esc(authors.join("; ")) : `<span class="none">${t("no author recorded")}</span>`,
-    `(${[cite ? esc(cite) : undefined, issued ? t("Publication Date: {date}", { date: esc(issued) }) : undefined]
+    authors.length ? data(authors.join("; "), lang) : `<span class="none">${t("no author recorded")}</span>`,
+    `(${[cite ? data(cite, lang) : undefined, issued ? t("Publication Date: {date}", { date: data(issued) }) : undefined]
       .filter(Boolean)
       .join(", ")})`,
   ].join(" ");
@@ -2627,11 +2710,11 @@ function submission(n: Node): string {
   return `<article class="sub">
   <div class="sub-cover">${coverCell}</div>
   <div class="sub-body">
-    <a class="sub-title" href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a>
+    <a class="sub-title"${dataBlock(lang)} href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a>
     <p class="sub-by">${byline}</p>
     ${
       abstract
-        ? `<p class="sub-abs">${esc(abstract)}</p>`
+        ? `<p class="sub-abs"${dataBlock(lang)}>${esc(abstract)}</p>`
         : `<p class="sub-abs none">${t("No <code>dc.description.abstract</code> in the captured record.")}</p>`
     }
     <p class="sub-links">${
@@ -3226,11 +3309,11 @@ function main(): number {
     );
     for (const c of all.filter((n) => n.flavour === "collection")) {
       const f = replicaPageOf(c)!;
-      files.set(`${at}/${f}`, page(c.title, [home, { label: c.title }], collectionPage(c, all), "site", [], f));
+      files.set(`${at}/${f}`, page(c.title, [home, { label: c.title, record: {} }], collectionPage(c, all), "site", [], f));
     }
     for (const n of all.filter((x) => x.flavour === "item")) {
       const f = replicaPageOf(n)!;
-      files.set(`${at}/${f}`, page(n.title, [home, { label: n.title }], itemPage(n, all), "site", [], f));
+      files.set(`${at}/${f}`, page(n.title, [home, { label: n.title, record: { lang: langOf(n) } }], itemPage(n, all), "site", [], f));
     }
   }
   LOCALE = "en";

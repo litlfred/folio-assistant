@@ -20,7 +20,7 @@ tiles, anything future.
 ## Why it is load-bearing here, and not boilerplate
 
 **This instance's declared interaction profile is low-dexterity.**
-`interaction/interaction.json` records it, and it already shapes the form of every
+`cat-harness/memory/interaction.json` records it, and it already shapes the form of every
 question the harness asks — numbered options, four or fewer, a stated default.
 
 A UI that needs precise pointing, or that cannot be driven from the keyboard,
@@ -159,7 +159,7 @@ on the region, and a count announced when a filter changes the list.
 `End-to-end + accessibility (hard)` job.
 
 ```sh
-bunx playwright test test/a11y.e2e.ts
+bunx playwright test cat-harness/test/a11y.e2e.ts
 ```
 
 Two halves, deliberately:

@@ -2,6 +2,10 @@
 title: "IMMZ.D21.Generate verifiable digital certificate — WHO SMART Immunizations artefact"
 description: "StructureDefinition/IMMZD21 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-IMMZD20.html"
+ig_next: "StructureDefinition-IMMZD5.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D21_Generate_verifiable_digital_certificate.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-IMMZD20.html" data-next="StructureDefinition-IMMZD5.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -11,7 +11,7 @@
  *
  * The tests here that read the aggregate repository's own root (the
  * root-declared `fsh-guts` trashcan and `.github/workflows/docs-site.yml`)
- * live in `cat-harness-tools/scripts/tests/fsh-guts-export-repo-root.test.ts`
+ * live in `test/fsh-guts-export-repo-root.test.ts`
  * (bean `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

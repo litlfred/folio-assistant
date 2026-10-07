@@ -67,6 +67,7 @@ import {
 import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
+import { MountDefaultsSchema, RemoteMountsSchema, type MountDefaults, type RemoteMount } from "./remote-mount.js";
 
 import {
   KgAssetSchema,
@@ -509,6 +510,66 @@ export const ContentAdapterDeclarationSchema = z
   })
   .strict();
 
+// ── Content-type translation profiles (moved from translation-tools.ts, bean `0r7u`) ───────────────────────────────────────────
+
+/**
+ * A translatable format that a content type can declare.
+ *
+ * Each format maps to an extraction function (source → POT entries)
+ * and an injection function (PO entries → target source).
+ */
+export const TranslatableFormatSchema = z.object({
+  /** Format identifier. */
+  id: z.string(),
+  /** Human-readable name. */
+  name: z.string(),
+  /** File extensions this format applies to. */
+  extensions: z.array(z.string()),
+  /** Smart-base Python script that handles this format (reference). */
+  smartBaseScript: z.string().optional(),
+  /** Smart-base function/line range for extraction. */
+  smartBaseExtractRef: z.string().optional(),
+  /** Smart-base function/line range for injection. */
+  smartBaseInjectRef: z.string().optional(),
+  /** TypeScript module that implements extraction (relative to repo root). */
+  extractModule: z.string().optional(),
+  /** TypeScript module that implements injection (relative to repo root). */
+  injectModule: z.string().optional(),
+  /**
+   * Notes about translating THIS format specifically, as distinct from
+   * `ContentTypeTranslation.notes`, which describes the content type as a
+   * whole. "Lean 4 terms stay in English" and "the diagram is re-rendered
+   * after injection" are properties of the format, not of the folio.
+   */
+  notes: z.string().optional(),
+});
+
+export type TranslatableFormat = z.infer<typeof TranslatableFormatSchema>;
+
+/**
+ * Content-type translation capability declaration.
+ *
+ * Each content adapter registers one of these to declare what
+ * formats it can translate and what scripts handle each format.
+ */
+export const ContentTypeTranslationSchema = z.object({
+  /** Content type identifier (matches adapter name). */
+  contentType: z.string(),
+  /** Human-readable name. */
+  name: z.string(),
+  /** Translatable formats this content type supports. */
+  formats: z.array(TranslatableFormatSchema),
+  /** Whether RTL rendering is supported. */
+  rtlSupported: z.boolean().default(false),
+  /** BPMN diagrams that need re-rendering for translation. */
+  bpmnDiagrams: z.array(z.string()).optional(),
+  /** Additional notes about translation for this content type. */
+  notes: z.string().optional(),
+});
+
+export type ContentTypeTranslation = z.infer<typeof ContentTypeTranslationSchema>;
+
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /** A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5). */
   summary?: string;
@@ -655,6 +716,10 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   subscriptions?: Subscription[];
   /** Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719. */
   knownSubstrates?: KnownSubstrate[];
+  /** What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`. */
+  mountDefaults?: MountDefaults;
+  /** Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`. */
+  remoteMounts?: RemoteMount[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -738,6 +803,15 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * root discovers rather than names. See {@link ContentAdapterDeclaration}.
    */
   contentAdapters?: ContentAdapterDeclaration[];
+  /**
+   * The translation profile of each content type THIS instance owns: which
+   * formats it can extract and inject, and which diagrams need re-rendering.
+   * Collected by `schemas/translation-tools.ts` from every present instance
+   * (bean `0r7u`, step 0 part 3), so cat-harness names no content type above
+   * it. Module and diagram paths resolve from the declaring instance, then
+   * down its `needs` chain.
+   */
+  contentTranslations?: ContentTypeTranslation[];
   /**
    * The Liquid prefix this instance's VALUES are addressed by in authored
    * text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the
@@ -3058,6 +3132,21 @@ export const CatHarnessDeclarationSchema = z.object({
     .array(SubscriptionSchema)
     .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: "subscriptions: an id appears twice" })
     .optional(),
+  /**
+   * What a DOWNSTREAM mounts of this instance by default, and where — see
+   * `schemas/remote-mount.ts` (bean `0mpw`). Owner, 2026-10-06: the defaults
+   * live in the harness's own declaration, so a downstream names only the
+   * harness and its pin and never restates the paths. Absent is the stated
+   * default (home path, every in-checkout directory), not "unmountable".
+   */
+  mountDefaults: MountDefaultsSchema.optional(),
+  /**
+   * Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char
+   * pin, resolved transitively through the harness's `needs` (bean `0mpw`).
+   * Not a submodule and not `.deps/`: the mounted directories are declared,
+   * locked by tree digest, and checked by `mount:remote:check`.
+   */
+  remoteMounts: RemoteMountsSchema.optional(),
   /** See {@link KnownSubstrate}. Names are unique. */
   knownSubstrates: z
     .array(KnownSubstrateSchema)
@@ -3165,6 +3254,7 @@ export const CatHarnessDeclarationSchema = z.object({
    * (`check:import-direction`, bean `p11x`).
    */
   contentAdapters: z.array(ContentAdapterDeclarationSchema).optional(),
+  contentTranslations: z.array(ContentTypeTranslationSchema).optional(),
   /** See {@link CatHarnessDeclaration.liquid}. */
   liquid: z
     .object({

@@ -3,6 +3,8 @@ title: "WHO GDHCN Trust Domains - DEV — JSON"
 description: "The JSON representation of ValueSet/Domains-DEV."
 nav_exclude: true
 json_view: {"heading":"WHO GDHCN Trust Domains - DEV - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/ValueSet-Domains-DEV.json","raw":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.json","rawName":"ValueSet-Domains-DEV.json","tabs":[{"label":"Narrative Content","href":"ValueSet-Domains-DEV.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.xml","active":false},{"label":"JSON","href":"ValueSet-Domains-DEV.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Domains-DEV.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Domains-DEV.jsonld.html","active":false}],"script":"../assets/resource-json.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +39,3 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <pre><code class="language-json" data-package="{{ page.json_view.package }}" data-entry="{{ page.json_view.entry }}">Loading JSON source…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.json_view.raw }}">published JSON</a> does not.</p></noscript>
 <script src="{{ page.json_view.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

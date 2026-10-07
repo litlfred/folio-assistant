@@ -74,6 +74,10 @@ export const PROPERTY_SKILLS = {
   // calls that layer's subprocesses, so its skill lives beside them.
   subscriptions: { skills: ["kg-subscription", "materialize-remote"] },
   knownSubstrates: { skills: ["kg-subscription"] },
+  // Bean `0mpw`: the harness's defaults and the downstream's mounts are two
+  // halves of one relation, and one skill walks both.
+  mountDefaults: { skills: ["remote-mount"] },
+  remoteMounts: { skills: ["remote-mount"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },
@@ -86,6 +90,8 @@ export const PROPERTY_SKILLS = {
   // reports an unclassified step.
   gateExemptions: { skills: ["prepare-merge"] },
   contentAdapters: { skills: ["content-profiles"] },
+  // Bean `0r7u`: each instance's translation profile per content type it owns.
+  contentTranslations: { skills: ["translation-manager"] },
   liquid: { skills: ["witnessed-values"] },
   // `publishable` was here until 2026-09-24 and the field is gone — replaced
   // by `publication.state`, which is a STATE rather than a boolean. The three

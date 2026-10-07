@@ -5,6 +5,8 @@ did:web:tng-cdn.who.int:v2:trustlist:-:SLV:SCA
 resolvable at https://tng-cdn-uat.who.int/v2/trustlist/-/SLV/SCA/did.json - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-SLV-UAT-SCA.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-SLV-UAT-SCA.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-SLV-UAT-SCA.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-SLV-UAT-SCA.ttl","active":false}],"heading":"El Salvador Trustlist (DID v2) - UAT - Certificate Signing Authority\ndid:web:tng-cdn.who.int:v2:trustlist:-:SLV:SCA\nresolvable at https://tng-cdn-uat.who.int/v2/trustlist/-/SLV/SCA/did.json - Change History","sections":[{"text":"History of changes for GDHCNParticipantDID-SLV-UAT-SCA ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

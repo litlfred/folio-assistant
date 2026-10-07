@@ -158,11 +158,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `docs`
 
-7 of 7 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/cat-harness/auto-docs/index/docs/docs/' | relative_url }})
-- [Folio Assistant]({{ '/cat-harness/auto-docs/index/docs/root-docs/' | relative_url }})
 - [Folio Assistant Core]({{ '/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/auto-docs/index/docs/smart-base-docs/' | relative_url }})
 - [smart-immunizations]({{ '/cat-harness/auto-docs/index/docs/smart-immunizations-docs/' | relative_url }})
@@ -244,7 +243,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- Folio Assistant — *declared, not published*
+- C@T Harness — *declared, not published*
 
 ### `issue-marks`
 
@@ -267,10 +266,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `memory`
 
-0 of 1 published.
+0 of 2 published.
 {: .fa-hx-dim }
 
-- Folio Assistant — *declared, not published*
+- C@T Harness — *declared, not published*
+- Folio Assistant Core — *declared, not published*
 
 ### `merge-queue`
 
@@ -541,7 +541,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 1 published.
 {: .fa-hx-dim }
 
-- Folio Assistant — *declared, not published*
+- C@T Harness — *declared, not published*
 
 ### `workflow-state`
 

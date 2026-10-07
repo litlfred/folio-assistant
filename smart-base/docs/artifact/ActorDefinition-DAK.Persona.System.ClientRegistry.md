@@ -2,6 +2,10 @@
 title: "Client Registry / Master Patient Index — WHO SMART Base artefact"
 description: "ActorDefinition/DAK.Persona.System.ClientRegistry in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ActorDefinition-DAK.Persona.Person.html"
+ig_next: "ActorDefinition-DAK.Persona.System.EMR.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ A digital system that creates, maintains, and provides authoritative unique iden
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ActorDefinition-DAK.Persona.Person.html" data-next="ActorDefinition-DAK.Persona.System.EMR.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

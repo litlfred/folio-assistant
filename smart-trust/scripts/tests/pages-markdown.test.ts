@@ -462,7 +462,9 @@ describe("the Publisher footer, and no in-page Contents box", () => {
     const d = JSON.parse(readFileSync(join(DOCS, "assets", "ig-footer.json"), "utf-8"));
     expect(d.packageId).toBe(ix.packageId);
     expect(d.version).toBe(ix.version);
-    expect(existsSync(join(DOCS, "assets", "ig-footer.js"))).toBe(true);
+    // An IG-site instance's pages are drawn by the IG site's own footer
+    // include (`ig_footer`), so the standalone loader is not published.
+    expect(existsSync(join(DOCS, "assets", "ig-footer.js"))).toBe(false);
   });
 
   // The <prev | next> chain: index, then every artefact page in the order the
@@ -473,18 +475,19 @@ describe("the Publisher footer, and no in-page Contents box", () => {
   // instance root since `mftp` — and the chain from there visits every
   // artefact page once, each hop resolving.
   it("prev/next walk the IG root -> every artefact page once, each hop resolving", () => {
-    const attr = (src: string, name: string) => src.match(new RegExp(`<footer id="ig-footer"[^>]*\\b${name}="([^"]+)"`))?.[1];
+    // The page's own front matter, which the IG site's footer include reads.
+    const attr = (src: string, name: string) => src.slice(0, src.indexOf("\n---", 3)).match(new RegExp(`^ig_${name}: "([^"]+)"$`, "m"))?.[1];
     const read = (rel: string) => readFileSync(join(DOCS, rel), "utf-8");
-    const first = artifactFiles.filter((f) => attr(read(join("artifact", f)), "data-prev") === "../");
+    const first = artifactFiles.filter((f) => attr(read(join("artifact", f)), "prev") === "../");
     expect(first.length).toBe(1);
     const seen: string[] = [];
     for (let at: string | undefined = join("artifact", first[0]!); at !== undefined; ) {
       expect(existsSync(join(DOCS, at))).toBe(true);
       seen.push(at);
-      const next = attr(read(at), "data-next");
+      const next = attr(read(at), "next");
       if (next === undefined) break;
       const target = join("artifact", next).replace(/\.html$/, ".md");
-      expect(attr(read(target), "data-prev")).toBe(at.replace(/^artifact\//, "").replace(/\.md$/, ".html"));
+      expect(attr(read(target), "prev")).toBe(at.replace(/^artifact\//, "").replace(/\.md$/, ".html"));
       at = target;
     }
     expect(seen.length).toBe(ix.artifacts.length);

@@ -35,7 +35,7 @@ import { fileURLToPath } from "node:url";
 
 import { tools, toolsOf } from "../tools/discover.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
-import { alternativesWithoutSelection } from "../schemas/tool.js";
+import { alternativesWithoutSelection, danglingRemedies, networkToolsWithoutRemedies } from "../schemas/tool.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
 import { corpusScopeFor, knownSkills as knownSkillsIn, workflowFiles } from "./known-skills.js";
@@ -546,6 +546,26 @@ if (import.meta.main) {
     for (const d of r.unselectableAlternatives) console.error(`    ${d.tool} ~ ${d.alternatives.join(", ")}`);
     console.error("    A reader learns a choice exists without learning how to make it. Add `selection` (when, limits, cost).");
   }
+  // Bean `6mk7`, owner 2026-10-06: a Tool that reaches the network says what
+  // to do when the host refuses it — a Tool, or `none` with the reason. Asked
+  // of every instance's Tools, as the rest of this CLI is.
+  const unremedied = networkToolsWithoutRemedies(all);
+  if (unremedied.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${unremedied.length} network-dependent Tool(s) with no \`remedies\`:`);
+    for (const id of unremedied) console.error(`    ${id}`);
+    console.error(
+      "    Declare one entry per host it reaches: `{ host, tool }` naming the Tool that works\n" +
+        "    without that host, or `{ host, none }` saying there is none and why. An agent facing a\n" +
+        "    refused host looks the answer up with `bun run tools:remedy <host>`.",
+    );
+  }
+  const danglingRemedy = danglingRemedies(all);
+  if (danglingRemedy.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${danglingRemedy.length} remedy(ies) naming no declared Tool:`);
+    for (const d of danglingRemedy) console.error(`    ${d.tool} (${d.host}) → ${d.remedy}`);
+  }
   if (r.unmetContracts.length > 0) {
     bad = true;
     console.error(`\n✗ ${r.unmetContracts.length} satisfies edge(s) the skill's own contract contradicts:`);
@@ -593,6 +613,6 @@ if (import.meta.main) {
   console.log(
     "\n✓ every satisfies resolves and agrees with its skill's contract; " +
       "every io type is declared; every argv input is injection-safe; " +
-      "every declared path exists",
+      "every declared path exists; every network Tool names its remedies",
   );
 }

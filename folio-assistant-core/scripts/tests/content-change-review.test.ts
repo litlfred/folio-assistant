@@ -53,15 +53,26 @@ describe("content-change-review: sliced review and the coverage gate", () => {
     expect(m.nodes.get("Call_Adjudication")?.calledElement).toBe("Process_Adjudication");
   });
 
+  // Every fact, as `review-coverage` emits them: the engine refuses a missing one.
+  const facts = (f: Record<string, unknown>) => ({
+    uncoveredBlocks: 0, openDefects: 0, rendered: "known", unreviewedPages: 0, undeterminedInputs: 0, measured: "known", missedPages: 0, ...f,
+  });
+
   test("an unreviewed changed block sends the review back to slicing", async () => {
     const { m, s } = await toCoverageGate();
-    complete(m, s, "GW_Covered", { facts: { uncoveredBlocks: 2, openDefects: 0 } });
+    complete(m, s, "GW_Covered", { facts: facts({ uncoveredBlocks: 2 }) });
     expect(at(m, s)).toEqual(["Task_SliceAndAssign"]);
   });
 
   test("an open defect does too, whatever the block count says", async () => {
     const { m, s } = await toCoverageGate();
-    complete(m, s, "GW_Covered", { facts: { uncoveredBlocks: 0, openDefects: 1 } });
+    complete(m, s, "GW_Covered", { facts: facts({ openDefects: 1 }) });
+    expect(at(m, s)).toEqual(["Task_SliceAndAssign"]);
+  });
+
+  test("an unreviewed rendered page sends it back too (bean bnjs)", async () => {
+    const { m, s } = await toCoverageGate();
+    complete(m, s, "GW_Covered", { facts: facts({ unreviewedPages: 1 }) });
     expect(at(m, s)).toEqual(["Task_SliceAndAssign"]);
   });
 
@@ -72,7 +83,7 @@ describe("content-change-review: sliced review and the coverage gate", () => {
 
   test("covered goes on to sign-off, where approve and merge are separate steps", async () => {
     const { m, s } = await toCoverageGate();
-    complete(m, s, "GW_Covered", { facts: { uncoveredBlocks: 0, openDefects: 0 } });
+    complete(m, s, "GW_Covered", { facts: facts({}) });
     // The editorial-dependency review arrived here from the harness's
     // `review-narrative` (placement PR3, bean `63wl`), ahead of the impact review.
     expect(at(m, s)).toEqual(["Task_ReviewUses"]);

@@ -50,6 +50,12 @@ while the PR is still open. The next push to the branch re-stages it. Where the
 comparison must outlive that, publish the captures themselves (§6) rather than
 only the staging URL. Detail: [`staging-review`](staging-review.md) §"The cap".
 
+**Which pages to picture.** For a Change Set, the pages come from its
+rendered list (skill [`rendered-impact`](rendered-impact.md)), so the "k of n
+pages changed" count is the list's count, not one made by hand. Its
+`unconfirmed` content pages (bytes unchanged, content loaded in the browser)
+are exactly the ones a screenshot settles.
+
 ## The rule
 
 > **A reviewer is shown a rendered change as a before/after pair. Each pair

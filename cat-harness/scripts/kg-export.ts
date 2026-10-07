@@ -2770,7 +2770,7 @@ export interface ExportOptions {
  * channel as an unreadable source — and the fields are simply absent, never
  * filled with a placeholder that would parse as a commit.
  */
-interface SourceProvenance {
+export interface SourceProvenance {
   sha?: string;
   /** The commit's web URL, when the remote names a forge we can address. */
   iri?: string;
@@ -2780,9 +2780,15 @@ interface SourceProvenance {
   unavailable?: string;
 }
 
-function readSourceProvenance(): SourceProvenance {
+/**
+ * `root` defaults to this instance, which is what every export reads. It is a
+ * parameter so a test can hand it a throwaway repository whose `origin` is
+ * known: the IRI derivation is logic over whatever remote it is given, and
+ * this checkout's remote is not something every clone has.
+ */
+export function readSourceProvenance(root: string = ROOT): SourceProvenance {
   const git = (args: string[]): string | undefined => {
-    const r = spawnSync("git", args, { cwd: ROOT, encoding: "utf-8" });
+    const r = spawnSync("git", args, { cwd: root, encoding: "utf-8" });
     if (r.status !== 0 || r.error) return undefined;
     return r.stdout.trim();
   };

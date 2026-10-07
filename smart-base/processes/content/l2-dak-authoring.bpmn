@@ -49,8 +49,9 @@
         <bpmn:flowNodeRef>Task_SeedBeans</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Analyst" name="Business analyst">
-        <bpmn:documentation>Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds.</bpmn:documentation>
+        <bpmn:documentation>Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds. Before any of that, and before the work plan is seeded, builds the DAK's L1 library from what its Component 1 cites, so every track starts with the guidance it operationalises already in the library and in the L1 graph.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_L1Library</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_AuthorMerge</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_AuthorFork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Personas</bpmn:flowNodeRef>
@@ -85,13 +86,21 @@
       <bpmn:incoming>B01</bpmn:incoming>
       <bpmn:outgoing>B02</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:userTask id="Task_L1Library" name="Build the L1 library from Component 1&#10;[dak-l1-library]">
+      <bpmn:documentation>Ingest the DAK and every source its Component 1 cites into the library, and extract the L1 graph that records them: §1.1's interventions, §1.2's citations, each resolved by its printed number to a publication. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts, and validate with both smart-kg validate.mjs and the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="dak-l1-library" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>B02</bpmn:incoming>
+      <bpmn:outgoing>B22</bpmn:outgoing>
+    </bpmn:userTask>
     <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
       <bpmn:documentation>Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="todo-manager" />
         <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
-      <bpmn:incoming>B02</bpmn:incoming>
+      <bpmn:incoming>B22</bpmn:incoming>
       <bpmn:outgoing>B03</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="Gateway_AuthorMerge" name="">
@@ -191,7 +200,8 @@
       <bpmn:incoming>B21</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="B01" sourceRef="StartEvent_Guideline" targetRef="Task_ScopeDak" />
-    <bpmn:sequenceFlow id="B02" sourceRef="Task_ScopeDak" targetRef="Task_SeedBeans" />
+    <bpmn:sequenceFlow id="B02" sourceRef="Task_ScopeDak" targetRef="Task_L1Library" />
+    <bpmn:sequenceFlow id="B22" sourceRef="Task_L1Library" targetRef="Task_SeedBeans" />
     <bpmn:sequenceFlow id="B03" sourceRef="Task_SeedBeans" targetRef="Gateway_AuthorMerge" />
     <bpmn:sequenceFlow id="B04" sourceRef="Gateway_AuthorMerge" targetRef="Gateway_AuthorFork" />
     <bpmn:sequenceFlow id="B05" sourceRef="Gateway_AuthorFork" targetRef="Task_Personas" />
@@ -240,6 +250,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ScopeDak_di" bpmnElement="Task_ScopeDak">
         <dc:Bounds x="375" y="110" width="130" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_L1Library_di" bpmnElement="Task_L1Library">
+        <dc:Bounds x="375" y="420" width="130" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_SeedBeans_di" bpmnElement="Task_SeedBeans">
         <dc:Bounds x="535" y="260" width="130" height="90" />
@@ -294,9 +307,13 @@
         <di:waypoint x="375" y="155" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="B02_di" bpmnElement="B02">
-        <di:waypoint x="505" y="155" />
-        <di:waypoint x="600" y="155" />
-        <di:waypoint x="600" y="260" />
+        <di:waypoint x="440" y="200" />
+        <di:waypoint x="440" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="B22_di" bpmnElement="B22">
+        <di:waypoint x="505" y="465" />
+        <di:waypoint x="600" y="465" />
+        <di:waypoint x="600" y="350" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="B03_di" bpmnElement="B03">
         <di:waypoint x="665" y="305" />

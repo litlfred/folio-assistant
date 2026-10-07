@@ -32,6 +32,12 @@
  * It asserts the RULE against a synthetic package rather than the current
  * corpus, which today has zero such entries: a criterion with nothing to find
  * cannot demonstrate that it would find it.
+ *
+ * The test of this file that reads `skill_fetch`'s implementation — a file of
+ * the tools layer above, not of this one — lives in that layer's
+ * `scripts/tests/manifest-remote-resolution.test.ts` (bean `7zz1` follow-up,
+ * owner 2026-10-06: a test reading an upper layer's files moves to that
+ * layer's declared test home). Standing alone, cat-harness does not hold it.
  */
 import { describe, expect, test } from "bun:test";
 import {
@@ -46,7 +52,6 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { implementingRootFor } from "../../schemas/harness-config.js";
 import { knownSkills, manifestResolvableSkills, remotePackageSkills } from "../known-skills.js";
 import { codeWithoutComments } from "../repo-files.js";
 
@@ -189,24 +194,6 @@ describe("the reason the allowance was closed is still true", () => {
       "scripts/partition/instance-rules.ts",
       "scripts/sync-remote-skills.ts",
     ]);
-  });
-
-  test("neither skill_fetch nor the registry reads skills/remote-packages/", () => {
-    // CODE, not prose. This asserted on the raw file text until 2026-09-19,
-    // when a documentation comment in `skill-fetch.ts` naming the directory —
-    // as one of seven a naive scan would wrongly treat as a skill package —
-    // turned it red while the behaviour it guards was untouched.
-    //
-    // That is the failure mode this file's sibling already recorded: grepping
-    // "cannot tell an implementation from a comment". Narrowing to quoted
-    // strings alone does not fix it either, because a markdown code span in a
-    // comment is backticked and backticks quote strings in TypeScript.
-    for (const f of ["src/tools/skill-fetch.ts", "scripts/generate-registry.ts"]) {
-      // Resolved through the implementing instance: `skill-fetch.ts` moved up
-      // with the server (bean `70lx`), and this layer names no path above it.
-      const code = codeWithoutComments(readFileSync(join(implementingRootFor(ROOT, f), f), "utf8"));
-      expect(code).not.toContain("remote-packages");
-    }
   });
 
   test("kg-audit no longer excuses a remote-declared entry", () => {

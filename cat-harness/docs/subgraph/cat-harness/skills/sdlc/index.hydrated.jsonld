@@ -161,6 +161,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
@@ -199,6 +200,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ref-stewardship",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
             "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
@@ -325,15 +327,34 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 401,
+          "instructionLines": 407,
           "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
           "name": "before-after-preview",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5",
-            "bytes": 20395,
-            "sha256": "86d4787caba578530c2dfc8caeea7e1c1725401a7265a06275a20d7c8c8705f5"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1",
+            "bytes": 20732,
+            "sha256": "05f74543442f132221f4d077ee78ec0cbb0d8434cb7c8e12db3bc4bef3fb60d1"
           },
           "title": "/before-after-preview — show the reviewer the change, not a description of it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 89,
+          "instructionsPath": "skills/sdlc/sdlc-core/blocked-build-dependencies.md",
+          "name": "blocked-build-dependencies",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b11d5494517e5d174c3007cf68afaf103bf79b62519f52305e50b4691ec8fc9",
+            "bytes": 4366,
+            "sha256": "5b11d5494517e5d174c3007cf68afaf103bf79b62519f52305e50b4691ec8fc9"
+          },
+          "title": "Blocked build dependencies — read the refusal before you work around it"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
@@ -704,13 +725,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 135,
+          "instructionLines": 160,
           "instructionsPath": "skills/sdlc/sdlc-core/issue-working.md",
           "name": "issue-working",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c550ccccd4cabab78007087d0d00b2dc4e481251324ed0d05fa5bc58fb21840",
-            "bytes": 6369,
-            "sha256": "4c550ccccd4cabab78007087d0d00b2dc4e481251324ed0d05fa5bc58fb21840"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1aeeed2198defd30060b23ee2d773d747452dd9a667dd32b937e0c72c9bb84f4",
+            "bytes": 7828,
+            "sha256": "1aeeed2198defd30060b23ee2d773d747452dd9a667dd32b937e0c72c9bb84f4"
           },
           "title": "Working an issue — announce, then re-check"
         },
@@ -742,13 +763,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 969,
+          "instructionLines": 1010,
           "instructionsPath": "skills/sdlc/sdlc-core/merge-queue.md",
           "name": "merge-queue",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a717e9c2acbe96576c1dd6fbfe1c0998087197a52c8e652d1aa0aea1fe9b3fc",
-            "bytes": 53714,
-            "sha256": "8a717e9c2acbe96576c1dd6fbfe1c0998087197a52c8e652d1aa0aea1fe9b3fc"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/694b6ee7b5a2c22481f5fe79ba2ef91e8bab96a0054a979edb5fe38475b2f5fb",
+            "bytes": 55951,
+            "sha256": "694b6ee7b5a2c22481f5fe79ba2ef91e8bab96a0054a979edb5fe38475b2f5fb"
           },
           "title": "Merge queue — what lands next, and as what"
         },
@@ -913,13 +934,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 587,
+          "instructionLines": 611,
           "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
           "name": "prepare-merge",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a237a03784296cf771143835d1f3b5d51894e12b9a96b04420d3a2654a4b2aa",
-            "bytes": 34117,
-            "sha256": "5a237a03784296cf771143835d1f3b5d51894e12b9a96b04420d3a2654a4b2aa"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0f110cdd33bbb01459145572a8ded0a5d6fedb42a8a6fc842eb9c41c937bef60",
+            "bytes": 35656,
+            "sha256": "0f110cdd33bbb01459145572a8ded0a5d6fedb42a8a6fc842eb9c41c937bef60"
           },
           "title": "Prepare-merge — get a feature branch ready to land"
         },
@@ -1056,6 +1077,25 @@
           "title": "Related work: find it, sort it, ask"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-impact",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency cone, before any build; a build diff then confirms the prediction. Use when opening or reviewing a Change Set PR, when asked \"which pages does this change\", when a prediction and a build disagree, or when adding a renderer.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 139,
+          "instructionsPath": "skills/sdlc/sdlc-core/rendered-impact.md",
+          "name": "rendered-impact",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1265fcd47257e803e987c8214b17da263570626a00e91c04829bdd1fe24f869f",
+            "bytes": 9409,
+            "sha256": "1265fcd47257e803e987c8214b17da263570626a00e91c04829bdd1fe24f869f"
+          },
+          "title": "Rendered impact — which rendered files a Change Set changes"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -1102,13 +1142,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-          "instructionLines": 673,
+          "instructionLines": 682,
           "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
           "name": "staging-review",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b",
-            "bytes": 33698,
-            "sha256": "7d791e3038c42b4b3771f02d80cc6a5c172f867fb2b48bf2043f29340c44850b"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/63aa0038ab5fa53883371fdd45acf28e0ebc734a74c9d93fe17fe3c78d992641",
+            "bytes": 34128,
+            "sha256": "63aa0038ab5fa53883371fdd45acf28e0ebc734a74c9d93fe17fe3c78d992641"
           },
           "title": "Staging review — before/after comparison"
         },

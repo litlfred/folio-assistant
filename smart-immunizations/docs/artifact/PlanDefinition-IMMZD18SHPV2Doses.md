@@ -2,6 +2,10 @@
 title: "IMMZ.D18.S.HPV.2-dose schedule — WHO SMART Immunizations artefact"
 description: "PlanDefinition/IMMZD18SHPV2Doses in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "PlanDefinition-IMMZD18SHib3DosesWithBoosterDose.html"
+ig_next: "PlanDefinition-IMMZD18SHPVSingleDose.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ IMMZ.D18.S.HPV.2-dose schedule 2-dose schedule
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="PlanDefinition-IMMZD18SHib3DosesWithBoosterDose.html" data-next="PlanDefinition-IMMZD18SHPVSingleDose.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

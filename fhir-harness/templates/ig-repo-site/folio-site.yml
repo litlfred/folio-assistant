@@ -16,11 +16,13 @@
 #
 # The base path is the REPOSITORY'S name on GitHub Pages, read rather than
 # assumed, so the site is right whatever the repository is called.
+#
+# Manual trigger only (owner decision, 2026-10-06): an IG repository's site is
+# published by hand from the Actions tab, never on push. Add a `push` trigger
+# in the copy only if that repository's owner wants every push published.
 name: folio site
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

@@ -3,6 +3,8 @@ title: "Receiver — testing"
 description: "ActorDefinition: Receiver - Testing (Experimental)."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"ActorDefinition-Receiver.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ActorDefinition-Receiver.xml","active":false},{"label":"JSON","href":"ActorDefinition-Receiver.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ActorDefinition-Receiver.ttl","active":false}],"heading":"ActorDefinition: Receiver - Testing (Experimental)","status":"Active as of 2026-10-01","sections":[{"heading":"Test Plans","text":"No test plans are currently available for the ActorDefinition."},{"heading":"Test Scripts","text":"No test scripts are currently available for the ActorDefinition."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

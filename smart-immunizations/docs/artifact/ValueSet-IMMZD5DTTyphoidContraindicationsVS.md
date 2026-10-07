@@ -2,6 +2,10 @@
 title: "IMMZD5DTTyphoidContraindications ValueSet for Decision Table — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZD5DTTyphoidContraindicationsVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZD5DTTBEContraindicationsVS.html"
+ig_next: "ValueSet-IMMZD5DTVaricellaContraindicationsVS.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -43,6 +47,3 @@ IG rather than a gap in this index.
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTyphoidContraindicationsVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTyphoidContraindicationsVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.openapi.json` |
 | JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTTyphoidContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTyphoidContraindicationsVS.jsonld` |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZD5DTTBEContraindicationsVS.html" data-next="ValueSet-IMMZD5DTVaricellaContraindicationsVS.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

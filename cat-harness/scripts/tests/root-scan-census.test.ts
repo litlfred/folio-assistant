@@ -3,6 +3,11 @@
  *
  * It reports and does not fail on its findings, so the cases that matter are
  * about the MEASUREMENT being honest rather than about a verdict.
+ *
+ * The tests of this file that read the whole checkout (scans
+ * folio-assistant-core's scripts) live in
+ * `test/root-scan-census-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -55,12 +60,6 @@ describe("the census covers the repository, and says which instances it scanned 
     const fam = build(rows, scope).families.scope;
     expect(fam.entries).toEqual([{ instance: "alpha", path: "alpha/scripts", state: "scanned", enumerating: 1 }]);
     cleanup();
-  });
-
-  test("over this repository, folio-assistant-core's scripts are in scope", () => {
-    const { rows, scope } = censusRepository(resolve(import.meta.dir, "..", "..", ".."));
-    expect(scope.find((s) => s.path === "folio-assistant-core/scripts")?.state).toBe("scanned");
-    expect(rows.some((r) => r.file.startsWith("folio-assistant-core/scripts/"))).toBe(true);
   });
 });
 

@@ -255,5 +255,19 @@ export function readBeanStore(root: string): BeanStore {
 
 /** Statuses that mean the item is still live. */
 export const OPEN_STATUSES = new Set(["draft", "todo", "in-progress"]);
+/**
+ * How many beans are OPEN — the ONE number every Beans badge shows.
+ *
+ * Bean `v215`: the navbar's icon row counted open beans (541) while the glass
+ * and launcher tiles counted every bean ever filed (943), and the board's own
+ * "open" left `draft` out. Three numbers under one name. The owner chose open
+ * work as the Beans headline (`gkv6`), so the icon row's `count.json`, the
+ * bean index's tile count and the board all take it from here.
+ */
+export function openBeanCount(beans: readonly { status?: string }[]): number {
+  return beans.filter((b) => b.status !== undefined && OPEN_STATUSES.has(b.status)).length;
+}
+/** The unit every Beans badge declares beside {@link openBeanCount}. */
+export const OPEN_BEANS_UNIT = "open beans";
 /** Statuses that mean it is finished, one way or the other. */
 export const CLOSED_STATUSES = new Set(["completed", "scrapped"]);

@@ -2,6 +2,10 @@
 title: "SGAuthoring.Skills.ManageGovernance — WHO SMART Base artefact"
 description: "Basic/SGAuthoring.Skills.ManageGovernance in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Basic-SGAuthoring.Skills.InterpretClinicalRecommendations.html"
+ig_next: "Basic-SGAuthoring.Skills.ManageReleases.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -35,6 +39,3 @@ nav_exclude: true
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="Basic-SGAuthoring.Skills.InterpretClinicalRecommendations.html" data-next="Basic-SGAuthoring.Skills.ManageReleases.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

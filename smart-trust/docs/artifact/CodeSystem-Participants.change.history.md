@@ -3,6 +3,8 @@ title: "WHO GDHCN Trust Network Participants CodeSystem — change history"
 description: "Participants - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"CodeSystem-Participants.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/CodeSystem-Participants.xml","active":false},{"label":"JSON","href":"CodeSystem-Participants.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/CodeSystem-Participants.ttl","active":false}],"heading":"Participants - Change History","sections":[{"text":"History of changes for Participants ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

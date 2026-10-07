@@ -8,10 +8,16 @@
  * it names what it owes INSTEAD, and a second claimant is a finding rather than
  * a quiet widening.
  *
+ * The test of this file that reads the checker the QA axis runs — a file of
+ * the tools layer above, not of this one — lives in that layer's
+ * `schemas/render-exemption.test.ts` (bean `7zz1` follow-up, owner 2026-10-06:
+ * a test reading an upper layer's files moves to that layer's declared test
+ * home). Standing alone, cat-harness does not hold the checker.
+ *
  * @module schemas/render-exemption.test
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { RENDER_OBLIGATIONS, isExemptFrom, readDeclaration, renderExemptionProblems, repoRootFor, type RenderExemption, findDeclarationFile } from "./cat-harness.js";
@@ -148,15 +154,6 @@ describe("isExemptFrom is what the QA axis calls", () => {
     expect(isExemptFrom({}, "visualiser")).toBe(false);
   });
 
-  test("the axis reads the DECLARATION, not an instance name", () => {
-    // Guarded because the obvious shortcut is `if (name === "bootstrap")`,
-    // which states a rule true only for the instance somebody remembered —
-    // and a vendored or renamed bootstrap would silently reacquire the
-    // obligation it was excused from.
-    const checker = readFileSync(join(REPO, "cat-harness-tools", "scripts", "check-instance-render.ts"), "utf-8");
-    expect(checker).toContain("renderExemptionProblems");
-    expect(checker).not.toContain('=== "bootstrap"');
-  });
 });
 
 describe("the obligations are a closed set", () => {

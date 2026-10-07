@@ -1,11 +1,11 @@
 ---
 # folio-assistant-obhe
 title: merge-main's notification rule has no skill home — ci-health.md carries the doctrine and names only one instance
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T06:09:01Z
-updated_at: 2026-10-04T06:09:01Z
+updated_at: 2026-10-07T02:51:01Z
 parent: folio-assistant-1xhc
 ---
 
@@ -43,3 +43,5 @@ merge manager has to order against #1952 anyway.
 - [ ] nothing restated that the workflow's own comments or
       `merge-main-comment.ts`'s docblock already carry — the skill wins, the
       code points at it
+
+_2026-10-07T02:51:01Z_ — Claimed by claude/obhe-merge-main-notification-skill-home — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

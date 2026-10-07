@@ -2289,6 +2289,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.contenttranslations",
+      "prefLabel": "CatHarnessDeclaration.contentTranslations",
+      "definition": "The translation profile of each content type THIS instance owns: which formats it can extract and inject, and which diagrams need re-rendering. Collected by `schemas/translation-tools.ts` from every present instance (bean `0r7u`, step 0 part 3), so cat-harness names no content type above it. Module and diagram paths resolve from the declaring instance, then down its `needs` chain.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.contentTranslations",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.directories",
       "prefLabel": "CatHarnessDeclaration.directories",
       "definition": "Directories this instance scans, before inheritance.",
@@ -2352,6 +2359,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.mountdefaults",
+      "prefLabel": "CatHarnessDeclaration.mountDefaults",
+      "definition": "What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.mountDefaults",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.name",
       "prefLabel": "CatHarnessDeclaration.name",
       "definition": "The instance's name, e.g. `\"agentic-harness\"`.",
@@ -2391,6 +2405,13 @@
       "prefLabel": "CatHarnessDeclaration.remoteGraphs",
       "definition": "Graphs known but not held — {@link RemoteGraph}.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclaration.remotemounts",
+      "prefLabel": "CatHarnessDeclaration.remoteMounts",
+      "definition": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.remoteMounts",
       "status": "candidate"
     },
     {
@@ -2534,6 +2555,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.mountdefaults",
+      "prefLabel": "CatHarnessDeclarationSchema.mountDefaults",
+      "definition": "What a DOWNSTREAM mounts of this instance by default, and where — see `schemas/remote-mount.ts` (bean `0mpw`). Owner, 2026-10-06: the defaults live in the harness's own declaration, so a downstream names only the harness and its pin and never restates the paths. Absent is the stated default (home path, every in-checkout directory), not \"unmountable\".",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.mountDefaults",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.navbaricons",
       "prefLabel": "CatHarnessDeclarationSchema.navbarIcons",
       "definition": "Which icons this instance's navbar row shows.",
@@ -2559,6 +2587,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.remoteGraphs",
       "definition": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}. A SEPARATE array from `directories`, not a variant of one, because a remote graph has no directory.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.remotemounts",
+      "prefLabel": "CatHarnessDeclarationSchema.remoteMounts",
+      "definition": "Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char pin, resolved transitively through the harness's `needs` (bean `0mpw`). Not a submodule and not `.deps/`: the mounted directories are declared, locked by tree digest, and checked by `mount:remote:check`.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteMounts",
       "status": "candidate"
     },
     {
@@ -2818,6 +2853,48 @@
       "prefLabel": "ContentDirectoryShape.writer",
       "definition": "The generator that writes this directory: repo-relative script files, and directories ending in `/` for what it reads rather than imports. See the interface field. At least one path, none twice.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.writer",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.bpmndiagrams",
+      "prefLabel": "ContentTypeTranslationSchema.bpmnDiagrams",
+      "definition": "BPMN diagrams that need re-rendering for translation.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.bpmnDiagrams",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.contenttype",
+      "prefLabel": "ContentTypeTranslationSchema.contentType",
+      "definition": "Content type identifier (matches adapter name).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.contentType",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.formats",
+      "prefLabel": "ContentTypeTranslationSchema.formats",
+      "definition": "Translatable formats this content type supports.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.formats",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.name",
+      "prefLabel": "ContentTypeTranslationSchema.name",
+      "definition": "Human-readable name.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.notes",
+      "prefLabel": "ContentTypeTranslationSchema.notes",
+      "definition": "Additional notes about translation for this content type.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.notes",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contenttypetranslationschema.rtlsupported",
+      "prefLabel": "ContentTypeTranslationSchema.rtlSupported",
+      "definition": "Whether RTL rendering is supported.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentTypeTranslationSchema.rtlSupported",
       "status": "candidate"
     },
     {
@@ -3259,6 +3336,69 @@
       "prefLabel": "TopologyConflict.reason",
       "definition": "Why the mechanism forbids it — an entailment, never a report.",
       "source": "cat-harness/schemas/cat-harness.ts#TopologyConflict.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.extensions",
+      "prefLabel": "TranslatableFormatSchema.extensions",
+      "definition": "File extensions this format applies to.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extensions",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.extractmodule",
+      "prefLabel": "TranslatableFormatSchema.extractModule",
+      "definition": "TypeScript module that implements extraction (relative to repo root).",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.extractModule",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.id",
+      "prefLabel": "TranslatableFormatSchema.id",
+      "definition": "Format identifier.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.injectmodule",
+      "prefLabel": "TranslatableFormatSchema.injectModule",
+      "definition": "TypeScript module that implements injection (relative to repo root).",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.injectModule",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.name",
+      "prefLabel": "TranslatableFormatSchema.name",
+      "definition": "Human-readable name.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.notes",
+      "prefLabel": "TranslatableFormatSchema.notes",
+      "definition": "Notes about translating THIS format specifically, as distinct from `ContentTypeTranslation.notes`, which describes the content type as a whole. \"Lean 4 terms stay in English\" and \"the diagram is re-rendered after injection\" are properties of the format, not of the folio.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.notes",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.smartbaseextractref",
+      "prefLabel": "TranslatableFormatSchema.smartBaseExtractRef",
+      "definition": "Smart-base function/line range for extraction.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseExtractRef",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.smartbaseinjectref",
+      "prefLabel": "TranslatableFormatSchema.smartBaseInjectRef",
+      "definition": "Smart-base function/line range for injection.",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseInjectRef",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.translatableformatschema.smartbasescript",
+      "prefLabel": "TranslatableFormatSchema.smartBaseScript",
+      "definition": "Smart-base Python script that handles this format (reference).",
+      "source": "cat-harness/schemas/cat-harness.ts#TranslatableFormatSchema.smartBaseScript",
       "status": "candidate"
     },
     {
@@ -6160,6 +6300,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-typology-registry.graphtypologydef.newinstancesource",
+      "prefLabel": "GraphTypologyDef.newInstanceSource",
+      "definition": "Where a NEW instance's own graph of this kind lives, when `folio_init` scaffolds it — `perInstance`'s companion: that field says a dependent HAS its own; this one says where the new one is kept. Bean `hp54`.",
+      "source": "cat-harness/schemas/graph-typology-registry.ts#GraphTypologyDef.newInstanceSource",
+      "status": "candidate"
+    },
+    {
       "id": "graph-typology-registry.graphtypologydef.nodeschemas",
       "prefLabel": "GraphTypologyDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
@@ -6316,7 +6463,7 @@
     {
       "id": "harness-config.folioassistantdependency.git",
       "prefLabel": "FolioAssistantDependency.git",
-      "definition": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. The agent should clone to a deterministic location (e.g. `.deps/<name>/`).",
+      "definition": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. Not cloned into `.deps/` (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on the declaration, laid down by `bun run mount:remote` (bean `0mpw`).",
       "source": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency.git",
       "status": "candidate"
     },
@@ -6778,8 +6925,15 @@
     {
       "id": "interaction.interactionnodeschema.users",
       "prefLabel": "InteractionNodeSchema.users",
-      "definition": "Keyed by the identity the agent can resolve — an email today.",
+      "definition": "Keyed by GitHub handle (owner 2026-10-06); other identities go in each entry's `aliases`. An email key from before still parses, and still matches when it is the session's login.",
       "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.users",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.aliases",
+      "prefLabel": "InteractionProfileSchema.aliases",
+      "definition": "Other identities this person CHOOSES to publish — a login email, a second handle. The entry's key is the GitHub handle (owner 2026-10-06: one person may hold more than one Claude account, so no login email is an identity).",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.aliases",
       "status": "candidate"
     },
     {
@@ -7189,6 +7343,13 @@
       "status": "candidate"
     },
     {
+      "id": "library-keywords.scoredkeywordschema.score",
+      "prefLabel": "ScoredKeywordSchema.score",
+      "definition": "Comparable within one library's matrix only.",
+      "source": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema.score",
+      "status": "candidate"
+    },
+    {
       "id": "log-entry.logentryschema.actor",
       "prefLabel": "LogEntrySchema.actor",
       "definition": "The actor id from `cat-harness/scenarios/actors/`, where one is known.",
@@ -7431,6 +7592,13 @@
       "prefLabel": "EntryObjectSchema.reason",
       "definition": "Why this placement, in a sentence. For `computed`, the rule's description will do.",
       "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "merge-queue.entryobjectschema.release",
+      "prefLabel": "EntryObjectSchema.release",
+      "definition": "A person's decision to merge, or not — {@link ReleaseSchema}.",
+      "source": "cat-harness/schemas/merge-queue.ts#EntryObjectSchema.release",
       "status": "candidate"
     },
     {
@@ -7840,6 +8008,34 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfdiagnosticsschema.figure_sequence_gaps",
+      "prefLabel": "PdfDiagnosticsSchema.figure_sequence_gaps",
+      "definition": "Numbers missing from a caption run, e.g. \"table 2.1\" beside a Table 2.2.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.figure_sequence_gaps",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfdiagnosticsschema.page_label_conflicts",
+      "prefLabel": "PdfDiagnosticsSchema.page_label_conflicts",
+      "definition": "Pages where label sources disagree, e.g. /PageLabels \"3\" against a printed \"iii\".",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.page_label_conflicts",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfdiagnosticsschema.toc_alignment",
+      "prefLabel": "PdfDiagnosticsSchema.toc_alignment",
+      "definition": "Where a printed contents page and the body disagree (issue #2302) — drafts drift. Present only when the document has a contents page. Each list is capped; `count` is the full number.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_alignment",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfdiagnosticsschema.toc_inferred_method",
+      "prefLabel": "PdfDiagnosticsSchema.toc_inferred_method",
+      "definition": "Which inference produced an inferred TOC (issue #2302): a printed contents page, heading styles read from font metrics, or the text-pattern heuristic that OCR'd text falls back to.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_inferred_method",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfmetadataschema.title_correction",
       "prefLabel": "PdfMetadataSchema.title_correction",
       "definition": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`, step b). Authored, never produced by a rung, and carried over by a re-ingest. `basis` says what the title was read from, so it can be checked rather than trusted.",
@@ -7875,10 +8071,31 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfsectionschema.label_start",
+      "prefLabel": "PdfSectionSchema.label_start",
+      "definition": "Printed labels of page_start / page_end, where known (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema.label_start",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfstructureschema.figures",
+      "prefLabel": "PdfStructureSchema.figures",
+      "definition": "The list of figures and tables, cross-checked (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.figures",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfstructureschema.granularity",
       "prefLabel": "PdfStructureSchema.granularity",
       "definition": "`page`: written by `pdf-pages.py`, one section per page. `slide`: written by `slides-structure.py`, one section per slide (bean `scfh`).",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfstructureschema.pages",
+      "prefLabel": "PdfStructureSchema.pages",
+      "definition": "Every physical page with its printed label (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.pages",
       "status": "candidate"
     },
     {
@@ -7893,6 +8110,20 @@
       "prefLabel": "PdfStructureSchema.toc_undetermined_reason",
       "definition": "Why an inferred TOC was not trusted, in a sentence a person can check.",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.toc_undetermined_reason",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdftocentryschema.confidence",
+      "prefLabel": "PdfTocEntrySchema.confidence",
+      "definition": "Inferred entries only (issue #2302): how sure the inference is, 0..1, and which independent evidence agreed — a printed contents page, the entry found in the body, a heading style, a section number, another extractor. Null on an outline entry, which is not scored.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.confidence",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdftocentryschema.page_label",
+      "prefLabel": "PdfTocEntrySchema.page_label",
+      "definition": "The printed label of `page` (\"iv\", \"23\"), where known; `page` is physical.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.page_label",
       "status": "candidate"
     },
     {
@@ -8477,6 +8708,90 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount.lockeddirectoryschema.path",
+      "prefLabel": "LockedDirectorySchema.path",
+      "definition": "Relative to the downstream instance's root, no trailing slash.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockeddirectoryschema.treedigest",
+      "prefLabel": "LockedDirectorySchema.treeDigest",
+      "definition": "SHA-256 over the sorted `<sha256> <file>` listing — `treeDigest`.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.treeDigest",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockeddirectoryschema.upstreampath",
+      "prefLabel": "LockedDirectorySchema.upstreamPath",
+      "definition": "Where the bytes are in the upstream repository.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedDirectorySchema.upstreamPath",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.path",
+      "prefLabel": "LockedInstanceSchema.path",
+      "definition": "Where its root landed downstream.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.pinnedby",
+      "prefLabel": "LockedInstanceSchema.pinnedBy",
+      "definition": "How the pin was found: the declared ref, the same tree, or a gitlink in a parent's tree.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.pinnedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.upstreamroot",
+      "prefLabel": "LockedInstanceSchema.upstreamRoot",
+      "definition": "The instance's root in the upstream repository; `\"\"` is that repository's root.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.upstreamRoot",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.lockedinstanceschema.via",
+      "prefLabel": "LockedInstanceSchema.via",
+      "definition": "The `remoteMounts` entry that brought it in.",
+      "source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.via",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.mountdefaultsschema.directories",
+      "prefLabel": "MountDefaultsSchema.directories",
+      "definition": "Directory ids, in this instance's own declaration.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountDefaultsSchema.directories",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.mountlockschema.mounts",
+      "prefLabel": "MountLockSchema.mounts",
+      "definition": "The `remoteMounts` it was written for, so a changed pin reads as stale.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.mounts",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.mountlockschema.unmounted",
+      "prefLabel": "MountLockSchema.unmounted",
+      "definition": "What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over an instance the mount never laid down. `local` and `skipped` are recorded too: they are answers, and a reader should see them as such.",
+      "source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.remotemountschema.harness",
+      "prefLabel": "RemoteMountSchema.harness",
+      "definition": "The harness's instance name, as its own declaration states it.",
+      "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.harness",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.remotemountschema.overrides",
+      "prefLabel": "RemoteMountSchema.overrides",
+      "definition": "Per-instance overrides across the closure, keyed by instance name.",
+      "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
+      "status": "candidate"
+    },
+    {
       "id": "render-log.renderlogentryschema.branch",
       "prefLabel": "RenderLogEntrySchema.branch",
       "definition": "Branch the render came from.",
@@ -8600,6 +8915,104 @@
       "prefLabel": "RenderTargetDeclaration.validateExport",
       "definition": "Export checking rendered output is structurally sound, if there is one.",
       "source": "cat-harness/schemas/render-targets.ts#RenderTargetDeclaration.validateExport",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.predictioncheck.confirmed",
+      "prefLabel": "PredictionCheck.confirmed",
+      "definition": "Predicted and measured.",
+      "source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.confirmed",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.predictioncheck.missed",
+      "prefLabel": "PredictionCheck.missed",
+      "definition": "Measured to change but not predicted: a cone defect, never a pass.",
+      "source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.missed",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.predictioncheck.unconfirmed",
+      "prefLabel": "PredictionCheck.unconfirmed",
+      "definition": "Predicted, not measured: expected for content pages that load their data (rule 3), suspicious otherwise.",
+      "source": "cat-harness/schemas/rendered-impact.ts#PredictionCheck.unconfirmed",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedfileschema.anchors",
+      "prefLabel": "RenderedFileSchema.anchors",
+      "definition": "The fragment ids within `path` the change alters, for a page that assembles many units (a document page with an anchor per block). A review list links `path#anchor` for each. Absent when the whole file is the unit, or when a build diff cannot say which part changed.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.anchors",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedfileschema.hash",
+      "prefLabel": "RenderedFileSchema.hash",
+      "definition": "What a review of this file is pinned to (see \"A PIN\"): for a `cone` file, a hash of the blobs of the changed inputs on `via`; for a `build-diff` file, its content hash. Absent when nothing pinned it.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.hash",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedfileschema.path",
+      "prefLabel": "RenderedFileSchema.path",
+      "definition": "Path in the BUILT site, relative to its root, e.g. `ast/artifact/PlanDefinition-X.html`.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedfileschema.via",
+      "prefLabel": "RenderedFileSchema.via",
+      "definition": "How the change reached this file: the changed input first, then each node the cone went through, e.g. `[\"input/fsh/x.fsh\", \"IMMZD18SBCG\", \"PlanDefinition/IMMZD18SBCG\"]`. Empty for a build diff, which measures that a file changed and cannot say why.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedFileSchema.via",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedimpactschema.inputs",
+      "prefLabel": "RenderedImpactSchema.inputs",
+      "definition": "The changed input files the renderer was given, relative to its source root.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.inputs",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedimpactschema.renderer",
+      "prefLabel": "RenderedImpactSchema.renderer",
+      "definition": "The renderer, by its Tool id or script, e.g. `fhir-ig-ast-pages`.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.renderer",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedimpactschema.site",
+      "prefLabel": "RenderedImpactSchema.site",
+      "definition": "The site the paths are relative to, as a reader finds it (an instance, a URL path).",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedImpactSchema.site",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedmeasuredschema.basecommit",
+      "prefLabel": "RenderedMeasuredSchema.baseCommit",
+      "definition": "The commit the PR's change is measured against.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.baseCommit",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.renderedmeasuredschema.beforecommit",
+      "prefLabel": "RenderedMeasuredSchema.beforeCommit",
+      "definition": "The commit the before side was built from, as its publish manifest records it.",
+      "source": "cat-harness/schemas/rendered-impact.ts#RenderedMeasuredSchema.beforeCommit",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.undeterminedschema.hash",
+      "prefLabel": "UndeterminedSchema.hash",
+      "definition": "The input's blob at head, so a waiver of it is pinned to this version.",
+      "source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.hash",
+      "status": "candidate"
+    },
+    {
+      "id": "rendered-impact.undeterminedschema.scope",
+      "prefLabel": "UndeterminedSchema.scope",
+      "definition": "`all`: the input can re-render anything (a site config, a shared include).",
+      "source": "cat-harness/schemas/rendered-impact.ts#UndeterminedSchema.scope",
       "status": "candidate"
     },
     {
@@ -10773,6 +11186,34 @@
       "status": "candidate"
     },
     {
+      "id": "tool.remedymatch.invoke",
+      "prefLabel": "RemedyMatch.invoke",
+      "definition": "That Tool's command, so the answer is runnable without a second lookup.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.invoke",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.remedymatch.needed_by",
+      "prefLabel": "RemedyMatch.needed_by",
+      "definition": "The Tool that needed the host.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.needed_by",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.remedymatch.none",
+      "prefLabel": "RemedyMatch.none",
+      "definition": "Stated: no workaround, and why.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.none",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.remedymatch.tool",
+      "prefLabel": "RemedyMatch.tool",
+      "definition": "The Tool to reach for, when there is one.",
+      "source": "cat-harness/schemas/tool.ts#RemedyMatch.tool",
+      "status": "candidate"
+    },
+    {
       "id": "tool.tooldefinitionschema.downstream",
       "prefLabel": "ToolDefinitionSchema.downstream",
       "definition": "A downstream output this Tool keeps current, with its declared inputs. See {@link ToolDownstreamSchema}. Optional because most Tools keep no derived output; a run record or a publish verifier naming a Tool that does not declare one is a finding (`downstream-tool-declared`).",
@@ -10784,6 +11225,13 @@
       "prefLabel": "ToolDefinitionSchema.maintains",
       "definition": "Published artefacts this Tool is authoritative for. See {@link ToolMaintainsSchema}.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.maintains",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldefinitionschema.remedies",
+      "prefLabel": "ToolDefinitionSchema.remedies",
+      "definition": "One entry per host this Tool reaches, saying what to do when it is refused. See {@link ToolRemedySchema}. REQUIRED non-empty when `requires.network` is true; `check:tools` enforces it, and resolves every `tool` it names.",
+      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.remedies",
       "status": "candidate"
     },
     {
@@ -10906,6 +11354,34 @@
       "status": "candidate"
     },
     {
+      "id": "tool.toolremedyschema.error",
+      "prefLabel": "ToolRemedySchema.error",
+      "definition": "Text an agent sees when the host refuses, if it does not name the host — matched as a substring.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.error",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.toolremedyschema.host",
+      "prefLabel": "ToolRemedySchema.host",
+      "definition": "The host this Tool reaches, as it appears in a refusal — `packages.fhir.org`.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.host",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.toolremedyschema.none",
+      "prefLabel": "ToolRemedySchema.none",
+      "definition": "Stated: no Tool works around this refusal, and why — or what to do instead.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.none",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.toolremedyschema.tool",
+      "prefLabel": "ToolRemedySchema.tool",
+      "definition": "The declared Tool that does the job without this host. `check:tools` resolves it.",
+      "source": "cat-harness/schemas/tool.ts#ToolRemedySchema.tool",
+      "status": "candidate"
+    },
+    {
       "id": "tool.toolselectionschema.cost",
       "prefLabel": "ToolSelectionSchema.cost",
       "definition": "What having it available costs. Distinct from `install`; see above.",
@@ -10924,111 +11400,6 @@
       "prefLabel": "ToolSelectionSchema.when",
       "definition": "The case this Tool is the right answer to.",
       "source": "cat-harness/schemas/tool.ts#ToolSelectionSchema.when",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.bpmndiagrams",
-      "prefLabel": "ContentTypeTranslationSchema.bpmnDiagrams",
-      "definition": "BPMN diagrams that need re-rendering for translation.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.bpmnDiagrams",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.contenttype",
-      "prefLabel": "ContentTypeTranslationSchema.contentType",
-      "definition": "Content type identifier (matches adapter name).",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.contentType",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.formats",
-      "prefLabel": "ContentTypeTranslationSchema.formats",
-      "definition": "Translatable formats this content type supports.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.formats",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.name",
-      "prefLabel": "ContentTypeTranslationSchema.name",
-      "definition": "Human-readable name.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.name",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.notes",
-      "prefLabel": "ContentTypeTranslationSchema.notes",
-      "definition": "Additional notes about translation for this content type.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.notes",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.contenttypetranslationschema.rtlsupported",
-      "prefLabel": "ContentTypeTranslationSchema.rtlSupported",
-      "definition": "Whether RTL rendering is supported.",
-      "source": "cat-harness/schemas/translation-tools.ts#ContentTypeTranslationSchema.rtlSupported",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.extensions",
-      "prefLabel": "TranslatableFormatSchema.extensions",
-      "definition": "File extensions this format applies to.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extensions",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.extractmodule",
-      "prefLabel": "TranslatableFormatSchema.extractModule",
-      "definition": "TypeScript module that implements extraction (relative to repo root).",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.extractModule",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.id",
-      "prefLabel": "TranslatableFormatSchema.id",
-      "definition": "Format identifier.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.injectmodule",
-      "prefLabel": "TranslatableFormatSchema.injectModule",
-      "definition": "TypeScript module that implements injection (relative to repo root).",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.injectModule",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.name",
-      "prefLabel": "TranslatableFormatSchema.name",
-      "definition": "Human-readable name.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.name",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.notes",
-      "prefLabel": "TranslatableFormatSchema.notes",
-      "definition": "Notes about translating THIS format specifically, as distinct from `ContentTypeTranslation.notes`, which describes the content type as a whole. \"Lean 4 terms stay in English\" and \"the diagram is re-rendered after injection\" are properties of the format, not of the folio.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.notes",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.smartbaseextractref",
-      "prefLabel": "TranslatableFormatSchema.smartBaseExtractRef",
-      "definition": "Smart-base function/line range for extraction.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseExtractRef",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.smartbaseinjectref",
-      "prefLabel": "TranslatableFormatSchema.smartBaseInjectRef",
-      "definition": "Smart-base function/line range for injection.",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseInjectRef",
-      "status": "candidate"
-    },
-    {
-      "id": "translation-tools.translatableformatschema.smartbasescript",
-      "prefLabel": "TranslatableFormatSchema.smartBaseScript",
-      "definition": "Smart-base Python script that handles this format (reference).",
-      "source": "cat-harness/schemas/translation-tools.ts#TranslatableFormatSchema.smartBaseScript",
       "status": "candidate"
     },
     {

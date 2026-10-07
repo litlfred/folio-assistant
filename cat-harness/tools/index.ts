@@ -170,6 +170,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served.",
       },
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "Publishing IS a push to the gh-pages branch; there is no offline arm. To look at a page, build it locally with `bun run preview:site`." }],
     }),
     // Bean `l4ay`, owner 2026-10-03: "A sub graph declares where it's getting
     // its content". The ONE resolver, from a shell — `branch-store
@@ -258,6 +259,36 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["directory-conventions"],
       requires: { runtime: ["bun"], network: false },
+    }),
+    // Bean `3tza`, owner ruling 2 (2026-10-06): stage 11 of `sub-kg-lifecycle`
+    // ("Verify on a fresh clone") is a command, as `seed:ready` became one.
+    defineTool({
+      id: "sub-kg-verify-clone",
+      title: "Verify a separated repository from a fresh clone",
+      description:
+        "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory.",
+      install: { none: true },
+      invoke: { shell: "bun run sub-kg:verify-clone" },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo" }, description: "The separated repository, `owner/name`. (The script also takes a git URL or a local path, for tests.)" },
+          { name: "ref", schema: t("Branch"), required: false, arg: { flag: "--ref" }, description: "The branch or tag to clone, e.g. the seeding PR's branch." },
+          { name: "sibling", schema: t("RepoFullName"), required: false, arg: { flag: "--sibling" }, description: "A repository to clone beside it, for a platform linked as a sibling checkout. Repeatable." },
+          { name: "work", schema: t("RepoPath"), required: false, arg: { flag: "--work" }, description: "Scratch directory, kept afterwards. Absent: a temporary directory, removed afterwards." },
+          { name: "text", schema: t("Flag"), required: false, arg: { flag: "--text" }, description: "A report for a person instead of JSON." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "`sub-kg-verify-clone/v1`: the commit cloned, each step with its status and output tail, and the verdict. Exit 0 green, 1 red, 2 unknown." },
+        ],
+      },
+      satisfies: ["sub-kg-lifecycle"],
+      selection: {
+        when: "After a sub-KG's staged contents are seeded into its new repository and re-pointed, before asking the owner about the cutover.",
+        limits: "Runs the repository's own gates as written; a gate that needs credentials or a service the clone cannot reach fails as it would for any new contributor.",
+        cost: "A clone plus an install plus the gates: minutes for a small repository.",
+      },
+      requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "It verifies a clone of the new repository; with GitHub refused there is nothing to clone." }],
     }),
     // Bean `qou-qb6t`, owner 2026-10-04: "all witnesses tools will need to go
     // into the KG". The reader of the `computation-witness` kind: which
@@ -411,6 +442,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One install step per container, and it wants network to fetch. Nothing at runtime after that.",
       },
       requires: { runtime: ["go"], network: true },
+      remedies: [{ host: "github.com", tool: "beans-manual" }],
     }),
 
     defineTool({
@@ -518,8 +550,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { none: true },
       invoke: { shell: "bun run cat-harness/scripts/pdf-viewer.ts" },
       requires: { runtime: ["bun", "unzip"], network: true },
+      remedies: [{ host: "github.com", none: "pdf.js is fetched from its GitHub release and no copy is vendored; the site builds without the viewer." }],
       io: {
         inputs: [
+          // input-site: inert #5ead75ee — prose naming the directory, in a message or a description
           { name: "site", schema: t("RepoPath"), required: true, arg: { flag: "--site" }, description: "The built site directory, `_site` in both site workflows." },
           { name: "allow", schema: t("Url"), required: true, arg: { flag: "--allow" }, description: "An https URL prefix the viewer may open, ending in `/`. Repeat the flag for more than one. `same-origin-only` is the explicit way to allow none — an omitted flag is a usage error, because a viewer that refuses every CDN document would otherwise ship green." },
           { name: "zip", schema: t("RepoPath"), required: false, arg: { flag: "--zip" }, description: "A local copy of the release zip, for offline runs and tests. Its hash is checked exactly as a download's would be." },
@@ -685,6 +719,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["prepare-merge-auto", "pickup", "watch", "coordinate"],
       requires: { network: true },
+      remedies: [{ host: "api.github.com", none: "No declared Tool reaches the GitHub API another way. A session that provides the GitHub MCP server can use it instead." }],
     }),
 
     defineTool({
@@ -706,6 +741,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // developer's machine — two Tools, one skill.
       satisfies: ["kg-export", "docs-generation"],
       requires: { network: true },
+      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; it runs on GitHub or not at all." }],
     }),
 
     defineTool({
@@ -760,6 +796,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["feature-staging"],
       requires: { network: true },
+      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; to look at a branch's pages locally, use `bun run preview:site`." }],
       selection: {
         when:
           "On a pull request touching the docs, schemas, content or skills it fires on its own — reach for the dispatch arm only to stage a branch that has no open pull request, or to remove a preview the close event could not reach.",
@@ -837,6 +874,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // because that is the arm a caller controls; the other two are
           // defaults, not inputs.
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base the node IRIs are minted against; a preview passes its own." },
+          // input-site: inert #5eaba3b5 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults to `_kg/<stub>.jsonld`, which is build output and gitignored." },
         ],
         outputs: [
@@ -1060,6 +1098,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "screenshot", schema: t("Flag"), required: false, arg: { flag: "--screenshot" }, description: "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate." },
         ],
         outputs: [
+          // input-site: inert #5e83c8da — prose naming the directory, in a message or a description
           { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2." },
         ],
       },
@@ -1133,6 +1172,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It is the build half of that skill's loop, not the whole loop.
       satisfies: ["lean-build-fix"],
       requires: { runtime: ["bash", "lean", "lake"], network: true },
+      remedies: [
+        { host: "release.lean-lang.org", error: "Host not in allowlist", tool: "lean-toolchain-setup" },
+        { host: "github.com", none: "Lake fetches the declared dependencies from GitHub; with it refused they cannot resolve." },
+      ],
     }),
 
     defineTool({
@@ -1154,6 +1197,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // which is what breaks `elan toolchain install` and why this script exists
       // at all. An agent reading only `network: true` would retry elan.
       requires: { runtime: ["bash", "curl", "elan"], network: true },
+      remedies: [{ host: "github.com", none: "It fetches the toolchain from the GitHub release because release.lean-lang.org is refused; with GitHub refused too there is no source." }],
     }),
 
     // ── The Lean audit half, and the one skill still without a mechanism ──
@@ -1534,6 +1578,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
+          // input-site: inert #13384224 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
         ],
         outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
@@ -1549,6 +1594,21 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         { source: "schemas/vocabulary.ts", artefact: "cat-harness/ns.jsonld", format: "json-ld" },
         { source: "schemas/vocabulary.ts", artefact: "folio-assistant-core/ns.jsonld", format: "json-ld" },
       ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "agent-memory",
+      title: "Agent memory assembler",
+      description:
+        "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated.",
+      install: { none: true },
+      invoke: { shell: "bun run agent-memory" },
+      io: {
+        inputs: [],
+        outputs: [{ name: "memory", schema: t("RepoPath"), description: "Each agent's assembled memory file, per vendor." }],
+      },
+      satisfies: ["agent-memory"],
       requires: { runtime: ["bun"], network: false },
     }),
 
@@ -1676,6 +1736,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["prepare-merge"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It merges against the remote's current base; with the remote refused, the base cannot be fetched." }],
       selection: {
         when:
           "Immediately before asking for a merge, and again if the base has moved since. Not on every push: it is the full gate set, on a second tree.",
@@ -1711,6 +1772,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns", "prepare-merge"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It composes from the remote's open pull requests." }],
       selection: {
         when: "The steward has chosen a batch of green, mutually independent PRs (see merge-overlap) and wants one branch that carries them all, regenerated once.",
         limits: "Each member's merge commit is not proved on its own; the train is proved at its end by one regen. A refused member is left out and reported — handing it back to its owner is the steward's step. It does not push: CI on the train runs only after the steward pushes it.",
@@ -1733,6 +1795,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns", "coordinate"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It compares the remote's open pull requests." }],
       selection: {
         when: "Before composing a merge train, and whenever deciding which PRs can land together or must be ordered.",
         limits: "Paths, not semantics (requirements T3): two PRs that change different files can still interact, which the shared-declaration list only partly covers. A README counts as authored when its prose changed, as a region when only generated regions did.",
@@ -1755,6 +1818,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It reads the remote's pull requests after a train lands." }],
       selection: {
         when: "After a train lands, for each member PR still open, before the steward decides whether to close it.",
         limits: "An authored path whose lines the base rewrote after the train reads `not-landed`: the reverse patch no longer applies, and only a person can say whether the rewrite kept the intent.",
@@ -1998,6 +2062,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // `network: true` is the unusual part, and it is what makes the third
       // state load-bearing rather than decorative — see `selection.limits`.
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "api.github.com", none: "Workflow outcomes are held by GitHub, not the checkout. It reports 'could not check', which is never green." }],
       selection: {
         when:
           "Before trusting ANY workflow's outcome, and at session start. A workflow's result is invisible from a checkout, which is how `docs-site.yml` failed 30 consecutive runs over two months with nothing in the repository saying so (bean `xom7`).",
@@ -2036,6 +2101,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "slice", schema: t("Slug"), required: false, arg: { flag: "--slice" }, description: "A slice to build; repeatable. Absent: every slice in the builder's table." },
+          // input-site: inert #8bc2e503 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where the files and `index.json` go; defaults to the gitignored `docs/assets/slices/`. The deploy passes `./_site/assets/slices`." },
           { name: "payloadOut", schema: t("RepoPath"), required: false, arg: { flag: "--payload-out" }, description: "Where the deploy payloads are written (`<hex>` plus its `<hex>.json` sidecar). Never the committed `docs/payload/`." },
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Build twice and verify instead of writing: one sha256, the row digest against the source, an FTS5 phrase query, the payload audit." },
@@ -2183,6 +2249,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [],
         outputs: [
+          // input-site: inert #4279ca6f — prose naming the directory, in a message or a description
           { name: "index", schema: t("RepoPath"), description: "`_site/assets/js/search-data.json` in the assembled site." },
         ],
       },
@@ -2205,9 +2272,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run cat-harness/scripts/search-split.ts --dir _site" },
       io: {
         inputs: [
+          // input-site: inert #a9ab302b — prose naming the directory, in a message or a description
           { name: "index", schema: t("RepoPath"), required: true, description: "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it." },
         ],
         outputs: [
+          // input-site: inert #37afab82 — prose naming the directory, in a message or a description
           { name: "scopes", schema: t("RepoPath"), description: "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope." },
         ],
       },
@@ -2785,6 +2854,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
       invoke: { shell: "release-please release-pr" },
       requires: { runtime: ["node", "release-please"], network: true },
+      remedies: [
+        { host: "api.github.com", none: "It opens release pull requests on GitHub." },
+        { host: "registry.npmjs.org", none: "It installs from npm; no other source is declared." },
+      ],
       // The same I/O as `package-release-manual`, stated at the level of the
       // RELEASE (owner, 2026-09-30: "Align I/O, pair"): a package in, its tag
       // out. So `deriveAlternatives` pairs the two (#1168, B9a). The release PR
@@ -2862,6 +2935,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "pip install faster-whisper (model weights download on first use)" },
       invoke: { shell: "python3 -m faster_whisper" },
       requires: { runtime: ["python3", "faster-whisper"], network: true },
+      remedies: [
+        { host: "huggingface.co", tool: "transcribe-whisper-cpp" },
+        { host: "pypi.org", tool: "transcribe-whisper-cpp" },
+      ],
       io: {
         inputs: [
           { name: "file", schema: t("RepoPath"), required: true, arg: { positional: 0 } },

@@ -24,13 +24,18 @@
  *    bpmn-moddle parse the engine runs.
  *
  * @module cat-harness/scripts/tests/processes-viz.test
+ *
+ * The tests of this file that read the whole checkout (regenerates the
+ * processes page over every instance's diagrams) live in
+ * `test/processes-viz-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 import { docsLayers } from "../compose-docs.js";
-import { page, pageRelPath, publishedIndex, processRows, skillToProcesses } from "../gen-processes-viz.js";
+import { page, pageRelPath, processRows, skillToProcesses } from "../gen-processes-viz.js";
 import { ownElementPattern } from "../../schemas/namespaces.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
@@ -231,12 +236,6 @@ describe("the committed page is current", () => {
     const rel = pageRelPath(REPO);
     expect(rel).toBeDefined();
     expect(existsSync(join(DOCS, rel!))).toBe(true);
-  });
-
-  it("and matches what the generator produces now", () => {
-    // A stale page fails the unit suite rather than only the gate, which is
-    // where it is noticed first.
-    expect(readFileSync(join(DOCS, pageRelPath(REPO)!), "utf-8")).toBe(publishedIndex(rows));
   });
 });
 

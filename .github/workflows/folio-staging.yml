@@ -252,6 +252,45 @@ jobs:
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
+      - name: Find the pull request
+        # A DISPATCHED run has no pull_request event, so until bean `ehh6` it
+        # ran as "PR n/a": no comment, no review-comment ingestion, no
+        # qa-reports fetch. Measured on smart-ra#26, whose staging runs only
+        # by dispatch (owner, 2026-10-06), though GitHub listed the run under
+        # the PR. So a dispatch looks the branch's PR up: an OPEN PR from THIS
+        # repository (a fork's branch of the same name is somebody else's),
+        # and exactly one, or none at all. A lookup that fails is said, and
+        # the run goes on untied, as before.
+        id: pr
+        env:
+          EVENT_PR: ${{ github.event.pull_request.number }}
+          EVENT_BASE: ${{ github.event.pull_request.base.ref }}
+          BRANCH: ${{ steps.slug.outputs.branch }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          if [ -n "$EVENT_PR" ]; then
+            echo "number=$EVENT_PR" >> "$GITHUB_OUTPUT"
+            echo "base=$EVENT_BASE" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! J=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --state open \
+                   --json number,baseRefName,isCrossRepository --jq '[.[] | select(.isCrossRepository | not)]'); then
+            echo "::warning title=pull request::could not list pull requests for $BRANCH; this run is tied to none"
+            exit 0
+          fi
+          case "$(jq length <<<"$J")" in
+            0) echo "no open pull request from $BRANCH: the preview is published, and nothing is commented" ;;
+            1)
+              N=$(jq -r '.[0].number' <<<"$J")
+              case "$N" in ''|*[!0-9]*) echo "::error::pull request number '$N' is not a number"; exit 1 ;; esac
+              echo "number=$N" >> "$GITHUB_OUTPUT"
+              echo "base=$(jq -r '.[0].baseRefName' <<<"$J")" >> "$GITHUB_OUTPUT"
+              echo "dispatched on $BRANCH: pull request #$N"
+              ;;
+            *) echo "::warning title=pull request::$BRANCH has several open pull requests; this run is tied to none" ;;
+          esac
+
       - name: Resolve the base
         # The ChangeSet and the pictures must use the SAME base (bean `5uuf`):
         # before, the ChangeSet read `base_ref` and the pictures read main's
@@ -260,7 +299,7 @@ jobs:
         id: base
         env:
           INPUT_BASE: ${{ inputs.base_ref }}
-          PR_BASE: ${{ github.event.pull_request.base.ref }}
+          PR_BASE: ${{ steps.pr.outputs.base }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           BASE="${INPUT_BASE:-${PR_BASE:-${DEFAULT_BRANCH:-main}}}"
@@ -313,6 +352,31 @@ jobs:
             --folio "$FOLIO_DIR" --base "origin/$BASE_REF" --head worktree \
             --out "$SITE_DIR/changeset.json" --text-out "$SITE_DIR/changeset-text.json"
 
+      - name: Compute the rendered impact
+        # Which rendered pages the change alters (bean `bnjs`, issue #971):
+        # the review list a Change Set is approved against. Loaded from the
+        # ChangeSet just computed and the site build's outline.json, never from
+        # source; the review page fetches the result when it is opened. A
+        # platform with no renderer writes nothing, and the page and the PR
+        # comment then say the list is not known, never that it is empty.
+        # The build command is passed so each builder it runs says what it
+        # reads (bean ehh6): a file none of them reads reaches no page.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          BASE_REF: ${{ steps.base.outputs.ref }}
+          SITE_DIR: ${{ inputs.site_dir }}
+          BUILD_COMMAND: ${{ inputs.build_command }}
+        run: |
+          set -eu
+          R="$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts"
+          if [ ! -f "$R" ]; then
+            echo "this platform has no document renderer ($R): rendered-impact.json not written"
+            exit 0
+          fi
+          bun run "$PLATFORM_DIR/folio-assistant-core/scripts/document-rendered-impact.ts" --root . --base "origin/$BASE_REF" --head HEAD \
+            --changeset "$SITE_DIR/changeset.json" --outline "$SITE_DIR/outline.json" \
+            --build-command "$BUILD_COMMAND" --out "$SITE_DIR/rendered-impact.json"
+
       - name: Fetch the folio's QA results from its qa-reports branch
         # Bean `tfqf`, reader audit R60. The folio's derived QA verdicts are
         # published to ITS OWN `qa-reports` branch (keyed `pr/<n>/<sha>`, the
@@ -328,7 +392,7 @@ jobs:
         # preview with none says "QA not available" rather than "unaudited".
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ steps.pr.outputs.number }}
         run: |
           set -u
           if [ -z "$PR" ]; then
@@ -428,12 +492,35 @@ jobs:
           echo "url=$URL" >> "$GITHUB_OUTPUT"
           echo "label=$LABEL" >> "$GITHUB_OUTPUT"
 
+      - name: Measure the rendered impact against main's site
+        # What the build ACTUALLY changed, against main's published site, and
+        # what the prediction missed (bean `bnjs`): a missed page was never on
+        # the review list, so the coverage gate counts it. Run before the
+        # banner is injected, which names the commit and so would change
+        # every page. Counted only when main's site was built from this PR's
+        # base (`status: known`); with no published main site nothing is
+        # written, which reads as "not measured", never "nothing missed".
+        if: steps.before.outputs.dir == 'pages'
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          BASE_REF: ${{ steps.base.outputs.ref }}
+          SITE_DIR: ${{ inputs.site_dir }}
+        run: |
+          set -eu
+          if [ ! -f "$SITE_DIR/rendered-impact.json" ]; then
+            echo "no rendered-impact.json: nothing predicted, so nothing to measure"
+            exit 0
+          fi
+          bun run "$PLATFORM_DIR/cat-harness/scripts/measure-rendered-impact.ts" --before pages --after "$SITE_DIR" \
+            --predicted "$SITE_DIR/rendered-impact.json" --base "$(git rev-parse "origin/$BASE_REF")" \
+            --out "$SITE_DIR/rendered-measured.json"
+
       - name: Inject staging banner
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           SITE_DIR: ${{ inputs.site_dir }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
-          PR: ${{ github.event.pull_request.number || 'n/a' }}
+          PR: ${{ steps.pr.outputs.number || 'n/a' }}
           BEFORE_URL: ${{ steps.before.outputs.url }}
           BEFORE_LABEL: ${{ steps.before.outputs.label }}
         run: |
@@ -476,13 +563,13 @@ jobs:
         # builds via the preview's previous file (bean `423d`). A failure here
         # fails the build: a preview whose comment list silently went empty
         # would read as "nobody commented".
-        if: github.event_name == 'pull_request'
+        if: steps.pr.outputs.number != ''
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           FOLIO_DIR: ${{ inputs.folio_dir }}
           SITE_DIR: ${{ inputs.site_dir }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ steps.pr.outputs.number }}
           TODOS_DIR: ${{ inputs.todos_dir }}
           GITHUB_TOKEN: ${{ github.token }}
         run: |
@@ -495,6 +582,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --pr "$PR" --commit "$GITHUB_SHA" \
             --folio "$FOLIO_DIR" --blocks-out "$SITE_DIR/blocks.json" \
             --existing "pages/STAGING/$STAGING_SLUG/review-comments.json" \
+            --rendered "$SITE_DIR/rendered-impact.json" --measured "$SITE_DIR/rendered-measured.json" \
             --out "$SITE_DIR/review-comments.json"
 
       - name: Deploy the preview and log the render, in one commit
@@ -522,7 +610,7 @@ jobs:
           # the author meant to delete. The data files the steps above write
           # (changeset and its text, blocks, block QA, review comments, the
           # visual diff and its pictures) are not a site on their own.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|rendered-impact\.json|rendered-measured\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
@@ -560,9 +648,10 @@ jobs:
           done
 
       - name: Comment staging URL on PR
-        if: github.event_name == 'pull_request'
+        if: steps.pr.outputs.number != ''
         uses: actions/github-script@v9
         env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
           SLUG: ${{ steps.slug.outputs.slug }}
           BRANCH: ${{ steps.slug.outputs.branch }}
           SITE_DIR: ${{ inputs.site_dir }}
@@ -583,22 +672,61 @@ jobs:
             } catch {
               summary = "\n**Blocks changed:** could not be read — see the build log.\n";
             }
+            // The rendered list (bean bnjs): what review approves against.
+            let rendered = "\n**Rendered pages:** not known — this build published no rendered-impact.json.\n";
+            try {
+              const raw = JSON.parse(fs.readFileSync(`${process.env.SITE_DIR}/rendered-impact.json`, "utf8"));
+              const impacts = Array.isArray(raw) ? raw : [raw];
+              const rows = [];
+              let index = 0;
+              const unknown = [];
+              for (const imp of impacts) {
+                for (const f of imp.files) {
+                  if (f.role === "index") { index++; continue; }
+                  for (const a of f.anchors && f.anchors.length ? f.anchors : [null]) {
+                    const frag = a ? `#${encodeURIComponent(a)}` : "";
+                    const before = f.change === "added" ? "" : ` · [before](${process.env.BEFORE_URL}/${f.path}${frag})`;
+                    rows.push(`- ${f.change}: [\`${f.path}${a ? " › " + a : ""}\`](${url}${f.path}${frag})${before}`);
+                  }
+                }
+                for (const u of imp.undetermined || []) unknown.push(`- not known (${u.scope === "all" ? "any page" : "unknown pages"}): \`${u.input}\` — ${u.reason}`);
+              }
+              const shown = rows.slice(0, 20);
+              rendered = `\n**Rendered pages to review:** ${rows.length}` + (index ? ` (and ${index} index file(s), not listed)` : "") +
+                ` — [rendered-impact.json](${url}rendered-impact.json)\n` + shown.join("\n") +
+                (rows.length > shown.length ? `\n- … ${rows.length - shown.length} more on the [review page](${url}review/)` : "") +
+                (unknown.length ? `\n\n**Not known** (never read as "no change"):\n` + unknown.join("\n") : "") + "\n";
+            } catch {}
+            // What the build changed that the list above did not name (bean bnjs).
+            let measuredLine = "\n**Measured against main:** not measured — no published main site to compare with.\n";
+            try {
+              const m = JSON.parse(fs.readFileSync(`${process.env.SITE_DIR}/rendered-measured.json`, "utf8"));
+              const missed = m.check.missed;
+              measuredLine = m.status !== "known"
+                ? `\n**Measured against main:** main's site was built from \`${String(m.beforeCommit).slice(0, 7)}\`, not this PR's base, so missed pages are not counted.\n`
+                : missed.length
+                  ? `\n**Missed by the list above:** ${missed.length} page(s) the build changed but no renderer predicted — each needs a \`page:\` verdict — [rendered-measured.json](${url}rendered-measured.json)\n` +
+                    missed.slice(0, 20).map((p) => `- [\`${p}\`](${url}${p})`).join("\n") + "\n"
+                  : `\n**Measured against main:** the build changed nothing the list above did not name.\n`;
+            } catch {}
             const body = `## 🔍 Folio staging preview deployed
 
             **URL:** ${url}
             **Review page:** ${url}review/ (every changed block, before and after, with the heat map, outline and open comments)
             **Commit:** \`${sha}\`
             **Branch:** \`${process.env.BRANCH}\`
-            ${summary}
+            ${summary}${rendered}${measuredLine}
             > Compare with [${process.env.BEFORE_LABEL}'s site](${process.env.BEFORE_URL}/) to review changes.`;
-            const comments = await github.rest.issues.listComments({ owner, repo, issue_number: context.issue.number });
+            // From the pull-request step, not `context.issue`: a dispatched run has none.
+            const issue_number = Number(process.env.PR_NUMBER);
+            const comments = await github.rest.issues.listComments({ owner, repo, issue_number });
             const existing = comments.data.find(
               (c) => c.user.login === "github-actions[bot]" && c.body.includes("Folio staging preview deployed"),
             );
             if (existing) {
               await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
             } else {
-              await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
             }
 
   publish-main:
@@ -858,6 +986,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" --pr "$PR" \
               --commit "$(jq -r '.commit // "unknown"' "$DIR/review-comments.json" 2>/dev/null || echo unknown)" \
               --blocks "$DIR/blocks.json" --existing "$DIR/review-comments.json" \
+              --rendered "$DIR/rendered-impact.json" --measured "$DIR/rendered-measured.json" \
               --out "$DIR/review-comments.json"
             git -C pages add "STAGING/$SLUG/review-comments.json"
             git -C pages commit -m "review-comments($SLUG): refresh on a PR comment" || exit 0

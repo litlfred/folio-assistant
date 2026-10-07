@@ -76,6 +76,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -235,7 +240,7 @@
     border-radius: 3px;
     background: var(--iris-accent);
     color: #fff;
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
   .search-remote-box {
     border-top: 1px solid var(--iris-edge);
@@ -392,15 +397,15 @@
   <span>Обзор IRIS</span><span>Статистика</span><span>О репозитории</span><span>Контакты</span><span>Справка</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="community-list.html">Главная</a><span class="sep">•</span><span class="here">WHO handbook for guideline development</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="community-list.html">Главная</a><span class="sep">•</span><span class="here"><bdi lang="en">WHO handbook for guideline development</bdi></span></div></div>
 
 <main class="wrap">
-<h1>WHO handbook for guideline development</h1>
+<h1 dir="auto" lang="en">WHO handbook for guideline development</h1>
 <p>Постоянный URI этой записи
-  <a href="https://hdl.handle.net/10665/145714">https://hdl.handle.net/10665/145714</a>
+  <a href="https://hdl.handle.net/10665/145714"><bdi>https://hdl.handle.net/10665/145714</bdi></a>
   <span class="state materialized">материализовано</span></p>
 
-<p class="note" style="margin-inline-start:0">В: 1. Headquarters &rsaquo; Publications</p>
+<p class="note" style="margin-inline-start:0">В: <bdi>1. Headquarters</bdi> &rsaquo; <bdi>Publications</bdi></p>
 
 <h2>Файлы</h2>
 <table class="items">
@@ -425,15 +430,15 @@
 <table class="items">
 <thead><tr><th>Где</th><th>Ссылка</th></tr></thead>
 <tbody>
-<tr><td>У первоисточника, в ВОЗ</td><td><a href="https://hdl.handle.net/10665/145714">https://hdl.handle.net/10665/145714</a></td></tr>
+<tr><td>У первоисточника, в ВОЗ</td><td><a href="https://hdl.handle.net/10665/145714"><bdi>https://hdl.handle.net/10665/145714</bdi></a></td></tr>
 <tr><td>Хранится здесь, в folio-assistant</td>
     <td><span class="none" title="copyright: refused — The publication's copyright page (library/9789241548960-eng/sections/sec-000-who-handbook-for-guideline-development.md l.31-36): &quot;© World Health Organization 2014. All rights reserved. … Requests for permission to reproduce or translate WHO publications –whether for sale or for non-commercial distribution– should be addressed to WHO Press&quot;. No such permission has been sought.; restrictions: refused — Reproduction, for sale or non-commercial distribution alike, requires WHO Press's permission (same page, l.35-36); none has been sought.">хранится здесь, не опубликовано — copyright: refused, restrictions: refused</span></td></tr>
-<tr><td>В коллекции</td><td><a href="collection-collection-hq-publications.html">Publications</a><br><code>в 1. Headquarters</code></td></tr>
+<tr><td>В коллекции</td><td><a href="collection-collection-hq-publications.html"><bdi>Publications</bdi></a><br><code class="ui">в <bdi>1. Headquarters</bdi></code></td></tr>
 <tr><td>Импортированный текст (L1)</td>
-    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections">who-iris/library/9789241548960-eng/sections/</a></td></tr>
-<tr><td>Запись Dublin Core</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Скачать 9789241548960-eng.dc.json</a>
+    <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections"><bdi dir="ltr">who-iris/library/9789241548960-eng/sections/</bdi></a></td></tr>
+<tr><td>Запись Dublin Core</td><td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/9789241548960-eng.dc.json">Скачать <bdi>9789241548960-eng.dc.json</bdi></a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/9789241548960-eng.dc.json">через CDN</a>
-      <br><code>квалифицированный Dublin Core · 6,7 КБ</code></td></tr>
+      <br><code class="ui">квалифицированный Dublin Core · 6,7 КБ</code></td></tr>
 <tr><td>Представления Dublin Core</td><td><a href="../dublin-core/9789241548960-eng.dc.xml">Dublin Core XML</a>
       <br><a href="../dublin-core/9789241548960-eng.dc.jsonld">JSON-LD (термины DCMI)</a></td></tr>
 </tbody>
@@ -444,7 +449,7 @@
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Импортированная реплика.</strong> Создана на основе <code>who-iris/catalogue/</code> с помощью <code>who-iris/scripts/gen-iris-pages.ts</code>. Макет по образцу <a href="https://iris.who.int/community-list">iris.who.int</a>; каждое число на этой странице прочитано из каталога, а не скопировано со снимка экрана.</p>
+  <p><strong>Импортированная реплика.</strong> Создана на основе <code dir="ltr">who-iris/catalogue/</code> с помощью <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code>. Макет по образцу <a href="https://iris.who.int/community-list">iris.who.int</a>; каждое число на этой странице прочитано из каталога, а не скопировано со снимка экрана.</p>
   <div class="rule"></div>
   <p>Первоисточник: <a href="https://iris.who.int/">iris.who.int</a> — © ВОЗ. Эта копия не заявляет о каком-либо одобрении и не несёт никаких знаков ВОЗ.</p>
 </div></footer>

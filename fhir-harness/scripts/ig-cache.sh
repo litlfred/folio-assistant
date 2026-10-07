@@ -327,7 +327,12 @@ cmd_seed() {
     edges=$(grep -o '"target"' "$out/dependencies.json" 2>/dev/null | wc -l | tr -d ' ')
   fi
   
+  # The exporter records its toolchain in the manifest; the subject reads it
+  # from there rather than saying "Publisher unknown" (smart-trust#4).
   local pub_version="unknown"
+  if [ -f "$out/manifest.json" ] && command -v python3 >/dev/null 2>&1; then
+    pub_version=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("toolchain",{}).get("publisher") or "unknown")' "$out/manifest.json" 2>/dev/null || echo unknown)
+  fi
   local sha; sha=$(igit rev-parse --short HEAD 2>/dev/null || echo "unknown")
   
   if [ "$PUSH" -eq 1 ] && would_shrink "$br" "$n" "$edges"; then
@@ -344,6 +349,20 @@ cmd_seed() {
   
   cp -R "$out/"* "$tmp/" 2>/dev/null || true
   rm -f "$tmp/index.lock"
+  # `ig.root` is the builder's absolute path (`/Users/<name>/...`): it names a
+  # machine, not the cache, and nothing reads it. Record it relative to the IG.
+  if [ -f "$tmp/manifest.json" ] && command -v python3 >/dev/null 2>&1; then
+    python3 - "$tmp/manifest.json" <<'PY' || die "could not normalise ig.root in manifest.json"
+import json, sys
+p = sys.argv[1]
+m = json.load(open(p))
+if isinstance(m.get("ig"), dict) and "root" in m["ig"]:
+    m["ig"]["root"] = "."
+    with open(p, "w") as f:
+        json.dump(m, f, indent=2)
+        f.write("\n")
+PY
+  fi
   # txcache goes alongside AST on the branch
   if [ -d "$root/input-cache/txcache" ]; then
     cp -R "$root/input-cache/txcache" "$tmp/"
@@ -413,16 +432,30 @@ cmd_doctor() {
     warn "maven not found"
   fi
   
-  if curl -sI https://packages.fhir.org | grep -q '200 OK'; then
-    info "network: packages.fhir.org reachable"
+  probe_host packages.fhir.org
+  probe_host tx.fhir.org
+}
+
+# Is a host reachable, and if not, what to do about it? Bean `6mk7`: a refused
+# packages.fhir.org once left an agent concluding SUSHI could not run, while
+# the seeder for exactly that refusal sat in the Tool graph. The answer is the
+# graph's (`remedies` on each network Tool), not text kept here.
+#
+# The status is read as a CODE: the old `grep '200 OK'` never matches an
+# HTTP/2 status line (`HTTP/2 200`), so a reachable host read as unreachable.
+probe_host() {
+  local host="$1" code
+  code="$(curl -s -o /dev/null -I -w '%{http_code}' --max-time 15 "https://$host" 2>/dev/null || true)"
+  case "$code" in
+    2??|3??) info "network: $host reachable ($code)"; return 0 ;;
+  esac
+  warn "network: $host UNREACHABLE (${code:-no response})"
+  local root
+  root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+  if command -v bun >/dev/null 2>&1 && [ -f "$root/package.json" ]; then
+    (cd "$root" && bun run --silent tools:remedy "$host" 2>/dev/null) | sed 's/^/    → /' >&2 || true
   else
-    warn "network: packages.fhir.org UNREACHABLE"
-  fi
-  
-  if curl -sI https://tx.fhir.org | grep -q '200 OK'; then
-    info "network: tx.fhir.org reachable"
-  else
-    warn "network: tx.fhir.org UNREACHABLE"
+    warn "  what to do instead: bun run tools:remedy $host"
   fi
 }
 

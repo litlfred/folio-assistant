@@ -7,6 +7,7 @@ section_number: 3.2.1
 pages: 37-40
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The GDG is multidisciplinary and composed of individuals from all WHO 
 regions likely to use the guideline, except for employees of WHO or other 
@@ -55,7 +56,8 @@ area are critically important to GDGs but should not dominate the group.
 A balanced group includes a range of expertise and institutional and professional affiliations.
 3.2.1.3 End-users of the guideline
 People with direct experience in managing the condition or problem addressed 
-by the guideline and who will have a role in implementing the new recomChapter 3 
+by the guideline and who will have a role in implementing the new recom
+Chapter 3 
 Contributors and their role in guideline development
 27
 mendations − members of governmental and nongovernmental organizations, programme managers, health-care workers and other end-users of the 

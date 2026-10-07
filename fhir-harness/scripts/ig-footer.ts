@@ -3,8 +3,21 @@
  * OWN package — never typed in (#1901, owner 2026-10-02: *"The values should
  * come from the IG's own metadata … and must not be hard-coded"*).
  *
- * `gen-ig-pages.ts` writes the result once per IG as `assets/ig-footer.json`,
- * and `templates/ig-pages/ig-footer.js` draws it on every page.
+ * `gen-ig-pages.ts` writes the result once per IG as `assets/ig-footer.json`.
+ *
+ * ## One footer per site, drawn once
+ *
+ * In an IG site (`igSite`), EVERY page's footer — the IG's own pages and its
+ * artefact pages alike — is drawn by one Liquid include,
+ * `templates/ig-site/ig-footer.liquid`, from one object, `igSiteFooter`'s
+ * result in `site.data.fhir.footer`. That object lays the package's facts
+ * (the JSON above) over the IG source's (`sushiFooterData`) and decides the
+ * "Links:" row once, against the pages the site holds. Until the artefact
+ * pages joined it they drew a second footer of their own from the package
+ * alone, which had no © year and sent "Table of Contents" to the site root.
+ *
+ * `templates/ig-pages/ig-footer.js` still draws the footer where there is no
+ * IG site and so no IG source: artefact pages composed into another site.
  *
  * ## Where each value comes from, in order
  *
@@ -21,7 +34,7 @@
  * that clause out. The Publisher's "© 2023+" year is one such for a page
  * built from the package alone: it comes from `sushi-config.yaml`'s
  * `copyrightYear`, which the package does not carry. A page built WITH the
- * IG's source — the IG site's own pages (`build-ig-site.ts`) — reads it from
+ * IG's source — every page of an IG site (`build-ig-site.ts`) — reads it from
  * there (`sushiFooterData`), the package's values still winning.
  *
  * @module fhir-harness/scripts/ig-footer

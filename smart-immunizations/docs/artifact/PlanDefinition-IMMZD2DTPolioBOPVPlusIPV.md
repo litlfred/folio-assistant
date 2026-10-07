@@ -2,6 +2,10 @@
 title: "IMMZ.D2.DT.Polio.bOPV plus IPV — WHO SMART Immunizations artefact"
 description: "PlanDefinition/IMMZD2DTPolioBOPVPlusIPV in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "PlanDefinition-IMMZD2DTPolioBirthDose.html"
+ig_next: "PlanDefinition-IMMZD2DTPolioIPVOnly.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ IMMZ.D2.DT.Polio.bOPV plus IPV "Bivalent oral polio vaccine (bOPV) plus inactiva
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTPolioBirthDose.html" data-next="PlanDefinition-IMMZD2DTPolioIPVOnly.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

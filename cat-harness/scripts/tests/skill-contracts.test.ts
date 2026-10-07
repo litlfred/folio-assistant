@@ -1,3 +1,8 @@
+/**
+ * The tests of this file that read the whole checkout (resolves a contract
+ * held by folio-assistant-sci) live in `test/skill-contracts-checkout.test.ts`
+ * (bean `7zz1`): standing alone, cat-harness has none of it.
+ */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
@@ -33,15 +38,5 @@ describe("a skill names its own contracts (#1168, B3b)", () => {
       }
     }
     expect(missing).toEqual([]);
-  });
-
-  test("a local contract resolves against the instance HOLDING the skill (placement PR1)", () => {
-    // `latex-authoring` moved up to sci with its `schemas/skills/` contract.
-    // Resolved against the harness the ref names a file that is not there.
-    const c = skillContracts(INSTANCE).get("latex-authoring");
-    expect(c?.input).toBe("schemas/skills/latex-authoring/input.schema.json");
-    expect(c?.instanceRoot).toBe(resolve(INSTANCE, "..", "folio-assistant-sci"));
-    expect(existsSync(contractFile(c!.instanceRoot, c!.input!)!)).toBe(true);
-    expect(existsSync(contractFile(INSTANCE, c!.input!)!)).toBe(false);
   });
 });

@@ -7,6 +7,7 @@ section_number: 10.2.2
 pages: 136-137
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 This describes the relative importance assigned to health outcomes by those affected by 
 them; how such importance varies within and across populations; and whether this importance or variability is surrounded by uncertainty. The less uncertainty or variability there is 

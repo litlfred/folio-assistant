@@ -53,6 +53,7 @@ classDiagram
       title [0..1] string
       layer [0..1] 'core'
       perInstance [0..1] true
+      newInstanceSource [0..1] object
       renderable [1] boolean
       recordsWork [0..1] boolean
       holds [1] content | context | state | derived
@@ -230,6 +231,13 @@ classDiagram
     }
   }
   namespace folio_assistant_core__core_tools {
+    class folio_assistant_core_core_tools_Remedy["Remedy"] {
+      <<json: ToolDefinitionSchema>>
+      host [1] string
+      error [0..1] string
+      tool [0..1] string
+      none [0..1] string
+    }
     class folio_assistant_core_core_tools_Maintain["Maintain"] {
       <<json: ToolDefinitionSchema>>
       source [1] string
@@ -247,6 +255,7 @@ classDiagram
       satisfies [1..*] string[]
       selection [0..1] object
       requires [0..1] object
+      remedies [0..*] Remedy[]
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
@@ -282,6 +291,20 @@ classDiagram
       inspected_at [1] string
       attribution [0..1] Record~string,  inspected_by: unknown; inspected_at: string ~
       verdicts [1] Record~string, Record~string, Verdict~~
+    }
+    class folio_assistant_core_core_library_folio_keywords_v1_Document["Document"] {
+      <<json: KeywordsFileSchema>>
+      term [1] string
+      score [1] number
+      evidence [0..*] heading[]
+    }
+    class folio_assistant_core_core_library_folio_keywords_v1_folio_keywords_v1["folio-keywords/v1"] {
+      <<json: KeywordsFileSchema>>
+      $schema [1] 'folio-keywords/v1'
+      entry [1] string
+      corpus [1] object
+      document [0..*] Document[]
+      sections [1] map~object[]~
     }
   }
   namespace folio_assistant_core__core_methodologies {
@@ -403,6 +426,30 @@ classDiagram
       auditor [1] object
     }
   }
+  namespace folio_assistant_core__memory {
+    class folio_assistant_core_memory_AlsoAbout["AlsoAbout"] {
+      <<json: MemoryNodeSchema>>
+      kind [1] 'block'
+      label [1] string
+    }
+    class folio_assistant_core_memory_MemoryNode["MemoryNode"] {
+      <<json: MemoryNodeSchema>>
+      id [1] string
+      summary [1] string
+      comment [0..1] string
+      createdAt [1] string
+      updatedAt [0..1] string
+      targetLabel [0..1] string
+      anchor [0..1] object
+      alsoAbout [0..*] AlsoAbout[]
+      tags [0..1] object
+      label [1] stable | trap | baseline
+      measured [0..1] object
+      archived [0..1] boolean
+      detail [0..1] string
+      $schema [1] 'folio-memory/v1'
+    }
+  }
   namespace folio_assistant_core__voices {
     class folio_assistant_core_voices_Source["Source"] {
       <<json: VoiceProfileSchema>>
@@ -480,7 +527,9 @@ classDiagram
   folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1 *-- "0..*" folio_assistant_core_glossary_folio_glossary_v1_Term : terms
   cssClass "folio_assistant_core_glossary_folio_glossary_v1_Term" fa_uml_kind_glossary
   cssClass "folio_assistant_core_glossary_folio_glossary_v1_folio_glossary_v1" fa_uml_kind_glossary
+  folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Remedy : remedies
   folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
+  cssClass "folio_assistant_core_core_tools_Remedy" fa_uml_kind_tools
   cssClass "folio_assistant_core_core_tools_Maintain" fa_uml_kind_tools
   cssClass "folio_assistant_core_core_tools_ToolDefinition" fa_uml_kind_tools
   cssClass "n_folio_assistant_core_core_adapters_code" fa_uml_kind_code
@@ -489,8 +538,11 @@ classDiagram
   cssClass "n_folio_assistant_core_core_src_code" fa_uml_undetermined
   cssClass "n_folio_assistant_core_core_scripts_code" fa_uml_kind_code
   cssClass "n_folio_assistant_core_core_scripts_code" fa_uml_undetermined
+  folio_assistant_core_core_library_folio_keywords_v1_folio_keywords_v1 *-- "0..*" folio_assistant_core_core_library_folio_keywords_v1_Document : document
   cssClass "folio_assistant_core_core_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "folio_assistant_core_core_library_folio_image_verdicts_v1" fa_uml_kind_library
+  cssClass "folio_assistant_core_core_library_folio_keywords_v1_Document" fa_uml_kind_library
+  cssClass "folio_assistant_core_core_library_folio_keywords_v1_folio_keywords_v1" fa_uml_kind_library
   cssClass "n_folio_assistant_core_core_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_folio_assistant_core_core_methodologies_methodology" fa_uml_undetermined
   folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Source : sources
@@ -510,6 +562,9 @@ classDiagram
   cssClass "folio_assistant_core_core_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "folio_assistant_core_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "folio_assistant_core_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
+  folio_assistant_core_memory_MemoryNode *-- "0..*" folio_assistant_core_memory_AlsoAbout : alsoAbout
+  cssClass "folio_assistant_core_memory_AlsoAbout" fa_uml_kind_memory
+  cssClass "folio_assistant_core_memory_MemoryNode" fa_uml_kind_memory
   folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
   folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
   folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology

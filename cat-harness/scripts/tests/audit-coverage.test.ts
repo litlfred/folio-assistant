@@ -10,7 +10,7 @@
  *
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/code-quality-gates.yml`) live in
- * `cat-harness-tools/scripts/tests/audit-coverage-workflows.test.ts` (bean
+ * `test/audit-coverage-workflows.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
@@ -175,7 +175,7 @@ describe("the report over this repository", () => {
   });
 
   test("the two kinds `3oqj` typed are typed, and their real nodes parse", () => {
-    // The regression this guards: `interaction/interaction.json` is read at the
+    // The regression this guards: `cat-harness/memory/interaction.json` is read at the
     // start of every session by jq in a shell script whose failure branch
     // prints "(could not parse — read it by hand)". A malformed node degrades
     // to a line nobody acts on, so the schema is what makes it fail loudly.

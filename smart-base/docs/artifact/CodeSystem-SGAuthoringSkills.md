@@ -2,6 +2,10 @@
 title: "SMART Guidelines Authoring Skills — WHO SMART Base artefact"
 description: "CodeSystem/SGAuthoringSkills in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "CodeSystem-SGAuthoringPersonaTypes.html"
+ig_next: "CodeSystem-SGPersonaTypes.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ CodeSystem for SMART Guidelines authoring skill capabilities. Each code represen
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="CodeSystem-SGAuthoringPersonaTypes.html" data-next="CodeSystem-SGPersonaTypes.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

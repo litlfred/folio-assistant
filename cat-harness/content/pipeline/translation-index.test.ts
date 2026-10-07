@@ -62,7 +62,9 @@ const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..
  */
 function instance(
   files: Record<string, string>,
-  config: Record<string, unknown> = { contentType: "document" },
+  // `docs`, the profile cat-harness declares itself (bean `0r7u`): these test
+  // the index's mechanics, which must hold in a standalone cat-harness too.
+  config: Record<string, unknown> = { contentType: "docs" },
 ): { root: string; dispose: () => void } {
   const root = mkdtempSync(join(tmpdir(), "translation-index-"));
   writeInstanceConfig(root, JSON.stringify(config, null, 2));
@@ -173,7 +175,7 @@ describe("a page is a translation because IT says so", () => {
         [`${SITE_DIR}/en/index.md`]:
           "---\ntitle: Home (EN)\nlang: en\nnav_exclude: true\ntranslation_source: index.md\n---\n\n# Home\n",
       },
-      { contentType: "document", translation: { defaultLocale: "fr" } },
+      { contentType: "docs", translation: { defaultLocale: "fr" } },
     );
     try {
       const { index, findings } = buildTranslationIndex(root);
@@ -188,10 +190,10 @@ describe("a page is a translation because IT says so", () => {
   it("only formats the CONTENT TYPE declares translatable are walked", () => {
     // The owner's model: "its not so much the node schema itself but its
     // content (e.g. markdown, bpmn) should be translatable". `.json` is not a
-    // translatable format for a document folio, so a JSON file carrying a
+    // translatable format for a docs site, so a JSON file carrying a
     // `lang` is not a page of any language — it is data.
-    expect(isTranslatable("document", ".md")).toBe(true);
-    expect(isTranslatable("document", ".json")).toBe(false);
+    expect(isTranslatable("docs", ".md")).toBe(true);
+    expect(isTranslatable("docs", ".json")).toBe(false);
     const { root, dispose } = instance({
       [`${SITE_DIR}/index.md`]: SOURCE_PAGE,
       [`${SITE_DIR}/data-fr.json`]: '{"lang":"fr"}',

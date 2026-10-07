@@ -7,6 +7,7 @@ section_number: 1.7.2
 pages: 18-19
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A consolidated guideline (also known as a compilation of guidelines) contains recommendations from existing WHO guidelines, or from guidelines 
 produced by other organizations that have followed processes consistent 

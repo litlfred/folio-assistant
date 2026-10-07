@@ -1,55 +1,17 @@
+/**
+ * The tests of this file that read the whole checkout (reads the content-type
+ * processes folio-assistant-core and -sci ship) live in
+ * `test/workflow-gate-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
+ */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
-import { join, resolve } from "path";
-import { loadProcessModel } from "../../src/workflow/process-model";
+import { join } from "path";
 import {
   loadRelaxations,
   PolicyError,
-  validateRelaxations,
 } from "../../src/workflow/gate";
-import { workflowFile } from "../known-skills.ts";
-
-/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
-const HARNESS = resolve(import.meta.dir, "../..");
-
-/**
- * The decision in bean `bcnl`: **strict at the base, relaxable by content
- * packages that say so.**
- *
- * The content-agnostic processes enforce. A per-content-type process is
- * advisory, because what counts as adequate review of a Lean proof and of a
- * FHIR profile are different questions and the package that knows the domain
- * should answer them.
- *
- * What makes that a policy rather than a loophole is what these tests pin: a
- * relaxation needs a stated reason, it must name something real, and it cannot
- * name the gate itself.
- *
- * The tests that pin folio-assistant-core's OWN diagrams (`editing-hci-validation`,
- * `draft-to-publication`, `content-lifecycle`) live beside them, in
- * `folio-assistant-core/scripts/tests/workflow-gate.test.ts`, and the advisory
- * run of `authoring-a-paper` in folio-assistant-sci's (bean `ho66`).
- */
-
-/**
- * Where a shipped diagram lives. Not one directory: a content-type process is
- * held by the instance that owns its skills (`l2-dak-authoring` in smart-base,
- * #1772; the paper and document processes since placement PR3, bean `63wl`),
- * and each instance groups its diagrams by concern. So a diagram is found by
- * NAME through the declared `processes` graphs.
- */
-const processFile = (f: string): string => workflowFile(HARNESS, `${f}.bpmn`);
-const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
-
-describe("the base is strict and the content-type processes are not", () => {
-  test("the three per-content-type processes are advisory", async () => {
-    for (const f of ["authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
-      expect((await loadProcessModel(processFile(f))).enforcement).toBe("advisory");
-    }
-  });
-
-});
 
 describe("reading the package policy files", () => {
   test("a relaxation with no reason does not load", () => {
@@ -87,23 +49,5 @@ describe("reading the package policy files", () => {
     mkdirSync(join(repo, "skills", "quiet"), { recursive: true });
     expect(loadRelaxations(repo)).toEqual([]);
     rmSync(repo, { recursive: true, force: true });
-  });
-});
-
-describe("the relaxations this repo actually ships", () => {
-  test("all of them are legal against the real processes", async () => {
-    const models = await Promise.all(
-      ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
-       "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"].map((f) =>
-        loadProcessModel(processFile(f)),
-      ),
-    );
-    const relaxations = loadRelaxations(INSTANCE_ROOT);
-    expect(() => validateRelaxations(relaxations, models)).not.toThrow();
-    // Every one is attributed and explained — the file is the record.
-    for (const r of relaxations) {
-      expect(r.package).toBeTruthy();
-      expect(r.reason.length).toBeGreaterThan(20);
-    }
   });
 });

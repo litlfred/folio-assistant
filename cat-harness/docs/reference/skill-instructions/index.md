@@ -109,6 +109,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Package: `graph-management` |
 | [Knowledge Graph separation](kg-separation.html) | `kg-separation` | — | > Skill id: `kg-separation` · Package: `graph-management` |
 | [LSI indexing](lsi-indexing.html) | `lsi-indexing` | — | **The method is the node, not this file.** [`lsi`](https://github.com/litlfred/folio-assistant/blob/ |
+| [Sub-KG lifecycle](sub-kg-lifecycle.html) | `sub-kg-lifecycle` | — | > Skill id: `sub-kg-lifecycle` · Package: `graph-management` |
 
 ## Knowledge graph — declaration, placement, export, audit (kg-core)
 
@@ -131,6 +132,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [KG export](kg-export.html) | `kg-export` | — | **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph |
 | [KG → package → distribution → portal](kg-to-portal.html) | `kg-to-portal` | — | A knowledge graph is in a repository. A portal — a Moodle site, a ministry's |
 | [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |
+| [Remote-mount a harness](remote-mount.html) | `remote-mount` | — | The owner, 2026-10-06, ruled on how a downstream folio gets the layers it is |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |
 | [Adding a](skill-registration.html) | `skill-registration` | — | One command, before you commit: |
 | [Skill voice review](skill-voice-review.html) | `skill-voice-review` | — |  |
@@ -229,6 +231,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [/before-after-preview](before-after-preview.html) | `before-after-preview` | — | > Skill id: `before-after-preview` · Package: `sdlc-core` · Issue: #1710 · |
+| [Blocked build dependencies](blocked-build-dependencies.html) | `blocked-build-dependencies` | — | Outbound HTTPS from an agent container goes through a proxy. A failed download |
 | [Branch archaeology: what each branch holds that main does not](branch-archaeology.html) | `branch-archaeology` | — | The question sounds like `git branch -r --no-merged`, and that command answers |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
@@ -267,6 +270,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
 | [Ref stewardship](ref-stewardship.html) | `ref-stewardship` | — | A **watched ref** is a long-lived branch that several processes write and that |
 | [Related work: find it, sort it, ask](related-work-coordination.html) | `related-work-coordination` | — | Owner, 2026-09-23 (issue #1023): *"when CRDM is initiated/updated through human agent chat discussio |
+| [Rendered impact](rendered-impact.html) | `rendered-impact` | — | > Skill id: `rendered-impact` · Package: `sdlc-core` · Bean: `bnjs` · Epic: `q4jm` · Issue #971 |
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Package: `sdlc-core` |
@@ -395,6 +399,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [fhir-ig-create](fhir-ig-create.html) | `fhir-ig-create` | — | > Skill id: `fhir-ig-create` · Package: `fhir-ig-base` · Instance: `fhir-harness` |
 | [ig-ast-delta](ig-ast-delta.html) | `ig-ast-delta` | — | > Skill id: `ig-ast-delta` · Package: `fhir-ig-base` · Instance: |
 | [ig-binary-artefacts](ig-binary-artefacts.html) | `ig-binary-artefacts` | — | > Skill id: `ig-binary-artefacts` · Package: `fhir-ig-base` · Instance: |
 | [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
@@ -503,12 +508,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [dak-l1-library](dak-l1-library.html) | `dak-l1-library` | — | > Skill id: `dak-l1-library` · Package: `authoring-who-smart-guidelines` · |
 | [dak-postprocessing](dak-postprocessing.html) | `dak-postprocessing` | — | > Skill id: `dak-postprocessing` · Package: `authoring-who-smart-guidelines` · |
 | [dak-preprocessing](dak-preprocessing.html) | `dak-preprocessing` | — | > Skill id: `dak-preprocessing` · Package: `authoring-who-smart-guidelines` · |
 | [grade](grade.html) | `grade` | — | > Skill id: `grade` · Package: `authoring-who-smart-guidelines` · The grading |
 | [ig-artifact-ingestion](ig-artifact-ingestion.html) | `ig-artifact-ingestion` | — | > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` · |
 | [l2-dak-authoring](l2-dak-authoring.html) | `l2-dak-authoring` | [schema](../skills/l2-dak-authoring.html) | > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` · |
 | [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Package: |
+| [smart-guideline-create](smart-guideline-create.html) | `smart-guideline-create` | — | > Skill id: `smart-guideline-create` · Package: `authoring-who-smart-guidelines` |
 | [smart-stack-layering](smart-stack-layering.html) | `smart-stack-layering` | — | > Skill id: `smart-stack-layering` · Package: `authoring-who-smart-guidelines` |
 | [toolchain-ownership](toolchain-ownership.html) | `toolchain-ownership` | — | > Skill id: `toolchain-ownership` · Package: `authoring-who-smart-guidelines` · |
 

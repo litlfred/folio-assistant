@@ -125,7 +125,7 @@ describe("regenPass with folds", () => {
 describe("the equivalences still hold in this tree", () => {
   // "every residual is a script, and every coverer a pair regen asks" reads
   // the CI workflows, so it lives in
-  // `cat-harness-tools/scripts/tests/pair-cover-workflows.test.ts`: a
+  // `test/pair-cover-workflows.test.ts`: a
   // standalone cat-harness layer has no workflows to read.
 
   test("skill:register's residual is its gate plus --declarations-only, and its chain names scripts", () => {

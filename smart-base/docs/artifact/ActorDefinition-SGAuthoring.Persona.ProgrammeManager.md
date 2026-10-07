@@ -2,6 +2,10 @@
 title: "Programme Manager — WHO SMART Base artefact"
 description: "ActorDefinition/SGAuthoring.Persona.ProgrammeManager in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ActorDefinition-SGAuthoring.Persona.FHIRModeller.html"
+ig_next: "ActorDefinition-SGAuthoring.Persona.PublicationManager.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ A programme manager responsible for the overall coordination and management of t
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ActorDefinition-SGAuthoring.Persona.FHIRModeller.html" data-next="ActorDefinition-SGAuthoring.Persona.PublicationManager.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

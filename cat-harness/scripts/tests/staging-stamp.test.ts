@@ -9,7 +9,7 @@
  *
  * The tests here that read the aggregate repository's own root
  * (`.github/workflows/feature-staging.yml`) live in
- * `cat-harness-tools/scripts/tests/staging-stamp-workflows.test.ts` (bean
+ * `test/staging-stamp-workflows.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, it } from "bun:test";

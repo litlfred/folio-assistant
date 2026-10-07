@@ -76,6 +76,11 @@
   .none { color: var(--iris-muted); font-style: italic; }
   /* The CDN link is secondary to the one that is known to work. */
   .cdn { font-size: 0.88em; color: var(--iris-ingested); }
+  /* TRANSLATED text set in the code face (a size, a container path). Arabic is
+     cursive, and a monospace face gives every letter its own cell, so on the ar
+     page "ميغابايت" rendered as eight separate letters (bean lffo). There it
+     takes the page's face; Latin and CJK keep the code look. */
+  code.ui:lang(ar) { font-family: inherit; }
   .nologo {
     margin-inline-start: auto; font-size: 0.78rem; color: var(--iris-muted);
     text-align: end; max-width: 16rem;
@@ -235,7 +240,7 @@
     border-radius: 3px;
     background: var(--iris-accent);
     color: #fff;
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
   .search-remote-box {
     border-top: 1px solid var(--iris-edge);
@@ -390,15 +395,15 @@
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
-<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here">Information products</span></div></div>
+<div class="crumbs"><div class="wrap"><a href="community-list.html">Home</a><span class="sep">•</span><span class="here"><bdi>Information products</bdi></span></div></div>
 
 <main class="wrap">
-<h1>Information products</h1>
+<h1 dir="auto">Information products</h1>
 <p>Permanent URI for this collection
-  <a href="https://iris.who.int/communities/ebd3b191-c322-4754-9415-469a1a0eb0c3">https://iris.who.int/communities/ebd3b191-c322-4754-9415-469a1a0eb0c3</a>
+  <a href="https://iris.who.int/communities/ebd3b191-c322-4754-9415-469a1a0eb0c3"><bdi>https://iris.who.int/communities/ebd3b191-c322-4754-9415-469a1a0eb0c3</bdi></a>
   <span class="state referenced">referenced</span></p>
 
-<div class="caveat"><p><strong>How this node was established.</strong> Measured from the breadcrumb on the captured item page: 'Home &gt; 7. Regional Office for the ... &gt; Regional Office for the W... &gt; Information products'. FOUR levels, of which the middle two are communities -- which is why <code>parents</code> is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.</p></div>
+<div class="caveat"><p><strong>How this node was established.</strong> <bdi>Measured from the breadcrumb on the captured item page: 'Home &gt; 7. Regional Office for the ... &gt; Regional Office for the W... &gt; Information products'. FOUR levels, of which the middle two are communities -- which is why <code>parents</code> is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.</bdi></p></div>
 
 <h2>Items in this Collection</h2>
 <p>Now showing 1 – 1 of 1 <em>modelled</em>. The upstream collection is larger; this catalogue holds what was materialised, and says so per row.</p>
@@ -407,13 +412,13 @@
 <thead><tr><th>Item</th><th>State</th><th>Upstream</th><th>Held copy</th><th>Metadata record</th></tr></thead>
 <tbody>
 <tr>
-  <td><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a><br><code>wpr-rdo-2020-003-eng</code></td>
+  <td><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html"><bdi>Publication and information products style guide</bdi></a><br><code>wpr-rdo-2020-003-eng</code></td>
   <td><span class="state materialized">materialized</span></td>
   <td class="dl"><a href="https://hdl.handle.net/10665/332098">IRIS source →</a><br><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Local replica →</a></td>
-  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via CDN</a> &middot; <code>2.68 MB</code></td>
-  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a>
+  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via CDN</a> &middot; <code class="ui">2.68 MB</code></td>
+  <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download <bdi>wpr-rdo-2020-003-eng.dc.json</bdi></a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">via CDN</a>
-      <br><code>qualified Dublin Core · 5.0 KB</code></td>
+      <br><code class="ui">qualified Dublin Core · 5.0 KB</code></td>
 </tr>
 </tbody>
 </table>
@@ -421,7 +426,7 @@
 </main>
 
 <footer class="mast"><div class="wrap">
-  <p><strong>Ingested replica.</strong> Rendered from <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <p><strong>Ingested replica.</strong> Rendered from <code dir="ltr">who-iris/catalogue/</code> by <code dir="ltr">who-iris/scripts/gen-iris-pages.ts</code>. Layout after <a href="https://iris.who.int/community-list">iris.who.int</a>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
   <div class="rule"></div>
   <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO. This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>

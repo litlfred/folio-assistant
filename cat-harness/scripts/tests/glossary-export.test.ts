@@ -17,6 +17,11 @@
  * "every concept has a definition" passes perfectly over a document with no
  * concepts — `6tkl`, which this repository has introduced more than once in
  * the tests written to prevent it.
+ *
+ * The tests of this file that read the whole checkout (reads roles another
+ * instance (folio-assistant-core) draws) live in
+ * `test/glossary-export-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -152,19 +157,6 @@ describe("the corpus it is actually run against", () => {
     const ids = new Set(concepts(doc).map((c) => c["@id"] as string));
     for (const r of report.undrawn) {
       expect([...ids].some((i) => i.endsWith(`#role/${r}`))).toBe(true);
-    }
-  });
-
-  test("an undrawn role another instance draws is told apart from one drawn nowhere (bean nafz)", () => {
-    // The walk is per instance, so "no swimlane draws" is a fact about the
-    // walk. deep-researcher's lane is in folio-assistant-core, bound by
-    // <folio:role ref>; the report must say where rather than list it beside
-    // roles no diagram in the repository draws.
-    const dr = report.drawnElsewhere.find((d) => d.role === "deep-researcher");
-    expect(dr?.files.some((f) => f.startsWith("folio-assistant-core/"))).toBe(true);
-    for (const d of report.drawnElsewhere) {
-      expect(report.undrawn).toContain(d.role);
-      for (const f of d.files) expect(f.startsWith("cat-harness/")).toBe(false);
     }
   });
 

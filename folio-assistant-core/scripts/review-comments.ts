@@ -55,7 +55,7 @@ import { dirname, resolve } from "node:path";
 
 import { snapshot } from "../schemas/changeset.js";
 import { feedbackDir, readCommitted } from "./review-comment-move.js";
-import { readCommittedVerdicts, verdictsDir } from "./review-coverage.js";
+import { pinMaps, readCommittedVerdicts, renderedFacts, verdictsDir } from "./review-coverage.js";
 import {
   REVIEW_COMMENTS_FILE_SCHEMA,
   ReviewCommentsFileSchema,
@@ -66,7 +66,7 @@ import {
   type ReviewComment,
   type ReviewCommentsFile,
 } from "../schemas/review-comment.js";
-import { ingestVerdicts, parseVerdictTag, type ReviewVerdict } from "../schemas/review-verdict.js";
+import { ingestVerdicts, parseVerdictTag, type RenderedFacts, type ReviewVerdict } from "../schemas/review-verdict.js";
 
 /** `blocks.json`: label → the content hash and former labels. */
 export type BlocksFile = Record<string, BlockAnchor>;
@@ -118,6 +118,8 @@ export interface RunOptions {
   committed?: ReadonlyMap<string, ReviewComment>;
   /** Verdicts committed on the feature branch, by id. They win over `existing`. */
   committedVerdicts?: ReadonlyMap<string, ReviewVerdict>;
+  /** The build's rendered impact (and measurement): what a `page:` or `input:` verdict may name (bean `bnjs`). */
+  rendered?: RenderedFacts;
   now?: string;
 }
 
@@ -136,7 +138,8 @@ export function buildReviewComments(o: RunOptions): ReviewCommentsFile {
   const cv = o.committedVerdicts ?? new Map<string, ReviewVerdict>();
   const prevVerdicts: ReviewVerdict[] = (o.existing?.verdicts ?? []).map((v) => cv.get(v.id) ?? v);
   for (const [id, v] of cv) if (!prevVerdicts.some((p) => p.id === id)) prevVerdicts.push(v);
-  const vr = ingestVerdicts({ repo: o.repo, pr: o.pr, commit: o.commit, comments: o.comments, existing: prevVerdicts, blocks: hashes });
+  const pins = o.rendered ? pinMaps(o.rendered) : undefined;
+  const vr = ingestVerdicts({ repo: o.repo, pr: o.pr, commit: o.commit, comments: o.comments, existing: prevVerdicts, blocks: hashes, ...pins });
   // `parseReviewTag` passes a verdict tag over, so it counted as untagged there. It is not.
   const verdictTagged = o.comments.filter((c) => parseVerdictTag(c.body) !== null).length;
   return ReviewCommentsFileSchema.parse({
@@ -164,6 +167,8 @@ const USAGE = `usage: bun run folio-assistant-core/scripts/review-comments.ts
   [--existing <previous review-comments.json>] [--commit <sha>]
   [--todos <todos graph root>]  statuses committed on the feature branch win
   [--comments <file.json>]   read comments from a file instead of GitHub (offline, tests)
+  [--rendered <rendered-impact.json> [--measured <rendered-measured.json>]]
+                             what a \`page:\` or \`input:\` verdict may name, with its pin
 
 GITHUB_TOKEN is used when set. A public repository can be read without it.`;
 
@@ -229,7 +234,15 @@ if (import.meta.main) {
       console.error(`⚠ no committed verdicts read: ${(e as Error).message}`);
     }
   }
-  const file = buildReviewComments({ repo, pr, commit, comments, blocks, existing, committed, committedVerdicts });
+  // Without the build's rendered impact a `page:`/`input:` verdict is reported
+  // malformed, saying why, rather than recorded against nothing.
+  const renderedPath = opt("rendered");
+  const measuredPath = opt("measured");
+  const rendered =
+    renderedPath && existsSync(renderedPath)
+      ? renderedFacts(readJson(renderedPath), measuredPath && existsSync(measuredPath) ? readJson(measuredPath) : undefined)
+      : undefined;
+  const file = buildReviewComments({ repo, pr, commit, comments, blocks, existing, committed, committedVerdicts, rendered });
   writeJson(out, file);
   const orphaned = file.comments.filter((c) => c.review.orphaned).length;
   console.error(

@@ -8,7 +8,7 @@
  *
  * The tests here that read the aggregate repository's own root (the
  * `.gitignore` and the root-declared `fsh-guts` trashcan) live in
- * `cat-harness-tools/scripts/tests/activity-log-repo-root.test.ts` (bean
+ * `test/activity-log-repo-root.test.ts` (bean
  * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";

@@ -237,6 +237,14 @@
       "graphTypologies": [
         "qa"
       ]
+    },
+    {
+      "id": "memory",
+      "path": "memory/",
+      "description": "Agent memory about content authoring, review and publication: lessons (block kinds, the document render path, normative statements, locale directories) an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each. Read by cat-harness's `agent-memory` assembler alongside every other instance's declared `memory` directory. Split from the repository root's `memory/` on the owner's ruling of 2026-10-06 (bean `ar1s`).",
+      "graphTypologies": [
+        "memory"
+      ]
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first. `cat-harness-tools` added 2026-10-01 on owner ruling C1 (epic 7x5n, bean rmi6): the tool implementation layer sits BELOW this one, so core may use it and it may never use core.",
@@ -268,6 +276,7 @@
       "because": "39 s — exits before writing; compares without the POT timestamp — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
     "check:catalogue": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
@@ -276,10 +285,12 @@
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
     "check:voices": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
     "dc:render:check": {
+      "inputs": ["{tracked}"],
       "outputs": [],
       "because": "returns before `writeFileSync` — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     },
@@ -287,5 +298,27 @@
       "outputs": [],
       "because": "`checkMaterializations` is offline and reads — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)"
     }
-  }
+  },
+  "contentTranslations": [
+    {
+      "contentType": "document",
+      "name": "Document (generic prose)",
+      "formats": [
+        {
+          "id": "markdown",
+          "name": "Markdown",
+          "extensions": [
+            ".md"
+          ],
+          "smartBaseScript": "extract_translations.py",
+          "smartBaseExtractRef": "L633–856 (extract_markdown)",
+          "smartBaseInjectRef": "inject_translations.py L56–818",
+          "extractModule": "content/pipeline/pot-extract.ts",
+          "injectModule": "content/pipeline/po-inject.ts"
+        }
+      ],
+      "rtlSupported": true,
+      "notes": "Base content type. All other types inherit Markdown translation."
+    }
+  ]
 }

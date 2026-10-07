@@ -9,6 +9,12 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>> {
+  class "Remedy" as fhir_harness_fhir_ig_tools_Remedy <<json: ToolDefinitionSchema>> #eee9f5 {
+    host [1] : string
+    error [0..1] : string
+    tool [0..1] : string
+    none [0..1] : string
+  }
   class "Maintain" as fhir_harness_fhir_ig_tools_Maintain <<json: ToolDefinitionSchema>> #eee9f5 {
     source [1] : string
     artefact [1] : string
@@ -24,6 +30,7 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     satisfies [1..*] : string[]
     selection [0..1] : object
     requires [0..1] : object
+    remedies [0..*] : Remedy[]
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
@@ -31,5 +38,6 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
   }
 }
 
+fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Remedy : remedies
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
 @enduml

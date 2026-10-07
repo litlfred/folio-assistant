@@ -30,24 +30,16 @@
  * DISAGREES, has no instance — and passes only the first and third. An
  * `instance` naming a directory that does not exist fails, so the escape
  * hatch cannot be used to paper over a missing one.
+ *
+ * The tests of this file that read the whole checkout (reads every staged
+ * instance's declaration in the checkout) live in
+ * `test/partition-names-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
 
-import { describe, expect, test } from "bun:test";
+import { expect, test } from "bun:test";
 
 import { REPOS } from "../partition/instance-rules.js";
-
-const ROOT = join(import.meta.dir, "..", "..", "..");
-
-/** The `name` an instance declares for itself, or `undefined` if it has no declaration. */
-function declaredName(instance: string): string | undefined {
-  const path = join(ROOT, instance, `${instance}.json`);
-  if (!existsSync(path)) return undefined;
-  const parsed: unknown = JSON.parse(readFileSync(path, "utf8"));
-  const name = (parsed as { name?: unknown }).name;
-  return typeof name === "string" ? name : undefined;
-}
 
 /**
  * The entries that name a staging instance, narrowed so `instance` is a string.
@@ -59,27 +51,6 @@ function declaredName(instance: string): string | undefined {
  * everywhere, is checkable once.
  */
 const STAGED = REPOS.filter((r): r is typeof r & { instance: string } => r.instance !== undefined);
-
-describe("every staged target repo agrees with its instance's declaration", () => {
-  for (const repo of STAGED) {
-    test(`${repo.id}: \`${repo.instance}\` is declared under that name`, () => {
-      const declared = declaredName(repo.instance);
-      expect(
-        declared,
-        `REPOS says target \`${repo.id}\` is staged in \`${repo.instance}/\`, but no ` +
-          `\`${repo.instance}/${repo.instance}.json\` declares a name. Either the ` +
-          `directory moved, or \`instance\` should be dropped because nothing stages ` +
-          `this target yet — do not leave it pointing at nothing.`,
-      ).toBeDefined();
-      expect(
-        declared,
-        `\`${repo.instance}/\` declares itself \`${declared}\`, which is not ` +
-          `\`${repo.instance}\`. The DECLARATION wins: update REPOS[].instance, ` +
-          `never the declaration, to match it.`,
-      ).toBe(repo.instance);
-    });
-  }
-});
 
 test("a target with no instance is a PLAN, and is allowed to have one", () => {
   // Anti-vacuity in the other direction. If every target gained an `instance`,

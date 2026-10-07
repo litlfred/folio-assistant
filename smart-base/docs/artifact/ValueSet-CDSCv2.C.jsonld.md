@@ -3,6 +3,8 @@ title: "Services and Application Types: Registries and Directories — JSON-LD"
 description: "The JSON-LD sidecar of ValueSet/CDSCv2.C, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON-LD","file":"ValueSet-CDSCv2.C.jsonld","src":"../fhir-artifact-index/dak/ValueSet-CDSCv2.C.jsonld","artifact":{"title":"Services and Application Types: Registries and Directories","page":"ValueSet-CDSCv2.C.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-CDSCv2.C.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.C.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.C.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.C.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-CDSCv2.C.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-CDSCv2.C.jsonld.html","active":true}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

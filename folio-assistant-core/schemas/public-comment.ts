@@ -75,6 +75,7 @@ import { createHash } from "node:crypto";
 import { z } from "zod";
 
 import { nodeKind } from "../../cat-harness/schemas/node-kind.js";
+import { RenderedImpactSchema } from "../../cat-harness/schemas/rendered-impact.js";
 import { TodoNodeKind } from "../../cat-harness/schemas/todo.js";
 
 export const PUBLIC_COMMENT_SCHEMA = "public-comment/1.0.0" as const;
@@ -465,7 +466,13 @@ export const ChangeSetHistorySchema = z.object({
 });
 
 /**
- * One change to the document, answering a group of comments (issue #2183).
+ * One change to a folio (issue #2183; made general, issue #971, bean `bnjs`).
+ *
+ * Born answering a group of public comments, and still that in a
+ * public-comment folio; since 2026-10-06 it is the Change Set for ANY folio
+ * change (owner: "generalize/apply concept from Ref Arch"). A change that
+ * answers no comment has empty `refs`. It applies to the MATERIALISED folio,
+ * never to the `library/` source it was materialised from.
  *
  * THIS FILE IS THE ONLY RECORD of a change-set: its title, requirements,
  * members, status and issues. A comment's change-sets are DERIVED from these
@@ -485,8 +492,11 @@ const ChangeSetFields = {
   title: z.string().min(1),
   /** What the change should do, in the editor's terms: the issue's requirements. */
   requirements: z.string().min(1),
-  /** The comments it answers. A comment may be in more than one change-set. */
-  refs: z.array(z.string().regex(/^PC-\d{4,}$/)),
+  /**
+   * The comments it answers, if any. A comment may be in more than one
+   * change-set. Empty for a change that answers no public comment.
+   */
+  refs: z.array(z.string().regex(/^PC-\d{4,}$/)).default([]),
   /** The section or block the change is mainly about, for ordering. */
   anchor: z.string().optional(),
   status: z.enum(CHANGE_SET_STATUSES).default("proposed"),
@@ -501,6 +511,13 @@ const ChangeSetFields = {
   proposedBy: z.string().min(1),
   proposedAt: z.string().min(1),
   history: z.array(ChangeSetHistorySchema).default([]),
+  /**
+   * What the change does to each rendered site: one `rendered-impact/v1` per
+   * renderer that builds the folio, cone-predicted when the PR opens and
+   * checked against a build diff (skill `rendered-impact`). Review approves
+   * against these lists. Absent until a PR exists.
+   */
+  rendered: z.array(RenderedImpactSchema).optional(),
 };
 
 /**

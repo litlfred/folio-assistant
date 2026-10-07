@@ -476,11 +476,50 @@ per-checkout `git config`.
 
 **Every merge a steward makes goes through `bun run merge:guard <pr> --merge
 --session <your session id>`.** Never `gh api -X PUT …/pulls/<n>/merge`,
-never the web button, never `merge_pull_request` from an MCP tool, and never
-by marking a PR ready or labelling it yourself first. The script
+never the web button, never `merge_pull_request` from an MCP tool, and, while a
+Merge Manager is active, never by marking a PR ready or labelling it yourself
+first (with none active, see §"When no Merge Manager is active"). The script
 (`cat-harness/scripts/merge-guard.ts`, bean `uoob`, child (f) of `nok9`) is
 the merge: it evaluates eight checks over GitHub's live facts, and performs
 the PUT, pinned to the head it evaluated, only when every one passes.
+
+### When no Merge Manager is active, the owning session merges (owner ruling 2026-10-06)
+
+The separation between the session that marks a PR ready and the session that
+merges it exists **only while a Merge Manager is active**. Owner, 2026-10-06:
+*"that only applies if there is an active Merge Manager. there isnt one right
+now"*, and "not just for this session".
+
+With no Merge Manager active, the PR's own session lands it once the owner has
+said to merge. It still goes through the guard:
+
+```
+bun run merge:guard <pr> --merge --session <your session id> --no-merge-manager
+```
+
+`--no-merge-manager` lifts **one** thing: check 2's refusal of a merging
+session that marked the PR ready itself. Every other check still applies,
+and so does check 2's own-session attribution. In particular, the
+`ready: <head sha>` marker signed by this session, `ready-to-merge`, green
+owed CI and a clean merge are all still required. The verdict says the
+separation was lifted, so the landing is auditable.
+
+**Where the guard cannot run** (for example a cloud sandbox whose `gh` has
+no usable token), read its verdict instead. The `merge-guard` workflow posts
+it as the `merge-guard` commit status on every head. Merge only when that
+status on the **exact current head** is `success`, and pin the merge to that
+sha (`expectedHeadSha` / `sha=`), which is the same pin the guard's own PUT
+uses. Say on the PR that the status was read rather than re-run. Any other
+state (`pending`, `failure`, or a status on an older head) is a refusal, as
+it would be from the script.
+
+How to tell whether a Merge Manager is active: the owner says so, or a live
+session holds the `merge-steward` lane (§"Address the ROLE, never a session",
+step 1). If you cannot tell, ask the owner. Do not assume none. A stale
+memory of "there was one yesterday" is not an answer in either direction.
+"The owner said merge" is still required. Submitting to `main` is the owner's
+call (§"Ask the user before submitting"), and this ruling does not change
+that.
 
 Owner ruling 2026-10-03, after three PRs were landed unfinished by a steward
 calling the PUT directly on the same day:
@@ -497,6 +536,8 @@ The eight checks, each named in a refusal by number and id:
    a merged PR. A stacked PR is retargeted by its owning session first.
 2. **`ready-for-review`** — not a draft, and the latest `ready_for_review`
    event is attributable to the PR's **own** session, never to yours.
+   With no Merge Manager active, `--no-merge-manager` lifts the "never to
+   yours" half (§"When no Merge Manager is active").
 3. **`ready-marker`** — a `ready: <sha>` comment **signed with the PR's own
    session link** (the one in its body), naming the head, or with only
    merge-main bot merges after it.
