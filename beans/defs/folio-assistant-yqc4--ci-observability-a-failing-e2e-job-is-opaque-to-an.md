@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yqc4
 title: 'CI observability: a failing e2e job is opaque to anyone who cannot reach the log host'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T13:56:51Z
-updated_at: 2026-10-03T14:14:54Z
+updated_at: 2026-10-07T14:15:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -60,7 +60,18 @@ host. Not done here; that is a decision about every job, not this one.
 - [x] an HTML report is produced on CI
 - [x] it is uploaded on failure, per shard, and absent files do not add a second failure
 - [x] proven by a forced failure that the artifact names the test and the error
-- [ ] owner's call on whether failing steps should also write `$GITHUB_STEP_SUMMARY`
+- [x] owner's call on whether failing steps should also write `$GITHUB_STEP_SUMMARY`
+
+## Owner ruling & landed implementation (2026-10-07)
+
+Owner ruling 2026-10-07: *"Yes, append failing step summaries and key error context to $GITHUB_STEP_SUMMARY across all CI jobs so agents and reviewers can inspect failures via the GitHub API without needing access to the external log host."*
+
+Implementation landed in `cat-harness/scripts/gate-shell.sh` (commit `c05ea5741526`, PR #2016). It wraps `defaults.run.shell` across every checkout job in `code-quality-gates.yml`:
+1. Non-zero exit appends failure header, script contents, and tail (last 200 lines / 60KB) to `$GITHUB_STEP_SUMMARY`.
+2. Emits `::error title=...::` workflow annotation with escaped newlines so failure diagnostics are fetchable via GitHub Check Run API annotations without requiring log-host access.
+3. Rollup jobs emit summaries inline.
+
+Closed on evidence per `bean-coordination.md`.
 
 
 ## The general case, now MEASURED on a job that is not Playwright

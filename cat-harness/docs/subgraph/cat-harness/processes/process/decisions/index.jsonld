@@ -1,0 +1,17 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/process/decisions/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded",
+      "@type": "cat-harness:Decision",
+      "name": "Is the sign-off recorded, and does it let the work proceed?"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "processes/process/decisions",
+  "path": "processes/process/decisions/"
+}

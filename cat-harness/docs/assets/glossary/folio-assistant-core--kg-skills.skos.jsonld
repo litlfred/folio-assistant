@@ -274,6 +274,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/l1-coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "l1-coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract."
+        }
+      ],
+      "skos:notation": "l1-coverage",
+      "dcterms:source": "folio-assistant-core/skills/library/ingestion/l1-coverage.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/l1-document-ingestion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -329,6 +349,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/plan-request-gate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "plan-request-gate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When somebody asks for a PLAN — \"plan\", \"approach\", \"proposal\", \"how would you\", \"come up with\" — produce a requirements document and a work plan, post or commit them where the governing methodology says, hand over both as absolute GitHub permalinks, and STOP until sign-off is recorded on the issue. Applies to content requests as much as to feature requests. The operation both requirements methodologies (crdm, spec-kit) point at; neither is replaced by it."
+        }
+      ],
+      "skos:notation": "plan-request-gate",
+      "dcterms:source": "folio-assistant-core/skills/content/requirements-planning/plan-request-gate.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/public-comment",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -356,6 +396,26 @@
       ],
       "skos:notation": "quality-control",
       "dcterms:source": "folio-assistant-core/skills/content/content-lifecycle-ext/quality-control.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/requirement-definition",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "requirement-definition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a requirement IS, said once for both requirements methodologies: a statement, a conformance level, a source, at least one success criterion with its verification method, and a sign-off owner. How that maps onto the `req:` schema's `successCriteria`, onto CRDM's REQ-### and spec-kit's FR/SC, and why a work plan is beans whose `## Done when` is copied from the success criteria of the statements they name."
+        }
+      ],
+      "skos:notation": "requirement-definition",
+      "dcterms:source": "folio-assistant-core/skills/content/requirements-planning/requirement-definition.md",
       "skos:note": "candidate"
     },
     {
