@@ -1,0 +1,12 @@
+---
+# folio-assistant-zcak
+title: 'Library viewer: shared edit/feedback links, and the Document view for a folio''s library (smart-ra review version)'
+status: in-progress
+type: feature
+priority: normal
+created_at: 2026-10-07T05:05:49Z
+updated_at: 2026-10-07T05:44:27Z
+parent: folio-assistant-q4jm
+---
+
+Owner 2026-10-07: (1) 'do the document viewer TOC for smart-ra review version' — the frozen DPI-H review version in smart-ra library/ gets the #2303 Document view (TOC, pages, sections) on smart-ra's staging site, so the page/line a public comment cites opens there. (2) 'fix library viewer has no edit or feedback links' — every library entry and section gets the shared edit-links recipe (bean v433): edit opens the entry's metadata or section source (never the frozen PDF), feedback opens an issue coded with the entry. Related: turh (Document viewer, another session), v433 (one link recipe), uphx (REQ-17).
