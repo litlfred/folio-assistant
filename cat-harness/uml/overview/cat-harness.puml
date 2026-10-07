@@ -694,6 +694,12 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     pages [1] : object[] | null
     undetermined_reason [0..1] : string
   }
+  class "folio-vector-figures/v1" as cat_harness_library_folio_vector_figures_v1_folio_vector_figures_v1 <<json: VectorFiguresSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-vector-figures/v1'
+    doc_id [1] : string
+    figures [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
   class "folio-figure-descriptions/v1" as cat_harness_library_folio_figure_descriptions_v1_folio_figure_descriptions_v1 <<json: FigureDescriptionsFileSchema>> #f4f4f1 {
     $schema [1] : 'folio-figure-descriptions/v1'
     _comment [0..1] : string

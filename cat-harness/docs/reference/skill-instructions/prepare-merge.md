@@ -123,6 +123,17 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    counts against a baseline run on the merge-base). Do not call a branch green
    by silently inheriting red.
 
+   **Then run `bun run security:gate`, by name, and quote its result.** It
+   runs every security check this repository has (workflow injection, secret
+   leaks, lockfile and toolchain pins, QA reviewer permission, materialised
+   fixity) plus two advisories, and refuses when a blocking check fails OR
+   could not be run. Most of those checks are also inside `bun run gates`;
+   the point of naming them here is that until 2026-10-07 **no merge or
+   publish step named any security check**, so a release was covered only if
+   the CI run before it happened to be the right one (bean `ieum`). Its
+   advisories (240 of 240 third-party actions unpinned, dependency
+   advisories) are reported in the PR and are not cleared by a green gate.
+
    **Know what the target covered.** Green is a claim about the files the build
    compiled, which is usually fewer than the files on disk — build targets
    default to a root plus its transitive imports. Confirm the files *you
