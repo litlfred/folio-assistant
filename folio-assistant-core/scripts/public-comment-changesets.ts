@@ -51,6 +51,7 @@
  *   list                         every change-set, its status and issue
  *   body <CS-012>                its rendered issue section
  *   adopt <CS-012> --issue N     make an existing issue its primary one
+ *   reopen <CS-012> --note "why"  back to discussing (closed or incorporated)
  *   check                        the records agree with each other (CI; no network)
  *   reconcile [--dry-run]        every issue agrees with its record (GITHUB_TOKEN)
  *   github --event e.json [--dry-run]   one issue, comment or PR event (the workflow)
@@ -86,6 +87,9 @@ import { applyTag, isCommittee, isEditor, parseGithubTag, Store, tagRefusal } fr
 const dirOf = (store: Store) => join(store.dir, "changesets");
 export const csId = (n: number) => `CS-${String(n).padStart(3, "0")}`;
 const LIVE = (cs: ChangeSet) => cs.status !== "merged";
+
+/** The statuses a reopened issue, or `reopen`, moves back to `discussing`. */
+const REOPENABLE: readonly ChangeSetStatus[] = ["closed", "incorporated"];
 
 export function changeSets(store: Store): ChangeSet[] {
   const d = dirOf(store);
@@ -707,7 +711,12 @@ function onIssueState(x: Ctx, n: number, action: "closed" | "reopened") {
   const cs = primaryOf(x, n);
   if (!cs) return;
   if (action === "reopened") {
-    if (cs.status === "closed") {
+    // A person reopening the issue says the change-set is not done, whether
+    // it was closed or marked incorporated. Only `closed` moved back until
+    // 2026-10-07, so reopening smart-ra #10 and #11 left CS-236 and CS-237
+    // `incorporated` with their comments undecided (owner: "nothing has been
+    // decided/incorporated").
+    if (REOPENABLE.includes(cs.status)) {
       render(x, put(x, noted({ ...cs, status: "discussing" }, x.login, x.at, "reopened", x.url)));
       x.out.log.push(`✓ ${cs.id}: discussing again`);
     }
@@ -1049,6 +1058,16 @@ if (import.meta.main) {
         const cs = getChangeSet(store, positional);
         saveChangeSet(store, noted({ ...cs, issue: n, issues: [...new Set([...cs.issues, n])].sort((a, b) => a - b), status: cs.status === "proposed" ? "discussing" : cs.status }, by, at, `#${n} adopted as its issue`));
         console.error(`✓ ${positional} → #${n}`);
+        break;
+      }
+      case "reopen": {
+        // The same move as reopening its issue, for when that event has
+        // already been handled under the old rule.
+        if (!positional) throw new Error('reopen <CS-012> --by <login> [--note "why"]');
+        const cs = getChangeSet(store, positional);
+        if (!REOPENABLE.includes(cs.status)) throw new Error(`${cs.id} is ${cs.status}; only ${REOPENABLE.join(" or ")} reopens`);
+        saveChangeSet(store, noted({ ...cs, status: "discussing" }, by, at, opt("note") ?? "reopened"));
+        console.error(`✓ ${cs.id}: discussing again`);
         break;
       }
       case "check": {

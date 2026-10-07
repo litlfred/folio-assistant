@@ -258,7 +258,10 @@ its comments; `pc: PC-0042` first narrows it.
 
 Closing a primary issue by hand while its comments still need a change reopens
 it, with the list. Closing it when every comment is decided without a change
-closes the change-set.
+closes the change-set. Reopening a primary issue puts its change-set back to
+`discussing`, whether it was `closed` or `incorporated`: a person reopening it
+is saying it is not done. `reopen <CS-012> --note "why"` makes the same move
+when the reopen event has already been handled.
 
 ### The issue forms
 
