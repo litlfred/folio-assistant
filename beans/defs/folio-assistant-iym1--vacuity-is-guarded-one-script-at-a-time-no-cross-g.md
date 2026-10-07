@@ -1,11 +1,11 @@
 ---
 # folio-assistant-iym1
 title: 'VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T07:36:35Z
-updated_at: 2026-09-27T09:03:41Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -153,3 +153,6 @@ refuses a gate that has declared nothing.
 Never `find -exec mv {} dir/` — it flattens subdirectory structure (25 `.py`
 files out of `ci/`, `lib/`, `tests/`). Directory-level moves, and restore from git
 after verifying byte-identity.
+
+## Completed on landed evidence
+Landed on main in PR #671 (Two beans: 1ity closed on evidence, and cjtm — a skill for creating a new instance kind).

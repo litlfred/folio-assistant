@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w8j8
 title: 'AGENTIC LIFECYCLE: handover reports and stalled-agent triage (skills, process, collector tool)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-02T19:08:53Z
-updated_at: 2026-10-02T21:03:20Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -21,3 +21,6 @@ PR #1912, branch claude/blissful-ride-c2f26u-handover.
 - [ ] tool `handover:collect --since <time> | --session <url>`: lists handover notes and the footprint (open PRs by Claude-Session, branches, in-progress beans, workflow instances) as JSON, so triage step 1 is one command
 - [ ] `session-state-machine` / `bean-lifecycle` link: an agent's arc ends in a handover note (an epic-level lifecycle step), not only in a merge
 - [ ] first real use: triage of the 2026-10-02 lead session and its subagents
+
+## Completed on landed evidence
+Landed on main in PR #1912 (Handover reports and stalled-agent triage (skills), plus the merge steward's handover).
