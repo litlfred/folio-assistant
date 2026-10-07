@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 538,
+      "count": 535,
       "unit": "open beans"
     }
   },
@@ -435,7 +435,7 @@
     {
       "id": "folio-assistant-129h",
       "title": "Merge refused: #2080 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-3fva",
@@ -444,7 +444,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:42Z",
-      "updatedAt": "2026-10-04T14:30:42Z",
+      "updatedAt": "2026-10-07T02:45:37Z",
       "preview": "PR #2080, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2080.json`, status `waiting-on-author`): Owner-ap",
       "file": "beans/defs/folio-assistant-129h--merge-refused-2080-owed-ci-not-green-on-its-head.md"
     },
@@ -465,14 +465,14 @@
     {
       "id": "folio-assistant-12ws",
       "title": "ONE NAME, TWO MEANINGS: check-l1-complete declares a local instanceRootFor that contradicts the exported one",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "low",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T07:36:38Z",
-      "updatedAt": "2026-09-21T07:36:38Z",
+      "updatedAt": "2026-10-07T04:33:08Z",
       "preview": "FOUND 2026-09-21 while sweeping `a6kl`.\n\n`cat-harness/schemas/cat-harness.ts:2495` exports:\n\n    /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */\n    export function instanceRootFor(start: string): string\n\n`cat-harness/scripts/check-l1-complete.ts:718` declares its own:\n\n    export function instanceRootFor(cwd: string): string | undefined\n\nThey are genuinely different f",
       "file": "beans/defs/folio-assistant-12ws--one-name-two-meanings-check-l1-complete-declares-a.md"
     },
@@ -675,14 +675,14 @@
     {
       "id": "folio-assistant-1hjm",
       "title": "merge queue is UNAVAILABLE on this repo — three workflows carry merge_group triggers that can never fire",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:29:45Z",
-      "updatedAt": "2026-09-30T22:47:27Z",
+      "updatedAt": "2026-10-07T04:47:41Z",
       "preview": "Measured 2026-09-30, after the owner asked for the merge queue to be turned on.\n\n## What was found\n\nThe repository's **New branch ruleset** form offers thirteen rules. **`Require\nmerge queue` is not one of them**:\n\n```\nRestrict creations · Restrict updates · Restrict deletions\nRequire linear history · Require deployments to succeed · Require signed commits\nRequire a pull request before merging · R",
       "file": "beans/defs/folio-assistant-1hjm--merge-queue-is-unavailable-on-this-repo-three-work.md"
     },
@@ -836,14 +836,14 @@
     {
       "id": "folio-assistant-24fa",
       "title": "beans:claim pushes to main, which GUARANTEES a refuse-class conflict on the claiming branch's own completion",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T00:43:10Z",
-      "updatedAt": "2026-10-03T09:24:35Z",
+      "updatedAt": "2026-10-07T05:10:06Z",
       "preview": "## Measured on itself, 2026-10-03\n\n`bun run beans:claim 8rff` writes the claim **straight to `main`**:\n\n> `_2026-10-03T00:27:48Z_ — Claimed by claude/merge-patterns-8rff — pushed to\n> main so sibling sessions see it before this branch has a PR (bean 35nj)`\n\nThat is deliberate and it works — `35nj` (\"A bean claim is invisible to a\nsibling until the PR exists, so claim-before-work does not prevent a",
       "file": "beans/defs/folio-assistant-24fa--beansclaim-pushes-to-main-which-guarantees-a-refus.md"
     },
@@ -966,7 +966,7 @@
     {
       "id": "folio-assistant-2ee5",
       "title": "Merge refused: #1955 handed back",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -975,7 +975,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-04T14:30:43Z",
+      "updatedAt": "2026-10-07T02:43:07Z",
       "preview": "PR #1955, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_MvpHighRisk: conflict declared, own CI green.\n- Queue entry (`beans/queue/litlfred--folio-assistant--1955.json`, status `active`): STATUS UNKNOWN on the 13:40Z al",
       "file": "beans/defs/folio-assistant-2ee5--merge-refused-1955-handed-back.md"
     },
@@ -1098,14 +1098,14 @@
     {
       "id": "folio-assistant-2q1p",
       "title": "RETIRED PREVIEWS COME BACK: the full-replace restore carries _retired as a record but never consults it, so a retirement is undone by the next main-site publish",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T12:00:53Z",
-      "updatedAt": "2026-10-02T12:00:53Z",
+      "updatedAt": "2026-10-07T05:01:39Z",
       "preview": "Found 2026-10-02 by testing ONE preview retirement before dispatching 57 —\nwhich is the only reason it was found rather than paid for 57 times.\n\n## The failure, measured on `gh-pages`\n\n| commit | what it did |\n|---|---|\n| `a46c58ca9df` | `staging(cleanup): remove STAGING/claude-fervent-brahmagupta-rbwhzm` — **1615 files deleted** |\n| `93ffa64488c` | `docs(gh-pages): site from a07c3c66…` — **all 16",
       "file": "beans/defs/folio-assistant-2q1p--retired-previews-come-back-the-full-replace-restor.md"
     },
@@ -2269,14 +2269,14 @@
     {
       "id": "folio-assistant-5gqn",
       "title": "MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T06:16:21Z",
-      "updatedAt": "2026-09-27T06:16:21Z",
+      "updatedAt": "2026-10-07T04:37:00Z",
       "preview": "Measured 2026-09-27 while driving #1439: **three** merges of `origin/main` in\nabout forty minutes, and `docs/assets/beans/index.json` conflicted on the third\none. `oxka` fixed this for three files and marked them\n`linguist-generated=true -diff -merge` in `.gitattributes`. This file is a fourth\nwith the same shape and is not marked.\n\n| file | conflicts paid today | marked `-merge`? |\n|---|---|---|\n",
       "file": "beans/defs/folio-assistant-5gqn--merge-friction-beans-indexjson-should-join-oxka-me.md"
     },
@@ -2307,7 +2307,7 @@
     {
       "id": "folio-assistant-5ki9",
       "title": "Merge refused: #2082 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-qvxh",
@@ -2316,7 +2316,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:42:21Z",
-      "updatedAt": "2026-10-04T14:42:21Z",
+      "updatedAt": "2026-10-07T02:42:07Z",
       "preview": "PR #2082, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict clean, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2082.json`, status `active`): Owner-approved 2026-10-04 ~14:00Z (",
       "file": "beans/defs/folio-assistant-5ki9--merge-refused-2082-owed-ci-not-green-on-its-head.md"
     },
@@ -2653,14 +2653,14 @@
     {
       "id": "folio-assistant-68op",
       "title": "GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: 'viewer pages keep the navbar they had' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T01:08:12Z",
-      "updatedAt": "2026-10-05T04:57:14Z",
+      "updatedAt": "2026-10-07T01:30:16Z",
       "preview": "The step name in `code-quality-gates.yml` names the REGRESSION branch of\n`check:viewer-nav`. The check has two failure modes, and the other one -\nthe sidecar is absent, so the audit cannot see its subject - fails under\nthe same name. A reader then goes looking for a page that lost its rail,\nand the same run tells them none did.\n\n## Measured 2026-10-03 (on PR #1819, heads c975c7da7b9 and 28746eb6a8",
       "file": "beans/defs/folio-assistant-68op--gate-name-describes-one-of-two-failure-modes-viewe.md"
     },
@@ -3131,14 +3131,14 @@
     {
       "id": "folio-assistant-7jdm",
       "title": "Merge refused: #2055 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-nok9",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:41Z",
-      "updatedAt": "2026-10-04T14:30:41Z",
+      "updatedAt": "2026-10-07T02:39:42Z",
       "preview": "PR #2055, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2055.json`, status `waiting-on-author`): Covered ",
       "file": "beans/defs/folio-assistant-7jdm--merge-refused-2055-owed-ci-not-green-on-its-head.md"
     },
@@ -3517,7 +3517,7 @@
     {
       "id": "folio-assistant-87mi",
       "title": "Merge refused: #2043 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
@@ -3526,7 +3526,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:41Z",
-      "updatedAt": "2026-10-04T14:30:41Z",
+      "updatedAt": "2026-10-07T02:38:14Z",
       "preview": "PR #2043, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2043.json`, status `waiting-on-author`): STATUS UNKNOWN on the",
       "file": "beans/defs/folio-assistant-87mi--merge-refused-2043-owed-ci-not-green-on-its-head.md"
     },
@@ -3951,7 +3951,7 @@
     {
       "id": "folio-assistant-9f05",
       "title": "Merge refused: #2063 not signed (merge:guard checks 3 and 4)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-d33q",
@@ -3960,7 +3960,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:41Z",
-      "updatedAt": "2026-10-04T14:30:41Z",
+      "updatedAt": "2026-10-07T02:41:19Z",
       "preview": "PR #2063, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_NotReady: conflict clean, own CI green.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2063.json`, status `active`): STATUS UNKNOWN on the 13:40Z all-PR r",
       "file": "beans/defs/folio-assistant-9f05--merge-refused-2063-not-signed-mergeguard-checks-3.md"
     },
@@ -3981,7 +3981,7 @@
     {
       "id": "folio-assistant-9gkj",
       "title": "Merge refused: #2094 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
@@ -3990,7 +3990,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-04T14:30:43Z",
+      "updatedAt": "2026-10-07T02:40:30Z",
       "preview": "PR #2094, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2094.json`, status `active`): ACK: Owner-approved",
       "file": "beans/defs/folio-assistant-9gkj--merge-refused-2094-owed-ci-not-green-on-its-head.md"
     },
@@ -4109,14 +4109,14 @@
     {
       "id": "folio-assistant-9rrb",
       "title": "CATALOGUE DISCOVERY: derive-po held a list of five page names, so #1404's four new pages took drift from 1 to 21 unseen",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T14:13:00Z",
-      "updatedAt": "2026-09-26T17:26:28Z",
+      "updatedAt": "2026-10-07T05:04:36Z",
       "preview": "Found 2026-09-26, minutes after #1369 merged, by watching what happened next.\n\n#1369 took `translation-drift` from 25 findings to 1. **PR #1404 then merged four\nmore translated pages across five locales with no catalogues, and the gate went to\n21.** The tool that had just catalogued 24 pairs could not see any of them, because\nits CLI held a list:\n\n```ts\nconst pages = [\"accessibility\", \"content-typ",
       "file": "beans/defs/folio-assistant-9rrb--catalogue-discovery-derive-po-held-a-list-of-five.md"
     },
@@ -4249,14 +4249,14 @@
     {
       "id": "folio-assistant-9zok",
       "title": "bun run gates can NEVER pass translation:catalogue:check — it scrapes a command whose $base is a shell variable defined on an earlier line of the workflow",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T18:56:04Z",
-      "updatedAt": "2026-10-02T18:56:04Z",
+      "updatedAt": "2026-10-07T04:51:03Z",
       "preview": "## The defect\n\n`AGENTS.md` makes `bun run gates` the STRICT pre-push command, and its whole\nargument for existing is that `gates.ts` derives its list from\n`.github/workflows/code-quality-gates.yml` so it *\"cannot drift from what CI\nactually runs\"*. For one gate the derivation is lossy in a way that makes the\ngate unpassable locally, for everyone, always.\n\n`code-quality-gates.yml:1341-1348` is a mu",
       "file": "beans/defs/folio-assistant-9zok--bun-run-gates-can-never-pass-translationcataloguec.md"
     },
@@ -4626,7 +4626,7 @@
     {
       "id": "folio-assistant-b8de",
       "title": "Merge refused: #1898 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
@@ -4635,7 +4635,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-04T16:41:00Z",
+      "updatedAt": "2026-10-07T02:44:43Z",
       "preview": "PR #1898, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict clean, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--1898.json`, status `blocked`): The vqlp HOLD IS LIFTED. The owner",
       "file": "beans/defs/folio-assistant-b8de--merge-refused-1898-owed-ci-not-green-on-its-head.md"
     },
@@ -5747,7 +5747,7 @@
     {
       "id": "folio-assistant-e0hw",
       "title": "Merge refused: #2102 not signed; conflicts with main in generated paths",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-whlc",
@@ -5756,7 +5756,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:07:55Z",
-      "updatedAt": "2026-10-04T15:07:55Z",
+      "updatedAt": "2026-10-07T02:38:58Z",
       "preview": "PR #2102 (two bean notes on 4ak5 and yj6r; no code), opened 15:01Z on 2026-10-04. Handed back on intake by the Merge Manager.\n\n## Refused\n- `merge:steward`: Rule_NotReady. Green, but there is no ready marker and no `ready-to-merge` label (merge:guard checks 3 and 4), and it conflicts with main in generated paths only (most likely the regenerated `beans/notes/README.md`).\n- Awaiting the owner's exp",
       "file": "beans/defs/folio-assistant-e0hw--merge-refused-2102-not-signed-conflicts-with-main.md"
     },
@@ -6024,7 +6024,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T17:42:23Z",
-      "updatedAt": "2026-10-06T19:02:53Z",
+      "updatedAt": "2026-10-06T20:20:00Z",
       "preview": "Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 1 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: parallel checks, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.\n\n## What\nEach verify/write pair that `bun run regen` / `bun run gates` runs records a hash of its declared INPUTS (the files it reads plus its own script)",
       "file": "beans/defs/folio-assistant-f017--speed-up-1-input-hash-skip-a-check-whose-declared.md"
     },
@@ -7392,7 +7392,7 @@
     {
       "id": "folio-assistant-is8n",
       "title": "Merge refused: #2071 owed CI not green on its head",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
@@ -7401,7 +7401,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:42Z",
-      "updatedAt": "2026-10-04T14:30:42Z",
+      "updatedAt": "2026-10-07T02:43:54Z",
       "preview": "PR #2071, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2071.json`, status `waiting-on-author`): STATUS UNKNOWN on the",
       "file": "beans/defs/folio-assistant-is8n--merge-refused-2071-owed-ci-not-green-on-its-head.md"
     },
@@ -8293,14 +8293,14 @@
     {
       "id": "folio-assistant-lfxa",
       "title": "QA: write the proof-no-placeholder-stub checker (and drop the QOU literal from its description)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T17:43:01Z",
-      "updatedAt": "2026-09-18T17:43:01Z",
+      "updatedAt": "2026-10-07T04:43:00Z",
       "preview": "## What\n\n`proof-no-placeholder-stub` was declared `automated: true` with **no checker\nfunction anywhere in the repo** — no dispatch-table entry, no `check*`\nfunction. Found by bean `fg6z` while closing the coverage gap in\n`scripts/tests/qa-criterion-source-file.test.ts`.\n\n`qa-sweep` resolves a checker with\n\n    AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id]\n\nand falls through to `needs-agent",
       "file": "beans/defs/folio-assistant-lfxa--qa-write-the-proof-no-placeholder-stub-checker-and.md"
     },
@@ -8797,14 +8797,14 @@
     {
       "id": "folio-assistant-mjl3",
       "title": "artefact-verification.json merges are CORRECTLY refused and must stay refused: it reads like a generated sidecar, has no writer, and carries authored reasons",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T17:41:35Z",
-      "updatedAt": "2026-10-03T17:41:53Z",
+      "updatedAt": "2026-10-07T06:31:00Z",
       "preview": "A **preventive** record, not a defect: this bean exists so the next agent that\nmeets this refusal twice does not \"fix\" it by widening a glob — which is the\nmistake `merge-conflict-patterns` names in its own opening and which I came within\none step of making.\n\n## Where it came from\n\nSwept the merge-main bot's refusals across all 13 open `merge-main` PRs on\n2026-10-03, while #2029 added the one real",
       "file": "beans/defs/folio-assistant-mjl3--artefact-verificationjson-merges-are-correctly-ref.md"
     },
@@ -9167,7 +9167,7 @@
     {
       "id": "folio-assistant-ns96",
       "title": "Merge refused: #2100 not signed (merge:guard checks 3 and 4)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-nok9",
@@ -9176,7 +9176,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:42:21Z",
-      "updatedAt": "2026-10-04T14:42:21Z",
+      "updatedAt": "2026-10-07T02:37:33Z",
       "preview": "PR #2100, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_NotReady: conflict clean, own CI green.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2100.json`, status `unknown`): ACK: new at 14:25Z (throttle merge-g",
       "file": "beans/defs/folio-assistant-ns96--merge-refused-2100-not-signed-mergeguard-checks-3.md"
     },
@@ -9337,28 +9337,28 @@
     {
       "id": "folio-assistant-obhe",
       "title": "merge-main's notification rule has no skill home — ci-health.md carries the doctrine and names only one instance",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T06:09:01Z",
-      "updatedAt": "2026-10-04T06:09:01Z",
+      "updatedAt": "2026-10-07T02:51:01Z",
       "preview": "Spun out of `03nl` (PR #2046) rather than widened into it.\n\n## What is already true\n\n`skills/sdlc/sdlc-core/ci-health.md` §\"A report is only read by someone in the\nroom\" ALREADY carries the doctrine this change is an instance of: one tracking\nissue **edited in place**, because *\"an edit does not notify, so a long outage\nstays one unread item rather than a stream\"*, and *\"it deliberately does not\ns",
       "file": "beans/defs/folio-assistant-obhe--merge-mains-notification-rule-has-no-skill-home-ci.md"
     },
     {
       "id": "folio-assistant-oh78",
       "title": "ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:05:19Z",
-      "updatedAt": "2026-09-29T20:50:33Z",
+      "updatedAt": "2026-10-07T04:58:18Z",
       "preview": "Found by the goal-review sweep of 2026-09-20 13:45–17:45 UTC (session_017PqeiS4JYySSWGAYLedmus, bean `mgta`, issue #578). An instruction gap: something the instructions said that the sweep could not do as written, said two ways, or did not say.\n\n## Measured\n54 proposals merged in the window; 2 issues changed (both newly opened). `issue-marks/` tracks two issues (#203, #223). Issue #558 (\"Sticky pi",
       "file": "beans/defs/folio-assistant-oh78--issue-discipline-assumes-every-change-has-an-issue.md"
     },
@@ -9435,14 +9435,14 @@
     {
       "id": "folio-assistant-omki",
       "title": "QUIET CLAIMS, THE NETWORK HALF: the check's own basis calls its count an upper bound — supply the signal it cannot see",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:26:09Z",
-      "updatedAt": "2026-09-29T20:50:34Z",
+      "updatedAt": "2026-10-07T04:53:47Z",
       "preview": "`bean-quiet-claims` reads one signal — hours since the bean's own `updated_at` —\nand its threshold `basis` says so in as many words: the count is an **UPPER\nBOUND**, because a bean it lists may carry a liveness signal the sweep cannot\nsee. `bean-coordination.md` §\"A quiet claim\" names three:\n\n> A claim is LIVE when something outside the bean says so — an open PR naming\n> it, an unmerged branch tou",
       "file": "beans/defs/folio-assistant-omki--quiet-claims-the-network-half-the-checks-own-basis.md"
     },
@@ -10271,6 +10271,20 @@
       "file": "beans/defs/folio-assistant-r2ld--on-this-page-sections-with-sub-sections-are-collap.md"
     },
     {
+      "id": "folio-assistant-r3ei",
+      "title": "f017 follow-up: review the remaining input sites that block ~57 checks from the input-hash skip",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-xpcu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T22:53:13Z",
+      "updatedAt": "2026-10-06T22:53:13Z",
+      "preview": "PR #2327 (bean f017) audits every skippable check's import closure. `bun run input-hash:coverage --blockers` lists the unannotated sites that keep the remaining ~57 declared tasks running every time.\n\nThe biggest blockers:\n- kind-validator.ts:196: a computed import of validator modules.\n- staging-stamp.ts:61 and :81: environment reads.\n- kg-export.ts: spawn, clock, env and host.\n\nEach site needs r",
+      "file": "beans/defs/folio-assistant-r3ei--f017-follow-up-review-the-remaining-input-sites-th.md"
+    },
+    {
       "id": "folio-assistant-r3gy",
       "title": "BOOTSTRAP OUTWARD REFERENCES: plan to reach zero before the repo split",
       "status": "in-progress",
@@ -10399,7 +10413,7 @@
     {
       "id": "folio-assistant-ra9p",
       "title": "Merge refused: #2065 authored conflict with main",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-hfag",
@@ -10408,7 +10422,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:41Z",
-      "updatedAt": "2026-10-04T14:30:41Z",
+      "updatedAt": "2026-10-07T02:36:48Z",
       "preview": "PR #2065, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_Refused: conflict refused, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2065.json`, status `waiting-on-author`): STATUS UNKNOWN",
       "file": "beans/defs/folio-assistant-ra9p--merge-refused-2065-authored-conflict-with-main.md"
     },
@@ -10729,14 +10743,14 @@
     {
       "id": "folio-assistant-rwwl",
       "title": "ci:watch reads a merge ref built against an OLD base as mergeable — conflicted PRs report PASS",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:04:29Z",
-      "updatedAt": "2026-10-06T06:08:03Z",
+      "updatedAt": "2026-10-07T01:38:17Z",
       "preview": "Found 2026-10-06 while testing bean 6lre against live data (6lre stays with its holder; this is a separate defect).\n\n## The defect, measured\n\n    $ bun run ci:watch --pr 2197 --once\n    06:03:22  f75e4edb51d  PASS — 22 check(s) completed clean, and every workflow owed for this event ran\n    exit 0\n\nGitHub reports #2197 as `mergeable_state: dirty`. #2088 gives the same result. So `ci:watch` answers",
       "file": "beans/defs/folio-assistant-rwwl--ciwatch-reads-a-merge-ref-built-against-an-old-bas.md"
     },
@@ -11315,14 +11329,14 @@
     {
       "id": "folio-assistant-tcd6",
       "title": "STAGING CLEANUP IS BROKEN: the cleanup job's checkout omits submodules, so rm -rf runs and the push never does — 6 consecutive failures, 80 previews, 47 for closed PRs",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T07:01:24Z",
-      "updatedAt": "2026-10-02T07:01:24Z",
+      "updatedAt": "2026-10-07T05:02:47Z",
       "preview": "Found 2026-10-02 while trying to remove staging previews by hand, and the\nroot cause turned out to be why they could not be removed at all.\n\n## The failure\n\n`feature-staging.yml`'s `cleanup` job checks out the platform with no\n`submodules`. `cat-harness/schemas/graph-kind-registry.ts` imports\n`../../bootstrap-tools/schemas/graph`, and `bootstrap-tools` is a SUBMODULE,\nso every platform script the ",
       "file": "beans/defs/folio-assistant-tcd6--staging-cleanup-is-broken-the-cleanup-jobs-checkou.md"
     },
@@ -11667,14 +11681,14 @@
     {
       "id": "folio-assistant-u4up",
       "title": "merge:train drops gitignored-but-tracked test/results files",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T16:44:20Z",
-      "updatedAt": "2026-10-04T16:44:20Z",
+      "updatedAt": "2026-10-07T03:09:48Z",
       "preview": "Measured 2026-10-04 building merge-train-2026-10-04a (#2113):\n\n1. The built train tree omitted `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` and its tool-run sidecar (tracked on main, gitignored), so `lsi:skills:check` and `lsi:viz:check` went red in CI while green locally. Restored by hand in 1635342194. Same family as 8j9e (#2090 fixed `merge-base.ts`, not the train tool).\n2. Take-b",
       "file": "beans/defs/folio-assistant-u4up--mergetrain-drops-gitignored-but-tracked-testresult.md"
     },
@@ -13896,14 +13910,14 @@
     {
       "id": "folio-assistant-zdfa",
       "title": "INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio's workflow lands where GitHub never reads it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:06:56Z",
-      "updatedAt": "2026-09-29T18:14:48Z",
+      "updatedAt": "2026-10-07T02:33:34Z",
       "preview": "Found by ojcx's real run, 2026-09-23. `init-folio --link sibling --assistant ../platform` writes `platform_dir: ../platform` into `.github/workflows/staging.yml`. In Actions, that path is outside the checkout, so the reusable workflow's \"Check out the platform\" step cannot place the platform there. A sibling checkout exists on the author's machine, never in CI. The folio-test run worked only becau",
       "file": "beans/defs/folio-assistant-zdfa--init-sibling-link-stagingyml-gets-platform-dir-pla.md"
     },
@@ -15421,13 +15435,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 576,
-        "closed": 241,
-        "open": 335,
-        "inProgress": 127,
-        "todo": 207,
+        "closed": 245,
+        "open": 331,
+        "inProgress": 148,
+        "todo": 182,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4184027777777778
+        "share": 0.4253472222222222
       },
       {
         "id": "folio-assistant-vuip",
@@ -15435,14 +15449,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 273,
+        "total": 274,
         "closed": 113,
-        "open": 160,
-        "inProgress": 90,
-        "todo": 69,
+        "open": 161,
+        "inProgress": 94,
+        "todo": 66,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4139194139194139
+        "share": 0.4124087591240876
       },
       {
         "id": "folio-assistant-yg29",
@@ -15461,8 +15475,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 538,
-    "coveredOpen": 535,
+    "openTotal": 535,
+    "coveredOpen": 532,
     "duplicateIds": 0
   }
 }

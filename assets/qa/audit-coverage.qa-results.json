@@ -337,7 +337,6 @@
             "folio-assistant-sci/scripts",
             "smart-trust/scripts",
             "test",
-            "tools",
             "who-iris/id-lookup",
             "who-iris/scripts"
           ],
@@ -428,7 +427,6 @@
           "state": "covered",
           "directories": [
             "cat-harness/docs",
-            "docs",
             "folio-assistant-core/docs",
             "smart-base/docs",
             "smart-base/findings",
@@ -642,7 +640,7 @@
           "kind": "interaction",
           "state": "covered",
           "directories": [
-            "interaction"
+            "cat-harness/memory"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -710,7 +708,8 @@
           "kind": "memory",
           "state": "covered",
           "directories": [
-            "memory"
+            "cat-harness/memory",
+            "folio-assistant-core/memory"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -1261,8 +1260,7 @@
             "fhir-harness/tools",
             "folio-assistant-core/tools",
             "folio-assistant-sci/tools",
-            "smart-base/tools",
-            "tools"
+            "smart-base/tools"
           ],
           "criteria": [
             "tool-alternative-selectable",
@@ -1443,7 +1441,7 @@
           "kind": "waiver",
           "state": "covered",
           "directories": [
-            "memory"
+            "cat-harness/memory"
           ],
           "criteria": [],
           "subjectKinds": [],

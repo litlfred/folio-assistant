@@ -16,7 +16,7 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 158,
+      "count": 157,
       "entries": [
         {
           "file": "cat-harness-tools/scripts/check-avatar-instances.ts",
@@ -344,10 +344,6 @@
         },
         {
           "file": "cat-harness/schemas/test-fixture-preload.ts",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/schemas/theme.ts",
           "names": 2
         },
         {
@@ -870,21 +866,21 @@
       "entries": [
         {
           "instances": 14,
-          "occurrences": 63790,
+          "occurrences": 63797,
           "allowed": 0,
-          "wrongDirection": 4543,
-          "wrongDirectionFiles": 517,
-          "exempt": 14287,
-          "namesRepository": 43689,
-          "undetermined": 1271,
+          "wrongDirection": 4535,
+          "wrongDirectionFiles": 514,
+          "exempt": 14286,
+          "namesRepository": 43703,
+          "undetermined": 1273,
           "pendingFiles": 42,
-          "pendingOccurrences": 327
+          "pendingOccurrences": 326
         }
       ]
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 918,
+      "count": 913,
       "entries": [
         {
           "file": "cat-harness-tools/cat-harness-tools.json",
@@ -1115,10 +1111,6 @@
           "target": "folio-assistant-sci"
         },
         {
-          "file": "cat-harness-tools/src/tools/beans-prime.ts",
-          "target": "folio-assistant"
-        },
-        {
           "file": "cat-harness-tools/src/tools/lsi-query.ts",
           "target": "who-iris"
         },
@@ -1129,10 +1121,6 @@
         {
           "file": "cat-harness-tools/src/tools/translation.ts",
           "target": "smart-base"
-        },
-        {
-          "file": "cat-harness-tools/src/tools/workflow.ts",
-          "target": "folio-assistant"
         },
         {
           "file": "cat-harness/cat-harness.json",
@@ -2968,10 +2956,6 @@
         },
         {
           "file": "cat-harness/schemas/theme.ts",
-          "target": "folio-assistant"
-        },
-        {
-          "file": "cat-harness/schemas/theme.ts",
           "target": "who-iris"
         },
         {
@@ -3640,10 +3624,6 @@
         },
         {
           "file": "cat-harness/skills/kg/kg-core/directory-conventions.md",
-          "target": "folio-assistant"
-        },
-        {
-          "file": "cat-harness/skills/kg/kg-core/directory-conventions.md",
           "target": "folio-assistant-core"
         },
         {
@@ -3897,10 +3877,6 @@
         {
           "file": "cat-harness/skills/sdlc/sdlc-core/feature-staging.md",
           "target": "smart-base"
-        },
-        {
-          "file": "cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md",
-          "target": "folio-assistant"
         },
         {
           "file": "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md",
@@ -4561,5 +4537,5 @@
       ]
     }
   },
-  "total": 1127
+  "total": 1121
 }
