@@ -1185,8 +1185,15 @@ describe("an entry's contents are a CLOSED set — `3psh`", () => {
 
 describe("libraryRootFor (bean 12ws)", () => {
   test("returns cwd when it declares a library graph", () => {
-    const iris = join(import.meta.dir, "../../../who-iris");
-    expect(libraryRootFor(iris)).toBe(iris);
+    // A fixture, not a sibling instance: `who-iris/` exists only in the
+    // monorepo, so reading it fails the standalone ratchet.
+    const root = mkdtempSync(join(tmpdir(), "l1-root-"));
+    made.push(root);
+    writeDeclaration(root, {
+      name: "t",
+      directories: [{ id: "library", path: "library/", graphTypologies: ["library"] }],
+    });
+    expect(libraryRootFor(root)).toBe(root);
   });
 
   test("falls back to own instance when cwd does not declare a library", () => {
