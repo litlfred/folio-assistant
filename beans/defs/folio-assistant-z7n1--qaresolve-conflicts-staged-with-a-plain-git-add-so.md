@@ -1,13 +1,12 @@
 ---
 # folio-assistant-z7n1
 title: qa:resolve-conflicts staged with a plain git add, so a branch that gitignores its results directory aborted merge:main
-status: in-progress
+status: completed
 type: bug
-parent: folio-assistant-d33q
-tags:
-  - ready-to-close
+priority: normal
 created_at: 2026-10-03T17:55:24Z
-updated_at: 2026-10-07T05:50:00Z
+updated_at: 2026-10-07T11:50:38Z
+parent: folio-assistant-d33q
 ---
 
 Found 2026-10-03 while measuring why `merge:main`'s last `push` run

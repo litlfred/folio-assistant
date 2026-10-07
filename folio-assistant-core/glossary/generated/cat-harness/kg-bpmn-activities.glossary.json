@@ -583,9 +583,17 @@
       "status": "candidate"
     },
     {
+      "id": "process_crdm_close.a_recordsignoff",
+      "prefLabel": "Record the sign-off as a requirement-signoff attestation",
+      "definition": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again.",
+      "notation": "A_RecordSignoff",
+      "source": "cat-harness/processes/process/crdm-close.bpmn#A_RecordSignoff",
+      "status": "candidate"
+    },
+    {
       "id": "process_crdm_close.ba_confirm",
       "prefLabel": "Confirm all criteria met",
-      "definition": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so.",
+      "definition": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so. Since issue #2405 (FR-013) it IS an adjudication with the requirement-set answers: an approval here moves the set to `accepted`, which `check:requirements` refuses unless it is a human's and every approved member is `in-force`.",
       "notation": "BA_Confirm",
       "source": "cat-harness/processes/process/crdm-close.bpmn#BA_Confirm",
       "status": "candidate"
@@ -847,6 +855,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_crdm_signoff.a_recordsignoff",
+      "prefLabel": "Record the sign-off as a requirement-signoff attestation",
+      "definition": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again.",
+      "notation": "A_RecordSignoff",
+      "source": "cat-harness/processes/process/crdm-signoff.bpmn#A_RecordSignoff",
+      "status": "candidate"
+    },
+    {
       "id": "process_crdm_signoff.ba_choosekg",
       "prefLabel": "Choose a destination, or none",
       "definition": "A PERSON'S STEP, and `none` is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement \"is really a skill\" has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent.",
@@ -857,7 +873,7 @@
     {
       "id": "process_crdm_signoff.ba_signoff",
       "prefLabel": "Sign off on requirements",
-      "definition": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf.",
+      "definition": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf. Since issue #2405 (FR-013) it IS an adjudication: it calls Process_Adjudication with the requirement-set answers, and every answer goes through A_RecordSignoff before anything follows it.",
       "notation": "BA_Signoff",
       "source": "cat-harness/processes/process/crdm-signoff.bpmn#BA_Signoff",
       "status": "candidate"

@@ -1,12 +1,11 @@
 ---
 # folio-assistant-gtx4
 title: 'FALSE PROVENANCE: qa-agent-write defaults agent_model to a stale literal, writing a model that did not do the work into committed sidecars'
-status: in-progress
-tags:
-  - ready-to-close
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-02T23:52:42Z
-updated_at: 2026-10-06T22:43:00Z
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-0ipy
 ---
 

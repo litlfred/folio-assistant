@@ -3247,7 +3247,7 @@ jobs:
       - name: playwright test
         env:
           E2E_SHARD: ${{ matrix.shard }}/3
-        run: bunx playwright test
+        run: bunx playwright test -c cat-harness-tools/playwright.config.ts
 
       # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
       #

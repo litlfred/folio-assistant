@@ -72,14 +72,14 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Subscribe to an external knowledge graph](subscribe-kg.html) | 11 | — |
 | [Translation Workflow](translation-workflow.html) | 10 | — |
 | [Actor and role administration](actor-role-administration.html) | 6 | — |
-| [CRDM close-out](crdm-close.html) | 3 | — |
+| [CRDM close-out](crdm-close.html) | 4 | — |
 | [CRDM data model](crdm-data-model.html) | 5 | — |
 | [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html) | 9 | — |
 | [CRDM — link the work to an issue](crdm-issue-linking.html) | 4 | — |
 | [CRDM Phase 1 — needs](crdm-needs.html) | 4 | — |
 | [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html) | 5 | — |
 | [CRDM requirements](crdm-requirements.html) | 9 | — |
-| [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | — |
+| [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 7 | — |
 | [Render a Knowledge Graph to a CDN](render-kg-to-cdn.html) | 3 | — |
 | [Session state machine](session-state-machine.html) | 7 | — |
 | [SWOT situation analysis](swot-analysis.html) | 7 | — |
@@ -147,7 +147,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | skill | run by |
 |---|---|
 | [`activity-log`](../reference/skill-instructions/activity-log.html) | [`activity-log.bpmn`](activity-log.html) |
-| [`adjudication`](../reference/skill-instructions/adjudication.html) | [`review-narrative.bpmn`](review-narrative.html), [`voice-review.bpmn`](voice-review.html), [`refresh-materialized.bpmn`](refresh-materialized.html), [`translation-workflow.bpmn`](translation-workflow.html), [`adjudication.bpmn`](adjudication.html), [`criterion-adjudication.bpmn`](criterion-adjudication.html), [`content-change-review.bpmn`](content-change-review.html), [`ingest-l1-completeness-gate.bpmn`](ingest-l1-completeness-gate.html) |
+| [`adjudication`](../reference/skill-instructions/adjudication.html) | [`review-narrative.bpmn`](review-narrative.html), [`voice-review.bpmn`](voice-review.html), [`refresh-materialized.bpmn`](refresh-materialized.html), [`translation-workflow.bpmn`](translation-workflow.html), [`crdm-close.bpmn`](crdm-close.html), [`crdm-signoff.bpmn`](crdm-signoff.html), [`adjudication.bpmn`](adjudication.html), [`criterion-adjudication.bpmn`](criterion-adjudication.html), [`content-change-review.bpmn`](content-change-review.html), [`ingest-l1-completeness-gate.bpmn`](ingest-l1-completeness-gate.html) |
 | [`adopt-methodology-from-source`](../reference/skill-instructions/adopt-methodology-from-source.html) | [`methodology-from-source.bpmn`](methodology-from-source.html) |
 | [`asset-extraction`](../reference/skill-instructions/asset-extraction.html) | [`document-ingestion.bpmn`](document-ingestion.html) |
 | [`bean-blocking`](../reference/skill-instructions/bean-blocking.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
@@ -181,7 +181,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | [`crdm-close.bpmn`](crdm-close.html), [`crdm-deliver.bpmn`](crdm-deliver.html), [`crdm-issue-linking.bpmn`](crdm-issue-linking.html), [`crdm-needs.bpmn`](crdm-needs.html), [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html), [`crdm-requirements.bpmn`](crdm-requirements.html), [`crdm-signoff.bpmn`](crdm-signoff.html) |
 | [`dak-l1-library`](../reference/skill-instructions/dak-l1-library.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
 | [`data-modelling`](../reference/skill-instructions/data-modelling.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
-| [`decision-audit`](../reference/skill-instructions/decision-audit.html) | [`crdm-close.bpmn`](crdm-close.html), [`crdm-signoff.bpmn`](crdm-signoff.html), [`options-analysis.bpmn`](options-analysis.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
+| [`decision-audit`](../reference/skill-instructions/decision-audit.html) | [`options-analysis.bpmn`](options-analysis.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html), [`content-change-review.bpmn`](content-change-review.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html) |
 | [`decision-comparison`](../reference/skill-instructions/decision-comparison.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
 | [`deep-document-research`](../reference/skill-instructions/deep-document-research.html) | [`deep-document-research.bpmn`](deep-document-research.html) |
 | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | [`graph-detanglement.bpmn`](graph-detanglement.html), [`kg-separation.bpmn`](kg-separation.html), [`sub-kg-lifecycle.bpmn`](sub-kg-lifecycle.html), [`actor-role-administration.bpmn`](actor-role-administration.html), [`feature-staging.bpmn`](feature-staging.html), [`repository-health-watch.bpmn`](repository-health-watch.html), [`board-relocate.bpmn`](board-relocate.html) |

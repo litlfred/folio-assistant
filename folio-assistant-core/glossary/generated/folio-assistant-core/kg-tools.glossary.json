@@ -61,6 +61,14 @@
       "notation": "glossary-build",
       "source": "folio-assistant-core/tools/index.ts#glossary-build",
       "status": "candidate"
+    },
+    {
+      "id": "l1-coverage",
+      "prefLabel": "L1 extraction coverage",
+      "definition": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009.",
+      "notation": "l1-coverage",
+      "source": "folio-assistant-core/tools/index.ts#l1-coverage",
+      "status": "candidate"
     }
   ]
 }

@@ -467,7 +467,7 @@ beans <id> --status in-progress
 ## Contributing
 
 See the [contributing guide](https://litlfred.github.io/folio-assistant/docs/cat-harness/start/contributing.html)
-and [`AGENTS.md`](./AGENTS.md). Run `bun test` and `eslint .` before pushing.
+and [`AGENTS.md`](./AGENTS.md). Run `bun test` and `bun run lint` before pushing.
 
 ## License
 
