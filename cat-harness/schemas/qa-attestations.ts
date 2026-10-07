@@ -113,6 +113,8 @@ import { dirname, join, relative, resolve, sep } from "node:path";
 
 import { z } from "zod";
 
+import { SignOffSchema } from "../../bootstrap-tools/schemas/requirement-set.ts";
+
 import {
   artefactStub,
   defaultGraphTypologies,
@@ -137,7 +139,7 @@ export const ATTESTATIONS_SUFFIX = ".attestations.json";
  * the other two are named so bean `8wj1` extends one list rather than adding
  * a second.
  */
-export const ATTESTATION_FAMILIES = ["kg-qa", "block-qa", "translation-qa", "bib-verification", "bib-human-review"] as const;
+export const ATTESTATION_FAMILIES = ["kg-qa", "block-qa", "translation-qa", "bib-verification", "bib-human-review", "requirement-signoff"] as const;
 export type AttestationFamily = (typeof ATTESTATION_FAMILIES)[number];
 
 /** One declared prose ↔ code pair's accepted state. Paths are repo-relative. */
@@ -302,6 +304,41 @@ export const BibHumanReviewAttestationsSchema = QaAttestationsBaseSchema.extend(
 export type BibHumanReviewAttestations = z.infer<typeof BibHumanReviewAttestationsSchema>;
 
 /**
+ * ## The `requirement-signoff` family (issue #2405, FR-011)
+ *
+ * A sign-off on a requirements document IS an adjudication record: who
+ * decided (`kind`, `id`, `actor` — {@link QaReviewer}'s identity fields, and
+ * the same three `kind`s), when (`at`), about what (`scope`: the set, or one
+ * member), the outcome from the requirement-set code list, the stage it moves
+ * the set to, the reason, and a permalink to where it was decided. It is a
+ * judgement no writer can regenerate, so it lives here, on `main`, in the
+ * `attestations` graph — one file per set:
+ *
+ * ```
+ * <attestations>/requirement-signoff/<set slug>.attestations.json
+ * ```
+ *
+ * The record's shape is the bootstrap base's `SignOffSchema` — imported
+ * DOWNWARD, never restated — so a set that carries its sign-offs inline (a
+ * set in a repository with no attestations graph) and one whose sign-offs are
+ * kept here are judged by one function, `requirementSetProblems`, over the
+ * union. Append-only: a later decision is a new record, never an edit.
+ */
+export const REQUIREMENT_SIGNOFF_FAMILY = "requirement-signoff" as const;
+
+export const RequirementSignoffAttestationsSchema = QaAttestationsBaseSchema.extend({
+  family: z.literal(REQUIREMENT_SIGNOFF_FAMILY),
+  signoffs: z.array(SignOffSchema).min(1),
+}).strict();
+export type RequirementSignoffAttestations = z.infer<typeof RequirementSignoffAttestationsSchema>;
+
+/** The store file for one requirement set's sign-offs. */
+export function requirementSignoffPath(attestationsHome: string, setId: string): string {
+  const slug = setId.replace(/^reqset:/, "");
+  return join(attestationsHome, REQUIREMENT_SIGNOFF_FAMILY, `${slug}${ATTESTATIONS_SUFFIX}`);
+}
+
+/**
  * Every `qa-attestations/v1` file. A union on `family` so `kg_validate` and
  * the registry have ONE validator per `$schema`.
  */
@@ -311,6 +348,7 @@ export const QaAttestationsSchema = z.discriminatedUnion("family", [
   TranslationAttestationsSchema,
   BibVerificationAttestationsSchema,
   BibHumanReviewAttestationsSchema,
+  RequirementSignoffAttestationsSchema,
 ]);
 export type QaAttestations = z.infer<typeof QaAttestationsSchema>;
 

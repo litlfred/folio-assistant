@@ -499,8 +499,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       title: "Seed the FHIR package cache from trusted sources (exact versions)",
       description:
         "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), publishers' own published-site repositories (the seeder's list, each fetch verified against the tarball's own package.json), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
-      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher" },
-      invoke: { shell: "python3 fhir-ig-publisher/ast-export/scripts/seed-fhir-cache-from-npm.py [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--missing-out <file>] [--dry-run] [name#version ...]" },
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--site-repo <prefix=owner/repo[@branch]>] [--missing-out <file>] [--dry-run] [name#version ...]" },
       io: {
         inputs: [
           { name: "sushi-config", schema: t("FilesystemPath"), required: false, description: "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`." },
@@ -521,7 +521,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           "Measured 2026-10-01 over the two IGs bean a9tx measures: 20 packages install; pinned HL7 versions need `--mirror`. A template FHIR/ig-registry does not list is named with `--template-repo`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
         cost: "One download per package; the core packages are tens of megabytes.",
       },
-      requires: { runtime: ["python3", "npm", "git"], network: true },
+      requires: { runtime: ["bun", "npm", "git"], network: true },
       remedies: [
         { host: "registry.npmjs.org", none: "npm is a trust anchor this Tool reads. The other route is an owner mirror (`--mirror`), filled by `fhir-package-mirror` on a machine that reaches packages.fhir.org." },
         { host: "github.com", none: "Publishers' site and template repositories are read from GitHub; with it refused, only npm and `--mirror` remain." },

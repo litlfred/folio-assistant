@@ -15,6 +15,8 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`build-ig-site.test.ts`](build-ig-site.test.ts) | a file |  |
 | [`build-ig-site.ts`](build-ig-site.ts) | a file |  |
 | [`check-artifact-index.ts`](check-artifact-index.ts) | a file |  |
+| [`fhir-cache-seed-npm.test.ts`](fhir-cache-seed-npm.test.ts) | a file |  |
+| [`fhir-cache-seed-npm.ts`](fhir-cache-seed-npm.ts) | a file |  |
 | [`gen-ig-pages.test.ts`](gen-ig-pages.test.ts) | a file |  |
 | [`gen-ig-pages.ts`](gen-ig-pages.ts) | a file |  |
 | [`ig-api-views.test.ts`](ig-api-views.test.ts) | a file |  |

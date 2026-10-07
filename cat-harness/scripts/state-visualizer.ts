@@ -769,23 +769,67 @@ function dashboardPage(g: StateGraph, graphs: StateGraph[]): string {
 
   if (tag === TODO_INDEX_SCHEMA) return todoBoardPage(g);
 
-  // ONE graph per page, so one meta: the renderer tells an absent meta from a
-  // failed fetch, and a second meta here would quietly make this the combined
-  // view under a single graph's name.
-  const metas = [
-    `<meta name="fa-beans-src" content="${src}">`,
-    // The deploy's stamp, at the site root beside this page's directory.
-    // Written by the deploy, never committed — bean `y7b3`.
-    `<meta name="fa-build-src" content="../build.json">`,
-  ];
-  return page({
-    title: `${g.id} — state`,
-    metas,
-    body: head + `<div class="fa-workplan" data-fa-workplan>
+  return beansBoardPage(g, graphs, src);
+}
+
+/**
+ * `<base>/beans/` — the work-plan dashboard, as a THEMED site page.
+ *
+ * Owner, 2026-10-07 (#2418): *"https://litlfred.github.io/folio-assistant/beans/
+ * (and other pages) have no top search/folio/local on the display"*. That band
+ * is built by `docs-ui.js`, which reaches a page only through the layout's
+ * `head_custom.html`; the standalone shell (`page()`) wrote its own head, so
+ * nothing built it. Same move as `todos/` (#1906), and for the same reason.
+ *
+ * The layout's head already carries everything the board needs, so the page
+ * names none of it: `fa-beans-src` and `fa-build-src` (both through
+ * `relative_url`), `work-plan.css`, and `work-plan.js`, which mounts itself on
+ * `[data-fa-workplan]`. The layout ALSO carries `fa-todo-src`, which would
+ * quietly make this the combined beans-and-todos view under the beans name —
+ * so the container says `data-fa-workplan-only="beans"`, and the renderer
+ * leaves the todo half unasked.
+ *
+ * The registry stays, as on every dashboard but `todos`. Its styles come with
+ * it, scoped to its own classes and written for BOTH schemes: on a themed page
+ * the reader's light/dark choice is live, which it never was in the shell.
+ */
+export function beansBoardPage(
+  g: Pick<StateGraph, "id" | "path" | "kinds">,
+  graphs: StateGraph[],
+  src: string,
+): string {
+  return `---
+layout: default
+title: Beans
+nav_exclude: true
+---
+<!--
+  ${GENERATED_BY}: the next run
+  overwrites it, \`state:visualizer:check\` fails on the difference, and a
+  hand-edit here is a change nothing else in the tree knows about.
+-->
+<style>
+.sv-sub { margin: 0 0 1.5rem; font-size: 0.9rem; opacity: 0.85; }
+.sv-h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
+  text-transform: uppercase; margin: 2rem 0 0.7rem; }
+.sv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.sv-list > li::before { content: none; }
+.sv-item { border: 1px solid rgba(127,127,127,0.4); border-radius: 8px; padding: 0.8rem 1rem; }
+.sv-item.is-here { border-color: currentColor; }
+.sv-item h2 { font-size: 1rem; margin: 0 0 0.2rem; }
+.sv-item p { margin: 0; font-size: 0.85rem; }
+.sv-here { font-weight: 600; }
+.sv-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em;
+  font-weight: 600; margin-left: 0.5rem; }
+</style>
+<h1 id="beans">${esc(g.id)}</h1>
+<p class="sv-sub">${esc(g.path)} · ${esc(g.kinds.join(", "))}</p>
+<div class="fa-workplan" data-fa-workplan data-fa-workplan-only="beans">
   <p class="fa-workplan-fallback">This view needs JavaScript. The data is
   <a href="${src}">a plain JSON file</a>.</p>
-</div>` + registry(graphs, g.id),
-  });
+</div>
+${registry(graphs, g.id)}
+`;
 }
 
 /**

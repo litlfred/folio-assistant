@@ -5,8 +5,9 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:10:30Z
-updated_at: 2026-10-02T17:38:56Z
+updated_at: 2026-10-07T08:16:00Z
 parent: folio-assistant-1xhc
+tags: [ready-to-close]
 ---
 
 
@@ -394,3 +395,10 @@ deleted, and the floor gets stronger** — one authoritative served listing
 instead of 2,405 copies and an empty destination.
 
 Put to the owner as a decision; not acted on.
+
+## Evidence
+All four Done-when items are ticked and re-derivable from the merged PRs below; the owner approval cited in the last bullet is reported by the closing session but not quoted or linked in the PR or here, so the bean is held at in-progress with the `ready-to-close` tag for the owner to confirm.
+- Items 1–4 landed in PR #1369 (merge commit `6579d63239`; `staging-preview-size` threshold basis split into `pages-publish-health`, instrument bean `1dre` created).
+- Follow-up investigation on linear floor (R4) scope landed in PR #1889 (merge commit `e89a5f4966`).
+- Owner ruling 2026-10-07: Owner approved moving static notes listing into `todos/index.html` and using a footer link stub on docs pages (~97% size recovery). The architectural investigation of `qj9a` is complete; the agreed refactoring implementation can be tracked in dedicated execution items.
+
