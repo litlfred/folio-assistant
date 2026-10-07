@@ -1,0 +1,409 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/",
+  "@type": "bootstrap:Subgraph",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/large-datasets/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets",
+          "@type": "cat-harness:SkillPackage",
+          "declaresSkill": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-subscription",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-on-demand",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+          ],
+          "description": "Taking a usable subset of a corpus this instance will never hold, and refreshing it. Named here rather than inferred from the directory: every instance's skills live in a directory called `skills`, so a package id taken from the basename collides with every other one. See bean `nlvl` for the measurement and `bootstrap/skills` for the precedent this follows.",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "name": "large-datasets",
+          "path": "skills/library/large-datasets",
+          "version": "0.1.0"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/copy-out-materialized",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 129,
+          "instructionsPath": "skills/library/large-datasets/copy-out-materialized.md",
+          "name": "copy-out-materialized",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4da335846160864611c27b05d6de1486939f78808fcf30164cbe49bf82581b03",
+            "bytes": 5804,
+            "sha256": "4da335846160864611c27b05d6de1486939f78808fcf30164cbe49bf82581b03"
+          },
+          "title": "Working on materialized content — copy it out"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-subscription",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Subscribing a folio or harness to an external knowledge graph — a substrate — and walking its parts from referenced to materialised, one at a time and only through the shared materialisation gates. When to subscribe, what makes a repository a substrate, choosing subgraphs, assets and harnesses, the five gates, instantiating a harness so it reaches the navbar, moving the pin, and what never to do.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 213,
+          "instructionsPath": "skills/library/large-datasets/kg-subscription.md",
+          "name": "kg-subscription",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a92c0dbfb376c4bb29a6116a37edcacef379ee01cfe7e02419d7d50a1b3d4459",
+            "bytes": 10584,
+            "sha256": "a92c0dbfb376c4bb29a6116a37edcacef379ee01cfe7e02419d7d50a1b3d4459"
+          },
+          "title": "Subscribing to a knowledge graph"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-on-demand",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "After bootstrap, a person asks for part of a remote subgraph to be held locally. Check what is already here (cache:index), put a number on the ask before anything is fetched, then run materialize-remote. Eviction is a report, never an act.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 71,
+          "instructionsPath": "skills/library/large-datasets/materialize-on-demand.md",
+          "name": "materialize-on-demand",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/645584ec26673803c5e0e9a0270c6c1be9c0bfe4fe428a87e9b6711796371aff",
+            "bytes": 3152,
+            "sha256": "645584ec26673803c5e0e9a0270c6c1be9c0bfe4fe428a87e9b6711796371aff"
+          },
+          "title": "Materialize on demand"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-remote",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 92,
+          "instructionsPath": "skills/library/large-datasets/materialize-remote.md",
+          "name": "materialize-remote",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/85ac53475fa038fbc72b2ee95030461faeaba89d5899ecefcf8697ed135f4b8c",
+            "bytes": 4271,
+            "sha256": "85ac53475fa038fbc72b2ee95030461faeaba89d5899ecefcf8697ed135f4b8c"
+          },
+          "title": "Materializing remote content"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 87,
+          "instructionsPath": "skills/library/large-datasets/sample-import.md",
+          "name": "sample-import",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7fec3795661f0a624ad87ade7488a563f14d36404826873ac29a74e7205672ce",
+            "bytes": 4063,
+            "sha256": "7fec3795661f0a624ad87ade7488a563f14d36404826873ac29a74e7205672ce"
+          },
+          "title": "Sample import"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/library/large-datasets",
+      "path": "skills/library/large-datasets/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "@type": "cat-harness:SkillPackage",
+          "declaresSkill": [
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adopt-methodology-from-source",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/literature-search",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-naming",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
+            "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch"
+          ],
+          "description": "Library and information management in the harness: the basic ingestion flow (accept an upload, extract its metadata into the KG, place the asset in library/ if materialized), content acquisition, upload routes and naming, asset extraction, literature search, methodology adoption, code lists, glossary terms, term disagreement and translation. Moved out of folio-core into the library topic (bean 9umr, owner ruling 2026-09-30); the cataloguing methods and the detailed document-ingestion method moved up a layer in placement PR6 (bean apcg).",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "name": "library-core",
+          "path": "skills/library/library-core",
+          "version": "0.1.0"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adopt-methodology-from-source",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 42,
+          "instructionsPath": "skills/library/library-core/adopt-methodology-from-source.md",
+          "name": "adopt-methodology-from-source",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e60155c5e05004bfa4a91656bc0c65c9b1462943bbabc0c0d682cbc4a48160e8",
+            "bytes": 3574,
+            "sha256": "e60155c5e05004bfa4a91656bc0c65c9b1462943bbabc0c0d682cbc4a48160e8"
+          },
+          "title": "Adopt a methodology from a source document"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Reading a container — a zip, a PDF, a saved web page — into the knowledge graph. What goes in by default (metadata), what does not (contents), the three timestamps that sit near each other and mean different things, and why a producer string is evidence.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 184,
+          "instructionsPath": "skills/library/library-core/asset-extraction.md",
+          "name": "asset-extraction",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6ca7d262b77db27d5d30792328470d3b428ac02d6188e14be2c0bd0a716af6fb",
+            "bytes": 8978,
+            "sha256": "6ca7d262b77db27d5d30792328470d3b428ac02d6188e14be2c0bd0a716af6fb"
+          },
+          "title": "Asset extraction — the index goes in, the contents do not"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-lists",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Author, extend or consume a code list: a closed set of codes, each with a label, a definition and a source, kept as a node and published as SKOS. Use when a diagram, a schema or a script needs a fixed set of values (adjudication answers, namespace IRIs) instead of strings in code.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 59,
+          "instructionsPath": "skills/library/library-core/code-lists.md",
+          "name": "code-lists",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6d42aad657c6a1f7b5465607da29a857c75885d36a35af6844bea90eb4459310",
+            "bytes": 2701,
+            "sha256": "6d42aad657c6a1f7b5465607da29a857c75885d36a35af6844bea90eb4459310"
+          },
+          "title": "Code lists"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Getting a resource INTO the graph in the first place — accepting one offered unprompted, or asking for one and then asking for it to be uploaded. The channels are plural and open: `uploads/` is one, the conversation is another. Runs before document ingestion, which begins only once a file has landed.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 104,
+          "instructionsPath": "skills/library/library-core/content-acquisition.md",
+          "name": "content-acquisition",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6653b52382b04b008ddcac69a3bf51bbec32e5b39d25a1a06db8781504ed4a39",
+            "bytes": 5211,
+            "sha256": "6653b52382b04b008ddcac69a3bf51bbec32e5b39d25a1a06db8781504ed4a39"
+          },
+          "title": "Acquisition is the step before ingestion, and it had no home"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 263,
+          "instructionsPath": "skills/library/library-core/glossary-terms.md",
+          "name": "glossary-terms",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/733dd49790fff97cacc5ebb727ad7ca3d22768a6ef93c6f9c180ffc6ad8a2197",
+            "bytes": 13819,
+            "sha256": "733dd49790fff97cacc5ebb727ad7ca3d22768a6ef93c6f9c180ffc6ad8a2197"
+          },
+          "title": "Glossary terms"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in `library/<slug>/` if it is materialized. The two entry points (a drop in `uploads/`, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: `bun run ingest`.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 146,
+          "instructionsPath": "skills/library/library-core/library-ingestion.md",
+          "name": "library-ingestion",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8df00722fff79e2004bfca430f9f5454a79502030ce6b98ff681b52a9d941271",
+            "bytes": 8399,
+            "sha256": "8df00722fff79e2004bfca430f9f5454a79502030ce6b98ff681b52a9d941271"
+          },
+          "title": "Library ingestion — the basic flow"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/literature-search",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Finding the source a node cites but does not hold — memory first, then this repository, then open-access services. Always produce a DIRECT download link. Read before recording that a citation cannot be found, and before appraising any source you have not opened. Its central rule: a blocked network is not a missing document, and the two must never share a report.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 156,
+          "instructionsPath": "skills/library/library-core/literature-search.md",
+          "name": "literature-search",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/60105da32f942ac7da3398115ba0b7c27eafb2528dfa5d948bf926c47a9e8fc0",
+            "bytes": 7897,
+            "sha256": "60105da32f942ac7da3398115ba0b7c27eafb2528dfa5d948bf926c47a9e8fc0"
+          },
+          "title": "Literature search — finding the source a citation points at"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/term-disagreement",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "When a glossary term the extractor minted and an authorised terminology disagree — the corpus spells a concept differently from the authority, or uses a word the authority does not carry — decide among three outcomes: change the prose, author a local term with its reason, or record that the vocabulary is wrong for this domain. Says which disagreements need a decision at all, how to choose, what each outcome writes and where, and what is NOT this skill (two judges disagreeing about a mapping).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 151,
+          "instructionsPath": "skills/library/library-core/term-disagreement.md",
+          "name": "term-disagreement",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/06a6d606f18b5d64072b02bd19615dcfae71072db0a3ffafcf7fce9e65502acd",
+            "bytes": 7478,
+            "sha256": "06a6d606f18b5d64072b02bd19615dcfae71072db0a3ffafcf7fce9e65502acd"
+          },
+          "title": "Term disagreement — the extractor and the terminology disagree"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, and the poSources fallback resolution chain.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 720,
+          "instructionsPath": "skills/library/library-core/translation-manager.md",
+          "name": "translation-manager",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e1cce2f66ce2eb475d44cbd86aac43617e9c7f18dc4059cf8146d4ced0645a67",
+            "bytes": 32883,
+            "sha256": "e1cce2f66ce2eb475d44cbd86aac43617e9c7f18dc4059cf8146d4ced0645a67"
+          },
+          "title": "Translation manager"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-naming",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "What an ingested file may be CALLED. Read before adding anything to an `uploads` or `library` graph, before writing a generator that links to one, and before \"fixing\" a broken link in a generated README. Covers which characters break what, why the name is normalised rather than the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 218,
+          "instructionsPath": "skills/library/library-core/upload-naming.md",
+          "name": "upload-naming",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5544011248863f1eb08a98b96e81ada58f86c8f18193edc65adfe563a5afab55",
+            "bytes": 10983,
+            "sha256": "5544011248863f1eb08a98b96e81ada58f86c8f18193edc65adfe563a5afab55"
+          },
+          "title": "Upload naming — the name is normalised, not the link escaped"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 193,
+          "instructionsPath": "skills/library/library-core/upload-routes.md",
+          "name": "upload-routes",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/99be9306c20748dc836fd690092ece23feefc4463e9109611ad7272239edaa71",
+            "bytes": 10332,
+            "sha256": "99be9306c20748dc836fd690092ece23feefc4463e9109611ad7272239edaa71"
+          },
+          "title": "Two mechanisms and a persona"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Notice what has landed in the acquisition queue, and tell an arrival from a backlog. Reports; it never deletes, and never ingests on its own say-so.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+          "instructionLines": 60,
+          "instructionsPath": "skills/library/library-core/uploads-watch.md",
+          "name": "uploads-watch",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2be82b12bf3dd96b9daa3f3d617deea056fb7a6ccb22b06adb29c4f489510ddd",
+            "bytes": 2717,
+            "sha256": "2be82b12bf3dd96b9daa3f3d617deea056fb7a6ccb22b06adb29c4f489510ddd"
+          },
+          "title": "Watching the queue"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/library/library-core/library-ingestion/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/library/library-core/library-ingestion",
+          "path": "skills/library/library-core/library-ingestion/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/library/library-core",
+      "path": "skills/library/library-core/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library",
+  "path": "skills/library/"
+}
