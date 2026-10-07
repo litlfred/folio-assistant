@@ -1,0 +1,49 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/scenarios",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "Scenarios — the Roles an Actor takes on, in `roles.json`, and the User Stories told as them, in `stories.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need and the Actor kinds that may play it; a lane names its Role, and a story names the Role it is told as, so the Role lists neither (#1168). SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path.",
+      "fileCount": 67,
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/scenarios",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "readmePath": "scenarios/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/actors/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "name": "scenarios/actors",
+      "path": "scenarios/actors/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/capabilities/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "name": "scenarios/capabilities",
+      "path": "scenarios/capabilities/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/scenarios"
+  ],
+  "name": "scenarios",
+  "path": "scenarios/"
+}

@@ -1,0 +1,127 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "cat-harness:graphTypology/content-adapters",
+      "@type": "bootstrap:GraphTypology",
+      "name": "content-adapters"
+    },
+    {
+      "@id": "cat-harness:graphTypology/pipeline-plugins",
+      "@type": "bootstrap:GraphTypology",
+      "name": "pipeline-plugins"
+    },
+    {
+      "@id": "cat-harness:graphTypology/qa-checkers",
+      "@type": "bootstrap:GraphTypology",
+      "name": "qa-checkers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#asset/agent-instructions",
+      "@type": "bootstrap:Asset",
+      "name": "agent-instructions",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d5cd0b9a6c42f694a433f7c2cf9b3dbabca9bbf34419d75198d3f7d9128709d",
+        "bytes": 2015,
+        "sha256": "8d5cd0b9a6c42f694a433f7c2cf9b3dbabca9bbf34419d75198d3f7d9128709d"
+      },
+      "title": "AGENTS.md — folio-assistant-sci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#asset/readme",
+      "@type": "bootstrap:Asset",
+      "name": "readme",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/909b73b1d3dd6ff7d77d53732c517967c975cd2f69680d8d6ec26f37b07ceec4",
+        "bytes": 3566,
+        "sha256": "909b73b1d3dd6ff7d77d53732c517967c975cd2f69680d8d6ec26f37b07ceec4"
+      },
+      "title": "folio-assistant-sci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/attestations",
+      "@type": "bootstrap:Subgraph",
+      "name": "attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-block-typologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-assistant-sci-block-typologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-content-adapters",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-assistant-sci-content-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-pipeline-plugins",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-assistant-sci-pipeline-plugins"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-qa-checkers",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-assistant-sci-qa-checkers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-translations",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-assistant-sci-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/folio-assistant-sci-typologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "folio-assistant-sci-typologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/library",
+      "@type": "bootstrap:Subgraph",
+      "name": "library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/qa",
+      "@type": "bootstrap:Subgraph",
+      "name": "qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-adapters",
+      "@type": "bootstrap:Subgraph",
+      "name": "sci-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-methodologies",
+      "@type": "bootstrap:Subgraph",
+      "name": "sci-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-scripts",
+      "@type": "bootstrap:Subgraph",
+      "name": "sci-scripts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-sources",
+      "@type": "bootstrap:Subgraph",
+      "name": "sci-sources"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld#directory/sci-tools",
+      "@type": "bootstrap:Subgraph",
+      "name": "sci-tools"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/scenarios/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/data/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/lean/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "folio-assistant-sci",
+  "path": "./"
+}

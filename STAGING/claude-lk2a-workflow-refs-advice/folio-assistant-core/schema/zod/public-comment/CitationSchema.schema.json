@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Citation",
+  "definitions": {
+    "Citation": {
+      "type": "object",
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "page": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "raw": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-lk2a-workflow-refs-advice/folio-assistant-core/schema/zod/public-comment/CitationSchema.schema.json",
+  "title": "CitationSchema",
+  "description": "Generated from `CitationSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/lk2a-workflow-refs-advice",
+    "sha": "ba1a342728bc5890ed3c91be9691b2846d1161b7",
+    "pr": "2346/merge",
+    "run": "37602521766"
+  }
+}
