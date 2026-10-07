@@ -1,0 +1,42 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/sdlc/spec-kit/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
+      "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/sdlc/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "name": "spec-kit",
+      "path": "skills/sdlc/spec-kit",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 146,
+      "instructionsPath": "skills/sdlc/spec-kit/spec-kit.md",
+      "name": "spec-kit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/da0d18294d74de2e5ff74cf19e7fef7cb668acc53aca52ce18e36ab5ece90a38",
+        "bytes": 7128,
+        "sha256": "da0d18294d74de2e5ff74cf19e7fef7cb668acc53aca52ce18e36ab5ece90a38"
+      },
+      "title": "Spec Kit — spec-driven development"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/sdlc/spec-kit",
+  "path": "skills/sdlc/spec-kit/"
+}

@@ -1,0 +1,129 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/folio-core/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/covered-is-not-reachable",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-assembly",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-contract",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-projection",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skills-and-tools"
+      ],
+      "description": "Content-agnostic platform skills that have not yet moved into a topic: the MCP tool surface (assembly, contract, projection), skills-and-tools and tool coverage. Synced into a content repo as a folio-core bundle. The knowledge-graph, library, UI, conduct, process, authoring and SDLC skills moved into their topics (bean 9umr).",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "name": "folio-core",
+      "path": "skills/folio-core",
+      "providesCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-push",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/python3",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/node-runtime"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/covered-is-not-reachable",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "A skill can be satisfied by the neighbours of its mechanism while the mechanism is reachable from no Tool node. Read before concluding from check:tools that a command is reachable, and before adding a Tool node or a `maintains` claim.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 274,
+      "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
+      "name": "covered-is-not-reachable",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f597eccd10b863f6b680c3ce7eb4b6f3318ed65d2a2d5001bac10ad3b1e9ee7",
+        "bytes": 14610,
+        "sha256": "8f597eccd10b863f6b680c3ce7eb4b6f3318ed65d2a2d5001bac10ad3b1e9ee7"
+      },
+      "title": "Covered is not reachable — and `check:tools` cannot tell you which"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-assembly",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Compose several Tool nodes into one MCP service — naming, collisions, grouping and versioning. Read when a service will expose more than one tool, or when two instances' tools land in the same namespace.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 93,
+      "instructionsPath": "skills/folio-core/mcp-assembly.md",
+      "name": "mcp-assembly",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/975c8baba9ff498559f9136c64ce30ea075a015b54c59c4adc9cfedb1f07a4ce",
+        "bytes": 4365,
+        "sha256": "975c8baba9ff498559f9136c64ce30ea075a015b54c59c4adc9cfedb1f07a4ce"
+      },
+      "title": "MCP assembly — many Tools, one service, one namespace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Verify an MCP service's tools against the Tool nodes and skill declarations they came from — I/O equivalence in both directions. Read before shipping a projected server, and when a tool call fails with an argument the schema said was fine.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 88,
+      "instructionsPath": "skills/folio-core/mcp-contract.md",
+      "name": "mcp-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0dd0079fa31ca4d3d61fffe92565b328e1b83c093e73421c360fabb2a81f13f1",
+        "bytes": 4642,
+        "sha256": "0dd0079fa31ca4d3d61fffe92565b328e1b83c093e73421c360fabb2a81f13f1"
+      },
+      "title": "MCP contract — the projected service must match what it was projected from"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-projection",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Generate an MCP server from Tool nodes — the mapping from this harness's skill/Tool vocabulary onto the current MCP standard. Read before exposing a CLI tool over MCP, or when asked how an agent stands a service up.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 152,
+      "instructionsPath": "skills/folio-core/mcp-projection.md",
+      "name": "mcp-projection",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4327b15b0993e204d93896bc5631072171e6289c1958d00a457c344457304c58",
+        "bytes": 8511,
+        "sha256": "4327b15b0993e204d93896bc5631072171e6289c1958d00a457c344457304c58"
+      },
+      "title": "consulted: reference material nobody performs — EXPLAINS a mapping — Tool node to MCP service — and instructs nobody. Classified the same way in the y1w9 sample of 15, by reading it, before this pass."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skills-and-tools",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "A skill states a capability generically; a Tool node carries the concrete mechanism. Read before writing or editing any skill, and whenever a skill is about to name a vendor, a CLI, a binary or an API endpoint.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
+      "instructionLines": 402,
+      "instructionsPath": "skills/folio-core/skills-and-tools.md",
+      "name": "skills-and-tools",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b1928c48f3bb20171303d7ea4b46caeb3422f46fc4be2164eb9b6e35735e92f",
+        "bytes": 21956,
+        "sha256": "3b1928c48f3bb20171303d7ea4b46caeb3422f46fc4be2164eb9b6e35735e92f"
+      },
+      "title": "Skills and Tools — the skill says what, the Tool says how"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/folio-core",
+  "path": "skills/folio-core/"
+}
