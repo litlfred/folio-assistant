@@ -125,7 +125,7 @@ in [`kg-export`](../../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a pu
    runs every security check this repository has (workflow injection, secret
    leaks, lockfile and toolchain pins, QA reviewer permission, materialised
    fixity) plus two advisories, and refuses when a blocking check fails OR
-   could not be run. Most of those checks are also inside `bun run gates`;
+   could not be run. Most of those checks are also inside `bun run cat gates`;
    the point of naming them here is that until 2026-10-07 **no merge or
    publish step named any security check**, so a release was covered only if
    the CI run before it happened to be the right one (bean `ieum`). Its
