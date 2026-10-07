@@ -80,6 +80,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import {
   cpSync,
   copyFileSync,
+  cpSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
@@ -871,6 +872,19 @@ export function probeStandalone(
         const dst = join(ws, f);
         mkdirSync(dirname(dst), { recursive: true });
         copyFileSync(src, dst);
+      }
+      // A REMOTE MOUNT is not in this checkout's index at all: since #2470
+      // bootstrap and bootstrap-tools are laid down from the mount lock as
+      // ignored directories, so `ls-files` names none of their files and the
+      // rehearsal ran with no closure — every test failed to import and no
+      // report was written. A mount is a verified copy of one pinned commit,
+      // so its tree as it stands IS what the clone would hold.
+      const src = join(repoRoot, rel);
+      if (listed.length === 0 && rel !== "" && existsSync(src)) {
+        cpSync(src, join(ws, rel), {
+          recursive: true,
+          filter: (p) => !/(^|[\\/])(\.git|node_modules)$/.test(relative(src, p)),
+        });
       }
       // A clone IS a git repository, and tests that ask git for the corpus
       // would otherwise fail as an artefact of the rehearsal (bean `ho66`:
