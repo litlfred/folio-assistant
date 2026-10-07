@@ -289,6 +289,13 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
   if (findDeclarationFile(repoRoot) !== undefined) {
     out.set(findDeclarationFile(repoRoot) ?? "", "the repository's own declaration: it acts as an initialized instance");
     const rootDecl = readDeclaration(repoRoot);
+    // Its remote-mount LOCK sits beside it (bean `0mpw`; first consumer, the
+    // smart-* cutover `hupw`): `<name>.mount-lock.json` is what the
+    // declaration's `remoteMounts` resolved to, committed with it, and
+    // accounted for by that field rather than by a list here.
+    if (rootDecl?.name && (rootDecl as { remoteMounts?: unknown[] }).remoteMounts?.length) {
+      out.set(`${rootDecl.name}.mount-lock.json`, `the lock of ${rootDecl.name}'s remoteMounts`);
+    }
     for (const dir of rootDecl?.directories ?? []) {
       const top = dir.path.replace(/^\.\//, "").split("/")[0];
       // Same `!out.has` guard and the same reason: being an instance is the
