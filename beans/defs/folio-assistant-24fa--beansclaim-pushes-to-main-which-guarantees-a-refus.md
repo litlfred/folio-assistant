@@ -1,11 +1,11 @@
 ---
 # folio-assistant-24fa
 title: beans:claim pushes to main, which GUARANTEES a refuse-class conflict on the claiming branch's own completion
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T00:43:10Z
-updated_at: 2026-10-07T05:10:32Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-d33q
 ---
 
@@ -124,3 +124,6 @@ After a successful push, beans:claim brings the claim commit into the claiming b
 - [x] Tests: fast-forward, merge commit, fallback, and the end-to-end claim→complete→merge main that fails on the old code.
 - [x] merge-conflict-patterns skill updated.
 - [ ] Merged, and the next claim from a fresh branch fast-forwards in real use.
+
+## Completed on landed evidence
+Landed on main in PR #2419 / commit 5026618c4aef (claim-bean: give joinClaim's merge commit an identity).
