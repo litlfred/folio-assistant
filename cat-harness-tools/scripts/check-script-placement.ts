@@ -22,7 +22,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
-import { mountedManifests } from "../../cat-harness/schemas/remote-mount.ts";
+import { mountScopeFor, mountedManifests } from "../../cat-harness/schemas/remote-mount.ts";
 import { CHECKOUT_SCRIPTS_KEY, readScriptTable } from "../../cat-harness/schemas/script-table.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -41,6 +41,7 @@ export function layersOf(repo: string): Map<string, string[]> {
   for (const inst of instanceRootsIn(repo)) {
     if (resolve(inst) === resolve(repo)) continue;
     if (existsSync(join(inst, ".git"))) continue; // a submodule: another repository
+    if (mountScopeFor(inst) !== undefined) continue; // a remote mount, the submodule's successor (bean nn8e): another repository too, unless its lock vouches for its manifest (below)
     const name = basename(inst);
     const decl = join(inst, `${name}.json`);
     const needs = existsSync(decl)
