@@ -14,19 +14,19 @@ Memory nodes across all agent roles, assembled from declared `memory` directorie
 ### STABLE — re-measure, always
 
 Nothing about workflow state should ever be quoted from this file. Run
-`bun run check:ci-health` and report what it returns today.
+`bun run cat check:ci-health` and report what it returns today.
 
 | what | command |
 |---|---|
-| per-workflow state on default branch | `bun run check:ci-health` |
-| workflow trigger policy | `bun run check:workflow-policy` |
+| per-workflow state on default branch | `bun run cat check:ci-health` |
+| workflow trigger policy | `bun run cat check:workflow-policy` |
 | the tracking issue | issues labelled `ci-health` |
 
 More: `detail/re-measure-ci-health.md`
 
 ### STABLE — the check and its three rules
 
-`bun run check:ci-health` reports each workflow's state on the **default
+`bun run cat check:ci-health` reports each workflow's state on the **default
 branch**: consecutive failures, days since the last green, whether it has run
 recently at all. The session-start sweep prints it, so it lands where you
 already look.
@@ -108,7 +108,7 @@ anomaly. The log named the test in one line.
 
 ### TRAP — derive the gate list from the WORKFLOW, not from package.json
 
-**`bun run gates`** runs what CI runs, derived from the workflow at run time
+**`bun run cat gates`** runs what CI runs, derived from the workflow at run time
 (`--all` adds the browser job). Never hand-list them: three checks are invoked
 by PATH so a `bun run <script>` sweep cannot see them, and a hand-list of 17
 read as coverage while the real set was 37 (measured 2026-09-19, by the agent
@@ -247,8 +247,8 @@ and fix it there rather than restating it back into this file.
 | what | command |
 |---|---|
 | folio-specific literals in platform code | grep the change for a paper dir, a title, an owner/repo, a Lake prefix, a workflow filename |
-| README sections a folio can opt into | `bun run readme:sections` |
-| README staleness | `bun run readme:sync:check` |
+| README sections a folio can opt into | `bun run cat readme:sections` |
+| README staleness | `bun run cat readme:sync:check` |
 | block-kind classification totality | read `schemas/block-kinds.ts`; `DOCUMENT_BLOCK_KINDS` must stay derived |
 
 > Relabelled from BASELINE to STABLE, 2026-09-19. `AGENTS.md` defines a
@@ -259,7 +259,7 @@ and fix it there rather than restating it back into this file.
 
 ### STABLE — the builder shim, and why `folio_init` is generic
 
-`bun run init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
+`bun run cat init-folio` / the `folio_init` MCP tool writes a folio's `content/`,
 `uploads/`, `library/`, manifests, `<name>.config.json`, the `content/schema/`
 builder shim, `AGENTS.md` + `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the
 session-start hook and the beans store.
