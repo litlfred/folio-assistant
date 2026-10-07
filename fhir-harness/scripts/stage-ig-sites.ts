@@ -265,7 +265,7 @@ export function releasesFor(root: string): IgReleases | undefined {
   return existsSync(at) ? IgReleasesSchema.parse(JSON.parse(readFileSync(at, "utf-8"))) : undefined;
 }
 
-/** Every instance whose IG menu records a cloneable sushi-config source. */
+/** Every instance whose declaration or IG menu records a cloneable source (bean `bamf`). */
 export function igsToBuild(repoRoot: string): { build: IgToBuild[]; skipped: string[] } {
   const build: IgToBuild[] = [];
   const skipped: string[] = [];
@@ -274,11 +274,25 @@ export function igsToBuild(repoRoot: string): { build: IgToBuild[]; skipped: str
     if (!existsSync(menuPath)) continue;
     const m = JSON.parse(readFileSync(menuPath, "utf-8")) as MenuFile;
     const instance = basename(root);
-    if (m.source?.kind !== "sushi-config" || !m.source.of || !m.source.ref) {
-      skipped.push(`${instance}: menu.json records no sushi-config source repository and commit`);
+    const decl = readDeclaration(root);
+    const declaredAs = decl?.name ?? instance;
+
+    let repo: string | undefined;
+    let ref: string | undefined;
+
+    if (decl?.source?.kind === "git") {
+      repo = decl.source.repository;
+      ref = decl.source.ref;
+    } else if (m.source?.kind === "sushi-config" && m.source.of && m.source.ref) {
+      repo = m.source.of;
+      ref = m.source.ref;
+    }
+
+    if (!repo || !ref) {
+      skipped.push(`${instance}: neither instance declaration nor menu.json records a git/sushi-config source repository and commit`);
       continue;
     }
-    build.push({ instance, root, menuPath, repo: m.source.of, ref: m.source.ref, declaredAs: readDeclaration(root)?.name ?? instance });
+    build.push({ instance, root, menuPath, repo, ref, declaredAs });
   }
   return { build, skipped };
 }

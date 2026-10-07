@@ -23,19 +23,37 @@ beforeAll(() => {
     writeFileSync(join(repo, name, "fhir-artifact-index", "menu.json"), m);
     writeDeclaration(join(repo, name), { name, directories: [] });
   }
+  // An instance that declares its source in its instance declaration (bean `bamf`)
+  mkdirSync(join(repo, "declared-source", "fhir-artifact-index"), { recursive: true });
+  writeFileSync(join(repo, "declared-source", "fhir-artifact-index", "menu.json"), menu());
+  writeDeclaration(join(repo, "declared-source"), {
+    name: "declared-source",
+    source: { kind: "git", repository: "https://example.org/declared-ig.git", ref: "def456" },
+    directories: [],
+  });
+
   mkdirSync(join(repo, "no-menu"), { recursive: true });
   writeDeclaration(join(repo, "no-menu"), { name: "no-menu", directories: [] });
 });
 afterAll(() => rmSync(repo, { recursive: true, force: true }));
 
+test("an instance whose declaration records a git source is built from that declared source", () => {
+  const { build } = igsToBuild(repo);
+  const declared = build.find((b) => b.instance === "declared-source");
+  expect(declared).toBeDefined();
+  expect(declared?.repo).toBe("https://example.org/declared-ig.git");
+  expect(declared?.ref).toBe("def456");
+});
+
 test("an instance whose menu records a sushi-config source is built, from that commit", () => {
   const { build } = igsToBuild(repo);
-  expect(build.map(({ instance, repo: r, ref }) => ({ instance, r, ref }))).toEqual([
-    { instance: "with-source", r: "https://example.org/ig.git", ref: "abc123" },
-  ]);
+  const withSource = build.find((b) => b.instance === "with-source");
+  expect(withSource).toBeDefined();
+  expect(withSource?.repo).toBe("https://example.org/ig.git");
+  expect(withSource?.ref).toBe("abc123");
 });
 
 test("a menu with no source is skipped AND reported; no menu at all is simply not an IG", () => {
   const { skipped } = igsToBuild(repo);
-  expect(skipped).toEqual(["no-source: menu.json records no sushi-config source repository and commit"]);
+  expect(skipped).toEqual(["no-source: neither instance declaration nor menu.json records a git/sushi-config source repository and commit"]);
 });
