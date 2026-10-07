@@ -301,7 +301,7 @@ export function readEntryDocument(dir: string, id: string, opts: { withheld?: bo
  */
 export const DOCUMENT_VIEW_JS = String.raw`
 /* THE DOCUMENT PANEL -- issue #2302. See scripts/lib/library-document.ts. */
-var DOC = null, DOC_TAB = "contents";
+var DOC = null, DOC_ID = null, DOC_TAB = "contents";
 function docHref(id){
   var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
   return dir + "entries/" + encodeURIComponent(id) + ".doc.json";
@@ -454,7 +454,7 @@ function renderDocument(id, d, err){
   if (!err && d && d.absent) { el.hidden = true; return; }
   el.hidden = false;
   if (err) { el.innerHTML = '<h2>Document</h2><p class="empty">Could not read the document view for ' + esc(id) + ' — ' + esc(err) + '. This is a failure to read, not an empty document.</p>'; return; }
-  DOC = d;
+  DOC = d; DOC_ID = id;
   if (d.links && window.faEditLinks) window.faEditLinks.configure({ repo: d.links.repo, branch: d.links.branch, content: id });
   var tab = DOC_TABS.filter(function(t){ return t[0] === DOC_TAB; })[0] || DOC_TABS[0];
   var whole = d.links ? ' <span class="doc-actions" data-src="' + esc(d.links.dir) + '" data-block="' + esc(id) + '"><a data-fa-link="source">source</a> ' +
@@ -484,10 +484,20 @@ function renderDocument(id, d, err){
     });
   });
 }
+/* An address naming a section (#sec-<id>), from the rail's contents or a
+   link from anywhere, opens the Sections tab at it: the section exists only
+   on that tab, so a bare fragment would scroll to nothing. */
+function openSectionFromHash(){
+  var h = decodeURIComponent(location.hash || "");
+  if (h.indexOf("#sec-") !== 0 || !DOC) return;
+  if (DOC_TAB !== "sections") { DOC_TAB = "sections"; renderDocument(DOC_ID, DOC, null); }
+  var t = document.getElementById(h.slice(1)); if (t) t.scrollIntoView();
+}
+window.addEventListener("hashchange", openSectionFromHash);
 function loadDocument(id){
   fetch(docHref(id), {cache: "no-store"})
     .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function(d){ renderDocument(id, d, null); })
+    .then(function(d){ renderDocument(id, d, null); openSectionFromHash(); })
     .catch(function(e){ renderDocument(id, null, String(e && e.message || e)); });
 }
 `;

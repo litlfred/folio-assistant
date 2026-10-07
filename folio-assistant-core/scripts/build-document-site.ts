@@ -68,6 +68,7 @@ import type { Chapter, Paper, Section, SectionRef } from "../../cat-harness/sche
 import { buildDocumentMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
 import { reviewPageHtml } from "../../cat-harness/scripts/gen-review-page.js";
 import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
+import { visualiserNavDeclaration, type VisualiserNavEntry } from "../../cat-harness/scripts/lib/navbar.js";
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
@@ -108,6 +109,44 @@ ${body}
 </body>
 </html>
 `;
+}
+
+/**
+ * The page's contents, declared for the harness rail (owner, 2026-10-07:
+ * *"LHS navbar should show page TOCs"*). The rail indexes headings that carry
+ * an `id`, and a document's headings carry none: the assembly writes each
+ * chapter's and section's label as an anchor JUST BEFORE its heading
+ * (`<p><a id="sec:1-1"></a></p>` then `<h3>`), because those ids are what the
+ * review page, the change-sets and the comment notes link to. So the index is
+ * declared, pointing at those anchors, rather than moving an id every other
+ * link already depends on.
+ *
+ * Chapters are rows and their sections are the rows' children, one level, as
+ * the declaration allows. A heading with no anchor before it is not a
+ * destination and is left out. Absent when fewer than two rows result: an
+ * index of the one chapter in view is a menu that does nothing.
+ */
+export function pageContents(html: string): string {
+  const entries: VisualiserNavEntry[] = [];
+  const text = (h: string) =>
+    h
+      .replace(/<[^>]*>/g, "")
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&#x27;|&#39;/g, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/\s+/g, " ")
+      .trim();
+  const re = /<p><a id="([^"]+)"><\/a><\/p>\s*<(h2|h3)\b[^>]*>([\s\S]*?)<\/\2>/g;
+  for (const m of html.matchAll(re)) {
+    const row = { label: text(m[3]!), href: `#${m[1]}` };
+    if (!row.label) continue;
+    const parent = entries[entries.length - 1];
+    if (m[2] === "h3" && parent) parent.items = [...(parent.items ?? []), row];
+    else entries.push(row);
+  }
+  return entries.length < 2 ? "" : visualiserNavDeclaration(entries) + "\n";
 }
 
 // ── Lazy pages: the block text as data (bean v433, owner 2026-10-06) ────────
@@ -593,10 +632,10 @@ export async function buildDocumentSite(
     const withActions = (h: string, compact = false) => (cfg ? injectBlockActions(h, blocks, cfg, { compact }).html : h);
     const lazy = opts.lazy === "always" || ((opts.lazy ?? "auto") === "auto" && blocks.length >= LAZY_THRESHOLD);
     if (!lazy) {
-      writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, html, mathOpts)));
+      writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, pageContents(html) + html, mathOpts)));
     } else {
       // The whole document on one page, for file://, no-JS readers and tools.
-      writeFileSync(join(dir, "index.hydrated.html"), withActions(page(manifest.title ?? d.slug, html, mathOpts)));
+      writeFileSync(join(dir, "index.hydrated.html"), withActions(page(manifest.title ?? d.slug, pageContents(html) + html, mathOpts)));
       const split = splitBlocks(built.markdown, new Set(blocks.map((b) => b.label)));
       const index = { chunks: 0, of: {} as Record<string, number>, ids: {} as Record<string, number> };
       mkdirSync(join(dir, "blocks"), { recursive: true });
@@ -614,7 +653,7 @@ export async function buildDocumentSite(
       lazyOf.set(d.slug, { hydrated: `${d.slug}/index.hydrated.html`, chunks: index.chunks, of: index.of });
       const shellHtml = await renderDocumentHtml(split.shell, { math });
       const note = `<p class="fa-one-page">The text loads as you read. <a href="index.hydrated.html">The whole document on one page.</a></p>\n<noscript><p><a href="index.hydrated.html">Read the whole document on one page.</a></p></noscript>\n`;
-      writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, note + shellHtml, mathOpts, lazyLoader(index)), true));
+      writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, pageContents(shellHtml) + note + shellHtml, mathOpts, lazyLoader(index)), true));
     }
     // A document's images live in `folio/<slug>/media/` and its blocks link
     // them as `media/<file>`, relative to the document's page. Copied, so a
