@@ -1084,6 +1084,7 @@ export const RULES: Rule[] = [
       "schemas/instance-roots.ts",
       "schemas/script-table.ts",            // the checkout's script table, by layer (bean `ar1s` P4): read from the declared instances, as instance-roots finds them
       "scripts/run-script.ts",              // `bun run cat <name>`: runs a script from that table
+      "scripts/mount-from-lock.ts",              // `bun run cat mount:lock`: replays the remote-mount lock (bean nn8e)
       "schemas/graph-typology-node.ts",
       "schemas/declared-nodes.ts",
       "schemas/validator-node.ts",

@@ -21,10 +21,13 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`block-kind-namespace-checkout.test.ts`](block-kind-namespace-checkout.test.ts) | a file |  |
 | [`bootstrap-graph-repo-root.test.ts`](bootstrap-graph-repo-root.test.ts) | a file |  |
 | [`bootstrap-reading-checkout.test.ts`](bootstrap-reading-checkout.test.ts) | a file |  |
+| [`build-ig-site-checkout.test.ts`](build-ig-site-checkout.test.ts) | a file |  |
 | [`check-bean-parents-repo-root.test.ts`](check-bean-parents-repo-root.test.ts) | a file |  |
 | [`check-import-direction-checkout.test.ts`](check-import-direction-checkout.test.ts) | a file |  |
 | [`compose-docs-checkout.test.ts`](compose-docs-checkout.test.ts) | a file |  |
 | [`content-holds-code-checkout.test.ts`](content-holds-code-checkout.test.ts) | a file |  |
+| [`detect-live-corpus-checkout.test.ts`](detect-live-corpus-checkout.test.ts) | a file |  |
+| [`contributions-root-sci-checkout.test.ts`](contributions-root-sci-checkout.test.ts) | a file |  |
 | [`directory-storage-checkout.test.ts`](directory-storage-checkout.test.ts) | a file |  |
 | [`dispatch-gates-can-pass.test.ts`](dispatch-gates-can-pass.test.ts) | a file |  |
 | [`document-kinds-viz-checkout.test.ts`](document-kinds-viz-checkout.test.ts) | a file |  |
@@ -51,8 +54,10 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`harnessed-kg-overview.test.ts`](harnessed-kg-overview.test.ts) | a file |  |
 | [`health-checks-workflows.test.ts`](health-checks-workflows.test.ts) | a file |  |
 | [`health-probes-repo-root.test.ts`](health-probes-repo-root.test.ts) | a file |  |
+| [`ig-releases-checkout.test.ts`](ig-releases-checkout.test.ts) | a file |  |
 | [`image-placements-checkout.test.ts`](image-placements-checkout.test.ts) | a file |  |
 | [`infrastructure-repo-root.test.ts`](infrastructure-repo-root.test.ts) | a file |  |
+| [`ingest-ig-invocation-checkout.test.ts`](ingest-ig-invocation-checkout.test.ts) | a file |  |
 | [`init-folio-checkout.test.ts`](init-folio-checkout.test.ts) | a file |  |
 | [`instance-repositories-checkout.test.ts`](instance-repositories-checkout.test.ts) | a file |  |
 | [`jsonld-label-resolution-checkout.test.ts`](jsonld-label-resolution-checkout.test.ts) | a file |  |
@@ -64,6 +69,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`library-entry-iri-checkout.test.ts`](library-entry-iri-checkout.test.ts) | a file |  |
 | [`library-links-checkout.test.ts`](library-links-checkout.test.ts) | a file |  |
 | [`library-withheld-checkout.test.ts`](library-withheld-checkout.test.ts) | a file |  |
+| [`memory-refs-checkout.test.ts`](memory-refs-checkout.test.ts) | a file |  |
 | [`merge-guard-workflows.test.ts`](merge-guard-workflows.test.ts) | a file |  |
 | [`methodologies-viz-checkout.test.ts`](methodologies-viz-checkout.test.ts) | a file |  |
 | [`methodology-evidence-checkout.test.ts`](methodology-evidence-checkout.test.ts) | a file |  |
@@ -72,12 +78,15 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`ns-document-resolves.test.ts`](ns-document-resolves.test.ts) | a file |  |
 | [`pair-cover-workflows.test.ts`](pair-cover-workflows.test.ts) | a file |  |
 | [`partition-names-checkout.test.ts`](partition-names-checkout.test.ts) | a file |  |
+| [`pipeline-plugins-sci-checkout.test.ts`](pipeline-plugins-sci-checkout.test.ts) | a file |  |
 | [`placement-pr1-content-up.test.ts`](placement-pr1-content-up.test.ts) | a file |  |
 | [`processes-viz-checkout.test.ts`](processes-viz-checkout.test.ts) | a file |  |
 | [`property-skills-checkout.test.ts`](property-skills-checkout.test.ts) | a file |  |
 | [`prov-jsonld-checkout.test.ts`](prov-jsonld-checkout.test.ts) | a file |  |
 | [`prov-qaqc-checkout.test.ts`](prov-qaqc-checkout.test.ts) | a file |  |
 | [`publish-instance-files-workflows.test.ts`](publish-instance-files-workflows.test.ts) | a file |  |
+| [`qa-checker-discovery-sci-checkout.test.ts`](qa-checker-discovery-sci-checkout.test.ts) | a file |  |
+| [`qa-criterion-source-file-sci-checkout.test.ts`](qa-criterion-source-file-sci-checkout.test.ts) | a file |  |
 | [`qa-results-workflows.test.ts`](qa-results-workflows.test.ts) | a file |  |
 | [`readme-sections-checkout.test.ts`](readme-sections-checkout.test.ts) | a file |  |
 | [`regen-after-merge-workflows.test.ts`](regen-after-merge-workflows.test.ts) | a file |  |
@@ -101,6 +110,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`subgraph-node-checkout.test.ts`](subgraph-node-checkout.test.ts) | a file |  |
 | [`subgraph-source-checkout.test.ts`](subgraph-source-checkout.test.ts) | a file |  |
 | [`subgraphs-checkout.test.ts`](subgraphs-checkout.test.ts) | a file |  |
+| [`task-pool-checkout.test.ts`](task-pool-checkout.test.ts) | a file |  |
 | [`tech-meta-checkout.test.ts`](tech-meta-checkout.test.ts) | a file |  |
 | [`term-mapping-checkout.test.ts`](term-mapping-checkout.test.ts) | a file |  |
 | [`theme-by-ref-checkout.test.ts`](theme-by-ref-checkout.test.ts) | a file |  |

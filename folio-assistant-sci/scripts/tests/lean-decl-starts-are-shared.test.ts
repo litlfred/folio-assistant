@@ -7,13 +7,20 @@
  * held against is this instance's, so standing alone cat-harness has nothing
  * for these to read. The rest of that file's tests stay there.
  */
-import { describe, expect, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 
 import {
   splitDeclarations,
   stripLeanComments,
 } from "../../../cat-harness/content/pipeline/lean-lexer.js";
+import { usePipelinePluginRegistry } from "../../../cat-harness/content/pipeline/pipeline-plugins";
 import { leanDeclSpans, scopeLeanToDecl } from "../../../cat-harness/content/pipeline/qa-checkers-q-usage.js";
+import { useSciPipelinePlugins } from "./sci-consumer";
+
+// The lexer is sci's contribution, so it is loaded through a folio that
+// depends on sci rather than from whatever the running checkout happens to be.
+beforeAll(useSciPipelinePlugins);
+afterAll(() => usePipelinePluginRegistry(undefined));
 
 /** One declaration of each shape the two patterns disagreed about. */
 const DIVERGENT = `theorem alpha : True := by trivial

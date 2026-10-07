@@ -187,6 +187,44 @@
           "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'Yes, trust both pins' — the SHAs the submodules already pinned (#2462)"
         }
       }
+    },
+    {
+      "harness": "who-iris",
+      "repository": "litlfred/who-iris",
+      "ref": "386617f40c26eeb87cab69645661f95b8383d7f6",
+      "overrides": {
+        "who-iris": {
+          "whole": true
+        }
+      },
+      "note": "The who-iris cutover (bean g8jp): litlfred/who-iris is the live graph; the in-tree copy is archived at fsh-guts/separated/who-iris.tar.gz. Its need folio-assistant-core is this checkout's own.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "386617f40c26eeb87cab69645661f95b8383d7f6",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: who-iris push access + remove in-tree copy 'Yes to both'; retire 'Run the retire'"
+        }
+      }
+    },
+    {
+      "harness": "fhir-harness",
+      "repository": "litlfred/fhir-harness",
+      "ref": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0",
+      "overrides": {
+        "fhir-harness": {
+          "whole": true
+        }
+      },
+      "note": "fhir-harness separated (#2266): litlfred/fhir-harness is the live layer; the in-tree copy is archived at fsh-guts/separated/fhir-harness.tar.gz. Its need folio-assistant-core is this checkout's own.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'keep working on separation. PRIORITY'; 'merge when ready after internal testing'"
+        }
+      }
     }
   ]
 }

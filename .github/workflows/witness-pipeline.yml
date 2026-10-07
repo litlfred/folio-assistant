@@ -53,7 +53,7 @@ jobs:
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7

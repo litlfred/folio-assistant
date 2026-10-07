@@ -6,7 +6,7 @@
  * is this instance's, so standing alone cat-harness has nothing for these to
  * read. The rest of that file's tests stay there.
  */
-import { describe, test, expect } from "bun:test";
+import { describe, test, expect, beforeAll, afterAll } from "bun:test";
 import {
   mkdtempSync,
   mkdirSync,
@@ -25,6 +25,13 @@ import { checkQUsageArchimedeanInCategoricalChapter } from "../../../cat-harness
 // core delegations to that layer. Configuring the package LIST alone leaves
 // every resolution `undefined` — measured: 9 of these tests went red.
 import { configureLeanPackages } from "../../../cat-harness/content/pipeline/lean-formal-ref.ts";
+import { usePipelinePluginRegistry } from "../../../cat-harness/content/pipeline/pipeline-plugins";
+import { useSciPipelinePlugins } from "./sci-consumer";
+
+// The Lean lexer the q-usage checker scopes with is sci's contribution: loaded
+// through a folio that depends on sci, not from whatever checkout is running.
+beforeAll(useSciPipelinePlugins);
+afterAll(() => usePipelinePluginRegistry(undefined));
 
 // ── Fixture helpers ─────────────────────────────────────────────
 

@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "latex-compilation",
+    "path": "skills/content/folio-paper-adapter/latex-compilation.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/latex-compilation.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/latex-compilation.ts",
+      "prose_hash": "4122e40602df",
+      "code_hash": "32049a737fcd",
+      "by": "baseline"
+    }
+  ]
+}
