@@ -27,7 +27,7 @@
       "mvp": [
         "rm -rf _kg _site",
         "bun test",
-        "CI=1 bunx playwright test -c cat-harness-tools/playwright.config.ts",
+        "CI=1 bun run test:e2e",
         "bun run scripts/site-links.ts --site ./_site"
       ]
     },
