@@ -1,11 +1,12 @@
 ---
 # folio-assistant-zdfa
 title: 'INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio''s workflow lands where GitHub never reads it'
-status: completed
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-23T18:06:56Z
-updated_at: 2026-10-07T02:33:37Z
+updated_at: 2026-10-07T11:03:28Z
+tags: [ready-to-close]
 parent: folio-assistant-q4jm
 ---
 

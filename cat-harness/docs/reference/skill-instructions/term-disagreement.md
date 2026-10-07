@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/library/library-core/term-disagreement.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/term-disagreement.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/term-disagreement.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/term-disagreement.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/library/library-core/term-disagreement.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Term disagreement — the extractor and the terminology disagree
