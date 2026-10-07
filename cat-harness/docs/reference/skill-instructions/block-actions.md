@@ -109,6 +109,30 @@ own: one recipe, so a change to the issue form or the branch reaches every
 page at once (owner, 2026-10-06: *"make sure feedback/edit links are changed
 across all harness/visualizers to be dynamic"*).
 
+## In the library: edit opens the folio, never the source
+
+A library entry is a frozen source: the version published for public comment
+stays in `library/` exactly as circulated, and the changes the review asks
+for are made in `folio/` (owner, 2026-10-07). So the library's Document view
+(`cat-harness/scripts/lib/library-document.ts`, drawn by the platform viewer
+and by `build-library-site.ts` on a folio's site) shows:
+
+| link | on | opens |
+|---|---|---|
+| **source** | the document, each section | the library's own file on GitHub, read-only |
+| **📣 feedback** | the document, each section | an issue coded with the entry: `Feedback [<entry>]: <section>` |
+| **✎ edit** | each section, and its contents row | the FIRST folio block of the folio section MATERIALISED from it |
+
+A section is matched to the folio by its number, else its title, through the
+`folio-review-anchors/v1` file whose `library` names the entry. A section the
+folio has no counterpart for (a PDF's front matter) gets no ✎ edit, because a
+guessed link would open the wrong block. The platform's own library has no
+materialisation, so it shows source and feedback only.
+
+`bun run folio-assistant-core/scripts/build-library-site.ts --repo <folio> --out _site`
+publishes a folio's library at `<out>/folio-assistant-core/<library dir>/<entry>/`,
+the same `<base>/<handler>/<kind>/<subject>` route every viewer follows.
+
 ## Using it as an agent
 
 ```sh

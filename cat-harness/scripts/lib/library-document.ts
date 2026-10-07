@@ -75,6 +75,27 @@ export interface DocSection {
   /** The opening of the section's own text; null when withheld or empty. */
   extract: string | null;
   extractCut: boolean;
+  /**
+   * Where this section was MATERIALISED for editing, when it was (bean zcak):
+   * a library entry is frozen (owner, 2026-10-07: "published 'draft for
+   * public comment' goes in library/, changes to it from PC review go under
+   * folio/"), so [edit] on a section opens the folio block made from it.
+   * Supplied by the caller ({@link EntryLinks}); absent when none maps.
+   */
+  edit?: { path: string; label: string };
+}
+
+/**
+ * What a section's [source], [feedback] and [edit] links are built from
+ * (bean zcak, the shared recipe of bean v433). `dir` is the entry's directory,
+ * repository-relative. The library never gets an edit link of its own: it is
+ * frozen, and `editFor` is how a folio that materialised it says where edits go.
+ */
+export interface EntryLinks {
+  repo: string;
+  branch?: string;
+  dir: string;
+  editFor?: (s: { id: string; number: string | null; title: string }) => { path: string; label: string } | undefined;
 }
 
 export interface DocKeyword { term: string; heading: boolean }
@@ -98,6 +119,8 @@ export interface DocumentView {
     pageLabelConflicts?: { count: number; items: string[] };
   };
   withheld: boolean;
+  /** Present when the caller gave {@link EntryLinks}: the page draws the links. */
+  links?: { repo: string; branch: string; dir: string };
 }
 
 /** The raw `structure.json` fields this view reads (schemas/pdf-structure.ts). */
@@ -156,7 +179,7 @@ export function extractOf(text: string | null, max = EXTRACT_CHARS): { extract: 
  * The document view of one entry directory, or null when it carries no
  * `structure.json`. `withheld` suppresses every verbatim extract.
  */
-export function readEntryDocument(dir: string, id: string, opts: { withheld?: boolean } = {}): DocumentView | null {
+export function readEntryDocument(dir: string, id: string, opts: { withheld?: boolean; links?: EntryLinks } = {}): DocumentView | null {
   // Through the shared accessor (bean rkqp): it knows every structure
   // variant. A pdf structure carries the TOC, pages and figures this view
   // shows; a notebook or text structure shows its sections only.
@@ -259,6 +282,15 @@ export function readEntryDocument(dir: string, id: string, opts: { withheld?: bo
   if (d.toc_alignment) view.checks.tocAlignment = d.toc_alignment;
   if (Array.isArray(d.figure_sequence_gaps)) view.checks.figureSequenceGaps = d.figure_sequence_gaps;
   if (d.page_label_conflicts) view.checks.pageLabelConflicts = d.page_label_conflicts;
+  const links = opts.links;
+  if (links) {
+    view.links = { repo: links.repo, branch: links.branch ?? "main", dir: links.dir.replace(/\/+$/, "") };
+    if (links.editFor)
+      for (const x of view.sections) {
+        const e = links.editFor({ id: x.id, number: x.number, title: x.title });
+        if (e) x.edit = e;
+      }
+  }
   return view;
 }
 
@@ -296,10 +328,14 @@ function docContents(d){
      is visible at a glance (owner, 2026-10-06: "TOC collapsible and start
      collapsed - hard to see overview"). Native <details>: keyboard and
      screen-reader behaviour with no script. */
+  var bySec = {};
+  d.sections.forEach(function(s){ bySec[s.id] = s; });
   function line(e){
     var t = (e.number ? esc(e.number) + ' ' : '') + esc(e.title);
     var link = e.section ? '<a href="#sec-' + esc(e.section) + '" data-sec="' + esc(e.section) + '">' + t + '</a>' : t;
-    return link + ' <span class="note">' + pageText(e.page, e.pageLabel) + '</span> ' + confPill(e.confidence, e.evidence);
+    var s = e.section && bySec[e.section];
+    return link + ' <span class="note">' + pageText(e.page, e.pageLabel) + '</span> ' + confPill(e.confidence, e.evidence) +
+      (s && s.edit && d.links ? ' ' + editHost(s) : '');
   }
   /* Build a node list first, so a level can see how many siblings it has.
      A node that is the ONLY one at its level starts open: an outline whose
@@ -360,6 +396,23 @@ function chips(ks){
     return '<span class="pill' + (k.heading ? ' ok' : '') + '"' + (k.heading ? ' title="also named by a heading"' : '') + '>' + esc(k.term) + '</span>';
   }).join(" ") + '</p>';
 }
+/* LINKS -- bean zcak, from the shared recipe (edit-links, bean v433). The
+   library is frozen, so [source] and [feedback] are about the library's own
+   section file, and [edit] opens the folio block MATERIALISED from the
+   section, when there is one. Each is its own host, so the runtime builds
+   every href from that host's data-src and nothing else. */
+function editHost(s){
+  return '<span class="doc-actions" data-src="' + esc(s.edit.path) + '" data-block="' + esc(s.edit.label) + '">' +
+    '<a data-fa-link="edit" title="Edit the folio block made from this section (the library copy is frozen)">✎ edit</a></span>';
+}
+function secActions(d, s){
+  if (!d.links) return '';
+  var t = (s.number ? s.number + ' ' : '') + s.title;
+  return ' <span class="doc-actions" data-src="' + esc(d.links.dir + '/sections/' + s.id + '.md') + '" data-block="' + esc(s.id) +
+    '" data-sec="' + esc(t) + '"><a data-fa-link="source" title="This section as extracted, on GitHub">source</a> ' +
+    '<a data-fa-link="feedback" title="Give feedback on this section (opens a GitHub issue)">📣 feedback</a></span>' +
+    (s.edit ? ' ' + editHost(s) : '');
+}
 function docSections(d){
   if (!d.sections.length) return '<p class="empty">No sections.</p>';
   return d.sections.map(function(s){
@@ -371,7 +424,7 @@ function docSections(d){
         ? '<div class="sum"><span class="pill">extract — the section’s own opening text' + (s.extractCut ? ', cut' : '') + '</span><p>' + esc(s.extract) + (s.extractCut ? '…' : '') + '</p></div>'
         : '<p class="note">' + (d.withheld ? 'Withheld — no text published; no summary yet.' : 'No text and no summary.') + '</p>';
     return '<article id="sec-' + esc(s.id) + '" class="docsec"><h3>' + esc((s.number ? s.number + ' ' : '') + s.title) +
-      ' <span class="note">' + range + ' · ' + s.words + ' words</span></h3>' + chips(s.keywords) + body + '</article>';
+      ' <span class="note">' + range + ' · ' + s.words + ' words</span>' + secActions(d, s) + '</h3>' + chips(s.keywords) + body + '</article>';
   }).join("");
 }
 function docChecks(d){
@@ -402,8 +455,11 @@ function renderDocument(id, d, err){
   el.hidden = false;
   if (err) { el.innerHTML = '<h2>Document</h2><p class="empty">Could not read the document view for ' + esc(id) + ' — ' + esc(err) + '. This is a failure to read, not an empty document.</p>'; return; }
   DOC = d;
+  if (d.links && window.faEditLinks) window.faEditLinks.configure({ repo: d.links.repo, branch: d.links.branch, content: id });
   var tab = DOC_TABS.filter(function(t){ return t[0] === DOC_TAB; })[0] || DOC_TABS[0];
-  el.innerHTML = '<h2>Document — ' + esc(d.title || id) + ' <span class="note">(' + d.pages + ' pages)</span></h2>' +
+  var whole = d.links ? ' <span class="doc-actions" data-src="' + esc(d.links.dir) + '" data-block="' + esc(id) + '"><a data-fa-link="source">source</a> ' +
+    '<a data-fa-link="feedback" title="Give feedback on this document (opens a GitHub issue)">📣 feedback</a></span>' : '';
+  el.innerHTML = '<h2>Document — ' + esc(d.title || id) + ' <span class="note">(' + d.pages + ' pages)</span>' + whole + '</h2>' +
     '<div class="seg" role="tablist" aria-label="Document view">' + DOC_TABS.map(function(t){
       return '<button type="button" role="tab" aria-selected="' + (t[0] === tab[0]) + '" data-tab="' + t[0] + '">' + esc(t[1]) + '</button>';
     }).join("") + '</div>' + (d.keywords && d.keywords.length ? '<div class="dockw"><span class="note">Keywords (LSI):</span> ' + chips(d.keywords) + '</div>' : '') +
@@ -417,8 +473,11 @@ function renderDocument(id, d, err){
       Array.prototype.forEach.call(el.querySelectorAll("ul.toc details"), function(x){ x.open = open; });
     });
   });
-  /* A section link from any tab opens the Sections tab at that section. */
-  Array.prototype.forEach.call(el.querySelectorAll("[data-sec]"), function(a){
+  /* Hrefs now, not on first hover: a keyboard reader tabs to these links. */
+  if (d.links && window.faEditLinks) window.faEditLinks.fill(el);
+  /* A section link from any tab opens the Sections tab at that section. Only
+     <a>: a link HOST carries data-sec too (its section's name, for an issue). */
+  Array.prototype.forEach.call(el.querySelectorAll("a[data-sec]:not([data-fa-link])"), function(a){
     a.addEventListener("click", function(ev){
       ev.preventDefault(); DOC_TAB = "sections"; renderDocument(id, DOC, null);
       var t = document.getElementById("sec-" + a.getAttribute("data-sec")); if (t) t.scrollIntoView();
