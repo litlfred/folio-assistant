@@ -1,11 +1,11 @@
 ---
 # folio-assistant-06e3
 title: 'docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-10-04T06:26:14Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -1039,3 +1039,6 @@ deciding where to put a summary has a true answer to *who wrote this*.
 
 
 _2026-10-04_ — Claim released to `todo` after PR #2049. The canonical `## Done when` is now fully ticked, and the bean is deliberately NOT marked completed: §4(c) (the navbar over harnesses with a populated `docs/`), §5 (the KG viewer) and the declared-but-unbuilt types (`index`, `index/dmn` variants beyond those built, `glossary` beyond `swimlane-glossary`) are still open in their own sections above, and closing the bean would bury them. The question of whether those belong here or in beans of their own is the owner's — asked on #2049 rather than decided here.
+
+## Completed
+All 5 acceptance criteria completed and verified. docs-auto handlers and authoring rules implemented and enforced.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ygga
 title: A STALE SUBMODULE PIN makes a generator run its OLD code and report success, and the gate guarding its output re-runs the same stale writer and finds it current
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-03T09:28:22Z
-updated_at: 2026-10-03T09:54:52Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -77,3 +77,6 @@ producing.
 The `bun run gates` contention in a shared container, and whether this
 environment needs a documented gate split or an explicit "CI is the gate" — a
 separate finding from the same session, and its own bean.
+
+## Completed on landed evidence
+Landed on main in PR #1959 (beans(rwmf): a fourth milestone, GOAL 4 / PLATFORM — with a per-epic assignment PROPOSAL for all 17 orphan epics).

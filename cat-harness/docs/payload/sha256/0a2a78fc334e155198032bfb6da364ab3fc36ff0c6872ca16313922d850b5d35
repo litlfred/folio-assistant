@@ -87,3 +87,18 @@ and CI scripts want no skill: GitHub Actions is their caller.
 
 **There is no PDF renderer in smart-base.** Its only PDF dependency is
 `pdfplumber`, used to *read* PDFs when extracting personas.
+
+## Seeding the FHIR package cache for a WHO IG
+
+`fhir-cache-seed-npm` (a `fhir-harness` Tool) can read a publisher's
+published-site repository, but it names no publisher: `fhir-harness` stays
+WHO-free, and `check:fhir-harness-exclusions` fails a `smart.who.int` literal
+there. So a WHO IG passes WHO's site in itself:
+
+```sh
+bun run fhir-harness/scripts/fhir-cache-seed-npm.ts --sushi-config sushi-config.yaml \
+  --site-repo smart.who.int.=WorldHealthOrganization/smart-html
+```
+
+Without that flag a `smart.who.int.*` package skips the site and falls through to
+npm, a template repository, or `--mirror`.
