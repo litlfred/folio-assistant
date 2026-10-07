@@ -160,6 +160,11 @@ export const PYTHON_DEPS: readonly PythonDep[] = [
     tier: "extended",
     why: "`pdf-tables.py` only. 912 KB itself, but it pulls numpy, pandas and OpenCV — 323 MB measured 2026-09-20, more than the whole lean set. Kept out of CI for that reason alone; the script is live (two skills document it, bean `fj94` has 38 tests) and this is a cost statement, not a deprecation.",
   },
+  {
+    distribution: "vosk",
+    tier: "extended",
+    why: "`meeting-recording.py transcribe` only: an offline second transcript of a recorded walkthrough, to compare with the meeting tool's own (skill `crdm-recorded-walkthrough`). Imported inside that one subcommand, so the other four run without it. The wheel is 7.2 MB (vosk 0.3.45, measured 2026-10-06), and it needs a speech model the caller supplies on top. Extended because nothing in CI transcribes, so CI should not pay for it.",
+  },
 ];
 
 /** The module name an entry provides — `imports` when given, else the distribution. */
@@ -171,7 +176,18 @@ export function depsForTier(tier: DepTier): readonly PythonDep[] {
   return PYTHON_DEPS.filter((d) => d.tier === tier);
 }
 
-/** The generated requirements file for a tier — see `scripts/gen-python-deps.ts`. */
+/**
+ * The generated requirements file for a tier, relative to the TOOL LAYER's
+ * root — see `scripts/gen-python-deps.ts` there, which writes it.
+ *
+ * THE ONE PLACE THE LOCATION IS WRITTEN. The pair sat at the repository root
+ * until 2026-10-06 (bean `ar1s`, phase 3: tooling leaves the root before the
+ * repo split) and now lives in the tool layer's declared `python/` directory,
+ * whose declaration describes it. CI installs the lean file from the checkout
+ * root; dependabot's pip `directory:` names the same place.
+ */
+export const REQUIREMENTS_DIR = "python";
+
 export function requirementsPath(tier: DepTier): string {
-  return tier === "lean" ? "requirements.txt" : "requirements-extended.txt";
+  return `${REQUIREMENTS_DIR}/${tier === "lean" ? "requirements.txt" : "requirements-extended.txt"}`;
 }

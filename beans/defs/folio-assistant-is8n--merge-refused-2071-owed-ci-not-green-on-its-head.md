@@ -1,10 +1,11 @@
 ---
 # folio-assistant-is8n
 title: 'Merge refused: #2071 owed CI not green on its head'
-status: completed
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-07T02:43:57Z
+updated_at: 2026-10-07T11:46:10Z
+tags: [ready-to-close]
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-1xhc
