@@ -22,6 +22,7 @@ export interface ComplexSearchCriteria {
   yearTo?: number;
   language?: string;
   community?: string;
+  communities?: string[];
   collection?: string;
   hasPdf?: boolean;
   copyrightVerdict?: string;
@@ -35,6 +36,7 @@ export interface SearchResultItem {
   creator?: string;
   issued?: string;
   year?: number;
+  spatial?: string;
   community?: string;
   collection?: string;
   subjects: string[];
@@ -42,6 +44,8 @@ export interface SearchResultItem {
   pdfName?: string;
   pdfBytes?: number;
   copyrightGate?: string;
+  govdoc?: string;
+  isbn?: string;
 }
 
 export interface FacetResult {
@@ -50,9 +54,15 @@ export interface FacetResult {
   count: number;
 }
 
+export interface SearchOptions {
+  communities?: string[];
+}
+
 export class IrisOxigraphEngine {
   public store: oxigraph.Store;
   private loadedGraphs: Set<string> = new Set();
+  private loadedCommunities: Set<string> = new Set();
+  private spineLoaded: boolean = false;
 
   constructor() {
     this.store = new oxigraph.Store();
@@ -79,6 +89,15 @@ export class IrisOxigraphEngine {
   }
 
   /**
+   * Loads the Tier 1 Global Routing Spine into the store.
+   */
+  public loadSpine(input: string | Buffer): void {
+    this.load(input);
+    this.loadedGraphs.add('https://iris.who.int/graph/spine');
+    this.spineLoaded = true;
+  }
+
+  /**
    * Lazily loads an additional named subgraph on-demand into the store.
    */
   public loadSubgraph(graphIri: string, input: string | Buffer): void {
@@ -87,6 +106,159 @@ export class IrisOxigraphEngine {
     }
     this.load(input);
     this.loadedGraphs.add(graphIri);
+  }
+
+  /**
+   * Lazily mounts an individual Tier 2 community subgraph into the store.
+   */
+  public loadCommunity(communityId: string, input: string | Buffer): void {
+    const graphIri = `https://iris.who.int/graph/community/${communityId}`;
+    if (this.loadedCommunities.has(communityId) || this.loadedGraphs.has(graphIri)) {
+      return;
+    }
+    this.load(input);
+    this.loadedGraphs.add(graphIri);
+    this.loadedCommunities.add(communityId);
+  }
+
+  /**
+   * Lazily mounts multiple community subgraphs into the store.
+   */
+  public loadCommunities(
+    communityIds: string[],
+    resolver: string | ((communityId: string) => string | Buffer)
+  ): void {
+    for (const cId of communityIds) {
+      if (this.isCommunityLoaded(cId)) continue;
+      let payload: string | Buffer | undefined;
+      if (typeof resolver === 'function') {
+        payload = resolver(cId);
+      } else {
+        const nqPath = path.join(resolver, `iris_who_int_graph_community_${cId}.nq`);
+        const gzPath = `${nqPath}.gz`;
+        if (fs.existsSync(gzPath)) {
+          payload = gzPath;
+        } else if (fs.existsSync(nqPath)) {
+          payload = nqPath;
+        }
+      }
+      if (payload) {
+        this.loadCommunity(cId, payload);
+      }
+    }
+  }
+
+  public isCommunityLoaded(communityId: string): boolean {
+    return this.loadedCommunities.has(communityId) || this.loadedGraphs.has(`https://iris.who.int/graph/community/${communityId}`);
+  }
+
+  public isSpineLoaded(): boolean {
+    return this.spineLoaded || this.loadedGraphs.has('https://iris.who.int/graph/spine');
+  }
+
+  public getLoadedCommunities(): string[] {
+    return Array.from(this.loadedCommunities);
+  }
+
+  public getLoadedGraphs(): string[] {
+    return Array.from(this.loadedGraphs);
+  }
+
+  /**
+   * Fast Tier 1 search over the global routing spine.
+   * Does not require Tier 2 community partitions to be loaded.
+   */
+  public searchSpine(criteria: ComplexSearchCriteria = {}): SearchResultItem[] {
+    const filters: string[] = [];
+
+    if (criteria.text) {
+      const escaped = criteria.text.toLowerCase().replace(/"/g, '\\"');
+      filters.push(`CONTAINS(LCASE(?title), "${escaped}")`);
+    }
+    if (criteria.creator) {
+      const escaped = criteria.creator.toLowerCase().replace(/"/g, '\\"');
+      filters.push(`CONTAINS(LCASE(?creator), "${escaped}")`);
+    }
+    if (criteria.community) {
+      const escaped = criteria.community.toLowerCase().replace(/"/g, '\\"');
+      filters.push(`CONTAINS(LCASE(?commName), "${escaped}")`);
+    }
+    if (criteria.collection) {
+      const escaped = criteria.collection.toLowerCase().replace(/"/g, '\\"');
+      filters.push(`CONTAINS(LCASE(?collName), "${escaped}")`);
+    }
+    if (criteria.yearFrom) {
+      filters.push(`(?year >= ${criteria.yearFrom})`);
+    }
+    if (criteria.yearTo) {
+      filters.push(`(?year <= ${criteria.yearTo})`);
+    }
+    if (criteria.hasPdf) {
+      filters.push(`BOUND(?pdfName)`);
+    }
+    if (criteria.copyrightVerdict) {
+      const escaped = criteria.copyrightVerdict.toLowerCase().replace(/"/g, '\\"');
+      filters.push(`LCASE(?copyrightGate) = "${escaped}"`);
+    }
+
+    const filterClause = filters.length > 0 ? `FILTER (${filters.join(' && ')})` : '';
+
+    const query = `
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      PREFIX dcterms: <http://purl.org/dc/terms/>
+      PREFIX dspace: <https://iris.who.int/ns/dspace#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+      SELECT DISTINCT ?handle ?title ?creator ?issued ?year ?commName ?collName ?pdfName ?pdfBytes ?copyrightGate
+      WHERE {
+        GRAPH <https://iris.who.int/graph/spine> {
+          ?handle a dspace:Item ;
+                  dcterms:title ?title .
+          OPTIONAL { ?handle dcterms:creator ?creator }
+          OPTIONAL { ?handle dcterms:issued ?issued }
+          OPTIONAL {
+            ?handle dspace:inCommunity ?comm .
+            ?comm rdfs:label ?commName .
+          }
+          OPTIONAL {
+            ?handle dspace:inCollection ?coll .
+            ?coll rdfs:label ?collName .
+          }
+          OPTIONAL {
+            ?handle dspace:hasBitstream ?bs .
+            ?bs dspace:mediaType "application/pdf" ;
+                dspace:fileName ?pdfName .
+            OPTIONAL { ?bs dspace:fileBytes ?pdfBytes }
+            OPTIONAL { ?bs dspace:copyrightGate ?copyrightGate }
+          }
+        }
+        BIND(IF(BOUND(?issued), xsd:integer(SUBSTR(STR(?issued), 1, 4)), 0) AS ?year)
+        ${filterClause}
+      }
+      ORDER BY DESC(?year) ?title
+    `;
+
+    const rawRows = this.store.query(query);
+    const results: SearchResultItem[] = [];
+    for (const row of rawRows) {
+      const yearVal = row.get('year')?.value;
+      const pdfBytesVal = row.get('pdfBytes')?.value;
+      results.push({
+        handle: row.get('handle').value,
+        title: row.get('title').value,
+        creator: row.get('creator')?.value,
+        issued: row.get('issued')?.value,
+        year: yearVal ? parseInt(yearVal, 10) : undefined,
+        community: row.get('commName')?.value,
+        collection: row.get('collName')?.value,
+        subjects: [],
+        languages: [],
+        pdfName: row.get('pdfName')?.value,
+        pdfBytes: pdfBytesVal ? parseInt(pdfBytesVal, 10) : undefined,
+        copyrightGate: row.get('copyrightGate')?.value
+      });
+    }
+    return results;
   }
 
   /**
@@ -134,8 +306,14 @@ export class IrisOxigraphEngine {
       filters.push(`(LCASE(?langCode) = "${escaped}" || CONTAINS(LCASE(?langLabel), "${escaped}"))`);
     }
 
-    // Community hierarchy
-    if (criteria.community) {
+    // Community hierarchy (single or multiple)
+    if (criteria.communities && criteria.communities.length > 0) {
+      const commClauses = criteria.communities.map(c => {
+        const escaped = c.toLowerCase().replace(/"/g, '\\"');
+        return `CONTAINS(LCASE(?commName), "${escaped}")`;
+      });
+      filters.push(`(${commClauses.join(' || ')})`);
+    } else if (criteria.community) {
       const escaped = criteria.community.toLowerCase().replace(/"/g, '\\"');
       filters.push(`CONTAINS(LCASE(?commName), "${escaped}")`);
     }
@@ -183,38 +361,11 @@ export class IrisOxigraphEngine {
                       ?commName ?collName ?pdfName ?pdfBytes ?copyrightGate
                       ?govdoc ?isbn
       WHERE {
-        # Graph 1: Dublin Core Metadata
-        GRAPH <https://iris.who.int/graph/metadata> {
-          ?handle dcterms:title ?title .
-          
-          OPTIONAL {
-            ?handle dcterms:creator ?crNode .
-            ?crNode rdf:value ?creator .
-          }
-          OPTIONAL { ?handle dcterms:issued ?issued }
-          OPTIONAL { ?handle dcterms:abstract ?abstract }
-          OPTIONAL {
-            ?handle dcterms:spatial ?spNode .
-            ?spNode rdf:value ?spatial .
-          }
-          OPTIONAL { ?handle <https://litlfred.github.io/folio-assistant-core/0.1.0/ns/dspace#dc.identifier.govdoc> ?govdoc }
-          OPTIONAL { ?handle <https://litlfred.github.io/folio-assistant-core/0.1.0/ns/dspace#dc.identifier.isbn> ?isbn }
-          
-          # Optional for filter evaluation
-          OPTIONAL {
-            ?handle dcterms:subject ?sNode .
-            ?sNode rdf:value ?subject .
-          }
-          OPTIONAL {
-            ?handle dcterms:language ?lNode .
-            ?lNode rdf:value ?langLabel .
-            OPTIONAL { ?lNode rdf:value ?langCode }
-          }
-        }
-
-        # Graph 2: Catalogue hierarchy & bitstream access
-        OPTIONAL {
+        # Graph pattern A: Base item & catalogue hierarchy from catalogue, spine, or metadata
+        {
           GRAPH <https://iris.who.int/graph/catalogue> {
+            ?handle a dspace:Item .
+            OPTIONAL { ?handle dcterms:title ?catTitle }
             OPTIONAL {
               ?handle dspace:inCommunity ?comm .
               ?comm rdfs:label ?commName .
@@ -231,8 +382,66 @@ export class IrisOxigraphEngine {
               OPTIONAL { ?bs dspace:copyrightGate ?copyrightGate }
             }
           }
+        } UNION {
+          GRAPH <https://iris.who.int/graph/spine> {
+            ?handle a dspace:Item .
+            OPTIONAL { ?handle dcterms:title ?spineTitle }
+            OPTIONAL { ?handle dcterms:creator ?spineCreator }
+            OPTIONAL { ?handle dcterms:issued ?spineIssued }
+            OPTIONAL {
+              ?handle dspace:inCommunity ?comm .
+              ?comm rdfs:label ?commName .
+            }
+            OPTIONAL {
+              ?handle dspace:inCollection ?coll .
+              ?coll rdfs:label ?collName .
+            }
+            OPTIONAL {
+              ?handle dspace:hasBitstream ?bs .
+              ?bs dspace:mediaType "application/pdf" ;
+                  dspace:fileName ?pdfName .
+              OPTIONAL { ?bs dspace:fileBytes ?pdfBytes }
+              OPTIONAL { ?bs dspace:copyrightGate ?copyrightGate }
+            }
+          }
+        } UNION {
+          GRAPH <https://iris.who.int/graph/metadata> {
+            ?handle dcterms:title ?metaTitleAlone .
+          }
         }
 
+        # Graph pattern B: Dublin Core detailed metadata from <https://iris.who.int/graph/metadata> OR mounted community partition
+        OPTIONAL {
+          GRAPH ?metaGraph {
+            OPTIONAL { ?handle dcterms:title ?metaTitle }
+            OPTIONAL {
+              ?handle dcterms:creator ?crNode .
+              OPTIONAL { ?crNode rdf:value ?metaCr }
+            }
+            OPTIONAL { ?handle dcterms:issued ?metaIssued }
+            OPTIONAL { ?handle dcterms:abstract ?abstract }
+            OPTIONAL {
+              ?handle dcterms:spatial ?spNode .
+              ?spNode rdf:value ?spatial .
+            }
+            OPTIONAL { ?handle <https://litlfred.github.io/folio-assistant-core/0.1.0/ns/dspace#dc.identifier.govdoc> ?govdoc }
+            OPTIONAL { ?handle <https://litlfred.github.io/folio-assistant-core/0.1.0/ns/dspace#dc.identifier.isbn> ?isbn }
+            OPTIONAL {
+              ?handle dcterms:subject ?sNode .
+              ?sNode rdf:value ?subject .
+            }
+            OPTIONAL {
+              ?handle dcterms:language ?lNode .
+              ?lNode rdf:value ?langLabel .
+              OPTIONAL { ?lNode rdf:value ?langCode }
+            }
+          }
+          FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
+        }
+
+        BIND(COALESCE(?metaTitle, ?spineTitle, ?catTitle, ?metaTitleAlone) AS ?title)
+        BIND(COALESCE(?metaCr, ?spineCreator) AS ?creator)
+        BIND(COALESCE(?metaIssued, ?spineIssued) AS ?issued)
         BIND(IF(BOUND(?issued), xsd:integer(SUBSTR(STR(?issued), 1, 4)), 0) AS ?year)
 
         ${filterClause}
@@ -261,7 +470,9 @@ export class IrisOxigraphEngine {
           languages: [],
           pdfName: row.get('pdfName')?.value,
           pdfBytes: row.get('pdfBytes')?.value ? parseInt(row.get('pdfBytes').value, 10) : undefined,
-          copyrightGate: row.get('copyrightGate')?.value
+          copyrightGate: row.get('copyrightGate')?.value,
+          govdoc: row.get('govdoc')?.value,
+          isbn: row.get('isbn')?.value
         });
       }
     }
@@ -280,28 +491,36 @@ export class IrisOxigraphEngine {
       PREFIX dcterms: <http://purl.org/dc/terms/>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       SELECT DISTINCT ?subject WHERE {
-        GRAPH <https://iris.who.int/graph/metadata> {
+        GRAPH ?metaGraph {
           <${item.handle}> dcterms:subject ?sNode .
           ?sNode rdf:value ?subject .
         }
+        FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
       }
     `;
     for (const r of this.store.query(subjQuery)) {
-      item.subjects.push(r.get('subject').value);
+      const val = r.get('subject').value;
+      if (!item.subjects.includes(val)) {
+        item.subjects.push(val);
+      }
     }
 
     const langQuery = `
       PREFIX dcterms: <http://purl.org/dc/terms/>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       SELECT DISTINCT ?lang WHERE {
-        GRAPH <https://iris.who.int/graph/metadata> {
+        GRAPH ?metaGraph {
           <${item.handle}> dcterms:language ?lNode .
           ?lNode rdf:value ?lang .
         }
+        FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
       }
     `;
     for (const r of this.store.query(langQuery)) {
-      item.languages.push(r.get('lang').value);
+      const val = r.get('lang').value;
+      if (!item.languages.includes(val)) {
+        item.languages.push(val);
+      }
     }
   }
 
@@ -316,10 +535,11 @@ export class IrisOxigraphEngine {
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         SELECT ?val (COUNT(DISTINCT ?handle) AS ?count) WHERE {
-          GRAPH <https://iris.who.int/graph/metadata> {
+          GRAPH ?metaGraph {
             ?handle dcterms:subject ?sNode .
             ?sNode rdf:value ?val .
           }
+          FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
         }
         GROUP BY ?val ORDER BY DESC(?count) ?val
       `;
@@ -328,9 +548,16 @@ export class IrisOxigraphEngine {
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         SELECT ?val (COUNT(DISTINCT ?handle) AS ?count) WHERE {
-          GRAPH <https://iris.who.int/graph/metadata> {
-            ?handle dcterms:creator ?cNode .
-            ?cNode rdf:value ?val .
+          {
+            GRAPH ?metaGraph {
+              ?handle dcterms:creator ?cNode .
+              ?cNode rdf:value ?val .
+            }
+            FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
+          } UNION {
+            GRAPH <https://iris.who.int/graph/spine> {
+              ?handle dcterms:creator ?val .
+            }
           }
         }
         GROUP BY ?val ORDER BY DESC(?count) ?val
@@ -340,10 +567,11 @@ export class IrisOxigraphEngine {
         PREFIX dspace: <https://iris.who.int/ns/dspace#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?val (COUNT(DISTINCT ?handle) AS ?count) WHERE {
-          GRAPH <https://iris.who.int/graph/catalogue> {
+          GRAPH ?catGraph {
             ?handle dspace:inCommunity ?comm .
             ?comm rdfs:label ?val .
           }
+          FILTER (?catGraph = <https://iris.who.int/graph/catalogue> || ?catGraph = <https://iris.who.int/graph/spine>)
         }
         GROUP BY ?val ORDER BY DESC(?count) ?val
       `;
@@ -351,9 +579,17 @@ export class IrisOxigraphEngine {
       query = `
         PREFIX dcterms: <http://purl.org/dc/terms/>
         SELECT ?val (COUNT(DISTINCT ?handle) AS ?count) WHERE {
-          GRAPH <https://iris.who.int/graph/metadata> {
-            ?handle dcterms:issued ?issued .
-            BIND(SUBSTR(STR(?issued), 1, 4) AS ?val)
+          {
+            GRAPH ?metaGraph {
+              ?handle dcterms:issued ?issued .
+              BIND(SUBSTR(STR(?issued), 1, 4) AS ?val)
+            }
+            FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
+          } UNION {
+            GRAPH <https://iris.who.int/graph/spine> {
+              ?handle dcterms:issued ?issued .
+              BIND(SUBSTR(STR(?issued), 1, 4) AS ?val)
+            }
           }
         }
         GROUP BY ?val ORDER BY DESC(?val)
@@ -363,10 +599,11 @@ export class IrisOxigraphEngine {
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         SELECT ?val (COUNT(DISTINCT ?handle) AS ?count) WHERE {
-          GRAPH <https://iris.who.int/graph/metadata> {
+          GRAPH ?metaGraph {
             ?handle dcterms:type ?tNode .
             ?tNode rdf:value ?val .
           }
+          FILTER (?metaGraph = <https://iris.who.int/graph/metadata> || STRSTARTS(STR(?metaGraph), "https://iris.who.int/graph/community/"))
         }
         GROUP BY ?val ORDER BY DESC(?count) ?val
       `;

@@ -21,15 +21,18 @@ It solves the primary limitation of the public DSpace Discovery API: **DSpace on
 
 ---
 
-## 1. Multi-Graph Architecture
+## 1. 2-Tier Multi-Graph Architecture
 
-The WHO IRIS RDF model is partitioned across distinct **named graphs** within a single N-Quads dataset:
+The WHO IRIS RDF model is organized into a **2-Tier on-demand loading hierarchy** to achieve minimal startup payload and fast local edge evaluation:
 
-| Graph IRI | Purpose | Typologies / Schemas |
-| :--- | :--- | :--- |
-| `<https://iris.who.int/graph/catalogue>` | Communities, collections, item hierarchy, and bitstream access gates | `dspace:Community`, `dspace:Collection`, `dspace:Item`, `dspace:Bitstream` |
-| `<https://iris.who.int/graph/metadata>` | Full Qualified Dublin Core bibliographic metadata | `dcterms:`, `dc:`, MeSH Authorities |
-| `<https://iris.who.int/graph/community/{id}>` | Subgraph partition per regional office / community | Slice of `metadata` for lazy loading |
+| Tier | Graph IRI | Payload Files | Contents & Purpose |
+| :--- | :--- | :--- | :--- |
+| **Tier 1 (Spine)** | `<https://iris.who.int/graph/spine>` | `who-iris-spine.nq`<br>`who-iris-spine.nq.gz` | **Global Routing Backbone**: Hierarchy (`dspace:Community`, `dspace:Collection`), item handles, titles, primary creator, year, and bitstream copyright gates. Bootstrap payload for instant search. |
+| **Tier 2 (Partitions)** | `<https://iris.who.int/graph/community/{id}>` | `iris_who_int_graph_community_{id}.nq`<br>`.nq.gz` | **Deep Bibliographic Metadata**: MeSH subject authorities (`dspace:authority`), abstracts, spatial coverage, official government document IDs, and ISBNs. Lazily mounted on demand. |
+| **Monolithic** | `<https://iris.who.int/graph/catalogue>`<br>`<https://iris.who.int/graph/metadata>` | `who-iris-dataset.nq`<br>`who-iris-dataset.nq.gz` | Complete merged dataset for server-side evaluation, batch exports, and reference integrity verification. |
+
+### Topology Manifest (`subgraph-manifest.json`)
+The distribution package includes `subgraph-manifest.json`, which indexes the global spine and per-community partition filenames, quad counts, and item counts, enabling dynamic edge discovery and selective downloading.
 
 ### The Binary Asset Invariant
 **Binary assets are never stored in the graph.** 
@@ -125,36 +128,48 @@ ORDER BY DESC(?itemCount) ?subject
 
 ---
 
-## 4. Client-Side WASM Execution Pattern
+## 4. Client-Side WASM Execution Pattern (2-Tier On-Demand)
 
 In a static browser environment, Oxigraph runs completely inside WebAssembly:
 
 ```typescript
 import oxigraph from 'oxigraph';
+import pako from 'pako';
 
 // 1. Initialize empty in-memory store
 const store = new oxigraph.Store();
 
-// 2. Fetch compressed catalogue graph from CDN
-const resp = await fetch('/who-iris/dist/oxigraph/iris_who_int_graph_catalogue.nq.gz');
-const buffer = await resp.arrayBuffer();
-const nquadsText = new TextDecoder().decode(pako.ungzip(buffer));
+// 2. Fetch Tier 1 Global Spine and manifest from CDN
+const [spineResp, manifestResp] = await Promise.all([
+  fetch('/who-iris/dist/oxigraph/who-iris-spine.nq.gz'),
+  fetch('/who-iris/dist/oxigraph/subgraph-manifest.json')
+]);
 
-// 3. Load catalogue quads
-store.load(nquadsText, { format: 'application/n-quads' });
+const spineBuffer = await spineResp.arrayBuffer();
+const spineNquads = new TextDecoder().decode(pako.ungzip(spineBuffer));
+const manifest = await manifestResp.json();
+
+// 3. Load Tier 1 Spine (< 20 KB compressed)
+// Immediately enables catalog hierarchy, title search, and rights gate filtering
+store.load(spineNquads, { format: 'application/n-quads' });
 
 // 4. Lazily fetch and mount a specific community when selected by user
 async function mountCommunity(commId: string) {
-  const commResp = await fetch(`/who-iris/dist/oxigraph/iris_who_int_graph_community_${commId}.nq.gz`);
-  const commText = new TextDecoder().decode(pako.ungzip(await commResp.arrayBuffer()));
+  const partition = manifest.tiers.tier2_communities.partitions[commId];
+  if (!partition) return;
+
+  const commResp = await fetch(`/who-iris/dist/oxigraph/${partition.fileGz}`);
+  const commBuffer = await commResp.arrayBuffer();
+  const commText = new TextDecoder().decode(pako.ungzip(commBuffer));
   
   // Appends new named graph to store without clobbering existing quads
   store.load(commText, { format: 'application/n-quads' });
 }
 
-// 5. Execute prepared query
+// 5. Execute prepared cross-graph query locally in < 5ms
 const results = store.query(myPreparedQuery);
 for (const binding of results) {
   console.log(binding.get('title').value);
 }
 ```
+

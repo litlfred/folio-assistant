@@ -140,4 +140,107 @@ describe('WHO-IRIS Oxigraph Multi-Graph MVP', () => {
     const handles = rows.map(r => r.get('handle').value);
     expect(handles).toContain('https://hdl.handle.net/10665/332098');
   });
+
+  test('2-Tier Architecture: Tier 1 spine fast discovery search without partitions', () => {
+    const engine = new IrisOxigraphEngine();
+    const spineGz = path.join(TMP_DIST, 'who-iris-spine.nq.gz');
+    expect(fs.existsSync(spineGz)).toBe(true);
+
+    engine.loadSpine(spineGz);
+    expect(engine.isSpineLoaded()).toBe(true);
+    expect(engine.getLoadedCommunities().length).toBe(0);
+
+    // Fast search over Tier 1 spine: finds items matching title, creator, community, and copyright gate
+    const results = engine.searchSpine({
+      community: 'Western Pacific',
+      hasPdf: true,
+      copyrightVerdict: 'permitted'
+    });
+
+    expect(results.length).toBe(1);
+    expect(results[0].handle).toBe('https://hdl.handle.net/10665/332098');
+    expect(results[0].title).toBe('Publication and information products style guide');
+    expect(results[0].creator).toBe('World Health Organization. Regional Office for the Western Pacific');
+    expect(results[0].pdfName).toBe('WPR-RDO-2020-003-eng.pdf');
+    expect(results[0].copyrightGate).toBe('permitted');
+
+    // Deep metadata (subjects, spatial) is empty because Tier 2 partitions are not yet mounted
+    expect(results[0].subjects.length).toBe(0);
+  });
+
+  test('2-Tier Architecture: Dynamic on-demand loading of community partition', () => {
+    const engine = new IrisOxigraphEngine();
+    const spinePath = path.join(TMP_DIST, 'who-iris-spine.nq');
+    engine.loadSpine(spinePath);
+
+    const manifestPath = path.join(TMP_DIST, 'subgraph-manifest.json');
+    expect(fs.existsSync(manifestPath)).toBe(true);
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+    const wproCommId = 'ebd3b191-c322-4754-9415-469a1a0eb0c3';
+    expect(manifest.tiers.tier2_communities.partitions[wproCommId]).toBeDefined();
+
+    // 1. Prior to mounting WPRO partition, complex search for WPRO specific govdoc or spatial yields no deep tags
+    const beforeResults = engine.complexSearch({ spatial: 'Manila' });
+    expect(beforeResults.length).toBe(0);
+
+    // 2. User browses to or activates search on WPRO community -> triggers lazy load
+    const partitionFile = path.join(TMP_DIST, manifest.tiers.tier2_communities.partitions[wproCommId].fileGz);
+    expect(fs.existsSync(partitionFile)).toBe(true);
+    engine.loadCommunity(wproCommId, partitionFile);
+    expect(engine.isCommunityLoaded(wproCommId)).toBe(true);
+
+    // 3. Re-run search: now resolves spatial, abstract, and MeSH subjects for WPRO
+    const afterResults = engine.complexSearch({ spatial: 'Manila' });
+    expect(afterResults.length).toBe(1);
+    expect(afterResults[0].handle).toBe('https://hdl.handle.net/10665/332098');
+    expect(afterResults[0].spatial).toBe('Manila');
+    expect(afterResults[0].govdoc).toBe('WPR/RDO/2020/003');
+    expect(afterResults[0].subjects).toContain('Guidelines as Topic');
+  });
+
+  test('2-Tier Architecture: Multi-community dynamic mounting and active cross-community search', () => {
+    const engine = new IrisOxigraphEngine();
+    engine.loadSpine(path.join(TMP_DIST, 'who-iris-spine.nq'));
+
+    const manifest = JSON.parse(fs.readFileSync(path.join(TMP_DIST, 'subgraph-manifest.json'), 'utf8'));
+    const commIds = Object.keys(manifest.tiers.tier2_communities.partitions);
+    expect(commIds.length).toBe(2);
+
+    // Batch load multiple community partitions dynamically via resolver directory
+    engine.loadCommunities(commIds, TMP_DIST);
+    for (const cId of commIds) {
+      expect(engine.isCommunityLoaded(cId)).toBe(true);
+    }
+
+    // Active cross-community search with multi-community selection
+    const multiResults = engine.complexSearch({
+      subject: 'Guidelines',
+      communities: ['Western Pacific', 'Headquarters']
+    });
+
+    expect(multiResults.length).toBe(2);
+    const handles = multiResults.map(r => r.handle);
+    expect(handles).toContain('https://hdl.handle.net/10665/332098'); // WPRO item
+    expect(handles).toContain('https://hdl.handle.net/10665/145714'); // HQ item
+  });
+
+  test('2-Tier Architecture: Subgraph manifest integrity and partition files exist', () => {
+    const manifestPath = path.join(TMP_DIST, 'subgraph-manifest.json');
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+    expect(manifest.version).toBe('1.0.0');
+    expect(manifest.tiers.tier1_spine.fileNq).toBe('who-iris-spine.nq');
+    expect(fs.existsSync(path.join(TMP_DIST, manifest.tiers.tier1_spine.fileNq))).toBe(true);
+    expect(fs.existsSync(path.join(TMP_DIST, manifest.tiers.tier1_spine.fileGz))).toBe(true);
+
+    const partitions = manifest.tiers.tier2_communities.partitions;
+    for (const p of Object.values(partitions) as any[]) {
+      expect(p.quadCount).toBeGreaterThan(0);
+      expect(p.itemCount).toBeGreaterThan(0);
+      expect(fs.existsSync(path.join(TMP_DIST, p.fileNq))).toBe(true);
+      expect(fs.existsSync(path.join(TMP_DIST, p.fileGz))).toBe(true);
+    }
+  });
 });
+
