@@ -143,8 +143,8 @@ html[data-fa-scheme="light"] .lib-page {
    bounded width; the short numeric and pill cells keep nowrap, because a
    count broken over two lines is harder to read than one scrolled to. */
 .lib-page #listing td.lib-first { white-space:normal; min-width:13rem; max-width:17rem; }
-.lib-page #listing td.lib-first .slug { overflow-wrap:anywhere; }
 .lib-page #listing td.t-title { white-space:normal; min-width:14rem; max-width:22rem; }
+.lib-page #listing td.t-title a.lib-title { display:inline-flex; align-items:center; min-height:24px; }
 .lib-page #listing td.t-source { white-space:normal; min-width:9rem; max-width:14rem; }
 .lib-page #listing td.t-source .slug { overflow-wrap:anywhere; }
 .lib-page #listing td.t-source .pill { white-space:nowrap; }
