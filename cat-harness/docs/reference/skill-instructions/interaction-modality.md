@@ -407,7 +407,7 @@ So the posture is:
    kind. Write the object, render the prose, then offer the selection.
 3. **Gating is revisited on EVIDENCE, not on a date.**
 
-> **The condition: twelve RENDERED decision records.** `bun run health` reports
+> **The condition: twelve RENDERED decision records.** `bun run cat health` reports
 > **`bean-rendered-decision-records`** — beans whose decision actually went
 > through {@link renderDecision}, detected from the five-row table it emits. At
 > twelve, a person can read them and answer the question the schema cannot

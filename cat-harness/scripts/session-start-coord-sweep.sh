@@ -65,11 +65,11 @@ if [ -f "$INTERACTION" ]; then
     # preferences": say so and apply the strictest profile on record, so an
     # accommodation is never lost to an account switch.
     # The GitHub login first, resolved by the authentication Tool's own
-    # resolver (`bun run auth:login`, auth_whoami's githubIdentity): the
+    # resolver (`bun run cat auth:login`, auth_whoami's githubIdentity): the
     # handle is the key, and asking GitHub is the auth process's job.
     GH_LOGIN=""
     if command -v bun >/dev/null 2>&1; then
-      GH_LOGIN=$(cd "$CHECKOUT_ROOT" && timeout 8 bun run --silent auth:login 2>/dev/null || true)
+      GH_LOGIN=$(cd "$CHECKOUT_ROOT" && timeout 8 bun run --silent cat auth:login 2>/dev/null || true)
     fi
     WHO_IDS=$(printf '%s\n' "$GH_LOGIN" "${CLAUDE_CODE_USER_EMAIL:-}" "${GITHUB_ACTOR:-}" "$(git config user.email 2>/dev/null)" "$(git config user.name 2>/dev/null)" | grep -v '^$' | jq -R . | jq -s .)
     jq -r --argjson ids "$WHO_IDS" '
@@ -244,11 +244,11 @@ elif [ -d "$BEANS_DIR" ]; then
   echo "> store in the same layout, so work done here is claimed, not unclaimed:"
   echo ">"
   echo "> \`\`\`sh"
-  echo "> bun run beans:fallback list --status todo"
-  echo "> bun run beans:fallback show <id>"
-  echo "> bun run beans:fallback claim <id>"
-  echo "> bun run beans:fallback create \"<title>\" --status in-progress"
-  echo "> bun run beans:fallback note <id> \"<what you found>\""
+  echo "> bun run cat beans:fallback list --status todo"
+  echo "> bun run cat beans:fallback show <id>"
+  echo "> bun run cat beans:fallback claim <id>"
+  echo "> bun run cat beans:fallback create \"<title>\" --status in-progress"
+  echo "> bun run cat beans:fallback note <id> \"<what you found>\""
   echo "> \`\`\`"
   echo ">"
   echo "> There is no excuse for unclaimed durable work when the CLI is missing."
@@ -351,7 +351,7 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/check-ci-health.ts
     echo "complete (no network, no bun, or the API refused). Run it by hand:"
     echo
     echo '```sh'
-    echo "bun run check:ci-health"
+    echo "bun run cat check:ci-health"
     echo '```'
     echo
   fi
@@ -392,7 +392,7 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/check-bun-runtime.
     echo "\`check:bun-runtime\` produced nothing. Run it by hand:"
     echo
     echo '```sh'
-    echo "bun run check:bun-runtime"
+    echo "bun run cat check:bun-runtime"
     echo '```'
     echo
   fi
@@ -415,7 +415,7 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/harness-dirs.ts" ]
     echo "## Declared directories"
     echo
     echo "Could not check (bun present but \`cat-harness/scripts/harness-dirs.ts\` produced nothing)."
-    echo "Run it by hand: \`bun run harness:dirs\`."
+    echo "Run it by hand: \`bun run cat harness:dirs\`."
     echo
   elif ! printf '%s' "$dirs_out" | grep -q '0 created\.'; then
     echo "## Declared directories — created what was missing"
@@ -445,7 +445,7 @@ echo "## Running processes"
 echo
 if [ ! -d "$wf_dir" ]; then
   echo "**Could not check — treat as unknown, not as none.** No \`beans/workflows/\`"
-  echo "directory. Run \`bun run harness:dirs\` to create what the declaration names."
+  echo "directory. Run \`bun run cat harness:dirs\` to create what the declaration names."
 else
   wf_n=$(find "$wf_dir" -maxdepth 1 -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
   if [ "$wf_n" = "0" ]; then
@@ -498,7 +498,7 @@ nothing and report every session clean.
    envelope or a bare array:
 
    ```sh
-   bun run check:session-staleness <listing.json>
+   bun run cat check:session-staleness <listing.json>
    ```
 
 3. **Report what it says, including the `task_summary` it prints.** A count
@@ -574,7 +574,7 @@ cat <<'EOF'
    new landings + sibling activity above — don't do it in the foreground.
    Escalate only if it surfaces something actionable against the work-plan.
 4. **Run the session-staleness check** described above — `list_sessions`, then
-   `bun run check:session-staleness`. It is the only step here whose input this
+   `bun run cat check:session-staleness`. It is the only step here whose input this
    script cannot produce, so it is the only one that silently reports nothing
    when skipped. A session that has held a question for days is the cheapest
    thing in this sweep to fix and the only one nobody else will notice.

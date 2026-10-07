@@ -29,12 +29,12 @@ import { resolveBeanGraphNode } from "../../scripts/beans.ts";
  * — which made the two artefacts a person most needs the two hardest to find.
  *
  * **This constant is the compiled-in default, not the declaration.**
- * `beans/beans.json` is where the layout is stated; `bun run check:harness-dirs`
+ * `beans/beans.json` is where the layout is stated; `bun run cat check:harness-dirs`
  * fails when this and the graph disagree. It stays a constant because the store
  * is on the hot path of every workflow call and re-reading a JSON file per call
  * to learn its own directory would be worse than a checked duplicate.
  */
-// declared-path-literal: the checked duplicate. `bun run check:harness-dirs`
+// declared-path-literal: the checked duplicate. `bun run cat check:harness-dirs`
 // fails when this and `beans/beans.json` disagree; it stays compiled in
 // because the store is on the hot path of every workflow call.
 export const WORKFLOW_DIR = join("beans", "workflows");

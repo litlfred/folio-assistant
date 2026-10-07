@@ -56,7 +56,7 @@ lives in its own. One command scaffolds it — the manifests, the declaration, t
 agent files and the link back here:
 
 ```sh
-bun run init-folio --help
+bun run cat init-folio --help
 ```
 
 Then [Get started]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) walks the first block through validate,

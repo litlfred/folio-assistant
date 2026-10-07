@@ -32,7 +32,7 @@ those instances documents its own voices beside their `SKILL.md` and
 This page does not list them, because every one of them sits **above** this
 layer: a link from here to one would point up the dependency arrow, and a list
 here would be a second catalogue free to drift from the first. The one
-catalogue is the interactive viewer (`bun run voices:viz`, published at
+catalogue is the interactive viewer (`bun run cat voices:viz`, published at
 `cat-harness/docs/cat-harness/voices/`), which re-reads every instance that
 declares a `voices` graph on each run; `skill_list` answers the same question
 from an agent.

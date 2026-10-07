@@ -74,6 +74,7 @@ import { tools } from "../tools/discover.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { isSkillMd, kgRoots, corpusScopeFor } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -88,20 +89,16 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * skill has a command" rather than as a failure to look.
  */
 export function declaredScripts(): [string, string][] {
-  const out: [string, string][] = [];
-  for (const rel of ["package.json", "../package.json"]) {
-    const f = join(ROOT, rel);
-    if (!existsSync(f)) continue;
-    try {
-      const scripts = JSON.parse(readFileSync(f, "utf-8")).scripts as Record<string, string> | undefined;
-      if (scripts) out.push(...Object.entries(scripts));
-    } catch {
-      // A manifest that will not parse is another gate's problem; skipping it
-      // must not be silent, because a shrunken index reads as a clean triage.
-      console.warn(`  ⚠ could not parse ${rel}; its scripts are missing from this triage`);
-    }
+  // Every manifest the checkout's script table reads (bean `ar1s` phase 4:
+  // the scripts left the root for the layers that run them).
+  try {
+    return Object.entries(scriptsOf(join(ROOT, "..")));
+  } catch (e) {
+    // A table that will not build is another gate's problem; skipping it must
+    // not be silent, because a shrunken index reads as a clean triage.
+    console.warn(`  ⚠ could not read the script table (${(e as Error).message}); scripts are missing from this triage`);
+    return [];
   }
-  return out;
 }
 
 /**

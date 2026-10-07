@@ -47,7 +47,7 @@
  * else is counted as **not parsed** and reported as its own state. A sentence
  * the checker did not understand is not a sentence it verified.
  *
- * Usage:  bun run check:agents-claims
+ * Usage:  bun run cat check:agents-claims
  * Exit:   0 clean · 1 a claim is false · 2 nothing could be parsed
  */
 import { existsSync, readFileSync, statSync } from "node:fs";

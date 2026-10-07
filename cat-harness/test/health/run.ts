@@ -3,13 +3,13 @@
  * Run the repository health checks, write the report, say what is wrong.
  *
  * ```sh
- * bun run health                 # run, write the report, human-readable output
- * bun run health -- --markdown   # the block the daily workflow puts in its issue
- * bun run health -- --list       # what checks exist, one line each
- * bun run health -- --warn       # report only, never fail
- * bun run health -- --strict     # also fail on `minor` findings
- * bun run health -- --no-write   # do not touch test/health/results/
- * bun run health -- --out F      # write the markdown to F, KEEP the exit code
+ * bun run cat health                 # run, write the report, human-readable output
+ * bun run cat health -- --markdown   # the block the daily workflow puts in its issue
+ * bun run cat health -- --list       # what checks exist, one line each
+ * bun run cat health -- --warn       # report only, never fail
+ * bun run cat health -- --strict     # also fail on `minor` findings
+ * bun run cat health -- --no-write   # do not touch test/health/results/
+ * bun run cat health -- --out F      # write the markdown to F, KEEP the exit code
  * ```
  *
  * ## Exit codes, and why there are three

@@ -75,7 +75,7 @@
  *
  * Usage:
  *   bun test --reporter=junit --reporter-outfile=/tmp/junit.xml
- *   bun run check:test-budgets /tmp/junit.xml
+ *   bun run cat check:test-budgets /tmp/junit.xml
  *
  * @covers none — its subject is a test run's timings, which no declared graph holds
  * @graphNode tool
@@ -289,7 +289,7 @@ if (import.meta.main) {
     console.error(
       "Test budgets — no junit report given, so nothing was measured.\n\n" +
         "  bun test --reporter=junit --reporter-outfile=/tmp/junit.xml\n" +
-        "  bun run check:test-budgets /tmp/junit.xml\n\n" +
+        "  bun run cat check:test-budgets /tmp/junit.xml\n\n" +
         "Exit 2: could not determine, which is not the same as clean.",
     );
     process.exit(2);

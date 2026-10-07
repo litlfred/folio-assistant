@@ -45,7 +45,7 @@ Rendered at 1280×800 and 390×844, served from the checkout. Since e112deae the
 
 ## Update, 2026-09-24: the agent summary beside the extract
 
-The blocks panel (bean `lrmo`) showed a prose block's extract and, in its last column, only a narrative STATE. It now carries the block's agent summary from the entry's `summaries.json` sidecar (`schemas/block-summary.ts`) **beside** the extract, never in its place: two columns at 1280 px, stacked with the extract first at 390 px. The last column is "narrative / summary", and for a prose block it shows the summary's state as a word badge. A header badge counts the backlog of the summary drain (`bun run summaries`) for the entries in scope. Checked by rendering the cat-harness page at both widths with `arxiv-2312.07755v1` opened: no horizontal page scroll at 390 px, and no script errors.
+The blocks panel (bean `lrmo`) showed a prose block's extract and, in its last column, only a narrative STATE. It now carries the block's agent summary from the entry's `summaries.json` sidecar (`schemas/block-summary.ts`) **beside** the extract, never in its place: two columns at 1280 px, stacked with the extract first at 390 px. The last column is "narrative / summary", and for a prose block it shows the summary's state as a word badge. A header badge counts the backlog of the summary drain (`bun run cat summaries`) for the entries in scope. Checked by rendering the cat-harness page at both widths with `arxiv-2312.07755v1` opened: no horizontal page scroll at 390 px, and no script errors.
 
 ## Update, 2026-10-02: findings re-measured and worked (bean `gnqa`, issue #1838)
 

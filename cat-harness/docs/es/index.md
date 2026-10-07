@@ -53,7 +53,7 @@ beans <id> --status in-progress     # reclamarlo, de forma visible
 **2. Crea tu primer folio.** Este repositorio es la *plataforma*; tu contenido vive en el suyo propio. Un solo comando lo prepara — los manifiestos, la declaración, los archivos del agente y el enlace de vuelta aquí:
 
 ```sh
-bun run init-folio --help
+bun run cat init-folio --help
 ```
 
 Después, [Primeros pasos]({{ '/docs/cat-harness/start/getting-started.html' | relative_url }}) acompaña el primer bloque por la validación, el renderizado y la revisión.

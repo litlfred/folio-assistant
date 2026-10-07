@@ -50,10 +50,10 @@ import {
   unlisted,
   withoutKey,
 } from "../../../cat-harness/scripts/skill-register.js";
+import { scriptsOf } from "../../../cat-harness/schemas/script-table.ts";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
-const scripts = (): Record<string, string> =>
-  JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8")).scripts;
+const scripts = (): Record<string, string> => scriptsOf(ROOT);
 
 /* ─────────────────────────────── the chain ─────────────────────────────── */
 
@@ -117,7 +117,7 @@ test("each step carries a reason, so the list can be re-derived rather than trus
 
 test("the two steps `gates` MASKS are still in the chain", () => {
   // The regression that would be invisible. `kg:audit:check` and
-  // `kg:detangle:check` are green inside `bun run gates` on a tree where they
+  // `kg:detangle:check` are green inside `bun run cat gates` on a tree where they
   // are red on their own, because `bun test` runs those writers first (bean
   // `ymsu`). So anyone re-deriving this chain THROUGH gates will conclude they
   // do not belong and delete them — and the deletion will look correct.
@@ -125,7 +125,7 @@ test("the two steps `gates` MASKS are still in the chain", () => {
     expect(
       CHAIN,
       `\`${masked}\` is missing. It IS staled by adding a skill — measured red on ` +
-        `its own against a tree where \`bun run gates\` reported it green, because ` +
+        `its own against a tree where \`bun run cat gates\` reported it green, because ` +
         `\`bun test\` runs the writer first. Do not re-derive this chain through ` +
         `gates; run the one check in isolation.`,
     ).toContain(masked);

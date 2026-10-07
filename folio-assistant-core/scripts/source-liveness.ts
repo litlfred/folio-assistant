@@ -2,7 +2,7 @@
 /**
  * Is each catalogue node's SOURCE still there — and does a snapshot of it exist?
  *
- * Usage: `bun run sources:liveness <instance-root>` (e.g. `who-iris`)
+ * Usage: `bun run cat sources:liveness <instance-root>` (e.g. `who-iris`)
  *
  * Bean `08u4`, from the `v048` roast (objections 6 + 7) and the owner's
  * question *"what happens if data source goes away"*. Nothing read

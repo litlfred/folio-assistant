@@ -452,7 +452,7 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
   };
 
   test("the generated page exists and carries the mount", () => {
-    expect(existsSync(VIEW), `${VIEW} is missing — run \`bun run library:viz\``).toBe(true);
+    expect(existsSync(VIEW), `${VIEW} is missing — run \`bun run cat library:viz\``).toBe(true);
     expect(readFileSync(VIEW, "utf8")).toContain("data-fa-folio-mount");
   });
 

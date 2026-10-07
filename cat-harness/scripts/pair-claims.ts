@@ -46,6 +46,7 @@ import { dirname, join, relative } from "node:path";
 import { absenceClaims, checkClaims, declares, locationClaims, normalise } from "./check-agents-claims.js";
 import type { ProseCodePair } from "./prose-code-pairs.js";
 import { bpmnIds, workflowBpmn } from "./workflow-bpmn.js";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 export type ClaimOutcome = "holds" | "false" | "undetermined";
 
@@ -122,7 +123,7 @@ export function judgePair(repo: string, pair: ProseCodePair, scripts: ReadonlySe
   }
 
   // `bun run <x>`: a path to a file, or a script name.
-  for (const m of norm.matchAll(/`bun run ([^\s`]+)/g)) {
+  for (const m of norm.matchAll(/`bun run (?:cat )?([^\s`]+)/g)) {
     const arg = m[1]!;
     if (/[/.]/.test(arg)) {
       if (!/\.[cm]?[jt]sx?$/.test(arg)) continue; // a flag or something else — not a claim this parses
@@ -185,10 +186,8 @@ export function claimsEntry(claims: PairClaim[]): { result: "pass" | "fail" | "n
  * (see {@link judgePair}), which is what the checkout can honestly say.
  */
 export function rootScripts(repo: string): Set<string> {
-  const file = join(repo, "package.json");
-  if (!existsSync(file)) return new Set();
-  const pkg = JSON.parse(readFileSync(file, "utf-8")) as { scripts?: Record<string, string> };
-  return new Set(Object.keys(pkg.scripts ?? {}));
+  if (!existsSync(join(repo, "package.json"))) return new Set();
+  return new Set(Object.keys(scriptsOf(repo)));
 }
 
 if (import.meta.main) {

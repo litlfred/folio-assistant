@@ -16,7 +16,7 @@
  * The structural fix is the merge queue (`merge_group:` on the gating
  * workflows), which tests exactly the commit that will land. This is the half
  * an agent can run itself, before asking anyone to merge: build the merge in a
- * throwaway worktree and run the full `bun run gates` there.
+ * throwaway worktree and run the full `bun run cat gates` there.
  *
  * ## Three outcomes, never two
  *
@@ -31,9 +31,9 @@
  * that is removed on every path out, including failure.
  *
  * Usage:
- *   bun run check:merged              # base = main
- *   bun run check:merged -- --base <branch>
- *   bun run check:merged -- --against <commit>   # a FIXED base, no fetch —
+ *   bun run cat check:merged              # base = main
+ *   bun run cat check:merged -- --base <branch>
+ *   bun run cat check:merged -- --against <commit>   # a FIXED base, no fetch —
  *     for replaying a past pair, which is how this script was falsified
  *
  * @module scripts/check-merged
@@ -176,13 +176,13 @@ function main(): number {
       }
     }
 
-    console.log("  running `bun run gates` on the merged tree…\n");
+    console.log("  running `bun run cat gates` on the merged tree…\n");
     // The merge worktree is freshly built and therefore clean. Reading it
     // before and after is what lets the two non-zero cases below be told
     // apart, and it is a question only THIS script can answer cheaply: it
     // owns the worktree, so it needs no parsing of the runner's output.
     const before = readTree(wt);
-    const gates = spawnSync("bun", ["run", "gates"], { cwd: wt, stdio: "inherit" });
+    const gates = spawnSync("bun", ["run", "cat", "gates"], { cwd: wt, stdio: "inherit" });
     if (gates.status !== 0) {
       // `gates` exits 1 for two different things, and the advice differs. The
       // exit code is NOT the discriminator and must not be made one: #1363
@@ -198,7 +198,7 @@ function main(): number {
         return 1;
       }
       console.error(`\n✗ the MERGED tree fails the gates, though this branch may pass alone.`);
-      console.error(`Merge the base into the branch, regenerate what the failing gates name, run \`bun run gates\`, push.`);
+      console.error(`Merge the base into the branch, regenerate what the failing gates name, run \`bun run cat gates\`, push.`);
       return 1;
     }
     console.log(`\n✓ this branch merged with ${baseSha.slice(0, 8)} passes every gate`);

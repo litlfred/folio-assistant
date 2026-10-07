@@ -270,7 +270,7 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
@@ -278,7 +278,7 @@ jobs:
         # made a committed copy stale on main and every open PR (2026-10-05).
         # check:derived-from names them; this runs each one's declared writer
         # against the mount above, sources before consumers.
-        run: bun run derive:publish
+        run: bun run cat derive:publish
 
       - name: Determine staging slug
         id: slug
@@ -477,7 +477,7 @@ jobs:
       - name: Render BPMN workflow diagrams
         run: |
           npx --yes playwright install --with-deps chromium
-          bun run render:bpmn 2>&1 | tail -10 || true
+          bun run cat render:bpmn 2>&1 | tail -10 || true
 
       # Stamp the build so a reviewer can tell WHAT is deployed from the
       # page itself — the core requirement from issue #215.
@@ -839,7 +839,7 @@ jobs:
       # `id="fa-nav-open"` twice while `gates` stayed green. Placed after the
       # mount so instance-rendered pages are checked too.
       - name: No page carries a duplicate id
-        run: bun run check:duplicate-ids ./_site
+        run: bun run cat check:duplicate-ids ./_site
 
       # The deploy's own built-site checks, run on the PREVIEW so they fail on the pull
       # request rather than after the merge (bean `63es`). Until 2026-10-01 they
@@ -856,7 +856,7 @@ jobs:
       # here. `check:maintained-artefacts` is the other one; it runs below, after
       # the exports that write what it looks for.
       - name: No escaped block-level markup in the preview
-        run: bun run check:escaped-markup ./_site
+        run: bun run cat check:escaped-markup ./_site
 
 
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
@@ -1347,7 +1347,7 @@ jobs:
             --state "$RUNNER_TEMP/qa-site-assets.state.json"
           # The panels' links to each result file, judged on what was BUILT
           # (bean `bejf`, #2217). Mirrored in `docs-site.yml`.
-          bun run check:qa-result-links --site ./_site
+          bun run cat check:qa-result-links --site ./_site
 
       # The same navbar-tile check `docs-site.yml` runs, mirrored here for the
       # same reason the witness copy above is: staging publishes the SAME
@@ -1363,7 +1363,7 @@ jobs:
       # beside `check:escaped-markup` (straight after the mount) found 6 of 8
       # missing — measured on this PR's first run (bean `63es`).
       - name: Every maintained artefact is in the preview
-        run: bun run check:maintained-artefacts ./_site
+        run: bun run cat check:maintained-artefacts ./_site
 
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
@@ -1816,7 +1816,7 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         working-directory: source
-        run: bun run state:mount
+        run: bun run cat state:mount
 
       - name: Check out the publish branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -2180,7 +2180,7 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         working-directory: source
-        run: bun run state:mount
+        run: bun run cat state:mount
 
       - name: Refuse to remove a preview that is still in use
         working-directory: source

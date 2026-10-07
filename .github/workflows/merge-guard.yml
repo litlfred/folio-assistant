@@ -3,7 +3,7 @@
 # Bean `uoob`, owner ruling 2026-10-03 (option 1). Three PRs were landed
 # unfinished by a steward calling the merge PUT directly (#1937, #1960, #1957;
 # the table is in `cat-harness/scripts/merge-guard.ts`). That script is now
-# the only way a steward lands a PR (`bun run merge:guard <pr> --merge`); this
+# the only way a steward lands a PR (`bun run cat merge:guard <pr> --merge`); this
 # workflow runs its EVALUATE mode on every event that can change a verdict and
 # posts the result as the `merge-guard` commit status on the head, so the
 # owner can make it a REQUIRED check and a merge that bypasses the script is

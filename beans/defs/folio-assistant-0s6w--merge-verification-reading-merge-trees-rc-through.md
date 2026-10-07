@@ -79,10 +79,10 @@ substitution has the bug — a timing `$(date)`, a sha `$(git rev-parse …)`, a
 2026-10-03, while absorbing `main` into #1943. The regeneration was launched as
 
 ```sh
-bun run regen > log 2>&1; RC=$?; echo "REGEN_EXIT=$RC" >> log; tail -20 log
+bun run cat regen > log 2>&1; RC=$?; echo "REGEN_EXIT=$RC" >> log; tail -20 log
 ```
 
-and the harness reported **"completed (exit code 0)"**. `bun run regen` had
+and the harness reported **"completed (exit code 0)"**. `bun run cat regen` had
 exited **1** — `Cannot find module '../../bootstrap-tools/schemas/graph'`,
 because a fresh `git worktree` does not populate submodules. A shell's exit
 status is its LAST command's, so the status that reached the caller was

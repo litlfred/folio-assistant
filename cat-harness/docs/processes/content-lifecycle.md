@@ -14,7 +14,7 @@ nav_exclude: true
 One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities. folio-assistant — the content lifecycle end to end, one cycle of a folio.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
 BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-by `bun run render:bpmn` — never hand-edit the SVG.
+by `bun run cat render:bpmn` — never hand-edit the SVG.
 The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
 that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
 work plan in beans/.

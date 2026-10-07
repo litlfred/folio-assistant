@@ -59,7 +59,7 @@
  * unreadable answer makes the whole run `unknown` — never a partial clean.
  * Same rule as `ci-health` and the repository health sweep.
  *
- * Usage:  bun run check:prs-have-runs [--min-age-minutes N] [--out <file>]
+ * Usage:  bun run cat check:prs-have-runs [--min-age-minutes N] [--out <file>]
  */
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";

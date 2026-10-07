@@ -86,7 +86,7 @@ export const PROPERTY_SKILLS = {
   // a wrong declaration costs.
   taskIo: { skills: ["prepare-merge"] },
   // Same bean: the CI steps and scripts an instance's gate set deliberately
-  // skips, with their reasons. prepare-merge runs `bun run gates`, which
+  // skips, with their reasons. prepare-merge runs `bun run cat gates`, which
   // reports an unclassified step.
   gateExemptions: { skills: ["prepare-merge"] },
   contentAdapters: { skills: ["content-profiles"] },

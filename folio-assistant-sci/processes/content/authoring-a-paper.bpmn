@@ -4,7 +4,7 @@
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-  by `bun run render:bpmn` — never hand-edit the SVG.
+  by `bun run cat render:bpmn` — never hand-edit the SVG.
 
   The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
   that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
@@ -28,7 +28,7 @@
       How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting. folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).
       Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
       BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-      by `bun run render:bpmn` — never hand-edit the SVG.
+      by `bun run cat render:bpmn` — never hand-edit the SVG.
       The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
       that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
       work plan in beans/.
@@ -96,7 +96,7 @@
       <bpmn:outgoing>A03</bpmn:outgoing>
     </bpmn:task>
     <bpmn:serviceTask id="Task_Scaffold" name="3 · Scaffold the folio repo&#10;[content-plan]">
-      <bpmn:documentation>Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</bpmn:documentation>
+      <bpmn:documentation>Create the folio repository with `bun run cat init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="content-plan" />
       </bpmn:extensionElements>

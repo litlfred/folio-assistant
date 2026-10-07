@@ -29,11 +29,11 @@
  *
  * ## Gate
  *
- *   bun run kg:audit            write sidecars, print a summary, exit 0
- *   bun run kg:audit --check    fail on a `critical` finding, or on a stale sidecar
- *   bun run kg:audit --strict   ...and on `major` too
- *   bun run kg:audit --json     the full report set, for a tool
- *   bun run kg:audit --instance ./bootstrap
+ *   bun run cat kg:audit            write sidecars, print a summary, exit 0
+ *   bun run cat kg:audit --check    fail on a `critical` finding, or on a stale sidecar
+ *   bun run cat kg:audit --strict   ...and on `major` too
+ *   bun run cat kg:audit --json     the full report set, for a tool
+ *   bun run cat kg:audit --instance ./bootstrap
  *                               audit ANOTHER declared instance from its own
  *                               root, writing its sidecars under its own
  *                               results directory (bean `bjzs`)
@@ -712,12 +712,12 @@ async function auditProcess(
   if (!docs) {
     published = { result: "unknown", findings: [{ where: "—", detail: "no docs layer is declared, so no page could be searched." }] };
   } else if (!existsSync(join(docs.svgDir, `${stem}.svg`))) {
-    published = entry([{ where: m.id, detail: `no rendered diagram at ${stem}.svg — run \`bun run render:bpmn\`.` }]);
+    published = entry([{ where: m.id, detail: `no rendered diagram at ${stem}.svg — run \`bun run cat render:bpmn\`.` }]);
   } else {
     published = entry(
       docs.pages.includes(`workflows/${stem}.svg`)
         ? []
-        : [{ where: m.id, detail: `${stem}.svg is rendered but no docs page shows it — run \`bun run processes:viz\`.` }],
+        : [{ where: m.id, detail: `${stem}.svg is rendered but no docs page shows it — run \`bun run cat processes:viz\`.` }],
     );
   }
 
@@ -971,7 +971,7 @@ async function auditProcess(
     }
   }
 
-  // RACI. ONE implementation, shared with `bun run raci` — `raciBreaches`
+  // RACI. ONE implementation, shared with `bun run cat raci` — `raciBreaches`
   // tags each breach with its kind, so three severities can be filed
   // separately without a second copy of the rule. Two answers to "is this
   // chart sound" is the drift this whole cluster exists to prevent.
@@ -1831,7 +1831,7 @@ function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> 
     // yet. `n/a` would be the false pass audit C5 names (bean `2gst`).
     const unknown = (): KgCriterionEntry => ({
       result: "unknown",
-      findings: [{ where: "—", detail: "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run qa:refresh`) or fetch it (`bun run qa:fetch`)." }],
+      findings: [{ where: "—", detail: "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run cat qa:refresh`) or fetch it (`bun run cat qa:fetch`)." }],
     });
     return { "test-run-skill-resolves": unknown(), "test-run-conforms": unknown(), "test-run-checkable": unknown() };
   }
@@ -3209,13 +3209,13 @@ if (asJson) {
     // still SEEN, and gated only where the directory is not stored.
     console.log(
       `  ${derivedStored ? "advisory" : "✗"}: ${stale.length} derived sidecar(s) differ from this run's` +
-        (derivedStored ? " (not gated: the kg-qa tree is stored on qa-reports; judge, never compare)" : ". Run `bun run kg:audit`:"),
+        (derivedStored ? " (not gated: the kg-qa tree is stored on qa-reports; judge, never compare)" : ". Run `bun run cat kg:audit`:"),
     );
     for (const s of stale.slice(0, derivedStored ? 5 : stale.length)) console.log(`    · ${s}`);
     if (derivedStored && stale.length > 5) console.log(`    …and ${stale.length - 5} more`);
   }
   if (check && staleAttestations.length) {
-    console.error(`${staleAttestations.length} attestation file(s) are not what this run would write. Run \`bun run kg:audit\` and commit:`);
+    console.error(`${staleAttestations.length} attestation file(s) are not what this run would write. Run \`bun run cat kg:audit\` and commit:`);
     for (const s of staleAttestations) console.error(`  · ${s}`);
   }
 

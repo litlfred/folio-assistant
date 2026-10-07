@@ -246,4 +246,4 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Regenerate
 
-`bun run prov:qaqc` writes this page and the logs under `assets/prov/`. `bun run check:prov-qaqc` checks that they are current.
+`bun run cat prov:qaqc` writes this page and the logs under `assets/prov/`. `bun run cat check:prov-qaqc` checks that they are current.

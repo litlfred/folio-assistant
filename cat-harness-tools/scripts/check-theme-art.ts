@@ -25,7 +25,7 @@
  * intake exists to catch — but turning it into a gate in the same change would
  * have made CI red over art that was missing rather than over a regression
  * somebody had just introduced. All three layouts are accepted as of
- * 2026-09-30 (`bun run check:theme-art:check`, exit 0, 3 layouts each), so the
+ * 2026-09-30 (`bun run cat check:theme-art:check`, exit 0, 3 layouts each), so the
  * reason to hold the gate is gone and the gate is in.
  *
  * So: `--check` exits non-zero on a refusal. **It has been gated in CI since

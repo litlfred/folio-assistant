@@ -5,7 +5,7 @@
 #
 # ## Why
 #
-# Measured on #1754, 2026-10-01: one `bun run merge:main` round took 19-46 min
+# Measured on #1754, 2026-10-01: one `bun run cat merge:main` round took 19-46 min
 # in an agent container shared with sibling sessions, while `main` moved every
 # few minutes. GitHub does not run `pull_request` CI on a conflicted PR, so a
 # branch that resolved 28 conflicts went 'dirty' again within a minute of the
@@ -251,7 +251,7 @@ jobs:
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run state:mount
+        run: bun run cat state:mount
 
       # `id` because this exit 1 is an expected RACE, not a defect: under a fast
       # merge cadence the head moves between selection and checkout several
@@ -265,7 +265,7 @@ jobs:
 
       # THE TOOL COMES FROM MAIN, NOT FROM THE PR — measured 2026-10-02 on 7
       # real runs: an old branch has neither the `merge:main` script nor
-      # `merge-base.ts`, so `bun run merge:main` in the PR's tree logged
+      # `merge-base.ts`, so `bun run cat merge:main` in the PR's tree logged
       # `Script not found` on every one. Main's copy is checked out OUTSIDE
       # the PR's tree (a clean tree is merge-base's precondition) and pointed
       # at it with `--root`. Main's patterns are the ones that apply, too: the
@@ -284,7 +284,7 @@ jobs:
           git submodule update --init --recursive
           bun install --frozen-lockfile
           # bean 9c7h: fsh-guts is kept on its branch; mount it before the gates prove the merge
-          bun run state:mount
+          bun run cat state:mount
 
       # Since bean `i1q7` item 3, `regen` asks the WHOLE gate set, browser-job
       # pairs included: `render:bpmn:check` needs Chromium, and on a runner

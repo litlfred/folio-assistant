@@ -11,7 +11,7 @@ parent: folio-assistant-d33q
 
 ## Measured on itself, 2026-10-03
 
-`bun run beans:claim 8rff` writes the claim **straight to `main`**:
+`bun run cat beans:claim 8rff` writes the claim **straight to `main`**:
 
 > `_2026-10-03T00:27:48Z_ — Claimed by claude/merge-patterns-8rff — pushed to
 > main so sibling sessions see it before this branch has a PR (bean 35nj)`

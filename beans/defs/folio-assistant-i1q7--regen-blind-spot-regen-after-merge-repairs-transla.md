@@ -11,7 +11,7 @@ parent: folio-assistant-3fva
 
 Found 2026-10-01 while merging `yhjr` into PR #1764.
 
-`bun run regen` reported `translate-bpmn:bootstrap:check STILL fails after bun run translate-bpmn:bootstrap — a real defect, not staleness`. It was staleness: `translate-bpmn:bootstrap` (`translate-bpmn.ts --instance ./bootstrap`) prints *"Nothing to do. Pass --extract, --check, or --inject"* and writes nothing. Running `translate-bpmn.ts --instance ./bootstrap --extract` by hand regenerated the 10 stale `.pot` files, and the check went to exit 0.
+`bun run cat regen` reported `translate-bpmn:bootstrap:check STILL fails after bun run cat translate-bpmn:bootstrap — a real defect, not staleness`. It was staleness: `translate-bpmn:bootstrap` (`translate-bpmn.ts --instance ./bootstrap`) prints *"Nothing to do. Pass --extract, --check, or --inject"* and writes nothing. Running `translate-bpmn.ts --instance ./bootstrap --extract` by hand regenerated the 10 stale `.pot` files, and the check went to exit 0.
 
 This is the `uju6` spelling class: the declared writer for a gate is not a writer. The same family as `bo44`'s sweep, in the opposite direction (a check whose writer cannot write).
 
@@ -29,6 +29,6 @@ Also found: `regen` does not cover the `kg-export*.qa-results.json` sidecars tha
 - regen: a writer that exits non-zero is now `writer-failed` (a verdict about the pairing), not "a real defect, not staleness".
 - regen asks the WHOLE gate set by default (`--fast` keeps the old scope). Outside the fast set there were only `render:bpmn:check` (3.7 s) and `bat:sync:check` (0.1 s, needs no browser). Without Chromium a browser-job failure is reported `no-browser`, never green.
 - Tests: `regen-writers.test.ts` stales a bootstrap .pot, a root .pot, the bootstrap kg-export sidecar, a .bat and a workflow SVG, and asserts red, then regen's pass runs the paired writer, then green. Falsified with the old bare writer, which gives `writer-failed`. Unit tests in `regen-after-merge.test.ts`.
-- Verified 2026-10-01: staled discussion.pot, kg-export.bootstrap sidecar, kg-export host sidecar and discussion.svg to older commits. Gates before: bootstrap .pot check 1, published-instance-exports 1, render:bpmn:check 1. `bun run regen` alone took 2 passes and gave "91 current, 4 regenerated, 0 unrepaired", exit 0. All gates 0 afterwards.
+- Verified 2026-10-01: staled discussion.pot, kg-export.bootstrap sidecar, kg-export host sidecar and discussion.svg to older commits. Gates before: bootstrap .pot check 1, published-instance-exports 1, render:bpmn:check 1. `bun run cat regen` alone took 2 passes and gave "91 current, 4 regenerated, 0 unrepaired", exit 0. All gates 0 afterwards.
 
 Not covered: the HOST `kg-export.qa-results.json` reds no gate when stale. `kg:export:check` and `check:version-bump` report it as advisory by design (id4s). So regen, which asks gates, does not refresh it. That applies to every self-sidecar whose staleness is advisory.

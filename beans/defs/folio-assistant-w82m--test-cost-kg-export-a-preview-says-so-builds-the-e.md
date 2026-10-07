@@ -9,7 +9,7 @@ updated_at: 2026-09-23T16:59:22Z
 parent: folio-assistant-1xhc
 ---
 
-Measured 2026-09-23. The test `kg export > a preview says so in its type and links every node back to canonical` (`cat-harness/scripts/tests/kg-export.test.ts:440`) calls `buildExport()` twice, once for the preview and once for canonical, with nothing cached. On a session container it takes about 5.2 s when run alone. That is over bun's default 5 s test timeout, and the same on `main` (`04b8ed02`) as on a feature branch. Run as part of the whole file, it passes, because earlier tests warm the build. So `bun run gates` fails locally on this test alone while CI, on faster runners, passes it.
+Measured 2026-09-23. The test `kg export > a preview says so in its type and links every node back to canonical` (`cat-harness/scripts/tests/kg-export.test.ts:440`) calls `buildExport()` twice, once for the preview and once for canonical, with nothing cached. On a session container it takes about 5.2 s when run alone. That is over bun's default 5 s test timeout, and the same on `main` (`04b8ed02`) as on a feature branch. Run as part of the whole file, it passes, because earlier tests warm the build. So `bun run cat gates` fails locally on this test alone while CI, on faster runners, passes it.
 
 It is not a flake. It is a test whose cost is right at its limit, and every new KG node pushes it closer.
 

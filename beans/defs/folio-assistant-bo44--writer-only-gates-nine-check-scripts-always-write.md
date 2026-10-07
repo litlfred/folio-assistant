@@ -326,7 +326,7 @@ Each of the ten producers gained a pure `<x>Document(report)` (the sidecar both 
 - `i2kp` defect 2 (`kg:audit:all:check` and `regen`).
 - The real findings the judge forms now report on this tree: wireframes (6 gaps), layout-norms (1 pair), harness-state (stale health report) — all red at the base too.
 
-## `bun run gates`, before and after
+## `bun run cat gates`, before and after
 
 Both runs in a fresh clone (base `5a3f3dbe` = `1541e368` + the claim; after `1ac56949`), on a shared machine.
 

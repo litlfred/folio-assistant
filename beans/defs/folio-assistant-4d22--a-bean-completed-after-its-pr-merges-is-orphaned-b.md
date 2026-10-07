@@ -57,7 +57,7 @@ Owner's pick: **"close in PR"**, which is the first of the fixes listed above, m
   does its work, with the Done-when ticked and its evidence. A bean not yet
   done stays open with a note. Practised for eight beans on 2026-09-23 with no
   orphan.
-- **The report**: `bun run beans:landed` (`cat-harness/scripts/beans-landed.ts`)
+- **The report**: `bun run cat beans:landed` (`cat-harness/scripts/beans-landed.ts`)
   lists open, non-epic beans named in a merged PR's title on `main`:
   `done-ticked` first, then `partly-ticked`, then `no-checklist`. It says
   "could not determine" when no merge history is visible, rather than

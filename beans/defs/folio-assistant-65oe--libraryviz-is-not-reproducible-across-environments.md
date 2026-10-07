@@ -122,7 +122,7 @@ entries. The `unreadable` pill and the no-badge third state both survive.
    with its own container's count and landed it on main, so the PR re-conflicted
    on that one file against almost every main commit — 372 behind, reflowed, 16
    more within minutes, conflicted again. The resolution was mechanical (take
-   either side, run `bun run library:viz`), and the exit was landing it rather
+   either side, run `bun run cat library:viz`), and the exit was landing it rather
    than reflowing it. Worth remembering for any future PR that removes a field
    from a frequently regenerated artefact.
 

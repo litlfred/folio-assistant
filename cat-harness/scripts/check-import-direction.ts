@@ -56,9 +56,9 @@
  * inverted, every instance's count WAS zero, so CI runs `--all`.
  *
  * ```sh
- * bun run check:import-direction                       # report, every instance
- * bun run check:import-direction --gate cat-harness    # …and fail on one
- * bun run check:import-direction --all                 # …and fail on any (CI)
+ * bun run cat check:import-direction                       # report, every instance
+ * bun run cat check:import-direction --gate cat-harness    # …and fail on one
+ * bun run cat check:import-direction --all                 # …and fail on any (CI)
  * ```
  *
  * Tested with planted violations in `tests/check-import-direction.test.ts`: a

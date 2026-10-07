@@ -41,12 +41,12 @@ Measured on the same 21 test files: with the corpus present, 8 tests fail, none 
 
 - The audit's six reader files plus `qa-graph-integrity.test.ts`, at the original test code: 0 fail with the corpus present, **14 fail with it absent**.
 - A FULL `bun test` with it absent, after the first fixes, found **13 more failures in 7 files the audit's 21-file run never ran**: `qa-attestations-criteria.test.ts` (6), `declared-paths.test.ts` (2), `declared-dirs.test.ts`, `check-declaration-filename.test.ts`, `regen-writers.test.ts`, `qa-fixture.test.ts`, `subgraphs.test.ts`.
-- Final full `bun test` with the corpus absent: **13924 pass, 0 fail** (678 files). With it present, the bun test inside `bun run gates` is green after the last commit.
+- Final full `bun test` with the corpus absent: **13924 pass, 0 fail** (678 files). With it present, the bun test inside `bun run cat gates` is green after the last commit.
 
 **Done when, both verified:**
 
 - [x] `bun test` passes with `test/results/` absent from the checkout (the full suite, every instance's results directory).
-- [x] `bun run check:qa-corpus` validates the fetched tree (`--dir <tree>`, `--ref <ref>`, or `--github`). It walks every declared `qa` directory and every `kgQaHomeFor` home: own, hosted (`bootstrap/`, `bootstrap-tools/`, `cat-harness-tools/`) and convention. It checks conflict markers and unparseable JSON, the kg-qa schema, applicable criteria, `fail` without findings, a failing critical criterion, the home manifest, and the witness tree against the generated badge pages. `check-qa-corpus.test.ts` plants an 8-wide conflict marker in a hosted home: exit 1. A miss or an empty tree is UNKNOWN, exit 2.
+- [x] `bun run cat check:qa-corpus` validates the fetched tree (`--dir <tree>`, `--ref <ref>`, or `--github`). It walks every declared `qa` directory and every `kgQaHomeFor` home: own, hosted (`bootstrap/`, `bootstrap-tools/`, `cat-harness-tools/`) and convention. It checks conflict markers and unparseable JSON, the kg-qa schema, applicable criteria, `fail` without findings, a failing critical criterion, the home manifest, and the witness tree against the generated badge pages. `check-qa-corpus.test.ts` plants an 8-wide conflict marker in a hosted home: exit 1. A miss or an empty tree is UNKNOWN, exit 2.
 
 **CI.** It runs in the `qa-publish` job, after the publish, as `check:qa-corpus --github`, over the entry that job just stored. A fork PR skips with the same notice the publish gives. Any other miss is UNKNOWN (exit 2). `gates.test.ts` names it as a publisher-job step, the way it names `qa:publish`.
 
@@ -77,7 +77,7 @@ Production changes:
 - R72 `qa-badge.e2e.ts:49` and R73 `qa-panel.e2e.ts:46,181` (Playwright) still read corpus witnesses at load. Not touched. Their fix is a fixture.
 - R75 `test/health/workflow.test.ts` is the live-defects bean's work.
 - `check:declared-dirs` still reports an absent `qa` directory as `absent`, as 16ei decided (`directory-storage.test.ts`). It goes away when 5hox declares `storage`.
-- Locally, `bun run gates` also fails `translation:catalogue:check -- --base "$base"`. That step is CI-only: `$base` is unset outside CI. It is not this change.
+- Locally, `bun run cat gates` also fails `translation:catalogue:check -- --base "$base"`. That step is CI-only: `$base` is unset outside CI. It is not this change.
 
 ## E2E item done (R72, R73)
 

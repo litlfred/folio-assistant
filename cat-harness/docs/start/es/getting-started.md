@@ -54,7 +54,7 @@ El triaje es un artefacto real y legible en lugar de una costumbre que un agente
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="Proceso BPMN: un usuario solicita crear un folio; el agente detecta la modalidad de interacción, lee los hechos del repositorio, y una compuerta exclusiva calculada a partir de folio-intent.dmn enruta a una de cinco ramas — ask, overlay, new-repo, add-folio, o una derivación a la autoría de contenido. La estructura inicial siembra el plan de trabajo, luego la compilación de Pages reporta live, not-yet o unknown.">
 </figure>
-<p class="bpmn-source"><em>Fuente: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — el SVG es generado por <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>Fuente: <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — el SVG es generado por <code>bun run cat render:bpmn</code>.</em></p>
 
 ### Los tres hechos
 
@@ -155,7 +155,7 @@ Consulta [Tipos de contenido](../../concepts/es/content-types.html) para ver las
 Sigue las instrucciones de [Instalación](installation.html), luego ejecuta:
 
 ```sh
-bun run check-deps
+bun run cat check-deps
 ```
 
 `bun` debería reportarse como presente. Cualquier elemento que tu tipo de contenido necesite y no
@@ -186,8 +186,8 @@ de tipos de contenido aparecen únicamente cuando el adaptador correspondiente e
 En la rama `overlay`, el agente examina antes de tocar cualquier cosa:
 
 ```sh
-bun run scan:repo            # informe de solo lectura
-bun run scan:repo -- --json  # lo mismo, como hechos
+bun run cat scan:repo            # informe de solo lectura
+bun run cat scan:repo -- --json  # lo mismo, como hechos
 ```
 
 Clasifica lo que encuentra en **tres** categorías — `library` (material de origen
@@ -218,8 +218,8 @@ habilidad [`repo-conversion`]({{ '/reference/skill-instructions/repo-conversion.
 Crear un folio debería terminar con un enlace. Inmediatamente después de generar la estructura inicial:
 
 ```sh
-bun run pages:bootstrap            # deduce la dirección, informa, sin sondeo
-bun run pages:bootstrap -- --wait  # sondea hasta que el sitio responda (delimitado)
+bun run cat pages:bootstrap            # deduce la dirección, informa, sin sondeo
+bun run cat pages:bootstrap -- --wait  # sondea hasta que el sitio responda (delimitado)
 ```
 
 Deduce la dirección a partir de `harness.config.json` o del remoto `origin`, encuentra
@@ -297,8 +297,8 @@ misma composición se sitúa de forma diferente en un recorte vertical.
 Luego:
 
 ```sh
-bun run docs:harness         # transfiere la declaración a docs/_data/
-bun run docs:harness -- --check   # ...y falla si está desactualizada (para CI)
+bun run cat docs:harness         # transfiere la declaración a docs/_data/
+bun run cat docs:harness -- --check   # ...y falla si está desactualizada (para CI)
 ```
 
 ### Tres cosas que no hará

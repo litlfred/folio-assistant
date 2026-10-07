@@ -105,7 +105,7 @@ time; the vocabulary had not.
 
 That is the third mismatch in
 [`covered-is-not-reachable`](covered-is-not-reachable.md), and it is invisible to
-`bun run tools:coverage` by construction: that tool enumerates **skills** and asks
+`bun run cat tools:coverage` by construction: that tool enumerates **skills** and asks
 which lack Tools, so a capability nobody stated is absent from the list it walks.
 Bean `yean`.
 

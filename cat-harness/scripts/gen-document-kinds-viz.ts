@@ -26,8 +26,8 @@
  * and the card says so rather than leaving it blank.
  *
  * Usage:
- *   bun run document-kinds:viz          # write
- *   bun run document-kinds:viz:check    # fail if a page is stale or orphaned
+ *   bun run cat document-kinds:viz          # write
+ *   bun run cat document-kinds:viz:check    # fail if a page is stale or orphaned
  */
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
@@ -263,7 +263,7 @@ if (import.meta.main) {
   }
   if (!check) console.log(`  ${kinds.length} document kind(s) across ${subjects.length} instance(s)`);
   if (stale > 0) {
-    console.error(`\n${stale} page(s) stale — run \`bun run document-kinds:viz\``);
+    console.error(`\n${stale} page(s) stale — run \`bun run cat document-kinds:viz\``);
     process.exit(1);
   }
 }

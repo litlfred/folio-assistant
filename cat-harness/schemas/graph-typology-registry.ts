@@ -377,7 +377,7 @@ export interface GraphTypologyDef {
    * distinction was invisible until `#437` moved the instance under
    * `cat-harness/`: the three `schema` paths kept working as instance-relative
    * strings while their own doc called them repo-relative, and nothing
-   * noticed because nothing read them. `bun run check:kind-validators` is
+   * noticed because nothing read them. `bun run cat check:kind-validators` is
    * what notices now.
    *
    * Absent means ABSENT — a kind with no runtime schema. A consumer must
@@ -1454,7 +1454,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   code: {
     anyLayer: true,
     description:
-      "Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run check:code-accounting` rather than reading a number here, because it moves every round** — " +
+      "Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run cat check:code-accounting` rather than reading a number here, because it moves every round** — " +
       "so the one property every checker here depends on — *an undeclared file is one no checker has a reason to look at* (`v8gh`) — did not hold for most of the code. The owner's first proposal was to move everything under `<stub>/src`; the measurement confirmed the **mechanism** and argued against the **destination**, because `schemas/` is already a declared graph, `content/pipeline/` is core's subject, and `scripts/` are entry points named **by path** in `package.json` and CI. So they are declared where they are, and `<stub>/src` is the convention for new instances. `content`: authored with an intention, re-authored rather than regenerated, and it stands on its own. **Not renderable** — `renderable` asks whether the graph is wired to the site build as pages, and the generated references are built from schemas and skills, not from this. Being declared says nothing about whether a Tool node **claims** the code; that is a second axis, and beans `d308` and `ce65` own it. `check:code-accounting` reports both and refuses to average them.",
     title: "Code",
     // Grouped by concern from within (`<dir>/code.json`), PR0c — for the TEST
@@ -1749,7 +1749,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "session-survey": {
     description:
-      "published surveys of a commit window — one JSON each, `\"$schema\": \"folio-session-survey/v1\"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through.",
+      "published surveys of a commit window — one JSON each, `\"$schema\": \"folio-session-survey/v1\"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run cat survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through.",
     title: "Session surveys",
     renderable: false,
     // Written BY a running session, for other sessions to read. That makes it
@@ -2576,7 +2576,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   // writes it, and a process writing a `context` graph is a defect.
   "substrate-snapshot": {
     description:
-      "the declaration of each Knowledge Graph this instance SUBSCRIBES to (`subscriptions/`) — at the substrate's root, or in the one directory the entry's `upstreamPath` names (a fork that keeps its instance one level down, bean `437w`) — one `folio-substrate-snapshot/v1` file per `subscriptions` entry: the upstream bytes at the pinned commit, their sha256, and the harnesses and subgraphs the substrate offers. **Two kinds, never folded together** (owner, 2026-10-06): a **substrate** declares at least one harness (bootstrap's definition, unchanged); a **content** Knowledge Graph declares Subgraphs and no harness — a FHIR IG — and is recorded as `kind: \"content\"` on both the entry and the snapshot, chooses no harness, is refused by `kg:instantiate`, and contributes no skills, processes or roles to any overlay. A declaration with neither is refused. `derived`: written by `bun run kg:subscribe` from somebody else's bytes and regenerated, never edited; `kg:subscribe:check` re-hashes and re-judges each one offline. It WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem and would read as an instance declaration to every scanner. Issue #1719.",
+      "the declaration of each Knowledge Graph this instance SUBSCRIBES to (`subscriptions/`) — at the substrate's root, or in the one directory the entry's `upstreamPath` names (a fork that keeps its instance one level down, bean `437w`) — one `folio-substrate-snapshot/v1` file per `subscriptions` entry: the upstream bytes at the pinned commit, their sha256, and the harnesses and subgraphs the substrate offers. **Two kinds, never folded together** (owner, 2026-10-06): a **substrate** declares at least one harness (bootstrap's definition, unchanged); a **content** Knowledge Graph declares Subgraphs and no harness — a FHIR IG — and is recorded as `kind: \"content\"` on both the entry and the snapshot, chooses no harness, is refused by `kg:instantiate`, and contributes no skills, processes or roles to any overlay. A declaration with neither is refused. `derived`: written by `bun run cat kg:subscribe` from somebody else's bytes and regenerated, never edited; `kg:subscribe:check` re-hashes and re-judges each one offline. It WRAPS the upstream `<name>.json` rather than copying it, because a bare copy carries `name` equal to its stem and would read as an instance declaration to every scanner. Issue #1719.",
     title: "Substrate snapshots",
     renderable: false,
     holds: "derived",

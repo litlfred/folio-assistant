@@ -53,7 +53,7 @@ ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue â€
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Run the health checks,&#10;keeping the report either way">
-      <bpmn:documentation>Run bun run health --out and upload the JSON report whatever the verdict â€” on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.</bpmn:documentation>
+      <bpmn:documentation>Run bun run cat health --out and upload the JSON report whatever the verdict â€” on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
@@ -61,7 +61,7 @@ ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue â€
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Determined" name="Could we&#10;tell?">
-      <bpmn:documentation>Asked of the `verdict` output of 'Run the health checks' in .github/workflows/health-check.yml, which runs `bun run health --out`. Exit 0 is clean, 1 gating finding(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `repo-health` label. The report is uploaded as an artifact on every verdict (`if: always()`), including this one.</bpmn:documentation>
+      <bpmn:documentation>Asked of the `verdict` output of 'Run the health checks' in .github/workflows/health-check.yml, which runs `bun run cat health --out`. Exit 0 is clean, 1 gating finding(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `repo-health` label. The report is uploaded as an artifact on every verdict (`if: always()`), including this one.</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>

@@ -43,7 +43,7 @@ session_018LDBbYU4qjY7tNv4cuHt1e (https://claude.ai/code/session_018LDBbYU4qjY7t
 Landed via branch claude/derive-at-publish (fully merged into main). Derived artefacts whose transitive `derivedFrom` reaches a tip-keyed input are built at publish and never committed; the fsh-guts viewer is the first.
 
 **Closed on evidence, 2026-10-06** (re-measured on main at f44d88fd9, not quoted):
-- [x] `bun run check:derived-from` exits 0: *"nothing committed is derived from a branch; 1 artefact(s) built at publish"*.
+- [x] `bun run cat check:derived-from` exits 0: *"nothing committed is derived from a branch; 1 artefact(s) built at publish"*.
 - [x] `derive:publish` runs in `docs-site.yml` and `feature-staging.yml` (and code-quality-gates).
 - [x] `git ls-files cat-harness/docs/fsh-guts/` is empty: the page is untracked.
 - [x] directory-conventions, fsh-guts and merge-conflict-patterns each carry §"The storage clock".

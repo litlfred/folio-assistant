@@ -61,7 +61,7 @@ from that declaration and committed beside it:
 - `ig-ast-plan.schema.json`
 - `ig-ast.context.jsonld`
 
-`bun run ig-ast:schema` regenerates them and `ig-ast:schema:check` is the CI
+`bun run cat ig-ast:schema` regenerates them and `ig-ast:schema:check` is the CI
 gate. These are the files the Java writer, or any downstream consumer,
 validates against. Every object is open to fields the writer adds first;
 `authority` is the literal `"cache"`, and a manifest claiming anything else is

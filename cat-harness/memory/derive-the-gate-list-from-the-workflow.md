@@ -11,7 +11,7 @@ references:
   - kind: agent
     id: ci-health-watcher
 ---
-**`bun run gates`** runs what CI runs, derived from the workflow at run time
+**`bun run cat gates`** runs what CI runs, derived from the workflow at run time
 (`--all` adds the browser job). Never hand-list them: three checks are invoked
 by PATH so a `bun run <script>` sweep cannot see them, and a hand-list of 17
 read as coverage while the real set was 37 (measured 2026-09-19, by the agent
@@ -34,7 +34,7 @@ The command:
 side and blanking the hash keys — these are single-line JSON, so
 `grep -v scriptHash` filters nothing.
 
-`MEMORY.md` is generated from `memory/` by `bun run agent-memory`; a TRAP
+`MEMORY.md` is generated from `memory/` by `bun run cat agent-memory`; a TRAP
 written into it directly is deleted by the next run. The harness injects the
 FIRST 200 lines, so an entry past that line is dropped silently — put evidence
 in an entry's `detail`, which is written beside the file rather than into it.
