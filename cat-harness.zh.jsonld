@@ -335,14 +335,14 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-07T05:52:24.305Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2af50f9c42efcbe2948b2af4183efee18e348a45",
-  "sourceCommitSha": "2af50f9c42efcbe2948b2af4183efee18e348a45",
-  "sourceCommitAt": "2026-10-07T07:17:40+02:00",
+  "generatedAt": "2026-10-07T08:07:24.130Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/17f9c07de18f4c80fbc0c75cc124457f5f295216",
+  "sourceCommitSha": "17f9c07de18f4c80fbc0c75cc124457f5f295216",
+  "sourceCommitAt": "2026-10-07T09:24:35+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 223,
+    "Skill": 224,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 18,
@@ -2466,6 +2466,22 @@
       ],
       "instructionsPath": "skills/sdlc/crdm/crdm-impact-analysis.md",
       "instructionLines": 134,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "crdm-recorded-walkthrough",
+      "title": "Requirements from a recorded walkthrough",
+      "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/sdlc/crdm/crdm-recorded-walkthrough.md",
+      "instructionLines": 96,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5299,7 +5315,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
       "name": "crdm",
       "version": "0.1.0",
-      "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its six skills — three governing the methodology and three detailing a single phase (needs assessment, the requirements template, impact analysis); its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
+      "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its seven skills — three governing the methodology, three detailing a single phase (needs assessment, the requirements template, impact analysis), and one for eliciting requirements from a recorded walkthrough; its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
       "path": "skills/sdlc/crdm",
       "hasManifest": true,
       "declaresSkill": [
@@ -5307,6 +5323,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-recorded-walkthrough",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow"
       ],
@@ -41242,7 +41259,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 282,
+      "fileCount": 283,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
@@ -41448,7 +41465,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3291,
+      "fileCount": 3308,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -41500,7 +41517,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 953,
+      "fileCount": 954,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {
@@ -41517,7 +41534,7 @@
       ],
       "description": "The harness runtime that is not the server: the content vocabulary (`content-types.ts`), blocks, the workflow engine, CRDM, logging, the git/cache/feedback/safe-path helpers under `core/`, and the built-in adapter table. The MCP and HTTP server itself moved to `cat-harness-tools/src/` (bean `70lx`, B1). `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.",
       "readmePath": "src/README.md",
-      "fileCount": 47,
+      "fileCount": 49,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-src"
     },
     {
@@ -45496,6 +45513,11 @@
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_BlockFeedbackToIngest",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_BlockFeedbackToIngest"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/flow/Flow_Duplicate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_Duplicate"
@@ -45654,6 +45676,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/Gateway_Triage",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Gateway_Triage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_BlockFeedback",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_BlockFeedback"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
@@ -46114,6 +46141,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-qa",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/bib-qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/block-actions",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/build-docs",

@@ -340,19 +340,19 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T05:51:59.689Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2af50f9c42efcbe2948b2af4183efee18e348a45",
-  "sourceCommitSha": "2af50f9c42efcbe2948b2af4183efee18e348a45",
-  "sourceCommitAt": "2026-10-07T07:17:40+02:00",
+  "generatedAt": "2026-10-07T08:06:56.853Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/17f9c07de18f4c80fbc0c75cc124457f5f295216",
+  "sourceCommitSha": "17f9c07de18f4c80fbc0c75cc124457f5f295216",
+  "sourceCommitAt": "2026-10-07T09:24:35+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 19,
+    "Skill": 20,
     "Decision": 4,
     "Process": 17,
-    "SequenceFlow": 275,
+    "SequenceFlow": 276,
     "Lane": 62,
-    "ProcessNode": 250,
+    "ProcessNode": 251,
     "GraphTypology": 18,
     "Subgraph": 18,
     "Asset": 2
@@ -400,6 +400,19 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "block-actions",
+      "title": "Block actions: [edit] and [feedback] on every block",
+      "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
+      "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
+      "instructionLines": 157,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-structure",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "document-structure",
@@ -419,7 +432,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 310,
+      "instructionLines": 344,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -447,7 +460,7 @@
       "name": "document-publishing",
       "title": "document-publishing",
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
-      "instructionLines": 82,
+      "instructionLines": 115,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
@@ -4937,10 +4950,11 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/public-comment.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_BlockFeedback",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_WithdrawRequested"
       ],
-      "nodeCount": 19,
-      "flowCount": 18,
+      "nodeCount": 20,
+      "flowCount": 19,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
@@ -4948,6 +4962,14 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_CommentsReturned",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_BlockFeedbackToIngest",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_BlockFeedback",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
@@ -5167,6 +5189,26 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/StartEvent_BlockFeedback",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Feedback on one block ([feedback] link)",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#role/feedback-provider",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/lane/Lane_Commenter",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_BlockFeedbackToIngest"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/node/Task_Ingest",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Ingest and place each comment",
@@ -5181,7 +5223,8 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIngest"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToIngest",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_BlockFeedbackToIngest"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#process/Process_PublicComment/flow/Flow_ToTriage"
@@ -9406,7 +9449,7 @@
       ],
       "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors, the sample-import pair, and — since bean `yj6r`, 2026-09-30 — two tranches of escapes that moved UP out of `cat-harness/`. The materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`) and the FHIR IG artefact-index pair (`ingest-ig-artifacts`, `check-artifact-index`) came first, to sit beside the `schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` they read. The glossary CLUSTER followed — `build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`, and all three of their tests — because walking a paper's blocks to collect `defines[]` and emit a `folio-glossary/v1` scheme is CONTENT machinery, and the harness (`needs: [\"bootstrap\"]`) was importing upward into this instance's `schemas/glossary.ts` and `scripts/glossary-page.ts` — an import against its own declaration, and a circular dependency between repositories after the split. The partition rules already classified `content/pipeline/` as core, so the classification did not change; the DIRECTORY caught up with it. They are still addressed as pipeline scripts by id, and `resolvePipelineScript` searches the folio, then the platform, then here. The LAST FOUR clusters followed on the same day and in the same tranche, taking the `cat-harness ->` sibling-import count from 5 to 2: `extract-assets.ts` (a container a folio was given → a `folio-extraction/v1` record, reading `schemas/extraction.ts` — both moved DOWN again on 2026-10-02 by owner ruling 2 of the placement proposal, bean `tlat`: the script to `cat-harness-tools/scripts/`, the schema to `cat-harness/schemas/`, as the tool behind the harness's own `asset-extraction` skill), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), and `build-document-site.ts` WITH its test, which reads `schemas/changeset.ts`. The last is the one with an invocation surface: a DOCUMENT folio's generated staging workflow names it by path, so `init-folio.ts` now writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins that string — the same instance-relative property this entry records for `review-comments.ts`, arrived at from the other direction. The partition rules had already classified all four `core` by exact entry, so again only the DIRECTORY moved; each dead entry was removed with its reasoning kept in place, because a rule naming a path its own scan can no longer see fires on nothing while reading as an adjudication. The adapters closure followed on the same day: `adapters/document/` and its SIX consuming tests are now here and in `adapters/`, taking the count 2 -> 0 (bean `ybp4`). This sentence previously read \"What did NOT move, and deliberately\" of those two files, and recorded that the closure \"needs its own ruling\" — it got one, and `r0tm`'s re-derivation also corrected the deterrent measurement: the 15 created escapes were 16, and paper-first is FREE, which is what turned an all-or-nothing three-instance move into two ordinary steps. This sentence listed only the review-comment pair until then, by which point four other tools were already here — a directory description that names its founding file rather than its contents goes stale the first time anything lands. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 87,
+      "fileCount": 93,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-scripts"
     },
     {
@@ -9457,7 +9500,7 @@
       ],
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
       "readmePath": "skills/README.md",
-      "fileCount": 80,
+      "fileCount": 81,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills"
     },
     {
@@ -9534,8 +9577,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "2af50f9c42efcbe2948b2af4183efee18e348a45",
+    "sha": "17f9c07de18f4c80fbc0c75cc124457f5f295216",
     "pr": "main",
-    "run": "37575598337"
+    "run": "37587142976"
   }
 }
