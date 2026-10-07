@@ -7,6 +7,7 @@ section_number: 12.6
 pages: 176-177
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 1.	
 Moher D, Liberati A, Tetzlaff J, Altman DG; PRISMA Group. Preferred reporting 

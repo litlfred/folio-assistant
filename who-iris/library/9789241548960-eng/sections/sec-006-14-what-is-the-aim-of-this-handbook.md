@@ -7,6 +7,7 @@ section_number: 1.4
 pages: 14-15
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 This handbook presents the important principles of guideline development 
 and provides stepwise instruction on the technical and procedural aspects 

@@ -7,6 +7,7 @@ section_number: 11.15
 pages: 166-167
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 advice guidelines
 The GRC needs to approve the development of a rapid advice guideline. The 

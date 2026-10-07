@@ -1,11 +1,11 @@
 ---
 # folio-assistant-z7n1
 title: qa:resolve-conflicts staged with a plain git add, so a branch that gitignores its results directory aborted merge:main
-status: todo
+status: in-progress
 type: bug
 parent: folio-assistant-d33q
 created_at: 2026-10-03T17:55:24Z
-updated_at: 2026-10-03T17:55:24Z
+updated_at: 2026-10-06T23:36:18Z
 ---
 
 Found 2026-10-03 while measuring why `merge:main`'s last `push` run
@@ -81,3 +81,4 @@ repositories for that reason.
 - [ ] #1801's next `merge:main` run goes green (needs this on `main` first —
       `merge-base.ts` runs from main's copy of the tool)
 
+_2026-10-06T23:36:18Z_ — Claimed by claude/z7n1-close-landed-resolver-staged-f — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

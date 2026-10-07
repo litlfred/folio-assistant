@@ -1,10 +1,10 @@
 ---
 # folio-assistant-k9mv
 title: SEED:READY upward paths — count declared paths that resolve only above the layer, not dependents discovery cannot see
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-04T14:14:25Z
-updated_at: 2026-10-04T14:14:25Z
+updated_at: 2026-10-06T19:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -22,3 +22,10 @@ Owner's choice, 2026-10-04, from three options (re-aim / make discovery see sibl
 - [x] Fact `siblingDiscoveryMisses` → `upwardPaths`, criterion `sibling-discovery` → `upward-paths`, `Rule_Discovery` → `Rule_UpwardPaths` in `seed-readiness-gate.dmn`.
 - [x] `kg-separation` skill table updated, with why.
 - [x] Measured: cat-harness 0 of 134 declared paths upward; folio-assistant-core 0 of 0 (its 5 Tool nodes are shell-invoked — stated in the note so "0" reads as determined).
+
+## Summary of Changes
+
+Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
+
+- `Rule_UpwardPaths` is present in `cat-harness/processes/kg/decisions/seed-readiness-gate.dmn` on main (box 2's rename).
+- `bun run gates` on the bookkeeping branch (main + bean edits) is green; it includes the seed-readiness tests.

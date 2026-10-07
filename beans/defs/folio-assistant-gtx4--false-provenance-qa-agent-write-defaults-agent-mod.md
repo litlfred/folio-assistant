@@ -1,10 +1,10 @@
 ---
 # folio-assistant-gtx4
 title: 'FALSE PROVENANCE: qa-agent-write defaults agent_model to a stale literal, writing a model that did not do the work into committed sidecars'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-02T23:52:42Z
-updated_at: 2026-10-02T23:52:42Z
+updated_at: 2026-10-06T22:42:11Z
 parent: folio-assistant-0ipy
 ---
 
@@ -118,3 +118,4 @@ separate bean's worth of work; recorded here so the connection is not lost.
       reason it is worth fixing cheaply now rather than after it has written
       a row nobody can distinguish.
 
+_2026-10-06T22:42:11Z_ — Claimed by claude/gtx4-qa-agent-write-model-default — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

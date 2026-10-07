@@ -7,6 +7,7 @@ section_number: 3.5.3
 pages: 45-46
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 group
 Stakeholders such as nongovernmental organizations, advocacy groups, 

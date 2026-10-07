@@ -11,6 +11,8 @@
  * bun run state:seed --id beans              # refresh the seed, verify, report
  * bun run state:seed --id beans --dry-run    # what it would push, pushing nothing
  * bun run state:seed --id beans --authoritative   # the CUTOVER half: the branch becomes the store
+ * bun run state:seed --retire <root> --into <host instance> --repository <url> \\
+ *   --also <root>.config.json                  # SEPARATION: a whole instance, into the host's fsh-guts
  * ```
  *
  * ## Why this exists — `state:drift`'s remedy had no implementation
@@ -123,7 +125,7 @@ import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
 import { resolveDirectories, type ResolvedDirectory } from "../../cat-harness/schemas/cat-harness.ts";
-import { FSH_GUTS_KIND, FSH_GUTS_SCHEMA_ID } from "../../cat-harness/schemas/fsh-guts.ts";
+import { FROZEN_SUBTREE_KIND, FSH_GUTS_KIND, FSH_GUTS_SCHEMA_ID } from "../../cat-harness/schemas/fsh-guts.ts";
 import { findDeclarationFile, instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
 import { instanceStateBranch } from "../../cat-harness/schemas/subgraph-source.ts";
 import { BranchStore, gitBlobId, MANIFEST_FILE, MANIFEST_SCHEMA, tipLocations, type TreeEntry } from "../../cat-harness/scripts/branch-store.ts";
@@ -418,49 +420,71 @@ export function fshGutsTargetFor(repoRoot: string, path: string): GutsTarget {
     return { state: "unknown", reason: `could not list the instances under ${repoRoot}: ${(e as Error).message}` };
   }
   for (const inst of roots) {
-    let dirs: ResolvedDirectory[];
-    try {
-      dirs = resolveDirectories([{ name: "(local)", root: inst, own: true }]).filter((d) => d.own);
-    } catch (e) {
-      return { state: "unknown", reason: `could not read the declaration under ${inst}: ${(e as Error).message}` };
-    }
-    const rel = (d: ResolvedDirectory) => relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
-    const owner = dirs.find((d) => rel(d) === path);
+    const r = readInstance(repoRoot, inst);
+    if (r.state !== "ok") return r;
+    const owner = r.dirs.find((d) => r.rel(d) === path);
     if (!owner) continue;
-    const declFile = findDeclarationFile(inst);
-    let instance = "";
-    try {
-      // `findDeclarationFile` answers with the FILENAME, relative to `inst`.
-      instance = String((JSON.parse(readFileSync(resolve(inst, declFile!), "utf-8")) as { name?: unknown }).name ?? "");
-    } catch {
-      // Named below as unknown: provenance without the instance is not provenance.
-    }
-    if (!instance) return { state: "unknown", reason: `could not read the instance name from ${declFile ?? inst}` };
-    const guts = dirs.filter((d) => (d.graphTypologies as readonly string[]).includes(FSH_GUTS_KIND));
-    const fix =
-      `Declare one in ${instance}.json — \`{ "id": "${FSH_GUTS_KIND}", "path": "${FSH_GUTS_KIND}/", "graphTypologies": ["${FSH_GUTS_KIND}"], ` +
-      `"source": { "kind": "branch", "branch": "${instanceStateBranch(instance, FSH_GUTS_KIND)}", "keyedBy": "tip" } }\` — and seed that branch ` +
-      `(the command \`folio_init\` prints for a new instance), then re-run.`;
-    if (guts.length === 0) {
-      return { state: "refused", reason: `${instance} declares no \`${FSH_GUTS_KIND}\` graph, so there is nowhere to deposit ${path}/ before removing it from main. ${fix}` };
-    }
-    if (guts.length > 1) return { state: "refused", reason: `${instance} declares \`${FSH_GUTS_KIND}\` ${guts.length} times, so there is no single trashcan to deposit into` };
-    let tips: ReturnType<typeof tipLocations>;
-    try {
-      tips = tipLocations(repoRoot, "tip");
-    } catch (e) {
-      return { state: "unknown", reason: `could not resolve where ${guts[0]!.id} is kept: ${(e as Error).message}` };
-    }
-    const at = tips.find((t) => t.id === guts[0]!.id && t.path === rel(guts[0]!));
-    if (!at) {
-      return {
-        state: "refused",
-        reason: `${instance}'s \`${FSH_GUTS_KIND}\` graph (${rel(guts[0]!)}/) is not kept at a branch tip, and a deposit goes through branch-store. ${fix}`,
-      };
-    }
-    return { state: "ok", instance, directoryId: owner.id, id: at.id, path: at.path, branch: at.branch };
+    const t = gutsOf(repoRoot, r, `${path}/`);
+    return t.state === "ok" ? { ...t, directoryId: owner.id } : t;
   }
   return { state: "refused", reason: `no instance under ${repoRoot} declares ${path}/, so there is no instance whose trashcan it belongs in` };
+}
+
+/** An instance root's own directories and its declared name. */
+type ReadInstance =
+  | { state: "ok"; root: string; instance: string; dirs: ResolvedDirectory[]; rel: (d: ResolvedDirectory) => string }
+  | { state: "unknown"; reason: string };
+
+function readInstance(repoRoot: string, inst: string): ReadInstance {
+  let dirs: ResolvedDirectory[];
+  try {
+    dirs = resolveDirectories([{ name: "(local)", root: inst, own: true }]).filter((d) => d.own);
+  } catch (e) {
+    return { state: "unknown", reason: `could not read the declaration under ${inst}: ${(e as Error).message}` };
+  }
+  const rel = (d: ResolvedDirectory) => relative(repoRoot, d.absPath).split("\\").join("/").replace(/\/+$/, "");
+  const declFile = findDeclarationFile(inst);
+  let instance = "";
+  try {
+    // `findDeclarationFile` answers with the FILENAME, relative to `inst`.
+    instance = String((JSON.parse(readFileSync(resolve(inst, declFile!), "utf-8")) as { name?: unknown }).name ?? "");
+  } catch {
+    // Named below as unknown: provenance without the instance is not provenance.
+  }
+  if (!instance) return { state: "unknown", reason: `could not read the instance name from ${declFile ?? inst}` };
+  return { state: "ok", root: inst, instance, dirs, rel };
+}
+
+/** The one `fsh-guts` graph `r` declares, kept at a branch tip — or why there is none. */
+function gutsOf(
+  repoRoot: string,
+  r: Extract<ReadInstance, { state: "ok" }>,
+  what: string,
+): { state: "ok"; instance: string; id: string; path: string; branch: string } | { state: "refused" | "unknown"; reason: string } {
+  const { instance, dirs, rel } = r;
+  const guts = dirs.filter((d) => (d.graphTypologies as readonly string[]).includes(FSH_GUTS_KIND));
+  const fix =
+    `Declare one in ${instance}.json — \`{ "id": "${FSH_GUTS_KIND}", "path": "${FSH_GUTS_KIND}/", "graphTypologies": ["${FSH_GUTS_KIND}"], ` +
+    `"source": { "kind": "branch", "branch": "${instanceStateBranch(instance, FSH_GUTS_KIND)}", "keyedBy": "tip" } }\` — and seed that branch ` +
+    `(the command \`folio_init\` prints for a new instance), then re-run.`;
+  if (guts.length === 0) {
+    return { state: "refused", reason: `${instance} declares no \`${FSH_GUTS_KIND}\` graph, so there is nowhere to deposit ${what} before removing it from main. ${fix}` };
+  }
+  if (guts.length > 1) return { state: "refused", reason: `${instance} declares \`${FSH_GUTS_KIND}\` ${guts.length} times, so there is no single trashcan to deposit into` };
+  let tips: ReturnType<typeof tipLocations>;
+  try {
+    tips = tipLocations(repoRoot, "tip");
+  } catch (e) {
+    return { state: "unknown", reason: `could not resolve where ${guts[0]!.id} is kept: ${(e as Error).message}` };
+  }
+  const at = tips.find((t) => t.id === guts[0]!.id && t.path === rel(guts[0]!));
+  if (!at) {
+    return {
+      state: "refused",
+      reason: `${instance}'s \`${FSH_GUTS_KIND}\` graph (${rel(guts[0]!)}/) is not kept at a branch tip, and a deposit goes through branch-store. ${fix}`,
+    };
+  }
+  return { state: "ok", instance, id: at.id, path: at.path, branch: at.branch };
 }
 
 /** `<fsh-guts>/retired/cutover-<instance>-<dir>-<tree12>`, without the extension. */
@@ -561,7 +585,28 @@ export function depositCutover(
   }
   const stem = depositStem(target.path, p);
   const archiveName = `${stem.split("/").pop()}.tar.gz`;
-  const record = depositRecord(p, archiveName);
+  return writeDeposit(
+    target,
+    { stem, archive, record: depositRecord(p, archiveName) },
+    `fsh-guts: deposit ${p.path}/ of ${p.instance} before its cutover removes it from main\n\n` +
+      `tree ${p.tree} at ${p.sourceCommit}; the live store is ${p.authoritativeBranch}.`,
+    opts,
+  );
+}
+
+/**
+ * Splice `<stem>.tar.gz` and `<stem>.md` onto the trashcan's tip and RE-READ
+ * the tip to confirm both blobs landed. The branch-store half of every
+ * deposit — a cutover's and a separation's alike — so the never-overwrite and
+ * verify-by-re-reading rules are written once.
+ */
+export function writeDeposit(
+  target: { id: string; branch: string },
+  item: { stem: string; archive: Buffer; record: string },
+  message: string,
+  opts: { repoRoot: string; remote?: string; storeDir?: string; dryRun?: boolean },
+): { state: "deposited" | "would-deposit"; deposit: Deposit } | { state: "refused" | "unknown"; reason: string } {
+  const { stem, archive, record } = item;
   const deposit: Deposit = {
     id: target.id,
     branch: target.branch,
@@ -570,7 +615,6 @@ export function depositCutover(
     archiveBlob: gitBlobId(archive),
     recordBlob: gitBlobId(Buffer.from(record, "utf-8")),
   };
-
   let store: BranchStore;
   try {
     store = BranchStore.open(target.branch, { repoRoot: opts.repoRoot, remote: opts.remote, storeDir: opts.storeDir, log: () => {} });
@@ -603,8 +647,7 @@ export function depositCutover(
       { path: deposit.archive, content: archive, expect: null },
       { path: deposit.record, content: record, expect: null },
     ],
-    `fsh-guts: deposit ${p.path}/ of ${p.instance} before its cutover removes it from main\n\n` +
-      `tree ${p.tree} at ${p.sourceCommit}; the live store is ${p.authoritativeBranch}.`,
+    message,
   );
   if (w.state !== "pushed") {
     return { state: "refused", reason: `the deposit to ${target.branch} was not made (${w.state}: ${w.reason}), so nothing was removed from main` };
@@ -792,6 +835,275 @@ export function cutoverReport(r: CutoverResult): string {
   return L.join("\n");
 }
 
+/**
+ * ## `--retire <path> --into <instance>` — separating a whole instance
+ *
+ * A cutover moves one DIRECTORY of an instance onto that instance's own state
+ * branch. Separation moves a whole INSTANCE ROOT out of the repository into
+ * its own (stage 13 of `sub-kg-lifecycle`), so neither half of `--cutover`
+ * fits: there is no tip-keyed branch the path is kept on — the live copy is
+ * another repository — and the trashcan is not the instance's own, because
+ * that instance is the thing leaving. It is the instance named by `--into`:
+ * the host that keeps the frozen copy.
+ *
+ * It REFUSES unless `<path>` is an instance root (it carries a declaration),
+ * `--into` names a different instance under the same checkout whose
+ * `fsh-guts` graph is kept at a branch tip, `--repository` answers
+ * `git ls-remote`, and nothing under the paths is uncommitted. The deposit is
+ * one archive of every path at HEAD — the root and each `--also` file beside
+ * it, such as its `.config.json` — checked to extract to exactly the tree
+ * and blob ids HEAD holds, plus a `separated-instance` note carrying the four
+ * stage-13 fields. Only once the deposit is re-read from the tip does
+ * `--commit` stage the `git rm` as one commit. Never pushes, like `--cutover`.
+ *
+ * `matchesCommit` is the HOST commit the copy was taken at, the meaning the
+ * first separation's notes gave it. The live repository's layout is its own
+ * (the forks nest and rename), so the copy is NOT compared to it: the note
+ * records the repository's tip at the time and says the comparison was not
+ * made, rather than implying one.
+ */
+export interface RetireOptions {
+  repoRoot?: string;
+  remote?: string;
+  storeDir?: string;
+  /** The instance whose `fsh-guts` keeps the frozen copy. */
+  into: string;
+  /** Where the live graph is now — anything `git ls-remote` accepts. */
+  repository: string;
+  /** Files beside the root that leave with it (`<name>.config.json`). */
+  also?: string[];
+  /** The bean the separation is worked under, recorded on the note. */
+  bean?: string;
+  /** Make the commit. Without it, a dry run. Never pushes either way. */
+  commit?: boolean;
+}
+
+export type RetireResult =
+  | {
+      state: "would-retire" | "retired";
+      path: string;
+      instance: string;
+      into: string;
+      paths: Array<{ path: string; id: string; files: number; bytes: number }>;
+      repositoryTip: string;
+      deposit: Deposit;
+      commit?: string;
+      reason: string;
+    }
+  | { state: "refused" | "unknown"; reason: string };
+
+/** `<fsh-guts>/separated/<name>`, the stage-13 location, as an archive rather than a loose tree. */
+export function separationStem(gutsPath: string, path: string): string {
+  return `${gutsPath}/separated/${path.split("/").pop()}`;
+}
+
+/** The provenance note: a `separated-instance` node carrying the four stage-13 fields. */
+export function separationRecord(p: {
+  instance: string;
+  into: string;
+  path: string;
+  paths: Array<{ path: string; id: string; files: number; bytes: number }>;
+  repository: string;
+  repositoryTip: string;
+  matchesCommit: string;
+  archive: string;
+  date: string;
+  bean?: string;
+}): string {
+  const q = (s: string) => JSON.stringify(s);
+  const files = p.paths.reduce((n, x) => n + x.files, 0);
+  const bytes = p.paths.reduce((n, x) => n + x.bytes, 0);
+  return [
+    "---",
+    `$schema: ${FSH_GUTS_SCHEMA_ID}`,
+    `title: ${q(`${p.path}/ (${p.instance}), as it left ${p.into} for ${p.repository}`)}`,
+    `kind: ${FROZEN_SUBTREE_KIND}`,
+    `movedOn: ${p.date}`,
+    `movedFrom: ${q(`${p.path}/`)}`,
+    "reason: separated",
+    `repository: ${q(p.repository)}`,
+    `matchesCommit: ${p.matchesCommit}`,
+    `repositoryTip: ${p.repositoryTip}`,
+    "repositoryCompared: false",
+    `instance: ${q(p.instance)}`,
+    `into: ${q(p.into)}`,
+    ...(p.bean ? [`bean: ${p.bean}`] : []),
+    `archive: ${q(p.archive)}`,
+    "paths:",
+    // Plain strings: the fsh-guts front-matter reader keeps scalars and lists of scalars.
+    ...p.paths.map((x) => `  - ${q(`${x.path} = ${x.id} (${x.files} file(s), ${x.bytes} bytes)`)}`),
+    `files: ${files}`,
+    `bytes: ${bytes}`,
+    "summary: >-",
+    `  ${p.paths.map((x) => x.path).join(", ")} as ${p.into}'s main tracked them at ${p.matchesCommit.slice(0, 12)}`,
+    `  (${files} file(s), ${bytes} bytes), packed beside this file as ${p.archive}. Frozen: never refreshed,`,
+    `  never rendered. The live graph is ${p.repository}, whose tip was ${p.repositoryTip.slice(0, 12)} at`,
+    "  the time; its layout was not compared to this copy.",
+    "---",
+    "",
+    `# ${p.path}/ (${p.instance}), at its separation`,
+    "",
+    `\`${p.archive}\` beside this file holds ${p.paths.map((x) => `\`${x.path}\``).join(", ")} exactly as`,
+    `\`${p.into}\`'s \`main\` tracked them at \`${p.matchesCommit}\` — list it with \`tar -tzf ${p.archive}\`.`,
+    "Extracted and added to a fresh index, each path writes the id recorded above, which is how",
+    "the separation verified the copy before removing anything.",
+    "",
+    `The live graph is \`${p.repository}\`. Change it there; do not unpack this back onto \`main\`.`,
+    "",
+  ].join("\n");
+}
+
+/** Each path's id (tree or blob) as the archive extracts it, by the identity HEAD uses. */
+export function archiveIds(archive: Buffer, paths: readonly string[]): Map<string, string | undefined> | undefined {
+  const dir = mkdtempSync(join(tmpdir(), "separation-deposit-"));
+  try {
+    const git = (args: string[]) =>
+      spawnSync("git", ["-c", "core.autocrlf=false", "-c", "core.fileMode=true", "-c", "core.symlinks=true", ...args], {
+        cwd: dir,
+        encoding: "utf-8",
+        maxBuffer: 256 * 1024 * 1024,
+      });
+    if (git(["init", "-q"]).status !== 0) return undefined;
+    if (spawnSync("tar", ["-xzf", "-"], { cwd: dir, input: archive }).status !== 0) return undefined;
+    // -f: a `.gitignore` INSIDE the snapshot must not hide a file it carries.
+    if (git(["add", "-A", "-f", "--", ...paths]).status !== 0) return undefined;
+    const tree = git(["write-tree"]).stdout.trim();
+    const out = new Map<string, string | undefined>();
+    for (const p of paths) {
+      const t = git(["rev-parse", `${tree}:${p}`]);
+      out.set(p, t.status === 0 ? t.stdout.trim() : undefined);
+    }
+    return out;
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+/** Separate the instance rooted at `path`. See §"`--retire`" above. */
+export function retireInstance(path: string, opts: RetireOptions): RetireResult {
+  const repoRoot = opts.repoRoot ?? defaultRepoRoot();
+  const clean = path.replace(/\/+$/, "").replace(/^\.\//, "");
+  const git = (args: string[]) => spawnSync("git", args, { cwd: repoRoot, encoding: "utf-8", maxBuffer: 256 * 1024 * 1024 });
+
+  let roots: string[];
+  try {
+    roots = instanceRootsIn(repoRoot);
+  } catch (e) {
+    return { state: "unknown", reason: `could not list the instances under ${repoRoot}: ${(e as Error).message}` };
+  }
+  const relRoot = (r: string) => relative(repoRoot, r).split("\\").join("/");
+  const leavingRoot = roots.find((r) => relRoot(r) === clean);
+  if (!leavingRoot) {
+    return { state: "refused", reason: `${clean}/ is not an instance root under ${repoRoot} — it carries no declaration, so it is a directory to cut over, not an instance to separate` };
+  }
+  const leaving = readInstance(repoRoot, leavingRoot);
+  if (leaving.state !== "ok") return leaving;
+  let host: Extract<ReadInstance, { state: "ok" }> | undefined;
+  for (const r of roots) {
+    if (r === leavingRoot) continue;
+    const ri = readInstance(repoRoot, r);
+    if (ri.state === "ok" && ri.instance === opts.into) host = ri;
+  }
+  if (!host) {
+    return { state: "refused", reason: `no OTHER instance under ${repoRoot} is named ${opts.into}, so there is no host to keep the frozen copy of ${leaving.instance}` };
+  }
+  const target = gutsOf(repoRoot, host, `${clean}/`);
+  if (target.state !== "ok") return target;
+  if (target.path === clean || target.path.startsWith(`${clean}/`)) {
+    return { state: "refused", reason: `${opts.into}'s fsh-guts (${target.path}/) is inside ${clean}/, the thing leaving` };
+  }
+
+  const ls = spawnSync("git", ["ls-remote", opts.repository, "HEAD"], { cwd: repoRoot, encoding: "utf-8" });
+  const repositoryTip = ls.status === 0 ? (ls.stdout.split(/\s/)[0] ?? "") : "";
+  if (!repositoryTip) {
+    return { state: "unknown", reason: `${opts.repository} did not answer git ls-remote (${ls.stderr.trim() || "no HEAD"}), so there is no live copy to point the note at; nothing was removed` };
+  }
+
+  const all = [clean, ...(opts.also ?? []).map((a) => a.replace(/\/+$/, "").replace(/^\.\//, ""))];
+  const paths: Array<{ path: string; id: string; files: number; bytes: number }> = [];
+  for (const p of all) {
+    const dirty = git(["status", "--porcelain", "--", p]);
+    if (dirty.status !== 0) return { state: "unknown", reason: `git status failed in ${repoRoot}: ${dirty.stderr.trim()}` };
+    if (dirty.stdout.trim()) return { state: "refused", reason: `${p} has uncommitted changes in ${repoRoot}; commit them first, so the copy is a commit` };
+    const id = git(["rev-parse", "--verify", "--quiet", `HEAD:${p}`]).stdout.trim();
+    if (!id) return { state: "refused", reason: `HEAD does not track ${p} — already separated, or never on main` };
+    const rows = git(["ls-tree", "-r", "-l", "HEAD", "--", p]).stdout.split("\n").filter(Boolean);
+    paths.push({ path: p, id, files: rows.length, bytes: rows.reduce((n, l) => n + (Number(l.split(/\s+/)[3]) || 0), 0) });
+  }
+  const head = git(["rev-parse", "HEAD"]).stdout.trim();
+  const at = git(["log", "-1", "--format=%ct", head]).stdout.trim();
+  const archived = spawnSync("git", ["archive", "--format=tar.gz", `--mtime=@${at || "0"}`, head, "--", ...all], {
+    cwd: repoRoot,
+    maxBuffer: 1024 * 1024 * 1024,
+  });
+  if (archived.status !== 0) return { state: "unknown", reason: `git archive of ${all.join(", ")} at ${head.slice(0, 12)} failed: ${archived.stderr.toString().trim()}` };
+  const archive = archived.stdout as Buffer;
+  const ids = archiveIds(archive, all);
+  for (const p of paths) {
+    const got = ids?.get(p.path);
+    if (got !== p.id) {
+      return { state: "refused", reason: `the snapshot's ${p.path} extracts to ${got ?? "(unreadable)"}, not ${p.id} — a deposit that is not what HEAD holds is not a deposit, so nothing was removed` };
+    }
+  }
+
+  const stem = separationStem(target.path, clean);
+  const archiveName = `${stem.split("/").pop()}.tar.gz`;
+  const record = separationRecord({
+    instance: leaving.instance,
+    into: opts.into,
+    path: clean,
+    paths,
+    repository: opts.repository,
+    repositoryTip,
+    matchesCommit: head,
+    archive: archiveName,
+    date: new Date().toISOString().slice(0, 10),
+    bean: opts.bean,
+  });
+  const d = writeDeposit(
+    target,
+    { stem, archive, record },
+    `fsh-guts: deposit ${clean}/ (${leaving.instance}) before its separation removes it from main\n\n` +
+      `${all.join(", ")} at ${head}; the live graph is ${opts.repository}.`,
+    { repoRoot, remote: opts.remote, storeDir: opts.storeDir, dryRun: opts.commit !== true },
+  );
+  // Narrowed on `"deposit" in d`: typescript7 declines to narrow this union by the state literals.
+  if (!("deposit" in d)) return { state: d.state, reason: d.reason };
+  const summary = paths.map((p) => `${p.path} (${p.files} file(s), ${p.bytes} bytes)`).join(", ");
+  const base = { path: clean, instance: leaving.instance, into: opts.into, paths, repositoryTip, deposit: d.deposit };
+  if (opts.commit !== true) {
+    return {
+      state: "would-retire",
+      ...base,
+      reason: `dry run: would deposit ${d.deposit.archive} on ${d.deposit.branch}, then remove ${summary} from main. Re-run with --commit to deposit, verify, and stage the removal as one commit (main is not pushed).`,
+    };
+  }
+  for (const p of all) {
+    const rm = git(["rm", "-r", "-q", "--", p]);
+    if (rm.status !== 0) return { state: "unknown", reason: `git rm -r ${p} failed: ${rm.stderr.trim()}` };
+  }
+  const message =
+    `separate ${clean}/ (${leaving.instance}) — the live graph is ${opts.repository}\n\n` +
+    `Removed from main: ${summary}.\n` +
+    `Deposited first, and verified on the tip: ${d.deposit.archive} (+ .md note) on ${d.deposit.branch}@${(d.deposit.commit ?? "").slice(0, 12)}; ` +
+    `it extracts to exactly HEAD:${clean} at ${head.slice(0, 12)}.\n` +
+    `${opts.repository} was at ${repositoryTip.slice(0, 12)}; its layout was not compared to the copy.` +
+    (opts.bean ? `\n\nBean: ${opts.bean}` : "");
+  const c = git(["commit", "-q", "-m", message]);
+  if (c.status !== 0) return { state: "unknown", reason: `git commit failed: ${c.stderr.trim() || c.stdout.trim()}` };
+  const sha = git(["rev-parse", "HEAD"]).stdout.trim();
+  return { state: "retired", ...base, commit: sha, reason: `deposited ${d.deposit.archive} on ${d.deposit.branch}, then committed ${sha.slice(0, 12)} removing ${summary}; main NOT pushed — review it, then push` };
+}
+
+export function retireReport(r: RetireResult): string {
+  if (r.state !== "would-retire" && r.state !== "retired") return `${r.state === "refused" ? "·" : "✗"} ${r.state} — ${r.reason}`;
+  const L = [`${r.state === "retired" ? "✓" : "·"} ${r.path}/ (${r.instance}) into ${r.into}: ${r.state} — ${r.reason}`];
+  for (const p of r.paths) L.push(`    - ${p.path}: ${p.files} file(s), ${p.bytes} bytes, ${p.id}`);
+  const d = r.deposit;
+  L.push(`    ${d.commit ? "✓" : "·"} fsh-guts: ${d.archive} + ${d.record.split("/").pop()} on ${d.branch}${d.commit ? `@${d.commit.slice(0, 12)}` : " (not yet written)"}`);
+  return L.join("\n");
+}
+
 export function report(r: SeedResult): string {
   // Narrowed by naming the arm it KEEPS: `typescript7` declines to narrow this
   // union by excluding three of the other arm's literals.
@@ -829,11 +1141,27 @@ if (import.meta.main) {
     const i = argv.indexOf(f);
     return i === -1 ? undefined : argv[i + 1];
   };
+  const repoRootArg = named("--repo-root") !== undefined ? resolve(named("--repo-root")!) : undefined;
+  const retire = named("--retire");
+  if (retire !== undefined) {
+    const into = named("--into");
+    const repository = named("--repository");
+    if (!into || !repository) {
+      console.error("usage: bun run state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit] [--repo-root <dir>] [--json]");
+      process.exit(5);
+    }
+    const also = argv.flatMap((a, i) => (a === "--also" && argv[i + 1] ? [argv[i + 1]!] : []));
+    const r = retireInstance(retire, { repoRoot: repoRootArg, into, repository, also, bean: named("--bean"), commit: argv.includes("--commit") });
+    if (argv.includes("--json")) console.log(JSON.stringify(r, null, 2));
+    else console.log(retireReport(r));
+    process.exit(r.state === "refused" ? 5 : r.state === "unknown" ? 4 : 0);
+  }
   const id = named("--id");
   if (!id) {
     console.error(
       "usage: bun run state:seed --id <directory id or branch> [--repo-root <dir>] [--from-manifest] [--authoritative] [--dry-run] [--json]\n" +
-        "       bun run state:seed --id <id> --cutover [--commit] [--repo-root <dir>] [--json]",
+        "       bun run state:seed --id <id> --cutover [--commit] [--repo-root <dir>] [--json]\n" +
+        "       bun run state:seed --retire <instance root> --into <host instance> --repository <url> [--also <file>]... [--bean <id>] [--commit]",
     );
     process.exit(5);
   }

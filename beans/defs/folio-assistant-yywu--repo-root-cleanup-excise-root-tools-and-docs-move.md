@@ -3,8 +3,9 @@
 title: 'Repo root cleanup: excise root tools/ and docs/; move stray .beans/ bean into beans/defs'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-06T18:05:32Z
-updated_at: 2026-10-06T18:05:32Z
+updated_at: 2026-10-06T18:14:54Z
 parent: folio-assistant-7x5n
 ---
 
@@ -20,3 +21,9 @@ Audit (read-only, 2026-10-06): root tools/ is a 1-line barrel re-exporting cat-h
 
 ## Done when
 The root holds no tools/, docs/ or .beans/, and every gate is green.
+
+
+**Owner ruling 2026-10-06, added:** interaction/interaction.json -> migrate into the harness instance config for now (a whole directory is heavy for one file); a follow-up bean decides its final home (it holds per-person preferences, keyed by person, but is read repo-wide).
+
+
+**Owner ruling 2026-10-06, reversing the line above:** do NOT move interaction.json into the harness config. interaction/ stays as it is.

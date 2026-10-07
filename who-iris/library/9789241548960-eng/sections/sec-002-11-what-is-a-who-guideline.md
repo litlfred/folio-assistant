@@ -7,6 +7,7 @@ section_number: 1.1
 pages: 13-13
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A WHO guideline is any document developed by the World Health Organization containing recommendations for clinical practice or public health 
 policy. A recommendation tells the intended end-user of the guideline what 
