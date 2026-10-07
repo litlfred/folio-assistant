@@ -18,7 +18,36 @@
       "labelEnd": null,
       "words": 225,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "github token",
+          "heading": false
+        },
+        {
+          "term": "writing workflows",
+          "heading": false
+        },
+        {
+          "term": "sensitive information",
+          "heading": false
+        },
+        {
+          "term": "sensitive data",
+          "heading": false
+        },
+        {
+          "term": "secrets",
+          "heading": false
+        },
+        {
+          "term": "read access",
+          "heading": false
+        },
+        {
+          "term": "repository",
+          "heading": false
+        }
+      ],
       "extract": "Secure use reference Security practices for writing workflows and using GitHub Actions features. Copy markdown Find information about security best practices when you are writing workflows and using GitHub Actions security features. Use secrets for sensitive information Because there are multiple ways a secret value can be transformed, automatic redaction is not guaranteed. Adhere to the following best practices to",
       "extractCut": true
     },
@@ -33,7 +62,40 @@
       "labelEnd": null,
       "words": 435,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "workflow logs",
+          "heading": false
+        },
+        {
+          "term": "secret value",
+          "heading": false
+        },
+        {
+          "term": "run logs",
+          "heading": false
+        },
+        {
+          "term": "redacted",
+          "heading": false
+        },
+        {
+          "term": "sensitive value",
+          "heading": false
+        },
+        {
+          "term": "register",
+          "heading": false
+        },
+        {
+          "term": "log output",
+          "heading": false
+        },
+        {
+          "term": "invalid inputs",
+          "heading": false
+        }
+      ],
       "extract": "value to be treated as a secret and redacted from logs. For more information about masking data, see Workflow commands for GitHub Actions. Delete and rotate exposed secrets Redacting of secrets is performed by your workflow runners. This means a secret will only be redacted if it was used within a job and is accessible by the runner. If an unredacted secret is sent to a workflow run log, you should delete the log",
       "extractCut": true
     },
@@ -48,7 +110,40 @@
       "labelEnd": null,
       "words": 259,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "environment secrets",
+          "heading": false
+        },
+        {
+          "term": "environment variable",
+          "heading": false
+        },
+        {
+          "term": "script injection",
+          "heading": false
+        },
+        {
+          "term": "intermediate environment",
+          "heading": false
+        },
+        {
+          "term": "pull request",
+          "heading": false
+        },
+        {
+          "term": "octocat",
+          "heading": false
+        },
+        {
+          "term": "title",
+          "heading": false
+        },
+        {
+          "term": "github",
+          "heading": false
+        }
+      ],
       "extract": "Periodically review the registered secrets to confirm they are still required. Remove those that are no longer needed. Rotate secrets periodically to reduce the window of time during which a compromised secret is valid. Consider requiring review for access to secrets You can use required reviewers to protect environment secrets. A workflow job cannot access environment secrets until approval is granted by a",
       "extractCut": true
     },
@@ -63,7 +158,40 @@
       "labelEnd": null,
       "words": 259,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "code scanning",
+          "heading": false
+        },
+        {
+          "term": "workflow templates",
+          "heading": false
+        },
+        {
+          "term": "untrusted pull",
+          "heading": false
+        },
+        {
+          "term": "pull request",
+          "heading": false
+        },
+        {
+          "term": "script injection",
+          "heading": false
+        },
+        {
+          "term": "github",
+          "heading": false
+        },
+        {
+          "term": "codeql",
+          "heading": false
+        },
+        {
+          "term": "checkout",
+          "heading": false
+        }
+      ],
       "extract": "exit 1 fi In this example, the attempted script injection is unsuccessful, which is reflected by the following lines in the log: env: TITLE: a\"; ls $GITHUB_WORKSPACE\" PR title did not start with 'octocat' With this approach, the value of the ${{ github.event.pull_request.title }} expression is stored in memory and used as a variable, and doesn't interact with the script generation process. In addition, consider",
       "extractCut": true
     },
@@ -78,7 +206,40 @@
       "labelEnd": null,
       "words": 279,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "workflow triggers",
+          "heading": false
+        },
+        {
+          "term": "openssf scorecards",
+          "heading": false
+        },
+        {
+          "term": "github actions",
+          "heading": false
+        },
+        {
+          "term": "workflow run",
+          "heading": false
+        },
+        {
+          "term": "pull request",
+          "heading": false
+        },
+        {
+          "term": "untrusted code",
+          "heading": false
+        },
+        {
+          "term": "request target",
+          "heading": false
+        },
+        {
+          "term": "default setup",
+          "heading": false
+        }
+      ],
       "extract": "they share the same cache of the main branch with other privileged workflow triggers, and may have repository write access and access to referenced secrets. These vulnerabilities can be exploited to take over a repository. For more information on these triggers, how to use them, and the associated risks, see Events that trigger workflows and Events that trigger workflows. For additional examples and guidance on the",
       "extractCut": true
     },
@@ -93,7 +254,40 @@
       "labelEnd": null,
       "words": 388,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "commit sha",
+          "heading": false
+        },
+        {
+          "term": "action repository",
+          "heading": false
+        },
+        {
+          "term": "github actions",
+          "heading": false
+        },
+        {
+          "term": "pin actions",
+          "heading": false
+        },
+        {
+          "term": "later job",
+          "heading": false
+        },
+        {
+          "term": "pinning",
+          "heading": false
+        },
+        {
+          "term": "organization level",
+          "heading": false
+        },
+        {
+          "term": "secrets",
+          "heading": false
+        }
+      ],
       "extract": "The individual jobs in a workflow can interact with (and compromise) other jobs. For example, a job querying the environment variables used by a later job, writing files to a shared directory that a later job processes, or even more directly by interacting with the Docker socket and inspecting other running containers and executing commands in them. This means that a compromise of a single action within a workflow",
       "extractCut": true
     },
@@ -108,7 +302,40 @@
       "labelEnd": null,
       "words": 337,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "github actions",
+          "heading": false
+        },
+        {
+          "term": "github security",
+          "heading": false
+        },
+        {
+          "term": "openid connect",
+          "heading": false
+        },
+        {
+          "term": "code owners",
+          "heading": false
+        },
+        {
+          "term": "cloud provider",
+          "heading": false
+        },
+        {
+          "term": "security features",
+          "heading": false
+        },
+        {
+          "term": "workflows",
+          "heading": false
+        },
+        {
+          "term": "workflow files",
+          "heading": false
+        }
+      ],
       "extract": "action's creators. The ‘Verified creator’ badge on GitHub Marketplace is a useful signal, as it indicates that the action was written by a team whose identity has been verified by GitHub. Note that there is risk to this approach even if you trust the author, because a tag can be moved or deleted if a bad actor gains access to the repository storing the action. Reusing third-party workflows The same principles",
       "extractCut": true
     },
@@ -123,7 +350,40 @@
       "labelEnd": null,
       "words": 299,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "code scanning",
+          "heading": false
+        },
+        {
+          "term": "github actions",
+          "heading": false
+        },
+        {
+          "term": "scorecards action",
+          "heading": false
+        },
+        {
+          "term": "actions workflows",
+          "heading": false
+        },
+        {
+          "term": "dependabot",
+          "heading": false
+        },
+        {
+          "term": "chain practices",
+          "heading": false
+        },
+        {
+          "term": "pull requests",
+          "heading": false
+        },
+        {
+          "term": "risky",
+          "heading": false
+        }
+      ],
       "extract": "Note Support for custom claims for OIDC is unavailable in AWS. Using Dependabot version updates to keep actions up to date You can use Dependabot to ensure that references to actions and reusable workflows used in your repository are kept up to date. Actions are often updated with bug fixes and new features to make automated processes faster, safer, and more reliable. Dependabot takes the effort out of maintaining",
       "extractCut": true
     },
@@ -138,7 +398,40 @@
       "labelEnd": null,
       "words": 371,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "github-hosted runners",
+          "heading": false
+        },
+        {
+          "term": "self-hosted runners",
+          "heading": false
+        },
+        {
+          "term": "virtual machines",
+          "heading": false
+        },
+        {
+          "term": "images maintained",
+          "heading": false
+        },
+        {
+          "term": "sbom",
+          "heading": false
+        },
+        {
+          "term": "open pull",
+          "heading": false
+        },
+        {
+          "term": "github",
+          "heading": false
+        },
+        {
+          "term": "hosts",
+          "heading": false
+        }
+      ],
       "extract": "GitHub-hosted runners take measures to help you mitigate security risks. Reviewing the supply chain for GitHub-hosted runners For GitHub-hosted runners created from images maintained by GitHub, you can view a software bill of materials (SBOM) to see what software was pre-installed on the runner. You can provide your users with the SBOM which they can run through a vulnerability scanner to validate if there are any",
       "extractCut": true
     },
@@ -153,7 +446,40 @@
       "labelEnd": null,
       "words": 385,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "self-hosted runner",
+          "heading": false
+        },
+        {
+          "term": "jit runners",
+          "heading": false
+        },
+        {
+          "term": "same runner",
+          "heading": false
+        },
+        {
+          "term": "sensitive information",
+          "heading": false
+        },
+        {
+          "term": "rest api",
+          "heading": false
+        },
+        {
+          "term": "job",
+          "heading": false
+        },
+        {
+          "term": "repositories",
+          "heading": false
+        },
+        {
+          "term": "environment",
+          "heading": false
+        }
+      ],
       "extract": "secrets by using environments and required reviews, these workflows are not run in an isolated environment and are still susceptible to the same risks when run on a self-hosted runner. Organization owners can choose which repositories are allowed to create repository-level self- hosted runners. For more information, see Disabling or limiting GitHub Actions for your organization. When a self-hosted runner is defined",
       "extractCut": true
     },
@@ -168,7 +494,40 @@
       "labelEnd": null,
       "words": 284,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "self-hosted runners",
+          "heading": false
+        },
+        {
+          "term": "organization level",
+          "heading": false
+        },
+        {
+          "term": "openid connect",
+          "heading": false
+        },
+        {
+          "term": "repository level",
+          "heading": false
+        },
+        {
+          "term": "cloud provider",
+          "heading": false
+        },
+        {
+          "term": "team",
+          "heading": false
+        },
+        {
+          "term": "centralized",
+          "heading": false
+        },
+        {
+          "term": "add",
+          "heading": false
+        }
+      ],
       "extract": "information, see Self-hosted runners reference. Once you have the config file from the REST API response, you can pass it to the runner at startup. ./run.sh --jitconfig ${encoded_jit_config} Planning your management strategy for self-hosted runners A self-hosted runner can be added to various levels in your GitHub hierarchy: the enterprise, organization, or repository level. This placement determines who will be",
       "extractCut": true
     },
@@ -183,7 +542,32 @@
       "labelEnd": null,
       "words": 186,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "audit log",
+          "heading": false
+        },
+        {
+          "term": "log events",
+          "heading": false
+        },
+        {
+          "term": "dependency graph",
+          "heading": false
+        },
+        {
+          "term": "security log",
+          "heading": false
+        },
+        {
+          "term": "monitor activity",
+          "heading": false
+        },
+        {
+          "term": "jobs",
+          "heading": false
+        }
+      ],
       "extract": "Auditing GitHub Actions events You can use the security log to monitor activity for your user account and the audit log to monitor activity in your organization. The security and audit log records the type of action, when it was run, and which personal account performed the action. For example, you can use the audit log to track the org.update_actions_secret event, which tracks changes to organization secrets. For",
       "extractCut": true
     },
@@ -198,7 +582,40 @@
       "labelEnd": null,
       "words": 317,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "dependabot alerts",
+          "heading": false
+        },
+        {
+          "term": "github advisory",
+          "heading": false
+        },
+        {
+          "term": "advisory database",
+          "heading": false
+        },
+        {
+          "term": "security advisories",
+          "heading": false
+        },
+        {
+          "term": "dependency graph",
+          "heading": false
+        },
+        {
+          "term": "actions",
+          "heading": false
+        },
+        {
+          "term": "repositories",
+          "heading": false
+        },
+        {
+          "term": "workflows",
+          "heading": false
+        }
+      ],
       "extract": "The account or organization that owns the action. The workflow file that references the action. The version or SHA the action is pinned to. In the dependency graph, dependencies are automatically sorted by vulnerability severity. If any of the actions you use have security advisories, they will display at the top of the list. You can navigate to the advisory from the dependency graph and access instructions for",
       "extractCut": true
     },
@@ -213,7 +630,40 @@
       "labelEnd": null,
       "words": 336,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "dependabot alerts",
+          "heading": false
+        },
+        {
+          "term": "dependency review",
+          "heading": false
+        },
+        {
+          "term": "dependency changes",
+          "heading": false
+        },
+        {
+          "term": "pull requests",
+          "heading": false
+        },
+        {
+          "term": "review action",
+          "heading": false
+        },
+        {
+          "term": "security impact",
+          "heading": false
+        },
+        {
+          "term": "tab",
+          "heading": false
+        },
+        {
+          "term": "vulnerable",
+          "heading": false
+        }
+      ],
       "extract": "Dependabot only creates alerts for vulnerable actions that use semantic versioning and will not create alerts for actions pinned to SHA values. You can enable Dependabot alerts for your personal account, for a repository, or for an organization. For more information, see Configuring Dependabot alerts. You can view all open and closed Dependabot alerts and corresponding Dependabot security updates in your",
       "extractCut": true
     },
@@ -228,7 +678,40 @@
       "labelEnd": null,
       "words": 298,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "configure dependabot",
+          "heading": false
+        },
+        {
+          "term": "dependabot version",
+          "heading": false
+        },
+        {
+          "term": "dependabot security",
+          "heading": false
+        },
+        {
+          "term": "actions checkout",
+          "heading": false
+        },
+        {
+          "term": "github actions",
+          "heading": false
+        },
+        {
+          "term": "update actions",
+          "heading": false
+        },
+        {
+          "term": "updates open",
+          "heading": false
+        },
+        {
+          "term": "reusable workflows",
+          "heading": false
+        }
+      ],
       "extract": "You can use Dependabot to ensure that references to actions and reusable workflows used in your repository are kept up to date. Actions are often updated with bug fixes and new features to make automated processes faster, safer, and more reliable. Dependabot takes the effort out of maintaining your dependencies as it does this automatically for you. For more information, see Keeping your actions up to date with",
       "extractCut": true
     },
@@ -243,7 +726,40 @@
       "labelEnd": null,
       "words": 266,
       "summary": null,
-      "keywords": [],
+      "keywords": [
+        {
+          "term": "repository maintainers",
+          "heading": false
+        },
+        {
+          "term": "security advisories",
+          "heading": false
+        },
+        {
+          "term": "security advisory",
+          "heading": false
+        },
+        {
+          "term": "security vulnerability",
+          "heading": false
+        },
+        {
+          "term": "actions you've",
+          "heading": false
+        },
+        {
+          "term": "github docs",
+          "heading": false
+        },
+        {
+          "term": "publish",
+          "heading": false
+        },
+        {
+          "term": "fix",
+          "heading": false
+        }
+      ],
       "extract": "Protecting actions you've created GitHub enables collaboration between people who publish and maintain actions and vulnerability reporters in order to promote secure coding. Repository security advisories allow maintainers of public repositories to privately discuss and fix a security vulnerability in a project. After collaborating on a fix, repository maintainers can publish the security advisory to publicly",
       "extractCut": true
     },
@@ -265,6 +781,56 @@
   ],
   "checks": {},
   "withheld": false,
+  "keywords": [
+    {
+      "term": "github actions",
+      "heading": false
+    },
+    {
+      "term": "github workflows",
+      "heading": false
+    },
+    {
+      "term": "github security",
+      "heading": false
+    },
+    {
+      "term": "reference github",
+      "heading": false
+    },
+    {
+      "term": "github docs",
+      "heading": false
+    },
+    {
+      "term": "github advisory",
+      "heading": false
+    },
+    {
+      "term": "github token",
+      "heading": false
+    },
+    {
+      "term": "managing github",
+      "heading": false
+    },
+    {
+      "term": "limiting github",
+      "heading": false
+    },
+    {
+      "term": "repository security",
+      "heading": false
+    },
+    {
+      "term": "github offers",
+      "heading": false
+    },
+    {
+      "term": "secure workflow",
+      "heading": false
+    }
+  ],
   "links": {
     "repo": "litlfred/folio-assistant",
     "branch": "main",
