@@ -116,6 +116,20 @@ the owner asked for an issue update three times in one session — after the
 method comparison, after the figures work, and again for overall status —
 each time because the last one was hours and several milestones old.
 
+## A sign-off on the issue becomes a record
+
+Issue #2405 (FR-011). When a requirements document is signed off on its issue
+— approved, amended, rejected, deferred or cancelled — the comment is the
+**evidence**, not the record. The record is a `requirement-signoff`
+attestation in the `attestations` graph
+(`test/attestations/requirement-signoff/<set>.attestations.json`): who
+(`kind`, `id`, `actor`), `at`, `scope`, `outcome`, the `stage` it moves the
+requirement set to, the `reason`, and `evidence` — the comment's permalink,
+`…/issues/<n>#issuecomment-<id>`. A sign-off given in chat is quoted on the
+issue first, dated, so the evidence link exists. The agent writes the record
+of a person's decision; it never writes one for a decision nobody made, and
+`check:requirements` refuses `approved` or `accepted` without a `human` one.
+
 ## Before you publish that something does not exist (STRICT)
 
 An issue comment is **published**, and a false claim in one costs more than a

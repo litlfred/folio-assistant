@@ -109,6 +109,32 @@ Phrases that emerge during content review:
 - "stakeholders need to be able to see …"
 - "can we make the review process more …"
 
+### A request for a plan
+
+Owner, 2026-10-07 (issue #2405): *"if we make a request for a plan you should
+ALWAYS have created a requirements document and work plan for us to review
+before implementation."*
+
+- "plan", "make a plan", "plan the …"
+- "approach", "what approach would you take"
+- "proposal", "propose …"
+- "how would you …"
+- "come up with …"
+
+**A plan request needs requirements under either methodology, and content
+requests are not exempt** (decision 2 of 2026-10-07): "plan the edits to
+chapter 3" triggers it as surely as "plan the new validator". The fork above
+still decides WHOSE requirements — this signal never selects a methodology
+and never blends them. What happens on a plan request is the same operation
+for both, and it lives in the content layer above this one, which is why it is
+named here rather than linked —
+the `plan-request-gate` skill (`skill_fetch plan-request-gate`)
+— produce a requirements document and a work plan, put them where this
+methodology says (CRDM: committed under `docs/proposals/`), hand both over as
+absolute GitHub permalinks, and **stop until sign-off is recorded on the
+issue**. The definition of a requirement both methodologies share is
+the `requirement-definition` skill (`skill_fetch requirement-definition`).
+
 ### Self-declared genre
 
 The mirror of `"Migration record: …"` below. Some documents say what they are in
@@ -133,7 +159,8 @@ to fit its own 27-item eval set is tuning to the test.
 
 Do not trigger CRDM for:
 
-- "Write the next section of chapter 3" — content authoring
+- "Write the next section of chapter 3" — content authoring (but "**plan** the
+  next section" is a plan request — see §"A request for a plan")
 - "Fix the typo in the overview" — content editing
 - "Run content_validate" — tool invocation
 - "What does this block kind mean?" — information request

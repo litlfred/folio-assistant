@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ei4q
 title: 'LHS NAVBAR OVERLAPS CONTENT ON DESKTOP: opening the rail should shrink the content width, not cover it'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-06T06:51:27Z
+updated_at: 2026-10-07T14:41:32Z
 parent: folio-assistant-9rq1
 ---
 
@@ -29,3 +29,5 @@ Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), ver
 - [ ] screenshots open and closed at 1280 and 390, sent to the owner (`rendered-verification`)
 
 Queued for later, or for an idle agent. Not separation work.
+
+_2026-10-07T14:41:32Z_ — Claimed by claude/qook-symlink-internal-check — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

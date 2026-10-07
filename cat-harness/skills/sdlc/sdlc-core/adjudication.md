@@ -82,6 +82,17 @@ So the split is **at the judgement**:
 |---|---|---|
 | entry condition, untainted dispatch, person-or-agent restriction | `adjudication.bpmn` | it must not vary, and restating it per caller is how it drifts |
 | the three QA-criterion outcomes, `A_RecordEntry`, the dispensation | `criterion-adjudication.bpmn` | it depends on what was asked |
+| a requirements document's sign-off: `approve amend reject defer cancel` (code list `adjudication-requirement-set`), `A_RecordSignoff`, `GW_SignoffRecorded` | `crdm-signoff.bpmn` (`BA_Signoff`), `crdm-close.bpmn` (`BA_Confirm`); spec-kit's adjudicated status by the same codes | the answer moves a requirement SET's stage (issue #2405, FR-013) |
+
+**The requirement-set caller records before it branches.** Every answer goes
+to `A_RecordSignoff`, which appends a `requirement-signoff` attestation (the
+`attestations` graph, `test/attestations/requirement-signoff/<set>.attestations.json`):
+who — `kind`, `id`, `actor`, the QA reviewer's identity fields — when, about
+what (the set or one member), the outcome, the stage it moves the set to, the
+reason and the permalink to the issue comment. `GW_SignoffRecorded` then reads
+the record BACK through `decisions/requirement-signoff-recorded.dmn`, with facts
+`check:requirements --signoff-facts <reqset:slug>` computes from the store, so a
+sign-off nobody recorded loops back rather than proceeding (SC-008).
 
 ### What that means when you call it
 
