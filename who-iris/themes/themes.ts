@@ -51,8 +51,9 @@ import {
   resolveTheme,
   type ResolvedTheme,
   type Theme,
-} from "../../cat-harness/schemas/theme.js";
-import { DEFAULT_THEME_ID, themeById } from "../../cat-harness/schemas/themes.js";
+  DEFAULT_THEME_ID,
+  themeById,
+} from "../platform.ts";
 
 /** The instance these themes belong to. `themeKey` keys on it; ids are not unique across instances. */
 export const THEME_INSTANCE = "who-iris";

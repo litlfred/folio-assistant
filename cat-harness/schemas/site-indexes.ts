@@ -379,6 +379,92 @@ export const BlockSummaryViewSchema = z
   })
   .strict();
 
+/**
+ * One entry's DOCUMENT view (`entries/<id>.doc.json`, issue #2302), built by
+ * `scripts/lib/library-document.ts` from the ingestion schema. An entry with
+ * no structure.json is written as `{ $schema, id, absent: true }` — a
+ * determined "nothing in this schema to show", served as a file so the viewer
+ * never has to tell a 404 from a failure.
+ */
+const DocKeyword = z.object({ term: z.string(), heading: z.boolean() }).strict();
+const AlignmentList = z.object({ count: z.number().int(), items: StringList }).strict();
+export const LibraryDocumentViewSchema = z
+  .object({
+    $schema: z.literal("folio-library-document/v1"),
+    id: z.string().min(1),
+    title: z.string().nullable(),
+    pages: z.number().int(),
+    tocSource: z.string().nullable(),
+    tocMethod: z.string().nullable(),
+    toc: z.array(
+      z
+        .object({
+          level: z.number().int(),
+          title: z.string(),
+          number: z.string().nullable(),
+          page: PageNumber,
+          pageLabel: z.string().nullable(),
+          confidence: z.number().nullable(),
+          evidence: StringList.nullable(),
+          source: z.string(),
+          section: z.string().nullable(),
+        })
+        .strict(),
+    ),
+    sections: z.array(
+      z
+        .object({
+          id: z.string(),
+          number: z.string().nullable(),
+          title: z.string(),
+          level: z.number().int(),
+          pageStart: PageNumber,
+          pageEnd: PageNumber,
+          labelStart: z.string().nullable(),
+          labelEnd: z.string().nullable(),
+          words: z.number().int(),
+          summary: z.object({ text: z.string(), status: z.string() }).strict().nullable(),
+          keywords: z.array(DocKeyword),
+          extract: z.string().nullable(),
+          extractCut: z.boolean(),
+        })
+        .strict(),
+    ),
+    keywords: z.array(DocKeyword).optional(),
+    pageLabels: z
+      .array(z.object({ physical: z.number().int(), label: z.string().nullable(), source: z.string().nullable(), confidence: z.number() }).strict())
+      .optional(),
+    figures: z
+      .array(
+        z
+          .object({
+            kind: z.string(),
+            number: z.string(),
+            title: z.string(),
+            page: z.number().int(),
+            pageLabel: z.string().nullable(),
+            confidence: z.number(),
+            evidence: StringList,
+          })
+          .strict(),
+      )
+      .optional(),
+    checks: z
+      .object({
+        tocAlignment: z.record(z.string(), AlignmentList).optional(),
+        figureSequenceGaps: StringList.optional(),
+        pageLabelConflicts: AlignmentList.optional(),
+      })
+      .strict(),
+    withheld: z.boolean(),
+  })
+  .strict();
+
+export const LibraryDocumentSchema = z.union([
+  LibraryDocumentViewSchema,
+  z.object({ $schema: z.literal("folio-library-document/v1"), id: z.string().min(1), absent: z.literal(true) }).strict(),
+]);
+
 export const LibraryEntrySchema = z
   .object({
     $schema: z.literal("folio-library-entry/v1"),

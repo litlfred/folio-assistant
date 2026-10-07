@@ -392,6 +392,7 @@ if (import.meta.main) {
     }
   } else {
     const i = argv.indexOf("--out");
+    // input-site: inert #77fd4e78 — an OUTPUT path this script writes, never reads
     const out = resolve(i !== -1 ? argv[i + 1]! : join(repoRootFor(root), "_kg", "theme-sheet.html"));
     const { html, themes, missing } = buildSheet(root);
     if (themes === 0) {

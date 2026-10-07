@@ -7,6 +7,7 @@ section_number: 4.4
 pages: 53-55
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 and finalized?
 The planning proposal is the first major product of the guideline development process, and its preparation starts as soon as the technical unit decides 

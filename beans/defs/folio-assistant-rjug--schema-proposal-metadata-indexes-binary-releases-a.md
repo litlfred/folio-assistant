@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rjug
 title: 'SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T10:30:00Z
+updated_at: 2026-10-06T19:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -256,3 +256,8 @@ All three Done-when boxes are now ticked and all three sections are ruled and
 implemented. **Left `in-progress` rather than closed**: #1571 is not merged, and
 a bean closes on evidence that the work has landed.
 
+## Summary of Changes
+
+Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
+
+- The holder left this open only because #1571 had not merged. **#1571 merged 2026-09-30T13:54:33Z** ("rjug §1 and §2: `ig-metadata-index` (derived) and `binary-release` (state) registered"), which discharges that reason.

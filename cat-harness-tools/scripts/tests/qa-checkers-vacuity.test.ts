@@ -25,6 +25,7 @@ import {
   checkNoVacuousInstanceData,
   checkNoDefinitionalLaundering,
   checkDocstringHonesty,
+  checkProofNoPlaceholderStub,
   parseFieldAssigns,
   parseDecls,
   parseStructureDecls,
@@ -851,3 +852,43 @@ instance realThing : MyStructure where
     expect(checkNoDefinitionalLaundering("/nonexistent/X.lean").result).toBe("n/a");
   });
 });
+
+describe("proof-no-placeholder-stub", () => {
+  test("fails on a bare placeholder stub comment", () => {
+    const src = `-- Manuscript.Chapter1.Theorem1 — placeholder stub\n`;
+    const r = withLean(src, (p) => checkProofNoPlaceholderStub(p));
+    expect(r.result).toBe("fail");
+    expect(r.hits.length).toBe(1);
+    expect(r.hits[0].line).toBe(1);
+    expect(r.hits[0].text).toContain("bare placeholder stub");
+  });
+
+  test("fails on a stub with imports and module docstring", () => {
+    const src = `import Mathlib\n\n/-! # Theorem 1 — placeholder stub -/\n`;
+    const r = withLean(src, (p) => checkProofNoPlaceholderStub({ lean: p }));
+    expect(r.result).toBe("fail");
+    expect(r.hits.length).toBe(1);
+    expect(r.hits[0].line).toBe(3);
+  });
+
+  test("passes on actual Lean mathematical declarations", () => {
+    const src = `import Mathlib\n\ntheorem trivial_equality (n : Nat) : n = n := rfl\n`;
+    const r = withLean(src, (p) => checkProofNoPlaceholderStub(p));
+    expect(r.result).toBe("pass");
+    expect(r.hits).toEqual([]);
+  });
+
+  test("passes when placeholder stub is mentioned in comments but substantive declarations exist", () => {
+    const src = `import Mathlib\n\n-- Replaces the earlier placeholder stub with formal proof\ntheorem add_comm_test (a b : Nat) : a + b = b + a := Nat.add_comm a b\n`;
+    const r = withLean(src, (p) => checkProofNoPlaceholderStub(p));
+    expect(r.result).toBe("pass");
+    expect(r.hits).toEqual([]);
+  });
+
+  test("returns n/a when no file or empty file", () => {
+    expect(checkProofNoPlaceholderStub(undefined).result).toBe("n/a");
+    expect(checkProofNoPlaceholderStub("/nonexistent/Test.lean").result).toBe("n/a");
+    expect(withLean("   \n\n  ", (p) => checkProofNoPlaceholderStub(p)).result).toBe("n/a");
+  });
+});
+

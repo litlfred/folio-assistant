@@ -22,6 +22,7 @@
  */
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { inputSiteReached } from "./input-trace.ts";
 
 /**
  * The part of a `WebPage` manifest this reads, declared here rather than
@@ -64,6 +65,8 @@ export function docsManifests(instanceRoot: string): string[] {
 export async function processPresentations(instanceRoot: string): Promise<Map<string, Presentation[]>> {
   const out = new Map<string, Presentation[]>();
   for (const manifest of docsManifests(instanceRoot)) {
+    // input-site: traced #e8ca3daa — a docs page manifest, loaded by path
+    inputSiteReached("process-presentations: computed load");
     const page = ((await import(manifest)) as { default: PageManifest }).default;
     for (const node of page.nodes) {
       if (node.asset?.kind !== "bpmn") continue;

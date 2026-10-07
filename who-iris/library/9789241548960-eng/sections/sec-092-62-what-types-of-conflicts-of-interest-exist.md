@@ -7,6 +7,7 @@ section_number: 6.2
 pages: 70-71
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Conflicts of interest are of two basic types: financial and nonfinancial. Both 
 are relevant to guideline development. Financial interests can be directly 

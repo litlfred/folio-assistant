@@ -8,7 +8,7 @@
  *
  * ## Why this needed a runnable schema, measured rather than supposed
  *
- * `interaction/interaction.json` is read at the start of every session, and the
+ * `cat-harness/memory/interaction.json` is read at the start of every session, and the
  * reader is **jq inside a shell script** — `scripts/session-start-coord-sweep.sh`,
  * whose failure branch prints `(could not parse … — read it by hand)`. So a
  * malformed node does not fail: it degrades to a line nobody acts on, in the one
@@ -18,7 +18,7 @@
  *
  * The kind declared `schema: "schemas/harness-config.ts"` and that was wrong in
  * a way worth naming: `harness-config.ts` holds the PATH to this file
- * (`interaction: z.string().default("interaction/interaction.json")`), not its
+ * (`interaction: z.string().default("cat-harness/memory/interaction.json")`), not its
  * shape. A pointer to where a fact is *not* written is worse than none, because
  * a reader who follows it concludes the shape is undeclared on purpose.
  *
@@ -54,6 +54,12 @@ export const INTERACTION_SCHEMA_TAG = "folio-interaction/v1";
  */
 export const InteractionProfileSchema = z.object({
   /**
+   * Other identities this person CHOOSES to publish — a login email, a second
+   * handle. The entry's key is the GitHub handle (owner 2026-10-06: one person
+   * may hold more than one Claude account, so no login email is an identity).
+   */
+  aliases: z.array(z.string()).optional(),
+  /**
    * Named profiles, e.g. `low-dexterity`. Free strings on purpose: the
    * vocabulary is open and a closed enum here would reject a profile a
    * downstream instance has a name for and this layer does not.
@@ -73,7 +79,9 @@ export const InteractionNodeSchema = z.object({
   /** Prose for a reader who opens the file; never read by a process. */
   $comment: z.string().optional(),
   /**
-   * Keyed by the identity the agent can resolve — an email today.
+   * Keyed by GitHub handle (owner 2026-10-06); other identities go in each
+   * entry's `aliases`. An email key from before still parses, and still
+   * matches when it is the session's login.
    *
    * Required, and may be empty: a repository where nobody has stated anything
    * still HAS an interaction graph, and `{}` says so where an absent key would

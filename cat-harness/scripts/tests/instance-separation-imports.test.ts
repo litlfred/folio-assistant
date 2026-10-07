@@ -112,17 +112,53 @@ const PLATFORM_LAYERS = new Set([
 /**
  * Covered instances that still climb without a shim, each with its measured
  * climb count as a CEILING. Lower it when climbs are rerouted; remove the
- * entry when it reaches zero. who-iris was 18 on 2026-10-04 and is 19 as
- * re-measured when this guard reached `main` on 2026-10-05: `main` added
- * `gen-iris-pages.ts → cat-harness/scripts/pdf-viewer.ts` before the guard
- * was there to refuse it. From here it may only fall. It fell to 7 on
- * 2026-10-05 (issue #2228, bean `lffo`): `who-iris/platform.ts` now carries
- * every climb `gen-iris-pages.ts` made, and the seven left are the theme
- * module and three tests.
+ * entry when it reaches zero. who-iris was 18 on 2026-10-04, 19 when this
+ * guard reached `main` on 2026-10-05, 7 later that day (issue #2228, bean
+ * `lffo`), and 0 on 2026-10-06 (bean `g8jp`), when its theme module and
+ * three tests moved onto `who-iris/platform.ts` — so it left this list.
  */
-const NOT_YET_SHIMMED: Record<string, number> = {
-  "who-iris": 7,
+const NOT_YET_SHIMMED: Record<string, number> = {};
+
+/**
+ * The SHIM's own climbs, per instance, that land outside every instance the
+ * declaration `needs` — a ceiling that may only fall, like the one above.
+ *
+ * A shim that routes every climb but reaches past what its instance declares
+ * still cannot leave: the lifted repository mounts what it `needs` and
+ * nothing else, so a climb into a layer reached only transitively resolves to
+ * nothing there. Owner, 2026-10-06 (bean `g8jp`): *"who-iris depends on
+ * folio-asst-core"* — never on cat-harness directly; a symbol from a lower
+ * layer comes through the needed layer's own surface
+ * (`folio-assistant-core/scripts/platform.ts`). who-iris is held at zero by
+ * being absent from this map. smart-base and smart-trust were measured, not
+ * fixed, when the check landed; their cutover (PR #2320) retires both.
+ */
+const SHIM_BEYOND_NEEDS: Record<string, number> = {
+  "smart-base": 31,
+  "smart-trust": 2,
 };
+
+/** The instances `instance`'s declaration `needs`. */
+function needsOf(instance: string): string[] {
+  const decl = declarationPathIn(join(ROOT, instance));
+  if (!decl || !existsSync(decl)) return [];
+  const d = JSON.parse(readFileSync(decl, "utf-8")) as { needs?: string[] };
+  return d.needs ?? [];
+}
+
+/** Each relative import in `instance/platform.ts` that lands outside the instance AND every instance it `needs`. */
+function shimClimbsBeyondNeeds(instance: string): string[] {
+  const shim = join(ROOT, instance, SHIM);
+  if (!existsSync(shim)) return [];
+  const allowed = [instance, ...needsOf(instance)].map((i) => join(ROOT, i));
+  const out: string[] = [];
+  for (const spec of specifiersOf(readFileSync(shim, "utf-8"))) {
+    if (!spec.startsWith(".")) continue;
+    const target = resolve(dirname(shim), spec);
+    if (!allowed.some((a) => !relative(a, target).startsWith(".."))) out.push(`${instance}/${SHIM} → ${spec}`);
+  }
+  return out;
+}
 
 // Every subject here is ANOTHER instance's code (smart-base, smart-trust,
 // who-iris), so the guard has nothing to read when cat-harness stands alone
@@ -132,7 +168,7 @@ describe.skipIf(!inAggregate())("staged instances reach the platform only throug
   const covered = staged.filter((i) => !PLATFORM_LAYERS.has(i));
 
   test("every exempted name is a staged instance (no list exempts nothing)", () => {
-    const listed = [...PLATFORM_LAYERS, ...Object.keys(NOT_YET_SHIMMED)];
+    const listed = [...PLATFORM_LAYERS, ...Object.keys(NOT_YET_SHIMMED), ...Object.keys(SHIM_BEYOND_NEEDS)];
     expect(listed.filter((i) => !staged.includes(i))).toEqual([]);
     expect(Object.keys(NOT_YET_SHIMMED).filter((i) => PLATFORM_LAYERS.has(i))).toEqual([]);
   });
@@ -164,6 +200,23 @@ describe.skipIf(!inAggregate())("staged instances reach the platform only throug
         overCeiling: false,
         shimmed: false,
       });
+    }
+  });
+
+  test("every shim reaches only the instances its declaration needs", () => {
+    // who-iris is the case this exists for: it `needs` folio-assistant-core
+    // and reaches cat-harness only through core's surface. The whole list on
+    // a failure — each line is a symbol to re-export from the needed layer.
+    const beyond = covered.filter((i) => !(i in SHIM_BEYOND_NEEDS)).flatMap(shimClimbsBeyondNeeds);
+    expect(beyond).toEqual([]);
+    expect(covered).toContain("who-iris");
+    expect(needsOf("who-iris")).toEqual(["folio-assistant-core"]);
+  });
+
+  test("an instance over the needs line never gains a climb past it", () => {
+    for (const [i, ceiling] of Object.entries(SHIM_BEYOND_NEEDS)) {
+      const n = shimClimbsBeyondNeeds(i).length;
+      expect({ instance: i, beyond: n, overCeiling: n > ceiling }).toEqual({ instance: i, beyond: n, overCeiling: false });
     }
   });
 });

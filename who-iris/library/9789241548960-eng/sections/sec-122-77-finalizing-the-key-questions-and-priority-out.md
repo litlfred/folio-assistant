@@ -7,6 +7,7 @@ section_number: 7.7
 pages: 101-101
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Key questions should be finalized by the steering group after receiving input 
 from all the relevant experts, including end-users (e.g. programme managers, partner agencies, and consumer and patient groups). Because the number 

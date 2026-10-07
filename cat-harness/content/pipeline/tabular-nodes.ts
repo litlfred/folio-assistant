@@ -39,7 +39,8 @@
  *
  * @module content/pipeline/tabular-nodes
  */
-import { CONTENT_DOCUMENT_CONTEXT } from "../../schemas/jsonld.ts";
+import { documentContext } from "../../schemas/content-context.ts";
+import { termCurie } from "../../schemas/namespaces.ts";
 
 /** All a manifest needs to know, from either record. */
 export interface TabularShape {
@@ -155,7 +156,7 @@ export function buildTabularNodes(
       path: `blocks/${bId}.jsonld`,
       content: node({
         "@id": bIri,
-        "@type": ["folio-assistant-core:Block", "doco:Table"],
+        "@type": [termCurie("Block"), "doco:Table"],
         kind: "table",
         label: sheet.name || bId,
         // The header vocabulary IS the findable surface — `p67i`: "a grep for
@@ -203,7 +204,7 @@ export function buildTabularNodes(
     path: "manifest.jsonld",
     content: node({
       "@id": opts.iri("manifest"),
-      "@type": ["folio-assistant-core:SourceDocument"],
+      "@type": [termCurie("SourceDocument")],
       title: opts.title,
       contains: containedByManifest,
       provenance: "ingested",
@@ -225,13 +226,13 @@ export function buildTabularNodes(
  * Serialise, dropping undefined so output is byte-stable.
  *
  * The `@context` goes FIRST and is not optional: every other node under
- * `library/` carries {@link CONTENT_DOCUMENT_CONTEXT}, and a node without it is one
+ * `library/` carries its {@link documentContext}, and a node without it is one
  * a JSON-LD loader cannot type — `kind`, `contains` and `headers` would stay
  * bare strings. This was missing while nothing called the emitter, which is
  * precisely the class of defect an unreached function hides.
  */
 function node(doc: Record<string, unknown>): string {
-  const clean: Record<string, unknown> = { "@context": CONTENT_DOCUMENT_CONTEXT };
+  const clean: Record<string, unknown> = { "@context": documentContext((doc["@type"] as string[] | undefined) ?? []) };
   for (const [k, v] of Object.entries(doc)) {
     if (v === undefined) continue;
     clean[k] = v;

@@ -134,8 +134,8 @@ All twelve of bean `ob3m`'s findings, in its numbering (its 3, 4 and 5 were one 
 
 ### Seen on the build, not one of the twelve
 
-- At 1280×800 the Glass settings panel opens at y = 591, and its body sits under the dock until the glass is scrolled. #1810 recorded this as "found, not fixed". It is still present.
-- Beans carries two counts: **541** on the icon row ("Beans — 541 open") and **943** on the glass and launcher tile. The icon row's name says "open". The tile's caption does not say what it counts.
+- At 1280×800 the Glass settings panel opens at y = 591, and its body sits under the dock until the glass is scrolled. #1810 recorded this as "found, not fixed". **Fixed by #2312** (bean `zpso`). The panel sat in the glass's flow after the 50vh shelf. Now it opens fixed in the visible glass, below the zoom bar and above the dock's visible top, with the dock shown or hidden. On a `preview:site` build at 1280×800 with the dock shown, it runs from y = 116 to 637 against the dock at 656, and every control shows at once (body 455 of 455 px). At 390×844 its frame, title and × stay above the dock, and its body scrolls inside the frame (823 of 610 px), because the content is taller than the room. Every strip panel (Todos, More, Filter) opens the same way. Gated by `glass-panel-in-view.e2e.ts`.
+- Beans carries two counts: **541** on the icon row ("Beans — 541 open") and **943** on the glass and launcher tile. The icon row's name says "open". The tile's caption does not say what it counts. **Fixed by #2312** (bean `v215`). The two numbers counted different things: open beans (`count.json`) against every bean ever filed (the bean index's `tile.beans`). The board's own "open" was a third count, because it left out drafts. Ruled: one was wrong, so they agree. Every Beans badge counts open beans (`openBeanCount`, the owner's headline under `gkv6`), and its name and tooltip say "open beans". On the build, the icon row, the glass tile and the launcher tile all read 540. Gated by `beans-count-agrees.e2e.ts`. The as-is drawing above keeps the 943 it was drawn with in #2295.
 
 ## History
 
@@ -150,3 +150,4 @@ All twelve of bean `ob3m`'s findings, in its numbering (its 3, 4 and 5 were one 
   - #1808: the one-scroller rail
   - #1810: two settings names, cross-linked
   - #1819: the pinned, fitted, hidden-on-arrival dock
+  - #2312: Glass settings opens clear of the dock, and Beans has one count

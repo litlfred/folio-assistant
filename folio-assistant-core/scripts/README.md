@@ -52,6 +52,7 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`pdf-line-map.py`](pdf-line-map.py) | a file |  |
+| [`platform.ts`](platform.ts) | a file |  |
 | [`public-comment-changesets.ts`](public-comment-changesets.ts) | a file |  |
 | [`public-comment-pages.test.ts`](public-comment-pages.test.ts) | a file |  |
 | [`public-comment-pages.ts`](public-comment-pages.ts) | a file |  |
@@ -68,6 +69,7 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-check.ts`](sample-import-check.ts) | a file |  |
 | [`sample-import-run.test.ts`](sample-import-run.test.ts) | a file |  |
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
+| [`site-reads.test.ts`](site-reads.test.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
 | [`stage-folio-local.ts`](stage-folio-local.ts) | a file |  |

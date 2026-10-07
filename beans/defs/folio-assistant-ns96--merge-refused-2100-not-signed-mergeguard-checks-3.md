@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ns96
 title: 'Merge refused: #2100 not signed (merge:guard checks 3 and 4)'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:42:21Z
-updated_at: 2026-10-04T14:42:21Z
+updated_at: 2026-10-07T02:37:33Z
 parent: folio-assistant-nok9
 blocking:
     - folio-assistant-uoob
@@ -32,3 +32,5 @@ A comment on PR #2100, plus a message to the Merge Manager role.
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
 - [ ] `bun run merge:guard 2100` passes all 7 checks, and it lands (or the owner closes it)
+
+_2026-10-07T02:37:33Z_ — Claimed by claude/ns96-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -7,6 +7,14 @@
   "source": "Tools of cat-harness",
   "terms": [
     {
+      "id": "agent-memory",
+      "prefLabel": "Agent memory assembler",
+      "definition": "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated.",
+      "notation": "agent-memory",
+      "source": "cat-harness/tools/index.ts#agent-memory",
+      "status": "candidate"
+    },
+    {
       "id": "auto-docs-viewer",
       "prefLabel": "Generated index pages",
       "definition": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",

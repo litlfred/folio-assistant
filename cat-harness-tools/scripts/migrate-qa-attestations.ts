@@ -200,6 +200,7 @@ export interface CriteriaMigrationReport {
   missing: string[];
 }
 
+// input-site: inert #6a924837 — names a build-output directory only to leave it out of a walk
 const SKIP_DIRS = new Set(["node_modules", "_site", "vendor"]);
 
 /** Every derived block/translation report under an instance, results tree first, then legacy siblings. */

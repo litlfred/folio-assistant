@@ -18,6 +18,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`bean-link-checkout.test.ts`](bean-link-checkout.test.ts) | a file |  |
 | [`bean-store-hygiene.test.ts`](bean-store-hygiene.test.ts) | a file |  |
 | [`beans-landed-repo-root.test.ts`](beans-landed-repo-root.test.ts) | a file |  |
+| [`block-kind-namespace-checkout.test.ts`](block-kind-namespace-checkout.test.ts) | a file |  |
 | [`bootstrap-graph-repo-root.test.ts`](bootstrap-graph-repo-root.test.ts) | a file |  |
 | [`bootstrap-reading-checkout.test.ts`](bootstrap-reading-checkout.test.ts) | a file |  |
 | [`check-bean-parents-repo-root.test.ts`](check-bean-parents-repo-root.test.ts) | a file |  |

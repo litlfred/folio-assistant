@@ -7,6 +7,7 @@ section_number: 5.5
 pages: 66-69
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 determinants of health, gender equality and relevant international human 
 rights standards and principles, should be included in the sections on implementation, monitoring and evaluation. The interventions recommended 
