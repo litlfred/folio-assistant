@@ -82,7 +82,7 @@ same act rather than two.
 
 For each of `agentic-harness` and `folio-assist-core`, independently:
 
-- [x] `bun run init-folio` against **that layer alone** — no sibling instance on
+- [x] `bun run cat init-folio` against **that layer alone** — no sibling instance on
       disk, no other layer linked — exits 0 in an empty repository.
 - [x] The scaffolded folio's declared graphs RESOLVE: every directory named in
       its `<instance>.json` exists, and no declared-but-absent entry (the `dh4f`

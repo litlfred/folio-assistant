@@ -1,5 +1,5 @@
 /**
- * Input-hash staleness skipping for `bun run regen` and `bun run gates` —
+ * Input-hash staleness skipping for `bun run cat regen` and `bun run cat gates` —
  * beans `xpcu`, `f017`.
  *
  * @module scripts/input-hash
@@ -177,7 +177,8 @@ export function entryFiles(
         out.push(t);
         found = true;
       } else if (t === "run" && tokens[i - 1] === "bun" && tokens[i + 1] !== undefined) {
-        const next = tokens[i + 1]!;
+        // `bun run cat <name>` is the checkout-script runner (bean `ar1s` P4): the name follows it.
+        const next = tokens[i + 1] === "cat" && tokens[i + 2] !== undefined ? tokens[i + 2]! : tokens[i + 1]!;
         if (scripts[next] !== undefined) {
           const nested = entryFiles(root, scripts, next, seen);
           if (nested === undefined) return undefined;
@@ -217,8 +218,9 @@ export function againstRefsOf(
       refs.add(next === undefined || next.startsWith("--") || /^(&&|\|\||;)$/.test(next) ? "" : next);
     } else if (t.startsWith("--against=")) {
       refs.add(t.slice("--against=".length));
-    } else if (t === "run" && tokens[i - 1] === "bun" && scripts[tokens[i + 1] ?? ""] !== undefined) {
-      for (const r of againstRefsOf(scripts, tokens[i + 1]!, seen)) refs.add(r);
+    } else if (t === "run" && tokens[i - 1] === "bun") {
+      const name = tokens[i + 1] === "cat" ? tokens[i + 2] : tokens[i + 1];
+      if (name !== undefined && scripts[name] !== undefined) for (const r of againstRefsOf(scripts, name, seen)) refs.add(r);
     }
   }
   return [...refs].sort();

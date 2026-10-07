@@ -20,4 +20,4 @@ Waits on PR1 (`ybwt`, not yet on main — link when it lands).
 - [ ] no `cat-harness/skills/folio-core/` directory remains
 - [ ] every topic in `skills/skills.json` holds at least one package; the harness holds no skill placed above it by proposal §1.2
 - [ ] `knownSkills(checkout)` equals PR1's set plus `block-change-summary`
-- [ ] `skill:register:check`, `kg:audit:check`, `check:agents-xref`, `bun run gates` green
+- [ ] `skill:register:check`, `kg:audit:check`, `check:agents-xref`, `bun run cat gates` green

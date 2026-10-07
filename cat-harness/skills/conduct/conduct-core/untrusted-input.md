@@ -133,7 +133,7 @@ reproduced it, by putting a second `env:` on a step that already had one.
 
 **`yaml.safe_load` accepted the file.** Duplicate keys are invalid YAML, but
 most loaders silently keep the last — so "it parses locally" is not evidence
-that GitHub will take it. `bun run check:workflows` uses a parser that reports
+that GitHub will take it. `bun run cat check:workflows` uses a parser that reports
 duplicates (`yaml`'s `parseDocument` with `uniqueKeys`), and is gated in CI.
 
 Two hand-rolled attempts at that duplicate check reported false findings before

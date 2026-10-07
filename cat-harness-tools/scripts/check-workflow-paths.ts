@@ -74,7 +74,7 @@
  *
  * ## What this check structurally CANNOT see, and where that exposure went
  *
- * `bun run check:l1-complete` is an npm script NAME, so {@link invokedPath}
+ * `bun run cat check:l1-complete` is an npm script NAME, so {@link invokedPath}
  * declines it — deliberately, since naming the script instead of the path is
  * the fix this check recommends. Bean `a6kl` lives exactly there: the
  * workflow line was correct, and `check:l1-complete` resolved its own corpus
@@ -155,8 +155,8 @@
  * defect becoming accepted architecture.
  *
  * Usage:
- *   bun run check:workflow-paths          # report and exit non-zero on a finding
- *   bun run check:workflow-paths --list   # print every invocation, verdict and cwd
+ *   bun run cat check:workflow-paths          # report and exit non-zero on a finding
+ *   bun run cat check:workflow-paths --list   # print every invocation, verdict and cwd
  *
  * ## Its sibling, `scripts/tests/workflow-paths-resolve.test.ts`
  *
@@ -330,7 +330,7 @@ export interface Invocation {
  * Two verbs, for two reasons.
  *
  * `bun run <path>` and `bun <path>`, where the path looks like a file rather
- * than an npm script name. `bun run check:ci-health` is a script NAME and is
+ * than an npm script name. `bun run cat check:ci-health` is a script NAME and is
  * deliberately not a path — which is also the fix this check recommends,
  * since it puts the path in `package.json` once instead of in every caller.
  *

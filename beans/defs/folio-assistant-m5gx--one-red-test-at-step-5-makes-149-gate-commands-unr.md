@@ -82,7 +82,7 @@ re-entering a dead end while a deleted one cannot be told from an accident.
 
 ## Why the claim did not prevent it
 
-`bun run beans:claim m5gx` succeeded and wrote its holder note to the default
+`bun run cat beans:claim m5gx` succeeded and wrote its holder note to the default
 branch. The sibling was working **`om30`** — a different id for the same
 subject. Before creating `m5gx` the store WAS grepped (`masks`, `masking`,
 `step 5`, `fail-fast`, `continue-on-error`) and returned nothing, because
@@ -102,7 +102,7 @@ a literal list of the jobs that happened to satisfy it.
 
 Measured in a clean worktree of `main`: the fast set is **157**, and
 `check:dependency-advisories` is absent — a browser-free `bun` gate that
-`bun run gates` had never run locally at all.
+`bun run cat gates` had never run locally at all.
 
 So one piece survives as its own PR: `installsBrowser()`, keyed on
 `playwright install`. 157 → 158, the literal is gone, and a future split needs

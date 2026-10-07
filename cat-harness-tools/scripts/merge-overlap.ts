@@ -28,9 +28,9 @@
  * (`independent: null`): "could not look" is never "no overlap".
  *
  * Usage:
- *   bun run merge:overlap                                   # open PRs via gh
- *   bun run merge:overlap -- --branches origin/a,origin/b   # explicit branches
- *   bun run merge:overlap -- origin/a origin/b --base origin/main --no-fetch
+ *   bun run cat merge:overlap                                   # open PRs via gh
+ *   bun run cat merge:overlap -- --branches origin/a,origin/b   # explicit branches
+ *   bun run cat merge:overlap -- origin/a origin/b --base origin/main --no-fetch
  *
  * Exit 0 the report was written · 2 could not list the PRs or resolve the base.
  * The report is JSON on stdout; a one-line summary per conflicting pair on stderr.

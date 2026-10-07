@@ -35,6 +35,7 @@
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { scriptsOf } from "../../cat-harness/schemas/script-table.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const SCRIPT = "fhir-harness/scripts/ingest-ig-artifacts.ts";
@@ -45,9 +46,7 @@ const run = (args: string[]) => {
 };
 
 describe("the registered invocation is well-formed", () => {
-  const scripts = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as {
-    scripts: Record<string, string>;
-  }).scripts;
+  const scripts = scriptsOf(REPO);
 
   /**
    * A GENERIC "NO DANGLING VALUE-TAKING FLAG" CHECK IS NOT HERE, and it was

@@ -28,7 +28,7 @@
  * and the rule lives where declarations are governed —
  * [`directory-conventions`](../skills/kg/kg-core/directory-conventions.md)
  * §"Pinning a reference — a SHA may stage, only a version may publish" —
- * with `bun run check:published-refs` as its mechanical half. The full scheme
+ * with `bun run cat check:published-refs` as its mechanical half. The full scheme
  * is `cat-harness/docs/proposals/instance-versioning.md`.
  *
  * ## What gets resolved across dependencies
@@ -104,7 +104,7 @@ export interface FolioAssistantDependency {
    * Git clone URL for the dependency. Used when `path` is absent or
    * the directory does not exist. Not cloned into `.deps/` (owner,
    * 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on
-   * the declaration, laid down by `bun run mount:remote` (bean `0mpw`).
+   * the declaration, laid down by `bun run cat mount:remote` (bean `0mpw`).
    */
   git?: string;
 
@@ -752,7 +752,7 @@ export function rootInstanceName(repoRoot: string): string | undefined {
  *
  * Tries `path` first (relative to folioRoot), then a REMOTE MOUNT of that
  * name recorded in the checkout's mount lock (bean `0mpw`). Does NOT fetch —
- * `bun run mount:remote` does, and `mount:remote:check` says when it has not.
+ * `bun run cat mount:remote` does, and `mount:remote:check` says when it has not.
  *
  * This fell back to `.deps/<name>/` until 2026-10-06, a directory nothing
  * created and the owner ruled out: a dot directory collides with GitHub's

@@ -123,7 +123,7 @@ test.describe("the generated page carries the mount", () => {
     // Guards the whole file: every assertion below is vacuous if the page was
     // never generated, and a suite that passes over a missing artefact is the
     // `dh4f` shape.
-    expect(PAGE, `${PAGE_FILE} is missing — run \`bun run iris:pages\``).not.toBe("");
+    expect(PAGE, `${PAGE_FILE} is missing — run \`bun run cat iris:pages\``).not.toBe("");
     expect(PAGE).toContain(MARKER);
   });
 });

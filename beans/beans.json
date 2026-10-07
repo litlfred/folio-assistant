@@ -1,5 +1,5 @@
 {
-  "_comment": "The bean graph. `beans/` is a graph whose DIRECTORIES are declared here — the same shape as `cat-harness.json`, reusing `ContentDirectorySchema` and the same open graph-typology registry rather than a parallel vocabulary. `graphs` is an array because a directory is a place to look and may hold more than one part of the graph; it does NOT say how to tell the contents apart, because the files declare what they are (a bean's front matter, a workflow instance's `$schema`). Paths resolve against THIS file's directory, so the whole graph relocates by moving one folder. Schema: schemas/bean-graph.ts. NOTE: `.beans.yml` still carries the defs path because the `beans` binary is third-party; `bun run check:harness-dirs` fails when they disagree.",
+  "_comment": "The bean graph. `beans/` is a graph whose DIRECTORIES are declared here — the same shape as `cat-harness.json`, reusing `ContentDirectorySchema` and the same open graph-typology registry rather than a parallel vocabulary. `graphs` is an array because a directory is a place to look and may hold more than one part of the graph; it does NOT say how to tell the contents apart, because the files declare what they are (a bean's front matter, a workflow instance's `$schema`). Paths resolve against THIS file's directory, so the whole graph relocates by moving one folder. Schema: schemas/bean-graph.ts. NOTE: `.beans.yml` still carries the defs path because the `beans` binary is third-party; `bun run cat check:harness-dirs` fails when they disagree.",
   "name": "folio-assistant",
   "directories": [
     {
@@ -24,7 +24,7 @@
       "graphTypologies": [
         "bean-notes"
       ],
-      "description": "One pull request's addendum to a bean, in a file of its own: `<bean>--<date>--<branch>.md`, so two pull requests adding to one bean never write one path. `README.md` is the generated index (`bun run beans:notes`). Bean `m61r`, issue #1853."
+      "description": "One pull request's addendum to a bean, in a file of its own: `<bean>--<date>--<branch>.md`, so two pull requests adding to one bean never write one path. `README.md` is the generated index (`bun run cat beans:notes`). Bean `m61r`, issue #1853."
     },
     {
       "id": "workflows",

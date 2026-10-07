@@ -395,7 +395,7 @@ to merge:
 3. Point the feature's test runs at the statements they check, in
    `folio-test-run/v1`'s `requirements` array, as `req:<slug>#<key>`. **The test
    points at the requirement, never the reverse.**
-4. `bun run check:requirements`. It refuses a slug that is in both sub-graphs
+4. `bun run cat check:requirements`. It refuses a slug that is in both sub-graphs
    (a copy, or a proposal landing on an existing requirement), an id that is
    not its file name, and front matter the schema rejects.
 

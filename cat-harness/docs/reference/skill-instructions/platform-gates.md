@@ -16,9 +16,9 @@ parent: Skill instructions
 **One command:**
 
 ```sh
-bun run gates          # the fast set
-bun run gates --all    # plus the jobs that need a browser
-bun run gates:list     # see them without running them
+bun run cat gates          # the fast set
+bun run cat gates --all    # plus the jobs that need a browser
+bun run cat gates:list     # see them without running them
 ```
 
 Run it **before you push**, not after CI tells you.
@@ -30,7 +30,7 @@ Run it **before you push**, not after CI tells you.
 Because a list here would be wrong within a week, and a wrong list is worse
 than none: it reads as authoritative, so nobody checks it.
 
-`bun run gates` derives the set from `.github/workflows/code-quality-gates.yml`
+`bun run cat gates` derives the set from `.github/workflows/code-quality-gates.yml`
 at the moment you run it. Add a gate to CI and it is in your next local sweep
 with nothing to update here.
 
@@ -188,7 +188,7 @@ tooling itself.
 ## Running "the gates that relate to my change" is not running the gates
 
 **Pick the gate set by JOB MEMBERSHIP, never by which gates you judge
-relevant.** `bun run gates --all` is the whole point of there being a command;
+relevant.** `bun run cat gates --all` is the whole point of there being a command;
 choosing a subset re-introduces exactly the gap the command closes.
 
 **Measured 2026-09-20, PR #526.** A change added two collectors to
@@ -220,7 +220,7 @@ The fix for the above ran `gates --all` and reported **60 of 60**. CI then
 failed again, on `kg:audit:check`:
 
 ```
-1 sidecar(s) are stale. Run `bun run kg:audit` and commit:
+1 sidecar(s) are stale. Run `bun run cat kg:audit` and commit:
   · test/results/kg-qa/skills/sdlc/sdlc-core/platform-gates.kg-qa.json
 ```
 
@@ -231,7 +231,7 @@ change being pushed, and its "60 of 60" was quoted as though it did.
 > **A verification names a TREE, not a branch.** Anything edited after the run
 > started is unverified, however green the run was.
 
-**`bun run gates` reads the WORKING TREE, not the commit**, which is the
+**`bun run cat gates` reads the WORKING TREE, not the commit**, which is the
 mechanism behind that sentence and worth knowing on its own. A third instance,
 2026-09-20: a splice script corrupted `<name>.json` while a run was in
 flight, and **40 of 61 gates failed reading a file that was invalid for about
@@ -253,14 +253,14 @@ the body changes. **A skill edit is three files:**
 | file | regenerate with |
 |---|---|
 | the body, `skills/<pkg>/<name>.md` | — you edit it |
-| `test/results/kg-qa/.../<name>.kg-qa.json` | `bun run kg:audit` |
+| `test/results/kg-qa/.../<name>.kg-qa.json` | `bun run cat kg:audit` |
 | `docs/reference/skill-instructions/<name>.md` | `bun run cat-harness/scripts/gen-skill-docs.ts` |
 
 The `kg-qa` row is a derived QA result: its record is the commit-keyed entry
 the CI job `qa-publish` stores on the orphan `qa-reports` branch (arc `3fva`),
 and the committed copy goes when bean `5hox` removes it. Until then
 `kg:audit:check` still compares against it, so it is still regenerated here —
-and `bun run skill:register` does all of it in one command.
+and `bun run cat skill:register` does all of it in one command.
 
 **This paragraph said "at least two files" and was wrong on its first
 commit** — it named the sidecar and missed the generated docs, and
@@ -316,7 +316,7 @@ own output when it fails.
 
 ## ...and a green gate set is not a CLEAN RUN
 
-`bun run gates` snapshots the tree before the first gate and after every one, so
+`bun run cat gates` snapshots the tree before the first gate and after every one, so
 every gate can pass and the run still exit 1:
 
 ```
@@ -352,7 +352,7 @@ that is in the browser job.
 
 ---
 
-## If `bun run gates` reports no gates
+## If `bun run cat gates` reports no gates
 
 It **fails** rather than exiting clean, and that is deliberate. An empty sweep
 that exits 0 is indistinguishable from a passing one — the defect this

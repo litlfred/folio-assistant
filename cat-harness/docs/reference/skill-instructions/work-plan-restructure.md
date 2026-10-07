@@ -88,7 +88,7 @@ it:
 | session log typed as epic or milestone | `sessionLogRootBeans` in `test/health/checks.ts` (the `bean-session-log-roots` finding) | `rule:session-log` |
 | duplicate | the `bean-store` duplicate groups; the target-object key in [`todo-manager`](todo-manager.md) §"Check before you create" | `rule:same-title`, `rule:same-target` |
 | landed work still open | [`branch-archaeology`](branch-archaeology.md): patch-id equivalence on main | `explicit` |
-| stale claim | `bean-stale-in-progress` / `bean-quiet-claims` in `bun run health`, network-checked by `check:quiet-claims` | `rule:stale-claim` |
+| stale claim | `bean-stale-in-progress` / `bean-quiet-claims` in `bun run cat health`, network-checked by `check:quiet-claims` | `rule:stale-claim` |
 | unparented | `check:bean-parents` | `rule:orphan` |
 
 **`lsi:epics` prints a calibration line, and the plan carries it.** On this
@@ -97,7 +97,7 @@ proposal that is wrong about two times in five. It is never presented as a
 finding.
 
 Write the plan as a **bean note** on the bean that owns the restructure
-(`bun run beans:note <id>`), with the summary first and the rows as a table.
+(`bun run cat beans:note <id>`), with the summary first and the rows as a table.
 The `notes` directory is declared and keyed by branch, so the plan is committed
 and reviewed in the PR diff without inventing a new directory. A plan too large
 for one note is split **by action class**, one note per class, because that is
@@ -149,8 +149,8 @@ Then ask:
    session log is closed or scrapped with a pointer to where its children
    went. Archiving is a view, not an exit
    ([`bean-coordination`](bean-coordination.md) §"Archiving is a VIEW").
-7. **After each batch:** `bun run check:bean-parents`,
-   `bun run readme:subgraphs` and `bun run health`. The batch is not done until
+7. **After each batch:** `bun run cat check:bean-parents`,
+   `bun run cat readme:subgraphs` and `bun run cat health`. The batch is not done until
    the guards agree with the plan's "after" column.
 
 ## 5. Reversing it

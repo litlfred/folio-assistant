@@ -46,6 +46,7 @@ import { readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { TRACKED, entryFiles, expandGlobs, sourceClosure, type PairIO } from "./input-hash.ts";
+import { CHECKOUT_SCRIPTS_KEY, scriptTable } from "../schemas/script-table.ts";
 
 /** What a pair can read, or why that cannot be said. */
 export type Footprint =
@@ -149,7 +150,10 @@ export function affects(fp: Footprint, changed: ReadonlySet<string> | undefined,
       : { affected: false, why: "declares {tracked}, and no path changed" };
   }
   if (changed.has("bun.lock")) return { affected: true, why: "bun.lock changed" };
-  if (changed.has("package.json") && (ctx.scriptsChanged?.(fp.scriptNames) ?? true)) {
+  // A script now lives in the manifest of the layer that runs it (bean `ar1s`
+  // phase 4), so ANY `package.json` may carry the command a pair runs.
+  const manifestChanged = [...changed].some((c) => c === "package.json" || c.endsWith("/package.json"));
+  if (manifestChanged && (ctx.scriptsChanged?.(fp.scriptNames) ?? true)) {
     return { affected: true, why: "package.json changed a command this pair runs (or could not be compared)" };
   }
   for (const c of changed) {
@@ -206,13 +210,32 @@ export function scriptsChangedSince(
   base: string,
   now: Readonly<Record<string, string>>,
 ): ((names: readonly string[]) => boolean) | undefined {
-  const text = git(root, ["show", `${base}:package.json`]);
-  if (text === undefined) return undefined;
-  let before: Record<string, string>;
+  // Every manifest the table reads now, read as it was at `base`: the root's
+  // `scripts` and each layer's `checkoutScripts`. A manifest that did not exist
+  // at `base` contributes nothing, which makes its scripts read as changed.
+  const before: Record<string, string> = {};
+  let manifests: string[];
   try {
-    before = (JSON.parse(text) as { scripts?: Record<string, string> }).scripts ?? {};
+    manifests = [...new Set([...scriptTable(root).values()].map((e) => e.manifest))];
   } catch {
     return undefined;
+  }
+  if (!manifests.includes("package.json")) manifests.push("package.json");
+  for (const manifest of manifests) {
+    const text = git(root, ["show", `${base}:${manifest}`]);
+    if (text === undefined) {
+      if (manifest === "package.json") return undefined;
+      continue;
+    }
+    try {
+      const m = JSON.parse(text) as Record<string, unknown>;
+      const block = (manifest === "package.json" ? m.scripts : m[CHECKOUT_SCRIPTS_KEY]) as Record<string, string> | undefined;
+      Object.assign(before, block ?? {});
+      // The root's scripts BEFORE the move are the whole table at that base.
+      if (manifest === "package.json") Object.assign(before, (m.scripts as Record<string, string> | undefined) ?? {});
+    } catch {
+      return undefined;
+    }
   }
   return (names) => names.some((n) => before[n] !== now[n]);
 }

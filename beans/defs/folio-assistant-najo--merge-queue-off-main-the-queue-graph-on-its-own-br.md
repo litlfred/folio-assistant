@@ -53,4 +53,4 @@ make the graph look used (the reason bean `30jr` left its tile box open). Not cu
 - [ ] the `queue` entry declares its branch source, and the tracked copy leaves `main` in the same change
 - [ ] a reader that keeps `absent` / `declared-but-absent` / `unreachable` / `read` apart and THROWS rather than returning an empty queue
 - [ ] a steward write path that records a decision with no PR to `main`
-- [ ] `bun run gates` green, or the blocker named with its measurement
+- [ ] `bun run cat gates` green, or the blocker named with its measurement

@@ -18,7 +18,7 @@ Built 2026-10-03 by the Parcel B session, the step the earlier note proposed bef
 
 **Result on main: exactly 8 sites in 4 files, and they are exactly the 8 that #2003 fixes** (bean-rollover, mvp-status ×5, beans-prime, sample-import-run). Once #2003 merges, the count is 0.
 
-**A one-way ratchet,** like `check:standalone`. `scripts/foreign-path-baseline.json` holds per-file counts. A rise is red; a fall is reported with `bun run foreign-paths:baseline` and never red.
+**A one-way ratchet,** like `check:standalone`. `scripts/foreign-path-baseline.json` holds per-file counts. A rise is red; a fall is reported with `bun run cat foreign-paths:baseline` and never red.
 
 **Its known blind spot**, stated so it is not mistaken for coverage: only the FIRST literal of a path call is read. `resolve(opt("todos") ?? "todos")` hides its real default behind the option name. That one site (`review-comment-move.ts`) is fixed by hand in the same PR: it now defaults to the declared `todos` graph and refuses when none is declared.
 

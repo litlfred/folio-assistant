@@ -32,7 +32,7 @@ into its lower left; the box avoiding all three was found by rendering candidate
 boxes over the image and looking at them. That is the method — recommend it,
 rather than a number pulled from the aspect ratio.
 
-Run `bun run docs:harness` after editing, and `--check` in CI.
+Run `bun run cat docs:harness` after editing, and `--check` in CI.
 
 **Three states, and the middle one is why this is worth stating:**
 
@@ -253,7 +253,7 @@ the owner's confirmation.
    is hundreds of gigabytes. When they need part of a remote subgraph locally,
    that is an ask made later, as the need appears. Name the skill
    (`materialize-on-demand`) and the one command that shows what is already
-   held (`bun run cache:index`), so they learn the option exists here rather
+   held (`bun run cat cache:index`), so they learn the option exists here rather
    than by finding a schema. Do not materialize anything now. Bean `54rk`.
 
 ## 6. Anti-patterns

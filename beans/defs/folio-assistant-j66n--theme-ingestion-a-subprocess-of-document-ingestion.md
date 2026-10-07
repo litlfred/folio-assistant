@@ -152,7 +152,7 @@ now says this.
 
 ### Verified on the rendering, not on the generator
 
-`bun run gates` 127/127, and the built SVG opened: viewBox widened to
+`bun run cat gates` 127/127, and the built SVG opened: viewBox widened to
 `155 75 2217 730`, all four new labels present, and the branch inside Lane_1's
 y-band (310–415 against 260–440). A green gate set is not a rendered page.
 

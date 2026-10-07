@@ -196,7 +196,7 @@ itself is corrected.
 
 ## Re-checked 2026-09-25 — stays open. An epic's boxes are not its children
 
-Reported by `bun run health` as *"`in-progress` with all 4 of its Done-when
+Reported by `bun run cat health` as *"`in-progress` with all 4 of its Done-when
 boxes ticked"*. The boxes are ticked. The epic is not done.
 
 **Measured on a clean checkout identical to `origin/main` at `d8c450b9a2`:**

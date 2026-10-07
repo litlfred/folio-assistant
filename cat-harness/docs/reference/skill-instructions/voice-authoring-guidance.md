@@ -21,7 +21,7 @@ drafting than to correct afterwards, because correcting it afterwards means
 rewriting prose somebody has already reviewed.
 
 ```sh
-bun run check:voices          # what this instance ships, and how many rules each carries
+bun run cat check:voices          # what this instance ships, and how many rules each carries
 ```
 
 The active set is in `<name>.config.json`:
@@ -72,7 +72,7 @@ its own source says. The uncited copy is the one a reader meets first, and it is
 the one nothing can check.
 
 So: to learn which of your voices' rules are counterintuitive, open the voices.
-`bun run check:voices` lists what this instance ships and how many rules each
+`bun run cat check:voices` lists what this instance ships and how many rules each
 carries.
 
 ## When two active voices disagree

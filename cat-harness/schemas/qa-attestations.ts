@@ -775,7 +775,7 @@ export function writeCriteriaAttestations(
 }
 
 /** The command that adds judgements still inside derived files to the store, for every family. */
-export const MIGRATE_COMMAND = "bun run qa:attestations:migrate";
+export const MIGRATE_COMMAND = "bun run cat qa:attestations:migrate";
 
 /** The criteria type of a report, so a writer gets its judgements back in its own entry type. */
 export type CriteriaOf<R> = R extends { criteria?: infer C } ? NonNullable<C> : CriteriaMap;

@@ -381,7 +381,7 @@ if (import.meta.main) {
     for (const e of r.emptyRoots) {
       console.log(`  ! root "${e.name}" exists but holds ZERO graph nodes (${e.dir})`);
       console.log(`    Nothing was searched there. This is not a negative result.`);
-      console.log(`    The .jsonld siblings are generated: run \`bun run gen:jsonld\` in the folio.`);
+      console.log(`    The .jsonld siblings are generated: run \`bun run cat gen:jsonld\` in the folio.`);
     }
     if (s.noSeeds && r.emptyRoots.length === 0) {
       console.log("  no lexical seed — expansion cannot help; try --text, or a different term");

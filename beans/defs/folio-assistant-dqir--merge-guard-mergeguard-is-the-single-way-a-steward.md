@@ -16,7 +16,7 @@ Three PRs were merged unfinished by the Merge Manager steward via a direct `PUT 
 - #1957: the steward itself called ready_for_review and added ready-to-merge 75 s before merging.
 
 ## Todo
-- [ ] cat-harness/scripts/merge-guard.ts + `bun run merge:guard <pr> [--merge]`, seven checks, exit 0/1/2
+- [ ] cat-harness/scripts/merge-guard.ts + `bun run cat merge:guard <pr> [--merge]`, seven checks, exit 0/1/2
 - [ ] LivePr gains draft/baseRef/readySha/readyBy; Rule_NotReady in merge-priority.dmn
 - [ ] .github/workflows/merge-guard.yml posts a merge-guard commit status
 - [ ] fixture tests, one per refusal, from the three real cases

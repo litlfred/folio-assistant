@@ -58,7 +58,7 @@ All of it is inside `large-datasets/`. The plain docs pipeline loads none of it.
 | | |
 |---|---|
 | `large-datasets/schemas/id-lookup.ts` | the shape (manifest + shards), the 64 KiB shard budget and its basis, the prefix-length chooser and a deterministic build |
-| `large-datasets/scripts/gen-id-lookup.ts` | `bun run id-lookup` / `id-lookup:check`. It indexes every who-iris catalogue node whose own `materialization.state` is `referenced`. `--check` compares byte for byte in both directions (changed, missing, stale shard). It is gated in `code-quality-gates.yml` |
+| `large-datasets/scripts/gen-id-lookup.ts` | `bun run cat id-lookup` / `id-lookup:check`. It indexes every who-iris catalogue node whose own `materialization.state` is `referenced`. `--check` compares byte for byte in both directions (changed, missing, stale shard). It is gated in `code-quality-gates.yml` |
 | `large-datasets/id-lookup/lookup.js` | the client: a plain ES module with no dependencies, about 110 lines. It fetches `manifest.json` once, then one shard per lookup, and keeps the last 8 shards |
 | `large-datasets/id-lookup/index.html` | a one-form page over it |
 | `large-datasets/id-lookup/who-iris/` | the generated index for the real corpus |

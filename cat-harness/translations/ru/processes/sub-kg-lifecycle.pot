@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sub-kg-lifecycle\n"
-"POT-Creation-Date: 2026-10-06T10:43:36.360Z\n"
+"POT-Creation-Date: 2026-10-07T18:45:27.207Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -21,12 +21,12 @@ msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:172
 #. Diagram element documentation
-msgid "`bun run seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page."
+msgid "`bun run cat seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:270
 #. Diagram element documentation
-msgid "`bun run sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
+msgid "`bun run cat sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:249
@@ -126,7 +126,7 @@ msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:224
 #. Diagram element documentation
-msgid "Asked at seed time, because the tree has moved since the rehearsal: every open pull request over the layer when the copy is taken is orphaned. Computed by decisions/seed-readiness-gate.dmn from the facts `bun run seed:ready --layer <name> --rehearse` gathers; the same table kg-separation uses."
+msgid "Asked at seed time, because the tree has moved since the rehearsal: every open pull request over the layer when the copy is taken is orphaned. Computed by decisions/seed-readiness-gate.dmn from the facts `bun run cat seed:ready --layer <name> --rehearse` gathers; the same table kg-separation uses."
 msgstr ""
 
 #: processes/kg/sub-kg-lifecycle.bpmn:46

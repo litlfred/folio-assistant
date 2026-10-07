@@ -99,7 +99,7 @@ if [ "$status" -ne 0 ] && [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
 
     # WHAT RAN, because there is no env var naming the current step. The
     # script's own non-comment lines are the identification — for a
-    # single-line step that is literally `bun run check:tools`.
+    # single-line step that is literally `bun run cat check:tools`.
     echo "<details><summary>the step</summary>"
     echo
     echo '````````sh'

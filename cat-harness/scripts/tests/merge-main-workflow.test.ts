@@ -96,7 +96,7 @@ describe("the write token never meets a fork", () => {
 });
 
 describe("the merge runs main's tool, and fails loudly", () => {
-  // Measured 2026-10-02 on 7 real runs: `bun run merge:main` resolved the
+  // Measured 2026-10-02 on 7 real runs: `bun run cat merge:main` resolved the
   // script from the PR's OWN package.json, which an old branch lacks —
   // `Script not found` every time, and every job green.
   const steps = doc.jobs.merge!.steps;
@@ -112,7 +112,7 @@ describe("the merge runs main's tool, and fails loudly", () => {
   test("the merge step runs that copy against the PR with --root, never the PR's script", () => {
     const run = runOf(steps[merge]!);
     expect(run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE"');
-    for (const s of steps) expect(runOf(s)).not.toMatch(/bun run merge:main\b/);
+    for (const s of steps) expect(runOf(s)).not.toMatch(/bun run cat merge:main\b/);
   });
 
   test("a non-zero exit that is not a refusal fails the job, after the comment", () => {

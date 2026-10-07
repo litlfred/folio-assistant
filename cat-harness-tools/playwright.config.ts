@@ -1,6 +1,6 @@
 /**
  * The Playwright config for the checkout's e2e specs, at `cat-harness-tools/`
- * since bean `ar1s` phase 4 and passed with `-c` by `bun run test:e2e` and CI.
+ * since bean `ar1s` phase 4 and passed with `-c` by `bun run cat test:e2e` and CI.
  *
  * @covers none — a browser-test runner's configuration, not a graph audit
  */

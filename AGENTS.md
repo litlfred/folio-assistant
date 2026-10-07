@@ -104,7 +104,7 @@ why there is no `recommendation` block kind.
 
 ## Starting a new folio
 
-`bun run init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,
+`bun run cat init-folio --help`, or the `folio_init` MCP tool. It writes `content/`,
 `uploads/`, `library/`, the document + chapter + first block manifests,
 `<slug>.json` and `<slug>.config.json`, the `content/schema/` builder shim,
 `AGENTS.md` with `CLAUDE.md`/`GEMINI.md` stubs, `.mcp.json`, the session-start
@@ -122,21 +122,21 @@ adapter-scoped tool would be unreachable in exactly the case it exists for.
 
 ```sh
 bun install                 # install deps
-bun run gates               # EVERY fast gate CI runs — run this before you push
-bun run gates --all         # ...plus the browser jobs
+bun run cat gates               # EVERY fast gate CI runs — run this before you push
+bun run cat gates --all         # ...plus the browser jobs
 bun run cat-harness-tools/src/index.ts --http # run the assistant (HTTP); --stdio for stdio MCP
 bun test                    # unit tests
-bun run test:e2e            # e2e tests   (playwright, -c cat-harness-tools/playwright.config.ts)
-bun run lint                # lint  (eslint -c cat-harness-tools/eslint.config.mjs .)
-bun run check-deps                  # probe environment capabilities
-bun run init-folio --help           # scaffold a new folio repository
-bun run readme:sync                 # refresh a folio README's generated sections
-bun run readme:sync:check           # ...and fail if any is stale (for CI)
-bun run readme:sections             # list the sections a README can opt into
-bun run readme:audit                # verify the README's links still resolve
-bun run preview:site                # BUILD the docs site locally and look at a page
-bun run bat:sync                    # regenerate the Windows .bat wrapper beside each user-run .sh
-bun run bat:sync:check              # ...and fail if any is missing or stale (for CI)
+bun run cat test:e2e            # e2e tests   (playwright, -c cat-harness-tools/playwright.config.ts)
+bun run cat lint                # lint  (eslint -c cat-harness-tools/eslint.config.mjs .)
+bun run cat check-deps                  # probe environment capabilities
+bun run cat init-folio --help           # scaffold a new folio repository
+bun run cat readme:sync                 # refresh a folio README's generated sections
+bun run cat readme:sync:check           # ...and fail if any is stale (for CI)
+bun run cat readme:sections             # list the sections a README can opt into
+bun run cat readme:audit                # verify the README's links still resolve
+bun run cat preview:site                # BUILD the docs site locally and look at a page
+bun run cat bat:sync                    # regenerate the Windows .bat wrapper beside each user-run .sh
+bun run cat bat:sync:check              # ...and fail if any is missing or stale (for CI)
 ```
 
 **`preview:site` exists because a green gate set is not a rendered page.** On
@@ -147,7 +147,7 @@ because the generator's own output looked right. Only a build showed it. The
 script handles the two things that make a naive `bundle exec jekyll` fail here
 and says in its header how its output differs from CI's.
 
-**`bun run gates` is the one to run before pushing, and it was missing from this
+**`bun run cat gates` is the one to run before pushing, and it was missing from this
 list until 2026-09-20.** Its absence has a measured cost: a session ran `bun
 test`, `eslint`, `typecheck` and a dozen named `check:*` scripts, called that
 green, pushed, and CI went red on `docs:harness:check` — a gate nothing in this
@@ -187,7 +187,7 @@ coincidence; a declaration inside the file is the contract.**
 carries the declaration schema and every graph typology, path resolution and the
 dot-prefix guard that tests **every** segment, and the rule that an unavoidable
 duplicate is fine while an unchecked one is not. In this instance
-`bun run check:harness-dirs` is what checks the two that cannot be removed:
+`bun run cat check:harness-dirs` is what checks the two that cannot be removed:
 `.beans.yml`, because the `beans` binary is third-party, and `WORKFLOW_DIR` in
 `workflow/store.ts`, because it is on the hot path of every workflow call.
 
@@ -222,7 +222,7 @@ cat-harness/scripts/install-beans.sh                 # install the CLI if missin
 beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
-bun run beans:claim <id>                 # claim an item
+bun run cat beans:claim <id>                 # claim an item
 ```
 
 **Two things were wrong with the line this replaces**, and the second matters
@@ -273,7 +273,7 @@ watcher queues). And this is not the content-review **feedback** workflow (the
 the README already carries its `<!-- marker:begin -->` / `<!-- marker:end -->`
 pair**; `content/pipeline/readme-links.ts` audits every other link and writes
 nothing. Between them no link in a folio README is unaccounted for.
-`bun run readme:sync`, `readme:sync:check` for CI, `readme:sections` to list
+`bun run cat readme:sync`, `readme:sync:check` for CI, `readme:sections` to list
 them, `readme:audit` for the authored half — or the `readme_sync` / `readme_audit`
 MCP tools, registered among the **generic** tools.
 
@@ -316,7 +316,7 @@ A workflow's outcome is invisible from a checkout, so one here fired on every
 push to `main` and **failed all 30 times over two months** with nothing in the
 repository saying so. Bean `xom7`.
 
-`bun run check:ci-health` reports each workflow's state on the default branch
+`bun run cat check:ci-health` reports each workflow's state on the default branch
 **and, separately, whether the Pages previews are actually building** — a fact
 GitHub holds *about* this repository rather than one the repository holds, so
 it is asked externally every run and cached nowhere. The session-start sweep
@@ -339,7 +339,7 @@ into a new folio, and no longer a workflow here.
 
 ## Repository health — the same shape, one level out
 
-`check:ci-health` asks whether the **workflows** pass. `bun run health`
+`check:ci-health` asks whether the **workflows** pass. `bun run cat health`
 (`test/health/`, daily via `.github/workflows/health-check.yml`) asks about
 the **repository**: how much of `gh-pages` the review previews occupy, how big
 a clone costs, whether the work plan has duplicates or unhonoured claims.
@@ -351,7 +351,7 @@ Same three rules as above, and for the same reasons: **could-not-determine is
 never rendered as clean** (and outranks a finding — a sweep blind on one check
 has not cleared the others), the tracking issue is **edited in place** rather
 than commented on, and on `unknown` it is left **untouched** while the job
-fails. `bun run health:list` says what the checks are.
+fails. `bun run cat health:list` says what the checks are.
 
 **It reports and never acts.** Four of the five checks are about artefacts
 accumulating, and every finding's action names something a *person* does. That
@@ -362,8 +362,8 @@ without anybody deciding it.
 
 ## Audit coverage — which audits reach which KIND of node
 
-`check:ci-health` asks whether the workflows pass; `bun run health` asks about
-the repository. **`bun run audit:coverage` asks what is audited at all** — per
+`check:ci-health` asks whether the workflows pass; `bun run cat health` asks about
+the repository. **`bun run cat audit:coverage` asks what is audited at all** — per
 declared graph typology, how many directories are declared, how many files they
 hold, how many `kg-audit` criteria reach the kind, and how many CI gates
 **declare** they cover it. Written as a sidecar under
@@ -420,7 +420,7 @@ permissions onto Role produced 36 conflicts; the two compositions (`inherits` is
 IS-A and static, the subprocess stack is scoped) and why merging them gives a
 closure too broad to fail an audit; the severity scale; and how to add a role.
 
-**The audit is `bun run kg:audit`** — one criterion per join, written as
+**The audit is `bun run cat kg:audit`** — one criterion per join, written as
 QA sidecars under `test/results/kg-qa/` (stored on `qa-reports`) in a tree that MIRRORS each
 subject's path, because flat would collide (four basenames already occur twice).
 `kg:audit:check` fails on a `critical` finding or a stale sidecar;
@@ -660,7 +660,7 @@ to spend the words: **do not start the topic.**
   [`folio-assistant/docs/process/publication-workflow.md`](cat-harness/docs/process/publication-workflow.md) — the normative
   picture of the HCI validation gate, the draft-review-publish path and the
   work-plan lane. `folio-assistant/docs/assets/img/workflows/*.svg` is
-  generated: `bun run render:bpmn`, and `render:bpmn:check` fails if stale.
+  generated: `bun run cat render:bpmn`, and `render:bpmn:check` fails if stale.
   `workflow_list` / `workflow_start` / `workflow_next` / `workflow_gate` /
   `workflow_complete` (MCP) run one — all five declared as Tool nodes — and
   state is committed under `beans/workflows/` so a sibling session sees the
@@ -732,7 +732,7 @@ to spend the words: **do not start the topic.**
   [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
-- **Adding one is never a one-file change** — `bun run skill:register` performs
+- **Adding one is never a one-file change** — `bun run cat skill:register` performs
   every derived artefact a skill owes and verifies each one landed;
   `skill:register:check` is the gate, and it is the only thing that makes the
   obligation binding. **Each stale artefact names a GENERATED file rather than
@@ -743,7 +743,7 @@ to spend the words: **do not start the topic.**
   carries what a skill owes and why the feedback arrives on somebody else's PR,
   the ONE declaration the command deliberately leaves to you (which package a
   file belongs to is your assertion, not a derivable fact), why the chain cannot
-  be measured through `bun run gates` (bean `ymsu`: `bun test` runs two of the
+  be measured through `bun run cat gates` (bean `ymsu`: `bun test` runs two of the
   writers, so gates reports their artefacts current when they are not), why
   `roles:` keeps coming back, and the two orphan directions the command reports
   rather than fixes. Seven merges in three days each broke the gate set this way

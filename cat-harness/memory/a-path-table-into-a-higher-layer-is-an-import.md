@@ -27,6 +27,6 @@ cat-harness from lifting into its own repository — and `check:partition`,
 (`instanceRootsIn`), and any ordering the table encoded by row position becomes
 a declared fact (`extends`). No instance name remains in the harness.
 
-**Gate**: `bun run check:import-direction --all`. It flags `../<instance>/…`
+**Gate**: `bun run cat check:import-direction --all`. It flags `../<instance>/…`
 module-path literals as well as specifiers, and prints `import(expr)` as
 could-not-determine. Re-measure; never quote its counts.

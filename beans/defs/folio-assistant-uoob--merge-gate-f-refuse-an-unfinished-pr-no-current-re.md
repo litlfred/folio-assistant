@@ -28,7 +28,7 @@ _2026-10-03T14:17:55Z_ — Claimed by claude/merge-guard — pushed to main so s
 
 
 
-PR: https://github.com/litlfred/folio-assistant/pull/2000 (DRAFT, owner reviews before merge). Session https://claude.ai/code/session_01CbYZTAubUAZhitov4NiPR9. The code is `bun run merge:guard <pr> [--merge --session <id>]` (cat-harness/scripts/merge-guard.ts): seven checks, of which 1 (`base`) is guard 2 here and 2-3 (`ready-for-review`, `ready-marker`) are guard 1. Note on the Done-when shapes, measured from the PRs: #1960 had NO comments at all, so its real shape is 'no ready marker' (plus no label and an unticked '[ ] CI green'); 'head moved past the marker' is #1937's real shape (ready: e75895610c4, then a hand merge of #1764 and two claim commits). Bean folio-assistant-dqir was a duplicate of this one, created 19 s later, and is scrapped.
+PR: https://github.com/litlfred/folio-assistant/pull/2000 (DRAFT, owner reviews before merge). Session https://claude.ai/code/session_01CbYZTAubUAZhitov4NiPR9. The code is `bun run cat merge:guard <pr> [--merge --session <id>]` (cat-harness/scripts/merge-guard.ts): seven checks, of which 1 (`base`) is guard 2 here and 2-3 (`ready-for-review`, `ready-marker`) are guard 1. Note on the Done-when shapes, measured from the PRs: #1960 had NO comments at all, so its real shape is 'no ready marker' (plus no label and an unticked '[ ] CI green'); 'head moved past the marker' is #1937's real shape (ready: e75895610c4, then a hand merge of #1764 and two claim commits). Bean folio-assistant-dqir was a duplicate of this one, created 19 s later, and is scrapped.
 
 ## Completed on landed evidence
 Landed on main in PR #1937 (Branch store: keyedBy tip + a generic tip-keyed store for beans/todos subgraph branches (fs43)).

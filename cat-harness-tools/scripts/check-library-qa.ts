@@ -71,8 +71,8 @@
  * a STALE sidecar and on `could-not-determine`, and on nothing else.
  *
  * Usage:
- *   bun run check:library-qa          # judge, and write the sidecar
- *   bun run check:library-qa:check    # fail if stale or undeterminable; writes nothing
+ *   bun run cat check:library-qa          # judge, and write the sidecar
+ *   bun run cat check:library-qa:check    # fail if stale or undeterminable; writes nothing
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, extname, join } from "node:path";

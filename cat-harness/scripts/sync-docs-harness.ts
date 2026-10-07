@@ -87,7 +87,7 @@ const landingChoice = resolveLandingInstance(REPO_ROOT);
 if (landingChoice.kind === "ambiguous") {
   console.error(
     `sync-docs-harness: cannot decide the site's landing page (${landingChoice.reason}) over ` +
-      `${landingChoice.names.join(", ")}. Run \`bun run check:landing-instance\` (issue #1904).`,
+      `${landingChoice.names.join(", ")}. Run \`bun run cat check:landing-instance\` (issue #1904).`,
   );
   process.exit(1);
 }
@@ -668,7 +668,7 @@ if (check) {
   }
   console.error(
     `docs/_data/harness.json is stale.\n` +
-      `Run \`bun run docs:harness\` and commit the result.`,
+      `Run \`bun run cat docs:harness\` and commit the result.`,
   );
   process.exit(1);
 }

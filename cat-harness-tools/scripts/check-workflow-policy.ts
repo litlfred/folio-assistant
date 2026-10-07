@@ -12,7 +12,7 @@
  * non-relaxable — is a build failure rather than something discovered on the
  * day it was needed.
  *
- * Usage:  bun run check:workflow-policy
+ * Usage:  bun run cat check:workflow-policy
  *
  * @covers none — .github/workflows/ is not a declared graph typology
  */

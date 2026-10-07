@@ -6,7 +6,7 @@
  * `check:declaration-filename` could not have caught the defect that opened
  * it, are all in `src/docs/declaration-claims.ts`.
  *
- * Usage: bun run check:declaration-claims [--json]
+ * Usage: bun run cat check:declaration-claims [--json]
  *
  * @module folio-assistant/scripts/check-declaration-claims
  * @covers cat-harness

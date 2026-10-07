@@ -209,7 +209,7 @@ export function evaluateVoiceReviews(
   for (const v of voices) {
     const r = reviews.find((x) => x.voice === v.id);
     if (!r) {
-      findings.push({ where: v.id, detail: `never reviewed against the ${v.id} voice (${v.rules.length} skill rule(s)) — \`bun run voice:review\`` });
+      findings.push({ where: v.id, detail: `never reviewed against the ${v.id} voice (${v.rules.length} skill rule(s)) — \`bun run cat voice:review\`` });
     } else if (r.skill_hash !== skillHash) {
       findings.push({ where: v.id, detail: `the skill changed since its ${v.id} review (${r.at}, by ${r.by}); re-review it` });
     } else if (r.voice_hash !== v.hash) {
@@ -282,8 +282,8 @@ if (import.meta.main) {
     return i >= 0 ? argv[i + 1] : undefined;
   };
   const usage =
-    "usage: bun run voice:review -- --sidecar <skill's kg-qa sidecar> --voice <id> --by agent|human --verdicts <file.json>\n" +
-    "       bun run voice:review -- --rules <voice id>     (print the rules to judge, with their citations)\n" +
+    "usage: bun run cat voice:review -- --sidecar <skill's kg-qa sidecar> --voice <id> --by agent|human --verdicts <file.json>\n" +
+    "       bun run cat voice:review -- --rules <voice id>     (print the rules to judge, with their citations)\n" +
     "verdicts: [{ \"rule\": \"<id>\", \"result\": \"pass\"|\"fail\"|\"n/a\", \"note\": \"…\" }] — one per rule; a note on every fail and n/a.";
   const repoRoot = resolve(import.meta.dir, "..", "..");
   const voices = skillVoices(repoRoot);
@@ -358,6 +358,6 @@ if (import.meta.main) {
   console.log(
     `recorded ${verdicts.length} verdict(s) for ${report.subject.path} against ${v.id}` +
       (failed.length ? ` — ${failed.length} rule(s) judged fail, recorded and not gated` : "") +
-      ` in ${relative(repoRoot, where.file)} — now run \`bun run kg:audit\``,
+      ` in ${relative(repoRoot, where.file)} — now run \`bun run cat kg:audit\``,
   );
 }
