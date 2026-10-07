@@ -10,13 +10,13 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 3525 terms: **37 authored** in 3 glossaries, on this page, and **3488 extracted** from knowledge-graph assets in 28 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 3528 terms: **38 authored** in 4 glossaries, on this page, and **3490 extracted** from knowledge-graph assets in 29 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
-<tr><td>authored</td><td>A person wrote or approved the definition.</td><td>37</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>3488</td></tr>
+<tr><td>authored</td><td>A person wrote or approved the definition.</td><td>38</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>3490</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
@@ -28,7 +28,7 @@ Extracted candidates are minted from this repository's own assets and are not, b
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>3488</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3488</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>3490</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>3490</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -42,15 +42,15 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <div style="overflow-x:auto"><table>
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
-<tr><td>this page</td><td>authored terms, counts and sources</td><td>37</td><td>51 KB</td></tr>
-<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>341</td><td>263 KB</td></tr>
+<tr><td>this page</td><td>authored terms, counts and sources</td><td>38</td><td>53 KB</td></tr>
+<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>343</td><td>265 KB</td></tr>
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>180</td><td>132 KB</td></tr>
 <tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>711</td><td>582 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>13</td><td>11 KB</td></tr>
 <tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>2243</td><td>1.2 MB</td></tr>
 </tbody></table></div>
 
-**Size:** this page holds 37 terms and is 51 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 38 terms and is 53 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 ## Authored terms
 
@@ -237,9 +237,9 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">15</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">16</span> shown</p>
 
-<nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-E">E</a> <a href="#letter-G">G</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-P">P</a> <a href="#letter-R">R</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a></nav>
+<nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-E">E</a> <a href="#letter-G">G</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a></nav>
 
 <h2 id="letter-A">A</h2>
 <dl class="fa-gloss">
@@ -337,6 +337,17 @@ policy
 </dd>
 </dl>
 
+<h2 id="letter-Q">Q</h2>
+<dl class="fa-gloss">
+<dt id="who-iris--who-terms--quality-of-the-evidence" data-fa-state="authored" data-fa-gloss="certainty of the evidence confidence in the estimates of effect">
+quality of the evidence
+</dt>
+<dd>
+<p>In the context of guideline development, the confidence that the estimates of an effect are adequate to support a particular decision or recommendation. Rated high, moderate, low or very low.</p>
+<p class="fa-gloss-meta">WHO house terms · <code>https://litlfred.github.io/folio-assistant/who-iris/ns#glossary/who-terms/quality-of-the-evidence</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md"><code>who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md</code></a></p>
+</dd>
+</dl>
+
 <h2 id="letter-R">R</h2>
 <dl class="fa-gloss">
 <dt id="cat-harness--platform--role" data-fa-state="authored" data-fa-gloss="">
@@ -406,6 +417,7 @@ voice
 <li><strong>Bootstrap terms</strong> (bootstrap, 22 terms) · <a href="{{ '/assets/glossary/bootstrap--terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>bootstrap/schemas/graph.schema.json</code></li>
 <li><strong>Folio Assistant platform terms (cat-harness)</strong> (cat-harness, 14 terms) · <a href="{{ '/assets/glossary/cat-harness--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/cat-harness.glossary.json</code></li>
 <li><strong>Folio Assistant platform terms</strong> (folio-assistant-core, 1 term) · <a href="{{ '/assets/glossary/folio-assistant-core--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/folio-assistant-core.glossary.json</code></li>
+<li><strong>WHO house terms</strong> (who-iris, 1 term) · <a href="{{ '/assets/glossary/who-iris--who-terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>who-iris/glossary/who-iris.glossary.json</code></li>
 <li><strong>Swimlane roles</strong> (cat-harness, 53 terms) · <a href="{{ '/cat-harness/auto-docs/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
 <li><strong>Swimlane roles</strong> (bootstrap, 7 terms) · <a href="{{ '/cat-harness/auto-docs/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/bootstrap/glossary-ledger.json</code></li>
 </ul>
@@ -425,7 +437,8 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <tr><td>folio-assistant-core</td><td>24 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>8 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>161 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>165 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>folio-assistant-sci</td><td>54 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>5 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>10 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td></tr>
 <tr><td>smart-base</td><td>10 · <a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>7 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>20 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td><strong>total</strong></td><td><strong>341</strong></td><td><strong>180</strong></td><td><strong>711</strong></td><td><strong>13</strong></td><td><strong>2243</strong></td></tr>
+<tr><td>who-iris</td><td>2 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><strong>total</strong></td><td><strong>343</strong></td><td><strong>180</strong></td><td><strong>711</strong></td><td><strong>13</strong></td><td><strong>2243</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
@@ -577,6 +590,12 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
    "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
    "name": "Process Node",
    "description": "A BPMN flow node: an activity (a task or call activity), a gateway, or an event."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/folio-assistant/who-iris/ns#glossary/who-terms/quality-of-the-evidence",
+   "name": "quality of the evidence",
+   "description": "In the context of guideline development, the confidence that the estimates of an effect are adequate to support a particular decision or recommendation. Rated high, moderate, low or very low."
   },
   {
    "@type": "DefinedTerm",

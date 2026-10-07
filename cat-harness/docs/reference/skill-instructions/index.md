@@ -421,6 +421,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [ig-site-links](ig-site-links.html) | `ig-site-links` | — | > Skill id: `ig-site-links` · Package: `fhir-ig-base` · Instance: |
 | [ig-site-theme](ig-site-theme.html) | `ig-site-theme` | — | > Skill id: `ig-site-theme` · Package: `fhir-ig-base` · Instance: |
 
+## WHO IRIS (catalogue instance)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+| [Oxigraph Multi-Graph Search & Discovery for WHO IRIS](iris-oxigraph.html) | `iris-oxigraph` | — | This skill defines how to use **Oxigraph** (in-memory WASM on the client, and native in Bun/Node on  |
+
 ## Mathematical authoring (authoring-math)
 
 | Skill | Id | Schema | Summary |
