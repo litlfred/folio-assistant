@@ -1,10 +1,10 @@
 ---
 # folio-assistant-wmk0
 title: 'PROCESS INDEX COVERAGE: bootstrap''s 5 diagrams and bootstrap-tools'' 1 are not in the workflow index — bootstrap''s graph publishes no subgraph files or documentation'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-03T12:50:07Z
-updated_at: 2026-10-03T12:50:07Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-whlc
 ---
 
@@ -16,3 +16,6 @@ This is an UPSTREAM change (bootstrap-tools is a submodule): it needs its own PR
 - [ ] bootstrap-tools' export publishes `subgraph/<instance>/…` index + hydrated files per the c1m4 contract (kg-export.md §Named subgraphs), with process documentation
 - [ ] the repo-level `subgraph/index.jsonld` lists bootstrap's roots, without re-carrying bootstrap's process into the root graph (#432 / pve3 still holds)
 - [ ] `check:process-index` reports 84 of 84
+
+## Completed on landed evidence
+Landed on main in PR #432 (An instance's graph is what it declares — bootstrap was leaking into main's).
