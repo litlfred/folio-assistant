@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/SuccessCriterion",
+  "definitions": {
+    "SuccessCriterion": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "criterion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verification": {
+          "type": "string",
+          "enum": [
+            "test",
+            "inspection",
+            "review",
+            "analysis"
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "criterion",
+        "verification"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-plan-requires-requirements-2405/bootstrap-tools/schema/zod/requirement/SuccessCriterionSchema.schema.json",
+  "title": "SuccessCriterionSchema",
+  "description": "Generated from `SuccessCriterionSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/plan-requires-requirements-2405",
+    "sha": "82510a421086794fa3455d7214e159e739570632",
+    "pr": "2407/merge",
+    "run": "37602513251"
+  }
+}
