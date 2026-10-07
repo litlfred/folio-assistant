@@ -452,6 +452,53 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
   outline-offset: 2px;
 }
 
+/* Search within the beans (#2418). A full-width row under the type chips,
+   with a visible label: a placeholder is not a label. Inks are the panel's
+   own tokens, so it holds in both schemes. */
+.fa-workplan-search {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.fa-workplan-search label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fa-wp-ink);
+}
+.fa-workplan-search-input {
+  flex: 1 1 16rem;
+  min-height: 2.25rem;
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--fa-wp-ink-2);
+  border-radius: 6px;
+  background: var(--fa-wp-surface);
+  color: var(--fa-wp-ink);
+}
+.fa-workplan-search-input::placeholder { color: var(--fa-wp-ink-2); opacity: 1; }
+.fa-workplan-search-input:focus-visible {
+  outline: 2px solid var(--fa-wp-ink);
+  outline-offset: 2px;
+}
+.fa-workplan-results .fa-workplan-bean-list { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+/* Each result is a link a reader is expected to click, so it meets the 24px
+   target floor (WCAG 2.2 2.5.8) — rows of 15px text did not, measured. */
+.fa-workplan-results .fa-workplan-bean-row { padding: 0.15rem 0; }
+.fa-workplan-results .fa-workplan-bean-link {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
+}
+.fa-workplan-bean-id {
+  font-size: 0.75rem;
+  color: var(--fa-wp-ink-2);
+  margin-right: 0.4rem;
+}
+
 /* When this page was built, from which commit, and how far main has moved
    since. Muted ink: it qualifies every number below rather than being one. */
 .fa-workplan-stamp {

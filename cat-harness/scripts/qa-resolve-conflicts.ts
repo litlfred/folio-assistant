@@ -99,7 +99,7 @@ const dryRun = process.argv.includes("--dry-run");
 const explain = process.argv.includes("--explain");
 
 function git(repoRoot: string, args: string[]): string {
-  return execFileSync("git", args, { cwd: repoRoot, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  return execFileSync("git", args, { cwd: repoRoot, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"], maxBuffer: 64 * 1024 * 1024 });
 }
 
 /** Paths git reports as unmerged, repo-relative. */
@@ -212,7 +212,9 @@ export function scanDocument(doc: unknown, into: SideScan, path: string[] = []):
  */
 export function scanConflict(repoRoot: string, path: string): SideScan {
   const into: SideScan = { kinds: [], nonScript: [], reviewerIds: [], unreadable: [] };
+  const stages = unmergedStages(repoRoot, path);
   for (const stage of ["2", "3"]) {
+    if (stages.size > 0 && !stages.has(Number(stage))) continue;
     let raw: string;
     try {
       raw = git(repoRoot, ["show", `:${stage}:${path}`]);
@@ -421,7 +423,8 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const paths = unmergedPaths(repoRoot);
+  const cliPaths = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+  const paths = cliPaths.length > 0 ? cliPaths : unmergedPaths(repoRoot);
   if (paths.length === 0) {
     console.log("qa-resolve-conflicts — no unmerged paths; nothing to do");
     process.exit(0);
