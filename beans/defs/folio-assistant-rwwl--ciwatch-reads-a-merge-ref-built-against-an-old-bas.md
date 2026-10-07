@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rwwl
 title: ci:watch reads a merge ref built against an OLD base as mergeable — conflicted PRs report PASS
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-06T06:04:29Z
-updated_at: 2026-10-06T06:08:03Z
+updated_at: 2026-10-07T01:38:17Z
 parent: folio-assistant-1xhc
 ---
 
@@ -41,3 +41,5 @@ The 52cz fix covered "new head, stale ref" but not "same head, base moved".
 
 ### Found, deliberately NOT fixed here
 An already-MERGED PR whose head is still served at refs/pull/N/head has no merge ref, so it reads as `conflicted`. Seen live on #2249 right after it merged. This is the old 'no merge ref => conflicted' rule, not this change. The fix would be to check, before reading the merge ref, whether the head is an ancestor of the default branch tip. It is left for its own bean so this PR stays one defect.
+
+_2026-10-07T01:38:17Z_ — Claimed by claude/rwwl-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
