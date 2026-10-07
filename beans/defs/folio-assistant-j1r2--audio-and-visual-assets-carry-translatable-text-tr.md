@@ -1,10 +1,10 @@
 ---
 # folio-assistant-j1r2
 title: Audio and visual assets carry translatable text — transcripts, captions, alt text, embedded labels
-status: todo
+status: completed
 type: task
 created_at: 2026-09-19T07:54:17Z
-updated_at: 2026-09-19T07:54:17Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -75,3 +75,6 @@ could not be read" must not render the same way.
   PR #352) are separate and in flight.
 - `BPMN re-render for translated labels` covers re-rendering the SVG after
   injection; the extraction it depends on already exists.
+
+## Completed on landed evidence
+Landed on main in PR #351 (Locale subdirectories are declared translated content, and the navbar filters by the selected locale).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hcpz
 title: seed:ready — per-layer seeding readiness gateway for kg-separation (Source settled?)
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T17:22:19Z
-updated_at: 2026-10-02T22:27:27Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -85,3 +85,6 @@ Measured on main `f0bd0c78c` by session https://claude.ai/code/session_01FrpbCpM
 - **#2080 (5hox) appears in every layer's list.** It deletes ~1,200 derived files under `*/test/results/`, so it is a "moving" PR for each layer. Landing it clears one count on every row.
 - **Standalone (`check:cat-harness-standalone`):** 375 failing tests vs the committed baseline of 377 (3 now pass, `compose-docs.test.ts`). That run used Bun 1.4.2, the container default, and showed 1 new failure, `navbar-assets.test.ts > navbar.js`. Under the pinned Bun 1.3.14 (`.bun-version`, all 31 workflow steps) that test passes, so it was the environment, not main. Not yet re-run end to end on 1.3.14. For comparison: 472 on 10-03 (ho66), 482 on 10-04.
 - **Proposal, not applied:** `layerMovingPrs` counts deletions of content-addressed generated files (`docs/assets/navbar/rail-<hash>.js`, `docs/payload/sha256/*`). Those are renamed by every regen and do not change what any seeded path means, which is what `Rule_LayerMoves` says it guards. For cat-harness, measured with `git diff --name-status -M --diff-filter=DR <merge-base> <head> -- cat-harness/`: **4 of the 6** moving PRs (#2229, #2224, #2197, #2189) move ONLY such hashed files (9, 3, 15 and 15 paths). #2192 moves 2 authored files (`scripts/special-branches.json` and its test), and #2080's removal of derived results is a deliberate move, so those two count under either reading. Excluding them is a change to the gate's meaning, so it waits for the owner.
+
+## Completed on landed evidence
+Landed on main in commit 866a579add8a (seed:ready per-layer seeding readiness gateway measured for every staged layer).

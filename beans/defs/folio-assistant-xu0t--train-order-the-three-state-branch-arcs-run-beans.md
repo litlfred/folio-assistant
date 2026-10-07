@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xu0t
 title: 'TRAIN ORDER: the three state-branch arcs run beans, then auto-docs, then qa-reports removal — owner''s sequencing, 2026-10-03'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T09:39:07Z
-updated_at: 2026-10-03T09:54:52Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -103,3 +103,6 @@ Carry on with everything else. Push to your own branch freely.
 
 Whether `beans:claim` should keep pushing to `main` at all — that is `24fa`'s
 own open question and this bean does not pre-empt it.
+
+## Completed on landed evidence
+Landed on main in PR #1957 (branch-store: generic mount/push keyed by directory id, for beans, todos and fsh-guts (merges after #1937)).

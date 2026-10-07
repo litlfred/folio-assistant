@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ugxd
 title: 'MERGE QUEUE CUTOVER: flip beans/queue to cat/cat-harness/merge-queue and move the main entries, as its own small PR'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-05T11:46:51Z
-updated_at: 2026-10-05T11:46:51Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -22,3 +22,6 @@ The PR lands, main tracks no beans/queue/*.json, and merge:queue:read lists ever
 
 ## Fails if
 The entry count on the branch is lower than on main at flip time, or any entry differs byte-wise.
+
+## Completed on landed evidence
+Landed on main in PR #2065 (merge queue off main: the queue graph on its own branch store (najo)).
