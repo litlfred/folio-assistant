@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/m-r/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1929 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1933 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 579 terms and is 327 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 585 terms and is 331 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2235</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2235</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2239</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2239</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">579</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">585</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a></nav>
 
@@ -605,6 +605,27 @@ ModelEntrySchema.validation <span class="fa-gloss-status">candidate, extracted</
 <p>How the list above came to be believed. Required — see the header.</p>
 <p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/schemas/model-registry.ts"><code>bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.validation</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--mount-trust.mountconsentschema.by" data-fa-state="extracted" data-fa-gloss="">
+MountConsentSchema.by <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Who consented: a person, by the identity they act under here.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/mount-trust.ts"><code>cat-harness/schemas/mount-trust.ts#MountConsentSchema.by</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--mount-trust.mountconsentschema.evidence" data-fa-state="extracted" data-fa-gloss="">
+MountConsentSchema.evidence <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the consent was given (an issue comment, a chat session), so it can be read.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/mount-trust.ts"><code>cat-harness/schemas/mount-trust.ts#MountConsentSchema.evidence</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--mount-trust.mountconsentschema.ref" data-fa-state="extracted" data-fa-gloss="">
+MountConsentSchema.ref <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The pin consented to. Must equal the mount's <code>ref</code>; a moved pin asks again.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/mount-trust.ts"><code>cat-harness/schemas/mount-trust.ts#MountConsentSchema.ref</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--remote-mount.mountdefaultsschema.directories" data-fa-state="extracted" data-fa-gloss="">
 MountDefaultsSchema.directories <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -625,6 +646,20 @@ MountLockSchema.unmounted <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over an instance the mount never laid down. <code>local</code> and <code>skipped</code> are recorded too: they are answers, and a reader should see them as such.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--mount-trust.mountsignatureschema.network" data-fa-state="extracted" data-fa-gloss="">
+MountSignatureSchema.network <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The trust network the key is listed in, e.g. <code>gdhcn</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/mount-trust.ts"><code>cat-harness/schemas/mount-trust.ts#MountSignatureSchema.network</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--mount-trust.mountsignatureschema.signeddigest" data-fa-state="extracted" data-fa-gloss="">
+MountSignatureSchema.signedDigest <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What was signed: the pinned declaration's sha256, as the lock records it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/mount-trust.ts"><code>cat-harness/schemas/mount-trust.ts#MountSignatureSchema.signedDigest</code></a></p>
 </dd>
 </dl>
 
@@ -3011,6 +3046,13 @@ RemoteMountSchema.overrides <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>Per-instance overrides across the closure, keyed by instance name.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--remote-mount.remotemountschema.trust" data-fa-state="extracted" data-fa-gloss="">
+RemoteMountSchema.trust <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What makes this mount trusted: a person's consent for THIS pin, or a signature in a declared trust network (<code>schemas/mount-trust.ts</code>, bean <code>ieum</code>, rule H8). Absent means unsigned and unconsented, and a non-staging mount is then refused rather than fetched.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#RemoteMountSchema.trust</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--skill-package.remotepackagerefschema.sync" data-fa-state="extracted" data-fa-gloss="">
 RemotePackageRefSchema.sync <span class="fa-gloss-status">candidate, extracted</span>

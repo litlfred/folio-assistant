@@ -50,6 +50,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { MountTrustSchema } from "./mount-trust.js";
 import { RepoFullNameSchema } from "./repo-full-name.js";
 
 /** An instance name — the same rule `cat-harness.ts` applies to `needs` and subscriptions. */
@@ -128,6 +129,13 @@ export const RemoteMountSchema = z
     /** Per-instance overrides across the closure, keyed by instance name. */
     overrides: z.record(InstanceNameSchema, MountOverrideSchema).optional(),
     note: z.string().min(1).optional(),
+    /**
+     * What makes this mount trusted: a person's consent for THIS pin, or a
+     * signature in a declared trust network (`schemas/mount-trust.ts`, bean
+     * `ieum`, rule H8). Absent means unsigned and unconsented, and a non-staging
+     * mount is then refused rather than fetched.
+     */
+    trust: MountTrustSchema.optional(),
   })
   .strict();
 export type RemoteMount = z.infer<typeof RemoteMountSchema>;

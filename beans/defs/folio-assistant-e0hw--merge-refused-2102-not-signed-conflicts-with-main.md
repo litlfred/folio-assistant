@@ -1,11 +1,10 @@
 ---
 # folio-assistant-e0hw
 title: 'Merge refused: #2102 not signed; conflicts with main in generated paths'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T15:07:55Z
-updated_at: 2026-10-07T11:21:16Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-whlc
 blocking:
     - folio-assistant-4ak5
@@ -38,3 +37,5 @@ Closed on evidence of landed work:
 - PR #2102 was merged into `main` by `litlfred` in commit `554b9ef86a21` on 2026-10-04T17:37:35Z.
 - Re-derived independently on 2026-10-07: PR #2102 state is `MERGED` with commit `554b9ef86a21` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

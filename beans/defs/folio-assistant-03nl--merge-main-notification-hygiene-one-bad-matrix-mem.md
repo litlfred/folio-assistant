@@ -1,11 +1,11 @@
 ---
 # folio-assistant-03nl
 title: 'MERGE-MAIN NOTIFICATION HYGIENE: one bad matrix member reds the whole run, and an unchanged failure re-notifies on every push to main'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-04T05:52:09Z
-updated_at: 2026-10-04T07:41:56Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -108,3 +108,6 @@ _2026-10-04_ — **PR #2046 is green and labelled** `ready-to-merge` + `merge-ma
 **The regeneration ORDER for a change that adds one BPMN node**, learned from two red CI rounds: `render:bpmn` → `translate-bpmn --extract` → `glossary:page` → `term:mapping` → `skill:register`. The registration chain is necessary and NOT sufficient — it runs neither `term:mapping` nor `translate-bpmn`, and its own verify passes `check:glossary` BEFORE the pots are re-extracted, so running `glossary:page` first leaves five localised pages stale under a green chain.
 
 Also measured: **no `pull_request` run fired for either of the last two pushes** (bean `3pqn`'s shape), so the green verdict is a `workflow_dispatch` on the branch head rather than on main-merged-into-branch. Said on the PR rather than left to read as a current green.
+
+## Completed on landed evidence
+Landed on main in PR #2046 (beans(03nl): merge-main notification hygiene and matrix member failure isolation).

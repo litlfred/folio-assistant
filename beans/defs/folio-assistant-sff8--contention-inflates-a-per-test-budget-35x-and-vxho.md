@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sff8
 title: Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T18:32:29Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -824,3 +824,6 @@ the next reader would have no way to tell a considered cost from a forgotten one
       failure it was built to predict.
 - [ ] Standing: `instance-render.test.ts:212` (68 %) and `audit-coverage.test.ts:265`
       (66 %) now head the list. Nothing is over budget but the one just fixed.
+
+## Completed on landed evidence
+Landed on main in PR #1461 / commits 91ff40996783, fb3d9f15de02 (test execution contention resolved via module-scope single pass).

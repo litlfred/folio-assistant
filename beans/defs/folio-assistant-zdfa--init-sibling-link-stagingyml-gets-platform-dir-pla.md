@@ -1,12 +1,11 @@
 ---
 # folio-assistant-zdfa
 title: 'INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio''s workflow lands where GitHub never reads it'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T18:06:56Z
-updated_at: 2026-10-07T11:03:28Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-q4jm
 ---
 
@@ -40,3 +39,5 @@ Closed on evidence of landed work:
 - Implementation landed on `main` in commit `65829fa426f0c507fd7d61ec1113b3cdb87fe1d2` (PR #1318).
 - Re-derived and independently verified on 2026-10-07: `bun test cat-harness/scripts/tests/folio-staging-platform.test.ts cat-harness/scripts/tests/init-folio.test.ts` passes 55/55 tests covering sibling platform resolution and submodule/subfolder warnings.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

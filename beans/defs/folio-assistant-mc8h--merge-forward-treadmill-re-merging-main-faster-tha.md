@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mc8h
 title: 'MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T13:25:16Z
-updated_at: 2026-09-30T22:34:00Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -168,3 +168,6 @@ appear. The only thing that would is the repository moving under an
 organization, which is an unexplored question recorded in `1hjm`, not a setting.
 This bean's mitigations remain the operating procedure for a reason that is now
 structural rather than discretionary.
+
+## Completed on landed evidence
+Landed on main in commit 0b04d4202ba1 (Merge-forward treadmill diagnosis and mitigation).

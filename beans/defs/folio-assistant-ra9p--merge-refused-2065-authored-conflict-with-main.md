@@ -1,11 +1,10 @@
 ---
 # folio-assistant-ra9p
 title: 'Merge refused: #2065 authored conflict with main'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T11:08:54Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-hfag
 blocking:
     - folio-assistant-30jr
@@ -42,3 +41,5 @@ Closed on evidence of landed work:
 - PR #2065 was resolved, approved, and merged into `main` by `litlfred` in commit `a46f8791571232b326f1df8230ed8086860ca391` on 2026-10-05T15:40:04Z.
 - Re-derived independently on 2026-10-07: PR #2065 state is `MERGED` with commit `a46f87915712` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

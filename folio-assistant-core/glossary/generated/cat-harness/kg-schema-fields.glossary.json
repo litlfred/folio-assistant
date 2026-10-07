@@ -7777,6 +7777,41 @@
       "status": "candidate"
     },
     {
+      "id": "mount-trust.mountconsentschema.by",
+      "prefLabel": "MountConsentSchema.by",
+      "definition": "Who consented: a person, by the identity they act under here.",
+      "source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.by",
+      "status": "candidate"
+    },
+    {
+      "id": "mount-trust.mountconsentschema.evidence",
+      "prefLabel": "MountConsentSchema.evidence",
+      "definition": "Where the consent was given (an issue comment, a chat session), so it can be read.",
+      "source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.evidence",
+      "status": "candidate"
+    },
+    {
+      "id": "mount-trust.mountconsentschema.ref",
+      "prefLabel": "MountConsentSchema.ref",
+      "definition": "The pin consented to. Must equal the mount's `ref`; a moved pin asks again.",
+      "source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "mount-trust.mountsignatureschema.network",
+      "prefLabel": "MountSignatureSchema.network",
+      "definition": "The trust network the key is listed in, e.g. `gdhcn`.",
+      "source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.network",
+      "status": "candidate"
+    },
+    {
+      "id": "mount-trust.mountsignatureschema.signeddigest",
+      "prefLabel": "MountSignatureSchema.signedDigest",
+      "definition": "What was signed: the pinned declaration's sha256, as the lock records it.",
+      "source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.signedDigest",
+      "status": "candidate"
+    },
+    {
       "id": "narrative.narrativeschema.confirmed_by",
       "prefLabel": "NarrativeSchema.confirmed_by",
       "definition": "Who ACCEPTED the words. Must be a human; see the module docstring.",
@@ -8831,6 +8866,13 @@
       "prefLabel": "RemoteMountSchema.overrides",
       "definition": "Per-instance overrides across the closure, keyed by instance name.",
       "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.overrides",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount.remotemountschema.trust",
+      "prefLabel": "RemoteMountSchema.trust",
+      "definition": "What makes this mount trusted: a person's consent for THIS pin, or a signature in a declared trust network (`schemas/mount-trust.ts`, bean `ieum`, rule H8). Absent means unsigned and unconsented, and a non-staging mount is then refused rather than fetched.",
+      "source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.trust",
       "status": "candidate"
     },
     {

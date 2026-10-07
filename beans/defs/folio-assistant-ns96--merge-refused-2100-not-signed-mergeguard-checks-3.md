@@ -1,11 +1,10 @@
 ---
 # folio-assistant-ns96
 title: 'Merge refused: #2100 not signed (merge:guard checks 3 and 4)'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:42:21Z
-updated_at: 2026-10-07T11:12:49Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-nok9
 blocking:
     - folio-assistant-uoob
@@ -42,3 +41,5 @@ Closed on evidence of landed work:
 - PR #2100 was merged into `main` via train #2113 in commit `c858234ad5f8` on 2026-10-04T17:42:26Z.
 - Re-derived independently on 2026-10-07: PR #2100 state is `MERGED` with commit `c858234ad5f8` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

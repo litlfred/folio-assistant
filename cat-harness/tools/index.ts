@@ -176,6 +176,97 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // its content". The ONE resolver, from a shell — `branch-store
     // mount`/`push` call the same function and dispatch on its `kind`.
     // Bean `mftp`, owner 2026-10-05: "make sure scripts you use go into Tools".
+    // Bean `ieum`, owner 2026-10-07: "security check before release", and
+    // "tools may be in place but not utilized fully". The checks it runs were
+    // already gated in CI; no release process step named any of them.
+    defineTool({
+      id: "security-gate",
+      title: "Run every existing security check as one named release step",
+      description:
+        "Run the repository's security checks — workflow injection, secret leaks, lockfile pinning, the toolchain pin, QA reviewer permission, materialised-asset fixity — plus two advisories (dependency advisories, third-party action SHA pinning), each by name as argv. Every check is reported as pass, fail or unknown; a blocking check that fails OR could not be run refuses the release, because could-not-check is never clean. Advisories are reported and never block. Called by `prepare-merge` before a push that will merge, and by any publish process before it publishes.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness-tools/scripts/security-gate.ts" },
+      io: {
+        inputs: [
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Print a `folio-security-gate/v1` result on stdout instead of the human report." },
+        ],
+        outputs: [
+          { name: "blocked", schema: t("Flag"), description: "Whether a blocking check failed or could not be run; also the exit status (1 when blocked)." },
+        ],
+      },
+      satisfies: ["security"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    // Bean `ieum`, owner 2026-10-07: "when published, make it unpinned on
+    // staging". Pins third-party actions in every workflow but the declared
+    // staging-only ones; `security-gate` blocks on what it leaves unpinned.
+    defineTool({
+      id: "pin-actions",
+      title: "Pin third-party GitHub Actions to full commit SHAs",
+      description:
+        "Rewrite every third-party `uses: owner/repo@ref` outside the declared staging-only workflows to `@<full commit SHA> # <ref>`, so Dependabot keeps the pair current. A tag resolves to its PEELED commit (an annotated tag's object is never pinned), else a branch head, by `git ls-remote` with argv. A ref that resolves to nothing, or to more than one commit, is refused and reported, never guessed. This repository's own reusable workflows are first-party and left alone. Idempotent.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness-tools/scripts/pin-actions.ts" },
+      io: {
+        inputs: [
+          { name: "dry-run", schema: t("Flag"), required: false, arg: { flag: "--dry-run" }, description: "Report what would be pinned and write nothing." },
+        ],
+        outputs: [
+          { name: "pinned", schema: t("Count"), description: "uses: lines pinned, per workflow, with every refused ref named; exit 1 when any is refused." },
+        ],
+      },
+      satisfies: ["security"],
+      requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "A SHA is read from the action's own repository; offline there is nothing to resolve against. `security-gate` still reports what is unpinned without the network." }],
+    }),
+    // Bean `ieum`, owner 2026-10-07: "filter inter-agent communication (e.g.
+    // handover reports/prompts) for prompt injection as well as any human
+    // input". Rules H3, H5, H9 of methodologies/zero-trust-handover.md.
+    defineTool({
+      id: "handover-screen",
+      title: "Screen a hand-over for injected instructions, field by field",
+      description:
+        "Before a model reads a sub-agent's report, a delegated prompt, a tool result or a comment from someone who is not the principal, screen it against a declared schema whose top-level fields are `control` (steers what the receiver does) or `data` (content it reads). A finding in a control field, or any field the strict schema does not declare, is REFUSED, so a report cannot extend the delegator's plan. A finding in a data field is QUARANTINED: the original is kept and marked, never stripped. The patterns are a deterministic tripwire (instruction overrides, role and turn spoofs, fence breaks, tool-call syntax, hidden Unicode, exfiltration links, pipe-to-shell), a mitigation and not a guarantee. Exit 0 clean, 1 refused, 3 quarantined, 2 could not determine.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness-tools/scripts/handover-screen.ts" },
+      io: {
+        inputs: [
+          { name: "schema", schema: t("RepoPath"), required: false, arg: { flag: "--schema" }, description: "JSON `{ fields: { name: \"control\" | \"data\" }, strict?: boolean }`." },
+          { name: "payload", schema: t("RepoPath"), required: false, description: "The hand-over, as a JSON object." },
+          { name: "text", schema: t("RepoPath"), required: false, arg: { flag: "--text" }, description: "A single free-text input, screened as one DATA field." },
+        ],
+        outputs: [
+          { name: "verdict", schema: t("Flag"), description: "`clean`, `quarantined` or `refused`, with every finding's path, field role and kind; also the exit status." },
+        ],
+      },
+      satisfies: ["security"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    // Bean `ieum`, owner 2026-10-07: "mounting remote KG needs trusted
+    // provenance sources (digitally signed e.g. verifiable via GDHCN), or
+    // explicit user consent", and "staging doesnt need signature". This script
+    // had no Tool node until then, so no agent could find it as a tool.
+    defineTool({
+      id: "remote-mount",
+      title: "Mount remote harnesses at a pinned commit, only when trusted",
+      description:
+        "Lay down each `remoteMounts` harness, and its dependency closure, from another repository at a full commit SHA, and write the mount lock. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/remote-mount.ts" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("RepoPath"), required: false, arg: { flag: "--instance" }, description: "The downstream instance root; omitted, every declaring instance in the checkout." },
+          { name: "staging", schema: t("Flag"), required: false, arg: { flag: "--staging" }, description: "Mount for a staging preview: no signature or consent required." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare the disk against the lock; fetch nothing." },
+        ],
+        outputs: [
+          { name: "outcomes", schema: t("Count"), description: "Per instance: mounted, local, skipped, missing (including refused by the trust gate) or could-not-determine." },
+        ],
+      },
+      satisfies: ["security"],
+      requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "A remote mount IS a fetch of another repository at a pin; offline there is nothing to mount. `--check` still reports the lock without the network." }],
+    }),
     defineTool({
       id: "rail-standalone-pages",
       title: "Give every page Jekyll did not lay out the folio-assistant navbar",

@@ -1,0 +1,687 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2507.07974v2",
+  "title": "Defending Against Prompt Injection With a Few DefensiveTokens",
+  "pages": 11,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": "2",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-2-related-work"
+    },
+    {
+      "level": 1,
+      "title": "DefensiveToken",
+      "number": "3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-3-defensivetoken"
+    },
+    {
+      "level": 2,
+      "title": "Preliminaries",
+      "number": "3.1",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-31-preliminaries"
+    },
+    {
+      "level": 2,
+      "title": "Motivation",
+      "number": "3.2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-32-motivation"
+    },
+    {
+      "level": 2,
+      "title": "Methodology",
+      "number": "3.3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-33-methodology"
+    },
+    {
+      "level": 2,
+      "title": "Connection to Prompt Tuning",
+      "number": "3.4",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-34-connection-to-prompt-tuning"
+    },
+    {
+      "level": 1,
+      "title": "Experiments",
+      "number": "4",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-4-experiments"
+    },
+    {
+      "level": 2,
+      "title": "Setup",
+      "number": "4.1",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-41-setup"
+    },
+    {
+      "level": 2,
+      "title": "DefensiveToken: A SOTA Test-Time Defense",
+      "number": "4.2",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-42-defensivetoken-a-sota-test-time-defense"
+    },
+    {
+      "level": 2,
+      "title": "DefensiveToken vs. Training-Time Defenses",
+      "number": "4.3",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-43-defensivetoken-vs-training-time-defenses"
+    },
+    {
+      "level": 2,
+      "title": "Analyzing the Utility-Security Trade-Off",
+      "number": "4.4",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-44-analyzing-the-utility-security-trade-off"
+    },
+    {
+      "level": 2,
+      "title": "Ablation Study",
+      "number": "4.5",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-45-ablation-study"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "5",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-5-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "Acknowledgments",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-acknowledgments"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 48,
+      "summary": null,
+      "keywords": [],
+      "extract": "Defending Against Prompt Injection With a Few DefensiveTokens Sizhe Chen UC Berkeley Berkeley, USA sizhe.chen@berkeley.edu Yizhu Wang UC Berkeley Berkeley, USA yizhu-wang@berkeley.edu Nicholas Carlini Google DeepMind, Anthropic Mountain View, San Francisco, USA nicholas@carlini.com Chawin Sitawarin Google DeepMind Mountain View, USA chawins@google.com David Wagner UC Berkeley Berkeley, USA daw@cs.berkeley.edu",
+      "extractCut": false
+    },
+    {
+      "id": "sec-000-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 296,
+      "summary": null,
+      "keywords": [],
+      "extract": "When large language model (LLM) systems interact with exter- nal data to perform complex tasks, a new attack, namely prompt injection, becomes a significant threat. By injecting instructions into the data accessed by the system, the attacker is able to over- ride the initial user task with an arbitrary task directed by the attacker. To secure the system, test-time defenses, e.g., defensive prompting, have been",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 459,
+      "summary": null,
+      "keywords": [],
+      "extract": "Large Language Models (LLMs) have demonstrated remarkable ca- pabilities across diverse natural language processing tasks. This empowers exciting LLM-integrated applications, which complete the user task with access to external data from the environment. However, this agentic way of using LLMs in systems also introduces novel attack surfaces, among which prompt injection has become a critical security vulnerability",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-3-defensivetoken",
+      "number": "3",
+      "title": "DefensiveToken",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 407,
+      "summary": null,
+      "keywords": [],
+      "extract": "side the LLM (top), individual developers have the flexibil- ity to append DefensiveTokens before the input in security- sensitive cases (middle), or only use the LLM as it is for high- quality responses when utility is a priority (bottom). Table 1: DefensiveToken and existing defenses. Training-time defenses yield robust models with limited utility loss, but are not flexible, i.e., cannot be stripped off to recover",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-2-related-work",
+      "number": "2",
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 544,
+      "summary": null,
+      "keywords": [],
+      "extract": "Prompt injection attacks could be divided into optimization-free at- tacks and optimization-based attacks. Optimization-free attacks [19, 41] use heuristic prompts to enhance the injection. Optimization- based attacks [18, 27] are significantly stronger, but they generally require white-box access to the model weights, prompt template, and defense details for computationally-heavy optimization. The threat of prompt",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-31-preliminaries",
+      "number": "3.1",
+      "title": "Preliminaries",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 244,
+      "summary": null,
+      "keywords": [],
+      "extract": "We consider an LLM application that follows the format below. An LLM input in LLM-integrated applications [INST] Please write a clear and efficient algorithm that solves the following problem. [DATA] Calculate the Fibonacci sequence up to the n-th number. [RESP] The input consists of a prompt (instruction from a trusted user) and data (from untrusted external sources), separated by delimiters [INST], [DATA], and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-32-motivation",
+      "number": "3.2",
+      "title": "Motivation",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 374,
+      "summary": null,
+      "keywords": [],
+      "extract": "Prompt injection defenses can be conducted by LLM providers or LLM system developers. The provider has complete access to the LLM and can change it arbitrarily using training-time defenses. One provided LLM will be used by various developers. An individual developer has its specific needs given the deployment context of the system. If security becomes a priority (over utility) for a developer, it may also apply a",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-33-methodology",
+      "number": "3.3",
+      "title": "Methodology",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 316,
+      "summary": null,
+      "keywords": [],
+      "extract": "Without changing the model parameters, the provider optimizes a defensive training loss on the embeddings of newly added De- fensiveTokens. Our defense first creates 𝑛(5 is recommended as studied later) randomly-initialized embeddings 𝑡= (𝑡1,𝑡2, ...,𝑡𝑛) ∈ 𝑡∈R𝑛×𝑒, each 𝑡𝑖with the same dimension 𝑒as tokens in the model vocabulary. When security is needed, a system developer prepends DefensiveTokens before",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-34-connection-to-prompt-tuning",
+      "number": "3.4",
+      "title": "Connection to Prompt Tuning",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 175,
+      "summary": null,
+      "keywords": [],
+      "extract": "Our defense can be viewed as an instance of prompt tuning [14], which prepends a few optimizable token embeddings to the input. Traditionally, prompt tuning has been shown to be effective in improving the utility for a given task instruction. Input in (traditional) prompt tuning for utility [tokens with trainable embeddings] [INST] [task instruction (same across samples)] [DATA] [data on this task (different across",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-4-experiments",
+      "number": "4",
+      "title": "Experiments",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": null,
+      "keywords": [],
+      "extract": "4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-41-setup",
+      "number": "4.1",
+      "title": "Setup",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1176,
+      "summary": null,
+      "keywords": [],
+      "extract": "Training. We use the Cleaned Alpaca instruction tuning dataset [34] with 51k samples as 𝐷in Algorithm 1. We apply DefensiveToken to four high-functioning open-weight models: Llama3-8B-Instruct, Llama3.1-8B-Instruct, Falcon3-7B-Instruct, and Qwen2.5-7B-Instruct. For each model, we use their offered system delimiter for the in- struction, the user delimiter for the data, and the assistant delimiter for the response.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-42-defensivetoken-a-sota-test-time-defense",
+      "number": "4.2",
+      "title": "DefensiveToken: A SOTA Test-Time Defense",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 758,
+      "summary": null,
+      "keywords": [],
+      "extract": "Test-time defenses are flexible for developers to decide whether to apply them in different scenarios. Existing test-time defenses include detectors, defensive prompting, and system-level defense, see Table 1. Detectors are designed to refuse answering when there is an attack, and thus inherently lose utility and are out of the scope of our proposed prevention-based defenses. Also inapplicable is system-level",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-43-defensivetoken-vs-training-time-defenses",
+      "number": "4.3",
+      "title": "DefensiveToken vs. Training-Time Defenses",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 210,
+      "summary": null,
+      "keywords": [],
+      "extract": "Training-time defenses, without flexibility to developers, enjoy strong security against prompt injections. StruQ [3] has near-zero attack success rates on optimization-free prompt injections. We use the StruQ loss and dataset to optimize the model using full or LoRA fine-tuning for one epoch, using learning rates 4 × 10−6 and 1.6 × 10−4 respectively as recommended in Chen et al. [4]. LoRA uses hyper-parameters",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-44-analyzing-the-utility-security-trade-off",
+      "number": "4.4",
+      "title": "Analyzing the Utility-Security Trade-Off",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 158,
+      "summary": null,
+      "keywords": [],
+      "extract": "Security should be measured with utility to make sure the model is useful for a defense. Table 3 shows that most evaluated defenses, ex- cept TextGrad and StruQ-Full (on Falcon3), have a slight utility drop in AlpacaFarm and SEP benchmark. For a high-level view, we plot the utility-security trade-off in Fig. 3. Even when DefensiveToken is implemented, it is the defense that loses the least utility compared to all",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-45-ablation-study",
+      "number": "4.5",
+      "title": "Ablation Study",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1383,
+      "summary": null,
+      "keywords": [],
+      "extract": "We conduct ablation studies to analyze the impact of various design choices and hyperparameters on the performance of DefensiveTo- ken. We evaluate using the AlpacaFarm benchmark, focusing on the Llama3.1-8B-Instruct model for most ablations. Number of DefensiveTokens. Table 4 shows the effect of varying the number of defensive tokens. Overall, more optimized tokens lead to better security but worse utility: The",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-5-conclusion",
+      "number": "5",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 150,
+      "summary": null,
+      "keywords": [],
+      "extract": "DefensiveToken effectively mitigates prompt injection while of- fering the system developer the flexibility to prioritize security or utility. Compared to other test-time defenses like Reminder or Sandwich defenses, DefensiveToken reduces attack success rate by two times to an order of magnitude by asking the provider to optimize and release DefensiveTokens. Compared to other defenses that require parameter",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-acknowledgments",
+      "number": null,
+      "title": "Acknowledgments",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 54,
+      "summary": null,
+      "keywords": [],
+      "extract": "This research was supported by the Google-BAIR Commons (Year 6, project 03), National Science Foundation under grant 2229876 (the ACTION center), OpenAI, Open Philanthropy, Google, the Department of Homeland Security, and IBM. We are grateful for insightful discussions and comments from Sewon Min. AISec ’25, October 13–17, 2025, Taipei, Taiwan Sizhe Chen et al.",
+      "extractCut": false
+    },
+    {
+      "id": "sec-016-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1517,
+      "summary": null,
+      "keywords": [],
+      "extract": "[1] Sahar Abdelnabi, Aideen Fay, Giovanni Cherubin, Ahmed Salem, Mario Fritz, and Andrew Paverd. 2025. Get my drift? Catching LLM Task Drift with Activation Deltas. arXiv:2406.00799 https://arxiv.org/abs/2406.00799 [2] Manish Bhatt, Sahana Chennabasappa, Yue Li, Cyrus Nikolaidis, Daniel Song, Shengye Wan, Faizan Ahmad, Cornelius Aschermann, Yaohui Chen, Dhaval Kapil, et al. 2024. Cyberseceval 2: A wide-ranging",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 11,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "When defensive tokens are omitted, the LLM system runs exactly as without our defense, maintaining its performance for high-quality responses expected by most developers and established benchmarks; see the bottom part in Fig. 1. For the developer, DefensiveTokens offer the flexibility to control the",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "DefensiveToken and existing defenses. Training-time defenses yield robust models with limited utility loss, but are not flexible, i.e., cannot be stripped off to recover utility at test time. Other existing defenses operate at test time but have different limitations. Prompting-based defenses are in",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "The security of DefensiveToken vs. existing test-time and training-time baselines. The values are averaged across all four tested LLMs (Llama3-8B-Instruct, Llama3.1-8B-Instruct, Falcon3-7B-Instruct, and Qwen2.5-7B-Instruct) with breakdown numbers in Table 3. DefensiveToken is both flexible and effec",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "The magnitude of 4096-d embeddings in the Llama- 3.1-8B-Instruct vocabulary vs. those in DefensiveToken",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "4",
+      "title": "Ablation study on the number of defensive tokens in DefensiveToken using AlpacaFarm. 1 token lends noticeable security. 5 tokens are sufficient for good security with minimal utility loss and are thus used in our main experiments",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "5",
+      "title": "Ablation study on the initialization of defensive tokens in DefensiveToken using AlpacaFarm and Llama3.1- 8B-Instruct",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "The utility-security trade-off on AlpacaFarm and SEP. The triangles mark test-time defenses, and the squares mark training-time ones. The utility and attack success rate (ASR) are averaged across four tested models. DefensiveToken is flexible with utility-security trade-off close to an ideal defense",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "3",
+      "title": "Utility (WinRate ↑) and security (ASR ↓) of test-time (TextGrad, Reminder, Sandwich, DefensiveToken) and training-time (StruQ, SecAlign using Full/LoRA fine-tuning) defense baselines",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "6",
+      "title": "Ablation study on the loss in DefensiveToken using AlpacaFarm and Llama3.1-8B-Instruct",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "7",
+      "title": "Ablation study on the position of DefensiveTokens using AlpacaFarm and Llama3.1-8B-Instruct",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "8",
+      "title": "Ablation study on the learning rate of optimizing DefensiveTokens using AlpacaFarm and Llama3.1-8B-Instruct",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant",
+    "branch": "main",
+    "dir": "cat-harness/library/arxiv-2507.07974v2"
+  }
+}

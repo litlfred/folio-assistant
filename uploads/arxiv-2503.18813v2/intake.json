@@ -1,0 +1,37 @@
+{
+  "$schema": "folio-intake/v1",
+  "doc_id": "arxiv-2503.18813v2",
+  "title": "Defeating Prompt Injections by Design",
+  "_comment": "Uploaded by the owner to main via GitHub web as uploads/2503.18813v2.pdf (commit 396fc4ad8a8411ef5208f808b4c9b96de587ff7a, 2026-10-07), pointed to in chat during the zero-trust pipeline session (session_01FWGdsHong3XHiU7CMRWmfo, bean ieum). Renamed into a per-document upload directory before its first ingest, as upload-naming requires. Title read from the PDF (CaMeL, Debenedetti et al., Google / Google DeepMind / ETH Zurich). arxiv.org is denied by this container's network policy, so the per-submission licence could not be asked.",
+  "source": {
+    "local": "uploads/2503.18813v2.pdf at litlfred/folio-assistant 396fc4ad8a8411ef5208f808b4c9b96de587ff7a",
+    "upstream": "https://arxiv.org/abs/2503.18813v2",
+    "capturedAt": "2026-10-07T06:01:05Z",
+    "capturedBy": "owner (litlfred), upload via GitHub web"
+  },
+  "files": [
+    {
+      "path": "arxiv-2503.18813v2.pdf",
+      "bytes": 5531468,
+      "sha256": "c3719f6ce73eecf45e3764debef8a3d8ff8c9233b37d128c558b694ec3790cc7",
+      "type": "publication",
+      "role": "original-bitstream"
+    }
+  ],
+  "licence": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "the PDF's own text (arxiv-2503.18813v2.pdf, all pages, pdftotext)",
+        "result": "no licence statement found; only the arXiv identifier stamp",
+        "on": "2026-10-07"
+      },
+      {
+        "where": "https://arxiv.org/abs/2503.18813v2",
+        "result": "could not ask: CONNECT tunnel failed, 403 from this container's network policy. An unasked question, not a missing licence.",
+        "on": "2026-10-07"
+      }
+    ],
+    "note": "OWNER INSTRUCTION 2026-10-07: uploaded and pointed to for ingestion with the two prompt-injection papers ('ingest and review for relevance'), and the standing clearance of 2026-10-02 'ok on arxiv sourced papers' applies. Cleared to ingest and hold; the licence id is still unestablished."
+  }
+}

@@ -133,6 +133,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`gen-auto-docs.ts`](gen-auto-docs.ts) | a file |  |
 | [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
 | [`gen-python-deps.ts`](gen-python-deps.ts) | a file |  |
+| [`handover-screen.ts`](handover-screen.ts) | a file |  |
 | [`kind-register.ts`](kind-register.ts) | a file |  |
 | [`merge-leftover.ts`](merge-leftover.ts) | a file |  |
 | [`merge-overlap.ts`](merge-overlap.ts) | a file |  |
@@ -140,9 +141,11 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`migrate-bib-attestations.ts`](migrate-bib-attestations.ts) | a file |  |
 | [`migrate-qa-attestations.ts`](migrate-qa-attestations.ts) | a file |  |
 | [`milestone-status.ts`](milestone-status.ts) | a file |  |
+| [`pin-actions.ts`](pin-actions.ts) | a file |  |
 | [`publish-id-lookup.ts`](publish-id-lookup.ts) | a file |  |
 | [`qa-refresh.ts`](qa-refresh.ts) | a file |  |
 | [`resolve-subgraph.ts`](resolve-subgraph.ts) | a file |  |
+| [`security-gate.ts`](security-gate.ts) | a file |  |
 | [`seed-ready.ts`](seed-ready.ts) | a file |  |
 | [`split-baseline.json`](split-baseline.json) | data |  |
 | [`split-baseline.ts`](split-baseline.ts) | a file |  |

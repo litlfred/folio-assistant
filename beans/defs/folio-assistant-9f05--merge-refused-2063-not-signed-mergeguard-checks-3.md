@@ -1,11 +1,10 @@
 ---
 # folio-assistant-9f05
 title: 'Merge refused: #2063 not signed (merge:guard checks 3 and 4)'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T11:33:44Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-d33q
 blocking:
     - folio-assistant-0qjq
@@ -41,3 +40,5 @@ Closed on evidence of landed work:
 - PR #2063 was resolved and merged into `main` by `litlfred` in commit `1b35d74eaf94` on 2026-10-04T21:28:24Z.
 - Re-derived independently on 2026-10-07: PR #2063 state is `MERGED` with commit `1b35d74eaf94` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

@@ -416,6 +416,54 @@
     autocomplete="off" spellcheck="false">
   <button type="submit" id="iris-search-btn">Search</button>
 </form>
+
+<div class="iris-facet-chips" id="iris-facet-chips" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.6rem 0 0.8rem;align-items:center;">
+  <span style="font-size:0.85rem;color:var(--iris-muted);font-weight:600;">Facets:</span>
+  <button type="button" class="iris-chip" data-facet-type="subject" data-facet-val="Guidelines as Topic" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Guidelines as Topic</button>
+  <button type="button" class="iris-chip" data-facet-type="subject" data-facet-val="Publishing" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Publishing</button>
+  <button type="button" class="iris-chip" data-facet-type="community" data-facet-val="Western Pacific" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Western Pacific</button>
+  <button type="button" class="iris-chip" data-facet-type="community" data-facet-val="Headquarters" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Headquarters</button>
+  <button type="button" class="iris-chip" data-facet-type="access" data-facet-val="open-access" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid #94BA65;color:#1d5c1d;background:#f0f6e9;cursor:pointer;">Open Access PDF</button>
+</div>
+
+<details id="iris-adv-filters" style="margin:0 0 1rem;font-size:0.9rem;border:1px solid var(--iris-edge);border-radius:4px;padding:0.5rem 0.8rem;background:var(--iris-wash);">
+  <summary style="cursor:pointer;font-weight:600;color:var(--iris-dark);">Complex Search &amp; KG Filters (Oxigraph)</summary>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:0.7rem;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--iris-edge);">
+    <div>
+      <label for="iris-filter-subject" style="display:block;font-size:0.8rem;font-weight:600;color:var(--iris-muted);">Subject (MeSH)</label>
+      <select id="iris-filter-subject" style="width:100%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+        <option value="">All Subjects</option>
+        <option value="Guidelines as Topic">Guidelines as Topic</option>
+        <option value="Publishing">Publishing</option>
+        <option value="Evidence-Based Medicine">Evidence-Based Medicine</option>
+        <option value="Information Systems and Communication">Information Systems</option>
+        <option value="Writing">Writing</option>
+      </select>
+    </div>
+    <div>
+      <label for="iris-filter-community" style="display:block;font-size:0.8rem;font-weight:600;color:var(--iris-muted);">Community</label>
+      <select id="iris-filter-community" style="width:100%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+        <option value="">All Communities</option>
+        <option value="Headquarters">Headquarters</option>
+        <option value="Western Pacific">Western Pacific</option>
+      </select>
+    </div>
+    <div>
+      <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--iris-muted);">Year Range</label>
+      <div style="display:flex;gap:0.3rem;">
+        <input type="number" id="iris-filter-year-from" placeholder="From" style="width:50%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+        <input type="number" id="iris-filter-year-to" placeholder="To" style="width:50%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+      </div>
+    </div>
+    <div style="display:flex;align-items:flex-end;">
+      <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.88rem;">
+        <input type="checkbox" id="iris-filter-open-access">
+        <span>Open Access PDF only</span>
+      </label>
+    </div>
+  </div>
+</details>
+
 <div id="iris-search-results" class="search-results-panel" role="region" aria-live="polite" style="display:none"></div>
 <p class="searchnote" id="iris-search-note">Search across <strong>3</strong> items held by value and referenced communities/collections. To look up any of the <strong>10</strong> referenced nodes by identifier, search here or open the <a href="../id-lookup/?index=who-iris/">identifier lookup</a>.
 Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</strong> files.</p>
@@ -468,12 +516,18 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
 
 <script>
 (function() {
-  var index = [{"title":"1. Headquarters","href":"community-list.html","badge":"Community","meta":"community/5bff2c18-6c2b-4658-9087-93811d2399c0","abstract":"","text":"1. headquarters community/5bff2c18-6c2b-4658-9087-93811d2399c0"},{"title":"2. Regional Office for Africa","href":"community-list.html","badge":"Community","meta":"community/e1b206b7-fd4c-4b93-972a-be07850a1cdd","abstract":"","text":"2. regional office for africa community/e1b206b7-fd4c-4b93-972a-be07850a1cdd"},{"title":"3. Regional Office for the Americas","href":"community-list.html","badge":"Community","meta":"community/270bee8e-d535-4512-86a2-b01850407a23","abstract":"","text":"3. regional office for the americas community/270bee8e-d535-4512-86a2-b01850407a23"},{"title":"4. Regional Office for the Eastern Mediterranean","href":"community-list.html","badge":"Community","meta":"community/f005d7fc-da21-4f55-9e06-9f65c49b2184","abstract":"","text":"4. regional office for the eastern mediterranean community/f005d7fc-da21-4f55-9e06-9f65c49b2184"},{"title":"5. Regional Office for Europe","href":"community-list.html","badge":"Community","meta":"community/fb66a624-a5dc-4576-8b6b-929639e552d8","abstract":"","text":"5. regional office for europe community/fb66a624-a5dc-4576-8b6b-929639e552d8"},{"title":"6. Regional Office for South-East Asia","href":"community-list.html","badge":"Community","meta":"community/8f327840-b0f3-4769-a1c2-270b2b5ce7da","abstract":"","text":"6. regional office for south-east asia community/8f327840-b0f3-4769-a1c2-270b2b5ce7da"},{"title":"7. Regional Office for the Western Pacific","href":"community-list.html","badge":"Community","meta":"community/ebd3b191-c322-4754-9415-469a1a0eb0c3","abstract":"","text":"7. regional office for the western pacific community/ebd3b191-c322-4754-9415-469a1a0eb0c3"},{"title":"8. WHO Framework Convention on Tobacco Control (FCTC)","href":"community-list.html","badge":"Community","meta":"community/28b22be0-5864-409c-9b83-0442e2a7ca0e","abstract":"","text":"8. who framework convention on tobacco control (fctc) community/28b22be0-5864-409c-9b83-0442e2a7ca0e"},{"title":"Information products","href":"collection-collection-wpro-information-products.html","badge":"Collection","meta":"collection/wpro-information-products","abstract":"Measured from the breadcrumb on the captured item page: 'Home > 7. Regional Office for the ... > Regional Office for the W... > Information products'. FOUR levels, of which the middle two are communities -- which is why `parents` is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.","text":"information products collection/wpro-information-products measured from the breadcrumb on the captured item page: 'home > 7. regional office for the ... > regional office for the w... > information products'. four levels, of which the middle two are communities -- which is why `parents` is a list of paths rather than a single id. the collection's own uuid is not in anything captured and iris.who.int is egress-blocked from this environment (connect tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier."},{"title":"Publication and information products style guide","href":"item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html","badge":"Item","meta":"World Health Organization. Regional Office for the Western Pacific · WPR/RDO/2020/003 · 2020-05-12","abstract":"This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also ava","text":"publication and information products style guide item/18892cf3-5a4f-42a4-923c-a93f4a594dec wpr-rdo-2020-003-eng world health organization. regional office for the western pacific wpr/rdo/2020/003 2020-05-12 this is the style guide for wpro publications and information products. all designers working on who wpro publication and information products should use this as reference for design and layout. templates and further guidelines are also available. for more information on wpro publications guidelines, please contact wpropuballstaff@who.int"},{"title":"Publications","href":"collection-collection-hq-publications.html","badge":"Collection","meta":"collection/hq-publications","abstract":"Established by TWO independent statements in the source, 2026-09-20. The breadcrumb on both captured full item records reads 'Home > 1. Headquarters > Publications', and the handbook's record additionally carries an explicit 'Collections: Publications' block. One reading of one page would have been weaker evidence than this is. THE COLLECTION'S OWN UUID IS NOT IN EITHER CAPTURE -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its PATH exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a UUID to fill the slot produces an identifier that resolves to nothing while looking authoritative. The collection's item count is likewise UNKNOWN; neither capture states one, and it is not interpolated.","text":"publications collection/hq-publications established by two independent statements in the source, 2026-09-20. the breadcrumb on both captured full item records reads 'home > 1. headquarters > publications', and the handbook's record additionally carries an explicit 'collections: publications' block. one reading of one page would have been weaker evidence than this is. the collection's own uuid is not in either capture -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its path exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a uuid to fill the slot produces an identifier that resolves to nothing while looking authoritative. the collection's item count is likewise unknown; neither capture states one, and it is not interpolated."},{"title":"WHO editorial style manual","href":"item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html","badge":"Item","meta":"World Health Organization. Technical Publications Unit · WHO/PUB/TPS/93.1 · 1993-12-31","abstract":"","text":"who editorial style manual item/b08c6c19-315a-41a4-a9cb-8edabdbc6791 who-pub-tps-931 world health organization. technical publications unit who/pub/tps/93.1 1993-12-31 "},{"title":"WHO handbook for guideline development","href":"item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html","badge":"Item","meta":"World Health Organization · 2014-12-18","abstract":"This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and","text":"who handbook for guideline development item/63e14c27-7448-41ec-be08-a96a25a47db6 9789241548960-eng world health organization  2014-12-18 this handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of who guidelines. intended for who technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet who standards."}];
+  var index = [{"title":"1. Headquarters","href":"community-list.html","badge":"Community","meta":"community/5bff2c18-6c2b-4658-9087-93811d2399c0","abstract":"","text":"1. headquarters community/5bff2c18-6c2b-4658-9087-93811d2399c0"},{"title":"2. Regional Office for Africa","href":"community-list.html","badge":"Community","meta":"community/e1b206b7-fd4c-4b93-972a-be07850a1cdd","abstract":"","text":"2. regional office for africa community/e1b206b7-fd4c-4b93-972a-be07850a1cdd"},{"title":"3. Regional Office for the Americas","href":"community-list.html","badge":"Community","meta":"community/270bee8e-d535-4512-86a2-b01850407a23","abstract":"","text":"3. regional office for the americas community/270bee8e-d535-4512-86a2-b01850407a23"},{"title":"4. Regional Office for the Eastern Mediterranean","href":"community-list.html","badge":"Community","meta":"community/f005d7fc-da21-4f55-9e06-9f65c49b2184","abstract":"","text":"4. regional office for the eastern mediterranean community/f005d7fc-da21-4f55-9e06-9f65c49b2184"},{"title":"5. Regional Office for Europe","href":"community-list.html","badge":"Community","meta":"community/fb66a624-a5dc-4576-8b6b-929639e552d8","abstract":"","text":"5. regional office for europe community/fb66a624-a5dc-4576-8b6b-929639e552d8"},{"title":"6. Regional Office for South-East Asia","href":"community-list.html","badge":"Community","meta":"community/8f327840-b0f3-4769-a1c2-270b2b5ce7da","abstract":"","text":"6. regional office for south-east asia community/8f327840-b0f3-4769-a1c2-270b2b5ce7da"},{"title":"7. Regional Office for the Western Pacific","href":"community-list.html","badge":"Community","meta":"community/ebd3b191-c322-4754-9415-469a1a0eb0c3","abstract":"","text":"7. regional office for the western pacific community/ebd3b191-c322-4754-9415-469a1a0eb0c3"},{"title":"8. WHO Framework Convention on Tobacco Control (FCTC)","href":"community-list.html","badge":"Community","meta":"community/28b22be0-5864-409c-9b83-0442e2a7ca0e","abstract":"","text":"8. who framework convention on tobacco control (fctc) community/28b22be0-5864-409c-9b83-0442e2a7ca0e"},{"title":"Information products","href":"collection-collection-wpro-information-products.html","badge":"Collection","meta":"collection/wpro-information-products","abstract":"Measured from the breadcrumb on the captured item page: 'Home > 7. Regional Office for the ... > Regional Office for the W... > Information products'. FOUR levels, of which the middle two are communities -- which is why `parents` is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.","text":"information products collection/wpro-information-products measured from the breadcrumb on the captured item page: 'home > 7. regional office for the ... > regional office for the w... > information products'. four levels, of which the middle two are communities -- which is why `parents` is a list of paths rather than a single id. the collection's own uuid is not in anything captured and iris.who.int is egress-blocked from this environment (connect tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier."},{"title":"Publication and information products style guide","href":"item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html","badge":"Item","meta":"World Health Organization. Regional Office for the Western Pacific · WPR/RDO/2020/003 · 2020-05-12","abstract":"This is the style guide for WPRO publications and information products. All designers working on WHO WPRO publication and information products should use this as reference for design and layout. Templates and further guidelines are also ava","text":"publication and information products style guide item/18892cf3-5a4f-42a4-923c-a93f4a594dec wpr-rdo-2020-003-eng world health organization. regional office for the western pacific wpr/rdo/2020/003 2020-05-12  7. regional office for the western pacific publishing guidelines as topic this is the style guide for wpro publications and information products. all designers working on who wpro publication and information products should use this as reference for design and layout. templates and further guidelines are also available. for more information on wpro publications guidelines, please contact wpropuballstaff@who.int","creator":"World Health Organization. Regional Office for the Western Pacific","year":2020,"spatial":"","community":"7. Regional Office for the Western Pacific","collection":"Information products","subjects":["Publishing","Guidelines as Topic"],"hasPdf":true,"copyrightGate":"permitted"},{"title":"Publications","href":"collection-collection-hq-publications.html","badge":"Collection","meta":"collection/hq-publications","abstract":"Established by TWO independent statements in the source, 2026-09-20. The breadcrumb on both captured full item records reads 'Home > 1. Headquarters > Publications', and the handbook's record additionally carries an explicit 'Collections: Publications' block. One reading of one page would have been weaker evidence than this is. THE COLLECTION'S OWN UUID IS NOT IN EITHER CAPTURE -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its PATH exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a UUID to fill the slot produces an identifier that resolves to nothing while looking authoritative. The collection's item count is likewise UNKNOWN; neither capture states one, and it is not interpolated.","text":"publications collection/hq-publications established by two independent statements in the source, 2026-09-20. the breadcrumb on both captured full item records reads 'home > 1. headquarters > publications', and the handbook's record additionally carries an explicit 'collections: publications' block. one reading of one page would have been weaker evidence than this is. the collection's own uuid is not in either capture -- only its name and its place in the hierarchy are -- and iris.who.int is egress-blocked from this environment, so the node is keyed by its path exactly as `collection/wpro-information-products` is, and for the same stated reason: inventing a uuid to fill the slot produces an identifier that resolves to nothing while looking authoritative. the collection's item count is likewise unknown; neither capture states one, and it is not interpolated."},{"title":"WHO editorial style manual","href":"item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html","badge":"Item","meta":"World Health Organization. Technical Publications Unit · WHO/PUB/TPS/93.1 · 1993-12-31","abstract":"","text":"who editorial style manual item/b08c6c19-315a-41a4-a9cb-8edabdbc6791 who-pub-tps-931 world health organization. technical publications unit who/pub/tps/93.1 1993-12-31  1. headquarters writing publishing ","creator":"World Health Organization. Technical Publications Unit","year":1993,"spatial":"","community":"1. Headquarters","collection":"Publications","subjects":["Writing","Publishing"],"hasPdf":true,"copyrightGate":"refused"},{"title":"WHO handbook for guideline development","href":"item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html","badge":"Item","meta":"World Health Organization · 2014-12-18","abstract":"This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and","text":"who handbook for guideline development item/63e14c27-7448-41ec-be08-a96a25a47db6 9789241548960-eng world health organization  2014-12-18  1. headquarters world health organization guidelines as topic review meta-analysis peer review evidence-based medicine handbook this handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of who guidelines. intended for who technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet who standards.","creator":"World Health Organization","year":2014,"spatial":"","community":"1. Headquarters","collection":"Publications","subjects":["World Health Organization","Guidelines as Topic","Review","Meta-Analysis","Peer Review","Evidence-Based Medicine","Handbook"],"hasPdf":true,"copyrightGate":"refused"}];
   var T = {"matching":"Matching catalogue nodes ({n}):","also":"Also search identifier lookup:","lookUp":"Look up “{q}” in referenced nodes →","none":"No materialized items or collections matched “<strong>{q}</strong>”.","searchFor":"Search for “{q}” in the referenced identifier lookup (10 nodes) →"};
   function fill(s, q, n) { return s.split("{q}").join(q).split("{n}").join(n); }
   var form = document.getElementById("iris-search-form");
   var input = document.getElementById("iris-search-input");
   var results = document.getElementById("iris-search-results");
+  var fSubj = document.getElementById("iris-filter-subject");
+  var fComm = document.getElementById("iris-filter-community");
+  var fYFrom = document.getElementById("iris-filter-year-from");
+  var fYTo = document.getElementById("iris-filter-year-to");
+  var fOA = document.getElementById("iris-filter-open-access");
+  var chips = document.querySelectorAll(".iris-chip");
   if (!form || !input || !results) return;
 
   function escapeHtml(s) {
@@ -494,11 +548,19 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
 
   function update() {
     var raw = input.value.trim();
-    if (!raw) {
+    var subj = fSubj ? fSubj.value.trim() : "";
+    var comm = fComm ? fComm.value.trim() : "";
+    var yFrom = fYFrom && fYFrom.value ? parseInt(fYFrom.value, 10) : 0;
+    var yTo = fYTo && fYTo.value ? parseInt(fYTo.value, 10) : 0;
+    var oaOnly = fOA ? fOA.checked : false;
+
+    var hasActive = raw || subj || comm || yFrom || yTo || oaOnly;
+    if (!hasActive) {
       results.style.display = "none";
       results.replaceChildren();
       return;
     }
+
     var terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
     var matches = [];
     for (var i = 0; i < index.length; i++) {
@@ -510,7 +572,25 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
           break;
         }
       }
-      if (ok) matches.push(entry);
+      if (!ok) continue;
+
+      if (subj && (!entry.subjects || entry.subjects.indexOf(subj) < 0)) {
+        continue;
+      }
+      if (comm && (!entry.community || entry.community.indexOf(comm) < 0)) {
+        continue;
+      }
+      if (yFrom && (!entry.year || entry.year < yFrom)) {
+        continue;
+      }
+      if (yTo && (!entry.year || entry.year > yTo)) {
+        continue;
+      }
+      if (oaOnly && !(entry.hasPdf && entry.copyrightGate === "permitted")) {
+        continue;
+      }
+
+      matches.push(entry);
     }
 
     var lookupUrl = "../id-lookup/?index=who-iris/&q=" + encodeURIComponent(raw);
@@ -521,13 +601,24 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
       html += "<ul class=\"search-results-list\" style=\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\">";
       for (var m = 0; m < matches.length; m++) {
         var it = matches[m];
-        // The record's own language, where it differs from the page's (bean lffo).
         var la = it.lang ? " lang=\"" + it.lang + "\"" : "";
         html += "<li class=\"search-result-item\" style=\"padding:0.6rem 0.8rem;border:1px solid var(--iris-edge);border-radius:4px;background:var(--iris-wash);\">";
-        html += "<div><span class=\"search-result-badge\" style=\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-inline-end:0.5rem;\">" + escapeHtml(it.badge) + "</span>";
+        html += "<div style=\"display:flex;align-items:center;flex-wrap:wrap;gap:0.35rem;\"><span class=\"search-result-badge\" style=\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-inline-end:0.3rem;\">" + escapeHtml(it.badge) + "</span>";
+        if (it.copyrightGate === "permitted") {
+          html += "<span class=\"state materialized\" style=\"font-size:0.72rem;\">PDF Permitted</span>";
+        } else if (it.hasPdf) {
+          html += "<span class=\"state referenced\" style=\"font-size:0.72rem;\">PDF Held (Restricted)</span>";
+        }
         html += "<a href=\"" + it.href + "\" dir=\"auto\"" + la + " style=\"font-weight:600;font-size:1.02rem;\">" + highlight(it.title, terms) + "</a></div>";
         if (it.meta) {
           html += "<div class=\"search-result-meta\" dir=\"auto\"" + la + " style=\"font-size:0.88rem;color:var(--iris-muted);margin-top:0.25rem;\">" + highlight(it.meta, terms) + "</div>";
+        }
+        if (it.subjects && it.subjects.length > 0) {
+          html += "<div style=\"margin-top:0.3rem;display:flex;flex-wrap:wrap;gap:0.25rem;\">";
+          for (var s = 0; s < it.subjects.length; s++) {
+            html += "<span style=\"font-size:0.75rem;background:#e2eaf0;color:var(--iris-dark);padding:0.1rem 0.4rem;border-radius:3px;\">#" + escapeHtml(it.subjects[s]) + "</span>";
+          }
+          html += "</div>";
         }
         if (it.abstract) {
           var snip = it.abstract.length > 180 ? it.abstract.slice(0, 180) + "…" : it.abstract;
@@ -537,12 +628,12 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
       }
       html += "</ul>";
       html += "<div class=\"search-remote-box\" style=\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\">";
-      html += T.also + " <a href=\"" + lookupUrl + "\" class=\"search-remote-link\">" + fill(T.lookUp, escapeHtml(raw), "") + "</a>";
+      html += T.also + " <a href=\"" + lookupUrl + "\" class=\"search-remote-link\">" + fill(T.lookUp, escapeHtml(raw || subj || comm), "") + "</a>";
       html += "</div>";
     } else {
-      html += "<p style=\"margin:0 0 0.5rem;\">" + fill(T.none, escapeHtml(raw), "") + "</p>";
+      html += "<p style=\"margin:0 0 0.5rem;\">" + fill(T.none, escapeHtml(raw || subj || comm), "") + "</p>";
       html += "<div class=\"search-remote-box\" style=\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\">";
-      html += "<a href=\"" + lookupUrl + "\" class=\"search-remote-link\" style=\"font-weight:600;\">" + fill(T.searchFor, escapeHtml(raw), "") + "</a>";
+      html += "<a href=\"" + lookupUrl + "\" class=\"search-remote-link\" style=\"font-weight:600;\">" + fill(T.searchFor, escapeHtml(raw || subj || comm), "") + "</a>";
       html += "</div>";
     }
 
@@ -551,9 +642,28 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
   }
 
   input.addEventListener("input", update);
+  if (fSubj) fSubj.addEventListener("change", update);
+  if (fComm) fComm.addEventListener("change", update);
+  if (fYFrom) fYFrom.addEventListener("input", update);
+  if (fYTo) fYTo.addEventListener("input", update);
+  if (fOA) fOA.addEventListener("change", update);
+
+  chips.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var t = btn.getAttribute("data-facet-type");
+      var v = btn.getAttribute("data-facet-val");
+      var adv = document.getElementById("iris-adv-filters");
+      if (adv) adv.open = true;
+      if (t === "subject" && fSubj) { fSubj.value = v; }
+      else if (t === "community" && fComm) { fComm.value = v; }
+      else if (t === "access" && fOA) { fOA.checked = !fOA.checked; }
+      update();
+    });
+  });
+
   form.addEventListener("submit", function(e) {
     var raw = input.value.trim();
-    if (!raw) { e.preventDefault(); return; }
+    if (!raw && !fSubj.value && !fComm.value) { e.preventDefault(); return; }
     var hasLocal = results.querySelector(".search-result-item");
     var firstLink = results.querySelector(".search-result-item a");
     if (hasLocal && firstLink) {
@@ -568,6 +678,7 @@ Upstream IRIS reports <strong>273,559</strong> items across <strong>1,057,223</s
     input.value = initQ;
     update();
   }
+  try { window.__irisSearch = { index: index, update: update }; } catch (e) {}
 })();
 </script>
 
