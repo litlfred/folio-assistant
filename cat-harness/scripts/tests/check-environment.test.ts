@@ -182,6 +182,18 @@ describe("distortions — DISCRIMINATION, which is the whole contract", () => {
       rmSync(real, { recursive: true, force: true });
     }
   });
+
+  test("a SYMLINKED root install pointing to the parent repository's node_modules is NOT a distortion (bean qook)", () => {
+    const wt = mkdtempSync(join(tmpdir(), "qook-wt-"));
+    try {
+      writeFileSync(join(wt, ".git"), `gitdir: ${REPO}/.git\n`);
+      symlinkSync(join(REPO, "node_modules"), join(wt, "node_modules"));
+      const d = distortions(wt);
+      expect(d.filter((x) => x.bean === "qook")).toEqual([]);
+    } finally {
+      rmSync(wt, { recursive: true, force: true });
+    }
+  });
 });
 
 describe("this repository, right now", () => {
