@@ -1695,6 +1695,20 @@
       "file": "beans/defs/folio-assistant-42u5--1955-hand-off-to-the-merge-manager-kept-merged-wit.md"
     },
     {
+      "id": "folio-assistant-437w",
+      "title": "kg:subscribe refuses a fork whose declaration is one level down (smart-base, smart-trust, smart-immunizations): accept an upstreamPath",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-fnx4",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T19:43:32Z",
+      "updatedAt": "2026-10-06T19:43:44Z",
+      "preview": "## Why\n\nThe owner ruled 2026-10-06 that smart-trust, smart-base and smart-immunizations leave folio-assistant the way who-iris did: each fork is authoritative and folio-assistant keeps a REMOTE subscription to it via `kg:subscribe`, pinned, no submodules. Today `bun run kg:subscribe` refuses all three with `not-a-substrate: the root carries no Knowledge Graph declaration`, because each fork nests ",
+      "file": "beans/defs/folio-assistant-437w--kgsubscribe-refuses-a-fork-whose-declaration-is-on.md"
+    },
+    {
       "id": "folio-assistant-4475",
       "title": "Run build-ig-site in an IG's own repository (smart-trust first), once folio-assistant is split",
       "status": "todo",
@@ -2893,14 +2907,14 @@
     {
       "id": "folio-assistant-6xdf",
       "title": "PUBLIC COMMENT: a PR body that merely MENTIONS a change-set id re-links an already-incorporated change-set to it, and the record writer drops $schema",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T14:36:04Z",
-      "updatedAt": "2026-10-06T14:55:46Z",
+      "updatedAt": "2026-10-07T07:49:45Z",
       "preview": "Measured 2026-10-06 on litlfred/smart-ra#24 (a submodule-pin staging PR whose body named CS-236 and CS-237 in prose). The public-comment workflow (pull_request_target, platform pinned at 7a2ff7e) committed 5f4ce41 to smart-ra main: both change-sets' pr moved from #9 (the merged PR that made the change) to #24, history gained 'PR #24 is making the change', and both files LOST their \"$schema\": \"chan",
       "file": "beans/defs/folio-assistant-6xdf--public-comment-a-pr-body-that-merely-mentions-a-ch.md"
     },
@@ -7981,14 +7995,14 @@
     {
       "id": "folio-assistant-kjbb",
       "title": "gen-skill-docs/gen-processes-viz: a literal endraw tag in source text closes the page's raw block early",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:11Z",
-      "updatedAt": "2026-10-01T08:11:49Z",
+      "updatedAt": "2026-10-07T05:11:00Z",
       "preview": "Both generators wrap emitted text in one Liquid raw block. A skill or BPMN documentation string containing the literal raw-block closing tag ends that block early; what follows is parsed as Liquid and can break the Pages build (it broke staging once, per a9tx §HANDOVER). Fix: one shared helper that escapes the closing tag inside the wrapped text, used by both generators, with a test.\n\n## Done when",
       "file": "beans/defs/folio-assistant-kjbb--gen-skill-docsgen-processes-viz-a-literal-endraw-t.md"
     },
@@ -15519,13 +15533,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 581,
-        "closed": 260,
-        "open": 321,
+        "closed": 261,
+        "open": 320,
         "inProgress": 137,
-        "todo": 183,
+        "todo": 182,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4475043029259897
+        "share": 0.44922547332185886
       },
       {
         "id": "folio-assistant-vuip",
@@ -15533,14 +15547,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 274,
+        "total": 275,
         "closed": 114,
-        "open": 160,
-        "inProgress": 93,
+        "open": 161,
+        "inProgress": 94,
         "todo": 66,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.41605839416058393
+        "share": 0.41454545454545455
       },
       {
         "id": "folio-assistant-yg29",
