@@ -25,6 +25,7 @@ import { RemoteSourceSchema, resolveSubgraphSource } from "../../schemas/subgrap
 import { MountLockSchema, mountedInstanceRoots } from "../../schemas/remote-mount.ts";
 import { checkRemote, exitCode, mountRemote, planRemote, remoteFanOut, summarise } from "../remote-mount.ts";
 import { run as replayLocks } from "../mount-from-lock.ts";
+import { gitCorpus } from "../../schemas/git-corpus.ts";
 
 function git(cwd: string, ...args: string[]): string {
   const r = spawnSync("git", args, { cwd, encoding: "utf-8", env: { ...process.env, GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@t", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@t" } });
@@ -359,6 +360,13 @@ describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", ()
       expect(replayLocks(fresh, true).outcomes.every((o) => o.state === "current")).toBe(true);
       // the mounter that writes locks reads the replayed tree as its own
       expect(checkRemote({ instanceRoot: fresh }).state).toBe("mounted");
+      // a repo-wide scan sees mounted files as it saw a submodule's: ignored by git, still corpus
+      const corpus = gitCorpus(fresh)!.map((f) => f.slice(fresh.length + 1));
+      expect(corpus).toContain("boot/ns.jsonld");
+      expect(corpus).toContain("core/scripts/run.ts");
+      expect(corpus).toContain("core/core.json");
+      expect(corpus.filter((f) => f === "boot/boot.json")).toHaveLength(1);
+      expect(gitCorpus(fresh, ["*.jsonld"])!.map((f) => f.slice(fresh.length + 1))).toEqual(["boot/ns.jsonld"]);
       // an edit is reported, and a replay leaves it untouched
       writeFileSync(join(fresh, "boot/README.md"), "edited\n");
       const again = replayLocks(fresh, false).outcomes.find((o) => o.instance === "boot")!;
