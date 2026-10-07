@@ -1,15 +1,14 @@
 ---
 # folio-assistant-4z5o
-title: 'Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure'
-status: in-progress
+title: Generated GitHub edit/source URLs escape the repo with ../ for every cross-instance figure
+status: completed
 type: bug
-parent: folio-assistant-o3xy
 priority: normal
-tags:
-  - ready-to-close
 created_at: 2026-10-04T09:08:59Z
-updated_at: 2026-10-06T19:50:00Z
+updated_at: 2026-10-07T11:50:39Z
+parent: folio-assistant-o3xy
 ---
+
 Generated pages compose GitHub URLs by joining an instance-relative path that leaves the instance root, producing links with `/main/../` in them:
 
     https://github.com/litlfred/folio-assistant/edit/main/../folio-assistant-core/processes/library/l1-document-ingestion.bpmn

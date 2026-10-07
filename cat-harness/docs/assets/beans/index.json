@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 524,
+      "count": 523,
       "unit": "open beans"
     }
   },
@@ -444,7 +444,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:42Z",
-      "updatedAt": "2026-10-07T11:54:45Z",
+      "updatedAt": "2026-10-07T02:45:37Z",
       "preview": "PR #2080, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2080.json`, status `waiting-on-author`): Owner-ap",
       "file": "beans/defs/folio-assistant-129h--merge-refused-2080-owed-ci-not-green-on-its-head.md"
     },
@@ -922,20 +922,6 @@
       "file": "beans/defs/folio-assistant-2ae2--readers-docs-site-feature-staging-review-heat-map.md"
     },
     {
-      "id": "folio-assistant-2as0",
-      "title": "Agent-triggered staging: local build + push to gh-pages, then an Artifact preview (#2410)",
-      "status": "in-progress",
-      "type": "feature",
-      "priority": "",
-      "parent": "folio-assistant-q4jm",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-10-07T11:12:53Z",
-      "updatedAt": "2026-10-07T11:12:53Z",
-      "preview": "Issue #2410. PR 1: cat-harness/scripts/stage-local.ts builds the folio's preview in the agent's checkout and pushes STAGING/<slug>/ through the same gate and render log as the workflow. PR 2: --artifact publishes it as a claude.ai Artifact. Measured 2026-10-07: 33 min runner queue before the workflow ran 45 s; Pages deploy 47 min queued.",
-      "file": "beans/defs/folio-assistant-2as0--agent-triggered-staging-local-build-push-to-gh-pag.md"
-    },
-    {
       "id": "folio-assistant-2b5s",
       "title": "MOUNT COPIES A DIRECTORY WHOLESALE: /who-iris/ publishes 1,367 corpus files as pages, and /library/who-iris/ publishes all 1,378 a second time",
       "status": "completed",
@@ -989,7 +975,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-07T11:42:15Z",
+      "updatedAt": "2026-10-07T02:43:07Z",
       "preview": "PR #1955, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_MvpHighRisk: conflict declared, own CI green.\n- Queue entry (`beans/queue/litlfred--folio-assistant--1955.json`, status `active`): STATUS UNKNOWN on the 13:40Z al",
       "file": "beans/defs/folio-assistant-2ee5--merge-refused-1955-handed-back.md"
     },
@@ -2344,7 +2330,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:42:21Z",
-      "updatedAt": "2026-10-07T11:37:47Z",
+      "updatedAt": "2026-10-07T02:42:07Z",
       "preview": "PR #2082, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict clean, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2082.json`, status `active`): Owner-approved 2026-10-04 ~14:00Z (",
       "file": "beans/defs/folio-assistant-5ki9--merge-refused-2082-owed-ci-not-green-on-its-head.md"
     },
@@ -3180,7 +3166,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:41Z",
-      "updatedAt": "2026-10-07T11:25:16Z",
+      "updatedAt": "2026-10-07T02:39:42Z",
       "preview": "PR #2055, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2055.json`, status `waiting-on-author`): Covered ",
       "file": "beans/defs/folio-assistant-7jdm--merge-refused-2055-owed-ci-not-green-on-its-head.md"
     },
@@ -3568,7 +3554,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:41Z",
-      "updatedAt": "2026-10-07T11:16:58Z",
+      "updatedAt": "2026-10-07T02:38:14Z",
       "preview": "PR #2043, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2043.json`, status `waiting-on-author`): STATUS UNKNOWN on the",
       "file": "beans/defs/folio-assistant-87mi--merge-refused-2043-owed-ci-not-green-on-its-head.md"
     },
@@ -3724,7 +3710,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T13:33:34Z",
-      "updatedAt": "2026-10-05T06:00:00Z",
+      "updatedAt": "2026-10-07T08:12:00Z",
       "preview": "Related: `blgm` (the merge pipeline tools: `merge-base.ts` is where the check belongs). Filed under epic `nok9` because a bean can only have an epic, milestone or feature as its parent.\n\nA merge can silently delete a file that `main` tracks but `.gitignore` covers, and nothing catches it until CI fails on a fresh checkout. Every local check stays green, because regen rewrites the file on disk and ",
       "file": "beans/defs/folio-assistant-8j9e--a-merge-silently-drops-a-gitignored-but-tracked-fi.md"
     },
@@ -4002,7 +3988,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:41Z",
-      "updatedAt": "2026-10-07T11:33:44Z",
+      "updatedAt": "2026-10-07T02:41:19Z",
       "preview": "PR #2063, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_NotReady: conflict clean, own CI green.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2063.json`, status `active`): STATUS UNKNOWN on the 13:40Z all-PR r",
       "file": "beans/defs/folio-assistant-9f05--merge-refused-2063-not-signed-mergeguard-checks-3.md"
     },
@@ -4032,7 +4018,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-07T11:29:30Z",
+      "updatedAt": "2026-10-07T02:40:30Z",
       "preview": "PR #2094, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI missing-required.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2094.json`, status `active`): ACK: Owner-approved",
       "file": "beans/defs/folio-assistant-9gkj--merge-refused-2094-owed-ci-not-green-on-its-head.md"
     },
@@ -4677,7 +4663,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:43Z",
-      "updatedAt": "2026-10-07T11:50:25Z",
+      "updatedAt": "2026-10-07T02:44:43Z",
       "preview": "PR #1898, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict clean, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--1898.json`, status `blocked`): The vqlp HOLD IS LIFTED. The owner",
       "file": "beans/defs/folio-assistant-b8de--merge-refused-1898-owed-ci-not-green-on-its-head.md"
     },
@@ -5798,7 +5784,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T15:07:55Z",
-      "updatedAt": "2026-10-07T11:21:16Z",
+      "updatedAt": "2026-10-07T02:38:58Z",
       "preview": "PR #2102 (two bean notes on 4ak5 and yj6r; no code), opened 15:01Z on 2026-10-04. Handed back on intake by the Merge Manager.\n\n## Refused\n- `merge:steward`: Rule_NotReady. Green, but there is no ready marker and no `ready-to-merge` label (merge:guard checks 3 and 4), and it conflicts with main in generated paths only (most likely the regenerated `beans/notes/README.md`).\n- Awaiting the owner's exp",
       "file": "beans/defs/folio-assistant-e0hw--merge-refused-2102-not-signed-conflicts-with-main.md"
     },
@@ -7183,7 +7169,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T19:10:49Z",
-      "updatedAt": "2026-10-07T00:13:29Z",
+      "updatedAt": "2026-10-06T19:30:28Z",
       "preview": "Stage 13 / F of n3ni. Owner 2026-10-06 (confirmed twice): 'cutover dirs should go to fsh-guts', then 'All three now'. Content lives in forks litlfred/smart-trust, litlfred/smart-base, litlfred/smart-immunizations (branch claude/seed-smart-base). smart-ig retired with them: it is only the waypoint between smart-base and the two IGs, and its needs:[smart-base] cannot resolve once smart-base is gone.",
       "file": "beans/defs/folio-assistant-hupw--smart-separation-cutover-retire-smart-trust-smart.md"
     },
@@ -7443,7 +7429,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:42Z",
-      "updatedAt": "2026-10-07T11:46:10Z",
+      "updatedAt": "2026-10-07T02:43:54Z",
       "preview": "PR #2071, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2071.json`, status `waiting-on-author`): STATUS UNKNOWN on the",
       "file": "beans/defs/folio-assistant-is8n--merge-refused-2071-owed-ci-not-green-on-its-head.md"
     },
@@ -7937,20 +7923,6 @@
       "file": "beans/defs/folio-assistant-k9yq--sticky-art-default-square-crop-faded-unless-the-to.md"
     },
     {
-      "id": "folio-assistant-kc7k",
-      "title": "Docs site: cat-harness pages publish under /docs/cat-harness/, not the site root (#2188)",
-      "status": "in-progress",
-      "type": "task",
-      "priority": "normal",
-      "parent": "folio-assistant-0lmb",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-10-05T14:02:31Z",
-      "updatedAt": "2026-10-06T00:02:06Z",
-      "preview": "Owner ruling 2026-10-05: cat-harness docs move from the site root to /docs/cat-harness/, a clean break with no redirects, so they cannot collide with instance mounts, graph-kind directories, locales or exports at the root (108 root entries; architecture and skills already share a page and a directory stem). Issue #2188. Supersedes the open question in 8h42. Done when: the published site serves cat",
-      "file": "beans/defs/folio-assistant-kc7k--docs-site-cat-harness-pages-publish-under-docscat.md"
-    },
-    {
       "id": "folio-assistant-kd85",
       "title": "LHS navbar: Graphs section starts closed (#2150)",
       "status": "completed",
@@ -8191,14 +8163,14 @@
     {
       "id": "folio-assistant-kye5",
       "title": "TWO README GENERATORS claim bootstrap-tools/README.md: folio-assistant's readme:sync:all strips the generated-by notices bootstrap-tools' own writes",
-      "status": "completed",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T09:30:25Z",
-      "updatedAt": "2026-10-07T08:07:00Z",
+      "updatedAt": "2026-10-01T11:22:38Z",
       "preview": "Found 2026-10-01 (PR #1769). At the bootstrap-tools pin c5e5e25, bun run readme:sync:all:check is red: folio-assistant's cat-harness/content/pipeline/readme-sections.ts rewrites the kg:roles row (adds glossary links) in a SUBMODULE this repo cannot commit to. At bootstrap-tools main (9c00c53) its own scripts/readme-sections.ts adds 'generated by bootstrap-tools' notices, which folio-assistant's ge",
       "file": "beans/defs/folio-assistant-kye5--two-readme-generators-claim-bootstrap-toolsreadmem.md"
     },
@@ -9246,7 +9218,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:42:21Z",
-      "updatedAt": "2026-10-07T11:12:49Z",
+      "updatedAt": "2026-10-07T02:37:33Z",
       "preview": "PR #2100, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_NotReady: conflict clean, own CI green.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2100.json`, status `unknown`): ACK: new at 14:25Z (throttle merge-g",
       "file": "beans/defs/folio-assistant-ns96--merge-refused-2100-not-signed-mergeguard-checks-3.md"
     },
@@ -10309,20 +10281,6 @@
       "updatedAt": "2026-10-04T13:06:48Z",
       "preview": "Issue #1767; proposal cat-harness/docs/proposals/smart-separation-2026-10-01.md §Decided Q5.\n\nOwner, 2026-10-01: \"what they really need to be are sub-document types/kinds/visualizer for them. smart-L1 is like a L1 document that was fully computable from smart-base assets (and maybe some other things like PICO, cochrane, etc), semi fixed structure ... similarly DAK is a publication type w/ the 10 c",
       "file": "beans/defs/folio-assistant-qvxh--smart-l1-and-dak-as-document-kinds-with-visualizer.md"
-    },
-    {
-      "id": "folio-assistant-qzsq",
-      "title": "Subscriptions vs remote mounts of the same instance: kg:subscribe on cat-harness trips reference-direction; on the root it is refused because root needs the instance",
-      "status": "todo",
-      "type": "task",
-      "priority": "",
-      "parent": "",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-10-07T12:46:47Z",
-      "updatedAt": "2026-10-07T12:46:47Z",
-      "preview": "Found on folio-assistant#2320 (bean `hupw`), 2026-10-07. Owner ruling, about 12:10 UTC: **\"Skip for now\"**. #2320 lands with the remote mounts only. This bean is where the subscriptions get decided.\n\n## What happens\n\nThe plan was for folio-assistant to subscribe to the three SMART forks at their pinned merge SHAs, with #2330's `kg:subscribe --upstream-path smart-base`:\n- smart-base as a substrate;",
-      "file": "beans/defs/folio-assistant-qzsq--subscriptions-vs-remote-mounts-of-the-same-instanc.md"
     },
     {
       "id": "folio-assistant-r0tm",
@@ -11837,12 +11795,12 @@
       "title": "TOC benchmark: score Nougat on the 13 outline PDFs (needs huggingface.co) (#2302)",
       "status": "todo",
       "type": "task",
-      "priority": "normal",
-      "parent": "folio-assistant-cp3v",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T18:05:01Z",
-      "updatedAt": "2026-10-07T10:57:08Z",
+      "updatedAt": "2026-10-06T18:05:01Z",
       "preview": "Follow-up to bean cp3v / PR #2303 (issue #2302). Needs an agent with network access to huggingface.co (Nougat weights); the cp3v session's container is denied it.\n\nBranch from claude/compassionate-johnson-rzv00r and open a PR INTO that branch (or into main once #2303 has merged). Do not edit _pdf_headings.py.\n\n## Steps\n- [ ] pip install nougat-ocr (weights: facebook/nougat-small; nougat-base if a ",
       "file": "beans/defs/folio-assistant-u9lb--toc-benchmark-score-nougat-on-the-13-outline-pdfs.md"
     },
@@ -13964,14 +13922,14 @@
     {
       "id": "folio-assistant-z3rf",
       "title": "Route outline-less PDFs: inferred contents when trusted (6xaz + mean confidence >= 0.6), else page granularity (#2302)",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
-      "priority": "normal",
+      "priority": "",
       "parent": "folio-assistant-cp3v",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T05:08:20Z",
-      "updatedAt": "2026-10-07T10:44:51Z",
+      "updatedAt": "2026-10-07T05:08:20Z",
       "preview": "Owner decision on #2302 (2026-10-07): option 1. A PDF with no outline uses its inferred contents when it passes the 6xaz concentration check AND the entries' mean confidence is at least 0.6; otherwise pdf-structure.py falls back to page granularity (one section per page) instead of today's single whole-document section.\n\n## Todo\n- [x] Measure the threshold on the benchmark corpus (mean confidence ",
       "file": "beans/defs/folio-assistant-z3rf--route-outline-less-pdfs-inferred-contents-when-tru.md"
     },
@@ -15572,14 +15530,14 @@
         "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md",
         "status": "todo",
         "epics": 2,
-        "total": 71,
-        "closed": 30,
+        "total": 70,
+        "closed": 29,
         "open": 41,
         "inProgress": 20,
         "todo": 21,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.4225352112676056
+        "share": 0.4142857142857143
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15602,14 +15560,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 583,
+        "total": 582,
         "closed": 263,
-        "open": 320,
-        "inProgress": 137,
+        "open": 319,
+        "inProgress": 136,
         "todo": 182,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.451114922813036
+        "share": 0.4518900343642612
       },
       {
         "id": "folio-assistant-vuip",
@@ -15618,13 +15576,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 275,
-        "closed": 116,
-        "open": 159,
-        "inProgress": 92,
+        "closed": 115,
+        "open": 160,
+        "inProgress": 93,
         "todo": 66,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4218181818181818
+        "share": 0.41818181818181815
       },
       {
         "id": "folio-assistant-yg29",
@@ -15642,8 +15600,8 @@
         "share": 1
       }
     ],
-    "orphanOpen": 1,
-    "openTotal": 524,
+    "orphanOpen": 0,
+    "openTotal": 523,
     "coveredOpen": 520,
     "duplicateIds": 0
   }

@@ -1,12 +1,11 @@
 ---
 # folio-assistant-7te5
 title: who-iris's 12 generated pages are counted as authored — gen-iris-pages marks nothing it writes
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-04T06:25:09Z
-updated_at: 2026-10-06T22:49:41Z
-tags:
-  - ready-to-close
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-0lmb
 ---
 
