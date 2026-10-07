@@ -30,6 +30,8 @@ import {
   fetchPull,
   getAll,
   isBotMerge,
+  isStewardAckComment,
+  claimsReadyFlip,
   openQuestions,
   readyMarkers,
   sameRepoNext,
@@ -184,6 +186,95 @@ describe("check 2 — ready for review", () => {
 
   test("never a draft: nothing to attribute, passes", () => {
     expect(status(real(1960), "ready-for-review").status).toBe("pass");
+  });
+
+  test("steward ACK posted within seconds of another session's flip does not steal attribution or refuse (bean gdni)", () => {
+    const s = real(1957);
+    const own = signingSession(s.pr.body)!;
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    // Steward ACK is posted at +2s (closer to flip than own session's ready marker at +4s)
+    s.comments.push(
+      signed(
+        20,
+        shift(ev.created_at!, 2_000),
+        STEWARD,
+        "**Merge queue ACK** (Merge Manager, https://claude.ai/code/session_01StewardStewardSteward)\n\nQueued for merge.",
+      ),
+    );
+    s.comments.push(signed(21, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
+    const c = status(s, "ready-for-review", { mergingSession: STEWARD });
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain(`marked ready at ${ev.created_at} by the PR's own session \`${own}\``);
+  });
+
+  test("steward ACK carrying HTML comment marker within seconds passes", () => {
+    const s = real(1957);
+    const own = signingSession(s.pr.body)!;
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(
+      signed(
+        22,
+        shift(ev.created_at!, 1_000),
+        STEWARD,
+        "<!-- steward:ack -->\nQueued for next train.",
+      ),
+    );
+    s.comments.push(signed(23, shift(ev.created_at!, 3_000), own, "Re-marked ready from this PR's own session."));
+    const c = status(s, "ready-for-review", { mergingSession: STEWARD });
+    expect(c.status).toBe("pass");
+  });
+
+  test("steward ACK alone without an owning session comment does not attribute the flip", () => {
+    const s = real(1957);
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(
+      signed(
+        24,
+        shift(ev.created_at!, 2_000),
+        STEWARD,
+        "ACK: queued for merge.",
+      ),
+    );
+    const c = status(s, "ready-for-review", { mergingSession: STEWARD });
+    expect(c.status).toBe("refuse");
+    expect(c.kind).toBe("not-ready");
+    expect(c.detail).toContain("does not exist");
+  });
+});
+
+describe("isStewardAckComment and claimsReadyFlip (bean gdni)", () => {
+  test("isStewardAckComment recognises common steward notes and markers", () => {
+    expect(isStewardAckComment("**Merge queue ACK** (Merge Manager, https://claude.ai/code/session_abc)")).toBe(true);
+    expect(isStewardAckComment("ACK: Owner-approved, queued for merge")).toBe(true);
+    expect(isStewardAckComment("[ACK] Queued for merge")).toBe(true);
+    expect(isStewardAckComment("Hand-back: conflict on main")).toBe(true);
+    expect(isStewardAckComment("Handed back to PR owner")).toBe(true);
+    expect(isStewardAckComment("Queue entry: #2107")).toBe(true);
+    expect(isStewardAckComment("Queued for next train")).toBe(true);
+    expect(isStewardAckComment("<!-- steward:ack -->\nQueued")).toBe(true);
+    expect(isStewardAckComment("<!-- merge:ack -->\nQueued")).toBe(true);
+    expect(isStewardAckComment("<!-- steward:note -->\nNoting queue state")).toBe(true);
+
+    expect(isStewardAckComment("Marking ready and labelling.")).toBe(false);
+    expect(isStewardAckComment("ready: 58a18693dc")).toBe(false);
+    expect(isStewardAckComment("I updated the queue processing algorithm.")).toBe(false);
+    expect(isStewardAckComment(null)).toBe(false);
+  });
+
+  test("claimsReadyFlip recognises comments claiming the ready flip", () => {
+    expect(claimsReadyFlip("ready: 58a18693dc89d9f77f37b39ea1d1eb33710f1a4c")).toBe(true);
+    expect(claimsReadyFlip("Marking ready and labelling.")).toBe(true);
+    expect(claimsReadyFlip("Marking ready.")).toBe(true);
+    expect(claimsReadyFlip("The PR is now marked ready for review.")).toBe(true);
+    expect(claimsReadyFlip("Re-marked ready from this PR's own session.")).toBe(true);
+    expect(claimsReadyFlip("- Ready-for-review: I converted this PR to draft and back from this session")).toBe(true);
+
+    // Negatives / ACKs / unrelated
+    expect(claimsReadyFlip("The PR is not ready for review yet.")).toBe(false);
+    expect(claimsReadyFlip("**Merge queue ACK** (Merge Manager, https://claude.ai/code/session_abc)")).toBe(false);
+    expect(claimsReadyFlip("<!-- steward:ack -->\nMarked ready by someone")).toBe(false);
+    expect(claimsReadyFlip("Just pushing a commit.")).toBe(false);
+    expect(claimsReadyFlip(null)).toBe(false);
   });
 });
 

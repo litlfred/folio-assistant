@@ -49,6 +49,7 @@ import { readdirSync, readFileSync, existsSync, writeFileSync } from "fs";
 import { join, resolve, relative, dirname, basename } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
 import { requirePaper } from "../content/pipeline/repo-root";
+import { inputSiteReached } from "./input-trace.ts";
 
 // Was `import.meta.dir`-relative, i.e. the PLATFORM — but every path below is
 // folio content (`content/**`, `computations/**`), and this is used as the cwd
@@ -81,6 +82,7 @@ function* walk(dir: string): Generator<string> {
     if (entry.isDirectory()) {
       // Skip nested build / vendored / Lean source dirs
       if (entry.name === "lean" || entry.name === "node_modules" ||
+          // input-site: inert #75d48ebd — names a build-output directory only to leave it out of a walk
           entry.name === ".lake" || entry.name === "build") continue;
       yield* walk(p);
     } else if (entry.isFile() && entry.name.endsWith(".ts")) {
@@ -173,6 +175,7 @@ function* walkLean(dir: string): Generator<string> {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const p = join(dir, entry.name);
     if (entry.isDirectory()) {
+      // input-site: inert #15eaa176 — names a build-output directory only to leave it out of a walk
       if (entry.name === ".lake" || entry.name === "build") continue;
       yield* walkLean(p);
     } else if (entry.isFile() && entry.name.endsWith(".lean")) {
@@ -351,9 +354,12 @@ function computeStats(paperDir: string, contentRoot: string): Stats {
 
   const pct = (n: number, d: number) => d === 0 ? 0 : Math.round((n / d) * 1000) / 10;
 
+  // input-site: traced #1d2d5d8a — generated_at of a coverage report
+  inputSiteReached("lean-coverage: clock");
+  const generatedAt = new Date().toISOString();
   return {
     paper: paperDir,
-    generated_at: new Date().toISOString(),
+    generated_at: generatedAt,
     total_blocks: blocks.length,
     by_kind: byKind,
     provable: {

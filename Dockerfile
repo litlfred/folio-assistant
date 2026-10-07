@@ -79,7 +79,7 @@ RUN npm install -g \
 #
 # `deps:python:check` now fails if this line stops installing from the
 # generated file, so the two cannot diverge again.
-COPY requirements.txt /tmp/requirements.txt
+COPY cat-harness-tools/python/requirements.txt /tmp/requirements.txt
 RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt \
  && rm /tmp/requirements.txt
 

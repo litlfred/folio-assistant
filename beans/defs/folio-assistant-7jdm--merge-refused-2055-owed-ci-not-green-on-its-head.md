@@ -1,10 +1,11 @@
 ---
 # folio-assistant-7jdm
 title: 'Merge refused: #2055 owed CI not green on its head'
-status: completed
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T02:39:44Z
+updated_at: 2026-10-07T11:25:16Z
+tags: [ready-to-close]
 parent: folio-assistant-nok9
 ---
 
