@@ -68,7 +68,7 @@ import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 import { SubscriptionKindSchema, type SubscriptionKind } from "./substrate-snapshot.js";
-import { MountDefaultsSchema, RemoteMountsSchema, type MountDefaults, type RemoteMount } from "./remote-mount.js";
+import { MountDefaultsSchema, RemoteMountsSchema, readMountLock, type MountDefaults, type RemoteMount } from "./remote-mount.js";
 
 import {
   KgAssetSchema,
@@ -3995,7 +3995,33 @@ export function forgeLocation(path: string, repoUrl: string, repoRoot?: string):
   for (const s of gitSubmodules(repoRoot)) {
     if (path === s.path || path.startsWith(`${s.path}/`)) return { repoUrl: s.url, path: path.slice(s.path.length + 1) };
   }
+  // Since bean `nn8e` (#2462) those layers are REMOTE MOUNTS, and the lock is
+  // what says where each came from: this checkout's forge holds no copy, so a
+  // link there 404s.
+  for (const m of mountedLocations(repoRoot)) {
+    if (path === m.path || path.startsWith(`${m.path}/`)) {
+      const rest = path.slice(m.path.length + 1);
+      return { repoUrl: m.url, path: [m.upstreamRoot, rest].filter((x) => x.length > 0).join("/") };
+    }
+  }
   return { repoUrl, path };
+}
+
+/** Each remote-mounted instance's checkout path, forge URL and path in its own repository, from the root's locks. */
+export function mountedLocations(repoRoot: string = join(import.meta.dir, "..", "..")): Array<{ path: string; url: string; upstreamRoot: string }> {
+  let names: string[];
+  try {
+    names = readdirSync(repoRoot).filter((f) => f.endsWith(".mount-lock.json"));
+  } catch {
+    return [];
+  }
+  const out: Array<{ path: string; url: string; upstreamRoot: string }> = [];
+  for (const f of names) {
+    const r = readMountLock(join(repoRoot, f));
+    if (!r.ok) continue;
+    for (const i of r.lock.instances) out.push({ path: i.path.replace(/\/+$/, ""), url: `https://github.com/${i.repository}`, upstreamRoot: i.upstreamRoot.replace(/^\/+|\/+$/g, "") });
+  }
+  return out;
 }
 
 /**

@@ -168,13 +168,26 @@ export function checkoutsOf(job: Job): CheckoutStep[] {
     // MOUNTS, not submodules: the checkout is served by a later step in the
     // same job that replays the lock into the same path. `submodules:` alone
     // no longer supplies them — there is no `.gitmodules` to read.
-    const root = (path ?? ".").replace(/\/+$/, "");
-    const mounted = job.lines
-      .slice(i + 1)
-      .some((l) => {
-        const m = /mount-from-lock\.ts["']?\s+--root\s+["']?([^"'\s;]+)/.exec(l);
-        return m?.[1] !== undefined && m[1].replace(/\/+$/, "") === root;
-      });
+    // The whole value, so `${{ steps.x.outputs.checkout }}` compares as one
+    // expression rather than as its first token.
+    const full = /^\s*path:\s*(.+?)\s*$/.exec(pathLine ?? "")?.[1]?.replace(/^["']|["']$/g, "");
+    const norm = (p: string) => p.replace(/\s+/g, " ").replace(/\/+$/, "");
+    const root = norm(full ?? ".");
+    const after = job.lines.slice(i + 1);
+    const mounted = after.some((l, k) => {
+      const m = /mount-from-lock\.ts["']?\s+--root\s+["']?([^"'\s;]+)/.exec(l);
+      if (m?.[1] === undefined) return false;
+      // A path that is a step output reaches the script through `env:`, never
+      // interpolated (check:workflow-injection): follow `$VAR` to its value in
+      // the same step, which sits just above its `run:`.
+      const v = /^\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?$/.exec(m[1]);
+      if (v?.[1] !== undefined) {
+        const stepStart = after.slice(0, k + 1).findLastIndex((x) => /^\s{0,8}- /.test(x));
+        const env = after.slice(Math.max(stepStart, 0), k + 1).map((x) => new RegExp(`^\\s*${v[1]}:\\s*(.+?)\\s*$`).exec(x)?.[1]).find(Boolean);
+        return env !== undefined && norm(env.replace(/^["']|["']$/g, "")) === root;
+      }
+      return norm(m[1]) === root;
+    });
     out.push({
       line: job.start + i + 1,
       path,
