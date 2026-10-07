@@ -6,7 +6,7 @@ type: task
 priority: normal
 parent: folio-assistant-bzyu
 created_at: 2026-10-05T14:24:39Z
-updated_at: 2026-10-07T21:05:00Z
+updated_at: 2026-10-07T17:15:00Z
 ---
 
 Update who-iris .pot gettext templates, verify 6 UN official language translations (en source + ar, es, fr, ru, zh in who-iris/translations/), and perform untainted roundtrip QA (independent back-translation + adjudication) per untainted-verification discipline.
@@ -76,10 +76,3 @@ All checkers operated under `untainted-verification` discipline with `TOOLS_USED
 
 ## Completed
 All 6 acceptance criteria completed and verified. WHO-IRIS .pot templates, 6 UN language translations, and roundtrip QA completed.
-
-## Evidence: Closed on Landed Work
-
-Delivered and landed in PR #2209 (commit `009ad093e112`):
-- WHO-IRIS gettext .pot templates updated and 6 UN language translations verified.
-- Untainted roundtrip Q/A (double-blind back-translation + adjudication) passed.
-- Search activation deployed on WHO-IRIS site.

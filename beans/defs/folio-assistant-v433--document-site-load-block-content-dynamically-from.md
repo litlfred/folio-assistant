@@ -5,7 +5,7 @@ status: completed
 type: feature
 priority: high
 created_at: 2026-10-06T20:28:26Z
-updated_at: 2026-10-07T21:05:00Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -29,10 +29,3 @@ _2026-10-06T22:00Z_ — Edit/feedback links unified across visualizers (owner: '
 
 ## Completed
 All 6 acceptance criteria completed and verified. Dynamic block loading implemented and verified for document site.
-
-## Evidence: Closed on Landed Work
-
-Delivered and landed in commits `dffd2a28457f`, `f8cbb4add08e`, `abee8fc92c54`:
-- Dynamic JS loading of block content from published graph per chapter.
-- Full hydrated fallback page for file:// and crawlers.
-- Dynamic edit/feedback links unified across visualizers.

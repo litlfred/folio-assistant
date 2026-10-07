@@ -8,7 +8,7 @@ tags:
     - wireframe-findings
     - ui
 created_at: 2026-10-06T18:52:19Z
-updated_at: 2026-10-07T21:05:00Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -32,9 +32,3 @@ At 1280×800, opening ⚙ Glass settings from the tile dock puts the panel at y 
 
 ## Completed
 All 5 acceptance criteria completed and verified. Settings panel layering under tile dock fixed and verified.
-
-## Evidence: Closed on Landed Work
-
-Delivered and landed in PR #2312 (commit `0cb430276f38`):
-- Glass settings panel opens wholly above dock at 1280x800 and 390x844.
-- Hit testing e2e tests passing in `glass-panel-in-view.e2e.ts`.

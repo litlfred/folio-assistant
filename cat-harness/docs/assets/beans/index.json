@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 368,
+      "count": 378,
       "unit": "open beans"
     }
   },
@@ -545,6 +545,20 @@
       "updatedAt": "2026-10-01T09:12:25Z",
       "preview": "Owner, 2026-10-01: *\"https://www.hl7.org/fhir/testplan.html is a downstream target in fhir context … we should be able to map to fhir test plan when we have full smart guidelines IG content.\"*\n\n## What\n`test-plan/v1` (platform, `cat-harness/schemas/test-plan.ts`, bean `ygzh`) stays FHIR-free. In the FHIR context a SMART Guidelines IG gets its test plans **exported as FHIR TestPlan resources**:\n- `",
       "file": "beans/defs/folio-assistant-18p1--export-test-planv1-fhir-r5-testplan-in-fhir-harnes.md"
+    },
+    {
+      "id": "folio-assistant-1948",
+      "title": "SHA-pin GitHub Actions workflows: required on main and publish, unpinned on staging",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ieum",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T22:03:25Z",
+      "updatedAt": "2026-10-07T22:03:25Z",
+      "preview": "",
+      "file": "beans/defs/folio-assistant-1948--sha-pin-github-actions-workflows-required-on-main.md"
     },
     {
       "id": "folio-assistant-197s",
@@ -2269,14 +2283,14 @@
     {
       "id": "folio-assistant-5akx",
       "title": "KeyedBySchema and DirectoryStorageSchema were two spellings of one enum — route parsed in one and threw in the other",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-fs43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T08:35:58Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T08:10:00Z",
       "preview": "## What was measured\n\n`main@12b916e9a5`, probe calling both schemas on one `storage` value:\n\n    A. DirectoryStorageSchema accepts keyedBy route? true\n    B. resolveSubgraphSource THREW: ZodError |\n       Invalid option: expected one of \"commit\"|\"tip\"\n\n`DirectoryStorageSchema.keyedBy` (`schemas/cat-harness.ts`) gained `\"route\"` with bean `1j3q`.\n`KeyedBySchema` (`schemas/subgraph-source.ts`), whic",
       "file": "beans/defs/folio-assistant-5akx--keyedbyschema-and-directorystorageschema-were-two.md"
     },
@@ -2900,7 +2914,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T12:28:52Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T17:15:00Z",
       "preview": "Owner, 2026-09-19: *\"metadata on ghpages staging should be avalabale in KG\"*.\n\nQueued, not started — raised mid-turn while the preview cleanup was running,\nand the standing instruction is to queue rather than pivot.\n\n## The ask, as I read it\n\nEvery staging preview under `STAGING/<slug>` on `gh-pages` has facts attached\nto it: which branch it was built from, which commit, which pull request and\niss",
       "file": "beans/defs/folio-assistant-6pfo--staging-previews-on-gh-pages-carry-metadata-that-e.md"
     },
@@ -4954,14 +4968,14 @@
     {
       "id": "folio-assistant-blgm",
       "title": "MERGE PIPELINE TOOLS: merge:train, merge:overlap, merge:leftover replace the steward's scratch scripts",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T17:22:14Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-02T21:22:55Z",
       "preview": "Owner approved 2026-10-02. Three commands for the merge steward, replacing scratch scripts train.sh / train2.sh / ch-impact.sh / verify.sh.\n\n- merge:train — build a train branch from a base SHA and members (PR numbers or branches): merge-base.ts --no-regen per member, refuse undeclared conflicts, one regen plus check:l1-complete --write, smart-kg-l1 --entry where stale, kg:audit:all:check; merge o",
       "file": "beans/defs/folio-assistant-blgm--merge-pipeline-tools-mergetrain-mergeoverlap-merge.md"
     },
@@ -5747,15 +5761,15 @@
     {
       "id": "folio-assistant-dt15",
       "title": "SEARCH: a collapsible magnifier at the top of the display window, full width when open (#1715)",
-      "status": "completed",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:54:34Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
-      "preview": "Owner, 2026-09-30: \"search that should be a collsaible icon/avatar on top of display window... that when open is full span width of all avaioblae\". Issue #1715. Supersedes the navbar/corner design of rx6k. Branch claude/search-collapsible.\n\n## Evidence: Closed on Landed Work\n\nDelivered and landed in PR #1720 (commits `481652c43790` and `1750c9d0bfa3`):\n- Search collapsible magnifier at top of disp",
+      "updatedAt": "2026-09-30T22:54:34Z",
+      "preview": "Owner, 2026-09-30: \"search that should be a collsaible icon/avatar on top of display window... that when open is full span width of all avaioblae\". Issue #1715. Supersedes the navbar/corner design of rx6k. Branch claude/search-collapsible.",
       "file": "beans/defs/folio-assistant-dt15--search-a-collapsible-magnifier-at-the-top-of-the-d.md"
     },
     {
@@ -6756,6 +6770,20 @@
       "file": "beans/defs/folio-assistant-gkv6--navbar-row-counts-beans-and-todos-icons-carry-coun.md"
     },
     {
+      "id": "folio-assistant-gl5v",
+      "title": "remote-KG trust gate in materialize-remote and dependency resolution",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ieum",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T22:03:25Z",
+      "updatedAt": "2026-10-07T22:03:25Z",
+      "preview": "",
+      "file": "beans/defs/folio-assistant-gl5v--remote-kg-trust-gate-in-materialize-remote-and-dep.md"
+    },
+    {
       "id": "folio-assistant-gm9g",
       "title": "render:bpmn:check on bootstrap/processes/*.svg — two generators, one artefact; FIXED by #1663, and my 'flap' diagnosis retracted",
       "status": "completed",
@@ -7527,7 +7555,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:30:42Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T14:55:47Z",
       "preview": "PR #2071, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict declared, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2071.json`, status `waiting-on-author`): STATUS UNKNOWN on the",
       "file": "beans/defs/folio-assistant-is8n--merge-refused-2071-owed-ci-not-green-on-its-head.md"
     },
@@ -7995,14 +8023,14 @@
     {
       "id": "folio-assistant-k8rc",
       "title": "The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:25:00Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-09-21T21:40:00Z",
       "preview": "The markdown half of this is done (`vzur`, #769). This is the `.ts` half, and\nit is **not** simply the same sweep one file type over — the exemption that\ncovers it is sound for most of the corpus and wrong for a subset.\n\n**Measured 2026-09-21 on `main` @ `83cc04b`:** 344 mentions of `harness.json`\nor `harness.config.json` in `.ts` files under `cat-harness/`, excluding\n`RETIRED_DECLARATION`'s own d",
       "file": "beans/defs/folio-assistant-k8rc--the-typescript-prose-backlog-344-and-two-of-them.md"
     },
@@ -9128,7 +9156,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T10:28:18Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T17:15:00Z",
       "preview": "Owner, 2026-10-06: \"the diagrams on https://litlfred.github.io/smart-trust/sequence-diagrams.html are now resiable/scrollable like the bpmn diagrams are. tehy should be\" (read as: are NOT, and should be). Screenshot: wide PlantUML SVGs on the IG narrative page overflow and are clipped at the right edge.\n\n## Done when\n- [x] Inline/IMG diagram SVGs on IG site pages get the BPMN viewer's pan, zoom an",
       "file": "beans/defs/folio-assistant-n7f8--ig-site-diagrams-plantuml-sequencedeployment-svgs.md"
     },
@@ -9280,9 +9308,9 @@
       "id": "folio-assistant-nn8e",
       "title": "Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462",
       "status": "in-progress",
-      "type": "task",
+      "type": "feature",
       "priority": "high",
-      "parent": "folio-assistant-0mpw",
+      "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T20:07:21Z",
@@ -9764,14 +9792,14 @@
     {
       "id": "folio-assistant-ozwb",
       "title": "Mount pass claims /smart-trust/ for openapi and rails the IG site (#2401)",
-      "status": "completed",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T07:34:06Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T08:05:31Z",
       "preview": "An igSite instance root is skipped by mountable(), so withRoutes hands /<instance>/ to the next renderable kind (smart-trust: openapi). The mount then copies openapi over the IG site and rails every IG page, adding navbar.css (body padding-left 56px, .fa-nav-* rules) on top of the Jekyll side-bar. Fix: withRoutes takes rootTaken = igSiteRoots(). Issue #2401.\n\n## Done when\n- [x] root cause measured",
       "file": "beans/defs/folio-assistant-ozwb--mount-pass-claims-smart-trust-for-openapi-and-rail.md"
     },
@@ -10299,14 +10327,14 @@
     {
       "id": "folio-assistant-qj9a",
       "title": "STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement",
-      "status": "completed",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:10:30Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T08:16:00Z",
       "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
@@ -10369,14 +10397,14 @@
     {
       "id": "folio-assistant-qook",
       "title": "check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus",
-      "status": "completed",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:04:49Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T08:13:00Z",
       "preview": "## CORRECTED 2026-09-26 — the cause is NOT `ymsu`, and the title understates it\n\nThis bean was opened saying *\"a sweep artefact\"* and pointing at `ymsu` — a\ngate that writes what a later gate reads. **That was wrong**, and it was a\nhypothesis stated in a bean's title as though it were the finding. The actual\ncause is a one-character `.gitignore` bug that distorts the CORPUS of every\nworktree `chec",
       "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
@@ -11376,7 +11404,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:24:39Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T17:15:00Z",
       "preview": "Update who-iris .pot gettext templates, verify 6 UN official language translations (en source + ar, es, fr, ru, zh in who-iris/translations/), and perform untainted roundtrip QA (independent back-translation + adjudication) per untainted-verification discipline.\n\n\n## Tasks\n- [x] Ensure who-iris .pot templates are extracted and up-to-date (`bun run cat glossary:pot:check`)\n- [x] Verify 6 UN officia",
       "file": "beans/defs/folio-assistant-t0jg--who-iris-update-pot-templates-6-un-language-transl.md"
     },
@@ -11734,7 +11762,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T08:21:22Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T17:30:00Z",
       "preview": "Sibling of ba9e (its worked example is PR #2044); the class is y7b3, \"a timestamp or total in a committed generated file turns every pair of concurrent changes into a conflict\". The landing place is arc 3fva, owner rulings D1/D4.\n\n## Measured (2026-10-04, this checkout, 400 commits on main)\n\n| file | commits touching it, of 400 |\n|---|---|\n| cat-harness/test/results/lsi/cat-harness/skills.lsi.json",
       "file": "beans/defs/folio-assistant-tqjj--lsi-trio-off-main-the-index-sidecar-its-run-record.md"
     },
@@ -12266,7 +12294,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T20:28:26Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T17:15:00Z",
       "preview": "Owner, 2026-10-06, after the DPI-H page (933 blocks, 2.3 MB HTML) was heavy to load: 'that can be dynamic JS load of KG, as should of rest of content', then 'Start building it now on this branch.'\n\nDesign: the document page becomes a SHELL (headings, block anchors, block actions, comment notes) and each block's rendered HTML is published as data, one JSON per chapter, loaded when it nears the view",
       "file": "beans/defs/folio-assistant-v433--document-site-load-block-content-dynamically-from.md"
     },
@@ -13105,6 +13133,20 @@
       "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> also please add back uploads/ folder. it should be initiation skill of\n> folio-asst-core/ and preseverd in the current folio-asst/ repo as state.\n> library/ should also be added in at initation, but not as state by KG-Content.\n\n## MEASURED FIRST, because \"add back\" turned out not to mean what it sounds like\n\nBoth directories are **present**, declared, and",
       "file": "beans/defs/folio-assistant-wwi6--initiation-uploads-and-library-are-created-at-init.md"
+    },
+    {
+      "id": "folio-assistant-x2ay",
+      "title": "add security:gate task to publish and merge BPMN processes",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ieum",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T22:03:25Z",
+      "updatedAt": "2026-10-07T22:03:25Z",
+      "preview": "",
+      "file": "beans/defs/folio-assistant-x2ay--add-securitygate-task-to-publish-and-merge-bpmn-pr.md"
     },
     {
       "id": "folio-assistant-x3bd",
@@ -14211,7 +14253,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:06:56Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T14:55:47Z",
       "preview": "Found by ojcx's real run, 2026-09-23. `init-folio --link sibling --assistant ../platform` writes `platform_dir: ../platform` into `.github/workflows/staging.yml`. In Actions, that path is outside the checkout, so the reusable workflow's \"Check out the platform\" step cannot place the platform there. A sibling checkout exists on the author's machine, never in CI. The folio-test run worked only becau",
       "file": "beans/defs/folio-assistant-zdfa--init-sibling-link-stagingyml-gets-platform-dir-pla.md"
     },
@@ -14337,7 +14379,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T18:52:19Z",
-      "updatedAt": "2026-10-07T21:05:00Z",
+      "updatedAt": "2026-10-07T17:15:00Z",
       "preview": "Recorded in the navbar wireframe's Findings (\"Seen on the build, not one of the twelve\"), re-drawn in #2295 (bean `folio-assistant-1q4b`); first noted in #1810 as \"found, not fixed\".\n\n## Defect\n\nAt 1280×800, opening ⚙ Glass settings from the tile dock puts the panel at y = 591. Its body sits under the fixed tile dock until the reader scrolls the glass. The controls the tile has just opened cannot ",
       "file": "beans/defs/folio-assistant-zpso--glass-settings-panel-opens-under-the-tile-dock-nav.md"
     },
@@ -15621,13 +15663,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 585,
-        "closed": 367,
-        "open": 218,
-        "inProgress": 68,
+        "closed": 361,
+        "open": 224,
+        "inProgress": 74,
         "todo": 149,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.6273504273504273
+        "share": 0.6170940170940171
       },
       {
         "id": "folio-assistant-vuip",
@@ -15635,14 +15677,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 279,
-        "closed": 165,
+        "total": 278,
+        "closed": 164,
         "open": 114,
         "inProgress": 55,
         "todo": 58,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.5913978494623656
+        "share": 0.5899280575539568
       },
       {
         "id": "folio-assistant-yg29",
@@ -15660,9 +15702,9 @@
         "share": 1
       }
     ],
-    "orphanOpen": 1,
-    "openTotal": 368,
-    "coveredOpen": 364,
+    "orphanOpen": 5,
+    "openTotal": 378,
+    "coveredOpen": 370,
     "duplicateIds": 0
   }
 }

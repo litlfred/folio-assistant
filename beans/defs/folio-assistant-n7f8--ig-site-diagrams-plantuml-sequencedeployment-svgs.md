@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-06T10:28:18Z
-updated_at: 2026-10-07T21:05:00Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -55,9 +55,3 @@ The viewer already exists and is generic, not BPMN-specific: `mountFigure` / `mo
 
 ## Completed
 All 5 acceptance criteria completed and verified. Pan/zoom/resize viewer for IG diagrams implemented and verified.
-
-## Evidence: Closed on Landed Work
-
-Delivered and landed in PR #2276 (commit `1480c5bf9219`):
-- Shared BPMN pan/zoom/resize viewer extended to PlantUML sequence/deployment SVGs across all IG site pages.
-- Keyboard accessible, e2e test passing.

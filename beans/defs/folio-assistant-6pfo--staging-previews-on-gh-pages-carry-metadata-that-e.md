@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-10-07T21:05:00Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -318,9 +318,3 @@ PR #1483's merge ran `cleanup`. `STAGING/_retired/claude-brave-hawking-511rrx.js
 
 ## Completed
 All 4 acceptance criteria completed and verified. Staging preview metadata published as KG graph on gh-pages.
-
-## Evidence: Closed on Landed Work
-
-Delivered and landed in PR #1483 (commit `7b685b667b38`):
-- Staging metadata graph published on gh-pages (`staging-preview.json`).
-- Retirement workflow into `_retired/` verified live.

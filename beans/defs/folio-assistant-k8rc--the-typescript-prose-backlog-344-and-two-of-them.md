@@ -1,11 +1,11 @@
 ---
 # folio-assistant-k8rc
 title: 'The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them'
-status: completed
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T20:25:00Z
-updated_at: 2026-10-07T21:05:00Z
+updated_at: 2026-09-21T21:40:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -69,7 +69,7 @@ reads), which is why it is worth counting rather than assuming.
       not 344** — see below.
 - [x] Every **user-visible output** mention names the file actually used, or
       the placeholder form where no path is in hand.
-- [x] A decision recorded on whether `check:declaration-filename` grows a
+- [ ] A decision recorded on whether `check:declaration-filename` grows a
       fifth class for user-visible strings — distinct from its `prose` class,
       whose exemption argument does not reach them. **The backlog is now
       clear, so this is only the owner's call**; put to them on
@@ -146,9 +146,3 @@ it was the only one that noticed — *"a matcher proven only against fixtures is
 proven against its author's idea of the file"* — and fixing all five
 occurrences would have destroyed that property. Its own commit, so a
 base-branch breakage is not buried in this diff.
-
-## Evidence: Closed on Landed Work
-
-Delivered and landed in PR #808 (commit `f99b5e575d67`):
-- TypeScript prose backlog of 335 runtime mentions addressed per issue #788 owner ruling.
-- Documentation and types aligned with platform rules.
