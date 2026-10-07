@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/Reviewer",
+  "definitions": {
+    "Reviewer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "organisation": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "acknowledge": {
+          "type": "boolean"
+        },
+        "github": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-68op-gate-name-viewer-nav/folio-assistant-core/schema/zod/public-comment/ReviewerSchema.schema.json",
+  "title": "ReviewerSchema",
+  "description": "Generated from `ReviewerSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/68op-gate-name-viewer-nav",
+    "sha": "a025fba9061f0d3e863e0d9c8f0d525cc4a67011",
+    "pr": "2348/merge",
+    "run": "37603656242"
+  }
+}
