@@ -9,7 +9,7 @@ updated_at: 2026-10-01T11:29:42Z
 parent: folio-assistant-scfh
 ---
 
-Issue #1614 item 4: methodology literature the KG / folio-asst deck relies on and no library holds. ODRL Information Model 2.2 (REC 2018-02-15; actor permissions, before/after check), PROV-O (REC 2013-04-30; QA/QC reports as provenance, bun run prov:qaqc), JSON-LD 1.1 (REC 2020-07-16; every manifest is JSON-LD). w3.org is blocked from the container; the REC publication snapshots are in each WG's GitHub repo (w3c/poe, w3c/prov, w3c/json-ld-syntax), printed to PDF offline and ingested with bun run ingest.
+Issue #1614 item 4: methodology literature the KG / folio-asst deck relies on and no library holds. ODRL Information Model 2.2 (REC 2018-02-15; actor permissions, before/after check), PROV-O (REC 2013-04-30; QA/QC reports as provenance, bun run cat prov:qaqc), JSON-LD 1.1 (REC 2020-07-16; every manifest is JSON-LD). w3.org is blocked from the container; the REC publication snapshots are in each WG's GitHub repo (w3c/poe, w3c/prov, w3c/json-ld-syntax), printed to PDF offline and ingested with bun run cat ingest.
 
 ## Done when
 

@@ -270,7 +270,7 @@ if (import.meta.main) {
     if (!derived.present) {
       console.error(
         `  ✗ refusing --write-baseline: ${relative(ROOT, RESULTS)} is absent, so the baseline would be written ` +
-          `over a corpus nobody looked at. Run \`bun run qa:fetch --ref main\` first.`,
+          `over a corpus nobody looked at. Run \`bun run cat qa:fetch --ref main\` first.`,
       );
       process.exit(2);
     }
@@ -344,7 +344,7 @@ if (import.meta.main) {
     );
     console.log(
       `\n  The derived QA corpus lives on the \`qa-reports\` branch. Materialise it with\n` +
-        `  \`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) and re-run. Do NOT edit the baseline.`,
+        `  \`bun run cat qa:fetch --ref main\` (or \`--ref pr/<n>\`) and re-run. Do NOT edit the baseline.`,
     );
     process.exit(2);
   }

@@ -249,7 +249,7 @@ git log --format="%h %p" -1 origin/pr-<n>-merge   # <merge> <base> <YOUR HEAD>
 ```
 
 Stale means that second parent is not your head — nothing else does. This is
-the same fact `bun run gates` exists around: **CI tests the merge**, and so
+the same fact `bun run cat gates` exists around: **CI tests the merge**, and so
 does the preview, so a branch behind its base is previewing a tree nobody will
 have.
 

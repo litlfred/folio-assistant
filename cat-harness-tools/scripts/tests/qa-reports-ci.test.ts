@@ -6,7 +6,7 @@
  *   anywhere in a workflow is a finding; the sanctioned writer is
  *   `qa-store.ts`, which owns the fetch → splice → push loop and refuses `-f`.
  * - `gates.ts` — a job holding `contents: write` is a publisher, so
- *   `bun run gates` never runs `qa:publish` on a contributor's machine.
+ *   `bun run cat gates` never runs `qa:publish` on a contributor's machine.
  *
  * Read against the REAL workflow files, so a later edit that drops the
  * schedule, the dry-run default, or the job's separation fails here.
@@ -38,8 +38,8 @@ describe("qa-reports-unretried", () => {
   });
 
   test.each([
-    ["bun run qa:publish --github"],
-    ["bun run qa:prune --apply"],
+    ["bun run cat qa:publish --github"],
+    ["bun run cat qa:prune --apply"],
     ["# git push origin x:qa-reports — a comment"],
     ["git push origin x:qa-reports-spike"],
     ["git push origin x:cat-qa-reports-spike"],
@@ -69,10 +69,10 @@ describe("the publish job", () => {
     expect(job.if).toContain("'pull_request'");
     expect(job.permissions).toEqual({ contents: "write" });
     expect(doc.permissions).toEqual({ contents: "read" });
-    expect(job.steps.some((s) => s.run?.includes("bun run qa:publish --github"))).toBe(true);
+    expect(job.steps.some((s) => s.run?.includes("bun run cat qa:publish --github"))).toBe(true);
   });
 
-  test("is not a gate: `bun run gates` does not extract it, in either set", () => {
+  test("is not a gate: `bun run cat gates` does not extract it, in either set", () => {
     expect(publishes(job)).toBe(true);
     expect(publishes({ permissions: { contents: "read" } })).toBe(false);
     expect(publishes({ permissions: "write-all" })).toBe(true);

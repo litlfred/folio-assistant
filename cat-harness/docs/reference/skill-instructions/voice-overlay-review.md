@@ -20,7 +20,7 @@ every voice it ships. `<name>.config.json` holds the list; an empty list means
 there is nothing for this skill to do and that is a pass, not a gap.
 
 ```sh
-bun run check:voices    # the voices, their rule counts, and that every citation resolves
+bun run cat check:voices    # the voices, their rule counts, and that every citation resolves
 ```
 
 ## The rule's citation is the argument, so open it

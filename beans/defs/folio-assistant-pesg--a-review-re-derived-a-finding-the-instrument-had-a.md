@@ -12,7 +12,7 @@ updated_at: 2026-09-27T08:21:26Z
 
 ## What happened, 2026-09-25
 
-`bun run health` reported **one** orphaned staging preview, named, sized and
+`bun run cat health` reported **one** orphaned staging preview, named, sized and
 reasoned:
 
 > `STAGING/dependabot-github_actions-actions-c1d4c18a44` (101.6 MB, 1426 files)

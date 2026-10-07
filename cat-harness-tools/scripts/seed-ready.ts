@@ -2,9 +2,9 @@
  * Is the source of a staged layer settled enough to seed it?
  *
  * ```sh
- * bun run seed:ready --layer cat-harness           # JSON report, exit 0/1/2
- * bun run seed:ready --layer cat-harness --text    # the same, for a person
- * bun run seed:ready --layer cat-harness --fixture prs.json   # offline
+ * bun run cat seed:ready --layer cat-harness           # JSON report, exit 0/1/2
+ * bun run cat seed:ready --layer cat-harness --text    # the same, for a person
+ * bun run cat seed:ready --layer cat-harness --fixture prs.json   # offline
  * ```
  *
  * This evaluates `GW_SeedReady` — "Ready to seed?" — in `kg-separation.bpmn`,

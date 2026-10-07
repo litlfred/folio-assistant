@@ -4,7 +4,7 @@
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
-  by `bun run render:bpmn` — never hand-edit the SVG.
+  by `bun run cat render:bpmn` — never hand-edit the SVG.
 
   The shape of this process is an argument about one sentence. "Create a folio"
   is asked by at least five different people wanting five different things:
@@ -64,7 +64,7 @@
       construction to publication, with `unknown` kept distinct from `not-yet`.
 
       Source of truth: this file. The SVG under docs/assets/img/workflows/ is
-      generated from it by `bun run render:bpmn` — never hand-edit the SVG.</bpmn:documentation>
+      generated from it by `bun run cat render:bpmn` — never hand-edit the SVG.</bpmn:documentation>
     <bpmn:extensionElements>
       <cat-harness.processes:policy enforcement="strict" />
     </bpmn:extensionElements>

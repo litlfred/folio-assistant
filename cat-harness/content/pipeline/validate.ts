@@ -318,7 +318,7 @@ async function loadBlocksFromDir(
           `tree: ${resultsRoot} is absent from this checkout, so verdicts under ` +
           `test/results/block-qa/ were NOT checked (verdicts beside the blocks ` +
           `were). The derived QA corpus lives on the \`qa-reports\` branch — run ` +
-          `\`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) and validate again.`;
+          `\`bun run cat qa:fetch --ref main\` (or \`--ref pr/<n>\`) and validate again.`;
         if (entries.length > 0 && !issues.some((i) => i.message === notice)) {
           issues.push({ level: "warning", block: "(none)", message: notice });
         }

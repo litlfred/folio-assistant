@@ -67,7 +67,7 @@ failure at the moment you read it, which is `1xhc`'s subject from the other
 side: here a gate fires when nothing is wrong, where `1xhc`'s usual case is a
 gate staying silent when something is.
 
-It also has a measurable cost in this repo: an author who runs `bun run gates`
+It also has a measurable cost in this repo: an author who runs `bun run cat gates`
 and sees 2 red cannot tell it is not theirs, which is the same "could not
 determine is never rendered as clean" failure that plausibly contributes to
 open PRs sitting unlandable.
@@ -122,7 +122,7 @@ Recorded and left `todo`. The session that found it was doing unrelated work
 ## Third independent confirmation, and one piece of evidence the bean does not yet have — 2026-09-26, ~17:30
 
 Seen again on `81461747918` (a beans-only branch, no source change), inside
-`bun run gates`. Same two files. **Not appending a duplicate observation: the new
+`bun run cat gates`. Same two files. **Not appending a duplicate observation: the new
 element is that the failing SET VARIES between runs of the identical commit.**
 
     full run A   buildReport — absence is absence
@@ -144,7 +144,7 @@ CI on that same commit reported **1** `bun test` failure, not 3 — main's `t8g3
 drift and nothing else — so the runner does not reproduce it and the local gate set
 is the surface that misreports.
 
-Consequence worth recording for whoever takes this: **`bun run gates` and
+Consequence worth recording for whoever takes this: **`bun run cat gates` and
 `check:merged` inherit it.** A session comparing a local gate run against CI sees
 2-of-158 locally against CI's 2 and has to establish, by hand and per run, that the
 extra names are not findings. That is the third time in one session that a local
@@ -158,7 +158,7 @@ had me open a duplicate of it.
 
 ## Two more timeouts, and their MARGINS are the evidence
 
-A clean-tree `bun run gates` on 2026-09-26 21:2x hit these, in the same file:
+A clean-tree `bun run cat gates` on 2026-09-26 21:2x hit these, in the same file:
 
     (fail) a paper-only criterion is n/a'd in a document folio, under its OWN outcome  [5170.50ms]
       ^ this test timed out after 5000ms.
@@ -185,7 +185,7 @@ whoever holds it should decide which.
 
 ## A third margin, and the SPREAD is the new evidence
 
-A clean-tree `bun run gates` on the merged tree (`6b4c89309ed`, 2026-09-27 05:0xZ)
+A clean-tree `bun run cat gates` on the merged tree (`6b4c89309ed`, 2026-09-27 05:0xZ)
 failed exactly one gate of 167, and its one failing test was:
 
     (fail) buildReport — absence is absence > a translated block reports coverage,
@@ -625,7 +625,7 @@ From run 2, default-budget cases by share — this is the deliverable:
 15 new tests (fixtures plus one corpus case asserting
 `declared-directory-resolves` IS seen to declare a budget — if it were not, the tool
 would report the repository's best-behaved slow test as its worst offender).
-`bun run gates` **170 of 170**, tree clean afterwards. `tsc` and `eslint` clean.
+`bun run cat gates` **170 of 170**, tree clean afterwards. `tsc` and `eslint` clean.
 
 - [x] **OWNER DECISION** — **BOTH (1 and 3)**, 2026-09-27: the instrument is built
       (`check:test-budgets`) and the live failure is fixed (`skill-coverage`).
@@ -756,7 +756,7 @@ bean's own defect committed by its own fix.
 
 ### Verification
 
-`bun run gates` **171 of 171**, tree clean. 17 tests in the file (was 14), `tsc` exit 0
+`bun run cat gates` **171 of 171**, tree clean. 17 tests in the file (was 14), `tsc` exit 0
 — it caught a real `string[] | undefined` in my first draft, fixed by holding the
 sample as entries rather than asserting the non-null away. `eslint` clean.
 

@@ -27,8 +27,8 @@ is the fifth, `<slide>` in `library-ingestion.md`, and it cost
 
 `check:escaped-markup` scans a **built tree**. Measured on main: it appears
 **once** in all of `.github/workflows/`, at `docs-site.yml:593` as
-`bun run check:escaped-markup ./_site`, and **0 times** in
-`code-quality-gates.yml`. So it runs only after merge, and `bun run gates`
+`bun run cat check:escaped-markup ./_site`, and **0 times** in
+`code-quality-gates.yml`. So it runs only after merge, and `bun run cat gates`
 cannot run it at all.
 
 That is the whole mechanism of the recurrence: #1615 was green on its PR and
@@ -74,7 +74,7 @@ a check that gets switched off."*
 
 1. [x] A source-side check flags a column-0 non-HTML pseudo-tag in published
        markdown, excusing autolinks, real HTML and fenced regions.
-2. [x] It is wired into `code-quality-gates.yml`, so `bun run gates` runs it and
+2. [x] It is wired into `code-quality-gates.yml`, so `bun run cat gates` runs it and
        a PR fails instead of main.
 3. [x] Falsified against the REAL historical defect: re-plant `<slide>`, watch
        it fire, restore, watch it pass.
@@ -100,7 +100,7 @@ source line explains.
 
 `check:escaped-markup:source` in `package.json`, and a step in
 `code-quality-gates.yml`. `gates.ts` derives its list from that workflow, so
-`bun run gates` picks it up with nothing further to declare.
+`bun run cat gates` picks it up with nothing further to declare.
 
 ### Falsified against the REAL defect, not a synthetic one
 
@@ -173,9 +173,9 @@ _2026-10-06T23:37:28Z_ — Claimed by claude/7pp6-close-landed-escaped-markup-so
 1. Implementation landed in commit `02f16ae98bb52a1662accaff24699f6f5a271283` via PR #1743 ("A column-0 pseudo-tag in a published source now fails the PR, not main (#1743)").
 2. `check:escaped-markup` gained `--source` mode, wired into `code-quality-gates.yml` and `package.json` (`check:escaped-markup:source`).
 3. Re-derived and re-tested clean source execution:
-   `bun run check:escaped-markup:source`
+   `bun run cat check:escaped-markup:source`
    Result: `✓ no markdown source line opens a raw HTML block, across 759 source(s)` (exit 0).
 4. Re-tested and verified regression tests:
    `bun test ./cat-harness-tools/scripts/tests/escaped-markup-source.test.ts`
    Result: 13 pass, 0 fail, 25 expect() calls across all real-world edge cases.
-5. All repository quality checks pass: `bun run typecheck`, `bun run lint` (0 errors), `bun run check:retired-front-matter`, `bun run check:bean-parents`.
+5. All repository quality checks pass: `bun run typecheck`, `bun run cat lint` (0 errors), `bun run cat check:retired-front-matter`, `bun run cat check:bean-parents`.

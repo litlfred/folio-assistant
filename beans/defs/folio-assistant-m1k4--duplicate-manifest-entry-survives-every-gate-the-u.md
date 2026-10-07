@@ -90,6 +90,6 @@ Falsified in both directions: re-adding the entry `main` carries today fails it,
 naming `workflow/release-epic-planning`; removing it passes. It fails on the
 real state of `main`, which is the only check that proves it is not vacuous.
 
-Verified: `bun run gates` 152 of 154 — the two being the `t8g3` translation
+Verified: `bun run cat gates` 152 of 154 — the two being the `t8g3` translation
 drift the owner is holding red by decision — and `bunx playwright test` **700
 passed, 0 failed**.

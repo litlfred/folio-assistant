@@ -44,7 +44,7 @@ describe("a new folio is QA'd from its first commit", () => {
     // their home is resolved from the SWEEP SCRIPT's location, not from the
     // folio being swept. So this test — sweeping a temp-directory folio —
     // wrote into `cat-harness/content/pipeline/script-sidecars/` of the real
-    // platform checkout, inside `bun test`, which is gate 1 of `bun run gates`.
+    // platform checkout, inside `bun test`, which is gate 1 of `bun run cat gates`.
     // Every gate ordered after it then read a repaired copy.
     //
     // Measured on origin/main e718627f198: with one sidecar's `script_hash`

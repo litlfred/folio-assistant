@@ -117,12 +117,12 @@
  * So: printed for a person, `--json` for a dashboard that renders it.
  *
  * Usage:
- *   bun run milestone:status                  # the table
- *   bun run milestone:status -- --json        # the same, as JSON on stdout
- *   bun run milestone:status -- --window 9    # the "active" window in hours (default 9)
- *   bun run milestone:status -- --bar        # JUST the milestone bars, one line each
- *   bun run milestone:status -- --no-fetch    # skip the fetch (faster, may be stale)
- *   bun run milestone:status -- --skip gate-evidence   # omit a slow gate
+ *   bun run cat milestone:status                  # the table
+ *   bun run cat milestone:status -- --json        # the same, as JSON on stdout
+ *   bun run cat milestone:status -- --window 9    # the "active" window in hours (default 9)
+ *   bun run cat milestone:status -- --bar        # JUST the milestone bars, one line each
+ *   bun run cat milestone:status -- --no-fetch    # skip the fetch (faster, may be stale)
+ *   bun run cat milestone:status -- --skip gate-evidence   # omit a slow gate
  *
  * Exit 0 every gate clear · 1 at least one blocked · 2 at least one
  * could-not-determine (which outranks blocked: a sweep blind on one gate has
@@ -329,7 +329,7 @@ function gateEvidence(prs: readonly Pr[]): Gate {
   const blocked: string[] = [];
   const undetermined: string[] = [];
   for (const p of prs) {
-    const r = spawnSync("bun", ["run", "check:head-has-run", "--", p.sha], { cwd: ROOT, encoding: "utf-8", maxBuffer: 32 * 1024 * 1024 });
+    const r = spawnSync("bun", ["run", "cat", "check:head-has-run", "--", p.sha], { cwd: ROOT, encoding: "utf-8", maxBuffer: 32 * 1024 * 1024 });
     if (r.status === 0) continue;
     if (r.status === 1) blocked.push(`#${p.number} — missing a run it owes`);
     else undetermined.push(`#${p.number} — could not ask (exit ${r.status})`);
@@ -380,7 +380,7 @@ function gateBeanRollover(): Gate {
   // `clear` off a plausible wrong number while the real totals were 164 and 2.
   // A structured summary cannot be misread that way, and scraping a report
   // whose author also publishes JSON is choosing the fragile reader.
-  const r = spawnSync("bun", ["run", "beans:rollover", "--", "--json"], { cwd: ROOT, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync("bun", ["run", "cat", "beans:rollover", "--", "--json"], { cwd: ROOT, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
   if (r.status === null) {
     return { id: "bean-rollover", question: "Does any bean edit still need a person?", state: "could-not-determine", value: "beans:rollover did not run", basis };
   }
@@ -441,7 +441,7 @@ function reportScopeGrowth(windowHours: number): Gate {
 /** REPORTED, not graded: how many in-progress beans have somebody behind them? */
 function reportHolders(): Gate {
   const basis =
-    "REPORTED. `bun run beans:claim` writes a `Claimed by` note; `beans update --status in-progress` does not, so an unheld in-progress bean is invisible to the already-claimed check. Counted with the predicate `claim-bean.ts` itself uses";
+    "REPORTED. `bun run cat beans:claim` writes a `Claimed by` note; `beans update --status in-progress` does not, so an unheld in-progress bean is invisible to the already-claimed check. Counted with the predicate `claim-bean.ts` itself uses";
   let inProgress = 0;
   let held = 0;
   try {

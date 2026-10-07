@@ -37,9 +37,8 @@ voice.
 - "Network location" becomes **position in the pipeline**: a value is not
   trusted because a sibling agent, a dependency or a CI job handed it over
   (tenet 2).
-- NIST's threat 5.7 is the case this skill is mostly about: an attacker who
-  can interact with an agent *"could theoretically trick the agent into …
-  performing some task on behalf of the attacker"*.
+- NIST's threat 5.7 (non-person entities in administration; quoted in the
+  node) is the case this skill is mostly about.
 
 ## Its sources: what is held, what is not
 
@@ -84,8 +83,9 @@ to every hand-over between participants.
 
 ## The boundaries this adds to the sub-KG's table
 
-[`security`](security.md) splits by boundary, not by attack name, and
-lists these hand-over boundaries (they were added to it on 2026-10-07). This
+[`security`](security.md) splits by boundary, not by attack name. It
+carries two of these rows (a hand-over reaching a model, and a remote graph
+being mounted); the rest are listed here, the skill that answers them. This
 table says which rule below answers each:
 
 | boundary | the hazard | what the receiver owes |
@@ -226,9 +226,11 @@ has four parts, and each maps onto a rule here:
 
 - **A tool-less quarantined reader with a schema.** The quarantined LLM
   *"has no tool access and can be used to parse unstructured data into data
-  with a predefined schema"* (`sec-007`, pp. 7–9). That is H3 and H9: a
-  hand-over report or a corpus file is read by something that can't act,
-  into a declared schema, before anything that can act sees it.
+  with a predefined schema"* (`sec-007`, pp. 7–9). H3 takes the SCHEMA half:
+  a hand-over is typed. **The reader half is NOT built here.** H9's screen is
+  a deterministic pattern tripwire, not a tool-less model, so nothing in this
+  platform yet does what CaMeL's quarantined LLM does (adjudication of
+  `1ygp`, L3.4). Building one is a candidate, not a fact.
 - **The plan never sees the data.** *"the P-LLM only interacts with the user
   query and not the data returned by tools or with the Q-LLM output"*
   (`sec-007`). The control flow is fixed from the principal's request, and
@@ -327,7 +329,7 @@ security:gate`, Tool node `security-gate`), and the release refuses on a
 blocking finding. "Could not check" is reported as its own state and never
 as clean. The utilisation audit on bean `ieum` (2026-10-07) found that the
 checks did run in CI, but **no merge, publish or release process step named
-any of them**. The pinning state is whatever `bun run security:gate` reports
+any of them**. The pinning state is whatever `bun run cat security:gate` reports
 now. A count written here would be stale by the next workflow edit (roast
 L3.6).
 
@@ -349,17 +351,18 @@ researched or held. Nothing in this skill describes it.
 |---|---|---|
 | no implicit trust by position; authorise each access | NIST SP 800-207, via the adopted node `zero-trust-architecture` | **adopted** (2026-10-07) |
 | job-to-job compromise as the model for agent-to-agent | GitHub Secure use reference | applied here; the reference is an ASSERTION source, not an adopted method |
-| SHA pinning, least-privilege tokens, privileged-trigger rules, dependency review | GitHub Secure use reference | applied here as `secure-code-authoring` rules , informed by the source as prior work; not an adopted method |
+| SHA pinning, least-privilege tokens, privileged-trigger rules, dependency review | GitHub Secure use reference | applied here as `secure-code-authoring` rules, informed by the source as prior work; not an adopted method |
 | "protocol pivoting" as a separate attack class | Ars Technica, 2026-10-06 | **refused as a class name**: the same report carries a dissent calling it indirect prompt injection, and the boundary split here doesn't need the name |
-| plan fixed from the principal; data never steers it | CaMeL (`sec-007`) | applied here as H1 and H3 , informed by the source as prior work; not an adopted method |
-| tool-less quarantined reader filling a declared schema | CaMeL (`sec-007`) | applied here as H3 and H9 , informed by the source as prior work; not an adopted method |
-| a report may signal "not enough information" and nothing more about the plan | CaMeL (`sec-007`) | applied here as H3 , informed by the source as prior work; not an adopted method |
-| per-value capabilities and per-tool policies | CaMeL (`sec-005`, `sec-008`) | applied here as the sink-based risk assessment , informed by the source as prior work; not an adopted method |
+| plan fixed from the principal; data never steers it | CaMeL (`sec-007`) | applied here as H1 and H3, informed by the source as prior work; not an adopted method |
+| a declared schema for whatever crosses a hand-over | CaMeL (`sec-007`) | applied here as H3, informed by the source as prior work; not an adopted method |
+| a tool-less quarantined MODEL reader | CaMeL (`sec-007`) | **not built**: H9 is a pattern tripwire, not this; a candidate design |
+| a report may signal "not enough information" and nothing more about the plan | CaMeL (`sec-007`) | applied here as H3, informed by the source as prior work; not an adopted method |
+| per-value capabilities and per-tool policies | CaMeL (`sec-005`, `sec-008`) | applied here as the sink-based risk assessment, informed by the source as prior work; not an adopted method |
 | CaMeL's custom interpreter | CaMeL | **not adopted**: a candidate design, too large to take on without a decision |
-| field-wise screening over a declared schema | DataFilter (`sec-014`) | applied here as H9 , informed by the source as prior work; not an adopted method |
+| field-wise screening over a declared schema | DataFilter (`sec-014`) | applied here as H9, informed by the source as prior work; not an adopted method |
 | silent stripping of injected spans | DataFilter | **refused**: refuse-never-repair; quarantine with the original kept instead |
 | provider-released defensive tokens | DefensiveTokens | **refused**: needs access to model embeddings this instance does not have |
 | "strip the defence in trusted interactions" | DefensiveTokens (`sec-005`) | **refused**: no interaction is trusted by position |
-| mount a remote KG only on signed provenance (e.g. GDHCN) or explicit consent | the owner, 2026-10-07 | applied here as H8 , informed by the source as prior work; not an adopted method |
+| mount a remote KG only on signed provenance (e.g. GDHCN) or explicit consent | the owner, 2026-10-07 | **the owner's ruling**, applied as H8 and built in `schemas/mount-trust.ts` |
 | H1–H9, the sink-based risk table, the release gate | ours | **this skill**: a house application, not part of any adopted method |
 {% endraw %}

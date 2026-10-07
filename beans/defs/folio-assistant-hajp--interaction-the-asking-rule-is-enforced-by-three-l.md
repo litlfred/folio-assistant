@@ -72,7 +72,7 @@ checkable:
 - [x] `HookEventSchema` can express `PreToolUse`
 - [x] `check:command-paths` covers hook commands in `.claude/settings.json`
 - [x] A check asserts the `.claude/skills/` stub's links resolve (`check:command-paths` covers `.claude/skills/`)
-- [ ] **REVISIT GATING at twelve RENDERED decision records.** `bun run health`
+- [ ] **REVISIT GATING at twelve RENDERED decision records.** `bun run cat health`
       → **`bean-rendered-decision-records`**; it read **1** on 2026-09-21, and
       the one was this bean. This box is the trigger, and it is the whole of
       what makes "gate later" a deferral rather than a decision nobody made.
@@ -320,7 +320,7 @@ a deferral with a numeric trigger, and the measurement it asks for is cheap, so
 it was taken rather than left to accumulate.
 
 ```
-bun run health  →  bean-rendered-decision-records
+bun run cat health  →  bean-rendered-decision-records
 ```
 
 | when | value |
@@ -351,7 +351,7 @@ have got.
 
 It is emitted as a **measurement**, not a finding (`test/health/checks.ts:1396`),
 so it is written to `test/health/results/repository.health-report.json` and never
-printed among the findings. Looking for it in `bun run health`'s console output
+printed among the findings. Looking for it in `bun run cat health`'s console output
 finds nothing, which reads like a missing check and is not one. Worth knowing
 before the next session re-derives this.
 

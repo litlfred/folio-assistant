@@ -136,9 +136,9 @@
  * It is what JUDGES the `substrate-snapshot` kind rather than merely typing it.
  *
  * Usage:
- *   bun run kg:subscribe <owner/repo>@<40-char-sha> [--upstream-path <dir>] [--name <instance>]
+ *   bun run cat kg:subscribe <owner/repo>@<40-char-sha> [--upstream-path <dir>] [--name <instance>]
  *                        [--instance <dir>] [--id <id>] [--dry-run]
- *   bun run kg:subscribe:check
+ *   bun run cat kg:subscribe:check
  */
 import { createHash } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -683,7 +683,7 @@ export async function subscribe(opts: SubscribeOptions): Promise<SubscribeResult
     raw: verdict.raw,
     fixity: { algorithm: "sha256", digest: createHash("sha256").update(verdict.raw).digest("hex") },
     summary: verdict.summary,
-    note: "Somebody else's bytes, pinned. Do not edit: re-run `bun run kg:subscribe` at the pin, or refresh.",
+    note: "Somebody else's bytes, pinned. Do not edit: re-run `bun run cat kg:subscribe` at the pin, or refresh.",
   });
   const snapshotFile = join(snapshotDir, `${id}.substrate.json`);
   const snapshotText = `${JSON.stringify(snapshot, null, 2)}\n`;
@@ -733,7 +733,7 @@ export function checkSubscriptions(instanceRoot: string): string[] {
     seen.add(`${s.id}${SNAPSHOT_SUFFIX}`);
     if (!existsSync(file)) {
       const flags = `${s.upstreamPath ? ` --upstream-path ${s.upstreamPath}` : ""}${s.id !== s.repository.split("/")[1] ? ` --id ${s.id}` : ""}`;
-      out.push(`${s.id}: no snapshot at ${relative(instanceRoot, file)} — run \`bun run kg:subscribe ${s.repository}@${s.ref}${flags}\``);
+      out.push(`${s.id}: no snapshot at ${relative(instanceRoot, file)} — run \`bun run cat kg:subscribe ${s.repository}@${s.ref}${flags}\``);
       continue;
     }
     const parsed = SubstrateSnapshotSchema.safeParse(JSON.parse(readFileSync(file, "utf8")));
@@ -871,7 +871,7 @@ if (import.meta.main) {
   const target = argv.find((a, i) => !a.startsWith("--") && !valued.includes(argv[i - 1] ?? ""));
   if (!target) {
     console.error(
-      "usage: bun run kg:subscribe <owner/repo>@<40-char-sha> [--upstream-path <dir>] [--name <instance>] [--instance <dir>] [--id <id>] [--dry-run]",
+      "usage: bun run cat kg:subscribe <owner/repo>@<40-char-sha> [--upstream-path <dir>] [--name <instance>] [--instance <dir>] [--id <id>] [--dry-run]",
     );
     process.exit(2);
   }

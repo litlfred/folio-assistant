@@ -65,9 +65,9 @@ jobs:
   typescript:
     steps:
       - uses: actions/checkout@v4
-      - run: bun run lint
+      - run: bun run cat lint
 `),
-    ).toEqual([{ job: "typescript", step: "(unnamed step)", command: "bun run lint" }]);
+    ).toEqual([{ job: "typescript", step: "(unnamed step)", command: "bun run cat lint" }]);
   });
 
   test("loadGates THROWS on a workflow it cannot read gates from", () => {
@@ -133,11 +133,11 @@ describe("every check script is accounted for — the direction nothing asked", 
     // substring match would read the wired gate as covering the unwired
     // report — the two scripts in this repository that differ exactly in
     // that way — and the report would count as gated.
-    expect(commandRunsScript("bun run check:partition", "check:partition")).toBe(true);
-    expect(commandRunsScript("bun run check:partition:edges", "check:partition")).toBe(false);
-    expect(commandRunsScript("bun run check:partition", "check:partition:edges")).toBe(false);
+    expect(commandRunsScript("bun run cat check:partition", "check:partition")).toBe(true);
+    expect(commandRunsScript("bun run cat check:partition:edges", "check:partition")).toBe(false);
+    expect(commandRunsScript("bun run cat check:partition", "check:partition:edges")).toBe(false);
     // A trailing flag is still a run of that script.
-    expect(commandRunsScript("bun run check:l1-complete -- --check", "check:l1-complete")).toBe(true);
+    expect(commandRunsScript("bun run cat check:l1-complete -- --check", "check:l1-complete")).toBe(true);
     // And a name inside a longer word is not a run of it.
     expect(commandRunsScript("bun run xcheck:partition", "check:partition")).toBe(false);
   });
@@ -194,7 +194,7 @@ describe("every check script is accounted for — the direction nothing asked", 
 describe("a command whose shell variable this reader discarded is NOT a gate", () => {
   // Bean `9zok`. The extraction keeps `bun …` lines and drops the shell that
   // gave them their variables, so a command referencing one was being run with
-  // the variable's NAME. Measured: that made `bun run gates` report `✗ 1 of
+  // the variable's NAME. Measured: that made `bun run cat gates` report `✗ 1 of
   // 210` on a clean tree, which made the STRICT pre-push rule in `AGENTS.md`
   // unsatisfiable on every branch.
   const WORKFLOW = `name: w
@@ -206,8 +206,8 @@ jobs:
       - name: catalogue
         run: |
           base="$(git merge-base origin/main HEAD)"
-          bun run translation:catalogue:check
-          bun run translation:catalogue:check -- --base "$base"
+          bun run cat translation:catalogue:check
+          bun run cat translation:catalogue:check -- --base "$base"
 `;
 
   test("it is diverted out of the RUNNABLE set, and only that set", () => {
@@ -217,11 +217,11 @@ jobs:
     // stale and asserted something false about CI, which is how the first
     // draft of this fix was caught.
     expect(gatesFrom(WORKFLOW, { all: true }).map((g) => g.command)).toContain(
-      'bun run translation:catalogue:check -- --base "$base"',
+      'bun run cat translation:catalogue:check -- --base "$base"',
     );
     const runnable = runnableGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
-    expect(runnable).toContain("bun run translation:catalogue:check");
-    expect(runnable).not.toContain('bun run translation:catalogue:check -- --base "$base"');
+    expect(runnable).toContain("bun run cat translation:catalogue:check");
+    expect(runnable).not.toContain('bun run cat translation:catalogue:check -- --base "$base"');
   });
 
   test("the two sets PARTITION the extraction — nothing falls out of both", () => {
@@ -239,7 +239,7 @@ jobs:
     // A silent skip and a pass are indistinguishable from the exit code, which
     // is this file's own `NoGatesFound` doctrine applied one command at a time.
     const skipped = unresolvedGatesFrom(WORKFLOW, { all: true }).map((g) => g.command);
-    expect(skipped).toEqual(['bun run translation:catalogue:check -- --base "$base"']);
+    expect(skipped).toEqual(['bun run cat translation:catalogue:check -- --base "$base"']);
   });
 
   test("the script keeps its coverage, because CI invokes it BOTH ways", () => {
@@ -254,7 +254,7 @@ jobs:
   test("the predicate catches both spellings and leaves ordinary commands alone", () => {
     expect(carriesUnexpandedVariable('bun run x -- --base "$base"')).toBe(true);
     expect(carriesUnexpandedVariable("bun run x -- --base ${BASE}")).toBe(true);
-    expect(carriesUnexpandedVariable("bun run gates --all")).toBe(false);
+    expect(carriesUnexpandedVariable("bun run cat gates --all")).toBe(false);
     // A literal dollar that is not a variable reference must not be caught.
     expect(carriesUnexpandedVariable("bun run x -- --label '$'")).toBe(false);
   });

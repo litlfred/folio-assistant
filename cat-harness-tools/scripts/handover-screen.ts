@@ -6,8 +6,8 @@
  * `cat-harness/src/core/handover-screen.ts`.
  *
  * Usage:
- *   bun run handover:screen --schema <schema.json> <payload.json>
- *   bun run handover:screen --text <file>      # one free-text field, read as DATA
+ *   bun run cat handover:screen --schema <schema.json> <payload.json>
+ *   bun run cat handover:screen --text <file>      # one free-text field, read as DATA
  *
  * The schema is `{ "fields": { "<name>": "control" | "data" }, "strict"?: bool }`.
  *

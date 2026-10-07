@@ -22,7 +22,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/docs-index/` (int
 5. **The table cannot be searched, filtered or grouped.** Locale copies (`ar`, `es`, `fr`, `ru`, `zh`) sit among the English pages by path order, and the 99 UML pages and 33 wireframe files sit between `translation-support` and `zh/index`. Both `docs` (217 rows) and `smart-trust-docs` (676 rows) are single pages.
 6. **The phone layout favours the path.** At 390 px the first column (`width: 26rem`, capped by the viewport) takes about 220 px for the name and path. That leaves about 130 px for the description, so *no description in the artefact* wraps over several lines.
 
-When fixed, re-draw `cat-harness/docs/wireframes/docs-index/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/docs-index/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

@@ -13,7 +13,7 @@ decision, the write), plus `Task_AuthorizeRelease` and `Task_PublishRelease`
 (the `publish-authorized` SHALL). If those were negotiable the base would not be
 strict, it would be a suggestion.
 
-`bun run check:workflow-policy` lists the policy and validates every relaxation;
+`bun run cat check:workflow-policy` lists the policy and validates every relaxation;
 it runs in CI, so one that has stopped applying is a build failure rather than a
 discovery on the day it is needed.
 

@@ -29,8 +29,8 @@
  * and reported, because pinning to a guess would be a silent repair.
  *
  * Usage:
- *   bun run actions:pin            # rewrite workflows in place
- *   bun run actions:pin --dry-run  # report what would change
+ *   bun run cat actions:pin            # rewrite workflows in place
+ *   bun run cat actions:pin --dry-run  # report what would change
  *
  * @graphNode tool
  * @covers none — .github/workflows/ is not a declared graph typology

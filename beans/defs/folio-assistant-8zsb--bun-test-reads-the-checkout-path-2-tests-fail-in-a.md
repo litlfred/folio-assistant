@@ -91,7 +91,7 @@ as if it were corpus.
 
 ## What it cost, measured
 
-One full `bun run gates` run on #1616 (~25 min) reported `✗ 1 of 189 failed`
+One full `bun run cat gates` run on #1616 (~25 min) reported `✗ 1 of 189 failed`
 for these two tests. The branch was clean. The gate set was measuring the
 worktree's name.
 

@@ -70,7 +70,7 @@
     {
       "id": "who-iris-site",
       "path": "site/",
-      "description": "The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.",
+      "description": "The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run cat iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.",
       "graphTypologies": [
         "docs"
       ],
@@ -93,7 +93,7 @@
         ]
       },
       "path": "catalogue/",
-      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today — 9 referenced, 3 materialized, 0 unknown — against 1,057,223 files upstream, and that gap IS the point. `bun run check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
+      "description": "The catalogue itself: `catalogue.json` declares the corpus and its measured size; `nodes/` holds one `folio-catalogue-node/v1` per community, collection or item; `records/` holds the `folio-dublin-core/v1` metadata an item node points at through `metadataRef`. TWELVE nodes today — 9 referenced, 3 materialized, 0 unknown — against 1,057,223 files upstream, and that gap IS the point. `bun run cat check:catalogue` verifies every node validates and every metadataRef, libraryId and parent path resolves; a Zod schema can require the reference and structurally cannot check the file is there.",
       "graphTypologies": [
         "catalogue"
       ]
@@ -142,7 +142,7 @@
       "_inheritance_comment": "Not reproduced in a dependent folio, and no field here says so: `themes` is not a `perInstance` graph typology (graph-typology-registry.ts), so a downstream folio gets a themes/ directory only where it already has one and never an empty one. That is right for this entry -- it says where THIS instance's themes live, not a workspace every downstream folio needs. `uploads/` and `library/` differ because their kinds ARE `perInstance`: a dependent folio ingests its OWN sources into its own copies. Before 2026-09-30 this was the per-entry `dependents: skip`, retired by the owner (option A) because the same kind was declared both ways in different declarations."
     },
     {
-      "_comment": "The RENDERABLE surface of this instance -- the ingested-IRIS replica pages, generated from catalogue/ by scripts/gen-iris-pages.ts and gated by `bun run iris:pages:check`. Declared because the owner's URL contract (2026-09-20) makes it addressable: `<baseURL>/<instantiated-harness>/<path_to_rendered_content>`, so these land at `<baseurl>/who-iris/community-list`. Undeclared, it would be the dh4f defect on the one directory a READER actually reaches -- exactly what cat-harness/docs/ was until 2026-09-20 with 241 files. These are pages THIS instance publishes about its own catalogue. `docs` is a `perInstance` graph typology (graph-typology-registry.ts), so a dependent folio has its OWN docs/ for its own pages; it never inherits these files, which stay this instance's.",
+      "_comment": "The RENDERABLE surface of this instance -- the ingested-IRIS replica pages, generated from catalogue/ by scripts/gen-iris-pages.ts and gated by `bun run cat iris:pages:check`. Declared because the owner's URL contract (2026-09-20) makes it addressable: `<baseURL>/<instantiated-harness>/<path_to_rendered_content>`, so these land at `<baseurl>/who-iris/community-list`. Undeclared, it would be the dh4f defect on the one directory a READER actually reaches -- exactly what cat-harness/docs/ was until 2026-09-20 with 241 files. These are pages THIS instance publishes about its own catalogue. `docs` is a `perInstance` graph typology (graph-typology-registry.ts), so a dependent folio has its OWN docs/ for its own pages; it never inherits these files, which stay this instance's.",
       "id": "who-iris-docs",
       "path": "docs/",
       "graphTypologies": [
@@ -172,7 +172,7 @@
     {
       "id": "id-lookup",
       "path": "id-lookup/",
-      "description": "The GENERATED prefix-sharded identifier lookup over this catalogue's REFERENCED nodes: `manifest.json` plus JSON shards keyed by id prefix, each under 64 KiB. Written by `cat-harness-tools/scripts/gen-id-lookup.ts` (`bun run id-lookup`, gated by `id-lookup:check`), which finds this directory by its id `id-lookup` and never by this instance's name; read by `cat-harness-tools/id-lookup/lookup.js`. Here rather than beside the generator because an instance hosts its own generated outputs (D3, bean `j7ql`, 2026-10-01). Edit the catalogue, never the shards: the generator replaces this directory whole.",
+      "description": "The GENERATED prefix-sharded identifier lookup over this catalogue's REFERENCED nodes: `manifest.json` plus JSON shards keyed by id prefix, each under 64 KiB. Written by `cat-harness-tools/scripts/gen-id-lookup.ts` (`bun run cat id-lookup`, gated by `id-lookup:check`), which finds this directory by its id `id-lookup` and never by this instance's name; read by `cat-harness-tools/id-lookup/lookup.js`. Here rather than beside the generator because an instance hosts its own generated outputs (D3, bean `j7ql`, 2026-10-01). Edit the catalogue, never the shards: the generator replaces this directory whole.",
       "graphTypologies": [
         "code"
       ],

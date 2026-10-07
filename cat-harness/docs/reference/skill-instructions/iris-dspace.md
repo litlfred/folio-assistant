@@ -208,7 +208,7 @@ this repository already holds, rasterised by
 That collision is the whole hazard: nothing downstream can tell the two apart
 from the bundle name, so the node has to say.
 
-`folio-assistant-core/scripts/gen-covers.ts` (run as `bun run iris:covers`) is the catalogue half — generic to any DSpace-shaped catalogue since bean `eayu`. It renders only covers
+`folio-assistant-core/scripts/gen-covers.ts` (run as `bun run cat iris:covers`) is the catalogue half — generic to any DSpace-shaped catalogue since bean `eayu`. It renders only covers
 the **catalogue asks for** — a node declares the `THUMBNAIL` bitstream and
 this supplies the bytes, so adding one is a catalogue edit rather than a script
 quietly adding files to the repository. And it **refuses** to write bytes for a

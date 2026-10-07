@@ -1,6 +1,6 @@
 ---
 # folio-assistant-ymsu
-title: kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run
+title: kg:detangle:check CANNOT FAIL inside bun run cat gates — bun test repairs the sidecar 1140 lines earlier in the same run
 status: completed
 type: bug
 priority: normal
@@ -12,12 +12,12 @@ parent: folio-assistant-1xhc
 
 Measured 2026-09-25, while establishing whether PR #1348 still had anything to
 fix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that
-broke `main` was invisible to `bun run gates` and surfaced only because a test
+broke `main` was invisible to `bun run cat gates` and surfaced only because a test
 run left the working tree dirty.
 
 ## The mechanism
 
-`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that
+`bun run cat gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that
 suite the detangle **writer** runs, not the checker:
 
     gates3.log:56    wrote 28 pinned measurement(s) to cat-harness/test/results/detangle/
@@ -25,7 +25,7 @@ suite the detangle **writer** runs, not the checker:
 
 Gate 152 is `kg:detangle:check`, 1137 lines of output later:
 
-    gates3.log:1194  ▸ bun run kg:detangle:check
+    gates3.log:1194  ▸ bun run cat kg:detangle:check
     gates3.log:1233  ✓ 28 pinned measurement(s) current in cat-harness/test/results/detangle/
 
 It reads the file gate 1 just repaired. It is comparing the writer's output to
@@ -37,8 +37,8 @@ Committed sidecar at `internal: 154`, working tree's true value `153`:
 
 | invocation | result |
 |---|---|
-| `bun run kg:detangle:check` **alone** | **exit 1** — `STALE  …folio-core.detangle.json — internal` |
-| `bun run gates` (same tree, same commit) | **exit 0** — `✓ 152 gate(s) pass` |
+| `bun run cat kg:detangle:check` **alone** | **exit 1** — `STALE  …folio-core.detangle.json — internal` |
+| `bun run cat gates` (same tree, same commit) | **exit 0** — `✓ 152 gate(s) pass` |
 
 Same tree, same stale value, opposite verdicts. The checker is not broken —
 run alone it catches the defect exactly as designed. What is broken is that
@@ -86,7 +86,7 @@ asked.
       collects. `wrote 28 pinned measurement(s)` appears 0 times in the fixed
       run's `bun test` and once in the baseline's
 - [x] `gates` fails when the tree is entered with a staled pinned measurement.
-      MEASURED AFTER: stale one `internal` by hand, `bun run gates` exits
+      MEASURED AFTER: stale one `internal` by hand, `bun run cat gates` exits
       non-zero.
       **Both runs done, same tree, `internal: 999`.** `origin/main`
       `e718627f198`: the check PASSED inside `gates`, 1 of 182 failed and none
@@ -170,7 +170,7 @@ refuses to print its clean line when any gate did.
 | | |
 |---|---|
 | `kg:detangle:check` **alone** | exit non-zero — `STALE … — internal` |
-| `kg:detangle:check` **inside `bun run gates`** (line 1215 of the run) | **passed**, over `internal: 999` |
+| `kg:detangle:check` **inside `bun run cat gates`** (line 1215 of the run) | **passed**, over `internal: 999` |
 | the new guard | `✗ 1 gate(s) CHANGED THE REPOSITORY` → `bun test`, naming the exact sidecar |
 
 So the bean's central claim is now reproduced on demand rather than only
@@ -252,7 +252,7 @@ So `main` is carrying a sidecar its own check rejects.
 
 ### Why no gate catches it
 
-`bun run gates` reported **3** failures on this tree and `kg:detangle:check` was
+`bun run cat gates` reported **3** failures on this tree and `kg:detangle:check` was
 not among them — because `bun test` runs earlier in the same gate set and
 **rewrites the sidecar to the 1443 values**, so the check that runs afterwards
 validates a file the run itself had just repaired. The gate set is self-healing
@@ -311,7 +311,7 @@ question and did not reach for it here.
 ### What survives
 
 The observation this bean is actually about is untouched and still correct:
-`bun run gates` did not report the failing `kg:detangle:check` because `bun test`
+`bun run cat gates` did not report the failing `kg:detangle:check` because `bun test`
 runs earlier in the same set and rewrites the sidecar first, so the check validated
 a file the run itself had just written. That is this bean's subject, it is
 independent of which value was right, and it is why the discrepancy was invisible
@@ -363,7 +363,7 @@ is **never looked at**.
 | step | name | conclusion |
 |---|---|---|
 | 5 | `bun test` | **failure** |
-| 6 | `bun run lint` | skipped |
+| 6 | `bun run cat lint` | skipped |
 | … | … | skipped |
 | 33 | knowledge-graph audit | skipped |
 | 37 | detangle measurements are current | skipped |
@@ -390,7 +390,7 @@ main.** `kg:detangle:check`'s state on main is therefore not "green" and not
 
 ### Measured locally, on that same commit
 
-`bun run kg:detangle:check` alone, tree clean apart from three files outside any
+`bun run cat kg:detangle:check` alone, tree clean apart from three files outside any
 declared graph directory (`scripts/skill-register.ts`, `package.json`, a
 workflow): **exit 1**, six sidecars STALE —
 
@@ -429,7 +429,7 @@ bean of `v625` rather than assumed here.
 ### CORRECTION to the block above — the "six stale sidecars" measurement does not reproduce
 
 Written the same session, before pushing. The §"Measured locally, on that same
-commit" block above reported `bun run kg:detangle:check` exiting 1 with six
+commit" block above reported `bun run cat kg:detangle:check` exiting 1 with six
 STALE sidecars, and drew from it that `kg:detangle:check` is stale on `main`.
 **Re-measured three times on the same commit with the committed sidecars
 byte-identical to `HEAD`: exit 0, `✓ 28 pinned measurement(s) current`.**
@@ -454,7 +454,7 @@ showed the sidecars unmodified at the time of the red run, which does not fit.
 Recorded as could-not-determine rather than as a cause.
 
 One consequence IS established, and it is the useful half: a downstream artefact
-inherits the instability. After a `bun run gates` in this tree, `bun test`
+inherits the instability. After a `bun run cat gates` in this tree, `bun test`
 repaired the six sidecars (1441 → 227), and `uml:overview:check` — whose page
 carries the detangler's pinned numbers — went **red**, naming
 `cat-harness/docs/uml/overview/cat-harness.md` and `.../cat-harness/schemas.md`
@@ -665,7 +665,7 @@ sentence: a gate that does not fire is indistinguishable from one that passed.
 
 ### The part that makes this measurable rather than theoretical
 
-`bun run gates` locally reported **3** failures; CI's `Repository gates` reports
+`bun run cat gates` locally reported **3** failures; CI's `Repository gates` reports
 **1**. The difference is not the tree — it is that bun's script runner executes
 every gate while a GitHub step stops at its first failure. So the only instrument
 that saw `main`'s missing declaration was a local full run, and nothing in CI
@@ -748,7 +748,7 @@ alone; the adoption would have been worth nothing.
 
 ## 2026-09-27 — measured on pristine main, and the runner now DETECTS it
 
-`bun run gates` on a pristine `origin/main` worktree at `c6960465301`
+`bun run cat gates` on a pristine `origin/main` worktree at `c6960465301`
 reported, as its own finding:
 
 ```
@@ -781,7 +781,7 @@ the remedy, and the remedy it prints is the right one:
 `bun test` writing into the tree it is being judged on; the runner only tells
 you afterwards that it happened. So a reader still cannot trust any gate
 ordered after `bun test` in a single `gates` run, and the guidance in this
-bean — measure one check at a time, never through `bun run gates` — stands
+bean — measure one check at a time, never through `bun run cat gates` — stands
 unchanged.
 
 Provenance: pristine detached worktree at `origin/main` `c6960465301`, leaf
@@ -793,7 +793,7 @@ not confound it. `git status --porcelain` after the run: 72 paths; after
 
 ## 2026-09-27 — clause 3's exit code is RIGHT; `check:merged`'s MESSAGE was wrong
 
-Coordination first, because this bean is claimed. `bun run beans:claim
+Coordination first, because this bean is claimed. `bun run cat beans:claim
 folio-assistant-ymsu` refused: *ALREADY CLAIMED by
 claude/ymsu-gates-tree-guard*. That session is not reachable from here
 (`ListAgents`: none running). Basis for proceeding on clause 1 anyway, recorded
@@ -849,7 +849,7 @@ correct value makes the entry vanish from porcelain) has its own case.
 
 `bun test` on a clean pristine worktree at `410199a1de2` left it **clean**, and
 `portable-path.test.ts` and `qa-witness.test.ts` each write nothing. Yet inside
-`bun run gates` the guard attributes **72** `content/pipeline/script-sidecars/`
+`bun run cat gates` the guard attributes **72** `content/pipeline/script-sidecars/`
 paths to `bun test`. So the write is conditional on something the gates run sets
 up earlier, not on `bun test` alone — which means clause 1 cannot be fixed by
 reading the test files and needs the gates context reproduced. Not yet done; do
@@ -956,8 +956,8 @@ inside the tree being judged. Found on `origin/main` @ `408f9982265` (PR #1570):
 
 ```
 ✗ 2 gate(s) CHANGED THE REPOSITORY while the gates were running:
-  · bun run check:version-bump                 (1 path)  cat-harness/test/results/kg-export.qa-results.json
-  · bun run check:published-instance-exports   (1 path)  cat-harness/test/results/kg-export.bootstrap.qa-results.json
+  · bun run cat check:version-bump                 (1 path)  cat-harness/test/results/kg-export.qa-results.json
+  · bun run cat check:published-instance-exports   (1 path)  cat-harness/test/results/kg-export.bootstrap.qa-results.json
 
 ✗ every gate passed, and the run is NOT clean — 2 gate(s) changed the tree.
 ```
@@ -1017,7 +1017,7 @@ four call sites, not one. A fix scoped to `kg:detangle` leaves three standing.
 
 Three `Unblock main:` PRs landed within a week — #1563, #1568, #1570 — and this
 mechanism is why none of them could have been caught before merge by running
-`bun run gates` on the branch: the gate that would notice repairs the file
+`bun run cat gates` on the branch: the gate that would notice repairs the file
 first. Of the nine red-`main` incidents on 2026-09-30, five were corpus-walking
 artefacts staled by the merge *sequence* (bean `391j`) and this mechanism is
 what made them invisible on each branch in isolation.
@@ -1026,7 +1026,7 @@ what made them invisible on each branch in isolation.
 ## 2026-09-30 — clause 1 FIXED and falsified end to end, and the writer was never a test file
 
 PR #1616, issue #1610, branch `claude/ymsu-gates-no-repair-in-tree`. Owner asked
-for this directly. Coordination note: `bun run beans:claim ymsu` still refuses
+for this directly. Coordination note: `bun run cat beans:claim ymsu` still refuses
 with *ALREADY CLAIMED by claude/ymsu-gates-tree-guard*, the clause-3 holder from
 #1363 — whose own PR scopes clause 1 OUT in as many words. Proceeded on that
 basis plus the owner's ask, as the 2026-09-27 entry above did.
@@ -1067,7 +1067,7 @@ Fixing only the consumer would leave the next scanner to rediscover this.
 Same tree, `folio-core.detangle.json` `internal` hand-staled to `999`, whole
 gate set both times:
 
-| | `kg:detangle:check` ALONE | the same check INSIDE `bun run gates` | run verdict |
+| | `kg:detangle:check` ALONE | the same check INSIDE `bun run cat gates` | run verdict |
 |---|---|---|---|
 | `origin/main` `e718627f198` | exit 1, `STALE … — internal` | **PASSED** | 1 of 182 failed — a pre-existing `bun test`, nothing about the staleness |
 | this branch | exit 1, `STALE … — internal` | **FAILED**, `STALE … — internal` | 4 of 186 failed: three name the planted staleness, one is that same pre-existing `bun test` |
@@ -1154,7 +1154,7 @@ The fixed run's mutation report:
 
 ```
 ✗ 1 gate(s) CHANGED THE REPOSITORY while the gates were running:
-  · bun run skill:register:check   (1 path(s))
+  · bun run cat skill:register:check   (1 path(s))
       wrote     (" M")  cat-harness/test/results/skill-register.qa-results.json
 ```
 
@@ -1208,5 +1208,5 @@ measured.
 
 Work landed on `main` in PR #1616 (merge commit `da6302d3a5a6df610271d77e710a607e10333c14`, head commit `2197bc7f7dab`), satisfying all five Done-when criteria with extensive falsification and sweep measurements recorded above.
 Verified against `main`:
-1. `bun run kg:detangle:check`: passes with 69 pinned measurements current.
+1. `bun run cat kg:detangle:check`: passes with 69 pinned measurements current.
 

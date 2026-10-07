@@ -18,7 +18,7 @@ listed `processes/publication-workflow.bpmn` in the `dak` entry's
 is a PAGE embedding three diagrams. An unresolvable path makes the re-render
 SKIP it, and a skipped diagram is indistinguishable from one that needed no
 work. Corrected to `draft-to-publication.bpmn` and gated by
-`bun run check:workflow-refs` (PR #245).
+`bun run cat check:workflow-refs` (PR #245).
 
 The `draft-to-publication` reading is an inference, flagged for the author.
 
@@ -51,7 +51,7 @@ is still to do.
 
 **2026-09-18 — orchestration built; page wiring is the remaining blocker.**
 
-`scripts/translate-bpmn.ts` (`bun run translate-bpmn`):
+`scripts/translate-bpmn.ts` (`bun run cat translate-bpmn`):
 - `--extract` → **706 translatable strings across 20 diagrams**, written as
   `translations/<locale>/workflows/<name>.pot`. Committed for `fr`, matching
   the existing convention (only fr carries committed .pot files).
@@ -80,4 +80,4 @@ _2026-09-19T00:41:33Z_ — Checked 2026-09-19 on main at 17dc1e6 — LIVE per th
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.

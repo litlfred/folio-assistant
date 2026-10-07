@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: Skills"
 parent: Glossary
 nav_order: 1
@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 225 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 23 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 2 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 225 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 24 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 2 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 342 terms and is 264 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 343 terms and is 265 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>342</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>342</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>343</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>343</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">342</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">343</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a> <a href="#letter-Z">Z</a></nav>
 
@@ -875,7 +875,7 @@ formalizer <span class="fa-gloss-status">candidate, extracted</span>
 gate-tree-mutation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Reading <code>bun run gates</code>' &quot;NOT clean&quot; verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?</p>
+<p>Reading <code>bun run cat gates</code>' &quot;NOT clean&quot; verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/gate-tree-mutation.md"><code>cat-harness/skills/sdlc/sdlc-core/gate-tree-mutation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--generalise-the-fix" data-fa-state="extracted" data-fa-gloss="">
@@ -1234,7 +1234,7 @@ l1-coverage <span class="fa-gloss-status">candidate, extracted</span>
 l1-document-ingestion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The detailed method for turning a DOCUMENT in <code>uploads/</code> into a complete L1 entry in <code>library/&lt;bib-slug&gt;/</code> — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic <code>library-ingestion</code> flow; one entry point: <code>bun run ingest</code>.</p>
+<p>The detailed method for turning a DOCUMENT in <code>uploads/</code> into a complete L1 entry in <code>library/&lt;bib-slug&gt;/</code> — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic <code>library-ingestion</code> flow; one entry point: <code>bun run cat ingest</code>.</p>
 <p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md"><code>folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md</code></a></p>
 </dd>
 <dt id="smart-base--kg-skills--l2-dak-authoring" data-fa-state="extracted" data-fa-gloss="">
@@ -1367,7 +1367,7 @@ lean-witness-audit <span class="fa-gloss-status">candidate, extracted</span>
 library-ingestion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in <code>library/&lt;slug&gt;/</code> if it is materialized. The two entry points (a drop in <code>uploads/</code>, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: <code>bun run ingest</code>.</p>
+<p>The BASIC ingestion flow every asset takes: an upload is accepted, its metadata goes into the knowledge graph, and the asset lands in <code>library/&lt;slug&gt;/</code> if it is materialized. The two entry points (a drop in <code>uploads/</code>, or materializing an asset a remote graph lists), what happens to the upload afterwards, and why content-type methods refine this flow from above rather than living in it. Command: <code>bun run cat ingest</code>.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/library-ingestion.md"><code>cat-harness/skills/library/library-core/library-ingestion.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--liquid-templates" data-fa-state="extracted" data-fa-gloss="">
@@ -1535,6 +1535,13 @@ opening-brief <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Brief a bean or a topic BEFORE touching anything: what you are doing and why it is worth doing, what you already know and with what provenance, how you plan to do it and what would falsify the approach. Scales with irreversibility, not line count.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/opening-brief.md"><code>cat-harness/skills/sdlc/sdlc-core/opening-brief.md</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-skills--oxigraph-catalogue-search" data-fa-state="extracted" data-fa-gloss="">
+oxigraph-catalogue-search <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.</p>
+<p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md"><code>folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md</code></a></p>
 </dd>
 </dl>
 
@@ -2274,7 +2281,7 @@ theme-declaration <span class="fa-gloss-status">candidate, extracted</span>
 theme-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Turning a declared theme into CSS — <code>bun run themes:css</code> — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of &quot;still not image&quot; had that one cause.</p>
+<p>Turning a declared theme into CSS — <code>bun run cat themes:css</code> — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of &quot;still not image&quot; had that one cause.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-generation.md"><code>cat-harness/skills/ui/theming/theme-generation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-ui-review" data-fa-state="extracted" data-fa-gloss="">

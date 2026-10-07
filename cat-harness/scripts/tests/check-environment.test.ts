@@ -229,7 +229,7 @@ describe("distortions — DISCRIMINATION, which is the whole contract", () => {
 describe("this repository, right now", () => {
   // ANTI-VACUITY in the other direction (`6tkl`): if this returned findings on a
   // normal checkout the guard would be unusable, and every gate run would refuse.
-  test("is not distorted — otherwise `bun run gates` refuses for everyone", () => {
+  test("is not distorted — otherwise `bun run cat gates` refuses for everyone", () => {
     expect(distortions(REPO)).toEqual([]);
   });
 

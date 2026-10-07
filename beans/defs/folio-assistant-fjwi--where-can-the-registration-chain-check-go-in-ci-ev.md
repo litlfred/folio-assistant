@@ -17,7 +17,7 @@ because every placement available today is either masked or red on arrival.
 ## Why the obvious placement does not work
 
 `skill:register:check` runs the five `--check` commands individually. That is
-exactly what makes it useful locally — `bun run gates` masks two of them,
+exactly what makes it useful locally — `bun run cat gates` masks two of them,
 because `bun test` runs the `kg-audit` and `detangle` writers before their
 checks read the artefacts (bean `ymsu`).
 
@@ -124,8 +124,8 @@ Re-measured on the same commit, committed sidecars byte-identical to `HEAD`:
 
 | | |
 |---|---|
-| `bun run kg:detangle:check` | **exit 0** — `✓ 28 pinned measurement(s) current`, three times |
-| `bun run skill:register:check` (all five steps) | **exit 0**, and the working tree untouched afterwards |
+| `bun run cat kg:detangle:check` | **exit 0** — `✓ 28 pinned measurement(s) current`, three times |
+| `bun run cat skill:register:check` (all five steps) | **exit 0**, and the working tree untouched afterwards |
 | wall time | **13s** |
 
 So there was never a red to arrive with, and the cost objection was wrong by an

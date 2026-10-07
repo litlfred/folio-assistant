@@ -23,7 +23,7 @@
  * `bun install` **in that directory**, there is no other way to regenerate a
  * lockfile, and that install is what creates the distortion. Doing the correct
  * thing is what breaks the reading, and nothing warns you. Measured 2026-09-26:
- * it cost a full `bun run gates` cycle, and the false red arrived alongside two
+ * it cost a full `bun run cat gates` cycle, and the false red arrived alongside two
  * unrelated test failures, so the reading was wrong in three places at once and
  * none of them named a `node_modules`.
  *
@@ -48,7 +48,7 @@
  * wired into a workflow to satisfy `check:unrun-scripts`.
  *
  * ```sh
- * bun run check:environment          # 0 clean, 2 distorted
+ * bun run cat check:environment          # 0 clean, 2 distorted
  * ```
  *
  * @covers schemas
@@ -174,7 +174,7 @@ export function shadowedPackages(nested: string, root: string): string[] {
  * runs BEFORE. A patch release that changed a type would slip past — and that is the
  * failure this accepts in exchange for not refusing a correctly set-up checkout,
  * which is the worse of the two and was measured: the equality version blocked
- * `bun run gates` on a tree whose typecheck was clean.
+ * `bun run cat gates` on a tree whose typecheck was clean.
  *
  * A malformed version is treated as NOT matching, so an unreadable pair is reported
  * rather than waved through — `could not tell` belongs on the refusing side here,

@@ -25,7 +25,7 @@
  * advisory for staging-only ones (owner, 2026-10-07). An `advisory` check
  * (dependency advisories, staging pinning) is reported in
  * the same three states and never blocks. Pinning was advisory on day one,
- * when 0 of 240 `uses:` lines were pinned; `bun run actions:pin` pinned the
+ * when 0 of 240 `uses:` lines were pinned; `bun run cat actions:pin` pinned the
  * 216 outside staging the same day, and only then did it become blocking.
  *
  * ## Every subprocess is argv, never a shell string
@@ -35,8 +35,8 @@
  * the `secure-code-authoring` voice's `scz-value-never-becomes-program-text`.
  *
  * Usage:
- *   bun run security:gate            # exit 1 on a blocking fail or unknown
- *   bun run security:gate --json     # machine-readable result on stdout
+ *   bun run cat security:gate            # exit 1 on a blocking fail or unknown
+ *   bun run cat security:gate --json     # machine-readable result on stdout
  *
  * @graphNode tool
  * @covers none — it re-runs other gates by name and reads .github/workflows/, which is not a declared graph typology; the kinds belong to the gates it calls
@@ -116,7 +116,7 @@ export function actionPinning(root = ROOT): GateResult[] {
   const published: GateResult =
     r.unpinned.length === 0
       ? { check: "action-sha-pinning", blocking: true, state: "pass", detail: `every third-party uses: outside staging-only workflows is SHA-pinned (${r.total} in all)` }
-      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside staging — run \`bun run actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
+      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside staging — run \`bun run cat actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
   const staging: GateResult = {
     check: "action-sha-pinning (staging-only)",
     blocking: false,

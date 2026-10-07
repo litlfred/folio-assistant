@@ -90,7 +90,7 @@ describe("merge-base log parsing", () => {
 describe("verdictOf", () => {
   const ok: Pick<TrainReport, "members" | "checks" | "main"> = {
     members: [{ spec: "1", label: "#1", sha: "a", status: "merged" }],
-    checks: [{ name: "regen", command: "bun run regen", status: "passed", exit: 0 }],
+    checks: [{ name: "regen", command: "bun run cat regen", status: "passed", exit: 0 }],
     main: { ref: "origin/main", sha: "b", status: "merged" },
   };
   test("built only when nothing needs a person", () => {

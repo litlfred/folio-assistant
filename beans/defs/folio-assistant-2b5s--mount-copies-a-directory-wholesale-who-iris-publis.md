@@ -126,7 +126,7 @@ The conflict held above was put back and answered with the recommended option. W
 
 ### Re-measured, not quoted
 
-Method: one local Jekyll build (`PREVIEW_NO_MOUNT=1 bun run preview:site`), then two copies of it. The mount step from `origin/main` (2e9cc280cb1) ran on one copy and the mount step from this branch on the other, as `docs-site.yml` runs it (`--site <dir> --built cat-harness`). Files were counted with `find -type f`:
+Method: one local Jekyll build (`PREVIEW_NO_MOUNT=1 bun run cat preview:site`), then two copies of it. The mount step from `origin/main` (2e9cc280cb1) ran on one copy and the mount step from this branch on the other, as `docs-site.yml` runs it (`--site <dir> --built cat-harness`). Files were counted with `find -type f`:
 
 | route | before | after | what is there now |
 |---|---|---|---|

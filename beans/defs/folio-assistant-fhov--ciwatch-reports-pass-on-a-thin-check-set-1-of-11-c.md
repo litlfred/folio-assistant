@@ -19,7 +19,7 @@ the zero case on purpose while leaving the one case wide open.
 PR #1671, head `a3e27f6b0e1`, 2026-09-30:
 
 ```
-$ bun run ci:watch a3e27f6b0e1
+$ bun run cat ci:watch a3e27f6b0e1
 19:05:47  a3e27f6b0e1  PASS — 1 check(s) completed clean
 ```
 

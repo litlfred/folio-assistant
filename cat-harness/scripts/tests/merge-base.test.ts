@@ -18,6 +18,7 @@ import { parseLog } from "../merge-main-comment.js";
 import { plan as qaPlan } from "../qa-resolve-conflicts.ts";
 import { classify, PATTERNS, resolveGeneratedRegions } from "../merge-conflict-patterns.js";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
+import { scriptsOf } from "../../schemas/script-table.ts";
 
 /** This instance and the repository it sits in, for the filesystem-driven sweeps. */
 const INSTANCE = resolve(import.meta.dir, "..", "..");
@@ -838,7 +839,7 @@ describe("owned-tree: subgraph indexes and content-addressed payloads (#2176)", 
   const onDisk = (dir: string) => (p: string) => existsSync(join(dir, p));
 
   test("both directories classify as owned-tree, pruned by a writer package.json declares", () => {
-    const scripts = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> }).scripts;
+    const scripts = scriptsOf(REPO);
     expect(classify(IDX).pattern?.id).toBe("subgraph-index");
     expect(classify("cat-harness/docs/subgraph/index.jsonld").pattern?.id).toBe("subgraph-index");
     expect(classify(`${P}/${name.base}`).pattern?.id).toBe("subgraph-payload");

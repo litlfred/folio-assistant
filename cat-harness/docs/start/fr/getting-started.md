@@ -55,7 +55,7 @@ Le tri constitue un artefact réel et lisible plutôt qu'une habitude arbitraire
   <img src="{{ '/assets/img/workflows/getting-started.svg' | relative_url }}"
        alt="Processus BPMN : un utilisateur demande à créer un folio ; l'agent détecte la modalité d'interaction, lit les faits du dépôt, et une passerelle exclusive calculée à partir de folio-intent.dmn achemine vers l'une des cinq branches — ask, overlay, new-repo, add-folio, ou un passage de relais à la rédaction de contenu. L'échafaudage amorce le plan de travail, puis la compilation Pages signale live, not-yet ou unknown.">
 </figure>
-<p class="bpmn-source"><em>Source : <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — le SVG est généré par <code>bun run render:bpmn</code>.</em></p>
+<p class="bpmn-source"><em>Source : <code>folio-assistant-core/processes/conduct/getting-started.bpmn</code> — le SVG est généré par <code>bun run cat render:bpmn</code>.</em></p>
 
 ### Les trois faits
 
@@ -156,7 +156,7 @@ Voir [Types de contenu](../../concepts/fr/content-types.html) pour découvrir ce
 Suivez le guide d'[Installation](installation.html), puis lancez :
 
 ```sh
-bun run check-deps
+bun run cat check-deps
 ```
 
 `bun` doit être signalé comme présent. Tout élément requis par votre type de contenu qui
@@ -187,8 +187,8 @@ un type de contenu n'apparaissent que lorsque l'adaptateur correspondant est act
 Sur la branche `overlay`, l'agent examine les lieux avant de toucher à quoi que ce soit :
 
 ```sh
-bun run scan:repo            # rapport en lecture seule
-bun run scan:repo -- --json  # identique, sous forme de faits
+bun run cat scan:repo            # rapport en lecture seule
+bun run cat scan:repo -- --json  # identique, sous forme de faits
 ```
 
 Il trie ce qu'il trouve en **trois** catégories — `library` (documentation source
@@ -219,8 +219,8 @@ Discipline complète : la compétence
 La création d'un folio doit se conclure par un lien. Immédiatement après l'échafaudage :
 
 ```sh
-bun run pages:bootstrap            # déduire l'adresse, générer le rapport, sans vérification réseau
-bun run pages:bootstrap -- --wait  # sonder jusqu'à ce que le site réponde (durée limitée)
+bun run cat pages:bootstrap            # déduire l'adresse, générer le rapport, sans vérification réseau
+bun run cat pages:bootstrap -- --wait  # sonder jusqu'à ce que le site réponde (durée limitée)
 ```
 
 La commande déduit l'adresse à partir de `harness.config.json` ou du dépôt distant `origin`, identifie
@@ -298,8 +298,8 @@ la même composition se positionne différemment dans un recadrage vertical.
 Puis :
 
 ```sh
-bun run docs:harness         # push the declaration into docs/_data/
-bun run docs:harness -- --check   # ...and fail if stale (for CI)
+bun run cat docs:harness         # push the declaration into docs/_data/
+bun run cat docs:harness -- --check   # ...and fail if stale (for CI)
 ```
 
 ### Trois choses qu'elle ne fera pas

@@ -115,7 +115,7 @@ describe("the third state at the PAGE level — nobody asked", () => {
     const html = mappingBlock(undefined, ["kg-skills"]);
     expect(html).toContain("Not checked");
     expect(html).toContain("unknown");
-    expect(html).toContain("bun run term:mapping");
+    expect(html).toContain("bun run cat term:mapping");
     expect(html).not.toContain("<table");
   });
 

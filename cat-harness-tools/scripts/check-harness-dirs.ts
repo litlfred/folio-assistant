@@ -30,8 +30,8 @@
  * check" and is never rendered as a pass — same rule as `check-ci-health.ts`.
  *
  * Usage:
- *   bun run check:harness-dirs
- *   bun run check:harness-dirs -- --json
+ *   bun run cat check:harness-dirs
+ *   bun run cat check:harness-dirs -- --json
  *
  * Exit: 0 consistent (or not configured), 1 a real disagreement, 2 could not check.
  *

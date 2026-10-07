@@ -70,7 +70,7 @@ bean asks for exists structurally, not as a note in a report.
 
 1. **Zero narratives exist.** Every `narrative` record in `library/` is
    `not-authored` (`ju0u`), so there are no localized narratives to round-trip.
-2. **Zero translated blocks.** `bun run translation:block-qa` reports
+2. **Zero translated blocks.** `bun run cat translation:block-qa` reports
    **`Wrote 0 sidecar(s); 609 (block, locale) pair(s) have no translation`** —
    even the three deterministic criteria have nothing to run over.
 3. **No independent translator.** Point 3 is the one that does not go away when

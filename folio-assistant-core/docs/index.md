@@ -15,7 +15,7 @@ itself.
 
 It sits on [C@T Harness](https://github.com/litlfred/folio-assistant/tree/main/cat-harness)
 and may import from it. The harness never imports from this layer.
-`bun run check:partition:edges` reports any edge that runs the wrong way.
+`bun run cat check:partition:edges` reports any edge that runs the wrong way.
 Instances such as WHO IRIS sit on top of this one. That is why the navbar
 lists it between them, because the order comes from each declaration's
 `needs`.

@@ -30,7 +30,7 @@
       <bpmn:outgoing>F_1</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="A_Verify" name="Run every verifier&#10;over the export">
-      <bpmn:documentation>Run the verifier set (scripts/publish-verify.ts, `bun run publish:verify -- --dir &lt;site&gt;`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block.</bpmn:documentation>
+      <bpmn:documentation>Run the verifier set (scripts/publish-verify.ts, `bun run cat publish:verify -- --dir &lt;site&gt;`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="publish-verification"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>

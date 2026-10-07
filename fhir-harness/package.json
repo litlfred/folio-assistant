@@ -1,0 +1,13 @@
+{
+  "name": "@litlfred/fhir-harness",
+  "private": true,
+  "type": "module",
+  "checkoutScripts": {
+    "check:artifact-index": "bun run fhir-harness/scripts/check-artifact-index.ts",
+    "ingest:ig": "bun run fhir-harness/scripts/ingest-ig-artifacts.ts",
+    "ingest:ig-chrome": "bun run fhir-harness/scripts/ingest-ig-chrome.ts",
+    "ingest:ig-menu": "bun run fhir-harness/scripts/ingest-ig-menu.ts",
+    "ig-ast:schema": "bun run fhir-harness/scripts/ig-ast.ts schema",
+    "ig-ast:schema:check": "bun run fhir-harness/scripts/ig-ast.ts schema --check"
+  }
+}

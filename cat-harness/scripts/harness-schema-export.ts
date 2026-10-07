@@ -269,7 +269,7 @@ export function staleSkillIoIds(opts: SchemaExportOptions = {}): Array<{ source:
  * Rewrite each source file's stored `$id` to where it actually publishes.
  *
  * **This existed only as a sentence until 2026-09-19.** `--check` printed
- * "Run `bun run kg:schema` to rewrite them", and `kg:schema` writes `_kg/` —
+ * "Run `bun run cat kg:schema` to rewrite them", and `kg:schema` writes `_kg/` —
  * build output — leaving the committed sources untouched. So the one remedy
  * the gate named did not perform it, and the only way past a legitimate
  * relocation was to hand-edit 44 identities: precisely the act the gate exists
@@ -292,7 +292,7 @@ export function staleSkillIoIds(opts: SchemaExportOptions = {}): Array<{ source:
  * this script writes carries exactly this string in `invoke.shell`, which is the
  * link `artefactDeclarationDrift` follows.
  */
-const SELF_INVOCATION = "bun run kg:schema";
+const SELF_INVOCATION = "bun run cat kg:schema";
 
 /**
  * Artefacts a Tool node declares itself authoritative for, by published path.
@@ -859,7 +859,7 @@ if (import.meta.main) {
     if (stale.length > 0) {
       console.error(`${stale.length} skill I/O schema(s) carry an $id that is not where they publish:`);
       for (const b of stale) console.error(`  ✗ ${b.source}\n      stored   ${b.stored}\n      expected ${b.expected}`);
-      console.error("\nRun `bun run kg:schema:ids` to rewrite them.");
+      console.error("\nRun `bun run cat kg:schema:ids` to rewrite them.");
       process.exit(1);
     }
     const n = buildSkillIoContracts().length;

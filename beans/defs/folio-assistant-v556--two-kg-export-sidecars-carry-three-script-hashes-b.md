@@ -9,7 +9,7 @@ updated_at: 2026-10-02T06:44:57Z
 parent: folio-assistant-1swy
 ---
 
-MEASURED 2026-09-22 on main at `f4de6c1e20`, clean tree, by running `bun run kg:export` and reading both committed sidecars back.
+MEASURED 2026-09-22 on main at `f4de6c1e20`, clean tree, by running `bun run cat kg:export` and reading both committed sidecars back.
 
 `scripts/kg-export.ts` writes two `qa-results/v1` sidecars. Between them and the script actually in the tree there are **three different hashes for one script**:
 
@@ -23,7 +23,7 @@ One script cannot have three hashes. **Both committed sidecars are stale, by dif
 
 ## Why nothing reports it — and this is the part worth fixing
 
-`bun run gates` passes **121/121** over this state. `bun run regen` reports **"38 current, 0 regenerated"**. Neither is malfunctioning:
+`bun run cat gates` passes **121/121** over this state. `bun run cat regen` reports **"38 current, 0 regenerated"**. Neither is malfunctioning:
 
 - `regen-after-merge` works on **verify/write pairs**. `kg:export` has **no `--check` mode** (`package.json` has `kg:export` and nothing else), so it has no pair and regen correctly ignores it.
 - `check:artefact-verification` — the gate added under `jfr6` *specifically* to ask whether generated artefacts are valid for a consumer — derives its inventory from `package.json` and, in its own words, *"a check counts as generated-artefact currency when its script is invoked with `--check`."* So an artefact whose generator has **no `--check` at all** is not in the 45 declared entries and never will be. Confirmed: `kg:export declared? False`.
@@ -77,7 +77,7 @@ regenerating it showed it was also hiding **3 findings** (`undeclaredSchemaModul
   **8** such generators. `kg-export.ts` left the list with this change; the other 7 (`check-l1-complete`,
   `check-lane-documentation`, `check-layout-norms`, `check-methodology-evidence`, `check-rendered-labels`,
   `check-wireframes`, `lsi`) are declared. Each rewrites its sidecar on every run, so the only thing that
-  catches drift is the tree guard in `bun run gates`.
+  catches drift is the tree guard in `bun run cat gates`.
 - [x] Re-measured: on a clean tree, `kg:export:check` reports both sidecars current with one hash.
 
 Tests: `kg-export-sidecars.test.ts` (subject derivation, orphans) and `artefact-verification.test.ts`

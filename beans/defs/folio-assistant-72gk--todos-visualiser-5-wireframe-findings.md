@@ -21,7 +21,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/todos/` (intent.m
 4. **The heading order skips a level, and the tags run into the names.** These are shared with `beans/`: the panel title is an `h3` directly under the `h1`, and the card headings' text reads "beanslive", "todoslive" and so on, because the tag span has no separator.
 5. **No way back to the site.** There is no `nav` or `header` and no link home. The page is dark by default, with no scheme control. (→ `folio-assistant-dc64`)
 
-When fixed, re-draw `cat-harness/docs/wireframes/todos/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/todos/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

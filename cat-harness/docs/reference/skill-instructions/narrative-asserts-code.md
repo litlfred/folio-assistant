@@ -42,7 +42,7 @@ Two kg-qa criteria on the subject's sidecar tell you what is open:
   changed and the prose did not. It says nothing about truth, only that
   nobody re-read the prose.
 - **`prose-claims-resolve`** (stage A). Each claim the prose makes about the
-  code comes out `holds`, `false` or `undetermined`. `bun run pairs:claims`
+  code comes out `holds`, `false` or `undetermined`. `bun run cat pairs:claims`
   prints the whole list, including what it did not check.
 
 What you judge is exactly the **stale pairs**, the **false claims** and the
@@ -52,10 +52,10 @@ nothing from you.
 ## Three outcomes, and each leaves a record
 
 1. **The prose holds.** Say why, in one sentence, and attest the pair:
-   `bun run pairs:attest -- --sidecar <sidecar> --by agent|human --reason "…"`.
+   `bun run cat pairs:attest -- --sidecar <sidecar> --by agent|human --reason "…"`.
    A reason is required because an attestation nobody can review is not
    evidence. Name what you compared: *"the TypeScript step describes the
-   repository gates and `bun run gates` derives its list from this job"* is a
+   repository gates and `bun run cat gates` derives its list from this job"* is a
    reason; *"looks fine"* is not.
 2. **The prose and the code really disagree.** Raise a finding against the
    side that is wrong. Usually that is the prose, because the code is what runs,

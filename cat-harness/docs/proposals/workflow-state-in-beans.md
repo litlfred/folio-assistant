@@ -46,7 +46,7 @@ by side under one visible directory answers that without giving machine state to
 a human-editable file.
 
 Both paths are now declared in `harness.config.json` under `harness`
-(`HarnessDirsSchema`), and `bun run check:harness-dirs` fails if that
+(`HarnessDirsSchema`), and `bun run cat check:harness-dirs` fails if that
 declaration, `.beans.yml` and `workflow/store.ts` ever disagree.
 
 The rest of this page is kept as written, because options B–D remain the honest
