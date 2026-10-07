@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-06T19:00:41Z
+updated_at: 2026-10-07T06:50:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -61,6 +61,19 @@ _2026-10-06T19:00:41Z_ — Claimed by claude/v3nf-parallel-gates-guard — pushe
   - inside a pooled batch: names only the gates running at that instant;
   - deleted, quoted or renamed path: could not determine.
 
-**Next lever, being measured:** declaring `check:cat-harness-standalone` read-only.
+**Declaring `check:cat-harness-standalone` read-only: measured, not adopted.**
 - Under strace it writes nothing in the checkout; every write is in a fresh `mkdtemp` directory.
-- Under strace plus a concurrent gates run, 25 tests outside its baseline failed, probably timeouts. So it is declared only if its baseline holds under pool load.
+- In the pool at `--jobs 3` its baseline HELD: "17 failing standalone, none outside the baseline". The 25 extra failures earlier happened only under strace plus a second gates run.
+- But wall time did not improve. Same tree (the PR head after merging main), `--jobs 3`, `--no-cache`, load 0.8-3.1:
+
+  | run | wall |
+  |---|---|
+  | declared read-only | 2160 s |
+  | undeclared (control) | 2136 s |
+
+- Why: it sits near the end of the workflow order, among few read-only neighbours, so its batch's wall time is its own 391 s. Pooling saves nothing unless the batch has more work than its longest member.
+- Both runs showed the same failures (`skill:register:check`, `lsi:skills:check`, `kg:detangle:check`, `uml:overview:check`). They come from the measurement worktree's temporary commit, not the declaration.
+
+**What would move the gates further** (not done here; each changes the order or the semantics, so each needs its own bean):
+1. Let a read-only gate overlap a following WRITER when the writer's declared outputs are disjoint from the reader's declared inputs. Today every writer and every undeclared gate is a full barrier, and the 37 barriers split the 214 read-only gates into short batches.
+2. `bun test` (about 1050 s) is the critical path, and nothing in this runner shortens it. CI already shards it 4 ways.
