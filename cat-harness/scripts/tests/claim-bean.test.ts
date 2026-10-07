@@ -103,37 +103,63 @@ describe("claiming on the default branch", () => {
     // A session mid-edit cannot afford a CHECKOUT, and none happens — the commit
     // is built in a temp worktree that is then removed.
     //
-    // It does modify exactly ONE file in the caller's tree: the bean, mirroring
-    // the claim. That is a later correctness fix, not a relaxation of this
-    // assertion — without it the branch's stale `todo` reverts the claim at merge
-    // time. Asserting the exact file rather than a clean tree keeps the original
-    // guarantee: nothing ELSE is touched.
-    expect(git(work, "status", "--porcelain").trim().split("\n")).toEqual([
-      // `.trim()` above eats git's leading space in " M ".
-      "M beans/defs/folio-assistant-aaaa--b.md",
-    ]);
+    // Bean `24fa`: the claim COMMIT then joins the caller's branch. With nothing
+    // of its own yet that is a fast-forward, so the tree is clean and the branch
+    // is exactly the claim — no stray uncommitted copy left to conflict later.
+    expect(o.joined).toBe("fast-forward");
+    expect(git(work, "status", "--porcelain").trim()).toBe("");
+    git(work, "fetch", "-q", "origin", "main");
+    expect(git(work, "rev-parse", "HEAD").trim()).toBe(git(work, "rev-parse", "origin/main").trim());
     expect(git(work, "worktree", "list").trim().split("\n")).toHaveLength(1);
   });
 
-  test("the claim is mirrored into the caller's own tree, or the merge reverts it", () => {
-    // Found by USING the tool: after a successful claim, `origin/main` said
-    // `in-progress` and the working tree still said `todo`. Committing that
-    // stale copy on the feature branch and merging would have reverted the
-    // claim — the branch's older value wins as an ordinary content change, so
-    // the tool would quietly undo its own work at merge time.
+  test("the claim is in the branch's history, so the branch's own later edit to the bean merges cleanly", () => {
+    // #2344, 2026-10-07: the claim landed on main, the branch then completed the
+    // same bean, and the PR conflicted on `updated_at` and the end of the body
+    // even with the claim's text mirrored byte for byte. A conflicted PR gets no
+    // CI at all (#2376). With the claim commit in the branch, the merge base
+    // includes it and nothing collides.
     const { work } = repoWith({ mmmm: bean("mmmm") });
-
-    const o = claimOnDefaultBranch("mmmm", "claude/feature", { repo: work });
-    expect(o.state).toBe("pushed");
-
-    const local = readFileSync(join(work, "beans", "defs", "folio-assistant-mmmm--b.md"), "utf-8");
+    expect(claimOnDefaultBranch("mmmm", "claude/feature", { repo: work }).state).toBe("pushed");
+    const f = join(work, "beans", "defs", "folio-assistant-mmmm--b.md");
+    const local = readFileSync(f, "utf-8");
     expect(/^status:\s*in-progress\s*$/m.test(local)).toBe(true);
-    // Deliberately NOT committed: what to commit and when is the session's
-    // business, and a tool that commits to your branch behind your back is
-    // worse than the problem it solves.
-    expect(git(work, "status", "--porcelain").trim()).toBe(
-      "M beans/defs/folio-assistant-mmmm--b.md",
-    );
+    writeFileSync(f, local.replace(/^status: in-progress$/m, "status: completed").replace(/^updated_at: .*$/m, "updated_at: 2026-10-07T00:00:00Z") + "\n## Summary of Changes\n\nDone.\n");
+    git(work, "commit", "-qam", "complete mmmm");
+    // Somebody else lands something on main meanwhile.
+    git(work, "fetch", "-q", "origin", "main");
+    git(work, "merge", "--no-edit", "-q", "origin/main");
+    expect(git(work, "status", "--porcelain").trim()).toBe("");
+    expect(readFileSync(f, "utf-8")).toContain("status: completed");
+  });
+
+  test("a branch with commits of its own gets a MERGE commit, never a rewrite", () => {
+    const { work } = repoWith({ nnnn: bean("nnnn") });
+    writeFileSync(join(work, "other.txt"), "work\n");
+    git(work, "add", "other.txt");
+    git(work, "commit", "-qm", "own work");
+    const own = git(work, "rev-parse", "HEAD").trim();
+    const o = claimOnDefaultBranch("nnnn", "claude/feature", { repo: work });
+    expect(o.joined).toBe("merged");
+    git(work, "fetch", "-q", "origin", "main");
+    const parents = git(work, "rev-list", "--parents", "-n", "1", "HEAD").trim().split(" ").slice(1);
+    expect(parents).toEqual([own, git(work, "rev-parse", "origin/main").trim()]);
+    expect(describeOutcome(o, "nnnn")).toContain("merge commit");
+  });
+
+  test("local edits in the way: the merge is not left half-done, and today's text mirror is the fallback", () => {
+    const { work } = repoWith({ pppp: bean("pppp") });
+    const f = join(work, "beans", "defs", "folio-assistant-pppp--b.md");
+    writeFileSync(f, readFileSync(f, "utf-8") + "\nuncommitted\n");
+    const before = git(work, "rev-parse", "HEAD").trim();
+    const o = claimOnDefaultBranch("pppp", "claude/feature", { repo: work });
+    expect(o.state).toBe("pushed");
+    expect(o.joined).toBe("not-joined");
+    expect(git(work, "rev-parse", "HEAD").trim()).toBe(before);
+    const local = readFileSync(f, "utf-8");
+    expect(local).toContain("uncommitted");
+    expect(/^status:\s*in-progress\s*$/m.test(local)).toBe(true);
+    expect(describeOutcome(o, "pppp")).toContain("NOT in this branch's history");
   });
 
   test("a bean another branch holds is REFUSED, by name, and nothing is written", () => {
