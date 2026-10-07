@@ -1,12 +1,11 @@
 ---
 # folio-assistant-vq2g
 title: Two bean FILES share one id, and no gate catches it
-status: in-progress
+status: completed
 type: bug
-tags:
-  - ready-to-close
+priority: normal
 created_at: 2026-10-03T02:40:59Z
-updated_at: 2026-10-06T19:45:00Z
+updated_at: 2026-10-07T11:50:40Z
 parent: folio-assistant-1xhc
 ---
 
