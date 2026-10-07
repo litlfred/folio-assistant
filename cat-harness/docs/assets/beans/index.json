@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 378,
+      "count": 383,
       "unit": "open beans"
     }
   },
@@ -864,14 +864,14 @@
     {
       "id": "folio-assistant-1ygp",
       "title": "ROAST: adversarial pass over the hand-over screen, its wiring and the zero-trust-handover methodology before adoption",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ieum",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T19:29:09Z",
-      "updatedAt": "2026-10-07T21:38:22Z",
+      "updatedAt": "2026-10-07T22:13:50Z",
       "preview": "Owner 2026-10-07: 'include adversarial analysis (general process we have)'. The process: lens fan-out plus an adjudicator (devils-advocate-watcher, Slot C), then generalise-the-fix move 2 on the wiring. Findings are recorded HERE with a status (answered / open / accepted-as-cost), because a printed objection is gone (v048).\n\n## Done when\n- [x] lenses run, adjudicated\n- [x] every surviving finding ",
       "file": "beans/defs/folio-assistant-1ygp--roast-adversarial-pass-over-the-hand-over-screen-i.md"
     },
@@ -1636,6 +1636,20 @@
       "file": "beans/defs/folio-assistant-3r47--drop-the-per-kind-graph-classes-kgraph-skillgraph.md"
     },
     {
+      "id": "folio-assistant-3sbm",
+      "title": "TOOL RELEASES + PROFILES: named, versioned, hashed tool sets with per-tool runtimes; PROV-O log of what each run used; SPDX 3 as export",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T22:13:50Z",
+      "updatedAt": "2026-10-07T22:17:25Z",
+      "preview": "Issue #2481. Owner 2026-10-07: 'need named/versioned releases + sha of software. it's not a gate per se, but a logging of what version of the Tool was used for audit purpose'; 'different tools may need different instances of java, so cannot pin java globally'. Owner chose PROV log + SPDX export. Closes G4 of the SPDX proposal (bean sd5v); answers D1's missing consumer (bean ffv7).\n\n## Done when\n- ",
+      "file": "beans/defs/folio-assistant-3sbm--tool-releases-profiles-named-versioned-hashed-tool.md"
+    },
+    {
       "id": "folio-assistant-3sm2",
       "title": "A gate held red by decision cannot ratchet its own subject — so the catalogue question is asked of the CHANGE (the 25→36 growth claim is RETRACTED: it was a mutant's output)",
       "status": "completed",
@@ -2055,6 +2069,20 @@
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
     },
     {
+      "id": "folio-assistant-4rbc",
+      "title": "CI cone: enable the f017 input-hash skip under CI, seeded from main's last green run",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T19:39:28Z",
+      "updatedAt": "2026-10-07T22:34:12Z",
+      "preview": "Issue #2456. Owner approved 2026-10-07 ~19:40Z (\"1y, 2y, 3y, 4y\"). Measurements in the issue body.\n\n_2026-10-07T19:39:38Z_ — Claimed by claude/ci-cone-f017 (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).\n\n## 2026-10-07: the approach as specified skips nothing, so no CI plumbing was built\n\n**The falsifier hit before any code was written.** Under f017's existing rules, a pull requ",
+      "file": "beans/defs/folio-assistant-4rbc--ci-cone-enable-the-f017-input-hash-skip-under-ci-s.md"
+    },
+    {
       "id": "folio-assistant-4sim",
       "title": "DCAT: describe a RELEASE of the glossary / terminology as a published dataset — held until the term model lands",
       "status": "completed",
@@ -2389,6 +2417,20 @@
       "updatedAt": "2026-10-07T14:55:47Z",
       "preview": "PR #2082, handed back by the Merge Manager on 2026-10-04 (BACKFILLED at 14:50Z: the hand-back was made as a PR comment and a queue entry only, without this bean. Owner: \"Backfill + enforce\").\n\n## Refused\n- `merge:steward` at 14:30Z: Rule_HeadNotGreen: conflict clean, own CI red.\n- Queue entry (`beans/queue/litlfred--folio-assistant--2082.json`, status `active`): Owner-approved 2026-10-04 ~14:00Z (",
       "file": "beans/defs/folio-assistant-5ki9--merge-refused-2082-owed-ci-not-green-on-its-head.md"
+    },
+    {
+      "id": "folio-assistant-5p4m",
+      "title": "CI: remove the two 1-s roll-up jobs (typescript, e2e) — 7fu5 leftover, owner swaps required checks",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T19:39:28Z",
+      "updatedAt": "2026-10-07T20:51:45Z",
+      "preview": "Issue #2456. Owner approved 2026-10-07 ~19:40Z (\"1y, 2y, 3y, 4y\"). Measurements in the issue body.\n\n_2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).\n\n## Done on claude/ci-runner-budget (PR #2457), 2026-10-07\n\n- Removed jobs `typescript` and `e2e` (commit 35a8229de93). Nothing outside the workflow read the names except th",
+      "file": "beans/defs/folio-assistant-5p4m--ci-remove-the-two-1-s-roll-up-jobs-typescript-e2e.md"
     },
     {
       "id": "folio-assistant-5qq3",
@@ -6406,14 +6448,14 @@
     {
       "id": "folio-assistant-fkqa",
       "title": "Agent memory target: Antigravity (agy) — implement now",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-31ni",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T18:35:25Z",
-      "updatedAt": "2026-10-06T18:35:25Z",
+      "updatedAt": "2026-10-07T12:00:21Z",
       "preview": "Owner 2026-10-06: implement the Antigravity target now (other vendors beaned, not implemented). Antigravity reads AGENTS.md / GEMINI.md and workspace rules under .agents/rules/*.md (older .agent/rules), with activation modes (always-on, model-decided, @-mention, glob) and a size cap reported as ~12,000 chars — format UNVERIFIED (vendor docs blocked from the build container; research in 31ni). No p",
       "file": "beans/defs/folio-assistant-fkqa--agent-memory-target-antigravity-agy-implement-now.md"
     },
@@ -7902,6 +7944,20 @@
       "file": "beans/defs/folio-assistant-jo87--queued-stream-a-ingest-uploads-to-a-complete-l1-li.md"
     },
     {
+      "id": "folio-assistant-jtfk",
+      "title": "CI: build the QA working copy once per run, restore it in the 8 consumer jobs (48% of runner-seconds)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T19:39:27Z",
+      "updatedAt": "2026-10-07T21:21:17Z",
+      "preview": "Issue #2456. Owner approved 2026-10-07 ~19:40Z (\"1y, 2y, 3y, 4y\"). Measurements in the issue body.\n\n_2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).\n\n## Done on claude/ci-runner-budget (PR #2457), 2026-10-07\n\n- New job `qa-working-copy` runs `bun run cat qa:working-copy` once. `cat-harness/scripts/qa-working-copy-bundle.",
+      "file": "beans/defs/folio-assistant-jtfk--ci-build-the-qa-working-copy-once-per-run-restore.md"
+    },
+    {
       "id": "folio-assistant-jut3",
       "title": "SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline",
       "status": "in-progress",
@@ -9308,9 +9364,9 @@
       "id": "folio-assistant-nn8e",
       "title": "Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462",
       "status": "in-progress",
-      "type": "feature",
+      "type": "task",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-0mpw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T20:07:21Z",
@@ -10251,6 +10307,20 @@
       "updatedAt": "2026-09-30T15:00:28Z",
       "preview": "Owner 2026-09-30: Typed SkillRef. 7 files → sdlc-core/integration-watcher (6 used local/, 1 bare); resolved by resolveSkillRef in a check.\n## Done when\n- [ ] all 7 values resolve; a check fails on one that does not\n\n\n\n## Done\n7 values → sdlc-core/integration-watcher; skill-refs.test resolves every skill inherits: (local/integration-watcher resolves missing, verified).",
       "file": "beans/defs/folio-assistant-q90t--b10d-1168-skill-front-matter-inherits-is-a-typed-s.md"
+    },
+    {
+      "id": "folio-assistant-qbco",
+      "title": "CI: reuse verdicts on main — skip expensive jobs when the tree was already verified green; cancel superseded main runs",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-hfag",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T19:39:27Z",
+      "updatedAt": "2026-10-07T21:21:17Z",
+      "preview": "Issue #2456. Owner approved 2026-10-07 ~19:40Z (\"1y, 2y, 3y, 4y\"). Measurements in the issue body.\n\n_2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).\n\n## Done on claude/ci-runner-budget (PR #2457), 2026-10-07 (commit 86ad61f3976)\n\n- (a) concurrency: push events share one group per ref and cancel-in-progress. The comment c",
+      "file": "beans/defs/folio-assistant-qbco--ci-reuse-verdicts-on-main-skip-expensive-jobs-when.md"
     },
     {
       "id": "folio-assistant-qbfi",
@@ -15662,14 +15732,14 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 17,
-        "total": 585,
+        "total": 589,
         "closed": 361,
-        "open": 224,
-        "inProgress": 74,
+        "open": 228,
+        "inProgress": 78,
         "todo": 149,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.6170940170940171
+        "share": 0.6129032258064516
       },
       {
         "id": "folio-assistant-vuip",
@@ -15677,14 +15747,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 278,
-        "closed": 164,
+        "total": 279,
+        "closed": 165,
         "open": 114,
         "inProgress": 55,
         "todo": 58,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.5899280575539568
+        "share": 0.5913978494623656
       },
       {
         "id": "folio-assistant-yg29",
@@ -15702,9 +15772,9 @@
         "share": 1
       }
     ],
-    "orphanOpen": 5,
-    "openTotal": 378,
-    "coveredOpen": 370,
+    "orphanOpen": 6,
+    "openTotal": 383,
+    "coveredOpen": 374,
     "duplicateIds": 0
   }
 }
