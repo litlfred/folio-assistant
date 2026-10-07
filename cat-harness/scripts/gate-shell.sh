@@ -58,8 +58,45 @@ log="$(mktemp -t gate-shell.XXXXXX)"
 # `bash -e`, exactly GitHub's default. 2>&1 into the pipe so the summary
 # carries the stderr a failure actually prints; the Actions log merges the
 # two streams anyway, so nothing a reader sees changes.
-bash -e "$script" 2>&1 | tee "$log"
-status="${PIPESTATUS[0]}"
+# THE CI CONE (bean `4rbc`, issue #2456). A job that ran `ci-cone.ts prepare`
+# has `CI_CONE_MODE` set, and only a step that is EXACTLY `bun run [cat] <script>`
+# is touched; every other step runs as written.
+#
+#   skip    (a pull request) `ci-cone.ts decide` exits 0 only when every path
+#           the check read on main's green run, and its script fingerprint,
+#           are unchanged here. Then the step prints
+#           `SKIPPED — inputs unchanged since <sha>` and lists itself in the job
+#           summary as SKIPPED, never as passed. Any other exit, an error
+#           included, runs the step exactly as before.
+#   record  (a push to main) the same command, run under `strace` by
+#           `ci-cone.ts run`, which records what it read. The verdict is the
+#           check's own exit status; recording never changes it.
+cone=""
+if [ -n "${CI_CONE_MODE:-}" ]; then
+  body="$(grep -vE '^\s*(#|$)' "$script" || true)"
+  if [ "$(printf '%s\n' "$body" | wc -l)" -eq 1 ] && [[ "$body" =~ ^[[:space:]]*bun\ run\ (cat\ )?([A-Za-z0-9:_-]+)[[:space:]]*$ ]]; then
+    cone="${BASH_REMATCH[2]}"
+  fi
+fi
+cone_cli="$(dirname "$0")/ci-cone.ts"
+if [ -n "$cone" ] && [ "$CI_CONE_MODE" = "skip" ] && bun "$cone_cli" decide "$cone"; then
+  rm -f "$log"
+  exit 0
+fi
+if [ -n "$cone" ] && [ "$CI_CONE_MODE" = "record" ]; then
+  bun "$cone_cli" run "$cone" 2>&1 | tee "$log"
+  status="${PIPESTATUS[0]}"
+  # A recorder killed by a signal (exit >= 128) has said nothing about the
+  # check, so the step runs again exactly as written and that is the verdict.
+  if [ "$status" -ge 128 ]; then
+    echo "gate-shell: the CI cone recorder exited $status; running the step untraced"
+    bash -e "$script" 2>&1 | tee "$log"
+    status="${PIPESTATUS[0]}"
+  fi
+else
+  bash -e "$script" 2>&1 | tee "$log"
+  status="${PIPESTATUS[0]}"
+fi
 
 # A green step writes nothing. A green run's summary is noise, and noise in
 # `output.summary` is worse than silence because it is read by tools.
