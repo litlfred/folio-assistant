@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-07T05:56:11Z
-updated_at: 2026-10-07T06:36:30Z
+updated_at: 2026-10-07T09:30:09Z
 ---
 
 ## The ask, owner 2026-10-07 — verbatim
@@ -74,3 +74,16 @@ The owner suspected the tools were "in place but not utilized fully". That is co
 ## Hazard found while working: a full `bun run gates` reverted uncommitted tracked edits
 
 2026-10-07: during a local `bun run gates`, every uncommitted edit to a TRACKED file in the working tree was reverted (package.json, tools/index.ts, a methodology, a voice, this bean). Untracked files survived and `git stash list` was empty. The log shows a test doing git operations in the real checkout (`fatal: path 'cat-harness/test/results/kg-qa/skills/x.kg-qa.json' is in the index, but not at stage 2`). **Commit before running gates** until the culprit is found. Filed as its own bean.
+
+
+## The gates-revert hazard: investigated 2026-10-07, NOT reproduced
+
+The owner asked for it to be done in this session. Measured:
+
+- **`bun test`, the whole suite in 8 chunks of ~120 files**, with an uncommitted marker edit to a tracked file (`THIRD-PARTY-NOTICES.md`): the marker survived every chunk.
+- **13 gate scripts run individually**, the ones the first run passed through after the last lost edit (`term:mapping` … `readme:subgraphs`, plus `skill:register`, `check:cat-harness-standalone`): the marker survived every one.
+- **A full `bun run gates`**, with the marker planted, a 5-second watcher, and a logging `git` wrapper first on PATH recording every checkout/restore/stash/reset/read-tree/switch/clean/merge call: the marker survived, and **no destructive git call ran with the real checkout as its target**. Every such call was `-C /tmp/...`.
+
+Static leads ruled out: `detect-live-corpus.ts` (`git checkout -- .`) refuses a dirty tree and is not a gate. The MCP server's branch-switch `discard` also runs `git clean -fd`, which would have deleted the untracked files, and those survived.
+
+What differs from the lost run: it carried several modified INPUT files (package.json, tools/index.ts, a voice, a methodology, a bean) where the probe carried one inert file. A step keyed on what changed, or something outside gates in that window, remains possible. **Status: unknown, not cleared.** Advice stands: commit before running gates.
