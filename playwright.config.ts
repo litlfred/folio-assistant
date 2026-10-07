@@ -98,11 +98,13 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  // `test-server.mjs` serves the repo root statically. It was referenced here
-  // long before it existed — see bean `dzl3` — so no e2e test in this repo was
-  // runnable until it was written.
+  // `cat-harness/test/test-server.mjs` serves the repo root statically. It was
+  // referenced here long before it existed — see bean `dzl3` — so no e2e test
+  // in this repo was runnable until it was written. It sat at the repository
+  // root until 2026-10-06 and moved beside the e2e specs it serves (bean
+  // `ar1s`, phase 3); it still serves the REPOSITORY root, two levels up.
   webServer: {
-    command: 'node test-server.mjs',
+    command: 'node cat-harness/test/test-server.mjs',
     port: 8080,
     reuseExistingServer: !process.env.CI,
   },
