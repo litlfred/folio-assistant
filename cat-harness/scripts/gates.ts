@@ -217,6 +217,18 @@ export const PRECONDITION_STEPS: readonly string[] = ["bun run qa:working-copy"]
 
 const OWN_STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `4rbc`. The CI cone's SETUP step: it reads which event this run
+    // is (`GITHUB_EVENT_NAME`, `GITHUB_REF`) and sets the mode the job's
+    // gate steps run in. Outside Actions it sets nothing, so as a local gate
+    // it would ask nothing. Its decisions are pinned by ci-cone.test.ts and
+    // the shell's half by gate-shell.test.ts.
+    match: "ci-cone.ts prepare",
+    kind: "ci-only",
+    reason:
+      "a SETUP step, not a check: it picks the CI cone's mode from the Actions event, and does nothing " +
+      "outside Actions; ci-cone.test.ts and gate-shell.test.ts pin the behaviour",
+  },
+  {
     // Bean `9c7h`: fsh-guts is kept on `cat/cat-harness/fsh-guts`, so every
     // job that reads the repository mounts it after `bun install`. A SETUP
     // step: it fetches over the network and has no verdict of its own; the

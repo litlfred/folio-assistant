@@ -36,3 +36,40 @@ _2026-10-07T19:39:38Z_ — Claimed by claude/ci-cone-f017 (session https://claud
    - It moves the "declared, not inferred" rule from f017. That rule is the owner's to change.
 
 Both options need an owner decision. Until then this bean stays open, with no CI change.
+
+## 2026-10-07 ~20:00–20:08Z: owner rulings
+
+After the measurement above, the owner chose option 1, *"1y"*: narrow inputs, verified on every main run. He then refined it twice:
+
+- *"derived is BEST"*: the narrow sets are DERIVED, computed by a deterministic, re-runnable procedure. They are neither hand-declared nor inferred.
+- *"DERIVED = no drift, no extra data fields"*: no committed input-set file and no new `inputs` field. The read set is computed from the run itself and never stored as authored data.
+
+**The rule becomes: an input set is declared or derived (computed from the run itself, never stored), never inferred.** It is stated in:
+- `ci-health.md` §"A green step can be a SKIPPED one: the CI cone";
+- the `input-hash.ts` and `task-io.ts` docblocks;
+- the `ci-cone.ts` module comment.
+
+## Design as built
+
+1. **Record, on a push to main.** `gate-shell.sh` runs every `bun run <check>` step of `gates-kg` and `gates-docs` through `ci-cone.ts run`, which runs it under `strace -f`. A green run records, in `build/ci-cone/records.json`:
+   - every path inside the checkout that the run opened, stat'ed, listed or probed, with the state it had (content digest, sorted listing, or absent);
+   - every git command the run executed (only read-only subcommands with no stdin), with its exit status and output digests;
+   - the check's f017 fingerprint without the tree: import closure, audited environment, tool versions and `--against` baseline.
+
+   The job saves the file with `actions/cache/save` under `ci-cone-v1-<job>-<main sha>`.
+2. **Decide, on a pull request.** The job restores the record under `<job>-<base sha>`, falling back to the newest `<job>-` key. `ci-cone.ts decide` re-computes the fingerprint, re-hashes every recorded path, and replays every recorded git command on the PR's tree. It skips only on an exact match. The step then prints `SKIPPED — inputs unchanged since <sha>` and is listed in the job summary under "CI cone". It is never reported as a pass.
+3. **Why an exact match is sound.** The verdict and its read set come from the same run, so nothing can drift. The same code reading the same recorded content takes the same path, given that f017's input-site audit makes every other input hashed or refused. A data-dependent read is covered, because the file that chose the path is in the record.
+
+   The caveat stands: a trace covers only the path that run took, and the argument above is what makes that enough.
+4. **Recorded as undetermined, so the check always runs:**
+   - a red run;
+   - a write inside the checkout;
+   - a git command that is not read-only;
+   - a relative path with no known cwd;
+   - an unclassified syscall;
+   - more than 20,000 paths (the whole-tree walks);
+   - a traced input site the run reached;
+   - a fingerprint that moved while the check ran;
+   - a check not declared `{tracked}` in task-io.
+
+   One change to f017 itself: a `tree` site no longer forces `{tracked}` when the caller replays git. Only the cone passes that option.

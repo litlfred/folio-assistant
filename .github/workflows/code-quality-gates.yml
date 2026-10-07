@@ -748,6 +748,33 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # THE CI CONE (bean `4rbc`, issue #2456). A pull request restores the
+      # check records of main's nearest green run: for each check, the
+      # fingerprint of its script and every path its run READ, under `strace`.
+      # `gate-shell.sh` then skips a `bun run <script>` step only when all of
+      # that is unchanged here, and lists it in this job's summary as
+      # `SKIPPED — inputs unchanged since <sha>`, never as passed. No `paths:`
+      # filter: that is how a gate stops covering the file that broke it. The
+      # read set is computed from the run, never stored as authored data
+      # (owner, 2026-10-07: "DERIVED = no drift, no extra data fields").
+      # A push to main traces every candidate check and saves the records at
+      # the end of the job. `ci-cone.ts` carries the reasons.
+      - name: CI cone — restore the check records of main's nearest green run (bean 4rbc)
+        if: github.event_name == 'pull_request'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-${{ github.job }}-${{ github.event.pull_request.base.sha }}
+          restore-keys: |
+            ci-cone-v1-${{ github.job }}-
+
+      - name: CI cone — choose this job's mode (bean 4rbc)
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = push ] && [ "$GITHUB_REF" = refs/heads/main ] && ! command -v strace >/dev/null; then
+            sudo apt-get install -y -qq strace || echo "strace could not be installed: this run records nothing"
+          fi
+          bun cat-harness/scripts/ci-cone.ts prepare
+
       # EVERY declared tip-keyed graph on disk before any gate reads one —
       # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
       # covering the store when it moves".
@@ -1284,6 +1311,16 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # CI cone (bean `4rbc`): this job's records, only on a push to main and
+      # only when every step above passed. Each record is also per check: a
+      # check that failed or could not be traced recorded nothing.
+      - name: CI cone — save this green run's check records (bean 4rbc)
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-${{ github.job }}-${{ github.sha }}
+
   gates-docs:
     # bpmn-node: Task_RepositoryGates
     name: Repository gates — instances, docs, translations (hard)
@@ -1342,6 +1379,33 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      # THE CI CONE (bean `4rbc`, issue #2456). A pull request restores the
+      # check records of main's nearest green run: for each check, the
+      # fingerprint of its script and every path its run READ, under `strace`.
+      # `gate-shell.sh` then skips a `bun run <script>` step only when all of
+      # that is unchanged here, and lists it in this job's summary as
+      # `SKIPPED — inputs unchanged since <sha>`, never as passed. No `paths:`
+      # filter: that is how a gate stops covering the file that broke it. The
+      # read set is computed from the run, never stored as authored data
+      # (owner, 2026-10-07: "DERIVED = no drift, no extra data fields").
+      # A push to main traces every candidate check and saves the records at
+      # the end of the job. `ci-cone.ts` carries the reasons.
+      - name: CI cone — restore the check records of main's nearest green run (bean 4rbc)
+        if: github.event_name == 'pull_request'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-${{ github.job }}-${{ github.event.pull_request.base.sha }}
+          restore-keys: |
+            ci-cone-v1-${{ github.job }}-
+
+      - name: CI cone — choose this job's mode (bean 4rbc)
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = push ] && [ "$GITHUB_REF" = refs/heads/main ] && ! command -v strace >/dev/null; then
+            sudo apt-get install -y -qq strace || echo "strace could not be installed: this run records nothing"
+          fi
+          bun cat-harness/scripts/ci-cone.ts prepare
 
       # EVERY declared tip-keyed graph on disk before any gate reads one —
       # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
@@ -2124,6 +2188,16 @@ jobs:
       # statically built navbar for EVERY reader, whatever locale they chose.
       - name: translation index is current
         run: bun run translation:index:check
+
+      # CI cone (bean `4rbc`): this job's records, only on a push to main and
+      # only when every step above passed. Each record is also per check: a
+      # check that failed or could not be traced recorded nothing.
+      - name: CI cone — save this green run's check records (bean 4rbc)
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-${{ github.job }}-${{ github.sha }}
 
       # ── LAST ON PURPOSE, and this is the whole point of the placement ──────
       #

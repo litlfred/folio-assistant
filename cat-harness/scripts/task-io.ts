@@ -37,6 +37,12 @@
  *   about FILES the audit cannot check, and a `tree` site refuses it;
  * - an `outputs: []` claim is re-checked on every `gates` run by the tree
  *   guard: a parallel batch that changes the tree is reported, naming the batch.
+ * - **never add a narrower list to get a CI skip.** The rule is "declared or
+ *   derived (computed from the run itself, never stored), never inferred"
+ *   (owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no
+ *   extra data fields"*). In CI the narrow set is DERIVED: `ci-cone.ts`
+ *   traces a `{tracked}` check's green run on main and records what it read
+ *   (bean `4rbc`). A row here only makes a check a candidate.
  *
  * ## How these entries were chosen — measured, 2026-10-01
  *
