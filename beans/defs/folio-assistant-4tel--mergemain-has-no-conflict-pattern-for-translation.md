@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4tel
 title: merge:main has no conflict pattern for translation-qa results, so it aborts
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T18:25:31Z
-updated_at: 2026-10-06T18:57:18Z
+updated_at: 2026-10-07T11:50:33Z
 parent: folio-assistant-d33q
 ---
 
@@ -17,3 +17,12 @@ These are derived QA results like the `detangle` and `lsi` sidecars that `derive
 - `merge-conflict-patterns.ts` classifies `*/test/results/translation-qa/**` as `derived-results: take-base` (or the pattern is widened to the whole declared results graph), with a test.
 
 _2026-10-06T18:57:18Z_ — Claimed by claude/4tel-merge-main-translation-qa — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Evidence
+
+- Added `**/test/results/translation-qa/**` to `derived-results` globs in `cat-harness/scripts/merge-conflict-patterns.ts`.
+- Updated `cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md` description for `derived-results` to mention translation-qa sidecars.
+- Added classification test in `cat-harness/scripts/tests/merge-base.test.ts` asserting that `cat-harness/test/results/translation-qa/docs/installation.fr.translation-qa.json` classifies as `derived-results` with strategy `take-base`.
+- `bun test ./cat-harness/scripts/tests/merge-base.test.ts` passed (58/58 tests, 240 assertions).
+- `typecheck` and `eslint` clean.

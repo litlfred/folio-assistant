@@ -35,7 +35,7 @@
 import { markdownEditLink, repoOf } from "../src/core/edit-links.js";
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync, unlinkSync } from "node:fs";
 import { workflowFiles, corpusScopeFor } from "./known-skills.js";
-import { join, dirname, relative, resolve } from "node:path";
+import { join, dirname, relative, resolve, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { resolveTarget } from "../schemas/todo-index.js";
@@ -65,6 +65,7 @@ import { isTodoPage, todoPageHtml } from "./todo-page.ts";
 import { beanDefsDir, beanFindings, blockEdges, blockedBy, blocksOf, readBeans } from "./beans.js";
 import { milestoneRollup } from "./milestone-rollup.js";
 import { missingTopLevelKeys } from "./lib/json-shape.ts";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -102,6 +103,7 @@ const SOURCE_LOCALE = sourceLocale(INSTANCE_ROOT);
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(INSTANCE_ROOT, "content", "docs");
 const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+
 /**
  * The forge this checkout points at.
  *
@@ -147,8 +149,8 @@ const REPO_WEB = detectRepoUrl(repoRootFor(INSTANCE_ROOT)) ?? "https://github.co
  * in the generated JSON. Bean `pb04`; found by resolving the link rather than
  * by reading it.
  */
-function repoRelative(p: string): string {
-  return relative(repoRootFor(INSTANCE_ROOT), resolve(INSTANCE_ROOT, p));
+export function repoRelative(p: string): string {
+  return relative(repoRootFor(INSTANCE_ROOT), resolve(INSTANCE_ROOT, p)).replace(/\\/g, "/");
 }
 
 const REPO_URL = detectRepoUrl(repoRootFor(INSTANCE_ROOT));
@@ -228,8 +230,11 @@ let storedAbsent = 0;
  * the rendered artefact. A narrative node resolves to its `.md`. A node with
  * neither is a bare heading and has nothing to edit.
  */
-function editTarget(page: WebPage, node: WebPageNode): string | null {
-  if (node.asset) return node.asset.source;
+export function editTarget(page: WebPage, node: WebPageNode): string | null {
+  if (node.asset) {
+    const src = node.asset.source;
+    return src.startsWith("../") ? repoRelative(src) : src;
+  }
   const narrative = node.block ?? node.lead;
   if (narrative) return `content/docs/${page.slug.replace(/\//g, "-")}/${narrative}.md`;
   return null;
@@ -760,7 +765,7 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
   if (node.asset) {
     const a = node.asset;
     out.push(`<div class="bpmn-figure" id="figure-${node.id}">`);
-    out.push(`  <img src="${a.rendered}"`);
+    out.push(`  <img src="${siteAddressed(page, a.rendered)}"`);
     out.push(`       alt="${a.alt.replace(/"/g, "&quot;")}">`);
     out.push("</div>");
     out.push("");
@@ -768,7 +773,7 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
     // acts. Reading the XML and changing it are not the same request, and the
     // existing pages have always offered the first.
     if (a.sourceLinks && a.sourceLinks.length > 0) {
-      const rendered = a.sourceLinks.map((l) => `[${l.text}](${l.href})`);
+      const rendered = a.sourceLinks.map((l) => `[${l.text}](${siteAddressed(page, l.href)})`);
       if (a.linkStyle === "caption") {
         // Paragraph-level attribute list on the line BELOW, which is what
         // kramdown needs when several links share one class.
@@ -787,6 +792,23 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
   }
 
   return out;
+}
+
+/**
+ * A node's asset path (`assets/img/workflows/x.svg`), which the manifest
+ * writes relative to the page's SOURCE directory, addressed so it resolves from wherever
+ * the page is published. A relative path only meant that while every page sat
+ * at the root; since bean `kc7k` the docs-folder pages publish under
+ * `docs/cat-harness/`, so it is written through `relative_url`. An absolute
+ * URL, a site-absolute path or an anchor is left as written.
+ */
+function siteAddressed(page: WebPage, path: string): string {
+  if (/^([a-z][a-z0-9+.-]*:|\/|#|\{)/i.test(path)) return path;
+  // Relative to the page's SOURCE directory, as the manifest wrote it.
+  const dir = page.slug.includes("/") ? page.slug.slice(0, page.slug.lastIndexOf("/")) : "";
+  const site = posix.normalize(posix.join(dir, path));
+  if (site.startsWith("../")) return path;
+  return `{{ '/${site}' | relative_url }}`;
 }
 
 /** Where a page's content is authored — the file to edit instead of the output. */
@@ -1489,7 +1511,7 @@ function processHierarchy(): Record<string, string[]> {
         // `href="{{ "/x.html" | ... }}"`, which terminates the attribute at
         // the second character of the Liquid tag — valid Liquid, broken HTML,
         // and it renders as a link to the empty string.
-        pageHref: (page, node) => `{{ '/${page}.html' | relative_url }}#${node}`,
+        pageHref: (page, node) => `{{ '/${publishedPagePath(OUT_DIR, page)}' | relative_url }}#${node}`,
         // Each todo's own page (#1908) — a directory, so the href ends in `/`.
         todoPageHref: (id) => `{{ '/${todoPageSitePath(id)}' | relative_url }}`,
       }),
@@ -1535,7 +1557,7 @@ function processHierarchy(): Record<string, string[]> {
         todoPageHtml(item, {
           // The block's RENDERING, from the todo page two levels down. A fact
           // about renderings, so it lives on the page and never on the todo.
-          ...(item.target ? { targetHref: `../../${item.target.page}.html#${item.target.node}` } : {}),
+          ...(item.target ? { targetHref: `../../${publishedPagePath(OUT_DIR, item.target.page)}#${item.target.node}` } : {}),
         }),
         "data",
       );
@@ -1738,48 +1760,6 @@ function processHierarchy(): Record<string, string[]> {
  * one. A content gate would go red on a projection that is fresh on the branch
  * and fresh on main and stale only against their union — bean `d2kp`.
  */
-{
-  const qaDir = directoryForGraph(INSTANCE_ROOT, "qa");
-  if (qaDir === undefined) {
-    // Declared nowhere is a real answer and not this generator's to fix. Said
-    // out loud rather than skipped silently, because a missing projection and
-    // an undeclared graph look identical from the published site.
-    console.log(`  · assets/qa/index.json — no directory declares the \`qa\` graph`);
-  } else {
-    const ix = projectQaGraph(qaDir, QA_CORPUS.present);
-    const out = join(OUT_DIR, "assets", "qa", "index.json");
-    mkdirSync(dirname(out), { recursive: true });
-    if (isQaGraphUnknown(ix)) {
-      // C9: no count of what this build happened to write. The projection
-      // says `unknown` with its reason and carries NO tile count, so the
-      // navbar draws no number (`readTileCounts`' third state) instead of a
-      // false one.
-      emit(out, JSON.stringify(ix, null, 2) + "\n", "verdict");
-      console.log(`  ? assets/qa/index.json — UNKNOWN: the derived QA corpus is not in this build; no count published`);
-    } else {
-      emit(
-        out,
-        // `ix.files`, not `ix.families.length`: a family is a schema the sweep
-        // groups by, and 7 on the tile where 636 documents were swept would be
-        // a number the reader cannot reconcile with the page it opens. The two
-        // third states this block already prints — `unclassified`, `unreadable`
-        // — stay in the console; the tile carries one number and its unit.
-        JSON.stringify({ ...tileCounts({ qa: [ix.files, "documents"] }), ...ix }, null, 2) + "\n",
-        "verdict",
-      );
-      const fams = ix.families.map((f) => `${f.schema} ${f.files}`).join(", ");
-      console.log(
-        `  ${check ? "·" : "✓"} assets/qa/index.json (${ix.files} document(s), ` +
-          `${ix.families.length} famil${ix.families.length === 1 ? "y" : "ies"}: ${fams}` +
-          // Both third states are printed EVERY run, including at zero. A count
-          // that appears only when non-zero cannot be told from one nobody
-          // measured.
-          `; ${ix.unclassified} unclassified, ${ix.unreadable} unreadable)`,
-      );
-    }
-  }
-}
-
 /**
  * Publish a translation projection for every HAND-AUTHORED docs page that has
  * one, plus the index its badge paints from.
@@ -1875,11 +1855,17 @@ publishAuthoredPageTranslationQa();
 // something that no longer exists, and nothing else would ever notice: the icon
 // is gone, so nobody clicks it and nobody sees it is wrong.
 //
+// Bean 0kbt: This sweep MUST run BEFORE the qa projection below (and queues
+// excluded paths for it), so a run that removes an orphan does not publish a count
+// that includes the very file this run deleted.
+//
 // In a STORED tree (bean `4l4d`) an orphan under `--check` is a fetch of
 // another commit's pages, not this checkout's defect: reported, not gated.
 // The write path still removes it, so what the site build publishes is clean.
+const orphanedQaAssets = new Set<string>();
 for (const orphan of listQaAssets()) {
   if (emittedQa.has(orphan)) continue;
+  orphanedQaAssets.add(orphan);
   if (check && QA_ASSETS_STORED) {
     console.log(`  · advisory: ${relative(INSTANCE_ROOT, orphan)} is orphaned in the stored working copy`);
   } else if (check) {
@@ -1888,6 +1874,71 @@ for (const orphan of listQaAssets()) {
   } else {
     unlinkSync(orphan);
     console.log(`  - removed orphaned ${orphan}`);
+  }
+}
+
+/**
+ * The `qa` graph, projected as one panel per family — bean `py74`, issue #635.
+ *
+ * `<base>/qa/` said *"declared and nothing publishes a projection for it yet"*
+ * over the largest generated graph here. `state-visualizer.ts` flips a graph
+ * from `declared` to `live` the moment `assets/<id>/index.json` exists, so
+ * this file is the whole of what was missing — no generator, schema or route
+ * change.
+ *
+ * **The directory comes from the DECLARATION, not from a literal.** `qa` is
+ * declared once, at `test/results/`, and `directoryForGraph` throws rather
+ * than picking silently if that ever stops being true — the `wggr` failure,
+ * where resolving `cat-harness` to the first of several matches wrote 37
+ * sidecars against the wrong subjects on a run that exited 0. The neighbouring
+ * `QA_ASSET_DIR` above still composes its path by hand; it is not changed here
+ * because it names a SUBDIRECTORY of the graph (`witnesses/`) that no
+ * declaration distinguishes, which is a different question and another bean's.
+ *
+ * Existence-gated, like the bean index and for the same reason: every QA
+ * sweep rewrites this graph, so the projection moves whenever anybody runs
+ * one. A content gate would go red on a projection that is fresh on the branch
+ * and fresh on main and stale only against their union — bean `d2kp`.
+ */
+{
+  const qaDir = directoryForGraph(INSTANCE_ROOT, "qa");
+  if (qaDir === undefined) {
+    // Declared nowhere is a real answer and not this generator's to fix. Said
+    // out loud rather than skipped silently, because a missing projection and
+    // an undeclared graph look identical from the published site.
+    console.log(`  · assets/qa/index.json — no directory declares the \`qa\` graph`);
+  } else {
+    const ix = projectQaGraph(qaDir, QA_CORPUS.present, undefined, { exclude: orphanedQaAssets });
+    const out = join(OUT_DIR, "assets", "qa", "index.json");
+    mkdirSync(dirname(out), { recursive: true });
+    if (isQaGraphUnknown(ix)) {
+      // C9: no count of what this build happened to write. The projection
+      // says `unknown` with its reason and carries NO tile count, so the
+      // navbar draws no number (`readTileCounts`' third state) instead of a
+      // false one.
+      emit(out, JSON.stringify(ix, null, 2) + "\n", "verdict");
+      console.log(`  ? assets/qa/index.json — UNKNOWN: the derived QA corpus is not in this build; no count published`);
+    } else {
+      emit(
+        out,
+        // `ix.files`, not `ix.families.length`: a family is a schema the sweep
+        // groups by, and 7 on the tile where 636 documents were swept would be
+        // a number the reader cannot reconcile with the page it opens. The two
+        // third states this block already prints — `unclassified`, `unreadable`
+        // — stay in the console; the tile carries one number and its unit.
+        JSON.stringify({ ...tileCounts({ qa: [ix.files, "documents"] }), ...ix }, null, 2) + "\n",
+        "verdict",
+      );
+      const fams = ix.families.map((f) => `${f.schema} ${f.files}`).join(", ");
+      console.log(
+        `  ${check ? "·" : "✓"} assets/qa/index.json (${ix.files} document(s), ` +
+          `${ix.families.length} famil${ix.families.length === 1 ? "y" : "ies"}: ${fams}` +
+          // Both third states are printed EVERY run, including at zero. A count
+          // that appears only when non-zero cannot be told from one nobody
+          // measured.
+          `; ${ix.unclassified} unclassified, ${ix.unreadable} unreadable)`,
+      );
+    }
   }
 }
 

@@ -150,20 +150,20 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 يتبع الوكيل سير عمل BPMN المقابل. وتصف صفحات التوثيق الحالية
 هذه المسارات بالتفصيل:
 
-- **[سير عمل النشر](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
+- **[سير عمل النشر](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html)** —
   دورة حياة المحتوى من المسودة وحتى التحقق والتصيير والنشر.
   وتغطي الأدوار (المؤلف، المراجع، المحرر)، والعمليات الأساسية،
   والأنشطة والمهارات.
 
-- **[استيعاب المستندات](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
+- **[استيعاب المستندات](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/document-ingestion.html)** —
   كيف يتحول الملف المُودَع إلى مصدر L1: استخراج الهيكل، واشتقاق المحتوى،
   وبناء الرسم البياني المعرفي لـ L1، وبوابة الاكتمال.
 
 - **أدلة الكتابة:**
-  - [كتابة ورقة بحثية](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
-  - [كتابة مستند](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
+  - [كتابة ورقة بحثية](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
+  - [كتابة مستند](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
 
 لا يعيد إطار العمل تعريف مسارات العمل هذه. بل يوفر **نقطة الدخول** —
 عبر تصنيف الطلب وتوجيهه إلى المسار الصحيح — و**نقطة الخروج** —
@@ -203,7 +203,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 مسارات العمل الفرعية في ظل طبقة محكومة من السياق والذكريات؛ هذه ثلاثة
 أسئلة يمكن لهذا المستودع طرحها الآن ولم يجب عليها بعد. وجدول الأعمال، مع
 تمييز كل ادعاء بأنه مقيس (measured) أو مقطوع به (decided) أو فرضية (hypothesis)، موجود في
-[`deterministic-and-agentic`](../../reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }}).
 اقرأه كجدول أعمال: ففيه من الفرضيات أكثر مما فيه من القياس،
 وهو يقر بذلك صراحة.
 
@@ -217,7 +217,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 > **مهارة تنفيذ BPMN:** بالنظر إلى عملية (Process)، وسياق (Context)، وحالة (State)، ودور (Role)، يتم استخدام
 > مهارة واحدة أو أكثر من أجل تنفيذ مهمة (Task).
 
-![تنفيذ BPMN، من الحتمي إلى الوكيلي. يمتد شريط ألوان من "حتمي" (أزرق، يسار: تنفيذ مدار بواسطة وكيل لمهمة واحدة) إلى "وكيلي" (أخضر، يمين: وكلاء عبر معظم أو كل المهام). على اليسار، تحت أيقونة ترس ومحرك: "أداة تنفيذ BPMN: أحد محركات BPMN مفتوحة المصدر، مع فرض صارم للحالة ومسارات السباحة"، فوق مخطط مسارات سباحة مسطح لدورة حياة folio مع ملاحظة لاصقة واحدة، ومجموعة beans واحدة، وشخص وروبوت قط بجانب المسارات. على اليمين، تحت أيقونة روبوت قط: "أداة تنفيذ BPMN: سرب وكيل ذو حالة غير محكومة. يقوم الوكلاء بـ 'تخفيف' مسارات السباحة، مع تخفيف الأثر عبر تقارير ضمان/مراقبة جودة ميكانيكية + وكيلة"، فوق المخطط ذاته مائلاً في المنظور، مع انتشار beans عبر كل مسار والعديد من روبوتات القطط تحته.](../../assets/img/bpmn-execution-spectrum.webp)
+![تنفيذ BPMN، من الحتمي إلى الوكيلي. يمتد شريط ألوان من "حتمي" (أزرق، يسار: تنفيذ مدار بواسطة وكيل لمهمة واحدة) إلى "وكيلي" (أخضر، يمين: وكلاء عبر معظم أو كل المهام). على اليسار، تحت أيقونة ترس ومحرك: "أداة تنفيذ BPMN: أحد محركات BPMN مفتوحة المصدر، مع فرض صارم للحالة ومسارات السباحة"، فوق مخطط مسارات سباحة مسطح لدورة حياة folio مع ملاحظة لاصقة واحدة، ومجموعة beans واحدة، وشخص وروبوت قط بجانب المسارات. على اليمين، تحت أيقونة روبوت قط: "أداة تنفيذ BPMN: سرب وكيل ذو حالة غير محكومة. يقوم الوكلاء بـ 'تخفيف' مسارات السباحة، مع تخفيف الأثر عبر تقارير ضمان/مراقبة جودة ميكانيكية + وكيلة"، فوق المخطط ذاته مائلاً في المنظور، مع انتشار beans عبر كل مسار والعديد من روبوتات القطط تحته.]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **مهارة واحدة، ونوعان من الأدوات.** المهارة هي نفسها عند كلا الطرفين: أخذ
 العملية، والسياق، والحالة الراهنة والدور، واختيار المهارات، وأداء
@@ -240,7 +240,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) كلغة للأذونات
 و[W3C PROV-O](https://www.w3.org/TR/prov-o/) كسجل للتنفيذ (المالك،
 2026-09-23؛ والمخطط الذي يقتضيه هذا هو
-[مقترح الجهات الفاعلة وODRL وPROV-O](../../proposals/odrl-prov-actor-model.html)).
+[مقترح الجهات الفاعلة وODRL وPROV-O]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})).
 
 **تقع معظم عمليات التشغيل الحقيقية بين الطرفين**، ويكون ذلك على مستوى المهمة بدلاً من مستوى العملية ككل:
 فالقسم [السابق](#deterministic-and-agentic) يحصي بالفعل أي
@@ -262,7 +262,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 عندما يُصنف طلب على أنه طلب ميزة، يدخل الوكيل في
 **سير عمل متطلبات CRDM**
-([التوثيق الكامل](https://litlfred.github.io/folio-assistant/crdm-methodology.html)،
+([التوثيق الكامل](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/crdm-methodology.html)،
 و[BPMN](../../../processes/process/crdm-requirements.bpmn)).
 
 يعد سير عمل طلبات الميزات هو الموضع الذي تقدم فيه وثيقة إطار العمل هذه أكبر

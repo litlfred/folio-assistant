@@ -5,9 +5,9 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import { BOOTSTRAP_GRAPH_TYPOLOGIES } from "../../../bootstrap-tools/schemas/graph.ts";
 import { CatHarnessDeclarationSchema } from "../../schemas/cat-harness.ts";
@@ -16,11 +16,13 @@ import {
   HARNESS_GRAPH_TYPOLOGIES,
   type RootFetcher,
   checkSubscriptions,
+  gitDeclarationFetcher,
   judgeSubstrate,
   parseTarget,
   setTopLevelKey,
   subscribe,
 } from "../kg-subscribe.ts";
+import { git } from "../sync-remote-skills.ts";
 
 const SHA = "0123456789abcdef0123456789abcdef01234567";
 const SHA2 = "89abcdef0123456789abcdef0123456789abcdef";
@@ -52,7 +54,10 @@ function fixture(files: Record<string, unknown>): RootFetcher & { calls: number 
   const serve = (): string => {
     f.calls++;
     const d = mkdtempSync(join(tmpdir(), "kg-sub-root-"));
-    for (const [n, v] of Object.entries(files)) writeFileSync(join(d, n), typeof v === "string" ? v : `${JSON.stringify(v, null, 2)}\n`);
+    for (const [n, v] of Object.entries(files)) {
+      mkdirSync(dirname(join(d, n)), { recursive: true });
+      writeFileSync(join(d, n), typeof v === "string" ? v : `${JSON.stringify(v, null, 2)}\n`);
+    }
     return d;
   };
   const f: RootFetcher & { calls: number } = Object.assign(serve, { calls: 0 });
@@ -138,15 +143,21 @@ describe("judgeSubstrate: three answers", () => {
     const bad = { ...SUBSTRATE, version: "v1", directories: [{ id: "kb", path: "kb/" }] };
     const v = await judgeSubstrate("litlfred/ihris-kb", SHA, fixture({ "ihris-kb.json": bad }));
     expect(v.state).toBe("not-a-substrate");
-    expect(v.state !== "substrate" && v.reason).toMatch(/bootstrap's declaration schema/);
+    expect("reason" in v && v.reason).toMatch(/bootstrap's declaration schema/);
   });
 
-  test("zero harnesses: refused, and the reason names the kinds and the root-only limit", async () => {
+  test("zero harnesses with Subgraphs: CONTENT, a separate kind and never a substrate (owner, 2026-10-06)", async () => {
     const noHarness = { name: "data", directories: [{ id: "d", path: "d/", graphTypologies: ["folio", "methodology"] }] };
     const v = await judgeSubstrate("o/data", SHA, fixture({ "data.json": noHarness }));
+    expect(v.state).toBe("content");
+    expect(v.state === "content" && v.summary.harnesses).toEqual([]);
+  });
+
+  test("zero harnesses and zero Subgraphs: still refused, and the reason names the kinds and the limit", async () => {
+    const v = await judgeSubstrate("o/data", SHA, fixture({ "data.json": { name: "data", directories: [] } }));
     expect(v.state).toBe("not-a-substrate");
-    expect(v.state !== "substrate" && v.reason).toMatch(/declares no harness/);
-    expect(v.state !== "substrate" && v.reason).toMatch(/nested instances/);
+    expect(v.state === "not-a-substrate" && v.reason).toMatch(/declares no harness/);
+    expect(v.state === "not-a-substrate" && v.reason).toMatch(/nested instances/);
   });
 
   test("no root declaration: refused, not could-not-determine — the root WAS read", async () => {
@@ -157,13 +168,13 @@ describe("judgeSubstrate: three answers", () => {
   test("two root declarations: refused by bootstrap's one-graph-per-directory rule", async () => {
     const v = await judgeSubstrate("o/r", SHA, fixture({ "a.json": { name: "a" }, "b.json": { name: "b" } }));
     expect(v.state).toBe("not-a-substrate");
-    expect(v.state !== "substrate" && v.reason).toMatch(/2 declarations/);
+    expect("reason" in v && v.reason).toMatch(/2 declarations/);
   });
 
   test("a fetch failure is could-not-determine — never either verdict", async () => {
     const v = await judgeSubstrate("litlfred/ihris-kb", SHA, failing);
     expect(v.state).toBe("could-not-determine");
-    expect(v.state !== "substrate" && v.reason).toMatch(/403/);
+    expect("reason" in v && v.reason).toMatch(/403/);
   });
 });
 
@@ -321,6 +332,300 @@ describe("checkSubscriptions: the offline gate", () => {
     expect(found).toMatch(/re-subscribe/);
     expect(found).toMatch(/`nope`/);
     expect(found).toMatch(/orphaned/);
+  });
+});
+
+// ── A declaration one level down (bean 437w) ──────────────────────────────────
+//
+// The shape of litlfred/trust-kg: nothing at the root, the instance one
+// directory down in a directory NOT named for it.
+const NESTED = {
+  name: "trust-kg",
+  directories: [
+    { id: "trust-skills", path: "skills/", graphTypologies: ["skills"] },
+    { id: "trust-folio", path: "folio/", graphTypologies: ["folio"] },
+  ],
+};
+const NESTED_TREE = { "shared/trust-kg.json": NESTED, "shared/package.json": { name: "not-the-stem" }, "package.json": { name: "x" } };
+const NESTED_TARGET = `litlfred/trust-kg@${SHA}`;
+
+/**
+ * A BARE repository on disk holding `files`, served through the real git
+ * fetcher: shallow, blobless, by SHA. Returns its URL and the commit.
+ */
+function bareRepo(files: Record<string, unknown>): { url: string; sha: string } {
+  const work = tmp("kg-sub-work-");
+  for (const [n, v] of Object.entries(files)) {
+    mkdirSync(dirname(join(work, n)), { recursive: true });
+    writeFileSync(join(work, n), typeof v === "string" ? v : `${JSON.stringify(v, null, 2)}\n`);
+  }
+  git(["init", "-q", work]);
+  git(["add", "-A"], work);
+  git(["-c", "user.email=t@example.org", "-c", "user.name=t", "-c", "commit.gpgsign=false", "commit", "-q", "-m", "fixture"], work);
+  const sha = git(["rev-parse", "HEAD"], work).trim();
+  const bare = join(tmp("kg-sub-bare-"), "r.git");
+  git(["clone", "-q", "--bare", work, bare]);
+  git(["config", "uploadpack.allowFilter", "true"], bare);
+  git(["config", "uploadpack.allowAnySHA1InWant", "true"], bare);
+  return { url: `file://${bare}`, sha };
+}
+
+describe("a declaration one level down (bean 437w): fixture bare repositories, real git fetch", () => {
+  const SUBS = [
+    ["root declaration", { "ihris-kb.json": SUBSTRATE, "kb/notes.json": { name: "notes" } }, "substrate", "ihris-kb.json"],
+    ["nested, directory name differs from the instance name", NESTED_TREE, "substrate", "shared/trust-kg.json"],
+    ["two candidates one level down", { "a/alpha.json": { ...NESTED, name: "alpha" }, "b/beta.json": { ...NESTED, name: "beta" } }, "ambiguous", undefined],
+    ["no declaration anywhere", { "package.json": { name: "x" }, "src/index.json": { name: "not-index" } }, "not-a-substrate", undefined],
+  ] as const;
+
+  test.each(SUBS)("%s", async (_label, files, state, file) => {
+    const { url, sha } = bareRepo(files);
+    const v = await judgeSubstrate("o/r", sha, gitDeclarationFetcher(() => url));
+    expect(v.state).toBe(state);
+    if (v.state === "substrate") {
+      const nestedIn = file?.includes("/") ? file.split("/")[0] : undefined;
+      const got: { file: string; upstreamPath?: string } = { file: v.file, upstreamPath: v.upstreamPath };
+      const want: { file: string; upstreamPath?: string } = { file: String(file), upstreamPath: nestedIn };
+      expect(got).toEqual(want);
+    }
+    if (v.state === "ambiguous") {
+      expect(v.candidates).toEqual(["a/alpha.json", "b/beta.json"]);
+      expect(v.reason).toMatch(/Not guessing/);
+      expect(v.reason).toMatch(/--upstream-path/);
+    }
+    if (v.state === "not-a-substrate") expect(v.reason).toMatch(/the root carries no Knowledge Graph declaration/);
+  });
+
+  test("the git fetcher reads only the named directory when given an upstreamPath, at any depth", async () => {
+    const { url, sha } = bareRepo({ "deep/er/trust-kg.json": NESTED, "a/alpha.json": { ...NESTED, name: "alpha" } });
+    const v = await judgeSubstrate("o/r", sha, gitDeclarationFetcher(() => url), { upstreamPath: "deep/er/" });
+    expect(v.state === "substrate" && v.file).toBe("deep/er/trust-kg.json");
+    // Two levels down is NOT found by the search — only by naming it — so
+    // this tree's only discoverable candidate is `a/alpha.json`.
+    const searched = await judgeSubstrate("o/r", sha, gitDeclarationFetcher(() => url));
+    expect(searched.state === "substrate" && searched.file).toBe("a/alpha.json");
+  });
+
+  test("a SHA the remote does not hold is could-not-determine", async () => {
+    const { url } = bareRepo(NESTED_TREE);
+    const v = await judgeSubstrate("o/r", SHA, gitDeclarationFetcher(() => url));
+    expect(v.state).toBe("could-not-determine");
+  });
+});
+
+describe("a declaration one level down (bean 437w): the search", () => {
+  test("nested with a different directory name: found, and its directory is the upstreamPath", async () => {
+    const v = await judgeSubstrate("litlfred/trust-kg", SHA, fixture(NESTED_TREE));
+    expect(v.state).toBe("substrate");
+    if (v.state !== "substrate") return;
+    expect(v.file).toBe("shared/trust-kg.json");
+    expect(v.upstreamPath).toBe("shared");
+    expect(v.summary.name).toBe("trust-kg");
+  });
+
+  test("the root still wins, so an existing subscription judges the same bytes", async () => {
+    const v = await judgeSubstrate("o/r", SHA, fixture({ "ihris-kb.json": SUBSTRATE, ...NESTED_TREE }));
+    expect(v.state === "substrate" && v.file).toBe("ihris-kb.json");
+    expect(v.state === "substrate" && v.upstreamPath).toBeUndefined();
+  });
+
+  test("two candidates: refused with both named, never guessed", async () => {
+    const two = { "a/alpha.json": { ...NESTED, name: "alpha" }, "b/beta.json": { ...NESTED, name: "beta" } };
+    const v = await judgeSubstrate("o/r", SHA, fixture(two));
+    expect(v.state).toBe("ambiguous");
+    expect("reason" in v && v.reason).toMatch(/`a\/alpha\.json`, `b\/beta\.json`/);
+  });
+
+  test("--name picks one of two; a name nobody carries is not-a-substrate", async () => {
+    const two = { "a/alpha.json": { ...NESTED, name: "alpha" }, "b/beta.json": { ...NESTED, name: "beta" } };
+    const v = await judgeSubstrate("o/r", SHA, fixture(two), { name: "beta" });
+    expect(v.state === "substrate" && v.file).toBe("b/beta.json");
+    const none = await judgeSubstrate("o/r", SHA, fixture(two), { name: "gamma" });
+    expect(none.state).toBe("not-a-substrate");
+    expect("reason" in none && none.reason).toMatch(/named `gamma`/);
+  });
+
+  test("a file whose `name` disagrees with its stem is not a candidate", async () => {
+    const v = await judgeSubstrate("o/r", SHA, fixture({ "shared/trust-kg.json": { ...NESTED, name: "shared" } }));
+    expect(v.state).toBe("not-a-substrate");
+  });
+
+  test("--upstream-path reads that directory only, and refuses what is not there", async () => {
+    const two = { "a/alpha.json": { ...NESTED, name: "alpha" }, "b/beta.json": { ...NESTED, name: "beta" } };
+    const v = await judgeSubstrate("o/r", SHA, fixture(two), { upstreamPath: "a" });
+    expect(v.state === "substrate" && v.file).toBe("a/alpha.json");
+    const empty = await judgeSubstrate("o/r", SHA, fixture(two), { upstreamPath: "c/" });
+    expect(empty.state).toBe("not-a-substrate");
+    expect("reason" in empty && empty.reason).toMatch(/`c\/` carries no Knowledge Graph declaration/);
+  });
+
+  test.each(["../elsewhere", ".hidden", "/abs"])("an unsafe upstreamPath %s is refused before any fetch", async (p) => {
+    const f = fixture(NESTED_TREE);
+    const v = await judgeSubstrate("o/r", SHA, f, { upstreamPath: p });
+    expect(v.state).toBe("not-a-substrate");
+    expect(f.calls).toBe(0);
+  });
+});
+
+describe("a declaration one level down (bean 437w): what subscribe records, and what --check holds", () => {
+  test("the subscription records the upstreamPath and the snapshot the nested file; --check is clean", async () => {
+    const { dir, file } = subscriber();
+    const r = await subscribe({ target: NESTED_TARGET, instance: dir, fetch: fixture(NESTED_TREE) });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.entry).toEqual({ id: "trust-kg", repository: "litlfred/trust-kg", ref: SHA, upstreamPath: "shared" });
+    const decl = CatHarnessDeclarationSchema.parse(JSON.parse(readFileSync(file, "utf8")));
+    expect(decl.subscriptions?.[0]?.upstreamPath).toBe("shared");
+    const snap = SubstrateSnapshotSchema.parse(JSON.parse(readFileSync(r.snapshotFile, "utf8")));
+    expect(snap.file).toBe("shared/trust-kg.json");
+    expect(checkSubscriptions(dir)).toEqual([]);
+  });
+
+  test("a re-subscribe reuses the recorded subtree and changes no byte", async () => {
+    const { dir, file } = subscriber();
+    await subscribe({ target: NESTED_TARGET, instance: dir, fetch: fixture(NESTED_TREE) });
+    const before = readFileSync(file, "utf8");
+    // The tree now ALSO has a second candidate: without the record this would be ambiguous.
+    const grown = fixture({ ...NESTED_TREE, "other/other.json": { ...NESTED, name: "other" } });
+    const r = await subscribe({ target: NESTED_TARGET, instance: dir, fetch: grown });
+    expect(r.ok && r.changed).toEqual([]);
+    expect(readFileSync(file, "utf8")).toBe(before);
+  });
+
+  test("an ambiguous tree is REFUSED by subscribe, and nothing is written", async () => {
+    const { dir, file } = subscriber();
+    const before = readFileSync(file, "utf8");
+    const two = { "a/alpha.json": { ...NESTED, name: "alpha" }, "b/beta.json": { ...NESTED, name: "beta" } };
+    const r = await subscribe({ target: NESTED_TARGET, instance: dir, fetch: fixture(two) });
+    expect(!r.ok && r.state).toBe("refused");
+    expect(!r.ok && r.reason).toMatch(/Not guessing/);
+    expect(readFileSync(file, "utf8")).toBe(before);
+    const picked = await subscribe({ target: NESTED_TARGET, instance: dir, upstreamPath: "b", fetch: fixture(two) });
+    expect(picked.ok && picked.entry.upstreamPath).toBe("b");
+  });
+
+  test("--check: a snapshot read from another subtree than the subscription records is a finding", async () => {
+    const { dir, file } = subscriber();
+    await subscribe({ target: NESTED_TARGET, instance: dir, fetch: fixture(NESTED_TREE) });
+    const cur = JSON.parse(readFileSync(file, "utf8")) as { subscriptions: Record<string, unknown>[] };
+    writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [{ ...cur.subscriptions[0], upstreamPath: "elsewhere" }]));
+    expect(checkSubscriptions(dir).join("\n")).toMatch(/read from `shared\/`.*`elsewhere`/);
+    const { upstreamPath: _gone, ...atRoot } = cur.subscriptions[0]!;
+    void _gone;
+    writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [atRoot]));
+    expect(checkSubscriptions(dir).join("\n")).toMatch(/read from `shared\/`, the subscription records the root/);
+  });
+
+  test("moving the subtree of a subscription with chosen parts is refused", async () => {
+    const { dir, file } = subscriber();
+    const tree = { ...NESTED_TREE, "other/trust-kg.json": NESTED };
+    await subscribe({ target: NESTED_TARGET, instance: dir, upstreamPath: "shared", fetch: fixture(tree) });
+    const cur = JSON.parse(readFileSync(file, "utf8")) as { subscriptions: Record<string, unknown>[] };
+    writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [{ ...cur.subscriptions[0], subgraphs: ["trust-skills"] }]));
+    const r = await subscribe({ target: NESTED_TARGET, instance: dir, upstreamPath: "other", fetch: fixture(tree) });
+    expect(!r.ok && r.reason).toMatch(/different subscription/);
+  });
+});
+
+// ── A content Knowledge Graph: a second kind (owner, 2026-10-06) ──────────────
+//
+// The shape of litlfred/imm-kg: Subgraphs, no harness, nested.
+const CONTENT = {
+  name: "imm-kg",
+  directories: [
+    { id: "imm-index", path: "input/", graphTypologies: ["fhir-artifact-index"] },
+    { id: "imm-docs", path: "docs/", graphTypologies: ["docs", "ig-pages"] },
+  ],
+};
+const CONTENT_TREE = { "shared/imm-kg.json": CONTENT, "package.json": { name: "x" } };
+const CONTENT_TARGET = `litlfred/imm-kg@${SHA}`;
+
+describe("content Knowledge Graphs (owner, 2026-10-06): fixture bare repositories, real git fetch", () => {
+  test.each([
+    ["content-only, nested: accepted as CONTENT", CONTENT_TREE, "content"],
+    ["harness-bearing, nested: still a SUBSTRATE", NESTED_TREE, "substrate"],
+    ["harness-bearing at the root: still a SUBSTRATE", { "ihris-kb.json": SUBSTRATE }, "substrate"],
+    ["a declaration with no Subgraph: still NOT-A-SUBSTRATE", { "empty.json": { name: "empty" } }, "not-a-substrate"],
+    ["no declaration at all: still NOT-A-SUBSTRATE, with the old reason", { "package.json": { name: "x" } }, "not-a-substrate"],
+  ] as const)("%s", async (_label, files, state) => {
+    const { url, sha } = bareRepo(files);
+    const v = await judgeSubstrate("o/r", sha, gitDeclarationFetcher(() => url));
+    expect(v.state).toBe(state);
+    if (v.state === "content") expect(v.summary.harnesses).toEqual([]);
+    if (v.state === "substrate") expect(v.summary.harnesses.length).toBeGreaterThan(0);
+    if (_label.startsWith("no declaration")) expect(v.state === "not-a-substrate" && v.reason).toMatch(/the root carries no Knowledge Graph declaration/);
+  });
+});
+
+describe("content Knowledge Graphs (owner, 2026-10-06): recorded as their own kind", () => {
+  test("subscribe records `kind: \"content\"` on the entry and the snapshot, and --check is clean", async () => {
+    const { dir, file } = subscriber();
+    const r = await subscribe({ target: CONTENT_TARGET, instance: dir, fetch: fixture(CONTENT_TREE) });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.verdict.state).toBe("content");
+    expect(r.entry).toEqual({ id: "imm-kg", repository: "litlfred/imm-kg", ref: SHA, upstreamPath: "shared", kind: "content" });
+    expect(CatHarnessDeclarationSchema.parse(JSON.parse(readFileSync(file, "utf8"))).subscriptions?.[0]?.kind).toBe("content");
+    const snap = SubstrateSnapshotSchema.parse(JSON.parse(readFileSync(r.snapshotFile, "utf8")));
+    expect(snap.kind).toBe("content");
+    expect(snap.summary.harnesses).toEqual([]);
+    expect(checkSubscriptions(dir)).toEqual([]);
+  });
+
+  test("a substrate subscription records NO kind, so every existing record is unchanged", async () => {
+    const { dir } = subscriber();
+    const r = await subscribe({ target: TARGET, instance: dir, fetch: fixture({ "ihris-kb.json": SUBSTRATE }) });
+    expect(r.ok && "kind" in r.entry).toBe(false);
+    expect(r.ok && (JSON.parse(readFileSync(r.snapshotFile, "utf8")) as { kind?: string }).kind).toBeUndefined();
+  });
+
+  test("the schemas hold the kind and the harness list together", () => {
+    const base = { id: "x", repository: "o/x", ref: SHA };
+    expect(CatHarnessDeclarationSchema.safeParse({ name: "a", subscriptions: [{ ...base, kind: "content", harnesses: ["x"] }] }).success).toBe(false);
+    expect(CatHarnessDeclarationSchema.safeParse({ name: "a", subscriptions: [{ ...base, kind: "content", subgraphs: ["d"] }] }).success).toBe(true);
+    const snap = {
+      $schema: "folio-substrate-snapshot/v1",
+      subscription: "x",
+      repository: "o/x",
+      ref: SHA,
+      file: "x.json",
+      raw: "{}",
+      fixity: { algorithm: "sha256", digest: "0".repeat(64) },
+      summary: { name: "x", subgraphs: [], harnesses: [] as string[] },
+    };
+    expect(SubstrateSnapshotSchema.safeParse(snap).success).toBe(false); // a substrate (kind absent) with no harness
+    expect(SubstrateSnapshotSchema.safeParse({ ...snap, kind: "content" }).success).toBe(true);
+    expect(SubstrateSnapshotSchema.safeParse({ ...snap, kind: "content", summary: { ...snap.summary, harnesses: ["x"] } }).success).toBe(false);
+  });
+
+  test("--check: a content snapshot under a substrate entry is a finding", async () => {
+    const { dir, file } = subscriber();
+    await subscribe({ target: CONTENT_TARGET, instance: dir, fetch: fixture(CONTENT_TREE) });
+    const cur = JSON.parse(readFileSync(file, "utf8")) as { subscriptions: Record<string, unknown>[] };
+    const { kind: _k, ...asSubstrate } = cur.subscriptions[0]!;
+    void _k;
+    writeFileSync(file, setTopLevelKey(readFileSync(file, "utf8"), "subscriptions", [asSubstrate]));
+    expect(checkSubscriptions(dir).join("\n")).toMatch(/the subscription is `substrate`, its snapshot is `content`/);
+  });
+
+  test("--check: a snapshot whose kind its bytes do not bear out is a finding", async () => {
+    const { dir } = subscriber();
+    const r = await subscribe({ target: TARGET, instance: dir, fetch: fixture({ "ihris-kb.json": SUBSTRATE }) });
+    if (!r.ok) throw new Error("fixture did not subscribe");
+    const j = JSON.parse(readFileSync(r.snapshotFile, "utf8")) as Record<string, unknown> & { summary: { harnesses: string[] } };
+    writeFileSync(r.snapshotFile, JSON.stringify({ ...j, kind: "content", summary: { ...j.summary, harnesses: [] } }));
+    const found = checkSubscriptions(dir).join("\n");
+    expect(found).toMatch(/its snapshot is `content`/);
+    expect(found).toMatch(/its bytes judge as `substrate`/);
+  });
+
+  test("a content snapshot contributes no harness declaration, whatever is asked", async () => {
+    const { harnessDeclarationIn } = await import("../subscribed-harnesses.ts");
+    const { dir } = subscriber();
+    const r = await subscribe({ target: CONTENT_TARGET, instance: dir, fetch: fixture(CONTENT_TREE) });
+    if (!r.ok) throw new Error("fixture did not subscribe");
+    const snap = SubstrateSnapshotSchema.parse(JSON.parse(readFileSync(r.snapshotFile, "utf8")));
+    expect(harnessDeclarationIn(snap, "imm-kg")).toBeUndefined();
   });
 });
 

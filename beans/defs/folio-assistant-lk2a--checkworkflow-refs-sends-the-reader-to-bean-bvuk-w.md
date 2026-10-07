@@ -1,10 +1,11 @@
 ---
 # folio-assistant-lk2a
 title: check:workflow-refs sends the reader to bean bvuk, which is COMPLETED and archived — the finding is live, the attribution is stale
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-02T23:32:19Z
-updated_at: 2026-10-06T23:45:15Z
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-0ipy
 ---
 
@@ -45,12 +46,21 @@ Source of the stale pointer: `cat-harness/scripts/check-workflow-refs.ts:273`
 header, where it is correct as history.
 
 ## Done when
-- [ ] line 273's advice names the open question for
+- [x] line 273's advice names the open question for
       `Process_RefreshMaterialized`'s answer set, not `bvuk`
-- [ ] a bean exists for that answer set, or the two callers declare one
-- [ ] the header references to `bvuk` at 121/128 stay — they are history and
+- [x] a bean exists for that answer set, or the two callers declare one
+- [x] the header references to `bvuk` at 121/128 stay — they are history and
       are accurate as such
-- [ ] check whether any OTHER advice string in the gate set points at a
+- [x] check whether any OTHER advice string in the gate set points at a
       closed bean; this is a class, not one line
+
+## Evidence
+- `cat-harness-tools/scripts/check-workflow-refs.ts:269`: removed stale pointer to completed bean `bvuk` ("what each should ask is an open question...").
+- `cat-harness/processes/library/sample-import.bpmn` & `cat-harness/processes/library/subscribe-kg.bpmn`: declared `cat-harness.processes:adjudication accepts="remote local merge defer"` on `Call_Refresh`.
+- `folio-assistant-core/processes/content/public-comment.bpmn`: declared `cat-harness.processes:adjudication accepts="stands withdrawn"` on `CallActivity_ChangeSet`.
+- `cat-harness-tools/scripts/check-workflow-refs.ts:329`: removed reference to closed/archived research bean `q0tc` from undeclared gateways advice string.
+- `cat-harness/scripts/tests/adjudication-marker.test.ts`: added tests asserting `sample-import` and `subscribe-kg` declare `["remote", "local", "merge", "defer"]` (41/41 tests passing).
+- `cat-harness-tools/scripts/check-workflow-refs.ts`: verified `Adjudication callers — 13 of 13 say which answers they can act on` (0 undeclared).
+- `translate-bpmn:check`: verified all 87 diagrams have current `.pot` templates across all 5 locales.
 
 _2026-10-06T23:45:15Z_ — Claimed by claude/lk2a-workflow-refs-advice — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

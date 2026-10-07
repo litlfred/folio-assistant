@@ -265,8 +265,8 @@ if (adjTotal > 0) {
   if (adjudicationCalls.undeclared.length) {
     console.log(
       `\n${adjudicationCalls.undeclared.length} caller(s) run an adjudication without naming the\n` +
-        `answers it may give. Not an error — what each should ask is the open question in\n` +
-        `bean \`bvuk\`, and guessing would make an undecided thing look checked. Declare\n` +
+        `answers it may give. Not an error — what each should ask is an open question,\n` +
+        `and guessing would make an undecided thing look checked. Declare\n` +
         `<cat-harness.processes:adjudication codes="…"/> here, with this step's gateway coding the same\n` +
         `set, once the answer is decided — or \`accepts\` where the callee fixes its own.`,
     );
@@ -326,7 +326,7 @@ if (branches.undeclared.length) {
   console.log(
     "  An undeclared gateway is not a defect — it predates `folio:judgement` —\n" +
       "  but it is a decision point nobody has said is a JUDGEMENT rather than a\n" +
-      "  table nobody wrote. Bean `q0tc` needs the difference.",
+      "  table nobody wrote.",
   );
   for (const g of branches.undeclared.slice(0, 8)) console.log(`  \u00b7 ${g.file}: ${g.node}`);
   if (branches.undeclared.length > 8) {

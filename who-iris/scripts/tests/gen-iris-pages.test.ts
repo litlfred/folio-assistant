@@ -482,6 +482,18 @@ describe("a phone-width reader never pans sideways — bean `xwrt`", () => {
   });
 });
 
+describe("every generated page carries the Do not hand-edit marker — bean `7te5`", () => {
+  it("every committed page in docs/ and site/ carries the generator banner", () => {
+    const pages = [
+      ...readdirSync(DOCS).filter((f) => f.endsWith(".html")).map((f) => join(DOCS, f)),
+      ...readdirSync(SITE).filter((f) => f.endsWith(".html")).map((f) => join(SITE, f)),
+    ];
+    expect(pages.length).toBeGreaterThan(0);
+    const missing = pages.filter((p) => !readFileSync(p, "utf-8").includes("Do not hand-edit: the next run overwrites it"));
+    expect(missing).toEqual([]);
+  });
+});
+
 describe("library/ is the corpus only — bean 2b5s", () => {
   it("holds no page, so no mount copies it", () => {
     // `mount-instance-docs.ts` mounts a directory that carries an index.html

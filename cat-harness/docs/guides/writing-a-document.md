@@ -34,7 +34,7 @@ with an LLM, published without a TeX installation.
 ## What a document folio is
 {: #what-a-document-folio-is data-fa-label="sec:guides-writing-a-document-what-a-document-folio-is" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/../folio-assistant-core/processes/content/authoring-a-document.bpmn){: .fa-node-edit title="Edit ../folio-assistant-core/processes/content/authoring-a-document.bpmn" data-fa-link="edit" data-src="../folio-assistant-core/processes/content/authoring-a-document.bpmn" data-repo="litlfred/folio-assistant" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="what-a-document-folio-is.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="what-a-document-folio-is.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" lang="en" dir="ltr" data-qa-family="kg" data-qa-key="what-a-document-folio-is.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/processes/content/authoring-a-document.bpmn){: .fa-node-edit title="Edit folio-assistant-core/processes/content/authoring-a-document.bpmn" data-fa-link="edit" data-src="folio-assistant-core/processes/content/authoring-a-document.bpmn" data-repo="litlfred/folio-assistant" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="what-a-document-folio-is.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="what-a-document-folio-is.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" lang="en" dir="ltr" data-qa-family="kg" data-qa-key="what-a-document-folio-is.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 Everything a paper folio is, minus the formal layer. The same tree of chapters
 and sections over typed **blocks**, the same editorial `uses[]` graph, the same
@@ -50,7 +50,7 @@ them. No Lean. No LaTeX.
 > feature "the paper adapter has", check first — you probably already have it.
 
 <div class="bpmn-figure" id="figure-what-a-document-folio-is">
-  <img src="../assets/img/workflows/authoring-a-document.svg"
+  <img src="{{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }}"
        alt="BPMN swimlane diagram of document authoring, plan to published.">
 </div>
 
@@ -196,7 +196,7 @@ Rules that make this work rather than merely compile:
   mapping — it predates this content type.
 
 The full convention, and what it is missing, is in the
-[`normative-statements`](../reference/skill-instructions/normative-statements.html)
+[`normative-statements`]({{ '/reference/skill-instructions/normative-statements.html' | relative_url }})
 skill.
 
 ---
@@ -301,8 +301,8 @@ lists exactly what is in the way.
 
 | | |
 |---|---|
-| Skills | [`document-authoring`](../reference/skill-instructions/document-authoring.html) · [`document-structure`](../reference/skill-instructions/document-structure.html) · [`normative-statements`](../reference/skill-instructions/normative-statements.html) · [`document-publishing`](../reference/skill-instructions/document-publishing.html) |
-| Typed contracts | [schema reference](../reference/skills/) |
+| Skills | [`document-authoring`]({{ site.baseurl }}/reference/skill-instructions/document-authoring.html) · [`document-structure`]({{ site.baseurl }}/reference/skill-instructions/document-structure.html) · [`normative-statements`]({{ site.baseurl }}/reference/skill-instructions/normative-statements.html) · [`document-publishing`]({{ site.baseurl }}/reference/skill-instructions/document-publishing.html) |
+| Typed contracts | [schema reference]({{ site.baseurl }}/reference/skills/) |
 | Skill package | `folio-assistant-core/skills/content/folio-document-adapter/package-manifest.json` |
 | Adapter | `adapters/document/` |
 | Vocabulary | `schemas/block-kinds.ts` — `DOCUMENT_BLOCK_KINDS`, `MATH_BLOCK_KINDS` |
