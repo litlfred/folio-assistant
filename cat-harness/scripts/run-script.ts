@@ -7,6 +7,9 @@
  * manifest in the directory it starts in, so the root keeps this one entry,
  * `cat`, and this finds the script by asking the declared instances.
  *
+ * A `.ts`/`.js` path in place of a name runs that file, as `bun run <file>`
+ * does, so a caller whose list mixes names and files needs no second spelling.
+ *
  * It runs the command exactly as `bun run` did: through `sh -c` from the
  * CHECKOUT ROOT, with `node_modules/.bin` first on PATH, the arguments
  * appended, and `npm_lifecycle_event` set to the script's name. The exit code
@@ -34,6 +37,13 @@ if (import.meta.main) {
     process.exit(name === undefined ? 2 : 0);
   }
   const entry = table.get(name);
+  // A FILE, not a script name: callers that pass either (qa-refresh's writer
+  // list, skill-register's steps) hand it here, and it runs as `bun run <file>`
+  // would have, from the checkout root.
+  if (!entry && /\.(?:m?[jt]s)$/.test(name)) {
+    const r = spawnSync(process.execPath, ["run", name, ...args], { cwd: REPO, stdio: "inherit", env: process.env });
+    process.exit(r.status ?? (r.signal ? 1 : 0));
+  }
   if (!entry) {
     const near = [...table.keys()].filter((k) => k.includes(name) || name.includes(k)).slice(0, 8);
     console.error(`bun run cat: no script "${name}" in any declared manifest.${near.length ? ` Did you mean: ${near.join(", ")}?` : ""}`);
