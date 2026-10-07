@@ -81,3 +81,11 @@ describe("a staging workflow that holds a write token is NOT exempt (owner 2026-
     expect(published!.state).toBe("fail");
   });
 });
+
+describe("checks moved into a layer's checkoutScripts are still run (#2448)", () => {
+  test("a layer script is found and run, not reported unknown", () => {
+    // check:bun-pin lives in cat-harness-tools/package.json checkoutScripts since #2448.
+    const r = runCheck("check:bun-pin", true);
+    expect(r.state).not.toBe("unknown");
+  });
+});
