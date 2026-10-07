@@ -21,7 +21,47 @@
  *
  * @module smart-base/scripts/l1-membership
  */
-import type { DublinCoreRecord, Intake, IntakeClassification } from "../platform.js";
+import type { DublinCoreRecord } from "../platform.js";
+
+/**
+ * An intake classification, as `cat-harness/schemas/intake.ts`
+ * (`IntakeClassificationSchema`) defines it. Read here STRUCTURALLY, not
+ * imported: smart-base's shim may not gain a climb into cat-harness, a layer
+ * its declaration does not `need` (`SHIM_BEYOND_NEEDS`, a ceiling that only
+ * falls). {@link checkClassification} holds a record written from here to
+ * the platform's rules.
+ */
+export interface IntakeClassification {
+  scheme: string;
+  code: string;
+  member: boolean;
+  properties?: Record<string, string>;
+  source: "declared" | "context" | "inferred";
+  basis: string;
+  by?: string;
+  at?: string;
+}
+/** The fields of an intake (`folio-intake/v1`) this instance reads. */
+export interface IntakeRecord {
+  record?: string;
+  files: { role: string; sha256?: string | null }[];
+  classifications?: IntakeClassification[];
+}
+
+/** The platform schema's rules for one classification; the reasons it fails, empty when it holds. */
+export function checkClassification(c: unknown): string[] {
+  const o = (c ?? {}) as Record<string, unknown>;
+  const errs: string[] = [];
+  for (const k of ["scheme", "code", "basis"]) if (typeof o[k] !== "string" || !(o[k] as string).length) errs.push(`${k}: a non-empty string`);
+  if (typeof o.member !== "boolean") errs.push("member: a boolean");
+  if (!["declared", "context", "inferred"].includes(o.source as string)) errs.push("source: declared, context or inferred");
+  for (const k of ["by"]) if (o[k] !== undefined && (typeof o[k] !== "string" || !(o[k] as string).length)) errs.push(`${k}: a non-empty string`);
+  if (o.at !== undefined && !/^\d{4}-\d{2}-\d{2}/.test(String(o.at))) errs.push("at: an ISO 8601 date");
+  if (o.properties !== undefined && (typeof o.properties !== "object" || Object.values(o.properties as object).some((v) => typeof v !== "string"))) errs.push("properties: string values");
+  const known = new Set(["scheme", "code", "member", "properties", "source", "basis", "by", "at"]);
+  for (const k of Object.keys(o)) if (!known.has(k)) errs.push(`${k}: not a field`);
+  return errs;
+}
 
 /** The SMART knowledge-graph layer scheme; `code` is the layer (`l1`). */
 export const LAYER_SCHEME = "https://smart.who.int/kg/layer";
@@ -72,7 +112,11 @@ export function inferL1(rec: DublinCoreRecord): IntakeClassification | undefined
 }
 
 /** Resolve the intake's records plus the inferred one by precedence. */
-export function decideL1(intake: Intake | undefined, rec: DublinCoreRecord | undefined): L1Decision {
+export function decideL1(intake: IntakeRecord | undefined, rec: DublinCoreRecord | undefined): L1Decision {
+  for (const c of intake?.classifications ?? []) {
+    const errs = checkClassification(c);
+    if (errs.length) throw new Error(`an intake classification breaks cat-harness/schemas/intake.ts: ${errs.join("; ")}`);
+  }
   const recorded = (intake?.classifications ?? []).filter((c) => c.scheme === LAYER_SCHEME && c.code === "l1");
   const inferred = rec && !recorded.some((c) => c.source === "inferred") ? inferL1(rec) : undefined;
   const all = [...recorded, ...(inferred ? [inferred] : [])].sort((a, b) => PRECEDENCE.indexOf(a.source) - PRECEDENCE.indexOf(b.source));

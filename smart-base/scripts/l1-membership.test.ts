@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 
-import type { DublinCoreRecord, Intake } from "../platform.js";
-import { decideL1, inferL1, LAYER_SCHEME } from "./l1-membership.ts";
+import type { DublinCoreRecord } from "../platform.js";
+import { checkClassification, decideL1, inferL1, LAYER_SCHEME, type IntakeRecord } from "./l1-membership.ts";
 
 const rec = (fields: [string, string | undefined, string][]): DublinCoreRecord => ({
   $schema: "folio-dublin-core/v1",
@@ -18,8 +18,7 @@ const DAK = rec([
 ]);
 const DDCC = rec([["title", undefined, "Digital documentation of COVID-19 certificates: vaccination status: technical specifications and implementation guidance"]]);
 
-const intake = (classifications: Intake["classifications"]): Intake =>
-  ({ $schema: "folio-intake/v1", doc_id: "x", title: "x", source: { upstream: "https://x", capturedAt: "2026-10-07T00:00:00Z" }, files: [], classifications }) as Intake;
+const intake = (classifications: IntakeRecord["classifications"]): IntakeRecord => ({ files: [], classifications });
 
 describe("inferL1", () => {
   test("the owner's rulings of 2026-10-07 are what the rule infers", () => {
@@ -56,5 +55,21 @@ describe("decideL1", () => {
   });
   test("nothing recorded and nothing inferred is undetermined", () => {
     expect(decideL1(undefined, undefined).status).toBe("undetermined");
+  });
+});
+
+describe("checkClassification holds the platform schema's rules", () => {
+  test("a good record passes; each broken field is named", () => {
+    expect(checkClassification({ scheme: LAYER_SCHEME, code: "l1", member: true, source: "context", basis: "b" })).toEqual([]);
+    expect(checkClassification({ scheme: "", code: "l1", member: "yes", source: "guessed", basis: "b", at: "Oct", extra: 1 })).toEqual([
+      "scheme: a non-empty string",
+      "member: a boolean",
+      "source: declared, context or inferred",
+      "at: an ISO 8601 date",
+      "extra: not a field",
+    ]);
+  });
+  test("decideL1 refuses an intake whose record breaks them", () => {
+    expect(() => decideL1(intake([{ scheme: LAYER_SCHEME, code: "l1", member: true, source: "declared", basis: "" }]), undefined)).toThrow();
   });
 });

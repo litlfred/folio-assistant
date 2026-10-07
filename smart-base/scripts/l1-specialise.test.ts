@@ -3,8 +3,8 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import type { DublinCoreRecord, Intake } from "../platform.js";
-import { decideL1, LAYER_SCHEME } from "./l1-membership.ts";
+import type { DublinCoreRecord } from "../platform.js";
+import { decideL1, LAYER_SCHEME, type IntakeRecord } from "./l1-membership.ts";
 import { identifiersOf, l1LibraryDocument, printedNumber, type Held, type Input } from "./l1-specialise.ts";
 
 const dir = mkdtempSync(join(tmpdir(), "l1-specialise-"));
@@ -22,14 +22,11 @@ const record = {
   provenance: { source: "t", retrievedAt: "2026-10-07T00:00:00Z", method: "t" },
 } as DublinCoreRecord;
 
-const intake = {
-  $schema: "folio-intake/v1",
-  doc_id: "lnob",
+const intake: IntakeRecord = {
   record: "rec.json",
-  source: { upstream: "https://iris.who.int", capturedAt: "2026-10-07T00:00:00Z" },
   files: [],
   classifications: [{ scheme: LAYER_SCHEME, code: "l1", member: true, source: "declared", basis: "owner", by: "ritikarawlani", at: "2026-10-07" }],
-} as Intake;
+};
 
 const held: Held = { intake, intakePath: "uploads/lnob/intake.json", record, recordPath: "uploads/lnob/rec.json", pdfSha256: "a".repeat(64), abs: { intake: join(dir, "intake.json"), record: join(dir, "rec.json") } };
 

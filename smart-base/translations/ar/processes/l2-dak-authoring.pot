@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: l2-dak-authoring\n"
-"POT-Creation-Date: 2026-10-06T09:42:31.752Z\n"
+"POT-Creation-Date: 2026-10-07T13:27:24.963Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -126,7 +126,7 @@ msgstr ""
 
 #: ../smart-base/processes/content/l2-dak-authoring.bpmn:90
 #. Diagram element documentation
-msgid "Ingest the DAK and every source its Component 1 cites into the library, and extract the L1 graph that records them: §1.1's interventions, §1.2's citations, each resolved by its printed number to a publication. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts, and validate with both smart-kg validate.mjs and the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically."
+msgid "Ingest the DAK and every source its Component 1 cites into the library. Record whether each is L1 on its intake (declared > context > inferred). Extract the DAK's L1 references graph: §1.2's citations, each numberedAs a reference entry that resolvesTo an L1 publication, or to the library entry of a held source that is not L1. For each L1 source, run l1-specialise.ts: its publication, sections and elements as specialisations of its library nodes, since the library is upstream of L1. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts --record-context, and validate with the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically."
 msgstr ""
 
 #: ../smart-base/processes/content/l2-dak-authoring.bpmn:26

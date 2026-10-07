@@ -49,9 +49,9 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { DublinCoreRecordSchema, handleFromUrl, IntakeSchema, ownDeclaredDirectories, readStructure, type DublinCoreRecord, type Intake } from "../platform.js";
+import { DublinCoreRecordSchema, handleFromUrl, ownDeclaredDirectories, readStructure, STRUCTURE_FILENAME, type DublinCoreRecord } from "../platform.js";
 import { L1_LIBRARY_CONTEXT, L1_V3_ONTOLOGY_VERSION, publicationElementId, publicationId, sectionId, sha256, slug, type Identifier } from "./l1-kgid.ts";
-import { decideL1, type L1Decision } from "./l1-membership.ts";
+import { decideL1, type IntakeRecord, type L1Decision } from "./l1-membership.ts";
 
 export const L1_LIBRARY_FILENAME = "smart-kg-l1-library.json";
 const SKILL = "smart-base/dak-l1-library";
@@ -101,7 +101,7 @@ export interface Doc {
 // ── What the repository holds about an entry ────────────────────────────────
 
 export interface Held {
-  intake: Intake;
+  intake: IntakeRecord;
   /** Repo-relative, as written into the document; `abs` is what is read. */
   intakePath: string;
   record?: DublinCoreRecord;
@@ -119,13 +119,15 @@ export interface Held {
  * (AGENTS.md). `uploadsDir` overrides both.
  */
 export function heldIntakes(repo: string, uploadsDir?: string): Held[] {
+  // declared-path-literal: the convention fallback for a checkout that declares no uploads graph (a DAK's IG repository), tried only after its declaration; it names that checkout's uploads/, not folio-assistant's
   const uploads = uploadsDir ?? ownDeclaredDirectories(repo, "uploads")[0] ?? join(repo, "uploads");
   if (!existsSync(uploads)) return [];
   const out: Held[] = [];
   for (const d of readdirSync(uploads, { withFileTypes: true })) {
     const intakePath = join(uploads, d.name, "intake.json");
     if (!d.isDirectory() || !existsSync(intakePath)) continue;
-    const intake = IntakeSchema.parse(JSON.parse(readFileSync(intakePath, "utf-8")));
+    const intake = JSON.parse(readFileSync(intakePath, "utf-8")) as IntakeRecord;
+    if (!Array.isArray(intake.files)) throw new Error(`${intakePath}: no files[] — not a folio-intake/v1 record`);
     const recordPath = intake.record ? join(uploads, d.name, intake.record) : undefined;
     const record = recordPath && existsSync(recordPath) ? DublinCoreRecordSchema.parse(JSON.parse(readFileSync(recordPath, "utf-8"))) : undefined;
     const pdfSha256 = intake.files.find((f) => f.role === "original-bitstream")?.sha256 ?? undefined;
@@ -440,7 +442,7 @@ if (import.meta.main) {
   const { doc, report } = l1LibraryDocument({
     entryPath: relative(repo, dir),
     structure,
-    structureSha256: sha256(readFileSync(join(dir, "structure.json"))),
+    structureSha256: sha256(readFileSync(join(dir, STRUCTURE_FILENAME))),
     manifest: JSON.parse(readFileSync(manifestPath, "utf-8")),
     manifestSha256: sha256(readFileSync(manifestPath)),
     frontMatter: existsSync(fm) ? readFileSync(fm, "utf-8") : "",

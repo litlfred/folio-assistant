@@ -154,8 +154,3 @@ export {
   DublinCoreRecordSchema,
   type DublinCoreRecord,
 } from "../folio-assistant-core/schemas/dublin-core.ts";
-export {
-  IntakeSchema,
-  type Intake,
-  type IntakeClassification,
-} from "../cat-harness/schemas/intake.ts";

@@ -77,10 +77,10 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { handleFromUrl, IntakeSchema, readStructure, type IntakeClassification } from "../platform.js";
+import { handleFromUrl, readStructure } from "../platform.js";
 import { isCurrent, readEntry, serialise, type LibraryEntry as BaseEntry } from "./extract-smart-kg-l1.ts";
 import { artifactId, citationId, dakNamespace, L1_LIBRARY_CONTEXT, L1_V3_ONTOLOGY_VERSION, publicationId, referenceEntryId, sha256 } from "./l1-kgid.ts";
-import { decideL1, LAYER_SCHEME } from "./l1-membership.ts";
+import { checkClassification, decideL1, LAYER_SCHEME, type IntakeClassification } from "./l1-membership.ts";
 import { dc, heldIntakes, identifiersOf, publicationProperties, type Held } from "./l1-specialise.ts";
 
 /** A library entry, with the checkout it is read from. */
@@ -611,9 +611,11 @@ if (import.meta.main) {
       console.log(`  context: ${h.intakePath} would record L1 by context (--record-context writes it)`);
       continue;
     }
+    const errs = checkClassification(record);
+    if (errs.length) throw new Error(`context record breaks cat-harness/schemas/intake.ts: ${errs.join("; ")}`);
     const raw = JSON.parse(readFileSync(h.abs.intake, "utf-8"));
     raw.classifications = [...(raw.classifications ?? []), record];
-    writeFileSync(h.abs.intake, `${JSON.stringify(IntakeSchema.parse(raw), null, 2)}\n`);
+    writeFileSync(h.abs.intake, `${JSON.stringify(raw, null, 2)}\n`);
     console.log(`  context: recorded on ${h.intakePath}`);
   }
   const target = join(dir, DAK_L1_FILENAME);
