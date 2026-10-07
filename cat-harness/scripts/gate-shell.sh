@@ -59,7 +59,7 @@ log="$(mktemp -t gate-shell.XXXXXX)"
 # carries the stderr a failure actually prints; the Actions log merges the
 # two streams anyway, so nothing a reader sees changes.
 # THE CI CONE (bean `4rbc`, issue #2456). A job that ran `ci-cone.ts prepare`
-# has `CI_CONE_MODE` set, and only a step that is EXACTLY `bun run <script>`
+# has `CI_CONE_MODE` set, and only a step that is EXACTLY `bun run [cat] <script>`
 # is touched; every other step runs as written.
 #
 #   skip    (a pull request) `ci-cone.ts decide` exits 0 only when every path
@@ -74,8 +74,8 @@ log="$(mktemp -t gate-shell.XXXXXX)"
 cone=""
 if [ -n "${CI_CONE_MODE:-}" ]; then
   body="$(grep -vE '^\s*(#|$)' "$script" || true)"
-  if [ "$(printf '%s\n' "$body" | wc -l)" -eq 1 ] && [[ "$body" =~ ^[[:space:]]*bun\ run\ ([A-Za-z0-9:_-]+)[[:space:]]*$ ]]; then
-    cone="${BASH_REMATCH[1]}"
+  if [ "$(printf '%s\n' "$body" | wc -l)" -eq 1 ] && [[ "$body" =~ ^[[:space:]]*bun\ run\ (cat\ )?([A-Za-z0-9:_-]+)[[:space:]]*$ ]]; then
+    cone="${BASH_REMATCH[2]}"
   fi
 fi
 cone_cli="$(dirname "$0")/ci-cone.ts"

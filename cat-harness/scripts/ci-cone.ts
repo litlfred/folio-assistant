@@ -85,6 +85,7 @@ import {
 } from "./input-hash.ts";
 import { openTrace } from "./input-trace.ts";
 import { collectTaskIo } from "./task-io.ts";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 /** Bump when the parser or the read-set rules change. A record from another version is ignored, so every check runs. */
 export const TRACER_VERSION = 2;
@@ -648,7 +649,12 @@ export interface ConeRunOpts {
   sha: string;
   /** `ignore` silences the check's own output (tests). */
   stdio?: "inherit" | "ignore";
+  /** What runs a script by name: `bun run cat` (bean `ar1s` P4), which tests replace. */
+  runner?: readonly string[];
 }
+
+/** How a gate step runs a script by name, since #2448: `bun run cat <name>`. */
+export const RUNNER = ["bun", "run", "cat"] as const;
 
 /**
  * Run `bun run <script>` under the tracer, and record (or forget) what it
@@ -659,7 +665,7 @@ export interface ConeRunOpts {
 export function recordRun(o: ConeRunOpts): { code: number; note: string } {
   const stdio = o.stdio ?? "inherit";
   const plain = (why: string) => {
-    const r = Bun.spawnSync(["bun", "run", o.script], { cwd: o.root, stdin: stdio, stdout: stdio, stderr: stdio });
+    const r = Bun.spawnSync([...(o.runner ?? RUNNER), o.script], { cwd: o.root, stdin: stdio, stdout: stdio, stderr: stdio });
     return { code: r.exitCode ?? 1, note: `not traced — ${why}` };
   };
   let before: Fingerprint;
@@ -671,7 +677,7 @@ export function recordRun(o: ConeRunOpts): { code: number; note: string } {
   if ("undetermined" in before) return plain(before.undetermined);
   const trace = openTrace(o.root);
   const log = join(tmpdir(), `ci-cone-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}.strace`);
-  const r = Bun.spawnSync(["strace", ...STRACE_ARGS, "-o", log, "bun", "run", o.script], {
+  const r = Bun.spawnSync(["strace", ...STRACE_ARGS, "-o", log, ...(o.runner ?? RUNNER), o.script], {
     cwd: o.root,
     stdin: stdio,
     stdout: stdio,
@@ -711,7 +717,7 @@ export function recordRun(o: ConeRunOpts): { code: number; note: string } {
 }
 
 /** Whether a PR run may skip `script` against the restored records. Any error is "run". */
-export function decideRun(o: Omit<ConeRunOpts, "sha" | "stdio">): ConeDecision {
+export function decideRun(o: Omit<ConeRunOpts, "sha" | "stdio" | "runner">): ConeDecision {
   try {
     const digests = new FileDigests(o.root);
     const fp = coneFingerprint(o.root, o.scripts, o.script, o.io, digests, o.baseline);
@@ -725,7 +731,7 @@ function main(argv: readonly string[]): number {
   const [cmd, script] = argv;
   const root = process.cwd();
   const env = process.env;
-  const scripts = (JSON.parse(readFileSync(join(root, "package.json"), "utf-8")) as { scripts?: Record<string, string> }).scripts ?? {};
+  const scripts = scriptsOf(root);
   if (cmd === "prepare") {
     // Which mode this job's gate steps run in, through $GITHUB_ENV.
     const out = env.GITHUB_ENV;
@@ -768,7 +774,7 @@ function main(argv: readonly string[]): number {
       console.log(`ci-cone: runs — ${d.why}`);
       return 1;
     }
-    console.log(`▸ bun run ${script}   SKIPPED — inputs unchanged since ${d.sha}`);
+    console.log(`▸ bun run cat ${script}   SKIPPED — inputs unchanged since ${d.sha}`);
     summary(`- \`${script}\` SKIPPED — ${d.why}`);
     return 0;
   }

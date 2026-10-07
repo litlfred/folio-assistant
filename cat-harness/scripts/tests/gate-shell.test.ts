@@ -216,6 +216,10 @@ describe("gate-shell.sh — the CI cone hook", () => {
     expect(crashed.status).toBe(7);
   });
 
+  test("`bun run cat <script>` (bean ar1s P4) is the same step, by the script's name", () => {
+    expect(coneStep("bun run cat some:check\n", "skip", 0).called).toBe("decide some:check\n");
+  });
+
   test("only a step that is EXACTLY one `bun run <script>` is touched", () => {
     for (const body of ["bun run a:check\nbun run b:check\n", "bun run a:check -- --flag\n", "bun --version\n", "set -e\nbun run a:check\n"]) {
       expect(coneStep(body, "skip", 0).called).toBe("");

@@ -148,7 +148,7 @@ describe.skipIf(!HAS_STRACE)("the falsifiers, under a real strace (skipped where
   const io: PairIO = { inputs: [TRACKED], outputs: [] };
   let baselineId = "entry-1";
   const baseline: BaselineResolver = () => ({ id: baselineId });
-  const record = (script = "x:check") => recordRun({ root, scripts, script, io, baseline, sha: "mainsha", stdio: "ignore" });
+  const record = (script = "x:check") => recordRun({ root, scripts, script, io, baseline, sha: "mainsha", stdio: "ignore", runner: ["bun", "run"] });
   const decide = (script = "x:check") => decideRun({ root, scripts, script, io, baseline });
   const write = (rel: string, text: string) => writeFileSync(join(root, rel), text);
 
@@ -272,7 +272,7 @@ describe.skipIf(!HAS_STRACE)("the falsifiers, under a real strace (skipped where
   });
 
   test("not {tracked} in task-io: not a candidate, so it runs untraced and never skips", () => {
-    const r = recordRun({ root, scripts, script: "x:check", io: { outputs: [] }, baseline, sha: "s", stdio: "ignore" });
+    const r = recordRun({ root, scripts, script: "x:check", io: { outputs: [] }, baseline, sha: "s", stdio: "ignore", runner: ["bun", "run"] });
     expect(r.code).toBe(0);
     expect(r.note).toContain("not a candidate");
     expect(decideRun({ root, scripts, script: "x:check", io: { outputs: [] }, baseline }).skip).toBe(false);
