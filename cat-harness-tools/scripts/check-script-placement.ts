@@ -22,7 +22,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
-import { mountedInstanceRoots } from "../../cat-harness/schemas/remote-mount.ts";
+import { mountedManifests } from "../../cat-harness/schemas/remote-mount.ts";
 import { readScriptTable } from "../../cat-harness/schemas/script-table.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -42,14 +42,24 @@ export function layersOf(repo: string): Map<string, string[]> {
       : [];
     out.set(relative(repo, inst), needs);
   }
-  // A remote-mounted layer an override moved below the first level: found by
-  // its lock, and a layer of this checkout like any other (its manifest is
-  // then read only through a matching asset lock; see `script-table.ts`).
-  for (const [name, abs] of mountedInstanceRoots(repo)) {
-    const rel = relative(repo, abs);
-    if (out.has(rel)) continue;
-    const decl = join(abs, `${name}.json`);
-    const needs = existsSync(decl) ? (((JSON.parse(readFileSync(decl, "utf-8")) as { needs?: unknown[] }).needs ?? []).filter((n): n is string => typeof n === "string")) : [];
+  // A REMOTE-MOUNTED instance is another repository's bytes, like a
+  // submodule, and is a home for scripts ONLY when its mount lock vouches for
+  // its `package.json` as an asset (owner, 2026-10-07, "Option A, by
+  // reference"). Otherwise it is not a layer of this checkout, and a script
+  // running its code stays at the root, as it did for the submodule.
+  const verified = new Map<string, string>();
+  for (const scope of new Set([resolve(repo), ...instanceRootsIn(repo).map((i) => resolve(i))])) {
+    for (const m of mountedManifests(scope)) {
+      if (m.root === undefined) continue;
+      const rel = relative(repo, m.root);
+      if (m.state === "verified") verified.set(rel, m.instance);
+      else out.delete(rel);
+    }
+  }
+  for (const [rel, name] of verified) {
+    if (out.has(rel)) continue; // at its home path: already read above
+    const decl = join(repo, rel, `${name}.json`);
+    const needs = existsSync(decl) ? ((JSON.parse(readFileSync(decl, "utf-8")) as { needs?: unknown[] }).needs ?? []).filter((n): n is string => typeof n === "string") : [];
     out.set(rel, needs);
   }
   return out;

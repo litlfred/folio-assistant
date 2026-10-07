@@ -508,6 +508,8 @@ export function compareWithPin(base: string, work: string, p: PlannedInstance): 
   if (!existsSync(declDisk) || sha256Text(readFileSync(declDisk)) !== sha256Text(readFileSync(declPin))) differing.push(`${p.path}/${p.instance}.json`);
   for (const d of p.directories) {
     const pin = fileHashes(join(work, d.upstreamPath));
+    // A whole-instance mount at the upstream's root: the fetch's own `.git` is never content.
+    if (d.upstreamPath === ".") for (const f of [...pin.keys()]) if (f === ".git" || f.startsWith(".git/")) pin.delete(f);
     const disk = fileHashes(join(base, d.path));
     for (const [f, h] of pin) if (disk.get(f) !== h) differing.push(`${d.path}/${f}`);
     for (const f of disk.keys()) if (!pin.has(f)) extra.push(`${d.path}/${f}`);
@@ -556,6 +558,11 @@ function lockEntry(base: string, p: PlannedInstance, declText: Buffer, absent: s
   };
 }
 
+/** The sparse-checkout paths that bring one planned instance down. */
+function sparsePaths(p: PlannedInstance): string[] {
+  return [p.declarationFile, ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`)), ...p.assets.map((a) => a.upstreamPath)];
+}
+
 /** What the pinned tree does not have, as directory ids and `asset:<id>`. */
 function absentAtPin(work: string, p: PlannedInstance): string[] {
   return [
@@ -594,11 +601,53 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
       const via = plan.mounts.find((m) => m.harness === p.via);
       const trust = via ? mountTrust(via, opts.purpose ?? "mount") : { ok: false as const, state: "could-not-determine" as const, detail: `no declared mount named \`${p.via}\`` };
       if (!trust.ok) {
-        plan.outcomes.push({ instance: p.instance, state: trust.state === "refused" ? "missing" : "could-not-determine", path: p.path, detail: `not mounted: ${trust.detail}` });
+        plan.outcomes.push({ instance: p.instance, state: trust.state === "refused" ? "missing" : "could-not-determine", path: p.path, detail: `not mounted: ${trust.detail}`, refusal: "trust" });
         if (before) locked.push(before);
         continue;
       }
       try {
+        // Tracked bytes are refused before anything else: neither a re-mount
+        // nor an adoption may land on files this checkout tracks.
+        if (tracked(plan.instanceRoot, p.path)) {
+          plan.outcomes.push({ instance: p.instance, state: "missing", path: p.path, detail: `\`${p.path}/\` holds tracked files — a mount never lands on tracked bytes`, refusal: "tracked" });
+          if (before) {
+            locked.push(before);
+            untouched.add(p.instance);
+          }
+          continue;
+        }
+        if (!before && existsSync(target)) {
+          // ADOPT IF IDENTICAL (owner, 2026-10-07). The target exists and no
+          // lock says this mount put it there. Compare it, file by file, with
+          // the pin: identical is adopted (only the lock is written); anything
+          // else is refused with the paths that differ. Never overwritten,
+          // never deleted.
+          const tree = trees.get(`${p.repository}@${p.sha}`)!;
+          const work = tree.checkout(sparsePaths(p));
+          const { differing, extra } = compareWithPin(plan.instanceRoot, work, p);
+          if (differing.length || extra.length) {
+            const parts = [differing.length ? `${differing.length} differ from the pin (${listPaths(differing)})` : "", extra.length ? `${extra.length} extra file(s) the pin does not have (${listPaths(extra)})` : ""].filter(Boolean);
+            plan.outcomes.push({
+              instance: p.instance,
+              state: "missing",
+              path: p.path,
+              detail: `\`${p.path}/\` already exists, no lock says this mount put it there, and it is not identical to ${p.repository}@${p.sha.slice(0, 12)} — refused, nothing changed: ${parts.join("; ")}. Move the edits upstream to the fork, or delete or rename the directory, then re-mount`,
+              refusal: "not-identical",
+              differing,
+              extra,
+            });
+            continue;
+          }
+          const absent = absentAtPin(work, p);
+          locked.push(lockEntry(plan.instanceRoot, p, readFileSync(join(work, p.declarationFile)), absent, true));
+          if (ensureIgnored(plan.instanceRoot, p.path) === "excluded") excluded.push(p.path);
+          plan.outcomes.push(
+            absent.length
+              ? { instance: p.instance, state: "missing", path: p.path, detail: `adopted, but declared and absent at ${p.sha.slice(0, 12)}: ${absent.join(", ")}`, refusal: "absent-at-pin" }
+              : { instance: p.instance, state: "mounted", path: p.path, adopted: true, detail: `adopted: already identical to ${p.repository}@${p.sha.slice(0, 12)}; only the lock was written` },
+          );
+          continue;
+        }
         if (before) {
           const changed = modifiedSince(plan.instanceRoot, before);
           if (changed.length) {
@@ -612,65 +661,51 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
             untouched.add(p.instance);
             continue;
           }
-        } else if (existsSync(target)) {
-          plan.outcomes.push({ instance: p.instance, state: "missing", path: p.path, detail: `\`${p.path}/\` already exists and no lock says this mount put it there — refused` });
-          continue;
-        }
-        if (tracked(plan.instanceRoot, p.path)) {
-          plan.outcomes.push({ instance: p.instance, state: "missing", path: p.path, detail: `\`${p.path}/\` holds tracked files — a mount never lands on tracked bytes` });
-          continue;
         }
         const tree = trees.get(`${p.repository}@${p.sha}`)!;
-        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`))]);
+        const work = tree.checkout(sparsePaths(p));
 
         // Replace what THIS mount put there before — only that.
         if (before) {
           for (const d of before.directories) rmSync(join(plan.instanceRoot, d.path), { recursive: true, force: true });
+          for (const a of before.assets ?? []) rmSync(join(plan.instanceRoot, a.path), { force: true });
           rmSync(join(plan.instanceRoot, before.path, `${before.instance}.json`), { force: true });
         }
         mkdirSync(target, { recursive: true });
         const declText = readFileSync(join(work, p.declarationFile));
         writeFileSync(join(target, `${p.instance}.json`), declText);
-        const dirs: LockedInstance["directories"] = [];
-        const absent: string[] = [];
+        const absent = absentAtPin(work, p);
         for (const d of p.directories) {
+          if (absent.includes(d.id)) continue;
           const src = join(work, d.upstreamPath);
-          if (!existsSync(src)) {
-            absent.push(d.id);
-            continue;
-          }
           const dst = join(plan.instanceRoot, d.path);
           mkdirSync(dirname(dst), { recursive: true });
           // A whole-instance mount at the upstream's root copies the fetch's
           // own work tree: its `.git` is the temporary repository, never content.
           cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true, filter: (from) => !(d.upstreamPath === "." && from === join(src, ".git")) });
         }
-        // Digest AFTER every copy, so a nested directory's digest covers what is on disk.
-        for (const d of p.directories) {
-          if (absent.includes(d.id)) continue;
-          dirs.push({ id: d.id, path: d.path, upstreamPath: d.upstreamPath, ...digestOf(join(plan.instanceRoot, d.path)) });
+        for (const a of p.assets) {
+          if (absent.includes(`asset:${a.id}`)) continue;
+          const dst = join(plan.instanceRoot, a.path);
+          mkdirSync(dirname(dst), { recursive: true });
+          copyFileSync(join(work, a.upstreamPath), dst);
         }
+        // Digest AFTER every copy, so a nested directory's digest covers what is on disk.
+        const entry = lockEntry(plan.instanceRoot, p, declText, absent, false);
         if (ensureIgnored(plan.instanceRoot, p.path) === "excluded") excluded.push(p.path);
-        locked.push({
-          instance: p.instance,
-          repository: p.repository,
-          sha: p.sha,
-          upstreamRoot: p.upstreamRoot,
-          path: p.path,
-          via: p.via,
-          pinnedBy: p.pinnedBy,
-          declaration: { file: `${p.instance}.json`, sha256: sha256Text(declText) },
-          directories: dirs,
-        });
-        const files = dirs.reduce((n, d) => n + d.files, 0);
-        plan.outcomes.push({
-          instance: p.instance,
-          state: absent.length ? "missing" : "mounted",
-          path: p.path,
-          detail: absent.length
-            ? `declared but absent at ${p.sha.slice(0, 12)}: ${absent.join(", ")} — the rest is mounted`
-            : `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}`,
-        });
+        locked.push(entry);
+        const files = entry.directories.reduce((n, d) => n + d.files, 0);
+        const dirs = entry.directories;
+        plan.outcomes.push(
+          absent.length
+            ? { instance: p.instance, state: "missing", path: p.path, detail: `declared but absent at ${p.sha.slice(0, 12)}: ${absent.join(", ")} — the rest is mounted`, refusal: "absent-at-pin" }
+            : {
+                instance: p.instance,
+                state: "mounted",
+                path: p.path,
+                detail: `${dirs.length} director${dirs.length === 1 ? "y" : "ies"}${entry.assets.length ? ` and ${entry.assets.length} asset(s)` : ""}, ${files} file(s) from ${p.repository}@${p.sha.slice(0, 12)}`,
+              },
+        );
       } catch (e) {
         plan.outcomes.push({ instance: p.instance, state: "could-not-determine", path: p.path, detail: `mounting threw: ${(e as Error).message}` });
       }
@@ -684,7 +719,17 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
       // in `instances` and is re-judged from disk by the check.
       unmounted: plan.outcomes
         .filter((o) => o.state !== "mounted" && !untouched.has(o.instance))
-        .map((o) => ({ instance: o.instance, state: o.state as "local" | "skipped" | "missing" | "could-not-determine", detail: o.detail }))
+        .map((o) => {
+          const r = o as InstanceOutcome & Refused;
+          return {
+            instance: o.instance,
+            state: o.state as "local" | "skipped" | "missing" | "could-not-determine",
+            detail: o.detail,
+            ...(r.refusal ? { refusal: r.refusal } : {}),
+            ...(r.differing?.length ? { differing: r.differing } : {}),
+            ...(r.extra?.length ? { extra: r.extra } : {}),
+          };
+        })
         .sort((a, b) => a.instance.localeCompare(b.instance)),
     };
     writeFileSync(lockFile, JSON.stringify(lock, null, 2) + "\n");
@@ -746,6 +791,11 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
         const abs = join(ds.instanceRoot, d.path);
         if (!existsSync(abs)) bad.push(`${d.path}/ absent`);
         else if (digestOf(abs).treeDigest !== d.treeDigest) bad.push(`${d.path}/ modified`);
+      }
+      for (const a of inst.assets ?? []) {
+        const abs = join(ds.instanceRoot, a.path);
+        if (!existsSync(abs)) bad.push(`${a.path} absent`);
+        else if (sha256Text(readFileSync(abs)) !== a.sha256) bad.push(`${a.path} modified`);
       }
       outcomes.push(
         bad.length

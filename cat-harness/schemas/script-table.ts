@@ -152,7 +152,11 @@ export function readScriptTable(repoRoot: string): ScriptTableResult {
     const m = mounted.byRoot.get(inst);
     if (m?.state === "none") continue;
     if (m?.state === "unresolvable") {
-      unresolved.push({ manifest, instance: m.instance, why: m.why, declares: declaredNames(join(root, manifest)) });
+      const declares = declaredNames(join(root, manifest));
+      // A manifest that declares no `checkoutScripts` at all hides no script
+      // name: there is nothing to resolve, so nothing is reported. Anything
+      // else, including a file that cannot be read, is unresolved.
+      if (declares === undefined || declares.length > 0) unresolved.push({ manifest, instance: m.instance, why: m.why, declares });
       continue;
     }
     add(readJson(join(root, manifest))?.[CHECKOUT_SCRIPTS_KEY], manifest);

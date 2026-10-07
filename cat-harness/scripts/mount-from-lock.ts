@@ -71,6 +71,14 @@ export interface LockInstance {
   path: string;
   declaration: { file: string; sha256: string };
   directories: LockDir[];
+  /** Single declared files, each locked by sha256 (a mounted `package.json`, issue #2467). Absent in older locks. */
+  assets?: LockAsset[];
+}
+export interface LockAsset {
+  id: string;
+  path: string;
+  upstreamPath: string;
+  sha256: string;
 }
 
 export type State = "mounted" | "current" | "missing" | "could-not-determine";
@@ -130,7 +138,9 @@ export function readLocks(root: string): { file: string; instances?: LockInstanc
           !SHA.test(String(i.sha)) ||
           typeof i.path !== "string" ||
           !Array.isArray(i.directories) ||
-          i.directories.some((d) => typeof d?.path !== "string" || typeof d.upstreamPath !== "string" || !DIGEST.test(String(d.treeDigest))),
+          i.directories.some((d) => typeof d?.path !== "string" || typeof d.upstreamPath !== "string" || !DIGEST.test(String(d.treeDigest))) ||
+          (i.assets !== undefined &&
+            (!Array.isArray(i.assets) || i.assets.some((a) => typeof a?.path !== "string" || typeof a.upstreamPath !== "string" || !DIGEST.test(String(a.sha256))))),
       );
       if (bad) return { file, error: `instance \`${String((bad as { instance?: unknown })?.instance)}\` is malformed` };
       return { file, instances: raw.instances as LockInstance[] };
@@ -211,6 +221,11 @@ function drift(root: string, inst: LockInstance): { absent: string[]; changed: s
     if (!existsSync(abs)) absent.push(d.path);
     else if (digestOf(abs).treeDigest !== d.treeDigest) changed.push(d.path);
   }
+  for (const a of inst.assets ?? []) {
+    const abs = join(root, a.path);
+    if (!existsSync(abs)) absent.push(a.path);
+    else if (sha256(readFileSync(abs)) !== a.sha256) changed.push(a.path);
+  }
   return { absent, changed };
 }
 
@@ -223,7 +238,7 @@ export function checkInstance(root: string, inst: LockInstance): Outcome {
 
 export function mountInstance(root: string, inst: LockInstance): Outcome {
   const id = inst.instance;
-  const bad = [inst.path, ...inst.directories.map((d) => d.path)].find((p) => !safeRel(p));
+  const bad = [inst.path, ...inst.directories.map((d) => d.path), ...(inst.assets ?? []).map((a) => a.path)].find((p) => !safeRel(p));
   if (bad !== undefined) return { instance: id, state: "could-not-determine", detail: `lock path \`${bad}\` climbs out of the checkout or is dot-prefixed` };
   const { absent, changed } = drift(root, inst);
   if (changed.length) {
@@ -234,7 +249,11 @@ export function mountInstance(root: string, inst: LockInstance): Outcome {
   if (trackedPath) return { instance: id, state: "missing", detail: `\`${trackedPath}/\` holds tracked files — a mount never lands on tracked bytes` };
 
   const upstreamDecl = inst.upstreamRoot ? `${inst.upstreamRoot.replace(/\/+$/, "")}/${inst.declaration.file}` : inst.declaration.file;
-  const sparse = [`/${upstreamDecl}`, ...inst.directories.map((d) => (d.upstreamPath === "." ? "/*" : `/${d.upstreamPath.replace(/\/+$/, "")}/`))];
+  const sparse = [
+    `/${upstreamDecl}`,
+    ...inst.directories.map((d) => (d.upstreamPath === "." ? "/*" : `/${d.upstreamPath.replace(/\/+$/, "")}/`)),
+    ...(inst.assets ?? []).map((a) => `/${a.upstreamPath}`),
+  ];
   let work: string;
   try {
     work = fetchAt(inst.repository, inst.sha, sparse);
@@ -263,6 +282,18 @@ export function mountInstance(root: string, inst: LockInstance): Outcome {
         for (const w of written) rmSync(join(root, w), { recursive: true, force: true });
         return { instance: id, state: "could-not-determine", detail: `\`${d.path}\` fetched at ${inst.sha.slice(0, 12)} hashes to ${got.slice(0, 12)}, the lock says ${d.treeDigest.slice(0, 12)} — removed, not kept` };
       }
+    }
+    for (const a of inst.assets ?? []) {
+      if (!absent.includes(a.path)) continue;
+      const src = join(work, a.upstreamPath);
+      if (!existsSync(src) || sha256(readFileSync(src)) !== a.sha256) {
+        for (const w of written) rmSync(join(root, w), { recursive: true, force: true });
+        return { instance: id, state: "could-not-determine", detail: `asset \`${a.upstreamPath}\` at ${inst.sha.slice(0, 12)} is absent or does not hash to the lock — nothing kept` };
+      }
+      const dst = join(root, a.path);
+      mkdirSync(dirname(dst), { recursive: true });
+      cpSync(src, dst);
+      written.push(a.path);
     }
     const declDst = join(root, inst.path, inst.declaration.file);
     if (!existsSync(declDst)) {
