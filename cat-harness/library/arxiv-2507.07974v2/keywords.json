@@ -1,0 +1,723 @@
+{
+  "$schema": "folio-keywords/v1",
+  "entry": "arxiv-2507.07974v2",
+  "corpus": {
+    "library": "cat-harness/library",
+    "sections": 1860,
+    "terms": 11867,
+    "weighting": "log-entropy"
+  },
+  "document": [
+    {
+      "term": "injection defense",
+      "score": 22.0563,
+      "evidence": []
+    },
+    {
+      "term": "training-time defense",
+      "score": 20.7912,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "prompt injection",
+      "score": 20.2901,
+      "evidence": []
+    },
+    {
+      "term": "test-time defense",
+      "score": 19.7797,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "utility loss",
+      "score": 15.8712,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "injection attacks",
+      "score": 15.7062,
+      "evidence": []
+    },
+    {
+      "term": "few defensivetokens",
+      "score": 15.6904,
+      "evidence": []
+    },
+    {
+      "term": "prompt optimization",
+      "score": 15.0933,
+      "evidence": []
+    },
+    {
+      "term": "sandwich defense",
+      "score": 14.9339,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "defensive tokens",
+      "score": 14.6839,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "prompt tuning",
+      "score": 14.5193,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "alpacafarm security",
+      "score": 14.507,
+      "evidence": [
+        "heading"
+      ]
+    }
+  ],
+  "sections": {
+    "sec-000-abstract": [
+      {
+        "term": "prompt injection",
+        "score": 1.4462,
+        "evidence": []
+      },
+      {
+        "term": "system developers",
+        "score": 1.2013,
+        "evidence": []
+      },
+      {
+        "term": "defensivetokens",
+        "score": 1.0912,
+        "evidence": []
+      },
+      {
+        "term": "test-time",
+        "score": 0.8075,
+        "evidence": []
+      },
+      {
+        "term": "defense",
+        "score": 0.7778,
+        "evidence": []
+      },
+      {
+        "term": "security",
+        "score": 0.7768,
+        "evidence": []
+      },
+      {
+        "term": "aisec",
+        "score": 0.7767,
+        "evidence": []
+      },
+      {
+        "term": "training-time",
+        "score": 0.7713,
+        "evidence": []
+      }
+    ],
+    "sec-001-1-introduction": [
+      {
+        "term": "prompt injection",
+        "score": 1.8,
+        "evidence": []
+      },
+      {
+        "term": "llm system",
+        "score": 1.6887,
+        "evidence": []
+      },
+      {
+        "term": "injection attacks",
+        "score": 1.5497,
+        "evidence": []
+      },
+      {
+        "term": "llm-integrated applications",
+        "score": 1.2165,
+        "evidence": []
+      },
+      {
+        "term": "defensive",
+        "score": 1.1978,
+        "evidence": []
+      },
+      {
+        "term": "developer",
+        "score": 1.1314,
+        "evidence": []
+      },
+      {
+        "term": "test time",
+        "score": 0.9821,
+        "evidence": []
+      },
+      {
+        "term": "provider",
+        "score": 0.9655,
+        "evidence": []
+      }
+    ],
+    "sec-002-3-defensivetoken": [
+      {
+        "term": "defensivetoken",
+        "score": 2.7514,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "utility loss",
+        "score": 2.275,
+        "evidence": []
+      },
+      {
+        "term": "training-time defenses",
+        "score": 2.2421,
+        "evidence": []
+      },
+      {
+        "term": "existing defenses",
+        "score": 1.652,
+        "evidence": []
+      },
+      {
+        "term": "test-time baseline",
+        "score": 1.6193,
+        "evidence": []
+      },
+      {
+        "term": "prompt injection",
+        "score": 1.1842,
+        "evidence": []
+      },
+      {
+        "term": "asr",
+        "score": 1.148,
+        "evidence": []
+      },
+      {
+        "term": "test time",
+        "score": 1.0659,
+        "evidence": []
+      }
+    ],
+    "sec-003-2-related-work": [
+      {
+        "term": "prevention-based defenses",
+        "score": 2.4559,
+        "evidence": []
+      },
+      {
+        "term": "detection-based defenses",
+        "score": 2.2776,
+        "evidence": []
+      },
+      {
+        "term": "prompt optimization",
+        "score": 2.2518,
+        "evidence": []
+      },
+      {
+        "term": "prompt injection",
+        "score": 2.1962,
+        "evidence": []
+      },
+      {
+        "term": "soft prompt",
+        "score": 2.1841,
+        "evidence": []
+      },
+      {
+        "term": "prompt tuning",
+        "score": 1.8745,
+        "evidence": []
+      },
+      {
+        "term": "system-level defense",
+        "score": 1.7571,
+        "evidence": []
+      },
+      {
+        "term": "against prompt",
+        "score": 1.5797,
+        "evidence": []
+      }
+    ],
+    "sec-004-31-preliminaries": [
+      {
+        "term": "prompt injection",
+        "score": 1.5165,
+        "evidence": []
+      },
+      {
+        "term": "resp",
+        "score": 1.1593,
+        "evidence": []
+      },
+      {
+        "term": "please write",
+        "score": 1.122,
+        "evidence": []
+      },
+      {
+        "term": "inst",
+        "score": 1.1123,
+        "evidence": []
+      },
+      {
+        "term": "write clear",
+        "score": 1.0369,
+        "evidence": []
+      },
+      {
+        "term": "efficient algorithm",
+        "score": 0.9844,
+        "evidence": []
+      },
+      {
+        "term": "instruction",
+        "score": 0.8821,
+        "evidence": []
+      },
+      {
+        "term": "attacker",
+        "score": 0.7819,
+        "evidence": []
+      }
+    ],
+    "sec-005-32-motivation": [
+      {
+        "term": "training-time defenses",
+        "score": 2.3857,
+        "evidence": []
+      },
+      {
+        "term": "llm system",
+        "score": 1.7344,
+        "evidence": []
+      },
+      {
+        "term": "utility loss",
+        "score": 1.6882,
+        "evidence": []
+      },
+      {
+        "term": "defenses cannot",
+        "score": 1.6791,
+        "evidence": []
+      },
+      {
+        "term": "system developers",
+        "score": 1.5188,
+        "evidence": []
+      },
+      {
+        "term": "defensivetokens",
+        "score": 1.2148,
+        "evidence": []
+      },
+      {
+        "term": "defen",
+        "score": 0.9469,
+        "evidence": []
+      },
+      {
+        "term": "sota",
+        "score": 0.9042,
+        "evidence": []
+      }
+    ],
+    "sec-006-33-methodology": [
+      {
+        "term": "defensive instruction",
+        "score": 1.8803,
+        "evidence": []
+      },
+      {
+        "term": "defensive training",
+        "score": 1.7979,
+        "evidence": []
+      },
+      {
+        "term": "tuning dataset",
+        "score": 1.525,
+        "evidence": []
+      },
+      {
+        "term": "trick",
+        "score": 0.8435,
+        "evidence": []
+      },
+      {
+        "term": "struq",
+        "score": 0.8421,
+        "evidence": []
+      },
+      {
+        "term": "embeddings",
+        "score": 0.8126,
+        "evidence": []
+      },
+      {
+        "term": "llm",
+        "score": 0.753,
+        "evidence": []
+      },
+      {
+        "term": "loss",
+        "score": 0.7457,
+        "evidence": []
+      }
+    ],
+    "sec-007-34-connection-to-prompt-tuning": [
+      {
+        "term": "prompt tuning",
+        "score": 3.5823,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "trainable embeddings",
+        "score": 1.9491,
+        "evidence": []
+      },
+      {
+        "term": "across samples",
+        "score": 1.316,
+        "evidence": []
+      },
+      {
+        "term": "task instruction",
+        "score": 1.2221,
+        "evidence": []
+      },
+      {
+        "term": "different across",
+        "score": 0.9856,
+        "evidence": []
+      },
+      {
+        "term": "resp",
+        "score": 0.9187,
+        "evidence": []
+      }
+    ],
+    "sec-009-41-setup": [
+      {
+        "term": "year ago",
+        "score": 2.8977,
+        "evidence": []
+      },
+      {
+        "term": "huge affect",
+        "score": 2.6842,
+        "evidence": []
+      },
+      {
+        "term": "alpacafarm security",
+        "score": 2.6747,
+        "evidence": []
+      },
+      {
+        "term": "ignore attack",
+        "score": 2.5925,
+        "evidence": []
+      },
+      {
+        "term": "huge effect",
+        "score": 2.3199,
+        "evidence": []
+      },
+      {
+        "term": "prompt injection",
+        "score": 2.1725,
+        "evidence": []
+      },
+      {
+        "term": "attack succeeds",
+        "score": 2.1601,
+        "evidence": []
+      },
+      {
+        "term": "llm judge",
+        "score": 2.1418,
+        "evidence": []
+      }
+    ],
+    "sec-010-42-defensivetoken-a-sota-test-time-defense": [
+      {
+        "term": "test-time defense",
+        "score": 7.3481,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "training-time defense",
+        "score": 3.1942,
+        "evidence": []
+      },
+      {
+        "term": "defensivetoken",
+        "score": 2.9402,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "average asr",
+        "score": 2.8125,
+        "evidence": []
+      },
+      {
+        "term": "existing test-time",
+        "score": 2.5664,
+        "evidence": []
+      },
+      {
+        "term": "system-level defense",
+        "score": 2.4861,
+        "evidence": []
+      },
+      {
+        "term": "optimization-based gcg",
+        "score": 2.1371,
+        "evidence": []
+      },
+      {
+        "term": "defensiveto kens",
+        "score": 1.9526,
+        "evidence": []
+      }
+    ],
+    "sec-011-43-defensivetoken-vs-training-time-defenses": [
+      {
+        "term": "training-time defenses",
+        "score": 4.5639,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "defensivetoken",
+        "score": 1.5534,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lora",
+        "score": 1.3712,
+        "evidence": []
+      },
+      {
+        "term": "prompt injections",
+        "score": 1.0692,
+        "evidence": []
+      },
+      {
+        "term": "against prompt",
+        "score": 0.9391,
+        "evidence": []
+      },
+      {
+        "term": "optimization-free",
+        "score": 0.8454,
+        "evidence": []
+      },
+      {
+        "term": "struq",
+        "score": 0.8421,
+        "evidence": []
+      }
+    ],
+    "sec-012-44-analyzing-the-utility-security-trade-off": [
+      {
+        "term": "utility-security trade-off",
+        "score": 3.1961,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "slight utility",
+        "score": 2.1843,
+        "evidence": []
+      },
+      {
+        "term": "utility loss",
+        "score": 1.6177,
+        "evidence": []
+      },
+      {
+        "term": "defensivetoken",
+        "score": 1.1378,
+        "evidence": []
+      },
+      {
+        "term": "defense",
+        "score": 1.0053,
+        "evidence": []
+      }
+    ],
+    "sec-013-45-ablation-study": [
+      {
+        "term": "ablation study",
+        "score": 4.5371,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "average winrate",
+        "score": 3.042,
+        "evidence": []
+      },
+      {
+        "term": "average asr",
+        "score": 2.996,
+        "evidence": []
+      },
+      {
+        "term": "secalign token",
+        "score": 2.8078,
+        "evidence": []
+      },
+      {
+        "term": "struq token",
+        "score": 2.7883,
+        "evidence": []
+      },
+      {
+        "term": "defensive tokens",
+        "score": 2.4113,
+        "evidence": []
+      },
+      {
+        "term": "ideal defense",
+        "score": 1.904,
+        "evidence": []
+      },
+      {
+        "term": "alpacafarm",
+        "score": 1.8979,
+        "evidence": []
+      }
+    ],
+    "sec-014-5-conclusion": [
+      {
+        "term": "defensivetoken",
+        "score": 1.1378,
+        "evidence": []
+      },
+      {
+        "term": "utility",
+        "score": 0.8492,
+        "evidence": []
+      },
+      {
+        "term": "defenses",
+        "score": 0.7923,
+        "evidence": []
+      },
+      {
+        "term": "flexibility",
+        "score": 0.7115,
+        "evidence": []
+      },
+      {
+        "term": "fering",
+        "score": 0.6293,
+        "evidence": []
+      }
+    ],
+    "sec-015-acknowledgments": [
+      {
+        "term": "grateful",
+        "score": 0.6651,
+        "evidence": []
+      },
+      {
+        "term": "homeland",
+        "score": 0.6057,
+        "evidence": []
+      },
+      {
+        "term": "insightful",
+        "score": 0.592,
+        "evidence": []
+      }
+    ],
+    "sec-016-references": [
+      {
+        "term": "prompt injection",
+        "score": 2.7811,
+        "evidence": []
+      },
+      {
+        "term": "injection attacks",
+        "score": 2.7705,
+        "evidence": []
+      },
+      {
+        "term": "international conference",
+        "score": 2.724,
+        "evidence": []
+      },
+      {
+        "term": "indirect prompt",
+        "score": 2.52,
+        "evidence": []
+      },
+      {
+        "term": "carlos guestrin",
+        "score": 2.5173,
+        "evidence": []
+      },
+      {
+        "term": "prompt hacking",
+        "score": 2.4499,
+        "evidence": []
+      },
+      {
+        "term": "sizhe chen",
+        "score": 2.4447,
+        "evidence": []
+      },
+      {
+        "term": "yuqi jia",
+        "score": 2.4254,
+        "evidence": []
+      }
+    ],
+    "sec-front-matter": [
+      {
+        "term": "berkeley",
+        "score": 1.9274,
+        "evidence": []
+      },
+      {
+        "term": "google deepmind",
+        "score": 1.6641,
+        "evidence": []
+      },
+      {
+        "term": "nicholas carlini",
+        "score": 1.6135,
+        "evidence": []
+      }
+    ]
+  }
+}

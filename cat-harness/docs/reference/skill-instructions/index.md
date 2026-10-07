@@ -88,6 +88,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Injection](injection-boundaries.html) | `injection-boundaries` | — |   run: \| |
 | [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
 | [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
+| [Zero-trust handover](zero-trust-handover.html) | `zero-trust-handover` | — | **This is a skill: this platform's application of a method, not the method.** |
 
 ## Platform core (folio-core)
 
