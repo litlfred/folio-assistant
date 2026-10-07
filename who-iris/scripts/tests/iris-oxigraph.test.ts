@@ -32,6 +32,19 @@ describe('WHO-IRIS Oxigraph Multi-Graph MVP', () => {
     expect(queries).toHaveProperty('facetCounts');
   });
 
+  test('Solution A Skolemization: asserts zero blank nodes in compiled N-Quads dataset', () => {
+    const nqPath = path.join(TMP_DIST, 'who-iris-dataset.nq');
+    const lines = fs.readFileSync(nqPath, 'utf8').split('\n').filter(Boolean);
+
+    // Assert no blank node subject or object identifiers exist in entire dataset
+    const blankNodes = lines.filter(line => /(^|\s)_:[a-zA-Z0-9_-]+/.test(line));
+    expect(blankNodes.length).toBe(0);
+
+    // Assert compound nodes are skolemized into deterministic https://iris.who.int/entity/item/ URIs
+    const skolemizedNodes = lines.filter(line => line.includes('https://iris.who.int/entity/item/'));
+    expect(skolemizedNodes.length).toBeGreaterThan(10);
+  });
+
   test('complex search: multi-condition filter combining Subject, Community, and Copyright Gate', () => {
     const engine = new IrisOxigraphEngine();
     engine.load(path.join(TMP_DIST, 'who-iris-dataset.nq'));

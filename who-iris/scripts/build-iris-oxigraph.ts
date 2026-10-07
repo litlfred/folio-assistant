@@ -27,10 +27,48 @@ export interface BuildResult {
   totalQuads: number;
   metadataQuads: number;
   catalogueQuads: number;
+  skolemizedCount: number;
   outputNqPath: string;
   outputGzPath: string;
   queriesJsonPath: string;
   subgraphs: Record<string, number>;
+}
+
+/**
+ * Solution A: Skolemization (Mint Deterministic, Content-Addressed URIs)
+ *
+ * Traverses JSON-LD objects before RDF conversion and assigns globally unique,
+ * deterministic URIs to all anonymous compound nodes (creators, subjects, dates,
+ * spatial, language, types) based on the parent item handle and property path.
+ *
+ * URI format: https://iris.who.int/entity/item/{handle_slug}#{property}_{index}
+ */
+export function skolemizeJsonLd(node: any, handleClean: string, prefix = 'entity'): any {
+  if (Array.isArray(node)) {
+    return node.map((item, idx) => {
+      if (item && typeof item === 'object' && !item['@id'] && !item['@value']) {
+        const mintedId = `https://iris.who.int/entity/item/${handleClean}#${prefix}_${idx + 1}`;
+        return skolemizeJsonLd(
+          { '@id': mintedId, ...item },
+          handleClean,
+          `${prefix}_${idx + 1}`
+        );
+      }
+      return skolemizeJsonLd(item, handleClean, `${prefix}_${idx + 1}`);
+    });
+  } else if (node && typeof node === 'object') {
+    const res: Record<string, any> = {};
+    for (const [key, val] of Object.entries(node)) {
+      if (key === '@context') {
+        res[key] = val;
+        continue;
+      }
+      const propClean = key.replace(/^.*[:#]/, '').replace(/[^a-zA-Z0-9]/g, '_');
+      res[key] = skolemizeJsonLd(val, handleClean, propClean);
+    }
+    return res;
+  }
+  return node;
 }
 
 export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<BuildResult> {
@@ -116,7 +154,8 @@ export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<Build
     }
   }
 
-  // 2. Process Dublin Core JSON-LD records
+  // 2. Process Dublin Core JSON-LD records with Solution A Skolemization
+  let skolemizedCount = 0;
   const dcFiles = fs.readdirSync(DC_DIR).filter(f => f.endsWith('.dc.jsonld'));
   for (const f of dcFiles) {
     const raw = JSON.parse(fs.readFileSync(path.join(DC_DIR, f), 'utf8'));
@@ -129,12 +168,17 @@ export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<Build
       subgraphQuads[commGraph] = [];
     }
 
-    const nquadsText = await jsonld.toRDF(raw, { format: 'application/n-quads' });
+    // Solution A: Skolemize anonymous compound nodes before toRDF conversion
+    const skolemized = skolemizeJsonLd(raw, handleClean);
+    const nquadsText = await jsonld.toRDF(skolemized, { format: 'application/n-quads' });
     const lines = nquadsText.split('\n').filter(Boolean);
 
     for (let line of lines) {
-      // Re-scope blank nodes to avoid cross-document collision in multi-graph datasets
-      line = line.replace(/_:(b[0-9a-zA-Z_-]+)/g, `_:item_${handleClean}_$1`);
+      // W3C RDF 1.1 fallback skolemization for any residual blank nodes
+      if (/_:[a-zA-Z0-9_-]+/.test(line)) {
+        skolemizedCount++;
+        line = line.replace(/_:(b[0-9a-zA-Z_-]+)/g, `<https://iris.who.int/.well-known/genid/item_${handleClean}_$1>`);
+      }
 
       // Line is a triple in default graph: `<s> <p> <o> .` -> assign to GRAPH_IRIS_METADATA and commGraph
       const quadMetadata = line.replace(/\s*\.\s*$/, ` <${GRAPH_IRIS_METADATA}> .\n`);
@@ -152,6 +196,12 @@ export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<Build
     ...subgraphQuads[GRAPH_IRIS_CATALOGUE],
     ...subgraphQuads[GRAPH_IRIS_METADATA],
   ];
+
+  // Assert Solution A: Zero Blank Nodes Invariant (Skolemization)
+  const residualBnodes = allQuads.filter(q => /(^|\s)_:[a-zA-Z0-9_-]+/.test(q));
+  if (residualBnodes.length > 0) {
+    throw new Error(`Skolemization check failed: ${residualBnodes.length} blank node(s) detected in dataset output.`);
+  }
 
   const outNq = path.join(outDir, 'who-iris-dataset.nq');
   fs.writeFileSync(outNq, allQuads.join('\n') + '\n', 'utf8');
@@ -248,6 +298,7 @@ ORDER BY ?communityName ?issued
     totalQuads: allQuads.length,
     metadataQuads: subgraphQuads[GRAPH_IRIS_METADATA].length,
     catalogueQuads: subgraphQuads[GRAPH_IRIS_CATALOGUE].length,
+    skolemizedCount,
     outputNqPath: outNq,
     outputGzPath: outGz,
     queriesJsonPath,

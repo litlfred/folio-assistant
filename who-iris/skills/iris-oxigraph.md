@@ -47,7 +47,7 @@ The WHO IRIS RDF model is partitioned across distinct **named graphs** within a 
 
 | # | Requirement | Why, in one line |
 |---|---|---|
-| **OX-1** | **Scope blank nodes by handle** (`_:item_${handleClean}_${id}`) | Prevents cross-document property contamination when multiple JSON-LD files merge |
+| **OX-1** | **Skolemize anonymous compound nodes into deterministic URIs** (`https://iris.who.int/entity/item/{handle}#{prop}_{idx}`) | Eliminates blank nodes entirely; prevents cross-document collisions and enables direct external URI addressability |
 | **OX-2** | **Store zero binary bytes in RDF** | Avoids WASM memory bloat; binaries are served as static files via CDN |
 | **OX-3** | **Join across named graphs via explicit `GRAPH` blocks** | Separates archival containment rights from bibliographic description |
 | **OX-4** | **Use canonical Handle URIs as primary subject** (`https://hdl.handle.net/...`) | Guarantees permanent identity resolution outside local server infrastructure |
