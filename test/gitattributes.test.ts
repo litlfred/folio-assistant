@@ -55,6 +55,9 @@ describe(".gitattributes exists and is read by git", () => {
       "cat-harness/docs/glossary/index.md",
       "cat-harness/docs/cat-harness/auto-docs/index/index.html",
       "cat-harness/test/results/audit-coverage.qa-results.json",
+      // Added 2026-09-27, bean `5gqn`. Rewritten whole by `gen-docs-pages.ts`; reads
+      // nothing back and is gated by `docs:pages:check`.
+      "cat-harness/docs/assets/beans/index.json",
       // Added 2026-10-01, bean `eqxp`. Producer `writeToolRun` composes the
       // body from its argument and reads the existing file only to skip a
       // pointless write.
@@ -84,6 +87,17 @@ describe("a sidecar whose producer reads it back is NOT marked", () => {
     }
   });
 
+  test("`harness.json` stays textually mergeable because its producer carries state forward", () => {
+    // Bean `5gqn`. `sync-docs-harness.ts:173-185` (and lines 220-240) carries
+    // the previous repo URL forward when git remote is unknown, so marking it
+    // `-merge` would discard a carried-forward URL silently in the one case
+    // where nothing else can supply it.
+    expect(
+      mergeAttr("cat-harness/docs/_data/harness.json"),
+      "cat-harness/docs/_data/harness.json is marked -merge, but sync-docs-harness carries previous state forward",
+    ).not.toBe("unset");
+  });
+
   test("no pattern globs the whole results tree", () => {
     // The obvious widening: 840 generated files under one directory. Refused by
     // text as well as by behaviour, because a future glob might match nothing
@@ -102,11 +116,18 @@ describe("a sidecar whose producer reads it back is NOT marked", () => {
 
 describe("every -merge path is gated in CI", () => {
   test("a wrong resolution reddens rather than ships", () => {
-    // This is what makes the whole entry safe rather than clever. The three
-    // files are covered by `check:glossary`, `auto:docs:check` and
-    // `audit:coverage:require-all`, so taking the wrong side cannot ship.
+    // This is what makes the whole entry safe rather than clever. The files
+    // are covered by `check:glossary`, `auto:docs:check`,
+    // `audit:coverage:require-all`, `docs:pages:check` and `lsi:skills:check`,
+    // so taking the wrong side cannot ship.
     const wf = readFileSync(join(REPO, ".github", "workflows", "code-quality-gates.yml"), "utf-8");
-    for (const gate of ["check:glossary", "auto:docs:check", "audit:coverage:require-all", "lsi:skills:check"]) {
+    for (const gate of [
+      "check:glossary",
+      "auto:docs:check",
+      "audit:coverage:require-all",
+      "docs:pages:check",
+      "lsi:skills:check",
+    ]) {
       expect(wf, `${gate} is not in CI, so a -merge path it covers is unguarded`).toContain(gate);
     }
   });

@@ -145,7 +145,7 @@ folio-assistant) и настройте его под ваш тип контен�
 ```sh
 # ЦЕЛЕВОЙ ФАЙЛ именуется по названию вашего инстанса -- `my-folio.config.json`, а не
 # фиксированным словом. Пример файла сохраняет собственное имя: именно так он называется.
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-core/skills/library/cataloguing/ontologist.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/cataloguing/ontologist.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/ontologist.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/cataloguing/ontologist.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-core/skills/library/cataloguing/ontologist.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Semantic Ontologist (Ambiguity Detection & Glossary)

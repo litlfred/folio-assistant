@@ -1,11 +1,11 @@
 ---
 # folio-assistant-b8de
 title: 'Merge refused: #1898 owed CI not green on its head'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-04T16:41:00Z
+updated_at: 2026-10-07T02:44:43Z
 parent: folio-assistant-iirv
 blocking:
     - folio-assistant-apcg
@@ -37,3 +37,5 @@ A comment on PR #1898, plus a message to the Merge Manager role.
 
 ## Attempts
 - 2026-10-04 16:40Z, train merge-train-2026-10-04a (PR #2113): EJECTED. #1898 at 0f70ad8 was signed by session_01VfkKoc and its CI guard passed all 7 checks, but merge-base's take-base resolution of the gitignored-but-tracked `cat-harness/test/results/lsi/cat-harness/skills.lsi.json` failed (\"is in the index, but not at stage 2\"). The fault is the tool (class 8j9e), not the PR. It rides the next train once the resolution is fixed or worked around, or after #2066 takes the LSI trio off main.
+
+_2026-10-07T02:44:43Z_ — Claimed by claude/b8de-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
