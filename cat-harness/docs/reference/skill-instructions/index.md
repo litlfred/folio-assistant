@@ -366,6 +366,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
+| [Oxigraph Multi-Graph Static Search & Catalog Discovery](oxigraph-catalogue-search.html) | `oxigraph-catalogue-search` | — | This skill defines the generic, platform-level architecture for querying library catalogue hierarchy |
 
 ## Cataloguing methods (cataloguing)
 

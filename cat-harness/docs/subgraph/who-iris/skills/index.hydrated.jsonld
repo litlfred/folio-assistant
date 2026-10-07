@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).",
-      "fileCount": 11,
+      "fileCount": 12,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -28,15 +28,33 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-skills",
-      "instructionLines": 257,
+      "instructionLines": 259,
       "instructionsPath": "skills/iris-dspace.md",
       "name": "iris-dspace",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/846b11e9979af7928b5e9a0c139bbeaec559b9f90564c991a0535cca681744a6",
-        "bytes": 14790,
-        "sha256": "846b11e9979af7928b5e9a0c139bbeaec559b9f90564c991a0535cca681744a6"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e6d4c02ce5a7deec73e3f2b325954201f51096d6f97ac5f6f44993f698a5c04c",
+        "bytes": 15231,
+        "sha256": "e6d4c02ce5a7deec73e3f2b325954201f51096d6f97ac5f6f44993f698a5c04c"
       },
       "title": "IRIS, DSpace and Dublin Core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-oxigraph",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. Enables combined complex queries, multi-dimensional faceted rollups, and lazy-loaded named subgraphs on the static edge.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#directory/who-iris-skills",
+      "instructionLines": 177,
+      "instructionsPath": "skills/iris-oxigraph.md",
+      "name": "iris-oxigraph",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cac0f1238d1640b8473621c8f92d04d98a2cfb3e059721f228f0d6fffe7e7325",
+        "bytes": 8511,
+        "sha256": "cac0f1238d1640b8473621c8f92d04d98a2cfb3e059721f228f0d6fffe7e7325"
+      },
+      "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS"
     }
   ],
   "hasSubgraph": [
