@@ -34,7 +34,8 @@ const DATA = JSON.parse(readFileSync(join(SITE, "_data/harness.json"), "utf8")) 
   navbar: unknown;
   harnesses: { name: string; instantiated?: boolean; mark?: { src?: string; glyph?: string } | null }[];
 };
-const VIEWER = readFileSync(join(SITE, "beans/index.html"), "utf8");
+// `qa/`, not `beans/`: since #2418 `beans/` is THEMED too, like `todos/`.
+const VIEWER = readFileSync(join(SITE, "qa/index.html"), "utf8");
 const FOOTER = (() => {
   const src = readFileSync(join(SITE, "_includes/generated/navbar-footer.html"), "utf8");
   const line = src.split("\n").find((l) => l.startsWith('<div class="fa-nav-in">'));

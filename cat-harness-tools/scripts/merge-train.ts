@@ -51,7 +51,7 @@
  * 2 could not start, or a refused merge left the tree unrestored.
  */
 import { spawnSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
@@ -270,7 +270,64 @@ function postChecks(root: string, label: string, regen: boolean): TrainCheck[] {
   return checks;
 }
 
-function commitIfChanged(root: string, message: string): void {
+/**
+ * Keep tracked-but-ignored files under test/results that were present in base.
+ *
+ * If a path tracked in base was deleted from the index or marked D (e.g. by a
+ * merge conflict or tool step) but is still on disk, `git add -A` ignores it
+ * because it matches `.gitignore` (bean `u4up`, issue #2113). Restage with `-f`.
+ */
+export function keepTrackedIgnored(root: string, base: string): string[] {
+  const kept: string[] = [];
+  const checkPaths = new Set<string>();
+
+  // Any path under */test/results/* deleted in the index relative to base:
+  const dropped = git(root, ["diff", "--name-only", "--diff-filter=D", base, "--", "*/test/results/*"]).out
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  for (const p of dropped) checkPaths.add(p);
+
+  // Also any cached deletion:
+  const cachedDropped = git(root, ["diff", "--cached", "--name-only", "--diff-filter=D", "--", "*/test/results/*"]).out
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  for (const p of cachedDropped) checkPaths.add(p);
+
+  for (const p of checkPaths) {
+    if (existsSync(join(root, p))) {
+      git(root, ["add", "-f", "--", p]);
+      kept.push(p);
+    }
+  }
+  return kept;
+}
+
+/** Check that the train dropped no tracked test/results path that was present in base. */
+export function checkTestResultsDrops(root: string, base: string, label: string = ""): TrainCheck {
+  const cmd = `git diff --diff-filter=D ${base.slice(0, 10)} HEAD -- '*/test/results/*'`;
+  const diff = git(root, ["diff", "--diff-filter=D", "--name-only", base, "HEAD", "--", "*/test/results/*"]);
+  const drops = diff.out.split("\n").map((s) => s.trim()).filter(Boolean);
+  if (drops.length > 0) {
+    return {
+      name: `no-test-results-drops${label}`,
+      command: cmd,
+      status: "failed",
+      exit: 1,
+      detail: `${drops.length} tracked test/results path(s) dropped by the train: ${drops.join(", ")}`,
+    };
+  }
+  return {
+    name: `no-test-results-drops${label}`,
+    command: cmd,
+    status: "passed",
+    exit: 0,
+  };
+}
+
+function commitIfChanged(root: string, message: string, base?: string): void {
+  if (base) keepTrackedIgnored(root, base);
   if (git(root, ["status", "--porcelain"]).out === "") return;
   git(root, ["add", "-A"]);
   git(root, ["commit", "-q", "-m", message]);
@@ -378,7 +435,8 @@ if (import.meta.main) {
       run(root, "bun", ["install", "--frozen-lockfile"]);
     }
     report.checks.push(...postChecks(root, "", true));
-    commitIfChanged(root, `merge-train: regenerate after ${merged} member(s)`);
+    commitIfChanged(root, `merge-train: regenerate after ${merged} member(s)`, base.out);
+    report.checks.push(checkTestResultsDrops(root, base.out));
   } else {
     report.checks.push({ name: "post-merge checks", command: "regen, …", status: "skipped", exit: null, detail: "no member merged" });
   }
@@ -394,7 +452,8 @@ if (import.meta.main) {
       if (conflicted.length) report.main.conflicted = conflicted;
       if (r.code === 0) {
         report.checks.push(...postChecks(root, " (after main)", false));
-        commitIfChanged(root, `merge-train: checks after merging ${main.ref}`);
+        commitIfChanged(root, `merge-train: checks after merging ${main.ref}`, base.out);
+        report.checks.push(checkTestResultsDrops(root, base.out, " (after main)"));
       } else {
         report.main.status = "refused";
         report.main.reason = parseAbortReason(r.out);
