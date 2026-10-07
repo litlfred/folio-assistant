@@ -7,6 +7,7 @@ section_number: 11.3
 pages: 146-146
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 rapid reviews and rapid advice guidelines?
 To date limited guidance has been provided on when and how to conduct 

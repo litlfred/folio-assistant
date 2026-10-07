@@ -7,6 +7,7 @@ section_number: 1.7.1
 pages: 18-18
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A standard guideline covers a clinical or policy area (e.g. the treatment 
 of postpartum haemorrhage or the minimum requirements for the safe 

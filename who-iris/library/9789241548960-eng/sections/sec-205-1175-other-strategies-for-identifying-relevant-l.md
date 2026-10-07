@@ -7,6 +7,7 @@ section_number: 11.7.5
 pages: 157-158
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 In the context of a new situation or event, the best (and perhaps only) data 
 might come from the acquisition and analysis of emerging information in real 

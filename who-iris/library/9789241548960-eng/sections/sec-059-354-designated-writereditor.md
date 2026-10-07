@@ -7,6 +7,7 @@ section_number: 3.5.4
 pages: 46-46
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 To ensure coherence, clarity and accuracy, one person should be respon-
 sible for drafting the guideline, incorporating comments from the GDG 

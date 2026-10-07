@@ -7,6 +7,7 @@ section_number: 10.2.3
 pages: 138-138
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 When considering the balance between an intervention’s or exposure’s benefits and harms, the GDG should examine the magnitude of the effects and 
 the relative importance of the outcomes, including any disadvantages or 

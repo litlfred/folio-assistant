@@ -7,6 +7,7 @@ section_number: 5.4.2
 pages: 64-65
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 5.4.2.1 Evidence retrieval and synthesis (Chapter 8)
 Existing systematic reviews seldom take equity, human rights, gender and 

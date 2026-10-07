@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 239,
+      "count": 240,
       "unit": "modules"
     }
   },
@@ -799,6 +799,14 @@
       "graphNode": "none",
       "reason": "a mint rule, not a schema",
       "summary": "A library entry's ONE IRI — the address of its published JSON-LD.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "instance": "cat-harness",
+      "name": "library-keywords",
+      "graphNode": "schema",
+      "summary": "`library/<slug>/keywords.json` — an entry's keywords, read from the LSI",
       "isTest": false
     },
     {
@@ -22734,6 +22742,116 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/library-keywords.ts#KeywordsFile",
+      "name": "KeywordsFile",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-keywords.ts#KeywordsFileSchema",
+      "name": "KeywordsFileSchema",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(KEYWORDS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entry",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "corpus",
+          "type": "z .object({ library: z.string(), sections: z.number().int(), terms: z.number().int(), weighting: z.string() }) .strict()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "document",
+          "type": "z.array(ScoredKeywordSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "sections",
+          "type": "z.record(z.string(), z.array(ScoredKeywordSchema))",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "KEYWORDS_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-keywords.ts#ScoredKeyword",
+      "name": "ScoredKeyword",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema",
+      "name": "ScoredKeywordSchema",
+      "module": "cat-harness/schemas/library-keywords.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "term",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "score",
+          "type": "z.number()",
+          "optional": false,
+          "array": false,
+          "doc": "Comparable within one library's matrix only."
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.enum([\"heading\"]))",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/log-entry.ts#LogCapture",
       "name": "LogCapture",
       "module": "cat-harness/schemas/log-entry.ts",
@@ -25213,6 +25331,34 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema",
+      "name": "PdfAlignmentListSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "count",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "items",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
       "name": "PdfDiagnosticsSchema",
       "module": "cat-harness/schemas/pdf-structure.ts",
@@ -25243,6 +25389,40 @@
           "array": false
         },
         {
+          "name": "toc_inferred_method",
+          "type": "z.enum([\"contents\", \"font\", \"regex\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which inference produced an inferred TOC (issue #2302): a printed"
+        },
+        {
+          "name": "figure_entries",
+          "type": "z.number().int().min(0).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "figure_sequence_gaps",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Numbers missing from a caption run, e.g. \"table 2.1\" beside a Table 2.2."
+        },
+        {
+          "name": "page_label_conflicts",
+          "type": "PdfAlignmentListSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Pages where label sources disagree, e.g. /PageLabels \"3\" against a printed \"iii\"."
+        },
+        {
+          "name": "toc_alignment",
+          "type": "z .object({ listed_not_found: PdfAlignmentListSchema, found_not_listed: PdfAlignmentListSchema, page_mismatch: PdfAlign…",
+          "optional": true,
+          "array": false,
+          "doc": "Where a printed contents page and the body disagree (issue #2302) —"
+        },
+        {
           "name": "sections",
           "type": "z.number().int().min(0)",
           "optional": false,
@@ -25252,6 +25432,67 @@
           "name": "chars_total",
           "type": "z.number().int().min(0)",
           "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfFigureEntrySchema",
+      "name": "PdfFigureEntrySchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "One caption in the list of figures and tables (issue #2302). `evidence`",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum([\"figure\", \"table\", \"box\", \"chart\", \"algorithm\", \"listing\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "confidence",
+          "type": "z.number().min(0).max(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "page_label",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
           "array": false
         }
       ],
@@ -25329,6 +25570,53 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfPageLabelSchema",
+      "name": "PdfPageLabelSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "One physical page and the label a reader sees on it (issue #2302).",
+      "fields": [
+        {
+          "name": "physical",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.enum([\"pdf-labels\", \"printed\", \"interpolated\", \"contents\"]).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "confidence",
+          "type": "z.number().min(0).max(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
       "name": "PdfSectionSchema",
       "module": "cat-harness/schemas/pdf-structure.ts",
@@ -25381,6 +25669,19 @@
           "name": "n_words",
           "type": "z.number().int().min(0)",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "label_start",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Printed labels of page_start / page_end, where known (issue #2302)."
+        },
+        {
+          "name": "label_end",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
           "array": false
         }
       ],
@@ -25529,6 +25830,20 @@
           "doc": "Why an inferred TOC was not trusted, in a sentence a person can check."
         },
         {
+          "name": "figures",
+          "type": "z.array(PdfFigureEntrySchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The list of figures and tables, cross-checked (issue #2302)."
+        },
+        {
+          "name": "pages",
+          "type": "z.array(PdfPageLabelSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Every physical page with its printed label (issue #2302)."
+        },
+        {
           "name": "sections",
           "type": "z.array(PdfSectionSchema)",
           "optional": false,
@@ -25559,7 +25874,9 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfFigureEntrySchema",
         "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfPageLabelSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
         "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema"
@@ -25608,6 +25925,26 @@
           "type": "z.string().nullable()",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "confidence",
+          "type": "z.number().min(0).max(1).nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Inferred entries only (issue #2302): how sure the inference is, 0..1,"
+        },
+        {
+          "name": "evidence",
+          "type": "z.array(z.string()).nullable().optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "page_label",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The printed label of `page` (\"iv\", \"23\"), where known; `page` is physical."
         }
       ],
       "extendsNames": [],
@@ -31820,6 +32157,36 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#AlignmentList",
+      "name": "AlignmentList",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "count",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "items",
+          "type": "StringList",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "name": "BeanIndexItemSchema",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -32042,6 +32409,35 @@
       "exported": false
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#DocKeyword",
+      "name": "DocKeyword",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "One entry's DOCUMENT view (`entries/<id>.doc.json`, issue #2302), built by",
+      "fields": [
+        {
+          "name": "term",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "heading",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#envelope",
       "name": "envelope",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -32079,6 +32475,120 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/site-indexes.ts#Count"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#LibraryDocumentSchema",
+      "name": "LibraryDocumentSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "folio-library-document/v1"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "name": "LibraryDocumentViewSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-library-document/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tocSource",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tocMethod",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toc",
+          "type": "z.array( z .object({ level: z.number().int(), title: z.string(), number: z.string().nullable(), page: PageNumber, pageL…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "sections",
+          "type": "z.array( z .object({ id: z.string(), number: z.string().nullable(), title: z.string(), level: z.number().int(), pageSta…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "keywords",
+          "type": "z.array(DocKeyword).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "pageLabels",
+          "type": "z .array(z.object({ physical: z.number().int(), label: z.string().nullable(), source: z.string().nullable(), confidence…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "figures",
+          "type": "z .array( z .object({ kind: z.string(), number: z.string(), title: z.string(), page: z.number().int(), pageLabel: z.str…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "checks",
+          "type": "z .object({ tocAlignment: z.record(z.string(), AlignmentList).optional(), figureSequenceGaps: StringList.optional(), pa…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "withheld",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#AlignmentList",
+        "cat-harness/schemas/site-indexes.ts#DocKeyword",
+        "cat-harness/schemas/site-indexes.ts#PageNumber",
+        "cat-harness/schemas/site-indexes.ts#StringList"
       ],
       "unresolved": [],
       "external": [
@@ -60747,6 +61257,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/library-keywords.ts#KeywordsFileSchema",
+      "to": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema",
+      "via": "document",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/library-keywords.ts#KeywordsFileSchema",
+      "to": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/log-entry.ts#LogEntrySchema",
       "to": "cat-harness/schemas/log-entry.ts#LogExecutionSchema",
       "via": "execution",
@@ -61075,6 +61601,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema",
+      "via": "page_label_conflicts",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfAlignmentListSchema",
+      "via": "toc_alignment",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
       "to": "cat-harness/schemas/pdf-structure.ts#Sha256",
       "via": "sha256",
@@ -61092,11 +61634,27 @@
     },
     {
       "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfFigureEntrySchema",
+      "via": "figures",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
       "to": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema",
       "via": "metadata",
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfPageLabelSchema",
+      "via": "pages",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
@@ -62131,6 +62689,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#AlignmentList",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "items",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "to": "cat-harness/schemas/site-indexes.ts#StringList",
       "via": "blockedBy",
@@ -62198,6 +62764,70 @@
       "from": "cat-harness/schemas/site-indexes.ts#FolioGraphProjectionSchema",
       "to": "cat-harness/schemas/site-indexes.ts#Count",
       "via": "nodes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#AlignmentList",
+      "via": "checks",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#DocKeyword",
+      "via": "keywords",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#DocKeyword",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "via": "toc",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "checks",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "figures",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryDocumentViewSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "toc",
       "kind": "field",
       "optional": false,
       "array": true

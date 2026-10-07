@@ -7,6 +7,7 @@ section_number: 1.2
 pages: 13-13
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 WHO develops guidelines whenever Member States, WHO country offices, 
 external experts or other stakeholders ask for guidance on a clinical or public 
