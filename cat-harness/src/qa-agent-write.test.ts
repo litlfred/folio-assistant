@@ -37,8 +37,8 @@ function repo(): { root: string; base: string; cleanup: () => void } {
   return { root, base, cleanup: () => rmSync(root, { recursive: true, force: true }) };
 }
 
-function write(base: string, criterion: string, cwd: string): void {
-  const r = spawnSync("bun", [SCRIPT, "--block", base, "--criterion", criterion, "--result", "pass"], {
+function write(base: string, criterion: string, cwd: string, extraArgs: string[] = []): void {
+  const r = spawnSync("bun", [SCRIPT, "--block", base, "--criterion", criterion, "--result", "pass", ...extraArgs], {
     cwd,
     encoding: "utf-8",
   });
@@ -109,6 +109,37 @@ describe("qa-agent-write", () => {
       write(t.base, "c-two", t.root);
       const out = JSON.parse(readFileSync(blockQaPath(t.root, t.base), "utf-8")) as { criteria: Record<string, unknown> };
       expect(Object.keys(out.criteria).sort()).toEqual(["c-one", "c-two"]);
+    } finally {
+      t.cleanup();
+    }
+  }, SPAWN_BUDGET_MS);
+
+  it("omits agent_model when --model is not supplied (bean gtx4)", () => {
+    const t = repo();
+    try {
+      write(t.base, "c-nomodel", t.root);
+      const out = JSON.parse(readFileSync(blockQaPath(t.root, t.base), "utf-8")) as {
+        criteria: Record<string, Array<{ reviewer: { kind: string; agent_model?: string; agent_skill?: string } }>>;
+      };
+      const reviewer = out.criteria["c-nomodel"]![0]!.reviewer;
+      expect(reviewer.kind).toBe("agent");
+      expect(reviewer.agent_model).toBeUndefined();
+      expect(reviewer.agent_skill).toBe("local/qa-agent-drain");
+    } finally {
+      t.cleanup();
+    }
+  }, SPAWN_BUDGET_MS);
+
+  it("records agent_model when --model is supplied (bean gtx4)", () => {
+    const t = repo();
+    try {
+      write(t.base, "c-withmodel", t.root, ["--model", "claude-sonnet-4-6"]);
+      const out = JSON.parse(readFileSync(blockQaPath(t.root, t.base), "utf-8")) as {
+        criteria: Record<string, Array<{ reviewer: { kind: string; agent_model?: string } }>>;
+      };
+      const reviewer = out.criteria["c-withmodel"]![0]!.reviewer;
+      expect(reviewer.kind).toBe("agent");
+      expect(reviewer.agent_model).toBe("claude-sonnet-4-6");
     } finally {
       t.cleanup();
     }

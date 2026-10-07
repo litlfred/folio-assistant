@@ -752,6 +752,7 @@ export function formatPot(entries: PotEntry[], metadata?: {
     }
   }
 
+  // input-site: inert #a456dd98 — POT-Creation-Date only; every comparison goes through potWithoutTimestamp()
   const now = new Date().toISOString();
   const header = [
     `# Translation template for ${metadata?.projectName ?? "folio content"}`,

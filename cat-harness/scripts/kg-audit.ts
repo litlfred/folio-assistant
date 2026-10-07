@@ -462,6 +462,37 @@ async function loadProcesses(): Promise<LoadedProcess[]> {
   return out;
 }
 
+interface RepoProcess {
+  instance: string;
+  file: string;
+}
+
+function loadRepoProcesses(repoRoot: string): Map<string, RepoProcess> {
+  const map = new Map<string, RepoProcess>();
+  for (const inst of instanceRootsIn(repoRoot)) {
+    const instName = readDeclaration(inst)?.name ?? basename(inst);
+    let files: string[] = [];
+    try {
+      files = workflowFiles(inst, corpusScopeFor(inst)).filter((f) => f.endsWith(".bpmn"));
+    } catch {
+      continue;
+    }
+    for (const file of files) {
+      try {
+        const text = readFileSync(file, "utf-8");
+        const re = /<(?:\w+:)?process\s+[^>]*\bid=["']([^"']+)["']/g;
+        let match: RegExpExecArray | null;
+        while ((match = re.exec(text)) !== null) {
+          map.set(match[1], { instance: instName, file });
+        }
+      } catch {
+        // Unreadable file
+      }
+    }
+  }
+  return map;
+}
+
 // ── Documentation surface ───────────────────────────────────────
 
 /**
@@ -513,6 +544,7 @@ function docsSurface(): DocsSurface | undefined {
 
   const walk = (dir: string): void => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
+      // input-site: inert #768fdcb7 — names a build-output directory only to leave it out of a walk
       if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
@@ -533,6 +565,7 @@ async function auditProcess(
   /** Basenames of every loadable diagram — a skill of the same name OWNS that process. */
   processStems: Set<string> = new Set(),
   docs?: DocsSurface,
+  repoProcesses?: Map<string, RepoProcess>,
 ): Promise<KgQaReport> {
   const rel = relative(root, p.file);
   const hash = sha256(readFileSync(p.file, "utf-8"));
@@ -547,7 +580,8 @@ async function auditProcess(
   const noSkill: KgFinding[] = [];
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
-  const unresolvedCall: KgFinding[] = [];
+  const danglingCall: KgFinding[] = [];
+  const externalCall: KgFinding[] = [];
   const undocumented: KgFinding[] = [];
   const calls = activities.filter((n) => n.calledElement !== undefined);
 
@@ -624,13 +658,23 @@ async function auditProcess(
           `declare <cat-harness.processes:no-skill reason="…"/> saying why.`,
       });
     }
-    if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
-      unresolvedCall.push({
-        where: n.id,
-        detail:
-          `calls "${n.calledElement}", which is the id of no process this instance can load. That is either a typo ` +
-          `or a process hosted elsewhere, and this audit cannot tell which — so it is recorded as unknown.`,
-      });
+    if (n.calledElement !== undefined) {
+      if (processIds.has(n.calledElement)) {
+        // Resolves locally within this instance.
+      } else if (repoProcesses?.has(n.calledElement)) {
+        const hosted = repoProcesses.get(n.calledElement)!;
+        externalCall.push({
+          where: n.id,
+          detail: `calls "${n.calledElement}", hosted by instance "${hosted.instance}".`,
+        });
+      } else {
+        danglingCall.push({
+          where: n.id,
+          detail:
+            `calls "${n.calledElement}", which is the id of no process this instance or any other instance in the ` +
+            `repository can load.`,
+        });
+      }
     }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
     if (!n.documentation) {
@@ -995,15 +1039,17 @@ async function auditProcess(
     "role-carries-activity-skill": entry(skillNotCarried, Boolean(graph) && m.lanes.length > 0),
     "activity-names-skill": entry(noSkill),
     "activity-fulfilment-kind": entry(wrongKind, Boolean(graph) && kindApplicable > 0),
-    // Three states, not two. A resolved target passes; a process with no call
-    // activity is `n/a`; a target this instance cannot load is `unknown`,
-    // because it may be hosted elsewhere — see the note on the criterion.
+    // Three states: `n/a` when the diagram has no call activities; `fail` when
+    // a target resolves neither locally nor in any instance across the
+    // repository; `pass` when every target resolves (naming the hosting
+    // instance as evidence when external). `unknown` is kept only when the
+    // diagram itself could not be loaded.
     "call-activity-resolves":
       calls.length === 0
         ? { result: "n/a" as KgResult, findings: [] }
-        : unresolvedCall.length
-          ? { result: "unknown" as KgResult, findings: unresolvedCall }
-          : { result: "pass" as KgResult, findings: [] },
+        : danglingCall.length
+          ? { result: "fail" as KgResult, findings: danglingCall }
+          : { result: "pass" as KgResult, findings: externalCall },
     "process-diagram-published": published,
     "activity-documented": entry(undocumented, activities.length > 0),
     "activity-calls-skill-process": entry(shouldCall, activities.length > 0),
@@ -1722,6 +1768,7 @@ function arrowDirection(): KgCriterionEntry {
  */
 function proseNamesResolve(): KgCriterionEntry {
   const repo = REPO_ROOT;
+  // input-site: tree #af526755 — ls-files: the index
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
   if (ls.exitCode !== 0) {
     return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };
@@ -2704,7 +2751,8 @@ const reports: KgQaReport[] = [];
 const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
 const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.file, ".bpmn")] : [])));
 const docs = docsSurface();
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
+const repoProcesses = loadRepoProcesses(REPO_ROOT);
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs, repoProcesses));
 reports.push(...(await auditDecisions(processes)));
 const storiesPath = join(SCENARIO_DIR, USER_STORIES_FILENAME);
 let stories: UserStoryGraph | undefined;

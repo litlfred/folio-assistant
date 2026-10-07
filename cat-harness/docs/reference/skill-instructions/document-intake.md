@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-core/skills/library/ingestion/document-intake.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/document-intake.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/document-intake.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/document-intake.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-core/skills/library/ingestion/document-intake.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Document Intake
@@ -252,7 +252,12 @@ someone time:
   inferred entry also carries `confidence` (0..1) and `evidence` — which
   independent checks agreed: listed on the contents page, found in the body
   near the page it names, set in a heading style, numbered. Trust the high
-  ones; look at the flagged ones before citing them. Measured over the 13
+  ones; look at the flagged ones before citing them. An inferred TOC is used
+  only when it passes the concentration check, its mean confidence is at
+  least 0.6, and no more than a quarter of the sections it would cut are
+  empty; otherwise the entry is split one section per page
+  (`granularity: "page"`, with the reason in `structure_note`) —
+  `l1-document-ingestion` §"The route `pdf-structure.py` takes itself". Measured over the 13
   corpus PDFs that carry an outline, hidden and used as the answer key: title
   F1 0.83 for this consensus on 20 held-out PDFs (0.92 on the development set) against 0.26 for text patterns alone (issue
   #2302). The same artefact carries `figures` — the list of figures and

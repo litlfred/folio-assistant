@@ -12,7 +12,7 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { libraryEntries } from "./library-dirs.ts";
 
 import {
@@ -31,6 +31,7 @@ import {
   staleSidecars,
   ENTRY_DIRECTORIES,
   ENTRY_SIDECARS,
+  libraryRootFor,
 } from "../check-l1-complete.ts";
 import { resolveQaLocation } from "../qa-store.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
@@ -1181,3 +1182,24 @@ describe("an entry's contents are a CLOSED set — `3psh`", () => {
     for (const f of ENTRY_SIDECARS) expect(contents(entry({ ...PAGED, [f]: "{}" }))?.state).toBe("met");
   });
 });
+
+describe("libraryRootFor (bean 12ws)", () => {
+  test("returns cwd when it declares a library graph", () => {
+    // A fixture, not a sibling instance: `who-iris/` exists only in the
+    // monorepo, so reading it fails the standalone ratchet.
+    const root = mkdtempSync(join(tmpdir(), "l1-root-"));
+    made.push(root);
+    writeDeclaration(root, {
+      name: "t",
+      directories: [{ id: "library", path: "library/", graphTypologies: ["library"] }],
+    });
+    expect(libraryRootFor(root)).toBe(root);
+  });
+
+  test("falls back to own instance when cwd does not declare a library", () => {
+    const own = resolve(import.meta.dir, "../..");
+    const fallback = libraryRootFor(tmpdir());
+    expect(fallback).toBe(own);
+  });
+});
+

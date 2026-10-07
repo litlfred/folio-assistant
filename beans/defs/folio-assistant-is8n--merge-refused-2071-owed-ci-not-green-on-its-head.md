@@ -1,10 +1,10 @@
 ---
 # folio-assistant-is8n
 title: 'Merge refused: #2071 owed CI not green on its head'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-04T14:30:42Z
+updated_at: 2026-10-07T02:43:54Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-1xhc
@@ -32,3 +32,5 @@ A comment on PR #2071, plus a message to the Merge Manager role.
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
 - [ ] `bun run merge:guard 2071` passes all 7 checks, and it lands (or the owner closes it)
+
+_2026-10-07T02:43:54Z_ — Claimed by claude/is8n-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
