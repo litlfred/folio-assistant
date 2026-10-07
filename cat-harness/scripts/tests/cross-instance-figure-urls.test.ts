@@ -12,7 +12,7 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import type { WebPage, WebPageNode } from "../../schemas/webpage.ts";
+import type { WebPage, WebPageAsset, WebPageNode } from "../../schemas/webpage.ts";
 import { editTarget } from "../gen-docs-pages.ts";
 
 const DOCS_DIR = join(import.meta.dir, "../../docs");
@@ -34,7 +34,6 @@ describe("cross-instance figure edit URLs (bean 4z5o)", () => {
   const dummyPage: WebPage = {
     slug: "test-page",
     title: "Test Page",
-    lead: "A test page",
     nodes: [],
   };
 
@@ -46,6 +45,7 @@ describe("cross-instance figure edit URLs (bean 4z5o)", () => {
         kind: "bpmn",
         source: "../folio-assistant-core/processes/library/l1-document-ingestion.bpmn",
         rendered: "assets/img/workflows/l1-document-ingestion.svg",
+        alt: "Nested instance figure",
       },
     };
 
@@ -55,19 +55,17 @@ describe("cross-instance figure edit URLs (bean 4z5o)", () => {
   });
 
   test("a figure whose source is local to the instance remains unchanged", () => {
-    const node: WebPageNode = {
-      id: "fig-local",
-      title: "Local Figure",
-      asset: {
-        kind: "bpmn",
-        // declared-path-literal: fixture data for editTarget, never read — it only has to look instance-local.
-        source: "processes/sdlc/bean-lifecycle.bpmn",
-        rendered: "assets/img/workflows/bean-lifecycle.svg",
-      },
+    const asset: WebPageAsset = {
+      kind: "bpmn",
+      // declared-path-literal: fixture data for editTarget, never read — it only has to look instance-local.
+      source: "processes/sdlc/bean-lifecycle.bpmn",
+      rendered: "assets/img/workflows/bean-lifecycle.svg",
+      alt: "Local figure",
     };
+    const node: WebPageNode = { id: "fig-local", title: "Local Figure", asset };
 
     const target = editTarget(dummyPage, node);
-    expect(target).toBe(node.asset?.source);
+    expect(target).toBe(asset.source);
     expect(target).not.toContain("..");
   });
 
