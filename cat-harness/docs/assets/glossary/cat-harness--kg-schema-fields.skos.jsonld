@@ -24068,6 +24068,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.remotemountschema.trust",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RemoteMountSchema.trust"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What makes this mount trusted: a person's consent for THIS pin, or a signature in a declared trust network (`schemas/mount-trust.ts`, bean `ieum`, rule H8). Absent means unsigned and unconsented, and a non-staging mount is then refused rather than fetched."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema.trust",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/render-log.renderlogentryschema.branch",
       "@type": "skos:Concept",
       "skos:inScheme": {

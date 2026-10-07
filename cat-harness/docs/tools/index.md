@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>134</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>135</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>73</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>111</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>112</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,20 +48,20 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 111 |
+| <span class="tg-tag tg-shell">shell</span> | 112 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 25 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 8 |
 
 | installation | tools |
 |---|---|
-| `none` | 124 |
+| `none` | 125 |
 | `cli` | 9 |
 | `container` | 1 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **73** skills named across **134** tools resolve to a
+Yes — all **73** skills named across **135** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -148,6 +148,7 @@ tool advertising a capability the graph cannot locate.
 | `readme-audit`<br>Audit README links | Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 3 in / 1 out |
 | `readme-sync`<br>Sync generated README sections | Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 5 in / 1 out |
 | `release-please`<br>release-please (declared, not configured here) | Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`). | <span class="tg-tag tg-shell">shell</span> | [`package-release`](../reference/skill-instructions/package-release.html) | 2 in / 1 out |
+| `remote-mount`<br>Mount remote harnesses at a pinned commit, only when trusted | Lay down each `remoteMounts` harness, and its dependency closure, from another repository at a full commit SHA, and write the mount lock. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches. | <span class="tg-tag tg-shell">shell</span> | [`security`](../reference/skill-instructions/security.html) | 3 in / 1 out |
 | `render-log`<br>Record what the publish branch served | Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace. | <span class="tg-tag tg-shell">shell</span> | [`render-logging`](../reference/skill-instructions/render-logging.html) | 9 in / 1 out |
 | `render-order`<br>The render pipeline, in dependency order | Flatten the repository's renders into the order their `needs` imply, and optionally run them. Two stages: the current declared state as json/jsonld and the README derived from it are FATAL; the dynamic renderers (viewers, visualisers, doc pages, diagrams) skip and log; the dynamic-state export closes it. A cycle or a missing dependency yields NO order rather than a partial one. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 1 in / 1 out |
 | `schema-docs`<br>Skill contract reference | Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 1 in / 1 out |

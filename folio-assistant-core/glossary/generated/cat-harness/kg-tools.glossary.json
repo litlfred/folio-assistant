@@ -639,6 +639,14 @@
       "status": "candidate"
     },
     {
+      "id": "remote-mount",
+      "prefLabel": "Mount remote harnesses at a pinned commit, only when trusted",
+      "definition": "Lay down each `remoteMounts` harness, and its dependency closure, from another repository at a full commit SHA, and write the mount lock. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches.",
+      "notation": "remote-mount",
+      "source": "cat-harness/tools/index.ts#remote-mount",
+      "status": "candidate"
+    },
+    {
       "id": "render-log",
       "prefLabel": "Record what the publish branch served",
       "definition": "Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace.",
