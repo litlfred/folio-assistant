@@ -1,6 +1,13 @@
 #!/usr/bin/env bun
 /**
- * Write `requirements.txt` and `requirements-extended.txt` from the declaration.
+ * Write `requirements.txt` and `requirements-extended.txt` from the declaration,
+ * into this layer's declared `python/` directory — the location
+ * `requirementsPath` in `cat-harness/schemas/python-deps.ts` names, and nowhere
+ * else (bean `ar1s`, phase 3).
+ *
+ * It moved here from `cat-harness/scripts/` with the files it writes: a
+ * generator in the harness writing into the tool layer above it would be a
+ * wrong-direction reference by construction, whatever it was spelled as.
  *
  * Bean `68dt`. `schemas/python-deps.ts` is definitional; these are downstream,
  * the same carrier split the schema modules use (`harness-schema-export.ts`
@@ -19,7 +26,7 @@
  * @covers code
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import {
   DEP_TIERS,
@@ -27,16 +34,17 @@ import {
   importNameOf,
   requirementsPath,
   type DepTier,
-} from "../schemas/python-deps.ts";
-import { repoRootFor } from "../schemas/cat-harness.js";
+} from "../../cat-harness/schemas/python-deps.ts";
+import { REPO_ROOT, TOOLS_ROOT } from "./lib/roots.ts";
 
-// THE REPOSITORY root. `requirements.txt` sits beside `package.json` and is
-// installed by CI as `pip install -r requirements.txt` from the checkout
-// root, so it is a repository artefact in the same class as the package
-// manifest — not the instance's, even though the scripts that import these
-// packages are. Arrived from main as `resolve(import.meta.dir, "..")`,
-// correct there because the two roots were one directory.
-const ROOT = repoRootFor(resolve(import.meta.dir, ".."));
+// THIS LAYER's root, because `requirementsPath` is relative to it. The pair
+// sat beside `package.json` until 2026-10-06 and moved into the declared
+// `python/` directory (bean `ar1s`, phase 3); CI still installs it from the
+// checkout root, as `pip install -r cat-harness-tools/python/requirements.txt`.
+const ROOT = TOOLS_ROOT;
+
+// The Dockerfile is the REPOSITORY's — its build context is the checkout.
+const DOCKER_ROOT = REPO_ROOT ?? TOOLS_ROOT;
 
 /** The file body for one tier. Deterministic, so `--check` compares bytes. */
 export function requirementsBody(tier: DepTier): string {
@@ -86,12 +94,15 @@ export function requirementsBody(tier: DepTier): string {
  * image did not read it.
  *
  * This asserts the WEAK property deliberately — that the Dockerfile installs
- * `-r requirements.txt` — rather than parsing its package list. A checker that
+ * `-r <dir>/requirements.txt` — rather than parsing its package list. Any
+ * directory prefix is accepted, so the root image's copy into `/tmp/` and a
+ * `-r cat-harness-tools/python/requirements.txt` from the repository build
+ * context (bean `ar1s`) both satisfy it. A checker that
  * re-derived the list would be a second opinion about what is installed, free
  * to disagree with the file it checks; requiring the generated file to be the
  * source removes the question instead of answering it twice.
  */
-export function dockerfileInstallsDeclaredSet(root = ROOT): boolean {
+export function dockerfileInstallsDeclaredSet(root = DOCKER_ROOT): boolean {
   const p = join(root, "Dockerfile");
   if (!existsSync(p)) return true; // no Dockerfile is not a drift finding
   const df = readFileSync(p, "utf-8");

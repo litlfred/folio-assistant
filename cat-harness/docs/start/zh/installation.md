@@ -117,7 +117,7 @@ bun run lint           # eslint
 ```sh
 # 目标文件名以你的实例命名 —— 例如 `my-folio.config.json`，而不是一个固定单词。
 # 示例文件保留其自身名称：这就是它的称谓。
-cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
+cp cat-harness/docs/reference/harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

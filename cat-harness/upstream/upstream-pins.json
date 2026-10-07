@@ -1,6 +1,6 @@
 {
   "$schema": "folio-upstream-pins/v1",
-  "_comment": "Pinned upstream dependencies, and what has to be true before one of them moves. Read by `bun run check:upstream-pins` and by the `upstream-pin-watch` / `upstream-version-adoption` processes under processes/. NOTE WHAT IS NOT HERE: the pinned version. It lives in the file the build reads, and `pinnedIn` + `pattern` say how to read it from there — a registry with its own copy would be a second answer to \"what are we running\", free to disagree with the build.",
+  "_comment": "Pinned upstream dependencies, and what has to be true before one of them moves. Read by `bun run check:upstream-pins` and by the `upstream-pin-watch` / `upstream-version-adoption` processes under processes/. NOTE WHAT IS NOT HERE: the pinned version. It lives in the file the build reads, and `pinnedIn` + `pattern` say how to read it from there — a registry with its own copy would be a second answer to \"what are we running\", free to disagree with the build. LOCATION: the harness's declared `upstream/` directory since 2026-10-06 (bean `ar1s`; it sat at the repository root before); every `pinnedIn` resolves against the harness root, where the files the build reads live.",
   "pins": [
     {
       "id": "just-the-docs",

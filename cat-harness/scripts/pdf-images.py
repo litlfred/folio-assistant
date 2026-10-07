@@ -138,7 +138,7 @@ def extract(pdf: Path, outdir: Path, dry_run: bool, role_threshold: float | None
             "undetermined_reason": (
                 "pymupdf is not installed, so no page geometry could be read. "
                 "This is NOT 'the document has no images': install it "
-                "(pip install -r requirements.txt) and re-run."
+                "(pip install -r cat-harness-tools/python/requirements.txt) and re-run."
             ),
         }
 
