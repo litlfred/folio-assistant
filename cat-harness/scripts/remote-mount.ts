@@ -55,7 +55,7 @@ import { z } from "zod";
 
 import { mountTrust } from "../schemas/mount-trust.js";
 import { checkoutRootFor, instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
-import { readDeclaredMounts, readIndexConfig, syncIgnoreBlock } from "../schemas/index-config.js";
+import { lockedMountPaths, readDeclaredMounts, readIndexConfig, syncIgnoreBlock } from "../schemas/index-config.js";
 import {
   MOUNT_LOCK_SCHEMA,
   MountDefaultsSchema,
@@ -474,7 +474,9 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
     // before anything lands, and `info/exclude` is never written.
     const idx = readIndexConfig(plan.instanceRoot);
     const index = idx.state === "ok" ? idx.config : undefined;
-    if (index !== undefined) syncIgnoreBlock(plan.instanceRoot, index);
+    // The PLANNED closure, so an instance the mount brings in transitively is
+    // ignored before its bytes land; re-synced from the lock once written.
+    if (index !== undefined) syncIgnoreBlock(plan.instanceRoot, index, [...lockedMountPaths(plan.instanceRoot), ...plan.instances.map((i) => i.path)]);
 
     const prior = readMountLock(lockFile);
     const priorBy = new Map((prior.ok ? prior.lock.instances : []).map((i) => [i.instance, i]));
@@ -587,6 +589,7 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
         .sort((a, b) => a.instance.localeCompare(b.instance)),
     };
     writeFileSync(lockFile, JSON.stringify(lock, null, 2) + "\n");
+    if (index !== undefined) syncIgnoreBlock(plan.instanceRoot, index);
     return { plan, lockFile, excluded };
   } finally {
     for (const t of trees.values()) t.close();

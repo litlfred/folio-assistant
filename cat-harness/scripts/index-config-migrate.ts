@@ -37,7 +37,7 @@ import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { INDEX_LOCK_FILENAME, findDeclarationFile, lockFilesIn } from "../schemas/instance-roots.js";
-import { INDEX_CONFIG_FILENAME, buildIndexConfig, formatIndexConfig, withIgnoreBlock, type IndexMigration } from "../schemas/index-config.js";
+import { INDEX_CONFIG_FILENAME, buildIndexConfig, formatIndexConfig, lockedMountPaths, withIgnoreBlock, type IndexMigration } from "../schemas/index-config.js";
 
 export interface MigrateResult {
   migration: IndexMigration;
@@ -73,7 +73,7 @@ export function planMigration(root: string): MigrateResult {
   let gitignore: MigrateResult["gitignore"];
   const giFile = join(root, ".gitignore");
   const giText = existsSync(giFile) ? readFileSync(giFile, "utf-8") : "";
-  const giNext = withIgnoreBlock(giText, migration.config, giFile);
+  const giNext = withIgnoreBlock(giText, migration.config, giFile, lockedMountPaths(root));
   if (giNext !== giText) {
     gitignore = { file: giFile, text: giNext };
     changes = true;
