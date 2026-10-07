@@ -21,6 +21,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`block-kind-namespace-checkout.test.ts`](block-kind-namespace-checkout.test.ts) | a file |  |
 | [`bootstrap-graph-repo-root.test.ts`](bootstrap-graph-repo-root.test.ts) | a file |  |
 | [`bootstrap-reading-checkout.test.ts`](bootstrap-reading-checkout.test.ts) | a file |  |
+| [`build-ig-site-checkout.test.ts`](build-ig-site-checkout.test.ts) | a file |  |
 | [`check-bean-parents-repo-root.test.ts`](check-bean-parents-repo-root.test.ts) | a file |  |
 | [`check-import-direction-checkout.test.ts`](check-import-direction-checkout.test.ts) | a file |  |
 | [`compose-docs-checkout.test.ts`](compose-docs-checkout.test.ts) | a file |  |
@@ -51,8 +52,10 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`harnessed-kg-overview.test.ts`](harnessed-kg-overview.test.ts) | a file |  |
 | [`health-checks-workflows.test.ts`](health-checks-workflows.test.ts) | a file |  |
 | [`health-probes-repo-root.test.ts`](health-probes-repo-root.test.ts) | a file |  |
+| [`ig-releases-checkout.test.ts`](ig-releases-checkout.test.ts) | a file |  |
 | [`image-placements-checkout.test.ts`](image-placements-checkout.test.ts) | a file |  |
 | [`infrastructure-repo-root.test.ts`](infrastructure-repo-root.test.ts) | a file |  |
+| [`ingest-ig-invocation-checkout.test.ts`](ingest-ig-invocation-checkout.test.ts) | a file |  |
 | [`init-folio-checkout.test.ts`](init-folio-checkout.test.ts) | a file |  |
 | [`instance-repositories-checkout.test.ts`](instance-repositories-checkout.test.ts) | a file |  |
 | [`jsonld-label-resolution-checkout.test.ts`](jsonld-label-resolution-checkout.test.ts) | a file |  |
