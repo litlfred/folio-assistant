@@ -1,0 +1,1162 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2202.02427v1",
+  "title": "Lightweight Compositional Embeddings for Incremental Streaming Recommendation",
+  "pages": 10,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Problem Formulation and Notation",
+      "number": "2",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-2-problem-formulation-and-notation"
+    },
+    {
+      "level": 1,
+      "title": "Lightweight Compositional Embeddings",
+      "number": "3",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-3-lightweight-compositional-embeddings"
+    },
+    {
+      "level": 2,
+      "title": "LCE model",
+      "number": "3.1",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-31-lce-model"
+    },
+    {
+      "level": 2,
+      "title": "Offline batch training",
+      "number": "3.2",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-32-offline-batch-training"
+    },
+    {
+      "level": 2,
+      "title": "Online incremental (streaming) updates",
+      "number": "3.3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-33-online-incremental-streaming-updates"
+    },
+    {
+      "level": 1,
+      "title": "Empirical evaluation",
+      "number": "4",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-4-empirical-evaluation"
+    },
+    {
+      "level": 2,
+      "title": "Replay protocol",
+      "number": "4.1",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-41-replay-protocol"
+    },
+    {
+      "level": 2,
+      "title": "Data",
+      "number": "4.2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-42-data"
+    },
+    {
+      "level": 2,
+      "title": "Baselines",
+      "number": "4.3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-43-baselines"
+    },
+    {
+      "level": 2,
+      "title": "Comparison with baseline methods",
+      "number": "4.4",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-44-comparison-with-baseline-methods"
+    },
+    {
+      "level": 2,
+      "title": "Comparison with LCE variants",
+      "number": "4.5",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-45-comparison-with-lce-variants"
+    },
+    {
+      "level": 2,
+      "title": "Explicit v.s. implicit embeddings",
+      "number": "4.6",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-46-explicit-vs-implicit-embeddings"
+    },
+    {
+      "level": 2,
+      "title": "Evaluation on real-world production data",
+      "number": "4.7",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-47-evaluation-on-real-world-production-data"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": "5",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-5-related-work"
+    },
+    {
+      "level": 2,
+      "title": "Sequential and streaming recommendation",
+      "number": "5.1",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-51-sequential-and-streaming-recommendation"
+    },
+    {
+      "level": 2,
+      "title": "Graph-based recommendation models",
+      "number": "5.2",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-52-graph-based-recommendation-models"
+    },
+    {
+      "level": 2,
+      "title": "Cold-start recommendation",
+      "number": "5.3",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-53-cold-start-recommendation"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "6",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-6-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-references"
+    },
+    {
+      "level": 1,
+      "title": "A Appendix",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "A.1 Comparison with related methods",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "A.2 Training procedure",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "A.3 Datasets",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "A.4 Baselines",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "A.5 Model capacity v.s. performance",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-000-3-lightweight-compositional-embeddings",
+      "number": "3",
+      "title": "Lightweight Compositional Embeddings",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 16,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "neville",
+          "heading": false
+        },
+        {
+          "term": "tobias",
+          "heading": false
+        },
+        {
+          "term": "microsoft",
+          "heading": false
+        }
+      ],
+      "extract": "for Incremental Streaming Recommendation Mengyue Hang1, Tobias Schnabel2, Longqi Yang2, Jennifer Neville1,2 1Purdue University, 2Microsoft hangm@purdue.edu,tobias.schnabel@microsoft.com,loy@microsoft.com,neville@purdue.edu",
+      "extractCut": false
+    },
+    {
+      "id": "sec-001-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 235,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "static setting",
+          "heading": false
+        },
+        {
+          "term": "graph-based",
+          "heading": false
+        },
+        {
+          "term": "lce",
+          "heading": false
+        },
+        {
+          "term": "streaming",
+          "heading": false
+        },
+        {
+          "term": "nodes",
+          "heading": false
+        },
+        {
+          "term": "recommendation",
+          "heading": false
+        },
+        {
+          "term": "compositional",
+          "heading": false
+        },
+        {
+          "term": "items",
+          "heading": false
+        }
+      ],
+      "extract": "Most work in graph-based recommender systems considers a static setting where all information about test nodes (i.e., users and items) is available upfront at training time. However, this static setting makes little sense for many real world applications where data comes in continuously as a stream of new edges and nodes, and one has to update model predictions incrementally to reflect the latest state. To fully",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 674,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "incremental streaming",
+          "heading": false
+        },
+        {
+          "term": "graph-based recommendation",
+          "heading": false
+        },
+        {
+          "term": "incremental replay",
+          "heading": false
+        },
+        {
+          "term": "lce performance",
+          "heading": false
+        },
+        {
+          "term": "utilize incremental",
+          "heading": false
+        },
+        {
+          "term": "recommen dation",
+          "heading": false
+        },
+        {
+          "term": "incremental updates",
+          "heading": false
+        },
+        {
+          "term": "streaming setting",
+          "heading": false
+        }
+      ],
+      "extract": "Real-world recommender systems face a number of important challenges in practice. First, they need to be able to model the rich- ness of user-item and user-user interactions. Graph-based recom- mender systems are an excellent fit for this as they frame recommen- dation as a link prediction task on the user-item graph [10, 32, 36]. Another substantial challenge is the dynamic nature of the inter- action data that",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-2-problem-formulation-and-notation",
+      "number": "2",
+      "title": "Problem Formulation and Notation",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 193,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "𝐺𝑓𝑖𝑛𝑎𝑙",
+          "heading": false
+        },
+        {
+          "term": "edges",
+          "heading": false
+        },
+        {
+          "term": "nodes",
+          "heading": false
+        },
+        {
+          "term": "𝐸𝑡𝐾and",
+          "heading": false
+        },
+        {
+          "term": "assume",
+          "heading": false
+        }
+      ],
+      "extract": "In this paper, we develop and evaluate our method in what we call the incremental streaming setting. In it, we assume that there exists some fixed future graph 𝐺𝑓𝑖𝑛𝑎𝑙= (𝑉𝑓𝑖𝑛𝑎𝑙, 𝐸𝑓𝑖𝑛𝑎𝑙) whose edges form the target of our prediction. Nodes are split into two types (users and items), 𝑉= 𝑈∪· 𝑊with no edges between items as item-item interactions are rare in practice. We do not get to observe the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-32-offline-batch-training",
+      "number": "3.2",
+      "title": "Offline batch training",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 207,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "lightweight compositional",
+          "heading": false
+        },
+        {
+          "term": "edges",
+          "heading": false
+        },
+        {
+          "term": "prediction target",
+          "heading": false
+        },
+        {
+          "term": "offline",
+          "heading": true
+        },
+        {
+          "term": "graph",
+          "heading": false
+        },
+        {
+          "term": "lce",
+          "heading": false
+        },
+        {
+          "term": "incremental",
+          "heading": false
+        }
+      ],
+      "extract": "model goes through 𝐾rounds of online incremental updates where it observes new edges and nodes as it is asked to produce updated predictions. More specifically, the prediction target is the edge set 𝐸𝑡𝑓𝑖𝑛𝑎𝑙−𝐸𝑡𝐾and the goal is to condition predictions on the graph𝐺𝑡𝐾, even though we can only estimate model parameters on 𝐺𝑡0. Figure 1 illustrates the incremental streaming scenario with an evolving",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-31-lce-model",
+      "number": "3.1",
+      "title": "LCE model",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 514,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "lce model",
+          "heading": true
+        },
+        {
+          "term": "compositional embeddings",
+          "heading": false
+        },
+        {
+          "term": "convolution layers",
+          "heading": false
+        },
+        {
+          "term": "explicit embeddings",
+          "heading": false
+        },
+        {
+          "term": "aggregation function",
+          "heading": false
+        },
+        {
+          "term": "composition function",
+          "heading": false
+        },
+        {
+          "term": "compose",
+          "heading": false
+        },
+        {
+          "term": "graph",
+          "heading": false
+        }
+      ],
+      "extract": "on the training set, propagating information from embeddings via simplified GCN layers. Afterwards, during each incremental update step, we re-compute the compositional embeddings with the new edges from each step and also compute new prediction scores. 3.1 LCE model We start with a general description of the LCE model before turning to training and inference details. For ease of exposition, let us assume that we",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-42-data",
+      "number": "4.2",
+      "title": "Data",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 316,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "z𝑇 𝑢z𝑤",
+          "heading": false
+        },
+        {
+          "term": "edges",
+          "heading": false
+        },
+        {
+          "term": "graph",
+          "heading": false
+        },
+        {
+          "term": "z𝑈",
+          "heading": false
+        },
+        {
+          "term": "items",
+          "heading": false
+        },
+        {
+          "term": "training",
+          "heading": false
+        },
+        {
+          "term": "incremental",
+          "heading": false
+        },
+        {
+          "term": "streaming",
+          "heading": false
+        }
+      ],
+      "extract": "set of all parameters in our model. We initialize the matrices of Lightweight Compositional Embeddings for Incremental Streaming Recommendation Machine Learning on Graph (MLoG) Workshop at WSDM’22, Feb 25th, 2022, Virtual Offline training Incremental updates Test data Time A C D A C D B A C D B t0 tK tfinal t1 ... B E E Figure 1: An example graph illustrating the streaming scenario we are addressing in this paper.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-33-online-incremental-streaming-updates",
+      "number": "3.3",
+      "title": "Online incremental (streaming) updates",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 68,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "embeddings",
+          "heading": false
+        },
+        {
+          "term": "z𝑈",
+          "heading": false
+        },
+        {
+          "term": "re-compute",
+          "heading": false
+        }
+      ],
+      "extract": "After offline training, we fix the explicit embeddings (Z𝑈, ˜Z𝑈) and re-compute embeddings Z𝑊as follows. Given a new graph 𝐺𝑡𝑘,𝑘> 0, we use the new adjacency matrix 𝐺𝑡in place of 𝐺 to initialize item embeddings via Eq.2 and follow Eq.3 to obtain the final embedding for 𝑤, again plugging in 𝐺𝑡𝑘for 𝐺. Finally, we obtain new recommendation scores via Eq.1 on missing edges between users and items. 4",
+      "extractCut": false
+    },
+    {
+      "id": "sec-008-4-empirical-evaluation",
+      "number": "4",
+      "title": "Empirical evaluation",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 22,
+      "summary": null,
+      "keywords": [],
+      "extract": "Through our experiments, we seek to answer the following re- search questions: (1) How does our proposed method fare against a competitive",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-43-baselines",
+      "number": "4.3",
+      "title": "Baselines",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 100,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "sec",
+          "heading": false
+        },
+        {
+          "term": "lce",
+          "heading": false
+        },
+        {
+          "term": "fig",
+          "heading": false
+        }
+      ],
+      "extract": "incremental updates to improve model performance? (→ Sec. 4.4) • How much does performance improve over the offline setting? (→Tables 3, 6, Fig. 2) • How close do they get to skyline performance (i.e. retrain- ing models with all available data)? (→Fig. 2) • How do they perform when including cold-start items during streaming? (→Fig. 3) (2) How important are the various components of LCE? Does performance suffer if",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-41-replay-protocol",
+      "number": "4.1",
+      "title": "Replay protocol",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1050,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "user-item graph",
+          "heading": false
+        },
+        {
+          "term": "user-item interactions",
+          "heading": false
+        },
+        {
+          "term": "yelp dataset",
+          "heading": false
+        },
+        {
+          "term": "lce emb",
+          "heading": false
+        },
+        {
+          "term": "lce layer",
+          "heading": false
+        },
+        {
+          "term": "user-user edges",
+          "heading": false
+        },
+        {
+          "term": "graph density",
+          "heading": false
+        },
+        {
+          "term": "window months",
+          "heading": false
+        }
+      ],
+      "extract": "For the overall experimental setup, we implemented the scenario introduced in Section 2 as follows. There are three larger splits of the data – an offline dataset to train (𝐺𝑡𝑟𝑎𝑖𝑛 𝑡0 ) on with a validation set (𝐺𝑣𝑎𝑙 𝑡0 ), 𝐾different chunks of streaming data (𝐺𝑡𝑖), and the test data (𝐺𝑓𝑖𝑛𝑎𝑙). This is also shown in Figure 1. For each method to evaluate, we first train a model 𝑀𝑡0 using the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-44-comparison-with-baseline-methods",
+      "number": "4.4",
+      "title": "Comparison with baseline methods",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 814,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "streaming performance",
+          "heading": false
+        },
+        {
+          "term": "streaming recommendation",
+          "heading": false
+        },
+        {
+          "term": "streaming window",
+          "heading": false
+        },
+        {
+          "term": "method lce",
+          "heading": false
+        },
+        {
+          "term": "streaming data",
+          "heading": false
+        },
+        {
+          "term": "model retraining",
+          "heading": false
+        },
+        {
+          "term": "incremental updates",
+          "heading": false
+        },
+        {
+          "term": "cold-start items",
+          "heading": false
+        }
+      ],
+      "extract": "Table 3 shows the streaming recommendation performance in terms of recall@20 and nDCG@20 of baseline methods and our method (including its variants) on the three datasets. The offline performance refers to the scenario when the offline portion of our dataset, 𝐺𝑡0 is used for training, while the streaming performance refers to when the streaming data is used for inference using the same trained model. In the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-45-comparison-with-lce-variants",
+      "number": "4.5",
+      "title": "Comparison with LCE variants",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 685,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "lce",
+          "heading": true
+        },
+        {
+          "term": "librarything month",
+          "heading": false
+        },
+        {
+          "term": "month streaming",
+          "heading": false
+        },
+        {
+          "term": "lce emb",
+          "heading": false
+        },
+        {
+          "term": "skyline",
+          "heading": false
+        },
+        {
+          "term": "als",
+          "heading": false
+        },
+        {
+          "term": "slim",
+          "heading": false
+        },
+        {
+          "term": "streaming data",
+          "heading": false
+        }
+      ],
+      "extract": "The two important features of our model architecture are (1) using two separate user embeddings for generating item embed- dings (Z𝑈) and scoring ( ˜Z𝑈) respectively, and (2) stacking multiple graph convolutional layers to capture long-range dependencies in the user-item interaction graphs. We performed two ablation studies to investigate the benefits of the two features. In Table 3, we can see that the single",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-46-explicit-vs-implicit-embeddings",
+      "number": "4.6",
+      "title": "Explicit v.s. implicit embeddings",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 429,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "explicit embeddings",
+          "heading": true
+        },
+        {
+          "term": "item embeddings",
+          "heading": false
+        },
+        {
+          "term": "user embeddings",
+          "heading": false
+        },
+        {
+          "term": "learn explicit",
+          "heading": false
+        },
+        {
+          "term": "compositional function",
+          "heading": false
+        },
+        {
+          "term": "node types",
+          "heading": false
+        },
+        {
+          "term": "implicit",
+          "heading": true
+        },
+        {
+          "term": "lce-user",
+          "heading": false
+        }
+      ],
+      "extract": "One important assumption of our model is that one node type is more amenable to “static” representation than the other, so we learn a static representation for that node type (e.g, users) and learn an implicit, compositional function to calculate the representation of the other nodes (e.g, items). In our earlier experiments, we con- sidered the smaller node set to be the more static one, which is the set of users in",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-47-evaluation-on-real-world-production-data",
+      "number": "4.7",
+      "title": "Evaluation on real-world production data",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 193,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "streaming data",
+          "heading": false
+        },
+        {
+          "term": "lightgcn",
+          "heading": false
+        },
+        {
+          "term": "lce",
+          "heading": false
+        },
+        {
+          "term": "weeks",
+          "heading": false
+        },
+        {
+          "term": "offline",
+          "heading": false
+        },
+        {
+          "term": "teams",
+          "heading": false
+        }
+      ],
+      "extract": "In additional to the three public datasets, we also evaluated LCE on a real-world production system (Microsoft Teams), where the task is to recommend TEAMs for users to join. We created a subset of 224K users and 26K TEAMs, with a total of 65 million user interactions. The interaction graph is constructed from a set of time- stamped user-item and user-user actions, where the edges represent interactions between two",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-5-related-work",
+      "number": "5",
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 11,
+      "summary": null,
+      "keywords": [],
+      "extract": "Our work is inspired by and contributes to three research di-",
+      "extractCut": false
+    },
+    {
+      "id": "sec-016-51-sequential-and-streaming-recommendation",
+      "number": "5.1",
+      "title": "Sequential and streaming recommendation",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-017-53-cold-start-recommendation",
+      "number": "5.3",
+      "title": "Cold-start recommendation",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 132,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "recommendation",
+          "heading": true
+        },
+        {
+          "term": "user-item",
+          "heading": false
+        },
+        {
+          "term": "graph-based",
+          "heading": false
+        },
+        {
+          "term": "incremental",
+          "heading": false
+        }
+      ],
+      "extract": "5.1 Sequential and streaming recommendation Sequential recommendation models [5, 16, 20, 21, 29, 33, 35] fo- cus on capturing the temporal dynamics of user-item interactions which is orthogonal to the problem of incremental recommenda- tion. Moreover, these methods cannot handle non-bipartite graph data which we study in this paper. Regarding streaming recommen- dation, prior work [3, 7, 31] has proposed retraining",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-52-graph-based-recommendation-models",
+      "number": "5.2",
+      "title": "Graph-based recommendation models",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 300,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "cold-start problem",
+          "heading": false
+        },
+        {
+          "term": "recommendation",
+          "heading": true
+        },
+        {
+          "term": "compositional embedding",
+          "heading": false
+        },
+        {
+          "term": "lce",
+          "heading": false
+        },
+        {
+          "term": "graph-based",
+          "heading": true
+        },
+        {
+          "term": "items",
+          "heading": false
+        },
+        {
+          "term": "models",
+          "heading": true
+        },
+        {
+          "term": "lightgcn",
+          "heading": false
+        }
+      ],
+      "extract": "Leveraging graphs to support recommendation scenarios is an emerging research theme. The core idea is to cast recommenda- tion problem to graph link prediction. Prior work explored many graph neural network architectures, for example GraphSage [9, 36]. NGCF [32] and LightGCN [10] learn convolutional structures over embeddings for all users and items. These models are not generally applicable to the incremental",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-6-conclusion",
+      "number": "6",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 183,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "streaming setting",
+          "heading": false
+        },
+        {
+          "term": "lce",
+          "heading": false
+        },
+        {
+          "term": "recommendation",
+          "heading": false
+        },
+        {
+          "term": "baselines",
+          "heading": false
+        },
+        {
+          "term": "real-world",
+          "heading": false
+        },
+        {
+          "term": "graph",
+          "heading": false
+        }
+      ],
+      "extract": "Motivated by needs of real-world recommender systems, we consider recommendation in an incremental streaming setting in this work, where new data continuously comes in after the model is trained. This is in contrast to the static setting that most graph- based recommendation systems adopt where all information about test nodes are available at training time. We propose a composi- tional graph-based method (LCE) that",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2373,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "sigir conference",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "acm conference",
+          "heading": false
+        },
+        {
+          "term": "web conference",
+          "heading": false
+        },
+        {
+          "term": "lce emb",
+          "heading": false
+        },
+        {
+          "term": "lce layer",
+          "heading": false
+        },
+        {
+          "term": "recommender systems",
+          "heading": false
+        },
+        {
+          "term": "incremental streaming",
+          "heading": false
+        }
+      ],
+      "extract": "[1] Michael W Berry, Susan T Dumais, and Gavin W O’Brien. 1995. Using linear algebra for intelligent information retrieval. SIAM review 37, 4 (1995), 573–595. [2] Chenwei Cai, Ruining He, and Julian McAuley. 2017. SPMC: socially-aware personalized markov chains for sparse sequential recommendation. arXiv preprint arXiv:1708.04497 (2017). [3] Shiyu Chang, Yang Zhang, Jiliang Tang, Dawei Yin, Yi Chang, Mark A",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "incremental streaming",
+      "heading": true
+    },
+    {
+      "term": "streaming graph",
+      "heading": false
+    },
+    {
+      "term": "streaming recommendation",
+      "heading": true
+    },
+    {
+      "term": "lce performance",
+      "heading": false
+    },
+    {
+      "term": "lce model",
+      "heading": true
+    },
+    {
+      "term": "streaming setting",
+      "heading": false
+    },
+    {
+      "term": "lce layer",
+      "heading": false
+    },
+    {
+      "term": "lce emb",
+      "heading": false
+    },
+    {
+      "term": "streaming data",
+      "heading": false
+    },
+    {
+      "term": "method lce",
+      "heading": false
+    },
+    {
+      "term": "compositional embeddings",
+      "heading": true
+    },
+    {
+      "term": "lce variants",
+      "heading": true
+    }
+  ]
+}

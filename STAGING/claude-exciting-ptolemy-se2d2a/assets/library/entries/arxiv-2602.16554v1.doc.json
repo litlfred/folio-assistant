@@ -1,0 +1,850 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2602.16554v1",
+  "title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
+  "pages": 13,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related Works",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-related-works"
+    },
+    {
+      "level": 1,
+      "title": "Framework",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-framework"
+    },
+    {
+      "level": 2,
+      "title": "Autoformalization",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-autoformalization"
+    },
+    {
+      "level": 2,
+      "title": "Autoinformalization",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-autoinformalization"
+    },
+    {
+      "level": 1,
+      "title": "Experiments",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-experiments"
+    },
+    {
+      "level": 2,
+      "title": "Results",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-results"
+    },
+    {
+      "level": 2,
+      "title": "Qualitative Observations",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-qualitative-observations"
+    },
+    {
+      "level": 1,
+      "title": "Discussion",
+      "number": null,
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-discussion"
+    },
+    {
+      "level": 2,
+      "title": "Challenges in MerLean",
+      "number": null,
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-challenges-in-merlean"
+    },
+    {
+      "level": 2,
+      "title": "Future Applications of MerLean",
+      "number": null,
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-future-applications-of-merlean"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "Formalization Examples",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-formalization-examples"
+    },
+    {
+      "level": 2,
+      "title": "Theorem: Fault Tolerance of Gauging Measurement",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-theorem-fault-tolerance-of-gauging-measurement"
+    },
+    {
+      "level": 2,
+      "title": "Agent-Discovered Helper Lemma",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-agent-discovered-helper-lemma"
+    },
+    {
+      "level": 2,
+      "title": "Axiom Example: Künneth Formula",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-000-framework",
+      "number": null,
+      "title": "Framework",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 31,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "university",
+          "heading": false
+        },
+        {
+          "term": "cambridge",
+          "heading": false
+        },
+        {
+          "term": "ren",
+          "heading": false
+        }
+      ],
+      "extract": "MALIZATION IN QUANTUM COMPUTATION Yuanjie Ren∗ Massachusetts Institute of Technology Cambridge, MA 02139 yuanjie@mit.edu Jinzheng Li∗ Northeastern University Boston, MA 02115 li.jinzh@northeastern.edu Yidi Qi∗ Northeastern University Boston, MA 02115 y.qi@northeastern.edu ABSTRACT",
+      "extractCut": false
+    },
+    {
+      "id": "sec-001-autoformalization",
+      "number": null,
+      "title": "Autoformalization",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 123,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "theoretical",
+          "heading": false
+        },
+        {
+          "term": "merlean",
+          "heading": false
+        },
+        {
+          "term": "quantum",
+          "heading": false
+        },
+        {
+          "term": "papers",
+          "heading": false
+        }
+      ],
+      "extract": "in quantum computation. MerLean extracts mathematical statements from LATEX source files, formalizes them into verified Lean 4 code built on Mathlib, and trans- lates the result back into human-readable LATEX for semantic review. We evaluate MerLean on three theoretical quantum computing papers producing 2,050 Lean dec- larations from 114 statements in total. MerLean achieves end-to-end formalization on all three",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 357,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "theoretical quantum",
+          "heading": false
+        },
+        {
+          "term": "quantum computation",
+          "heading": false
+        },
+        {
+          "term": "arxiv",
+          "heading": false
+        },
+        {
+          "term": "mathematical statements",
+          "heading": false
+        },
+        {
+          "term": "formal code",
+          "heading": false
+        },
+        {
+          "term": "accelerate",
+          "heading": false
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "merlean",
+          "heading": false
+        }
+      ],
+      "extract": "The goal of autoformalization (Szegedy, 2020) is to automatically translate mathematical statements from natural language into formal code verifiable by systems such as Isabelle (Paulson, 1994), Coq (Team, 2024), and Lean (Moura & Ullrich, 2021). Recent work has shown that Large Language Models (LLMs) are well suited to this task due to their semantic processing capabilities (Wu et al., 2022; Jiang et al., 2022;",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-related-works",
+      "number": null,
+      "title": "Related Works",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 275,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "frontier llms",
+          "heading": false
+        },
+        {
+          "term": "demonstrated",
+          "heading": false
+        },
+        {
+          "term": "agentic",
+          "heading": false
+        },
+        {
+          "term": "zhang",
+          "heading": false
+        },
+        {
+          "term": "claude",
+          "heading": false
+        },
+        {
+          "term": "lines",
+          "heading": false
+        },
+        {
+          "term": "liu",
+          "heading": false
+        },
+        {
+          "term": "systems",
+          "heading": false
+        }
+      ],
+      "extract": "LLM-based autoformalization and automated theorem provers demonstrated promising capabilities on competition-level problems (Wu et al., 2022; Jiang et al., 2022). Subsequent work improved upon these foundations by addressing proof detail expansion (Tarrach et al., 2024) and faithfulness verification (Li et al., 2024; Liu et al., 2025; Peng et al., 2025). Extensions to domain-specific applications include Euclidean",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-autoinformalization",
+      "number": null,
+      "title": "Autoinformalization",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 447,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "latex paper",
+          "heading": false
+        },
+        {
+          "term": "agent",
+          "heading": false
+        },
+        {
+          "term": "faithfulness",
+          "heading": false
+        },
+        {
+          "term": "autoinformalization",
+          "heading": true
+        },
+        {
+          "term": "until",
+          "heading": false
+        },
+        {
+          "term": "attempt",
+          "heading": false
+        },
+        {
+          "term": "compiles",
+          "heading": false
+        },
+        {
+          "term": "errors",
+          "heading": false
+        }
+      ],
+      "extract": "for expert review. This round-trip design ensures both machine-verified correctness and human- verifiable semantic alignment. The framework employs a frontier LLM agent based on Claude Code that engages multi-turn agentic interactions—iteratively refining outputs based on compiler feedback, faithfulness checks, and tool-augmented exploration of Mathlib. Figure 1 illustrates the overall architecture. 3.1",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-results",
+      "number": null,
+      "title": "Results",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 231,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "axiom declarations",
+          "heading": false
+        },
+        {
+          "term": "assumptions",
+          "heading": false
+        },
+        {
+          "term": "formal methods",
+          "heading": false
+        },
+        {
+          "term": "readers",
+          "heading": false
+        },
+        {
+          "term": "merlean",
+          "heading": false
+        },
+        {
+          "term": "informalization",
+          "heading": false
+        },
+        {
+          "term": "dependency",
+          "heading": false
+        },
+        {
+          "term": "content",
+          "heading": false
+        }
+      ],
+      "extract": "formula for certain coefficient rings). MerLean handles this through explicit axiom declarations, clearly distinguishing intentional assumptions from incomplete proofs (sorry). When formalization fails after maximum attempts, an “axiom phase” converts blocking subgoals to axioms, producing partial formalizations with transparent assumptions that can be filled in as Mathlib expands. 3.2 AUTOINFORMALIZATION The",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-experiments",
+      "number": null,
+      "title": "Experiments",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 623,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "compile attempts",
+          "heading": false
+        },
+        {
+          "term": "quantum topology",
+          "heading": false
+        },
+        {
+          "term": "product codes",
+          "heading": false
+        },
+        {
+          "term": "balanced product",
+          "heading": false
+        },
+        {
+          "term": "spectral sequences",
+          "heading": false
+        },
+        {
+          "term": "unpublished manuscript",
+          "heading": false
+        },
+        {
+          "term": "fault-tolerant",
+          "heading": false
+        },
+        {
+          "term": "paper",
+          "heading": false
+        }
+      ],
+      "extract": "We evaluate MerLean on three papers in theoretical quantum computing: one unpublished manuscript to guarantee zero data contamination, and two published papers to assess performance on existing literature. • Paper A: Balanced Product Codes (Breuckmann & Eberhardt, 2021). This paper studies quantum codes constructed from tensor products and fiber bundles of chain complexes. The mathematical machinery includes",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-qualitative-observations",
+      "number": null,
+      "title": "Qualitative Observations",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 436,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "spectral sequences",
+          "heading": false
+        },
+        {
+          "term": "unneth formula",
+          "heading": false
+        },
+        {
+          "term": "product codes",
+          "heading": false
+        },
+        {
+          "term": "balanced product",
+          "heading": false
+        },
+        {
+          "term": "original paper",
+          "heading": false
+        },
+        {
+          "term": "homology",
+          "heading": false
+        },
+        {
+          "term": "kunnethmap",
+          "heading": false
+        },
+        {
+          "term": "aux",
+          "heading": false
+        }
+      ],
+      "extract": "Compile-Fix Loop Behavior. The hard statements that require 20+ compile attempts typically involve: 1. Dependent type arithmetic (e.g., proving i −1 + 1 = i at the type level) 2. Missing lemmas that require creative workarounds 3. Tactic timeouts requiring proof restructuring Agent-Discovered Lemmas. MerLean frequently introduces auxiliary lemmas not stated in the original paper. These helper lemmas are natural",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-discussion",
+      "number": null,
+      "title": "Discussion",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": null,
+      "keywords": [],
+      "extract": "5.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-challenges-in-merlean",
+      "number": null,
+      "title": "Challenges in MerLean",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 183,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "faithfulness checking",
+          "heading": false
+        },
+        {
+          "term": "physics concepts",
+          "heading": false
+        },
+        {
+          "term": "merlean",
+          "heading": true
+        },
+        {
+          "term": "too",
+          "heading": false
+        },
+        {
+          "term": "gaps",
+          "heading": false
+        },
+        {
+          "term": "axioms",
+          "heading": false
+        }
+      ],
+      "extract": "Mathlib Gaps and Axiom-Based Formalization. Our evaluation highlighted gaps in Mathlib regarding specialized physics concepts, for instance, the K¨unneth formula was unavailable. MerLean handles this by explicitly declaring axiom nodes in the dependency graph. More broadly, many physics concepts are not rigorously defined in the language of mathematics (e.g., notions in quantum field theory). Yet, it is out of the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-future-applications-of-merlean",
+      "number": null,
+      "title": "Future Applications of MerLean",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 299,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "merlean",
+          "heading": true
+        },
+        {
+          "term": "peer review",
+          "heading": false
+        },
+        {
+          "term": "synthetic data",
+          "heading": false
+        },
+        {
+          "term": "scientific",
+          "heading": false
+        },
+        {
+          "term": "unpublished",
+          "heading": false
+        },
+        {
+          "term": "physics",
+          "heading": false
+        },
+        {
+          "term": "research",
+          "heading": false
+        },
+        {
+          "term": "researchers",
+          "heading": false
+        }
+      ],
+      "extract": "Research Assistant. During our initial formalization of the unpublished Quantum Topology paper, one lemma persistently required an axiom. Examining the autoinformalized blueprint revealed that an ambiguous definition, where a constraint the author had implicitly assumed was lacking, caused the problem. After fixing the LATEX source, MerLean produced a complete formalization. This illustrates how the bidirectional",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1060,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "url arxiv",
+          "heading": false
+        },
+        {
+          "term": "url org",
+          "heading": false
+        },
+        {
+          "term": "org abs",
+          "heading": false
+        },
+        {
+          "term": "url https",
+          "heading": false
+        },
+        {
+          "term": "mateja jamnik",
+          "heading": false
+        },
+        {
+          "term": "quantum physics",
+          "heading": false
+        },
+        {
+          "term": "theoretical quantum",
+          "heading": false
+        },
+        {
+          "term": "quantum computation",
+          "heading": false
+        }
+      ],
+      "extract": "We have presented MerLean, a fully automated bidirectional framework for formalizing mathematical research papers from LATEX into verified Lean 4 libraries. Our evaluation on three papers in theoretical quantum computation, covering stabilizer codes, fault-tolerant protocols, balanced product codes, and homological algebra, produced over 2,000 Lean declarations across 41,000+ lines of verified code, demonstrating",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-formalization-examples",
+      "number": null,
+      "title": "Formalization Examples",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 17,
+      "summary": null,
+      "keywords": [],
+      "extract": "We provide representative examples from the Fault-Tolerant QC formalization to illustrate the quality of MerLean’s output. A.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-013-theorem-fault-tolerance-of-gauging-measurement",
+      "number": null,
+      "title": "Theorem: Fault Tolerance of Gauging Measurement",
+      "level": 2,
+      "pageStart": 9,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 322,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "min log",
+          "heading": false
+        },
+        {
+          "term": "measurement",
+          "heading": true
+        },
+        {
+          "term": "cheeger constant",
+          "heading": false
+        },
+        {
+          "term": "spacetime",
+          "heading": false
+        },
+        {
+          "term": "weight",
+          "heading": false
+        },
+        {
+          "term": "decompose",
+          "heading": false
+        },
+        {
+          "term": "least",
+          "heading": false
+        },
+        {
+          "term": "get",
+          "heading": false
+        }
+      ],
+      "extract": "Theorem 2 of Williamson & Yoder (2024) (adapted): The fault-tolerant implementation of Algorithm 1 with a suitable graph G has spacetime fault-distance dST = d, where d is the distance of the original code. Specifically, if (1) the Cheeger constant satisfies h(G) ≥1, and (2) the number of measurement rounds satisfies to −ti ≥d, then any spacetime logical fault has weight at least d. /-- Main Theorem (Fault",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-agent-discovered-helper-lemma",
+      "number": null,
+      "title": "Agent-Discovered Helper Lemma",
+      "level": 2,
+      "pageStart": 10,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1249,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "cycle tensor",
+          "heading": false
+        },
+        {
+          "term": "axiom cycle",
+          "heading": false
+        },
+        {
+          "term": "boundary aux",
+          "heading": false
+        },
+        {
+          "term": "axiom kunnethmap",
+          "heading": false
+        },
+        {
+          "term": "tensor product",
+          "heading": false
+        },
+        {
+          "term": "unneth map",
+          "heading": false
+        },
+        {
+          "term": "unneth formula",
+          "heading": false
+        },
+        {
+          "term": "cross product",
+          "heading": false
+        }
+      ],
+      "extract": "This lemma is part of the formalization of Williamson & Yoder (2024), specifically addressing the lower bound on space distance. The agent introduced this intermediate lemma on its own to complete the proof of the space distance lower bound in the fault-tolerant quantum computation formalization. Given a Cheeger-like expansion parameter h(G), a cleaning set of size at most the cleaned operator weight, and a boundary",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "quantum physics",
+      "heading": false
+    },
+    {
+      "term": "fault-tolerant quantum",
+      "heading": false
+    },
+    {
+      "term": "quantum codes",
+      "heading": false
+    },
+    {
+      "term": "theoretical quantum",
+      "heading": false
+    },
+    {
+      "term": "quantum computation",
+      "heading": false
+    },
+    {
+      "term": "quantum topology",
+      "heading": false
+    },
+    {
+      "term": "axiom cycle",
+      "heading": false
+    },
+    {
+      "term": "axiom kunnethmap",
+      "heading": false
+    },
+    {
+      "term": "latex paper",
+      "heading": false
+    },
+    {
+      "term": "quantum computing",
+      "heading": false
+    },
+    {
+      "term": "research papers",
+      "heading": false
+    },
+    {
+      "term": "axiom declarations",
+      "heading": false
+    }
+  ]
+}
