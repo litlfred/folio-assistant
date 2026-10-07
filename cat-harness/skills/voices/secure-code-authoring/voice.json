@@ -25,6 +25,12 @@
     {
       "title": "Zero-trust handover (methodology)",
       "path": "cat-harness/methodologies/zero-trust-handover.md"
+    },
+    {
+      "title": "Defending Against Prompt Injection with DataFilter",
+      "libraryId": "arxiv-2510.19207v2",
+      "url": "https://arxiv.org/abs/2510.19207v2",
+      "year": 2026
     }
   ],
   "rules": [
@@ -74,6 +80,19 @@
         "sectionId": "page-006",
         "pages": "6",
         "quote": "The individual jobs in a workflow can interact with (and compromise) other jobs."
+      }
+    },
+    {
+      "id": "scz-screen-handover-fields",
+      "title": "Hand-overs are typed, and screened field by field before a model reads them",
+      "description": "A hand-over report, a delegated prompt, a tool result, or text from a person who is not the session's principal (a PR comment, an issue body, a public comment, an uploaded document) travels as a declared schema rather than a free-text blob, and the receiver screens it for injected instructions FIELD BY FIELD. A finding in a field that steers control (a tool name, a path, a URL, a command, a next step) is refused. A finding in a free-text data field is quarantined: the original is kept, the field is marked, and the receiver is told. It is never silently stripped. A tightly typed skill/tool I/O schema is what makes the screen possible, since it says where the data sits and which fields steer.",
+      "category": "methodology",
+      "severity": "critical",
+      "source": {
+        "libraryId": "arxiv-2510.19207v2",
+        "sectionId": "sec-014-handling-structured-data",
+        "pages": "6-7",
+        "quote": "we parse this JSON input, and recursively filter each key and each value in the JSON object."
       }
     },
     {

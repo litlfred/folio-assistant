@@ -19,6 +19,8 @@ origin: >
   Technica, 2026-05-26, on BadHost (CVE-2026-48710, Starlette before 1.0.1).
 evidence:
   - library/github-docs-actions-secure-use-reference
+  - library/arxiv-2510.19207v2
+  - library/arxiv-2507.07974v2
 applies-when: >
   **A value crosses from one participant to another and the receiver is about
   to act on it.** That covers an agent handing work to a sub-agent or a
@@ -51,6 +53,8 @@ voice. Adoption is the owner's decision.
 | Goodin, Ars Technica 2026-10-06, MCP protocol pivoting | 🔗 reference only, <https://arstechnica.com/security/2026/10/vulnerability-in-agents-from-google-and-others-exposes-structural-flaw-in-mcp/> | the attack shape, summarised in our words, and one short quotation |
 | Goodin, Ars Technica 2026-05-26, BadHost / CVE-2026-48710 | 🔗 reference only, <https://arstechnica.com/information-technology/2026/05/millions-of-ai-agents-imperiled-by-critical-vulnerability-in-open-source-package/> | the "authorise on a reconstructed URL" defect class |
 | Rapid7, CVE-2026-97228 vulnerability database entry | 🔗 reference only | that the pivot was assigned a CVE (CVSS v3 2.7); nothing else |
+| Wang, Chen, Alkhudair, Alomair, Wagner, *Defending Against Prompt Injection with DataFilter* (arXiv:2510.19207v2; SaTML 2026) | ✅ `library/arxiv-2510.19207v2` (licence id not established; ingest cleared by the owner) | prior work for H9 and for keeping skill I/O schemas tight (§"Prior work") |
+| Chen, Wang, Carlini, Sitawarin, Wagner, *Defending Against Prompt Injection With a Few DefensiveTokens* (arXiv:2507.07974v2; AISec '25) | ✅ `library/arxiv-2507.07974v2`, CC-BY-4.0 | its threat-model boundary, and why it is not adoptable here (§"Prior work") |
 
 **Reported numbers are not imported as facts.** The CVE scores and download
 counts are the reporters' claims, and nothing below depends on them.
@@ -130,10 +134,74 @@ list:
   private, loopback and cloud-metadata ranges, apply the same check to each
   redirect, and never authorise on a URL rebuilt from request headers (the
   BadHost class).
-- **H8. A graph you depend on is a supply-chain input.** Skills, voices,
-  processes and tools resolved from a dependency instance are pinned to a
-  commit like any other dependency. Once signing exists (§"Not yet"), they
-  are verified before they are loaded.
+- **H8. A graph you depend on is a supply-chain input, and mounting one needs
+  trust or consent.** Skills, voices, processes and tools resolved from a
+  dependency instance are pinned to a commit like any other dependency. The
+  owner, 2026-10-07: *"mounting remote KG needs trusted provenance sources
+  (digitally signed e.g. verifiable via GDHCN), or explicit user consent"*.
+  A remote graph is mounted (as a dependency, a `remoteGraphs` entry, or a
+  materialised asset) only when ONE of these holds: its provenance is
+  signed by a key verifiable through a trust network the instance declares
+  (the WHO Global Digital Health Certification Network is the named
+  example), or a person gave explicit consent for that graph at that pin.
+  Unsigned and unconsented means not mounted. That gets reported as its own
+  state, never treated as a fallback to "mount anyway". Consent is recorded,
+  and is scoped to the pin, so a moved pin asks again.
+- **H9. Screen what crosses a hand-over: reports, prompts, and human input
+  that is not the principal's.** A hand-over report, a delegated prompt, a
+  tool result, and text from a person who is not this session's principal
+  (a PR comment, an issue body, a public comment, an uploaded document) are
+  screened for injected instructions before a model reads them. The screen
+  works FIELD BY FIELD over a declared schema, never over a free-text blob,
+  which is why skill and tool I/O stays tightly typed. A finding in a field
+  that steers control (a tool name, a path, a URL, a command, a next step)
+  is REFUSED. A finding in a free-text data field is quarantined: the
+  original is kept, the field is marked, and the receiver is told. Silently
+  stripping it would violate refuse-never-repair. The principal's own chat
+  input is instruction, not data. It is still checked by value at every sink
+  it reaches (H6), and screening it as an injection would be screening the
+  person the session works for.
+
+## Prior work: two prompt-injection defences, read against this pipeline
+
+The owner supplied both on 2026-10-07 with *"ingest and review for relevance
+to increase guards, also as prior work evidence (we try to keep I/O skill
+schema tightly controlled)"*. Results reported in them aren't imported as
+facts here.
+
+**DataFilter (arXiv:2510.19207v2) is the relevant one.** It is a test-time,
+model-agnostic filter that *"removes malicious instructions from the data
+before it reaches the backend LLM"* (abstract), and it places itself among
+detection-based, training-time, prompting and system-level defences
+(`sec-008`). Two of its points bear directly on this pipeline:
+
+- **Structured I/O is what makes a screen workable.** For tool output, the
+  authors parse the JSON input and *"recursively filter each key and each
+  value in the JSON object"*, then rebuild it, because *"if a message comes
+  from the tools, it has to be in the JSON format"* (`sec-014`, pp. 6–7).
+  That is prior-work evidence for this instance's practice of keeping skill
+  and tool I/O schemas tight: a declared schema tells the screen where data
+  sits and which fields steer control. H9 is written on that basis.
+- **It repairs, and this instance refuses.** DataFilter strips the injected
+  span and passes the rest on. Under [`security`](../skills/conduct/security/security.md)'s
+  refuse-never-repair rule, stripping is acceptable only where the field is
+  data and the original is kept and flagged. A field that steers control is
+  refused outright. **Adopted:** the field-wise screen over a schema.
+  **Refused:** silent stripping. The filter is itself a model, so if it is
+  used it is a pinned supply-chain dependency (H8).
+
+**DefensiveTokens (arXiv:2507.07974v2) is not adoptable here, and it is
+useful for its boundary.** Its tokens are optimised embeddings that *"the LLM
+provider optimizes and releases"* (`sec-005`, p. 3), and this instance calls
+hosted models whose embeddings it can't change. Its conclusion states the
+boundary clearly: it *"only defends against prompt injections, where the user
+(instruction) is benign, and application-retrieved external data is
+malicious"*, and *"does not apply to … jailbreaks, system following attacks,
+and data extraction attacks, where the user is malicious"* (`sec-014`, p. 9).
+That is why H9 separates the principal's input from third-party human input.
+Its motivation also argues for stripping a defence off *"in trusted
+interactions"* (`sec-005`). **Refused:** under zero trust, no hand-over is a
+trusted interaction by position.
 
 ## Per-tool risk is assessed from the tool's SINKS
 
@@ -163,10 +231,12 @@ missing.
 
 A release (a merge to the default branch, a published site, a tagged
 package) is the last point where a defect is cheap. The gate runs the
-security checks that already exist, as a named step, and the release
-refuses on a finding. "Could not check" is reported as its own state and
-never as clean. Which checks exist and which are actually invoked today is
-measured in the utilisation audit on bean `ieum`, not asserted here.
+security checks that already exist, as a named step (`bun run
+security:gate`, Tool node `security-gate`), and the release refuses on a
+blocking finding. "Could not check" is reported as its own state and never
+as clean. The utilisation audit on bean `ieum` (2026-10-07) found that the
+checks did run in CI, but **no merge, publish or release process step named
+any of them**, and that 0 of 240 third-party actions were SHA-pinned.
 
 ## Not yet: signed knowledge graphs
 
@@ -188,4 +258,9 @@ researched or held. Nothing in this node describes it.
 | job-to-job compromise as the model for agent-to-agent | GitHub Secure use reference | proposed |
 | SHA pinning, least-privilege tokens, privileged-trigger rules, dependency review | GitHub Secure use reference | proposed, as `secure-code-authoring` rules |
 | "protocol pivoting" as a separate attack class | Ars Technica, 2026-10-06 | **refused as a class name**: the same report carries a dissent calling it indirect prompt injection, and the boundary split here doesn't need the name |
-| H1–H8, the sink-based risk table, the release gate | ours | extensions beyond the sources, marked as such |
+| field-wise screening over a declared schema | DataFilter (`sec-014`) | proposed, as H9 |
+| silent stripping of injected spans | DataFilter | **refused**: refuse-never-repair; quarantine with the original kept instead |
+| provider-released defensive tokens | DefensiveTokens | **refused**: needs access to model embeddings this instance does not have |
+| "strip the defence in trusted interactions" | DefensiveTokens (`sec-005`) | **refused**: no interaction is trusted by position |
+| mount a remote KG only on signed provenance (e.g. GDHCN) or explicit consent | the owner, 2026-10-07 | proposed, as H8 |
+| H1–H9, the sink-based risk table, the release gate | ours | extensions beyond the sources, marked as such |
