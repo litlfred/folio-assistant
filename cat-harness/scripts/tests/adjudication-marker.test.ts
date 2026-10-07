@@ -379,6 +379,19 @@ describe("the two real callers that fit", () => {
       ]);
     }
   });
+
+  test("sample-import and subscribe-kg declare the four for refresh-materialized", async () => {
+    const diagram = (n: string): string => workflowFile(join(import.meta.dir, "../.."), n);
+    for (const f of ["sample-import.bpmn", "subscribe-kg.bpmn"] as const) {
+      const m = await loadProcessModel(diagram(f));
+      expect(m.nodes.get("Call_Refresh")!.adjudicationAccepts, `${f} lost its accepts`).toEqual([
+        "remote",
+        "local",
+        "merge",
+        "defer",
+      ]);
+    }
+  });
 });
 
 /** A parent calling a child whose adjudicator DEFERS its enum. */
