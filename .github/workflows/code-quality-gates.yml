@@ -449,6 +449,119 @@ jobs:
       - name: tsc --noEmit
         run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
 
+  qa-working-copy:
+    # bpmn-node: Task_QaWorkingCopy
+    name: QA working copy, built once for this run (not a gate)
+    #
+    # Bean `jtfk`, issue #2456 (owner, 2026-10-07: "1y, 2y, 3y, 4y").
+    #
+    # ## Why one job builds it and the others restore it
+    #
+    # `bun run qa:working-copy` (bean `72a8`) used to run IN every job that
+    # reads the QA tree — the four `bun test` shards, `gates-kg`, `gates-docs`,
+    # `gates-unrun`, `skill-registration-chain` — and `qa-publish` ran the same
+    # writers a ninth time. Measured on run 37659324493 (PR #2363): 2,284 of
+    # the run's 4,714 runner-seconds, 48 %, and in a shard 235 s of build
+    # before 253 s of `bun test`. Nine machines computed one tree from one
+    # commit. Now this job computes it and the readers download it.
+    #
+    # ## An artifact, not a cache
+    #
+    # A cache key built from less than the real inputs serves stale data, and
+    # the real inputs here are the whole tracked tree plus whatever the writers
+    # read from `qa-reports` at the moment they run. An artifact is per run and
+    # exact: what the readers judge is what this job built from this commit.
+    #
+    # ## What is carried, and how a reader knows it got it whole
+    #
+    # `qa-working-copy-bundle.sh` snapshots the checkout before and after the
+    # build and packs EVERYTHING that changed — not a list of directories,
+    # because the writers also regenerate files outside the `qa` roots, and a
+    # hand-kept list is how a reader would one day judge a partial tree. It
+    # writes a sha256 manifest, and the manifest's own sha256 is this job's
+    # output. Each reader checks the downloaded manifest against that hash and
+    # every restored file against the manifest, IN PLACE, before it judges
+    # anything; any mismatch is red and says so.
+    #
+    # ## The critical path
+    #
+    # Every reader now waits for this job. They waited the same ~4 minutes
+    # before, building the copy themselves; what changes is that eight of
+    # them no longer each hold a runner for it.
+    #
+    # ## Not a gate
+    #
+    # It judges nothing. `gates.ts` runs `qa:working-copy` locally as a
+    # precondition (`PRECONDITION_STEPS`) rather than as a gate, and the two
+    # bundle steps are `bash`, which `gatesFrom` does not extract. A failed
+    # build still fails the run: every reader runs `if: !cancelled()` and goes
+    # red at its first step, so a broken copy can never be skipped into a
+    # vacuous pass (bean `0qjq`).
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      manifest: ${{ steps.pack.outputs.manifest }}
+    # Every `run:` step goes through `gate-shell.sh`, for the reason the
+    # `typescript-static` job gives (bean `yqc4`).
+    defaults:
+      run:
+        shell: bash ${{ github.workspace }}/cat-harness/scripts/gate-shell.sh {0}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run state:mount
+
+      - name: Snapshot the checkout before the build (bean jtfk)
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
+
+      - name: Produce the QA working copy this run reads (bean 72a8)
+        # The derived QA results are not committed (bean `5hox`): their record is
+        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
+        # tests READ that tree, so it is computed here, once: the external
+        # bootstrap export, then every declared writer (`qa:refresh`, which also
+        # writes its completeness report to `build/qa-refresh.json`) —
+        # `qa:working-copy` is the two. Without it they report
+        # could-not-determine. `gates.ts` runs the same script as a precondition
+        # locally, and so does not list it as a gate.
+        run: bun run qa:working-copy
+
+      - name: Pack everything the build wrote, with its manifest (bean jtfk)
+        id: pack
+        run: |
+          manifest=$(bash cat-harness/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/qa-before.txt" "$RUNNER_TEMP/qa-working-copy")
+          echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
+          {
+            echo "### QA working copy (bean \`jtfk\`)"
+            echo
+            echo "manifest sha256: \`$manifest\` — $(grep -cvE '^(dir|deleted) ' "$RUNNER_TEMP/qa-working-copy/manifest.txt") file(s), $(du -h "$RUNNER_TEMP/qa-working-copy/qa-working-copy.tar" | cut -f1) uncompressed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the QA working copy for this run's readers (bean jtfk)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: qa-working-copy
+          path: |
+            ${{ runner.temp }}/qa-working-copy/manifest.txt
+            ${{ runner.temp }}/qa-working-copy/qa-working-copy.tar
+          if-no-files-found: error
+          # A re-run of the whole workflow builds again; it must replace,
+          # not collide with, the first attempt's copy.
+          overwrite: true
+          retention-days: 3
+
   typescript-test:
     # bpmn-node: Task_TypeScript
     name: TypeScript — bun test, shard ${{ matrix.shard }}/4
@@ -479,6 +592,12 @@ jobs:
     # not stopped by a per-test timeout, and the Actions default is six hours.
     # a shard measured 2m07s-2m21s; 20 is ~9x that, so a red here is a hang, never a slow day.
     timeout-minutes: 20
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -530,15 +649,32 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # NO `--parallel` — measured, and the failure is a hang, not a slowdown.
       # Bun's in-process worker pool (1.3.14) left one worker spinning at
@@ -695,7 +831,15 @@ jobs:
     #
     # Part 1 of 3 of `Repository gates (hard)` — bean `doxj`; the `gates`
     # roll-up above says why the job is split and carries the check name.
-    # No `needs:` in any part, for the reason `gates` gives about `typescript`.
+    # No part `needs:` another gate, for the reason `gates` gives about
+    # `typescript`; the one `needs:` is the QA working copy's producer, which
+    # judges nothing (bean `jtfk`).
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -778,15 +922,32 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -1291,6 +1452,12 @@ jobs:
     # Part 2 of 3 of `Repository gates (hard)` — bean `doxj`. Ends with
     # `translation:drift:check`, which may be red by decision and so must be
     # its job's last step (`check:red-gate-is-last`, bean `cpss`).
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -1373,12 +1540,32 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # As in gates-kg: `test/results/` is not committed (bean `5hox`), and
-        # `kg:audit:all:check` below compares every instance's kg-qa sidecars
-        # under it. Without this step the tree is absent and the audit reports a
-        # finding on every instance that has sidecars.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # The same audit, over EVERY declared instance rather than the root alone.
       #
@@ -2278,6 +2465,12 @@ jobs:
     # the same setup as `gates`. No `needs:` on `gates` and none from it, for
     # the reason `gates` gives about `typescript` — independent questions,
     # asked independently, so one red cannot stop the other being asked.
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -2335,15 +2528,32 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: gates that were registered and never run
         run: |
@@ -3327,6 +3537,12 @@ jobs:
   skill-registration-chain:
     # bpmn-node: Task_SkillChain
     name: Skill-registration chain, unmasked (hard)
+    # Reads the QA working copy the `qa-working-copy` job builds once (bean
+    # `jtfk`). `!cancelled()`, not the default `success()`: if the build
+    # fails, this job must still run and go RED at its first step rather
+    # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    needs: qa-working-copy
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -3372,15 +3588,32 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
-      - name: Produce the QA working copy this job reads (bean 72a8)
-        # The derived QA results are not committed (bean `5hox`): their record is
-        # the `qa-reports` branch and `test/results/` is gitignored. The gates and
-        # tests below READ that tree, so it is computed here first, exactly as
-        # `qa-publish` computes it: the external bootstrap export, then every
-        # declared writer (`qa:refresh`) — `qa:working-copy` is the two. Without
-        # it they report could-not-determine. `gates.ts` runs the same script as
-        # a precondition locally, and so does not list it as a gate.
-        run: bun run qa:working-copy
+      - name: The QA working copy was built for this run (bean jtfk)
+        # Built once by the `qa-working-copy` job (bean `jtfk`) rather than here.
+        # This job runs `if: !cancelled()`, so a failed build reaches this step
+        # and stops the job red, saying why — never a skip, which a required
+        # check reads as a pass (bean `0qjq`).
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to judge. This job cannot determine its verdict — NOT a pass."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        # Checks the manifest against the producer's output hash BEFORE
+        # extracting, then every restored file against the manifest IN PLACE.
+        # A mismatch is red: this job judges exactly the tree the producer built.
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
       # job was added because all six of these checks lived in the `typescript`
@@ -3447,11 +3680,26 @@ jobs:
     # byte-identical to it). Once `5hox` removes it, a fresh checkout holds one
     # file there, so `qa:refresh` runs the declared QA writers into the empty
     # tree first. Not an artifact from `gates`: its gates are in judge mode and
-    # write nothing, so its working copy is this checkout's. A refresh that
-    # leaves a writer failed, a family empty or a file unclaimed is INCOMPLETE,
-    # this job fails, and `qa:publish --completeness` refuses to store it — a
-    # partial entry is never published as if it were the commit's record.
-    needs: [gates-kg, gates-docs]
+    # write nothing — the artifact is the `qa-working-copy` job's, which is
+    # where the writers run (below). A refresh that leaves a writer failed, a
+    # family empty or a file unclaimed is INCOMPLETE, that job fails, this one
+    # stops at its first step, and `qa:publish --completeness` would refuse it
+    # anyway — a partial entry is never published as if it were the commit's
+    # record.
+    #
+    # ## The working copy is the producer's, not a second build — bean `jtfk`
+    #
+    # It ran `qa:refresh` itself here until 2026-10-07: 470 s of the same
+    # writers the `qa-working-copy` job runs over the same commit. Now it
+    # restores that job's copy, which carries `build/qa-refresh.json`, the
+    # completeness report `qa:publish --completeness` reads. What this job
+    # does that the producer does not is kept: the bootstrap kg-export (bean
+    # `0utt`, the declared producer of that sidecar), now followed by a check
+    # that it left the restored copy byte-identical — so what is published is
+    # exactly what the gates judged — then the publish and the stored-entry
+    # validation. A fork PR's publish is skipped by `qa:publish --github`
+    # itself, as before.
+    needs: [gates-kg, gates-docs, qa-working-copy]
     if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') }}
     runs-on: ubuntu-latest
     permissions:
@@ -3504,6 +3752,31 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run state:mount
 
+      - name: The QA working copy was built for this run (bean jtfk)
+        env:
+          PRODUCER: ${{ needs.qa-working-copy.result }}
+        run: |
+          if [ "$PRODUCER" != "success" ]; then
+            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no complete QA working copy to publish. Nothing is stored — a partial entry is never published as the commit's record."
+            exit 1
+          fi
+
+      - name: Download the QA working copy (bean jtfk)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: qa-working-copy
+          path: ${{ runner.temp }}/qa-working-copy
+
+      # Bean `3hk4`: the copy is the producer's `qa:working-copy`, whose
+      # `qa:refresh` ran every writer in `QA_WRITERS` into the empty tree and
+      # checked each wrote and every file is claimed; an incomplete tree failed
+      # THAT job, so this one stops at the step above. Its report travels in
+      # the copy as `build/qa-refresh.json`.
+      - name: Restore this run's QA working copy, byte-identical to the producer's (beans 3hk4, jtfk)
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
+
       # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
       # owner ruling 2026-10-01: keep the file, give it a producer). Both
       # deploys publish bootstrap through bootstrap-tools' `export-graph.ts`,
@@ -3512,28 +3785,26 @@ jobs:
       # producer". Run here, before the publish, so what reaches `qa-reports`
       # is this commit's export. The document goes to the runner's temp dir:
       # the sidecar is the product. That gate reads this line as the producer.
+      #
+      # The producer job's `qa:working-copy` ran the same export first, and
+      # the sidecar is deterministic (measured 2026-10-07: two runs, one
+      # sha256), so this rewrites it with the same bytes — which the next step
+      # checks rather than assumes.
       - name: Regenerate the bootstrap kg-export QA sidecar
         run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
 
-      # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
-      # splice, `commit-tree -p`, push without `-f`, three attempts with the
-      # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
-      # (`qa-reports-unretried`).
-      # Bean `3hk4`. Tracked copy present: accounts for it and runs nothing.
-      # Absent (after `5hox`): runs every writer in `QA_WRITERS`
-      # (`qa-refresh.ts`) into the empty tree, then checks each wrote and every
-      # file is claimed. Exit 1 on an incomplete tree fails the job here, so
-      # the publish below never runs on it. After the kg-export step above,
-      # whose sidecar it accounts for as an `external` family.
-      - name: Produce this run's QA working copy, and say whether it is complete
-        run: bun run qa:refresh --github --report "$RUNNER_TEMP/qa-refresh.json"
+      - name: What is published is what the gates judged — the copy is unchanged (bean jtfk)
+        env:
+          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: bash cat-harness/scripts/qa-working-copy-bundle.sh verify "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       - name: Publish this run's QA results (skips fork PRs with a notice)
         env:
           # The worst of the two parts: failure, then cancelled, then skipped,
-          # else success — one word, as `needs.gates.result` was.
-          GATES_RESULT: ${{ contains(join(needs.*.result, ','), 'failure') && 'failure' || (contains(join(needs.*.result, ','), 'cancelled') && 'cancelled' || (contains(join(needs.*.result, ','), 'skipped') && 'skipped' || 'success')) }}
-        run: bun run qa:publish --github --completeness "$RUNNER_TEMP/qa-refresh.json" --gates-result "$GATES_RESULT"
+          # else success — one word, as `needs.gates.result` was. Named, not
+          # `needs.*`: `qa-working-copy` is a need too, and it is not a gate.
+          GATES_RESULT: ${{ contains(format('{0},{1}', needs.gates-kg.result, needs.gates-docs.result), 'failure') && 'failure' || (contains(format('{0},{1}', needs.gates-kg.result, needs.gates-docs.result), 'cancelled') && 'cancelled' || (contains(format('{0},{1}', needs.gates-kg.result, needs.gates-docs.result), 'skipped') && 'skipped' || 'success')) }}
+        run: bun run qa:publish --github --completeness build/qa-refresh.json --gates-result "$GATES_RESULT"
 
       # Bean `cxcn` (reader audit F7): the corpus VALIDATION the unit tests did
       # over the committed tree — every kg-qa sidecar validates, no critical
