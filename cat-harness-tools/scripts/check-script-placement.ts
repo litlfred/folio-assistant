@@ -22,18 +22,10 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
-import { mountScopeFor, mountedManifests } from "../../cat-harness/schemas/remote-mount.ts";
-import { CHECKOUT_SCRIPTS_KEY, readScriptTable } from "../../cat-harness/schemas/script-table.ts";
+import { readScriptTable } from "../../cat-harness/schemas/script-table.ts";
+import { mountScopeFor } from "../../cat-harness/schemas/remote-mount.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
-
-function declaresCheckoutScripts(manifest: string): boolean {
-  try {
-    return CHECKOUT_SCRIPTS_KEY in (JSON.parse(readFileSync(manifest, "utf-8")) as object);
-  } catch {
-    return false;
-  }
-}
 
 /** The layers of this repository (not submodules), each with its declared `needs`. */
 export function layersOf(repo: string): Map<string, string[]> {
@@ -41,7 +33,6 @@ export function layersOf(repo: string): Map<string, string[]> {
   for (const inst of instanceRootsIn(repo)) {
     if (resolve(inst) === resolve(repo)) continue;
     if (existsSync(join(inst, ".git"))) continue; // a submodule: another repository
-    if (mountScopeFor(inst) !== undefined) continue; // a remote mount, the submodule's successor (bean nn8e): another repository too, unless its lock vouches for its manifest (below)
     const name = basename(inst);
     const decl = join(inst, `${name}.json`);
     const needs = existsSync(decl)
@@ -51,61 +42,44 @@ export function layersOf(repo: string): Map<string, string[]> {
       : [];
     out.set(relative(repo, inst), needs);
   }
-  // A REMOTE-MOUNTED instance is another repository's bytes, like a
-  // submodule, and is a home for scripts ONLY when its mount lock vouches for
-  // its `package.json` as an asset (owner, 2026-10-07, "Option A, by
-  // reference"). Otherwise it is not a layer of this checkout, and a script
-  // running its code stays at the root, as it did for the submodule.
-  const verified = new Map<string, string>();
-  for (const scope of new Set([resolve(repo), ...instanceRootsIn(repo).map((i) => resolve(i))])) {
-    for (const m of mountedManifests(scope)) {
-      if (m.root === undefined) continue;
-      const rel = relative(repo, m.root);
-      // Verified AND opted in: an upstream whose manifest carries no
-      // `checkoutScripts` (bootstrap-tools keeps its own `scripts`) has not
-      // made itself a home for this checkout's scripts, and a script running
-      // its code stays at the root, as it did under the submodule.
-      if (m.state === "verified" && declaresCheckoutScripts(m.manifest)) verified.set(rel, m.instance);
-      else out.delete(rel);
-    }
-  }
-  for (const [rel, name] of verified) {
-    if (out.has(rel)) continue; // at its home path: already read above
-    const decl = join(repo, rel, `${name}.json`);
-    const needs = existsSync(decl) ? ((JSON.parse(readFileSync(decl, "utf-8")) as { needs?: unknown[] }).needs ?? []).filter((n): n is string => typeof n === "string") : [];
-    out.set(rel, needs);
-  }
   return out;
 }
 
 /** The manifest a command belongs in: a layer's `package.json`, or the root's. */
-export function ownerOf(command: string, layers: Map<string, string[]>): string {
+export function ownerOf(command: string, layers: Map<string, string[]>, foreign: ReadonlySet<string> = new Set()): string {
   const closure = (l: string, seen = new Set<string>()): Set<string> => {
     for (const n of layers.get(l) ?? []) if (!seen.has(n)) { seen.add(n); closure(n, seen); }
     return seen;
   };
   const esc = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const named = [...layers.keys()].filter((l) => new RegExp(`(^|[\\s"'=(/])${esc(l)}(/|$|[\\s"')])`).test(command));
+  // A MOUNTED layer (bean `nn8e`) still counts when following `needs` — a
+  // layer above it reaches the rest of the stack through it — but it cannot
+  // OWN a script here: its manifest belongs to its own repository.
+  const named = [...layers.keys()].filter((l) => !foreign.has(l)).filter((l) => new RegExp(`(^|[\\s"'=(/])${esc(l)}(/|$|[\\s"')])`).test(command));
   if (named.length === 0) return "package.json";
   const owners = named.filter((c) => named.every((o) => o === c || closure(c).has(o)));
   return owners.length === 1 ? `${owners[0]}/package.json` : "package.json";
 }
 
 export interface PlacementVerdict {
-  /** 0 placed, 1 a script in the wrong manifest (or a name declared twice), 2 a manifest could not be resolved. */
+  /** 0 placed, 1 a script in the wrong manifest (or a name declared twice), 2 a mounted manifest could not be resolved. */
   exit: 0 | 1 | 2;
   lines: string[];
 }
 
 /**
- * Judge every script's placement. A remote-mounted layer's manifest counts as
- * that layer's home only through a matching asset lock
- * (`schemas/script-table.ts`); one that cannot be vouched for is reported as
- * could-not-determine, never skipped as if it held nothing, and outranks a
- * misplacement because its scripts were not judged at all.
+ * Judge every script's placement.
+ *
+ * A mounted instance's manifest is not POLICED here (its repository keeps
+ * it, bean `nn8e`), but whether it can be READ is: the script table takes a
+ * mounted `package.json` only when the mount lock vouches for its bytes
+ * (owner, 2026-10-07, "Option A, by reference"; `schemas/script-table.ts`).
+ * One that cannot be vouched for is could-not-determine (exit 2), never
+ * skipped as if it held nothing, because its scripts are in no table at all.
  */
 export function placementVerdict(repo: string): PlacementVerdict {
   const layers = layersOf(repo);
+  const foreign = new Set([...layers.keys()].filter((l) => mountScopeFor(join(repo, l)) !== undefined));
   let read: ReturnType<typeof readScriptTable>;
   try {
     read = readScriptTable(repo);
@@ -119,7 +93,7 @@ export function placementVerdict(repo: string): PlacementVerdict {
     // A mounted instance's manifest is its own repository's to keep (bean `nn8e`):
     // its scripts sit where that repository put them, and this checkout cannot move them.
     if (e.manifest !== "package.json" && mountScopeFor(dirname(join(repo, e.manifest))) !== undefined) continue;
-    const want = ownerOf(e.command, layers);
+    const want = ownerOf(e.command, layers, foreign);
     if (want !== e.manifest) wrong.push(`  ${e.name}: in ${e.manifest}, belongs in ${want}\n      ${e.command}`);
   }
   const lines: string[] = [];
@@ -128,9 +102,9 @@ export function placementVerdict(repo: string): PlacementVerdict {
     lines.push("  A layer's scripts go in its package.json under `checkoutScripts`; the root keeps only what runs no single layer.");
   }
   if (unresolved.length > 0) {
-    lines.push(`❔ could not determine: ${unresolved.length} remote-mounted manifest(s) no mount lock vouches for; their scripts were not judged:`);
+    lines.push(`❔ could not determine: ${unresolved.length} remote-mounted manifest(s) no mount lock vouches for; their scripts are in no table:`);
     for (const u of unresolved) lines.push(`  ${u.manifest}${u.instance ? ` (mounted \`${u.instance}\`)` : ""}: ${u.why}`);
-    lines.push("  Re-mount so the lock carries the manifest as an asset (`bun run cat mount:remote`), or move the edits upstream.");
+    lines.push("  Re-mount so the lock vouches for the manifest (`bun run cat mount:remote`), or move the edits upstream.");
     return { exit: 2, lines };
   }
   if (wrong.length > 0) return { exit: 1, lines };

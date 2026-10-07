@@ -63,8 +63,9 @@ function fixture(o: { asset: boolean; manifestOnDisk?: string }): string {
 }
 
 describe("check:script-placement over a remote-mounted layer", () => {
-  test("a matching hash: the mounted layer is a home, and its script is placed there", () => {
+  test("a matching hash: the mounted manifest's scripts are read, and not policed (its repository keeps them)", () => {
     const root = fixture({ asset: true, manifestOnDisk: MANIFEST });
+    // a mounted layer still counts for `needs`, but owns nothing here
     expect(layersOf(root).has("core")).toBe(true);
     expect(placementVerdict(root)).toMatchObject({ exit: 0 });
   });
@@ -75,8 +76,6 @@ describe("check:script-placement over a remote-mounted layer", () => {
     expect(v.exit).toBe(2);
     expect(v.lines.join("\n")).toContain("core/package.json");
     expect(v.lines.join("\n")).toContain("does not hash to the lock");
-    // not a layer: nothing vouches for it as a home
-    expect(layersOf(root).has("core")).toBe(false);
   });
 
   test("no asset in the lock: a manifest on disk is could-not-determine", () => {
@@ -89,6 +88,5 @@ describe("check:script-placement over a remote-mounted layer", () => {
   test("no asset and no manifest: a determined none, and the gate passes", () => {
     const root = fixture({ asset: false });
     expect(placementVerdict(root).exit).toBe(0);
-    expect(layersOf(root).has("core")).toBe(false);
   });
 });

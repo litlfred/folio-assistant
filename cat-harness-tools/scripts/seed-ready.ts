@@ -78,6 +78,7 @@
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import {
+  cpSync,
   copyFileSync,
   existsSync,
   mkdirSync,
@@ -90,6 +91,7 @@ import {
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 
+import { mountScopeFor } from "../../cat-harness/schemas/remote-mount.js";
 import { instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { clearCheckoutCache, resolveImplementingPath } from "../../cat-harness/schemas/harness-config.js";
 import { toolsOf } from "../../cat-harness/tools/discover.js";
@@ -849,6 +851,14 @@ export function probeStandalone(
     ws = mkdtempSync(join(tmpdir(), "seed-ready-rehearsal-"));
     for (const d of members) {
       const rel = relative(repoRoot, rootOf(repoRoot, d));
+      // A REMOTE MOUNT (bean `nn8e`) is ignored by git, so `ls-files` lists
+      // nothing for it and the member arrived EMPTY — every test reaching
+      // bootstrap-tools then failed as an artefact of the rehearsal (measured on
+      // fhir-harness, 2026-10-07: 9 of 9). A mount is its repository's whole
+      // tree, so it is copied whole.
+      if (mountScopeFor(rootOf(repoRoot, d)) !== undefined) {
+        cpSync(join(repoRoot, rel), join(ws, rel), { recursive: true, verbatimSymlinks: true, filter: (src) => !src.endsWith("/.git") && !src.includes("/node_modules") });
+      }
       const listed = execFileSync("git", ["-C", repoRoot, "ls-files", "-z", "--recurse-submodules", "--", rel], {
         encoding: "utf-8",
         maxBuffer: 256 * 1024 * 1024,
