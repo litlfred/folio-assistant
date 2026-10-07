@@ -252,8 +252,9 @@ function standsOn(assistant: string, contentType: InitFolioOptions["contentType"
 // ── State graphs (bean `hp54`) ───────────────────────────────────
 
 /**
- * The STATE graphs every instance scaffolds — `holds: "state"` kinds it gives
- * a directory of its own: the work plan and the todos. Listed rather than
+ * The graphs every instance keeps OFF main from its first commit — the work
+ * plan and the todos (`holds: "state"`), and the trashcan a cutover deposits
+ * into (`fsh-guts`, `holds: "context"`; the name predates it). Listed rather than
  * derived from the registry because the scaffold writes their CONTENT
  * (`.beans.yml`'s store, `todos/todos.json`), and a kind added to the registry
  * brings no content with it. `init-folio.test.ts` pins that every registry
@@ -273,6 +274,19 @@ export const INSTANCE_STATE_GRAPHS = [
     path: "todos/",
     kind: "todos",
     description: "People's outstanding items and the feedback raised against blocks; its inner directories are declared by `todos/todos.json`.",
+  },
+  {
+    // The trashcan that is kept. A NEW instance gets one from its first commit
+    // (owner, 2026-10-06: "cutover dirs should go to fsh-guts") because
+    // `state:seed --cutover` REFUSES to remove a directory from main when its
+    // instance has nowhere to deposit the snapshot — and an instance that had
+    // to declare one first would meet that refusal on its first cutover.
+    id: "fsh-guts",
+    // declared-path-literal: as above.
+    path: "fsh-guts/",
+    kind: "fsh-guts",
+    description:
+      "The trashcan that is kept: deprecated and removed content, each node declaring itself `folio-fsh-guts/v1` with where it came from. Where a cutover deposits the directory it removes from main. Never rendered.",
   },
 ] as const;
 type StateGraphDef = (typeof INSTANCE_STATE_GRAPHS)[number];
@@ -313,6 +327,8 @@ function stateGraphFiles(slug: string, g: StateGraphDef): Record<string, string>
   // on a fresh repository, 2026-10-06). Same layout as the platform's own: the
   // CLI's store at \`defs/\`.
   if (g.id === "beans") return { [at("beans.json")]: beansGraph(slug), [at("defs/.gitkeep")]: "" };
+  // `retired/` is where a cutover's deposit lands (`state-seed.ts`, the `retired/` pair precedent).
+  if (g.id === "fsh-guts") return { [at("retired/.gitkeep")]: "" };
   return {
     [at("todos.json")]: todosGraph(slug),
     [at("items/.gitkeep")]: "",

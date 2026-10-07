@@ -7,6 +7,7 @@ section_number: 6.8
 pages: 76-79
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Little is known about the effect of declarations and conflicts of interest on 
 someone’s behaviour, how group participants and GDG members and chairs 

@@ -122,3 +122,66 @@ export function renderRendered(box: HTMLElement, model: RenderedModel): void {
     box.appendChild(uk);
   }
 }
+
+/**
+ * What the build diff says about the list (bean `ehh6`): `rendered-measured.json`,
+ * or `null` when the build published none. On smart-ra#26 the misses and the
+ * not-base status appeared only in the PR comment, and that comment was never
+ * posted, so the one page a reviewer opens said nothing about them.
+ */
+export interface MeasuredModel {
+  state: "missed" | "clean" | "not-base" | "not-measured";
+  /** Changed pages no renderer named; a removed one has no preview to link. */
+  missed: Array<{ path: string; change: string; after?: string }>;
+  /** The commit main's published site was built from, when it is not the base. */
+  beforeCommit?: string;
+}
+
+export function measuredModel(measured: unknown): MeasuredModel {
+  const m = measured as {
+    status?: string;
+    beforeCommit?: string;
+    check?: { missed?: string[] };
+    measured?: { files?: Array<{ path: string; change: string }> };
+  } | null;
+  if (!m || !m.check || !Array.isArray(m.check.missed)) return { state: "not-measured", missed: [] };
+  const change: Record<string, string> = {};
+  ((m.measured && m.measured.files) || []).forEach(function (f) { change[f.path] = f.change; });
+  const missed = m.check.missed.slice().sort().map(function (p) {
+    const c = change[p] || "changed";
+    return c === "removed" ? { path: p, change: c } : { path: p, change: c, after: "../" + p };
+  });
+  if (m.status !== "known") return { state: "not-base", missed: missed, beforeCommit: m.beforeCommit ? String(m.beforeCommit).slice(0, 7) : undefined };
+  return { state: missed.length ? "missed" : "clean", missed: missed };
+}
+
+/** Draw the measurement under the list, by textContent only. */
+export function renderMeasured(box: HTMLElement, model: MeasuredModel): void {
+  function el(tag: string, text?: string | null, cls?: string) {
+    const e = document.createElement(tag);
+    if (text != null) e.textContent = text;
+    if (cls) e.className = cls;
+    return e;
+  }
+  const n = model.missed.length;
+  const say = {
+    "not-measured": "Not measured: this build published no rendered-measured.json, so whether it changed a page the list does not name is not known.",
+    clean: "Measured against main: the build changed nothing the list above does not name.",
+    missed: "Missed by the list above: " + n + " page(s) the build changed that no renderer named. Each needs a page: verdict.",
+    "not-base": "Measured against main's site as built from " + (model.beforeCommit || "an unrecorded commit") + ", not this change's base, so main's own changes are mixed in and none of these " + n + " page(s) is counted as missed.",
+  }[model.state];
+  box.appendChild(el("p", say, model.state === "missed" ? undefined : "muted"));
+  if (!n) return;
+  const ul = el("ul");
+  model.missed.forEach(function (r) {
+    const li = el("li");
+    li.appendChild(el("span", r.change, "kind"));
+    if (r.after) {
+      const a = el("a", r.path) as HTMLAnchorElement;
+      a.href = r.after;
+      li.appendChild(a);
+    } else li.appendChild(el("span", r.path, "label"));
+    ul.appendChild(li);
+  });
+  box.appendChild(ul);
+}

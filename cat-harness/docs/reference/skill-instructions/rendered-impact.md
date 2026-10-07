@@ -78,7 +78,7 @@ Three rules, each one a refusal:
 | renderer | maps | how | status |
 |---|---|---|---|
 | `fhir-ig-pages` | `.fsh`, `.cql`, `input/pagecontent/*.md` | `fsh-cone` forward cone → SUSHI's `fsh-index.json` → AST artefact page + served JSON; a page → itself and every page that includes it | in the FHIR layer, documented with its AST tooling (`skill_fetch ig-ast-delta`) |
-| `document-site`, `public-comment-site` | a block, a document/chapter/section manifest, `media/*`, the public-comment store | loaded from the published `changeset.json` (each changed block's label and file) and `outline.json` (the documents), never from source: a block lands on its document's page, anchored at its label (`anchors`) | in the document layer, with the ChangeSet Tool |
+| `document-site`, `public-comment-site` | a block, a document/chapter/section manifest, `media/*`, the public-comment store | loaded from the published `changeset.json` (each changed block's label and file) and `outline.json` (the documents), never from source: a block lands on its document's page, anchored at its label (`anchors`); a file no builder of the site reads is an input with no page: each builder in the folio's build command exports `siteReads` (the folio; the comment store; every directory of a typology holding a kind it renders), and a file outside all of them, the submodules, `.github/` and the root's non-Markdown files reaches nothing — so `beans/` reaches no page, while `todos/`, whose pages are rendered, still may. A step that exports no `siteReads` excludes nothing; never decide it from the instance's declaration, which also declares what no builder reads | in the document layer, with the ChangeSet Tool |
 | `docs-site` | any file | a file in the COMPOSED Jekyll tree (`docsLayers`, `composedInstances`) → its page (permalink, or `.md` → `.html`) or asset; an include → the pages that include it, transitively; `_data` → the pages and includes that read it; a layout, a THEME include (read from the installed theme; unreadable means every include) or an include nothing calls → any page; any page change → the search index; a file outside the tree → `undetermined` when the staging cone carries any directory, nothing when it reaches none | `cat-harness/scripts/docs-rendered-impact.ts` |
 
 **Measured on the docs-site renderer** (this repository's site, two local builds, 2026-10-06): a page, a data file read through an include, an include, a stylesheet and a script gave 8 predicted files and 8 measured. 7 were confirmed. The 1 miss differs between two builds of the same commit anyway (where QA data was fetched from), and 1 unconfirmed page includes the changed include behind a Liquid condition. Two builds of one commit first differed in 826 files, every one by a `?v=<build time>` cache-buster. So `diffBuiltSites` blanks `BUILD_STAMPS` before hashing; without that, every page reads as missed.
@@ -108,6 +108,9 @@ names none above it.
   (`status: known`); otherwise main's own changes would read as misses
   (`not-base`). No published main site, no file: "not measured", never
   "nothing missed".
+  The review page shows it under the list, as the PR comment does: a run
+  started by dispatch finds its PR from the branch, so the comment is not
+  lost when no `pull_request` event started the run (bean `ehh6`).
 - **Gate**: `review-coverage-gate.dmn` reads three page counts beside the
   block counts, each with a status fact so an uncomputed count is never 0:
   - `unreviewedPages`: review-list files nobody has reviewed at their
@@ -129,7 +132,9 @@ names none above it.
    through the dependency information the renderer ALREADY has. Never
    re-derive a mapping the renderer's own tool records (SUSHI's `fsh-index`
    is the authority for FSH → resource).
-2. Put every other input in `undetermined`.
+2. Put every other input in `undetermined`, unless the renderer cannot read
+   it at all: then it is an input with no file. Decide that from what the
+   instance declares, never from a list of names here.
 3. Test it against a real build with `comparePrediction`: 0 missed is the bar.
 {% endraw %}
 

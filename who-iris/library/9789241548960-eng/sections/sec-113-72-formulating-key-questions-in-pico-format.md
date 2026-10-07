@@ -7,6 +7,7 @@ section_number: 7.2
 pages: 91-91
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 PICO is an acronym for population, intervention (or exposure), comparator and outcome − four elements that should be considered in any question 
 governing a systematic search of the evidence. Sometimes T is added for the 

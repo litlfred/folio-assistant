@@ -7,6 +7,7 @@ section_number: 10.2.1
 pages: 136-136
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The quality of the evidence across outcomes critical to decision-making will inform the 
 strength of the recommendation. The higher the quality of the evidence, the greater the 

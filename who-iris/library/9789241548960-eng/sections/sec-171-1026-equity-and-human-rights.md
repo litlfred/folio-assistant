@@ -7,6 +7,7 @@ section_number: 10.2.6
 pages: 139-139
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Interventions have implications for the progressive realization of the right 
 to health and the options given in a guideline can reduce or increase health 

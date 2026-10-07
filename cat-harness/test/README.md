@@ -12,6 +12,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 |---|---|---|
 | [`a11y.e2e.ts`](a11y.e2e.ts) | a file |  |
 | [`action-tiles.e2e.ts`](action-tiles.e2e.ts) | a file |  |
+| [`beans-count-agrees.e2e.ts`](beans-count-agrees.e2e.ts) | a file |  |
 | [`block-screenshots.e2e.ts`](block-screenshots.e2e.ts) | a file |  |
 | [`board-move-filter.e2e.ts`](board-move-filter.e2e.ts) | a file |  |
 | [`board-windows.e2e.ts`](board-windows.e2e.ts) | a file |  |
@@ -29,6 +30,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`glass-filter.e2e.ts`](glass-filter.e2e.ts) | a file |  |
 | [`glass-interactions.e2e.ts`](glass-interactions.e2e.ts) | a file |  |
 | [`glass-navigation.e2e.ts`](glass-navigation.e2e.ts) | a file |  |
+| [`glass-panel-in-view.e2e.ts`](glass-panel-in-view.e2e.ts) | a file |  |
 | [`glass-placement.e2e.ts`](glass-placement.e2e.ts) | a file |  |
 | [`glass-pop-outs.e2e.ts`](glass-pop-outs.e2e.ts) | a file |  |
 | [`glass-scroll.e2e.ts`](glass-scroll.e2e.ts) | a file |  |

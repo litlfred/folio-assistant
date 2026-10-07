@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-01T17:26:24Z
-updated_at: 2026-10-06T10:47:13Z
+updated_at: 2026-10-06T19:35:03Z
 parent: folio-assistant-7x5n
 ---
 
@@ -63,3 +63,27 @@ Measured on `claude/laughing-fermat-v46nqs` @ d82b69e11 and on local branch `loc
 Other jobs on the box: other sessions' regen/gates and `bun test` (worktrees 2197, 2088), and a `git index-pack`. The two gates runs are not directly comparable on wall time.
 
 **Where the gate time goes now:** two SERIAL gates are 2021 of 2765 s: `bun test` (1525 s) and `check:cat-harness-standalone` (496 s, undeclared, so it runs as a barrier). The 10 skippable gates cost about 250 s of summed time in the base run.
+
+## 2026-10-06 (later) — speed dispatch, session_01GGe2PsYLUNUwb4HNMR2qsc, branch claude/speed-merge-loop, PR #2321
+
+Not claiming xpcu (held by the 10-01 session; its branch has no open PR and its work is on main). v3nf was claimed at 19:00 by claude/v3nf-parallel-gates-guard, so gates parallelism stays theirs. This session took **7how**, because 7how is why the PR recipe has six steps.
+
+**Today's recipe, measured** (Bun 1.3.14, 4 CPUs, load 2-3; branch warmed on c5714c8b41, then merged bcf8dc3c74 = ~2 h of main, 0 conflicts):
+
+| step | warm round | merge round |
+|---|---|---|
+| state:mount | 9 s | 3 s |
+| regen | 590 s | 389 s |
+| qa:working-copy | 292 s | 263 s |
+| kg:detangle | 5 s | 5 s |
+| regen again | 179 s (all current) | 121 s (all current) |
+| **total** | **1075 s** | **781 s** |
+
+Where qa:working-copy goes: skill:register 124 s, kg:audit:all 87 s (73 %); 26 other writers ≤ 17 s each.
+The first regen of the warm round 'regenerated' uml:overview from a QA copy it had not built: the 7how defect, seen live.
+
+## 2026-10-06 (late): f017 measured on PR #2327 (`244608c`)
+
+- **regen warm:** 179 s with 62 of 121 pairs skipped (231 s and 13 before). Cold: 404 s.
+- **gates on the same tree:** 136 of 251 gates skipped (10 before).
+- **gates wall time:** 1840 s, nearly unchanged. `bun test` (935 s) and `check:cat-harness-standalone` (338 s) are serial and not skippable, and together they are 1273 s of that. The next speed-up is theirs: v3nf, and test sharding. Details are in bean f017.

@@ -7,6 +7,7 @@ section_number: 11.1
 pages: 145-145
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 In response to a public health emergency, WHO must provide global leadership 
 and timely guidance in the form of an evidence-informed guideline produced 

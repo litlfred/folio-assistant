@@ -54,8 +54,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
-import { fshGutsDirectory } from "../schemas/fsh-guts.js";
-import { exitUnlessMounted, readMarker } from "./branch-store.js";
+import { frozenSubtreeNote, fshGutsDirectory, withoutFrozenSubtrees } from "../schemas/fsh-guts.js";
+import { BranchStoreUsageError, exitUnlessMounted, readMarker } from "./branch-store.js";
 import { baseDocsDir } from "./compose-docs.js";
 import { publishPlan } from "./derive-at-publish.js";
 
@@ -178,7 +178,14 @@ function titleOf(abs: string): string | undefined {
  * not a mount (e.g. in test fixtures).
  */
 function trackedRels(dir: string, repo = REPO): string[] {
-  const m = readMarker(repo, KIND);
+  let m: ReturnType<typeof readMarker>;
+  try {
+    m = readMarker(repo, KIND);
+  } catch (e) {
+    // Outside a git checkout (the standalone layer copy) there is no mount
+    // to consult, so the walk is the answer rather than an error.
+    if (!(e instanceof BranchStoreUsageError)) throw e;
+  }
   if (m && resolve(m.into) === resolve(dir)) {
     return Object.keys(m.files)
       .filter((r) => existsSync(join(dir, r)))
@@ -197,7 +204,7 @@ function trackedRels(dir: string, repo = REPO): string[] {
 export function gutsFiles(dir: string, repo = REPO): GutsFile[] {
   const rels = trackedRels(dir, repo);
   const tagged = new Set(
-    rels.filter((r) => {
+    withoutFrozenSubtrees(dir, rels).live.filter((r) => {
       try {
         return readFileSync(join(dir, r), "utf-8").includes(TAG);
       } catch {
@@ -205,7 +212,17 @@ export function gutsFiles(dir: string, repo = REPO): GutsFile[] {
       }
     }),
   );
-  return rels.map((rel) => {
+  // A FROZEN subtree (sub-kg-lifecycle stage 13) is ONE row, not one per
+  // file: it is another repository's state at one commit, described as a
+  // whole by its tagged sibling note — the `sidecar` relation, at directory
+  // scale. Listing its thousands of files would bury the corpus this page
+  // indexes (7.7k of them arrived at once on 2026-10-06, bean 61t6).
+  const { live, frozen } = withoutFrozenSubtrees(dir, rels);
+  const subtreeRows: GutsFile[] = frozen.map((d) => {
+    const title = frozenSubtreeNote(join(dir, d))?.title;
+    return { rel: `${d}/`, group: d.split("/")[0]!, state: "sidecar", ...(title ? { title } : {}) };
+  });
+  const fileRows = live.map((rel): GutsFile => {
     const slash = rel.lastIndexOf("/");
     const group = slash === -1 ? "." : rel.slice(0, rel.indexOf("/"));
     let state: DeclState = "undeclared";
@@ -223,6 +240,7 @@ export function gutsFiles(dir: string, repo = REPO): GutsFile[] {
     const title = titleOf(join(dir, rel));
     return { rel, group, state, ...(title ? { title } : {}) };
   });
+  return [...fileRows, ...subtreeRows].sort((a, b) => (a.rel < b.rel ? -1 : a.rel > b.rel ? 1 : 0));
 }
 
 const BADGE: Record<DeclState, string> = {
@@ -285,7 +303,7 @@ export function page(files: GutsFile[], blobBase: string): string {
     "| state | files | what it means |",
     "|---|---|---|",
     `| ${BADGE.declared} | ${counts.declared} | carries the tag itself |`,
-    `| ${BADGE.sidecar} | ${counts.sidecar} | a script, described by a tagged \`.md\` sibling |`,
+    `| ${BADGE.sidecar} | ${counts.sidecar} | a script, or a frozen copy of a separated graph, described by a tagged \`.md\` sibling |`,
     `| ${BADGE.undeclared} | ${counts.undeclared} | **neither** — a gap, not a format limit |`,
     "",
   ];

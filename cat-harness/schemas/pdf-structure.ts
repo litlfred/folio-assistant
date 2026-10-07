@@ -74,6 +74,16 @@ export const PdfTocEntrySchema = z
     page: z.number().int().min(1).nullable(),
     source: z.enum(["outline", "inferred"]),
     number: z.string().nullable(),
+    /**
+     * Inferred entries only (issue #2302): how sure the inference is, 0..1,
+     * and which independent evidence agreed — a printed contents page, the
+     * entry found in the body, a heading style, a section number, another
+     * extractor. Null on an outline entry, which is not scored.
+     */
+    confidence: z.number().min(0).max(1).nullable().optional(),
+    evidence: z.array(z.string()).nullable().optional(),
+    /** The printed label of `page` ("iv", "23"), where known; `page` is physical. */
+    page_label: z.string().nullable().optional(),
   })
   .strict();
 
@@ -88,6 +98,9 @@ export const PdfSectionSchema = z
     page_end: z.number().int().min(1),
     n_chars: z.number().int().min(0),
     n_words: z.number().int().min(0),
+    /** Printed labels of page_start / page_end, where known (issue #2302). */
+    label_start: z.string().nullable().optional(),
+    label_end: z.string().nullable().optional(),
   })
   .strict()
   .refine((s) => s.page_end >= s.page_start, { message: "page_end is before page_start" });
@@ -158,12 +171,75 @@ export const PdfMetadataSchema = z
   })
   .passthrough();
 
+/**
+ * One caption in the list of figures and tables (issue #2302). `evidence`
+ * names what agreed beyond the caption line itself: `referenced` (cited in the
+ * text), `in-sequence` (its number fits its run), `graphic` (an image or
+ * drawing on its page; figures only), `listed` (a printed list names it).
+ */
+export const PdfFigureEntrySchema = z
+  .object({
+    kind: z.enum(["figure", "table", "box", "chart", "algorithm", "listing"]),
+    number: z.string(),
+    title: z.string(),
+    page: z.number().int().min(1),
+    confidence: z.number().min(0).max(1),
+    evidence: z.array(z.string()),
+    page_label: z.string().nullable().optional(),
+  })
+  .strict();
+
+/**
+ * One physical page and the label a reader sees on it (issue #2302).
+ * `source` is where the label was taken from — the PDF's /PageLabels, the
+ * number printed in its header or footer, a run's interpolation, a contents
+ * page — and `evidence` every source that agreed. `label` is null when no
+ * source gives one.
+ */
+export const PdfPageLabelSchema = z
+  .object({
+    physical: z.number().int().min(1),
+    label: z.string().nullable(),
+    source: z.enum(["pdf-labels", "printed", "interpolated", "contents"]).nullable(),
+    confidence: z.number().min(0).max(1),
+    evidence: z.array(z.string()),
+  })
+  .strict();
+
+const PdfAlignmentListSchema = z
+  .object({ count: z.number().int().min(0), items: z.array(z.string()) })
+  .strict();
+
 export const PdfDiagnosticsSchema = z
   .object({
     pages_without_text: z.number().int().min(0),
     likely_scanned: z.boolean(),
     toc_entries: z.number().int().min(0),
     toc_inferred_entries: z.number().int().min(0).optional(),
+    /**
+     * Which inference produced an inferred TOC (issue #2302): a printed
+     * contents page, heading styles read from font metrics, or the
+     * text-pattern heuristic that OCR'd text falls back to.
+     */
+    toc_inferred_method: z.enum(["contents", "font", "regex"]).optional(),
+    figure_entries: z.number().int().min(0).optional(),
+    /** Numbers missing from a caption run, e.g. "table 2.1" beside a Table 2.2. */
+    figure_sequence_gaps: z.array(z.string()).optional(),
+    /** Pages where label sources disagree, e.g. /PageLabels "3" against a printed "iii". */
+    page_label_conflicts: PdfAlignmentListSchema.optional(),
+    /**
+     * Where a printed contents page and the body disagree (issue #2302) —
+     * drafts drift. Present only when the document has a contents page.
+     * Each list is capped; `count` is the full number.
+     */
+    toc_alignment: z
+      .object({
+        listed_not_found: PdfAlignmentListSchema,
+        found_not_listed: PdfAlignmentListSchema,
+        page_mismatch: PdfAlignmentListSchema,
+      })
+      .strict()
+      .optional(),
     sections: z.number().int().min(0),
     chars_total: z.number().int().min(0),
   })
@@ -179,6 +255,10 @@ export const PdfStructureSchema = z
     toc_source: z.enum(TOC_SOURCES),
     /** Why an inferred TOC was not trusted, in a sentence a person can check. */
     toc_undetermined_reason: z.string().nullable().optional(),
+    /** The list of figures and tables, cross-checked (issue #2302). */
+    figures: z.array(PdfFigureEntrySchema).optional(),
+    /** Every physical page with its printed label (issue #2302). */
+    pages: z.array(PdfPageLabelSchema).optional(),
     sections: z.array(PdfSectionSchema),
     diagnostics: PdfDiagnosticsSchema.optional(),
     /**

@@ -111,3 +111,19 @@ export function nodesOfKind(index: Pick<NodeKindIndex, "kinds">, kindId: string,
   }
   return [...out.values()].sort((a, b) => a.harness.localeCompare(b.harness) || a.path.localeCompare(b.path));
 }
+
+/**
+ * Every directory `nodesOfKind` can read for ANY kind on the index: each
+ * instance's directories of a typology that holds a versioned kind. Absolute.
+ * What a page generator over the index reads (bean `ehh6`), so a changed file
+ * outside all of them cannot change one of its pages.
+ */
+export function kindDirectories(index: Pick<NodeKindIndex, "kinds">, repoRoot: string): string[] {
+  const typologies = [...new Set(index.kinds.filter((k) => k.version).flatMap((k) => k.holdings.map((h) => h.typology)))];
+  const out = new Set<string>();
+  for (const root of instanceRootsIn(repoRoot)) {
+    if (!readDeclaration(root)?.name) continue;
+    for (const typology of typologies) for (const { absPath } of directoryEntriesForGraph(root, typology)) out.add(absPath);
+  }
+  return [...out].sort();
+}

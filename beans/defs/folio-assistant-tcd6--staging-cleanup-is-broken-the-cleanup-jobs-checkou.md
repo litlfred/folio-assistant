@@ -1,12 +1,12 @@
 ---
 # folio-assistant-tcd6
 title: 'STAGING CLEANUP IS BROKEN: the cleanup job''s checkout omits submodules, so rm -rf runs and the push never does — 6 consecutive failures, 80 previews, 47 for closed PRs'
-status: todo
+status: in-progress
 type: bug
 priority: high
 parent: folio-assistant-1xhc
 created_at: 2026-10-02T07:01:24Z
-updated_at: 2026-10-02T07:01:24Z
+updated_at: 2026-10-07T05:02:47Z
 ---
 
 Found 2026-10-02 while trying to remove staging previews by hand, and the
@@ -105,3 +105,5 @@ A checkout of a publish branch (`gh-pages`, `inputs.publish_branch`) is exempt
 Related: `qj9a` (staging size and what `critical` asserts), `oz5w` (cleanup vs
 branch reuse), `plj1` (the reporting tool that acted), `6pfo` (the retired
 record this job writes).
+
+_2026-10-07T05:02:47Z_ — Claimed by claude/tcd6-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

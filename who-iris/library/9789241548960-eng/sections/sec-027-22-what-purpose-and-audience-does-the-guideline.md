@@ -7,6 +7,7 @@ section_number: 2.2
 pages: 28-28
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 WHO staff developing guidelines need to have a clear goal and audience in 
 mind when they set about developing a guideline.

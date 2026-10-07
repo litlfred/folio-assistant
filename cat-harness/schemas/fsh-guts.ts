@@ -25,6 +25,8 @@
  * @graphNode schema
  */
 
+import { existsSync, readFileSync } from "node:fs";
+
 import { z } from "zod";
 
 import { type ResolvedDirectory, resolveDirectories } from "./cat-harness.ts";
@@ -220,6 +222,89 @@ function jsonSchemaTag(text: string): string | undefined {
     // Not JSON. The caller's message for "declares nothing" is correct.
   }
   return undefined;
+}
+
+/**
+ * The `kind` of the note that FREEZES the directory beside it.
+ *
+ * Stage 13 of [`sub-kg-lifecycle`](../skills/kg/graph-management/sub-kg-lifecycle.md):
+ * after a cutover the host keeps its copy of the separated graph as one
+ * fsh-guts relocation, `<name>/` beside a note `<name>.md`. That copy is
+ * another repository's state at one commit — thousands of files that are
+ * never refreshed, never rendered and never judged here. **The subtree is ONE
+ * retired item, and the note is the node that describes it.**
+ *
+ * Recognised by DECLARATION, like every other node of this graph: a
+ * directory is frozen because the sibling note says `kind: separated-instance`,
+ * never because of the directory it sits in. A subtree with no note, or a note
+ * of another kind, is walked like any other directory — so its files must
+ * declare themselves, and a copy dropped in without its note fails loudly
+ * rather than vanishing from every check.
+ */
+export const FROZEN_SUBTREE_KIND = "separated-instance";
+
+/**
+ * What a frozen subtree's note must say: where the copy came from and when,
+ * the repository that now holds the live graph, and the commit the copy
+ * matches. Stage 13 names these four; without the last two a reader cannot
+ * tell which repository to change instead, or how stale the copy is.
+ */
+export const FROZEN_SUBTREE_FIELDS = ["movedFrom", "movedOn", "repository", "matchesCommit"] as const;
+
+/** The parsed note that freezes `dir`, or `undefined` if `dir` is not a frozen subtree. */
+export function frozenSubtreeNote(dir: string): FshGutsNode | undefined {
+  const note = `${dir.replace(/\/+$/, "")}.md`;
+  if (!existsSync(note)) return undefined;
+  let text: string;
+  try {
+    text = readFileSync(note, "utf-8");
+  } catch {
+    return undefined;
+  }
+  const read = readFshGutsNode(text);
+  return read.node?.kind === FROZEN_SUBTREE_KIND ? read.node : undefined;
+}
+
+/** Is `dir` (absolute) a frozen subtree — one item, described by its note, never walked? */
+export function isFrozenSubtree(dir: string): boolean {
+  return frozenSubtreeNote(dir) !== undefined;
+}
+
+/**
+ * Split a list of paths relative to `base` into the files a scanner judges and
+ * the frozen subtrees it reports as one item each.
+ *
+ * For readers that already hold a file LIST rather than walking — a glob, or
+ * the state branch's mount marker — so the rule is the same whether the
+ * corpus was walked or listed. A path is dropped when some ancestor directory
+ * of it is frozen; the note itself is a sibling, so it stays.
+ */
+export function withoutFrozenSubtrees(
+  base: string,
+  rels: readonly string[],
+): { live: string[]; frozen: string[] } {
+  const verdict = new Map<string, boolean>();
+  const frozenAncestor = (rel: string): string | undefined => {
+    const parts = rel.split("/");
+    for (let i = 1; i < parts.length; i++) {
+      const d = parts.slice(0, i).join("/");
+      let f = verdict.get(d);
+      if (f === undefined) {
+        f = isFrozenSubtree(`${base.replace(/\/+$/, "")}/${d}`);
+        verdict.set(d, f);
+      }
+      if (f) return d;
+    }
+    return undefined;
+  };
+  const live: string[] = [];
+  const frozen = new Set<string>();
+  for (const rel of rels) {
+    const d = frozenAncestor(rel);
+    if (d === undefined) live.push(rel);
+    else frozen.add(d);
+  }
+  return { live, frozen: [...frozen].sort() };
 }
 
 /** The graph typology a trashcan directory declares. */
