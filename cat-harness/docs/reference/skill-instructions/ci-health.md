@@ -176,6 +176,30 @@ Two properties of that scheduled run are load-bearing rather than incidental:
   rather than closing it. A watchdog reporting that it cannot see must not read
   as good news, and its own red is reported by the next scheduled run.
 
+### The second instance: merge-main's in-place comment
+
+The same edited-in-place doctrine governs `merge-main.yml` (bean `03nl`,
+implemented by `cat-harness/scripts/merge-main-comment.ts`). The workflow fires on every
+push to `main` and runs across open PRs; one failing PR must not email the
+maintainer on every push across the day.
+
+So the bot's PR comment is the record and is **edited in place**, and a failure
+whose signature the comment already holds stays quiet. Three conditions stay
+**loud** (failing the aggregate step so the run notifies):
+
+1. **A new failure** — the first failure on this PR head.
+2. **A changed cause** — the failure signature changed even on the same head.
+3. **A systemic failure** — every selected PR failed, not made up entirely of
+   repeats (or a member failed to classify itself).
+
+**Quiet is not silent.** A failure that does not notify still maintains four
+records:
+
+1. **Its PR comment** (edited in place, carrying the failure signature).
+2. **Its line in the job summary**.
+3. **A warning annotation** on the run.
+4. **Its own red member job** in the matrix (findable in GitHub Actions UI).
+
 ## The opposite defect
 
 This covers a workflow that fires constantly and fails every time. The
