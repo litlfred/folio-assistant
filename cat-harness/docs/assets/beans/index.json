@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 507,
+      "count": 492,
       "unit": "open beans"
     }
   },
@@ -3180,7 +3180,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T09:15:31Z",
-      "updatedAt": "2026-10-06T20:27:23Z",
+      "updatedAt": "2026-10-07T14:54:46Z",
       "preview": "Measured 2026-10-06 on #2267 (coordinator) and reported independently by session A, from #2268.\n\n**What happens.** Since #2080 (5hox), the QA results tree is computed and not committed. Some generators read it from disk, at least `uml:overview` and `readme:subgraphs`. A container's local copy can be partial or stale. On #2267 only `kg-qa` was present, so `bun run regen` rewrote the QA overview wit",
       "file": "beans/defs/folio-assistant-7how--regen-reads-a-stale-qa-tree-generators-that-read-g.md"
     },
@@ -3703,14 +3703,14 @@
     {
       "id": "folio-assistant-8iqc",
       "title": "Library QA after ingestion: titles, bibliographic metadata, placeholder blocks and summary backlog are never judged",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T16:39:43Z",
-      "updatedAt": "2026-10-01T19:40:22Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "Issue [#1794](https://github.com/litlfred/folio-assistant/issues/1794).\n\nA library entry is never judged after ingestion or the KG build. Measured on main (59 entries): 24 titles equal the slug, at least 5 are implausible (who-pub-tps-931 is 'Abies', OCR noise off a scanned cover), 0 of 59 carry author or year, and who-pub-tps-931 shows 121 'Page N (no content carried)' blocks over 25,714 OCR word",
       "file": "beans/defs/folio-assistant-8iqc--library-qa-after-ingestion-titles-bibliographic-me.md"
     },
@@ -5833,14 +5833,14 @@
     {
       "id": "folio-assistant-eayu",
       "title": "who-iris separation: generic DSpace code to the platform; IRIS-specific code flagged",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:52:49Z",
-      "updatedAt": "2026-10-01T08:56:29Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## Why\nOwner ruling 2026-09-30, verbatim: \"dspace scripts generic in folio-assistant. iris specific tools for now ok in who-iris/ but make sure fails QA finding\".\n\nwho-iris/ is a staged instance that will move to its own CONTENT repository (litlfred/who-iris). kg-separation / bootstrap FR-7: a content repository holds no code. who-iris-tools is NOT authorised.\n\n## Done when\n- every code file under",
       "file": "beans/defs/folio-assistant-eayu--who-iris-separation-generic-dspace-code-to-the-pla.md"
     },
@@ -7508,14 +7508,14 @@
     {
       "id": "folio-assistant-iym1",
       "title": "VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T07:36:35Z",
-      "updatedAt": "2026-09-27T09:03:41Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "FOUND 2026-09-21 by the sweep that closed `a6kl`'s open question.\n\nAn empty corpus makes every count zero, and zero reads as a clean run. That is\n`6tkl`, and this repository has already paid for it three times — `6tkl` itself\n(`check-declared-assets` hardcoding two instances of eight), `pzdv` (two HARD\ngates green over zero titles and zero flagged lines), and `a6kl` (an L1 gate\nreporting `nothing ",
       "file": "beans/defs/folio-assistant-iym1--vacuity-is-guarded-one-script-at-a-time-no-cross-g.md"
     },
@@ -7578,14 +7578,14 @@
     {
       "id": "folio-assistant-j1r2",
       "title": "Audio and visual assets carry translatable text — transcripts, captions, alt text, embedded labels",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T07:54:17Z",
-      "updatedAt": "2026-09-19T07:54:17Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## What this is\n\nRaised by the repo owner, 2026-09-19:\n\n> \"narrative/audio/visual content with text should be translatable. its not so\n> much the node schema itself but its content (e.g. markdown, bpmn) should be\n> translatable.\"\n\nThe first half of that is already built. The second half — **audio and visual**\n— is not.\n\n## What already exists, so nobody rebuilds it\n\n`schemas/translation-tools.ts` ",
       "file": "beans/defs/folio-assistant-j1r2--audio-and-visual-assets-carry-translatable-text-tr.md"
     },
@@ -9694,14 +9694,14 @@
     {
       "id": "folio-assistant-p11x",
       "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T09:52:20Z",
-      "updatedAt": "2026-09-30T11:01:23Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "Opened 2026-09-27 because **`bf5l` asked for it and it did not exist.** That\nbean's closing section says, of making the blind checks see the edge it found:\n*\"Making the blind checks see it is NOT done here … it wants its own bean.\"* A\ncorpus-grep across `beans/defs/` and `beans/defs/archive/` found no such bean, so\n`bf5l` completed with its follow-up unrecorded.\n\n## What is measured\n\nVerified dire",
       "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
@@ -9780,7 +9780,7 @@
     {
       "id": "folio-assistant-p67i",
       "title": "INGEST: CSV and spreadsheet — sheet names, headers, shape, narrative",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
@@ -9789,7 +9789,7 @@
         "folio-assistant-jg8s"
       ],
       "createdAt": "2026-09-16T06:43:50Z",
-      "updatedAt": "2026-10-06T06:40:24Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## What\n\nFor a CSV or spreadsheet, extract what makes a dataset findable rather than\nmerely stored: sheet/tab names, column and row headers, the shape (rows ×\ncolumns per sheet), and a narrative description of what the data is about.\n\n## Done when\n\n`manifest.jsonld` carries a tabular record per sheet, the narrative carries its\nprovenance stamp, and a grep for a column header finds the dataset that",
       "file": "beans/defs/folio-assistant-p67i--ingest-csv-and-spreadsheet-sheet-names-headers-sha.md"
     },
@@ -10243,14 +10243,14 @@
     {
       "id": "folio-assistant-qmqg",
       "title": "TRANSLATIONS: the convention fallback would have made #1448's declaration edit a silent no-op",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T06:20:28Z",
-      "updatedAt": "2026-09-27T06:38:17Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "Found 2026-09-27 while doing the `.pot` relocation in PR #1448, which is the\nthing that makes this measurable rather than theoretical.\n\n## The shape\n\nTen production readers resolve the translations directory like this:\n\n```ts\ndirectoryForGraph(root, \"translation-sources\") ?? join(root, \"translations\")\n```\n\n`po-resolve.ts` documents it as a deliberate **third source**: *\"the\nconvention, `translatio",
       "file": "beans/defs/folio-assistant-qmqg--translations-the-convention-fallback-would-have-ma.md"
     },
@@ -12287,14 +12287,14 @@
     {
       "id": "folio-assistant-vglq",
       "title": "FOREIGN-SITE DATA SCOPE (#2263 follow-up): translation and fsh-guts figures on a folio's site describe the folio",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T12:14:15Z",
-      "updatedAt": "2026-10-06T12:14:31Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "Follow-up to #2263 / PR #2265 (bean ky3r), which left two defects of the same class open:\n\n1. _data/translation-qa.json and _data/translations.json are copied into a folio's shell by compose-docs --shell, so smart-trust pages show the PLATFORM's 'Swept 49/689' translation badge.\n2. The fsh-guts icon on a folio site fetches its count from the folio's own site, where no fsh-guts document exists, and",
       "file": "beans/defs/folio-assistant-vglq--foreign-site-data-scope-2263-follow-up-translation.md"
     },
@@ -12561,14 +12561,14 @@
     {
       "id": "folio-assistant-vwd8",
       "title": "TYPESCRIPT 7: migrate from 6.0.3 (Dependabot #910)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:59:32Z",
-      "updatedAt": "2026-09-30T08:59:32Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## What\n\nThe owner said **\"Try migration now\"** on 2026-09-30, which reopens the 2026-09-27\nhold recorded in `folio-assistant-u2ol`. This bean works option 3 from that bean,\n**side-by-side**, on branch `claude/magical-archimedes-4qkfxp-ts7`. TS 7 does the\ntypechecking. The TS 6 JS API stays installed for the code that imports it.\nMeasured 2026-09-30.\n\n## Why #910 has been red since 2026-09-23. It ",
       "file": "beans/defs/folio-assistant-vwd8--typescript-7-migrate-from-603-dependabot-910.md"
     },
@@ -12709,14 +12709,14 @@
     {
       "id": "folio-assistant-w8j8",
       "title": "AGENTIC LIFECYCLE: handover reports and stalled-agent triage (skills, process, collector tool)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T19:08:53Z",
-      "updatedAt": "2026-10-02T21:03:20Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "Owner, 2026-10-02, verbatim: \"prepare for you and your current siblings to stall out in the next 5-30 minutes … each agent should prepare a templated 'handover report' … an 'incoming stalled agent triage' process … consolidate the various workstreams into 2-4 themes … coordinate with relevant agents (e.g. the Merge Manager) … update processes, skills, tools etc. include as part of SDLC under agent",
       "file": "beans/defs/folio-assistant-w8j8--agentic-lifecycle-handover-reports-and-stalled-age.md"
     },
@@ -12925,14 +12925,14 @@
     {
       "id": "folio-assistant-wmk0",
       "title": "PROCESS INDEX COVERAGE: bootstrap's 5 diagrams and bootstrap-tools' 1 are not in the workflow index — bootstrap's graph publishes no subgraph files or documentation",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T12:50:07Z",
-      "updatedAt": "2026-10-03T12:50:07Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "Found 2026-10-03 when ax6r moved the workflow index onto the published subgraph JSON-LD (owner ruling: 'Move to JSON-LD'). `check:process-index` now reports 78 of 84; the 6 not covered are listed on every run (e.g. `bootstrap/processes/log-message.bpmn`). The rule #432 / bean `pve3` keeps bootstrap's process out of the root's graph, and bootstrap's own graph (built by bootstrap-tools' `export-grap",
       "file": "beans/defs/folio-assistant-wmk0--process-index-coverage-bootstraps-5-diagrams-and-b.md"
     },
@@ -12997,14 +12997,14 @@
     {
       "id": "folio-assistant-wwi6",
       "title": "INITIATION: uploads/ and library/ are created at initiation, one as state and one not",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T06:19:54Z",
-      "updatedAt": "2026-09-29T18:14:48Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> also please add back uploads/ folder. it should be initiation skill of\n> folio-asst-core/ and preseverd in the current folio-asst/ repo as state.\n> library/ should also be added in at initation, but not as state by KG-Content.\n\n## MEASURED FIRST, because \"add back\" turned out not to mean what it sounds like\n\nBoth directories are **present**, declared, and",
       "file": "beans/defs/folio-assistant-wwi6--initiation-uploads-and-library-are-created-at-init.md"
     },
@@ -13025,14 +13025,14 @@
     {
       "id": "folio-assistant-x3h9",
       "title": "HARNESS CORE: gettext .pot/.po pipeline + accessibility are core, not folio-only (issue #223)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T17:04:14Z",
-      "updatedAt": "2026-09-18T17:04:14Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## The ask\n\nOwner, [#223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5733305682), 2026-09-18T16:55:40Z, verbatim:\n\n> in agentic-harness core, i still want support for .pot/po gettext and translation pipeline. also core accessability issues where applicable (e.g. skills and expectations should be descrinbed even if not in tooling)\n\n## Why it is a separation-of-conce",
       "file": "beans/defs/folio-assistant-x3h9--harness-core-gettext-potpo-pipeline-accessibility.md"
     },
@@ -13723,14 +13723,14 @@
     {
       "id": "folio-assistant-ygga",
       "title": "A STALE SUBMODULE PIN makes a generator run its OLD code and report success, and the gate guarding its output re-runs the same stale writer and finds it current",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T09:28:22Z",
-      "updatedAt": "2026-10-03T09:54:52Z",
+      "updatedAt": "2026-10-07T17:24:00Z",
       "preview": "## Measured 2026-10-03 on PR #1959, with a 101-file blast radius\n\nA generator that lives in a submodule runs the code the **pin** points at, not\nthe code `main` carries. After `git merge origin/main` the pin moves, and a\nworktree whose submodules were not re-initialised runs the OLD generator.\n\nWhile resolving `beans/README.md` on `claude/platform-milestone`,\n`bun run readme:subgraphs` was run bef",
       "file": "beans/defs/folio-assistant-ygga--a-stale-submodule-pin-makes-a-generator-run-its-ol.md"
     },
@@ -13908,14 +13908,14 @@
     {
       "id": "folio-assistant-ytqn",
       "title": "MAIN IS RED: claim-branch-store's conflict test is SYSTEMATICALLY over bun's 5s default in CI — 3 runs at 5820/6252/6908ms, passes alone in 16s",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T08:10:15Z",
-      "updatedAt": "2026-10-04T08:10:40Z",
+      "updatedAt": "2026-10-07T17:25:00Z",
       "preview": "`cat-harness/scripts/tests/claim-branch-store.test.ts` — *\"THE REAL CONFLICT: a\nsibling writes BETWEEN our read and our write — `expect` catches it\"` — **times\nout against bun's 5000 ms default in every CI run measured**, and the assertion\nthat reports is `Expected: \"already-claimed\" / Received: \"unknown\"`, which is\nthe timeout cutting the probe short rather than a wrong verdict.\n\nLanded on `main`",
       "file": "beans/defs/folio-assistant-ytqn--main-is-red-claim-branch-stores-conflict-test-is-s.md"
     },
@@ -15601,13 +15601,13 @@
         "status": "todo",
         "epics": 2,
         "total": 71,
-        "closed": 31,
-        "open": 40,
-        "inProgress": 19,
-        "todo": 21,
+        "closed": 33,
+        "open": 38,
+        "inProgress": 18,
+        "todo": 20,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.43661971830985913
+        "share": 0.4647887323943662
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15631,13 +15631,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 585,
-        "closed": 279,
-        "open": 306,
-        "inProgress": 124,
-        "todo": 181,
+        "closed": 288,
+        "open": 297,
+        "inProgress": 121,
+        "todo": 175,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.47692307692307695
+        "share": 0.49230769230769234
       },
       {
         "id": "folio-assistant-vuip",
@@ -15646,13 +15646,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 276,
-        "closed": 118,
-        "open": 158,
-        "inProgress": 90,
-        "todo": 67,
+        "closed": 122,
+        "open": 154,
+        "inProgress": 87,
+        "todo": 66,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.427536231884058
+        "share": 0.4420289855072464
       },
       {
         "id": "folio-assistant-yg29",
@@ -15671,8 +15671,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 507,
-    "coveredOpen": 504,
+    "openTotal": 492,
+    "coveredOpen": 489,
     "duplicateIds": 0
   }
 }
