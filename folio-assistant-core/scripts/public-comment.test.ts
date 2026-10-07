@@ -337,17 +337,21 @@ describe("a consolidated review log (the DPI-H master log, 2026-10-05)", () => {
     expect(nameKey("NAIR, Tapas")).toBe(nameKey("Tapas Nair"));
   });
 
-  test("the log's own statuses arrive as decisions or triage; a refusal with no reason is held", () => {
+  test("the log's own statuses are recorded, never decisions: the comment arrives triaged with the log's words", () => {
     expect(logStatusMove("Partially accepted")).toEqual({ decide: "accepted-modified" });
     expect(logStatusMove("Pending")).toBeUndefined();
     const s = tempStore();
     const r = importRows(s, tableRows(sheet, consent).rows, { channel: "comment-matrix", batch: "log--master", sha256: "x", sheet: "Master log", series: "log" }, "2026-10-05T00:00:00Z");
     const by = Object.fromEntries(s.all().map((c) => [c.public.source.entry, c]));
     expect(by["1"]!.status).toBe("received");
-    expect(by["2"]!.public.decision).toMatchObject({ code: "accepted", by: "review-log" });
-    expect(by["3"]!.public.decision).toMatchObject({ code: "not-accepted", reason: "Out of scope." });
-    expect(by["4"]!.status).toBe("triaged");
-    expect(r.fromLog?.held.map((x) => x.ref)).toEqual([by["4"]!.public.ref]);
+    // Owner, 2026-10-07: "nothing has been decided". Only an editor decides.
+    for (const e of ["2", "3", "4"]) {
+      expect(by[e]!.status).toBe("triaged");
+      expect(by[e]!.public.decision).toBeUndefined();
+    }
+    expect(by["2"]!.public.history.at(-1)!.note).toContain('the log\'s status was "Accepted"');
+    expect(by["3"]!.public.history.at(-1)!.note).toContain("Out of scope.");
+    expect(r.fromLog?.recorded).toHaveLength(3);
     expect(by["5"]!.status).toBe("triaged");
     expect(by["1"]!.public.source.channel).toBe(channelOf("Online form", "comment-matrix"));
     expect(by["1"]!.public.reviewer.name).toBe("NAIR, Tapas");
@@ -535,6 +539,19 @@ describe("change-sets and their issues (issue #2183)", () => {
     expect(getChangeSet(s, "CS-001").status).toBe("incorporated");
     expect(s.get("PC-0002").status).toBe("incorporated");
     expect(m.actions).toContainEqual({ kind: "state", issue: 100, state: "closed", reason: "completed" });
+  });
+
+  test("a merge with comments still undecided leaves the change-set open and its issue open (D-1, bean uphx)", async () => {
+    const s = store();
+    const f = fake();
+    await run(s, comment(50, "ed", "pc: PC-0001\ndecide: accepted\n\nYes."), f);
+    const merged: GithubEvent = { action: "closed", sender: { login: "au" }, pull_request: { number: 12, body: "Closes #50", head: { ref: "cs-001" }, merged: true, state: "closed", html_url: "https://github.com/o/r/pull/12" } };
+    const m = await run(s, merged, f);
+    expect(s.get("PC-0001").status).toBe("incorporated");
+    expect(s.get("PC-0002").status).not.toBe("incorporated");
+    expect(getChangeSet(s, "CS-001").status).not.toBe("incorporated");
+    expect(m.actions.filter((a) => a.kind === "state")).toEqual([]);
+    expect(m.log.join("\n")).toContain("1 of 2 comment(s) are not decided");
   });
 
   test("a primary issue closed by hand: reopened while comments still need a change; closed when none do", async () => {

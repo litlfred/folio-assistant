@@ -304,8 +304,10 @@ export function trackedIn(repoRoot = REPO_ROOT): (repoRelative: string) => boole
   // Not a git work tree (a standalone extract of one layer): nothing here is
   // COMMITTED, so nothing can be committed-from-branch. That is the true
   // answer, not a blind one — the question is about commits, and there are none.
+  // input-site: tree #eb1a96ae — rev-parse --is-inside-work-tree: a fact about the checkout
   const inside = spawnSync("git", ["rev-parse", "--is-inside-work-tree"], { cwd: repoRoot, encoding: "utf8" });
   if (inside.status !== 0 || inside.stdout.trim() !== "true") return () => false;
+  // input-site: tree #c97d7798 — ls-files: the index
   const r = spawnSync("git", ["ls-files", "-z"], { cwd: repoRoot, encoding: "utf8", maxBuffer: 1 << 28 });
   if (r.status !== 0) throw new Error(`check:derived-from: git ls-files failed — ${r.stderr}`);
   const files = new Set(r.stdout.split("\0").filter(Boolean));

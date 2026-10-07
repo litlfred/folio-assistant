@@ -7,6 +7,7 @@ section_number: 12.5.2
 pages: 175-175
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 All WHO recommendations that are not based on the processes and standards outlined in this handbook (particularly those published before the GRC 
 was established in 2007 and those not considering equity, human rights and 

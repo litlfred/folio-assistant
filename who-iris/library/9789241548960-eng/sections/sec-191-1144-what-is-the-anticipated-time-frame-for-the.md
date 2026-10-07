@@ -7,6 +7,7 @@ section_number: 11.4.4
 pages: 148-148
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The intent of rapid advice guidelines is to provide urgently needed, evidence-
 informed recommendations that can be implemented within one to three months 

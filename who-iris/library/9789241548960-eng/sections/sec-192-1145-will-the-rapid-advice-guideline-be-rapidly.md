@@ -7,6 +7,7 @@ section_number: 11.4.5
 pages: 148-149
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Rapid advice guidelines should only be developed if a mechanism is in place 
 for disseminating and implementing them, and if implementing the recommendations is feasible in the context of the emergency. Various factors need 

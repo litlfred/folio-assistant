@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
-      "fileCount": 80,
+      "fileCount": 81,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -79,6 +79,24 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/block-actions",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+              "instructionLines": 157,
+              "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
+              "name": "block-actions",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/36523bf229f512b032cc74470963106b3d05689e949abd268e97d36bdc8b5da8",
+                "bytes": 8307,
+                "sha256": "36523bf229f512b032cc74470963106b3d05689e949abd268e97d36bdc8b5da8"
+              },
+              "title": "Block actions: [edit] and [feedback] on every block"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-authoring",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -105,14 +123,14 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
-              "instructionLines": 82,
+              "instructionLines": 115,
               "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
               "name": "document-publishing",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/078453880e1c8cb5171ed7069cde0a704bffba019244d475def34a99c062512d",
-                "bytes": 3397,
-                "sha256": "078453880e1c8cb5171ed7069cde0a704bffba019244d475def34a99c062512d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/275daac470176c81c1251a78d39ae218a04c95426d98f0f753f9a62b0afc3261",
+                "bytes": 5414,
+                "sha256": "275daac470176c81c1251a78d39ae218a04c95426d98f0f753f9a62b0afc3261"
               },
               "title": "document-publishing"
             },
@@ -162,14 +180,14 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
-              "instructionLines": 310,
+              "instructionLines": 341,
               "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
               "name": "public-comment",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/153ad2fafc3b24dc78cfcc834c7c0f69c9a4388e9683f2cd45335af87fa7ffc8",
-                "bytes": 16941,
-                "sha256": "153ad2fafc3b24dc78cfcc834c7c0f69c9a4388e9683f2cd45335af87fa7ffc8"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9e134975f0d93c4a942dc4ebf4895c32825c4273f32f4b83facf1382be49ca9f",
+                "bytes": 18913,
+                "sha256": "9e134975f0d93c4a942dc4ebf4895c32825c4273f32f4b83facf1382be49ca9f"
               },
               "title": "public-comment"
             }
@@ -397,13 +415,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-              "instructionLines": 460,
+              "instructionLines": 488,
               "instructionsPath": "skills/library/ingestion/document-intake.md",
               "name": "document-intake",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43b57840f239cb4703309f1c7b72e367402c0e4895c7f1a4b02057eec412e894",
-                "bytes": 20975,
-                "sha256": "43b57840f239cb4703309f1c7b72e367402c0e4895c7f1a4b02057eec412e894"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9ce37cd93fe0c0d7e24fcd8e50b95ce5b94d0a3c842994c77df34804ba82fd7f",
+                "bytes": 23138,
+                "sha256": "9ce37cd93fe0c0d7e24fcd8e50b95ce5b94d0a3c842994c77df34804ba82fd7f"
               },
               "title": "Document Intake"
             },
@@ -415,13 +433,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-              "instructionLines": 735,
+              "instructionLines": 796,
               "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
               "name": "l1-document-ingestion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c0fe31634e159027f99bc0e7f6e3a24215437eba4dc094266e3dd34dd14f8b2b",
-                "bytes": 42075,
-                "sha256": "c0fe31634e159027f99bc0e7f6e3a24215437eba4dc094266e3dd34dd14f8b2b"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6aa3801237a3e2a943143b3a4e1d54b2256d04a0e55aa20783f8c852d12c24d7",
+                "bytes": 45415,
+                "sha256": "6aa3801237a3e2a943143b3a4e1d54b2256d04a0e55aa20783f8c852d12c24d7"
               },
               "title": "L1 document ingestion"
             },

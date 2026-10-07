@@ -7,6 +7,7 @@ section_number: 12.4
 pages: 173-173
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Dissemination involves making guidelines accessible, advertising their 
 availability and distributing them widely. Guideline developers should consult with WHO Press on priced and mandatory free distribution. Priced distribution is done by WHO Press through sales agents in all regions and by 

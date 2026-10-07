@@ -7,6 +7,7 @@ section_number: 5.2.2
 pages: 57-57
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Attention to these areas enables WHO to more effectively deliver on its 
 commitments in its Twelfth General Programme of Work (1). This chapter 

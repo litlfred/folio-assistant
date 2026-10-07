@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/directory-conventions.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/directory-conventions.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/directory-conventions.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/directory-conventions.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/directory-conventions.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Directory conventions — what an instance declares it scans
@@ -843,8 +843,11 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
 - **Mounting dispatches on the kind**, and the process is
   `processes/kg/mount-subgraph.bpmn`: `directory` is the checkout path in place
   (a write is a commit); `branch` + `tip` is mounted from the tip and spliced
-  back without force (`branch-store mount`/`push`); a kind with no flow is
-  refused with its own exit code rather than read as an empty directory.
+  back without force (`branch-store mount`/`push`); `remote` is another
+  repository's tree at a full 40-character pin, laid down and locked by
+  `mount:remote` and never written back (the [`remote-mount`](remote-mount.md)
+  skill, bean `0mpw`); a kind with no flow is refused with its own exit code
+  rather than read as an empty directory.
 - **The KG export publishes the resolved source** on the Subgraph node, as
   `contentSource` — `dcterms:source`, with `kind` (`dcterms:type`), `branch`
   (`dcterms:identifier`), `keyedBy` and `declaredIn` scoped inside it. A
@@ -1715,5 +1718,6 @@ up: [`cat-harness/docs/proposals/instance-versioning.md`](../../proposals/instan
 
 | process | step(s) that name it |
 |---|---|
+| [Remote-mount a dependency](../../processes/mount-dependency.html) | Mount each instance at its declared path |
 | [Mount a declared subgraph](../../processes/mount-subgraph.html) | Resolve the subgraph's content source; Use the checkout path in place; Mount the branch tip at the declared path; Refuse: no flow for this source kind |
 

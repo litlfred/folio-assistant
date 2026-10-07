@@ -66,6 +66,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { dashboardRoute } from "./public-comment-route.js";
 import {
   CHANGE_SET_SCHEMA,
   CHANGING_DECISIONS,
@@ -225,20 +226,21 @@ export function discussUrl(repo: string, cs: Pick<ChangeSet, "id" | "title">): s
 export function renderSection(cs: ChangeSet, store: Store): string {
   const cfg = store.config();
   const site = (cfg.site ?? "").replace(/\/$/, "");
+  const dash = `${site}/${dashboardRoute(store.repo, cfg.document)}/`;
   const byRef = new Map(store.all().map((c) => [c.public.ref, c]));
   const rows = cs.refs.map((ref) => {
     const c = byRef.get(ref);
     if (!c) return `| ${ref} | | (not in the store) | | |`;
     const label = c.public.anchor.targetLabel;
     const where = label ? (site ? `[${cell(clip(c.public.citation.raw || label, 40))}](${site}/${cfg.document}/#${label})` : cell(label)) : "whole document";
-    const refLink = site ? `[${ref}](${site}/public-comments/#${ref})` : ref;
+    const refLink = site ? `[${ref}](${dash}#${ref})` : ref;
     const state = c.public.decision ? `${c.status}: **${c.public.decision.code}**` : c.status;
     return `| ${refLink} | ${where} | ${state} | ${cell(clip(c.public.text, 200))} | ${cell(clip(c.public.suggestedRevision ?? "", 140))} |`;
   });
   const others = cs.issues.filter((n) => n !== cs.issue);
   return [
     sectionStart(cs.id),
-    `> **Change-set ${cs.id}** · ${cs.status} · ${cs.refs.length} comment(s)${site ? ` · [dashboard](${site}/public-comments/#${cs.id})` : ""}`,
+    `> **Change-set ${cs.id}** · ${cs.status} · ${cs.refs.length} comment(s)${site ? ` · [dashboard](${dash}#${cs.id})` : ""}`,
     "> This section is written from the change-set's record, so an edit to it here is replaced. Change it with the commands below; discuss it anywhere in this issue.",
     "",
     "### Requirements",
@@ -680,13 +682,23 @@ function onPullRequest(x: Ctx, pr: { number: number; body: string; branch: strin
         x.out.log.push(`✗ ${ref}: ${(e as Error).message}`);
       }
     }
-    const status: ChangeSetStatus = pr.merged ? "incorporated" : cs.status === "proposed" || cs.status === "discussing" ? "editing" : cs.status;
+    // A merge settles the change-set only when every comment in it is settled
+    // (decided, incorporated, duplicate or withdrawn). Before this, a merge
+    // marked the whole set incorporated and closed its issue while most of
+    // its comments were still undecided: CS-236 and CS-237 in smart-ra, 13 of
+    // 15 comments `received` (D-1 of the 2026-10-06 walkthrough, bean uphx).
+    const unsettled = cs.refs.filter((r) => { const st = x.store.get(r).status; return OPEN_STATUSES.includes(st) || st === "editing"; });
+    const settled = unsettled.length === 0;
+    if (pr.merged && !settled) x.out.log.push(`· ${cs.id}: PR #${pr.number} merged, but ${unsettled.length} of ${cs.refs.length} comment(s) are not decided; the change-set stays open`);
+    const status: ChangeSetStatus = pr.merged
+      ? settled ? "incorporated" : cs.status === "proposed" ? "discussing" : cs.status === "editing" ? "discussing" : cs.status
+      : cs.status === "proposed" || cs.status === "discussing" ? "editing" : cs.status;
     if (cs.status !== status || cs.pr?.number !== pr.number) {
       cs = put(x, noted({ ...cs, pr: { number: pr.number, branch: pr.branch }, status }, x.login, x.at, pr.merged ? `PR #${pr.number} merged` : `PR #${pr.number} is making the change`, x.url));
       x.out.log.push(`✓ ${cs.id}: ${status} (PR #${pr.number})`);
     }
     engage(x, cs, `PR #${pr.number} is making this change.`);
-    if (pr.merged && cs.issue) x.out.actions.push({ kind: "state", issue: cs.issue, state: "closed", reason: "completed" });
+    if (pr.merged && settled && cs.issue) x.out.actions.push({ kind: "state", issue: cs.issue, state: "closed", reason: "completed" });
   }
 }
 

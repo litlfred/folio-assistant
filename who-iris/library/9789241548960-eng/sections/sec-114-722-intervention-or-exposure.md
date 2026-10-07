@@ -7,6 +7,7 @@ section_number: 7.2.2
 pages: 91-93
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 the P (population) or the I. The PICO format also provides a useful structure 
 for delineating inclusion and exclusion criteria for the body of evidence (see 

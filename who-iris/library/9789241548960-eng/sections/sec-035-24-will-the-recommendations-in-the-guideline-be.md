@@ -7,6 +7,7 @@ section_number: 2.4
 pages: 30-30
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 implemented?
 The purpose of WHO guidelines is to improve the health and well-being of 
