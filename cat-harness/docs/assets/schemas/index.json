@@ -32557,6 +32557,13 @@
           "type": "z.boolean()",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "links",
+          "type": "z.object({ repo: z.string().min(1), branch: z.string().min(1), dir: z.string().min(1) }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where [source] and [feedback] point: the repository and the entry's directory (bean zcak)."
         }
       ],
       "extendsNames": [],
