@@ -1,0 +1,2464 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "w3c-2013-prov-o",
+  "title": "PROV-O: The PROV Ontology",
+  "pages": 69,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "PROV-O: The PROV Ontology",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-prov-o-the-prov-ontology"
+    },
+    {
+      "level": 2,
+      "title": "W3C Recommendation 30 April 2013",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-w3c-recommendation-30-april-2013"
+    },
+    {
+      "level": 2,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-abstract"
+    },
+    {
+      "level": 2,
+      "title": "Status of This Document",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-status-of-this-document"
+    },
+    {
+      "level": 3,
+      "title": "PROV Family of Documents",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-prov-family-of-documents"
+    },
+    {
+      "level": 3,
+      "title": "Endorsed By W3C",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-endorsed-by-w3c"
+    },
+    {
+      "level": 3,
+      "title": "Please Send Comments",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-please-send-comments"
+    },
+    {
+      "level": 2,
+      "title": "Table of Contents",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-table-of-contents"
+    },
+    {
+      "level": 2,
+      "title": "Introduction",
+      "number": "1",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-1-introduction"
+    },
+    {
+      "level": 3,
+      "title": "Compliance with this Document",
+      "number": "1.1",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-11-compliance-with-this-document"
+    },
+    {
+      "level": 3,
+      "title": "Notational Conventions",
+      "number": "1.2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-12-notational-conventions"
+    },
+    {
+      "level": 3,
+      "title": "Namespaces",
+      "number": "1.3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-13-namespaces"
+    },
+    {
+      "level": 2,
+      "title": "PROV-O at a glance",
+      "number": "2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-2-prov-o-at-a-glance"
+    },
+    {
+      "level": 2,
+      "title": "The PROV-O Ontology Description",
+      "number": "3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "Starting Point Terms",
+      "number": "3.1",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-31-starting-point-terms"
+    },
+    {
+      "level": 3,
+      "title": "Expanded Terms",
+      "number": "3.2",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-32-expanded-terms"
+    },
+    {
+      "level": 3,
+      "title": "Qualified Terms",
+      "number": "3.3",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-33-qualified-terms"
+    },
+    {
+      "level": 2,
+      "title": "Cross reference for PROV-O classes and properties",
+      "number": "4",
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "Starting Point Terms",
+      "number": "4.1",
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-31-starting-point-terms"
+    },
+    {
+      "level": 3,
+      "title": "(1) Class: prov:Entityback to starting-point classes",
+      "number": null,
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(2) Class: prov:Activityback to starting-point classes",
+      "number": null,
+      "page": 15,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(3) Class: prov:Agentback to starting-point classes",
+      "number": null,
+      "page": 15,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(4) Property: prov:wasGeneratedBy opback to starting-point properties",
+      "number": null,
+      "page": 16,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(5) Property: prov:wasDerivedFrom opback to starting-point properties",
+      "number": null,
+      "page": 16,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(6) Property: prov:wasAttributedTo opback to starting-point properties",
+      "number": null,
+      "page": 17,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(7) Property: prov:startedAtTime dpback to starting-point properties",
+      "number": null,
+      "page": 18,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(8) Property: prov:used opback to starting-point properties",
+      "number": null,
+      "page": 18,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(9) Property: prov:wasInformedBy opback to starting-point properties",
+      "number": null,
+      "page": 19,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(10) Property: prov:endedAtTime dpback to starting-point properties",
+      "number": null,
+      "page": 19,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(11) Property: prov:wasAssociatedWith opback to starting-point properties",
+      "number": null,
+      "page": 20,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(12) Property: prov:actedOnBehalfOf opback to starting-point properties",
+      "number": null,
+      "page": 20,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "Expanded Terms",
+      "number": "4.2",
+      "page": 21,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-42-expanded-terms"
+    },
+    {
+      "level": 3,
+      "title": "(13) Class: prov:Collectionback to expanded classes",
+      "number": null,
+      "page": 21,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(14) Class: prov:EmptyCollectionback to expanded classes",
+      "number": null,
+      "page": 22,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(15) Class: prov:Bundleback to expanded classes",
+      "number": null,
+      "page": 22,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(16) Class: prov:Personback to expanded classes",
+      "number": null,
+      "page": 22,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(17) Class: prov:SoftwareAgentback to expanded classes",
+      "number": null,
+      "page": 23,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(18) Class: prov:Organizationback to expanded classes",
+      "number": null,
+      "page": 23,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(19) Class: prov:Locationback to expanded classes",
+      "number": null,
+      "page": 24,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(20) Property: prov:alternateOf opback to expanded properties",
+      "number": null,
+      "page": 24,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(21) Property: prov:specializationOf opback to expanded properties",
+      "number": null,
+      "page": 25,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(22) Property: prov:generatedAtTime dpback to expanded properties",
+      "number": null,
+      "page": 25,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(23) Property: prov:hadPrimarySource opback to expanded properties",
+      "number": null,
+      "page": 26,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(24) Property: prov:value dpback to expanded properties",
+      "number": null,
+      "page": 27,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(25) Property: prov:wasQuotedFrom opback to expanded properties",
+      "number": null,
+      "page": 27,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(26) Property: prov:wasRevisionOf opback to expanded properties",
+      "number": null,
+      "page": 28,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(27) Property: prov:invalidatedAtTime dpback to expanded properties",
+      "number": null,
+      "page": 28,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(28) Property: prov:wasInvalidatedBy opback to expanded properties",
+      "number": null,
+      "page": 29,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(29) Property: prov:hadMember opback to expanded properties",
+      "number": null,
+      "page": 29,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(30) Property: prov:wasStartedBy opback to expanded properties",
+      "number": null,
+      "page": 30,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(31) Property: prov:wasEndedBy opback to expanded properties",
+      "number": null,
+      "page": 31,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(32) Property: prov:invalidated opback to expanded properties",
+      "number": null,
+      "page": 31,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(33) Property: prov:influenced opback to expanded properties",
+      "number": null,
+      "page": 32,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(34) Property: prov:atLocation opback to expanded properties",
+      "number": null,
+      "page": 32,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(35) Property: prov:generated opback to expanded properties",
+      "number": null,
+      "page": 33,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "Qualified Terms",
+      "number": "4.3",
+      "page": 33,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-43-qualified-terms"
+    },
+    {
+      "level": 3,
+      "title": "(36) Class: prov:Influenceback to qualified classes",
+      "number": null,
+      "page": 33,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(37) Class: prov:EntityInfluenceback to qualified classes",
+      "number": null,
+      "page": 34,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(38) Class: prov:Usageback to qualified classes",
+      "number": null,
+      "page": 35,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(39) Class: prov:Startback to qualified classes",
+      "number": null,
+      "page": 35,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(40) Class: prov:Endback to qualified classes",
+      "number": null,
+      "page": 36,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(41) Class: prov:Derivationback to qualified classes",
+      "number": null,
+      "page": 37,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(42) Class: prov:PrimarySourceback to qualified classes",
+      "number": null,
+      "page": 38,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(43) Class: prov:Quotationback to qualified classes",
+      "number": null,
+      "page": 39,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(44) Class: prov:Revisionback to qualified classes",
+      "number": null,
+      "page": 39,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(45) Class: prov:ActivityInfluenceback to qualified classes",
+      "number": null,
+      "page": 40,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(46) Class: prov:Generationback to qualified classes",
+      "number": null,
+      "page": 41,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(47) Class: prov:Communicationback to qualified classes",
+      "number": null,
+      "page": 41,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(48) Class: prov:Invalidationback to qualified classes",
+      "number": null,
+      "page": 42,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(49) Class: prov:AgentInfluenceback to qualified classes",
+      "number": null,
+      "page": 43,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(50) Class: prov:Attributionback to qualified classes",
+      "number": null,
+      "page": 43,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(51) Class: prov:Associationback to qualified classes",
+      "number": null,
+      "page": 44,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(52) Class: prov:Planback to qualified classes",
+      "number": null,
+      "page": 45,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(53) Class: prov:Delegationback to qualified classes",
+      "number": null,
+      "page": 45,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(54) Class: prov:InstantaneousEventback to qualified classes",
+      "number": null,
+      "page": 46,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(55) Class: prov:Roleback to qualified classes",
+      "number": null,
+      "page": 46,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(56) Property: prov:wasInfluencedBy opback to qualified properties",
+      "number": null,
+      "page": 47,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(57) Property: prov:qualifiedInfluence opback to qualified properties",
+      "number": null,
+      "page": 48,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(58) Property: prov:qualifiedGeneration opback to qualified properties",
+      "number": null,
+      "page": 49,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(59) Property: prov:qualifiedDerivation opback to qualified properties",
+      "number": null,
+      "page": 49,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(60) Property: prov:qualifiedPrimarySource opback to qualified properties",
+      "number": null,
+      "page": 50,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-60-property-provqualifiedprimarysource-opback-to"
+    },
+    {
+      "level": 3,
+      "title": "(61) Property: prov:qualifiedQuotation opback to qualified properties",
+      "number": null,
+      "page": 51,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(62) Property: prov:qualifiedRevision opback to qualified properties",
+      "number": null,
+      "page": 51,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(63) Property: prov:qualifiedAttribution opback to qualified properties",
+      "number": null,
+      "page": 52,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(64) Property: prov:qualifiedInvalidation opback to qualified properties",
+      "number": null,
+      "page": 52,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-64-property-provqualifiedinvalidation-opback-to"
+    },
+    {
+      "level": 3,
+      "title": "(65) Property: prov:qualifiedStart opback to qualified properties",
+      "number": null,
+      "page": 53,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(66) Property: prov:qualifiedUsage opback to qualified properties",
+      "number": null,
+      "page": 54,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(67) Property: prov:qualifiedCommunication opback to qualified properties",
+      "number": null,
+      "page": 54,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-67-property-provqualifiedcommunication-opback-to"
+    },
+    {
+      "level": 3,
+      "title": "(68) Property: prov:qualifiedAssociation opback to qualified properties",
+      "number": null,
+      "page": 55,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(69) Property: prov:qualifiedEnd opback to qualified properties",
+      "number": null,
+      "page": 56,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(70) Property: prov:qualifiedDelegation opback to qualified properties",
+      "number": null,
+      "page": 56,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(71) Property: prov:influencer opback to qualified properties",
+      "number": null,
+      "page": 58,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(72) Property: prov:entity opback to qualified properties",
+      "number": null,
+      "page": 58,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(73) Property: prov:hadUsage opback to qualified properties",
+      "number": null,
+      "page": 59,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(74) Property: prov:hadGeneration opback to qualified properties",
+      "number": null,
+      "page": 59,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(75) Property: prov:activity opback to qualified properties",
+      "number": null,
+      "page": 60,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(76) Property: prov:agent opback to qualified properties",
+      "number": null,
+      "page": 60,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(77) Property: prov:hadPlan opback to qualified properties",
+      "number": null,
+      "page": 61,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(78) Property: prov:hadActivity opback to qualified properties",
+      "number": null,
+      "page": 61,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(79) Property: prov:atTime dpback to qualified properties",
+      "number": null,
+      "page": 62,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "(80) Property: prov:hadRole opback to qualified properties",
+      "number": null,
+      "page": 62,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "Term Index",
+      "number": "4.4",
+      "page": 63,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-022-44-term-index"
+    },
+    {
+      "level": 2,
+      "title": "A. PROV-O OWL Profile",
+      "number": null,
+      "page": 65,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-023-a-prov-o-owl-profile"
+    },
+    {
+      "level": 2,
+      "title": "B. Names of inverse properties",
+      "number": null,
+      "page": 65,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-024-b-names-of-inverse-properties"
+    },
+    {
+      "level": 2,
+      "title": "C. Changes since WD-prov-o-20120724",
+      "number": null,
+      "page": 67,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-025-c-changes-since-wd-prov-o-20120724"
+    },
+    {
+      "level": 2,
+      "title": "D. Changes since CR-prov-o-20121211",
+      "number": null,
+      "page": 67,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-026-d-changes-since-cr-prov-o-20121211"
+    },
+    {
+      "level": 2,
+      "title": "E. Changes since PR-prov-o-20130312",
+      "number": null,
+      "page": 68,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-027-e-changes-since-pr-prov-o-20130312"
+    },
+    {
+      "level": 2,
+      "title": "F. Acknowledgements",
+      "number": null,
+      "page": 68,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-028-f-acknowledgements"
+    },
+    {
+      "level": 2,
+      "title": "G. References",
+      "number": null,
+      "page": 68,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-029-g-references"
+    },
+    {
+      "level": 3,
+      "title": "G.1 Normative references",
+      "number": null,
+      "page": 68,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-030-g1-normative-references"
+    },
+    {
+      "level": 3,
+      "title": "G.2 Informative references",
+      "number": null,
+      "page": 69,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-031-g2-informative-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": null,
+      "keywords": [],
+      "extract": "W3C",
+      "extractCut": false
+    },
+    {
+      "id": "sec-000-prov-o-the-prov-ontology",
+      "number": null,
+      "title": "PROV-O: The PROV Ontology",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-001-w3c-recommendation-30-april-2013",
+      "number": null,
+      "title": "W3C Recommendation 30 April 2013",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 133,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "rensselaer polytechnic",
+          "heading": false
+        },
+        {
+          "term": "polytechnic institute",
+          "heading": false
+        },
+        {
+          "term": "w3c",
+          "heading": true
+        },
+        {
+          "term": "university",
+          "heading": false
+        },
+        {
+          "term": "usa",
+          "heading": false
+        }
+      ],
+      "extract": "This version: http://www.w3.org/TR/2013/REC-prov-o-20130430/ Latest published version: http://www.w3.org/TR/prov-o/ Implementation report: http://www.w3.org/TR/2013/NOTE-prov-implementations-20130430/ Previous version: http://www.w3.org/TR/2013/PR-prov-o-20130312/ Editors: Timothy Lebo, Rensselaer Polytechnic Institute, USA Satya Sahoo, Case Western Reserve University, USA Deborah McGuinness, Rensselaer Polytechnic",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 102,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prov ontology",
+          "heading": false
+        },
+        {
+          "term": "owl",
+          "heading": false
+        },
+        {
+          "term": "provenance information",
+          "heading": false
+        },
+        {
+          "term": "prov-o",
+          "heading": false
+        }
+      ],
+      "extract": "The PROV Ontology (PROV-O) expresses the PROV Data Model [PROV-DM] using the OWL2 Web Ontology Language (OWL2) [OWL2- OVERVIEW]. It provides a set of classes, properties, and restrictions that can be used to represent and interchange provenance information generated in different systems and under different contexts. It can also be specialized to create new classes and properties to model provenance information for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-status-of-this-document",
+      "number": null,
+      "title": "Status of This Document",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 45,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "status",
+          "heading": true
+        },
+        {
+          "term": "document",
+          "heading": true
+        },
+        {
+          "term": "w3c",
+          "heading": false
+        }
+      ],
+      "extract": "This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.",
+      "extractCut": false
+    },
+    {
+      "id": "sec-004-prov-family-of-documents",
+      "number": null,
+      "title": "PROV Family of Documents",
+      "level": 3,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 198,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prov",
+          "heading": true
+        },
+        {
+          "term": "prov data",
+          "heading": false
+        },
+        {
+          "term": "documents",
+          "heading": true
+        },
+        {
+          "term": "prov-overview",
+          "heading": false
+        },
+        {
+          "term": "prov-constraints",
+          "heading": false
+        },
+        {
+          "term": "prov-dc",
+          "heading": false
+        },
+        {
+          "term": "prov-sem",
+          "heading": false
+        }
+      ],
+      "extract": "This document is part of the PROV family of documents, a set of documents defining various aspects that are necessary to achieve the vision of inter-operable interchange of provenance information in heterogeneous environments such as the Web. These documents are listed below. Please consult the [PROV-OVERVIEW] for a guide to reading these documents. PROV-OVERVIEW (Note), an overview of the PROV family of documents",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-endorsed-by-w3c",
+      "number": null,
+      "title": "Endorsed By W3C",
+      "level": 3,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 74,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "w3c",
+          "heading": true
+        },
+        {
+          "term": "endorsed",
+          "heading": true
+        },
+        {
+          "term": "director",
+          "heading": false
+        }
+      ],
+      "extract": "This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread deployment. This enhances the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-please-send-comments",
+      "number": null,
+      "title": "Please Send Comments",
+      "level": 3,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 105,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "w3c patent",
+          "heading": false
+        },
+        {
+          "term": "patent policy",
+          "heading": false
+        },
+        {
+          "term": "comments",
+          "heading": true
+        }
+      ],
+      "extract": "This document was published by the Provenance Working Group as a Recommendation. If you wish to make comments regarding this document, please send them to public-prov-comments@w3.org (subscribe, archives). All comments are welcome. This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-table-of-contents",
+      "number": null,
+      "title": "Table of Contents",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-008-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-11-compliance-with-this-document",
+      "number": "1.1",
+      "title": "Compliance with this Document",
+      "level": 3,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-010-12-notational-conventions",
+      "number": "1.2",
+      "title": "Notational Conventions",
+      "level": 3,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-011-13-namespaces",
+      "number": "1.3",
+      "title": "Namespaces",
+      "level": 3,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-012-2-prov-o-at-a-glance",
+      "number": "2",
+      "title": "PROV-O at a glance",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 638,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prov ontology",
+          "heading": false
+        },
+        {
+          "term": "prov-o",
+          "heading": true
+        },
+        {
+          "term": "prov-o classes",
+          "heading": false
+        },
+        {
+          "term": "represent provenance",
+          "heading": false
+        },
+        {
+          "term": "prov data",
+          "heading": false
+        },
+        {
+          "term": "ontology language",
+          "heading": false
+        },
+        {
+          "term": "namespace prefixes",
+          "heading": false
+        },
+        {
+          "term": "provenance information",
+          "heading": false
+        }
+      ],
+      "extract": "3. The PROV-O Ontology Description 3.1 Starting Point Terms 3.2 Expanded Terms 3.3 Qualified Terms 4. Cross reference for PROV-O classes and properties 4.1 Starting Point Terms 4.2 Expanded Terms 4.3 Qualified Terms 4.4 Term Index A. PROV-O OWL Profile B. Names of inverse properties C. Changes since WD-prov-o-20120724 D. Changes since CR-prov-o-20121211 E. Changes since PR-prov-o-20130312 F. Acknowledgements G.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-31-starting-point-terms",
+      "number": "3.1",
+      "title": "Starting Point Terms",
+      "level": 3,
+      "pageStart": 3,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1251,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "starting point",
+          "heading": true
+        },
+        {
+          "term": "aggregationactivity prov",
+          "heading": false
+        },
+        {
+          "term": "activity prov",
+          "heading": false
+        },
+        {
+          "term": "entity prov",
+          "heading": false
+        },
+        {
+          "term": "wasattributedto prov",
+          "heading": false
+        },
+        {
+          "term": "wasinformedby prov",
+          "heading": false
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "heading": false
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "heading": false
+        }
+      ],
+      "extract": "Starting Point classes and properties provide the basis for the rest of the PROV Ontology and thus it is recommended that readers become comfortable with how to apply these terms before continuing to the remaining categories. These terms are used to create simple provenance descriptions that can be elaborated using terms from other categories. The classes and properties in this category are listed below and are",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-32-expanded-terms",
+      "number": "3.2",
+      "title": "Expanded Terms",
+      "level": 3,
+      "pageStart": 6,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1968,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "derek prov",
+          "heading": false
+        },
+        {
+          "term": "post sioc",
+          "heading": false
+        },
+        {
+          "term": "post9821v sioc",
+          "heading": false
+        },
+        {
+          "term": "publicationactivity prov",
+          "heading": false
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "heading": false
+        },
+        {
+          "term": "datetime prov",
+          "heading": false
+        },
+        {
+          "term": "inc prov",
+          "heading": false
+        },
+        {
+          "term": "blog post",
+          "heading": false
+        }
+      ],
+      "extract": "The terms introduced in this section provide additional ways to describe the provenance among Entities, Activities, and Agents. The additional terms are illustrated in the following figure and can be separated into five different categories. generatedAtTime value hadMember invalidatedAtTime wasStartedBy / wasEndedBy wasInvalidatedBy wasInfluencedBy / wasQuotedFrom / wasRevisionOf / hadPrimarySource Activity Entity",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-33-qualified-terms",
+      "number": "3.3",
+      "title": "Qualified Terms",
+      "level": 3,
+      "pageStart": 10,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1150,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "entity prov",
+          "heading": false
+        },
+        {
+          "term": "activity prov",
+          "heading": false
+        },
+        {
+          "term": "qualify prov",
+          "heading": false
+        },
+        {
+          "term": "attime prov",
+          "heading": false
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "heading": false
+        },
+        {
+          "term": "qualifiedassociation prov",
+          "heading": false
+        },
+        {
+          "term": "association prov",
+          "heading": false
+        },
+        {
+          "term": "usage prov",
+          "heading": false
+        }
+      ],
+      "extract": "The Qualified Terms category is the result of applying the Qualification Pattern [LD-Patterns-QR] to the simple (unqualified) relations available in the Starting Point and Expanded categories. The terms in this category are for users who wish to provide further details about the provenance- related influence among Entities, Activities, and Agents. The Qualification Pattern restates an unqualified influence relation",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-41-starting-point-terms",
+      "number": "4.1",
+      "title": "Starting Point Terms",
+      "level": 3,
+      "pageStart": 13,
+      "pageEnd": 21,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2325,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "aggregatedbyregions prov",
+          "heading": false
+        },
+        {
+          "term": "illustrationactivity prov",
+          "heading": false
+        },
+        {
+          "term": "newspaper inc",
+          "heading": false
+        },
+        {
+          "term": "national newspaper",
+          "heading": false
+        },
+        {
+          "term": "bar chart",
+          "heading": false
+        },
+        {
+          "term": "derek",
+          "heading": false
+        },
+        {
+          "term": "aggregated data",
+          "heading": false
+        }
+      ],
+      "extract": "prov:used :aggregatedByRegions; ## the illustration activity used the aggregated data (to create the bar chart). . :aggregatedByRegions a prov:Entity . :illustrationActivity prov:qualifiedUsage [ ## Qualify how the :illustrationActivity a prov:Usage; ## used prov:entity :aggregatedByRegions; ## the Entity :aggregatedByRegions prov:atTime \"2011-07-14T03:03:03Z\"^^xsd:dateTime; ## Qualification: The aggregated data was",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-42-expanded-terms",
+      "number": "4.2",
+      "title": "Expanded Terms",
+      "level": 3,
+      "pageStart": 21,
+      "pageEnd": 33,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2959,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prefix prov",
+          "heading": false
+        },
+        {
+          "term": "forecast prov",
+          "heading": false
+        },
+        {
+          "term": "invalidation prov",
+          "heading": false
+        },
+        {
+          "term": "prefix rdfs",
+          "heading": false
+        },
+        {
+          "term": "london forecast",
+          "heading": false
+        },
+        {
+          "term": "wasattributedto prov",
+          "heading": false
+        },
+        {
+          "term": "super-properties prov",
+          "heading": false
+        },
+        {
+          "term": "specializationof prov",
+          "heading": false
+        }
+      ],
+      "extract": "The additional terms used to describe relations among Starting Point classes are discussed in Section 3.2. prov:Collection prov:EmptyCollection prov:Bundle prov:Person prov:SoftwareAgent prov:Organization prov:Location prov:alternateOf prov:specializationOf prov:generatedAtTime prov:hadPrimarySource prov:value prov:wasQuotedFrom prov:wasRevisionOf prov:invalidatedAtTime prov:wasInvalidatedBy prov:hadMember",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-43-qualified-terms",
+      "number": "4.3",
+      "title": "Qualified Terms",
+      "level": 3,
+      "pageStart": 33,
+      "pageEnd": 50,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 4845,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prefix prov",
+          "heading": false
+        },
+        {
+          "term": "entity prov",
+          "heading": false
+        },
+        {
+          "term": "activity prov",
+          "heading": false
+        },
+        {
+          "term": "chart prov",
+          "heading": false
+        },
+        {
+          "term": "qualifies prov",
+          "heading": false
+        },
+        {
+          "term": "invalidation prov",
+          "heading": false
+        },
+        {
+          "term": "derivation prov",
+          "heading": false
+        },
+        {
+          "term": "derek prov",
+          "heading": false
+        }
+      ],
+      "extract": "The terms used to qualify the Starting Point and Expanded properties are discussed in Section 3.3. prov:Influence prov:EntityInfluence prov:Usage prov:Start prov:End prov:Derivation prov:PrimarySource prov:Quotation prov:Revision prov:ActivityInfluence prov:Generation prov:Communication prov:Invalidation prov:AgentInfluence prov:Attribution prov:Association prov:Plan prov:Delegation prov:InstantaneousEvent prov:Role",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-60-property-provqualifiedprimarysource-opback-to",
+      "number": null,
+      "title": "(60) Property: prov:qualifiedPrimarySource opback to qualified properties",
+      "level": 3,
+      "pageStart": 50,
+      "pageEnd": 52,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 746,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prov",
+          "heading": true
+        },
+        {
+          "term": "prefix prov",
+          "heading": false
+        },
+        {
+          "term": "entity prov",
+          "heading": false
+        },
+        {
+          "term": "qualifies prov",
+          "heading": false
+        },
+        {
+          "term": "super-properties prov",
+          "heading": false
+        },
+        {
+          "term": "nationalregionslist prov",
+          "heading": false
+        },
+        {
+          "term": "domain prov",
+          "heading": false
+        },
+        {
+          "term": "draft prov",
+          "heading": false
+        }
+      ],
+      "extract": "IRI: http://www.w3.org/ns/prov#qualifiedPrimarySource A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight. Because of the directness of primary sources, they 'speak for themselves' in ways that cannot be captured through the filter of secondary sources. As such, it is important",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-64-property-provqualifiedinvalidation-opback-to",
+      "number": null,
+      "title": "(64) Property: prov:qualifiedInvalidation opback to qualified properties",
+      "level": 3,
+      "pageStart": 52,
+      "pageEnd": 54,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 474,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prov",
+          "heading": true
+        },
+        {
+          "term": "prefix prov",
+          "heading": false
+        },
+        {
+          "term": "activity prov",
+          "heading": false
+        },
+        {
+          "term": "checking prov",
+          "heading": false
+        },
+        {
+          "term": "qualifies prov",
+          "heading": false
+        },
+        {
+          "term": "super-properties prov",
+          "heading": false
+        },
+        {
+          "term": "domain prov",
+          "heading": false
+        },
+        {
+          "term": "prefix rdfs",
+          "heading": false
+        }
+      ],
+      "extract": "back to qualified properties IRI: http://www.w3.org/ns/prov#qualifiedInvalidation Invalidation is the start of the destruction, cessation, or expiry of an existing entity by an activity. The entity is no longer available for use (or further invalidation) after invalidation. Any generation or usage of an entity precedes its invalidation. Example @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . @prefix xsd:",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-67-property-provqualifiedcommunication-opback-to",
+      "number": null,
+      "title": "(67) Property: prov:qualifiedCommunication opback to qualified properties",
+      "level": 3,
+      "pageStart": 54,
+      "pageEnd": 63,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2113,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prov",
+          "heading": true
+        },
+        {
+          "term": "prefix prov",
+          "heading": false
+        },
+        {
+          "term": "activity prov",
+          "heading": false
+        },
+        {
+          "term": "qualified properties",
+          "heading": true
+        },
+        {
+          "term": "chart prov",
+          "heading": false
+        },
+        {
+          "term": "derek prov",
+          "heading": false
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "heading": false
+        },
+        {
+          "term": "super-properties prov",
+          "heading": false
+        }
+      ],
+      "extract": "IRI: http://www.w3.org/ns/prov#qualifiedCommunication Communication is the exchange of an entity by two activities, one activity using the entity generated by the other. Example @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . back to qualified properties @prefix owl: <http://www.w3.org/2002/07/owl#> . @prefix prov: <http://www.w3.org/ns/prov#> . @prefix :",
+      "extractCut": true
+    },
+    {
+      "id": "sec-022-44-term-index",
+      "number": "4.4",
+      "title": "Term Index",
+      "level": 3,
+      "pageStart": 63,
+      "pageEnd": 65,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 266,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "entry",
+          "heading": false
+        },
+        {
+          "term": "cross reference",
+          "heading": false
+        },
+        {
+          "term": "term",
+          "heading": true
+        },
+        {
+          "term": "prov-o",
+          "heading": false
+        },
+        {
+          "term": "index",
+          "heading": true
+        },
+        {
+          "term": "entity",
+          "heading": false
+        },
+        {
+          "term": "activity",
+          "heading": false
+        },
+        {
+          "term": "agent",
+          "heading": false
+        }
+      ],
+      "extract": "The PROV-O terms in this cross reference are shown below alphabetically, along with their entry number. Table 4: Term Index. PROV-O Term Position within Cross Reference actedOnBehalfOf Entry 12 Activity Entry 2 activity Entry 75 ActivityInfluence Entry 45 Agent Entry 3 agent Entry 76 AgentInfluence Entry 49 alternateOf Entry 20 Association Entry 51 atLocation Entry 34 atTime Entry 79 Attribution Entry 50 Bundle",
+      "extractCut": true
+    },
+    {
+      "id": "sec-023-a-prov-o-owl-profile",
+      "number": null,
+      "title": "A. PROV-O OWL Profile",
+      "level": 2,
+      "pageStart": 65,
+      "pageEnd": 65,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 353,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "owl",
+          "heading": true
+        },
+        {
+          "term": "domain prov",
+          "heading": false
+        },
+        {
+          "term": "activity prov",
+          "heading": false
+        },
+        {
+          "term": "hadactivity rdfs",
+          "heading": false
+        },
+        {
+          "term": "wasinfluencedby rdfs",
+          "heading": false
+        },
+        {
+          "term": "hadrole rdfs",
+          "heading": false
+        },
+        {
+          "term": "agent prov",
+          "heading": false
+        },
+        {
+          "term": "atlocation rdfs",
+          "heading": false
+        }
+      ],
+      "extract": "This section is non-normative. To encourage widespread adoption, PROV-O's design is intentionally minimal and lightweight. Because the OWL 2 RL profile is aimed at RDF applications that require scalable reasoning without sacrificing too much expressive power [OWL2-PRIMER], it served as a baseline for all axioms included in PROV-O. The PROV-O axioms that do not suit the OWL 2 RL profile are listed in Table 5. All",
+      "extractCut": true
+    },
+    {
+      "id": "sec-024-b-names-of-inverse-properties",
+      "number": null,
+      "title": "B. Names of inverse properties",
+      "level": 2,
+      "pageStart": 65,
+      "pageEnd": 67,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 784,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "entity prov",
+          "heading": false
+        },
+        {
+          "term": "activity prov",
+          "heading": false
+        },
+        {
+          "term": "union prov",
+          "heading": false
+        },
+        {
+          "term": "inverse",
+          "heading": true
+        },
+        {
+          "term": "invalidated prov",
+          "heading": false
+        },
+        {
+          "term": "derivation prov",
+          "heading": false
+        },
+        {
+          "term": "alternateof prov",
+          "heading": false
+        },
+        {
+          "term": "wasinfluencedby prov",
+          "heading": false
+        }
+      ],
+      "extract": "To maximize interoperability, PROV-O intentionally avoids defining too many properties' inverses. In fact, it only defines two (prov:generated and prov:invalidated). When all inverses are defined for all properties, modelers may choose from two logically equivalent properties when making each assertion. Although the two options may be logically equivalent, developers consuming the assertions may need to exert extra",
+      "extractCut": true
+    },
+    {
+      "id": "sec-025-c-changes-since-wd-prov-o-20120724",
+      "number": null,
+      "title": "C. Changes since WD-prov-o-20120724",
+      "level": 2,
+      "pageStart": 67,
+      "pageEnd": 67,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 222,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prov",
+          "heading": false
+        },
+        {
+          "term": "added",
+          "heading": false
+        },
+        {
+          "term": "wasinformedby",
+          "heading": false
+        },
+        {
+          "term": "subproperty",
+          "heading": false
+        },
+        {
+          "term": "instantaneousevent",
+          "heading": false
+        },
+        {
+          "term": "trig",
+          "heading": false
+        },
+        {
+          "term": "qualifiedcommunication",
+          "heading": false
+        },
+        {
+          "term": "owl",
+          "heading": false
+        }
+      ],
+      "extract": "This section is non-normative. Restated prov:hadRole's domain to 'Association or InstantaneousEvent' instead of the original that enumerated the subclasses of InstantaneousEvent ('Association or End or Generation or Invalidation or Start or Usage'). Renamed prov:Source to prov:PrimarySource and prov:qualifiedSource to prov:qualifiedPrimarySource. Examples have been rewritten to avoid usage of TriG named graph syntax",
+      "extractCut": true
+    },
+    {
+      "id": "sec-026-d-changes-since-cr-prov-o-20121211",
+      "number": null,
+      "title": "D. Changes since CR-prov-o-20121211",
+      "level": 2,
+      "pageStart": 67,
+      "pageEnd": 68,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 187,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "updated prov",
+          "heading": false
+        },
+        {
+          "term": "cross reference",
+          "heading": false
+        },
+        {
+          "term": "entity",
+          "heading": false
+        },
+        {
+          "term": "added",
+          "heading": false
+        },
+        {
+          "term": "exemplar",
+          "heading": false
+        },
+        {
+          "term": "prov-dm",
+          "heading": false
+        },
+        {
+          "term": "changed",
+          "heading": false
+        }
+      ],
+      "extract": "This section is non-normative. Updated exemplar in cross reference entry prov:hadGeneration to include prov:activity property. Reordered class and predicate terms from alphabetical to a more natural narrative-based order. Added Term Index to aid reading this document in printed form. Fixed typo 'iteself' to 'itself'. Removed inaccurate property characteristics (AsymmetricProperty, IrreflexiveProperty) in third",
+      "extractCut": true
+    },
+    {
+      "id": "sec-027-e-changes-since-pr-prov-o-20130312",
+      "number": null,
+      "title": "E. Changes since PR-prov-o-20130312",
+      "level": 2,
+      "pageStart": 68,
+      "pageEnd": 68,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 22,
+      "summary": null,
+      "keywords": [],
+      "extract": "This section is non-normative. Fixed typo in alternateOf example: :london_forecast_043 became :london_forecast_0413 Changed capitalization in definitions for Organization (new) and Person (new).",
+      "extractCut": false
+    },
+    {
+      "id": "sec-028-f-acknowledgements",
+      "number": null,
+      "title": "F. Acknowledgements",
+      "level": 2,
+      "pageStart": 68,
+      "pageEnd": 68,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 528,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "invited expert",
+          "heading": false
+        },
+        {
+          "term": "rensselaer polytechnic",
+          "heading": false
+        },
+        {
+          "term": "polytechnic institute",
+          "heading": false
+        },
+        {
+          "term": "w3c ercim",
+          "heading": false
+        },
+        {
+          "term": "national archives",
+          "heading": false
+        },
+        {
+          "term": "w3c mit",
+          "heading": false
+        },
+        {
+          "term": "working group",
+          "heading": false
+        },
+        {
+          "term": "page cross",
+          "heading": false
+        }
+      ],
+      "extract": "This section is non-normative. This document has been produced by the PROV Working Group, and its contents reflect extensive discussion within the Working Group as a whole. The editors extend special thanks to Sandro Hawke (W3C/MIT) and Ivan Herman (W3C/ERCIM), W3C contacts for the PROV Working Group. The editors acknowledge valuable contributions from the following: Tom Baker, David Booth, Robert Freimuth, Satrajit",
+      "extractCut": true
+    },
+    {
+      "id": "sec-029-g-references",
+      "number": null,
+      "title": "G. References",
+      "level": 2,
+      "pageStart": 68,
+      "pageEnd": 68,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-030-g1-normative-references",
+      "number": null,
+      "title": "G.1 Normative references",
+      "level": 3,
+      "pageStart": 68,
+      "pageEnd": 69,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 154,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "paolo missier",
+          "heading": false
+        },
+        {
+          "term": "w3c recommendation",
+          "heading": false
+        },
+        {
+          "term": "luc moreau",
+          "heading": false
+        },
+        {
+          "term": "april",
+          "heading": false
+        },
+        {
+          "term": "url",
+          "heading": false
+        },
+        {
+          "term": "eds",
+          "heading": false
+        }
+      ],
+      "extract": "[IRI] M. Duerst, M. Suignard. Internationalized Resource Identifiers (IRI). January 2005. Internet RFC 3987. URL: http://www.ietf.org/rfc/rfc3987.txt [OWL2-OVERVIEW] W3C OWL Working Group. OWL 2 Web Ontology Language: Overview. 27 October 2009. W3C Recommendation. URL: http://www.w3.org/TR/2009/REC-owl2-overview-20091027/ [PROV-CONSTRAINTS] James Cheney; Paolo Missier; Luc Moreau; eds. Constraints of the PROV Data",
+      "extractCut": true
+    },
+    {
+      "id": "sec-031-g2-informative-references",
+      "number": null,
+      "title": "G.2 Informative references",
+      "level": 3,
+      "pageStart": 69,
+      "pageEnd": 69,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 234,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "w3c note",
+          "heading": false
+        },
+        {
+          "term": "w3c recommendation",
+          "heading": false
+        },
+        {
+          "term": "luc moreau",
+          "heading": false
+        },
+        {
+          "term": "paul groth",
+          "heading": false
+        },
+        {
+          "term": "april",
+          "heading": false
+        },
+        {
+          "term": "eds",
+          "heading": false
+        },
+        {
+          "term": "url",
+          "heading": false
+        },
+        {
+          "term": "prov",
+          "heading": false
+        }
+      ],
+      "extract": "[LD-Patterns-QR] Leigh Dodds; Ian Davis. Qualified Relation. modified 31 May 2012, accessed 01 June 2012 URL: http://patterns.dataincubator.org/book/qualified-relation.html [OWL2-PRIMER] Pascal Hitzler; Markus Krötzsch; Bijan Parsia; Peter F. Patel-Schneider; Sebastian Rudolph. OWL 2 Web Ontology Language:Primer. 27 October 2009. W3C Recommendation. URL: http://www.w3.org/TR/2009/REC-owl2-primer-20091027/ [PROV-AQ]",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "entity prov",
+      "heading": true
+    },
+    {
+      "term": "activity prov",
+      "heading": true
+    },
+    {
+      "term": "prefix prov",
+      "heading": false
+    },
+    {
+      "term": "wasattributedto prov",
+      "heading": true
+    },
+    {
+      "term": "invalidation prov",
+      "heading": false
+    },
+    {
+      "term": "agent prov",
+      "heading": true
+    },
+    {
+      "term": "derivation prov",
+      "heading": false
+    },
+    {
+      "term": "wasgeneratedby prov",
+      "heading": true
+    },
+    {
+      "term": "wasassociatedwith prov",
+      "heading": true
+    },
+    {
+      "term": "wasderivedfrom prov",
+      "heading": true
+    },
+    {
+      "term": "derek prov",
+      "heading": false
+    },
+    {
+      "term": "influence prov",
+      "heading": false
+    }
+  ]
+}
