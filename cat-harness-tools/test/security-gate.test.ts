@@ -70,3 +70,22 @@ describe("action pinning follows the owner's staging ruling", () => {
     expect(unpinnedActions(root)!.total).toBe(0);
   });
 });
+
+describe("a staging workflow that holds a write token is NOT exempt (owner 2026-10-07, roast 1ygp L4.1)", () => {
+  test("an unpinned action in it blocks", () => {
+    const root = mkdtempSync(join(tmpdir(), "sg-write-"));
+    mkdirSync(join(root, ".github", "workflows"), { recursive: true });
+    writeFileSync(join(root, ".github", "workflows", "feature-staging.yml"), "permissions:\n  contents: write\njobs:\n  a:\n    steps:\n      - uses: actions/checkout@v4\n");
+    const [published] = actionPinning(root);
+    expect(published!.blocking).toBe(true);
+    expect(published!.state).toBe("fail");
+  });
+});
+
+describe("checks moved into a layer's checkoutScripts are still run (#2448)", () => {
+  test("a layer script is found and run, not reported unknown", () => {
+    // check:bun-pin lives in cat-harness-tools/package.json checkoutScripts since #2448.
+    const r = runCheck("check:bun-pin", true);
+    expect(r.state).not.toBe("unknown");
+  });
+});

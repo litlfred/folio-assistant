@@ -21,12 +21,14 @@
  * | `fail`    | the check ran and refused                 | yes (blocking checks) |
  * | `unknown` | the check could not be run                | yes: could-not-check is never clean |
  *
- * Action SHA pinning BLOCKS for workflows that publish or run on main, and is
- * advisory for staging-only ones (owner, 2026-10-07). An `advisory` check
- * (dependency advisories, staging pinning) is reported in
- * the same three states and never blocks. Pinning was advisory on day one,
- * when 0 of 240 `uses:` lines were pinned; `bun run actions:pin` pinned the
- * 216 outside staging the same day, and only then did it become blocking.
+ * Action SHA pinning BLOCKS for every workflow except a staging-only one that
+ * holds no write token and has no `pull_request_target` trigger, which is
+ * reported as advisory (owner, 2026-10-07, twice: *"unpinned on staging"*,
+ * then *"pin write-token workflows"* once the roast found a staging workflow
+ * that could rewrite the live site; bean `1ygp` L4.1). `stagingExempt` in
+ * `pin-actions.ts` decides that from what the workflow can do, never from its
+ * name. An `advisory` check (dependency advisories, exempt staging pinning)
+ * is reported in the same three states and never blocks.
  *
  * ## Every subprocess is argv, never a shell string
  *
@@ -35,8 +37,8 @@
  * the `secure-code-authoring` voice's `scz-value-never-becomes-program-text`.
  *
  * Usage:
- *   bun run security:gate            # exit 1 on a blocking fail or unknown
- *   bun run security:gate --json     # machine-readable result on stdout
+ *   bun run cat security:gate            # exit 1 on a blocking fail or unknown
+ *   bun run cat security:gate --json     # machine-readable result on stdout
  *
  * @graphNode tool
  * @covers none — it re-runs other gates by name and reads .github/workflows/, which is not a declared graph typology; the kinds belong to the gates it calls
@@ -44,7 +46,8 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { parseUses, STAGING_ONLY_WORKFLOWS } from "./pin-actions.ts";
+import { scriptTable, type ScriptEntry } from "../../cat-harness/schemas/script-table.ts";
+import { parseUses, stagingExempt } from "./pin-actions.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..");
 
@@ -69,11 +72,21 @@ export const SECURITY_CHECKS: ReadonlyArray<{ script: string; blocking: boolean;
 
 /** Run one package script by NAME, as argv. */
 export function runCheck(script: string, blocking: boolean, root = ROOT): GateResult {
-  const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf-8")) as { scripts?: Record<string, string> };
-  if (!pkg.scripts?.[script]) {
-    return { check: script, blocking, state: "unknown", detail: "no such package.json script: the check could not be run" };
+  // Looked up across the root `scripts` AND every layer's `checkoutScripts`
+  // (#2448). Reading the root manifest alone made every moved check
+  // `unknown`, so the gate refused every run from c2df3a0 on.
+  let entry: ScriptEntry | undefined;
+  try {
+    entry = scriptTable(root).get(script);
+  } catch (e) {
+    return { check: script, blocking, state: "unknown", detail: `the script table could not be read: ${String(e).split("\n")[0]}` };
   }
-  const p = Bun.spawnSync(["bun", "run", script], { cwd: root, stdout: "pipe", stderr: "pipe" });
+  if (!entry) {
+    return { check: script, blocking, state: "unknown", detail: "no such script in any manifest: the check could not be run" };
+  }
+  // A layer's script runs through the `cat` runner; a root one runs directly.
+  const argv = entry.manifest === "package.json" ? ["bun", "run", script] : ["bun", "run", "cat", script];
+  const p = Bun.spawnSync(argv, { cwd: root, stdout: "pipe", stderr: "pipe" });
   // Bun echoes "$ bun run …" on stderr, so prefer the check's own last stdout line.
   const lastLine = (t: string) => t.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("$ ")).pop();
   const tail = (lastLine(p.stdout.toString()) ?? lastLine(p.stderr.toString()) ?? "").slice(0, 300);
@@ -83,13 +96,13 @@ export function runCheck(script: string, blocking: boolean, root = ROOT): GateRe
 }
 
 /**
- * Third-party `uses:` lines not pinned to a full commit SHA, split by the
- * owner's ruling of 2026-10-07 (*"when published, make it unpinned on
- * staging"*): a workflow that publishes or runs on main must pin, and a
- * staging-only workflow may not. Local (`./`) and `docker://` references are
- * not third-party actions, and this repository's own reusable workflows are
- * first-party. Parsing and the staging set come from `pin-actions.ts`, so the
- * tool that pins and the gate that checks cannot disagree about a line.
+ * Third-party `uses:` lines not pinned to a full commit SHA, split by
+ * {@link stagingExempt}: every workflow must pin unless it is a staging-only
+ * workflow with no write token and no `pull_request_target` trigger. Local
+ * (`./`) and `docker://` references are not third-party actions, and this
+ * repository's own reusable workflows are first-party. Parsing and the
+ * exemption come from `pin-actions.ts`, so the tool that pins and the gate
+ * that checks cannot disagree about a line.
  */
 export function unpinnedActions(root = ROOT): { total: number; unpinned: string[]; stagingUnpinned: string[] } | undefined {
   const dir = join(root, ".github", "workflows");
@@ -98,12 +111,14 @@ export function unpinnedActions(root = ROOT): { total: number; unpinned: string[
   const stagingUnpinned: string[] = [];
   let total = 0;
   for (const f of readdirSync(dir).filter((n) => /\.ya?ml$/.test(n)).sort()) {
-    readFileSync(join(dir, f), "utf-8").split("\n").forEach((line, i) => {
+    const text = readFileSync(join(dir, f), "utf-8");
+    const exempt = stagingExempt(f, text);
+    text.split("\n").forEach((line, i) => {
       const u = parseUses(line);
       if (!u || u.firstParty) return;
       total++;
       if (u.pinned) return;
-      (STAGING_ONLY_WORKFLOWS.has(f) ? stagingUnpinned : unpinned).push(`${f}:${i + 1} ${u.action}@${u.ref}`);
+      (exempt ? stagingUnpinned : unpinned).push(`${f}:${i + 1} ${u.action}@${u.ref}`);
     });
   }
   return { total, unpinned, stagingUnpinned };
@@ -115,13 +130,13 @@ export function actionPinning(root = ROOT): GateResult[] {
   if (r === undefined) return [{ check: "action-sha-pinning", blocking: true, state: "unknown", detail: "no .github/workflows directory" }];
   const published: GateResult =
     r.unpinned.length === 0
-      ? { check: "action-sha-pinning", blocking: true, state: "pass", detail: `every third-party uses: outside staging-only workflows is SHA-pinned (${r.total} in all)` }
-      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside staging — run \`bun run actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
+      ? { check: "action-sha-pinning", blocking: true, state: "pass", detail: `every third-party uses: outside exempt staging workflows (no write token, no pull_request_target) is SHA-pinned (${r.total} in all)` }
+      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside exempt staging workflows — run \`bun run cat actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
   const staging: GateResult = {
-    check: "action-sha-pinning (staging-only)",
+    check: "action-sha-pinning (exempt staging)",
     blocking: false,
     state: r.stagingUnpinned.length === 0 ? "pass" : "fail",
-    detail: r.stagingUnpinned.length === 0 ? "staging-only workflows are pinned too" : `${r.stagingUnpinned.length} unpinned in staging-only workflows, allowed by the owner's ruling`,
+    detail: r.stagingUnpinned.length === 0 ? "exempt staging workflows are pinned too, or there are none" : `${r.stagingUnpinned.length} unpinned in exempt staging workflows (no write token), allowed by the owner's ruling`,
   };
   return [published, staging];
 }
