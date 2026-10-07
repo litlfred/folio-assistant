@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ixmq
 title: 'MERGE RELEASE: capture a person''s merge decision on the queue entry, bound to the SHA, and read it back at landing'
-status: in-progress
+status: completed
 type: feature
 created_at: 2026-10-04T13:21:37Z
-updated_at: 2026-10-04T13:21:37Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-hfag
 blocked_by:
     - folio-assistant-najo
@@ -30,3 +30,6 @@ Requested by the owner 2026-10-04 (session https://claude.ai/code/session_01Ga3H
 - [ ] C — read back: `merge:steward` shows release state per PR; `releaseCovers(entry, head)` is what `merge:guard` (#2000, `uoob`) calls before landing.
 - [ ] D — `Task_Release` and `merge-queue.md` name the record and the command.
 - [ ] E — `TrainMemberEvidence` links the release it executed (with `30jr`).
+
+## Completed on landed evidence
+Landed on main in PR #2091 (Merge release: capture a person merge decision on the queue).

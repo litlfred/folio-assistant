@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8iqc
 title: 'Library QA after ingestion: titles, bibliographic metadata, placeholder blocks and summary backlog are never judged'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-01T16:39:43Z
-updated_at: 2026-10-01T19:40:22Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -25,3 +25,6 @@ Owner ruling on #1794, option 1 ("fix the viewer now"): a withheld entry's row s
 ## 2026-10-01 — title authority order implemented (PR #1822, stacked on #1799)
 
 The owner ruled, choosing option 2 of 4: catalogue record (DC) → referenced.json → PDF Info /Title → slug, and never the page-1 parse. That is now implemented in one resolver (cat-harness/content/pipeline/library-title.ts), used by gen-library-jsonld and check-library-qa. Manifests record meta.title_source and meta.title_from. pdf-pages.py now writes metadata.docinfo, and --docinfo-into backfilled 23 entries after checking each sha256. 59 entries: dc-record 3, referenced 2, pdf-info 29, text-heading 6, slug 19 (was 25 slug/file-name). who-pub-tps-931: Abies -> WHO editorial style manual. QA: title-missing 25->19, title-implausible 15->1. All 8 mutation runs went red. Open interpretation for the owner: text/notebook sources take their declared heading (text-heading) at the pdf-info rank.
+
+## Completed on landed evidence
+Landed on main in PR #1822 (Library titles: catalogue record → referenced.json → PDF /Title → slug (#1794, stacked on #1799)).

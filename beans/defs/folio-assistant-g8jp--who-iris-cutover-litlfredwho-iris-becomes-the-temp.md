@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g8jp
 title: 'who-iris cutover: litlfred/who-iris becomes the (temporary) authoritative source; folio-assistant reads it by remote subscription'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T19:12:02Z
-updated_at: 2026-10-06T21:59:21Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -42,3 +42,5 @@ The cutover, in the same change that removes `who-iris/`, needs three steps:
 
 #2326 (0mpw) owns adding `mountedInstanceRoots(scope)` to `topLevelDeclarations`.
 
+## Completed on landed evidence
+Landed on main in PR #2324 (who-iris pre-cutover: who-iris reaches only folio-assistant by remote subscription).

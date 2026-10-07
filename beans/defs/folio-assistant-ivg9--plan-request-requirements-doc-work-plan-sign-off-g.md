@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ivg9
 title: PLAN REQUEST → requirements doc + work plan + sign-off gate; successCriteria on requirement statements (#2405)
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-07T09:36:38Z
-updated_at: 2026-10-07T10:39:49Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-ahvw
 ---
 
@@ -22,3 +22,6 @@ Issue: https://github.com/litlfred/folio-assistant/issues/2405. Owner approved 2
 - [ ] bun run gates green (or unrelated red documented)
 
 Holder: claude/plan-requires-requirements-2405 (session https://claude.ai/code/session_01SohDE1SrrLGXAqW3LkZzod)
+
+## Completed on landed evidence
+Landed on main in PR #1980 / commit c3ae8157d3ed (PLAN REQUEST → requirements doc + work plan + sign-off gate; tick ivg9).
