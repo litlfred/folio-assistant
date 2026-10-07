@@ -1,13 +1,11 @@
 ---
 # folio-assistant-4tel
 title: merge:main has no conflict pattern for translation-qa results, so it aborts
-status: in-progress
+status: completed
 type: bug
 priority: normal
-tags:
-    - ready-to-close
 created_at: 2026-10-04T18:25:31Z
-updated_at: 2026-10-06T18:58:30Z
+updated_at: 2026-10-07T11:50:33Z
 parent: folio-assistant-d33q
 ---
 
