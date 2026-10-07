@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -56,8 +56,6 @@ const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 // specs.
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = siteDirFor(ROOT);
-/** The instance's own segment, so the served path is composed and not spelled. */
-const INSTANCE = ROOT.split("/").filter(Boolean).pop() ?? "";
 
 /** Directories under the site whose `index.html` this generator wrote. */
 function dashboards(): string[] {
@@ -71,12 +69,14 @@ function dashboards(): string[] {
       if (!existsSync(page)) return false;
       try {
         const html = readFileSync(page, "utf8");
-        // STANDALONE pages only — the ones this test server can serve as a
-        // browser would see them. Since #1906 `todos/` is a THEMED page
-        // (Jekyll front matter, Liquid includes), and its unbuilt source is
-        // not what a reader gets; it is audited after rendering, with the
-        // same tags, in `todos-page-board.e2e.ts`.
-        return html.includes(MARKER) && /^\s*<!doctype html>/i.test(html);
+        // THEMED pages since #2418 — Jekyll front matter on the default
+        // layout, so the top band reaches them. This server has no Jekyll, so
+        // the body is served in a stand-in for the layout (`shell()` below).
+        // A page with Liquid in it (`todos/`, #1906) is not what a reader gets
+        // until it is built; it is audited after rendering, with the same
+        // tags, in `todos-page-board.e2e.ts`.
+        return html.includes(MARKER) && html.startsWith("---\nlayout: default\n") &&
+          !html.includes("{%");
       } catch {
         return false;
       }
@@ -85,6 +85,44 @@ function dashboards(): string[] {
 }
 
 const IDS = dashboards();
+
+const asset = (rel: string) => readFileSync(join(ROOT, SITE, rel), "utf8");
+
+/**
+ * A stand-in for the default layout: what it contributes to these pages and
+ * nothing more — both data metas from `head_custom.html`, the work-plan
+ * renderer and its styles, and the theme's dark ground, because the inks are
+ * written for that ground and an unstyled white page would fail contrast for
+ * a reason no reader sees. The band itself is `docs-ui.js`'s, covered by its
+ * own specs.
+ */
+function shell(id: string): string {
+  const body = asset(`${id}/index.html`).replace(/^---\n[\s\S]*?\n---\n/, "");
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${id}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="fa-beans-src" content="/assets/beans/index.json">
+<meta name="fa-todo-src" content="/assets/todos/index.json">
+<style>${asset("assets/css/work-plan.css")}</style>
+<style>html,body{background:#27262b;color:#fff;margin:0}main{padding:0 16px}</style></head><body>
+<main class="main-content" id="main-content">
+${body}
+</main>
+<script>${asset("assets/js/kg-render.js")}</script>
+<script>${asset("assets/js/work-plan.js")}</script></body></html>`;
+}
+
+async function open(page: Page, id: string): Promise<void> {
+  await page.route("http://site.test/**", (route) => {
+    const path = new URL(route.request().url()).pathname;
+    if (path === `/${id}/`) return route.fulfill({ contentType: "text/html", body: shell(id) });
+    const file = join(ROOT, SITE, path);
+    if (path.startsWith("/assets/") && existsSync(file)) {
+      return route.fulfill({ contentType: "application/json", body: readFileSync(file, "utf8") });
+    }
+    return route.fulfill({ status: 404, body: "not found" });
+  });
+  await page.goto(`http://site.test/${id}/`);
+}
 
 test.describe("every generated state dashboard is accessible", () => {
   test("there is at least one to audit", () => {
@@ -97,10 +135,10 @@ test.describe("every generated state dashboard is accessible", () => {
 
   for (const id of IDS) {
     test(`${id} has no WCAG A/AA violations`, async ({ page }) => {
-      await page.goto(`/${INSTANCE}/${SITE}/${id}/index.html`);
+      await open(page, id);
       const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
       expect(
-        violations.map((v) => `${v.id} [${v.impact}] ×${v.nodes.length} — ${v.help}`),
+        violations.map((v) => `${v.id} [${v.impact}] ×${v.nodes.length} — ${v.help}: ` + v.nodes.slice(0, 3).map((n) => `${n.target.join(" ")} (${n.failureSummary ?? ""})`).join("; ")),
       ).toEqual([]);
     });
 
@@ -109,7 +147,7 @@ test.describe("every generated state dashboard is accessible", () => {
       // needs horizontal scrolling to read is a page that needs a drag, and a
       // drag is the affordance this instance's own UI rules avoid.
       await page.setViewportSize({ width: 390, height: 844 });
-      await page.goto(`/${INSTANCE}/${SITE}/${id}/index.html`);
+      await open(page, id);
       const { scrollW, clientW } = await page.evaluate(() => ({
         scrollW: document.documentElement.scrollWidth,
         clientW: document.documentElement.clientWidth,
