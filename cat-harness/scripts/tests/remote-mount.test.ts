@@ -24,6 +24,8 @@ import { instanceRootsIn } from "../../schemas/instance-roots.ts";
 import { RemoteSourceSchema, resolveSubgraphSource } from "../../schemas/subgraph-source.ts";
 import { MountLockSchema, mountedInstanceRoots } from "../../schemas/remote-mount.ts";
 import { checkRemote, exitCode, mountRemote, planRemote, remoteFanOut, summarise } from "../remote-mount.ts";
+import { run as replayLocks } from "../mount-from-lock.ts";
+import { gitCorpus } from "../../schemas/git-corpus.ts";
 
 function git(cwd: string, ...args: string[]): string {
   const r = spawnSync("git", args, { cwd, encoding: "utf-8", env: { ...process.env, GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@t", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@t" } });
@@ -67,6 +69,8 @@ beforeAll(() => {
   boot = bareRepo(base, "boot", {
     "boot.json": decl("boot", { directories: [{ id: "boot-schemas", path: "schemas/", graphTypologies: ["code"] }] }),
     "schemas/floor.ts": "export const floor = 1;\n",
+    "ns.jsonld": '{"@context":{}}\n',
+    "README.md": "# boot\n",
   });
   up = bareRepo(
     base,
@@ -311,5 +315,82 @@ describe("mount trust (H8, bean `ieum`)", () => {
     const root = downstream(consentFor("2".repeat(40)));
     const r = mountRemote({ instanceRoot: root, urlFor });
     expect(r.plan.outcomes[0]!.detail).toContain("a moved pin asks again");
+  });
+});
+
+describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", () => {
+  test("19. `whole` mounts every tracked file at the instance root, locked as one `*` directory", () => {
+    const root = downstream({ overrides: { boot: { whole: true } } });
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    expect(Object.fromEntries(r.plan.outcomes.map((o) => [o.instance, o.state])).boot).toBe("mounted");
+    // the root files a declared-directories mount leaves behind
+    expect(readFileSync(join(root, "boot/ns.jsonld"), "utf-8")).toContain("@context");
+    expect(existsSync(join(root, "boot/README.md"))).toBe(true);
+    expect(existsSync(join(root, "boot/schemas/floor.ts"))).toBe(true);
+    // never the fetch's own repository
+    expect(existsSync(join(root, "boot/.git"))).toBe(false);
+    const lock = MountLockSchema.parse(JSON.parse(readFileSync(join(root, "down.mount-lock.json"), "utf-8")));
+    expect(lock.instances.find((i) => i.instance === "boot")!.directories).toMatchObject([{ id: "*", path: "boot", upstreamPath: "." }]);
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+  });
+
+  test("20. a committed lock replays on a fresh clone with no declaration reader, and verifies digests", () => {
+    const src = downstream({ overrides: { boot: { whole: true } } });
+    mountRemote({ instanceRoot: src, urlFor });
+    // A fresh checkout holding only the lock: what CI and session start see.
+    const fresh = join(base, `fresh-${++n}`);
+    mkdirSync(fresh, { recursive: true });
+    git(fresh, "init", "-q", "-b", "main");
+    writeFileSync(join(fresh, "down.mount-lock.json"), readFileSync(join(src, "down.mount-lock.json")));
+    writeFileSync(join(fresh, "down.json"), readFileSync(join(src, "down.json")));
+    // serve o/<name> under one prefix, as github.com would
+    const srv = join(base, `srv-${n}`, "o");
+    mkdirSync(srv, { recursive: true });
+    spawnSync("ln", ["-s", up.bare, join(srv, "up")]);
+    spawnSync("ln", ["-s", boot.bare, join(srv, "boot")]);
+    const prev = process.env.CAT_MOUNT_URL_PREFIX;
+    process.env.CAT_MOUNT_URL_PREFIX = `file://${dirname(srv)}`;
+    try {
+      const first = replayLocks(fresh, false);
+      expect(Object.fromEntries(first.outcomes.map((o) => [o.instance, o.state]))).toEqual({ base: "mounted", boot: "mounted", core: "mounted" });
+      expect(readFileSync(join(fresh, "boot/ns.jsonld"), "utf-8")).toContain("@context");
+      expect(existsSync(join(fresh, "core/scripts/run.ts"))).toBe(true);
+      // idempotent, and the offline check agrees
+      expect(replayLocks(fresh, false).outcomes.every((o) => o.state === "current")).toBe(true);
+      expect(replayLocks(fresh, true).outcomes.every((o) => o.state === "current")).toBe(true);
+      // the mounter that writes locks reads the replayed tree as its own
+      expect(checkRemote({ instanceRoot: fresh }).state).toBe("mounted");
+      // a repo-wide scan sees mounted files as it saw a submodule's: ignored by git, still corpus
+      const corpus = gitCorpus(fresh)!.map((f) => f.slice(fresh.length + 1));
+      expect(corpus).toContain("boot/ns.jsonld");
+      expect(corpus).toContain("core/scripts/run.ts");
+      expect(corpus).toContain("core/core.json");
+      expect(corpus.filter((f) => f === "boot/boot.json")).toHaveLength(1);
+      expect(gitCorpus(fresh, ["*.jsonld"])!.map((f) => f.slice(fresh.length + 1))).toEqual(["boot/ns.jsonld"]);
+      // an edit is reported, and a replay leaves it untouched
+      writeFileSync(join(fresh, "boot/README.md"), "edited\n");
+      const again = replayLocks(fresh, false).outcomes.find((o) => o.instance === "boot")!;
+      expect(again.state).toBe("missing");
+      expect(readFileSync(join(fresh, "boot/README.md"), "utf-8")).toBe("edited\n");
+    } finally {
+      if (prev === undefined) delete process.env.CAT_MOUNT_URL_PREFIX;
+      else process.env.CAT_MOUNT_URL_PREFIX = prev;
+    }
+  });
+
+  test("21. a lock whose digest the fetched bytes do not match is could-not-determine, and nothing is kept", () => {
+    const src = downstream({ overrides: { boot: { whole: true } } });
+    mountRemote({ instanceRoot: src, urlFor });
+    const fresh = join(base, `fresh-${++n}`);
+    mkdirSync(fresh, { recursive: true });
+    git(fresh, "init", "-q", "-b", "main");
+    const lock = JSON.parse(readFileSync(join(src, "down.mount-lock.json"), "utf-8"));
+    lock.instances = lock.instances.filter((i: { instance: string }) => i.instance === "boot");
+    lock.instances[0].repository = `file://${boot.bare}`;
+    lock.instances[0].directories[0].treeDigest = "0".repeat(64);
+    writeFileSync(join(fresh, "down.mount-lock.json"), JSON.stringify(lock));
+    const r = replayLocks(fresh, false);
+    expect(r.outcomes[0]!.state).toBe("could-not-determine");
+    expect(existsSync(join(fresh, "boot"))).toBe(false);
   });
 });

@@ -11,15 +11,33 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
-      "instructionLines": 164,
+      "instructionLines": 169,
       "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
       "name": "dublin-core-renderings",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/818a2f2b38d7a34b5df2a71ee562e30a89cd4350558c50e409ece1ce1447348d",
-        "bytes": 7458,
-        "sha256": "818a2f2b38d7a34b5df2a71ee562e30a89cd4350558c50e409ece1ce1447348d"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f",
+        "bytes": 7893,
+        "sha256": "015c3cf3dfb32e68d6aaf4b21e8bf371dd4263294756d67fe364056f54e1ff9f"
       },
       "title": "Dublin Core renderings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/oxigraph-catalogue-search",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-skills",
+      "instructionLines": 212,
+      "instructionsPath": "skills/library/catalogue/oxigraph-catalogue-search.md",
+      "name": "oxigraph-catalogue-search",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/da8629afe3a55c94b31f757412689d342c1f577e2036b9a62cc81b51b95cdb56",
+        "bytes": 9963,
+        "sha256": "da8629afe3a55c94b31f757412689d342c1f577e2036b9a62cc81b51b95cdb56"
+      },
+      "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery"
     }
   ],
   "holdsGraph": [

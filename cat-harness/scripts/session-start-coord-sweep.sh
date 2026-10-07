@@ -526,6 +526,18 @@ echo
 # No declaration is tip-keyed yet, so today this says "not enabled" and costs
 # one process. Guarded on `bun` because this sweep is CLI-independent by
 # design and must still work where only git is present.
+#
+# The REMOTE MOUNTS go first (bean `nn8e`, #2462): `bootstrap/` and
+# `bootstrap-tools/` are no longer submodules, and `state-mount.ts` cannot even
+# load without `bootstrap-tools`. `mount-from-lock.ts` replays the committed
+# lock with `node:*` only, so it runs on a fresh clone.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/mount-from-lock.ts" ]; then
+  lock_out="$(cd "$CHECKOUT_ROOT" && bun run "$REPO_ROOT/scripts/mount-from-lock.ts" --root "$CHECKOUT_ROOT" 2>&1)" || true
+  case "$lock_out" in
+    *"not-enabled"*|*"— OK"*) ;;
+    *) printf '%s\n\n' "$lock_out" ;;
+  esac
+fi
 if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/state-mount.ts" ]; then
   mount_out="$(cd "$CHECKOUT_ROOT" && bun run "$REPO_ROOT/scripts/state-mount.ts" 2>&1)" || true
   if [ -n "$mount_out" ]; then
