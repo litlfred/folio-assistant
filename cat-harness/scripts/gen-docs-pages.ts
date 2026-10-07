@@ -35,7 +35,7 @@
 import { markdownEditLink, repoOf } from "../src/core/edit-links.js";
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync, unlinkSync } from "node:fs";
 import { workflowFiles, corpusScopeFor } from "./known-skills.js";
-import { join, dirname, relative, resolve } from "node:path";
+import { join, dirname, relative, resolve, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { resolveTarget } from "../schemas/todo-index.js";
@@ -65,6 +65,7 @@ import { isTodoPage, todoPageHtml } from "./todo-page.ts";
 import { beanDefsDir, beanFindings, blockEdges, blockedBy, blocksOf, readBeans } from "./beans.js";
 import { milestoneRollup } from "./milestone-rollup.js";
 import { missingTopLevelKeys } from "./lib/json-shape.ts";
+import { publishedPagePath } from "./lib/jekyll-permalink.ts";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { THEMES, themeById } from "../schemas/themes.js";
@@ -102,6 +103,7 @@ const SOURCE_LOCALE = sourceLocale(INSTANCE_ROOT);
 // `content/` — without tripping the folio-emptiness gate.
 const SRC_DIR = join(INSTANCE_ROOT, "content", "docs");
 const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+
 /**
  * The forge this checkout points at.
  *
@@ -763,7 +765,7 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
   if (node.asset) {
     const a = node.asset;
     out.push(`<div class="bpmn-figure" id="figure-${node.id}">`);
-    out.push(`  <img src="${a.rendered}"`);
+    out.push(`  <img src="${siteAddressed(page, a.rendered)}"`);
     out.push(`       alt="${a.alt.replace(/"/g, "&quot;")}">`);
     out.push("</div>");
     out.push("");
@@ -771,7 +773,7 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
     // acts. Reading the XML and changing it are not the same request, and the
     // existing pages have always offered the first.
     if (a.sourceLinks && a.sourceLinks.length > 0) {
-      const rendered = a.sourceLinks.map((l) => `[${l.text}](${l.href})`);
+      const rendered = a.sourceLinks.map((l) => `[${l.text}](${siteAddressed(page, l.href)})`);
       if (a.linkStyle === "caption") {
         // Paragraph-level attribute list on the line BELOW, which is what
         // kramdown needs when several links share one class.
@@ -790,6 +792,23 @@ function emitNode(page: WebPage, node: WebPageNode): string[] {
   }
 
   return out;
+}
+
+/**
+ * A node's asset path (`assets/img/workflows/x.svg`), which the manifest
+ * writes relative to the page's SOURCE directory, addressed so it resolves from wherever
+ * the page is published. A relative path only meant that while every page sat
+ * at the root; since bean `kc7k` the docs-folder pages publish under
+ * `docs/cat-harness/`, so it is written through `relative_url`. An absolute
+ * URL, a site-absolute path or an anchor is left as written.
+ */
+function siteAddressed(page: WebPage, path: string): string {
+  if (/^([a-z][a-z0-9+.-]*:|\/|#|\{)/i.test(path)) return path;
+  // Relative to the page's SOURCE directory, as the manifest wrote it.
+  const dir = page.slug.includes("/") ? page.slug.slice(0, page.slug.lastIndexOf("/")) : "";
+  const site = posix.normalize(posix.join(dir, path));
+  if (site.startsWith("../")) return path;
+  return `{{ '/${site}' | relative_url }}`;
 }
 
 /** Where a page's content is authored — the file to edit instead of the output. */
@@ -1492,7 +1511,7 @@ function processHierarchy(): Record<string, string[]> {
         // `href="{{ "/x.html" | ... }}"`, which terminates the attribute at
         // the second character of the Liquid tag — valid Liquid, broken HTML,
         // and it renders as a link to the empty string.
-        pageHref: (page, node) => `{{ '/${page}.html' | relative_url }}#${node}`,
+        pageHref: (page, node) => `{{ '/${publishedPagePath(OUT_DIR, page)}' | relative_url }}#${node}`,
         // Each todo's own page (#1908) — a directory, so the href ends in `/`.
         todoPageHref: (id) => `{{ '/${todoPageSitePath(id)}' | relative_url }}`,
       }),
@@ -1538,7 +1557,7 @@ function processHierarchy(): Record<string, string[]> {
         todoPageHtml(item, {
           // The block's RENDERING, from the todo page two levels down. A fact
           // about renderings, so it lives on the page and never on the todo.
-          ...(item.target ? { targetHref: `../../${item.target.page}.html#${item.target.node}` } : {}),
+          ...(item.target ? { targetHref: `../../${publishedPagePath(OUT_DIR, item.target.page)}#${item.target.node}` } : {}),
         }),
         "data",
       );

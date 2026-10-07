@@ -8,4 +8,4 @@ decision is recorded, because there is no token on it until then.
 That is ordering, not enforcement: nothing yet stops an agent calling a
 capability tool directly. The case for making it binding — and the argument
 that the commit boundary is the right place — is in
-[Proposal: workflow orchestration](../proposals/workflow-orchestration.html).
+[Proposal: workflow orchestration]({{ '/proposals/workflow-orchestration.html' | relative_url }}).

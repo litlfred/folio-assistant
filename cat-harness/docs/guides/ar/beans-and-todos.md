@@ -72,7 +72,7 @@ _تم توليد هذه الصفحة من [`content/docs/beans-and-todos/`](http
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/bean-lifecycle.bpmn){: .fa-node-edit title="Edit processes/sdlc/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
-  <img src="../../ar/assets/img/workflows/bean-lifecycle.svg"
+  <img src="{{ '/ar/assets/img/workflows/bean-lifecycle.svg' | relative_url }}"
        alt="مخطط مسارات BPMN مع مسارين. في مسار الوكيل: يتم تحديد العمل الدائم، ويجري الوكيل بحثًا عن العنوان بدقة قبل إنشاء أي شيء، ثم تسأل بوابة عما إذا كان الـ bean موجودًا بالفعل. إذا لم يكن كذلك، يقوم بإنشائه؛ وإذا كان موجودًا، تسأل بوابة ثانية عن مالكه. الـ bean المملوك لشخص آخر يُوجَّه إلى المسار السفلي — جلسة موازية أو إنسان — حيث يكون الإجراء الوحيد هو تركه والتنسيق، منتهيًا هناك. أما الـ bean الخاص بالوكيل نفسه أو غير المحجوز فيُحجز كـ in-progress، ويُعمل عليه مع إبقاء المتن محدثًا، ثم يصل إلى بوابة نتائج ذات ثلاثة فروع: done يؤدي إلى complete، وnot wanted يؤدي إلى scrap مع بيان الأسباب وعدم الحذف أبدًا، وblocked يؤدي إلى تسجيل مانع التقدم وإعادته. وتلتقي الفروع الثلاثة عند حدث نهاية واحد، مع تسجيل الحالة.">
 </div>
 
@@ -180,7 +180,7 @@ _تم توليد هذه الصفحة من [`content/docs/beans-and-todos/`](http
 
 توضح بقية هذه الصفحة **ماهية** الـ bean. أما هذا القسم فيبيّن ما
 **يحتويه** المخزن حاليًا — مقروءًا بشكل مباشر من
-[`/assets/beans/index.json`](../../assets/beans/index.json)، وهو الإسقاط (projection)
+[`/assets/beans/index.json`]({{ '/assets/beans/index.json' | relative_url }})، وهو الإسقاط (projection)
 الذي يكتبه `gen-docs-pages.ts` من `beans/defs/` في كل بناء، إلى جانب فهرس المهام (todos)
 الذي نُشر منذ فترة أطول.
 
@@ -236,6 +236,6 @@ _تم توليد هذه الصفحة من [`content/docs/beans-and-todos/`](http
 <div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">
     تتطلب لوحة معلومات خطة العمل المباشرة تفعيل JavaScript. والإسقاط الذي تقرأه هو
-    <a href="../../ar/assets/beans/index.json">ملف JSON عادي</a> ويمكن قراءته مباشرة.
+    <a href="{{ '/ar/assets/beans/index.json' | relative_url }}">ملف JSON عادي</a> ويمكن قراءته مباشرة.
   </p>
 </div>

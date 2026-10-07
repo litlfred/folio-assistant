@@ -4,7 +4,7 @@
 # Does NOT include: Bun, Lean, MCP server (use host Bun for content pipeline)
 #
 # Build:
-#   docker build -t qou-latex -f scripts/docker-latex-build/Dockerfile .
+#   docker build -t qou-latex -f folio-assistant-sci/scripts/docker-latex-build/Dockerfile folio-assistant-sci/scripts/docker-latex-build
 #
 # Usage (compile PDF after running content pipeline on host):
 #   cd content && bun run pipeline/build.ts ...   # generates chapters/*.tex + main.tex
