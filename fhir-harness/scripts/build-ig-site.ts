@@ -36,6 +36,7 @@
  * @module fhir-harness/scripts/build-ig-site
  */
 
+import { EDIT_LINKS_RUNTIME } from "../../cat-harness/src/core/edit-links.js";
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
@@ -375,9 +376,7 @@ export function harnessLayout(topBar: string, tocNav: string, sectionLabel?: str
     '<main class="ig-main main-content" id="main-content">',
     IG_FIGURE_IMAGES_STAMP,
     "{{ content }}",
-    '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
-    '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
-    `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
+    ...igEditLines(),
     // Last on the page, as on the Publisher's. Only on pages that flag it
     // (`ig_footer`): the pages this build wrote, and the artefact pages
     // copied in, whose front matter (`ig_footer`, `ig_root`, `ig_prev`,
@@ -496,13 +495,33 @@ link(h,"ig-feedback",repo+"/issues/new?title="+encodeURIComponent("Feedback on \
  * 2026-10-05, bean `mftp`: *"the chrome is not the standrad harness chrome.
  * missing search bar/locale selctor"*).
  */
+/**
+ * The edit link and the per-section source and feedback links, as Liquid, for
+ * both layouts. The page's edit link comes from the platform's one recipe,
+ * edit-links (bean v433), and keeps its plain href for readers without
+ * JavaScript. The per-section links are `SOURCE_LINKS_JS`'s own: a heading
+ * can live in an included file (bean `x78e`), and its issue is titled after
+ * the section, with the page apart, which the block recipe does not do.
+ */
+function igEditLines(): string[] {
+  return [
+    '{% if page.ig_edit_url %}<p class="ig-edit"><a data-fa-link="edit" data-src="{{ page.ig_source_path }}" data-repo="{{ page.ig_source_repo }}" href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
+    '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "repo": {{ page.ig_source_repo | jsonify }}, "branch": {{ page.ig_source_branch | jsonify }}, "path": {{ page.ig_source_path | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
+    `<script>${EDIT_LINKS_RUNTIME}</script><script>${SOURCE_LINKS_JS}</script>{% endif %}`,
+  ];
+}
+
+/** `https://github.com/<o>/<r>/edit/<branch>` and a path, as the front matter the link recipe reads. */
+export function editBaseParts(editBase: string, path: string): { ig_source_repo?: string; ig_source_branch?: string; ig_source_path: string } {
+  const m = editBase.replace(/\/$/, "").match(/^https:\/\/github\.com\/([^/]+\/[^/]+)\/edit\/(.+)$/);
+  return m ? { ig_source_repo: m[1]!, ig_source_branch: m[2]!, ig_source_path: path } : { ig_source_path: path };
+}
+
 export function igChromeIncludes(topBar: string): { top: string; bottom: string } {
   return {
     top: `<style>${IG_TOPBAR_CSS.trim()}</style>\n${topBar}\n${IG_FIGURE_IMAGES_STAMP}\n`,
     bottom: [
-      '{% if page.ig_edit_url %}<p class="ig-edit"><a href="{{ page.ig_edit_url }}">Edit this page on GitHub</a></p>{% endif %}',
-      '{% if page.ig_source_lines %}<script type="application/json" id="ig-source-lines">{"blob": {{ page.ig_source_blob | jsonify }}, "lines": {{ page.ig_source_lines | jsonify }}}</script>',
-      `<script>${SOURCE_LINKS_JS}</script>{% endif %}`,
+      ...igEditLines(),
       "",
     ].join("\n"),
   };
@@ -1138,6 +1157,8 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
           // should link to line numbers if possible"): each heading's line in the
           // ORIGINAL file, read before anything here rewrites it.
           ig_source_blob: `${opts.editBase.replace(/\/$/, "").replace(/\/edit\//, "/blob/")}/input/pagecontent/${f}`,
+          // The same facts, apart, for the shared link recipe (bean v433).
+          ...editBaseParts(opts.editBase, `input/pagecontent/${f}`),
           // Through the page's includes (bean `x78e`): an IG's index.md is
           // only `{% include index-ig.md %}`, and its headings live there.
           ig_source_lines: sourceHeadings(readFileSync(join(pagecontent, f), "utf-8"), includeSource(src), new Set([`input/pagecontent/${f}`])).map(

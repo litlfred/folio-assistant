@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`fhir-harness/skills/fhir-ig-base/fhir-ig-create.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/fhir-ig-create.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/fhir-ig-create.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/fhir-ig-create.md){: .fa-edit-source data-fa-link="edit" data-src="fhir-harness/skills/fhir-ig-base/fhir-ig-create.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # fhir-ig-create

@@ -43,6 +43,7 @@
         <bpmn:documentation>Outside the folio: returns comments on the review version through a matrix, a form or a letter, and may withdraw one at any time. Never moves a comment past received; everything after that is the review's.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="feedback-provider"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_CommentsReturned</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_BlockFeedback</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_WithdrawRequested</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Withdraw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Withdrawn</bpmn:flowNodeRef>
@@ -91,10 +92,16 @@
     <bpmn:startEvent id="StartEvent_CommentsReturned" name="Comments returned on the review version">
       <bpmn:outgoing>Flow_ToIngest</bpmn:outgoing>
     </bpmn:startEvent>
+    <bpmn:startEvent id="StartEvent_BlockFeedback" name="Feedback on one block ([feedback] link)">
+      <bpmn:documentation>A reader presses [feedback] on a block of the rendered document and opens a GitHub issue about that block, from the folio's block-feedback issue form when it has one (skill block-actions, REQ-17). The issue names the block, so it arrives already placed. Intake records it like any other comment; a reader who would rather propose the wording presses [edit], which is a pull request, reviewed as a content change.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="block-actions"/></bpmn:extensionElements>
+      <bpmn:outgoing>Flow_BlockFeedbackToIngest</bpmn:outgoing>
+    </bpmn:startEvent>
     <bpmn:task id="Task_Ingest" name="Ingest and place each comment">
       <bpmn:documentation>public-comment import / import-narrative: one record per row or cited passage, anchored through review-anchors.json. Status: received.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_ToIngest</bpmn:incoming>
+      <bpmn:incoming>Flow_BlockFeedbackToIngest</bpmn:incoming>
       <bpmn:outgoing>Flow_ToTriage</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Triage" name="Triage: confirm the anchor, type and priority">
@@ -187,6 +194,7 @@
     </bpmn:endEvent>
 
     <bpmn:sequenceFlow id="Flow_ToIngest" sourceRef="StartEvent_CommentsReturned" targetRef="Task_Ingest" />
+    <bpmn:sequenceFlow id="Flow_BlockFeedbackToIngest" sourceRef="StartEvent_BlockFeedback" targetRef="Task_Ingest" />
     <bpmn:sequenceFlow id="Flow_ToTriage" sourceRef="Task_Ingest" targetRef="Task_Triage" />
     <bpmn:sequenceFlow id="Flow_ToTriageGateway" sourceRef="Task_Triage" targetRef="Gateway_Triage" />
     <bpmn:sequenceFlow id="Flow_Duplicate" name="duplicate" sourceRef="Gateway_Triage" targetRef="EndEvent_Duplicate" />
@@ -235,6 +243,9 @@
 
       <bpmndi:BPMNShape id="StartEvent_CommentsReturned_di" bpmnElement="StartEvent_CommentsReturned">
         <dc:Bounds x="200" y="107" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_BlockFeedback_di" bpmnElement="StartEvent_BlockFeedback">
+        <dc:Bounds x="520" y="107" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Ingest_di" bpmnElement="Task_Ingest">
         <dc:Bounds x="280" y="215" width="120" height="80" />
@@ -294,6 +305,11 @@
         <dc:Bounds x="1260" y="107" width="36" height="36" />
       </bpmndi:BPMNShape>
 
+      <bpmndi:BPMNEdge id="Flow_BlockFeedbackToIngest_di" bpmnElement="Flow_BlockFeedbackToIngest">
+        <di:waypoint x="538" y="143" />
+        <di:waypoint x="538" y="255" />
+        <di:waypoint x="400" y="255" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_ToIngest_di" bpmnElement="Flow_ToIngest">
         <di:waypoint x="236" y="125" />
         <di:waypoint x="340" y="125" />
