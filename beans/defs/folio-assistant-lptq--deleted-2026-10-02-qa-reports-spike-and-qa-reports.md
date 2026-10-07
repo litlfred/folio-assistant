@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lptq
 title: 'DELETED 2026-10-02: qa-reports-spike and qa-reports-spike-b, with the SHAs to restore them'
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-10-02T23:24:30Z
-updated_at: 2026-10-03T00:05:00Z
+updated_at: 2026-10-06T06:26:36Z
 parent: folio-assistant-fs43
 ---
 
@@ -102,3 +102,10 @@ exists only as an arc name in PR titles, so it cannot be a parent.
 
 Stated rather than silently chosen, because which epic a bean belongs to is an
 assertion and not derivable — the same rule `check:partition` applies to modules.
+
+
+## Summary of Changes
+
+**Closed on evidence, 2026-10-06** (re-measured on main at 2fdbb5109a by session_01QSd18GZBc9NJNMy6GV9v7D, not quoted from earlier notes). Status history: never completed before, so not an owner reopen; no holder.
+
+A record bean, no checklist. `git/matching-refs/heads/qa-reports-spike` is empty: both branches are gone. Both restore SHAs (76893ba, 43c8b09) still resolve on GitHub with their recorded subjects, so the restore commands here still work until GitHub garbage-collects them. Nothing on main reads either branch. Closing keeps the record in the store.

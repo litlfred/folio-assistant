@@ -33,7 +33,8 @@ import {
 
 import { isOwnExtensionNamespace, OWN_BPMN_EXTENSION_NAMESPACES, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
-import { directoriesForGraph } from "../schemas/cat-harness.js";
+import { directoriesForGraph, instanceDirectoriesForGraph } from "../schemas/cat-harness.js";
+import { instanceRootsIn } from "../schemas/instance-roots.js";
 import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
@@ -281,6 +282,7 @@ export function namespaceMentions(iris: readonly string[], repoRoot = resolve(RO
   // the string "external-schemas" here would be a second spelling of a
   // directory the declaration already answers — `check:declared-paths` counts
   // exactly that, and it is right to: the two copies are free to diverge.
+  // input-site: inert #ca5b78a8 — names a build-output directory only to leave it out of a walk
   const SKIP = new Set(["node_modules", "_kg", "docs", ".git", "dist", "coverage"]);
   const EXT = [".ts", ".tsx", ".json", ".jsonld", ".md"];
   const walk = (dir: string): void => {
@@ -330,10 +332,14 @@ export function namespaceMentions(iris: readonly string[], repoRoot = resolve(RO
  */
 export function skosTermsInUse(root = resolve(ROOT, "..")): string[] {
   const out = new Set<string>();
+  // This script's own exporters, plus every instance's DECLARED `schemas`
+  // graph. The third entry used to be the literal `folio-assistant-core/schemas`:
+  // a path into a layer above cat-harness that no import gate sees, and one
+  // that would scan nothing, silently, once cat-harness stands alone
+  // (separation placement review, 2026-10-06, bean `0r7u` step 0).
   const dirs = [
     join(root, "cat-harness", "scripts"),
-    join(root, "cat-harness", "schemas"),
-    join(root, "folio-assistant-core", "schemas"),
+    ...new Set(instanceRootsIn(root).flatMap((i) => instanceDirectoriesForGraph(i, "schemas"))),
   ];
   for (const dir of dirs) {
     if (!existsSync(dir)) continue;

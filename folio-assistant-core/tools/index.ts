@@ -28,6 +28,12 @@
  * Tool, and governed by the `review-comments` skill, on the owner's ruling
  * *"make sure it is a Skill/Tool so process can be modified later"*: the
  * staging workflow only calls it.
+ *
+ * ## `block-actions` — bean `uphx`, REQ-17
+ *
+ * [edit] and [feedback] on every block of a document: the owner asked for it
+ * as common core functionality (2026-10-06), so the document build draws the
+ * links and this Tool hands them to an agent.
  */
 import { defineTool, type ToolDefinition } from "../../cat-harness/schemas/tool.js";
 import { toolTypeIri } from "../../cat-harness/schemas/tool-types.js";
@@ -61,6 +67,35 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "Renders only records a catalogue item names. Fields with no DCMI term keep a minted predicate in JSON-LD and are reduced to their DC element in XML. A non-`dc` schema field cannot appear in XML at all, and is listed in a header comment. Not OAI-PMH `oai_dc`.",
         cost: "Milliseconds per record. Reads the catalogue nodes and records; no network.",
+      },
+    }),
+    defineTool({
+      id: "block-actions",
+      title: "Block edit and feedback links",
+      description:
+        "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill (bean `uphx`, REQ-17).",
+      install: { none: true },
+      invoke: { shell: "bun run folio-assistant-core/scripts/block-actions.ts" },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio's repository root. Default: the working directory." },
+          { name: "block", schema: t("NodeId"), required: false, arg: { flag: "--block" }, description: "One block's label. Absent: every block of every document. A label no block has exits 1." },
+          { name: "github", schema: t("RepoFullName"), required: false, arg: { flag: "--github" }, description: "`owner/name` on GitHub. Default `GITHUB_REPOSITORY`, else the checkout's `origin`. None at all exits 2: no links rather than broken ones." },
+          { name: "edit-branch", schema: t("Branch"), required: false, arg: { flag: "--edit-branch" }, description: "The branch [edit] opens. Default `main`." },
+          { name: "issue-template", schema: t("RepoPath"), required: false, arg: { flag: "--issue-template" }, description: "The issue form's file name under `.github/ISSUE_TEMPLATE/`. Default `block-feedback.yml`, used only if the folio has it." },
+        ],
+        outputs: [
+          { name: "links", schema: t("RepoPath"), description: "JSON on stdout: one `{ label, source, section, edit, feedback }` per block. A one-line summary goes to stderr." },
+        ],
+      },
+      satisfies: ["block-actions"],
+      requires: { runtime: ["bun"], network: false },
+      selection: {
+        when:
+          "A reader, reviewer or agent wants to propose a change to, or give feedback on, one block of a document folio, and needs the link that lands on that block rather than on the repository.",
+        limits:
+          "Builds URLs; it writes nothing to GitHub. Only labelled blocks get links. The issue form's fields are read by a line scan for `id:`, so a form must declare its ids plainly.",
+        cost: "Milliseconds: one walk of the document manifests. No network.",
       },
     }),
     defineTool({
@@ -118,6 +153,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["review-comments"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "api.github.com", none: "Reviewer comments are held by GitHub; without it the review page keeps its last ingested set." }],
       selection: {
         when:
           "A pull request that edits a folio has reviewer comments, and the review page, the heat map, or an editor needs them as structured todos anchored to blocks.",
@@ -189,6 +225,58 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           "Counts only what reviewers recorded as verdicts. A block nobody tagged is uncovered even if somebody read it. A verdict on an older hash is reported as stale and not counted.",
         cost: "Reads three JSON files and one directory; one git commit with `--commit`.",
       },
+    }),
+    // Moved here from cat-harness/tools/index.ts on 2026-10-06 (bean `0r7u`
+    // step 0): its command runs `folio-assistant-core/scripts/build-glossary.ts`,
+    // so declared in the harness it was an upward path into this layer. A Tool
+    // is declared by the harness that owns its implementation (#2192).
+    //
+    // ── The evidence path, and the check that is NOT a computation ────────
+    //
+    // Group 11 of `d308` (`1oqu`). The bean's constraint was that a Tool here
+    // must return "could not determine" distinctly from "verified", because
+    // `evidence-retrieval · Task_RecordUnverified` exists for the case where the
+    // authority check fails, and collapsing them would launder an unverified
+    // citation into an authoritative one.
+    //
+    // **That constraint is already met, and not by a Tool.** Measured
+    // 2026-09-20: nothing in the corpus WRITES a `VerificationEntry`.
+    // `schemas/bib-verification.ts` carries seven `VerificationStatus` values —
+    // `unfetchable` ("URL/DOI did not resolve") and `partial` ("awaiting PDF")
+    // are the could-not-determine cases — and a `Verifier` discriminated union
+    // whose own comment states the point: *"`kind: "agent"` is a
+    // machine-generated claim awaiting human review; `kind: "human"` is a human
+    // adjudication."* Verification is a judgement RECORDED in a curated file, so
+    // the guarantee lives in that file's schema, where a boolean cannot reach it.
+    //
+    // The laundering risk is therefore sharper than the bean assumed: it is not
+    // only unknown→verified, it is **agent-claim→verified**. A node emitting
+    // `verified: true` would collapse both distinctions at once, which is why
+    // this node declares neither — it builds the glossary and says so. The bib
+    // verification path is reached through `qa-sweep` instead (`bib-qa.ts` has no
+    // `import.meta.main` and produces the report `qa-checkers-extended` reads).
+    defineTool({
+      id: "glossary-build",
+      title: "Glossary build",
+      description:
+        "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
+      install: { none: true },
+      invoke: { shell: "bun run folio-assistant-core/scripts/build-glossary.ts" },
+      io: {
+        inputs: [
+          { name: "targetPath", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Report drift and write nothing." },
+        ],
+        outputs: [
+          { name: "glossary", schema: t("RepoPath"), description: "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root." },
+        ],
+      },
+      // `document-intake`, which is what `Task_L1Sources` refs. It carries NO
+      // input contract, so `check-tools` cannot verify this edge against one —
+      // worth saying plainly rather than letting a clean run imply agreement
+      // that was never tested.
+      satisfies: ["document-intake"],
+      requires: { runtime: ["bun"], network: false },
     }),
   ];
 }

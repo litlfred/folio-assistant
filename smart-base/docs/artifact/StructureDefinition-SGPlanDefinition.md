@@ -2,6 +2,10 @@
 title: "SMART Guidelines PlanDefinition — WHO SMART Base artefact"
 description: "StructureDefinition/SGPlanDefinition in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-SGMeasure.html"
+ig_next: "StructureDefinition-SGQuestionnaire.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Defines the minimum expectations for PlanDefinition resources used in SMART Guid
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="StructureDefinition-SGMeasure.html" data-next="StructureDefinition-SGQuestionnaire.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

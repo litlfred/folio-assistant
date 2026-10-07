@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/fsh-guts.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/fsh-guts.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/fsh-guts.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/fsh-guts.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/fsh-guts.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # `fsh-guts/` — the trashcan that is kept
@@ -209,6 +209,11 @@ it is ingested", and that skill is the one to change if the rule moves.
   here to tidy up is the opposite mistake.
 - **A bean.** Beans have their own lifecycle — `scrapped`, with reasons — and
   a second disposal mechanism for them would be two answers to one question.
+  A cutover's snapshot of a whole `beans/` directory is not that: the beans
+  stay live on their branch, and the archive is the copy `main` last held.
+  The rule and its format are in
+  [`directory-conventions`](directory-conventions.md) §"Cutting an EXISTING
+  instance over".
 - **Secrets, credentials or personal data.** This is not rendered; it is still
   committed, still public in a public repository, and still in the JSON-LD.
   Not-rendered is not private, and treating it as private is the one way this

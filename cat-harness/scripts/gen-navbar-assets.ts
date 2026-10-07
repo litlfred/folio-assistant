@@ -19,6 +19,10 @@
  *   bun run navbar:assets           write them
  *   bun run navbar:assets:check     exit 1 if either is stale
  *
+ * @covers none — this asks whether two BUNDLED ASSETS and the rail data
+ * beside them are current, not whether a declared graph is well-formed; the
+ * graph they render is judged where it is generated (`docs:harness`), as
+ * `gen-navbar-include.ts` says for the same reason.
  * @module cat-harness/scripts/gen-navbar-assets
  */
 import { existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";

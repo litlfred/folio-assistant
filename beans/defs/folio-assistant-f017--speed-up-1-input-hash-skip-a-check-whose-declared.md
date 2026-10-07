@@ -1,10 +1,11 @@
 ---
 # folio-assistant-f017
 title: 'SPEED-UP 1: input-hash skip — a check whose declared inputs are unchanged since its last green run is skipped and says so'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-01T17:42:23Z
-updated_at: 2026-10-01T17:42:23Z
+updated_at: 2026-10-06T20:20:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -20,7 +21,78 @@ A merge → regen → gates cycle takes ~50–80 min of agent wall-clock on a lo
 A check whose real inputs are wider than its declared inputs would be skipped while stale. So: the input set must be declared, not inferred, and a test must show that editing an undeclared-but-read file is caught (or the check refuses to skip when it cannot enumerate its inputs — the third state, never "unchanged").
 
 ## Done when
-- [ ] input-set declaration per pair, and the hash store (committed or cache, decided with reasons)
-- [ ] `regen` and `gates` skip on an unchanged hash and say so
-- [ ] a test per refusal case (inputs not enumerable → runs)
-- [ ] measured: regen wall-clock before/after on the same tree
+- [x] input-set declaration per pair, and the hash store (committed or cache, decided with reasons)
+- [x] `regen` and `gates` skip on an unchanged hash and say so
+- [x] a test per refusal case (inputs not enumerable → runs)
+- [x] measured: regen wall-clock before/after on the same tree
+
+
+## 2026-10-06
+
+The boxes were ticked on these measurements. Bun 1.3.14 throughout.
+
+- **Declaration and store:** on main since #2112. `task-io.ts` declares inputs. The store is a local cache at `build/regen-cache/input-hashes.json`: never committed, and off under `CI`. The reasons are in the `input-hash.ts` docblock.
+- **regen skips:** on main.
+- **gates skips:** NEW on local branch `local/regen-speedup`, commit 8dd50a7a7, not on main yet.
+  - The cache gains `checks`: a check script's own fingerprint, recorded only from a run that exited 0 with the same fingerprint before and after it ran.
+  - regen records an entry only for checks it actually RAN green in a settled run. It never records one for a skipped, `--changed`-assumed or pair-cover-derived verdict.
+  - Both commands read the entries. gates prints `SKIPPED — inputs unchanged since this check last passed` and counts skips apart from passes.
+- **Measured skips (load 4-13):**
+  - gates after regen skipped 9 of 251 gates.
+  - gates run again on the same tree skipped 10, including the duplicate `skill:register:check`.
+  - `kg:audit:all:check` and `translation:block-qa:check` were correctly NOT skipped. Their `--against main` qa-reports baseline moved between the two runs.
+- **Refusal tests:** in `cat-harness/scripts/tests/task-pool.test.ts`, the block "COULD NOT DETERMINE is never clean", plus the new block "f017: check-level records".
+  - Each of these is edited in a fixture git repo and must make the check RUN: a declared input, a new glob match, the script, an imported module, any tracked or untracked file under `{tracked}`, and a moved baseline.
+  - A red run, or inputs that move mid-run, record nothing.
+  - Undeclared, undetermined, not-exactly-one-script and cache-off gates never skip.
+- **Regen before/after, same tree (4312e99c7):** cold cache 396 s wall, 537 s user, 181 s sys (load 2-9). Warm cache 231 s wall, 306 s user, 107 s sys (load 8-10), with 13 pairs skipped.
+
+**Falsifier, unchanged:** a script that reads something its declaration does not name. All 15 skippable declarations are `{tracked}` (whole tree), so the remaining exposure is ignored files, the environment, the network and the clock. `task-io.ts` excludes declaring inputs for those by rule.
+
+Status is left as is: the gates half is not on main until `local/regen-speedup` is merged.
+
+_2026-10-06T19:02:53Z_ — Claimed by claude/f017-input-hash-coverage — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-10-06 (evening): the falsifier is now checked on every fingerprint
+
+Work is on branch `claude/f017-input-hash-coverage`, PR #2327, issue #2325.
+
+- **Audit (`input-sites.ts`).** Every fingerprint walks the check's import closure. Any line that can read the environment, the network, the clock, randomness, git history, a spawned process, the host or a computed module must carry a pinned `// input-site:` annotation. If one lacks it, or its pin is stale, the result is undetermined and the check runs.
+  - What a verdict names is hashed: env values, HEAD and ref commit ids plus the shallow boundary, and the `--against` identity.
+  - Code inside `import.meta.main` is skipped when the file is only imported. `import type` is not followed.
+- **Runtime trace (`input-trace.ts`).** A site that no check is known to reach is `traced`. A recorded run that reaches it records nothing.
+  - qa-store reads report the ref they read. A run is tolerated only when every ref it read is a hashed `--against` baseline.
+- **Also hashed:** bun and git versions, the runtime env, and the ignored files under `{tracked}`.
+- **Coverage:** 164 of 222 declared tasks can now skip (15 before). Run `bun run input-hash:coverage` to see the list.
+- **Two old skips were unsound:**
+  - `skill:register:check` spawns `uml:overview:check`, which reads the network.
+  - `lsi:viz:check` reads the qa-reports branch at `main` when its indexes are not checked out.
+  - The audit now refuses the first. The trace refuses the second for any run that read the store.
+- **Open (follow-up, not this PR):** about 57 tasks are still blocked by unreviewed sites; `--blockers` lists them. The biggest are kind-validator, staging-stamp and kg-export.
+
+### Measured on `244608c`, same tree
+
+All runs used Bun 1.3.14 on 4 shared CPUs. Load is noted per run.
+
+| run | wall | user | sys | load | skipped |
+|---|---|---|---|---|---|
+| regen, cold cache | 404 s | 786 s | 312 s | 1–3.5 | 0 |
+| regen, warm | **179 s** | 321 s | 140 s | 3.5–4 | **62 of 121 pairs** |
+| gates after regen | 1876 s | 1907 s | 655 s | 2–4 | 62 of 251 |
+| gates again, same tree | 1840 s | **1820 s** | 678 s | 2–3 | **136 of 251** |
+| gates, cold (earlier commit, includes the QA working-copy build) | 2117 s* | 2555 s | 738 s | 1–3 | 0 |
+
+\* This is the gate loop's own wall time. The full command took 2425 s.
+
+**Against the earlier figures in this bean:**
+- regen warm took 231 s with 13 pairs skipped. It now takes 179 s with 62 skipped.
+- gates on the same tree skipped 10. It now skips 136.
+
+**Why gates wall time barely moves:** two serial gates take 1273 s of the 1840 s. `bun test` takes 935 s and `check:cat-harness-standalone` takes 338 s. Neither can be skipped by input hash: `bun test` reads tmp dirs, the clock and spawns, and the standalone check is not declared. So skipping cuts CPU, about 29% less user time than a cold gates run, but the critical path stays. That is a parallelism and test-sharding question for v3nf and xpcu, not for f017.
+
+**Two failures in the local gates runs, neither from this PR:**
+- `check:reference-direction:check --against main` fails identically on a clean `origin/main` worktree.
+- `bun test` failures:
+  - The attestation-history test fails because this clone is shallow.
+  - `workflow-overlay` "OUTSIDE the root" timed out at 5660 ms under full-suite load. It passes alone on both the branch and main, and the whole file takes 4.4–5.1 s alone on either.
+- CI is green on every job on `244608c`.

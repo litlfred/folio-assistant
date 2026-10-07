@@ -2,6 +2,10 @@
 title: "Can validate L3 functionality — WHO SMART Base artefact"
 description: "Requirements/SGAuthoring.Skills.ValidateL3Functionality in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Requirements-SGAuthoring.Skills.ValidateDAKContent.html"
+ig_next: "StructureDefinition-BusinessProcessWorkflow.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Capability to test StructureMap extraction, CQL execution, and measure calculati
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="Requirements-SGAuthoring.Skills.ValidateDAKContent.html" data-next="StructureDefinition-BusinessProcessWorkflow.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

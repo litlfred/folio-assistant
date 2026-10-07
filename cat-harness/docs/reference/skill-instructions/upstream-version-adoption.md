@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/upstream-version-adoption.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/upstream-version-adoption.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/upstream-version-adoption.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/upstream-version-adoption.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/upstream-version-adoption.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Adopting an upstream version bump
@@ -208,6 +208,7 @@ This skill has its own process: **[Adopting an upstream version bump](../../proc
 | process | step(s) that name it |
 |---|---|
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | 11 · Parent consumes, additively (calls a sub-process) |
+| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | 10 · Re-point: livesAt, seam, submodule or subscription |
 | [Watching a pinned upstream dependency](../../processes/upstream-pin-watch.html) | Read the pin registry upstream-pins.json; List upstream releases and compare to the pin; Close the tracking issue; Open or EDIT the one tracking issue; Pick up the stale pin claim a bean; Adopt the version bump (calls a sub-process) |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Scope the delta pinned → candidate; Impact analysis what of ours binds it; Record the hold or the decline |
 

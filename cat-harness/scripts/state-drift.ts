@@ -51,14 +51,31 @@
  */
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
-import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, nestedDirectories, readDeclaration } from "../schemas/cat-harness.ts";
 
 import { BranchStore, MANIFEST_FILE, MANIFEST_SCHEMA } from "./branch-store.ts";
 
-export const SPECIAL_BRANCHES = join(import.meta.dir, "special-branches.json");
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
+
+/**
+ * The repository a CLI run is about: the git toplevel of the current
+ * directory, falling back to the platform checkout only outside any git tree.
+ *
+ * It was `REPO_ROOT` — the PLATFORM's root — unconditionally. Run from a
+ * folio that links the platform as a submodule or sibling, every default
+ * therefore read the platform's declarations (`cat/cat-harness/beans`)
+ * instead of the folio's own (`cat/<instance>/beans`), and `state:seed --id
+ * beans` refreshed the wrong branch's row — measured 2026-10-06 cutting a
+ * folio over, where the workaround was calling `observedRows({ repoRoot })`
+ * by hand (bean `hp54`). Inside the platform checkout the toplevel IS
+ * `REPO_ROOT`, so its own runs see no change.
+ */
+export function defaultRepoRoot(cwd: string = process.cwd()): string {
+  const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd, encoding: "utf-8" });
+  return r.status === 0 && r.stdout.trim() ? r.stdout.trim() : REPO_ROOT;
+}
 
 export interface SpecialBranch {
   id: string;
@@ -137,7 +154,7 @@ function treeOf(store: BranchStore, commit: string): string {
 
 /**
  * Candidate names for a special branch, canonical first — the resolution rule
- * `special-branches.json` states: the new name if it exists on the remote,
+ * retired `special-branches.json` stated: the new name if it exists on the remote,
  * else the first `legacy` that does. {@link BranchStore.open} implements
  * exactly that over an ordered candidate list, so the rule has one
  * implementation rather than a second one here.
@@ -159,7 +176,7 @@ export function candidatesOf(b: SpecialBranch): string[] | undefined {
  * `undefined` when the remote cannot be listed: never an empty set.
  */
 export function observedBranches(opts: { repoRoot?: string; remote?: string } = {}): string[] | undefined {
-  const cwd = opts.repoRoot ?? REPO_ROOT;
+  const cwd = opts.repoRoot ?? defaultRepoRoot();
   const remote = opts.remote ?? process.env.BRANCH_STORE_REMOTE ?? "origin";
   const r = spawnSync("git", ["ls-remote", "--heads", remote, "refs/heads/cat/*", "refs/heads/gh-pages"], { cwd, encoding: "utf-8", timeout: 60_000 });
   if (r.status !== 0) return undefined;
@@ -177,7 +194,7 @@ export function observedBranches(opts: { repoRoot?: string; remote?: string } = 
  * of a branch's NAME; this map is how an observed branch is told apart from an
  * undeclared one.
  */
-export function declaredBranches(repoRoot: string = REPO_ROOT): { exact: Map<string, string>; prefixes: Map<string, string> } {
+export function declaredBranches(repoRoot: string = defaultRepoRoot()): { exact: Map<string, string>; prefixes: Map<string, string> } {
   const exact = new Map<string, string>();
   const prefixes = new Map<string, string>();
   for (const root of instanceRootsIn(repoRoot)) {
@@ -187,7 +204,10 @@ export function declaredBranches(repoRoot: string = REPO_ROOT): { exact: Map<str
     } catch {
       continue; // an unreadable declaration is check:declared-dirs' finding
     }
-    for (const d of decl?.directories ?? []) {
+    // Nested entries too (`beans/beans.json`'s `queue`): a store declared on
+    // the node that labels it is as declared as one in the instance file.
+    const entries = decl ? [...(decl.directories ?? []), ...nestedDirectories(root, decl)] : [];
+    for (const d of entries) {
       const st = d.storage as { branch?: string; branchPrefix?: string } | undefined;
       const src = d.source as { kind?: string; branch?: string; branchPrefix?: string } | undefined;
       const branch = st?.branch ?? (src?.kind === "branch" ? src.branch : undefined);
@@ -199,8 +219,13 @@ export function declaredBranches(repoRoot: string = REPO_ROOT): { exact: Map<str
   return { exact, prefixes };
 }
 
-/** The table, read ONLY when a caller names it (the fixture tests). No default: infrastructure no longer reads it. */
-export function specialBranches(file: string = SPECIAL_BRANCHES): SpecialBranch[] {
+/**
+ * A table of special branches, read ONLY when a caller names one (the fixture
+ * tests). There is no default: `special-branches.json` is gone (owner,
+ * 2026-10-05: "dont use /get rid of"), and every branch's name is its
+ * declaring directory's `storage`.
+ */
+export function specialBranches(file: string): SpecialBranch[] {
   return (JSON.parse(readFileSync(file, "utf-8")) as { branches: SpecialBranch[] }).branches;
 }
 
@@ -333,7 +358,7 @@ export function driftOf(b: SpecialBranch, opts: DriftOptions = {}): DriftRow[] {
 export function observedRows(opts: { repoRoot?: string; remote?: string } = {}): (SpecialBranch & { declared: boolean })[] | undefined {
   const names = observedBranches(opts);
   if (names === undefined) return undefined;
-  const { exact, prefixes } = declaredBranches(opts.repoRoot ?? REPO_ROOT);
+  const { exact, prefixes } = declaredBranches(opts.repoRoot ?? defaultRepoRoot());
   return names.map((name) => {
     const prefix = [...prefixes.keys()].find((p) => name.startsWith(p));
     const id = exact.get(name) ?? (prefix ? prefixes.get(prefix)! : name);
@@ -387,7 +412,9 @@ export function brief(rows: readonly DriftRow[]): string {
 
 if (import.meta.main) {
   const json = process.argv.includes("--json");
-  const rows = driftRows({ log: (l) => process.argv.includes("--verbose") && console.error(l) });
+  const rr = process.argv.indexOf("--repo-root");
+  const repoRoot = rr === -1 ? undefined : resolve(process.argv[rr + 1] ?? ".");
+  const rows = driftRows({ repoRoot, log: (l) => process.argv.includes("--verbose") && console.error(l) });
   if (json) {
     console.log(JSON.stringify(rows, null, 2));
   } else if (process.argv.includes("--brief")) {

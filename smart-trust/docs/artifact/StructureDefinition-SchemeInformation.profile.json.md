@@ -3,6 +3,8 @@ title: "Scheme Information — JSON profile"
 description: "The JSON representation of StructureDefinition/SchemeInformation."
 nav_exclude: true
 json_view: {"heading":"Logical Model: SchemeInformation - JSON Profile","package":"../fhir-artifact-index/package.tgz","entry":"package/StructureDefinition-SchemeInformation.json","raw":"https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.json","rawName":"StructureDefinition-SchemeInformation.json","tabs":[{"label":"Content","href":"StructureDefinition-SchemeInformation.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-SchemeInformation-mappings.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.xml","active":false},{"label":"JSON","href":"StructureDefinition-SchemeInformation.profile.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-SchemeInformation.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-SchemeInformation.schema.json.html","active":false}],"script":"../assets/resource-json.js","intro":"JSON representation of the SchemeInformation logical model."}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +39,3 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <pre><code class="language-json" data-package="{{ page.json_view.package }}" data-entry="{{ page.json_view.entry }}">Loading JSON source…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.json_view.raw }}">published JSON</a> does not.</p></noscript>
 <script src="{{ page.json_view.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

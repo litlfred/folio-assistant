@@ -22,6 +22,11 @@
  * composed tree, sees one file, and cannot tell an override from the only
  * copy. So "it overrode" and "it SAID it overrode" are separate assertions,
  * and a composer that did the first without the second would pass one of them.
+ *
+ * The tests of this file that read the whole checkout (reads the root
+ * instance's declaration, which declares the `root-docs` layer) live in
+ * `test/compose-docs-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from "node:fs";
@@ -33,6 +38,7 @@ import {
   compose,
   docsLayers,
   instanceStub,
+  isChrome,
   isWithheld,
   mergeConfig,
   treeDigest,
@@ -106,14 +112,6 @@ describe("compose-docs reads its layers from the declaration", () => {
     expect(layers.map((l) => l.id)).toEqual(["docs"]);
     expect(missing.map((l) => l.id)).toEqual(["root-docs"]);
     rmSync(root, { recursive: true, force: true });
-  });
-
-  test("the REAL repository declares exactly the two layers this is built on", () => {
-    // Vacuity guard: every fixture test below would pass against a repository
-    // that had no layers at all.
-    const { layers, missing } = docsLayers(REPO);
-    expect(missing).toEqual([]);
-    expect(layers.map((l) => l.id)).toEqual(["docs", "root-docs"]);
   });
 });
 
@@ -500,7 +498,15 @@ describe("the cut, on the REAL tree", () => {
     // so a ratio tuned to that corpus measured instances no longer here.
     const stubbed = cut.carried.filter((d) => !d.carry).map((d) => `${d.instance.under}/`);
     const theirs = Object.keys(all.suppliedBy).filter((k) => stubbed.some((u) => k.startsWith(u))).length;
-    expect(theirs).toBeGreaterThan(stubbed.length);
+    // A stubbed instance whose docs are ONE page (folio-assistant-core's, since
+    // bean c5fm) is replaced by exactly one stub, so the cut cannot shrink the
+    // tree: assert that it does not grow it either, the same answer the
+    // composes-none case above gives. Otherwise the cut must remove pages.
+    if (theirs === stubbed.length) {
+      expect(nCut).toBe(nAll);
+    } else {
+      expect(theirs).toBeGreaterThan(stubbed.length);
+    }
     expect(nCut).toBeLessThanOrEqual(nAll - theirs + stubbed.length);
 
     // ...and what remains in place of each stubbed instance is its stub, not a
@@ -544,5 +550,29 @@ describe("carriedInstances with the staging cone (bean 4j86)", () => {
   test("the prefix match stays a floor: the cone can only add", () => {
     const d = carriedInstances([smartTrust], ["smart-trust/scripts/gen.ts"], [{ ...reached[0]!, carry: false }], "/repo");
     expect(d[0]!.carry).toBe(true);
+  });
+});
+
+// #2235 F1: an IG repository's own site is built inside the main site's CHROME.
+describe("--shell: the chrome only", () => {
+  test("isChrome is the Jekyll machinery and assets, nothing else", () => {
+    for (const p of ["_config.yml", "_includes/head_custom.html", "_data/harness.json", "assets/js/docs-ui.js"]) expect(isChrome(p)).toBe(true);
+    for (const p of ["index.md", "glossary/index.md", "smart-trust/index.md"]) expect(isChrome(p)).toBe(false);
+  });
+  test("the real tree composes no page, no instance, and EMPTY generated includes", () => {
+    const out = mkdtempSync(join(tmpdir(), "shell-"));
+    try {
+      const r = compose(out, REPO, { shell: true });
+      const paths = Object.keys(r.suppliedBy);
+      expect(paths.length).toBeGreaterThan(0);
+      expect(paths.filter((p) => !isChrome(p))).toEqual([]);
+      expect(r.carried).toEqual([]);
+      expect(existsSync(join(out, "_config.yml"))).toBe(true);
+      const gen = paths.filter((p) => /^_includes[\\/]generated[\\/]/.test(p));
+      expect(gen.length).toBeGreaterThan(0);
+      for (const g of gen) expect(readFileSync(join(out, g), "utf-8")).toBe("");
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
   });
 });

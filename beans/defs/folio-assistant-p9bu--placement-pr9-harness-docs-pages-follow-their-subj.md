@@ -1,10 +1,10 @@
 ---
 # folio-assistant-p9bu
 title: 'Placement PR9: harness docs pages follow their subject to the owning instance'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-01T06:58:01Z
+updated_at: 2026-10-06T06:56:20Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-63wl
@@ -20,3 +20,5 @@ Blocked by PR3 and PR6 (the processes these pages document must have moved).
 ## Done when
 - [ ] `docs:pages:check` and `translated-links:check` green
 - [ ] the published site's page count is unchanged
+
+_2026-10-06T06:56:20Z_ — Claimed by claude/docs-follow-subject-p9bu — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

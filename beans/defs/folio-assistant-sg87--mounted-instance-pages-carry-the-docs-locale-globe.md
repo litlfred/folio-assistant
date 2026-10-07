@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sg87
 title: Mounted instance pages carry the docs locale globe (#2219)
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T18:07:13Z
-updated_at: 2026-10-05T18:24:51Z
+updated_at: 2026-10-06T05:23:38Z
 parent: folio-assistant-bzyu
 ---
 
@@ -17,3 +17,8 @@ Issue #2219. Owner chose B: same chrome as folio-assistant on mounted pages (fa-
 
 ## Done when
 /who-iris/ shows the band globe with AR ZH EN FR RU ES, only EN live; unit + e2e cover it; PR green.
+
+
+## Summary of Changes
+
+Landed in #2220: mounted instance pages (e.g. /who-iris/) carry the docs locale globe, with declared but untranslated locales greyed out. Issue #2219 is left for the owner to close.

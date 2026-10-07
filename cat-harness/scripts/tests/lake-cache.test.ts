@@ -618,4 +618,58 @@ describe("lake-cache.sh — cat/folio-assistant-sci/lake-cache/ rename (beans 32
   test("resolve-branch without --key is a usage error", () => {
     expect(run(["resolve-branch"], lakeRoot).code).toBe(2);
   });
+
+  // Bean rva2: a folio that declares its lake-cache family names the prefix,
+  // and the built-in name becomes its newest legacy fallback.
+  describe("the folio's declared family wins (bean rva2)", () => {
+    const DECLARED = "my/lake-cache";
+    const declPath = () =>
+      join(execFileSync("git", ["rev-parse", "--show-toplevel"], { cwd: lakeRoot, encoding: "utf-8" }).trim(), "folio.json");
+    const writeDeclaration = () =>
+      writeFileSync(
+        declPath(),
+        JSON.stringify({
+          name: "folio",
+          directories: [
+            { id: "lake-cache", path: "lake-cache/", graphTypologies: ["lake-cache"], storage: { branchPrefix: `${DECLARED}/`, keyedBy: "family" } },
+          ],
+        }),
+      );
+
+    test("a key that exists nowhere resolves to the declared name", () => {
+      writeDeclaration();
+      try {
+        expect(resolveKey()).toBe(`${DECLARED}/${KEY}`);
+      } finally {
+        rmSync(declPath(), { force: true });
+      }
+    });
+
+    test("a key under the built-in name is still found, as the newest legacy", () => {
+      writeDeclaration();
+      push(OLDEST, NEW);
+      try {
+        expect(resolveKey()).toBe(`${NEW}/${KEY}`);
+      } finally {
+        drop(OLDEST, NEW);
+        rmSync(declPath(), { force: true });
+      }
+    });
+
+    test("the declared name wins over the built-in one when both exist", () => {
+      writeDeclaration();
+      push(NEW, DECLARED);
+      try {
+        expect(resolveKey()).toBe(`${DECLARED}/${KEY}`);
+      } finally {
+        drop(NEW, DECLARED);
+        rmSync(declPath(), { force: true });
+      }
+    });
+
+    test("with no declaration the built-in name is unchanged", () => {
+      expect(existsSync(declPath())).toBe(false);
+      expect(resolveKey()).toBe(`${NEW}/${KEY}`);
+    });
+  });
 });

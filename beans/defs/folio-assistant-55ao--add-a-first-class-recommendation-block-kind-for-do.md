@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-08-28T15:04:51Z
-updated_at: 2026-09-23T22:39:31Z
+updated_at: 2026-10-06T06:35:08Z
 parent: folio-assistant-0lmb
 ---
 
@@ -100,3 +100,17 @@ Put as one question each while going through the open beans:
 - **since:** 2026-09-23T22:45Z
 - **expires:** 14 days, then re-ask the owner whether the discussion has happened.
 - **handoff:** Q1 and Q2 are settled above. When Q3 is answered, build in this order: code-list scheme for strength, the block kind (about 30 files, listed above), the skill, then the BPMN step. Also update `content-profiles.md`, which says "deliberately no `recommendation` kind".
+
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
+## Owner ruling 2026-10-06 on Q3: LINK, don't merge
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): link without merging; one vocabulary; still waiting on stakeholders. **The owner chose "Link, don't merge".**
+
+- `recommendation` (document adapter, folio-assistant-core) and `health-intervention` (DAK adapter, smart-*) stay **two kinds**, joined by an optional edge from a recommendation to the health-intervention it is about.
+- Each layer keeps its own vocabulary, and nothing in core depends on the DAK adapter.
+- The block resolves. **The build waits until the content split across repos is done**, per the owner (2026-10-06: *"that needs to be done before F"*). It then lands in folio-assistant-core.

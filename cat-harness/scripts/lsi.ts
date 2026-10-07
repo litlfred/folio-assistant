@@ -249,8 +249,10 @@ export function computeIndex(t: GraphTarget, docs?: string[], opts: LsiOptions =
   const hit = key ? computed.get(key) : undefined;
   if (hit) return hit;
   const units = unitsOf(t.absPath, t.graphTypologies, docs);
+  // input-site: inert #c1aef090 — a duration for the log
   const t0 = performance.now();
   const ix = buildLsi(units, opts);
+  // input-site: inert #8a078e0b — a duration for the log
   const ms = Math.round(performance.now() - t0);
   const f = findings(ix);
   const sidecar: LsiSidecar = {
@@ -550,6 +552,11 @@ function targets(): GraphTarget[] {
     console.error(`no prose graph matches --instance ${inst ?? "*"} --graph ${gid ?? "*"}`);
     process.exit(2);
   }
+  // `--needed`: only the graphs `needOf` says need an index — the set `lsi
+  // audit` judges, computed from the instances present rather than listed by
+  // a caller that cannot know which instances sit above it (bean `0r7u`). An
+  // empty selection here is a determined "none needs one", not a miss.
+  if (process.argv.includes("--needed")) return all.filter((t) => needOf(t).needed);
   return all;
 }
 

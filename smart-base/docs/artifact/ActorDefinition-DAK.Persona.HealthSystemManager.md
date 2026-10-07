@@ -2,6 +2,10 @@
 title: "Health System Manager — WHO SMART Base artefact"
 description: "ActorDefinition/DAK.Persona.HealthSystemManager in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ActorDefinition-DAK.Persona.HealthcareProvider.html"
+ig_next: "ActorDefinition-DAK.Persona.Person.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ A professional involved in the administration and oversight of health systems. H
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ActorDefinition-DAK.Persona.HealthcareProvider.html" data-next="ActorDefinition-DAK.Persona.Person.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

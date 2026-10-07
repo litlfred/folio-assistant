@@ -6,7 +6,7 @@
 
 The graph typologies folio-assistant-core owns, one folio-graph-typology/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-typology-registry.ts, with each entry's code comments kept as its rationale.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-typologies`, holding `typologies`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `folio-assistant-core-typologies`, holding `typologies`.
 
 | file | what it is | used by |
 |---|---|---|

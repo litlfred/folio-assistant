@@ -2,6 +2,10 @@
 title: "IMMZD5DTTBEContraindications ValueSet for Decision Table — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZD5DTTBEContraindicationsVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZD5DTRubellaContraindicationsVS.html"
+ig_next: "ValueSet-IMMZD5DTTyphoidContraindicationsVS.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -39,10 +43,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTBEContraindicationsVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTBEContraindicationsVS.schema.json` · [view](ValueSet-IMMZD5DTTBEContraindicationsVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTBEContraindicationsVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTBEContraindicationsVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTBEContraindicationsVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTBEContraindicationsVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD5DTTBEContraindicationsVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTBEContraindicationsVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTTBEContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTBEContraindicationsVS.jsonld` · [view](ValueSet-IMMZD5DTTBEContraindicationsVS.jsonld.html) |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZD5DTRubellaContraindicationsVS.html" data-next="ValueSet-IMMZD5DTTyphoidContraindicationsVS.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD5DTTBEContraindicationsVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD5DTTBEContraindicationsVS.jsonld` |

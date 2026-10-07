@@ -6,7 +6,7 @@
 
 The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-skills`, holding `skills`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|

@@ -1,3 +1,9 @@
+/**
+ * The tests of this file that read the whole checkout (reads the folio
+ * directory a content instance above cat-harness declares) live in
+ * `test/folio-viz-checkout.test.ts` (bean `7zz1`): standing alone, cat-harness
+ * has none of it.
+ */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -5,7 +11,6 @@ import { join } from "node:path";
 import { readFolioGraph, projection, viewerHtml } from "../gen-folio-viz.ts";
 import { MARKER } from "../folio-mount.ts";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
-import { viewersOf, type ViewedDirectory } from "../viewer-declarations.js";
 
 /**
  * The folio graph has a view of its own. Bean `7ofc`.
@@ -83,20 +88,6 @@ describe("the generated artefacts are the ones declared", () => {
   test("both exist — run `bun run folio:viz` if not", () => {
     expect(existsSync(page), `${page} missing`).toBe(true);
     expect(existsSync(data), `${data} missing`).toBe(true);
-  });
-
-  test("the folio directory's viewer — read from the pages — is the page that exists", () => {
-    // A viewer that resolves to nothing is `pb04`: the coverage reads as met
-    // and the link is dead. Since #1168 B7a-2b the page names the directory it
-    // draws, and the directory no longer names its page.
-    const decl = JSON.parse(readFileSync(join(ROOT, "cat-harness.json"), "utf-8")) as {
-      directories: ViewedDirectory[];
-    };
-    const folio = decl.directories.find((d) => d.id === "folio");
-    expect(folio).toBeDefined();
-    const vis = viewersOf(folio!, ROOT, REPO)[0]?.ref;
-    expect(vis).toBeDefined();
-    expect(existsSync(join(REPO, vis!)), `${vis} does not resolve`).toBe(true);
   });
 
   test("the page really carries the mount, not just the function", () => {

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-gxvk
 title: 'READER AUDIT: every consumer of committed QA results, classified by how it must change when QA leaves main — with one fix bean per reader family'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-01T08:15:59Z
-updated_at: 2026-10-01T08:48:27Z
+updated_at: 2026-10-06T06:09:22Z
 parent: folio-assistant-3fva
 ---
 
@@ -56,3 +56,7 @@ Two corrections to earlier beans:
 - `lsi_query`, `degradation.ts` and the `tools/index.ts` lsi entry (`2ae2`) are not readers.
 
 D2 undercounts: besides the 13 block/translation agent entries, 32 `kg-qa` files carry `pair_attestations` (6 agent, 26 baseline).
+
+## Closed 2026-10-06 on re-measured evidence
+
+Closed by the 3fva QA-readers pass (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze). Every done-when box is ticked; the boxes that waited on a merge or a scheduled run were re-checked against GitHub on 2026-10-06 and carry their evidence inline. Closed on evidence, not authorship (bean-coordination §"Closing a bean whose work has already landed").

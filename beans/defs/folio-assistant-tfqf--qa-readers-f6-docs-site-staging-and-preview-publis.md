@@ -11,7 +11,7 @@ blocked_by:
     - folio-assistant-16ei
 ---
 
-Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.3 family F6). **Refines and supersedes the docs-site and staging half of `2ae2`.** The audit found that `2ae2`'s three MCP sites are not readers (§5.4). Blocked on `16ei`. **CRITICAL: two false-cleans.**
+Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.3 family F6). **Refines and supersedes the docs-site and staging half of `2ae2`.** The audit found that `2ae2`'s three MCP sites are not readers (§5.4). As of 2026-10-06 this is not blocked on `16ei`: it completed (qa-store landed; CI publishes `main/` and `pr/` entries and the prune runs on schedule), so the block is withdrawn. **CRITICAL: two false-cleans.**
 
 ## Readers
 - `.github/workflows/docs-site.yml:149` `gen-docs-pages.ts` (write) → page badges and witnesses (C). Absent today: all **136** live badges become "not swept", and the build stays green. HIGH. Measured by a write-mode run, which was reverted.

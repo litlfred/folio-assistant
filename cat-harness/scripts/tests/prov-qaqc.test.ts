@@ -4,6 +4,10 @@
  * `authorizeTask` the deterministic engine runs before a task is re-run after
  * it. Nothing is invented: an entry with no actor or no role gets a finding,
  * never a made-up agent or role.
+ *
+ * The tests of this file that read the whole checkout (reads the root-declared
+ * `beans/workflows/` instances) live in `test/prov-qaqc-checkout.test.ts`
+ * (bean `7zz1`): standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
@@ -11,13 +15,11 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import {
-  buildReport,
   outputs,
   processStem,
   reportInstance,
   stableJson,
   staleness,
-  totals,
   type Report,
 } from "../prov-qaqc.js";
 import { roleGraphFor, workflowFile } from "../known-skills.js";
@@ -197,20 +199,5 @@ describe("prov-qaqc: outputs", () => {
     const page = outputs(report(), { page: "/p", assets: "/a" }).get("/p")!;
     expect(page).toContain("**Advisory.**");
     expect(page).toContain("| `unknown` | 1 |");
-  });
-});
-
-describe("prov-qaqc: the real repository", () => {
-  test("vacuity guard: the committed instances yield more than zero activities, all valid", async () => {
-    const r = await buildReport();
-    const t = totals(r);
-    expect(r.instances.size).toBeGreaterThan(0);
-    expect(t.activities).toBeGreaterThan(0);
-    expect(r.invalid).toEqual([]);
-  });
-
-  test("the committed page and logs are current (what check:prov-qaqc gates)", async () => {
-    const files = outputs(await buildReport());
-    expect(staleness(files)).toEqual({ stale: [], orphans: [] });
   });
 });

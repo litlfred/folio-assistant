@@ -45,7 +45,7 @@ import {
   readDeclaration,
   repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
-import { fshGutsDirectories, readFshGutsNode } from "../schemas/fsh-guts.js";
+import { fshGutsDirectories, isFrozenSubtree, readFshGutsNode } from "../schemas/fsh-guts.js";
 import { exitUnlessMounted } from "./branch-store.js";
 import { contextBindings, vocabMapping } from "../schemas/vocab-mapping.js";
 import { STANDARD_PREFIXES } from "../schemas/vocab-mapping-fhir.js";
@@ -137,8 +137,12 @@ export function fshGutsDirs(root: string): FshGutsDir[] {
 function walk(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
     const path = join(dir, name);
-    if (statSync(path).isDirectory()) walk(path, out);
-    else out.push(path);
+    // A FROZEN subtree (sub-kg-lifecycle stage 13) is one item, exported as
+    // its sibling note — never thousands of `skipped` entries for another
+    // repository's files, none of which is a node of this graph.
+    if (statSync(path).isDirectory()) {
+      if (!isFrozenSubtree(path)) walk(path, out);
+    } else out.push(path);
   }
   return out;
 }
@@ -245,6 +249,13 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
       movedFrom: termIri("movedFrom"),
       issue: termIri("issue"),
       bean: termIri("bean"),
+      // A node kind's own fields (`extraFields`), kept whole as a JSON
+      // literal. Undeclared, a processor dropped it with "invalid property"
+      // the first time a node carried one — the stage-13 notes' `repository`
+      // and `matchesCommit` (bean 61t6). `@json` rather than a nested context,
+      // because `kind` is open: the keys inside are not known here, and a
+      // context listing them would close the field set one level out.
+      data: { "@id": termIri("data"), "@type": "@json" },
       // `schema:text` rather than a minted `fac:body`: schema.org already
       // names "the textual content of this thing", and a second term for it
       // is the drift `ns:check` caught twice on this branch already.

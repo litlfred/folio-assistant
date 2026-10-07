@@ -3,6 +3,8 @@ title: "Core Data Element Type Value Set — JSON Schema"
 description: "The JSON Schema sidecar of ValueSet/CoreDataElementTypeVS, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"ValueSet-CoreDataElementTypeVS.schema.json","src":"../fhir-artifact-index/dak/ValueSet-CoreDataElementTypeVS.schema.json","artifact":{"title":"Core Data Element Type Value Set","page":"ValueSet-CoreDataElementTypeVS.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-CoreDataElementTypeVS.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CoreDataElementTypeVS.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CoreDataElementTypeVS.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CoreDataElementTypeVS.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-CoreDataElementTypeVS.schema.json.html","active":true},{"label":"JSON-LD","href":"ValueSet-CoreDataElementTypeVS.jsonld.html","active":false}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

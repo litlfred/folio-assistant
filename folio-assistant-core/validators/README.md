@@ -6,7 +6,7 @@
 
 The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit).
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `folio-assistant-core-validators`, holding `validators`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `folio-assistant-core-validators`, holding `validators`.
 
 | file | what it is | used by |
 |---|---|---|

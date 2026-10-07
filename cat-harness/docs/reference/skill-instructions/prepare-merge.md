@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/prepare-merge.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/prepare-merge.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/prepare-merge.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/prepare-merge.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/prepare-merge.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Prepare-merge — get a feature branch ready to land
@@ -61,6 +61,13 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    `bun run qa:resolve-conflicts`. A conflict in `test/attestations/` is a
    judgement and has none. See §"Conflicts in `test/results/` and
    `test/attestations/`" below before resolving either by hand.
+
+   **Merge with `bun run merge:main`, never a plain `git merge` followed by
+   regen.** It resolves every conflict a declared pattern covers (glossaries,
+   translated glossaries, UML, viewer pages, site data, QA sidecars), refuses
+   the rest with the tree restored, and runs regen on the result. A plain
+   `git merge` stops on those same generated files, one by one (measured
+   2026-10-06, bean `xpcu`).
 
    **And after EVERY base merge, conflicted or not, run `bun run regen`.**
    A clean merge is not evidence that the generated artefacts are right — see
@@ -138,8 +145,12 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    per the same honesty rule as the build above.
    **For a branch that changes a folio's blocks, report review coverage.**
    `content-change-review.bpmn`'s coverage gate (`GW_Covered`, table
-   `decisions/review-coverage-gate.dmn`) reads two counts. Report both in
-   the PR body, in the gate's own terms:
+   `decisions/review-coverage-gate.dmn`) reads the block counts below and,
+   where the preview published a `rendered-impact.json`, three page counts
+   (unreviewed pages, undetermined inputs, missed pages; see
+   [`rendered-impact`](rendered-impact.md)). Report them in the PR body, in
+   the gate's own terms, and a page count the preview did not publish as
+   "not known":
    - **open defects**: review comments of kind `defect` still `open` or
      `addressed`, from the preview's `review-comments.json`;
    - **changed blocks with neither a verdict nor a waiver** on their current
@@ -149,7 +160,8 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    `px0t`), run on the preview's published files:
    `bun run <platform>/folio-assistant-core/scripts/review-coverage.ts
    --changeset changeset.json --blocks blocks.json --comments
-   review-comments.json`. Quote its stderr summary. **If the preview has no
+   review-comments.json [--rendered rendered-impact.json --measured
+   rendered-measured.json]`. Quote its stderr summary. **If the preview has no
    `review-comments.json`, or one with no `verdicts` field, write "not
    measured"**, never 0. And never count resolved comments as coverage: a
    resolved comment is not a reviewer's verdict on the block.
@@ -248,7 +260,9 @@ And what it does **not** entitle, each with what it costs:
   `check:*` scripts all passed and CI went red twice — first on
   `check:partition` (a new script must be classified in
   `scripts/partition/instance-rules.ts`), then on `no check script is unrun` (a
-  new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it).
+  new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it —
+  or, for a script owned by an instance above cat-harness, a
+  `gateExemptions.scripts` row in that instance's `<instance>.json`, bean `0r7u`).
   Neither is visible to any of the three. `bun run gates` derives its list from
   the workflow, which is why it cannot drift from what CI runs.
 - **"Nothing is failing, so nothing is wrong."** A *conflicted* head produces no
@@ -315,6 +329,18 @@ bun run regen --changed <base>  # ask only the pairs whose inputs changed since 
 bun run regen --explain         # say, per pair, why it was asked or not
 ```
 
+**The QA working copy is part of the run — do not build it by hand around
+regen** (bean `7how`, issue #2319). Generators such as `uml:overview` and
+`readme:subgraphs` read the computed, ignored `*/test/results/` tree. Before
+every pass regen asks the copy's stamp
+(`bun run qa:working-copy -- --status`) whether it was built from the tree as
+it stands, and rebuilds it if not. The paths that rebuild changed join the
+pass's change set, so any pair that reads them is asked again. A failed build
+exits 2, and regen never grades a pass over a half-built copy. The recipe that
+grew around the gap (`regen → qa:working-copy → kg:detangle → regen`) is
+therefore one `regen`, or one `merge:main`. `gates` uses the same stamp, so the
+`gates` that follows a regen on the same tree builds nothing.
+
 It reports four states, and **`unrepaired` is the one to read**: a check that
 still fails after its writer ran is a real defect, not staleness, and the
 command exits non-zero rather than claiming a repair it did not make. So is a
@@ -330,7 +356,10 @@ current if the fork point, the branch tip or the base tip was current.
 `merge:main -- --full-regen` asks every pair. Separately, every pass after
 the first asks only the pairs whose inputs the previous pass actually changed
 (measured from `git`, not declared). Both cuts are only as good as the
-`task-io.ts` declarations. The whole-tree pairs (`kg:audit:all:check`,
+`task-io.ts` declarations — and, for a task owned by an instance above
+cat-harness, that instance's own `taskIo` block in its `<instance>.json`
+(bean `0r7u`). `task-io.ts` collects them and **refuses a task declared
+twice**, so declare a row where its script lives, never in both places. The whole-tree pairs (`kg:audit:all:check`,
 `skill:register:check`, `kg:audit:check`) still run after every merge.
 
 ### Submodules: check the pointers BEFORE you stage the merge (STRICT)

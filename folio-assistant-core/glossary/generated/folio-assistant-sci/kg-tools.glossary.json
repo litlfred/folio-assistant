@@ -7,6 +7,14 @@
   "source": "Tools of folio-assistant-sci",
   "terms": [
     {
+      "id": "lean-cache",
+      "prefLabel": "Lake olean cache",
+      "definition": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+      "notation": "lean-cache",
+      "source": "folio-assistant-sci/tools/index.ts#lean-cache",
+      "status": "candidate"
+    },
+    {
       "id": "lean-formal-edges",
       "prefLabel": "Formal edges from the Lean build",
       "definition": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\".",

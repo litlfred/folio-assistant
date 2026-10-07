@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/opening-brief.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/opening-brief.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/opening-brief.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/opening-brief.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/opening-brief.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Opening brief — brief the topic before you touch anything
@@ -244,5 +244,6 @@ reader who arrives after it.
 |---|---|
 | [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before touching anything |
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Brief, and claim the bean |
+| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | Brief, and claim the bean |
 | [Options analysis](../../processes/options-analysis.html) | Frame the decision and check the trigger |
 

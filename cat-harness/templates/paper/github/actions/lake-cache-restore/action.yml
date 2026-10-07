@@ -67,7 +67,7 @@ runs:
         # The cache-branch family is `cat/folio-assistant-sci/lake-cache/`
         # (bean folio-assistant-9io2; it was `lake-cache/`, then the interim
         # `cat-lake-cache/`; names declared in
-        # cat-harness/scripts/special-branches.json). Tier 2 resolves the key
+        # the declaring folio's `storage`; special-branches.json is gone). Tier 2 resolves the key
         # new-name-first, then each legacy name, newest first.
         echo "orphan-key=${PACKAGE}-$slug" >> "$GITHUB_OUTPUT"
         echo "orphan-branch=cat/folio-assistant-sci/lake-cache/${PACKAGE}-$slug" >> "$GITHUB_OUTPUT"

@@ -3,6 +3,8 @@ title: "GDHCN Participants to WHO Regional Offices — change history"
 description: "ParticipantsToWHORegionalOffices - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"ConceptMap-ParticipantsToWHORegionalOffices.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.xml","active":false},{"label":"JSON","href":"ConceptMap-ParticipantsToWHORegionalOffices.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ConceptMap-ParticipantsToWHORegionalOffices.ttl","active":false}],"heading":"ParticipantsToWHORegionalOffices - Change History","sections":[{"text":"History of changes for ParticipantsToWHORegionalOffices ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

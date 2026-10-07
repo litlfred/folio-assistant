@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of folio-assistant-sci"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/ns#glossary/kg-tools/lean-cache",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Lake olean cache"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two."
+        }
+      ],
+      "skos:notation": "lean-cache",
+      "dcterms:source": "folio-assistant-sci/tools/index.ts#lean-cache",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/ns#glossary/kg-tools/lean-formal-edges",
       "@type": "skos:Concept",
       "skos:inScheme": {

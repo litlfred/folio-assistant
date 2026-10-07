@@ -28,7 +28,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { QA_WRITERS, assess, claimants, globToRegExp, trackedQaFiles, type QaWriter } from "../qa-refresh.ts";
+import { QA_WRITERS, assess, claimants, globToRegExp, runRestoring, trackedQaFiles, writerSideEffects, type QaWriter } from "../qa-refresh.ts";
 import { clearQaCache, publishQa, readQaManifest, refreshReportComplete, REFRESH_SCHEMA, type QaStoreOptions } from "../../../cat-harness/scripts/qa-store.ts";
 import { movedRoots, type MovedInventory } from "../../../cat-harness/scripts/qa-verify-moved.ts";
 import { HARNESS_ROOT } from "../lib/roots.ts";
@@ -99,7 +99,7 @@ describe("the declaration", () => {
       "cat-harness/test/results/block-qa/content/docs/concepts-agentic-harness/overview.qa.json": "qa-sweep:docs",
       "cat-harness/test/results/library-qa/9789240010567-eng.qa-results.json": "check:l1-complete",
       "cat-harness/test/results/lsi/cat-harness/skills.lsi.json": "lsi:index:cat-harness:skills",
-      "cat-harness/test/results/tool-runs/lsi-index/who-iris/library.tool-run.json": "lsi:index:who-iris:library",
+      "cat-harness/test/results/tool-runs/lsi-index/who-iris/library.tool-run.json": "lsi:index:library",
       "cat-harness/test/results/lsi-need-an-index.qa-results.json": "lsi:audit",
       "cat-harness/test/results/witnesses/skills/index.json": "docs:pages",
       "cat-harness/test/results/viewer-nav/viewer-nav.qa.json": "viewer:nav:audit",
@@ -289,4 +289,57 @@ describe("qa:publish --completeness", () => {
     },
     T,
   );
+});
+
+describe("producing the working copy leaves the committed tree as the commit has it (bean 72a8)", () => {
+  test("a committed file a writer rewrote is restored", () => {
+    expect(writerSideEffects(new Set(), new Set(["cat-harness/docs/assets/beans/index.json"]))).toEqual([
+      "cat-harness/docs/assets/beans/index.json",
+    ]);
+  });
+  test("a file the person had already edited is theirs, and is never touched", () => {
+    expect(writerSideEffects(new Set(["a.ts"]), new Set(["a.ts", "b.json"]))).toEqual(["b.json"]);
+  });
+  test("nothing rewritten, nothing restored", () => {
+    expect(writerSideEffects(new Set(["a.ts"]), new Set(["a.ts"]))).toEqual([]);
+  });
+});
+
+describe("the restore window is ONE writer's run, not the whole refresh (bean 7how)", () => {
+  // A tree as a set of dirty paths. Writer `w1` rewrites `side.json`; between
+  // `w1` and `w2` a person edits `fix.ts` (the #2272 loss: an uncommitted fix
+  // reverted mid-run). With one window over both writers it was restored.
+  test("an edit made BETWEEN writers is not charged to either, and is kept", () => {
+    const dirty = new Set<string>();
+    const restored: string[] = [];
+    const runs = runRestoring(
+      ["w1", "w2"],
+      (w) => {
+        if (w === "w1") dirty.add("side.json"); // w2 writes nothing tracked
+        return w;
+      },
+      () => new Set(dirty),
+      (paths) => {
+        restored.push(...paths);
+        for (const p of paths) dirty.delete(p);
+        if (paths.includes("side.json")) dirty.add("fix.ts"); // the person's edit lands after w1's restore
+      },
+    );
+    expect(restored).toEqual(["side.json"]);
+    expect(runs.map((r) => r.restored)).toEqual([["side.json"], []]);
+    expect(dirty.has("fix.ts")).toBe(true);
+  });
+  test("each restored path is charged to the writer it changed under", () => {
+    const dirty = new Set<string>();
+    const runs = runRestoring(
+      ["a", "b"],
+      (w) => (dirty.add(`${w}.json`), w),
+      () => new Set(dirty),
+      (paths) => paths.forEach((p) => dirty.delete(p)),
+    );
+    expect(runs).toEqual([
+      { run: "a", restored: ["a.json"] },
+      { run: "b", restored: ["b.json"] },
+    ]);
+  });
 });

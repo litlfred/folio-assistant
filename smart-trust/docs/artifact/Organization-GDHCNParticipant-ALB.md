@@ -2,6 +2,10 @@
 title: "GDHCNParticipant-ALB — WHO SMART Trust artefact"
 description: "Organization/GDHCNParticipant-ALB in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ConceptMap-ParticipantsToWHORegionalOffices.html"
+ig_next: "Organization-GDHCNParticipant-ALB-UAT.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -35,6 +39,3 @@ nav_exclude: true
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 19 of 678 carry one.
-
-<footer id="ig-footer" data-prev="ConceptMap-ParticipantsToWHORegionalOffices.html" data-next="Organization-GDHCNParticipant-ALB-UAT.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

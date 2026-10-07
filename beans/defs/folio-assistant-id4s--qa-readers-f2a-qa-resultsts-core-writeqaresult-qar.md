@@ -1,11 +1,11 @@
 ---
 # folio-assistant-id4s
 title: 'QA READERS F2a: qa-results.ts core (writeQaResult, qaResultState) and the export comparisons read through qa-store'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T08:47:13Z
-updated_at: 2026-10-01T17:34:54Z
+updated_at: 2026-10-06T06:09:22Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -46,3 +46,7 @@ Verified both ways (results present, then every `*/test/results` and `test/healt
 - [x] no caller composes `<root>/test/results/` by hand. `QA_RESULTS_DIR` now appears only in `qa-results.ts` and in its own test, which asserts that the constant mirrors the declaration.
 - [x] `check:version-bump` reports `unknown` (not `current`) when the branch has no baseline. Its exit on that state is documented: 0.
 - [x] its tests run with `test/results/` absent (`check-published-instance-exports.test.ts`, `qa-baseline.test.ts`, `instance-versioning.test.ts`). Still failing when absent are three witness/badge tests in `qa-results.test.ts`. They read `test/results/witnesses`, which is F6's subject (docs publishing).
+
+## Closed 2026-10-06 on re-measured evidence
+
+Closed by the 3fva QA-readers pass (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze). Every done-when box is ticked; the boxes that waited on a merge or a scheduled run were re-checked against GitHub on 2026-10-06 and carry their evidence inline. Closed on evidence, not authorship (bean-coordination §"Closing a bean whose work has already landed").

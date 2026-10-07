@@ -2769,6 +2769,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.coverage.measured",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Coverage.measured"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the build was measured against its base."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.measured",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.coverage.missedpages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Coverage.missedPages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Pages the build measured and the prediction missed, not reviewed since. Counted only when `measured` is `known`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.missedPages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.coverage.opendefects",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2788,6 +2826,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.coverage.rendered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Coverage.rendered"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether a rendered impact was given; when `absent` the three lists below are empty because UNKNOWN."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.rendered",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.coverage.stale",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2800,7 +2857,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Verdicts on an OLDER version of a block, which therefore do not count."
+          "@value": "Verdicts on an OLDER version of what they are on, which therefore do not count."
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.stale",
@@ -2845,6 +2902,82 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.coverage.undeterminedinputs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Coverage.undeterminedInputs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Inputs no renderer could place, with neither a current verdict nor a waiver."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.undeterminedInputs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.coverage.unreviewedpages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Coverage.unreviewedPages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Rendered pages (and data files) on the review list that nobody has reviewed at their current pin."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#Coverage.unreviewedPages",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.renderedfacts.files",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedFacts.files"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The predicted files and undetermined inputs, every renderer's, each pinned."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#RenderedFacts.files",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.renderedfacts.measured",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RenderedFacts.measured"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The build's measurement, when it was measured."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#RenderedFacts.measured",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.reviewverdictschema.blockhash",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2857,7 +2990,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The block's content hash when the verdict was given. The verdict counts only while it is current."
+          "@value": "The block's content hash (a page's or input's pin) when the verdict was given. It counts only while current."
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.blockHash",
@@ -2956,6 +3089,44 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.role",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.reviewverdictschema.target",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewVerdictSchema.target"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absent on verdicts written before pages could be reviewed: those are all on blocks."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.target",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/review-verdict.reviewverdictschema.targetlabel",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewVerdictSchema.targetLabel"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A block's label, or a page's or an input's path, as `target` says."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictSchema.targetLabel",
       "skos:note": "candidate"
     },
     {

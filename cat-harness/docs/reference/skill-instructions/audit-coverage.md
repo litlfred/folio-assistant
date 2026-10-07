@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/audit-coverage.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/audit-coverage.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/audit-coverage.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/audit-coverage.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/audit-coverage.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Audit coverage — measured, with denominators
@@ -151,7 +151,7 @@ through it — and the flag is what stops it resting there.
 ### The two kinds that were genuinely untyped
 
 `interaction` and `issue-marks` declared no validator at all, and the cost was
-measured rather than supposed: `interaction/interaction.json` is read at the
+measured rather than supposed: `cat-harness/memory/interaction.json` is read at the
 start of **every** session by jq inside a shell script whose failure branch
 prints `(could not parse … — read it by hand)`. A malformed node does not fail;
 it degrades to a line nobody acts on, in the one file every sibling session

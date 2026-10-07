@@ -66,12 +66,28 @@ function compiledIndex(id: string): Record<string, unknown> {
   return ix;
 }
 
+/**
+ * The same compiled index as a BUILD's (`ast-to-artifact-index` output, source
+ * kind `output`) at `revision`, with the second profile compiled at `other`.
+ */
+function builtIndex(id: string, revision: string, other: string): Record<string, unknown> {
+  type Mat = { inputs: Record<string, string> } & Record<string, unknown>;
+  const ix = compiledIndex(id) as { artifacts: Array<{ materialization: Mat }>; source: Record<string, unknown> };
+  ix.source = { kind: "output", of: "output-ast", readAt: "2026-10-06", revision };
+  const m = ix.artifacts[0].materialization;
+  m.inputs.sourceRevision = revision;
+  ix.artifacts[1].materialization = { ...m, inputs: { ...m.inputs, sourceRevision: other } };
+  return ix;
+}
+
 const repo = scratchRepo({
   ips: { index: artifactIndex(IPS, "ips"), identity: IPS_IDENTITY },
   ipa: { index: artifactIndex(IPA, "ipa") },
   plain: { index: artifactIndex(IPS, "plain"), identity: IPS_IDENTITY },
   compiled: { index: compiledIndex("compiled") },
   uncompiled: { index: compiledIndex("uncompiled") },
+  built1: { index: builtIndex("built1", "1".repeat(40), "9".repeat(40)) },
+  built2: { index: builtIndex("built2", "2".repeat(40), "9".repeat(40)) },
 });
 afterAll(() => rmSync(repo, { recursive: true, force: true }));
 
@@ -179,5 +195,28 @@ describe("gen-ig-pages --compiled-data: an AST-built artefact page loads its res
   it("without --compiled-data: no section, no loader — the published-IG pages are unchanged", () => {
     expect(artefact("uncompiled", "StructureDefinition-Composition-uv-ips")).not.toContain("data-ast-src");
     expect(existsSync(join(repo, "uncompiled", "docs", "assets", "ast-resource.js"))).toBe(false);
+  });
+});
+
+describe("gen-ig-pages: an AST build's revision is printed once, on the index (bean c65n)", () => {
+  generate("built1", "--label", "Same");
+  generate("built2", "--label", "Same");
+  const read = (instance: string, rel: string): string => readFileSync(join(repo, instance, "docs", rel), "utf8");
+
+  it("the index carries the revision and the anchor artefact pages link to", () => {
+    expect(read("built1", "index.md")).toContain('<a id="build-revision"></a>');
+    expect(read("built1", "index.md")).toContain("`" + "1".repeat(12) + "`");
+  });
+
+  it("an artefact built at the index's revision links to it, so a new commit leaves its page byte-identical", () => {
+    const md = read("built1", "artifact/StructureDefinition-Composition-uv-ips.md");
+    expect(md).toContain("compiled copy of the [build revision](../#build-revision)");
+    expect(md).not.toContain("1".repeat(12));
+    // The two scratch instances differ in NAME, which the asset paths carry; that is the fixture, not the stamp.
+    expect(read("built2", "artifact/StructureDefinition-Composition-uv-ips.md").replaceAll("/built2/", "/built1/")).toBe(md);
+  });
+
+  it("an artefact built at a different revision still names its own", () => {
+    expect(read("built1", "artifact/StructureDefinition-Patient-uv-ips.md")).toContain("`" + "9".repeat(12) + "`");
   });
 });

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md){: .fa-edit-source data-fa-link="edit" data-src="fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # ig-render-jekyll
@@ -19,6 +19,11 @@ parent: Skill instructions
 Render an IG's pages as **folio pages** — markdown with front matter, through
 Jekyll and just-the-docs — populated from the Publisher's structured output,
 rather than copying the Publisher's finished HTML into place.
+
+**Whether an IG repository gets this rendering at all is the owner's call,
+asked when the repository is adopted, default yes.** The question, and the
+manual-only workflow template it installs, are in
+[`ig-build-pipeline`](ig-build-pipeline.md) §"Who starts a build".
 
 ## Why, in one property
 

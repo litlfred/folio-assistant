@@ -6,7 +6,7 @@
 
 The methodologies core adopts from its own corpus. Separate from `cat-harness/methodologies/` for the reason `smart-base-methodologies` is separate from both: a method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job, per this instance's AGENTS.md, is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-methodologies`, holding `methodology`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-methodologies`, holding `methodology`.
 
 | file | what it is | used by |
 |---|---|---|

@@ -295,7 +295,14 @@
     "index": "{{ '/assets/qa/' | append: _tr_slug | append: '/qa-index.json' | relative_url }}",
     "list": "{{ '/assets/qa/translation-qa-pages.json' | relative_url }}"
   },
-  "sweep": {
+  "sweep": {%- comment -%}
+    `absent` is set only on a FOLIO's site whose build published no sweep of
+    its own (#2263 follow-up). The shell leaves the platform's sweep out, and
+    `run: false` alone would say "not run" -- a claim about the folio that
+    nobody made. `foreignSite.absent.translationQa` is the words instead
+    (`lib/foreign-site-scope.ts`); `null` everywhere else.
+  {%- endcomment -%}{
+    "absent": {% if site.data.translation-qa %}null{% else %}{{ site.data.harness.foreignSite.absent.translationQa | jsonify }}{% endif %},
     "run": {% if site.data.translation-qa %}true{% else %}false{% endif %},
     "sweptAt": "{{ site.data.translation-qa.sweptAt | default: '' }}",
     "totalPages": {{ site.data.translation-qa.totalPages | default: 0 }},
@@ -524,6 +531,15 @@
 <meta name="fa-search-index" content="{{ site.data.build.search_index }}">
 
 <!--
+  A page left out of the search index ON PURPOSE (`search_exclude: true`)
+  says so in what is built, so `publish:verify`'s search-index check can tell
+  a deliberate exclusion from a truncated index (#2233). Front matter is gone
+  once Jekyll has run; without this marker the ~2,800 IG artefact pages that
+  #2194 excluded read as "4,189 pages offer a search box, 1,003 indexed".
+-->
+{% if page.search_exclude %}<meta name="fa-search-exclude" content="true">{% endif %}
+
+<!--
   The bean index — the AGENT work plan, published by the same generator beside
   the todo index above, for the same reason and read the same way. Separate
   files rather than one combined document because the two stores are separate
@@ -566,7 +582,16 @@
   fetch that fails is reported rather than shown as an empty trashcan —
   "nothing discarded" and "could not read the document" are opposite facts.
 -->
+<!--
+  NOT on a folio's site that does not link its OWN fsh-guts (#2263 follow-up):
+  there this path is the folio's, where no document is published, and the
+  fetch's 404 painted "?" -- an error -- on the fish. With no meta the count is
+  ABSENT, and the row's fish is a link or an inert icon saying why
+  (`foreignSite.absent.fshGuts`, `lib/foreign-site-scope.ts`).
+-->
+{%- unless site.data.harness.foreignSite.absent.fshGuts %}
 <meta name="fa-fsh-guts-src" content="{{ '/fsh-guts.json' | relative_url }}">
+{%- endunless %}
 <!--
   ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
   failure, not a performance one.
@@ -639,6 +664,10 @@
 <!-- BEFORE docs-ui.js, which calls it: the one drawing of the harness icon row (beans `lhvt`, `9rq1`). -->
 <script src="{{ '/assets/js/navbar-row.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 <script src="{{ '/assets/js/docs-ui.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<!-- The edit, source and feedback links of every page, from the platform's one
+  recipe (cat-harness/src/core/edit-links.ts, bean v433): links carry their
+  facts and this builds the hrefs. -->
+<script src="{{ '/assets/js/edit-links.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying

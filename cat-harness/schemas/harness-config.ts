@@ -102,8 +102,9 @@ export interface FolioAssistantDependency {
 
   /**
    * Git clone URL for the dependency. Used when `path` is absent or
-   * the directory does not exist. The agent should clone to a
-   * deterministic location (e.g. `.deps/<name>/`).
+   * the directory does not exist. Not cloned into `.deps/` (owner,
+   * 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on
+   * the declaration, laid down by `bun run mount:remote` (bean `0mpw`).
    */
   git?: string;
 
@@ -292,7 +293,7 @@ export const HarnessDirsSchema = z.object({
   // would make the fallback depend on the thing it is the fallback for. The
   // declaration and this default name the same place on purpose; the
   // `interaction` directory entry carries the other half of that pairing.
-  interaction: z.string().default("interaction/interaction.json"),
+  interaction: z.string().default("cat-harness/memory/interaction.json"),
 });
 
 export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
@@ -381,6 +382,7 @@ export const HarnessConfigSchema = z.object({
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { flattenDependencies as flattenSteps } from "./dependency-order";
+import { mountScopeFor, mountedInstanceRoots } from "./remote-mount";
 import { BlockKindNodeSchema, builderOf } from "./block-kind-node";
 import { ContentAdapterNodeSchema } from "./content-adapter-node";
 import { PipelinePluginNodeSchema, QaCheckerNodeSchema, splitOwnCodeRef } from "./contribution-nodes";
@@ -748,9 +750,14 @@ export function rootInstanceName(repoRoot: string): string | undefined {
 /**
  * Resolve a single dependency to an absolute path.
  *
- * Tries `path` first (relative to folioRoot), then falls back to
- * checking `.deps/<name>/` for a previous clone. Does NOT clone —
- * that is the caller's responsibility.
+ * Tries `path` first (relative to folioRoot), then a REMOTE MOUNT of that
+ * name recorded in the checkout's mount lock (bean `0mpw`). Does NOT fetch —
+ * `bun run mount:remote` does, and `mount:remote:check` says when it has not.
+ *
+ * This fell back to `.deps/<name>/` until 2026-10-06, a directory nothing
+ * created and the owner ruled out: a dot directory collides with GitHub's
+ * conventions and with this repository's own dot-prefix guard. The lock is
+ * the declared answer to "where did that layer land", so it is the one read.
  */
 export function resolveDependencyPath(
   folioRoot: string,
@@ -764,11 +771,9 @@ export function resolveDependencyPath(
     if (existsSync(abs)) return abs;
   }
 
-  // Try .deps/<name>/
-  const depsDir = join(folioRoot, ".deps", dep.name);
-  if (existsSync(depsDir)) return depsDir;
-
-  return null;
+  // Try a remote mount of that name
+  const abs = resolve(folioRoot);
+  return mountedInstanceRoots(mountScopeFor(abs) ?? abs).get(dep.name) ?? null;
 }
 
 /**
@@ -835,7 +840,10 @@ export function dependenciesFromNeeds(instanceRoot: string): {
   // the one instance declared at the repository root. That made the root
   // instance's `needs` derive nothing while its authored edge still resolved —
   // an overlay that looked like it worked and held one entry.
-  const repoRoot = siblingScopeFor(abs);
+  // A MOUNTED instance's siblings are where the mount that placed it put
+  // them (bean `0mpw`) — which `siblingScopeFor` cannot see when an override
+  // moved it below the one-level scan.
+  const repoRoot = mountScopeFor(abs) ?? siblingScopeFor(abs);
   const byName = new Map<string, string>();
   for (const root of instanceRootsIn(repoRoot)) {
     try {
@@ -845,6 +853,11 @@ export function dependenciesFromNeeds(instanceRoot: string): {
       // An unreadable sibling cannot be matched against; it is not an error
       // here, and `check:declaration-filename` is what reports it.
     }
+  }
+  // A REMOTE MOUNT an override moved below the one-level scan is still a
+  // sibling (bean `0mpw`): its lock says where it landed.
+  for (const [n, root] of mountedInstanceRoots(repoRoot)) {
+    if (!byName.has(n)) byName.set(n, root);
   }
 
   const dependencies: FolioAssistantDependency[] = [];
@@ -1690,6 +1703,7 @@ export async function loadContributions<C extends { name: string }, S extends Co
 ): Promise<S> {
   registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
+    // input-site: imports */contributes.ts #c73b53ce — a dependency's declared `contributes` module; input-sites.test.ts holds every declaration to this glob
     const fn = contributeFunction(dep, modulePath, await import(modulePath));
     registerPinned(registry, dep, await (fn as () => C | Promise<C>)());
   }
@@ -1724,6 +1738,7 @@ export function loadContributionsSync<C extends { name: string }, S extends Cont
 ): S {
   registerDeclaredContributions<C>(folioRoot, registry);
   for (const { dep, modulePath } of contributingDependencies(folioRoot)) {
+    // input-site: imports */contributes.ts #4875e70d — a dependency's declared `contributes` module; input-sites.test.ts holds every declaration to this glob
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const fn = contributeFunction(dep, modulePath, require(modulePath));
     const contribution = (fn as () => C | Promise<C>)();
@@ -1843,6 +1858,7 @@ function tableEntry(dep: ResolvedDependency, nodeFile: string, ref: string, key:
   const { path, exportName } = splitOwnCodeRef(ref);
   const abs = resolve(dep.rootPath, path);
   if (!existsSync(abs)) throw new Error(`${nodeFile}: ${ref} — ${abs} does not exist`);
+  // input-site: imports */content/pipeline/plugin-slots.ts,*/content/pipeline/qa-checkers-*.ts #f17e81a6 — own-code refs of declared qa-checkers / pipeline-plugins nodes; input-sites.test.ts holds every ref to these globs
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const table = (require(abs) as Record<string, unknown>)[exportName];
   if (typeof table !== "object" || table === null) throw new Error(`${nodeFile}: ${ref} exports no table named ${exportName}`);

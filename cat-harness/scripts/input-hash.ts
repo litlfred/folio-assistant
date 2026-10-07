@@ -1,8 +1,9 @@
 /**
- * Input-hash staleness skipping for `bun run regen` — bean `xpcu`.
+ * Input-hash staleness skipping for `bun run regen` and `bun run gates` —
+ * beans `xpcu`, `f017`.
  *
  * @module scripts/input-hash
- * @graphNode none — a local-only cache helper for `regen-after-merge.ts`
+ * @graphNode none — a local-only cache helper for `regen-after-merge.ts` and `gates.ts`
  *
  * ## What it answers
  *
@@ -34,11 +35,19 @@
  * like any other input, and a baseline that cannot be resolved — offline, no
  * branch, a corrupt entry — is undetermined, so the pair runs.
  *
- * What it does NOT see, and why that is acceptable only because every entry in
- * `task-io.ts` was read first: files outside the declaration that the script
- * reads anyway, ignored files, environment variables, the clock, the network,
- * and modules a script SPAWNS rather than imports (declare those, or use
- * {@link TRACKED}).
+ * ## What it cannot see is AUDITED, not assumed (bean `f017`)
+ *
+ * Every fingerprint also walks the script's import closure through
+ * `input-sites.ts`: a line that reads the environment, the network, the
+ * clock, git history, a spawned process or a computed module must carry a
+ * pinned `// input-site:` annotation, or the fingerprint is undetermined.
+ * What an annotation names is then hashed here — environment VALUES, the
+ * `HEAD` / ref commit ids and the shallow boundary — and every fingerprint
+ * carries the `bun` and `git` versions and the variables that change how they
+ * run. Under {@link TRACKED} the digest covers IGNORED files too (path, size,
+ * mtime), since a directory walk reads them whether or not git does. A site no
+ * check is known to reach may instead be `traced` (`input-trace.ts`): a run
+ * that reaches it records nothing.
  *
  * ## "Could not determine" is never "clean"
  *
@@ -55,6 +64,16 @@
  * - an imported module uses a NON-LITERAL dynamic import, whose target cannot
  *   be followed.
  *
+ * ## Two kinds of entry, one file
+ *
+ * `pairs` is regen's: a verify/write pair (check AND writer) at a green run.
+ * `checks` is a CHECK SCRIPT ALONE, recorded from a run of that script that
+ * exited 0 with its inputs unmoved across the run ({@link recordCheckRun}) —
+ * by `gates`, or by `regen` asking the check. Both commands read it, so the
+ * `gates` run that follows a `regen` on the same tree does not ask again what
+ * `regen` just asked (bean `f017`), and a gate listed twice in the workflow
+ * is asked once.
+ *
  * ## The cache is local, never committed, and off in CI
  *
  * It lives at `build/regen-cache/input-hashes.json`, and `build/` is
@@ -64,15 +83,18 @@
  * does `--no-cache`, so CI asks every pair exactly as before.
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { readQaManifest, type QaStoreOptions } from "./qa-store.ts";
+import { auditClosure, SiteMemo } from "./input-sites.ts";
+import { inputSiteReached } from "./input-trace.ts";
 
 /** Where the cache lives, relative to the repository root. `build/` is git-ignored. */
+// input-site: inert #9a24257c — names a build-output directory only to leave it out of a walk
 export const CACHE_FILE = join("build", "regen-cache", "input-hashes.json");
 
 /** Bump to invalidate every recorded hash when the fingerprint's recipe changes. */
-export const RECIPE_VERSION = 2;
+export const RECIPE_VERSION = 4;
 
 export type Fingerprint = { hash: string; files: number; wholeTree?: boolean } | { undetermined: string };
 
@@ -298,15 +320,37 @@ export const TRACKED = "{tracked}";
 /**
  * A digest of the working tree's tracked and untracked-but-not-ignored files.
  *
- * Cheap because unmodified tracked files are identified by the blob id the
- * index already holds; only files that differ from the index, and untracked
- * ones, are read and hashed. Submodules appear as their recorded commit; a
- * submodule with changes in its own tree cannot be hashed from here, so it
- * makes the digest UNDETERMINED rather than silently omitted.
+ * The digest is of CONTENT, not of git's bookkeeping: every file present is
+ * entered as its path and its git blob id. An unmodified tracked file's id is
+ * the one the index already holds; a modified or untracked file's is computed
+ * by `git hash-object` in the checkout, so the checkout's attributes apply
+ * exactly as they would on `git add`. Committing a file therefore does not
+ * change the digest — measured 2026-10-06 (bean `7how`): the previous recipe
+ * hashed a modified file as a sha256 and a clean one as its blob id, so the
+ * merge commit `merge:main` makes turned a tree regen had just settled into
+ * a "changed" one, and every `{tracked}` skip and the QA working copy's stamp
+ * after it were lost. Submodules appear as their recorded commit; a submodule
+ * with changes in its own tree cannot be hashed from here, so it makes the
+ * digest UNDETERMINED rather than silently omitted.
  */
-export function trackedTreeDigest(root: string, digests: FileDigests): { hash: string } | { undetermined: string } {
-  const git = (args: string[]): string | undefined => {
-    const r = Bun.spawnSync(["git", ...args], { cwd: root, stdout: "pipe", stderr: "pipe" });
+export function trackedTreeDigest(
+  root: string,
+  digests: FileDigests,
+  /**
+   * `false` leaves IGNORED files out — for a caller whose stamp is about the
+   * SOURCE tree and whose own output is ignored (`qa-working-copy.ts`: the QA
+   * copy is what it builds). A skip fingerprint always includes them.
+   */
+  opts: { ignored?: boolean } = {},
+): { hash: string } | { undetermined: string } {
+  const git = (args: string[], stdin?: string): string | undefined => {
+    // input-site: tree #e4bd9913 — ls-files listings of the index, the untracked and the ignored files, and hash-object of the files they name
+    const r = Bun.spawnSync(["git", ...args], {
+      cwd: root,
+      stdout: "pipe",
+      stderr: "pipe",
+      stdin: stdin === undefined ? undefined : new TextEncoder().encode(stdin),
+    });
     return r.exitCode === 0 ? r.stdout.toString() : undefined;
   };
   const staged = git(["ls-files", "-s", "-z"]);
@@ -319,33 +363,148 @@ export function trackedTreeDigest(root: string, digests: FileDigests): { hash: s
   const split = (s: string) => s.split("\0").filter(Boolean);
   const gone = new Set(split(deleted));
   const changed = new Set(split(modified).filter((p) => !gone.has(p)));
-  const h = createHash("sha256");
+  const ids = new Map<string, string>();
+  const toHash: string[] = [];
   for (const line of split(staged)) {
     // "<mode> <blob> <stage>\t<path>"
     const tab = line.indexOf("\t");
     const path = line.slice(tab + 1);
     const [mode, blob] = line.slice(0, tab).split(" ");
-    if (gone.has(path)) {
-      h.update(`gone ${path}\n`);
-    } else if (changed.has(path)) {
+    if (gone.has(path)) continue;
+    if (changed.has(path)) {
       if (mode === "160000") return { undetermined: `submodule ${path} has changes in its own tree` };
-      try {
-        h.update(`file ${path} ${digests.digest(path)}\n`);
-      } catch {
-        return { undetermined: `could not read ${path}` };
-      }
+      toHash.push(path);
     } else {
-      h.update(`blob ${path} ${blob}\n`);
+      ids.set(path, `${mode === "160000" ? "commit" : "blob"} ${blob}`);
     }
   }
-  for (const path of split(untracked).sort()) {
-    try {
-      h.update(`new ${path} ${digests.digest(path)}\n`);
-    } catch {
-      return { undetermined: `could not read untracked ${path}` };
+  toHash.push(...split(untracked));
+  if (toHash.length > 0) {
+    const out = git(["hash-object", "--stdin-paths"], toHash.join("\n") + "\n");
+    const got = out?.trim().split("\n") ?? [];
+    if (out === undefined || got.length !== toHash.length) {
+      return { undetermined: `could not hash ${toHash.length} modified or untracked file(s)` };
     }
+    toHash.forEach((p, i) => ids.set(p, `blob ${got[i]}`));
+  }
+  const h = createHash("sha256");
+  for (const p of [...ids.keys()].sort()) h.update(`${p} ${ids.get(p)}\n`);
+  if (opts.ignored === false) return { hash: h.digest("hex") };
+  const ignored = git(["ls-files", "-o", "-i", "--exclude-standard", "--directory", "-z"]);
+  if (ignored === undefined) return { undetermined: "could not list the ignored files" };
+  for (const entry of split(ignored).sort()) {
+    const r = ignoredDigest(root, entry, h, digests);
+    if (r !== undefined) return { undetermined: r };
   }
   return { hash: h.digest("hex") };
+}
+
+/**
+ * Ignored files are part of "the whole working tree" too: a check that walks a
+ * directory with `readdirSync` or `Bun.Glob` reads them whether or not git
+ * does — the shape of the `:pages:check` that passed locally on an untracked
+ * loader and failed on a clean checkout. So each one's path and CONTENT is
+ * hashed (memoised by size and mtime, like any file). Content, not mtime:
+ * `gates` rebuilds the QA working copy under `test/results/` before its first
+ * gate, rewriting every file with the bytes it had, and an mtime digest made
+ * that rebuild invalidate every `{tracked}` check — measured 2026-10-06, a
+ * warm `gates` after a warm `regen` skipped 0 of 250.
+ *
+ * Left out, each for a stated reason:
+ * - `node_modules/` at any depth — its content is what `bun.lock` pins, and
+ *   `bun.lock` is in every fingerprint;
+ * - the input-hash cache itself, which every run rewrites;
+ * - a directory holding its own `.git` — another checkout (an agent worktree
+ *   under `.claude/worktrees/`), which is a different repository's tree.
+ */
+/**
+ * Ignored BUILD OUTPUT directories at the top of the tree, left out of the
+ * digest: every regen and gates run rewrites them (a KG export stamped with
+ * its time, the qa:refresh report), so hashing them made every `{tracked}`
+ * check miss — measured 2026-10-06, three such files were the whole
+ * difference across a QA working-copy rebuild. Sound only because a source
+ * line that names one of these directories is an input SITE (`input-sites.ts`,
+ * risk `build`) and must be annotated, so a check that reads a build output is
+ * refused unless a person has read that line.
+ */
+// input-site: inert #5e55a69c — the list of build-output directories the tree digest leaves out; it reads none of them
+export const BUILD_OUTPUT_DIRS = ["build", "_kg", "_site", "dist"] as const;
+
+function ignoredDigest(root: string, entry: string, h: ReturnType<typeof createHash>, digests: FileDigests): string | undefined {
+  const rel = entry.replace(/\/$/, "");
+  if (/(^|\/)node_modules$/.test(rel) || rel === dirname(CACHE_FILE) || rel === CACHE_FILE) return undefined;
+  if ((BUILD_OUTPUT_DIRS as readonly string[]).includes(rel.split("/")[0]!)) return undefined;
+  const walk = (r: string): string | undefined => {
+    let st;
+    try {
+      st = statSync(join(root, r));
+    } catch {
+      return undefined; // gone between the listing and the stat: nothing to read
+    }
+    if (!st.isDirectory()) {
+      if (r === CACHE_FILE) return undefined;
+      try {
+        h.update(`ignored ${r} ${digests.digest(r)}\n`);
+      } catch {
+        return undefined; // gone between the stat and the read: nothing left to read
+      }
+      return undefined;
+    }
+    if (/(^|\/)node_modules$/.test(r) || r === dirname(CACHE_FILE) || existsSync(join(root, r, ".git"))) return undefined;
+    let names: string[];
+    try {
+      names = readdirSync(join(root, r)).sort();
+    } catch {
+      return `could not list ignored ${r}`;
+    }
+    for (const n of names) {
+      const bad = walk(`${r}/${n}`);
+      if (bad !== undefined) return bad;
+    }
+    return undefined;
+  };
+  return walk(rel);
+}
+
+/**
+ * What a `head` / `refs` site reads, named by commit id. A commit id is a hash
+ * of its whole history, so "HEAD is the same commit" is "every `git log` from
+ * HEAD answers the same" — except across a SHALLOW boundary, which `git fetch
+ * --deepen` moves without moving HEAD; its file is hashed too. A ref that does
+ * not resolve is hashed as missing, which is itself an answer the check sees.
+ */
+function historyLine(root: string, head: boolean, refs: readonly string[]): { line: string } | { undetermined: string } {
+  // input-site: traced #b9c60d41 — the fingerprint machinery
+  inputSiteReached("input-hash: history ids");
+  const git = (args: string[]) => Bun.spawnSync(["git", ...args], { cwd: root, stdout: "pipe", stderr: "pipe" });
+  let line = "";
+  const names = [...(head ? ["HEAD"] : []), ...refs];
+  for (const name of names) {
+    const r = git(["rev-parse", "--verify", "--quiet", `${name}^{commit}`]);
+    line += `ref ${name} = ${r.exitCode === 0 ? r.stdout.toString().trim() : "missing"}\n`;
+  }
+  const shallowPath = git(["rev-parse", "--git-path", "shallow"]);
+  if (shallowPath.exitCode !== 0) return { undetermined: "could not locate the shallow file" };
+  const sp = resolve(root, shallowPath.stdout.toString().trim());
+  line += `shallow ${existsSync(sp) ? createHash("sha256").update(readFileSync(sp)).digest("hex") : "none"}\n`;
+  return { line };
+}
+
+const RUNTIME_ENV = ["BUN_OPTIONS", "NODE_OPTIONS", "GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "TZ", "LANG", "LC_ALL"] as const;
+
+/** `bun` and `git` versions — a tool upgrade can change an answer with no file changing. */
+let toolVersions: string | undefined;
+function toolsLine(): string {
+  if (toolVersions === undefined) {
+    // input-site: traced #69cae5db — the fingerprint machinery
+    inputSiteReached("input-hash: git --version");
+    const git = Bun.spawnSync(["git", "--version"], { stdout: "pipe", stderr: "pipe" });
+    // The variables that change how bun or git behave for EVERY script, whatever it reads itself.
+    // input-site: env BUN_OPTIONS,NODE_OPTIONS,GIT_DIR,GIT_WORK_TREE,GIT_INDEX_FILE,TZ,LANG,LC_ALL #841ddb83 — RUNTIME_ENV, hashed into every fingerprint
+    const runtimeEnv = RUNTIME_ENV.map((n) => `${n}=${JSON.stringify(process.env[n] ?? null)}`).join(" ");
+    toolVersions = `tools bun ${Bun.version} ${Bun.revision} ${git.exitCode === 0 ? git.stdout.toString().trim() : "git?"} ${runtimeEnv}\n`;
+  }
+  return toolVersions;
 }
 
 /** Memoised per-file content digests, keyed by path + size + mtime. */
@@ -364,9 +523,12 @@ export class FileDigests {
     this.memo.set(rel, { key, digest });
     return digest;
   }
+  /** Per-file input-site scans (`input-sites.ts`), shared by every fingerprint of a run. */
+  readonly sites = new SiteMemo();
   /** Forget everything — call after writers ran, since mtimes can tie within a tick. */
   clear(): void {
     this.memo.clear();
+    this.sites.clear();
     this.tree = undefined;
   }
 }
@@ -411,15 +573,37 @@ export function fingerprint(
     if (e === undefined) return { undetermined: `\`${s}\` does not resolve to script files` };
     entries.push(...e);
   }
-  // Under TRACKED every script source is already in the tree digest — including
-  // modules loaded by a computed path and scripts that are spawned rather than
-  // imported, which the closure cannot follow. The entries were still resolved
-  // above, so a command that runs a binary is undetermined either way.
-  const closure = wholeTree ? { files: [] as string[] } : sourceClosure(root, entries);
-  if ("undetermined" in closure) return closure;
+  // Every source the check runs is AUDITED (`input-sites.ts`): a line that can
+  // read the environment, the network, the clock, git history or a computed
+  // module must carry a reviewed, pinned annotation saying what it reads, or
+  // the fingerprint is undetermined. Under TRACKED the files themselves are
+  // already in the tree digest; the audit is what makes "the tree" the whole
+  // input. A non-TypeScript script cannot be audited, so it is undetermined.
+  const foreign = entries.find((e) => !/\.(m?[jt]sx?)$/.test(e));
+  if (foreign !== undefined) return { undetermined: `${foreign} is not TypeScript/JavaScript, so its reads cannot be audited` };
+  const audit = auditClosure(root, entries, digests.sites, undefined, (name) => entryFiles(root, scripts, name));
+  if ("undetermined" in audit) return audit;
+  if (audit.needsTree && !wholeTree) {
+    return { undetermined: "a source reads the working tree through git (`tree` site), which only a {tracked} declaration covers" };
+  }
+  for (const name of audit.envUnset) {
+    // input-site: traced #87c9a17e — the fingerprint machinery
+    inputSiteReached("input-hash: fingerprint reads env-unset names");
+    if ((process.env[name] ?? "") !== "") return { undetermined: `$${name} is set, and names something outside the tree` };
+  }
+  const closure = { files: wholeTree ? ([] as string[]) : audit.files };
 
   const h = createHash("sha256");
   h.update(`recipe ${RECIPE_VERSION}\n`);
+  h.update(toolsLine());
+  // input-site: traced #44be6c16 — the fingerprint machinery; a check that only imports this module computes no fingerprint
+  inputSiteReached("input-hash: fingerprint reads audited env");
+  for (const name of audit.env) h.update(`env ${name} = ${JSON.stringify(process.env[name] ?? null)}\n`);
+  if (audit.needsHead || audit.refs.length > 0) {
+    const hist = historyLine(root, audit.needsHead, audit.refs);
+    if ("undetermined" in hist) return hist;
+    h.update(hist.line);
+  }
   for (const s of scriptNames) h.update(`script ${s} = ${scripts[s]}\n`);
   h.update(`io ${JSON.stringify(io)}\n`);
   if (tree !== undefined) h.update(`tree ${tree.hash}\n`);
@@ -433,18 +617,29 @@ export function fingerprint(
 
 export interface HashCache {
   version: number;
+  /** Verify/write PAIR (`regen`'s key, check and writer) → fingerprint at its last green run. */
   pairs: Record<string, string>;
+  /**
+   * A CHECK SCRIPT ALONE → its fingerprint the last time it was RUN and
+   * exited 0, by `regen` or by `gates` (bean `f017`). Shared, so a gate `regen`
+   * just asked on this tree is not asked again by the `gates` run that
+   * follows it, and vice versa. Absent in a cache written before it existed.
+   */
+  checks?: Record<string, string>;
 }
 
 /** Read the cache; anything unreadable is an empty cache, which makes every pair run. */
 export function loadCache(root: string): HashCache {
   try {
     const raw = JSON.parse(readFileSync(join(root, CACHE_FILE), "utf-8")) as HashCache;
-    if (raw.version === RECIPE_VERSION && typeof raw.pairs === "object" && raw.pairs !== null) return raw;
+    if (raw.version === RECIPE_VERSION && typeof raw.pairs === "object" && raw.pairs !== null) {
+      const checks = typeof raw.checks === "object" && raw.checks !== null ? raw.checks : {};
+      return { ...raw, checks };
+    }
   } catch {
     /* absent or corrupt — start empty */
   }
-  return { version: RECIPE_VERSION, pairs: {} };
+  return { version: RECIPE_VERSION, pairs: {}, checks: {} };
 }
 
 export function saveCache(root: string, cache: HashCache): void {
@@ -475,4 +670,54 @@ export function decide(cache: HashCache | undefined, key: string, fp: Fingerprin
   if (prev === undefined) return { skip: false, why: `no hash recorded at a previous green run (${scope(fp)})` };
   if (prev !== fp.hash) return { skip: false, why: `inputs changed since the last green run (${scope(fp)})` };
   return { skip: true, why: `inputs unchanged since the last green run (${scope(fp)})` };
+}
+
+/**
+ * The fingerprint of ONE check script — what `gates` runs, and what a `regen`
+ * pair's check runs — over the same inputs as {@link fingerprint}, minus any
+ * writer. `io` is the script's own declaration (`task-io.ts`); without
+ * `inputs` it is undetermined, so the script is always run.
+ */
+export function checkFingerprint(
+  root: string,
+  scripts: Readonly<Record<string, string>>,
+  script: string,
+  io: PairIO | undefined,
+  digests: FileDigests = new FileDigests(root),
+  baseline?: BaselineResolver,
+): Fingerprint {
+  return fingerprint(root, scripts, [script], io, digests, baseline);
+}
+
+/** Whether a check script may be skipped: its inputs hash to its last recorded pass. */
+export function decideCheck(cache: HashCache | undefined, script: string, fp: Fingerprint): SkipDecision {
+  if (cache === undefined) return { skip: false, why: "cache disabled (--no-cache or CI)" };
+  if ("undetermined" in fp) return { skip: false, why: `inputs could not be determined: ${fp.undetermined}` };
+  const prev = cache.checks?.[script];
+  if (prev === undefined) return { skip: false, why: `no hash recorded at a previous pass of this check (${scope(fp)})` };
+  if (prev !== fp.hash) return { skip: false, why: `inputs changed since this check last passed (${scope(fp)})` };
+  return { skip: true, why: `inputs unchanged since this check last passed (${scope(fp)})` };
+}
+
+/**
+ * Record — or forget — one RUN of a check script, in place.
+ *
+ * `before` is the fingerprint taken just before it ran and `after` just after
+ * (with fresh digests). A hash is recorded only when the run exited 0 AND the
+ * two agree: equal fingerprints mean nothing the check reads moved while it was
+ * reading, so the pass is a fact about exactly the inputs that hash names. Any
+ * other combination — red, undetermined, or inputs that moved underneath it
+ * (a writer beside it, a person editing, the check writing its own input) —
+ * DELETES the entry, so a later run cannot skip on the strength of it.
+ */
+export function recordCheckRun(
+  cache: HashCache,
+  script: string,
+  passed: boolean,
+  before: Fingerprint,
+  after: Fingerprint,
+): void {
+  cache.checks ??= {};
+  if (passed && "hash" in before && "hash" in after && before.hash === after.hash) cache.checks[script] = before.hash;
+  else delete cache.checks[script];
 }

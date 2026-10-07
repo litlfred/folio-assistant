@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T08:56:37Z
+updated_at: 2026-10-06T06:15:06Z
 parent: folio-assistant-vuip
 blocked_by:
     - folio-assistant-70lx
@@ -96,3 +96,10 @@ Same move, two plans. 70lx carries the list now; this bean closes when 70lx does
 
 ## Owner ruling C1, 2026-10-01 (separation arc 7x5n): cat-harness-tools sits BELOW core
 cat-harness-tools needs only cat-harness (+ bootstrap-tools); folio-assistant-core MAY depend on it. MCP-server / tool-implementation parts that need core move UP into folio-assistant-core. Supersedes the reading of the 2026-10-01 ruling 2 as 'core must not depend on cat-harness-tools': it now reads 'core must not depend on the MCP server'. Measured basis: 88 references from core into cat-harness code. Under D1 those would have formed a core<->tools cycle. Concretely: cat-harness-tools/cat-harness-tools.json drops needs: folio-assistant-core.
+
+## 2026-10-06 — re-checked for closing: not yet
+
+Checked on main f44d88fd9 by session https://claude.ai/code/session_01FrpbCpM7BWxGCPsu618MLr (coordinating session's idle queue: 'close w2gr if its evidence holds'). It does not hold yet:
+- This bean says it closes when `70lx` does (2026-10-01). `70lx` is in-progress.
+- Its last box, 'pushed to litlfred/cat-harness-tools', is the seed itself: `iai8` (todo), behind the owner's go in `smbc`.
+Left open; nothing ticked.

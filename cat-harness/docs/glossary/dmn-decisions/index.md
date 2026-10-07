@@ -83,7 +83,7 @@ Draft QA green? <span class="fa-gloss-status">candidate, extracted</span>
 <h2 id="letter-E">E</h2>
 <dl class="fa-gloss">
 <dt id="folio-assistant-core--kg-dmn-decisions--decision_reviewcoveragegate" data-fa-state="extracted" data-fa-gloss="">
-Every changed block reviewed? <span class="fa-gloss-status">candidate, extracted</span>
+Every changed block and rendered page reviewed? <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>

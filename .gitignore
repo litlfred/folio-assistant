@@ -70,7 +70,10 @@ __pycache__/
 # (1,449 tracked files, including `script-qa/*.script-qa.json` QA sidecars) and
 # `docs/audits/_deprecated/` (66) — where any NEW file would then be skipped by
 # `git add` with no error. Keep the leading slash on every entry.
-/.agents/
+# `.agents/skills/` is NOT scratch: it is where Antigravity reads workspace
+# skills, and `agent-memory.ts` generates one per subagent there (bean `fkqa`).
+/.agents/*
+!/.agents/skills/
 /amalgamated_done/
 /amalgamated_input/
 /_deprecated/
@@ -257,6 +260,10 @@ cat-harness/ingest-staging/
 # The composed documentation tree (`compose-docs.ts`). A build output: the
 # BASE is `cat-harness/docs/` and the overlay is the root `docs/`, both tracked.
 _docs/
+# The IG staging work tree and its build list (stage-ig-sites --work ./_ig,
+# docs-site.yml): a local production-style build writes both here (#2235).
+/_ig/
+/_ig-list.txt
 
 # The WORKING COPY of every declared `qa` directory (bean `5hox`, arc `3fva`,
 # owner ruling D4). Each of these declares `storage: { branch: qa-reports }`:

@@ -2,6 +2,10 @@
 title: "Thabo Mbulelo Mbeki — WHO SMART Immunizations artefact"
 description: "Patient/IMMZ.C.Patient.1 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "Measure-IMMZIND45.html"
+ig_next: "Patient-IMMZ.C.Patient.2.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Example of a patient: Thabo Mbulelo Mbeki.
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="Measure-IMMZIND45.html" data-next="Patient-IMMZ.C.Patient.2.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-h2s9
 title: The sweep asks gh for mergeable, whose UNKNOWN means 'not computed yet' — and renders it as 'could not be read'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-22T00:47:08Z
-updated_at: 2026-09-22T12:43:26Z
+updated_at: 2026-10-07T05:12:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -146,7 +146,7 @@ Option 2 is the one worth taking if this stays unverified, and it should be desc
 
 ## Done when (unchanged)
 
-- [ ] The sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` when the merge-ref state is readable — **still open after one clean run**
+- [x] The sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` when the merge-ref state is readable — verified on scheduled Run 133 (see below)
 
 
 _2026-09-22T11:05:00Z_ — **SECOND CLEAN SWEEP, AND THE DEPLOYED LOGIC VERIFIED BY A DIFFERENT ROUTE.** The production box stays unticked; a narrower one is now met and is worth stating separately rather than blurring into it.
@@ -211,7 +211,7 @@ The merge ref exists. The API had simply **not computed the field yet** — lazi
 
 ## Done when
 
-- [ ] **PRODUCTION:** the sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` — **open after three clean sweeps**
+- [x] **PRODUCTION:** the sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` — verified on scheduled Run 133 (see §"2026-09-26 — verified on a live scheduled run" below)
 - [x] **THE DEPLOYED STEP'S LOGIC:** all five branches exercised against real forge refs
 - [x] **THE DEFECT IS RECURRENT, not a settled race:** `mergeable_state: "unknown"` observed again on #944, a mergeable PR, and correctly resolved by the merge-ref probe
 
@@ -264,4 +264,12 @@ call, not mine.
 
 The workflow's UNKNOWN **advice string** had not been updated with the script's
 — see `fx5r`. The code agreed; the prose did not.
+
+## Evidence
+
+Work landed on `main` in PR #839 (merge commit `ca457fccc6f3f77df091143370c1ae2a02e819af`).
+Verified on `main`:
+1. `.github/workflows/pr-checks-present.yml` lines 165–171: mergeability is probed via `git ls-remote origin "refs/pull/$pr/merge"`, reserving `UNKNOWN` strictly for probe execution failure.
+2. Verified in production on scheduled Run 133 of `PRs without checks` (run 36218768664) on 2026-09-26.
+
 

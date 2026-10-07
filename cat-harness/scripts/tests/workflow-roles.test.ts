@@ -19,9 +19,15 @@ import { workflowFile, workflowFiles } from "../known-skills.ts";
 const ROOT = join(import.meta.dir, "..", "..");
 const graph = readRoleGraph(join(ROOT, "scenarios"));
 
+// The pins below run on `crdm-requirements.bpmn`, a diagram cat-harness owns,
+// so the interpreter is tested where it lives. They read `getting-started` and
+// `editing-hci-validation` until 2026-10-06, both folio-assistant-core's, so
+// standing alone the harness had nothing to run them on (bean `ho66`). Any
+// diagram whose first steps bind a role serves; the assertions are unchanged.
+
 describe("enabled() joins a lane to its declared role", () => {
   test("reports the role, not only the lane's spelling", async () => {
-    const model = await loadProcessModel(workflowFile(ROOT, "getting-started.bpmn"));
+    const model = await loadProcessModel(workflowFile(ROOT, "crdm-requirements.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     const open = enabled(model, state, graph);
     expect(open.length).toBeGreaterThan(0);
@@ -32,7 +38,7 @@ describe("enabled() joins a lane to its declared role", () => {
   });
 
   test("an activity's roleSkills is the role's closure, not the activity's own refs", async () => {
-    const model = await loadProcessModel(workflowFile(ROOT, "editing-hci-validation.bpmn"));
+    const model = await loadProcessModel(workflowFile(ROOT, "crdm-requirements.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     for (const e of enabled(model, state, graph)) {
       if (e.kind !== "activity" || !e.role) continue;
@@ -41,7 +47,7 @@ describe("enabled() joins a lane to its declared role", () => {
   });
 
   test("without a role graph the interpreter still works — unmigrated is not broken", async () => {
-    const model = await loadProcessModel(workflowFile(ROOT, "getting-started.bpmn"));
+    const model = await loadProcessModel(workflowFile(ROOT, "crdm-requirements.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     const open = enabled(model, state);
     expect(open.length).toBeGreaterThan(0);
@@ -52,7 +58,7 @@ describe("enabled() joins a lane to its declared role", () => {
   });
 
   test("describe() and enabled() cannot disagree about who performs a step", async () => {
-    const model = await loadProcessModel(workflowFile(ROOT, "getting-started.bpmn"));
+    const model = await loadProcessModel(workflowFile(ROOT, "crdm-requirements.bpmn"));
     const state = startInstance(model, { id: "test-instance", subject: "test-subject" });
     const rendered = renderInstance(model, state, graph);
     for (const e of enabled(model, state, graph)) {

@@ -1,22 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { drainSubprocess } from "./helpers";
 import { mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
-import { join, resolve } from "path";
+import { join } from "path";
 import {
   DecisionError,
-  evaluate,
-  loadDecisionTable,
-  possibleOutcomes,
   unaryTest,
   UnsupportedDmn,
 } from "../../src/workflow/decision-table";
 import { loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
-import { complete, enabled, startInstance, WorkflowError } from "../../src/workflow/instance";
-import { workflowFile } from "../known-skills.ts";
-
-/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
-const HARNESS = resolve(import.meta.dir, "../..");
 
 /**
  * Four of the ten exclusive gateways across the BPMN diagrams are not judgement
@@ -27,6 +18,12 @@ const HARNESS = resolve(import.meta.dir, "../..");
  * These tests are about the difference between computing and choosing. The
  * sharp one is that a computed gateway *refuses* a hand-supplied outcome: being
  * able to assert the answer would defeat the whole mechanism.
+ *
+ * The tests over SHIPPED tables and processes live with their owners (bean
+ * `ho66`): `draft-qa-gate.dmn` in folio-assistant-core, `lean-build-gate.dmn`
+ * and `authoring-a-paper.bpmn` in folio-assistant-sci, each in that
+ * instance's `scripts/tests/decision-table.test.ts`. Standing alone,
+ * cat-harness has none of them to read.
  */
 
 
@@ -94,44 +91,6 @@ describe("the FEEL subset", () => {
   });
 });
 
-describe("the shipped tables", () => {
-  test("the Lean gate distinguishes deferred sorries from conjectural ones", async () => {
-    const t = await loadDecisionTable(workflowFile(HARNESS, "lean-build-gate.dmn"), "Decision_LeanBuildGate");
-    expect(t.hitPolicy).toBe("FIRST");
-    expect(t.inputs.map((i) => i.expression)).toEqual(["buildOk", "deferredSorries"]);
-
-    // A red build never reads as green, whatever the sorry count.
-    expect(evaluate(t, { buildOk: false, deferredSorries: 0 }).outcome).toBe("not yet");
-    // Deferred sorries hold it.
-    expect(evaluate(t, { buildOk: true, deferredSorries: 4 }).outcome).toBe("not yet");
-    // Green: build ok, nothing closeable left. Conjectural sorries are not
-    // counted into `deferredSorries`, which is the point of the split.
-    const green = evaluate(t, { buildOk: true, deferredSorries: 0 });
-    expect(green.outcome).toBe("green");
-    expect(green.rule).toBe("Rule_Green");
-  });
-
-  test("the draft QA gate blocks on critical and major, and says so by rule", async () => {
-    const t = await loadDecisionTable(workflowFile(HARNESS, "draft-qa-gate.dmn"), "Decision_DraftQaGate");
-    expect(evaluate(t, { failCritical: 1, failMajor: 0 }).rule).toBe("Rule_Critical");
-    expect(evaluate(t, { failCritical: 0, failMajor: 2 }).rule).toBe("Rule_Major");
-    expect(evaluate(t, { failCritical: 0, failMajor: 0 }).outcome).toBe("yes");
-  });
-
-  test("a fact the table needs but did not get is an error, not a default", async () => {
-    const t = await loadDecisionTable(workflowFile(HARNESS, "draft-qa-gate.dmn"), "Decision_DraftQaGate");
-    // A gate that answers on data it never received is the failure the whole
-    // mechanism exists to remove.
-    expect(() => evaluate(t, { failCritical: 0 })).toThrow(DecisionError);
-    expect(() => evaluate(t, { failCritical: 0 })).toThrow(/failMajor/);
-  });
-
-  test("possibleOutcomes reads the rules, not a particular evaluation", async () => {
-    const t = await loadDecisionTable(workflowFile(HARNESS, "lean-build-gate.dmn"), "Decision_LeanBuildGate");
-    expect(possibleOutcomes(t).sort()).toEqual(["green", "not yet"]);
-  });
-});
-
 describe("a table must be able to route the gateway it backs", () => {
   test("an outcome with no matching branch fails at load, not at decision time", async () => {
     const dir = mkdtempSync(join(tmpdir(), "dmn-route-"));
@@ -178,71 +137,3 @@ describe("a table must be able to route the gateway it backs", () => {
   });
 });
 
-describe("computed gateways in a running process", () => {
-  const paper = async () => loadProcessModel(workflowFile(HARNESS, "authoring-a-paper.bpmn"));
-
-  const upToLeanGate = async () => {
-    const model = await paper();
-    const state = startInstance(model, { id: "d1", subject: "paper" });
-    for (const n of ["Task_Plan", "Task_SeedPlan", "Task_Scaffold", "Task_AuthorBlocks", "Task_Formalize"]) {
-      complete(model, state, n);
-    }
-    return { model, state };
-  };
-
-  test("workflow_next reports which facts the table reads", async () => {
-    const { model, state } = await upToLeanGate();
-    const gate = enabled(model, state).find((e) => e.node === "Gateway_LeanGreen");
-    expect(gate?.kind).toBe("decision");
-    expect(gate?.kind === "decision" && gate.computed).toEqual({
-      decision: "Decision_LeanBuildGate",
-      facts: ["buildOk", "deferredSorries"],
-    });
-  });
-
-  test("the outcome is computed from facts, and the rule is recorded", async () => {
-    const { model, state } = await upToLeanGate();
-    complete(model, state, "Gateway_LeanGreen", { facts: { buildOk: true, deferredSorries: 0 } });
-
-    expect(enabled(model, state).map((e) => e.node)).toEqual(["Task_Validate"]);
-    const entry = state.history.find((h) => h.node === "Gateway_LeanGreen")!;
-    expect(entry.outcome).toBe("green");
-    // The audit trail says which table decided and on which rule.
-    expect(entry.note).toContain("Decision_LeanBuildGate → green by Rule_Green");
-  });
-
-  test("a red build routes back to formalisation", async () => {
-    const { model, state } = await upToLeanGate();
-    complete(model, state, "Gateway_LeanGreen", { facts: { buildOk: false, deferredSorries: 0 } });
-    expect(enabled(model, state).map((e) => e.node)).toEqual(["Task_Formalize"]);
-  });
-
-  test("a hand-supplied outcome is REFUSED on a computed gateway", async () => {
-    const { model, state } = await upToLeanGate();
-    // Being able to assert the answer would defeat the mechanism entirely.
-    expect(() => complete(model, state, "Gateway_LeanGreen", { outcome: "green" })).toThrow(
-      WorkflowError,
-    );
-    expect(() => complete(model, state, "Gateway_LeanGreen", { outcome: "green" })).toThrow(
-      /computed by Decision_LeanBuildGate, not chosen/,
-    );
-  });
-
-  test("omitting the facts refuses and names them", async () => {
-    const { model, state } = await upToLeanGate();
-    expect(() => complete(model, state, "Gateway_LeanGreen")).toThrow(/buildOk.*deferredSorries/s);
-  });
-
-  test("gateways without a table are still chosen, not computed", async () => {
-    const model = await loadProcessModel(workflowFile(HARNESS, "editing-hci-validation.bpmn"));
-    const state = startInstance(model, { id: "d2", subject: "def:x" });
-    complete(model, state, "Task_DescribeChange");
-    complete(model, state, "Task_ClaimBean");
-    drainSubprocess(model, state, "CallActivity_Evidence");
-    complete(model, state, "Task_DraftEdit");
-    const judgement = enabled(model, state).find((e) => e.node === "Gateway_ReviewerKind");
-    expect(judgement?.kind === "decision" && judgement.computed).toBeUndefined();
-    complete(model, state, "Gateway_ReviewerKind", { outcome: "yes" });
-    expect(enabled(model, state).some((e) => e.node === "Task_SmeReview")).toBe(true);
-  });
-});

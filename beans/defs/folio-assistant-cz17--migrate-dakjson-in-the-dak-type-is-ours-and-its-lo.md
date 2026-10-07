@@ -3,8 +3,9 @@
 title: 'Migrate dak.json in: the DAK type is ours, and its Logical Model is pending upstream'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-18T21:36:56Z
-updated_at: 2026-09-19T06:55:21Z
+updated_at: 2026-10-06T06:33:19Z
 parent: folio-assistant-0lmb
 ---
 
@@ -92,3 +93,9 @@ AND WE HAVE ALREADY REBUILT MOST OF SGRequirements WITHOUT THE LABEL. skills/req
 THE DECISION DEFERRED, in the owner's words 'we can relate them later': whether to adopt SGUserStory's IRI (http://smart.who.int/base/StructureDefinition/SGUserStory) or mint a folio term and assert an equivalence. Adopting makes a DAK folio's stories literally the same objects as ours; minting keeps the harness free of a WHO dependency, which is the direction rule enforced everywhere else in this repo. Note that this bean has already taken the ADOPT side once, for a different object and with a stated reason — DAK_TYPE points at http://smart.who.int/base/StructureDefinition/DAK via SMART_BASE_NS, because the DAK logical model is WHO's. Whether the same argument carries to a user story is the open question: a DAK is WHO's concept, a user story is not.
 
 WORTH LIFTING WHENEVER THIS IS PICKED UP, independent of the IRI decision: input/fsh/models/UserScenario.fsh writes `description[x] 1..1 string or uri` — the markdown inline OR a URI to a markdown file relative to the repository root. That is 'brief in the schema, rich in the docs' made STRUCTURAL rather than editorial, and it is the same problem the folio README split (generated markers vs authored prose) solves a different way.
+
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.

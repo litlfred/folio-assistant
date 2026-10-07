@@ -9,11 +9,12 @@
  * @module scripts/tests/state-mount
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 
 import { contentAt, resolveTipLocation, tipLocations } from "../branch-store.js";
-import { mountState, report } from "../state-mount.js";
+import { delegatedReport, delegatedStores, mountState, report } from "../state-mount.js";
 import { cleanup, git, MANIFEST, stateFixture, TIP_SOURCE, BRANCH } from "./state-fixture.js";
 
 afterEach(cleanup);
@@ -179,5 +180,40 @@ describe("failure is LOUD, and says what not to believe", () => {
     const r = mountState({ repoRoot: root, store });
     expect(r.state).toBe("failed");
     expect(r.graphs[0]?.reason).toContain("keyed by commit");
+  });
+});
+
+describe("a store state:mount does not mount names the Tool that does (bean j9cs)", () => {
+  // cat-harness's OWN store only: this file runs standalone too
+  // (check:cat-harness-standalone), where no other harness's declaration or
+  // Tool exists. A dependency's store naming a Tool nobody declares is
+  // check:tools' finding (danglingStorageTools), which sees the whole tree.
+  test("cat-harness's site store names the Tool that publishes it", () => {
+    const stores = delegatedStores(resolve(import.meta.dir, "..", "..", ".."));
+    expect(stores.find((s) => s.id === "site")).toMatchObject({ keyedBy: "route", branch: "gh-pages", tool: "gh-pages" });
+  });
+
+  test("a family store's Tool is resolved to the command it declares", () => {
+    const root = mkdtempSync(join(tmpdir(), "state-mount-tool-"));
+    try {
+      const entry = {
+        id: "cache",
+        path: "cache/",
+        graphTypologies: ["lake-cache"],
+        storage: { branchPrefix: "p/cache/", keyedBy: "family", keyFrom: "<member>", tool: "site-build-local" },
+      };
+      writeFileSync(join(root, "t.json"), JSON.stringify({ name: "t", directories: [entry] }, null, 2) + "\n");
+      expect(delegatedStores(root)).toEqual([
+        { id: "cache", path: "cache/", branch: "p/cache/", keyedBy: "family", tool: "site-build-local", invoke: "cat-harness/scripts/preview-site.sh" },
+      ]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a store with no declared Tool says so rather than leaving the cell blank", () => {
+    const out = delegatedReport([{ id: "x", path: "x/", branch: "p/", keyedBy: "family" }]);
+    expect(out).toContain("none declared");
+    expect(delegatedReport([])).toBe("");
   });
 });

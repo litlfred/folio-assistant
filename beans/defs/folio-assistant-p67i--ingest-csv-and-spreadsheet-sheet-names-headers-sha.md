@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-29T20:03:12Z
+updated_at: 2026-10-06T06:40:24Z
 parent: folio-assistant-slw1
 ---
 
@@ -228,3 +228,17 @@ to exercise it would be a second unreached branch, which is the defect above.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+
+## Handover 2026-10-06 — PAUSED until the repo separation lands (Session F, GOAL 5)
+
+Owner ruling, relayed by the coordinating session (session_012qoycyCSGidZqW245vXhze): repo separation is the primary goal, content authoring/review/publication goes to folio-assistant-core while cat-harness keeps the methods, and that 'needs to be done before F'. This bean resumes AFTER the split. **The code it touches may have moved to folio-assistant-core by then — re-locate it before editing, and re-measure.** Open questions on it are being put to the owner by the coordinating session, one at a time; the answer will be recorded here, not assumed.
+
+## Owner ruling 2026-10-06: agent drafts the dataset narrative, human confirms
+
+Asked in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, with three options (recommended first): agent drafts, human confirms; humans write them; structural record only for now. **The owner chose "Agent drafts, human confirms"**, consistent with the ruling on images (`d5f1`).
+
+- An agent drafts each dataset's narrative from its headers and sample rows, stamped with **model version** (`iqim`), and queued for human confirmation.
+- **First real data** (owner, 2026-10-06): the DAK Excel workbooks and the litlfred/smart-ra Public Comment sheets.
+- Runs after the content split, in folio-assistant-core, together with the `eief` extractors.

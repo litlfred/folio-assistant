@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-04T07:23:15Z
+updated_at: 2026-10-06T18:12:35Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-h8ig
@@ -47,3 +47,6 @@ Everything else is ready and verified. `bun run state:seed --id beans --authorit
 - **since:** 2026-10-04
 - **expires:** 2026-10-18. If `h8ig` has not landed by then, the block is not the thing to re-check — the ARC's ordering is, because a Phase 6 that waits a fortnight on a Phase 3 row means the row was mis-phased, and the honest move is to say so on `fs43` rather than to extend this date again.
 - **handoff:** everything else is ready and verified. The flip is five steps, written out in this bean's body and in the note `beans/notes/folio-assistant-9ofm--2026-10-04--claude-beans-off-main-9ofm.md`: declare `source: { kind: "branch", branch: "cat/cat-harness/beans", keyedBy: "tip" }`, `git rm -r beans`, add `/beans/` to `.gitignore`, `bun run state:seed --id beans --authoritative`, `bun run state:mount`, then the gates. The branch is current and verified at every refresh, so step 4 is cheap to re-run first. Do NOT reorder: the seed before the `git rm` leaves a window where neither copy is authoritative, and the `git rm` before the declaration leaves a checkout whose declaration says the files are here.
+
+
+_2026-10-06_ — **OWNER'S EXPLICIT GO** (session_012qoycyCSGidZqW245vXhze): "remove todos/ beans/ whatever is in state branch". Sequenced after the repo-root cleanup PR (bean yywu); the remaining 9ofm prerequisites (h8ig claim writer, i8wf re-creation hazard, fwtz site rebuild) are checked first.

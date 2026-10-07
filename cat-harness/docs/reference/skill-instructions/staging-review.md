@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/staging-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/staging-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/staging-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/staging-review.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/staging-review.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Staging review — before/after comparison
@@ -262,6 +262,15 @@ build log prints each decision with its reason. Before reporting a missing IG
 as a defect, read that line. If the cone left out something your change does
 affect, the fix is a missing `writer` or `derivedFrom` on the directory's
 declaration, not a rule to always carry it.
+
+## Which pages to list: the Change Set's rendered list
+
+When the change is a Change Set, do not choose the before/after pages by
+judgement: take them from its rendered list (skill
+[`rendered-impact`](rendered-impact.md)), every content page on it, and say
+which inputs the renderer could not place. A page the list does not name and
+you add anyway is fine; a page on the list that you leave out is a gap the
+reviewer cannot see.
 
 ## When to provide before/after URLs
 

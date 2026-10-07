@@ -7,9 +7,11 @@ section_number: 12.4.5
 pages: 174-175
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 You should carefully plan a dissemination strategy early in the development 
-process. A variety of approaches should be considered. These can include an offiChapter 12 
+process. A variety of approaches should be considered. These can include an offi
+Chapter 12 
 Producing and publishing the guideline
 163
 163

@@ -2,6 +2,10 @@
 title: "Quality Control Reviewer — WHO SMART Base artefact"
 description: "ActorDefinition/SGAuthoring.Persona.QCReviewer in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ActorDefinition-SGAuthoring.Persona.PublicationManager.html"
+ig_next: "ActorDefinition-SGAuthoring.Persona.TechnicalOfficer.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ A quality assurance specialist responsible for reviewing SMART Guidelines Implem
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ActorDefinition-SGAuthoring.Persona.PublicationManager.html" data-next="ActorDefinition-SGAuthoring.Persona.TechnicalOfficer.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

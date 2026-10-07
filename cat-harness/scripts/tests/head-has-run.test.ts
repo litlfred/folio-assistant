@@ -11,12 +11,17 @@
  * The first draft failed that on its own terms: `deadbeef…` reported "has NO
  * workflow run of any kind", because an id GitHub never heard of returns an
  * empty list exactly as a dropped event does. That case is pinned below.
+ *
+ * The git half — resolving a commit, and whether it is pushed — is asserted
+ * over a throwaway repository whose `HEAD` and `origin/main` are set by the
+ * fixture (`test/support/git-fixture.ts`), not over this checkout: standing
+ * alone, cat-harness has no `origin`, and these are logic over whatever
+ * repository they are handed.
  */
-import { describe, expect, test } from "bun:test";
-import { execFileSync } from "node:child_process";
+import { afterAll, describe, expect, test } from "bun:test";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 
 import {
   pushedState,
@@ -29,9 +34,15 @@ import {
   runsForHead,
   type GitRunner,
 } from "../check-head-has-run.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 
-const REPO = repoRootFor(resolve(import.meta.dir, "..", ".."));
+/**
+ * A throwaway repository with one commit on `main`, an `origin`, and that
+ * commit recorded as `origin/main` — what a pushed branch leaves behind.
+ */
+const FIXTURE = gitFixtureRepo({ pushed: true });
+const REPO = FIXTURE.root;
+afterAll(() => FIXTURE.cleanup());
 
 /** A fetch that answers with `runs` and never touches the network. */
 const stub = (runs: unknown[], init: { ok?: boolean; status?: number } = {}) =>
@@ -134,7 +145,7 @@ describe("the commit is resolved HERE before GitHub is asked", () => {
 
 describe("pushed or not, because the two need different advice", () => {
   test("a commit on a remote-tracking ref reads as pushed", () => {
-    // Asserted against `origin/main`, which any clone that can run this has.
+    // Asserted against `origin/main`, which the fixture records as pushed.
     const sha = resolveCommit(REPO, "origin/main") ?? resolveCommit(REPO, "HEAD")!;
     // `toBe("pushed")`, NOT `not.toBe("not-pushed")`. Bean `y0n2`: the third
     // state exists precisely so a git failure cannot pass as either answer, and
@@ -146,13 +157,12 @@ describe("pushed or not, because the two need different advice", () => {
   test("a commit in a fresh repo with no remote reads as NOT pushed", () => {
     // Telling somebody "GitHub dropped your event" when they simply have not
     // pushed is how a warning gets ignored.
-    const root = mkdtempSync(join(tmpdir(), "headrun-"));
-    const g = (...a: string[]) => execFileSync("git", ["-C", root, ...a], { stdio: "ignore" });
-    g("init", "-q");
-    g("config", "user.email", "t@e");
-    g("config", "user.name", "t");
-    g("commit", "-q", "--allow-empty", "-m", "only commit");
-    expect(pushedState(root, resolveCommit(root, "HEAD")!)).toBe("not-pushed");
+    const fresh = gitFixtureRepo({ remote: null });
+    try {
+      expect(pushedState(fresh.root, resolveCommit(fresh.root, "HEAD")!)).toBe("not-pushed");
+    } finally {
+      fresh.cleanup();
+    }
   });
 
   test("git unable to answer is `cannot-tell`, NOT `not-pushed`", () => {
@@ -194,14 +204,33 @@ const HEADS = [
 /**
  * A forge where PR 11 is mergeable and PR 22 is not. A merge ref is named
  * `merge<N>`, and its second parent is PR N's head unless `staleFor` says the
- * ref was built for an earlier head.
+ * ref was built for an earlier head. Its first parent is the default branch's
+ * tip unless `base` says the ref was built on an older one (bean `rwwl`).
  */
+const TIP = "e".repeat(40);
+type BaseMoved = { builtOn: string; onDefault?: boolean; merges?: "clean" | "conflict" | "error" };
 const fakeGit =
-  (heads = HEADS, mergeable = new Set(["11"]), staleFor = new Set<string>()): GitRunner =>
+  (
+    heads = HEADS,
+    mergeable = new Set(["11"]),
+    staleFor = new Set<string>(),
+    base?: BaseMoved,
+  ): GitRunner =>
   (args) => {
     const ref = args[args.length - 1] ?? "";
     if (ref === "refs/pull/*/head") return heads;
     if (args[0] === "fetch") return "";
+    if (args[0] === "ls-remote" && args[1] === "--symref") return `ref: refs/heads/main\tHEAD\n${TIP}\tHEAD\n`;
+    if (args[0] === "rev-parse" && /^merge\d+\^1$/.test(ref)) return base?.builtOn ?? TIP;
+    if (args[0] === "merge-base") {
+      if (base?.onDefault === false) throw new Error("not an ancestor");
+      return "";
+    }
+    if (args[0] === "merge-tree") {
+      if (base?.merges === "conflict") throw Object.assign(new Error("conflict"), { status: 1 });
+      if (base?.merges === "error") throw Object.assign(new Error("fatal"), { status: 128 });
+      return "f".repeat(40);
+    }
     const parent = /^merge(\d+)\^2$/.exec(ref)?.[1];
     if (args[0] === "rev-parse" && parent !== undefined) {
       if (staleFor.has(parent)) return "d".repeat(40);
@@ -239,6 +268,37 @@ describe("sddf — the merge ref is the discriminator, not the clock", () => {
     expect(mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(["11"])))).toBe(
       "unknown",
     );
+  });
+
+  test("a merge ref built for THIS head on an OLD base that now conflicts is `conflicted` (rwwl, #2197)", () => {
+    // Measured 2026-10-06: refs/pull/2197/merge had ^2 = the head and ^1 = an
+    // old main. Reading ^2 alone called it mergeable, so ci:watch printed PASS
+    // on a PR REST called `dirty`.
+    const old = "9".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: old, merges: "conflict" })),
+    ).toBe("conflicted");
+  });
+
+  test("an old base that still merges cleanly is `mergeable` — the forge rebuilds lazily", () => {
+    const old = "9".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: old, merges: "clean" })),
+    ).toBe("mergeable");
+  });
+
+  test("a base that is not the default branch (a stacked PR) is `unknown`, not a guess", () => {
+    const other = "8".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: other, onDefault: false })),
+    ).toBe("unknown");
+  });
+
+  test("a merge-tree that ERRORS (rather than conflicts) is `unknown`, never `conflicted`", () => {
+    const old = "9".repeat(40);
+    expect(
+      mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(), { builtOn: old, merges: "error" })),
+    ).toBe("unknown");
   });
 
   test("a FAILING probe is `unknown`, never `conflicted`", () => {

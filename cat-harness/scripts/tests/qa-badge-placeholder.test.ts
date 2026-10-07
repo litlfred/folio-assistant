@@ -52,6 +52,13 @@ describe("the badge placeholder", () => {
     }
   });
 
+  test("declares itself English, left-to-right — bean `giiw`", () => {
+    // On an Arabic page the badge inherited `dir="rtl"`; `docs-ui.css`
+    // reversed its direction, but a screen reader hears `lang`, not CSS.
+    const b = qaBadgePlaceholder({ family: "translation", key: "page.translation", noun: "page", slug: "demo" });
+    expect(b).toMatch(/^<button [^>]*\blang="en" dir="ltr"/);
+  });
+
   test("every committed generated page carries placeholders only", () => {
     // The scan is over the CHECKOUT's pages, so it must find some: a filter
     // over nothing would pass.

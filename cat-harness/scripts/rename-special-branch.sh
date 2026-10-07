@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # rename-special-branch.sh — rename a special branch (or a family of them) on
 # a GitHub repository, safely. Bean folio-assistant-32f6; the names are
-# declared in cat-harness/scripts/special-branches.json.
+# declared on the owning directory's `storage` (special-branches.json is gone).
 #
 # Needs nothing but git and push access. It does NOT use your checkout: it
 # fetches into a throwaway bare repository in a temp directory, so it does not

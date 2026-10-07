@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-10-04T06:33:25Z
-updated_at: 2026-10-04T06:33:25Z
+updated_at: 2026-10-06T06:26:49Z
 parent: folio-assistant-fs43
 ---
 
@@ -24,3 +24,7 @@ Why it matters more than one flake: this gate is what stands between a stale see
 - [ ] the cause is named (shared store dir / private ref / leftover objects), not just the symptom
 - [ ] the file is green over 20 consecutive whole-file runs
 - [ ] if the fixture shares a store on purpose, the sharing is asserted rather than incidental
+
+
+## Re-measured 2026-10-06 on main at 2fdbb5109a — not closable yet
+No cause is named anywhere (no commit or code mentions fc8y). `state-drift.test.ts` passed 5 of 5 consecutive runs (21/21 each); the 20-run bar in item 2 was not measured. Items 1 and 3 open.

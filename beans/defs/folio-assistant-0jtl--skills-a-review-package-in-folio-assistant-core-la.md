@@ -3,8 +3,9 @@
 title: 'SKILLS: a review package in folio-assistant-core — large-document-review, review-heatmap, review-navigation, learned from WHO SOPs and inspection practice'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-22T21:02:55Z
+updated_at: 2026-10-06T06:15:04Z
 parent: folio-assistant-q4jm
 ---
 
@@ -37,3 +38,12 @@ Record each source's provenance in the skill.
 - [ ] the package is declared and reachable through `skill_list` / `skill_fetch`
 - [ ] the three skills are written, each with a cited source for every rule not derived here
 - [ ] content-review.md and staging-review.md point to it for documents over one chapter
+
+## Owner ruling 2026-10-06: where the review skills live
+
+Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW245vXhze, from two options (recommended first):
+
+1. **CHOSEN: leave them in cat-harness and point to them from core.** `review-heatmap`, `review-comments`, `staging-review`, `visual-diff` and `before-after-preview` stay in cat-harness. folio-assistant-core gets a `review` pointer that names them (about 2 files). Nothing moves, so it cannot collide with the GOAL 1 separation work, and every harness can still use the skills.
+2. Move them into `folio-assistant-core/skills/review/` (not chosen: about 10–15 files plus re-registration, colliding with in-flight separation PRs).
+
+This bean's scope narrows to the pointer.

@@ -3,6 +3,8 @@ title: "WHO GDHCN Payload Types — change history"
 description: "PayloadTypes - Change History."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Narrative Content","href":"ValueSet-PayloadTypes.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-PayloadTypes.xml","active":false},{"label":"JSON","href":"ValueSet-PayloadTypes.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-PayloadTypes.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-PayloadTypes.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-PayloadTypes.jsonld.html","active":false}],"heading":"PayloadTypes - Change History","sections":[{"text":"History of changes for PayloadTypes ."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

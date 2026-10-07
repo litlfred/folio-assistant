@@ -29,7 +29,7 @@
  * | `heavyMoversOpen`  | open PRs labelled `heavy-mover` that touch L or the next layer |
  * | `nextLayerPrs`     | open PRs touching the NEXT layer (L+1)                       |
  * | `layerPrs`         | open PRs touching L                                          |
- * | `layerMovingPrs`   | open PRs that delete a file in L, or rename one into or out of it |
+ * | `layerMovingPrs`   | open PRs that delete a file in L, or rename one into or out of it — not counting `owned-tree` generated names (isRegeneratedName) |
  * | `standaloneRed`    | failing tests when L and what it needs run as sibling clones |
  * | `upwardPaths`      | paths DECLARED in L that resolve only in an instance above L |
  * | `undetermined`     | criteria this run could not decide                           |
@@ -97,6 +97,7 @@ import { QA_CRITERIA_BY_ID, getCriterionSourceFile } from "../../cat-harness/con
 import { RENDER_TARGETS } from "../../cat-harness/schemas/render-targets.js";
 import { evaluate, loadDecisionTable, type DecisionTable } from "../../cat-harness/src/workflow/decision-table.js";
 import { workflowFile } from "../../cat-harness/scripts/known-skills.js";
+import { classify as classifyConflict } from "../../cat-harness/scripts/merge-conflict-patterns.js";
 import { HARNESS_ROOT } from "./lib/roots.ts";
 
 /** This instance's root — where the declared `processes` graph is found from. */
@@ -395,9 +396,25 @@ const inAny = (path: string, dirs: string[]): boolean => dirs.some((d) => under(
 /** Every path a file entry touches: where it is, and where it was. */
 const touched = (f: PrFile): string[] => (f.previousPath ? [f.path, f.previousPath] : [f.path]);
 
-/** A move in `dirs`: a deletion there, or a rename into or out of it. */
+/**
+ * A path whose name a generator owns: an `owned-tree` pattern in
+ * merge-conflict-patterns.ts, written whole by a declared writer that deletes
+ * whatever it did not write (content-addressed payloads, rail data, subgraph
+ * indexes). Every regen renames or drops these, so deleting one changes what
+ * no seeded path means — `Rule_LayerMoves`' own reason for counting a move.
+ * Owner, 2026-10-06: "Stop counting hashed generated files as moves in the
+ * seed check". Measured that day: 4 of cat-harness's 6 moving PRs moved
+ * nothing else.
+ */
+export const isRegeneratedName = (path: string): boolean => classifyConflict(path).strategy === "owned-tree";
+
+/**
+ * A move in `dirs`: a deletion there, or a rename into or out of it — of a
+ * path whose name means something. A rename counts if either end does.
+ */
 const movesIn = (f: PrFile, dirs: string[]): boolean =>
-  (f.status === "removed" && inAny(f.path, dirs)) || (f.status === "renamed" && touched(f).some((p) => inAny(p, dirs)));
+  (f.status === "removed" && inAny(f.path, dirs) && !isRegeneratedName(f.path)) ||
+  (f.status === "renamed" && touched(f).some((p) => inAny(p, dirs)) && !touched(f).every(isRegeneratedName));
 
 const complete = (pr: PrPathSet): boolean => pr.files.length >= pr.changedFiles;
 

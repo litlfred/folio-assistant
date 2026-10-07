@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/publish-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/publish-verification.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/publish-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/publish-verification.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/publish-verification.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Publish verification, and the one alert
@@ -44,6 +44,30 @@ by a real processor (`jsonld.js`, network refused). A key the `@context` does
 not declare is DROPPED by a processor, silently — the first run found the
 vocabulary losing `layer` on all 159 terms and the fsh-guts export losing
 `skipped`.
+
+## A verifier the preview cannot ask is a release failure waiting (STRICT)
+
+The staging preview runs the same verifier set, so a preview is never greener
+than the release it previews. **That promise breaks wherever the preview
+answers a different question.** It serves the PUBLISHED search index
+(`--search-index borrowed`), so `search-index` there asks only "present and
+parsing", never "does it cover the pages". #2194 was green in its preview, and
+its production publish was refused (#2233): *"indexes 1003 page(s) while 4189
+offer a search box"*. Nothing was deployed.
+
+So the preview asks the coverage question of the index **it built**, before
+swapping in the published one:
+`publish-verify.ts --dir ./_site --only search-index`. The rule, for any
+verifier added later: **if the preview substitutes an input, the verifier runs
+on the preview's own input before the substitution.** A check only the
+release asks fails after merge, on main, where everyone pays for it.
+
+**Deliberate exclusion is marked in what is built.** `search_exclude: true`
+is front matter, and front matter is gone after Jekyll. `head_custom.html`
+writes `<meta name="fa-search-exclude">` for it, and `search-index` leaves
+those pages out of the coverage denominator and COUNTS them in its finding.
+An exclusion the built page does not carry cannot be told from a truncated
+index, and the release check will refuse it, correctly.
 
 ## What is in scope
 

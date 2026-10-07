@@ -22,6 +22,11 @@
  * criteria to an adapter, checked against the contributed adapter the way a
  * running sweep sees it — through the registry `loadContributions` fills from
  * this checkout's declared dependencies.
+ *
+ * The tests of this file that read the whole checkout (reads the adapters and
+ * block kinds the content instances contribute (smart-base's `dak`)) live in
+ * `test/adapter-scoping-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, test, expect } from "bun:test";
 import { resolve } from "path";
@@ -59,19 +64,6 @@ describe("adapter partition", () => {
     expect([...PAPER_BLOCK_KINDS]).toEqual([...BLOCK_KINDS]);
   });
 
-  test("paper is the one built-in adapter — dak is contributed (bean 1335)", () => {
-    expect([...CONTENT_ADAPTERS]).toEqual(["paper"]);
-    expect(registry.contributedAdapters()).toContain("dak");
-  });
-
-  test("a contributed kind never overlaps a built-in one", () => {
-    // `register` refuses the collision; this pins that the checkout's real
-    // contributors honour it.
-    const paper = new Set<string>(PAPER_BLOCK_KINDS);
-    expect(contributed.length).toBeGreaterThan(0);
-    for (const { kind } of contributed) expect(paper.has(kind)).toBe(false);
-  });
-
   test("ALL_BLOCK_KINDS is the built-in kinds, with no duplicates", () => {
     expect([...ALL_BLOCK_KINDS]).toEqual([...PAPER_BLOCK_KINDS]);
     expect(new Set(ALL_BLOCK_KINDS).size).toBe(ALL_BLOCK_KINDS.length);
@@ -105,18 +97,6 @@ describe("criterion adapter scope", () => {
   test("every criterion resolves to a non-empty scope", () => {
     for (const def of QA_CRITERIA_REGISTRY) {
       expect(criterionAdapters(def).length).toBeGreaterThan(0);
-    }
-  });
-
-  test("a criterion never depends on a companion its adapters cannot have", () => {
-    // `depends_on` gates applicability, so a mismatched pair does not error —
-    // it produces a criterion that is permanently `n/a` and looks registered.
-    // A contributed adapter's roles come from the registry.
-    for (const def of QA_CRITERIA_REGISTRY) {
-      expect({ id: def.id, bad: incompatibleCompanions(def, registry) }).toEqual({
-        id: def.id,
-        bad: [],
-      });
     }
   });
 

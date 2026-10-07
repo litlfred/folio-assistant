@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/sdlc/sdlc-core/before-after-preview.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/before-after-preview.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/before-after-preview.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/before-after-preview.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/before-after-preview.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # /before-after-preview — show the reviewer the change, not a description of it
@@ -49,6 +49,12 @@ ruling 2026-10-02, issue #1868), so a link in a preview can 404 days later
 while the PR is still open. The next push to the branch re-stages it. Where the
 comparison must outlive that, publish the captures themselves (§6) rather than
 only the staging URL. Detail: [`staging-review`](staging-review.md) §"The cap".
+
+**Which pages to picture.** For a Change Set, the pages come from its
+rendered list (skill [`rendered-impact`](rendered-impact.md)), so the "k of n
+pages changed" count is the list's count, not one made by hand. Its
+`unconfirmed` content pages (bytes unchanged, content loaded in the browser)
+are exactly the ones a screenshot settles.
 
 ## The rule
 

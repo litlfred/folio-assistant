@@ -183,6 +183,19 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // decisions are per pull request, the train they feed is one. Deliberately
   // NOT a list: a list would read as the store, and what this kind records is
   // an ORDER somebody decided (bean `hfag`).
+  // The published site (bean lehh): a globe over a stack of pages. The basic
+  // tier is the bare globe; the CDN tier adds an arrow round it, for the
+  // redirects and headers a real CDN can apply and Pages cannot.
+  "basic-cdn-site": {
+    glyph: "M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M3 12h18M12 3q-4 9 0 18M12 3q4 9 0 18",
+    tone: 196,
+    reads: "a globe with its meridians: pages served by path to anyone, and nothing more",
+  },
+  "cdn-site": {
+    glyph: "M11 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M3 12h16M11 4q-4 8 0 16M11 4q4 8 0 16M19 4l2 2-2 2M21 6h-4",
+    tone: 184,
+    reads: "a globe with an arrow at its rim: served by path, and redirected and re-headed on the way",
+  },
   "merge-queue": {
     glyph: "M5 7h5M5 12h5M5 17h5M10 7q4 0 4 5M10 17q4 0 4-5M10 12h9",
     tone: 205,

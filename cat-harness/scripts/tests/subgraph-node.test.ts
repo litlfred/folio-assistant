@@ -7,36 +7,21 @@
  * that is converted adds its row; the generators not yet converted are named
  * on the follow-up bean, not here, so this list never claims more than it
  * checks.
+ *
+ * The tests of this file that read the whole checkout (reads the root-declared
+ * graphs (`todos/`, `beans/`) among every adopting publisher) live in
+ * `test/subgraph-node-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 
-import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { declaredSubgraphNode, makeIri } from "../kg-export.ts";
+import { makeIri } from "../kg-export.ts";
 import { memberOf, subgraphContainer, subgraphIri, subgraphPublicationFindings } from "../subgraph-node.ts";
-
-const ROOT = join(import.meta.dir, "..", "..");
-const SITE = join(ROOT, siteDirFor(ROOT));
-
-/** Declared subgraph id → the committed document that publishes its contents. */
-const PUBLISHED: ReadonlyArray<{ id: string; file: string }> = [{ id: "todos", file: join(SITE, "todos.jsonld") }];
 
 describe("the IRI is the one kg-export mints the node under", () => {
   for (const id of ["todos", "beans", "a b", "x#y", "p/q"]) {
     test(JSON.stringify(id), () => {
       expect(subgraphIri("https://e.org/i.jsonld", id)).toBe(makeIri("https://e.org/i.jsonld", "directory", id));
-    });
-  }
-});
-
-describe("every adopting publisher follows the pattern", () => {
-  for (const { id, file } of PUBLISHED) {
-    test(`${id}: ${file.slice(ROOT.length + 1)}`, () => {
-      const declared = declaredSubgraphNode(ROOT, id);
-      expect(declared).toBeDefined();
-      const doc = JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>;
-      expect(subgraphPublicationFindings(doc, { iri: declared!.iri })).toEqual([]);
     });
   }
 });

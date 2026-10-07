@@ -2,6 +2,10 @@
 title: "IMMZ.D2.DT.Hepatitis B.Delayed start — WHO SMART Immunizations artefact"
 description: "PlanDefinition/IMMZD2DTHepatitisBDelayedStart in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "PlanDefinition-IMMZD2DTHepatitisBBirthDose.html"
+ig_next: "PlanDefinition-IMMZD2DTHib2DosesWithBoosterDose.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ IMMZ.D2.DT.Hepatitis B.Delayed start 3-dose schedule (no birth dose + 3 doses), 
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="PlanDefinition-IMMZD2DTHepatitisBBirthDose.html" data-next="PlanDefinition-IMMZD2DTHib2DosesWithBoosterDose.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -175,6 +175,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "plantuml-jar", schema: t("RepoPath"), required: false, description: "Render `input/images-source/*.plantuml` as the Publisher does." },
           { name: "changed-files", schema: t("RepoPath"), required: false, description: "Build only the IGs a changed file reaches (the staging cone, bean `4j86`)." },
           { name: "compose-into", schema: t("RepoPath"), required: false, description: "Move each staged IG into this host Jekyll source at `<instance>/`, so the host's build renders it with the host's chrome (sidebar, search, language selector)." },
+          { name: "compose-at-root", schema: t("Flag"), required: false, arg: { flag: "--compose-at-root" }, description: "With `--compose-into` and `--only`: the IG IS the site — compose it at the host's ROOT, based at `--baseurl` itself. An IG repository's own site uses this with a `compose-docs --shell` host, so it wears the main site's chrome (#2235)." },
           { name: "only", schema: t("Slug"), required: false, description: "Build one IG instance." },
           { name: "source", schema: t("RepoPath"), required: false, description: "With `--only`: a local checkout of the IG's source to build from instead of cloning the recorded commit — an IG repository building its own site in CI." },
         ],
@@ -189,6 +190,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Seconds per IG plus the clone; the Jekyll build is the caller's.",
       },
       requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "It clones each IG's source repository from GitHub; no declared Tool stages an IG without it." }],
     }),
     defineTool({
       id: "ingest-ig-menu",
@@ -406,6 +408,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "A full IG build: minutes to tens of minutes.",
       },
       requires: { runtime: ["java", "maven", "sushi", "jekyll"], network: true },
+      remedies: [
+        { host: "packages.fhir.org", tool: "fhir-cache-seed-npm" },
+        { host: "tx.fhir.org", none: "No declared Tool replaces the terminology server. The HL7 IG Publisher's own `-tx n/a` skips terminology validation, at the cost of not validating it." },
+        { host: "repo1.maven.org", none: "The Maven build needs Maven Central; a populated `~/.m2` from an earlier build is the only other source." },
+      ],
     }),
 
     defineTool({
@@ -459,6 +466,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "A Publisher run over the cone, plus loading the cache package.",
       },
       requires: { runtime: ["java", "sushi"], network: true },
+      remedies: [
+        { host: "packages.fhir.org", tool: "fhir-cache-seed-npm" },
+        { host: "tx.fhir.org", none: "No declared Tool replaces the terminology server. The HL7 IG Publisher's own `-tx n/a` skips terminology validation, at the cost of not validating it." },
+        { host: "repo1.maven.org", none: "The Maven build needs Maven Central; a populated `~/.m2` from an earlier build is the only other source." },
+      ],
     }),
 
     defineTool({
@@ -479,6 +491,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Two full IG builds, three with `--byte-identical`.",
       },
       requires: { runtime: ["java", "maven", "sushi", "jekyll", "python3", "git"], network: true },
+      remedies: [{ host: "packages.fhir.org", tool: "fhir-cache-seed-npm" }],
     }),
 
     defineTool({
@@ -509,6 +522,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One download per package; the core packages are tens of megabytes.",
       },
       requires: { runtime: ["python3", "npm", "git"], network: true },
+      remedies: [
+        { host: "registry.npmjs.org", none: "npm is a trust anchor this Tool reads. The other route is an owner mirror (`--mirror`), filled by `fhir-package-mirror` on a machine that reaches packages.fhir.org." },
+        { host: "github.com", none: "Publishers' site and template repositories are read from GitHub; with it refused, only npm and `--mirror` remain." },
+      ],
     }),
 
     defineTool({
@@ -532,6 +549,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One download per package; terminology packages are megabytes each.",
       },
       requires: { runtime: ["bash", "curl", "python3", "git"], network: true },
+      remedies: [{ host: "packages.fhir.org", none: "It exists to run where packages.fhir.org IS reachable — a local networked agent, for instance — and the mirror it fills is what `fhir-cache-seed-npm --mirror` reads here." }],
     }),
 
     defineTool({
@@ -647,6 +665,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["compiled-artefact-cache", "ig-ast-delta"],
       requires: { runtime: ["bash", "git"], network: true },
+      remedies: [
+        { host: "packages.fhir.org", tool: "fhir-cache-seed-npm" },
+        { host: "tx.fhir.org", none: "No declared Tool replaces the terminology server. The HL7 IG Publisher's own `-tx n/a` skips terminology validation, at the cost of not validating it." },
+      ],
     }),
 
     defineTool({
@@ -713,6 +735,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One GitHub API call per 100 releases.",
       },
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "api.github.com", none: "Pass `--from <releases.json>`, saved where GitHub is reachable." }],
     }),
   ];
 }

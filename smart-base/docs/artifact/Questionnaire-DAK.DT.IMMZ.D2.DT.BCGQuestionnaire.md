@@ -2,6 +2,10 @@
 title: "Questionnaire for IMMZ.D2 Determine required vaccination(s) if any — WHO SMART Base artefact"
 description: "Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire in the WHO SMART Base IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ConceptMap-CDSCv1toCDSCv2.html"
+ig_next: "Requirements-SGAuthoring.Skills.AuthorActorDefinitions.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Auto-generated questionnaire for decision table DAK.DT.IMMZ.D2.DT.BCG
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 47 of 225 carry one.
-
-<footer id="ig-footer" data-prev="ConceptMap-CDSCv1toCDSCv2.html" data-next="Requirements-SGAuthoring.Skills.AuthorActorDefinitions.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

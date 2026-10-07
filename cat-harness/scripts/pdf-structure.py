@@ -37,8 +37,12 @@ and for the section files' `doc_title`. Keep writing `docinfo`: for a title
 it outranks the guess.
 
 Table of contents comes from the PDF outline when there is one (194 of
-339, 57%) and is otherwise inferred from heading patterns in the text.
-Which route was used is recorded per entry, so a consumer can weight it.
+339, 57%). Otherwise it is inferred from the LAYOUT (`_pdf_headings`): a
+printed contents page if the document has one, else lines set in a heading
+style (size, weight, capitals, numbering). The text-pattern heuristic
+`infer_headings` is the last resort, for OCR'd text, which has no fonts.
+Which route was used is recorded per entry (`source`) and, for an inferred
+TOC, in `diagnostics.toc_inferred_method`, so a consumer can weight it.
 
 Usage:
     pdf-structure.py <pdf> [<pdf>...] [-o OUTDIR] [--no-sections] [--json]
@@ -100,6 +104,13 @@ from _pdf_doc_id import (  # noqa: E402
 # `pdf-pages.py` and `ingest-document.ts --refresh-title`, so the three agree
 # about what a title is.
 from _pdf_title import BROWSER_RE, apply as resolve_title, evidence_from_pdf  # noqa: E402
+
+# The layout-based fallback (issue #2302): headings read from font metrics,
+# or from a printed contents page. Measured against held-out outlines by
+# `toc-benchmark.py`; see docs/research-and-analysis/toc-extraction.md.
+import _pdf_headings  # noqa: E402
+import _pdf_figures  # noqa: E402
+import _pdf_page_labels  # noqa: E402
 
 SCHEMA = "pdf-structure/v1"
 
@@ -385,6 +396,15 @@ class TocEntry:
     page: int | None
     source: str            # "outline" | "inferred"
     number: str | None = None
+    # For an inferred entry only: how sure the inference is (0..1) and which
+    # independent evidence agreed — "contents", "body", "style", "number", ...
+    # (`_pdf_headings.consensus_headings`). None for an outline entry, which is
+    # the document's own answer and is not scored.
+    confidence: float | None = None
+    evidence: list[str] | None = None
+    # The printed label of `page` ("iv", "23") where one is known — what a
+    # reader cites. `page` stays the physical index.
+    page_label: str | None = None
 
 
 @dataclass
@@ -398,6 +418,9 @@ class Section:
     n_chars: int
     n_words: int
     text: str = field(repr=False, default="")
+    # Printed labels of page_start / page_end, where known.
+    label_start: str | None = None
+    label_end: str | None = None
 
 
 def _tech_meta(path: str) -> dict:
@@ -505,12 +528,57 @@ def inferred_toc_verdict(toc: list["TocEntry"], n_pages: int) -> str | None:
     return None
 
 
+def _heading_key(e: TocEntry) -> str:
+    return f"{e.number or ''}|{e.title.lower()}"
+
+
+def listing_pages(per_page: list[list[TocEntry]]) -> set[int]:
+    """
+    Pages that LIST headings the document states later — a contents page —
+    rather than open them. Bean `6xaz`, shape two.
+
+    `infer_headings` keeps a heading's FIRST occurrence, which is right for a
+    running header and wrong for a contents page: the listing comes first, so
+    it shadows every chapter it names. Measured on `WHO_PUB_TPS_93.1.pdf`
+    (OCR'd, no outline): 16 chapter headings sit on contents pages 2-4 and
+    again, once each and in order, in the body (Spelling p8, Punctuation p16,
+    ... Technical reports p78). Every boundary landed on pages 2-4, and 26 of
+    42 sections came out under 500 characters. The contents-page skip above
+    never fired because the OCR moved the page numbers into a column of their
+    own, so no line carried a trailing number.
+
+    The test is a property of the page, not a calibrated threshold: at least
+    two of its NUMBERED headings recur later, their next occurrences fall on
+    DIFFERENT pages, and in the same order. A running header cannot satisfy
+    it — two headers repeated on the next page recur on ONE page — and neither
+    can a page that opens one chapter.
+    """
+    where: dict[str, list[int]] = {}
+    for pageno, es in enumerate(per_page, start=1):
+        for e in es:
+            if e.number:
+                where.setdefault(_heading_key(e), []).append(pageno)
+    out: set[int] = set()
+    for pageno, es in enumerate(per_page, start=1):
+        nxt = []
+        for e in es:
+            if not e.number:
+                continue
+            later = [p for p in where.get(_heading_key(e), []) if p > pageno]
+            if later:
+                nxt.append(later[0])
+        if len(nxt) >= 2 and len(set(nxt)) >= 2 and nxt == sorted(nxt):
+            out.add(pageno)
+    return out
+
+
 def infer_headings(pages: list[str]) -> list[TocEntry]:
     """Heading detection for documents with no outline (43% of the corpus)."""
-    entries: list[TocEntry] = []
-    seen: set[str] = set()
+    per_page: list[list[TocEntry]] = []
 
     for pageno, text in enumerate(pages, start=1):
+        found: list[TocEntry] = []
+        per_page.append(found)
         # A table-of-contents page is itself a dense list of heading-shaped
         # lines, each ending in the page number it points at. Scraping it
         # yields a whole document's headings all claiming to start on the
@@ -555,13 +623,85 @@ def infer_headings(pages: list[str]) -> list[TocEntry]:
                 continue
 
             title = re.sub(r"\s{2,}", " ", title).strip(" .")
-            key = f"{num or ''}|{title.lower()}"
+            found.append(TocEntry(level, title, pageno, "inferred", num))
+
+    listed = listing_pages(per_page)
+    entries: list[TocEntry] = []
+    seen: set[str] = set()
+    for pageno, found in enumerate(per_page, start=1):
+        if pageno in listed:
+            continue
+        for e in found:
+            key = _heading_key(e)
             if key in seen:
                 continue
             seen.add(key)
-            entries.append(TocEntry(level, title, pageno, "inferred", num))
-
+            entries.append(e)
     return entries
+
+
+def layout_lines(path: str, ocr_used: bool) -> list | None:
+    """Text lines with their font metrics, or None when there is no layout."""
+    if ocr_used:
+        return None
+    try:
+        return _pdf_headings.extract_lines(path) or None
+    except Exception:                           # no layout-capable backend
+        return None
+
+
+def infer_page_labels(path: str, lines: list | None, n_pages: int) -> tuple[list[dict[str, Any]], dict]:
+    """The printed label of every physical page, and where sources disagree."""
+    try:
+        pdf = _pdf_page_labels.pdf_labels(path)
+    except Exception:                           # pypdf only: no /PageLabels read
+        pdf = {}
+    if not lines and not pdf:
+        return [{"physical": p, "label": None, "source": None, "confidence": 0.0, "evidence": []}
+                for p in range(1, n_pages + 1)], {"count": 0, "items": []}
+    labels = _pdf_page_labels.page_labels(lines or [], n_pages, pdf=pdf)
+    rows = [pl._asdict() | {"evidence": list(pl.evidence)} for pl in labels]
+    return rows, _pdf_page_labels.label_conflicts(lines or [], n_pages, pdf)
+
+
+def infer_figures(path: str, lines: list | None) -> tuple[list[dict[str, Any]], list[str]]:
+    """The list of figures and tables, and the gaps in its numbering.
+
+    Read from the layout like the TOC; with no layout there is nothing to
+    say, and the answer is an empty list rather than a guess.
+    """
+    if not lines:
+        return [], []
+    try:
+        graphics = _pdf_figures.graphics_pymupdf(path)
+    except Exception:                           # pdfminer only: no graphic evidence
+        graphics = {}
+    entries = _pdf_figures.figure_list(lines, graphics)
+    return [e._asdict() | {"evidence": list(e.evidence)} for e in entries], _pdf_figures.sequence_gaps(entries)
+
+
+def infer_toc(lines: list | None, pages: list[str]) -> tuple[list[TocEntry], str | None]:
+    """A table of contents for a document with no outline, and the method.
+
+    Layout first, text patterns last: the printed contents page cross-checked
+    against the body, else heading styles confirmed by numbering, each entry
+    carrying its confidence and evidence (`consensus_headings`). Measured over
+    the 13 corpus PDFs that carry an outline, with the outline hidden and used
+    as the answer key (`toc-benchmark.py`, issue #2302): title F1 0.83 on 20
+    held-out PDFs (0.92 on the 13 it was developed on), against 0.26 for
+    `infer_headings` alone. The text heuristic stays for
+    OCR'd text, which carries no font metrics, and for a document where the
+    layout finds nothing.
+    """
+    if lines:
+        scored = _pdf_headings.consensus_headings(lines)
+        if scored:
+            method = "contents" if any("contents" in s.sources for s in scored) else "font"
+            return [TocEntry(s.heading.level, s.heading.title, s.heading.page, "inferred",
+                             s.heading.number, round(s.confidence, 2), list(s.sources))
+                    for s in scored], method
+    found = infer_headings(pages)
+    return found, ("regex" if found else None)
 
 
 def looks_like_byline(line: str, abstract_words: set[str]) -> bool:
@@ -1275,7 +1415,14 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     outline = _toc_entries(reader.raw_toc())
     # An inferred table of contents is asked to justify itself; an outline is
     # the document's own answer and is not second-guessed (bean `6xaz`).
-    inferred = [] if outline else infer_headings(pages)
+    # The page layout, read once for the TOC, the figures and the contents
+    # check. None when there is none to read: OCR'd text has no fonts, and a
+    # pypdf-only install has no layout-capable backend.
+    lines = layout_lines(path, ocr_used)
+    inferred: list[TocEntry] = []
+    inferred_method: str | None = None
+    if not outline:
+        inferred, inferred_method = infer_toc(lines, pages)
     n_inferred = len(inferred)
     toc_undetermined = inferred_toc_verdict(inferred, len(pages)) if inferred else None
     if toc_undetermined:
@@ -1283,6 +1430,20 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
     toc = outline or inferred
     meta = parse_front_matter(pages)
     sections = split_sections(pages, toc)
+    figures, figure_gaps = infer_figures(path, lines)
+    page_rows, label_conflicts = infer_page_labels(path, lines, len(pages))
+    label_of = {r["physical"]: r["label"] for r in page_rows if r["label"]}
+    for e in toc:
+        e.page_label = label_of.get(e.page) if e.page else None
+    for f in figures:
+        f["page_label"] = label_of.get(f["page"])
+    for s in sections:
+        s.label_start = label_of.get(s.page_start) if s.page_start else None
+        s.label_end = label_of.get(s.page_end) if s.page_end else None
+    # A printed contents page and the body can disagree — drafts drift. Asked
+    # whether or not the PDF has an outline, since the printed contents is
+    # what a reader sees either way. Reported, never corrected.
+    toc_alignment = _pdf_headings.contents_alignment(lines) if lines else None
 
     docinfo = reader.docinfo()
 
@@ -1348,6 +1509,14 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
         # Why, in a sentence a person can check, rather than a bare flag. Absent
         # when the TOC was trusted.
         "toc_undetermined_reason": toc_undetermined,
+        # The list of figures and tables, each caption scored by the evidence
+        # that agreed: cited in the text, in its numbering run, a graphic on
+        # its page, a printed list naming it (`_pdf_figures`, issue #2302).
+        "figures": figures,
+        # Every physical page with the label a reader sees on it, and which
+        # sources agreed: the PDF's /PageLabels, the number printed in its
+        # header or footer, a run's interpolation, a contents page.
+        "pages": page_rows,
         "sections": [
             {k: v for k, v in asdict(s).items() if k != "text"} for s in sections
         ],
@@ -1360,6 +1529,18 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
             # for every inferred TOC, trusted or not — a number that only
             # appears on failures cannot show you a near miss.
             "toc_inferred_entries": n_inferred,
+            # Which inference produced it: "contents" (a printed contents
+            # page), "font" (heading styles) or "regex" (text patterns, the
+            # last resort). Absent when the outline was used.
+            **({"toc_inferred_method": inferred_method} if inferred_method else {}),
+            "figure_entries": len(figures),
+            # Numbers missing from a caption run ("table 2.1" when there is a
+            # Table 2.2): a finding about the DOCUMENT — usually a draft's.
+            "figure_sequence_gaps": figure_gaps,
+            # Pages where the sources give different labels — e.g. /PageLabels
+            # says "3" where the page prints "iii".
+            "page_label_conflicts": label_conflicts,
+            **({"toc_alignment": toc_alignment} if toc_alignment else {}),
             "sections": len(sections),
             "chars_total": sum(s.n_chars for s in sections),
         },

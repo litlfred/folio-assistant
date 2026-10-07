@@ -165,7 +165,7 @@ describe("what a page may claim", () => {
 
   test("the landing include opens the panel only when asked", () => {
     const inc = readFileSync(join(SITE, "_includes", "landing.html"), "utf-8");
-    expect(inc).toContain('<details class="fa-sticky-panel"{% if include.open %} open{% endif %}>');
+    expect(inc).toContain('<details class="fa-sticky-panel" lang="en" dir="ltr"{% if include.open %} open{% endif %}>');
     // The landing page itself includes it bare, so it stays slid away there.
     const index = readFileSync(join(SITE, "index.md"), "utf-8");
     expect(index).toContain("{% include landing.html %}");

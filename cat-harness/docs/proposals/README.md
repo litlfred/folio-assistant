@@ -38,10 +38,12 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `proposals`, holding `
 | [`placement-audit-2026-10-01.json`](placement-audit-2026-10-01.json) | data |  |
 | [`placement-audit-2026-10-01.md`](placement-audit-2026-10-01.md) | Placement audit — every skill, tool, scenario, process and role checked against its layer (2026-10-01) |  |
 | [`placement-concern-groups-2026-10-01.md`](placement-concern-groups-2026-10-01.md) | Placement proposal: concern sub-subgraphs and staged moves across the layers |  |
+| [`public-comment-round-2-crd-2026-10-06.md`](public-comment-round-2-crd-2026-10-06.md) | Public comment, round 2: requirements from the chief-editor walkthrough |  |
 | [`qa-readers-audit-2026-10-01.md`](qa-readers-audit-2026-10-01.md) | QA readers audit: who reads test/results/, and what happens when it is gone |  |
 | [`qa-reports-branch-and-test-process-2026-10-01.md`](qa-reports-branch-and-test-process-2026-10-01.md) | QA and test evidence off main, and a test process that certifies |  |
 | [`sdlc-process-audit.md`](sdlc-process-audit.md) | SDLC process audit — which diagram owns which phase |  |
 | [`separation-arc-2026-10-01.md`](separation-arc-2026-10-01.md) | Separation arc — one workplan for GOAL 1 |  |
+| [`separation-placement-review-2026-10-06.md`](separation-placement-review-2026-10-06.md) | Separation placement review — 2026-10-06 |  |
 | [`smart-document-kinds-2026-10-01.md`](smart-document-kinds-2026-10-01.md) | SMART document kinds: L1 and DAK |  |
 | [`smart-separation-2026-10-01.md`](smart-separation-2026-10-01.md) | smart-* separation |  |
 | [`spdx-3-applicability-2026-10-03.md`](spdx-3-applicability-2026-10-03.md) | SPDX 3: where it should, could and should not be used |  |

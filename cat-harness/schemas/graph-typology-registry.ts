@@ -51,6 +51,7 @@ import { declaredNodeFiles } from "./declared-nodes";
 import { GraphTypologyNodeSchema, kindDefOf } from "./graph-typology-node";
 import { ValidatorNodeSchema, type ValidatorNode } from "./validator-node";
 import { namespaceForLayer } from "./namespaces";
+import type { NewInstanceSource } from "./subgraph-source";
 import { BOOTSTRAP_GRAPH_TYPOLOGIES } from "../../bootstrap-tools/schemas/graph";
 
 
@@ -195,6 +196,24 @@ export interface GraphTypologyDef {
    * (the `dh4f` rule). {@link materialiseDirectories} reads it.
    */
   perInstance?: true;
+  /**
+   * Where a NEW instance's own graph of this kind lives, when `folio_init`
+   * scaffolds it — `perInstance`'s companion: that field says a dependent HAS
+   * its own; this one says where the new one is kept. Bean `hp54`.
+   *
+   * Read by `folio_init` ONCE, never by the resolver: the scaffolder writes a
+   * complete `source: { kind: "branch", branch: "cat/<instance>/<id>",
+   * keyedBy }` into the new instance's own declaration, and from then on that
+   * declaration is the one answer. So an existing instance whose entry
+   * declares no source (this repository's own `beans/` and `todos/`, still
+   * awaiting their cutover) is not moved by it. The rule and the branch-name
+   * convention are in the `directory-conventions` skill, §"Where a NEW
+   * instance's state lives".
+   *
+   * Absent means a new instance's graph of this kind is written into its
+   * checkout, as before.
+   */
+  newInstanceSource?: NewInstanceSource;
   /**
    * Is a graph of this kind expected to render as a website?
    *
@@ -979,6 +998,12 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
       "folio-library-entry/v1": { generated: true },
+      // The per-entry DOCUMENT view (issue #2302): TOC, pages, figures,
+      // sections with summaries and keywords, checks — read from the
+      // ingestion schema by lib/library-document.ts. Same writer again, and a
+      // separate family for the same reason as the entry graph: fetched only
+      // when one entry is opened.
+      "folio-library-document/v1": { generated: true },
       "folio-voices-index/v1": { generated: true },
       "folio-graph-projection/v1": { generated: true },
       // The media-type sidecar beside each content-addressed payload under
@@ -1635,6 +1660,9 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   beans: {
     tileIcon: "beans",
+    // A NEW instance keeps its own on `cat/<instance>/beans`, branch-mounted
+    // (owner, 2026-10-06, bean `hp54`). folio_init only — see the field.
+    newInstanceSource: { kind: "branch", keyedBy: "tip" },
     description:
       "the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json`",
     title: "Beans",
@@ -1827,6 +1855,9 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json`",
     title: "Todos",
     perInstance: true,
+    // A NEW instance keeps its own on `cat/<instance>/todos`, branch-mounted
+    // (owner, 2026-10-06, bean `hp54`). folio_init only — see the field.
+    newInstanceSource: { kind: "branch", keyedBy: "tip" },
     layer: "core",
     renderable: false,
     // A person's outstanding items. Outstanding is the word that settles it —
@@ -2017,6 +2048,9 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.
       "folio-block-summaries/v1": {},
+      // An entry's LSI keywords, per section and per document (issue #2302).
+      // Derived from the whole library's term weights by library-keywords.ts.
+      "folio-keywords/v1": { generated: true },
       // What the site mount must not publish from this directory (bean `cw35`).
       // Written by the instance's generator from its licence gates; the mount
       // validates it with this schema and refuses to mount if it cannot.
@@ -2138,6 +2172,43 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "schema is strict throughout, and a file a deploy phase deleted must still say where " +
       "to get it back and why it went.",
   },
+  // A published static site, as a graph (bean `lehh`, owner 2026-10-05). Two
+  // capability tiers, both declared now so a real CDN has a kind to land in:
+  // `basic-cdn-site` serves files by path and nothing more (GitHub Pages);
+  // `cdn-site` adds media types, redirects and headers (who-iris's CDN, beans
+  // l9v6 and xies). A site is an archive with routes: its files reuse
+  // ArchiveEntrySchema, and the kind adds the route layout.
+  "basic-cdn-site": {
+    description:
+      "a published static site on a CDN that serves files by path only: no media-type mapping, no redirects, no headers. One `basic-cdn-site/1.0.0` document describes it: its root URL, its routes (the release root, the staging-preview template `STAGING/<slug>/`, the per-instance sub-sites), the commit it was built from, and its files as archive entries. `derived`: built from the renderable graphs its directory's `derivedFrom` names, by a build Tool, and put on the CDN by the Tool its `storage.tool` names. GitHub Pages is one such CDN.",
+    title: "Basic CDN site",
+    renderable: false,
+    holds: "derived",
+    // declared-path-literal: this table IS the declaration, as on `binary-release`.
+    schema: "schemas/site.ts",
+    nodeSchemas: {
+      "basic-cdn-site/1.0.0": {},
+    },
+    summary:
+      "A published static site on a CDN that serves files by path only (GitHub Pages): its routes, " +
+      "the commit it was built from, and its files as archive entries. Built from the renderable graphs " +
+      "its directory names, and deployed by the Tool its storage names.",
+  },
+  "cdn-site": {
+    description:
+      "a published site on a CDN that also controls media types, redirects and response headers. One `cdn-site/1.0.0` document: everything a `basic-cdn-site` carries, plus `mimeTypes`, `redirects` and `headers`. Declared ahead of its first instance so a CDN deployment (who-iris, beans l9v6 and xies) lands in a kind rather than widening `basic-cdn-site`, whose point is what it cannot do.",
+    title: "CDN site",
+    renderable: false,
+    holds: "derived",
+    // declared-path-literal: this table IS the declaration.
+    schema: "schemas/site.ts",
+    nodeSchemas: {
+      "cdn-site/1.0.0": {},
+    },
+    summary:
+      "A published site on a CDN that also controls media types, redirects and headers: " +
+      "a `basic-cdn-site` plus those three. No instance declares one yet.",
+  },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
   // simply available: the activation list in `harness.config.json` is what makes
@@ -2216,7 +2287,7 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
   "document-kinds": {
     description:
-      "DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `folio-document-kind/v1` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767.",
+      "DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `document-kind/1.0.0` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767.",
     renderable: false,
     // Authored-from-a-source, like `themes`: a document kind is true whether
     // or not any document has been written in it yet. Core knows that kinds
@@ -2225,16 +2296,16 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-document-kind/v1": {},
+      "document-kind/1.0.0": {},
       // How one subject realises a kind, computed by the kind's owner — a
       // second family in this directory because it is DERIVED from another
       // graph (an IG's artefact index), where the kind is authored.
-      "folio-document-kind-coverage/v1": {},
+      "document-kind-coverage/1.0.0": {},
     },
     summary:
       "Document kinds — named structures of sections (fixed or semi-fixed) that a document " +
-      "authored with a harness follows, one `folio-document-kind/v1` JSON each, plus computed " +
-      "`folio-document-kind-coverage/v1` reports of how a subject realises one. Every kind and " +
+      "authored with a harness follows, one `document-kind/1.0.0` JSON each, plus computed " +
+      "`document-kind-coverage/1.0.0` reports of how a subject realises one. Every kind and " +
       "section names its sources; `computedFrom` names the declared graphs a section derives from.",
   },
   "todo-feedback": {
@@ -2439,6 +2510,13 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
   },
 
   "fsh-guts": {
+    // A NEW instance keeps its trashcan on `cat/<instance>/fsh-guts`, the way
+    // `beans` and `todos` are kept (owner, 2026-10-06: "cutover dirs should go
+    // to fsh-guts"; `state:seed --cutover` refuses without one). A STORAGE
+    // fact, and independent of `holds` below: the cutover's deposit is a
+    // write the owner confirms, not one a running step makes on its own, so
+    // the kind stays `context`. folio_init only — see the field.
+    newInstanceSource: { kind: "branch", keyedBy: "tip" },
     published: false,
     description:
       "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the site. The destination for anything that would otherwise be deleted. **THAT IS TRUE AGAIN AS OF 2026-09-23, AND WAS NOT FOR SOME TIME.** The kind also held `proposals/` — the LIVE design corpus, cited as the governing scheme by seven skills and four code modules — so an agent that read this row, learned the kind was throwaway and skipped it had skipped the schemes it needed. That is exactly what happened (bean `5kn6`): a session proposed three options for a question `instance-versioning.md` §3.3 and an owner ruling of 2026-09-20 had already settled. **The owner's fix was to move them, not to re-describe the kind** — *\"proposals not in fsh-guts but docs/ for needed &lt;stub&gt;\"* — so proposals now live in the `docs/` of the instance whose stub they concern, published rather than hidden. What remains here is `retired/` and one-off migration `scripts/`, which are what the label always described. **The lesson survives the fix**: a kind whose name tells an agent to skip it must not hold anything an agent needs.",

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/library/library-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/translation-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/translation-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/translation-manager.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/library/library-core/translation-manager.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Translation manager
@@ -495,8 +495,10 @@ framing is what settles it:
 > translatable.
 
 Translatability is a property of a **format within a content type**, and that
-model already exists: `schemas/translation-tools.ts` declares, per content
-type, which formats have an extract/inject pair — Markdown, LaTeX, PlantUML,
+model already exists: each instance that owns a content type declares, under
+`contentTranslations` in its own `<instance>.json`, which formats have an
+extract/inject pair, and `schemas/translation-tools.ts` collects them (bean
+`0r7u`) — Markdown, LaTeX, PlantUML,
 SVG, ArchiMate, Excel, BPMN, FSH, FHIR JSON — and `isTranslatable(contentType,
 extension)` is the predicate. The index asks it rather than inventing a second
 answer, so a `.json` beside a page is data and never a language.
@@ -680,8 +682,13 @@ pipeline (IG Publisher) are complementary and independent.
 ## Content-type-specific translation tools
 
 Each content type declares what formats it can translate and what scripts
-handle each format. See `schemas/translation-tools.ts` for the full
-registry.
+handle each format. The declaration belongs to the instance that OWNS the
+content type, under `contentTranslations` in its `<instance>.json`;
+`schemas/translation-tools.ts` collects every present instance's profiles and
+refuses a content type declared twice. A module or diagram path in a profile
+resolves from the declaring instance, then down its `needs` chain. Until
+2026-10-06 this was a literal table in cat-harness, naming four content types
+owned by layers above it (bean `0r7u`). Today's profiles:
 
 | Content type | Formats | RTL |
 |---|---|---|

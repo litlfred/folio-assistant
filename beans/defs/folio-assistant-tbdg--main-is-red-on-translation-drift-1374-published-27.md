@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tbdg
 title: 'main is RED on translation-drift: #1374 published 27 translated pages with no .po catalogue, and the backlog list is not the fix'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-06T05:55:27Z
 parent: folio-assistant-bzyu
 ---
 
@@ -470,3 +470,12 @@ makes that hard to see.
 
 
 _2026-09-29_ — **Re-parented `1xhc` → `bzyu`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). main is red BECAUSE translated pages shipped without catalogues; the fix is translation work.
+
+## Summary of Changes — closed on evidence, 2026-10-06
+
+Re-measured on origin/main f0bd0c78c (this session, not quoted from a note):
+- `bun test cat-harness/content/pipeline/translation-drift.test.ts`: 18 pass, 0 fail, including 'the real corpus — and the gate can actually fail' (so the gate was not widened to pass).
+- `bun run translation:drift:check`: 75 translations compared, 0 NEWLY drifted, 0 unreadable, 8 uncatalogued-and-recorded. Each of the 8 carries a reason about the translation itself (count-differs, msgid-conflict needing msgctxt) and a date. None says 'to unblock CI'. 118 .po catalogues now exist, against 19 when this bean was opened.
+- Code-quality gates on main at f0bd0c78c: success (run 37418808408).
+- e2e fallback fixture (cat-harness/test/nav-locale.e2e.ts): now DERIVED from the translation index instead of a named page, so translating one more page cannot turn it red.
+The author's decision this bean waited on is recorded in code: the derive-po catalogues plus dated, translation-specific UNCATALOGED entries.

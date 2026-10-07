@@ -35,6 +35,9 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
+import { instanceDirectoriesForGraph } from "../schemas/cat-harness.ts";
+import { instanceRootsIn } from "../schemas/instance-roots.ts";
+
 import {
   MAPPING_TARGETS,
   type ConceptMatch,
@@ -52,6 +55,7 @@ import {
   type AdjudicationStatus,
 } from "../schemas/term-adjudication.ts";
 import { againstOrUsage, buildQaResult, judgeQaResult, judgeUsage, writeQaResult } from "./qa-results.ts";
+import { inputSiteReached } from "./input-trace.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const STEM = "term-mapping";
@@ -73,7 +77,16 @@ interface GlossScheme {
   file: string;
 }
 
-/** Every file under the glossary directory whose name ends in `suffix`. */
+/**
+ * Every file whose name ends in `suffix` under a declared `glossary` graph of
+ * any instance in this checkout.
+ *
+ * Found through the declarations, not a literal path: this script lives in
+ * cat-harness and the glossary is declared by folio-assistant-core, a layer
+ * ABOVE it. A hard-coded `folio-assistant-core/glossary` was an upward path no
+ * import gate sees, and it would scan nothing — silently — the day cat-harness
+ * stands alone (separation placement review, 2026-10-06, bean `0r7u` step 0).
+ */
 function glossaryFiles(root: string, suffix: string): string[] {
   const out: string[] = [];
   const walk = (dir: string) => {
@@ -96,7 +109,9 @@ function glossaryFiles(root: string, suffix: string): string[] {
       else if (n.endsWith(suffix)) out.push(abs);
     }
   };
-  walk(join(root, "folio-assistant-core", "glossary"));
+  for (const instance of instanceRootsIn(root)) {
+    for (const dir of instanceDirectoriesForGraph(instance, "glossary")) walk(dir);
+  }
   return out;
 }
 
@@ -537,9 +552,12 @@ function main(): number {
   if (badRef !== undefined) return badRef;
   const { mappings, scope } = run(ROOT);
 
+  // input-site: traced #4492df34 — checked_at of the mappings it writes; main() runs only as an entry
+  inputSiteReached("check-term-mapping: clock");
+  const checkedAt = new Date().toISOString().slice(0, 10);
   const file = {
     $schema: "folio-term-mappings/v1" as const,
-    checked_at: new Date().toISOString().slice(0, 10),
+    checked_at: checkedAt,
     scope,
     mappings,
   };

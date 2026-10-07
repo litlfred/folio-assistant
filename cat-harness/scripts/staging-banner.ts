@@ -326,9 +326,18 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
  *
  * The static text says FEATURE BRANCH before any fetch happens, so a page
  * served with a broken or missing `staging.json` still announces itself.
+ *
+ * `lang="en" dir="ltr"` (bean `giiw`): the banner is one English sentence on
+ * every locale's page. Measured on the Arabic home page with it inheriting
+ * `dir="rtl"`: the links kept their order and each `↗` its side, because
+ * every run between them is strong LTR text — but the 🔀 that opens the
+ * sentence is a neutral at the paragraph's edge, took the paragraph's
+ * direction, and was drawn at the far right, after "build log". The attribute
+ * is what makes that a property of the banner rather than of what happens to
+ * be in it, and `lang` is what tells a screen reader to read it as English.
  */
 export const FRAGMENT =
-  `<div data-fa-staging-banner style="${BANNER_STYLE}">\u{1F500} <b>FEATURE BRANCH</b> ` +
+  `<div data-fa-staging-banner lang="en" dir="ltr" style="${BANNER_STYLE}">\u{1F500} <b>FEATURE BRANCH</b> ` +
   `<span data-fa-staging-detail>— loading build details…</span></div>` +
   OFFSET_STYLE +
   `<script>${CLIENT}</script>`;

@@ -68,13 +68,45 @@ def run(cmd: list[str], cwd: Path | None = None, check: bool = True,
     )
 
 
-# Family prefixes, declared in cat-harness/scripts/special-branches.json (id
+# Family prefixes: the BUILT-IN fallbacks (special-branches.json is gone; the folio's declaration, read below, comes first) (id
 # `lake-cache`) and checked against this copy by
-# tests/special-branches.test.ts. New name first, then each legacy one,
+# tests/cache-family-fallbacks.test.ts. New name first, then each legacy one,
 # newest first, until bean folio-assistant-oycs removes the fallback. A
 # candidate is always a WHOLE branch name (prefix + key), so `lake-cache/`
 # never matches inside `cat-lake-cache/` or `cat/folio-assistant-sci/lake-cache/`.
 CACHE_PREFIXES = ("cat/folio-assistant-sci/lake-cache/", "cat-lake-cache/", "lake-cache/")
+
+
+def _declared_cache_prefix(root: Path) -> str | None:
+    """The folio's own lake-cache family (bean rva2), or None.
+
+    A directory with graphTypology `lake-cache` and `storage.keyedBy: "family"`
+    in `<instance>.json` at the folio root names the prefix. Same reader as
+    lake-cache.sh and lake-cache-fetch.sh; an unreadable file is skipped.
+    """
+    for path in sorted(root.glob("*.json")):
+        try:
+            d = json.loads(path.read_text())
+        except Exception:
+            continue
+        dirs = d.get("directories") if isinstance(d, dict) else None
+        if not isinstance(dirs, list):
+            continue
+        for e in dirs:
+            if not isinstance(e, dict):
+                continue
+            st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
+            kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
+            prefix = st.get("branchPrefix")
+            if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(prefix, str) and prefix:
+                return prefix.rstrip("/") + "/"
+    return None
+
+
+# The declared family goes first; the built-in names stay as fallbacks.
+_DECLARED = _declared_cache_prefix(REPO_ROOT)
+if _DECLARED:
+    CACHE_PREFIXES = (_DECLARED,) + tuple(p for p in CACHE_PREFIXES if p != _DECLARED)
 
 
 def resolve_branch(key: str) -> str:

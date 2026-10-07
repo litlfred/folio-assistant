@@ -313,3 +313,43 @@ describe("file-level users, for the IG AST's incremental plan (bean a9tx)", () =
     ]);
   });
 });
+
+describe("Title and Description are prose, not rules (bean c65n)", () => {
+  // Shaped like smart-immunizations' IMMZD18SBCGVS, whose Description says
+  // "ValueSet IMMZD18SBCG for …" and so made the value set a dependent of the
+  // PlanDefinition it is only named after.
+  const T = mkdtempSync(join(tmpdir(), "fsh-cone-prose-"));
+  let pg: FshGraph;
+  beforeAll(() => {
+    const w = (rel: string, body: string) => {
+      mkdirSync(join(T, rel, ".."), { recursive: true });
+      writeFileSync(join(T, rel), body);
+    };
+    w("sushi-config.yaml", "id: prose.tank\ncanonical: http://example.org/prose\n");
+    w("input/fsh/Sched.fsh", "Instance: Sched\nInstanceOf: PlanDefinition\nUsage: #definition\n* status = #active\n");
+    w("input/fsh/Other.fsh", "ValueSet: OtherVS\n* include codes from system http://loinc.org\n");
+    w(
+      "input/fsh/SchedVS.fsh",
+      [
+        "ValueSet: SchedVS",
+        'Title: "SchedVS — see ValueSet Sched"',
+        'Description: """',
+        "ValueSet Sched for the schedule table.",
+        "Codes from system Sched, valueset Sched.",
+        '"""',
+        // A real rule AFTER the multi-line value must still be read.
+        "* include codes from valueset OtherVS",
+        "",
+      ].join("\n"),
+    );
+    w("input/fsh/OneLine.fsh", 'ValueSet: OneLineVS\nDescription: "ValueSet Sched, on one line"\n');
+    pg = buildFshGraph(T);
+  });
+  afterAll(() => rmSync(T, { recursive: true, force: true }));
+
+  test("the schedule's forward cone does not reach a value set that only names it in prose", () => {
+    expect([...forwardCone(pg, ["Sched"])]).toEqual([]);
+    expect([...pg.nodes.get("SchedVS")!.deps]).toEqual(["OtherVS"]);
+    expect([...pg.nodes.get("OneLineVS")!.deps]).toEqual([]);
+  });
+});

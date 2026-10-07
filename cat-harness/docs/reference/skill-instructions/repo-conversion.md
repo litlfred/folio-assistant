@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/conduct/conduct-core/repo-conversion.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/repo-conversion.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/conduct-core/repo-conversion.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/conduct-core/repo-conversion.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/conduct/conduct-core/repo-conversion.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # /repo-conversion — folio-assistant over a repo that already has a life
@@ -119,6 +119,11 @@ hand:
   marker pairs the author has opted into, so offer to add markers rather than
   content.
 - **`.gitignore`** — append the folio entries; keep theirs.
+
+A harness built on this platform may add adoption steps of its own for its
+kind of repository, for example about CI that already publishes a site on
+every push. Ask `skill_list` for the skill governing that kind before
+calling the conversion done.
 
 ## 5. Anti-patterns
 

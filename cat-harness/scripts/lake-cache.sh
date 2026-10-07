@@ -65,9 +65,9 @@ PRIVATE_REF="refs/lake-cache-restore"
 
 # ── Branch family names ─────────────────────────────────────────────
 #
-# Declared in cat-harness/scripts/special-branches.json (id `lake-cache`);
+# The BUILT-IN fallback names (special-branches.json is gone, owner 2026-10-05);
 # copied here because a folio may restore a cache with no `bun` on the
-# path. tests/special-branches.test.ts fails if the copy disagrees.
+# path. tests/cache-family-fallbacks.test.ts fails if the scripts disagree.
 #
 # The family is `cat/folio-assistant-sci/lake-cache/` (owner, 2026-10-02:
 # special branches are `cat/<harness>/<name>`; bean folio-assistant-9io2).
@@ -89,6 +89,48 @@ command -v git >/dev/null 2>&1 || die "git not found on PATH"
 
 REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) \
   || die "not inside a git repository"
+
+# ── The folio's own declaration wins (bean folio-assistant-rva2) ────
+#
+# Owner, 2026-10-03: "each harness declares it, (and each instance can also
+# declare), why centralize?" A folio that declares its lake-cache family —
+# a directory entry with graphTypology `lake-cache` and `storage.keyedBy:
+# "family"` in its `<instance>.json` — names the prefix here, and the
+# built-in name above becomes the newest legacy fallback, so branches under
+# the platform's name are still found. With no declaration, or no python3
+# to read one, nothing changes. Read-only and silent: the declaration's
+# own validity is check:declared-dirs' finding, not this script's.
+declared_cache_prefix() {
+  command -v python3 >/dev/null 2>&1 || return 0
+  python3 - "$REPO_ROOT" <<'PY' 2>/dev/null
+import glob, json, os, sys
+for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
+    try:
+        d = json.load(open(path))
+    except Exception:
+        continue
+    dirs = d.get("directories") if isinstance(d, dict) else None
+    if not isinstance(dirs, list):
+        continue
+    for e in dirs:
+        if not isinstance(e, dict):
+            continue
+        st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
+        kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
+        if "lake-cache" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
+            print(st["branchPrefix"].rstrip("/"))
+            sys.exit(0)
+PY
+}
+DECLARED_PREFIX=$(declared_cache_prefix)
+if [ -n "$DECLARED_PREFIX" ] && [ "$DECLARED_PREFIX" != "$CACHE_PREFIX" ]; then
+  _legacy="$CACHE_PREFIX"
+  for p in $LEGACY_CACHE_PREFIXES; do
+    [ "$p" = "$DECLARED_PREFIX" ] || _legacy="$_legacy $p"
+  done
+  CACHE_PREFIX="$DECLARED_PREFIX"
+  LEGACY_CACHE_PREFIXES="$_legacy"
+fi
 
 # ── Argument parsing ────────────────────────────────────────────────
 CMD="${1:-}"; shift || true

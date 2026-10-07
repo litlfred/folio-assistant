@@ -1,5 +1,7 @@
 /**
- * What a check script reads and writes — the ONE place it is declared (bean `xpcu`).
+ * What a check script reads and writes (bean `xpcu`). This layer's rows are
+ * declared here; an instance above it declares its own under `taskIo` in its
+ * `<instance>.json`, and {@link collectTaskIo} reads both (bean `0r7u`).
  *
  * @module scripts/task-io
  * @graphNode none — a declaration table read by `regen-after-merge.ts` and `gates.ts`
@@ -13,21 +15,26 @@
  *   check that writes is treated as undeclared, and the test says so.)
  * - `inputs` — what can change the script's answer. This is what lets `regen`
  *   SKIP a verify/write pair whose inputs hash to the value recorded at its last
- *   green run (`input-hash.ts`). `{tracked}` means the whole working tree as
+ *   green run, and `gates` skip the script itself when its inputs hash to its
+ *   last pass (`input-hash.ts`, bean `f017`). `{tracked}` means the whole working tree as
  *   version control sees it; a narrower glob list hashes only what it names,
  *   plus the script's own source and every module it imports.
  *
  * ## The rule for adding one
  *
- * **Only declare what you have read in the script, or measured.** An `inputs`
- * list that misses a file the script reads makes `regen` skip a pair that would
- * have failed — the false clean this repository refuses everywhere else. And
- * an `outputs: []` claim that is wrong lets two writers race. So:
+ * **`inputs: [TRACKED]` is a claim the fingerprint CHECKS, every time** (bean
+ * `f017`, 2026-10-06). `input-sites.ts` walks the script's import closure, and
+ * every line that can read something the tree does not hold — the environment,
+ * the network, the clock, git history, a spawned process, a computed module —
+ * must carry a pinned, reviewed `// input-site:` annotation saying what it
+ * reads; otherwise the fingerprint is undetermined and the script RUNS. So a
+ * `{tracked}` declaration can cost skips, never correctness, and the old rule
+ * ("declare only what you have read") is enforced rather than remembered.
+ * `bun run input-hash:coverage` says which declared scripts can skip and what
+ * blocks the rest; `--sites <file>` prints the pins.
  *
- * - for a script that walks every instance, skill or bean, use `{tracked}` and
- *   not a hand-picked list;
- * - do NOT declare `inputs` for a script whose answer depends on anything else:
- *   an environment variable, the network, the clock, or an ignored file;
+ * - prefer `{tracked}` to a hand-picked glob list: a narrower list is a claim
+ *   about FILES the audit cannot check, and a `tree` site refuses it;
  * - an `outputs: []` claim is re-checked on every `gates` run by the tree
  *   guard: a parallel batch that changes the tree is reported, naming the batch.
  *
@@ -57,6 +64,9 @@
  * in `regen`, the settling pass re-asks every pair. A wrong `outputs: []` can
  * produce a false red, not a false green.
  */
+import { dirname } from "node:path";
+import { checkoutRootFor, readDeclaration } from "../schemas/cat-harness.ts";
+import { instanceRootsIn } from "../schemas/instance-roots.ts";
 import { TRACKED, type PairIO } from "./input-hash.ts";
 
 export interface ScriptIO {
@@ -64,6 +74,10 @@ export interface ScriptIO {
   inputs?: readonly string[];
   /** `[]`: writes nothing, may run in the pool. Absent: runs alone. */
   outputs?: readonly string[];
+  /** The task that repairs this check, when `X` / `X:check` naming does not give it (`regen`'s `WRITER_OVERRIDES`). */
+  writer?: string;
+  /** A merge train runs this check, and its writer when red, even without `regen`. */
+  afterMerge?: boolean;
 }
 
 /** Writes nothing — measured with `strace` (see the module comment). Not skippable. */
@@ -72,7 +86,15 @@ const READ_ONLY: ScriptIO = { outputs: [] };
 /** Read-only, and safe to skip on an unchanged tree: read for writes, env, network and clock. */
 const TREE_READER: ScriptIO = { inputs: [TRACKED], outputs: [] };
 
-export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
+/**
+ * This layer's own rows. A task owned by an instance ABOVE this one is not
+ * listed here: that instance declares it in its own `<instance>.json` under
+ * `taskIo`, and {@link collectTaskIo} reads it from whatever instances are
+ * present (bean `0r7u`, owner ruling 2026-10-06 — "each instance declares its
+ * own tasks"). Twenty rows moved out on that day; naming them here would be
+ * the upward reference that breaks this layer when it stands alone.
+ */
+const OWN_TASK_IO: Readonly<Record<string, ScriptIO>> = {
   // ── regen's slowest pairs, by measured wall time (seconds, both passes) ──
   "translation:block-qa:check": TREE_READER, //   456 s — `--check` compares `substantive()`, which drops commit SHAs and timestamps
   "kg:audit:all:check": TREE_READER, //            335 s — spawns `kg-audit.ts --check` per instance; the spawned source is in the tree
@@ -84,8 +106,6 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   // `kg:audit:check`'s). In regen its sub-checks are folded (`pair-cover.ts`).
   "skill:register:check": TREE_READER,
   "kg:audit:check": TREE_READER, //                 81 s — `--check` compares the manifest and every sidecar, writes neither
-  "check:glossary": TREE_READER, //                 45 s — `glossary-page.ts --check` exits before its write loop
-  "glossary:pot:check": TREE_READER, //             39 s — exits before writing; compares without the POT timestamp
   "readme:subgraphs:check": TREE_READER, //         25 s — writes its QA result only without `--check`
   "skills:docs:check": TREE_READER, //              19 s — returns before `writeFileSync`
   "processes:viz:check": TREE_READER, //            19 s
@@ -98,178 +118,171 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   // ── read-only by measurement: no write under `strace` on a clean tree ──
   // Not skippable (no `inputs`): each may still read the environment, the
   // clock or the network. Re-measure before adding one; never add by name.
-  "agent-memory:check": READ_ONLY,
-  "avatars:css:check": READ_ONLY,
-  "boards:default:check": READ_ONLY,
-  "bootstrap:schemas:check": READ_ONLY,
+  "agent-memory:check": TREE_READER,
+  "avatars:css:check": TREE_READER,
+  "boards:default:check": TREE_READER,
+  "bootstrap:schemas:check": TREE_READER,
   "bootstrap:validate": READ_ONLY,
-  "bootstrap:vocabulary:check": READ_ONLY,
-  "check:actor-reach": READ_ONLY,
-  "check:agent-entry-links": READ_ONLY,
-  "check:agents-claims": READ_ONLY,
-  "check:agents-xref": READ_ONLY,
-  "check:agents-xref:strict": READ_ONLY,
-  "check:anchor-names": READ_ONLY,
-  "check:artefact-verification": READ_ONLY,
-  "check:artifact-index": READ_ONLY,
-  "check:asset-roles": READ_ONLY,
+  "bootstrap:vocabulary:check": TREE_READER,
+  "check:actor-reach": TREE_READER,
+  "check:agent-entry-links": TREE_READER,
+  "check:agents-claims": TREE_READER,
+  "check:agents-xref": TREE_READER,
+  "check:agents-xref:strict": TREE_READER,
+  "check:anchor-names": TREE_READER,
+  "check:artefact-verification": TREE_READER,
+  "check:asset-roles": TREE_READER,
   "check:available-locales": READ_ONLY,
-  "check:avatar-instances": READ_ONLY,
-  "check:bean-archive": READ_ONLY,
-  "check:bean-blocks": READ_ONLY,
-  "check:bean-bodies": READ_ONLY,
-  "check:bean-front-matter": READ_ONLY,
+  "check:avatar-instances": TREE_READER,
+  "check:bean-archive": TREE_READER,
+  "check:bean-blocks": TREE_READER,
+  "check:bean-bodies": TREE_READER,
+  "check:bean-front-matter": TREE_READER,
   "check:bean-issue-links": READ_ONLY,
-  "check:bean-parent-prose:check": READ_ONLY,
-  "check:bean-parents": READ_ONLY,
-  "check:bean-restates-skill": READ_ONLY,
+  "check:bean-parent-prose:check": TREE_READER,
+  "check:bean-parents": TREE_READER,
+  "check:bean-restates-skill": TREE_READER,
   "check:bean-rollup": READ_ONLY,
-  "check:bootstrap-concepts": READ_ONLY,
-  "check:bun-pin": READ_ONLY,
-  "check:catalogue": READ_ONLY,
+  "check:bootstrap-concepts": TREE_READER,
+  "check:bun-pin": TREE_READER,
   "check:ci-invocations": READ_ONLY,
-  "check:code-accounting": READ_ONLY,
+  "check:code-accounting": TREE_READER,
   "check:command-paths": READ_ONLY,
-  "check:concern-groups": READ_ONLY,
+  "check:concern-groups": TREE_READER,
   "check:context-emission": READ_ONLY,
-  "check:declaration-claims": READ_ONLY,
-  "check:declaration-filename": READ_ONLY,
-  "check:declared-assets": READ_ONLY,
-  "check:declared-dirs": READ_ONLY,
-  "check:declared-paths": READ_ONLY,
-  "check:docs-populated": READ_ONLY,
-  "check:docs-templates": READ_ONLY,
-  "check:escaped-markup:source": READ_ONLY,
-  "check:fallback-roles": READ_ONLY,
-  "check:folio-mount": READ_ONLY,
-  "check:graph-typology-work": READ_ONLY,
-  "check:harness-dirs": READ_ONLY,
+  "check:declaration-claims": TREE_READER,
+  "check:declaration-filename": TREE_READER,
+  "check:declared-assets": TREE_READER,
+  "check:declared-dirs": TREE_READER,
+  "check:declared-paths": TREE_READER,
+  "check:docs-populated": TREE_READER,
+  "check:docs-templates": TREE_READER,
+  "check:escaped-markup:source": TREE_READER,
+  "check:fallback-roles": TREE_READER,
+  "check:folio-mount": TREE_READER,
+  "check:graph-typology-work": TREE_READER,
+  "check:harness-dirs": TREE_READER,
   "check:harness-state:check": READ_ONLY,
-  "check:image-roles": READ_ONLY,
-  "check:import-direction": READ_ONLY,
-  "check:instance-config": READ_ONLY,
+  "check:image-roles": TREE_READER,
+  "check:import-direction": TREE_READER,
+  "check:instance-config": TREE_READER,
   "check:instance-graph": READ_ONLY,
   "check:instance-render": READ_ONLY,
-  "check:instance-themes:check": READ_ONLY,
-  "check:invocation-parity": READ_ONLY,
+  "check:instance-themes:check": TREE_READER,
+  "check:invocation-parity": TREE_READER,
   "check:kind-validators:require-all": READ_ONLY,
   "check:l1-complete": READ_ONLY,
-  "check:lane-documentation": READ_ONLY,
-  "check:layout-norms": READ_ONLY,
-  "check:lockfile-pinning": READ_ONLY,
-  "check:materialized-fixity": READ_ONLY,
-  "check:methodology-evidence": READ_ONLY,
+  "check:lane-documentation": TREE_READER,
+  "check:layout-norms": TREE_READER,
+  "check:lockfile-pinning": TREE_READER,
+  "check:methodology-evidence": TREE_READER,
   "check:model-languages": READ_ONLY,
-  "check:module-scope-resolution": READ_ONLY,
-  "check:navbar-consistency:check": READ_ONLY,
-  "check:node-iris": READ_ONLY,
-  "check:orphan-verdicts": READ_ONLY,
-  "check:partition": READ_ONLY,
+  "check:module-scope-resolution": TREE_READER,
+  "check:navbar-consistency:check": TREE_READER,
+  "check:node-iris": TREE_READER,
+  "check:orphan-verdicts": TREE_READER,
+  "check:partition": TREE_READER,
   "check:portable-paths": READ_ONLY,
-  "check:process-documentation": READ_ONLY,
-  "check:publishable": READ_ONLY,
-  "check:published-refs": READ_ONLY,
+  "check:process-documentation": TREE_READER,
+  "check:publishable": TREE_READER,
+  "check:published-refs": TREE_READER,
   "check:python-deps": READ_ONLY,
   "check:qa-reviewer-permission": READ_ONLY,
-  "check:raci": READ_ONLY,
-  "check:read-only-graphs": READ_ONLY,
-  "check:ready-to-close": READ_ONLY,
-  "check:red-gate-is-last": READ_ONLY,
+  "check:raci": TREE_READER,
+  "check:read-only-graphs": TREE_READER,
+  "check:ready-to-close": TREE_READER,
+  "check:red-gate-is-last": TREE_READER,
   "check:remote-skills": READ_ONLY,
-  "check:rendered-labels": READ_ONLY,
-  "check:requirements": READ_ONLY,
-  "check:retired-front-matter": READ_ONLY,
-  "check:schema-nodes": READ_ONLY,
-  "check:secret-leaks": READ_ONLY,
-  "check:skills": READ_ONLY,
-  "check:soft-hyphens": READ_ONLY,
-  "check:source-licence": READ_ONLY,
-  "check:stale-field-advice": READ_ONLY,
-  "check:stale-paths": READ_ONLY,
-  "check:state-on-main": READ_ONLY,
-  "check:structure-accessor": READ_ONLY,
+  "check:rendered-labels": TREE_READER,
+  "check:requirements": TREE_READER,
+  "check:retired-front-matter": TREE_READER,
+  "check:schema-nodes": TREE_READER,
+  "check:secret-leaks": TREE_READER,
+  "check:skills": TREE_READER,
+  "check:soft-hyphens": TREE_READER,
+  "check:source-licence": TREE_READER,
+  "check:stale-field-advice": TREE_READER,
+  "check:stale-paths": TREE_READER,
+  "check:state-on-main": TREE_READER,
+  "check:structure-accessor": TREE_READER,
   "check:subgraph-coverage": READ_ONLY,
-  "check:subgraphs": READ_ONLY,
-  "check:tabular-stubs": READ_ONLY,
-  "check:term-mapping": READ_ONLY,
-  "check:theme-art:check": READ_ONLY,
-  "check:tools": READ_ONLY,
-  "check:tools-closure": READ_ONLY,
+  "check:subgraphs": TREE_READER,
+  "check:tabular-stubs": TREE_READER,
+  "check:term-mapping": TREE_READER,
+  "check:theme-art:check": TREE_READER,
+  "check:tools": TREE_READER,
+  "check:tools-closure": TREE_READER,
   "check:upload-names:check": READ_ONLY,
-  "check:uploads-retired": READ_ONLY,
+  "check:uploads-retired": TREE_READER,
   "check:usage-paths": READ_ONLY,
-  "check:viewer-backticks": READ_ONLY,
-  "check:viewer-nav": READ_ONLY,
-  "check:voice-skills": READ_ONLY,
-  "check:voices": READ_ONLY,
+  "check:viewer-backticks": TREE_READER,
+  "check:viewer-nav": TREE_READER,
+  "check:voice-skills": TREE_READER,
   "check:waivers": READ_ONLY,
-  "check:wireframes": READ_ONLY,
-  "check:workflow-coverage": READ_ONLY,
-  "check:workflow-injection": READ_ONLY,
-  "check:workflow-paths": READ_ONLY,
-  "check:workflow-policy": READ_ONLY,
-  "check:workflow-refs": READ_ONLY,
-  "check:workflow-script-paths": READ_ONLY,
-  "check:workflows": READ_ONLY,
-  "check:xml-comments": READ_ONLY,
-  "code-lists:check": READ_ONLY,
-  "vocab-mappings:check": READ_ONLY,
-  "deps:python:check": READ_ONLY,
-  "auto:docs:check": READ_ONLY,
-  "docs:harness:check": READ_ONLY,
+  "check:wireframes": TREE_READER,
+  "check:workflow-coverage": TREE_READER,
+  "check:workflow-injection": TREE_READER,
+  "check:workflow-paths": TREE_READER,
+  "check:workflow-policy": TREE_READER,
+  "check:workflow-refs": TREE_READER,
+  "check:workflow-script-paths": TREE_READER,
+  "check:workflows": TREE_READER,
+  "check:xml-comments": TREE_READER,
+  "code-lists:check": TREE_READER,
+  "vocab-mappings:check": TREE_READER,
+  "deps:python:check": TREE_READER,
+  "auto:docs:check": TREE_READER,
+  "docs:harness:check": TREE_READER,
   "docs:pages:check": READ_ONLY,
-  "external-schemas:check": READ_ONLY,
-  "folio:viz:check": READ_ONLY,
-  "fsh-guts:viz:check": READ_ONLY,
+  "external-schemas:check": TREE_READER,
+  "folio:viz:check": TREE_READER,
+  "fsh-guts:viz:check": TREE_READER,
   "gen:jsonld:check": READ_ONLY,
   "glossary:check": READ_ONLY,
   "glossary:check:bootstrap": READ_ONLY,
-  "handler:index:check": READ_ONLY,
-  "harness:dirs:check": READ_ONLY,
+  "handler:index:check": TREE_READER,
+  "harness:dirs:check": TREE_READER,
   "id-lookup:check": READ_ONLY,
-  "iri:sync:check": READ_ONLY,
-  "iris:covers:check": READ_ONLY,
-  "iris:pages:check": READ_ONLY,
-  "kg:detangle:direction": READ_ONLY,
+  "iri:sync:check": TREE_READER,
+  "kg:detangle:direction": TREE_READER,
   "kg:schema:check": READ_ONLY,
   "kg:subscribe:check": READ_ONLY,
   "beans:notes:check": READ_ONLY, // read: `checkNotes` only reads; the writer is `beans:notes`
-  "landing:data:check": READ_ONLY,
+  "landing:data:check": TREE_READER,
   "landing:sticky:check": READ_ONLY,
-  "library:readmes:check": READ_ONLY,
+  "library:readmes:check": TREE_READER,
   "lint": READ_ONLY,
-  "lsi:skills:check": READ_ONLY,
-  "methodologies:viz:check": READ_ONLY,
-  "navbar:geometry:check": READ_ONLY,
-  "navbar:include:check": READ_ONLY,
-  "ns:check": READ_ONLY,
-  "readme:audit": READ_ONLY,
-  "readme:audit:root": READ_ONLY,
-  "readme:sync:all:check": READ_ONLY,
-  "readme:sync:check": READ_ONLY,
-  "readme:sync:root:check": READ_ONLY,
-  "root-scan-census:check": READ_ONLY,
-  "skill:commands:check": READ_ONLY,
-  "smart-base:pages:check": READ_ONLY,
-  "smart-trust:pages:check": READ_ONLY,
-  "state:visualizer:check": READ_ONLY,
+  "lsi:skills:check": TREE_READER,
+  "methodologies:viz:check": TREE_READER,
+  "navbar:assets:check": TREE_READER,
+  "navbar:geometry:check": TREE_READER,
+  "navbar:include:check": TREE_READER,
+  "ns:check": TREE_READER,
+  "readme:audit": TREE_READER,
+  "readme:audit:root": TREE_READER,
+  "readme:sync:all:check": TREE_READER,
+  "readme:sync:check": TREE_READER,
+  "readme:sync:root:check": TREE_READER,
+  "root-scan-census:check": TREE_READER,
+  "skill:commands:check": TREE_READER,
+  "state:visualizer:check": TREE_READER,
   "subscriptions:viz:check": READ_ONLY,
-  "theme:page:check": READ_ONLY,
-  "themes:css:check": READ_ONLY,
-  "tools:viz:check": READ_ONLY,
-  "translate-bpmn:bootstrap:check": READ_ONLY,
-  "translate-bpmn:check": READ_ONLY,
+  "theme:page:check": TREE_READER,
+  "themes:css:check": TREE_READER,
+  "tools:viz:check": TREE_READER,
+  "translate-bpmn:bootstrap:check": TREE_READER,
+  "translate-bpmn:check": TREE_READER,
   "translate-kg-viewer:check": READ_ONLY,
   "translated-links:check": READ_ONLY,
   "translation:catalogue:check": READ_ONLY,
-  "translation:drift:check": READ_ONLY,
-  "translation:index:check": READ_ONLY,
-  "translation:obsolete:check": READ_ONLY,
-  "translation:pot:check": READ_ONLY,
+  "translation:drift:check": TREE_READER,
+  "translation:index:check": TREE_READER,
+  "translation:obsolete:check": TREE_READER,
+  "translation:pot:check": TREE_READER,
   "translation:status:check": READ_ONLY,
   "uml:overview:check": READ_ONLY,
-  "upload-step:docs:check": READ_ONLY,
-  "voices:viz:check": READ_ONLY,
+  "upload-step:docs:check": TREE_READER,
+  "voices:viz:check": TREE_READER,
   // ── regen's barriers, re-measured 2026-10-05 (bean `8qyc`) ──
   // Each was a pair regen ran ALONE only for want of a declaration: added to
   // the gate set after the 2026-10-01 sweep. Each `--check` ran under `strace -f`
@@ -280,34 +293,23 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   // exits before its writer path, most through the judge (`concludeJudgement`
   // / `judgeQaResult`), which writes nothing by contract.
   "bat:sync:check": READ_ONLY,
-  "check:avatar-coverage:check": READ_ONLY,
+  "check:avatar-coverage:check": TREE_READER,
   "check:l1-complete:check": READ_ONLY, //         `sidecarFor` only under `--write`
-  "check:lane-documentation:check": READ_ONLY,
-  "check:layout-norms:check": READ_ONLY,
+  "check:lane-documentation:check": TREE_READER,
+  "check:layout-norms:check": TREE_READER,
   "check:library-qa:check": READ_ONLY, //          `writeQaResult` only in the else of `if (check)`
-  "check:methodology-evidence:check": READ_ONLY,
+  "check:methodology-evidence:check": TREE_READER,
   "check:nav-names:check": READ_ONLY, //           ditto
-  "check:rendered-labels:check": READ_ONLY,
-  "check:source-licence:check": READ_ONLY,
+  "check:rendered-labels:check": TREE_READER,
+  "check:source-licence:check": TREE_READER,
   "check:undeclared-files:check": READ_ONLY, //    its one ftruncate is Bun's spawn-stdin memfd
   "kg:locale:check": READ_ONLY, //                 writes nothing; reads KG_BASE_URL, so still no `inputs`
   "kind:register:check": READ_ONLY, //             `--check` skips the write loop; its five verifies are READ_ONLY here
-  "check:wireframes:check": READ_ONLY,
-  "dc:render:check": READ_ONLY, //                 returns before `writeFileSync`
-  "document-kinds:viz:check": READ_ONLY, //        its one `rmSync` is in the not-`check` arm
+  "check:wireframes:check": TREE_READER,
+  "document-kinds:viz:check": TREE_READER, //        its one `rmSync` is in the not-`check` arm
   "node-kind:pages:check": READ_ONLY, //           its one `rmSync` is in the not-`check` arm
-  "ig-ast:schema:check": READ_ONLY,
-  "kg:materialize:check": READ_ONLY, //            `checkMaterializations` is offline and reads
-  "p2:refusals:check": READ_ONLY,
-  "qa:attestations:migrate:check": READ_ONLY, //   `--check` passes `dryRun` to the kg trees and `check` to criteria
-  "slice:sqlite:vendor:check": READ_ONLY,
-  "smart-base:diig-figure:check": READ_ONLY, //    python; `write_text` only without `--check`
-  "smart-base:document-kinds:check": READ_ONLY,
-  "smart-base:dth-terms:check": READ_ONLY,
-  "smart-base:smart-kg-l1:check": READ_ONLY, //    `continue`s before `writeFileSync` under `check`
-  "smart-immunizations:pages:check": READ_ONLY, // `if (CHECK)` compares; the rebuild is the else
-  "smart-trust:openapi:check": READ_ONLY, //       exits before `--source` is even read
-  "smart-trust:openapi:pages:check": READ_ONLY,
+  "qa:attestations:migrate:check": TREE_READER, //   `--check` passes `dryRun` to the kg trees and `check` to criteria
+  "slice:sqlite:vendor:check": TREE_READER,
   // NO `inputs` for these five, read rather than assumed (bean `8qyc`): four
   // build through `kg-export.ts`'s `buildExport`, which stamps the document
   // with `stagingFields(process.env)` (`staging-stamp.ts`), and `kg:export`
@@ -328,6 +330,45 @@ export const TASK_IO: Readonly<Record<string, ScriptIO>> = {
   "slice:sqlite:check": READ_ONLY, //               12 s; `checkSlice` builds in `slice-check-*` / `slice-sqlite-*`
   "subgraph:jsonld:check": READ_ONLY, //            15 s; `if (check)` returns before `rmSync` / `writeFileSync`
 };
+
+/**
+ * {@link OWN_TASK_IO} plus every present instance's declared `taskIo`.
+ *
+ * A key declared twice — by two instances, or by an instance and this table —
+ * THROWS rather than letting one win: two owners of one task is a placement
+ * defect, and silently picking either would make `outputs: []` a claim nobody
+ * owns. An instance whose `taskIo` is absent contributes nothing; standalone,
+ * with no instance above this layer present, the result is the own rows alone.
+ */
+export function collectTaskIo(
+  repoRoot: string,
+  own: Readonly<Record<string, ScriptIO>> = OWN_TASK_IO,
+): Readonly<Record<string, ScriptIO>> {
+  const out: Record<string, ScriptIO> = { ...own };
+  const ownerOf = new Map<string, string>(Object.keys(own).map((k) => [k, "cat-harness/scripts/task-io.ts"]));
+  for (const instance of instanceRootsIn(repoRoot)) {
+    const declared = readDeclaration(instance)?.taskIo;
+    if (declared === undefined) continue;
+    for (const [task, io] of Object.entries(declared)) {
+      const prior = ownerOf.get(task);
+      if (prior !== undefined) {
+        throw new Error(`task "${task}" is declared by both ${prior} and ${instance} — one task, one owner`);
+      }
+      ownerOf.set(task, instance);
+      out[task] = {
+        ...(io.inputs === undefined ? {} : { inputs: io.inputs }),
+        ...(io.outputs === undefined ? {} : { outputs: io.outputs }),
+        ...(io.writer === undefined ? {} : { writer: io.writer }),
+        ...(io.afterMerge === undefined ? {} : { afterMerge: io.afterMerge }),
+      };
+    }
+  }
+  return out;
+}
+
+export const TASK_IO: Readonly<Record<string, ScriptIO>> = collectTaskIo(
+  checkoutRootFor(dirname(import.meta.dir)),
+);
 
 /**
  * A verify/write pair's declaration — its CHECK's. The writer needs none: in

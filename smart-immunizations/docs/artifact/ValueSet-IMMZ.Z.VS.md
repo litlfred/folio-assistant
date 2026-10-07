@@ -2,6 +2,10 @@
 title: "IMMZ.Z.VS ValueSet for vaccine types — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZ.Z.VS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZ.Z.LiveAttenuated.html"
+ig_next: "ValueSet-IMMZD18SBCGVS.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -42,7 +46,4 @@ IG rather than a gap in this index.
 | JSON Schema | *not published for this artefact* | |
 | Displays | *not published for this artefact* | |
 | OpenAPI | *not published for this artefact* | |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.VS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.VS.jsonld` · [view](ValueSet-IMMZ.Z.VS.jsonld.html) |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZ.Z.LiveAttenuated.html" data-next="ValueSet-IMMZD18SBCGVS.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZ.Z.VS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZ.Z.VS.jsonld` |

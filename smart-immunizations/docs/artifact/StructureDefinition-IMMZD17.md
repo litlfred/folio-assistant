@@ -2,6 +2,10 @@
 title: "IMMZ.D17.Report AEFI — WHO SMART Immunizations artefact"
 description: "StructureDefinition/IMMZD17 in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureDefinition-IMMZD13.html"
+ig_next: "StructureDefinition-IMMZD18.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -39,10 +43,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D17_Report_AEFI.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D17_Report_AEFI.schema.json` · [view](StructureDefinition-IMMZ_D17_Report_AEFI.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D17_Report_AEFI.schema.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D17_Report_AEFI.schema.json` |
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/StructureDefinition-IMMZ_D17_Report_AEFI.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-IMMZ_D17_Report_AEFI.openapi.json` |
 | JSON-LD | *not published for this artefact* | |
-
-<footer id="ig-footer" data-prev="StructureDefinition-IMMZD13.html" data-next="StructureDefinition-IMMZD18.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

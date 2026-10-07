@@ -1,11 +1,11 @@
 ---
 # folio-assistant-de9k
 title: 'BUG: three committed kg-qa sidecars on main hold git conflict markers, and every reader treats them as empty'
-status: in-progress
+status: completed
 type: bug
 priority: critical
 created_at: 2026-10-01T08:47:14Z
-updated_at: 2026-10-01T09:30:18Z
+updated_at: 2026-10-06T06:10:00Z
 parent: folio-assistant-3fva
 ---
 
@@ -33,7 +33,7 @@ Command: `git grep -c '^<<<<<<<' origin/main -- cat-harness/test/results/bootstr
 ## Done when
 - [x] the three files parse, and both sides of the conflict were checked for a `pair_attestations` entry that must be kept. They were restored, not regenerated: their subjects are gone, so `kg:audit` cannot regenerate them (see Summary)
 - [x] a gate fails on an unparseable file anywhere under a declared `qa` directory, hosted homes included, with a planted conflict marker as the falsifier
-- [ ] `readAttestations` and `readVoiceReviews` report a corrupt sidecar as `unknown`; they do not return `[]`. **Not done here.** `prose-code-pairs.ts` and `skill-voice-review.ts` belong to F1's file set (audit §5, after `16ei`), so editing them now would collide with F1. The guard above already fails on the corrupt-file case these readers would swallow.
+- [x] `readAttestations` and `readVoiceReviews` report a corrupt sidecar as `unknown`; they do not return `[]`. **Not done here.** `prose-code-pairs.ts` and `skill-voice-review.ts` belong to F1's file set (audit §5, after `16ei`), so editing them now would collide with F1. The guard above already fails on the corrupt-file case these readers would swallow. — **verified 2026-10-06: F1 landed it. `AttestationsRead` (`cat-harness/scripts/prose-code-pairs.ts:202`) and `VoiceReviewsRead` (`skill-voice-review.ts`) carry `{ state: "corrupt" | "unknown"; reason }` with no list, and `evaluatePairsFrom` turns that into `unknown` and writes nothing back.**
 
 ## Summary of Changes
 
@@ -48,3 +48,7 @@ Done 2026-10-01 by a subagent of session 01LKpuPo, on worktree branch `worktree-
 
 ## Owner ruling 2026-10-01 — the 3 SUBJECT-GONE sidecars are DELETED
 Asked with options; the owner chose delete. Before deletion: each was about 1.06 KB, held 0 `pair_attestations` (checked against both parents of `48aab0bd` by the de9k agent), and described a skill that left the submodules during placement. Removed with `git rm` on branch `claude/quirky-davinci-ixuymr`.
+
+## Closed 2026-10-06 on re-measured evidence
+
+The last box was done by F1 after this bean was written; see the inline evidence. Closed by the 3fva QA-readers pass (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), on evidence, not authorship.

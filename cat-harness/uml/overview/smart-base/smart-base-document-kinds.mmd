@@ -1,14 +1,14 @@
 classDiagram
   direction TB
   namespace smart_base__smart_base_document_kinds {
-    class smart_base_smart_base_document_kinds_folio_document_kind_v1_Source["Source"] {
-      <<json: DocumentKindSchema>>
+    class smart_base_smart_base_document_kinds_document_kind_1_0_0_Source["Source"] {
+      <<json: DocumentKindKind>>
       ref [1] string
       locator [0..1] string
       note [0..1] string
     }
-    class smart_base_smart_base_document_kinds_folio_document_kind_v1_Section["Section"] {
-      <<json: DocumentKindSchema>>
+    class smart_base_smart_base_document_kinds_document_kind_1_0_0_Section["Section"] {
+      <<json: DocumentKindKind>>
       id [1] string
       title [1] string
       required [1] boolean
@@ -17,9 +17,8 @@ classDiagram
       modelledBy [0..*] string[]
       sources [0..*] Source[]
     }
-    class smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1["folio-document-kind/v1"] {
-      <<json: DocumentKindSchema>>
-      $schema [1] 'folio-document-kind/v1'
+    class smart_base_smart_base_document_kinds_document_kind_1_0_0_document_kind_1_0_0["document-kind/1.0.0"] {
+      <<json: DocumentKindKind>>
       id [1] string
       title [1] string
       description [1] string
@@ -28,25 +27,25 @@ classDiagram
       sections [1..*] Section[]
       sources [1..*] Source[]
       generatedBy [0..1] string
+      $schema [1] string
     }
-    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member["Member"] {
-      <<json: DocumentKindCoverageSchema>>
+    class smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Member["Member"] {
+      <<json: DocumentKindCoverageKind>>
       key [1] string
       label [1] string
     }
-    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section["Section"] {
-      <<json: DocumentKindCoverageSchema>>
+    class smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Section["Section"] {
+      <<json: DocumentKindCoverageKind>>
       id [1] string
       members [0..*] Member[]
     }
-    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced["Unplaced"] {
-      <<json: DocumentKindCoverageSchema>>
+    class smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Unplaced["Unplaced"] {
+      <<json: DocumentKindCoverageKind>>
       group [1] string
       count [1] integer
     }
-    class smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1["folio-document-kind-coverage/v1"] {
-      <<json: DocumentKindCoverageSchema>>
-      $schema [1] 'folio-document-kind-coverage/v1'
+    class smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_document_kind_coverage_1_0_0["document-kind-coverage/1.0.0"] {
+      <<json: DocumentKindCoverageKind>>
       kind [1] string
       subject [1] string
       from [1] string
@@ -55,18 +54,19 @@ classDiagram
       sections [0..*] Section[]
       unplaced [0..*] Unplaced[]
       generatedBy [1] string
+      $schema [1] string
     }
   }
-  smart_base_smart_base_document_kinds_folio_document_kind_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
-  smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Section : sections
-  smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1 *-- "1..*" smart_base_smart_base_document_kinds_folio_document_kind_v1_Source : sources
-  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member : members
-  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section : sections
-  smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1 *-- "0..*" smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced : unplaced
-  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_Source" fa_uml_kind_document_kinds
-  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_Section" fa_uml_kind_document_kinds
-  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_v1_folio_document_kind_v1" fa_uml_kind_document_kinds
-  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Member" fa_uml_kind_document_kinds
-  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Section" fa_uml_kind_document_kinds
-  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_Unplaced" fa_uml_kind_document_kinds
-  cssClass "smart_base_smart_base_document_kinds_folio_document_kind_coverage_v1_folio_document_kind_coverage_v1" fa_uml_kind_document_kinds
+  smart_base_smart_base_document_kinds_document_kind_1_0_0_Section *-- "0..*" smart_base_smart_base_document_kinds_document_kind_1_0_0_Source : sources
+  smart_base_smart_base_document_kinds_document_kind_1_0_0_document_kind_1_0_0 *-- "1..*" smart_base_smart_base_document_kinds_document_kind_1_0_0_Section : sections
+  smart_base_smart_base_document_kinds_document_kind_1_0_0_document_kind_1_0_0 *-- "1..*" smart_base_smart_base_document_kinds_document_kind_1_0_0_Source : sources
+  smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Section *-- "0..*" smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Member : members
+  smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_document_kind_coverage_1_0_0 *-- "0..*" smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Section : sections
+  smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_document_kind_coverage_1_0_0 *-- "0..*" smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Unplaced : unplaced
+  cssClass "smart_base_smart_base_document_kinds_document_kind_1_0_0_Source" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_document_kind_1_0_0_Section" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_document_kind_1_0_0_document_kind_1_0_0" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Member" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Section" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_Unplaced" fa_uml_kind_document_kinds
+  cssClass "smart_base_smart_base_document_kinds_document_kind_coverage_1_0_0_document_kind_coverage_1_0_0" fa_uml_kind_document_kinds

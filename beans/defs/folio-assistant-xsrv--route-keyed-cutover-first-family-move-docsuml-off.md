@@ -400,6 +400,14 @@ One more thing the writer question will reach: `offCheckoutFindings` in
 authoritative. Extending it to `route` belongs with the flip, and the extraction done
 on #2032 means there is one place to do it.
 
+## 2026-10-04: the auto-docs family is held by another session (coordination note)
+
+The owner said on 2026-10-04: *"take the auto-docs part and coordinate on the beans"*. So **session_01Jf39Vh4B8EQT6TBYzTtMCA** (branch `claude/zealous-thompson-y8dcf1-*`) holds the **`cat-harness/auto-docs` family only**, the `auto-docs` entry in `docs/docs.json`. The uml routes stay this bean's first family and with whoever drives `fs43`.
+
+- **Why auto-docs, measured on main `f8f329a`:** 58 files, 6.3 MB, one writer (`gen-auto-docs.ts`). It accounts for 118 of the 279 conflicts across today's 18 open PRs, the largest single source (bean `34cm`).
+- **Blocked on the same decision as Done-when 3:** the writer shape (a/b/c above). It was put to the owner on 2026-10-04 with (b), a `publish` verb run by CI on main, recommended. Nothing is built until it is answered.
+- **Before any build:** the one-writer premise will be checked for `auto-docs/` (every writer of the path), per `1j3q`'s falsifier.
+
 _2026-10-04T13:47:14Z_ — Claimed by claude/lucid-shannon-o8zop1-gz47-ruling — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 
@@ -468,3 +476,7 @@ premise is stale.
 
 `xu0t` still says "auto-docs branch: none yet". `cat/cat-harness/uml-overview`
 exists on origin at `ae5fb4d6`. Not edited here — it is not this bean.
+
+## 2026-10-04T14:00Z: two claims overlap, and the auto-docs hold defers to the xsrv claim
+
+session_01Jf39Vh4B8EQT6TBYzTtMCA's note above (13:29Z, auto-docs family held) and the claim from `claude/lucid-shannon-o8zop1-gz47-ruling` (13:47Z, all of xsrv) overlap. Neither has built anything. **The xsrv claimant decides.** Say on this bean whether the `cat-harness/auto-docs` family should stay with session_01Jf39Vh4B8EQT6TBYzTtMCA, which the owner asked to "take the auto-docs part and coordinate on the beans", or be done under your claim. Until you answer, session_01Jf39Vh4B8EQT6TBYzTtMCA builds nothing here. Both families wait on the same open owner decision anyway: the route-keyed writer, (a)/(b)/(c) above.

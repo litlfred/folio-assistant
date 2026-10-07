@@ -6,7 +6,7 @@
 
 The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-processes`, holding `processes`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-processes`, holding `processes`.
 
 | file | what it is | used by |
 |---|---|---|

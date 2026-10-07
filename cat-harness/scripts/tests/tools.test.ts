@@ -4,20 +4,24 @@
  * Five Tool nodes were DESCRIBED across four skills and the harness analysis
  * before any existed. This is what makes the skill/Tool separation checkable
  * rather than asserted.
+ *
+ * The tests of this file that read the whole checkout (discovers skills across
+ * every instance in the checkout) live in `test/tools-checkout.test.ts` (bean
+ * `7zz1`): standing alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { tools } from "../../tools/discover.js";
 import { ToolDefinitionSchema, alternativesWithoutSelection, deriveAlternatives } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
-import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
+import { checkTools, danglingStorageTools, knownSkills, contractRequires } from "../check-tools.js";
 import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
-
 
 const BASE = "https://example.invalid/fa";
 
@@ -70,12 +74,6 @@ const STAGING_EXPORT = await buildExport({ baseUrl: STAGING_BASE });
 describe("tools", () => {
   test("there are tools to check — otherwise everything below is vacuous", () => {
     expect(tools().length).toBeGreaterThanOrEqual(4);
-  });
-
-  test("every satisfies names a skill that exists", () => {
-    // The constraint a schema cannot express: Zod can require `satisfies` to be
-    // non-empty, but it does not get to read the tree.
-    expect(CHECKED.danglingSatisfies).toEqual([]);
   });
 
   test("every satisfies edge agrees with its skill's own input contract", () => {
@@ -184,15 +182,6 @@ describe("tools", () => {
   test("the generated schemas carry an absolute $id", () => {
     expect(buildToolSchema({ baseUrl: BASE }).$id).toBe(`${BASE}/tool.schema.json`);
     expect(buildToolTypes({ baseUrl: BASE }).$id).toBe(`${BASE}/tool-types.schema.json`);
-  });
-
-  test("skill discovery is not a hardcoded list", () => {
-    // Four hardcoded corpus paths have been wrong in this repo already; this
-    // asserts the check sees the packages a list would have missed.
-    const s = knownSkills();
-    expect(s.has("smart-base-tools")).toBe(true); // smart-base/skills/content/authoring-who-smart-guidelines
-    expect(s.has("lean-formalization")).toBe(true); // schemas/skills/<name>/
-    expect(s.has("kg-export")).toBe(true); // skills/folio-core
   });
 
   test("skill discovery is the ONE definition, not a second scan", () => {
@@ -397,5 +386,27 @@ describe("the gates Tool — one node over a derived list", () => {
     }
     expect(gates?.selection?.when).toContain("INHERITED");
     expect(gates?.requires?.network).toBe(false);
+  });
+});
+
+describe("storage.tool names a declared Tool (bean j9cs)", () => {
+  test("the repository's own declarations name only declared Tools", () => {
+    expect(danglingStorageTools()).toEqual([]);
+  });
+
+  test("a store naming no declared Tool is reported, with where it was declared", () => {
+    const repo = mkdtempSync(join(tmpdir(), "storage-tool-"));
+    mkdirSync(join(repo, "inst"), { recursive: true });
+    writeFileSync(
+      join(repo, "inst", "inst.json"),
+      JSON.stringify({
+        name: "inst",
+        directories: [
+          { id: "site", path: "site/", graphTypologies: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "no-such-tool" } },
+          { id: "ok", path: "ok/", graphTypologies: ["basic-cdn-site"], storage: { branch: "gh-pages", keyedBy: "route", tool: "gh-pages" } },
+        ],
+      }),
+    );
+    expect(danglingStorageTools(repo)).toEqual([{ instance: "inst", directory: "site", tool: "no-such-tool" }]);
   });
 });

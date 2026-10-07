@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of cat-harness"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/agent-memory",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Agent memory assembler"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated."
+        }
+      ],
+      "skos:notation": "agent-memory",
+      "dcterms:source": "cat-harness/tools/index.ts#agent-memory",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/auto-docs-viewer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -191,6 +211,26 @@
       ],
       "skos:notation": "ci-health",
       "dcterms:source": "cat-harness/tools/index.ts#ci-health",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/compose-docs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Compose the site's documentation tree from its declared docs layers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235)."
+        }
+      ],
+      "skos:notation": "compose-docs",
+      "dcterms:source": "cat-harness/tools/index.ts#compose-docs",
       "skos:note": "candidate"
     },
     {
@@ -574,26 +614,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/glossary-build",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Glossary build"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change."
-        }
-      ],
-      "skos:notation": "glossary-build",
-      "dcterms:source": "cat-harness/tools/index.ts#glossary-build",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/headless-render-qc",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -814,26 +834,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/lean-cache",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Lake olean cache"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two."
-        }
-      ],
-      "skos:notation": "lean-cache",
-      "dcterms:source": "cat-harness/tools/index.ts#lean-cache",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/lean-coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1046,7 +1046,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR."
+          "@value": "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR."
         }
       ],
       "skos:notation": "merge-train",
@@ -1091,6 +1091,26 @@
       ],
       "skos:notation": "narrative-queue",
       "dcterms:source": "cat-harness/tools/index.ts#narrative-queue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/navbar-include",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the site sidebar's harness navbar include"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235)."
+        }
+      ],
+      "skos:notation": "navbar-include",
+      "dcterms:source": "cat-harness/tools/index.ts#navbar-include",
       "skos:note": "candidate"
     },
     {
@@ -1634,6 +1654,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/site-build-local",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the docs site locally"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill)."
+        }
+      ],
+      "skos:notation": "site-build-local",
+      "dcterms:source": "cat-harness/tools/index.ts#site-build-local",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/site-search-index",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1791,6 +1831,26 @@
       ],
       "skos:notation": "state-viewer",
       "dcterms:source": "cat-harness/tools/viewers.ts#state-viewer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/sub-kg-verify-clone",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Verify a separated repository from a fresh clone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory."
+        }
+      ],
+      "skos:notation": "sub-kg-verify-clone",
+      "dcterms:source": "cat-harness/tools/index.ts#sub-kg-verify-clone",
       "skos:note": "candidate"
     },
     {

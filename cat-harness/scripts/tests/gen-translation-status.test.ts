@@ -11,7 +11,11 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { countCatalogue, share, statusPage } from "../gen-translation-status.ts";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import { countCatalogue, otherInstances, share, statusPage } from "../gen-translation-status.ts";
 
 /** A minimal catalogue header — every real `.po` opens with one. */
 const HEADER = `# Some translation
@@ -205,5 +209,40 @@ describe("the date on the page is when the numbers CHANGED", () => {
   test("the SCOPE is on the page, so a number cannot be read as covering everything", () => {
     const html = statusPage({ locales, changedAt: "2026-01-05", scope: "cat-harness/translations" });
     expect(html).toContain("cat-harness/translations");
+  });
+});
+
+describe("another instance's catalogues are measured, in their own table — issue #2228", () => {
+  // who-iris's catalogues moved into its own declared directory on 2026-10-04
+  // and the page, which measured one directory, stopped counting them.
+  test("a sibling instance that declares translation-sources is found, and the handler itself is not", () => {
+    const repo = mkdtempSync(join(tmpdir(), "ts-inst-"));
+    const plant = (name: string, withDir: boolean): void => {
+      mkdirSync(join(repo, name, "translations", "fr"), { recursive: true });
+      writeFileSync(
+        join(repo, name, `${name}.json`),
+        JSON.stringify({ name, directories: withDir ? [{ id: "t", path: "translations/", graphTypologies: ["translation-sources"] }] : [] }),
+      );
+      writeFileSync(join(repo, name, "translations", "fr", "x.po"), `${HEADER}\nmsgid "a"\nmsgstr "b"\n`);
+    };
+    plant("handler", true);
+    plant("inst", true);
+    plant("undeclared", false);
+    const found = otherInstances(repo, join(repo, "handler"));
+    expect(found.map((i) => i.instance)).toEqual(["inst"]);
+    expect(found[0]!.locales[0]).toMatchObject({ locale: "fr", catalogues: 1, entries: 1, translated: 1 });
+  });
+
+  test("each instance is its own table, with ids that do not collide with the first", () => {
+    const loc = { locale: "fr", templates: 1, catalogues: 1, entries: 2, translated: 2, fuzzy: 0, untranslated: 0, unreadable: [] };
+    const html = statusPage({
+      locales: [loc],
+      changedAt: "2026-10-05",
+      scope: "cat-harness/translations",
+      instances: [{ instance: "who-iris", scope: "who-iris/translations", locales: [loc] }],
+    });
+    expect(html).toContain(`id="locale-fr"`);
+    expect(html).toContain(`id="who-iris-locale-fr"`);
+    expect(html).toContain("<code>who-iris/translations</code>");
   });
 });

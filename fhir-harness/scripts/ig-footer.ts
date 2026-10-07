@@ -3,8 +3,21 @@
  * OWN package — never typed in (#1901, owner 2026-10-02: *"The values should
  * come from the IG's own metadata … and must not be hard-coded"*).
  *
- * `gen-ig-pages.ts` writes the result once per IG as `assets/ig-footer.json`,
- * and `templates/ig-pages/ig-footer.js` draws it on every page.
+ * `gen-ig-pages.ts` writes the result once per IG as `assets/ig-footer.json`.
+ *
+ * ## One footer per site, drawn once
+ *
+ * In an IG site (`igSite`), EVERY page's footer — the IG's own pages and its
+ * artefact pages alike — is drawn by one Liquid include,
+ * `templates/ig-site/ig-footer.liquid`, from one object, `igSiteFooter`'s
+ * result in `site.data.fhir.footer`. That object lays the package's facts
+ * (the JSON above) over the IG source's (`sushiFooterData`) and decides the
+ * "Links:" row once, against the pages the site holds. Until the artefact
+ * pages joined it they drew a second footer of their own from the package
+ * alone, which had no © year and sent "Table of Contents" to the site root.
+ *
+ * `templates/ig-pages/ig-footer.js` still draws the footer where there is no
+ * IG site and so no IG source: artefact pages composed into another site.
  *
  * ## Where each value comes from, in order
  *
@@ -18,8 +31,11 @@
  * | license | `ImplementationGuide.license` | `package.json` `license` |
  *
  * A value no source carries is ABSENT from the result, and the footer leaves
- * that clause out. The Publisher's "© 2023+" year is one such: it comes from
- * `sushi-config.yaml`'s `copyrightYear`, which the package does not carry.
+ * that clause out. The Publisher's "© 2023+" year is one such for a page
+ * built from the package alone: it comes from `sushi-config.yaml`'s
+ * `copyrightYear`, which the package does not carry. A page built WITH the
+ * IG's source — every page of an IG site (`build-ig-site.ts`) — reads it from
+ * there (`sushiFooterData`), the package's values still winning.
  *
  * @module fhir-harness/scripts/ig-footer
  */
@@ -36,7 +52,17 @@ export interface IgFooterData {
   generated?: string;
   license?: string;
   licenseUrl?: string;
+  /** `sushi-config.yaml` `copyrightYear`, e.g. `2023+` — only where the IG's source is read. */
+  copyrightYear?: string;
 }
+
+/**
+ * The class that scopes the mirrored chrome's custom properties
+ * (`assets/ig-chrome.css`), the Publisher's `--footer-*` colours among them.
+ * One name for both writers of the footer: the artefact pages
+ * (`gen-ig-pages.ts`) and the IG site's own pages (`build-ig-site.ts`).
+ */
+export const IG_CHROME_SCOPE = "st-ig";
 
 type Json = Record<string, unknown>;
 const str = (v: unknown): string | undefined => (typeof v === "string" && v.trim() !== "" ? v : undefined);
@@ -104,4 +130,72 @@ export function igFooterData(
   };
   // Absent, not `undefined`: the JSON written from this says only what is known.
   return Object.fromEntries(Object.entries(out).filter(([, v]) => v !== undefined)) as IgFooterData;
+}
+
+/**
+ * The same facts from the IG's SOURCE, `sushi-config.yaml` — the fallback for
+ * an IG site page when the package's own values (`assets/ig-footer.json`) are
+ * not held, and the only source of `copyrightYear`. SUSHI's own rules: a
+ * `publisher` is a string or `{ name, url }`, `packageId` defaults to `id`,
+ * `fhirVersion` is a string or a list.
+ */
+export function sushiFooterData(sushi: Json): IgFooterData {
+  const pub = sushi.publisher;
+  const pubObj = pub && typeof pub === "object" && !Array.isArray(pub) ? (pub as Json) : undefined;
+  const fhirVersion = str(sushi.fhirVersion) ?? str(first(sushi.fhirVersion));
+  const license = str(sushi.license);
+  const year = sushi.copyrightYear;
+  const out: IgFooterData = {
+    publisher: str(pub) ?? str(pubObj?.name),
+    publisherUrl: str(pubObj?.url),
+    packageId: str(sushi.packageId) ?? str(sushi.id),
+    version: str(sushi.version),
+    fhirVersion,
+    fhirUrl: fhirSpecUrl(fhirVersion),
+    license,
+    licenseUrl: licenseUrl(license),
+    copyrightYear: typeof year === "number" ? String(year) : str(year),
+  };
+  return Object.fromEntries(Object.entries(out).filter(([, v]) => v !== undefined)) as IgFooterData;
+}
+
+/** One link of the footer's "Links:" row. `external` marks a link off this site. */
+export interface IgFooterLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+/**
+ * What an IG site page's footer template reads (`site.data.fhir.footer`):
+ * the facts, and the "Links:" row already decided. The Publisher's row is
+ * Table of Contents | QA Report | Version History | License; a link is drawn
+ * only where its target is HELD (#1901, owner 2026-10-02: no link to a page
+ * that is not there), so the template never decides what exists.
+ */
+export interface IgSiteFooter extends IgFooterData {
+  links: IgFooterLink[];
+  /** The chrome scope class, when the site holds the mirrored chrome; the band then wears the Publisher's colours. */
+  scope?: string;
+  /** Stylesheets the footer needs, relative to the IG site's root. */
+  stylesheets: string[];
+}
+
+/**
+ * @param facts  the package's values first, the source's after (`{ ...sushi, ...pkg }`)
+ * @param held   whether this IG site serves a page, by its root-relative href
+ */
+export function igSiteFooter(
+  facts: IgFooterData,
+  held: (href: string) => boolean,
+  styling: { scope?: string; stylesheets?: string[] } = {},
+): IgSiteFooter {
+  const links: IgFooterLink[] = [];
+  // The Publisher's own pages, in its order. `qa.html` and `history.html` are
+  // Publisher outputs this build does not write; they appear once it does.
+  for (const [label, href] of [["Table of Contents", "toc.html"], ["QA Report", "qa.html"], ["Version History", "history.html"]] as const) {
+    if (held(href)) links.push({ label, href });
+  }
+  if (facts.licenseUrl) links.push({ label: "License", href: facts.licenseUrl, external: true });
+  return { ...facts, links, ...(styling.scope ? { scope: styling.scope } : {}), stylesheets: styling.stylesheets ?? [] };
 }

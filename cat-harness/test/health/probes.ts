@@ -883,16 +883,16 @@ export interface GatherOptions {
   now?: Date;
   /** Override the remote's default branch, which is otherwise discovered. */
   defaultBranch?: string;
-  /** `special-branches.json` to read budgets from. Tests point it at a fixture. */
+  /** `branch-budgets.json` to read budgets from. Tests point it at a fixture. */
   specialBranchesPath?: string;
 }
 
 /** The one declaration of the special branches, beside the scripts that use it. */
-const SPECIAL_BRANCHES_JSON = resolve(import.meta.dir, "..", "..", "scripts", "special-branches.json");
+const SPECIAL_BRANCHES_JSON = resolve(import.meta.dir, "branch-budgets.json");
 
 // ── Special branches ────────────────────────────────────────────
 
-/** A `special-branches.json` row as this probe reads it: names, shape, budget. */
+/** A `branch-budgets.json` row as this probe reads it: names, shape, budget. */
 export interface SpecialBranchDecl {
   id: string;
   shape: "branch" | "family";
@@ -901,7 +901,12 @@ export interface SpecialBranchDecl {
   budget?: SpecialBranchBudget;
 }
 
-/** `special-branches.json` — the one declaration of the special branches and their budgets. */
+/**
+ * `branch-budgets.json` — the size budgets this health check owns (owner,
+ * 2026-10-05: special-branches.json is gone, and the budgets live with the
+ * check, choice 3 of 3). The names in it are only what is measured; a
+ * branch's name is its declaring directory's `storage`.
+ */
 export function readSpecialBranches(path: string): SpecialBranchDecl[] {
   const raw = JSON.parse(readFileSync(path, "utf-8")) as { branches?: SpecialBranchDecl[] };
   return (raw.branches ?? []).map((b) => ({

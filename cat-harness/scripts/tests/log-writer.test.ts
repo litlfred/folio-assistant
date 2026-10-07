@@ -5,12 +5,16 @@
  *
  * Bean `folio-assistant-7uff`.
  *
+ * Which shipped processes declare capture is pinned beside the diagrams, in
+ * folio-assistant-core's and folio-assistant-sci's
+ * `scripts/tests/log-writer.test.ts` (bean `ho66`).
+ *
  * @module scripts/tests/log-writer.test
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { basename, join } from "node:path";
+import { join } from "node:path";
 
 import {
   LOG_REF_KINDS,
@@ -19,8 +23,6 @@ import {
   LogReferenceSchema,
   logDirs,
 } from "../../schemas/log-entry.ts";
-import { workflowFile, workflowFiles } from "../known-skills.js";
-import { loadProcessModel } from "../../src/workflow/process-model.ts";
 import { describeCapture, writeLogEntry } from "../../src/logging/log-writer.ts";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -244,64 +246,4 @@ describe("command execution", () => {
  * `<folio:log capture>` on a process, and the property the call-activity
  * route would have broken.
  */
-describe("the process says whether running it is logged", () => {
-  // Diagrams by NAME through the declared `processes` graphs (placement PR3, bean `63wl`).
-  const diagram = (name: string): string => workflowFile(join(import.meta.dir, "../.."), name);
 
-  test("the three processes the owner named declare capture", async () => {
-    // Located through `workflowFiles`, not composed from a literal
-    // directory. `crdm-requirements.bpmn` moved to its own topical subgraph
-    // on 2026-09-20 and a composed path went ENOENT — which this test read
-    // as the process failing to declare capture, the wrong finding
-    // entirely. The declaration says where diagrams live; asking it is the
-    // difference between "this moved" and "this is broken".
-    const byStem = new Map(
-      workflowFiles(join(import.meta.dir, "../..")).map((f) => [basename(f, ".bpmn"), f]),
-    );
-    for (const stem of ["crdm-requirements", "editing-hci-validation", "content-lifecycle"]) {
-      const file = byStem.get(stem);
-      // Asserted rather than defaulted: a missing diagram must not read as a
-      // missing declaration.
-      expect(`${stem}: ${file ? "found" : "NOT FOUND"}`).toBe(`${stem}: found`);
-      const m = await loadProcessModel(file!);
-      expect(m.logCapture, `${stem} does not declare folio:log`).toBe("on");
-    }
-  });
-
-  test("an unmarked process leaves capture UNDETERMINED, not off", async () => {
-    // The whole reason the field is three-valued. `undefined` here resolves
-    // to `unknown` in the writer — nobody decided — which is a different
-    // claim from a process that declared `off`.
-    const m = await loadProcessModel(diagram("authoring-a-paper.bpmn"));
-    expect(m.logCapture).toBeUndefined();
-    expect(writeLogEntry(instance(), { event: "message", summary: "x" }, m.logCapture).capture)
-      .toBe("unknown");
-  });
-
-  test("a capture value the engine cannot honour refuses to load", async () => {
-    // Same discipline as `folio:bean op`: a diagram that asks for a mode the
-    // engine does not have must not load and quietly log nothing. That is
-    // worse here than elsewhere, because the missing artefact IS the record.
-    const root = mkdtempSync(join(tmpdir(), "log-bpmn-"));
-    const good = readFileSync(diagram("content-lifecycle.bpmn"), "utf-8");
-    const bad = good.replace('<cat-harness.processes:log capture="on" />', '<cat-harness.processes:log capture="sometimes" />');
-    expect(bad).not.toBe(good);
-    const p = join(root, "content-lifecycle.bpmn");
-    writeFileSync(p, bad);
-    await expect(loadProcessModel(p)).rejects.toThrow(/capture="sometimes" is not implemented/);
-  });
-
-  test("marking a strict process did NOT change what it enforces", async () => {
-    // The falsification check for taking the extension route over a call
-    // activity. A call activity is a NODE in the control flow, so adding one
-    // to a strict process would have inserted a step that must be completed
-    // in order — changing what the diagram says about work nobody asked to
-    // reorder. An extension element adds no node and no flow.
-    for (const stem of ["editing-hci-validation", "content-lifecycle"]) {
-      const m = await loadProcessModel(diagram(`${stem}.bpmn`));
-      expect(m.enforcement).toBe("strict");
-      // No node anywhere in the process mentions the log process.
-      for (const n of m.nodes.values()) expect(n.calledElement).not.toBe("Process_ActivityLog");
-    }
-  });
-});

@@ -3,6 +3,8 @@ title: "CBOR Web Token (CWT) Payload (Common) — examples"
 description: "Logical Model: CWTPayload - Examples."
 nav_exclude: true
 tab_page: {"tabs":[{"label":"Content","href":"StructureDefinition-CWTPayload.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-CWTPayload-mappings.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.xml","active":false},{"label":"JSON","href":"StructureDefinition-CWTPayload.profile.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-CWTPayload.schema.json.html","active":false}],"heading":"Logical Model: CWTPayload - Examples","status":"Active as of 2026-10-01","sections":[{"text":"No examples are currently available for the Profile."}]}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -32,6 +34,3 @@ carries no date) and `sections[]` (`heading` optional, `text`), all markdown-esc
 {% endif %}{{ s.text }}
 
 {% endfor %}
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

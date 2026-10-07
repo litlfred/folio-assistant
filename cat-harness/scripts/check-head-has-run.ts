@@ -362,12 +362,54 @@ export function mergeStateForHead(
     // one read cannot tell the two apart.
     git(["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", "origin", merge]);
     const builtFor = git(["rev-parse", `${merge}^2`]).trim();
-    return builtFor === sha ? "mergeable" : "unknown";
+    if (builtFor !== sha) return "unknown";
+    return mergeStateAgainstCurrentBase(git, sha, git(["rev-parse", `${merge}^1`]).trim());
   } catch {
     // The head lookup succeeded and this one did not, so the difference is the
     // probe rather than the PR. Never `conflicted` on a failed read — that is
     // the confident wrong answer this file exists to prevent.
     return "unknown";
+  }
+}
+
+/**
+ * A merge ref built for THIS head is still only as current as its BASE.
+ *
+ * The check above compares the merge commit's SECOND parent with the head. Its
+ * FIRST parent is the base tip the forge merged against, and the forge does not
+ * rebuild the ref when the base moves on and the head now conflicts: it keeps
+ * the last one that merged. Measured 2026-10-06 (bean `rwwl`):
+ * `refs/pull/2197/merge` had `^1` = 9922966 (an old `main`) and `^2` = the head,
+ * `main` was 1b17452, `git merge-tree` against it exited 1, and REST said
+ * `dirty`. Reading `^2` alone called that `mergeable`, and `ci:watch --pr 2197`
+ * printed PASS, exit 0, on a PR that could not merge. bean `52cz` closed
+ * "new head, stale ref"; this is "same head, base moved".
+ *
+ * So the first parent must be the base's tip, or the merge is re-decided here
+ * against the tip with `git merge-tree`. The base is established only for the
+ * default branch, where `^1` is one of its ancestors. A stacked PR's base is
+ * not derivable from git alone, so that case is `unknown` rather than a guess,
+ * as is any failed read.
+ */
+function mergeStateAgainstCurrentBase(git: GitRunner, sha: string, builtOn: string): MergeState {
+  const symref = git(["ls-remote", "--symref", "origin", "HEAD"]);
+  const branch = /^ref:\s+refs\/heads\/(\S+)\s+HEAD/m.exec(symref)?.[1];
+  const tip = symref.split("\n").find((l) => /\sHEAD$/.test(l) && !l.startsWith("ref:"))?.split(/\s+/)[0];
+  if (branch === undefined || tip === undefined || tip === "") return "unknown";
+  if (builtOn === tip) return "mergeable";
+  git(["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", "origin", tip]);
+  try {
+    git(["merge-base", "--is-ancestor", builtOn, tip]);
+  } catch {
+    // Not on the default branch (a stacked PR), or history too shallow to say.
+    return "unknown";
+  }
+  try {
+    git(["merge-tree", "--write-tree", "--name-only", tip, sha]);
+    return "mergeable";
+  } catch (e) {
+    // `merge-tree --write-tree` exits 1 for a conflicted merge and >1 for an error.
+    return (e as { status?: number }).status === 1 ? "conflicted" : "unknown";
   }
 }
 

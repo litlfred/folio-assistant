@@ -106,6 +106,17 @@ export const GIT_LIST_MAX_BUFFER = 64 * 1024 * 1024;
  */
 export function gitCorpus(dir: string, pathspec: readonly string[] = []): string[] | undefined {
   if (!existsSync(dir)) return undefined;
+  // A directory git IGNORES as a whole has no git corpus by design: it is the
+  // working copy of a graph whose record is kept elsewhere — the `qa` results,
+  // stored on the `qa-reports` branch and `.gitignore`d since bean `5hox`.
+  // `--exclude-standard` lists nothing there, and every per-directory reader
+  // then reported a computed tree of 1,285 files as empty (bean `72a8`,
+  // measured 2026-10-04: `check:kind-validators` said EXAMINED NOTHING and the
+  // UML overview dropped the qa schemas). For such a directory the disk IS the
+  // corpus, read with this module's own exclusions: no dependency tree, no
+  // dot-directory.
+  if (ignoredWholesale(dir)) return diskCorpus(dir, pathspec);
+  // input-site: tree #18f05ac2 — ls-files --cached --others --exclude-standard: the index and the untracked files
   const r = spawnSync(
     "git",
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspec],
@@ -146,8 +157,41 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
   return own;
 }
 
+/** Is `dir` itself ignored by git — the directory, not some file inside it? */
+function ignoredWholesale(dir: string): boolean {
+  // input-site: tree #c974d831 — check-ignore: the tracked .gitignore files (and the user's core.excludesFile, which the tree digest's own listing obeys too)
+  const r = spawnSync("git", ["check-ignore", "-q", `${resolve(dir)}${sep}`], { cwd: dir, encoding: "utf-8" });
+  return r.status === 0;
+}
+
+/** Every file under `dir` matching `pathspec` (bare globs match the file name), skipping `node_modules` and dot-entries. */
+function diskCorpus(dir: string, pathspec: readonly string[]): string[] {
+  const globs = pathspec.map((p) => new Glob(p));
+  const out: string[] = [];
+  const walk = (d: string): void => {
+    let entries: import("node:fs").Dirent[];
+    try {
+      entries = readdirSync(d, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      if (e.name === "node_modules" || e.name.startsWith(".")) continue;
+      const abs = join(d, e.name);
+      if (e.isDirectory()) walk(abs);
+      else if (e.isFile()) {
+        const rel = relative(dir, abs);
+        if (globs.length === 0 || globs.some((g) => g.match(rel.includes(sep) && !pathspec.some((p) => p.includes("/")) ? e.name : rel))) out.push(abs);
+      }
+    }
+  };
+  walk(dir);
+  return out.sort();
+}
+
 /** The submodules whose gitlinks sit under `dir`, relative to it (mode 160000). */
 function submodulesUnder(dir: string): string[] {
+  // input-site: tree #78f2d62d — ls-files --stage: the index
   const r = spawnSync("git", ["ls-files", "-z", "--stage"], { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER });
   if (r.error !== undefined || r.status !== 0) return [];
   return r.stdout
@@ -182,6 +226,7 @@ function submodulePathspec(s: string, pathspec: readonly string[]): string[] | u
  */
 export function inWorkTree(dir: string): boolean {
   if (!existsSync(dir)) return false;
+  // input-site: tree #84077f0d — rev-parse --is-inside-work-tree: a fact about the checkout
   const r = spawnSync("git", ["rev-parse", "--is-inside-work-tree"], {
     cwd: dir,
     encoding: "utf-8",

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-a4of
 title: 'S1 bookkeeping truth: close merged beans, reconcile fnx4 boxes, fold w2gr 3b into 70lx'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-01T08:14:33Z
-updated_at: 2026-10-03T16:27:08Z
+updated_at: 2026-10-06T19:30:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -13,7 +13,7 @@ G2+G3 of the arc plan.
 
 ## Done when
 - [x] y5si, ybp4 completed with PR evidence (#1599, #1687)
-- [ ] ejye, ybwt, 7dek completed (#1758, #1760)
+- [x] ejye, 7dek completed (#1758, #1760); ~~ybwt~~ carried on its own bean, see the 2026-10-06 summary. Its one open box is code work, not bookkeeping
 - [x] fnx4 boxes ticked for slices merged in #1721
 - [x] w2gr step 3b list recorded on 70lx so the move happens once
 
@@ -68,3 +68,13 @@ uoob, wczm, xxku.
 This bean's own box — "ejye, ybwt, 7dek completed (#1758, #1760)" — is class 1 in
 form but names three BEANS as well as two PRs, so it needs their state, not just
 the PRs'. Both PRs are merged. Left open deliberately.
+
+## Summary of Changes
+
+Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3, which took the bean: it was `in-progress` with no holder recorded and no open PR. Owner ruling 2026-10-06: "do all the bookkeeping 1-3". PR #2317.
+
+- **`ejye` → completed.** Both falsifiers pass as pinned tests on main, and the whole gate set is green on #2317 head `39e0c3e`.
+- **`7dek` → completed.** `render:bpmn:check`, `check:tools` and `skill:register:check` exit 0, and `xies` now names `Process_RenderKgToCdn` as its gate-4 step.
+- **`ybwt`: NOT closed, and the box is amended rather than ticked as written.** Its one open box ("no cat-harness file names a moved skill … BPMN refs → PR3/PR6") is substantive code work, not bookkeeping. Its 2026-10-02 note measured 32 harness-BPMN skill refs that cat-harness cannot reach: 29 belong to document-intake (PR6, bean `apcg`) and 3 to ig-ast-delta. That work stays on `ybwt`, blocked by `apcg`. Ticking "ybwt completed" would be exactly the false bookkeeping this bean exists to remove, so the box now says what was done and where the rest went.
+
+Beyond the three named here, this PR's sweep closed on re-run evidence `ga6u` (S3), `0mf0` (S2, with its PR-latency measurement), `58ro`, `z9hh`, `d4m4`, `nf2z`, `tlj9`, `k9mv`, `lvk9`, `zacz`, `4tts`, `a8wy`, `rjug` and `z6xd`. It also listed 108 stale in-progress claims for the owner rather than reassigning them.

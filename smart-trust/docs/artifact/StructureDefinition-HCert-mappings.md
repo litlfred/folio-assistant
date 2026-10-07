@@ -3,6 +3,8 @@ title: "Health Certificate — mappings"
 description: "Logical Model: HCert - Mappings."
 nav_exclude: true
 mappings: {"tabs":[{"label":"Content","href":"StructureDefinition-HCert.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-HCert-mappings.html","active":true},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.xml","active":false},{"label":"JSON","href":"StructureDefinition-HCert.profile.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-HCert.schema.json.html","active":false}],"heading":"Logical Model: HCert - Mappings","status":"Active as of 2026-10-01","intro":"Mappings for the HCert logical model.","inIg":[],"toOther":[],"other":[{"name":"RIM Mapping","uri":"http://hl7.org/v3","rows":[{"label":"HCert","depth":0,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html#HCert","title":"Health Certificate","value":"n/a"},{"label":"1","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html#HCert.1","title":"HCERT EU DCC","value":""},{"label":"3","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html#HCert.3","title":"Vaccination Core Data Set claim","value":""},{"label":"4","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html#HCert.4","title":"Test Result Core Data Set claim","value":""},{"label":"5","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html#HCert.5","title":"VHL","value":""},{"label":"-6","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html#HCert.-6","title":"DVCMin","value":""},{"label":"-7","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-HCert-definitions.html#HCert.-7","title":"Medication Treatment Line Minimal (Proposed)","value":""}]}],"legend":"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -45,6 +47,3 @@ values are markdown-escaped by the generator; an empty section prints the Publis
 {% for r in m.rows %}| [{{ r.label }}]({{ r.href }}) | {{ r.value }} |
 {% endfor %}{% endfor %}
 [Documentation for this format]({{ page.mappings.legend }})
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

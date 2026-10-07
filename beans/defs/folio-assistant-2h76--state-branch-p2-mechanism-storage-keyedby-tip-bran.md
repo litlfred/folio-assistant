@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2h76
 title: 'STATE BRANCH P2: mechanism — storage keyedBy tip, branch-store splice-write, seed the orphan ''state'' branch, session-start mount at state/'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T10:58:10Z
-updated_at: 2026-10-03T08:11:12Z
+updated_at: 2026-10-06T06:26:35Z
 parent: folio-assistant-fs43
 ---
 
@@ -102,3 +102,10 @@ As built (`cat-harness/scripts/branch-store.ts`, tests `branch-mount.test.ts`, 1
 - `push` honours the checkout's ignore rules for new files (fsh-guts/logs/ is never pushed), but not a rule that ignores the whole mount root;
 - exit codes: mount refused 5; push conflict or refused 5, failed 6.
 Mutation-checked: removing `expect`, the ignore filter or the byte-safety each turns a named test red.
+
+
+## Summary of Changes
+
+**Closed on evidence, 2026-10-06** (re-measured on main at 2fdbb5109a by session_01QSd18GZBc9NJNMy6GV9v7D, not quoted from earlier notes). Status history: never completed before, so not an owner reopen; no holder.
+
+`keyedBy: tip` is in the shared enum; branch-store retries over a moved tip and carries generic `mount --id`/`push --id` (#1957); state-store/mount/push on main (#1982), state-mount wired into the session-start sweep. branch-mount, branch-store, state-store and state-push tests pass, covering the concurrent same-bean edit with no lost write and the same-file conflict. The seeded `state` branch is retired, superseded by per-graph branches per the 2026-10-03 owner ruling recorded here.

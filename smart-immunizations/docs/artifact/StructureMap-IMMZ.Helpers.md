@@ -2,6 +2,10 @@
 title: "IMMZ.Helpers — WHO SMART Immunizations artefact"
 description: "StructureMap/IMMZ.Helpers in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "StructureMap-IMMZ.D5.QRToLM.html"
+ig_next: "ValueSet-IMMZ.C.DE5.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +41,3 @@ Immunization - Transform QuestionnaireResponse to Logical Model Helper groups
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
 200 of 748 carry one.
-
-<footer id="ig-footer" data-prev="StructureMap-IMMZ.D5.QRToLM.html" data-next="ValueSet-IMMZ.C.DE5.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

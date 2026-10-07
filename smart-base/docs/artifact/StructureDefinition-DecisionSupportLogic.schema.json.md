@@ -3,6 +3,8 @@ title: "Decision-Support Logic (DAK) — JSON Schema"
 description: "The JSON Schema sidecar of StructureDefinition/DecisionSupportLogic, from the IG's DAK API."
 nav_exclude: true
 ig_api: {"label":"JSON Schema","file":"StructureDefinition-DecisionSupportLogic.schema.json","src":"../fhir-artifact-index/dak/StructureDefinition-DecisionSupportLogic.schema.json","artifact":{"title":"Decision-Support Logic (DAK)","page":"StructureDefinition-DecisionSupportLogic.html"},"tabs":[{"label":"Narrative Content","href":"StructureDefinition-DecisionSupportLogic.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-DecisionSupportLogic.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-DecisionSupportLogic.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/StructureDefinition-DecisionSupportLogic.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-DecisionSupportLogic.schema.json.html","active":true}],"script":"../assets/ig-api-view.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -34,6 +36,3 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 <pre><code class="language-json" data-ig-api-src="{{ page.ig_api.src }}">Loading…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.ig_api.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.ig_api.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

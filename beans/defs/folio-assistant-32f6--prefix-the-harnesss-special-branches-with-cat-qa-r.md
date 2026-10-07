@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-02T18:07:50Z
-updated_at: 2026-10-03T01:20:21Z
+updated_at: 2026-10-06T06:26:49Z
 parent: folio-assistant-fs43
 ---
 
@@ -147,3 +147,7 @@ so they reach the session that owns the work.
   and `qa-store.ts` does not exist on main. An earlier turn of this session called the
   post-rename third-name path urgent on the strength of a writer that is not there. It is
   armed but unreachable.
+
+
+## Re-measured 2026-10-06 on main at 2fdbb5109a — not closable yet
+`cat/cat-harness/qa-reports` exists and the legacy names (`qa-reports`, `state`, `lake-cache/*`, `fhir-ast/*`) are gone from origin. **Item 5 cannot be verified:** the legacy `qa-reports` returns 404 with no redirect, so nothing shows the rename went through the rename API; no on-main record of how it was done. The lake-cache family in litlfred/qou was not checked (bean 9io2).

@@ -38,7 +38,6 @@ import { join, relative } from "node:path";
 import { loadProcessModel, isActivity } from "../../cat-harness/src/workflow/process-model.js";
 import { knownSkills } from "../../cat-harness/scripts/known-skills.js";
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
-import { resolveImplementingPath } from "../../cat-harness/schemas/harness-config.js";
 
 interface Dangling { file: string; node: string; ref: string }
 interface Coverage { file: string; covered: number; total: number; uncovered: string[] }
@@ -282,11 +281,13 @@ if (adjTotal > 0) {
  * re-render skipped it silently and a skipped diagram is indistinguishable
  * from a diagram that needed no work.
  */
-const { CONTENT_TYPE_TRANSLATIONS } = await import("../../cat-harness/schemas/translation-tools.js");
+const { CONTENT_TYPE_TRANSLATIONS, resolveTranslationPath } = await import("../../cat-harness/schemas/translation-tools.js");
 const missingDeclared: string[] = [];
 for (const ct of CONTENT_TYPE_TRANSLATIONS) {
   for (const rel of ct.bpmnDiagrams ?? []) {
-    if (!existsSync(join(INSTANCE_ROOT, rel))) missingDeclared.push(`${ct.contentType} → ${rel}`);
+    // Resolved from the instance that DECLARES the profile, then down its
+    // `needs` chain (bean `0r7u`): the profiles left cat-harness for their owners.
+    if (resolveTranslationPath(ct, rel) === undefined) missingDeclared.push(`${ct.contentType} → ${rel}`);
   }
 }
 // Same class again: a format may declare the modules that implement its
@@ -295,7 +296,7 @@ for (const ct of CONTENT_TYPE_TRANSLATIONS) {
 for (const ct of CONTENT_TYPE_TRANSLATIONS) {
   for (const f of ct.formats) {
     for (const rel of [f.extractModule, f.injectModule]) {
-      if (rel && resolveImplementingPath(INSTANCE_ROOT, rel).state !== "found") {
+      if (rel && resolveTranslationPath(ct, rel) === undefined) {
         missingDeclared.push(`${ct.contentType}/${f.id} → ${rel}`);
       }
     }

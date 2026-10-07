@@ -11,55 +11,15 @@
  * class.
  *
  * @module scripts/tests/skill-doc-source-links.test
+ *
+ * The tests of this file that read the whole checkout (resolves skill sources
+ * across every instance in the checkout) live in
+ * `test/skill-doc-source-links-checkout.test.ts` (bean `7zz1`): standing
+ * alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
 
-import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
 import { repoRelative } from "../gen-skill-docs.ts";
-
-const INSTANCE_ROOT = resolve(import.meta.dir, "../..");
-const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
-const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "skill-instructions");
-const LINK = /https:\/\/github\.com\/litlfred\/folio-assistant\/(?:blob|edit)\/main\/([^)\s]+)/g;
-
-/** The pages the generator PUBLISHES — the ones its index links. */
-function publishedPages(): Set<string> {
-  const index = readFileSync(join(OUT_DIR, "index.md"), "utf8");
-  return new Set([...index.matchAll(/\]\(([^)/]+)\.html\)/g)].map((m) => `${m[1]}.md`));
-}
-
-describe("generated skill pages link a source that exists", () => {
-  const published = publishedPages();
-  const pages = readdirSync(OUT_DIR).filter((f) => f.endsWith(".md") && f !== "index.md");
-
-  test("the corpus is not empty — the guard every assertion below needs", () => {
-    expect(published.size).toBeGreaterThan(100);
-  });
-
-  test("every source and edit link on a published page resolves", () => {
-    const dead: string[] = [];
-    let checked = 0;
-    for (const page of pages) {
-      if (!published.has(page)) continue;
-      const body = readFileSync(join(OUT_DIR, page), "utf8");
-      for (const m of body.matchAll(LINK)) {
-        checked++;
-        const path = decodeURIComponent(m[1]);
-        if (path.split("/").includes("..") || !existsSync(join(REPO_ROOT, path))) dead.push(`${page} -> ${path}`);
-      }
-    }
-    // Named, not counted: a count says the class exists, a name says where.
-    expect(dead).toEqual([]);
-    expect(checked).toBeGreaterThan(100);
-  });
-
-  // Pages in the directory that the index does NOT link are orphans — output
-  // the generator no longer writes. They are outside this test on purpose:
-  // removing one is a deletion, and a deletion is asked for
-  // (`deletion-requires-confirmation`), not made green by a test.
-});
 
 describe("repoRelative", () => {
   test("a directory inside the checkout is named repository-relative", () => {

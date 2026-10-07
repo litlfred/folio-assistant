@@ -129,7 +129,15 @@ export function nodeKind<const I extends string, const P extends readonly NodeKi
   versionedId: I,
   parents: P,
   ownFields: O,
-  opts: { overrides?: readonly (keyof O & string)[] } = {},
+  opts: {
+    overrides?: readonly (keyof O & string)[];
+    /**
+     * A check across fields that no field's own schema can make (a section id
+     * that appears twice). Applied to the composed schema, so a validator that
+     * unwraps the kind into its schema runs it too.
+     */
+    refine?: (value: z.infer<z.ZodObject<Composed<P, OwnOf<I, O>>>>, ctx: z.RefinementCtx) => void;
+  } = {},
 ): NodeKind<Composed<P, OwnOf<I, O>>> {
   const parsed = parseSchemaTag(versionedId);
   const id = parsed ? parsed.name : versionedId;
@@ -206,7 +214,9 @@ export function nodeKind<const I extends string, const P extends readonly NodeKi
     own,
     overrides: [...declaredOverrides],
     order: order.map((s) => s.id),
-    schema: z.object(shape) as unknown as z.ZodObject<Composed<P, OwnOf<I, O>>>,
+    schema: (opts.refine
+      ? z.object(shape).superRefine(opts.refine as (v: unknown, ctx: z.RefinementCtx) => void)
+      : z.object(shape)) as unknown as z.ZodObject<Composed<P, OwnOf<I, O>>>,
   };
 }
 

@@ -2,6 +2,10 @@
 title: "IMMZD18SRabies ValueSet for Decision Table — WHO SMART Immunizations artefact"
 description: "ValueSet/IMMZD18SRabiesVS in the WHO SMART Immunizations IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+ig_footer: true
+ig_root: "../"
+ig_prev: "ValueSet-IMMZD18SPolioSequentialIPVbOPVVS.html"
+ig_next: "ValueSet-IMMZD18SRotavirusVS.html"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -39,10 +43,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.schema.json` · [view](ValueSet-IMMZD18SRabiesVS.schema.json.html) |
+| JSON Schema | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.schema.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.schema.json` |
 | Displays | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.displays.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.displays.json` |
 | OpenAPI | <https://worldhealthorganization.github.io/smart-immunizations/schemas/ValueSet-IMMZD18SRabiesVS.openapi.json> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SRabiesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.jsonld` · [view](ValueSet-IMMZD18SRabiesVS.jsonld.html) |
-
-<footer id="ig-footer" data-prev="ValueSet-IMMZD18SPolioSequentialIPVbOPVVS.html" data-next="ValueSet-IMMZD18SRotavirusVS.html" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>
+| JSON-LD | <https://worldhealthorganization.github.io/smart-immunizations/ValueSet-IMMZD18SRabiesVS.jsonld> | `fhir-artifact-index/dak/ValueSet-IMMZD18SRabiesVS.jsonld` |

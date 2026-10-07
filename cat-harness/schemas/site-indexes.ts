@@ -115,6 +115,19 @@ export const BeanIndexSchema = z
 
 // ── folio-translation-status/v1 — scripts/gen-translation-status.ts ──
 
+const LocaleStatusSchema = z
+  .object({
+    locale: z.string().min(1),
+    templates: Count,
+    catalogues: Count,
+    entries: Count,
+    translated: Count,
+    fuzzy: Count,
+    untranslated: Count,
+    unreadable: StringList,
+  })
+  .strict();
+
 export const TranslationStatusSchema = z
   .object({
     ...envelope("folio-translation-status/v1"),
@@ -122,20 +135,23 @@ export const TranslationStatusSchema = z
     changedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     /** The translations directory counted, repository-relative. */
     scope: z.string(),
-    locales: z.array(
-      z
-        .object({
-          locale: z.string().min(1),
-          templates: Count,
-          catalogues: Count,
-          entries: Count,
-          translated: Count,
-          fuzzy: Count,
-          untranslated: Count,
-          unreadable: StringList,
-        })
-        .strict(),
-    ),
+    locales: z.array(LocaleStatusSchema),
+    /**
+     * Every OTHER instance's declared `translation-sources` directory, each
+     * measured on its own (issue #2228). Optional: an index written before
+     * the field existed is still a valid index.
+     */
+    instances: z
+      .array(
+        z
+          .object({
+            instance: z.string().min(1),
+            scope: z.string(),
+            locales: z.array(LocaleStatusSchema),
+          })
+          .strict(),
+      )
+      .optional(),
   })
   .strict();
 
@@ -362,6 +378,96 @@ export const BlockSummaryViewSchema = z
     rejectionReason: z.string().optional(),
   })
   .strict();
+
+/**
+ * One entry's DOCUMENT view (`entries/<id>.doc.json`, issue #2302), built by
+ * `scripts/lib/library-document.ts` from the ingestion schema. An entry with
+ * no structure.json is written as `{ $schema, id, absent: true }` — a
+ * determined "nothing in this schema to show", served as a file so the viewer
+ * never has to tell a 404 from a failure.
+ */
+const DocKeyword = z.object({ term: z.string(), heading: z.boolean() }).strict();
+const AlignmentList = z.object({ count: z.number().int(), items: StringList }).strict();
+export const LibraryDocumentViewSchema = z
+  .object({
+    $schema: z.literal("folio-library-document/v1"),
+    id: z.string().min(1),
+    title: z.string().nullable(),
+    pages: z.number().int(),
+    tocSource: z.string().nullable(),
+    tocMethod: z.string().nullable(),
+    toc: z.array(
+      z
+        .object({
+          level: z.number().int(),
+          title: z.string(),
+          number: z.string().nullable(),
+          page: PageNumber,
+          pageLabel: z.string().nullable(),
+          confidence: z.number().nullable(),
+          evidence: StringList.nullable(),
+          source: z.string(),
+          section: z.string().nullable(),
+        })
+        .strict(),
+    ),
+    sections: z.array(
+      z
+        .object({
+          id: z.string(),
+          number: z.string().nullable(),
+          title: z.string(),
+          level: z.number().int(),
+          pageStart: PageNumber,
+          pageEnd: PageNumber,
+          labelStart: z.string().nullable(),
+          labelEnd: z.string().nullable(),
+          words: z.number().int(),
+          summary: z.object({ text: z.string(), status: z.string() }).strict().nullable(),
+          keywords: z.array(DocKeyword),
+          extract: z.string().nullable(),
+          extractCut: z.boolean(),
+          /** The folio block this section was materialised as, for [edit] (bean zcak). */
+          edit: z.object({ path: z.string().min(1), label: z.string().min(1) }).strict().optional(),
+        })
+        .strict(),
+    ),
+    keywords: z.array(DocKeyword).optional(),
+    pageLabels: z
+      .array(z.object({ physical: z.number().int(), label: z.string().nullable(), source: z.string().nullable(), confidence: z.number() }).strict())
+      .optional(),
+    figures: z
+      .array(
+        z
+          .object({
+            kind: z.string(),
+            number: z.string(),
+            title: z.string(),
+            page: z.number().int(),
+            pageLabel: z.string().nullable(),
+            confidence: z.number(),
+            evidence: StringList,
+          })
+          .strict(),
+      )
+      .optional(),
+    checks: z
+      .object({
+        tocAlignment: z.record(z.string(), AlignmentList).optional(),
+        figureSequenceGaps: StringList.optional(),
+        pageLabelConflicts: AlignmentList.optional(),
+      })
+      .strict(),
+    withheld: z.boolean(),
+    /** Where [source] and [feedback] point: the repository and the entry's directory (bean zcak). */
+    links: z.object({ repo: z.string().min(1), branch: z.string().min(1), dir: z.string().min(1) }).strict().optional(),
+  })
+  .strict();
+
+export const LibraryDocumentSchema = z.union([
+  LibraryDocumentViewSchema,
+  z.object({ $schema: z.literal("folio-library-document/v1"), id: z.string().min(1), absent: z.literal(true) }).strict(),
+]);
 
 export const LibraryEntrySchema = z
   .object({

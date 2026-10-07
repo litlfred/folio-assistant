@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/process/workflow/session-context.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/session-context.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/session-context.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/session-context.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/process/workflow/session-context.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Session context
@@ -134,7 +134,7 @@ records what an actor DID at a moment, append-only. This is the current
 position, overwritten as it moves. A log tells you how you got here; this tells
 you where you are.
 
-**Not interaction preferences.** `interaction/interaction.json` holds how a person
+**Not interaction preferences.** `cat-harness/memory/interaction.json` holds how a person
 wants to be asked — durable, read at session start, never written by a process.
 That is `context`, and this is `state`: the two are on opposite sides of the
 layer line and must not be merged, however adjacent they look.

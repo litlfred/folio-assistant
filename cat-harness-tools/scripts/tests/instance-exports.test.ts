@@ -11,6 +11,7 @@ import { join, resolve } from "node:path";
 
 import {
   DEPLOY_WORKFLOW,
+  declaredExportNames,
   incompleteExports,
   publishedInstances,
   unpublishedInstanceSchemas,
@@ -241,8 +242,88 @@ describe("an exported Zod *Schema the publisher would not write fails the gate",
   });
 });
 
+// ── Re-exports — the text half reads every export form, and `export *` is reported ──
+//
+// Bean `4ak5` follow-up (owner-approved 2026-10-05). The text half read only
+// `export const`, so a module that re-exported a Zod `*Schema` was invisible
+// to it while the publisher's import walk rendered it: the gate could not
+// fail on that schema whatever the publisher did.
+describe("a re-exported Zod *Schema is read from the text too", () => {
+  test("every value-export form yields the name the importer gets; `type` exports and bare `export *` do not", () => {
+    const text = [
+      "export const DirectSchema = z.string();",
+      "export { LocalSchema, other };",
+      'export { FooSchema as RenamedSchema, type TypeOnlySchema } from "./a.ts";',
+      "export {\n  MultiLineSchema,\n  default as DefaultSchema,\n} from './b.ts';",
+      'export type { PureTypeSchema } from "./c.ts";',
+      'export * as NamespaceSchema from "./d.ts";',
+      'export type * from "./e.ts";',
+      "",
+    ].join("\n");
+    expect(declaredExportNames(text)).toEqual({
+      names: ["DirectSchema", "LocalSchema", "other", "RenamedSchema", "MultiLineSchema", "DefaultSchema", "NamespaceSchema"],
+      star: false,
+    });
+    expect(declaredExportNames('export * from "./x.ts";\n').star).toBe(true);
+  });
+
+  const root = mkdtempSync(join(tmpdir(), "zod-reexport-gate-"));
+  afterAll(() => rmSync(root, { recursive: true, force: true }));
+  mkdirSync(join(root, "schemas"), { recursive: true });
+  const zod = JSON.stringify(Bun.resolveSync("zod", import.meta.dir));
+  writeFileSync(join(root, "schemas", "base.ts"), `import { z } from ${zod};\nexport const BaseSchema = z.object({ b: z.number() });\n`);
+  writeFileSync(
+    join(root, "schemas", "relay.ts"),
+    [
+      `import { z } from ${zod};`,
+      "const LocalSchema = z.string();",
+      "export { LocalSchema };",
+      'export { BaseSchema as RenamedSchema } from "./base.ts";',
+      'export type { BaseSchema as TypeOnlySchema } from "./base.ts";',
+      "",
+    ].join("\n"),
+  );
+  writeFileSync(join(root, "schemas", "star.ts"), 'export * from "./base.ts";\n');
+  const stub = publishedIdentity(root).stub;
+  const plan: PlannedExport[] = [{ path: root, stub, ownCanonical: false }];
+  const starFinding =
+    `${root}: schemas/star.ts has a bare \`export * from\`, so the gate cannot read from its text which *Schema ` +
+    "names it re-exports — whether they are published could not be determined. Name them in an `export { … }` list";
+
+  test("the deploy's own publisher writes every re-export, so the only finding is the undetermined `export *`", async () => {
+    expect(await unpublishedZodSchemas(plan, (r) => scannedInstanceSchemas(r), REPO)).toEqual([starFinding]);
+  });
+
+  test("FALSIFIED: a publisher that drops the re-exported renderings is named, one finding per re-export", async () => {
+    const dropping = async (r: string) => {
+      const built = await scannedInstanceSchemas(r);
+      const kept = (f: string) => !f.startsWith("zod/relay/");
+      return { ...built, zod: built.zod.filter((z) => kept(z.published)), files: built.files.filter(([f]) => kept(f)) };
+    };
+    expect(await unpublishedZodSchemas(plan, dropping, REPO)).toEqual([
+      starFinding,
+      `${root}: schemas/relay.ts#LocalSchema is an exported Zod *Schema, which the publisher does not write to ${stub}/schema/zod/relay/LocalSchema.schema.json`,
+      `${root}: schemas/relay.ts#RenamedSchema is an exported Zod *Schema, which the publisher does not write to ${stub}/schema/zod/relay/RenamedSchema.schema.json`,
+    ]);
+  });
+});
+
 describe.skipIf(!inAggregate())("every planned instance's exported Zod *Schema reaches its schema/zod/", () => {
   test("the deploy's own publisher leaves nothing out, and reports no failure", async () => {
     expect(await unpublishedZodSchemas(instanceExportPlan(REPO))).toEqual([]);
+  });
+
+  test("the re-exports measured on 2026-10-05 are read from the text, and the publisher writes them", async () => {
+    // `materialization.ts` re-exports three Zod schemas with `export { … }`;
+    // until the text half read lists, the gate could not see them at all.
+    const text = readFileSync(join(REPO, "folio-assistant-core", "schemas", "materialization.ts"), "utf-8");
+    const { names, star } = declaredExportNames(text);
+    expect(names).toEqual(expect.arrayContaining(["SignatureSchema", "SourceProvenanceSchema", "FixitySchema"]));
+    expect(star).toBe(false);
+    const built = await scannedInstanceSchemas(join(REPO, "folio-assistant-core"));
+    const written = new Set(built.files.map(([f]) => f));
+    for (const n of ["SignatureSchema", "SourceProvenanceSchema", "FixitySchema"]) {
+      expect(written.has(`zod/materialization/${n}.schema.json`)).toBe(true);
+    }
   });
 });

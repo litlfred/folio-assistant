@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/graph-management/kg-separation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/kg-separation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/kg-separation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/kg-separation.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/graph-management/kg-separation.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Knowledge Graph separation — the method
@@ -127,7 +127,7 @@ the work looks finished.
 | 10 | **Seed**: the owner creates the repositories; once the source has settled, seed `main`, then the content and tools as reviewed PRs, with history | `administrator`, then `authoring-agent` | `bun run seed:ready --layer <name> --rehearse` answers `settled` for each layer, at seed time; then the seeding PRs reviewed and green |
 | 11 | **Parent consumes, additively**: pin (a SHA while staging, a version once released), repoint imports, keep the parent's copy | `platform-authoring-agent` | the parent green with the dependency declared; `check:published-refs` |
 | 12 | **First release**: tag, publish `/<version>/` and `/v<major>/` | `publication-manager` | `check:version-bump`; every identifier dereferences ([`publish-verification`](publish-verification.md)) |
-| 13 | **Cutover**: the one commit deleting the parent's copy | `administrator` | only after 11 and 12 are green |
+| 13 | **Cutover**: the one commit retiring the parent's copy into [`fsh-guts`](fsh-guts.md) as a verified archive (the deposit `state:seed --cutover` makes: it must extract to the exact tree removed, with a provenance note), deposited into the PARENT's fsh-guts before the removal, frozen, never refreshed or rendered: a relocation, not a deletion (owner, 2026-10-06; [`sub-kg-lifecycle`](sub-kg-lifecycle.md) stage 13 has the steps) | `administrator` | only after 11 and 12 are green |
 | 14 | **Independent refinement**: each new release adopted by the parent as a reviewed step | `authoring-agent` | [`upstream-version-adoption`](upstream-version-adoption.md) |
 
 **Nothing is committed to the new repositories before stage 10**, and stage 10
@@ -152,12 +152,49 @@ bun run seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 n
 | heavy movers | an open PR labelled `heavy-mover` touches the layer or the next one up |
 | next layer | any open PR touches the next layer up, which imports this one |
 | layer load | more than five open PRs touch the layer |
-| moves | an open PR deletes a file in the layer, or renames one into or out of it |
+| moves | an open PR deletes a file in the layer, or renames one into or out of it. A generator's own names do not count: an `owned-tree` path in `merge-conflict-patterns.ts` (content-hashed payloads, rail data) is renamed by every regen, so moving one changes what no seeded path means (owner, 2026-10-06) |
 | standalone | `bun test` is red with only the layer and what it `needs` beside it, as sibling directories |
 | upward paths | a path DECLARED in the layer — a Tool module, a QA criterion source, a render target — resolves only in an instance above it, so it breaks the day the layer stands alone |
 
 These were the steward's hand-applied criteria (2026-10-02), generalised per
 layer.
+
+**A test about the WHOLE CHECKOUT lives at the top (owner, 2026-10-06, "Top-level
+instance"; bean `7zz1`).** A test that reads several sibling instances at
+once, or the aggregate root itself (`.github/`, `.gitignore`, the root
+declaration, `beans/`, `todos/`, `memory/`, `fsh-guts/`), is red in every layer
+it is placed in, so it goes in the root instance's DECLARED test home —
+`folio-assistant-tests` in `folio-assistant.json`, at `test/` — never in a layer
+and never at a path a runner hardcodes. Whatever names every layer belongs at the
+top, so each layer below stays standalone-green. Split a file when only some of
+its tests read the checkout, keep the fixture tests with their layer, compose
+the moved paths from `ORIGIN_DIR` (the directory the test was written in), and
+move a corpus describe whole when it carries a vacuity guard: a sibling left
+behind passes standalone over nothing.
+
+**A test reading an UPPER layer's files moves to that layer (owner, 2026-10-06,
+"tests that read cat-harness-tools files => move to cat-harness-tools").** It is
+red standing alone for the same reason, one level down: the file it reads is
+not in its layer's closure. It goes in the upper layer's DECLARED test home,
+which may import the lower layer — never the reverse — and it is split, pointed
+back to and composed from `ORIGIN_DIR` exactly as above. Check first that the
+file it reads really IS the upper layer's: a path written from the checkout root
+(`cat-harness/src/…` read relative to the working directory) is red standing
+alone over a file the layer does hold, and the fix there is to resolve it from
+the test file, not to move it.
+
+**A test that reads the checkout's GIT asks which of two things it is (owner,
+2026-10-06, "Throwaway repository, plus moving the real-repo checks").** A
+standalone layer is a fresh clone with no `origin` and one commit, so a test
+handed this checkout's remote, `HEAD` or `origin/main` fails there on a missing
+input. A test of LOGIC that merely reads git — address derivation, an upload
+URL's shape, a commit IRI, resolving a short sha — builds a throwaway repository
+whose facts it sets (`gitFixtureRepo` in cat-harness's
+`test/support/git-fixture.ts`) and passes that root, with every assertion
+exactly as strict; a function that resolves its root internally gains an
+optional root parameter defaulting to today's. A check that THIS repository is
+configured right — its own Pages address, its committed pages' banners — keeps
+its assertion verbatim and moves to the top-level test home above.
 
 **`upward paths` replaced `sibling discovery` (owner, 2026-10-04).** The old
 criterion counted dependents that discovery could not find in a workspace of
@@ -267,7 +304,8 @@ against the **pinned** version, not the latest.
 
 Until the parent is green with the extraction declared, the extraction is
 additive and the parent keeps its copy; the cutover commit is the one unit
-worth reverting. After a release, a tagged version is never reused: roll back
+worth reverting, and since the copy is ARCHIVED in the parent's fsh-guts
+rather than deleted, the archive restores the exact tree that was removed. After a release, a tagged version is never reused: roll back
 with a new patch release and move the parent's pin back.
 
 ## Worked example — bootstrap + bootstrap-tools
@@ -294,4 +332,5 @@ This skill has its own process: **[A knowledge graph leaves for its own reposito
 | process | step(s) that name it |
 |---|---|
 | [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Measure the signals; Separate this graph?; 4 · Identity: version, iriBase, nodeSchemas; 5 · Move harness output about it to the host; 6 · Split content from tools; 8 · Rehearse standalone; Create the repositories; Drain: land, close or re-target the open PRs; 10 · Seed both repositories |
+| [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | Drain: land, close or re-target the open PRs |
 

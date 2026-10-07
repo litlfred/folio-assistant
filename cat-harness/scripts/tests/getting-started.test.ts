@@ -14,105 +14,27 @@
  * Each of those is a case where the tempting shortcut produces output that
  * looks exactly like a correct answer, which is why they get tests and the
  * formatting does not.
+ *
+ * (1) and (3) read `folio-intent.dmn` and `pages-live-gate.dmn`, which
+ * folio-assistant-core owns, so those tests live beside them in
+ * `folio-assistant-core/scripts/tests/getting-started.test.ts` (bean `ho66`).
+ *
+ * "this repo's own address is derived from the remote" is a check of THIS
+ * repository's configuration — it expects `litlfred.github.io/folio-assistant`
+ * — so it lives in the checkout's root test home, as
+ * `test/getting-started-repo-root.test.ts` (owner, 2026-10-06: "Throwaway
+ * repository, plus moving the real-repo checks"). The derivation itself is
+ * asserted here over a throwaway repository whose `origin` is known.
  */
 
 import { describe, expect, test } from "bun:test";
 import { resolve } from "node:path";
 
-import { evaluate, loadDecisionTable, possibleOutcomes } from "../../src/workflow/decision-table.js";
-import { loadProcessModel } from "../../src/workflow/process-model.js";
 import { classify, scanRepo } from "../scan-repo-content.js";
-import { derivePagesUrl, outcomeFor, parseRemote, type PagesOutcome } from "../pages-bootstrap.js";
-import { workflowFile } from "../known-skills.ts";
-
-/** The harness root; diagrams are found by NAME through its declared `processes` graphs (bean `63wl`). */
-const HARNESS = resolve(import.meta.dir, "../..");
+import { derivePagesUrl, parseRemote } from "../pages-bootstrap.js";
+import { gitFixtureRepo } from "../../test/support/git-fixture.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
-
-describe("folio-intent.dmn — five requests, one sentence", () => {
-  const load = () =>
-    loadDecisionTable(workflowFile(HARNESS, "folio-intent.dmn"), "Decision_FolioIntent");
-
-  test("a bare non-folio directory is the ONE state that answers itself", async () => {
-    const t = await load();
-    expect(
-      evaluate(t, { statedIntent: "unstated", isFolio: false, repoHasContent: false }).outcome,
-    ).toBe("new-repo");
-  });
-
-  test("an existing folio is ambiguous — add-folio, new-repo and new-content all fit", async () => {
-    const t = await load();
-    expect(
-      evaluate(t, { statedIntent: "unstated", isFolio: true, repoHasContent: true }).outcome,
-    ).toBe("ask");
-  });
-
-  test("somebody's repository is never overlaid on inference", async () => {
-    const t = await load();
-    expect(
-      evaluate(t, { statedIntent: "unstated", isFolio: false, repoHasContent: true }).outcome,
-    ).toBe("ask");
-  });
-
-  test("what the user actually said beats every filesystem heuristic", async () => {
-    const t = await load();
-    // The misspeak case: they are standing in a folio and said they want a
-    // document. Scaffolding a second folio here is the bug this table exists
-    // to stop, and `isFolio` must not be able to override them.
-    expect(
-      evaluate(t, { statedIntent: "new-content", isFolio: true, repoHasContent: true }).outcome,
-    ).toBe("new-content");
-    // And the converse: they asked to overlay a directory that happens to be bare.
-    expect(
-      evaluate(t, { statedIntent: "overlay", isFolio: false, repoHasContent: false }).outcome,
-    ).toBe("overlay");
-  });
-
-  test("every outcome the table can return names a real branch of the gateway", async () => {
-    const t = await load();
-    const model = await loadProcessModel(workflowFile(HARNESS, "getting-started.bpmn"));
-    const gateway = model.nodes.get("Gateway_Intent");
-    expect(gateway).toBeDefined();
-    const branches = gateway!.outgoing.map((f) => model.flows.get(f)!.name);
-    for (const o of possibleOutcomes(t)) expect(branches).toContain(o);
-    // `ask` in particular: it is an OUTCOME, not an agent's decision to ask.
-    expect(possibleOutcomes(t)).toContain("ask");
-  });
-});
-
-describe("pages-live-gate.dmn — 'could not check' is not 'not yet'", () => {
-  const load = () =>
-    loadDecisionTable(workflowFile(HARNESS, "pages-live-gate.dmn"), "Decision_PagesLive");
-
-  test("a measured 404 is `not-yet`; a failed request is `unknown`", async () => {
-    const t = await load();
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "not-found" }).outcome).toBe("not-yet");
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "error" }).outcome).toBe("unknown");
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "unchecked" }).outcome).toBe("unknown");
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "ok" }).outcome).toBe("live");
-  });
-
-  test("no URL means unknown whatever a probe claims to have found", async () => {
-    const t = await load();
-    expect(evaluate(t, { pagesUrlKnown: false, probe: "ok" }).outcome).toBe("unknown");
-  });
-
-  test("the script's own decision agrees with the table it documents", async () => {
-    const t = await load();
-    for (const pagesUrlKnown of [true, false]) {
-      for (const probe of ["ok", "not-found", "error", "unchecked"] as const) {
-        // The table's outcome is typed `unknown` by the evaluator, which knows
-        // nothing about this particular table's range. Narrowing it to
-        // PagesOutcome is the assertion: if the DMN ever returns a fourth
-        // value, this line is where it surfaces.
-        expect(outcomeFor({ pagesUrlKnown, probe })).toBe(
-          evaluate(t, { pagesUrlKnown, probe }).outcome as PagesOutcome,
-        );
-      }
-    }
-  });
-});
 
 describe("scan-repo-content — the third bucket", () => {
   test("a directory convention beats the extension", () => {
@@ -169,9 +91,17 @@ describe("pages-bootstrap — deriving the address", () => {
     expect(r.url).toBeUndefined();
   });
 
-  test("this repo's own address is derived from the remote", () => {
-    const r = derivePagesUrl(INSTANCE_ROOT);
-    expect(r.url).toBe("https://litlfred.github.io/folio-assistant/");
-    expect(r.urlSource).toBe("git remote");
+  test("a repository's address is derived from its remote", () => {
+    // Over a throwaway repository whose `origin` is
+    // `https://github.com/example/demo.git`. This repository's own address is
+    // checked in `test/getting-started-repo-root.test.ts`.
+    const fx = gitFixtureRepo();
+    try {
+      const r = derivePagesUrl(fx.root);
+      expect(r.url).toBe("https://example.github.io/demo/");
+      expect(r.urlSource).toBe("git remote");
+    } finally {
+      fx.cleanup();
+    }
   });
 });

@@ -67,6 +67,7 @@ import {
 import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
+import { MountDefaultsSchema, RemoteMountsSchema, type MountDefaults, type RemoteMount } from "./remote-mount.js";
 
 import {
   KgAssetSchema,
@@ -509,6 +510,66 @@ export const ContentAdapterDeclarationSchema = z
   })
   .strict();
 
+// ── Content-type translation profiles (moved from translation-tools.ts, bean `0r7u`) ───────────────────────────────────────────
+
+/**
+ * A translatable format that a content type can declare.
+ *
+ * Each format maps to an extraction function (source → POT entries)
+ * and an injection function (PO entries → target source).
+ */
+export const TranslatableFormatSchema = z.object({
+  /** Format identifier. */
+  id: z.string(),
+  /** Human-readable name. */
+  name: z.string(),
+  /** File extensions this format applies to. */
+  extensions: z.array(z.string()),
+  /** Smart-base Python script that handles this format (reference). */
+  smartBaseScript: z.string().optional(),
+  /** Smart-base function/line range for extraction. */
+  smartBaseExtractRef: z.string().optional(),
+  /** Smart-base function/line range for injection. */
+  smartBaseInjectRef: z.string().optional(),
+  /** TypeScript module that implements extraction (relative to repo root). */
+  extractModule: z.string().optional(),
+  /** TypeScript module that implements injection (relative to repo root). */
+  injectModule: z.string().optional(),
+  /**
+   * Notes about translating THIS format specifically, as distinct from
+   * `ContentTypeTranslation.notes`, which describes the content type as a
+   * whole. "Lean 4 terms stay in English" and "the diagram is re-rendered
+   * after injection" are properties of the format, not of the folio.
+   */
+  notes: z.string().optional(),
+});
+
+export type TranslatableFormat = z.infer<typeof TranslatableFormatSchema>;
+
+/**
+ * Content-type translation capability declaration.
+ *
+ * Each content adapter registers one of these to declare what
+ * formats it can translate and what scripts handle each format.
+ */
+export const ContentTypeTranslationSchema = z.object({
+  /** Content type identifier (matches adapter name). */
+  contentType: z.string(),
+  /** Human-readable name. */
+  name: z.string(),
+  /** Translatable formats this content type supports. */
+  formats: z.array(TranslatableFormatSchema),
+  /** Whether RTL rendering is supported. */
+  rtlSupported: z.boolean().default(false),
+  /** BPMN diagrams that need re-rendering for translation. */
+  bpmnDiagrams: z.array(z.string()).optional(),
+  /** Additional notes about translation for this content type. */
+  notes: z.string().optional(),
+});
+
+export type ContentTypeTranslation = z.infer<typeof ContentTypeTranslationSchema>;
+
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /** A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5). */
   summary?: string;
@@ -655,6 +716,10 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   subscriptions?: Subscription[];
   /** Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719. */
   knownSubstrates?: KnownSubstrate[];
+  /** What a downstream remote-mounts of this instance by default — `schemas/remote-mount.ts`, bean `0mpw`. */
+  mountDefaults?: MountDefaults;
+  /** Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`. */
+  remoteMounts?: RemoteMount[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -696,10 +761,57 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    */
   needs?: string[];
   /**
+   * What this instance's own package tasks read and write, keyed by task name
+   * — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts`
+   * holds for the harness's own tasks: `outputs: []` (measured to write
+   * nothing, so it may run in the pool) and `inputs` (what can change the
+   * answer, so `regen` may skip it on an unchanged tree; `"{tracked}"` is the
+   * whole working tree). `because` keeps the measurement that justified it.
+   *
+   * Declared by the instance that OWNS the task, so the harness collects it
+   * instead of naming a layer above itself (owner ruling 2026-10-06: "each
+   * instance declares its own tasks", bean `0r7u` step 0). Absent declares
+   * nothing: those tasks run alone and are never skipped, the safe default.
+   */
+  taskIo?: Record<
+    string,
+    {
+      inputs?: string[];
+      outputs?: string[];
+      /** The task that REPAIRS this check when the `X` / `X:check` naming does not give it. */
+      writer?: string;
+      /** Run after a merge train even when `regen` is not (merge-train step 3). Requires `writer`. */
+      afterMerge?: boolean;
+      because?: string;
+    }
+  >;
+  /**
+   * The CI steps and check scripts of THIS instance that the local gate set
+   * deliberately does not run, each with its reason — the rows
+   * `cat-harness/scripts/gates.ts` holds as `STEP_EXEMPTIONS` and
+   * `SCRIPT_EXEMPTIONS` for the harness's own. Same contract: a reason is
+   * required, a step `match` is a substring of the workflow command, a script
+   * name is matched exactly. Declared by the owner so the harness need not
+   * name a layer above itself (bean `0r7u` step 0).
+   */
+  gateExemptions?: {
+    steps?: Array<{ match: string; kind: "covered-by" | "ci-only" | "no-folio"; reason: string }>;
+    scripts?: Array<{ script: string; kind: "report" | "covered-by" | "no-folio" | "scheduled"; reason: string }>;
+  };
+  /**
    * The content adapters this instance SHIPS, which the harness's composition
    * root discovers rather than names. See {@link ContentAdapterDeclaration}.
    */
   contentAdapters?: ContentAdapterDeclaration[];
+  /**
+   * The translation profile of each content type THIS instance owns: which
+   * formats it can extract and inject, and which diagrams need re-rendering.
+   * Collected by `schemas/translation-tools.ts` from every present instance
+   * (bean `0r7u`, step 0 part 3), so cat-harness names no content type above
+   * it. Module and diagram paths resolve from the declaring instance, then
+   * down its `needs` chain.
+   */
+  contentTranslations?: ContentTypeTranslation[];
   /**
    * The Liquid prefix this instance's VALUES are addressed by in authored
    * text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the
@@ -1492,6 +1604,14 @@ export const DirectoryStorageSchema = z
      * for lean cache").
      */
     repository: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/repo").optional(),
+    /**
+     * The declared Tool that puts content on this store, or mounts it from
+     * there: `gh-pages` deploys a site, `ig-cache` restores an AST family
+     * (bean j9cs, owner 2026-10-04: *"there should not be a central registry
+     * for declaring mount tools"*). A Tool node's `id`, which
+     * `check:storage-tools` resolves against every declared `tools` graph.
+     */
+    tool: z.string().regex(/^[a-z0-9][a-z0-9-]*$/, "a Tool node id").optional(),
   })
   .strict()
   // ONE object carrying the ONE enum (`route-member.test.ts` checks identity),
@@ -3012,6 +3132,21 @@ export const CatHarnessDeclarationSchema = z.object({
     .array(SubscriptionSchema)
     .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: "subscriptions: an id appears twice" })
     .optional(),
+  /**
+   * What a DOWNSTREAM mounts of this instance by default, and where — see
+   * `schemas/remote-mount.ts` (bean `0mpw`). Owner, 2026-10-06: the defaults
+   * live in the harness's own declaration, so a downstream names only the
+   * harness and its pin and never restates the paths. Absent is the stated
+   * default (home path, every in-checkout directory), not "unmountable".
+   */
+  mountDefaults: MountDefaultsSchema.optional(),
+  /**
+   * Harnesses this instance REMOTE-MOUNTS — each a repository and a 40-char
+   * pin, resolved transitively through the harness's `needs` (bean `0mpw`).
+   * Not a submodule and not `.deps/`: the mounted directories are declared,
+   * locked by tree digest, and checked by `mount:remote:check`.
+   */
+  remoteMounts: RemoteMountsSchema.optional(),
   /** See {@link KnownSubstrate}. Names are unique. */
   knownSubstrates: z
     .array(KnownSubstrateSchema)
@@ -3052,6 +3187,63 @@ export const CatHarnessDeclarationSchema = z.object({
    */
   needs: z.array(z.string().min(1)).optional(),
   /**
+   * What this instance's own package tasks read and write, keyed by task name
+   * — the same {@link ScriptIO}-shaped facts `cat-harness/scripts/task-io.ts`
+   * holds for the harness's own tasks: `outputs: []` (measured to write
+   * nothing, so it may run in the pool) and `inputs` (what can change the
+   * answer, so `regen` may skip it on an unchanged tree; `"{tracked}"` is the
+   * whole working tree). `because` keeps the measurement that justified it.
+   *
+   * Declared by the instance that OWNS the task, so the harness collects it
+   * instead of naming a layer above itself (owner ruling 2026-10-06: "each
+   * instance declares its own tasks", bean `0r7u` step 0). Absent declares
+   * nothing: those tasks run alone and are never skipped, the safe default.
+   */
+  taskIo: z
+    .record(
+      z.string().min(1),
+      z
+        .object({
+          inputs: z.array(z.string().min(1)).optional(),
+          outputs: z.array(z.string().min(1)).optional(),
+          writer: z.string().min(1).optional(),
+          afterMerge: z.boolean().optional(),
+          because: z.string().min(1).optional(),
+        })
+        .strict()
+        .refine((t) => t.afterMerge !== true || t.writer !== undefined, {
+          message: "`afterMerge` needs a `writer`: a repair step with nothing to run repairs nothing",
+        }),
+    )
+    .optional(),
+  gateExemptions: z
+    .object({
+      steps: z
+        .array(
+          z
+            .object({
+              match: z.string().min(1),
+              kind: z.enum(["covered-by", "ci-only", "no-folio"]),
+              reason: z.string().trim().min(1),
+            })
+            .strict(),
+        )
+        .optional(),
+      scripts: z
+        .array(
+          z
+            .object({
+              script: z.string().min(1),
+              kind: z.enum(["report", "covered-by", "no-folio", "scheduled"]),
+              reason: z.string().trim().min(1),
+            })
+            .strict(),
+        )
+        .optional(),
+    })
+    .strict()
+    .optional(),
+  /**
    * The content adapters this instance ships — see {@link ContentAdapterDeclaration}.
    *
    * Declared by the instance that OWNS the adapter, so the harness below it
@@ -3062,6 +3254,7 @@ export const CatHarnessDeclarationSchema = z.object({
    * (`check:import-direction`, bean `p11x`).
    */
   contentAdapters: z.array(ContentAdapterDeclarationSchema).optional(),
+  contentTranslations: z.array(ContentTypeTranslationSchema).optional(),
   /** See {@link CatHarnessDeclaration.liquid}. */
   liquid: z
     .object({

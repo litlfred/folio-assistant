@@ -181,6 +181,10 @@ export const RULES: Rule[] = [
       "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
       "scripts/review-heat.ts",          // the review page heat map, embedded by toString (bean `qbfi`)
       "scripts/review-nav.ts",           // the review page outline, breadcrumb and minimap, embedded by toString (bean `eb4l`)
+      "scripts/review-rendered.ts",      // the review page's rendered-pages list, embedded by toString (bean `bnjs`)
+      "scripts/measure-rendered-impact.ts", // a staging build diffed against main's published site; what the prediction missed (bean `bnjs`)
+      "scripts/docs-rendered-impact.ts",    // the docs site's renderer: changed files to pages of the composed just-the-docs site (bean `bnjs`)
+      "scripts/git-blobs.ts",               // each input's blob at a ref: what every renderer pins a page to (bean `bnjs`)
       "scripts/publish-block-qa.ts",     // a folio's QA verdicts summarised for the heat map (bean `qbfi`)
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
@@ -273,6 +277,12 @@ export const RULES: Rule[] = [
       // surface that draws a harness's mark calls it, so a folio owning it
       // would let one instance decide how every other instance's mark is read.
       "scripts/lib/harness-mark.ts",
+      // What that chrome's data says on a FOLIO's own site (#2263): its tiles,
+      // icon row and rail scopes scoped to the folio, the platform's graphs
+      // re-based onto the platform. HARNESS beside `harness-rail.ts`: it is the
+      // platform deciding how its own chrome reads elsewhere, and a folio
+      // owning it would let one instance decide what every other shows.
+      "scripts/lib/foreign-site-scope.ts",
       // How a GRAPH-TYPOLOGY row in that navbar is marked and named (bean `yag0`):
       // the kind's avatar glyph and hue, and the head of its registered
       // summary as the accessible name. HARNESS beside `navbar.ts` for the
@@ -350,6 +360,7 @@ export const RULES: Rule[] = [
       // needs a folio to have anything to do.
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
+      "scripts/tool-remedy.ts",              // a refused host → the Tool that works without it (bean `6mk7`)
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
       "scripts/gen-subgraph-jsonld.ts",      // that graph framed per named subgraph (bean `c1m4`)
       // Harness by subject: the slice is the platform's own work plan, and the
@@ -404,9 +415,9 @@ export const RULES: Rule[] = [
       // The seeds' own freshness check (bean `9ofm`): it reads each special
       // branch's `manifest.json`, resolves the ref that manifest names, and
       // compares the two TREES. Harness-level for the same reason as its
-      // neighbours, and one more: the branches it reads are declared in
-      // `scripts/special-branches.json`, which is the harness's table — a
-      // folio's subject matter cannot add a row to it or change what a tree
+      // neighbours, and one more: the branches it reads are the ones the
+      // instances' declarations name (special-branches.json is gone, owner
+      // 2026-10-05) — a folio's subject matter cannot change what a tree
       // comparison concludes.
       "scripts/state-drift.ts",               // a seeded state branch still matches the ref it was seeded from
       // What every reader of a moved graph needs, written once (bean `9ofm`
@@ -454,6 +465,14 @@ export const RULES: Rule[] = [
       // are instantiated at the root, read from their snapshots. HARNESS so the
       // tile above may import it; `kg-instantiate.ts` (core) imports it too.
       "scripts/subscribed-harnesses.ts",
+      // Its site half (bean `g8jp`): each subgraph a subscription chose,
+      // resolved to the tree held for it. HARNESS for the same reason — the
+      // tile above and `mount-instance-docs.ts` / `compose-docs.ts` (all
+      // harness) import it, and it reads declarations, never folio content.
+      "scripts/subscribed-trees.ts",
+      // The part LAYOUT both halves share, moved out of `kg-subscribe.ts`
+      // (core) so the reader above may import it (bean `g8jp`).
+      "scripts/kg-parts.ts",
       // Beside its sibling, and HARNESS rather than core — the opposite
       // classification to `gen-default-boards.ts`, for the reason that entry
       // records: what settles it is what a module is ABOUT. That one produces
@@ -489,6 +508,8 @@ export const RULES: Rule[] = [
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/subgraph-source.ts",          // where a declared subgraph gets its content (bean `l4ay`) — read by the declaration schema itself
+      "schemas/remote-mount.ts",             // declared-path-literal: a partition plan names modules by path. Remote mounts (bean `0mpw`): mountDefaults, remoteMounts, the lock
+
       "scripts/subgraph-node.ts",            // the declared Subgraph node as a publisher's container (bean `l4ay`); imports nothing
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
@@ -759,6 +780,8 @@ export const RULES: Rule[] = [
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/lib/library-withheld-view.ts", // that viewer's withheld rows + banner (#1794), embedded verbatim
       "scripts/lib/library-address.ts",    // that viewer's entry-IRI path parser (#1881), embedded verbatim
+      "scripts/lib/library-document.ts",   // that viewer's Document panel: structure.json → doc.json (#2302)
+      "scripts/library-keywords.ts",        // the library's LSI keywords per section and document (#2302)
       "scripts/gen-uploads-viz.ts",         // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
@@ -798,6 +821,8 @@ export const RULES: Rule[] = [
       // than by a rule, and an `exact` entry naming a path this scan can no longer see
       // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
+      "scripts/remote-tree.ts",              // one remote tree at one pin: shallow blobless fetch, sparse checkout; gitPartFetcher moved down from core (bean `0mpw`)
+      "scripts/remote-mount.ts",             // lay a harness and its closure down from a pinned commit, lock it, check it (bean `0mpw`)
       "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
       "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, what each instance subscribed to and chose, and each chosen part drawn from its materialisation record (issue #1719)
@@ -1345,7 +1370,12 @@ export const RULES: Rule[] = [
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
       "scripts/pair-cover.ts",              // ...and which regen pairs FOLD into one another's check (bean `8qyc`): a gate whose chain the pool already asks is replaced by its residual. Scheduling only, beside the pool for the same reason
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
+      "scripts/input-sites.ts",             // ...the audit that makes that skip sound: every line of a check's closure that reads what the hash cannot see is annotated or refused (bean `f017`)
+      "scripts/input-trace.ts",             // ...its runtime half: a traced site a recorded run reaches records nothing
+      "scripts/input-hash-coverage.ts",     // ...and the report of which checks may skip and what blocks the rest
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
+      "scripts/qa-working-copy.ts",         // ...and the QA working copy's stamp (bean `7how`): which tree the computed QA tree was built from, rebuilt by `regen`/`gates` when stale
+      "scripts/measure-merge-round.ts",     // ...and the merge-round yardstick (bean `xpcu`): times the recipe in a scratch worktree, judges nothing
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
       "scripts/kind-table.ts",              // the reader over the graph-typology TABLE in `directory-conventions.md`, which `kind-register` and `graph-typology-docs.test.ts` both ask. Harness: the table is the harness's own documentation of its own registry
       "scripts/route-authority.ts",         // WHICH COPY a route-keyed generator's --check compares against — the checkout, the branch, or both. Harness: it reads a declaration and a branch manifest and knows nothing about any content type. Its `unknown` state is the point (bean `xsrv` Done-when 3: a branch it cannot fetch is never a pass)
@@ -1753,6 +1783,7 @@ export const ROOT = resolve(import.meta.dir, "..", "..");
 // seeing none of the e2e specs or the health sweep.
 export const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "test", "types"];
 
+// input-site: inert #08aab37b — names a build-output directory only to leave it out of a walk
 export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 
 /** This instance's spec, ready to hand to the engine. */

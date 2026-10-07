@@ -89,6 +89,54 @@ test("the banner fills in from staging.json", async ({ page }) => {
   await expect(banner.getByText("build log")).toBeVisible();
 });
 
+test("on an Arabic page it reads left to right, as the English it is — bean `giiw`", async ({ page }) => {
+  // The banner is one English sentence on every locale. Measured with it
+  // inheriting `dir="rtl"` (bean `giiw`): the links kept their order and each
+  // ↗ its side — every run between them is strong LTR text, so the bidi
+  // algorithm resolves the " · " separators to LTR as well — but the 🔀 that
+  // OPENS the sentence is a neutral at the paragraph's edge, so it took the
+  // paragraph's direction and was drawn at the far RIGHT, after "build log".
+  // The order and arrow assertions are guards; the 🔀 is the one that failed.
+  await page.route("**/*", async (route) => {
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith("staging.json")) {
+      return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(FACTS) });
+    }
+    return route.fulfill({ status: 200, contentType: "text/html", body: PAGE.replace('<html lang="en">', '<html lang="ar" dir="rtl">') });
+  });
+  await page.goto(`http://127.0.0.1:8080${ROOT}guides/agent-onboarding.html`);
+  const banner = page.locator("[data-fa-staging-banner]");
+  await expect(banner.getByText("build log")).toBeVisible();
+  expect(await banner.evaluate((b) => [b.getAttribute("lang"), getComputedStyle(b).direction])).toEqual(["en", "ltr"]);
+  const x = async (loc: import("@playwright/test").Locator) => (await loc.boundingBox())!.x;
+  const order = [
+    await x(banner.locator("b", { hasText: "FEATURE BRANCH" })),
+    await x(banner.getByText("PR #563")),
+    await x(banner.getByText("compare with main ↗")),
+    await x(banner.getByText("build log")),
+  ];
+  expect([...order].sort((a, b) => a - b)).toEqual(order);
+  // The 🔀 opens the line: left of FEATURE BRANCH, not right of "build log".
+  const mark = await banner.evaluate((b) => {
+    const t = b.firstChild as Text;
+    const r = document.createRange();
+    r.setStart(t, 0);
+    r.setEnd(t, t.data.indexOf(" "));
+    return r.getBoundingClientRect().right;
+  });
+  expect(mark).toBeLessThanOrEqual(order[0]!);
+  // The arrow follows the word it points from, at the link's right end.
+  const arrow = await banner.getByText("compare with main ↗").evaluate((a) => {
+    const t = a.firstChild as Text;
+    const r = document.createRange();
+    const i = t.data.indexOf("↗");
+    r.setStart(t, i);
+    r.setEnd(t, i + 1);
+    return { arrow: r.getBoundingClientRect().right, link: a.getBoundingClientRect().right };
+  });
+  expect(Math.abs(arrow.arrow - arrow.link)).toBeLessThan(2);
+});
+
 test("the compare link deep-links to THIS page on main", async ({ page }) => {
   // Landing the reader on the site root asks them to re-navigate from memory
   // to do the comparison the link is for, and the deeper the page the less

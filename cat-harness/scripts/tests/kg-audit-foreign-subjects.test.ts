@@ -14,6 +14,7 @@
  * and `kg:audit:check` would then call them CURRENT, because it compares what
  * the writer would write — so only a test of the tree itself can fail on it.
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -119,6 +120,17 @@ describe("the committed cat-harness tree holds no verdict about another instance
     const toolDir = join(tree, "tools");
     const own = new Set(toolsOf(HARNESS).map((t) => `${portableSegment(t.id)}.kg-qa.json`));
     expect(own.size).toBeGreaterThan(0);
+    if (!existsSync(toolDir)) {
+      // Since bean `5hox` the tree is a computed working copy (`qa:working-copy`),
+      // stored on `qa-reports` rather than committed. Where it has not been
+      // computed — the standalone layer, which lays out TRACKED files only —
+      // the claim is about what is committed, so ask git, rather than reading
+      // a missing directory as a crash or as a clean run over nothing.
+      const tracked = spawnSync("git", ["ls-files", "--", tree], { cwd: HARNESS, encoding: "utf-8" });
+      expect(tracked.status).toBe(0);
+      expect(tracked.stdout.trim()).toBe("");
+      return;
+    }
     const foreign = readdirSync(toolDir).filter((f) => f.endsWith(".kg-qa.json") && !own.has(f));
     expect(foreign).toEqual([]);
   });

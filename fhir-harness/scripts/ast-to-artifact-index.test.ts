@@ -203,3 +203,25 @@ describe("compareIndexes", () => {
     expect(c.onlyInPublished).toEqual(["CodeSystem/Gone"]);
   });
 });
+
+describe("a resource whose `name` is not a string (bean c65n)", () => {
+  test("an example Patient (name is HumanName[]) is indexed under its id, not a crash", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ast-index-patient-"));
+    const patient = { resourceType: "Patient", id: "child-1", name: [{ family: "Doe", given: ["Ada"] }] };
+    put(dir, "resources/Patient/child-1--0000.json", patient);
+    put(dir, "manifest.json", {
+      $schema: "ig-ast/v1",
+      authority: "cache",
+      provisional: [],
+      inputs: { toolchain: "t", sourceRevision: "a".repeat(40) },
+      resources: [{ key: "Patient/child-1", canonical: null, version: null, resourceType: "Patient", id: "child-1", name: null, file: "resources/Patient/child-1--0000.json", source: null }],
+    });
+    put(dir, "dependencies.json", { $schema: "ig-ast-dependencies/v1", dependencies: [] });
+    const { index, unreadable } = astToArtifactIndex(readAst(dir), { instanceId: "x" });
+    expect(unreadable).toEqual([]);
+    const p = index.artifacts.find((a) => a.key === "Patient/child-1")!;
+    expect(p.title).toBe("child-1");
+    expect(p.description).toBeUndefined();
+    expect(p.name).toBeUndefined();
+  });
+});

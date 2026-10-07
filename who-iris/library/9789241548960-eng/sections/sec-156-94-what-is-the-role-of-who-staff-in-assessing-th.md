@@ -7,6 +7,7 @@ section_number: 9.4
 pages: 124-124
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 of the evidence?
 WHO staff responsible for developing guidelines need to understand the 

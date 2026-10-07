@@ -146,7 +146,7 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
   // `termIri("Name")` is the ONE minting form since the namespaces split —
   // 94 hand-written template literals became this single call, which is also
   // what makes the scan a scan for one pattern rather than for four.
-  const pat = /\btermIri\(\s*"([A-Za-z][A-Za-z0-9_]*)"\s*\)/g;
+  const pat = /\bterm(?:Iri|Curie)\(\s*"([A-Za-z][A-Za-z0-9_]*)"\s*\)/g;
   // `xd1g`. Measured at the conversion: **936 before, 935 after** — the one it
   // drops is a gitignored `dist/index.d.ts`, and a generated declaration file
   // minting a term would be a term nobody wrote. Nothing gained.
@@ -482,6 +482,7 @@ if (import.meta.main) {
   const out =
     outIdx >= 0
       ? argv[outIdx + 1]
+      // input-site: inert #d1a0656a — an OUTPUT path this script writes, never reads
       : join(repoRootFor(ROOT), layer ? `_kg/ns-${layer}.jsonld` : "_kg/ns.jsonld");
 
   const { doc, report } = buildVocabulary(ROOT, layer, argv.includes("--exact"));

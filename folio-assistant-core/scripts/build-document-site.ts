@@ -62,15 +62,18 @@ import { visit } from "unist-util-visit";
 
 import { folioDir } from "../../cat-harness/schemas/cat-harness.js";
 import { readHarnessConfig } from "../../cat-harness/schemas/harness-config.js";
+import { detectRepoUrl, ownerRepo } from "../../cat-harness/src/core/git-refs.js";
+import { DEFAULT_TEMPLATE, injectBlockActions, readIssueForm, type BlockActionsConfig, type BlockContext } from "./block-actions.js";
 import type { Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
 import { buildDocumentMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
 import { reviewPageHtml } from "../../cat-harness/scripts/gen-review-page.js";
 import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
+import { visualiserNavDeclaration, type VisualiserNavEntry } from "../../cat-harness/scripts/lib/navbar.js";
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
 /** A readable page shell. Light and dark follow the reader's system setting. */
-function page(title: string, body: string, math?: MathOptions): string {
+function page(title: string, body: string, math?: MathOptions, tail = ""): string {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -95,15 +98,180 @@ function page(title: string, body: string, math?: MathOptions): string {
   .katex-display { overflow-x: auto; overflow-y: hidden; }
   dfn.defterm { font-style: normal; font-weight: 600; }
   .cite { color: var(--muted); }
+  .fa-blk:empty { min-height: 3rem; }
+  .fa-one-page { font-size: .85rem; color: var(--muted); }
 </style>${math ? mathHead(math) : ""}
 </head>
 <body>
 <main>
 ${body}
-</main>
+</main>${tail}
 </body>
 </html>
 `;
+}
+
+/**
+ * The page's contents, declared for the harness rail (owner, 2026-10-07:
+ * *"LHS navbar should show page TOCs"*). The rail indexes headings that carry
+ * an `id`, and a document's headings carry none: the assembly writes each
+ * chapter's and section's label as an anchor JUST BEFORE its heading
+ * (`<p><a id="sec:1-1"></a></p>` then `<h3>`), because those ids are what the
+ * review page, the change-sets and the comment notes link to. So the index is
+ * declared, pointing at those anchors, rather than moving an id every other
+ * link already depends on.
+ *
+ * Chapters are rows and their sections are the rows' children, one level, as
+ * the declaration allows. A heading with no anchor before it is not a
+ * destination and is left out. Absent when fewer than two rows result: an
+ * index of the one chapter in view is a menu that does nothing.
+ */
+export function pageContents(html: string): string {
+  const entries: VisualiserNavEntry[] = [];
+  const text = (h: string) =>
+    h
+      .replace(/<[^>]*>/g, "")
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&#x27;|&#39;/g, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/\s+/g, " ")
+      .trim();
+  const re = /<p><a id="([^"]+)"><\/a><\/p>\s*<(h2|h3)\b[^>]*>([\s\S]*?)<\/\2>/g;
+  for (const m of html.matchAll(re)) {
+    const row = { label: text(m[3]!), href: `#${m[1]}` };
+    if (!row.label) continue;
+    const parent = entries[entries.length - 1];
+    if (m[2] === "h3" && parent) parent.items = [...(parent.items ?? []), row];
+    else entries.push(row);
+  }
+  return entries.length < 2 ? "" : visualiserNavDeclaration(entries) + "\n";
+}
+
+// ── Lazy pages: the block text as data (bean v433, owner 2026-10-06) ────────
+//
+// *"that can be dynamic JS load of KG, as should of rest of content"*. A large
+// document's page is a SHELL: every heading, every block anchor (so links, the
+// review page, [edit]/[feedback] and the comment notes all still find their
+// block) and an empty placeholder per block. Each block's rendered HTML is
+// published as data, `<slug>/blocks/NNN.json`, in document order, a chunk of
+// {@link LAZY_CHUNK} blocks each. The page loads the chunks near the reader,
+// then the rest in idle time. `index.hydrated.html` is the whole document on one page,
+// as before: a `file://` open (where fetch fails), a reader without
+// JavaScript, and any tool that wants the text in the page all get that.
+//
+// Small documents stay one page: below {@link LAZY_THRESHOLD} blocks there is
+// nothing to save, and one file is simpler to read and to test. Searching the
+// comments is the dashboard's job (owner: "only the visualizer search for the
+// PCs"), so nothing here needs the text in the page to be findable at once.
+
+export const LAZY_THRESHOLD = 200;
+export const LAZY_CHUNK = 40;
+
+export interface BlockSplit {
+  /** The document with each listed block's body replaced by a placeholder. */
+  shell: string;
+  /** Each listed block's Markdown, in document order. */
+  blocks: { label: string; markdown: string }[];
+}
+
+/**
+ * Split the assembled Markdown at block anchors. A block runs from its
+ * `<a id="<label>"></a>` line to the next anchor or heading; lines inside a
+ * fenced code block are never read as either. Anchors that are not block
+ * labels (sections, chapters) stay in the shell, with their headings.
+ */
+export function splitBlocks(markdown: string, labels: Set<string>): BlockSplit {
+  const ANCHOR = /^<a id="([^"]+)"><\/a>\s*$/;
+  const HEADING = /^#{1,6}\s/;
+  const FENCE = /^\s*(```|~~~)/;
+  const shell: string[] = [];
+  const blocks: BlockSplit["blocks"] = [];
+  let cur: { label: string; lines: string[] } | null = null;
+  let inFence = false;
+  const close = () => {
+    if (cur) blocks.push({ label: cur.label, markdown: cur.lines.join("\n").trim() + "\n" });
+    cur = null;
+  };
+  for (const line of markdown.split("\n")) {
+    if (!inFence) {
+      const m = line.match(ANCHOR);
+      if (m) {
+        close();
+        shell.push(line);
+        if (labels.has(m[1]!)) {
+          shell.push("", `<div class="fa-blk" data-blk="${esc(m[1]!)}"></div>`, "");
+          cur = { label: m[1]!, lines: [] };
+        }
+        continue;
+      }
+      if (HEADING.test(line)) {
+        close();
+        shell.push(line);
+        continue;
+      }
+    }
+    if (FENCE.test(line)) inFence = !inFence;
+    if (cur) cur.lines.push(line);
+    else shell.push(line);
+  }
+  close();
+  return { shell: shell.join("\n"), blocks };
+}
+
+/** Every `id="…"` in a block's HTML, so a link to a term inside an unloaded block finds its chunk. */
+const idsIn = (html: string) => [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]!);
+
+/** The loader a lazy page runs. Index: label and inner id -> chunk number. */
+function lazyLoader(index: { chunks: number; of: Record<string, number>; ids: Record<string, number> }): string {
+  const json = JSON.stringify(index).replace(/</g, "\\u003c");
+  return `
+<script type="application/json" id="fa-blocks">${json}</script>
+<script>
+(() => {
+  const ix = JSON.parse(document.getElementById("fa-blocks").textContent);
+  const pending = new Map();
+  let failed = false;
+  const fill = (data) => {
+    for (const [label, html] of Object.entries(data)) {
+      const ph = document.querySelector('.fa-blk[data-blk="' + CSS.escape(label) + '"]');
+      if (!ph || ph.dataset.filled) continue;
+      ph.innerHTML = html;
+      ph.dataset.filled = "1";
+      if (window.faMathObserve) window.faMathObserve(ph);
+    }
+  };
+  // Fetch fails when the page is opened from disk: the whole document is one
+  // page away, so go there rather than show empty blocks.
+  const load = (n) => {
+    if (!pending.has(n)) pending.set(n, fetch("blocks/" + String(n).padStart(3, "0") + ".json")
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then(fill)
+      .catch(() => { if (!failed) { failed = true; location.replace("index.hydrated.html" + location.search + location.hash); } }));
+    return pending.get(n);
+  };
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { io.unobserve(e.target); load(ix.of[e.target.dataset.blk]); }
+  }, { rootMargin: "2000px 0px" });
+  for (const ph of document.querySelectorAll(".fa-blk")) io.observe(ph);
+  // A link to a block, or to a term inside one, loads its chunk and lands on it.
+  const go = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const n = id ? (ix.of[id] ?? ix.ids[id]) : undefined;
+    if (n === undefined) return;
+    load(n).then(() => document.getElementById(id)?.scrollIntoView());
+  };
+  addEventListener("hashchange", go);
+  go();
+  // Then the rest, one chunk at a time while the browser is idle, so the whole
+  // text is there for reading on and for the browser's own find.
+  const idle = window.requestIdleCallback || ((f) => setTimeout(f, 200));
+  let next = 0;
+  const more = () => { while (next < ix.chunks && pending.has(next)) next++; if (next < ix.chunks) load(next).then(() => idle(more)); };
+  addEventListener("load", () => idle(more));
+})();
+</script>`;
 }
 
 
@@ -161,7 +329,9 @@ addEventListener("DOMContentLoaded", () => {
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) if (e.isIntersecting) { io.unobserve(e.target); render(e.target); }
   }, { rootMargin: "1500px 0px" });
-  for (const el of document.querySelectorAll("code.math-inline, code.math-display")) io.observe(el);
+  // Blocks a lazy page loads later call this on what they add (bean v433).
+  window.faMathObserve = (root) => { for (const el of root.querySelectorAll("code.math-inline, code.math-display")) io.observe(el); };
+  window.faMathObserve(document);
 });
 </script>`;
 }
@@ -326,6 +496,13 @@ export interface OutlineDocument {
   /** The document's page, relative to the site root. */
   page: string;
   chapters: Array<{ title: string; label?: string; sections: OutlineSection[] }>;
+  /**
+   * Present when the page is lazy (bean v433): `page` is then a shell, the
+   * text is in `blocks/NNN.json` and the whole document in `hydrated`. `of`
+   * maps each block to its chunk, so a change can name the file it alters
+   * (rendered impact, bean `bnjs`).
+   */
+  lazy?: { hydrated: string; chunks: number; of: Record<string, number> };
 }
 export interface Outline {
   $schema: typeof OUTLINE_SCHEMA;
@@ -366,6 +543,61 @@ export async function documentOutline(manifestPath: string, folioRoot: string, s
   return doc;
 }
 
+/**
+ * Every labelled block of one document, with its source file and section, in
+ * manifest order: what [edit] and [feedback] are built from (`block-actions`).
+ * The source is the block's `.md` when it has one (the prose a person edits),
+ * else its `.ts` manifest.
+ */
+export async function documentBlocks(manifestPath: string, repoRoot: string, slug: string): Promise<BlockContext[]> {
+  const docDir = dirname(manifestPath);
+  const paper = (await import(manifestPath)).default as Paper;
+  const out: BlockContext[] = [];
+  for (const chRef of paper.chapters) {
+    const chDir = join(docDir, chRef.dir);
+    const chPath = join(chDir, `${chRef.dir}.ts`);
+    if (!existsSync(chPath)) continue;
+    const chapter = (await import(chPath)).default as Chapter;
+    const walk = async (secs: Array<Section | SectionRef>) => {
+      for (const sec of secs) {
+        if (isRef(sec)) continue;
+        for (const root of sec.blocks) {
+          const ts = join(chDir, `${root}.ts`);
+          if (!existsSync(ts)) continue;
+          const b = (await import(ts)).default as { label?: string };
+          if (!b.label) continue;
+          const md = join(chDir, `${root}.md`);
+          out.push({ label: b.label, source: relative(repoRoot, existsSync(md) ? md : ts), section: sec.title, page: `${slug}/index.html` });
+        }
+        if (sec.subsections) await walk(sec.subsections);
+      }
+    };
+    await walk(chapter.sections);
+  }
+  return out;
+}
+
+/**
+ * Where [edit] and [feedback] point, from the build's environment: the
+ * repository is `GITHUB_REPOSITORY` in CI, else the checkout's `origin`; the
+ * issue form is the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when
+ * it has one. Explicit options win.
+ */
+export function defaultBlockActions(repoRoot: string, over: Partial<BlockActionsConfig> = {}): BlockActionsConfig {
+  const origin = detectRepoUrl(repoRoot);
+  const repo = over.repo ?? process.env.GITHUB_REPOSITORY ?? (origin?.includes("github.com") ? ownerRepo(origin) : undefined);
+  const template = over.template ?? DEFAULT_TEMPLATE;
+  const fields = readIssueForm(repoRoot, template);
+  return {
+    ...(repo ? { repo } : {}),
+    branch: over.branch ?? "main",
+    ...(fields ? { template, templateFields: fields } : {}),
+    ...(over.labels ? { labels: over.labels } : {}),
+    ...(over.siteUrl ? { siteUrl: over.siteUrl } : {}),
+    ...(over.content ? { content: over.content } : {}),
+  };
+}
+
 export interface SiteBuildResult {
   documents: { slug: string; blocks: number; page: string }[];
   errors: string[];
@@ -374,12 +606,13 @@ export interface SiteBuildResult {
 export async function buildDocumentSite(
   repoRoot: string,
   outDir: string,
-  opts: { math?: boolean } = {},
+  opts: { math?: boolean; actions?: Partial<BlockActionsConfig> | false; lazy?: "auto" | "always" | "never" } = {},
 ): Promise<SiteBuildResult> {
   // Math defaults on only for a paper instance; see the note on renderDocumentHtml.
   const math = opts.math ?? readHarnessConfig(repoRoot)?.contentType === "paper";
   const docs = documentManifests(repoRoot);
   const result: SiteBuildResult = { documents: [], errors: [] };
+  const lazyOf = new Map<string, NonNullable<OutlineDocument["lazy"]>>();
   if (docs.length === 0) {
     result.errors.push(`no document manifest under ${folioDir(repoRoot)} (expected folio/<slug>/<slug>.ts)`);
     return result;
@@ -392,10 +625,36 @@ export async function buildDocumentSite(
     const manifest = (await import(d.path)).default as Paper;
     const dir = join(outDir, d.slug);
     mkdirSync(dir, { recursive: true });
-    writeFileSync(
-      join(dir, "index.html"),
-      page(manifest.title ?? d.slug, html, math ? { macros: katexMacros(manifest.macros) } : undefined),
-    );
+    const mathOpts = math ? { macros: katexMacros(manifest.macros) } : undefined;
+    const blocks = await documentBlocks(d.path, repoRoot, d.slug);
+    const cfg = opts.actions === false ? undefined : defaultBlockActions(repoRoot, { content: d.slug, ...(opts.actions ?? {}) });
+    // [edit] and [feedback] on every block (REQ-17, bean uphx). Off only when asked.
+    const withActions = (h: string, compact = false) => (cfg ? injectBlockActions(h, blocks, cfg, { compact }).html : h);
+    const lazy = opts.lazy === "always" || ((opts.lazy ?? "auto") === "auto" && blocks.length >= LAZY_THRESHOLD);
+    if (!lazy) {
+      writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, pageContents(html) + html, mathOpts)));
+    } else {
+      // The whole document on one page, for file://, no-JS readers and tools.
+      writeFileSync(join(dir, "index.hydrated.html"), withActions(page(manifest.title ?? d.slug, pageContents(html) + html, mathOpts)));
+      const split = splitBlocks(built.markdown, new Set(blocks.map((b) => b.label)));
+      const index = { chunks: 0, of: {} as Record<string, number>, ids: {} as Record<string, number> };
+      mkdirSync(join(dir, "blocks"), { recursive: true });
+      for (let i = 0; i < split.blocks.length; i += LAZY_CHUNK) {
+        const n = index.chunks++;
+        const chunk: Record<string, string> = {};
+        for (const b of split.blocks.slice(i, i + LAZY_CHUNK)) {
+          const h = await renderDocumentHtml(b.markdown, { math });
+          chunk[b.label] = h;
+          index.of[b.label] = n;
+          for (const id of idsIn(h)) index.ids[id] ??= n;
+        }
+        writeFileSync(join(dir, "blocks", `${String(n).padStart(3, "0")}.json`), JSON.stringify(chunk));
+      }
+      lazyOf.set(d.slug, { hydrated: `${d.slug}/index.hydrated.html`, chunks: index.chunks, of: index.of });
+      const shellHtml = await renderDocumentHtml(split.shell, { math });
+      const note = `<p class="fa-one-page">The text loads as you read. <a href="index.hydrated.html">The whole document on one page.</a></p>\n<noscript><p><a href="index.hydrated.html">Read the whole document on one page.</a></p></noscript>\n`;
+      writeFileSync(join(dir, "index.html"), withActions(page(manifest.title ?? d.slug, pageContents(shellHtml) + note + shellHtml, mathOpts, lazyLoader(index)), true));
+    }
     // A document's images live in `folio/<slug>/media/` and its blocks link
     // them as `media/<file>`, relative to the document's page. Copied, so a
     // figure in the preview is the figure in the folio.
@@ -407,7 +666,11 @@ export async function buildDocumentSite(
     .map((d) => `<li><a href="${esc(d.page)}">${esc(d.slug)}</a> (${d.blocks} blocks)</li>`)
     .join("\n");
   const outline: Outline = { $schema: OUTLINE_SCHEMA, documents: [] };
-  for (const d of docs) outline.documents.push(await documentOutline(d.path, folioDir(repoRoot), d.slug));
+  for (const d of docs) {
+    const o = await documentOutline(d.path, folioDir(repoRoot), d.slug);
+    const lz = lazyOf.get(d.slug);
+    outline.documents.push(lz ? { ...o, lazy: lz } : o);
+  }
   writeFileSync(join(outDir, "outline.json"), JSON.stringify(outline) + "\n");
   mkdirSync(join(outDir, "review"), { recursive: true });
   writeFileSync(join(outDir, "review", "index.html"), reviewPageHtml());
@@ -418,6 +681,17 @@ export async function buildDocumentSite(
   return result;
 }
 
+/**
+ * What this builder READS (bean `ehh6`): the folio directory, repo-relative.
+ * Its config and declaration sit at the repository root, which the document
+ * predictor already counts as read. `args` are the ones the build command passes.
+ */
+export function siteReads(repoRoot: string, args: string[] = []): string[] {
+  const i = args.indexOf("--repo");
+  const repo = i >= 0 && args[i + 1] ? resolve(repoRoot, args[i + 1]!) : repoRoot;
+  return [relative(repoRoot, folioDir(repo)).split("\\").join("/")];
+}
+
 if (import.meta.main) {
   const args = process.argv.slice(2);
   const opt = (n: string) => {
@@ -426,14 +700,29 @@ if (import.meta.main) {
   };
   if (args.includes("--help")) {
     console.log(
-      "usage: bun run folio-assistant-core/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site] [--math | --no-math]",
+      "usage: bun run folio-assistant-core/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site] [--math | --no-math]\n" +
+        "         [--github <owner/repo>] [--edit-branch main] [--issue-template block-feedback.yml] [--site-url <url>] [--no-block-actions]\n" +
+        "         [--lazy auto|always|never]   (auto: a document of " + LAZY_THRESHOLD + "+ blocks loads its text as data)",
     );
     process.exit(0);
   }
   const repo = resolve(opt("repo") ?? process.cwd());
   const out = resolve(repo, opt("out") ?? "_site");
   const math = args.includes("--math") ? true : args.includes("--no-math") ? false : undefined;
-  const r = await buildDocumentSite(repo, out, { math });
+  const actions = args.includes("--no-block-actions")
+    ? false
+    : {
+        ...(opt("github") ? { repo: opt("github") } : {}),
+        ...(opt("edit-branch") ? { branch: opt("edit-branch") } : {}),
+        ...(opt("issue-template") ? { template: opt("issue-template") } : {}),
+        ...(opt("site-url") ? { siteUrl: opt("site-url") } : {}),
+      };
+  const lazyOpt = opt("lazy");
+  if (lazyOpt && !["auto", "always", "never"].includes(lazyOpt)) {
+    console.error(`✗ --lazy must be auto, always or never, not ${lazyOpt}`);
+    process.exit(2);
+  }
+  const r = await buildDocumentSite(repo, out, { math, actions, ...(lazyOpt ? { lazy: lazyOpt as "auto" | "always" | "never" } : {}) });
   for (const d of r.documents) console.error(`  ${d.page}  ${d.blocks} block(s)`);
   if (r.errors.length > 0) {
     for (const e of r.errors) console.error(`✗ ${e}`);

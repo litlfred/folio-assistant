@@ -21,9 +21,17 @@ import { join, resolve } from "path";
 import { execFileSync, spawnSync } from "child_process";
 import { createHash } from "crypto";
 
-import { OWNED, fixedPagesOf, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
-import { nodes as nodesOf, pngSize } from "../../../folio-assistant-core/scripts/gen-covers.js";
-import { publicationBlockers } from "../../../folio-assistant-core/schemas/materialization.js";
+import {
+  OWNED,
+  OWNED_SITE,
+  SITE_LOCALES,
+  SITE_STRINGS,
+  catalogueProblems,
+  fixedPagesOf,
+  recentOrder,
+  requirementsFromSkill,
+} from "../gen-iris-pages.js";
+import { coverNodes as nodesOf, pngSize, publicationBlockers } from "../../platform.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
@@ -364,7 +372,9 @@ describe("the IRIS home replica", () => {
     // separators, exactly as IRIS prints it -- and it is where this catalogue's
     // item count came from at all.
     const cat = JSON.parse(readFileSync(join(INSTANCE, "catalogue", "catalogue.json"), "utf-8"));
-    expect(home).toContain(`repository&rsquo;s ${cat.totalItemsUpstream} items`);
+    // The apostrophe is the character itself since the strings moved into the
+    // translatable table (#2228); it was the entity `&rsquo;` before.
+    expect(home).toContain(`repository’s ${cat.totalItemsUpstream} items`);
     expect(home).toContain(cat.totalItemsUpstream.toLocaleString("en-US"));
     expect(home).toContain(cat.totalFilesUpstream.toLocaleString("en-US"));
   });
@@ -528,6 +538,90 @@ describe("the search highlighter escapes every regex metacharacter", () => {
     for (const t of ["(", ")", "[", "]", "{", "}", ".", "*", "+", "?", "^", "$", "|", "\\", "c++", "who?"]) {
       const re = new RegExp("(" + esc(t) + ")", "gi");
       expect(re.test(`pre ${t} post`)).toBe(true);
+    }
+  });
+});
+
+describe("the replica in the six UN languages — issue #2228", () => {
+  const english = readdirSync(SITE).filter((f) => f.endsWith(".html")).sort();
+
+  it("every replica page exists in every language, and nothing else does", () => {
+    for (const loc of SITE_LOCALES) {
+      const here = readdirSync(join(SITE, loc)).filter((f) => f.endsWith(".html")).sort();
+      expect({ loc, pages: here }).toEqual({ loc, pages: english });
+      for (const f of here) expect(OWNED_SITE.test(`${loc}/${f}`)).toBe(true);
+    }
+  });
+
+  it("each page says its language, and Arabic reads right to left", () => {
+    for (const loc of SITE_LOCALES) {
+      const html = readFileSync(join(SITE, loc, "index.html"), "utf-8");
+      expect(html).toContain(loc === "ar" ? `<html lang="ar" dir="rtl">` : `<html lang="${loc}">`);
+      const meta = JSON.parse(/id="fa-translation-meta">([^<]*)</.exec(html)![1]!);
+      expect(meta.lang).toBe(loc);
+      expect(meta.translationStatus).toBe("unverified");
+      expect([...meta.availableLocales].sort()).toEqual(["ar", "en", "es", "fr", "ru", "zh"]);
+    }
+    expect(readFileSync(join(SITE, "index.html"), "utf-8")).toContain(`<html lang="en">`);
+  });
+
+  it("a publication's title is the catalogue's, untranslated, in every language", () => {
+    // The records are WHO's data. Translating the interface around them must
+    // not touch them: the same title appears verbatim on every copy.
+    const item = english.find((f) => f.startsWith("item-"))!;
+    const title = /<h1[^>]*>([^<]*)<\/h1>/.exec(readFileSync(join(SITE, item), "utf-8"))![1]!;
+    expect(title.length).toBeGreaterThan(0);
+    for (const loc of SITE_LOCALES) {
+      expect(readFileSync(join(SITE, loc, item), "utf-8")).toContain(`>${title}</h1>`);
+    }
+  });
+
+  it("record data is direction-isolated from the translated interface (bean lffo)", () => {
+    // Measured before the fix on the ar home page: the WPRO citation line
+    // rendered as `(12-05-2020 :تاريخ النشر ,WPR/RDO/2020/003)`, because the
+    // English run and the Arabic label shared one bidi context.
+    const item = english.find((f) => f.startsWith("item-"))!;
+    const ar = readFileSync(join(SITE, "ar", item), "utf-8");
+    const en = readFileSync(join(SITE, item), "utf-8");
+    // A whole-block title aligns by its own text, and says which language it is in…
+    expect(ar).toMatch(/<h1 dir="auto" lang="en">[^<]+<\/h1>/);
+    // …but only where that differs from the page: the English page gains no `lang` noise.
+    expect(en).toMatch(/<h1 dir="auto">[^<]+<\/h1>/);
+    // The record-data crumb is isolated; the interface crumb ("Home") is not.
+    expect(ar).toMatch(/<span class="here"><bdi lang="en">[^<]+<\/bdi><\/span>/);
+
+    const home = readFileSync(join(SITE, "ar", "index.html"), "utf-8");
+    // Every value interpolated into the translated byline is its own isolate.
+    expect(home).toContain(`(<bdi lang="en">WPR/RDO/2020/003</bdi>, `);
+    expect(home).toMatch(/: <bdi>2020-05-12<\/bdi>\)/);
+    // Abstracts and titles are block-level data: `dir="auto"`, never `ltr`.
+    expect(home).toMatch(/<p class="sub-abs" dir="auto" lang="en">/);
+    expect(home).toMatch(/<a class="sub-title" dir="auto" lang="en" /);
+    // Record data never gets `ltr`; only repository paths do, which are LTR by nature.
+    expect(home).not.toMatch(/<(?:bdi|h1|p class="sub-abs"|a class="sub-title")[^>]*dir="ltr"/);
+    expect(home).toContain(`<code dir="ltr">who-iris/catalogue/</code>`);
+  });
+
+  it("the interface is translated — no page in a translation carries the English chrome", () => {
+    for (const loc of SITE_LOCALES) {
+      const html = readFileSync(join(SITE, loc, "community-list.html"), "utf-8");
+      expect(html).not.toContain(">List of Communities<");
+      expect(html).not.toContain("Communities &amp; Collections</a>");
+    }
+  });
+
+  it("every catalogue is complete, unfuzzy and keeps its placeholders and markup", () => {
+    expect(SITE_STRINGS.length).toBeGreaterThan(0);
+    expect(catalogueProblems().problems).toEqual([]);
+  });
+
+  it("a page links its other languages and the assets one directory further up", () => {
+    const fr = readFileSync(join(SITE, "fr", "index.html"), "utf-8");
+    expect(fr).toContain(`href="../index.html" lang="en"`);
+    expect(fr).toContain(`href="../es/index.html" lang="es"`);
+    expect(fr).toContain(`action="../../id-lookup/"`);
+    for (const m of fr.matchAll(/<img src="([^"]+)"/g)) {
+      expect(existsSync(join(SITE, "fr", decodeURIComponent(m[1]!)))).toBe(true);
     }
   });
 });

@@ -134,7 +134,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "./skill-packages.js";
-import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, instanceRootsIn, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, resolveDirectories, instanceDirectoriesForGraph, instanceRootsIn, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { toolDownstreamEntry, undeclaredDownstreamEntry } from "./downstream-runs.ts";
 import { VERIFIERS } from "./publish-verify.ts";
 import { checkoutRootFor, orderedDependencies } from "../schemas/harness-config.js";
@@ -513,6 +513,7 @@ function docsSurface(): DocsSurface | undefined {
 
   const walk = (dir: string): void => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
+      // input-site: inert #768fdcb7 — names a build-output directory only to leave it out of a walk
       if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
@@ -1722,6 +1723,7 @@ function arrowDirection(): KgCriterionEntry {
  */
 function proseNamesResolve(): KgCriterionEntry {
   const repo = REPO_ROOT;
+  // input-site: tree #af526755 — ls-files: the index
   const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
   if (ls.exitCode !== 0) {
     return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };
@@ -1772,6 +1774,22 @@ function proseNamesResolve(): KgCriterionEntry {
 function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> {
   // declared-path-literal: the conventional fallback when no declaration names the directory
   const r = checkTestRuns(root, ownDirectoryById(root, "qa", "test/results"), skills);
+  // Only a DECLARED `qa` directory that is absent is unknown. An instance that
+  // declares none (bootstrap, cat-openapi, …) has no results to read, and its
+  // missing conventional directory is a determined "no runs": `n/a`.
+  const qaDeclared = resolveDirectories([{ name: "(local)", root, own: true }]).some(
+    (d) => d.id === "qa" && d.own && d.scope !== "repository" && d.declaredBy !== "(default)",
+  );
+  if (!r.looked && qaDeclared) {
+    // A declared results directory that is absent says nothing about whether
+    // runs exist — since 5hox it is derived and may not be computed or fetched
+    // yet. `n/a` would be the false pass audit C5 names (bean `2gst`).
+    const unknown = (): KgCriterionEntry => ({
+      result: "unknown",
+      findings: [{ where: "—", detail: "the QA results directory is absent, so recorded test runs could not be read. Compute it (`bun run qa:refresh`) or fetch it (`bun run qa:fetch`)." }],
+    });
+    return { "test-run-skill-resolves": unknown(), "test-run-conforms": unknown(), "test-run-checkable": unknown() };
+  }
   const any = r.runs > 0;
   return {
     "test-run-skill-resolves": entry(r.unresolved, any),

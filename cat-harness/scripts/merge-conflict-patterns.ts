@@ -276,6 +276,16 @@ export const PATTERNS: readonly ConflictPattern[] = [
       "`owned-tree` takes each side's COMMITTED blob instead, so every kept name holds the bytes it hashes. The writer then deletes the orphan, which is the deletion the `staged` checkpoint allows.",
   },
   {
+    id: "navbar-rail-data",
+    globs: ["**/docs/assets/navbar/rail-*.js"],
+    strategy: "owned-tree",
+    prunedBy: "navbar:assets",
+    why:
+      "the shared navbar rail data: `rail-<hash>.js`, named by the content hash of the rail JSON it carries (harness-rail.ts), so a changed rail is a NEW file and the old one is orphaned. " +
+      "`navbar:assets` deletes every rail file no committed page names, and its --check fails on one. " +
+      "Both sides of a merge add their own hash, so `take-base` would `git rm` the branch's and `checkout --theirs` cannot apply; `owned-tree` keeps each side's committed blob and the writer prunes the loser. Found 2026-10-06 on #2197, refused as `no declared pattern`.",
+  },
+  {
     id: "readme-generated-regions",
     globs: ["**/README.md"],
     strategy: "generated-regions",

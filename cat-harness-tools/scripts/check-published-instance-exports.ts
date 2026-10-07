@@ -623,6 +623,56 @@ export function unpublishedInstanceSchemas(
 const EXPORTED_CONST = /^export\s+const\s+([A-Za-z_$][\w$]*)\s*[:=]/gm;
 
 /**
+ * A top-level export LIST — `export { A, B as CSchema }`, with or without a
+ * `from` clause. Group 1 is `type` for a type-only list, which exports no
+ * value and is skipped; group 2 is the specifiers, which may span lines.
+ */
+const EXPORTED_LIST = /^export\s+(type\s+)?\{([^}]*)\}/gm;
+
+/**
+ * A top-level `export * from` — group 1 `type` when type-only, group 2 the
+ * namespace name of `export * as N from`, which IS a single readable name.
+ */
+const EXPORTED_STAR = /^export\s+(type\s+)?\*\s*(?:as\s+([A-Za-z_$][\w$]*)\s+)?from\b/gm;
+
+/**
+ * The value names a module's TEXT says it exports, by the three forms above,
+ * and whether it also has a bare `export * from`.
+ *
+ * Re-exports count (bean `4ak5` follow-up, owner-approved 2026-10-05):
+ * `folio-assistant-core/schemas/materialization.ts` re-exports
+ * `SignatureSchema`, `SourceProvenanceSchema` and `FixitySchema` with
+ * `export { … }`, which the publisher's import walk always saw and this half
+ * never did. The exported name is the one AFTER `as`, since that is the key
+ * the importer gets. A specifier marked `type` exports no value and is
+ * skipped.
+ *
+ * A bare `export *` is reported, never followed: the names it exports live in
+ * another module's text, and reading that would make this half a second
+ * import walker — the publisher's job. So `star` is the third state, "could
+ * not determine from the text", and the caller turns it into a finding.
+ */
+export function declaredExportNames(text: string): { names: string[]; star: boolean } {
+  const names = [...text.matchAll(EXPORTED_CONST)].map((m) => m[1]!);
+  for (const m of text.matchAll(EXPORTED_LIST)) {
+    if (m[1] !== undefined) continue;
+    for (const raw of m[2]!.split(",")) {
+      const spec = raw.trim();
+      if (spec === "" || /^type\s/.test(spec)) continue;
+      const named = /^(?:[A-Za-z_$][\w$]*|"[^"]*"|'[^']*')\s+as\s+([A-Za-z_$][\w$]*)$/.exec(spec) ?? /^([A-Za-z_$][\w$]*)$/.exec(spec);
+      if (named) names.push(named[1]!);
+    }
+  }
+  let star = false;
+  for (const m of text.matchAll(EXPORTED_STAR)) {
+    if (m[1] !== undefined) continue;
+    if (m[2] !== undefined) names.push(m[2]);
+    else star = true;
+  }
+  return { names: [...new Set(names)], star };
+}
+
+/**
  * Bean `4ak5` item 1, part 2 — does every public Zod schema a planned
  * instance HAS reach its published `<stub>/schema/zod/`?
  *
@@ -630,8 +680,9 @@ const EXPORTED_CONST = /^export\s+const\s+([A-Za-z_$][\w$]*)\s*[:=]/gm;
  * every exported const named `*Schema` whose value is a Zod schema, in the
  * top-level `.ts` modules (not `*.test.ts`) of the instance's schemas
  * directory. What the instance HAS is read here from the modules' text — each
- * `export const …Schema` — and then confirmed a Zod value by importing the
- * module (`isZodSchema`, the repository's one answer to "is this Zod"). What
+ * exported name ending `Schema` ({@link declaredExportNames}) — and then
+ * confirmed a Zod value by importing the module (`isZodSchema`, the
+ * repository's one answer to "is this Zod"). What
  * the publisher WRITES is {@link scannedInstanceSchemas}, the function the
  * deploy calls. The two halves enumerate independently: a scan that lost a
  * module, or a renderer that dropped an export, disagrees with the text.
@@ -641,10 +692,13 @@ const EXPORTED_CONST = /^export\s+const\s+([A-Za-z_$][\w$]*)\s*[:=]/gm;
  * failure the publisher reports (`zodProblems`) ARE findings: the deploy
  * exits 1 on the same, so the gate that passes it must too.
  *
- * Re-exports (`export { X } from`) are not seen by the text half, so this
- * guards against UNDER-publishing what a module declares, not against
- * publishing more. `publish` is injectable so a test can stand in a publisher
- * that drops one and watch this fail.
+ * The text half reads `export const`, `export { … }` lists (re-exports
+ * included) and `export * as N` ({@link declaredExportNames}). A bare
+ * `export * from` is a finding — its names cannot be read from this module's
+ * text, so whether they are published is undetermined, and undetermined is
+ * never green. This guards against UNDER-publishing what a module declares,
+ * not against publishing more. `publish` is injectable so a test can stand in
+ * a publisher that drops one and watch this fail.
  */
 export async function unpublishedZodSchemas(
   plan: readonly PlannedExport[] = instanceExportPlan(REPO_ROOT),
@@ -667,9 +721,14 @@ export async function unpublishedZodSchemas(
       for (const f of readdirSync(dir).map(String).sort()) {
         if (!f.endsWith(".ts") || f.endsWith(".test.ts") || f.endsWith(".d.ts")) continue;
         const module = relative(root, join(dir, f)).split("\\").join("/");
-        const names = [...readFileSync(join(dir, f), "utf-8").matchAll(EXPORTED_CONST)]
-          .map((m) => m[1]!)
-          .filter((n) => PUBLIC_SCHEMA_EXPORT.test(n));
+        const declared = declaredExportNames(readFileSync(join(dir, f), "utf-8"));
+        if (declared.star) {
+          out.push(
+            `${p.path}: ${module} has a bare \`export * from\`, so the gate cannot read from its text which *Schema ` +
+              "names it re-exports — whether they are published could not be determined. Name them in an `export { … }` list",
+          );
+        }
+        const names = declared.names.filter((n) => PUBLIC_SCHEMA_EXPORT.test(n));
         if (names.length === 0) continue;
         let mod: Record<string, unknown>;
         try {

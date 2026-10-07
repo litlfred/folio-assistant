@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g4o0
 title: 'SEARCH BAND: search + locale selector in the fa-glass-band; no overlap, magnifier right, one-click toggle'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-10-05T15:09:32Z
-updated_at: 2026-10-05T15:10:06Z
+updated_at: 2026-10-06T05:23:38Z
 parent: folio-assistant-o3xy
 ---
 
@@ -17,3 +17,8 @@ Owner, 2026-10-05 (two screenshots): the open search draws its 'Search everywher
 - PR green and marked ready
 
 Issue #2201. Branch claude/zealous-gates-3o9ma2-search-band.
+
+
+## Summary of Changes
+
+Landed in #2211 (follow-up to #2201, now closed): search and the locale globe sit in the fa-glass-band, search starts closed, the magnifier stays on the right, one click opens and one closes, and the text is kept on close.

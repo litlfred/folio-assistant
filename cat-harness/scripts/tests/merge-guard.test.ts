@@ -14,6 +14,11 @@
  * test names the check it is about and asserts that check's status; the
  * variants that isolate one reason (a signed marker, a re-timed question) say
  * what they changed from the real record and why.
+ *
+ * The tests here that read the aggregate repository's own root
+ * (`feature-staging.yml`, `merge-main.yml`) live in
+ * `test/merge-guard-workflows.test.ts` (bean
+ * `ho66`): standing alone, cat-harness has no such root to read.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -26,7 +31,6 @@ import {
   getAll,
   isBotMerge,
   openQuestions,
-  parseMergeMainDispatches,
   readyMarkers,
   sameRepoNext,
   signingSession,
@@ -156,6 +160,26 @@ describe("check 2 — ready for review", () => {
     const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
     s.comments.push(signed(2, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
     expect(status(s, "ready-for-review", { mergingSession: STEWARD }).status).toBe("pass");
+  });
+
+  test("no Merge Manager active: the PR's OWN session may mark it ready and merge it", () => {
+    const s = real(1957);
+    const own = signingSession(s.pr.body)!;
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(3, shift(ev.created_at!, 4_000), own, `ready: ${s.pr.head.sha.slice(0, 11)}`));
+    expect(status(s, "ready-for-review", { mergingSession: own }).status).toBe("refuse");
+    const c = status(s, "ready-for-review", { mergingSession: own, noMergeManager: true });
+    expect(c.status).toBe("pass");
+    expect(c.detail).toContain("no Merge Manager is active");
+  });
+
+  test("no Merge Manager active still refuses a ready flip nobody from the PR's own session signed", () => {
+    const s = real(1957);
+    const ev = s.timeline.find((e) => e.event === "ready_for_review")!;
+    s.comments.push(signed(4, shift(ev.created_at!, 60_000), STEWARD, "Marking ready and labelling."));
+    const c = status(s, "ready-for-review", { mergingSession: STEWARD, noMergeManager: true });
+    expect(c.status).toBe("refuse");
+    expect(c.detail).toContain("cannot be attributed to the PR's own session");
   });
 
   test("never a draft: nothing to attribute, passes", () => {
@@ -357,14 +381,6 @@ describe("check 5 — a held run on a bot-merged head is judged by its dispatch"
     expect(c.detail).toContain("Code-quality gates: failure");
     expect(c.detail).not.toContain("judged by its green");
     expect(status(real(1957), "ci").status).toBe("pass");
-  });
-
-  test("parseMergeMainDispatches reads today's merge-main.yml, and refuses a line it cannot read", () => {
-    const yml = readFileSync(join(import.meta.dir, "..", "..", "..", ".github", "workflows", "merge-main.yml"), "utf8");
-    expect(parseMergeMainDispatches(yml)).toEqual([...DISPATCHED]);
-    expect(parseMergeMainDispatches('for wf in a.yml b.yml; do\n  gh workflow run "$wf" --ref x\ndone')).toEqual(["a.yml", "b.yml"]);
-    expect(parseMergeMainDispatches('for wf in $WORKFLOWS; do gh workflow run "$wf"; done')).toBeUndefined();
-    expect(parseMergeMainDispatches("gh workflow run code-quality-gates.yml")).toBeUndefined();
   });
 });
 

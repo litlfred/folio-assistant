@@ -171,6 +171,24 @@ test("todos: a phrase from a todo's summary finds it, and its source file is fet
   await expect(pre).toContainText(knownTodo.comment.trim().split(/\s+/).slice(0, 4).join(" "));
 });
 
+/**
+ * The search box is debounced, and a result list is redrawn when each search
+ * lands. A body opened just before a redraw used to vanish with the item it
+ * was in -- the intermittent CI failure of the todos and library tests above,
+ * on a runner slow enough that the payload fetch outlived the 150 ms debounce.
+ * The redraw is forced here rather than raced for.
+ */
+test("a redraw that still lists a row keeps the body the reader opened", async ({ page }) => {
+  await open(page, "beans");
+  const query = `"${beanPhrase}"`;
+  const pre = await openResult(page, query, knownBean.title);
+  const first = knownBean.body.trim().split("\n")[0]!.trim().slice(0, 40);
+  await expect(pre).toContainText(first);
+  await page.evaluate((q) => (window as unknown as { __sliceSearch(t: string): Promise<unknown> }).__sliceSearch(q), query);
+  await expect(pre).toContainText(first);
+  await expect(page.locator("#out li pre")).toHaveCount(1);
+});
+
 // ── library ──────────────────────────────────────────────────────────────
 
 const libraryIndex = JSON.parse(readFileSync(join(DOCS, "assets", "library", "index.json"), "utf-8")) as { entries: { id: string; title: string }[] };

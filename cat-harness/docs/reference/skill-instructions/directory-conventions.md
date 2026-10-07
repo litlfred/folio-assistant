@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/kg-core/directory-conventions.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/directory-conventions.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/directory-conventions.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/directory-conventions.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/directory-conventions.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Directory conventions — what an instance declares it scans
@@ -159,8 +159,10 @@ decides it.
 | `boards` | **harness** | boards — one file each, `"$schema": "folio-board/v1"`. A board is a **diagram OF** a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — *"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter."* | no |
 | `board-positions` | **harness** | where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The **Diagram Interchange** half: it points at notes and is never pointed back at, which is why a note carries no `x`, `y`, `board` or `position`. `state` rather than `content`, because a running process writes it every time somebody moves a note. | no |
 | `binary-release` | **harness** | published binary releases — one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. **Never the bytes**: the schema is strict throughout. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option A); Option B was reusing `materialization`, and bean `gpdo`'s `compiled` purpose landing since has sharpened that mismatch rather than softening it — all four materialization purposes are purposes of A COPY THIS INSTANCE HOLDS, while a release is a publication UPSTREAM that stays true after every local copy is gone. The two compose rather than substitute. `state`: the release pipeline writes it, and re-running produces a DIFFERENT release rather than the same one again, which is why this is not `derived` although `ig-metadata-index` above is. `recordsWork: false` — a published release is a completed fact, not something anybody is partway through. The case it exists for is the deploy purge: after the WHO deploy phase deletes its >100 MB files, nothing else anywhere records that they existed, so a purged asset must still say where to fetch it and why it went — a removal with no recorded reason cannot be told from an accident. Shape in `schemas/binary-release.ts`. | no |
+| `basic-cdn-site` | **harness** | a published static site on a CDN that serves files by path only: no media-type mapping, no redirects, no headers. One `basic-cdn-site/1.0.0` document describes it: its root URL, its routes (the release root, the staging-preview template `STAGING/<slug>/`, the per-instance sub-sites), the commit it was built from, and its files as archive entries. `derived`: built from the renderable graphs its directory's `derivedFrom` names, by a build Tool, and put on the CDN by the Tool its `storage.tool` names. GitHub Pages is one such CDN. | no |
+| `cdn-site` | **harness** | a published site on a CDN that also controls media types, redirects and response headers. One `cdn-site/1.0.0` document: everything a `basic-cdn-site` carries, plus `mimeTypes`, `redirects` and `headers`. Declared ahead of its first instance so a CDN deployment (who-iris, beans l9v6 and xies) lands in a kind rather than widening `basic-cdn-site`, whose point is what it cannot do. | no |
 | `themes` | **harness** | themes an instance DERIVED from a source it holds — a served stylesheet, or a style guide's stated rules. One Theme node each, carrying `kind: sticky \| webpage \| publication`; the palette vocabulary is shared across every kind and only the geometry varies. Every value cites where it was measured. NOT the platform's own twelve themes, which are furniture in `cat-harness/schemas/themes.ts` — a palette read off a WHO style guide is subject matter. | no |
-| `document-kinds` | **harness** | DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `folio-document-kind/v1` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767. | no |
+| `document-kinds` | **harness** | DOCUMENT KINDS a harness contributes — named structures of sections a document authored with it follows, `fixed` (exactly these sections) or `semi-fixed` (these required, others allowed). One `document-kind/1.0.0` JSON each; every kind and section names its sources, and `computedFrom` names the declared graphs a section derives from. Not a content profile: a profile constrains which BLOCK KINDS a folio may contain and is a compile-time union in core; a kind is a structure, contributed as data. Stage D5 of the smart-* separation, #1767. | no |
 | `session-state` | **harness** | a SESSION's context — the acting actor, the instances it has open, the beans it claimed and what it waits on. Distinct from `workflow-state`, which is where ONE instance got to: a session spans processes, and a session with nothing open is the commonest state there is. `actor` is required because nothing else can supply it. **Registered ahead of a directory**: nothing writes one yet, and the state machine that will is bean `3nfv`. Shape in `schemas/session-context.ts`; read with [`session-context`](session-context.md). | no |
 | `interaction` | **harness** | how a PERSON wants to be asked — committed, read at session start by every agent. `context`: read during a process, never written by one; it changes when a person states a preference. Also `harness.config.json`'s `interaction` key, which defaults here, so the declaration and the config name one place. | no |
 | `issue-marks` | **harness** | how far an agent has read an issue — `lastCommentId`, `lastUpdatedAt`, `checkedAt`, one file per issue. **Not the comments**: an id and two timestamps, never a body. Two marks because a comment EDITED after being read keeps its id. Read with [`issue-working`](issue-working.md); shape in `src/issue-watch/seen-comments.ts`. | no |
@@ -248,7 +250,8 @@ decides it.
 > *"narrative/audio/visual content with text should be translatable. its not
 > so much the node schema itself but its content (e.g. markdown, bpmn) should
 > be translatable"*: translatability is a property of a **format within a
-> content type**, which `schemas/translation-tools.ts` already declares and
+> content type**, which the owning instance declares under
+> `contentTranslations` (collected by `schemas/translation-tools.ts`) and
 > `isTranslatable` already answers, not a property of a directory.
 >
 > `.po` catalogues are the genuine exception, and that is what
@@ -813,11 +816,13 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
   declared repository branch and `path` is where a mount of it lands. A later
   kind (a graph database) is a new member of the union: additive, and a
   compile error at every consumer that has not decided what to do with it.
-- **The branch NAME is declared once**, in `cat-harness/scripts/special-branches.json`
-  (with its legacy spellings and its mirrors). A branch source names its
-  branch; the resolver attaches the matching row, and a branch no row
-  declares is a finding (`subgraph-source.test.ts`), never a guess at what to
-  fetch.
+- **The branch NAME is declared once**, on the directory entry that owns it:
+  its `storage` (or `source`). There is no central table — `special-branches.json`
+  was removed on 2026-10-05 (owner: *"dont use /get rid of"*). A script that
+  resolves a family's branch reads the folio's declaration first and keeps
+  its built-in names only as a fallback (`cache-family-fallbacks.test.ts`
+  keeps those in step). A branch no declaration names is a finding
+  (`subgraph-source.test.ts`), never a guess at what to fetch.
 - **The instance config overrides it, by id.** `<instance>.config.json` →
   `"subgraphSources": { "<dir-id>": <source> }`. The declaration says what the
   subgraph IS; the config says how THIS instantiation is set up, and where
@@ -838,8 +843,11 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
 - **Mounting dispatches on the kind**, and the process is
   `processes/kg/mount-subgraph.bpmn`: `directory` is the checkout path in place
   (a write is a commit); `branch` + `tip` is mounted from the tip and spliced
-  back without force (`branch-store mount`/`push`); a kind with no flow is
-  refused with its own exit code rather than read as an empty directory.
+  back without force (`branch-store mount`/`push`); `remote` is another
+  repository's tree at a full 40-character pin, laid down and locked by
+  `mount:remote` and never written back (the [`remote-mount`](remote-mount.md)
+  skill, bean `0mpw`); a kind with no flow is refused with its own exit code
+  rather than read as an empty directory.
 - **The KG export publishes the resolved source** on the Subgraph node, as
   `contentSource` — `dcterms:source`, with `kind` (`dcterms:type`), `branch`
   (`dcterms:identifier`), `keyedBy` and `declaredIn` scoped inside it. A
@@ -849,6 +857,118 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
 `state` on `main` and still `state` on `cat/cat-harness/todos`; a `context`
 graph could be mounted from a branch and stays read-only. See
 [`content-context-and-state-graphs`](content-context-and-state-graphs.md).
+
+### Where a NEW instance's state lives — on its own branch, by default (owner, 2026-10-06)
+
+**This subsection owns the rule.** The scaffold skills
+([`getting-started`](getting-started.md), `folio_init`)
+point here and do not restate it.
+
+Measured 2026-10-06: a folio scaffolded by `folio_init` carried `beans/` and
+`todos/` on `main` from its install commit, and its declaration named neither,
+so nothing could say where its work plan lived. The scaffold never asked the
+`source` resolver. The owner's ruling: *fix the process*. Bean `hp54`.
+
+- **The default is a property of the KIND, read once at scaffold time.** A
+  graph typology may carry `newInstanceSource: { kind: "branch", keyedBy:
+  "tip" }`, beside `perInstance`. `beans`, `todos` and `fsh-guts` carry it
+  (`fsh-guts` since 2026-10-06, so a new instance's first cutover has
+  somewhere to deposit — see the main half below). It is a storage fact and
+  says nothing about `holds`: `fsh-guts` stays `context`. It has no
+  `branch`, because a kind has no branch name to give. `folio_init` composes
+  the name and writes a **complete** `source` into the new instance's own
+  `<instance>.json`. After that the declaration is the one answer. The
+  resolver never reads `newInstanceSource`, so it is not a second place
+  answering where the content lives. It also cannot move an existing
+  instance whose entry declares no source. This repository's own `beans/`
+  and `todos/` stay where they are until their cutover (`fs43`).
+- **The branch name is `cat/<instance>/<directory-id>`**, built by
+  `instanceStateBranch` in `schemas/subgraph-source.ts`. For example, the
+  `dpi-h-ra` instance's branches are `cat/dpi-h-ra/beans` and
+  `cat/dpi-h-ra/todos`. This is the owner's
+  `cat/<harness>/<name>` ruling (2026-10-02) applied to a folio. One name does
+  three jobs:
+  - it names the declaration (`<instance>.json`);
+  - it prefixes the bean ids (`.beans.yml` → `<instance>-`);
+  - it names the state branches.
+
+  The last segment is the directory **id**, the key that `branch-store
+  mount --id` and `state:seed --id` use.
+- **`folio_init` resolves each state graph through the one resolver** (after
+  writing the declaration and config, so a `subgraphSources` override is
+  honoured), and acts on the resolved source:
+
+  | resolved | what `folio_init` does |
+  |---|---|
+  | `branch` | Declares the graph. Does **not** write it into the checkout. Adds `/<path>/**` to `.gitignore` so a mount is never committed. Prints the seed command. |
+  | `directory` | Writes the graph **and** declares it. Before `hp54` the scaffold wrote it and did not declare it. |
+
+- **Seeding is printed, not performed.** No platform command creates a new
+  state branch:
+  - `branch-store` refuses to ("seeding … is a steward act");
+  - `state:seed` only refreshes an existing seed.
+
+  So `folio_init` prints a self-contained shell block. Run it once from the
+  new repository. It pushes an orphan tip branch holding:
+  - a `state-manifest/v1` manifest marked `authoritative: true`, because a
+    new instance has no `main` copy;
+  - a README;
+  - the graph's starting files. For `beans`, those are `beans/beans.json`
+    and `beans/defs/`, and the seed must carry them: `beans:claim` reads
+    `beans.json` from the branch and refuses to guess where `defs` is.
+
+  Then `state:mount` puts each branch at its declared path. This was checked
+  end to end on a fresh repository with a bare remote: init, seed, mount,
+  `beans create`, `branch-store push --id beans`, `beans:claim`.
+- **Cutting an EXISTING instance over is two halves, and both have a command.**
+  Run both from the instance's own repository. Every default is the cwd's git
+  toplevel, and `--repo-root <dir>` overrides it. Until `hp54` the default
+  was the platform checkout, so a folio that links the platform refreshed
+  the platform's branch.
+
+  1. **The branch half:** `state:seed --id <id> --authoritative`. The branch
+     becomes the store.
+  2. **The main half:** `state:seed --id <id> --cutover`. It is a dry run
+     that reports files and bytes and the deposit it would make. Add
+     `--commit` to deposit, then stage `git rm -r <path>` and a
+     `/<path>/**` ignore line as **one** commit naming the branch, the tree
+     id and the deposit. It never pushes `main`. It refuses unless all of
+     these hold:
+     - the manifest says `authoritative: true`;
+     - the manifest says `keyedBy: "tip"`, or the mount would be `corrupt`;
+     - a declaration keeps the path on that branch;
+     - nothing under the path is uncommitted;
+     - `HEAD:<path>` and the branch's `<path>` are the same tree id, so the
+       two copies are byte-identical;
+     - the directory's **own** instance declares a `fsh-guts` graph kept at a
+       branch tip, and the deposit into it lands and re-reads verified.
+
+  **What a cutover removes goes to `fsh-guts` first — the one rule for it**
+  (owner, 2026-10-06: *"cutover dirs should go to fsh-guts"*). Before any
+  `git rm`, `--commit` packs `<path>/` at `HEAD` with `git archive`, checks
+  the pack extracts to **the same tree id** it is about to remove, and
+  splices the existing `retired/` pair onto the trashcan's tip through
+  `branch-store` (never a force push, `expect: null` so it never
+  overwrites): `retired/cutover-<instance>-<dir>-<tree12>.tar.gz` plus a
+  same-basename `.md` declaring `folio-fsh-guts/v1`, `kind:
+  cutover-snapshot`, `movedFrom`, `movedOn`, `reason: cutover`, the
+  instance, `sourceCommit`, `tree` and `authoritativeBranch`. It re-reads
+  the tip, and only if both blobs are there does it make the removal
+  commit. No trashcan declared, a trashcan not on a tip, a branch that is
+  not there, or a push that did not land: **refused, `main` untouched**,
+  with the fix named. This is not a second disposal of beans — the branch
+  is still the live store; the deposit is the copy `main` last held.
+  `deletion-requires-confirmation` still governs: the dry run is the
+  report, and `--commit` is only run on the owner's explicit go.
+
+  Then run `state:mount`. Both halves, and the refusals, were checked end
+  to end on a fresh repository.
+- **A state directory nobody declared is a finding**: `undeclared-state` in
+  `check:declared-dirs`. Every other check there compares declarations to
+  disk. This one runs the other way, for the conventional state paths only
+  (`DEFAULT_DIRECTORIES` entries whose kinds all `holds: "state"`). It
+  reports and never removes anything. Whether to move the content off `main`
+  is the owner's call ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
 
 ## What a derived subgraph is computed FROM — `derivedFrom` (owner, 2026-10-04)
 
@@ -1094,8 +1214,8 @@ one is argued.
    (§"Node schemas, one per `$schema` family").
 4. **Declare only what exists**, or say why not with `absent: { reason }`.
    **Where its content comes from** is `source` — omit it for the checkout
-   directory; a branch source names a branch declared in
-   `special-branches.json` (§"Where a subgraph gets its content").
+   directory; a branch source names its branch on the entry itself
+   (§"Where a subgraph gets its content").
 5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
    for, the `visualiser` that renders it; an opt-out carries its reason
    (`SubgraphCoverageSchema`). Without a skill the directory is unreachable
@@ -1598,5 +1718,6 @@ up: [`cat-harness/docs/proposals/instance-versioning.md`](../../proposals/instan
 
 | process | step(s) that name it |
 |---|---|
+| [Remote-mount a dependency](../../processes/mount-dependency.html) | Mount each instance at its declared path |
 | [Mount a declared subgraph](../../processes/mount-subgraph.html) | Resolve the subgraph's content source; Use the checkout path in place; Mount the branch tip at the declared path; Refuse: no flow for this source kind |
 

@@ -301,18 +301,21 @@ export interface EntryTitleRead {
  *
  * `structure` and `referenced` are passed in when the caller has already read
  * them, so the generator does not parse a file twice. The catalogue lives at
- * the INSTANCE root, two levels above `library/<slug>`.
+ * the INSTANCE root, two levels above `library/<slug>` — above `locatedAt`,
+ * which differs from `dir` only for a staged entry being built for the
+ * library it will be promoted into (bean `apui`).
  */
 export function readTitleCandidates(
   dir: string,
   slug: string,
   pre: { structure?: Json; referenced?: Json; sourceFiles?: readonly string[] } = {},
+  locatedAt: string = dir,
 ): EntryTitleRead {
   const unreadable: { file: string; why: string }[] = [];
   const from: EntryTitleRead["from"] = {};
   const candidates: TitleCandidates = { slug, sourceFiles: pre.sourceFiles ?? [] };
 
-  const cat = catalogueRecordFor(dirname(dirname(dir)), slug, unreadable);
+  const cat = catalogueRecordFor(dirname(dirname(locatedAt)), slug, unreadable);
   if (cat) {
     candidates["dc-record"] = dcValue(cat.rec, "title");
     if (candidates["dc-record"]) from["dc-record"] = `${cat.file} dc.title`;

@@ -67,7 +67,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { siteDirFor } from "../schemas/cat-harness.js";
+import { instanceRootFor, siteDirFor } from "../schemas/cat-harness.js";
 import { graphTypologyRowDecor } from "./lib/graph-typology-nav.js";
 import { kindTitle } from "./lib/nav-label.js";
 import { navMarkFields, type HarnessMark } from "./lib/harness-mark.js";
@@ -79,12 +79,13 @@ import {
   type NavbarModel,
 } from "./lib/navbar.js";
 
-const ROOT = join(dirname(new URL(import.meta.url).pathname), "..", "..");
 // THE SITE ROOT IS ASKED FOR, never written down. `site-dir-single-answer`
 // refuses the literal in source, and rightly: this generator writes into the
 // site and a second copy of that string is a second answer to where the site
 // is. It caught this file on its first run.
-const INSTANCE = join(ROOT, "cat-harness");
+// The instance this generator belongs to, found by its declaration: in the
+// monorepo `<repo>/cat-harness`, standalone the repository root (bean `uxn1`).
+const INSTANCE = instanceRootFor(dirname(new URL(import.meta.url).pathname));
 const SITE = join(INSTANCE, siteDirFor(INSTANCE));
 const DATA = join(SITE, "_data", "harness.json");
 const OUT = join(SITE, "_includes", "generated", "navbar-footer.html");
@@ -115,6 +116,55 @@ export interface Harness {
   mark?: HarnessMark | null;
   instantiated?: boolean;
   visualisations?: Visualisation[];
+  needs?: string[];
+}
+
+/**
+ * The harness rows for an IG REPOSITORY'S OWN SITE (#2235 F1), the same view
+ * the rail's `--instance` gives a page it injects into (`instanceHarnesses`):
+ * this instance first, then what it needs, transitively, and nothing else.
+ *
+ * The rows are the main site's (`docs/_data/harness.json`), so their paths
+ * are the main site's. On this site the instance IS the root: a path under
+ * `/<instance>/` becomes the same path at `/`; every other path is the main
+ * site's page and becomes an absolute URL under `linkRoot`, which Jekyll's
+ * `relative_url` leaves as written.
+ */
+export function instanceView(harnesses: readonly Harness[], instance: string, linkRoot: string): Harness[] {
+  const byName = new Map(harnesses.map((h) => [h.name, h]));
+  const reach = new Set([instance]);
+  for (const queue = [instance]; queue.length > 0; ) {
+    for (const n of byName.get(queue.shift()!)?.needs ?? []) {
+      if (reach.has(n)) continue;
+      reach.add(n);
+      queue.push(n);
+    }
+  }
+  const root = linkRoot.replace(/\/$/, "");
+  const own = `/${instance}/`;
+  const map = (p: string | null | undefined): string | undefined => {
+    if (!p) return undefined;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return p;
+    if (p === own.slice(0, -1) || p.startsWith(own)) return `/${p.slice(own.length)}`;
+    return `${root}${p.startsWith("/") ? "" : "/"}${p}`;
+  };
+  return harnesses
+    .filter((h) => reach.has(h.name))
+    .sort((a, b) => (a.name === instance ? -1 : b.name === instance ? 1 : 0))
+    .map((h) => {
+      const href = h.name === instance ? "/" : map(h.href);
+      const { href: _drop, ...rest } = h;
+      return {
+        ...rest,
+        ...(href ? { href } : {}),
+        instantiated: true,
+        visualisations: (h.visualisations ?? []).map((v) => {
+          const { path: _p, ...vr } = v;
+          const path = map(v.path);
+          return path ? { ...vr, path } : vr;
+        }),
+      };
+    });
 }
 
 /**
@@ -266,6 +316,29 @@ function main(): void {
   // fsh-guts is NOT emitted into `.fa-nav-top` any more: the owner put it in
   // the declared icon row, "with the others" (2026-10-02, #1925), which
   // `mountNavIconRow` draws from `navbarIcons`. One placement, not two.
+  // `--instance <name> --link-root <main site URL> [--title <label>] [--out <file>]`:
+  // the navbar of an IG repository's own site (#2235 F1). Written into that
+  // site's composed shell, never over the committed include.
+  const argv = process.argv;
+  const opt = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
+  const instance = opt("--instance");
+  if (instance) {
+    const linkRoot = opt("--link-root");
+    const out = opt("--out");
+    if (!linkRoot || !out) {
+      console.error("gen-navbar-include: --instance needs --link-root and --out (the shell's _includes/generated/navbar-footer.html)");
+      process.exit(2);
+    }
+    const rows = instanceView(data.harnesses ?? [], instance, linkRoot);
+    if (!rows.some((h) => h.name === instance)) {
+      console.error(`gen-navbar-include: no harness named ${instance} in ${DATA}`);
+      process.exit(2);
+    }
+    mkdirSync(dirname(out), { recursive: true });
+    writeFileSync(out, render(rows, opt("--title") ?? instance, false));
+    console.log(`wrote ${out} — ${instance}'s own navbar: ${rows.map((h) => h.name).join(", ")}`);
+    return;
+  }
   const next = render(data.harnesses ?? [], data.title ?? "folio-assistant", false);
 
   let current: string | undefined;

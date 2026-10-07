@@ -10,6 +10,11 @@
  * a defect once it has gone. Whether the committed PAGE matches the committed
  * indexes is `lsi:viz:check`'s question — a gate, which reads the checkout or
  * the branch and says UNKNOWN on a miss — and it is not re-asked here.
+ *
+ * The tests of this file that read the whole checkout (reads the LSI indexes
+ * every instance in the checkout publishes) live in
+ * `test/gen-lsi-viz-checkout.test.ts` (bean `7zz1`): standing alone,
+ * cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
@@ -76,23 +81,6 @@ describe("the LSI viewer page", () => {
   test("has a section for every index it read", () => {
     expect(page).toContain("## " + FIXTURE.instance + " / " + FIXTURE.graph);
   });
-
-  // Bean `tqjj`. The "committed indexes" and "units indexed" tiles are GONE:
-  // both moved whenever any file was added to any indexed graph, which is the
-  // `y7b3` class and cost 319 of the last 400 commits on `main`. What is
-  // asserted instead is the property that replaced them — the committed page
-  // is a function of the TREE, so it reads the same with and without an index
-  // to hand, and only `--detail` adds anything that an index's content moves.
-  test("the committed page carries no value an index's content moves", () => {
-    const committed = committedPage();
-    for (const n of [FIXTURE.units, FIXTURE.terms].map(String)) {
-      expect(committed).not.toContain("<b>" + n + "</b>");
-    }
-    expect(committed).not.toContain("committed indexes");
-    expect(committed).not.toContain("units indexed");
-    expect(committed).not.toContain("## " + FIXTURE.instance + " / " + FIXTURE.graph);
-    expect(committed).not.toContain(FIXTURE.fingerprint);
-  }, 30_000);
 
   test("the committed page is the same whether or not an index is to hand", () => {
     // `renderCommitted` takes no source, which is the point: there is no

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-04T17:33:33Z
-updated_at: 2026-10-05T12:23:07Z
+updated_at: 2026-10-06T06:26:49Z
 parent: folio-assistant-fs43
 ---
 
@@ -69,3 +69,7 @@ The five local side tables that were left in place are now derived from fields o
 
 ## 2026-10-05: re-parented from dmx1 to folio-assistant-fs43
 dmx1 closed (#2180), and check:bean-rollup refuses a completed container with an open child. sod4's open rows are not distributed-kinds work: #2 is the QA criteria, and the small rows belong to other beans. So sod4 moves up one level, under dmx1's own parent, instead of keeping dmx1 open.
+
+
+## Re-measured 2026-10-06 on main at 2fdbb5109a — not closable yet
+Umbrella the owner chose to keep open. Spot-checks: `merge-train.ts` still runs `smart-base:smart-kg-l1:check` (last row open); `cat-harness/scripts/special-branches.json` still exists here (#12 open; #2192 retires it). `PUBLISHED_ELSEWHERE` no longer greps and `check-avatar-instances.ts` has `EXEMPT = {}`: rows #8 and #9 may be done but are unticked — verify and tick on the next pass.

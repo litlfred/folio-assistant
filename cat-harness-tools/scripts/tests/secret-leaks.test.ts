@@ -13,7 +13,7 @@ import { join } from "node:path";
 
 import { describe, expect, test } from "bun:test";
 
-import { SECRET_PATTERNS, scanTree } from "../check-secret-leaks.ts";
+import { SECRET_PATTERNS, scanRoots, scanTree } from "../check-secret-leaks.ts";
 
 function tree(files: Record<string, string>): string {
   const root = mkdtempSync(join(tmpdir(), "secrets-"));
@@ -90,5 +90,37 @@ describe("the pattern set", () => {
         /\\b\(?[A-Za-z_-]{2,}/.test(src) || src.includes("BEGIN") || src.includes("api[_-]?key");
       expect({ name, anchored }).toEqual({ name, anchored: true });
     }
+  });
+});
+
+describe("scan roots come from the instances present (bean 0r7u)", () => {
+  const instance = (root: string, name: string, dirs: Array<[string, string]>) => {
+    mkdirSync(join(root, name), { recursive: true });
+    writeFileSync(
+      join(root, name, `${name}.json`),
+      JSON.stringify({
+        name,
+        version: "0.1.0",
+        directories: dirs.map(([id, kind]) => ({ id, path: `${id}/`, graphTypologies: [kind] })),
+      }),
+    );
+    for (const [id] of dirs) mkdirSync(join(root, name, id), { recursive: true });
+  };
+
+  test("standalone, with no instance above, only the fixed roots are scanned", () => {
+    const root = mkdtempSync(join(tmpdir(), "roots-"));
+    expect(scanRoots(root)).toEqual([".github", "cat-harness", "beans", "package.json"]);
+  });
+
+  test("an instance's skills and glossary graphs are added; its other graphs are not", () => {
+    const root = mkdtempSync(join(tmpdir(), "roots-"));
+    instance(root, "acme", [["skills", "skills"], ["glossary", "glossary"], ["library", "library"]]);
+    expect(scanRoots(root)).toEqual([".github", "cat-harness", "beans", "package.json", "acme/glossary", "acme/skills"]);
+  });
+
+  test("a directory under a fixed root is not scanned twice", () => {
+    const root = mkdtempSync(join(tmpdir(), "roots-"));
+    instance(root, "cat-harness", [["skills", "skills"]]);
+    expect(scanRoots(root)).toEqual([".github", "cat-harness", "beans", "package.json"]);
   });
 });

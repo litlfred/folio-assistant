@@ -19,7 +19,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
-import { render, type Harness } from "../gen-navbar-include.js";
+import { instanceView, render, type Harness } from "../gen-navbar-include.js";
 import { harnessTiles } from "../harness-tiles.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
@@ -254,5 +254,30 @@ describe("a graph row says the destination's ONE name (bean `ob3m` finding 6)", 
 
   test("a kind whose page is another kind's row is listed once", () => {
     expect(out.match(/<span class="fa-nav-label">Schemas/g)?.length).toBe(1);
+  });
+});
+
+// #2235 F1: the navbar of an IG repository's OWN site.
+describe("instanceView — an instance's own site", () => {
+  const rows: Harness[] = [
+    { name: "core", href: "/core/", instantiated: true, visualisations: [{ kind: "docs", path: "/core/docs/" }] },
+    { name: "ig", href: "/ig/", instantiated: true, needs: ["base"], visualisations: [{ kind: "docs", path: "/ig/artifacts.html" }] },
+    { name: "base", href: "/base/", instantiated: false, needs: ["core"] },
+    { name: "other", href: "/other/", instantiated: true },
+  ];
+  const v = instanceView(rows, "ig", "https://main.example/site/");
+  test("the instance first, then only what it needs, transitively", () => {
+    // After the instance, the rows keep harness.json's order (the main navbar's).
+    expect(v.map((h) => h.name)).toEqual(["ig", "core", "base"]);
+  });
+  test("the instance's own pages move to this site's root; every other link is the main site's", () => {
+    expect(v[0]!.href).toBe("/");
+    expect(v[0]!.visualisations![0]!.path).toBe("/artifacts.html");
+    expect(v.find((h) => h.name === "core")!.href).toBe("https://main.example/site/core/");
+    expect(v.find((h) => h.name === "core")!.visualisations![0]!.path).toBe("https://main.example/site/core/docs/");
+  });
+  test("every row it shows is rendered — a dependency here is reachable on the main site", () => {
+    expect(v.every((h) => h.instantiated === true)).toBe(true);
+    expect(render(v, "IG")).toContain("https://main.example/site/core/");
   });
 });

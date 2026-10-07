@@ -6,7 +6,7 @@
 
 L1 source content this LAYER owns — the publications core's own vocabulary is derived FROM, one `<bib-slug>/` per ingested document. Declared 2026-09-23 on the owner's ruling that Doc-Researcher (arXiv:2510.21603v1) is part of the f-a-c subgraph, and declared rather than borrowed for the reason `methodology-adoption` §4 gives: a method is placed by OWNERSHIP so that extraction is literal, and a paper core's methodology cites from another instance's library would not lift out with it. `ingest-document.ts` refuses to guess a destination when several are declared, which is what surfaced the absence. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own and reproducing these would hand it somebody else's corpus.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-library`, holding `library`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-library`, holding `library`.
 
 | file | what it is | used by |
 |---|---|---|

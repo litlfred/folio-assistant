@@ -98,9 +98,48 @@ resolve_package() {
   return 1
 }
 
+# The family's prefixes, newest first, each ending in `/` (bean rva2; owner,
+# 2026-10-05: "make fhir and lean work same"). The IG checkout's own
+# declaration goes first — a directory with graphTypology `ig-ast` and
+# `storage.keyedBy: "family"` in its `<instance>.json` — exactly as
+# lake-cache.sh reads the Lean folio's. The built-in names stay as fallbacks;
+# no declaration, or no python3 to read one, leaves them as they were.
+# IGIT_ROOT must be set.
+ast_prefixes() {
+  local declared="" p
+  if command -v python3 >/dev/null 2>&1; then
+    declared=$(python3 - "$IGIT_ROOT" <<'PY' 2>/dev/null
+import glob, json, os, sys
+for path in sorted(glob.glob(os.path.join(sys.argv[1], "*.json"))):
+    try:
+        d = json.load(open(path))
+    except Exception:
+        continue
+    dirs = d.get("directories") if isinstance(d, dict) else None
+    if not isinstance(dirs, list):
+        continue
+    for e in dirs:
+        if not isinstance(e, dict):
+            continue
+        st = e.get("storage") if isinstance(e.get("storage"), dict) else {}
+        kinds = e.get("graphTypologies") if isinstance(e.get("graphTypologies"), list) else []
+        if "ig-ast" in kinds and st.get("keyedBy") == "family" and isinstance(st.get("branchPrefix"), str) and st["branchPrefix"]:
+            print(st["branchPrefix"].rstrip("/") + "/")
+            sys.exit(0)
+PY
+)
+  fi
+  [ -n "$declared" ] && printf '%s\n' "$declared"
+  for p in "cat/fhir-harness/fhir-ast/" "cat-fhir-ast/" "fhir-ast/"; do
+    [ "$p" = "$declared" ] || printf '%s\n' "$p"
+  done
+}
+
 cmd_list_names() {
   IGIT_ROOT=$(resolve_ig_root)
-  igit ls-remote --heads "$REMOTE" 'refs/heads/cat/fhir-harness/fhir-ast/*' 'refs/heads/cat-fhir-ast/*' 'refs/heads/fhir-ast/*' | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
+  local p pats=()
+  while IFS= read -r p; do pats+=("refs/heads/${p}*"); done < <(ast_prefixes)
+  igit ls-remote --heads "$REMOTE" "${pats[@]}" | sed -n 's#^.*refs/heads/\(.*\)$#\1#p'
 }
 
 # The cache branch for a package. Special branches are moving to the owner's
@@ -114,14 +153,16 @@ cmd_list_names() {
 resolve_branch() {
   local pkg="$1"
   if [ -n "$BRANCH" ]; then printf '%s\n' "$BRANCH"; return; fi
-  local name rc
-  for name in "cat/fhir-harness/fhir-ast/$pkg" "cat-fhir-ast/$pkg" "fhir-ast/$pkg"; do
+  local name rc p first=""
+  while IFS= read -r p; do
+    name="$p$pkg"
+    [ -n "$first" ] || first="$name"
     igit ls-remote --exit-code --heads "$REMOTE" "refs/heads/$name" >/dev/null 2>&1
     rc=$?
     if [ "$rc" -eq 0 ]; then printf '%s\n' "$name"; return; fi
     [ "$rc" -eq 2 ] || die "could not reach remote '$REMOTE' to look up $name (git ls-remote exit $rc)"
-  done
-  printf '%s\n' "cat/fhir-harness/fhir-ast/$pkg"
+  done < <(ast_prefixes)
+  printf '%s\n' "$first"
 }
 
 count_resources() {
@@ -286,7 +327,12 @@ cmd_seed() {
     edges=$(grep -o '"target"' "$out/dependencies.json" 2>/dev/null | wc -l | tr -d ' ')
   fi
   
+  # The exporter records its toolchain in the manifest; the subject reads it
+  # from there rather than saying "Publisher unknown" (smart-trust#4).
   local pub_version="unknown"
+  if [ -f "$out/manifest.json" ] && command -v python3 >/dev/null 2>&1; then
+    pub_version=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("toolchain",{}).get("publisher") or "unknown")' "$out/manifest.json" 2>/dev/null || echo unknown)
+  fi
   local sha; sha=$(igit rev-parse --short HEAD 2>/dev/null || echo "unknown")
   
   if [ "$PUSH" -eq 1 ] && would_shrink "$br" "$n" "$edges"; then
@@ -303,6 +349,20 @@ cmd_seed() {
   
   cp -R "$out/"* "$tmp/" 2>/dev/null || true
   rm -f "$tmp/index.lock"
+  # `ig.root` is the builder's absolute path (`/Users/<name>/...`): it names a
+  # machine, not the cache, and nothing reads it. Record it relative to the IG.
+  if [ -f "$tmp/manifest.json" ] && command -v python3 >/dev/null 2>&1; then
+    python3 - "$tmp/manifest.json" <<'PY' || die "could not normalise ig.root in manifest.json"
+import json, sys
+p = sys.argv[1]
+m = json.load(open(p))
+if isinstance(m.get("ig"), dict) and "root" in m["ig"]:
+    m["ig"]["root"] = "."
+    with open(p, "w") as f:
+        json.dump(m, f, indent=2)
+        f.write("\n")
+PY
+  fi
   # txcache goes alongside AST on the branch
   if [ -d "$root/input-cache/txcache" ]; then
     cp -R "$root/input-cache/txcache" "$tmp/"
@@ -372,16 +432,30 @@ cmd_doctor() {
     warn "maven not found"
   fi
   
-  if curl -sI https://packages.fhir.org | grep -q '200 OK'; then
-    info "network: packages.fhir.org reachable"
+  probe_host packages.fhir.org
+  probe_host tx.fhir.org
+}
+
+# Is a host reachable, and if not, what to do about it? Bean `6mk7`: a refused
+# packages.fhir.org once left an agent concluding SUSHI could not run, while
+# the seeder for exactly that refusal sat in the Tool graph. The answer is the
+# graph's (`remedies` on each network Tool), not text kept here.
+#
+# The status is read as a CODE: the old `grep '200 OK'` never matches an
+# HTTP/2 status line (`HTTP/2 200`), so a reachable host read as unreachable.
+probe_host() {
+  local host="$1" code
+  code="$(curl -s -o /dev/null -I -w '%{http_code}' --max-time 15 "https://$host" 2>/dev/null || true)"
+  case "$code" in
+    2??|3??) info "network: $host reachable ($code)"; return 0 ;;
+  esac
+  warn "network: $host UNREACHABLE (${code:-no response})"
+  local root
+  root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+  if command -v bun >/dev/null 2>&1 && [ -f "$root/package.json" ]; then
+    (cd "$root" && bun run --silent tools:remedy "$host" 2>/dev/null) | sed 's/^/    → /' >&2 || true
   else
-    warn "network: packages.fhir.org UNREACHABLE"
-  fi
-  
-  if curl -sI https://tx.fhir.org | grep -q '200 OK'; then
-    info "network: tx.fhir.org reachable"
-  else
-    warn "network: tx.fhir.org UNREACHABLE"
+    warn "  what to do instead: bun run tools:remedy $host"
   fi
 }
 

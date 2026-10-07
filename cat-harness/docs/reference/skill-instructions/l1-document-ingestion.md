@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md){: .fa-edit-source data-fa-link="edit" data-src="folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # L1 document ingestion
@@ -33,6 +33,27 @@ METHOD that chooses among them; invoking harness code from here is a downward
 edge. The executable form is `processes/library/l1-document-ingestion.bpmn`,
 which calls the harness's basic `Process_Ingestion` first and then the four
 `ingest-*` phases beside it.
+
+## The whole path is two commands (bean `apui`)
+
+```sh
+bun run ingest uploads/FILE.pdf --library <lib>            # rung + every derived arm, into ingest-staging/
+bun run ingest uploads/FILE.pdf --library <lib> --promote  # the L1 gate, then into <lib>/<slug>/
+```
+
+Staging prints the second line for you, built from **your own arguments** — it
+used to recompose the path relative to the instance root, which is "not there"
+from where `bun run` runs, and to drop `--library`.
+
+**`--promote` writes the entry's JSON-LD nodes**, for that entry only, with the
+same `buildEntryNodes` the corpus generator uses. They are minted for the
+**destination**, not for staging: an entry's instance is read off where it sits,
+and `ingest-staging/` belongs to whichever instance holds it. Before this, an
+entry promoted into a sibling library named the wrong instance in its manifest
+`@id`, and `gen-library-jsonld --check` failed on it until somebody ran the
+corpus-wide generator by hand. You do **not** need `gen-library-jsonld` or
+`check:l1-complete --write` after promoting — the first is done, and the
+second's verdicts live on the `qa-reports` branch rather than on `main`.
 
 ## Which rung, and why there is more than one
 
@@ -507,13 +528,74 @@ drafts: [{block, source_hash, text}]}`, with `source_hash` echoed from
 longer matches, and a block that already has a current summary.
 
 **Drain K at a time during ingestion work**, not all at once: a thousand
-unreviewed drafts at once is a buried reviewer. Write 1–3 sentences in your
-own words, from the block's text only, adding nothing from outside it. If the
+unreviewed drafts at once is a buried reviewer. Write in your own words, from
+the block's text only, adding nothing from outside it.
+
+**Length scales with the source** (owner, 2026-10-06: *"summaries 1-4
+short-medium-long sentences depending on length of source content"*):
+
+| source text | summary |
+|---|---|
+| under ~150 words | 1 short sentence |
+| ~150–600 words | 2 sentences, short to medium |
+| ~600–2,000 words | 3 medium sentences |
+| over ~2,000 words | 4 sentences, medium to long |
+
+A one-paragraph section does not earn four sentences, and a chapter is not
+done justice by one. If the
 extraction put the wrong text under a heading, summarise what is there and say
 so. The backlog is reported by `check:l1-complete` (`block-summaries`) and on
 the library page. It is advisory, never a gate. What the gate does fail is a
 sidecar that does not parse, names another entry, or holds a record for a block
 or source that is not there.
+
+### The Document panel — what a reader browses (issue #2302)
+
+Every entry carrying a `structure.json` gets a **Document** panel in the
+library viewer, built from the ingestion schema by
+`cat-harness/scripts/lib/library-document.ts` and published as
+`assets/library/entries/<id>.doc.json` (`folio-library-document/v1`) by
+`bun run library:viz`. Tabs: **Contents** (the TOC as a tree, collapsed below
+the first level that branches, each inferred entry's confidence, linking to its
+section), **Pages** (physical page, printed label, sections starting, figures),
+**Figures & tables**, **Sections** (the summary, else an *extract* — the
+section's own opening text, labelled as such and cut at a word), **Checks**
+(contents vs body, numbering gaps, page-label conflicts). Because it reads the
+schema, a new field in `structure.json` reaches every library at once; a field
+an older ingestion lacks shows "not recorded — re-ingest", never an empty table.
+
+For a withheld entry the panel keeps structure, page labels, figure and table
+**captions** (labels, like TOC titles — owner, 2026-10-06) and our summaries,
+and omits only section body extracts.
+
+### Keywords — from the LSI weights, per section and per document (issue #2302)
+
+`bun run library:keywords` writes `library/<slug>/keywords.json`
+(`folio-keywords/v1`) for every entry of every declared library: up to 12 for
+the document and up to 8 per section, fewer for a short section (one per ~20
+content tokens, at least 3). They are read from the **same** log-entropy matrix
+the LSI index is built from (`keywordsOf` in `content/pipeline/lsi.ts`), so a
+keyword means "frequent here, rare across this library" exactly as the index
+does — no second vocabulary. `library:keywords:check` fails on a stale file;
+re-run it after ingesting or re-splitting an entry. The Document panel shows
+them as chips, green where a heading also names the term (`evidence:
+["heading"]`) — the document saying it of itself. Withheld entries show them:
+they are derived terms, like captions, not the text.
+
+What the scoring does, each measured on the who-iris handbook (2026-10-06):
+
+- **Two-word phrases** from truly adjacent tokens said at least twice; a stop
+  word, punctuation, or a line break before a capital (a table cell, a heading)
+  breaks the run — "Development" over "Systematic review team" is two cells,
+  not "development systematic".
+- **A word said once** in a text of 100+ tokens is not a keyword, unless the
+  section's heading names it; heading-named terms score double.
+- **Generic words** the index keeps but that say nothing about a topic
+  ("anyone", "aims", "take", "-ly" adverbs) are excluded from keywords only.
+- **Plurals fold**: "evidence reviews" does not follow "evidence review".
+
+Limits: no part-of-speech tagging, so a rare verb can still surface in a short
+section; a library of fewer than 3 sections gets none.
 
 ### A WITHHELD entry in the viewer — its summary, else the gate, never "no content" (issue #1794)
 

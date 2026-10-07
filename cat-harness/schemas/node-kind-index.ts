@@ -67,6 +67,11 @@ export interface NodeKindEntry {
   /** Where, repo-relative, and under which export. Absent for an ancestor reached only as a parent. */
   module?: string;
   exportName?: string;
+  /**
+   * The kind's own page renderer, when its validator node names one (`pages`),
+   * repo-relative. Absent: the generic pages built from the schema.
+   */
+  pages?: { module: string; exportName: string };
   /** The graph typologies that hold nodes of this kind, and the families they file it under. */
   holdings: { typology: string; family?: string }[];
 }
@@ -102,6 +107,7 @@ export const NodeKindIndexFileKind = nodeKind("node-kind-index/1.0.0", [], {
     declaredBy: z.string().optional(),
     module: z.string().optional(),
     exportName: z.string().optional(),
+    pages: z.object({ module: z.string().min(1), exportName: z.string().min(1) }).optional(),
     holdings: z.array(z.object({ typology: z.string().min(1), family: z.string().optional() })),
   })),
   unkinded: z.array(z.object({
@@ -168,6 +174,18 @@ export async function nodeKindIndex(
     return isNodeKind(named) ? { kind: named, declaredBy, at } : { declaredBy, at, reason: "zod-schema" };
   };
 
+  // A renderer is resolved to a path, not imported: only the page generator
+  // runs it, and an index that executed page code to list kinds would fail on
+  // a renderer's bug rather than report the kind.
+  const withPages = (entry: NodeKindEntry, typology: string, family?: string): NodeKindEntry => {
+    const pages = registry.validatorNodeFor(typology, family)?.node.pages;
+    if (!pages || entry.pages) return entry;
+    const ref = parseValidatorRef(pages);
+    const base = rootOf(ref.instance, instanceRoot);
+    if (base !== undefined) entry.pages = { module: relative(repoRoot, resolve(join(base, ref.module))).split("\\").join("/"), exportName: ref.exportName };
+    return entry;
+  };
+
   for (const name of registry.names().sort()) {
     const typology = resolveGraphTypology(name).kind;
     if (typology !== name) continue; // an alias: its canonical name is visited on its own
@@ -186,12 +204,12 @@ export async function nodeKindIndex(
           continue;
         }
         const r = await resolveRef(validator);
-        if (r.kind) add(r.kind, { declaredBy: r.declaredBy, ...r.at! }).holdings.push({ typology, family });
+        if (r.kind) withPages(add(r.kind, { declaredBy: r.declaredBy, ...r.at! }), typology, family).holdings.push({ typology, family });
         else unkinded.push({ typology, family, reason: r.reason ?? "unresolvable", ref: validator });
       }
     } else if (def.validator) {
       const r = await resolveRef(def.validator);
-      if (r.kind) add(r.kind, { declaredBy: r.declaredBy, ...r.at! }).holdings.push({ typology });
+      if (r.kind) withPages(add(r.kind, { declaredBy: r.declaredBy, ...r.at! }), typology).holdings.push({ typology });
       else unkinded.push({ typology, reason: r.reason ?? "unresolvable", ref: def.validator });
     }
   }

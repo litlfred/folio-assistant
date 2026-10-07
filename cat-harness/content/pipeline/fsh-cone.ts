@@ -299,7 +299,27 @@ export function buildFshGraph(root: string): FshGraph {
   const blocks: Block[] = [];
   for (const file of fshFiles) {
     let current: Block | undefined;
+    // Inside a `Title:` / `Description:` value that runs over several lines
+    // (`"""…"""`). That value is prose, never a rule, and the edge patterns are
+    // not anchored, so scanning it found rules in the words: measured on
+    // smart-immunizations (bean `c65n`), "ValueSet IMMZD18SBCG for …" in a
+    // ValueSet's Description matched `valueset NAME` and made the value set a
+    // dependent of the PlanDefinition. Blanked rather than dropped, so a
+    // block's line count is unchanged.
+    let inMetaText = false;
     for (const raw of readFileSync(file, "utf8").split(/\r?\n/)) {
+      if (inMetaText) {
+        if (raw.includes('"""')) inMetaText = false;
+        if (current) current.lines.push("");
+        continue;
+      }
+      const meta = raw.match(/^(?:Title|Description):\s*(.*)$/);
+      if (meta && current) {
+        const v = meta[1];
+        inMetaText = v.startsWith('"""') && !v.slice(3).includes('"""');
+        current.lines.push("");
+        continue;
+      }
       // Strip `//` comments — but only a `//` at line start or after whitespace,
       // or every `http://…` canonical on the line is cut to `http:`.
       const line = raw.replace(/(^|\s)\/\/.*$/, "$1");

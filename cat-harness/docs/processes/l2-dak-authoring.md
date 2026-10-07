@@ -9,7 +9,7 @@ nav_exclude: true
 {% raw %}
 # L2 DAK authoring
 
-`Process_L2Dak` · advisory · 10 step(s)
+`Process_L2Dak` · advisory · 11 step(s)
 
 How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.
 Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
@@ -35,17 +35,18 @@ work plan in beans/.
 |---|---|---|
 | Programme manager / technical officer | `programme-manager` | Sets the scope once, before the fork into six parallel authoring tracks. The actors and processes enumerated here are what everything downstream, including the terminology and clinical lanes, is scoped against, and nothing later in this diagram revisits that boundary. |
 | Work plan — beans (shared by humans and agents) | `work-plan` | A single claim made once, right after scoping and before the parallel fork. Unlike the per-edit lifecycle in editing-hci-validation, this diagram seeds one bean for the whole DAK and never returns here to log or resolve it, so tracking any one track's own progress is not this lane's concern. |
-| Business analyst | `business-analyst` | Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds. |
+| Business analyst | `business-analyst` | Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds. Before any of that, and before the work plan is seeded, builds the DAK's L1 library from what its Component 1 cites, so every track starts with the guidance it operationalises already in the library and in the L1 graph. |
 | Terminologist | `terminologist` | One parallel branch of the fork, producing bindings the other five tracks cite rather than author themselves. Kept a separate lane rather than folded into the analyst's because governance of a code binding is deliberately independent of the artefact that cites it. |
 | Clinical SME | `clinical-sme` | The one gate every authored track must clear before assembly: a "no" here does not return to the specific task that erred but loops back through Gateway_AuthorMerge into the fork itself, so this lane's judgement — not the analyst's — decides whether personas, BPMN, DMN, data dictionary and indicators all get revisited together. |
 
 ## Steps
 
-Every one of the 10 step(s) is documented.
+Every one of the 11 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Scope the DAK**<br>`Task_ScopeDak` | Programme manager / technical officer | [`content-plan`](../reference/skill-instructions/content-plan.html) | Enumerate the processes, decisions and data elements the guideline implies; identify the actors. |
+| **Build the L1 library from Component 1**<br>`Task_L1Library` | Business analyst | [`dak-l1-library`](../reference/skill-instructions/dak-l1-library.html) | Ingest the DAK and every source its Component 1 cites into the library, and extract the L1 graph that records them: §1.1's interventions, §1.2's citations, each resolved by its printed number to a publication. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts, and validate with both smart-kg validate.mjs and the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically. |
 | **Seed the work plan**<br>`Task_SeedBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan. |
 | **Personas and scenarios**<br>`Task_Personas` | Business analyst | [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated. |
 | **Business processes · BPMN 2.0**<br>`Task_Bpmn` | Business analyst | [`bpmn-authoring`](../reference/skill-instructions/bpmn-authoring.html) | Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR. |

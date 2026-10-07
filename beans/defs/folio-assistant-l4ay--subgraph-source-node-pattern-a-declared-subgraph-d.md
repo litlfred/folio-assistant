@@ -1,11 +1,11 @@
 ---
 # folio-assistant-l4ay
 title: 'SUBGRAPH SOURCE + NODE PATTERN: a declared subgraph declares where its content comes from (directory | branch | future), overridable by instance config; publishers use the declared Subgraph node + isPartOf'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-03T08:31:48Z
-updated_at: 2026-10-03T10:06:52Z
+updated_at: 2026-10-06T06:26:36Z
 parent: folio-assistant-fs43
 ---
 
@@ -26,3 +26,10 @@ Owner rulings 2026-10-03 (verbatim): "todos = subgraph node + todo content nodes
 
 ## Done when
 PR merged-ready with CI green and the checklist above ticked.
+
+
+## Summary of Changes
+
+**Closed on evidence, 2026-10-06** (re-measured on main at 2fdbb5109a by session_01QSd18GZBc9NJNMy6GV9v7D, not quoted from earlier notes). Status history: never completed before, so not an owner reopen; no holder.
+
+Follow-on #1987 merged 2026-10-03 with CI green. `source: SubgraphSourceSchema` is on ContentDirectory; instance-config overrides go through one resolver (`declaredSubgraph` → `resolveSubgraphSource`); `contentSource` is on the Subgraph node; todos.jsonld members use `inSubgraph` (its own term since bean 3f5f, superseding the box's dcterms:isPartOf wording); `mount-subgraph.bpmn`, both skills and the `subgraph-resolve` tool are present. subgraph-node and subgraph-source tests pass.

@@ -30,8 +30,14 @@
 {%- else -%}
 {%- assign instantiated = tiles | where: "instantiated", true -%}
 {%- endif -%}
+{%- comment -%} `lang="en" dir="ltr"` (bean `giiw`): this section is English
+  on every locale's page — the heading and lead here, the instances' own
+  labels and summaries in `harness.json` — and nothing translates it. On the
+  Arabic home page it inherited `dir="rtl"`, so each sentence's full stop and
+  each count's colon were laid out at the wrong end. The attributes say what
+  the text IS, so they hold on an English page too. {%- endcomment -%}
 {%- if instantiated.size > 0 -%}
-<section class="fa-harness-sections" id="harnesses">
+<section class="fa-harness-sections" id="harnesses" lang="en" dir="ltr">
   {%- unless include.instance -%}
   <h2 id="harnesses-heading">What each harness holds</h2>
   <p class="fa-harness-sections__lead">

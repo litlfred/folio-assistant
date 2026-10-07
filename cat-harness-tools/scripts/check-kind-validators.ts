@@ -240,8 +240,9 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
     // directory to read at all — which is a different answer from an empty one.
     // Bean `najo`; `graphReadPath` is the one implementation of the question.
     const dirs = new Set<string>();
-    // A directory stored on a BRANCH FAMILY (bean lehh) holds its nodes on the
-    // family's branches by declaration, never in the checkout: named, not swept.
+    // A directory stored on a BRANCH FAMILY (bean lehh), or ROUTE-keyed on a
+    // published branch (the site, `gh-pages`), holds its nodes on those
+    // branches by declaration, never in the checkout: named, not swept.
     const onFamily = new Set<string>();
     const liveStores = new Map<string, string>();
     let declared = 0;
@@ -249,7 +250,7 @@ export async function sweepFamilies(root: string): Promise<FamilySweep[]> {
       for (const e of readDeclaration(inst)?.directories ?? []) {
         const st = e.storage as { keyedBy?: string } | undefined;
         const src = e.source as { kind?: string } | undefined;
-        if (e.graphTypologies.includes(kind as never) && (st?.keyedBy === "family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
+        if (e.graphTypologies.includes(kind as never) && (st?.keyedBy === "family" || st?.keyedBy === "route" || st?.keyedBy === "route-family" || src?.kind === "family")) onFamily.add(join(inst, e.path).replace(/\/$/, ""));
       }
       for (const d of directoryEntriesForGraph(inst, kind)) {
         if (onFamily.has(d.absPath.replace(/\/$/, ""))) continue;
@@ -349,7 +350,7 @@ async function main(): Promise<number> {
       );
     }
     if (f.onFamily && Object.keys(f.counts).length === 0) {
-      console.log(`  · ${f.onFamily} director(ies) on a branch FAMILY by declaration — the nodes are on the family's branches, not in this checkout, so not examined here`);
+      console.log(`  · ${f.onFamily} director(ies) on a branch family or a route-keyed branch by declaration — the nodes are on those branches, not in this checkout, so not examined here`);
     } else if (f.noDirectory) {
       console.log(`  · no instance declares a ${f.kind} directory — nothing to route (a nested kind is reached through its parent)`);
     } else if (f.unreachable && nodes === 0) {

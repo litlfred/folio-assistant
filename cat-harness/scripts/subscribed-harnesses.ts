@@ -21,7 +21,7 @@
  * empty tile (`dh4f`).
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
@@ -36,6 +36,7 @@ import {
   type SubstrateSnapshot,
 } from "../schemas/substrate-snapshot.js";
 import type { HarnessTile } from "./harness-tiles.js";
+import { type SubscribedTree, subscribedTrees } from "./subscribed-trees.js";
 
 type DirLike = { path: string; graphTypologies?: readonly string[]; scope?: DeclarationScope };
 
@@ -116,6 +117,13 @@ export interface SubscribedHarness {
   subscription: Subscription;
   instantiated: boolean;
   snapshot: SnapshotRead;
+  /**
+   * The subgraphs of this harness the subscription CHOSE, each resolved to
+   * what this checkout holds — the same answer the site build reads
+   * (`subscribed-trees.ts`, bean `g8jp`), so the tile and the published pages
+   * cannot disagree about what is here.
+   */
+  trees: SubscribedTree[];
 }
 
 /**
@@ -130,6 +138,7 @@ export function subscribedHarnesses(root: string, decls: readonly { dir: string;
       const chosen = s.harnesses ?? [];
       if (!chosen.length) continue;
       const snapshot = readSnapshot(dir, decl, s);
+      const trees = subscribedTrees([{ dir, decl: { ...decl, subscriptions: [s] } }]);
       for (const h of chosen) {
         out.push({
           harness: h,
@@ -137,6 +146,9 @@ export function subscribedHarnesses(root: string, decls: readonly { dir: string;
           subscription: s,
           instantiated: existsSync(join(root, instanceConfigFilename(h))),
           snapshot,
+          // A tree whose instance could not be read cannot be attributed to a
+          // harness, and is still the subscription's — listed under each.
+          trees: trees.filter((t) => t.instance === undefined || t.instance === h),
         });
       }
     }
@@ -151,15 +163,31 @@ export function subscribedHarnesses(root: string, decls: readonly { dir: string;
  * is drawn as a finding, never as an empty tile.
  */
 export function subscribedTile(h: SubscribedHarness): HarnessTile {
-  const own = hasAvatar(h.harness);
-  const avatar = own ? avatarFor(h.harness) : GENERIC;
   const s = h.subscription;
   const pin = `${s.repository}@${s.ref.slice(0, 12)}`;
   const decl = h.snapshot.state === "read" ? harnessDeclarationIn(h.snapshot.snapshot, h.harness) : undefined;
+  // THE INSTANCE'S OWN MARK, read from its declaration at the pin (bean sod4
+  // #4: "an instance declares its own mark"). An in-tree instance's `avatar`
+  // reaches the registry by a scan; a subscribed one is not in the tree, so
+  // without this it fell to GENERIC the day it left (bean `g8jp`).
+  const declared = h.snapshot.state === "read" ? declaredAvatarIn(h.snapshot.snapshot) : undefined;
+  const own = declared !== undefined || hasAvatar(h.harness);
+  const avatar = declared ?? (own ? avatarFor(h.harness) : GENERIC);
   const findings: string[] = [];
   if (h.snapshot.state !== "read") findings.push(`${h.harness}: could not read its declaration — ${h.snapshot.reason}`);
   else if (!decl) findings.push(`${h.harness}: the snapshot of \`${s.id}\` does not declare it at the pin`);
+  for (const t of h.trees) {
+    if (t.state === "could-not-determine") findings.push(`${h.harness}: chosen subgraph \`${t.subgraph}\` could not be determined — ${t.reason}`);
+  }
+  const held = h.trees.filter((t) => t.state === "held");
+  const heldIds = new Set(held.map((t) => t.subgraph));
+  // ITS OWN THEMED ROOT, when a held directory gives it one. The site build
+  // mounts a held directory exactly as it would an in-tree one, and
+  // `withRoutes` always gives an instance with a mountable directory the
+  // route `/<instance>/` — so the tile goes there, as an in-tree tile does.
+  const rooted = held.some((t) => mountableTree(t));
   const kinds = [...new Set((decl?.directories ?? []).flatMap((d) => d.graphTypologies))];
+  const heldKinds = new Set(held.flatMap((t) => t.entry?.graphTypologies ?? []));
   const title = decl?.title ?? h.harness;
   return {
     name: h.harness,
@@ -170,18 +198,22 @@ export function subscribedTile(h: SubscribedHarness): HarnessTile {
       (decl?.description ? `. ${decl.description}` : "."),
     footer: false,
     icon: null,
+    // The registry glyph is the mark when the instance has one of its own; its
+    // declared `icon` image is not drawn, since the image is a file at the pin.
+    ...(own ? { mark: { glyph: avatar.glyph, title: avatar.reads } } : {}),
     tone: avatar.tone,
     toneFrom: "avatar",
     reads: avatar.reads,
     genericAvatar: !own,
     instantiated: h.instantiated,
+    ...(rooted ? { href: `/${h.harness}/`, hrefKind: "folio" as const } : {}),
     ...(decl?.needs !== undefined ? { needs: decl.needs } : {}),
     stats: [
       { id: "directories", label: "declared directories", value: decl?.directories.length ?? 0 },
       { id: "kinds", label: "declared graph typologies", value: kinds.length },
       { id: "views", label: "visualisations you can open", value: 0 },
     ],
-    visualisations: kinds.map((kind) => ({ kind, note: `referenced from ${pin}, not held here` })),
+    visualisations: kinds.map((kind) => ({ kind, note: heldKinds.has(kind) ? `held here from ${pin}` : `referenced from ${pin}, not held here` })),
     // EVERY graph of a subscribed harness is REMOTE (`603s`): it lives in the
     // subscribed repository at the pin, and the subgraphs the subscription
     // names are the ones copied in — materialised, still remote in origin.
@@ -192,8 +224,31 @@ export function subscribedTile(h: SubscribedHarness): HarnessTile {
       url: `https://github.com/${s.repository}/tree/${s.ref}/${d.path}`,
       via: "subscription" as const,
       ref: s.ref.slice(0, 7),
-      ...((s.subgraphs ?? []).includes(d.id) ? { materialised: [d.id] } : {}),
+      // HELD, not merely chosen: a chosen subgraph never materialised is a
+      // finding above, and marking it copied-in here would contradict it.
+      ...(heldIds.has(d.id) ? { materialised: [d.id] } : {}),
     })),
     findings,
   };
+}
+
+/** The `avatar` a substrate's root declaration carries, when it carries a well-formed one. */
+function declaredAvatarIn(snap: SubstrateSnapshot): { glyph: string; tone: number; reads: string } | undefined {
+  try {
+    const a = (JSON.parse(snap.raw) as { avatar?: { glyph?: unknown; tone?: unknown; reads?: unknown } }).avatar;
+    if (a && typeof a.glyph === "string" && typeof a.tone === "number" && typeof a.reads === "string") {
+      return { glyph: a.glyph, tone: a.tone, reads: a.reads };
+    }
+  } catch {
+    // an unreadable snapshot is already `readSnapshot`'s answer
+  }
+  return undefined;
+}
+
+/** Would `mount-instance-docs` mount this held tree? The same floor: an `index.html` at its root, not composed, not an IG site. */
+function mountableTree(t: SubscribedTree): boolean {
+  if (t.state !== "held" || !t.tree || !t.entry) return false;
+  if (t.entry["composed"] === true || t.entry["igSite"] === true || !t.entry.graphTypologies.length) return false;
+  const index = join(t.tree, "index.html");
+  return existsSync(index) && statSync(index).isFile();
 }

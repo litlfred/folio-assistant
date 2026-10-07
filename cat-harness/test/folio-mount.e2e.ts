@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 import { MARKER } from "../scripts/folio-mount.ts";
+import { TRANSLATION_META_ID } from "../scripts/lib/translation-meta.ts";
 
 /**
  * THE FOLIO MOUNT on a REAL generated who-iris page. Bean `jpjt`, F8/F9.
@@ -217,11 +218,21 @@ test.describe("the replica is unchanged with the glass closed", () => {
     });
 
   test("no element moves, resizes or changes colour", async ({ page }) => {
+    // The REAL page, translation block and all (bean `uvt0`, owner 2026-10-06:
+    // "Overlay, no shift"). From #2229 until uvt0 both sides stripped the
+    // block, because the locale band then sat in the flow and moved <main>
+    // down 52px; that comparison could not see the shift a reader got. The
+    // band is now an overlay on the strip the replica already reserves, so the
+    // translated page is the one compared. The premise is asserted: the block
+    // is present, and the band really drew its locale control.
+    expect(PAGE).toContain(`id="${TRANSLATION_META_ID}"`);
+
     await serve(page, "/who-iris/community-list.html", { withMount: false });
     const before = await snapshot(page);
 
     await serve(page, "/who-iris/community-list.html");
     await expect(page.locator(".fa-glass-handle")).toBeVisible(); // the mount really ran
+    await expect(page.locator(".fa-page-lang-toggle")).toHaveCount(1); // and so did the locale band
     const after = await snapshot(page);
 
     const changed = Object.keys(before).filter((k) => before[k] !== after[k]);
@@ -232,6 +243,56 @@ test.describe("the replica is unchanged with the glass closed", () => {
     // asserted: the same trap `site-mark-mask.test.ts` fell into.
     expect(Object.keys(before).length).toBeGreaterThan(20);
   });
+
+  test("the locale band is an overlay on the reserved strip, not a row in the flow (uvt0)", async ({ page }) => {
+    await serve(page, "/who-iris/community-list.html");
+    await expect(page.locator(".fa-page-lang-toggle")).toBeVisible();
+    const g = await page.evaluate(() => {
+      const band = document.querySelector(".fa-glass-band[data-fa-band-tools]")!;
+      const r = band.getBoundingClientRect();
+      return {
+        position: getComputedStyle(band).position,
+        overlay: band.hasAttribute("data-fa-band-overlay"),
+        inBody: band.parentElement === document.body,
+        top: r.top,
+        bottom: r.bottom,
+        padding: parseFloat(getComputedStyle(document.body).paddingTop),
+        bannerTop: document.querySelector(".ingested")!.getBoundingClientRect().top,
+      };
+    });
+    expect(g.overlay).toBe(true);
+    expect(g.inBody).toBe(true);
+    expect(g.position).toBe("fixed");
+    // It occupies the strip body already reserves, and nothing below it.
+    expect(g.padding).toBe(36);
+    expect(g.top).toBe(0);
+    expect(g.bottom).toBeLessThanOrEqual(g.padding);
+    expect(g.bannerTop).toBeGreaterThanOrEqual(g.bottom);
+  });
+
+  // Sharing the strip means sharing it with the handle: the locale control sits
+  // at the inline START, the handle at the centre, and they must not touch —
+  // in RTL at phone width too, where the start is the right edge.
+  for (const [path, width] of [
+    ["/who-iris/community-list.html", 1280],
+    ["/who-iris/community-list.html", 390],
+    ["/who-iris/ar/community-list.html", 1280],
+    ["/who-iris/ar/community-list.html", 390],
+  ] as const) {
+    test(`the locale control clears the handle on the shared strip (uvt0, ${path} @ ${width})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await serve(page, path);
+      await expect(page.locator(".fa-page-lang-toggle")).toBeVisible();
+      await expect(page.locator(".fa-glass-handle")).toBeVisible();
+      const [ctrl, handle] = await page.evaluate(() =>
+        [".fa-page-lang-bar", ".fa-glass-handle"].map((s) => {
+          const r = document.querySelector(s)!.getBoundingClientRect();
+          return { left: r.left, right: r.right };
+        }),
+      );
+      expect(ctrl.right <= handle.left || ctrl.left >= handle.right).toBe(true);
+    });
+  }
 
   test("the band above the replica is the handle's, and clears it", async ({ page }) => {
     await serve(page, "/who-iris/community-list.html");

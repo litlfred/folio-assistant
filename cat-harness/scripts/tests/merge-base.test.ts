@@ -846,6 +846,9 @@ describe("owned-tree: subgraph indexes and content-addressed payloads (#2176)", 
       expect(scripts[p.prunedBy!]).toBeDefined();
       expect(scripts[`${p.prunedBy!}:check`]).toBeDefined();
     }
+    // The navbar's rail data is named by its content hash too (2026-10-06, #2197).
+    expect(classify("cat-harness/docs/assets/navbar/rail-1tstgx8dr3c.js").pattern?.id).toBe("navbar-rail-data");
+    expect(classify("cat-harness/docs/assets/navbar/navbar.js").strategy).toBe("refuse");
     // `prunedBy` belongs to owned-tree alone.
     expect(PATTERNS.filter((x) => x.prunedBy !== undefined && x.strategy !== "owned-tree")).toEqual([]);
     expect(pathClass(IDX).class).toBe("generated");

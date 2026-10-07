@@ -21,6 +21,11 @@
  * `@unified-latex` dep absent in some envs); these tests are self-contained.
  *
  *     cd scripts/tests && bun test lean-ref-coverage.test.ts
+ *
+ * The tests here whose subject is folio-assistant-sci's contribution (the
+ * chapter profiles this instance contributes) live in
+ * `folio-assistant-sci/scripts/tests/lean-ref-coverage.test.ts` (bean `ho66`):
+ * standing alone, cat-harness has no such contribution to read.
  */
 
 import { describe, test, expect } from "bun:test";
@@ -41,8 +46,6 @@ import {
   resolveCanonicalLean,
   listPackageLeanFiles,
 } from "../../content/pipeline/qa-utils.ts";
-import { checkWallSide } from "../../content/pipeline/qa-checkers-voice.ts";
-import { checkQUsageArchimedeanInCategoricalChapter } from "../../content/pipeline/qa-checkers-q-usage.ts";
 import { scanOrphanLeanFiles } from "../../content/pipeline/q-usage-audit.ts";
 // From `lean-formal-ref`, not `lean-packages`: importing it installs the Lean
 // formalism layer into core's `formal-ref` injection point, and this suite
@@ -124,38 +127,6 @@ const MIXED_BODY = [
 // ── 1. Candidate-2 resolution + audit of the resolved file ──────
 
 describe("lean.ref candidate-2 (library tree) resolution", () => {
-  test("sibling-less block resolves to the Lake-tree file and is audited", () => {
-    const { tmp, content, lake } = makeWorkspace();
-    try {
-      writeLake(lake, "QOU/BraidKnot/TauQuantumIntegerForm.lean", ARCHIMEDEAN_BODY);
-      const { ts } = writeBlock(content, "braids-and-knots", "tau-integer-form", {
-        ref: "qou:QOU.BraidKnot.TauQuantumIntegerForm",
-        md: "The bar-even identity holds over any commutative ring.\n",
-      });
-
-      const blocks = [...walkBlocks(join(tmp, "folio"))];
-      const blk = blocks.find((b) => b.ts === ts);
-      expect(blk).toBeDefined();
-      // Resolved to the library tree — NOT a chapter-dir sibling (none exists).
-      expect(blk!.lean).toBeDefined();
-      expect(blk!.lean!.replace(/\\/g, "/")).toContain(
-        "/lean/QOU/BraidKnot/TauQuantumIntegerForm.lean",
-      );
-
-      // Both named checkers fail on the RESOLVED library content.
-      expect(checkWallSide(blk!.md, blk!.lean).result).toBe("fail");
-      const arch = checkQUsageArchimedeanInCategoricalChapter(
-        blk!.md,
-        blk!.ts,
-        blk!.lean,
-      );
-      expect(arch.result).toBe("fail");
-      // Chapter is content-based (from the block path), NOT the lean dir.
-      expect(arch.chapter).toBe("braids-and-knots");
-    } finally {
-      rmSync(tmp, { recursive: true, force: true });
-    }
-  });
 
   test("direct module-path resolution (candidate 2a)", () => {
     const { tmp, lake } = makeWorkspace();

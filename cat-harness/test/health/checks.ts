@@ -221,7 +221,7 @@ export interface HealthContext {
   specialBranches: Probe<SpecialBranchEvidence>;
 }
 
-/** A special branch's size budget, as `special-branches.json` declares it. */
+/** A special branch's size budget, as `branch-budgets.json` states it. */
 export interface SpecialBranchBudget {
   bytes: number;
   /** `branch`: each branch on its own. `family`: every branch of a family together. */
@@ -657,10 +657,10 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
  *
  * Owner, 2026-10-04: *"also update healthchecks for limits on the other specal
  * branches (e.g. lean cache 4gb, auto-docs 1gb, beans 100mb, todos 100mb)"*,
- * and qa-reports at 500 MB. The budgets live on the rows of
- * `special-branches.json`, beside the names — one declaration, so a renamed
- * branch cannot leave its budget behind — and every threshold below is built
- * from them, basis and all. The preview budget on `gh-pages` is not here: it
+ * and qa-reports at 500 MB. The budgets live in `branch-budgets.json`, a
+ * file this check owns (owner, 2026-10-05: special-branches.json is gone;
+ * choice 3 of 3), and every threshold below is built from them, basis and
+ * all. The preview budget on `gh-pages` is not here: it
  * is `staging-preview-size`'s, and the deploy rotation enforces it.
  *
  * A family is measured as the owner scoped it: `lake-cache` in TOTAL, because
@@ -670,7 +670,7 @@ export function specialBranchSizeCheck(ctx: HealthContext): HealthCheckResult {
   const id = "special-branch-size";
   const summary =
     "Each special data branch (beans, todos, qa-reports, the Lean cache family, auto-docs) against the " +
-    "size budget its row in `special-branches.json` declares. Measures tip trees; removes nothing.";
+    "size budget its row in `branch-budgets.json` states. Measures tip trees; removes nothing.";
   if (ctx.specialBranches.state === "unknown") {
     return unknownResult(id, summary, [], ctx.specialBranches.reason);
   }
@@ -1917,7 +1917,7 @@ export const HEALTH_CHECKS: readonly {
   {
     id: "special-branch-size",
     summary:
-      "Each special data branch against the size budget its `special-branches.json` row declares " +
+      "Each special data branch against the size budget its `branch-budgets.json` row states " +
       "(owner, 2026-10-04). Measures tip trees; removes nothing.",
     run: specialBranchSizeCheck,
   },

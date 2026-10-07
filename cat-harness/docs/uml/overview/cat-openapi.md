@@ -55,6 +55,7 @@ classDiagram
       id [1] string
       validates [1] object
       schema [1] string
+      pages [0..1] string
       rationale [0..1] string
     }
   }
@@ -66,6 +67,7 @@ classDiagram
       title [0..1] string
       layer [0..1] 'core'
       perInstance [0..1] true
+      newInstanceSource [0..1] object
       renderable [1] boolean
       recordsWork [0..1] boolean
       holds [1] content | context | state | derived

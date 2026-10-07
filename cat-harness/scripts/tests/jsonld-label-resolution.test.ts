@@ -19,9 +19,13 @@
  *
  * These tests pin that, and pin the round-trip that lets a consumer get back
  * from an IRI to the label an author actually wrote.
+ *
+ * The tests of this file that read the whole checkout (reads the label
+ * prefixes the content instances contribute) live in
+ * `test/jsonld-label-resolution-checkout.test.ts` (bean `7zz1`): standing
+ * alone, cat-harness has none of it.
  */
 import { describe, test, expect } from "bun:test";
-import { resolve } from "path";
 import {
   assertPrefixesInSync,
   KIND_PREFIXES,
@@ -34,7 +38,6 @@ import {
   BLOCK_KIND_TO_FOLIO_TYPE,
 } from "../../schemas/jsonld";
 import { isCrossPaperRef, KNOWN_LABEL_PREFIXES } from "../../schemas/constraints";
-import type { FolioContribution } from "../../schemas/contributions";
 import { BLOCK_KINDS } from "../../schemas/block-kinds";
 
 describe("prefix list stays in sync with constraints.ts", () => {
@@ -256,17 +259,5 @@ describe("contributed label prefixes", () => {
     expect(resolveLabel("dt:anc-contact", "p", ["dt"])).toBe(
       `papers/p/blocks/${labelToSegment("dt", "anc-contact")}`,
     );
-  });
-
-  test("the real registry supplies them", async () => {
-    const { loadContributions } = await import("../../schemas/harness-config");
-    const { ContributionRegistry } = await import("../../schemas/contributions");
-    const registry = await loadContributions<FolioContribution, InstanceType<typeof ContributionRegistry>>(
-      resolve(import.meta.dir, "../../.."),
-      new ContributionRegistry(),
-    );
-    const prefixes = registry.contributedLabelPrefixes();
-    expect(prefixes).toContain("dt");
-    expect(parseReference("dt:anc-contact", prefixes).form).toBe("same-paper");
   });
 });

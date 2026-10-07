@@ -6,6 +6,10 @@
  * quietly linked nothing, or that hardcoded the bootstrap's name.
  *
  * @module scripts/tests/harness-tiles.test
+ *
+ * The tests of this file that read the whole checkout (reads who-iris's own
+ * theme) live in `test/harness-tiles-checkout.test.ts` (bean `7zz1`): standing
+ * alone, cat-harness has none of it.
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
@@ -860,17 +864,6 @@ describe("an instance's OWN theme tones its tile (bean v8n5)", () => {
   const REPO = join(import.meta.dir, "..", "..", "..");
   const HOST = join(REPO, "cat-harness");
   const tiles = harnessTiles(REPO, HOST, ["who-iris", "cat-harness", "bootstrap"]);
-
-  test("who-iris's tile tone is the hue of its own theme's accent, not the avatar's", async () => {
-    const { themeByRef } = await import("../../schemas/theme-by-ref.js");
-    const { hexHue } = await import("../../schemas/theme.js");
-    const r = themeByRef({ instance: "who-iris", themeId: "iris-sticky" }, REPO);
-    expect(r.ok).toBe(true);
-    const who = tiles.find((t) => t.name === "who-iris")!;
-    expect(who.toneFrom).toBe("theme");
-    expect(who.tone).toBe(hexHue(r.ok ? r.theme.palette.accent : "")!);
-    expect(who.findings.join(" ")).not.toContain("not installed");
-  });
 
   test("an instance citing a PLATFORM theme keeps its avatar tone", () => {
     for (const name of ["cat-harness", "bootstrap"]) {

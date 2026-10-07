@@ -113,6 +113,9 @@ import { declarationPathIn } from "../schemas/cat-harness.js";
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 import { isDirectoryReadme } from "../schemas/kg-node.ts";
 import { coneForCheckout, type ConeDecision } from "./staging-cone.ts";
+import { DOCS_SITE_BASE } from "../schemas/jsonld.js";
+import { foreignScopeFor, isHostProjection, scopeHarnessData, scopeSiteConfig } from "./lib/foreign-site-scope.ts";
+import { subscribedTrees } from "./subscribed-trees.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -253,9 +256,10 @@ export interface ComposedInstance {
  */
 export function composedInstances(repo = REPO): ComposedInstance[] {
   const out: ComposedInstance[] = [];
+  const subscribers: { dir: string; decl: Parameters<typeof subscribedTrees>[0][number]["decl"] }[] = [];
+  const staged = new Set<string>();
   for (const e of readdirSync(repo, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
-    if (e.name === "cat-harness") continue;
     const declPath = declarationPathIn(join(repo, e.name));
     if (!declPath || !existsSync(declPath)) continue;
     let d: { name?: string; directories?: (DeclEntry & { composed?: boolean })[] };
@@ -266,12 +270,28 @@ export function composedInstances(repo = REPO): ComposedInstance[] {
       // declaration, and reporting it here would be a second voice on it.
       continue;
     }
+    staged.add(d.name ?? e.name);
+    if (Array.isArray((d as { subscriptions?: unknown }).subscriptions)) {
+      subscribers.push({ dir: join(repo, e.name), decl: { ...d, name: d.name ?? e.name } as (typeof subscribers)[number]["decl"] });
+    }
+    // The base layer's own directories are never composed under its name (see
+    // above) — but its SUBSCRIPTIONS are read, so it was not skipped earlier.
+    if (e.name === "cat-harness") continue;
     for (const entry of d.directories ?? []) {
       if (!entry.path || entry.composed !== true) continue;
       const abs = join(repo, e.name, entry.path);
       if (!existsSync(abs)) continue;
       out.push({ instance: d.name ?? e.name, dir: abs, under: d.name ?? e.name, root: e.name });
     }
+  }
+  // A SUBSCRIBED instance's composed directories, from the tree this checkout
+  // holds (bean `g8jp`). Only `held` ones: a chosen directory that is not held
+  // is `mount-instance-docs`' finding, which fails the build, and reporting it
+  // here too would be a second voice on it. A subscribed instance also staged
+  // in the tree is composed from the staged copy alone.
+  for (const t of subscribedTrees(subscribers)) {
+    if (t.state !== "held" || !t.instance || !t.tree || t.entry?.["composed"] !== true || staged.has(t.instance)) continue;
+    out.push({ instance: t.instance, dir: t.tree, under: t.instance, root: relative(repo, t.tree).split(sep).join("/") });
   }
   return out.sort((a, b) => a.under.localeCompare(b.under));
 }
@@ -510,6 +530,12 @@ function filesUnder(dir: string, prefix = ""): string[] {
 }
 
 export interface ComposeReport {
+  /**
+   * A shell's scoping to the folio whose site it is (#2263): which instance,
+   * which platform root its borrowed links point at, and the host's count
+   * projections left out. Absent on a whole-site compose.
+   */
+  readonly scoped?: { instance?: string; platformBase: string; hostProjections: string[] };
   /** Layers laid down, base first. */
   readonly layers: DocsLayer[];
   /** Declared layers whose directory does not exist. */
@@ -637,7 +663,32 @@ export interface ComposeOptions {
    * `carriedInstances`.
    */
   readonly changedFiles?: readonly string[];
+  /**
+   * Compose the CHROME only: the layers' Jekyll machinery (`_config.yml`,
+   * `_includes/`, `_layouts/`, `_sass/`, `_data/`, …) and `assets/`, and no
+   * page and no composed instance. An IG repository's own site composes its
+   * IG INTO this shell, so it is built with the same search box, locale
+   * selector and navbar as the main site rather than with a plain stand-in
+   * layout (#2235 F1). A page is any other path, so it is left out.
+   */
+  readonly shell?: boolean;
+  /**
+   * WHOSE site a shell is for (#2263). A shell's `_data/harness.json` is
+   * re-scoped to that folio (`lib/foreign-site-scope.ts`), and the platform's
+   * count projections under `assets/`, and its translation sweep and index
+   * under `_data/`, are left out. Omitted on a shell, the
+   * folio is unknown and the scoping still runs, with no instance: nothing is
+   * then the folio's own, so every state tile is unlinked and every platform
+   * tile re-based — never the platform's numbers on someone else's page.
+   */
+  readonly foreign?: { instance?: string; platformBase?: string; title?: string };
 }
+
+/** Is `rel` part of the site's chrome — Jekyll machinery or a static asset — rather than a page? */
+export const isChrome = (rel: string): boolean => {
+  const first = rel.split(/[\\/]/)[0]!;
+  return first.startsWith("_") || first === "assets";
+};
 
 export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): ComposeReport {
   const { layers, missing } = docsLayers(repo);
@@ -651,9 +702,11 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
   const overrides: ComposeReport["overrides"] = [];
   const added: string[] = [];
   const merged: ComposeReport["merged"] = [];
+  const hostProjections: string[] = [];
 
   for (const [i, layer] of layers.entries()) {
     for (const rel of filesUnder(layer.dir)) {
+      if (opts.shell && !isChrome(rel)) continue;
       const isOverlay = i > 0;
       // Withheld BEFORE anything else touches `rel`, so a staging-only page
       // cannot be recorded as supplied, overridden or added. A report that
@@ -664,6 +717,33 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
       }
       const dest = join(out, rel);
       const src = join(layer.dir, rel);
+
+      // A shell carries the host's GENERATED includes EMPTY: they are
+      // projections of the host's own graphs (its harness navbar, its todo
+      // listing), not chrome, and on an IG's own site they linked 400 pages
+      // that site does not have (#2235 F1). The site that adopts the shell
+      // writes its own (`gen-navbar-include --instance`).
+      if (opts.shell && /^_includes[\\/]generated[\\/]/.test(rel)) {
+        mkdirSync(join(dest, ".."), { recursive: true });
+        writeFileSync(dest, "");
+        suppliedBy[rel] = layer.id;
+        continue;
+      }
+
+      // THE HOST'S COUNT PROJECTIONS ARE NOT CHROME EITHER (#2263): the bean
+      // and todo indexes, their `count.json`, the library and QA indexes. On
+      // an IG's site the icon row fetched them as that site's own, and
+      // smart-trust showed folio-assistant's 537 open beans. Left out, they
+      // 404 there, which the badge reads as ABSENT -- not as zero. The same
+      // goes for the host's translation sweep and index under `_data/`
+      // (`HOST_DATA_PROJECTIONS`): "Swept 49/689" on a folio's page was the
+      // platform's sweep.
+      if (opts.shell && /^(assets|_data)[\\/].+\.json$/.test(rel) && isHostProjection(rel, readFileSync(src, "utf-8"))) {
+        delete suppliedBy[rel];
+        rmSync(dest, { force: true });
+        hostProjections.push(rel);
+        continue;
+      }
 
       // MERGED, not shadowed — and only when a lower layer actually supplied
       // one. A YAML round trip drops comments and may reorder keys, so doing
@@ -693,7 +773,7 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
   // Composed instances land UNDER THEIR OWN NAME, after the layers, so an
   // instance cannot shadow a base page by accident: `who-iris/index.md` in a
   // composed tree is `<out>/who-iris/index.md`, never `<out>/index.md`.
-  const composedInst = composedInstances(repo);
+  const composedInst = opts.shell ? [] : composedInstances(repo);
   const carry = carriedInstances(
     composedInst,
     opts.changedFiles,
@@ -736,6 +816,37 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
     }
   }
 
+  // A SHELL IS A FOLIO'S SITE, so the harness data it carries is scoped to
+  // that folio: its tiles, icon row, rail scopes and title (#2263). Done
+  // after the layers so it scopes the merged result, once.
+  let scoped: ComposeReport["scoped"];
+  if (opts.shell) {
+    const scope = foreignScopeFor(repo, {
+      ...(opts.foreign?.instance ? { instance: opts.foreign.instance } : {}),
+      platformBase: opts.foreign?.platformBase ?? DOCS_SITE_BASE,
+      ...(opts.foreign?.title ? { title: opts.foreign.title } : {}),
+    });
+    const data = join(out, "_data", "harness.json");
+    if (existsSync(data)) {
+      const next = scopeHarnessData(JSON.parse(readFileSync(data, "utf-8")), scope);
+      writeFileSync(data, `${JSON.stringify(next, null, 2)}\n`);
+      scoped = { instance: scope.instance, platformBase: scope.platformBase, hostProjections: [...new Set(hostProjections)].sort() };
+    }
+    // The platform's `footer_content` describes the platform (its name, its
+    // licences); on a folio's site it read as the folio's own. Replaced by a
+    // line naming the folio and what built it, with no licence the folio did
+    // not declare. Only in a shell, so the platform's own build keeps its
+    // bytes (the byte-identity property `MERGE_RATHER_THAN_SHADOW` protects).
+    const config = join(out, "_config.yml");
+    if (existsSync(config)) {
+      const before = parseYaml(readFileSync(config, "utf-8")) as Record<string, unknown> | null;
+      if (before && typeof before === "object") {
+        const after = scopeSiteConfig(before, scope);
+        if (after !== before) writeFileSync(config, stringifyYaml(after));
+      }
+    }
+  }
+
   // DEDUPED. A path present in two layers is withheld once per layer, and a
   // report listing it twice made `withheld.length` stop meaning "files this
   // tree does not carry" — which is the only thing a reader would use it for.
@@ -750,6 +861,7 @@ export function compose(out: string, repo = REPO, opts: ComposeOptions = {}): Co
     withheld: [...new Set(withheldFiles)].sort(),
     composed: composedInst,
     carried: carry,
+    ...(scoped ? { scoped } : {}),
   };
 }
 
@@ -769,7 +881,7 @@ if (import.meta.main) {
   const out = i >= 0 ? argv[i + 1] : undefined;
   if (!out) {
     console.error(
-      "usage: compose-docs.ts --out <dir> [--check] [--staging] [--changed-files <file>]",
+      "usage: compose-docs.ts --out <dir> [--check] [--staging] [--changed-files <file>] [--shell [--instance <name>] [--title <label>] [--link-root <platform site>]]",
     );
     process.exit(2);
   }
@@ -802,7 +914,26 @@ if (import.meta.main) {
   // — `VisualisationSchema.publish` carries why the two error directions are
   // not symmetric.
   const staging = argv.includes("--staging");
-  const r = compose(resolve(out), REPO, { staging, changedFiles });
+  const shell = argv.includes("--shell");
+  // `--instance <name> [--title <label>] [--link-root <platform site>]`: whose
+  // site the shell is for (#2263). Only meaningful with --shell.
+  const opt = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
+  const foreign = shell
+    ? {
+        ...(opt("--instance") ? { instance: opt("--instance")! } : {}),
+        ...(opt("--title") ? { title: opt("--title")! } : {}),
+        ...(opt("--link-root") ? { platformBase: opt("--link-root")! } : {}),
+      }
+    : undefined;
+  const r = compose(resolve(out), REPO, { staging, changedFiles, shell, ...(foreign ? { foreign } : {}) });
+  if (shell) console.log("  --shell: the chrome only — Jekyll machinery and assets, no page, no composed instance");
+  if (r.scoped) {
+    console.log(
+      `  --shell: harness data scoped to ${r.scoped.instance ?? "an UNNAMED folio (pass --instance: nothing is then its own)"}; ` +
+        `borrowed links point at ${r.scoped.platformBase}`,
+    );
+    for (const h of r.scoped.hostProjections) console.log(`  HOST PROJECTION left out: ${h}`);
+  }
 
   for (const m of r.missing) {
     // A declared layer with no directory is a FINDING, not a skip. It is the

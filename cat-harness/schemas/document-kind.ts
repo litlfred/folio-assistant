@@ -33,7 +33,14 @@
  */
 import { z } from "zod";
 
-export const DOCUMENT_KIND_SCHEMA_TAG = "folio-document-kind/v1";
+import { nodeKind } from "./node-kind.js";
+
+/**
+ * A node kind since issue #2195 (owner, 2026-10-06), so every harness's
+ * document kinds get pages. Renamed from `folio-document-kind/v1` with the
+ * other short SemVer names; `retag-schemas.ts` moved the files.
+ */
+export const DOCUMENT_KIND_SCHEMA_TAG = "document-kind/1.0.0";
 
 /** Where a structure, or one section of it, comes from. */
 export const DocumentKindSourceSchema = z.object({
@@ -64,9 +71,10 @@ export const DocumentKindSectionSchema = z.object({
   sources: z.array(DocumentKindSourceSchema).optional(),
 });
 
-export const DocumentKindSchema = z
-  .object({
-    $schema: z.literal(DOCUMENT_KIND_SCHEMA_TAG),
+export const DocumentKindKind = nodeKind(
+  DOCUMENT_KIND_SCHEMA_TAG,
+  [],
+  {
     id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
     title: z.string().min(1),
     description: z.string().min(1),
@@ -81,22 +89,26 @@ export const DocumentKindSchema = z
     sources: z.array(DocumentKindSourceSchema).min(1),
     /** Set when the file is generated; names the generator, so a hand edit is visibly a defect. */
     generatedBy: z.string().min(1).optional(),
-  })
-  .superRefine((k, ctx) => {
-    const ids = k.sections.map((s) => s.id);
-    const dup = ids.find((id, i) => ids.indexOf(id) !== i);
-    if (dup) ctx.addIssue({ code: "custom", path: ["sections"], message: `section id "${dup}" appears twice` });
-    if (k.structure === "fixed") {
-      const optional = k.sections.filter((s) => !s.required).map((s) => s.id);
-      if (optional.length > 0) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["sections"],
-          message: `a fixed structure has no optional sections; optional here: ${optional.join(", ")}`,
-        });
+  },
+  {
+    refine: (k, ctx) => {
+      const ids = k.sections.map((s) => s.id);
+      const dup = ids.find((id, i) => ids.indexOf(id) !== i);
+      if (dup) ctx.addIssue({ code: "custom", path: ["sections"], message: `section id "${dup}" appears twice` });
+      if (k.structure === "fixed") {
+        const optional = k.sections.filter((s) => !s.required).map((s) => s.id);
+        if (optional.length > 0) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["sections"],
+            message: `a fixed structure has no optional sections; optional here: ${optional.join(", ")}`,
+          });
+        }
       }
-    }
-  });
+      },
+  },
+);
+export const DocumentKindSchema = DocumentKindKind.schema;
 
 export type DocumentKind = z.infer<typeof DocumentKindSchema>;
 export type DocumentKindSection = z.infer<typeof DocumentKindSectionSchema>;
@@ -113,15 +125,14 @@ export type DocumentKindSection = z.infer<typeof DocumentKindSectionSchema>;
  * no rule placed is listed in `unplaced`, never dropped — a coverage report
  * that hid its remainder would read as complete.
  */
-export const DOCUMENT_KIND_COVERAGE_SCHEMA_TAG = "folio-document-kind-coverage/v1";
+export const DOCUMENT_KIND_COVERAGE_SCHEMA_TAG = "document-kind-coverage/1.0.0";
 
 const CoverageMemberSchema = z.object({
   key: z.string().min(1),
   label: z.string().min(1),
 });
 
-export const DocumentKindCoverageSchema = z.object({
-  $schema: z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG),
+export const DocumentKindCoverageKind = nodeKind(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG, [], {
   /** The kind's id. */
   kind: z.string().min(1),
   /** The instance whose content was classified. */
@@ -136,5 +147,6 @@ export const DocumentKindCoverageSchema = z.object({
   unplaced: z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() })),
   generatedBy: z.string().min(1),
 });
+export const DocumentKindCoverageSchema = DocumentKindCoverageKind.schema;
 
 export type DocumentKindCoverage = z.infer<typeof DocumentKindCoverageSchema>;

@@ -3,6 +3,8 @@ title: "Trust Network Participant — JSON"
 description: "The JSON representation of ActorDefinition/TrustNetworkParticipant."
 nav_exclude: true
 json_view: {"heading":"Trust Network Participant - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/ActorDefinition-TrustNetworkParticipant.json","raw":"https://litlfred.github.io/smart-trust/ActorDefinition-TrustNetworkParticipant.json","rawName":"ActorDefinition-TrustNetworkParticipant.json","tabs":[{"label":"Narrative Content","href":"ActorDefinition-TrustNetworkParticipant.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ActorDefinition-TrustNetworkParticipant.xml","active":false},{"label":"JSON","href":"ActorDefinition-TrustNetworkParticipant.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ActorDefinition-TrustNetworkParticipant.ttl","active":false}],"script":"../assets/resource-json.js"}
+ig_footer: true
+ig_root: "../"
 ---
 <link rel="stylesheet" href="../assets/ig-pages.css">
 <link rel="stylesheet" href="../assets/ig-chrome.css">
@@ -37,6 +39,3 @@ page: `resource-json.js` reads it out of the package in the browser (`visualizer
 <pre><code class="language-json" data-package="{{ page.json_view.package }}" data-entry="{{ page.json_view.entry }}">Loading JSON source…</code></pre>
 <noscript><p>This view needs JavaScript; the <a href="{{ page.json_view.raw }}">published JSON</a> does not.</p></noscript>
 <script src="{{ page.json_view.script }}" defer></script>
-
-<footer id="ig-footer" class="st-ig"></footer>
-<script src="../assets/ig-footer.js" defer></script>

@@ -119,7 +119,7 @@ const NonBlank = z.string().refine((s) => s.trim().length > 0, "must not be blan
 const Instant = z.iso.datetime({ offset: true });
 
 /**
- * A watched ref, as `scripts/special-branches.json` spells it.
+ * A watched ref, spelled as a declaring directory's `storage.branch` spells it.
  *
  * Either the declared `id` (`gh-pages`, `beans`) or the full `name`
  * (`cat/cat-harness/beans`) — both are accepted because the declaration itself
@@ -127,12 +127,12 @@ const Instant = z.iso.datetime({ offset: true });
  * feature branch: a ref with one writer and no downstream serialisation needs
  * no steward, and giving it one adds a single point of failure for nothing.
  * That membership check is the declaration's job, not this regex's — see
- * `scripts/tests/special-branches.test.ts` — so this only refuses the shapes
+ * the declaration schema (`DirectoryStorageSchema`) — so this only refuses the shapes
  * that could never be a declared ref.
  */
 export const WatchedRefSchema = NonBlank.refine(
   (s) => !s.startsWith("claude/") && !s.startsWith("refs/"),
-  "a watched ref is declared in scripts/special-branches.json — not a feature branch, and not a full refname",
+  "a watched ref is a declared branch (a directory's `storage`) — not a feature branch, and not a full refname",
 );
 
 /**

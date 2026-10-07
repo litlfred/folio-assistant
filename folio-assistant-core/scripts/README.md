@@ -6,11 +6,13 @@
 
 Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors, the sample-import pair, and — since bean `yj6r`, 2026-09-30 — two tranches of escapes that moved UP out of `cat-harness/`. The materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`) and the FHIR IG artefact-index pair (`ingest-ig-artifacts`, `check-artifact-index`) came first, to sit beside the `schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` they read. The glossary CLUSTER followed — `build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`, and all three of their tests — because walking a paper's blocks to collect `defines[]` and emit a `folio-glossary/v1` scheme is CONTENT machinery, and the harness (`needs: ["bootstrap"]`) was importing upward into this instance's `schemas/glossary.ts` and `scripts/glossary-page.ts` — an import against its own declaration, and a circular dependency between repositories after the split. The partition rules already classified `content/pipeline/` as core, so the classification did not change; the DIRECTORY caught up with it. They are still addressed as pipeline scripts by id, and `resolvePipelineScript` searches the folio, then the platform, then here. The LAST FOUR clusters followed on the same day and in the same tranche, taking the `cat-harness ->` sibling-import count from 5 to 2: `extract-assets.ts` (a container a folio was given → a `folio-extraction/v1` record, reading `schemas/extraction.ts` — both moved DOWN again on 2026-10-02 by owner ruling 2 of the placement proposal, bean `tlat`: the script to `cat-harness-tools/scripts/`, the schema to `cat-harness/schemas/`, as the tool behind the harness's own `asset-extraction` skill), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), and `build-document-site.ts` WITH its test, which reads `schemas/changeset.ts`. The last is the one with an invocation surface: a DOCUMENT folio's generated staging workflow names it by path, so `init-folio.ts` now writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins that string — the same instance-relative property this entry records for `review-comments.ts`, arrived at from the other direction. The partition rules had already classified all four `core` by exact entry, so again only the DIRECTORY moved; each dead entry was removed with its reasoning kept in place, because a rule naming a path its own scan can no longer see fires on nothing while reading as an adjudication. The adapters closure followed on the same day: `adapters/document/` and its SIX consuming tests are now here and in `adapters/`, taking the count 2 -> 0 (bean `ybp4`). This sentence previously read "What did NOT move, and deliberately" of those two files, and recorded that the closure "needs its own ruling" — it got one, and `r0tm`'s re-derivation also corrected the deterrent measurement: the 15 created escapes were 16, and paper-first is FREE, which is what turned an all-or-nothing three-instance move into two ordinary steps. This sentence listed only the review-comment pair until then, by which point four other tools were already here — a directory description that names its founding file rather than its contents goes stale the first time anything lands. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.
 
-Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, holding `code`.
+Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, holding `code`.
 
 | file | what it is | used by |
 |---|---|---|
 | [`backfill-materialized-fixity.ts`](backfill-materialized-fixity.ts) | a file |  |
+| [`block-actions.test.ts`](block-actions.test.ts) | a file |  |
+| [`block-actions.ts`](block-actions.ts) | a file |  |
 | [`build-document-site.test.ts`](build-document-site.test.ts) | a file |  |
 | [`build-document-site.ts`](build-document-site.ts) | a file |  |
 | [`build-folio-site.test.ts`](build-folio-site.test.ts) | a file |  |
@@ -18,6 +20,8 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`build-glossary-skos.test.ts`](build-glossary-skos.test.ts) | a file |  |
 | [`build-glossary-usage.test.ts`](build-glossary-usage.test.ts) | a file |  |
 | [`build-glossary.ts`](build-glossary.ts) | a file |  |
+| [`build-library-site.test.ts`](build-library-site.test.ts) | a file |  |
+| [`build-library-site.ts`](build-library-site.ts) | a file |  |
 | [`cache-index.test.ts`](cache-index.test.ts) | a file |  |
 | [`cache-index.ts`](cache-index.ts) | a file |  |
 | [`check-catalogue.ts`](check-catalogue.ts) | a file |  |
@@ -27,10 +31,14 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm.test.ts`](codemod-refterm.test.ts) | a file |  |
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`dc-render.ts`](dc-render.ts) | a file |  |
+| [`document-rendered-impact.test.ts`](document-rendered-impact.test.ts) | a file |  |
+| [`document-rendered-impact.ts`](document-rendered-impact.ts) | a file |  |
 | [`docx-structure.py`](docx-structure.py) | a file |  |
 | [`docx-structure.test.ts`](docx-structure.test.ts) | a file |  |
 | [`docx-to-folio.test.ts`](docx-to-folio.test.ts) | a file |  |
 | [`docx-to-folio.ts`](docx-to-folio.ts) | a file |  |
+| [`fetch-dspace-item.test.ts`](fetch-dspace-item.test.ts) | a file |  |
+| [`fetch-dspace-item.ts`](fetch-dspace-item.ts) | a file |  |
 | [`folio-site-chrome-check.ts`](folio-site-chrome-check.ts) | a file |  |
 | [`folio-site-qa.ts`](folio-site-qa.ts) | a file |  |
 | [`gen-covers.test.ts`](gen-covers.test.ts) | a file |  |
@@ -48,7 +56,11 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`pdf-line-map.py`](pdf-line-map.py) | a file |  |
+| [`platform.ts`](platform.ts) | a file |  |
 | [`public-comment-changesets.ts`](public-comment-changesets.ts) | a file |  |
+| [`public-comment-pages.test.ts`](public-comment-pages.test.ts) | a file |  |
+| [`public-comment-pages.ts`](public-comment-pages.ts) | a file |  |
+| [`public-comment-route.ts`](public-comment-route.ts) | a file |  |
 | [`public-comment-site.test.ts`](public-comment-site.test.ts) | a file |  |
 | [`public-comment-site.ts`](public-comment-site.ts) | a file |  |
 | [`public-comment.test.ts`](public-comment.test.ts) | a file |  |
@@ -62,10 +74,12 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-check.ts`](sample-import-check.ts) | a file |  |
 | [`sample-import-run.test.ts`](sample-import-run.test.ts) | a file |  |
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
+| [`site-reads.test.ts`](site-reads.test.ts) | a file |  |
 | [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
 | [`source-liveness.ts`](source-liveness.ts) | a file |  |
 | [`stage-folio-local.ts`](stage-folio-local.ts) | a file |  |
 | [`folio-site-assets/`](folio-site-assets/) | _nothing declares what this holds_ | |
 | [`lib/`](lib/) | _nothing declares what this holds_ | |
+| [`test-fixtures/`](test-fixtures/) | _nothing declares what this holds_ | |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

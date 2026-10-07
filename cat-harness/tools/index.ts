@@ -170,6 +170,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served.",
       },
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "Publishing IS a push to the gh-pages branch; there is no offline arm. To look at a page, build it locally with `bun run preview:site`." }],
     }),
     // Bean `l4ay`, owner 2026-10-03: "A sub graph declares where it's getting
     // its content". The ONE resolver, from a shell — `branch-store
@@ -197,6 +198,49 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
     defineTool({
+      id: "compose-docs",
+      title: "Compose the site's documentation tree from its declared docs layers",
+      description:
+        "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/compose-docs.ts" },
+      io: {
+        inputs: [
+          { name: "out", schema: t("RepoPath"), required: true, description: "The Jekyll source to write (replaced)." },
+          { name: "staging", schema: t("Flag"), required: false, arg: { flag: "--staging" }, description: "A local build or a staging preview: staging-only visualisations are included." },
+          { name: "changed-files", schema: t("RepoPath"), required: false, description: "The branch's changed paths, one per line: instances it does not reach are stubbed." },
+          { name: "shell", schema: t("Flag"), required: false, arg: { flag: "--shell" }, description: "The chrome only: Jekyll machinery and assets, no page and no composed instance; generated includes written empty." },
+        ],
+        outputs: [
+          { name: "files", schema: t("Count"), description: "Files composed, with every override, merge, withheld file and carried or stubbed instance named." },
+        ],
+      },
+      satisfies: ["harness-tiles"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
+      id: "navbar-include",
+      title: "Write the site sidebar's harness navbar include",
+      description:
+        "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/gen-navbar-include.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if the committed include is stale; write nothing." },
+          { name: "instance", schema: t("Slug"), required: false, description: "The instance whose own site this navbar is for." },
+          { name: "link-root", schema: t("RepoPath"), required: false, description: "With `--instance`: the main site's URL, for every link that is not this instance's own." },
+          { name: "title", schema: t("Slug"), required: false, description: "With `--instance`: the label the navbar's home row carries." },
+          { name: "out", schema: t("RepoPath"), required: false, description: "With `--instance`: where to write the include (the shell's `_includes/generated/navbar-footer.html`)." },
+        ],
+        outputs: [
+          { name: "include", schema: t("RepoPath"), description: "The include written, or `up to date`." },
+        ],
+      },
+      satisfies: ["harness-tiles"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
       id: "subgraph-resolve",
       title: "Resolve a declared subgraph's content source",
       description:
@@ -215,6 +259,36 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["directory-conventions"],
       requires: { runtime: ["bun"], network: false },
+    }),
+    // Bean `3tza`, owner ruling 2 (2026-10-06): stage 11 of `sub-kg-lifecycle`
+    // ("Verify on a fresh clone") is a command, as `seed:ready` became one.
+    defineTool({
+      id: "sub-kg-verify-clone",
+      title: "Verify a separated repository from a fresh clone",
+      description:
+        "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory.",
+      install: { none: true },
+      invoke: { shell: "bun run sub-kg:verify-clone" },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo" }, description: "The separated repository, `owner/name`. (The script also takes a git URL or a local path, for tests.)" },
+          { name: "ref", schema: t("Branch"), required: false, arg: { flag: "--ref" }, description: "The branch or tag to clone, e.g. the seeding PR's branch." },
+          { name: "sibling", schema: t("RepoFullName"), required: false, arg: { flag: "--sibling" }, description: "A repository to clone beside it, for a platform linked as a sibling checkout. Repeatable." },
+          { name: "work", schema: t("RepoPath"), required: false, arg: { flag: "--work" }, description: "Scratch directory, kept afterwards. Absent: a temporary directory, removed afterwards." },
+          { name: "text", schema: t("Flag"), required: false, arg: { flag: "--text" }, description: "A report for a person instead of JSON." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "`sub-kg-verify-clone/v1`: the commit cloned, each step with its status and output tail, and the verdict. Exit 0 green, 1 red, 2 unknown." },
+        ],
+      },
+      satisfies: ["sub-kg-lifecycle"],
+      selection: {
+        when: "After a sub-KG's staged contents are seeded into its new repository and re-pointed, before asking the owner about the cutover.",
+        limits: "Runs the repository's own gates as written; a gate that needs credentials or a service the clone cannot reach fails as it would for any new contributor.",
+        cost: "A clone plus an install plus the gates: minutes for a small repository.",
+      },
+      requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "It verifies a clone of the new repository; with GitHub refused there is nothing to clone." }],
     }),
     // Bean `qou-qb6t`, owner 2026-10-04: "all witnesses tools will need to go
     // into the KG". The reader of the `computation-witness` kind: which
@@ -368,6 +442,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "One install step per container, and it wants network to fetch. Nothing at runtime after that.",
       },
       requires: { runtime: ["go"], network: true },
+      remedies: [{ host: "github.com", tool: "beans-manual" }],
     }),
 
     defineTool({
@@ -475,8 +550,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { none: true },
       invoke: { shell: "bun run cat-harness/scripts/pdf-viewer.ts" },
       requires: { runtime: ["bun", "unzip"], network: true },
+      remedies: [{ host: "github.com", none: "pdf.js is fetched from its GitHub release and no copy is vendored; the site builds without the viewer." }],
       io: {
         inputs: [
+          // input-site: inert #5ead75ee — prose naming the directory, in a message or a description
           { name: "site", schema: t("RepoPath"), required: true, arg: { flag: "--site" }, description: "The built site directory, `_site` in both site workflows." },
           { name: "allow", schema: t("Url"), required: true, arg: { flag: "--allow" }, description: "An https URL prefix the viewer may open, ending in `/`. Repeat the flag for more than one. `same-origin-only` is the explicit way to allow none — an omitted flag is a usage error, because a viewer that refuses every CDN document would otherwise ship green." },
           { name: "zip", schema: t("RepoPath"), required: false, arg: { flag: "--zip" }, description: "A local copy of the release zip, for offline runs and tests. Its hash is checked exactly as a download's would be." },
@@ -642,6 +719,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["prepare-merge-auto", "pickup", "watch", "coordinate"],
       requires: { network: true },
+      remedies: [{ host: "api.github.com", none: "No declared Tool reaches the GitHub API another way. A session that provides the GitHub MCP server can use it instead." }],
     }),
 
     defineTool({
@@ -658,8 +736,34 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         outputs: [{ name: "url", schema: t("Url"), description: "Where the tree is served.", render: { as: "url", reason: "a reader opens it; the scheme is checked before it reaches an href" } }],
       },
-      satisfies: ["kg-export"],
+      // `docs-generation` too (owner, 2026-10-05, bean lehh): this is the CI
+      // build of the site, and `site-build-local` is the same build on a
+      // developer's machine — two Tools, one skill.
+      satisfies: ["kg-export", "docs-generation"],
       requires: { network: true },
+      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; it runs on GitHub or not at all." }],
+    }),
+
+    defineTool({
+      id: "site-build-local",
+      title: "Build the docs site locally",
+      description:
+        "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
+      install: { none: true },
+      invoke: { shell: "cat-harness/scripts/preview-site.sh" },
+      io: {
+        inputs: [
+          { name: "dest", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "Where to write the built site. Default: a temporary directory." },
+        ],
+        outputs: [{ name: "site", schema: t("RepoPath"), description: "The built site, as `pages-publish` would publish it." }],
+      },
+      satisfies: ["docs-generation"],
+      selection: {
+        when: "Looking at a rendered page before pushing it: a layout, an anchor, a generated index.",
+        limits: "Not what CI builds: it uses the installed just-the-docs gem rather than the pinned remote theme, so chrome can differ, while Liquid and kramdown do not. It runs the cheap post-Jekyll steps and names the rest it skipped. Read a layout question off the staging preview.",
+        cost: "Local Ruby and Jekyll; a minute or two.",
+      },
+      requires: { runtime: ["bash"], network: false },
     }),
 
     // ── The preview host: one STAGING/<slug> per open pull request ─────────
@@ -692,6 +796,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["feature-staging"],
       requires: { network: true },
+      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; to look at a branch's pages locally, use `bun run preview:site`." }],
       selection: {
         when:
           "On a pull request touching the docs, schemas, content or skills it fires on its own — reach for the dispatch arm only to stage a branch that has no open pull request, or to remove a preview the close event could not reach.",
@@ -769,6 +874,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           // because that is the arm a caller controls; the other two are
           // defaults, not inputs.
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base the node IRIs are minted against; a preview passes its own." },
+          // input-site: inert #5eaba3b5 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults to `_kg/<stub>.jsonld`, which is build output and gitignored." },
         ],
         outputs: [
@@ -992,6 +1098,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "screenshot", schema: t("Flag"), required: false, arg: { flag: "--screenshot" }, description: "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate." },
         ],
         outputs: [
+          // input-site: inert #5e83c8da — prose naming the directory, in a message or a description
           { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2." },
         ],
       },
@@ -1065,25 +1172,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // It is the build half of that skill's loop, not the whole loop.
       satisfies: ["lean-build-fix"],
       requires: { runtime: ["bash", "lean", "lake"], network: true },
-    }),
-
-    defineTool({
-      id: "lean-cache",
-      title: "Lake olean cache",
-      description:
-        "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
-      install: { none: true },
-      invoke: { shell: "cat-harness/scripts/lake-cache.sh" },
-      io: {
-        inputs: [
-          { name: "action", schema: t("LakeCacheAction"), required: true, arg: { positional: 0 }, description: "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked." },
-          { name: "lakeRoot", schema: t("RepoPath"), required: false, arg: { flag: "--lake-root" }, description: "The package whose `.lake/` is acted on." },
-          { name: "package", schema: t("PackageName"), required: false, arg: { flag: "--package" } },
-        ],
-        outputs: [{ name: "result", schema: t("Text"), description: "A real hit, a miss, or a diagnosis — never a miss that reads as a hit." }],
-      },
-      satisfies: ["lean-cache-restore"],
-      requires: { runtime: ["bash", "git", "lake"], network: true },
+      remedies: [
+        { host: "release.lean-lang.org", error: "Host not in allowlist", tool: "lean-toolchain-setup" },
+        { host: "github.com", none: "Lake fetches the declared dependencies from GitHub; with it refused they cannot resolve." },
+      ],
     }),
 
     defineTool({
@@ -1105,6 +1197,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // which is what breaks `elan toolchain install` and why this script exists
       // at all. An agent reading only `network: true` would retry elan.
       requires: { runtime: ["bash", "curl", "elan"], network: true },
+      remedies: [{ host: "github.com", none: "It fetches the toolchain from the GitHub release because release.lean-lang.org is refused; with GitHub refused too there is no source." }],
     }),
 
     // ── The Lean audit half, and the one skill still without a mechanism ──
@@ -1485,6 +1578,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
+          // input-site: inert #13384224 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
         ],
         outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
@@ -1500,6 +1594,21 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         { source: "schemas/vocabulary.ts", artefact: "cat-harness/ns.jsonld", format: "json-ld" },
         { source: "schemas/vocabulary.ts", artefact: "folio-assistant-core/ns.jsonld", format: "json-ld" },
       ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "agent-memory",
+      title: "Agent memory assembler",
+      description:
+        "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated.",
+      install: { none: true },
+      invoke: { shell: "bun run agent-memory" },
+      io: {
+        inputs: [],
+        outputs: [{ name: "memory", schema: t("RepoPath"), description: "Each agent's assembled memory file, per vendor." }],
+      },
+      satisfies: ["agent-memory"],
       requires: { runtime: ["bun"], network: false },
     }),
 
@@ -1627,6 +1736,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["prepare-merge"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It merges against the remote's current base; with the remote refused, the base cannot be fetched." }],
       selection: {
         when:
           "Immediately before asking for a merge, and again if the base has moved since. Not on every push: it is the full gate set, on a second tree.",
@@ -1647,7 +1757,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "merge-train",
       title: "Merge train",
       description:
-        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, `extract-smart-kg-l1.ts --entry` for each stale entry, and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
+        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
       install: { none: true },
       invoke: { shell: "bun run merge:train" },
       io: {
@@ -1662,6 +1772,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns", "prepare-merge"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It composes from the remote's open pull requests." }],
       selection: {
         when: "The steward has chosen a batch of green, mutually independent PRs (see merge-overlap) and wants one branch that carries them all, regenerated once.",
         limits: "Each member's merge commit is not proved on its own; the train is proved at its end by one regen. A refused member is left out and reported — handing it back to its owner is the steward's step. It does not push: CI on the train runs only after the steward pushes it.",
@@ -1684,6 +1795,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns", "coordinate"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It compares the remote's open pull requests." }],
       selection: {
         when: "Before composing a merge train, and whenever deciding which PRs can land together or must be ordered.",
         limits: "Paths, not semantics (requirements T3): two PRs that change different files can still interact, which the shared-declaration list only partly covers. A README counts as authored when its prose changed, as a region when only generated regions did.",
@@ -1706,6 +1818,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["merge-conflict-patterns"],
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "github.com", none: "It reads the remote's pull requests after a train lands." }],
       selection: {
         when: "After a train lands, for each member PR still open, before the steward decides whether to close it.",
         limits: "An authored path whose lines the base rewrote after the train reads `not-landed`: the reverse patch no longer applies, and only a person can say whether the rewrite kept the intent.",
@@ -1949,6 +2062,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // `network: true` is the unusual part, and it is what makes the third
       // state load-bearing rather than decorative — see `selection.limits`.
       requires: { runtime: ["bun"], network: true },
+      remedies: [{ host: "api.github.com", none: "Workflow outcomes are held by GitHub, not the checkout. It reports 'could not check', which is never green." }],
       selection: {
         when:
           "Before trusting ANY workflow's outcome, and at session start. A workflow's result is invisible from a checkout, which is how `docs-site.yml` failed 30 consecutive runs over two months with nothing in the repository saying so (bean `xom7`).",
@@ -1987,6 +2101,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "slice", schema: t("Slug"), required: false, arg: { flag: "--slice" }, description: "A slice to build; repeatable. Absent: every slice in the builder's table." },
+          // input-site: inert #8bc2e503 — prose naming the directory, in a message or a description
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where the files and `index.json` go; defaults to the gitignored `docs/assets/slices/`. The deploy passes `./_site/assets/slices`." },
           { name: "payloadOut", schema: t("RepoPath"), required: false, arg: { flag: "--payload-out" }, description: "Where the deploy payloads are written (`<hex>` plus its `<hex>.json` sidecar). Never the committed `docs/payload/`." },
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Build twice and verify instead of writing: one sha256, the row digest against the source, an FTS5 phrase query, the payload audit." },
@@ -2134,6 +2249,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [],
         outputs: [
+          // input-site: inert #4279ca6f — prose naming the directory, in a message or a description
           { name: "index", schema: t("RepoPath"), description: "`_site/assets/js/search-data.json` in the assembled site." },
         ],
       },
@@ -2156,9 +2272,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run cat-harness/scripts/search-split.ts --dir _site" },
       io: {
         inputs: [
+          // input-site: inert #a9ab302b — prose naming the directory, in a message or a description
           { name: "index", schema: t("RepoPath"), required: true, description: "`_site/assets/js/search-data.json`, as the theme wrote it or as staging borrowed it." },
         ],
         outputs: [
+          // input-site: inert #37afab82 — prose naming the directory, in a message or a description
           { name: "scopes", schema: t("RepoPath"), description: "`_site/assets/js/search/` — `manifest.json` and one `<scope>.json` per scope." },
         ],
       },
@@ -2434,54 +2552,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["proof-status-tracking"],
       requires: { runtime: ["python3"], network: false },
-    }),
-
-    // ── The evidence path, and the check that is NOT a computation ────────
-    //
-    // Group 11 of `d308` (`1oqu`). The bean's constraint was that a Tool here
-    // must return "could not determine" distinctly from "verified", because
-    // `evidence-retrieval · Task_RecordUnverified` exists for the case where the
-    // authority check fails, and collapsing them would launder an unverified
-    // citation into an authoritative one.
-    //
-    // **That constraint is already met, and not by a Tool.** Measured
-    // 2026-09-20: nothing in the corpus WRITES a `VerificationEntry`.
-    // `schemas/bib-verification.ts` carries seven `VerificationStatus` values —
-    // `unfetchable` ("URL/DOI did not resolve") and `partial` ("awaiting PDF")
-    // are the could-not-determine cases — and a `Verifier` discriminated union
-    // whose own comment states the point: *"`kind: "agent"` is a
-    // machine-generated claim awaiting human review; `kind: "human"` is a human
-    // adjudication."* Verification is a judgement RECORDED in a curated file, so
-    // the guarantee lives in that file's schema, where a boolean cannot reach it.
-    //
-    // The laundering risk is therefore sharper than the bean assumed: it is not
-    // only unknown→verified, it is **agent-claim→verified**. A node emitting
-    // `verified: true` would collapse both distinctions at once, which is why
-    // this node declares neither — it builds the glossary and says so. The bib
-    // verification path is reached through `qa-sweep` instead (`bib-qa.ts` has no
-    // `import.meta.main` and produces the report `qa-checkers-extended` reads).
-    defineTool({
-      id: "glossary-build",
-      title: "Glossary build",
-      description:
-        "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
-      install: { none: true },
-      invoke: { shell: "bun run folio-assistant-core/scripts/build-glossary.ts" },
-      io: {
-        inputs: [
-          { name: "targetPath", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary." },
-          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Report drift and write nothing." },
-        ],
-        outputs: [
-          { name: "glossary", schema: t("RepoPath"), description: "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root." },
-        ],
-      },
-      // `document-intake`, which is what `Task_L1Sources` refs. It carries NO
-      // input contract, so `check-tools` cannot verify this edge against one —
-      // worth saying plainly rather than letting a clean run imply agreement
-      // that was never tested.
-      satisfies: ["document-intake"],
-      requires: { runtime: ["bun"], network: false },
     }),
 
     // ── The FSH cone, and TWO of three declared contracts refused ─────────
@@ -2784,6 +2854,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
       invoke: { shell: "release-please release-pr" },
       requires: { runtime: ["node", "release-please"], network: true },
+      remedies: [
+        { host: "api.github.com", none: "It opens release pull requests on GitHub." },
+        { host: "registry.npmjs.org", none: "It installs from npm; no other source is declared." },
+      ],
       // The same I/O as `package-release-manual`, stated at the level of the
       // RELEASE (owner, 2026-09-30: "Align I/O, pair"): a package in, its tag
       // out. So `deriveAlternatives` pairs the two (#1168, B9a). The release PR
@@ -2861,6 +2935,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "pip install faster-whisper (model weights download on first use)" },
       invoke: { shell: "python3 -m faster_whisper" },
       requires: { runtime: ["python3", "faster-whisper"], network: true },
+      remedies: [
+        { host: "huggingface.co", tool: "transcribe-whisper-cpp" },
+        { host: "pypi.org", tool: "transcribe-whisper-cpp" },
+      ],
       io: {
         inputs: [
           { name: "file", schema: t("RepoPath"), required: true, arg: { positional: 0 } },

@@ -39,6 +39,7 @@ import {
   ingestMode,
   mayPromote,
   planFor,
+  promoteCommand,
   usableOutlineEntries,
   withDerivedArms,
 } from "../ingest-document.ts";
@@ -782,6 +783,31 @@ describe("refuse to promote — the gate between the arms and the library", () =
     const src = readFileSync(new URL("../ingest-document.ts", import.meta.url).pathname, "utf-8");
     expect(src).toContain('"ingest-staging"');
     expect(src).not.toContain('".ingest-staging"');
+  });
+
+  test("the printed next step is the caller's own command, plus --promote — bean `apui`", () => {
+    // It was recomposed relative to the instance root and printed
+    // `../uploads/X.pdf`, which is "not there" from the repository root where
+    // `bun run` puts you, and it dropped `--library`, which a repo declaring
+    // several libraries refuses to guess. Measured by running it, 2026-10-06.
+    expect(promoteCommand(["uploads/x.pdf", "--library", "../sib/library"])).toBe(
+      "bun run ingest uploads/x.pdf --library ../sib/library --promote",
+    );
+    // A filename with a space survives a copy-paste into a shell.
+    expect(promoteCommand(["uploads/Skills in X.pdf"])).toBe('bun run ingest "uploads/Skills in X.pdf" --promote');
+    // Never doubled, and a dry run is not what gets promoted.
+    expect(promoteCommand(["uploads/x.pdf", "--dry-run", "--promote"])).toBe("bun run ingest uploads/x.pdf --promote");
+  });
+
+  test("promotion mints the entry's JSON-LD for its DESTINATION, before anything is copied", () => {
+    // Without this a promoted entry failed `gen-library-jsonld --check` (37
+    // stale nodes on the 2026-10-06 run) and named the staging tree's
+    // instance, so the path was four commands, two of them corpus-wide.
+    const src = readFileSync(new URL("../ingest-document.ts", import.meta.url).pathname, "utf-8");
+    const built = src.indexOf("buildEntryNodes(slug, staging, out)");
+    expect(built).toBeGreaterThan(0);
+    // Built before the copy, so an unbuildable entry is refused, not half-filed.
+    expect(built).toBeLessThan(src.indexOf("cpSync(staging, out"));
   });
 
   test("ONE unmet requirement refuses the whole entry", () => {
