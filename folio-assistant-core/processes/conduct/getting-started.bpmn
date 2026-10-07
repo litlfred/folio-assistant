@@ -22,7 +22,13 @@
 
   Gateway_Live is the same construction applied to publication: `live`,
   `not-yet` and `unknown` are three states, and the third is never dressed up as
-  either of the others.
+  either of the others. A fourth, `unprovisioned`, is checked before them: no
+  gh-pages branch exists, so Pages cannot be switched on to serve it. Every
+  publishing path (new-repo, overlay, add-folio, and an overlay or new repo that
+  remote-mounts its dependencies) passes Task_ProvisionGhPages before
+  Task_PagesBootstrap, and `unprovisioned` routes back to it. Owner,
+  2026-10-01: "need to create gh-pages branch before can turn on"; 2026-10-07:
+  "need to create gh-pages before can deploy" (issue #2417).
 
   Enforcement is strict. Three steps are non-relaxable and each for the same
   kind of reason — they are the points where the process is acting on somebody
@@ -87,8 +93,9 @@
         <bpmn:flowNodeRef>Task_SeedPlan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Publish" name="Publish — GitHub Pages">
-        <bpmn:documentation>Derives the URL and holds the three-way report that follows it: "live", "not-yet" and "unknown" are reached by exclusive branches of one DMN-computed gateway, and this lane is what keeps a failed probe from being reported as the softer "not-yet" it would be tempting to default to.</bpmn:documentation>
+        <bpmn:documentation>Provisions the gh-pages branch before Pages is switched on (Task_ProvisionGhPages, #2417), derives the URL, and holds the report that follows it: "unprovisioned" routes back to provisioning, and "live", "not-yet" and "unknown" are reached by exclusive branches of one DMN-computed gateway, and this lane is what keeps a failed probe from being reported as the softer "not-yet" it would be tempting to default to.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="publish-target"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_ProvisionGhPages</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_PagesBootstrap</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Live</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReportUrl</bpmn:flowNodeRef>
@@ -208,12 +215,22 @@ authoring">
         <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_seed</bpmn:incoming>
+      <bpmn:outgoing>Flow_provision</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="Task_ProvisionGhPages" name="Provision gh-pages">
+      <bpmn:documentation>Before Pages is switched on, make sure the gh-pages branch exists — the semantics of A_Provision in bootstrap-tools' render-kg-to-github-pages.bpmn, first half. `git ls-remote --heads origin gh-pages`; if absent, `bun run cat-harness/scripts/pages-bootstrap.ts --provision` pushes an orphan gh-pages holding a placeholder index.html and .nojekyll (idempotent; never forced; the script creates no remote branch without the flag). Then Settings → Pages → "Deploy from a branch: gh-pages, / (root)" — not "GitHub Actions" when the publish workflow pushes gh-pages. Every publishing path reaches this step: new-repo, overlay and add-folio, and an overlay or new repo that remote-mounts its dependencies (litlfred/test, provisioned at 860f9c2). Owner, 2026-10-01: "need to create gh-pages branch before can turn on"; 2026-10-07: "need to create gh-pages before can deploy" (#2417).</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="getting-started" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_provision</bpmn:incoming>
+      <bpmn:incoming>Flow_unprovisioned</bpmn:incoming>
       <bpmn:outgoing>Flow_pages</bpmn:outgoing>
     </bpmn:serviceTask>
 
     <bpmn:serviceTask id="Task_PagesBootstrap" name="Start the Pages build
 and derive the URL">
-      <bpmn:documentation>scripts/pages-bootstrap.ts: derive the site URL from the git remote or &lt;name&gt;.config.json, report whether a publish workflow exists, and optionally probe until the site answers.</bpmn:documentation>
+      <bpmn:documentation>scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is `unprovisioned`), derive the site URL from the git remote or &lt;name&gt;.config.json, report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
@@ -223,7 +240,7 @@ and derive the URL">
 
     <bpmn:exclusiveGateway id="Gateway_Live" name="Is the site
 answering?">
-      <bpmn:documentation>Computed from decisions/pages-live-gate.dmn. Three outcomes, and `unknown` is not a softer `not-yet`.</bpmn:documentation>
+      <bpmn:documentation>Computed from decisions/pages-live-gate.dmn. Four outcomes: `unprovisioned` (no gh-pages branch — back to Task_ProvisionGhPages) is checked first, and `unknown` is not a softer `not-yet`.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:decision ref="decisions/pages-live-gate.dmn#Decision_PagesLive" />
       </bpmn:extensionElements>
@@ -231,6 +248,7 @@ answering?">
       <bpmn:outgoing>Flow_live</bpmn:outgoing>
       <bpmn:outgoing>Flow_notyet</bpmn:outgoing>
       <bpmn:outgoing>Flow_unknown</bpmn:outgoing>
+      <bpmn:outgoing>Flow_unprovisioned</bpmn:outgoing>
     </bpmn:exclusiveGateway>
 
     <bpmn:serviceTask id="Task_ReportUrl" name="Hand over the
@@ -282,11 +300,13 @@ be confirmed">
     <bpmn:sequenceFlow id="Flow_confirm" sourceRef="Task_ConfirmImport" targetRef="Task_Scaffold" />
     <bpmn:sequenceFlow id="Flow_created" sourceRef="Task_CreateRepo" targetRef="Task_Scaffold" />
     <bpmn:sequenceFlow id="Flow_seed" sourceRef="Task_Scaffold" targetRef="Task_SeedPlan" />
-    <bpmn:sequenceFlow id="Flow_pages" sourceRef="Task_SeedPlan" targetRef="Task_PagesBootstrap" />
+    <bpmn:sequenceFlow id="Flow_provision" sourceRef="Task_SeedPlan" targetRef="Task_ProvisionGhPages" />
+    <bpmn:sequenceFlow id="Flow_pages" sourceRef="Task_ProvisionGhPages" targetRef="Task_PagesBootstrap" />
     <bpmn:sequenceFlow id="Flow_probe" sourceRef="Task_PagesBootstrap" targetRef="Gateway_Live" />
     <bpmn:sequenceFlow id="Flow_live" name="live" sourceRef="Gateway_Live" targetRef="Task_ReportUrl" />
     <bpmn:sequenceFlow id="Flow_notyet" name="not-yet" sourceRef="Gateway_Live" targetRef="Task_ReportPending" />
     <bpmn:sequenceFlow id="Flow_unknown" name="unknown" sourceRef="Gateway_Live" targetRef="Task_ReportUnknown" />
+    <bpmn:sequenceFlow id="Flow_unprovisioned" name="unprovisioned" sourceRef="Gateway_Live" targetRef="Task_ProvisionGhPages" />
     <bpmn:sequenceFlow id="Flow_done1" sourceRef="Task_ReportUrl" targetRef="EndEvent_Ready" />
     <bpmn:sequenceFlow id="Flow_done2" sourceRef="Task_ReportPending" targetRef="EndEvent_Ready" />
     <bpmn:sequenceFlow id="Flow_done3" sourceRef="Task_ReportUnknown" targetRef="EndEvent_Ready" />
@@ -310,7 +330,8 @@ be confirmed">
       <bpmndi:BPMNShape id="Task_CreateRepo_di" bpmnElement="Task_CreateRepo"><dc:Bounds x="880" y="440" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_HandOff_di" bpmnElement="EndEvent_HandOff"><dc:Bounds x="900" y="537" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Scaffold_di" bpmnElement="Task_Scaffold"><dc:Bounds x="1320" y="260" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_SeedPlan_di" bpmnElement="Task_SeedPlan"><dc:Bounds x="1560" y="605" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SeedPlan_di" bpmnElement="Task_SeedPlan"><dc:Bounds x="1320" y="605" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ProvisionGhPages_di" bpmnElement="Task_ProvisionGhPages"><dc:Bounds x="1320" y="720" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_PagesBootstrap_di" bpmnElement="Task_PagesBootstrap"><dc:Bounds x="1560" y="720" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_Live_di" bpmnElement="Gateway_Live" isMarkerVisible="true"><dc:Bounds x="1790" y="735" width="50" height="50" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ReportUrl_di" bpmnElement="Task_ReportUrl"><dc:Bounds x="1900" y="720" width="150" height="80" /></bpmndi:BPMNShape>
@@ -329,13 +350,15 @@ be confirmed">
       <bpmndi:BPMNEdge id="Flow_addfolio_di" bpmnElement="Flow_addfolio"><di:waypoint x="780" y="300" /><di:waypoint x="1320" y="300" /><bpmndi:BPMNLabel><dc:Bounds x="1050" y="278" width="65" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_scan_di" bpmnElement="Flow_scan"><di:waypoint x="1030" y="390" /><di:waypoint x="1155" y="390" /><di:waypoint x="1155" y="195" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_confirm_di" bpmnElement="Flow_confirm"><di:waypoint x="1230" y="155" /><di:waypoint x="1395" y="155" /><di:waypoint x="1395" y="260" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_created_di" bpmnElement="Flow_created"><di:waypoint x="1030" y="480" /><di:waypoint x="1395" y="480" /><di:waypoint x="1395" y="340" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_seed_di" bpmnElement="Flow_seed"><di:waypoint x="1470" y="300" /><di:waypoint x="1635" y="300" /><di:waypoint x="1635" y="605" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_pages_di" bpmnElement="Flow_pages"><di:waypoint x="1635" y="685" /><di:waypoint x="1635" y="720" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_created_di" bpmnElement="Flow_created"><di:waypoint x="1030" y="480" /><di:waypoint x="1350" y="480" /><di:waypoint x="1350" y="340" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_seed_di" bpmnElement="Flow_seed"><di:waypoint x="1440" y="340" /><di:waypoint x="1440" y="605" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_provision_di" bpmnElement="Flow_provision"><di:waypoint x="1395" y="685" /><di:waypoint x="1395" y="720" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_pages_di" bpmnElement="Flow_pages"><di:waypoint x="1470" y="760" /><di:waypoint x="1560" y="760" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_probe_di" bpmnElement="Flow_probe"><di:waypoint x="1710" y="760" /><di:waypoint x="1790" y="760" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_live_di" bpmnElement="Flow_live"><di:waypoint x="1840" y="760" /><di:waypoint x="1900" y="760" /><bpmndi:BPMNLabel><dc:Bounds x="1848" y="736" width="35" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_notyet_di" bpmnElement="Flow_notyet"><di:waypoint x="1815" y="785" /><di:waypoint x="1815" y="870" /><di:waypoint x="1900" y="870" /><bpmndi:BPMNLabel><dc:Bounds x="1825" y="845" width="55" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_unknown_di" bpmnElement="Flow_unknown"><di:waypoint x="1815" y="785" /><di:waypoint x="1815" y="980" /><di:waypoint x="1900" y="980" /><bpmndi:BPMNLabel><dc:Bounds x="1825" y="955" width="60" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_unprovisioned_di" bpmnElement="Flow_unprovisioned"><di:waypoint x="1815" y="735" /><di:waypoint x="1815" y="710" /><di:waypoint x="1440" y="710" /><di:waypoint x="1440" y="720" /><bpmndi:BPMNLabel><dc:Bounds x="1640" y="690" width="90" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_done1_di" bpmnElement="Flow_done1"><di:waypoint x="2050" y="760" /><di:waypoint x="2180" y="760" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_done2_di" bpmnElement="Flow_done2"><di:waypoint x="2050" y="870" /><di:waypoint x="2120" y="870" /><di:waypoint x="2120" y="760" /><di:waypoint x="2180" y="760" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_done3_di" bpmnElement="Flow_done3"><di:waypoint x="2050" y="980" /><di:waypoint x="2150" y="980" /><di:waypoint x="2150" y="760" /><di:waypoint x="2180" y="760" /></bpmndi:BPMNEdge>

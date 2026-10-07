@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5blc
 title: 'Digital Transformation Handbook (DTH): a voice, an L1 document subtype on Reference Architecture + DIIG concepts, and a source of methodologies / processes / glossary'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T18:16:53Z
-updated_at: 2026-10-04T10:16:01Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-qvxh
 ---
 
@@ -52,3 +52,6 @@ All three approved. (1) F-A mapping APPLIED in PR #1985: closeMatch from the glo
 - **No empirical claim in a formal statement:** measured, not assumed. The repository holds 0 `.lean` files, and no theorem, lemma, proposition, definition, axiom or corollary block cites any of the handbooks (9789240093362, 9789240101197, 9789240116191, 9789240010567, the DPI-H RA). The rule stands for anything added later.
 - **DIIG Fig. 1.1.1 SVG:** done in #2062 (bean 70zt).
 - **Remaining:** the owner sends the RA comment and files the SMART Base issue (smart-base/findings/).
+
+## Completed on landed evidence
+Landed on main in PR #1985 (Digital Transformation Handbook: DTH L1 document subtype and concepts ingested).

@@ -1,7 +1,7 @@
 ---
 # folio-assistant-xb4p
 title: 'skills-index visualiser: 7 wireframe findings'
-status: todo
+status: completed
 type: task
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-skills-index
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T16:12:48Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -48,3 +48,6 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — 5. Markdown shows through (literal backticks): Narrowed since 2026-09-29: 1 of 273 descriptions shows a literal backtick (was 24), and 26 descriptions now render <code>. The one left is a 220-char cut that splits an inline-code span: 'Structural-QA integration watcher … edited uses[] / kind / label'. (idx.mjs, bt.mjs)
 - **STILL-PRESENT** — 6. Phone layout favours the path: On the main skills page at 390, the name+path cell is 89px and the description 255px, and the path breaks anywhere (overflow-wrap:anywhere; 3 lines). The small siblings are still path-heavy: who-iris-skills 180px vs 115px, large-datasets-skills 184px vs 112px. (idx.mjs, idx2.mjs)
 - **STILL-PRESENT** — 7. Small siblings get the same heavy page shell: who-iris-skills (1 row) and large-datasets-skills (3 rows) are still preceded by the lede, the note and the sibling list. At 390 the first row starts at y≈931 (was ≈811). (idx.mjs, idx2.mjs)
+
+## Completed on landed evidence
+Landed on main in PR #1592 (References become links; replica band; dark-theme tag contrast).

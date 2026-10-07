@@ -1,11 +1,11 @@
 ---
 # folio-assistant-q4cm
 title: 'EDIT SET: one feature branch per set of document edits, reviewed in review/ — and a tool where accept is a GitHub PR approval that gates publishing'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-10-06T06:12:56Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-txut
@@ -85,3 +85,6 @@ Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW2
 3. CODEOWNERS with a separate reviewer account (not chosen).
 
 R2 is unblocked: `edit_set_accept` reads the owner's marker on the PR and binds it to the head SHA.
+
+## Completed on landed evidence
+Landed on main in commit bc69a46e1fcc (Edit set: one feature branch per set of document edits — owner ruling on review plus merge).

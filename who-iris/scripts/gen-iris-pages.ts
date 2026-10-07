@@ -2459,15 +2459,26 @@ function landingPage(all: Node[]): string {
   const itemsUpstream = cat.totalItemsUpstream;
   const filesUpstream = cat.totalFilesUpstream;
 
+  const byId = new Map(all.map((n) => [n.id, n]));
   const searchEntries = all
     .map((n) => {
       if (n.flavour === "item") {
         const authors = dc(n, "contributor", "author");
         const issued = day(dc(n, "date", "issued")[0]);
+        const year = issued ? parseInt(issued.slice(0, 4), 10) : undefined;
         const abstract = dc(n, "description", "abstract")[0] ?? "";
         const cite = dc(n, "identifier", "citation")[0] ?? dc(n, "identifier", "govdoc")[0] ?? "";
+        const spatial = dc(n, "spatial")[0] ?? "";
+        const subjects = dc(n, "subject", "mesh");
+        const bitstreams = n.bitstreams ?? [];
+        const originalPdf = bitstreams.find((b) => b.bundle === "ORIGINAL" && (b.mediaType === "application/pdf" || b.name.endsWith(".pdf")));
+        const copyrightGate = originalPdf?.materialization?.gates?.copyright?.verdict;
+        const parentComm = (n.parents?.[0] ?? []).find((p) => p.startsWith("community/"));
+        const parentColl = (n.parents?.[0] ?? []).find((p) => p.startsWith("collection/"));
+        const commTitle = parentComm ? byId.get(parentComm)?.title : undefined;
+        const collTitle = parentColl ? byId.get(parentColl)?.title : undefined;
         const meta = [authors.join("; "), cite, issued].filter(Boolean).join(" · ");
-        const text = [n.title, n.id, n.libraryId ?? "", authors.join(" "), cite, issued, abstract].join(" ").toLowerCase();
+        const text = [n.title, n.id, n.libraryId ?? "", authors.join(" "), cite, issued, spatial, commTitle ?? "", subjects.join(" "), abstract].join(" ").toLowerCase();
         return {
           title: n.title,
           href: `item-${slug(n.id)}.html`,
@@ -2476,6 +2487,14 @@ function landingPage(all: Node[]): string {
           lang: langOf(n) !== LOCALE ? langOf(n) : undefined,
           abstract: abstract.slice(0, 240),
           text,
+          creator: authors.join("; "),
+          year,
+          spatial,
+          community: commTitle,
+          collection: collTitle,
+          subjects,
+          hasPdf: !!originalPdf,
+          copyrightGate,
         };
       }
       if (n.flavour === "collection") {
@@ -2516,6 +2535,54 @@ function landingPage(all: Node[]): string {
     autocomplete="off" spellcheck="false">
   <button type="submit" id="iris-search-btn">${t("Search")}</button>
 </form>
+
+<div class="iris-facet-chips" id="iris-facet-chips" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.6rem 0 0.8rem;align-items:center;">
+  <span style="font-size:0.85rem;color:var(--iris-muted);font-weight:600;">Facets:</span>
+  <button type="button" class="iris-chip" data-facet-type="subject" data-facet-val="Guidelines as Topic" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Guidelines as Topic</button>
+  <button type="button" class="iris-chip" data-facet-type="subject" data-facet-val="Publishing" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Publishing</button>
+  <button type="button" class="iris-chip" data-facet-type="community" data-facet-val="Western Pacific" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Western Pacific</button>
+  <button type="button" class="iris-chip" data-facet-type="community" data-facet-val="Headquarters" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid var(--iris-edge);background:var(--iris-wash);cursor:pointer;">Headquarters</button>
+  <button type="button" class="iris-chip" data-facet-type="access" data-facet-val="open-access" style="font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:12px;border:1px solid #94BA65;color:#1d5c1d;background:#f0f6e9;cursor:pointer;">Open Access PDF</button>
+</div>
+
+<details id="iris-adv-filters" style="margin:0 0 1rem;font-size:0.9rem;border:1px solid var(--iris-edge);border-radius:4px;padding:0.5rem 0.8rem;background:var(--iris-wash);">
+  <summary style="cursor:pointer;font-weight:600;color:var(--iris-dark);">Complex Search &amp; KG Filters (Oxigraph)</summary>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:0.7rem;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--iris-edge);">
+    <div>
+      <label for="iris-filter-subject" style="display:block;font-size:0.8rem;font-weight:600;color:var(--iris-muted);">Subject (MeSH)</label>
+      <select id="iris-filter-subject" style="width:100%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+        <option value="">All Subjects</option>
+        <option value="Guidelines as Topic">Guidelines as Topic</option>
+        <option value="Publishing">Publishing</option>
+        <option value="Evidence-Based Medicine">Evidence-Based Medicine</option>
+        <option value="Information Systems and Communication">Information Systems</option>
+        <option value="Writing">Writing</option>
+      </select>
+    </div>
+    <div>
+      <label for="iris-filter-community" style="display:block;font-size:0.8rem;font-weight:600;color:var(--iris-muted);">Community</label>
+      <select id="iris-filter-community" style="width:100%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+        <option value="">All Communities</option>
+        <option value="Headquarters">Headquarters</option>
+        <option value="Western Pacific">Western Pacific</option>
+      </select>
+    </div>
+    <div>
+      <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--iris-muted);">Year Range</label>
+      <div style="display:flex;gap:0.3rem;">
+        <input type="number" id="iris-filter-year-from" placeholder="From" style="width:50%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+        <input type="number" id="iris-filter-year-to" placeholder="To" style="width:50%;padding:0.35rem;border:1px solid var(--iris-edge);border-radius:3px;">
+      </div>
+    </div>
+    <div style="display:flex;align-items:flex-end;">
+      <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.88rem;">
+        <input type="checkbox" id="iris-filter-open-access">
+        <span>Open Access PDF only</span>
+      </label>
+    </div>
+  </div>
+</details>
+
 <div id="iris-search-results" class="search-results-panel" role="region" aria-live="polite" style="display:none"></div>
 <p class="searchnote" id="iris-search-note">${t("Search across <strong>{held}</strong> items held by value and referenced communities/collections. To look up any of the <strong>{referenced}</strong> referenced nodes by identifier, search here or open the {lookup}.", {
     held: num(held.length),
@@ -2564,6 +2631,12 @@ ${collections
   var form = document.getElementById("iris-search-form");
   var input = document.getElementById("iris-search-input");
   var results = document.getElementById("iris-search-results");
+  var fSubj = document.getElementById("iris-filter-subject");
+  var fComm = document.getElementById("iris-filter-community");
+  var fYFrom = document.getElementById("iris-filter-year-from");
+  var fYTo = document.getElementById("iris-filter-year-to");
+  var fOA = document.getElementById("iris-filter-open-access");
+  var chips = document.querySelectorAll(".iris-chip");
   if (!form || !input || !results) return;
 
   function escapeHtml(s) {
@@ -2584,11 +2657,19 @@ ${collections
 
   function update() {
     var raw = input.value.trim();
-    if (!raw) {
+    var subj = fSubj ? fSubj.value.trim() : "";
+    var comm = fComm ? fComm.value.trim() : "";
+    var yFrom = fYFrom && fYFrom.value ? parseInt(fYFrom.value, 10) : 0;
+    var yTo = fYTo && fYTo.value ? parseInt(fYTo.value, 10) : 0;
+    var oaOnly = fOA ? fOA.checked : false;
+
+    var hasActive = raw || subj || comm || yFrom || yTo || oaOnly;
+    if (!hasActive) {
       results.style.display = "none";
       results.replaceChildren();
       return;
     }
+
     var terms = raw.toLowerCase().split(/\\s+/).filter(Boolean);
     var matches = [];
     for (var i = 0; i < index.length; i++) {
@@ -2600,7 +2681,25 @@ ${collections
           break;
         }
       }
-      if (ok) matches.push(entry);
+      if (!ok) continue;
+
+      if (subj && (!entry.subjects || entry.subjects.indexOf(subj) < 0)) {
+        continue;
+      }
+      if (comm && (!entry.community || entry.community.indexOf(comm) < 0)) {
+        continue;
+      }
+      if (yFrom && (!entry.year || entry.year < yFrom)) {
+        continue;
+      }
+      if (yTo && (!entry.year || entry.year > yTo)) {
+        continue;
+      }
+      if (oaOnly && !(entry.hasPdf && entry.copyrightGate === "permitted")) {
+        continue;
+      }
+
+      matches.push(entry);
     }
 
     var lookupUrl = "${toSiteRoot()}../id-lookup/?index=who-iris/&q=" + encodeURIComponent(raw);
@@ -2611,13 +2710,24 @@ ${collections
       html += "<ul class=\\"search-results-list\\" style=\\"list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:0.75rem;\\">";
       for (var m = 0; m < matches.length; m++) {
         var it = matches[m];
-        // The record's own language, where it differs from the page's (bean lffo).
         var la = it.lang ? " lang=\\"" + it.lang + "\\"" : "";
         html += "<li class=\\"search-result-item\\" style=\\"padding:0.6rem 0.8rem;border:1px solid var(--iris-edge);border-radius:4px;background:var(--iris-wash);\\">";
-        html += "<div><span class=\\"search-result-badge\\" style=\\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-inline-end:0.5rem;\\">" + escapeHtml(it.badge) + "</span>";
+        html += "<div style=\\"display:flex;align-items:center;flex-wrap:wrap;gap:0.35rem;\\"><span class=\\"search-result-badge\\" style=\\"display:inline-block;font-size:0.75rem;font-weight:600;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;background:var(--iris-accent);color:#fff;margin-inline-end:0.3rem;\\">" + escapeHtml(it.badge) + "</span>";
+        if (it.copyrightGate === "permitted") {
+          html += "<span class=\\"state materialized\\" style=\\"font-size:0.72rem;\\">PDF Permitted</span>";
+        } else if (it.hasPdf) {
+          html += "<span class=\\"state referenced\\" style=\\"font-size:0.72rem;\\">PDF Held (Restricted)</span>";
+        }
         html += "<a href=\\"" + it.href + "\\" dir=\\"auto\\"" + la + " style=\\"font-weight:600;font-size:1.02rem;\\">" + highlight(it.title, terms) + "</a></div>";
         if (it.meta) {
           html += "<div class=\\"search-result-meta\\" dir=\\"auto\\"" + la + " style=\\"font-size:0.88rem;color:var(--iris-muted);margin-top:0.25rem;\\">" + highlight(it.meta, terms) + "</div>";
+        }
+        if (it.subjects && it.subjects.length > 0) {
+          html += "<div style=\\"margin-top:0.3rem;display:flex;flex-wrap:wrap;gap:0.25rem;\\">";
+          for (var s = 0; s < it.subjects.length; s++) {
+            html += "<span style=\\"font-size:0.75rem;background:#e2eaf0;color:var(--iris-dark);padding:0.1rem 0.4rem;border-radius:3px;\\">#" + escapeHtml(it.subjects[s]) + "</span>";
+          }
+          html += "</div>";
         }
         if (it.abstract) {
           var snip = it.abstract.length > 180 ? it.abstract.slice(0, 180) + "…" : it.abstract;
@@ -2627,12 +2737,12 @@ ${collections
       }
       html += "</ul>";
       html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
-      html += T.also + " <a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\">" + fill(T.lookUp, escapeHtml(raw), "") + "</a>";
+      html += T.also + " <a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\">" + fill(T.lookUp, escapeHtml(raw || subj || comm), "") + "</a>";
       html += "</div>";
     } else {
-      html += "<p style=\\"margin:0 0 0.5rem;\\">" + fill(T.none, escapeHtml(raw), "") + "</p>";
+      html += "<p style=\\"margin:0 0 0.5rem;\\">" + fill(T.none, escapeHtml(raw || subj || comm), "") + "</p>";
       html += "<div class=\\"search-remote-box\\" style=\\"border-top:1px solid var(--iris-edge);padding-top:0.75rem;margin-top:0.75rem;font-size:0.92rem;\\">";
-      html += "<a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\" style=\\"font-weight:600;\\">" + fill(T.searchFor, escapeHtml(raw), "") + "</a>";
+      html += "<a href=\\"" + lookupUrl + "\\" class=\\"search-remote-link\\" style=\\"font-weight:600;\\">" + fill(T.searchFor, escapeHtml(raw || subj || comm), "") + "</a>";
       html += "</div>";
     }
 
@@ -2641,9 +2751,28 @@ ${collections
   }
 
   input.addEventListener("input", update);
+  if (fSubj) fSubj.addEventListener("change", update);
+  if (fComm) fComm.addEventListener("change", update);
+  if (fYFrom) fYFrom.addEventListener("input", update);
+  if (fYTo) fYTo.addEventListener("input", update);
+  if (fOA) fOA.addEventListener("change", update);
+
+  chips.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var t = btn.getAttribute("data-facet-type");
+      var v = btn.getAttribute("data-facet-val");
+      var adv = document.getElementById("iris-adv-filters");
+      if (adv) adv.open = true;
+      if (t === "subject" && fSubj) { fSubj.value = v; }
+      else if (t === "community" && fComm) { fComm.value = v; }
+      else if (t === "access" && fOA) { fOA.checked = !fOA.checked; }
+      update();
+    });
+  });
+
   form.addEventListener("submit", function(e) {
     var raw = input.value.trim();
-    if (!raw) { e.preventDefault(); return; }
+    if (!raw && !fSubj.value && !fComm.value) { e.preventDefault(); return; }
     var hasLocal = results.querySelector(".search-result-item");
     var firstLink = results.querySelector(".search-result-item a");
     if (hasLocal && firstLink) {
@@ -2658,6 +2787,7 @@ ${collections
     input.value = initQ;
     update();
   }
+  try { window.__irisSearch = { index: index, update: update }; } catch (e) {}
 })();
 </script>
 `;
@@ -3215,6 +3345,10 @@ from it is this instance&rsquo;s own front page.</p>
     <em>select &rarr; serialize &rarr; package &rarr; sign &rarr; distribute
     &rarr; verify</em>, with the trust anchors read off the WHO SMART Trust IG
     and the transport left undetermined rather than guessed.</p>
+  </li>
+  <li>
+    <a href="oxigraph-pipeline-requirements.md">Oxigraph multi-graph search pipeline &amp; scale architecture</a>
+    <p>System requirements, pipeline placement, multi-graph partition model, and browser WASM SPARQL query engine architecture for WHO-IRIS (with scale plan for 300,000 items and zero binary blobs in RDF).</p>
   </li>
 </ul>
 `;

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8qyc
 title: 'REGEN DUPLICATED WORK + BARRIERS: skill:register:check re-runs sub-checks regen also asks; un-barrier read-only checks; narrow inputs'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-05T05:24:07Z
-updated_at: 2026-10-06T10:47:25Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-xpcu
 ---
 
@@ -35,3 +35,6 @@ Holder: claude/zealous-gates-3o9ma2-io-decls (session https://claude.ai/code/ses
 - regen records NO check-level entry for a derived (folded) verdict, so gates still runs `skill:register:check` once after a regen.
 
 **Decision for the owner:** should `gates` (local only; CI is untouched) apply the same fold? It would save about 150 s of CPU per gate run. Folding `kg:audit:check` into `kg:audit:all:check` needs only the argument already accepted for regen. Alternatively, should regen's derived verdict be allowed to populate gates' skip record? Neither is done here: pair-cover.ts says the gates question is "put on the PR rather than decided here".
+
+## Completed on landed evidence
+Landed on main in PR #2156 / merge commit 9409c4a7e2a5 (skill:register:check chain speed-up and barrier removal).

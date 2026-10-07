@@ -509,6 +509,7 @@ export const RULES: Rule[] = [
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/subgraph-source.ts",          // where a declared subgraph gets its content (bean `l4ay`) — read by the declaration schema itself
       "schemas/remote-mount.ts",             // declared-path-literal: a partition plan names modules by path. Remote mounts (bean `0mpw`): mountDefaults, remoteMounts, the lock
+      "schemas/mount-trust.ts",              // declared-path-literal: a partition plan names modules by path. What a remote mount needs to be trusted (bean `ieum`, H8) — read by remote-mount.ts
 
       "scripts/subgraph-node.ts",            // the declared Subgraph node as a publisher's container (bean `l4ay`); imports nothing
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tqjj
 title: 'LSI trio off main: the index sidecar, its run record and the viewer page conflict on ~80% of merges'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T08:21:22Z
-updated_at: 2026-10-04T09:01:31Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -119,3 +119,6 @@ merge bot (no `workflows` token scope; owner ruling on #2043):
 [ ] `bun run gates` green on #2066
 [ ] #2068 needs the `STEP_EXEMPTIONS` entry for `bun run lsi:viz`
     ("no step CI runs is unclassified", gates.test.ts)
+
+## Completed on landed evidence
+Landed on main in PR #2044 (ba9e: no file counts in committed READMEs; publish them in the KG export).
