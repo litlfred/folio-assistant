@@ -10,5 +10,6 @@ Part of [C@T OpenAPI](../README.md) 0.1.0, declared as `cat-openapi-validators`,
 
 | file | what it is | used by |
 |---|---|---|
+| [`open-api-config.json`](open-api-config.json) | data |  |
 | [`open-api-provenance.json`](open-api-provenance.json) | data |  |
 <!-- kg:subgraph:end -->
