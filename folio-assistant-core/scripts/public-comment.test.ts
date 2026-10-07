@@ -18,6 +18,7 @@ import {
   changeSets,
   checkChangeSets,
   closedIssues,
+  linkedChangeSets,
   executeActions,
   formFields,
   getChangeSet,
@@ -552,6 +553,36 @@ describe("change-sets and their issues (issue #2183)", () => {
     expect(getChangeSet(s, "CS-001").status).not.toBe("incorporated");
     expect(m.actions.filter((a) => a.kind === "state")).toEqual([]);
     expect(m.log.join("\n")).toContain("1 of 2 comment(s) are not decided");
+  });
+
+  test("only a keyword links a PR to a change-set; a prose mention does not (bean 6xdf)", () => {
+    expect(linkedChangeSets("Closes CS-12, fixes CS-3 and resolves cs-7")).toEqual(["CS-012", "CS-003", "CS-007"]);
+    expect(linkedChangeSets("Pin bump.\ncs: CS-236, CS-237\n")).toEqual(["CS-236", "CS-237"]);
+    expect(linkedChangeSets("Staging for CS-236 and CS-237, which were reopened.")).toEqual([]);
+  });
+
+  test("a settled change-set is never re-linked by another PR, even one that names it with a keyword (bean 6xdf)", async () => {
+    const s = store();
+    const f = fake();
+    await run(s, comment(50, "ed", "pc: PC-0001, PC-0002\ndecide: accepted\n\nYes."), f);
+    await run(s, { action: "closed", sender: { login: "au" }, pull_request: { number: 12, body: "Closes #50", head: { ref: "cs-001" }, merged: true, state: "closed", html_url: "https://github.com/o/r/pull/12" } }, f);
+    expect(getChangeSet(s, "CS-001")).toMatchObject({ status: "incorporated", pr: { number: 12 } });
+    for (const body of ["Pin bump; mentions CS-001 in prose.", "Closes CS-001", "Closes #50"]) {
+      const r = await run(s, { action: "opened", sender: { login: "au" }, pull_request: { number: 24, body, head: { ref: "pin" }, merged: false, state: "open", html_url: "https://github.com/o/r/pull/24" } }, f);
+      expect(getChangeSet(s, "CS-001")).toMatchObject({ status: "incorporated", pr: { number: 12 } });
+      expect(s.get("PC-0001").status).toBe("incorporated");
+      if (body !== "Pin bump; mentions CS-001 in prose.") expect(r.log.join("\n")).toContain("does not re-link it");
+    }
+  });
+
+  test("the record writer keeps $schema (bean 6xdf)", async () => {
+    const s = store();
+    const f = fake();
+    await run(s, comment(50, "ed", "pc: PC-0001\ndecide: accepted\n\nYes."), f);
+    const raw = JSON.parse(readFileSync(join(s.dir, "changesets", "CS-001.json"), "utf-8"));
+    expect(raw.$schema).toBe("changeset/1.0.0");
+    saveChangeSet(s, getChangeSet(s, "CS-001"));
+    expect(JSON.parse(readFileSync(join(s.dir, "changesets", "CS-001.json"), "utf-8")).$schema).toBe("changeset/1.0.0");
   });
 
   test("reopening an incorporated change-set's issue puts it back to discussing (CS-236/237)", async () => {
