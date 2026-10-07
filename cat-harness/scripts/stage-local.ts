@@ -185,6 +185,9 @@ export async function stageLocal(o: StageOptions): Promise<StageResult> {
   // one: found in whichever of the platform's instances carries them, never
   // named here. A platform without them gets no review data, and the review
   // page says so, as the workflow does when it has no renderer.
+  // declared-path-literal: a module path INSIDE another instance of the
+  // platform, probed by `inPlatform` across its instances. No directory
+  // declaration of this layer names it, and naming that layer is the point.
   const changeset = inPlatform(platform, "schemas/changeset.ts");
   if (changeset) run(repo, "bun", ["run", changeset, "--folio", inputs.folio_dir, "--base", `origin/${base}`, "--head", "worktree", "--out", join(site, "changeset.json"), "--text-out", join(site, "changeset-text.json")]);
   else log("· this platform has no ChangeSet tool: no review data on this preview");
