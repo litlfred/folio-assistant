@@ -92,6 +92,26 @@ carry:
 
 Owner, 2026-09-21: *"ensure that the spec exists before anything is developed"*.
 
+## A request for a plan reaches the gate (issue #2405)
+
+**A request for a plan is a detection signal here as in `crdm`** — "plan",
+"approach", "proposal", "how would you", "come up with" (owner, 2026-10-07:
+*"if we make a request for a plan you should ALWAYS have created a
+requirements document and work plan for us to review before
+implementation"*). Under spec-kit the requirements document IS the spec,
+posted as a comment on the governing issue, and the work plan is the beans
+`tasks` produces. The operation — what to produce, permalinks for every link
+handed over, and **stop until sign-off is recorded on the issue** — is
+the content layer's
+`plan-request-gate` skill (`skill_fetch plan-request-gate`),
+shared with `crdm` without blending the two methods.
+
+**Every FR names at least one SC, and every SC states its verification
+method** (`test`, `inspection`, `review`, `analysis`). That is the one
+definition of a requirement both methodologies use —
+the `requirement-definition` skill (`skill_fetch requirement-definition`)
+— and, like the gate, it is this platform's addition rather than upstream's.
+
 ## What this platform refuses, with reasons
 
 `methodology-adoption` requires both halves stated — a silent omission
@@ -139,6 +159,12 @@ must sign it off, tied to WHO/IG subject matter → `crdm`.
   `req:agent-workflow` → `judgement-stays-human` (SHALL) applies unchanged: an
   agent does not record a human's decision on their behalf. A marker silently
   closed is worse than one never raised, because it looks answered.
+- **Adjudicated status IS a sign-off, and it is recorded.** A spec reaches it
+  through the same adjudication the CRDM sign-off steps call — answers
+  `approve amend reject defer cancel` (code list `adjudication-requirement-set`)
+  — and the answer is written as a `requirement-signoff` attestation for the
+  spec's requirement set (issue #2405, FR-011/FR-013), never only stated in a
+  comment. The comment is the `evidence` the record links to.
 - **Never let a spec reach adjudicated status with a marker open.** Otherwise
   the marker becomes a way of appearing to ask without having asked.
 - **Never cite spec-kit for the spec-before-code gate.** It is this platform's

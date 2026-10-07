@@ -80,6 +80,38 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     $schema [1] : 'model-registry/1.0.0'
     models [0..*] : Model[]
   }
+  class "Member" as bootstrap_schemas_requirement_set_schema_json_Member <<schema: requirement-set.schema.json>> #e9edf3 {
+    ref [1] : string
+    decision [0..1] : approved | amended | rejected | deferred
+  }
+  class "SignOff" as bootstrap_schemas_requirement_set_schema_json_SignOff <<schema: requirement-set.schema.json>> #e9edf3 {
+    kind [1] : script | agent | human
+    id [1] : string
+    actor [0..1] : string
+    at [1] : string
+    scope [1] : string
+    outcome [1] : approve | amend | reject | defer | cancel
+    stage [0..1] : enum(10)
+    reason [0..1] : string
+    evidence [1] : string
+  }
+  class "Requirement Set" as bootstrap_schemas_requirement_set_schema_json_Requirement_Set <<schema: requirement-set.schema.json>> #e9edf3 {
+    id [1] : string
+    title [1] : string
+    methodology [1] : string
+    issue [0..1] : string
+    stage [1] : enum(10)
+    members [1..*] : Member[]
+    workPlan [0..*] : string[]
+    signOffs [0..*] : SignOff[]
+    document [0..1] : string
+    supersededBy [0..1] : string
+  }
+  class "SuccessCriteria" as bootstrap_schemas_requirement_schema_json_SuccessCriteria <<schema: requirement.schema.json>> #e9edf3 {
+    key [1] : string
+    criterion [1] : string
+    verification [1] : test | inspection | review | analysis
+  }
   class "Statement" as bootstrap_schemas_requirement_schema_json_Statement <<schema: requirement.schema.json>> #e9edf3 {
     key [1] : string
     label [1] : string
@@ -92,6 +124,7 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     category [0..1] : string
     actors [0..*] : string[]
     dependsOn [0..*] : string[]
+    successCriteria [1..*] : SuccessCriteria[]
   }
   class "Requirement" as bootstrap_schemas_requirement_schema_json_Requirement <<schema: requirement.schema.json>> #e9edf3 {
     id [1] : string
@@ -189,6 +222,9 @@ bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" boo
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Directory : directories
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Asset : assets
 bootstrap_schemas_model_registry_schema_json_Model_Registry *-- "0..*" bootstrap_schemas_model_registry_schema_json_Model : models
+bootstrap_schemas_requirement_set_schema_json_Requirement_Set *-- "1..*" bootstrap_schemas_requirement_set_schema_json_Member : members
+bootstrap_schemas_requirement_set_schema_json_Requirement_Set *-- "0..*" bootstrap_schemas_requirement_set_schema_json_SignOff : signOffs
+bootstrap_schemas_requirement_schema_json_Statement *-- "1..*" bootstrap_schemas_requirement_schema_json_SuccessCriteria : successCriteria
 bootstrap_schemas_requirement_schema_json_Requirement *-- "1..*" bootstrap_schemas_requirement_schema_json_Statement : statements
 bootstrap_scenarios_Role *-- "0..*" bootstrap_scenarios_FormerName : formerNames
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles

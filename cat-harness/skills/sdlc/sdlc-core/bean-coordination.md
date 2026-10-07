@@ -411,6 +411,11 @@ Two things that follow:
 
 - The `## Done when` items are ticked in that same commit, with the evidence,
   so the bean on `main` shows *why* it is complete, not just that it is.
+  When the bean delivers requirement statements, those items ARE their
+  success criteria, copied when the bean was made (`todo-manager` §"Working
+  with Beans" 4), and the bean is in its requirement set's `workPlan` — so
+  ticking them is judging the criteria, and closing the last bean of a set is
+  what moves the set toward `delivered` (issue #2405, FR-007/FR-010).
 - A bean whose Done-when is not yet all met **stays open** in that commit, with
   a note saying what is left. Completing it to avoid an orphan would be the
   opposite error.
