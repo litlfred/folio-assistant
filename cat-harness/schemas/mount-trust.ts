@@ -4,7 +4,7 @@
  * @module schemas/mount-trust
  * @graphNode schema
  *
- * Bean `ieum`, issue #2389, rule H8 of `methodologies/zero-trust-handover.md`.
+ * Bean `ieum`, issue #2389, rule H8 of `skills/conduct/security/zero-trust-handover.md`.
  * The owner, 2026-10-07: *"mounting remote KG needs trusted provenance sources
  * (digitally signed e.g. verifiable via GDHCN), or explicit user consent"*,
  * and, the same day, *"staging doesnt need signature"*.

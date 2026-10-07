@@ -1,7 +1,7 @@
 /**
  * The hand-over screen: check what one agent, tool or person hands another
  * BEFORE a model reads it. Bean `ieum`, issue #2389, rules H3, H5 and H9 of
- * `methodologies/zero-trust-handover.md`.
+ * `skills/conduct/security/zero-trust-handover.md`.
  *
  * The owner, 2026-10-07: *"would be good to filter inter-agent communication
  * (e.g. handover reports/prompts) for prompt injection as well as any human

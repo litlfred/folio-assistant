@@ -2,7 +2,7 @@
  * Screen a hand-over before a model reads it: a sub-agent's report, a
  * delegated prompt, a tool result, or a comment from a person who is not the
  * session's principal. Bean `ieum`, rules H3, H5 and H9 of
- * `methodologies/zero-trust-handover.md`; the logic is
+ * `skills/conduct/security/zero-trust-handover.md`; the logic is
  * `cat-harness/src/core/handover-screen.ts`.
  *
  * Usage:
