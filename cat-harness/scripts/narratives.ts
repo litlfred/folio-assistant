@@ -15,10 +15,10 @@
  * `--why-text`, and is never required.
  *
  * ```sh
- * bun run narratives                 # numbered list of everything awaiting a person
- * bun run narratives:confirm 1       # accept draft 1
- * bun run narratives:reject 1 --why 2   # turn it down, reason 2 of the presets
- * bun run narratives:reject 1 --why-text "..."   # ...or say it in your own words
+ * bun run cat narratives                 # numbered list of everything awaiting a person
+ * bun run cat narratives:confirm 1       # accept draft 1
+ * bun run cat narratives:reject 1 --why 2   # turn it down, reason 2 of the presets
+ * bun run cat narratives:reject 1 --why-text "..."   # ...or say it in your own words
  * ```
  *
  * ## It never writes a draft
@@ -82,7 +82,7 @@ export interface QueueItem {
    *
    * Shown, and never confirmable: a person accepting it would be accepting a
    * summary of text that is no longer there. It goes back to the drain
-   * (`bun run summaries:next`) instead.
+   * (`bun run cat summaries:next`) instead.
    */
   stale?: boolean;
 }
@@ -286,7 +286,7 @@ export function decide(
     throw new Error(
       `refusing to confirm a STALE summary: ${item.subject ?? item.file}'s text changed after it was drafted, ` +
         "or its freshness could not be established — " +
-        "it goes back to the drain (bun run summaries:next), not to a reviewer",
+        "it goes back to the drain (bun run cat summaries:next), not to a reviewer",
     );
   }
   const f = join(root, item.file);
@@ -337,8 +337,8 @@ function list(items: QueueItem[]): void {
     console.log(`      ${it.narrative.text}`);
     console.log(`      ${it.file}\n`);
   });
-  console.log("  bun run narratives:confirm <n>");
-  console.log("  bun run narratives:reject <n> --why <r>     (or --why-text \"...\")\n");
+  console.log("  bun run cat narratives:confirm <n>");
+  console.log("  bun run cat narratives:reject <n> --why <r>     (or --why-text \"...\")\n");
   console.log("reasons:");
   REJECTION_REASONS.forEach((r, i) => console.log(`  ${i + 1}. ${r}`));
 }
@@ -353,7 +353,7 @@ if (import.meta.main) {
   const items = queue();
   const n = Number(argv[1]);
   if (!Number.isInteger(n) || n < 1 || n > items.length) {
-    console.error(`pick a number from 1 to ${items.length} — \`bun run narratives\` lists them`);
+    console.error(`pick a number from 1 to ${items.length} — \`bun run cat narratives\` lists them`);
     process.exit(1);
   }
   const item = items[n - 1];
@@ -365,7 +365,7 @@ if (import.meta.main) {
     else if (wi !== -1) {
       const k = Number(argv[wi + 1]);
       if (!Number.isInteger(k) || k < 1 || k > REJECTION_REASONS.length) {
-        console.error(`--why takes 1..${REJECTION_REASONS.length}; see \`bun run narratives\``);
+        console.error(`--why takes 1..${REJECTION_REASONS.length}; see \`bun run cat narratives\``);
         process.exit(1);
       }
       reason = REJECTION_REASONS[k - 1];

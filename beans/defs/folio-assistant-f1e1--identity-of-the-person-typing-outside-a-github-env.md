@@ -10,7 +10,7 @@ parent: folio-assistant-7x5n
 
 Owner 2026-10-06: 'this needs WAY more work when not in GitHub environment'.
 
-What landed (bean ar1s P1, this session): interaction preferences are keyed by GitHub handle (+ optional published aliases); the session-start sweep resolves the handle through the authentication Tool's own resolver (`bun run auth:login` -> githubIdentity, part of auth_whoami, issue #1207) and matches it with the Claude login, GITHUB_ACTOR and the git author; no match is a THIRD state that applies the strictest profile on record. It works ONLY where a GitHub token is present (GH_TOKEN/GITHUB_TOKEN, or Actions).
+What landed (bean ar1s P1, this session): interaction preferences are keyed by GitHub handle (+ optional published aliases); the session-start sweep resolves the handle through the authentication Tool's own resolver (`bun run cat auth:login` -> githubIdentity, part of auth_whoami, issue #1207) and matches it with the Claude login, GITHUB_ACTOR and the git author; no match is a THIRD state that applies the strictest profile on record. It works ONLY where a GitHub token is present (GH_TOKEN/GITHUB_TOKEN, or Actions).
 
 ## Gaps outside GitHub
 - [ ] Local CLI with no GH token: no handle — today falls to 'could not determine' + strictest profile.

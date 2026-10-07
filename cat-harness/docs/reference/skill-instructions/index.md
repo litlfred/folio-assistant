@@ -243,7 +243,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
 | [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
-| ["NOT clean" is a verdict about the RUN, not about your diff](gate-tree-mutation.html) | `gate-tree-mutation` | — | `bun run gates` snapshots the tree before the first gate and after every one, so |
+| ["NOT clean" is a verdict about the RUN, not about your diff](gate-tree-mutation.html) | `gate-tree-mutation` | — | `bun run cat gates` snapshots the tree before the first gate and after every one, so |
 | [Generalise the fix, then attack the generalisation](generalise-the-fix.html) | `generalise-the-fix` | — | A fix that repairs one instance and leaves its siblings is half a fix. A fix |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Package: `sdlc-core` |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
@@ -253,7 +253,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
-| [Merge-conflict patterns](merge-conflict-patterns.html) | `merge-conflict-patterns` | — | `bun run merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the |
+| [Merge-conflict patterns](merge-conflict-patterns.html) | `merge-conflict-patterns` | — | `bun run cat merge:main` is the command; `processes/sdlc/merge-base.bpmn` is the |
 | [Merge queue](merge-queue.html) | `merge-queue` | — | `processes/sdlc/merge-train.bpmn` is the process. The ORDER is computed by |
 | [Does the prose say what the code does?](narrative-asserts-code.html) | `narrative-asserts-code` | — | Issue #1042, feature bean `flbx`, stage C. The owner, 2026-09-21: *"need to see |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
@@ -366,6 +366,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Dublin Core renderings](dublin-core-renderings.html) | `dublin-core-renderings` | — | Bean `7eak`. The owner, 2026-09-30: *"do we render the proper xml for dublin |
+| [Oxigraph Multi-Graph Static Search & Catalog Discovery](oxigraph-catalogue-search.html) | `oxigraph-catalogue-search` | — | This skill defines the generic, platform-level architecture for querying library catalogue hierarchy |
 
 ## Cataloguing methods (cataloguing)
 

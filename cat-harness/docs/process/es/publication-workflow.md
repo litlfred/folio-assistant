@@ -49,7 +49,7 @@ treinta y nueve frente a cincuenta y cinco.
 
 Un recuento en prosa es una afirmación; un índice derivado es evidencia. Por lo tanto, el número reside
 en [el índice derivado de procesos]({{ '/cat-harness/auto-docs/index/processes/' | relative_url }}),
-que se genera a partir de la declaración mediante `bun run auto:docs`, está controlado en CI
+que se genera a partir de la declaración mediante `bun run cat auto:docs`, está controlado en CI
 y no puede desviarse de los diagramas que contabiliza. **El trabajo de esta página es la mitad
 que no se puede generar**: para qué *sirve* cada proceso, cuándo te encontrarías
 en él y cuál proceso vecino es el que realmente deseas.
@@ -69,7 +69,7 @@ tabla.
 
 Cada uno es un documento BPMN 2.0 real con intercambio de diagramas (*diagram interchange*) — ábralo en
 [bpmn.io](https://demo.bpmn.io/), Camunda Modeler o cualquier herramienta BPMN. Los SVG
-de toda la documentación se generan a partir de estos archivos mediante `bun run render:bpmn`;
+de toda la documentación se generan a partir de estos archivos mediante `bun run cat render:bpmn`;
 nunca edite a mano un SVG.
 
 **Antes que cualquier otro** — el proceso con el que una persona se encuentra primero, y el único
@@ -243,7 +243,7 @@ por lo que un nuevo elemento es una fila en `upstream-pins.json` en lugar de un 
 
 **Los propios flujos de trabajo de CI** —`.github/workflows/*.yml` también son
 procesos, con desencadenadores, compuertas y rutas de compensación, y hasta el 2026-09-20 ninguno
-estaba dibujado. `bun run check:workflow-coverage` mide cuántos lo están, en tres
+estaba dibujado. `bun run cat check:workflow-coverage` mide cuántos lo están, en tres
 estados; un flujo de trabajo nombra el diagrama que implementa con una
 línea `# bpmn: cat-harness/processes/….bpmn` en lugar de emparejarse por su
 nombre de archivo, porque una mención no equivale a cobertura. El puntero está en el flujo
@@ -310,7 +310,7 @@ ha desaparecido» nunca ha tenido una respuesta que un lector pudiera consultar:
 | `human-translation-workflow.bpmn` | El mismo ciclo cuando participan un traductor humano y un revisor experto en la materia (SME) |
 | `evidence-retrieval.bpmn` | Formulación de una pregunta, búsqueda en fuentes de confianza, evaluación de los resultados obtenidos |
 
-> **Esta lista está verificada, no se mantiene a mano.** `bun run check:workflow-refs`
+> **Esta lista está verificada, no se mantiene a mano.** `bun run cat check:workflow-refs`
 > falla cuando un archivo `.bpmn` bajo `processes/` está ausente de esta página. Se
 > añadió porque la página comenzaba contabilizando diecinueve archivos y luego enumeraba
 > ocho —los once anteriores estaban presentes en el repositorio e invisibles aquí,
@@ -378,7 +378,7 @@ decisión, la escritura), además de `Task_AuthorizeRelease` y `Task_PublishRele
 (el requisito SHALL de `publish-authorized`). Si esos fueran negociables, la base no sería
 estricta, sería una sugerencia.
 
-`bun run check:workflow-policy` lista la política y valida cada flexibilización;
+`bun run cat check:workflow-policy` lista la política y valida cada flexibilización;
 se ejecuta en CI, por lo que una que haya dejado de aplicarse es un fallo de compilación en lugar de un
 descubrimiento el día en que se necesita.
 
@@ -668,9 +668,9 @@ Los archivos `.bpmn` son la fuente de verdad.
 ```sh
 # 1. editar processes/<diagrama>.bpmn — en un modelador o a mano
 # 2. regenerar los SVGs
-bun run render:bpmn
+bun run cat render:bpmn
 # 3. o, en CI, solo comprobar que no estén desfasados
-bun run render:bpmn:check
+bun run cat render:bpmn:check
 ```
 
 `render:bpmn` renderiza cada archivo `.bpmn` con [bpmn-js](https://bpmn.io/toolkit/bpmn-js/)

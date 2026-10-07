@@ -15,7 +15,7 @@ parent: folio-assistant-bzyu
 → `this repository's own corpus > the committed index is up to date and valid`
 
 ```
-expect(r.state, `run: bun run translation:index`).toBe("ok")
+expect(r.state, `run: bun run cat translation:index`).toBe("ok")
 Expected: "ok"   Received: "stale"
 ```
 
@@ -50,7 +50,7 @@ both landed in that shape.
 On pristine main:
 
 ```
-bun run translation:index
+bun run cat translation:index
 → Wrote docs/_data/translations.json — 14 source page(s), locales: ar, es, fr, ru, zh
  M cat-harness/docs/_data/translations.json | 252 +++++++++++++++++++
 ```
@@ -76,7 +76,7 @@ committed there would conflict with the next batch rather than help it.
 
 ## Resolved on main, 2026-09-26 — and this bean named the wrong cause
 
-`bun run translation:index:check` on `origin/main` at 016b9c0f46c:
+`bun run cat translation:index:check` on `origin/main` at 016b9c0f46c:
 
     translation index up to date — 14 source page(s) with translations
 
@@ -91,7 +91,7 @@ pages — either `translation:index` in the batch recipe, or a
 
 **That gate was not missing.** It exists and is registered:
 
-    .github/workflows/code-quality-gates.yml:1469   run: bun run translation:index:check
+    .github/workflows/code-quality-gates.yml:1469   run: bun run cat translation:index:check
     package.json:330                                "translation:index:check": "... --check"
 
 I proposed building a thing that was already there, and I proposed it while

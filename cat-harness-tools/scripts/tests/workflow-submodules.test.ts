@@ -80,7 +80,7 @@ describe("what it must NOT flag", () => {
   test("a `package.json` script name is not a platform script path", () => {
     const named = BROKEN.replace(
       "          bun run source/cat-harness/scripts/staging-record.ts retire --out x.json",
-      "          bun run gates",
+      "          bun run cat gates",
     );
     expect(auditWorkflow("staging.yml", named).findings).toHaveLength(0);
   });

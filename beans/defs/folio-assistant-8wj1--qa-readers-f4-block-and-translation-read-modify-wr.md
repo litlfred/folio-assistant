@@ -46,7 +46,7 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 
 Held by session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR (sub-agent of `claude/quirky-davinci-ixuymr`). Announced here rather than through `beans:claim`, because this session pushes nothing.
 
-**Measured** with `bun run qa:attestations:migrate:check`, which counts every non-script entry in every derived block or translation report:
+**Measured** with `bun run cat qa:attestations:migrate:check`, which counts every non-script entry in every derived block or translation report:
 - before: 157 derived reports, **13 non-script entries in 12 files** (11 `block-qa/v1`, 2 `translation-qa/v1`; 12 by `kind: agent`), 0 in a store;
 - after: the same 13, all held in `test/attestations/`, 0 missing.
 
@@ -73,7 +73,7 @@ Held by session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR (sub-age
 - `qa-merge-findings` now anchors at the block's content repo. It used the git top level, which pointed at a results tree nothing reads.
 - `language-trap-audit` used to drop adjudications on its own criteria by overwriting the array. It no longer does.
 
-**Gates.** Baseline was `bun run gates` before any change: 2 of 203 red. They were `bun test` (1 failing test: "the report is a fixpoint") and `translation:catalogue:check`. After (at `870e259a`): bun test was 13787 pass and 1 fail, the same test as the baseline. Gates were 3 of 203 red: the same two, plus `check:artefact-verification`, which flagged the new `:check`. `32677ff4` declares it, and it now passes.
+**Gates.** Baseline was `bun run cat gates` before any change: 2 of 203 red. They were `bun test` (1 failing test: "the report is a fixpoint") and `translation:catalogue:check`. After (at `870e259a`): bun test was 13787 pass and 1 fail, the same test as the baseline. Gates were 3 of 203 red: the same two, plus `check:artefact-verification`, which flagged the new `:check`. `32677ff4` declares it, and it now passes.
 
 **Reconcile with `2gst`.** 2gst's layout is uncommitted, in its own worktree (`schemas/qa-attestations.ts`, the declared `attestations` directory).
 - The two agree on the root, the `<family>/` mirror, the suffix, the `$schema` tag and the `family` field.

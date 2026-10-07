@@ -1910,7 +1910,7 @@ ${nodeRows}
 
 <p class="caveat">Generated from <code>catalogue/</code> by
 <code>who-iris/scripts/gen-iris-pages.ts</code>. Every count above is derived from the
-nodes themselves; none is transcribed. <code>bun run check:catalogue</code> separately
+nodes themselves; none is transcribed. <code>bun run cat check:catalogue</code> separately
 verifies that each node validates and that every <code>metadataRef</code>,
 <code>libraryId</code>, <code>localPath</code> and parent path resolves — so this page
 reports what the catalogue says, and that check reports whether it hangs together.</p>
@@ -2233,7 +2233,7 @@ function renderingsCell(n: Node): string {
   const link = (abs: string, label: string): string =>
     existsSync(abs)
       ? `<a href="${esc(encPath(relative(siteDir(), abs).split(sep).join("/")))}">${label}</a>`
-      : `<span class="none">${t("{label}: not rendered (run {command})", { label, command: "<code>bun run dc:render</code>" })}</span>`;
+      : `<span class="none">${t("{label}: not rendered (run {command})", { label, command: "<code>bun run cat dc:render</code>" })}</span>`;
   return `${link(r.xml, t("Dublin Core XML"))}
       <br>${link(r.jsonld, t("JSON-LD (DCMI Terms)"))}`;
 }

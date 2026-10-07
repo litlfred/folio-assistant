@@ -325,7 +325,7 @@
   named after the stub -- so the only entry point to the viewer anywhere on
   this site was a 404 from the day it was added. See bean `udx8`, and the
   identical defect AGENTS.md records against the README's chapter PDFs. A
-  path built by convention is a claim; `bun run site:links --site _site`
+  path built by convention is a claim; `bun run cat site:links --site _site`
   checks it against the tree that actually ships, and the Pages workflow runs
   that check after the export.
 
@@ -632,7 +632,7 @@
 -->
 <link rel="stylesheet" href="{{ '/assets/css/work-plan.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
-     `bun run themes:css`; `themes:css:check` fails the build when it is stale.
+     `bun run cat themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
@@ -640,7 +640,7 @@
 <!-- UML overview colours: one class per graph typology, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
 <link rel="stylesheet" href="{{ '/assets/css/uml.css' | relative_url }}?v={{ site.time | date: '%s' }}">
-<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
+<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run cat avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->

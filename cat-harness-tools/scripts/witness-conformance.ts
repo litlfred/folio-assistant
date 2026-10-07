@@ -19,10 +19,10 @@
  * changed by a migration. The remedy for a finding is a change to the
  * producer, then a re-run, decided case by case.
  *
- *   bun run witness:conformance                  # the folio in the cwd
- *   bun run witness:conformance --dir <path>     # a directory, declared or not
- *   bun run witness:conformance --json           # machine-readable
- *   bun run witness:conformance --strict         # exit 1 on a malformed file
+ *   bun run cat witness:conformance                  # the folio in the cwd
+ *   bun run cat witness:conformance --dir <path>     # a directory, declared or not
+ *   bun run cat witness:conformance --json           # machine-readable
+ *   bun run cat witness:conformance --strict         # exit 1 on a malformed file
  *
  * Without `--dir` and with no declared directory, it says so and exits 2: a
  * clean report over nothing is the `dh4f` defect, not a pass.

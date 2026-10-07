@@ -70,5 +70,5 @@ Measured at 1280 and 390 px on home, the library viewer and the who-iris
 replica: the handle sits inside the navbar on each, and covers no content.
 `glass.e2e.ts` checks that, with a rail and with a theme sidebar, at both widths,
 the handle is IN the navbar, covers no `h1`, and still opens and closes the glass.
-137 pass across the related e2e files, and `bun run gates` passes 145.
+137 pass across the related e2e files, and `bun run cat gates` passes 145.
 

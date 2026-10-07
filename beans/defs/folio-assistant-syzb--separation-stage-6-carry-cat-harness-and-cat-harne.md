@@ -18,6 +18,6 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 
 ## Done when
 - [ ] `git submodule status` shows both at the seeded SHAs
-- [ ] falsifier: `bun run gates --all` on the submodule checkout matches the pre-cutover run gate for gate, with no path edits; the rehearsal and `check:published-refs` pass
+- [ ] falsifier: `bun run cat gates --all` on the submodule checkout matches the pre-cutover run gate for gate, with no path edits; the rehearsal and `check:published-refs` pass
 - [ ] `fsh-guts/retired/cat-harness-split.md` exists (manifest only)
 - [ ] `migration-plan.md` Phase II points at `kg-separation` for bootstrap and cat-harness

@@ -47,7 +47,7 @@ folio-supplied data. See §7.
 ```sh
 beans prime && beans list      # the work-plan — see §6
 cat-harness/scripts/session-start-coord-sweep.sh  # CLI-independent equivalent
-bun run check-deps                     # what this environment can do
+bun run cat check-deps                     # what this environment can do
 ```
 
 `--check-deps` matters more than it looks. Many checks degrade to `n/a`

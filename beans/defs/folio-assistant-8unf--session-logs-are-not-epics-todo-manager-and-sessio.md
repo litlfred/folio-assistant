@@ -14,7 +14,7 @@ Evidence: qou work-plan analysis 2026-10-04 (session https://claude.ai/code/sess
 ## Done when
 - [x] Directive 1 and the sample are rewritten: a session's record is the PR body plus a bean NOTE per bean worked (`beans:note`, keyed by branch), never an epic or milestone
 - [x] session-intent step 4b matches
-- [x] `bun run health`'s bean-store check reports open Session:/handoff beans typed epic|milestone (report-only)
+- [x] `bun run cat health`'s bean-store check reports open Session:/handoff beans typed epic|milestone (report-only)
 - [x] skill:register run, gates green
 
 

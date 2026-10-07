@@ -84,8 +84,8 @@
  * missing the mount like any other.
  *
  * Usage:
- *   bun run check:folio-mount
- *   bun run check:folio-mount -- --json
+ *   bun run cat check:folio-mount
+ *   bun run cat check:folio-mount -- --json
  *
  * Exit: 0 every declared page is mounted, 1 a page is missing it or an
  * exemption is stale, 2 could not check.

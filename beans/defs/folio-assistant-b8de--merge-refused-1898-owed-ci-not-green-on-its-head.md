@@ -32,7 +32,7 @@ A comment on PR #1898, plus a message to the Merge Manager role.
 - [x] #1898 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [x] the owed `pull_request` CI is green on that head
 - [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [x] `bun run merge:guard 1898` passes all 7 checks, and it lands (or the owner closes it)
+- [x] `bun run cat merge:guard 1898` passes all 7 checks, and it lands (or the owner closes it)
 
 
 ## Attempts

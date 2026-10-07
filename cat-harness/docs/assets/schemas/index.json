@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 242,
+      "count": 243,
       "unit": "modules"
     }
   },
@@ -1341,6 +1341,15 @@
       "name": "script-qa",
       "graphNode": "schema",
       "summary": "Per-script QA report schema.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/script-table.ts",
+      "instance": "cat-harness",
+      "name": "script-table",
+      "graphNode": "none",
+      "reason": "functions that read the script table; no schema",
+      "summary": "The checkout's script table, read from where each script now lives.",
       "isTest": false
     },
     {
@@ -31873,6 +31882,40 @@
         "cat-harness/schemas/block-qa.ts#QaCriterionEntry",
         "cat-harness/schemas/script-qa.ts#ScriptLanguage"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/script-table.ts#ScriptEntry",
+      "name": "ScriptEntry",
+      "module": "cat-harness/schemas/script-table.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The command, relative to the checkout root."
+        },
+        {
+          "name": "manifest",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The manifest it is declared in, repository-relative (`package.json` for the root)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true

@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/beans/` (intent.m
 6. **The state-graph tag runs into the name as text.** The status tag is a sibling span with no separator, so the heading's text is "beanslive", "glossaryelsewhere", "healthdeclared" (from `innerText`). A screen reader announces it that way.
 7. **The page is dark by default and has no scheme control.** `:root` defaults to the dark ground, and light applies only through `data-fa-scheme="light"`. Nothing on the page sets it. (→ `folio-assistant-dc64`)
 
-When fixed, re-draw `cat-harness/docs/wireframes/beans/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/beans/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

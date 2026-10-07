@@ -14,7 +14,7 @@ must move, or be cut, **before** `litlfred/cat-harness(-tools)` and
 
 ## Where each layer stands
 
-`bun run seed:ready --layer <L>` (no `--rehearse`), 06:30Z:
+`bun run cat seed:ready --layer <L>` (no `--rehearse`), 06:30Z:
 
 | layer | verdict | rule | layer PRs | moving PRs | upward declared paths | standalone |
 |---|---|---|---|---|---|---|
@@ -116,4 +116,4 @@ link or a path breaks when the layer stands alone.
 5. Ruled and approved moves land, one concern group per PR, with a rewording pass wherever a staying file names a moved one.
 6. Upward **mentions** that are links or paths are fixed (`check:reference-direction`).
 7. The standalone failures reach 0 (`ho66`; Session A).
-8. `bun run seed:ready --layer <L> --rehearse` answers **settled**; then the seed PRs go to each empty repository, on a branch.
+8. `bun run cat seed:ready --layer <L> --rehearse` answers **settled**; then the seed PRs go to each empty repository, on a branch.

@@ -4,7 +4,7 @@
 
 # who-iris-site
 
-The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.
+The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run cat iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.
 
 Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-site`, holding `docs`.
 

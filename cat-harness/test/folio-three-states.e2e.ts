@@ -470,7 +470,7 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
   };
 
   test("the generated page exists, and is on the layout that carries the folio", () => {
-    expect(existsSync(VIEW), `${VIEW} is missing — run \`bun run library:viz\``).toBe(true);
+    expect(existsSync(VIEW), `${VIEW} is missing — run \`bun run cat library:viz\``).toBe(true);
     // Themed: the layout loads docs-ui.js, so the page carries no mount of its
     // own — a second one would load the folio twice.
     const page = readFileSync(VIEW, "utf8");

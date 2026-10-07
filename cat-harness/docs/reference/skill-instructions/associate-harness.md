@@ -87,6 +87,6 @@ Add an entry to `associatedHarnesses` in the declaring instance's `<name>.json`:
 
 ## Then
 
-Run `bun run docs:harness` and commit `docs/_data/harness.json`. The Harnesses
+Run `bun run cat docs:harness` and commit `docs/_data/harness.json`. The Harnesses
 panel (the ⚙ on a sidebar divider, or the glass tile) reads it from there.
 {% endraw %}

@@ -193,7 +193,7 @@ Una compuerta (*gateway*) ahora indica cuál es. `<cat-harness.processes:decisio
 y se rechaza un resultado proporcionado manualmente; `<cat-harness.processes:judgement reason="…">` significa
 el criterio de alguien, exigiéndose el motivo. Antes de ese marcador, "no hay tabla
 porque esto es un juicio subjetivo" y "no hay tabla porque nadie escribió una" eran
-indistinguibles; y `bun run check:workflow-refs` ahora imprime la división
+indistinguibles; y `bun run cat check:workflow-refs` ahora imprime la división
 tripartita, de modo que la pregunta *¿cuánto de esto lo decide un modelo?* tiene una respuesta
 que se cuenta en lugar de meramente afirmarse.
 
@@ -247,7 +247,7 @@ aplicado por el motor dentro de una ejecución por lo demás agéntica, y esa es
 tarea, no de todo el diagrama.
 
 **Parcialmente construido.** No hay ningún motor BPMN conectado aún. El informe mecánico de QA/QC
-ya existe: `bun run prov:qaqc` escribe el historial de cada instancia de flujo de trabajo como un
+ya existe: `bun run cat prov:qaqc` escribe el historial de cada instancia de flujo de trabajo como un
 registro PROV-O y vuelve a comprobar cada paso contra las directivas ODRL, de carácter consultivo
 (issue #1180, paso 5; la habilidad `task-authorization`). El informe agéntico de QA/QC
 aún no existe. El resto de esta sección describe el objetivo para que la

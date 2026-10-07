@@ -41,7 +41,7 @@ Escape axis: 2 before, 2 after.
 - [x] BUILTIN_ADAPTERS re-pointed
 - [x] init-folio.ts reads the path rather than composing it; test pins the full path
 - [x] escape axis re-measured: 2 before, 2 after
-- [x] bun run gates green, compared against origin/main in a clean worktree
+- [x] bun run cat gates green, compared against origin/main in a clean worktree
 
 
 

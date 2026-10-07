@@ -23,7 +23,7 @@ Note: epic `nok9` is copied verbatim from #1887's branch, because it is not on `
 
 ## Verified 2026-10-02, on this branch at `e75ce6b38e`
 
-Each check run on its own, never through `bun run gates` (which is unpassable
+Each check run on its own, never through `bun run cat gates` (which is unpassable
 on any branch until the `gatesFrom` fix on #1889 lands — bean `9zok`, issue
 #1915):
 
@@ -66,5 +66,5 @@ were read as the owed runs because the job NAMES all matched.
 Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
 
 - `cat-harness/processes/sdlc/merge-refusal.bpmn` exists on main (box 2).
-- `render:bpmn:check` → exit 0. `skill:register:check` and `readme:subgraphs:check` pass inside `bun run gates` on the bookkeeping branch (box 3).
+- `render:bpmn:check` → exit 0. `skill:register:check` and `readme:subgraphs:check` pass inside `bun run cat gates` on the bookkeeping branch (box 3).
 - The refused-member process ran on real cases afterwards: `58ro` and `z9hh` are refusal beans that it opened and that closed when their PRs (#1977, #2093) landed.

@@ -62,6 +62,7 @@ import { gitFiles } from "../../cat-harness/schemas/git-corpus.ts";
 import { directoriesForGraph, instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 // The HARNESS, not this layer: these scripts moved up in 70lx B2b and read cat-harness.
 import { HARNESS_ROOT } from "./lib/roots.ts";
+import { scriptsOf } from "../../cat-harness/schemas/script-table.ts";
 
 /**
  * Every `.ts` under `root` that GIT accounts for, excluding dot directories.
@@ -126,9 +127,7 @@ const under = (file: string, dirs: readonly string[]): boolean =>
  */
 export function toolEntryPoints(repoRoot: string): { shells: number; entries: string[] } {
   const pkgPath = join(repoRoot, "package.json");
-  const scripts = existsSync(pkgPath)
-    ? ((JSON.parse(readFileSync(pkgPath, "utf8")) as { scripts?: Record<string, string> }).scripts ?? {})
-    : {};
+  const scripts = existsSync(pkgPath) ? scriptsOf(repoRoot) : {};
 
   const shells: string[] = [];
   for (const root of instanceRootsIn(repoRoot)) {
@@ -150,7 +149,7 @@ export function toolEntryPoints(repoRoot: string): { shells: number; entries: st
     // A chain longer than this is a script calling itself, which is a defect
     // for another check; here it must simply terminate.
     if (depth > 6) return;
-    for (const m of cmd.matchAll(/(?:^|&&|\|\||;)\s*bun run ([^\s&|;]+)/g)) {
+    for (const m of cmd.matchAll(/(?:^|&&|\|\||;)\s*bun run (?:cat )?([^\s&|;]+)/g)) {
       const token = m[1]!;
       if (token.endsWith(".ts")) entries.add(token);
       else if (scripts[token]) follow(scripts[token], depth + 1);

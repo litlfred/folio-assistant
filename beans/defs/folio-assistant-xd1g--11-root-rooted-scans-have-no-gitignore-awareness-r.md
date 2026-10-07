@@ -111,7 +111,7 @@ written reason instead of a fix.
 ## A THIRTEENTH, and the first one whose output is COMMITTED — `kg-detangle` (2026-09-26)
 
 Found the way this bean predicts: not by sweeping the list, but by a gate writing
-to the tree while `bun run gates` judged it, caught by the new between-gates tree
+to the tree while `bun run cat gates` judged it, caught by the new between-gates tree
 guard (bean `ymsu`).
 
 **`cat-harness/skills/kg/graph-management/kg-detangle.ts` walks from `ROOT` and skips
@@ -148,7 +148,7 @@ run; this is a wrong number in a published document, pinned.
 It also inverts what the tree guard's own remediation text tells you to do —
 *"regenerate and COMMIT what is stale"* — because here the two writers disagree and
 following that advice commits whichever ran last. Measured in sequence on one tree:
-`bun test` leaves 227, then `bun run kg:detangle` restores 1441.
+`bun test` leaves 227, then `bun run cat kg:detangle` restores 1441.
 
 ### The cause, and it is this bean's own trigger again
 
@@ -244,7 +244,7 @@ unreadable`, `main`'s own `t8g3` blocker, checked by NAME. tsc and eslint clean.
 `kg:detangle:check`, `uml:overview:check`, `check:partition`,
 `check:kind-validators`, `check:subgraphs`, `check:context-emission`,
 `check:code-accounting`, `check:harness-dirs` each PASS, run one at a time rather
-than through `bun run gates` — every false reading this session came from running
+than through `bun run cat gates` — every false reading this session came from running
 the gate set while editing the tree.
 
 ### Still open on this bean
@@ -261,7 +261,7 @@ conventions.
 Recorded because the convergence is evidence about this bean's method, not just
 about `kg-detangle`.
 
-The section above found it via the between-gates tree guard while `bun run gates`
+The section above found it via the between-gates tree guard while `bun run cat gates`
 judged the tree, and numbered it the **thirteenth**. A second session
 (PR #1399) found the SAME defect in the SAME file about an hour later by a
 different route entirely: a new `skill-registration-chain` CI job, built to run
@@ -674,10 +674,10 @@ is the question every one of these measurements had to answer by hand.
 failure it produces is *indistinguishable from a stale committed sidecar* — it
 even tells you to commit the wrong thing.
 
-Symptom: `bun run audit:coverage:require-all` and `:strict` both exit 1 with
+Symptom: `bun run cat audit:coverage:require-all` and `:strict` both exit 1 with
 
     the committed sidecar at cat-harness/test/results/audit-coverage.qa-results.json
-    disagrees with this run — run `bun run audit:coverage` and commit it.
+    disagrees with this run — run `bun run cat audit:coverage` and commit it.
 
 The whole disagreement is ONE directory. Diffed semantically rather than by
 `git diff`, which calls the sidecar binary:
@@ -696,9 +696,9 @@ generators cannot match the committed sidecar.
 
 Proof, non-destructive:
 
-    mv schemas /tmp/held && bun run audit:coverage:require-all   # -> 0
-                            bun run audit:coverage:strict        # -> 0
-    mv /tmp/held schemas  && bun run audit:coverage:require-all  # -> 1
+    mv schemas /tmp/held && bun run cat audit:coverage:require-all   # -> 0
+                            bun run cat audit:coverage:strict        # -> 0
+    mv /tmp/held schemas  && bun run cat audit:coverage:require-all  # -> 1
 
 ## Why this one is worth its own line
 

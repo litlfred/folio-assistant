@@ -102,5 +102,5 @@ stakeholders". Every report ends with a **NOT DETERMINED** section naming the
 people half, any changed path that maps to no skill (unknown impact, not
 absent impact), and any skill whose `roles:` are undeclared.
 
-`bun run stakeholder-map <path>...` or `--since <ref>`; `stakeholder_map` as
+`bun run cat stakeholder-map <path>...` or `--since <ref>`; `stakeholder_map` as
 an MCP tool.

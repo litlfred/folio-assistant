@@ -16,4 +16,4 @@ Issue #2195, PR 1 of 3. Node kind = TS nodeKind(); found through each graph typo
 
 Merged as #2221 (`5e4a560` on main). Node kinds are found through each graph typology's family validators; `node-kinds:check` gates a stale index, a new unkinded family (ratcheted baseline) and id collisions.
 
-**Closed on evidence, 2026-10-06** (re-measured, not quoted): on main at `f0bd0c7`, `bun run node-kinds:check` exits 0 — *"node-kinds.json is current, no new family is unkinded, and no id collides"*. Status history: opened in-progress, never reopened. Follow-ups (bean/harness/document kinds) are #2248, not this bean.
+**Closed on evidence, 2026-10-06** (re-measured, not quoted): on main at `f0bd0c7`, `bun run cat node-kinds:check` exits 0 — *"node-kinds.json is current, no new family is unkinded, and no id collides"*. Status history: opened in-progress, never reopened. Follow-ups (bean/harness/document kinds) are #2248, not this bean.
