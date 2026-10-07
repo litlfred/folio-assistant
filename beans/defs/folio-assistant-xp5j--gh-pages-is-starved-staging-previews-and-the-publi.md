@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xp5j
 title: 'gh-pages is STARVED: staging previews and the published site contend for one serialised Pages deployment, 72 of 100 cancelled'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T06:49:11Z
-updated_at: 2026-10-04T08:02:37Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -404,3 +404,6 @@ bean. Recorded so the next agent does not re-derive it from five stacked runs.
 - [ ] `check:ci-health`'s newest-settled line reads success rather than cancelled
 
 _2026-10-04T08:00:34Z_ — Claimed by claude/xp5j-ref-steward — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Completed on landed evidence
+Landed on main in PR #2063 (xp5j: a steward per watched ref — recast merge-steward, migrate gh-pages).

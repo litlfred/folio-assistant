@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xxku
 title: 'Flushable containers: a named store with a buffer limit, an over-full badge, and three flush actions'
-status: todo
+status: completed
 type: feature
 parent: folio-assistant-1xhc
 created_at: 2026-09-19T12:07:49Z
-updated_at: 2026-09-19T12:15:59Z
+updated_at: 2026-10-07T17:30:00Z
 ---
 
 
@@ -307,3 +307,6 @@ closing delimiter and there is no escape for it. Same asymmetry
 - Building the viewer chrome for the badge — that is `7vhe`.
 - The staging prune mechanism itself — that is `w2g5` / #407.
 - Pruning any preview with a live signal, at any threshold.
+
+## Completed on landed evidence
+Landed on main in PR #407 (w2g5: make staging orphan detection a disjunction of liveness signals, and give cleanup a reachable remedy).
