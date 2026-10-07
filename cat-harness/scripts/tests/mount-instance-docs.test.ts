@@ -25,7 +25,7 @@ import { join } from "path";
 
 import {
   igSiteRoots,
-  mountRoutes,
+  mountable,
   servedDirectories,
   WITHHELD_FILE,
   publishedAsset,
@@ -224,9 +224,29 @@ describe("which kind answers at the instance's own route", () => {
     expect(undetermined).toEqual([]);
   });
 
-  it("the real smart-trust declaration mounts nothing at /smart-trust/", () => {
-    expect(igSiteRoots().has("smart-trust")).toBe(true);
-    expect(mountRoutes("cat-harness")).not.toContain("smart-trust");
+  it("a declared igSite root keeps /<instance>/ off the mount table — read from a declaration", () => {
+    // smart-trust's shape, as a fixture so it holds in a standalone checkout.
+    const repo = mkdtempSync(join(tmpdir(), "igsite-root-"));
+    const inst = join(repo, "st");
+    for (const d of ["docs", "openapi"]) {
+      mkdirSync(join(inst, d), { recursive: true });
+      writeFileSync(join(inst, d, "index.html"), "<html><body></body></html>");
+    }
+    writeFileSync(
+      join(inst, "st.json"),
+      JSON.stringify({
+        name: "st",
+        directories: [
+          { id: "st-docs", path: "docs/", graphTypologies: ["docs"], instanceRoot: true, igSite: true },
+          { id: "st-openapi", path: "openapi/", graphTypologies: ["openapi"] },
+        ],
+      }),
+    );
+    expect([...igSiteRoots(repo)]).toEqual(["st"]);
+    const found = mountable(repo).filter((m) => m.name === "st");
+    expect(found.map((m) => m.kind)).toEqual(["openapi"]);
+    expect(withRoutes(found).candidates.map((c) => c.route).sort()).toEqual(["openapi/st", "st"]); // the defect
+    expect(withRoutes(found, igSiteRoots(repo)).candidates.map((c) => c.route)).toEqual(["openapi/st"]);
   });
 
   it("one instance being undetermined does not implicate another", () => {
