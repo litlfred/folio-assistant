@@ -78,6 +78,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-validators`,
 | [`todo-node.json`](todo-node.json) | data |  |
 | [`todos-board.json`](todos-board.json) | data |  |
 | [`tool-definition.json`](tool-definition.json) | data |  |
+| [`tool-profile.json`](tool-profile.json) | data |  |
+| [`tool-release.json`](tool-release.json) | data |  |
 | [`tool-run-record.json`](tool-run-record.json) | data |  |
 | [`translation-config.json`](translation-config.json) | data |  |
 | [`translation-status.json`](translation-status.json) | data |  |

@@ -1209,6 +1209,11 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // Tool releases (issue #2481, bean `3sbm`): the gate over the
+      // `tool-release` graph that T1 puts in cat-harness for every layer to
+      // inherit. Harness, beside `code-lists.ts`, for the same reason: the
+      // resolver that reads these is needed to RUN a render.
+      "scripts/tool-releases.ts",
       // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
       // process, so harness, beside the gates it sits among.
       "scripts/publish-verify.ts",

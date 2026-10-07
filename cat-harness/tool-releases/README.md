@@ -8,5 +8,10 @@ The external tools this platform runs: one `folio-tool-release/v1` file per tool
 
 Part of [C@T Harness](../README.md) 0.1.0, declared as `tool-releases`, holding `tool-release`.
 
-_This directory holds no files yet._
+| file | what it is | used by |
+|---|---|---|
+| [`default.profile.json`](default.profile.json) | The tools this platform's own renders need: PlantUML, which brings its JRE and graphviz in as runtimes, and graphviz for direct `dot` use. |  |
+| [`graphviz-16.1.0-linux-x64-ubuntu-24.04.json`](graphviz-16.1.0-linux-x64-ubuntu-24.04.json) | data |  |
+| [`plantuml-1.2024.7.json`](plantuml-1.2024.7.json) | data |  |
+| [`temurin-jre-21.0.4_7-linux-x64.json`](temurin-jre-21.0.4_7-linux-x64.json) | data |  |
 <!-- kg:subgraph:end -->
