@@ -42,4 +42,4 @@ _2026-10-06T21:52:57Z_ — Claimed by claude/0kbt-orphan-witness-count — pushe
    - Any path in `exclude` is skipped during file scanning, excluding it from `files` count, family file counts, and bucket tallies.
 3. **Automated tests**:
    - `cat-harness/content/pipeline/qa-graph-index.test.ts`: verifies `opts.exclude` removes excluded paths from counts, families, and bucket sums.
-   - `cat-harness/scripts/tests/gen-docs-pages-orphan-qa.test.ts`: writes an orphan witness with `fail: 999`, executes `gen-docs-pages.ts`, verifies orphan is removed, asserts published count matches the post-sweep tree on disk rather than the starting tree, and executes a second run to verify strict idempotence.
+   - `test/gen-docs-pages-orphan-qa-checkout.test.ts` (written in `cat-harness/scripts/tests/`, moved to the root `test/` because it runs the whole generator over the checkout — bean `7zz1`): writes an orphan witness with `fail: 999`, executes `gen-docs-pages.ts`, verifies orphan is removed, asserts published count matches the post-sweep tree on disk rather than the starting tree, and executes a second run to verify strict idempotence.

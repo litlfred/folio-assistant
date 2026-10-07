@@ -7,16 +7,26 @@
  * - a test writes an orphan witness, runs the generator once, and asserts the published count matches
  *   the tree the run leaves behind - not the tree it started from
  * - idempotence is pinned: two consecutive runs on an unchanged tree publish identical counts
+ *
+ * A test about the WHOLE CHECKOUT, written in `cat-harness/scripts/tests/`
+ * and moved here (bean `7zz1`, owner ruling 2026-10-06 "Top-level instance"):
+ * it spawns the full `gen-docs-pages.ts` from the repository root, which
+ * rewrites the published docs tree. Standing alone, cat-harness's own tests
+ * read that tree, so running it inside the layer turned nine unrelated tests
+ * red in `check:cat-harness-standalone`. Every path below is composed from
+ * ORIGIN_DIR, the directory it was written in, so nothing it reads changed.
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
-import { readQaGraph } from "../../content/pipeline/qa-graph-index.ts";
-import { directoryForGraph, siteDirFor } from "../../schemas/cat-harness.ts";
+import { readQaGraph } from "../cat-harness/content/pipeline/qa-graph-index.ts";
+import { directoryForGraph, siteDirFor } from "../cat-harness/schemas/cat-harness.ts";
 
-const INSTANCE_ROOT = join(import.meta.dir, "..", "..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move, so nothing it reads changed. */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+const INSTANCE_ROOT = join(ORIGIN_DIR, "..", "..");
 const REPO_ROOT = join(INSTANCE_ROOT, "..");
 const QA_ASSET_DIR = join(INSTANCE_ROOT, "test", "results", "witnesses");
 const QA_INDEX_PATH = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets", "qa", "index.json");

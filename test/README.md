@@ -38,6 +38,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`gates-third-state-checkout.test.ts`](gates-third-state-checkout.test.ts) | a file |  |
 | [`gates-workflows.test.ts`](gates-workflows.test.ts) | a file |  |
 | [`gen-default-boards-checkout.test.ts`](gen-default-boards-checkout.test.ts) | a file |  |
+| [`gen-docs-pages-orphan-qa-checkout.test.ts`](gen-docs-pages-orphan-qa-checkout.test.ts) | a file |  |
 | [`gen-lsi-viz-checkout.test.ts`](gen-lsi-viz-checkout.test.ts) | a file |  |
 | [`gen-themes-css-checkout.test.ts`](gen-themes-css-checkout.test.ts) | a file |  |
 | [`generated-banner-commands-repo-root.test.ts`](generated-banner-commands-repo-root.test.ts) | a file |  |
