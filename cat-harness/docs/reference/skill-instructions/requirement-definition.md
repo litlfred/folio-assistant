@@ -141,11 +141,3 @@ delivers a requirement.
 - `bootstrap-tools/schemas/requirement.ts` — `SuccessCriterionSchema`, `RequirementRefSchema`
 - `cat-harness-tools/scripts/check-requirements.ts` — the warning
 {% endraw %}
-
-## Processes that run this skill
-
-| process | step(s) that name it |
-|---|---|
-| [CRDM close-out](../../processes/crdm-close.html) | Record the sign-off as a requirement-signoff attestation |
-| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Record the sign-off as a requirement-signoff attestation |
-
