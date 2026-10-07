@@ -128,7 +128,7 @@ export function heldIntakes(repo: string, uploadsDir?: string): Held[] {
     const intake = IntakeSchema.parse(JSON.parse(readFileSync(intakePath, "utf-8")));
     const recordPath = intake.record ? join(uploads, d.name, intake.record) : undefined;
     const record = recordPath && existsSync(recordPath) ? DublinCoreRecordSchema.parse(JSON.parse(readFileSync(recordPath, "utf-8"))) : undefined;
-    const pdfSha256 = intake.files.find((f) => f.role === "original-bitstream")?.sha256;
+    const pdfSha256 = intake.files.find((f) => f.role === "original-bitstream")?.sha256 ?? undefined;
     out.push({ intake, intakePath: relative(repo, intakePath), record, recordPath: recordPath ? relative(repo, recordPath) : undefined, pdfSha256, abs: { intake: intakePath, record: recordPath } });
   }
   return out;
