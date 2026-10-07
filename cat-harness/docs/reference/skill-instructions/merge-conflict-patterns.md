@@ -667,12 +667,19 @@ claim to the default branch so a sibling sees it before your PR exists (bean
 measured it, and the refusal text used to assert the first cause for both —
 sending an agent to hunt a sibling that does not exist.
 
-`claim-bean.ts` now mirrors the claim note onto the branch as well as the
-status, byte-identically (`mirrorClaimNote`), which removes the BODY half of
-that conflict. What remains is `status` and `updated_at`, and that remainder is
-**correct**: `in-progress` on the default branch against `completed` on yours
-is a real divergence from a merge base that predates the claim. Resolve it by
-keeping the completing branch's value and the note — and **never by unioning
+`claim-bean.ts` now brings the claim COMMIT into the claiming branch after the
+push (bean `24fa`, owner option 1, #2376): a fast-forward when the branch has
+nothing of its own yet, otherwise a merge commit. The claim is then in the
+branch's merge base, so finishing the bean merges cleanly. Copying only the
+claim's text was not enough. On #2344 the copy was byte-identical and the bean
+still conflicted on `updated_at` and the end of the body, and **a conflicted PR
+gets no CI at all**, so it can never turn green.
+
+The conflict therefore now means the claim could NOT be brought in: a detached
+checkout, local edits in the way, or a merge that would conflict. `beans:claim`
+says so (`NOT in this branch's history`) and falls back to the text mirror
+(`mirrorClaimNote`). Resolve the remainder by merging the default branch in, or
+by keeping the completing branch's value and the note — and **never by unioning
 the front matter**, since a duplicated `updated_at` is
 `check-bean-front-matter`'s recorded defect.
 
