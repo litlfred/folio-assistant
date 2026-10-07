@@ -1,16 +1,15 @@
 ---
-layout: default
-generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
-title: 'dak-l1-library'
-parent: Skill instructions
+name: dak-l1-library
+description: >
+  Build a DAK's library from the L1 sources its Component 1 cites, and the L1
+  knowledge graph that records them. Read when starting or extending a DAK
+  library, when a DAK's guidance changes, and before writing any L1 graph for a
+  DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it
+  is L1 (declared > context > inferred), extracting the Component 1 graph, the
+  L1 graph of each L1 source as a specialisation of its library entry, and the
+  layering rule: the library is upstream of L1.
 ---
 
-{: .note }
-> Generated from [`smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md`](https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md) — do not edit here.
->
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md){: .fa-edit-source data-fa-link="edit" data-src="smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md" data-repo="litlfred/folio-assistant" }
-
-{% raw %}
 # dak-l1-library
 
 > Skill id: `dak-l1-library` · Package: `authoring-who-smart-guidelines` ·
@@ -157,11 +156,3 @@ item. The PDFs themselves are pinned by sha256 and not committed.
 - the Dublin Core record: `folio-assistant-core/schemas/dublin-core.ts`;
 - the intake, its licence and its classifications: `cat-harness/schemas/intake.ts`,
   `cat-harness/schemas/source-licence.ts`.
-{% endraw %}
-
-## Processes that run this skill
-
-| process | step(s) that name it |
-|---|---|
-| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Build the L1 library from Component 1 |
-

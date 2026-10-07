@@ -9,7 +9,7 @@
     {
       "id": "dak-l1-library",
       "prefLabel": "dak-l1-library",
-      "definition": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, extracting the Component 1 graph, and the two validators it must pass.",
+      "definition": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it is L1 (declared > context > inferred), extracting the Component 1 graph, the L1 graph of each L1 source as a specialisation of its library entry, and the layering rule: the library is upstream of L1.",
       "notation": "dak-l1-library",
       "source": "smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
       "status": "candidate"

@@ -273,6 +273,17 @@ classDiagram
       role [1] string
       note [0..1] string
     }
+    class who_iris_who_iris_uploads_folio_intake_v1_Classification["Classification"] {
+      <<json: IntakeSchema>>
+      scheme [1] string
+      code [1] string
+      member [1] boolean
+      properties [0..1] map~string~
+      source [1] declared | context | inferred
+      basis [1] string
+      by [0..1] string
+      at [0..1] string
+    }
     class who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1["folio-intake/v1"] {
       <<json: IntakeSchema>>
       $schema [1] 'folio-intake/v1'
@@ -284,6 +295,7 @@ classDiagram
       source [1] object
       files [0..*] File[]
       licence [0..1] object
+      classifications [0..*] Classification[]
     }
   }
   namespace who_iris__who_iris_skills {
@@ -559,10 +571,12 @@ classDiagram
   who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
   who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
   who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
+  who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_Classification : classifications
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_Asset" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_Omitted" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_intake_v1_File" fa_uml_kind_uploads
+  cssClass "who_iris_who_iris_uploads_folio_intake_v1_Classification" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1" fa_uml_kind_uploads
   who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Source : sources
   who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Pattern : patterns

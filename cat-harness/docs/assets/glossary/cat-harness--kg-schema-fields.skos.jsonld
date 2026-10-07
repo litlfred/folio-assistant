@@ -18634,6 +18634,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/intake.intakeclassificationschema.basis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeClassificationSchema.basis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why — the rule, the person's words, or the process step. Required: an unexplained classification is a guess."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeClassificationSchema.basis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/intake.intakeclassificationschema.properties",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeClassificationSchema.properties"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Qualifiers the scheme defines, e.g. `{ publicationType: \"implementation-guidance\" }`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeClassificationSchema.properties",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/intake.intakefileschema.role",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18688,6 +18726,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema._comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/intake.intakeschema.classifications",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema.classifications"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Classifications of the captured item ({@link IntakeClassificationSchema})."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.classifications",
       "skos:note": "candidate"
     },
     {

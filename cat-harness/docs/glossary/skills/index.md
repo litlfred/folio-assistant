@@ -583,7 +583,7 @@ critical-path-analysis <span class="fa-gloss-status">candidate, extracted</span>
 dak-l1-library <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, extracting the Component 1 graph, and the two validators it must pass.</p>
+<p>Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it is L1 (declared &gt; context &gt; inferred), extracting the Component 1 graph, the L1 graph of each L1 source as a specialisation of its library entry, and the layering rule: the library is upstream of L1.</p>
 <p class="fa-gloss-meta">Skills of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md"><code>smart-base/skills/content/authoring-who-smart-guidelines/dak-l1-library.md</code></a></p>
 </dd>
 <dt id="smart-base--kg-skills--dak-postprocessing" data-fa-state="extracted" data-fa-gloss="">

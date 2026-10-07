@@ -14,7 +14,7 @@ Candidate terms extracted from every BPMN task and call activity: `name` as the 
 
 From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 441 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 160 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 707 terms and is 575 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 707 terms and is 576 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -943,7 +943,7 @@ Build the L1 knowledge graph [document-intake] <span class="fa-gloss-status">can
 Build the L1 library from Component 1 [dak-l1-library] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Ingest the DAK and every source its Component 1 cites into the library, and extract the L1 graph that records them: §1.1's interventions, §1.2's citations, each resolved by its printed number to a publication. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts, and validate with both smart-kg validate.mjs and the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically.</p>
+<p>Ingest the DAK and every source its Component 1 cites into the library. Record whether each is L1 on its intake (declared &gt; context &gt; inferred). Extract the DAK's L1 references graph: §1.2's citations, each numberedAs a reference entry that resolvesTo an L1 publication, or to the library entry of a held source that is not L1. For each L1 source, run l1-specialise.ts: its publication, sections and elements as specialisations of its library nodes, since the library is upstream of L1. Fetch IRIS items with fetch-dspace-item.ts, ingest, run extract-dak-l1-references.ts --record-context, and validate with the smart-base Zod validator. Fidelity — does each citation name the source it resolves to — is left to a person, never passed automatically.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn"><code>smart-base/processes/content/l2-dak-authoring.bpmn#Task_L1Library</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_qareportsigning.task_buildrun" data-fa-state="extracted" data-fa-gloss="">

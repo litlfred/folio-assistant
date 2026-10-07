@@ -83,6 +83,17 @@ classDiagram
       role [1] string
       note [0..1] string
     }
+    class folio_assistant_uploads_folio_intake_v1_Classification["Classification"] {
+      <<json: IntakeSchema>>
+      scheme [1] string
+      code [1] string
+      member [1] boolean
+      properties [0..1] map~string~
+      source [1] declared | context | inferred
+      basis [1] string
+      by [0..1] string
+      at [0..1] string
+    }
     class folio_assistant_uploads_folio_intake_v1_folio_intake_v1["folio-intake/v1"] {
       <<json: IntakeSchema>>
       $schema [1] 'folio-intake/v1'
@@ -94,6 +105,7 @@ classDiagram
       source [1] object
       files [0..*] File[]
       licence [0..1] object
+      classifications [0..*] Classification[]
     }
     class folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json["spdx-3-1-rc1-machine-readable/schema.json"] {
       <<schema: spdx-3-1-rc1-machine-readable/schema.json>>
@@ -323,7 +335,9 @@ classDiagram
     }
   }
   folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files
+  folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_Classification : classifications
   cssClass "folio_assistant_uploads_folio_intake_v1_File" fa_uml_kind_uploads
+  cssClass "folio_assistant_uploads_folio_intake_v1_Classification" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_folio_intake_v1_folio_intake_v1" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json" fa_uml_kind_uploads
   cssClass "n_folio_assistant_folio_assistant_tests_code" fa_uml_kind_code

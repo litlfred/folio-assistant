@@ -6867,6 +6867,20 @@
       "status": "candidate"
     },
     {
+      "id": "intake.intakeclassificationschema.basis",
+      "prefLabel": "IntakeClassificationSchema.basis",
+      "definition": "Why — the rule, the person's words, or the process step. Required: an unexplained classification is a guess.",
+      "source": "cat-harness/schemas/intake.ts#IntakeClassificationSchema.basis",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeclassificationschema.properties",
+      "prefLabel": "IntakeClassificationSchema.properties",
+      "definition": "Qualifiers the scheme defines, e.g. `{ publicationType: \"implementation-guidance\" }`.",
+      "source": "cat-harness/schemas/intake.ts#IntakeClassificationSchema.properties",
+      "status": "candidate"
+    },
+    {
       "id": "intake.intakefileschema.role",
       "prefLabel": "IntakeFileSchema.role",
       "definition": "What it is FOR here: `original-bitstream`, `metadata-source`, `webpage-theme-source`, `none`.",
@@ -6885,6 +6899,13 @@
       "prefLabel": "IntakeSchema._comment",
       "definition": "Authored context for a person reading the file.",
       "source": "cat-harness/schemas/intake.ts#IntakeSchema._comment",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.classifications",
+      "prefLabel": "IntakeSchema.classifications",
+      "definition": "Classifications of the captured item ({@link IntakeClassificationSchema}).",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.classifications",
       "status": "candidate"
     },
     {

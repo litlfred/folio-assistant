@@ -18,6 +18,16 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     role [1] : string
     note [0..1] : string
   }
+  class "Classification" as folio_assistant_uploads_folio_intake_v1_Classification <<json: IntakeSchema>> #f4f4f1 {
+    scheme [1] : string
+    code [1] : string
+    member [1] : boolean
+    properties [0..1] : map<string>
+    source [1] : declared | context | inferred
+    basis [1] : string
+    by [0..1] : string
+    at [0..1] : string
+  }
   class "folio-intake/v1" as folio_assistant_uploads_folio_intake_v1_folio_intake_v1 <<json: IntakeSchema>> #f4f4f1 {
     $schema [1] : 'folio-intake/v1'
     doc_id [1] : string
@@ -28,6 +38,7 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     source [1] : object
     files [0..*] : File[]
     licence [0..1] : object
+    classifications [0..*] : Classification[]
   }
   class "spdx-3-1-rc1-machine-readable/schema.json" as folio_assistant_uploads_spdx_3_1_rc1_machine_readable_schema_json_spdx_3_1_rc1_machine_readable_schema_json <<schema: spdx-3-1-rc1-machine-readable/schema.json>> #f4f4f1 {
     @context [1] : 'https://spdx.github.io/spdx-spec/v3.1-RC1/rdf/spdx-context.jsonld'
@@ -35,4 +46,5 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
 }
 
 folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files
+folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_Classification : classifications
 @enduml

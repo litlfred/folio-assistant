@@ -188,6 +188,16 @@ package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>>
     role [1] : string
     note [0..1] : string
   }
+  class "Classification" as who_iris_who_iris_uploads_folio_intake_v1_Classification <<json: IntakeSchema>> #f4f4f1 {
+    scheme [1] : string
+    code [1] : string
+    member [1] : boolean
+    properties [0..1] : map<string>
+    source [1] : declared | context | inferred
+    basis [1] : string
+    by [0..1] : string
+    at [0..1] : string
+  }
   class "folio-intake/v1" as who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 <<json: IntakeSchema>> #f4f4f1 {
     $schema [1] : 'folio-intake/v1'
     doc_id [1] : string
@@ -198,6 +208,7 @@ package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>>
     source [1] : object
     files [0..*] : File[]
     licence [0..1] : object
+    classifications [0..*] : Classification[]
   }
 }
 package "who-iris/who-iris-skills" as pkg_who_iris_who_iris_skills <<skills>> {
@@ -426,6 +437,7 @@ who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 *-- 
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
 who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
+who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_Classification : classifications
 who_iris_who_iris_skills_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Source : sources
 who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Pattern : patterns
 who_iris_who_iris_skills_folio_voice_skill_v1_Rule *-- "0..*" who_iris_who_iris_skills_folio_voice_skill_v1_Terminology : terminology
