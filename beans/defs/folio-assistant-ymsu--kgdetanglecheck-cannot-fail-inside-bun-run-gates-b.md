@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ymsu
 title: kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-30T15:14:04Z
+updated_at: 2026-10-07T05:08:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -1203,3 +1203,10 @@ the first as an owner decision.
 _2026-09-30_ — measured on `origin/main` `e718627f198` and, after merge,
 `7b685b667b3`. Every number above is from a run in this container, reported as
 measured.
+
+## Evidence
+
+Work landed on `main` in PR #1616 (merge commit `da6302d3a5a6df610271d77e710a607e10333c14`, head commit `2197bc7f7dab`), satisfying all five Done-when criteria with extensive falsification and sweep measurements recorded above.
+Verified against `main`:
+1. `bun run kg:detangle:check`: passes with 69 pinned measurements current.
+
