@@ -4,19 +4,20 @@
 # Prerequisites:
 #   - Node.js + npx (for content pipeline via tsx)
 #   - Docker with the qou-latex image built:
-#       docker build -t qou-latex -f scripts/docker-latex-build/Dockerfile .
+#       docker build -t qou-latex -f folio-assistant-sci/scripts/docker-latex-build/Dockerfile folio-assistant-sci/scripts/docker-latex-build
+#     (the `latex-image` Tool's install.container line)
 #
 # Usage:
-#   ./scripts/docker-latex-build/build-pdf.sh              # full build
-#   ./scripts/docker-latex-build/build-pdf.sh --tex-only   # skip content pipeline (reuse existing chapters/*.tex)
-#   ./scripts/docker-latex-build/build-pdf.sh --clean      # clean aux files before build
-#   ./scripts/docker-latex-build/build-pdf.sh --help
+#   ./folio-assistant-sci/scripts/docker-latex-build/build-pdf.sh              # full build
+#   ./folio-assistant-sci/scripts/docker-latex-build/build-pdf.sh --tex-only   # skip content pipeline (reuse existing chapters/*.tex)
+#   ./folio-assistant-sci/scripts/docker-latex-build/build-pdf.sh --clean      # clean aux files before build
+#   ./folio-assistant-sci/scripts/docker-latex-build/build-pdf.sh --help
 #
 # Output: main.pdf in the repo root
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
 DOCKER_IMAGE="${DOCKER_IMAGE:-qou-latex}"
 PAPER="${PAPER:-quantum-observable-universe}"
 TEX_ONLY=false
@@ -53,7 +54,7 @@ cd "$REPO_ROOT"
 # ── Verify Docker image exists ───────────────────────────────────
 if ! docker image inspect "$DOCKER_IMAGE" &>/dev/null; then
   echo "Docker image '$DOCKER_IMAGE' not found. Building..."
-  docker build -t "$DOCKER_IMAGE" -f scripts/docker-latex-build/Dockerfile .
+  docker build -t "$DOCKER_IMAGE" -f folio-assistant-sci/scripts/docker-latex-build/Dockerfile folio-assistant-sci/scripts/docker-latex-build
 fi
 
 # ── Step 0: Clean aux files if requested ─────────────────────────
@@ -81,7 +82,7 @@ if [ "$TEX_ONLY" = false ]; then
   fi
 
   echo "    Building LaTeX from content objects..."
-  npx tsx ../scripts/docker-latex-build/run-build.ts \
+  npx tsx ../cat-harness-tools/scripts/docker-latex-build/run-build.ts \
     "$PAPER/$PAPER.ts" \
     --out-dir ../chapters/ \
     --generate-main --main-out ../main.tex \

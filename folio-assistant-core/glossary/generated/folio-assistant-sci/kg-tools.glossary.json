@@ -7,6 +7,14 @@
   "source": "Tools of folio-assistant-sci",
   "terms": [
     {
+      "id": "latex-image",
+      "prefLabel": "Compile LaTeX in a container",
+      "definition": "Compile a rendered paper's `main.tex` with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.",
+      "notation": "latex-image",
+      "source": "folio-assistant-sci/tools/index.ts#latex-image",
+      "status": "candidate"
+    },
+    {
       "id": "lean-cache",
       "prefLabel": "Lake olean cache",
       "definition": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",

@@ -55,9 +55,12 @@ describe("Unified paper-assistant image", () => {
     expect(df).toMatch(/\bgh\s+--version\b/);
   });
 
-  test("Dockerfile includes Python requests", () => {
+  test("Dockerfile installs the generated Python set", () => {
+    // `requests` used to be retyped here; the image now installs the file
+    // `deps:python` writes, which declares it (bean `ar1s`, phase 2).
     const df = readFileSync(MCP_DOCKERFILE, "utf-8");
-    expect(df).toContain("requests");
+    expect(df).toContain("COPY cat-harness-tools/python/requirements.txt");
+    expect(df).toMatch(/pip3 install[^\n]*\\\s*\n\s*-r \/tmp\/requirements\.txt/);
   });
 
   test("no CI workflow regressed to a pre-unification image", () => {
@@ -100,12 +103,14 @@ describe("Unified paper-assistant image", () => {
     expect(content).toContain("builder_image:");
   });
 
-  test("deprecated workflows have no automatic triggers", () => {
+  test("the deprecated image workflows are gone, with their images", () => {
+    // Removed 2026-10-07 (bean `ar1s`, phase 2, owner GO): both were
+    // dispatch-only and built images nothing used. An image is now part of
+    // the Tool that uses it, declared by its `install.container`.
     for (const wf of ["docker-ci-image.yml", "build-latex-image.yml"]) {
-      const content = readFileSync(join(REPO_ROOT, `.github/workflows/${wf}`), "utf-8");
-      expect(content).toContain("DEPRECATED");
-      expect(content).not.toMatch(/^\s+- cron:/m);
-      expect(content).not.toMatch(/push:\s*\n\s+branches:/m);
+      expect(existsSync(join(REPO_ROOT, `.github/workflows/${wf}`))).toBe(false);
     }
+    expect(existsSync(join(REPO_ROOT, ".github/docker"))).toBe(false);
+    expect(existsSync(join(REPO_ROOT, "Dockerfile"))).toBe(false);
   });
 });
