@@ -89,7 +89,7 @@ publisher. Nothing else is consulted.
 | source | trust | what it holds |
 |---|---|---|
 | npm, account `grahamegrieve` | **owner: trusted**. Grahame Grieve founded HL7 FHIR | mostly the latest version of each HL7 package; core packages under `@hl7/` |
-| a publisher's own published-site repository on GitHub (the seeder's list) | the publisher's own published site | every released version that publisher hosts there |
+| a publisher's own published-site repository on GitHub (`--site PREFIX=OWNER/REPO`, passed by the caller that knows its IGs' publisher) | the publisher's own published site | every released version that publisher hosts there |
 | a template's own repo at HEAD | `FHIR/ig-registry/templates.json` names it; **owner: `fhir.base.template` is trusted** | templates, `#current` included |
 | `--mirror` | whoever ran `mirror-fhir-packages.sh` (Tool `fhir-package-mirror`) | what the others lack |
 
