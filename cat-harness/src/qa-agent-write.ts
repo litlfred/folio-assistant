@@ -19,7 +19,7 @@
  *     [--score 0.85] [--score-max 1] [--score-rubric '{"clarity":0.9}'] \
  *     [--evidence "file:line — verbatim quote"] \
  *     [--notes "..."] \
- *     [--model claude-opus-4-8] [--skill local/qa-agent-drain]
+ *     [--model <agent-model>] [--skill local/qa-agent-drain]
  *
  * Idempotent per (block, criterion, agent-id): any prior entry from
  * the same agent identity (`reviewer.id`) on this criterion is
@@ -141,7 +141,7 @@ if (score) {
     );
   }
 }
-const model = arg("model") ?? "claude-opus-4-8";
+const model = arg("model");
 const skill = arg("skill") ?? "local/qa-agent-drain";
 
 // Resolve the block triple from the base path (no extension).
@@ -230,7 +230,7 @@ const entry: QaCriterionEntry = {
   reviewer: {
     kind: "agent",
     id: skill,
-    agent_model: model,
+    ...(model ? { agent_model: model } : {}),
     agent_date: today,
     agent_skill: skill,
   },

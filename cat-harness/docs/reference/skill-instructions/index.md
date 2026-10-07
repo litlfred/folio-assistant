@@ -218,6 +218,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | [schema](../skills/crdm-detect.html) | Detect when a user request is a **feature request** (platform capability change) |
 | [Phase 4](crdm-impact-analysis.html) | `crdm-impact-analysis` | — | This skill expands the Phase 4 summary in `crdm-requirements-workflow.md`. |
 | [Phase 1](crdm-needs-assessment.html) | `crdm-needs-assessment` | — | This skill expands the Phase 1 summary in `crdm-requirements-workflow.md`. |
+| [Requirements from a recorded walkthrough](crdm-recorded-walkthrough.html) | `crdm-recorded-walkthrough` | — | A walkthrough recording is the best source a CRDM round can have: the |
 | [Phase 3](crdm-requirements-template.html) | `crdm-requirements-template` | — | This skill expands the Phase 3 summary in `crdm-requirements-workflow.md`. |
 | [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
 
@@ -346,6 +347,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Block actions: [edit] and [feedback] on every block](block-actions.html) | `block-actions` | — | A reader who finds something wrong in a block should be one click from |
 | [document-authoring](document-authoring.html) | `document-authoring` | [schema](../skills/document-authoring.html) | Author a **document** folio: policy guidance, a standard, a report, a |
 | [document-publishing](document-publishing.html) | `document-publishing` | [schema](../skills/document-publishing.html) | Take a document folio from corpus to published artifact — without a TeX |
 | [document-structure](document-structure.html) | `document-structure` | [schema](../skills/document-structure.html) | Decide and maintain the chapter/section skeleton of a document folio. |

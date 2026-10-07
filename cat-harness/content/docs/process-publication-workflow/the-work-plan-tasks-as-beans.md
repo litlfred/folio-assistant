@@ -22,7 +22,7 @@ Why it is modelled as a lane rather than a note:
 - **`beans create` is not idempotent.** Check for an existing bean by exact
   title before creating one — the guard, and the incident that motivates it,
   are in
-  [`todo-manager`](../reference/skill-instructions/todo-manager.html).
+  [`todo-manager`]({{ '/reference/skill-instructions/todo-manager.html' | relative_url }}).
 - **Beans are not sidecars.** Machine-generated queues (QA `*.qa.json`, witness
   files, watcher queues) stay bulk JSON; they never become beans.
 

@@ -91,7 +91,9 @@ describe("the dispatch cleanup exists and is reachable", () => {
   });
 
   it("gives a dispatched cleanup its own concurrency group, so two of them do not cancel each other", () => {
-    expect(text).toContain("group: staging-${{ github.event.pull_request.head.ref || inputs.cleanup_slug || github.ref_name }}");
+    // The `push-` prefix (2026-10-06) keeps a push run out of the PR run's
+    // group; the cleanup slug still sits in the key either way.
+    expect(text).toContain("group: staging-${{ github.event_name == 'push' && 'push-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || github.ref_name }}");
   });
 });
 
