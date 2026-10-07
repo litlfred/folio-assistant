@@ -210,15 +210,27 @@ export interface Mountable {
  * rather than letting a silent pick read as a decision. That is the same
  * third-state rule the rest of this repository keeps: could-not-determine is
  * never rendered as a choice.
+ *
+ * **A root already TAKEN is not up for grabs** (`rootTaken`). An instance whose
+ * IG site is built at `/<instance>/` by `stage-ig-sites.ts` (bean `mftp`) has
+ * its root served by Jekyll, so its `igSite` directory never reaches `found`
+ * — and without this the next renderable kind inherited the root. That is how
+ * `smart-trust/openapi/` came to mount at `/smart-trust/`: its files were
+ * copied over the IG site and the mount's rail walk railed every IG page,
+ * putting the standalone rail's stylesheet (`body{padding-left:56px}`, and
+ * rules for the `.fa-nav-*` classes the Jekyll side-bar also uses) on top of
+ * the side-bar those pages already carry.
  */
 export function withRoutes<T extends Mountable>(
   found: readonly T[],
+  rootTaken: ReadonlySet<string> = new Set(),
 ): { candidates: (T & { route: string })[]; undetermined: { name: string; kinds: string[]; serving: string }[] } {
   const byInstance = new Map<string, T[]>();
   for (const m of found) byInstance.set(m.name, [...(byInstance.get(m.name) ?? []), m]);
 
   const undetermined: { name: string; kinds: string[]; serving: string }[] = [];
   for (const [name, ms] of byInstance) {
+    if (rootTaken.has(name)) continue;
     if (ms.length > 1 && !ms.some((m) => m.instanceRoot)) {
       undetermined.push({ name, kinds: ms.map((m) => m.kind), serving: ms[0]!.kind });
     }
@@ -232,7 +244,7 @@ export function withRoutes<T extends Mountable>(
     m.instanceRoot && found.some((o) => o !== m && o.name === m.name && o.kind === m.kind && !o.instanceRoot);
   const candidates = found.flatMap((m) => {
     const byKind = yieldsKindRoute(m) ? [] : [{ ...m, route: `${m.kind}/${m.name}` }];
-    if (rooted.has(m.name)) return byKind;
+    if (rooted.has(m.name) || rootTaken.has(m.name)) return byKind;
     // A declared root waits for its own entry rather than letting whichever
     // kind comes first claim the route.
     if (declaredRoot.has(m.name) && !m.instanceRoot) return byKind;
@@ -1144,7 +1156,7 @@ export function igSiteOwner(segment: string): string | undefined {
  */
 export function mountRoutes(built: string): string[] {
   const found = mountable().filter((m) => !(m.name === built && m.kind === "docs"));
-  const { candidates } = withRoutes(found);
+  const { candidates } = withRoutes(found, igSiteRoots());
   return resolve_(candidates).mounts.map((m) => m.route);
 }
 
@@ -1306,6 +1318,16 @@ function declaredEntries(repo = REPO): ResolvedEntry[] {
     }
   }
   return [...out, ...subscribedMountEntries(repo).entries];
+}
+
+/**
+ * The instances whose root, `/<instance>/`, is their own IG site — any
+ * directory declared `igSite` (bean `mftp`). `stage-ig-sites.ts` composes that
+ * site into the Jekyll source at `_docs/<instance>/`, so the root is served
+ * before this script runs and no mount may claim it ({@link withRoutes}).
+ */
+export function igSiteRoots(repo = REPO): Set<string> {
+  return new Set(declaredEntries(repo).filter((e) => e.entry.igSite === true).map((e) => e.name));
 }
 
 /** A directory whose bytes are published verbatim for pages to fetch (`served: true`, bean `680p`). */
@@ -1678,7 +1700,7 @@ function main(): number {
     for (const p of subscribedRead.problems) console.error(`  ${p}`);
   }
 
-  const { candidates, undetermined } = withRoutes(found);
+  const { candidates, undetermined } = withRoutes(found, igSiteRoots());
   for (const u of undetermined) {
     console.error(
       `  ? /${u.name}/ is UNDETERMINED — ${u.kinds.length} renderable kinds (${u.kinds.join(", ")}) ` +

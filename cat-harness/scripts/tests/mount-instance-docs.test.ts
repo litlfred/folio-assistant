@@ -24,6 +24,8 @@ import { tmpdir } from "os";
 import { join } from "path";
 
 import {
+  igSiteRoots,
+  mountable,
   servedDirectories,
   WITHHELD_FILE,
   publishedAsset,
@@ -210,6 +212,41 @@ describe("which kind answers at the instance's own route", () => {
     // away from an instance it does not concern.
     const { candidates } = withRoutes([m("lone", "docs", true)]);
     expect(candidates.map((c) => c.route).sort()).toEqual(["docs/lone", "lone"]);
+  });
+
+  it("a root already TAKEN by an IG site is not inherited by the next kind", () => {
+    // smart-trust: `docs/` is the declared root AND `igSite`, so it is built
+    // by stage-ig-sites and never reaches `found`. `openapi/` then claimed
+    // `/smart-trust/`, was copied over the IG site, and the mount's rail walk
+    // railed every IG page on top of the side-bar they already carry.
+    const { candidates, undetermined } = withRoutes([m("st", "openapi"), m("st", "library")], new Set(["st"]));
+    expect(candidates.map((c) => c.route).sort()).toEqual(["library/st", "openapi/st"]);
+    expect(undetermined).toEqual([]);
+  });
+
+  it("a declared igSite root keeps /<instance>/ off the mount table — read from a declaration", () => {
+    // smart-trust's shape, as a fixture so it holds in a standalone checkout.
+    const repo = mkdtempSync(join(tmpdir(), "igsite-root-"));
+    const inst = join(repo, "st");
+    for (const d of ["docs", "openapi"]) {
+      mkdirSync(join(inst, d), { recursive: true });
+      writeFileSync(join(inst, d, "index.html"), "<html><body></body></html>");
+    }
+    writeFileSync(
+      join(inst, "st.json"),
+      JSON.stringify({
+        name: "st",
+        directories: [
+          { id: "st-docs", path: "docs/", graphTypologies: ["docs"], instanceRoot: true, igSite: true },
+          { id: "st-openapi", path: "openapi/", graphTypologies: ["openapi"] },
+        ],
+      }),
+    );
+    expect([...igSiteRoots(repo)]).toEqual(["st"]);
+    const found = mountable(repo).filter((m) => m.name === "st");
+    expect(found.map((m) => m.kind)).toEqual(["openapi"]);
+    expect(withRoutes(found).candidates.map((c) => c.route).sort()).toEqual(["openapi/st", "st"]); // the defect
+    expect(withRoutes(found, igSiteRoots(repo)).candidates.map((c) => c.route)).toEqual(["openapi/st"]);
   });
 
   it("one instance being undetermined does not implicate another", () => {
