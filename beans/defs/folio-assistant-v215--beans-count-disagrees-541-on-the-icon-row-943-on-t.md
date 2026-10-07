@@ -1,14 +1,14 @@
 ---
 # folio-assistant-v215
 title: 'Beans count disagrees: 541 on the icon row, 943 on the glass and launcher tiles'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - wireframe-findings
     - ui
 created_at: 2026-10-06T18:52:19Z
-updated_at: 2026-10-06T18:52:29Z
+updated_at: 2026-10-07T05:10:00Z
 parent: folio-assistant-4ccr
 ---
 
@@ -40,3 +40,11 @@ Beans carries two counts. The icon row shows **541** ("Beans — 541 open"). The
 - [x] An e2e test fails on the old projections or code and passes on the fix. `beans-count-agrees.e2e.ts` fails 4 of 4 on main (951 against 542, and the board at 540 against 542) and passes 4 of 4 here. The unit test is `open-bean-count.test.ts`.
 - [x] There are before and after screenshots at 1280 and 390: `navfix-beans-{before,after}-{1280,390}.png`. Each shows the icon row with its tip on the left, and the glass More panel's Beans tile, outlined, on the right.
 - [x] The navbar wireframe's Findings mark this as fixed, citing the PR (#2312).
+
+## Evidence
+
+Work landed on `main` in PR #2312 (merge commit `0cb430276f38`).
+All 6 Done-when criteria were implemented, verified, and merged.
+Verified against `main`:
+1. `bun test cat-harness/scripts/tests/open-bean-count.test.ts`: all 4 tests pass.
+2. Projections agree: `index.json`'s tile count equals `count.json`'s icon row count.

@@ -180,7 +180,9 @@ describe("workflow triggers match what their headers claim", () => {
       // detection path. The derived test below now catches that case for any
       // future reference; these entries pin the rest.
       "jsonld-gen-check.yml": ["pull_request", "push"],
-      "feature-staging.yml": ["pull_request"],
+      // `push` (2026-10-06): a conflicted PR gets no `pull_request` event, so
+      // without it the preview freezes at the last clean push.
+      "feature-staging.yml": ["pull_request", "push"],
       "health-check.yml": ["schedule"],
       "pr-checks-present.yml": ["schedule"],
       "upstream-pins.yml": ["schedule"],
