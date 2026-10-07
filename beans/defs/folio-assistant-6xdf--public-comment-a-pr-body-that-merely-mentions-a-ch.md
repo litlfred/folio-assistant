@@ -16,9 +16,9 @@ Two defects:
 2. Writer: the save path drops $schema from the change-set record.
 
 ## Done when
-- [ ] an incorporated change-set is never re-linked to another PR (test)
-- [ ] only an explicit keyword links a PR to a change-set (test), and the public-comment skill says which
-- [ ] the record writer keeps $schema (test)
+- [x] an incorporated change-set is never re-linked to another PR (test)
+- [x] only an explicit keyword links a PR to a change-set (test), and the public-comment skill says which
+- [x] the record writer keeps $schema (test)
 - [x] smart-ra's CS-236 / CS-237 records restored (d4331c3)
 
 
