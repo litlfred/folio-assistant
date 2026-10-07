@@ -80,7 +80,6 @@ import { execFileSync, spawnSync } from "node:child_process";
 import {
   cpSync,
   copyFileSync,
-  cpSync,
   existsSync,
   mkdirSync,
   mkdtempSync,
