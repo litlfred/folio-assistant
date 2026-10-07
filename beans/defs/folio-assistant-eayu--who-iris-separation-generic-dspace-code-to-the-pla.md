@@ -1,11 +1,11 @@
 ---
 # folio-assistant-eayu
 title: 'who-iris separation: generic DSpace code to the platform; IRIS-specific code flagged'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T22:52:49Z
-updated_at: 2026-10-01T08:56:29Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -29,3 +29,6 @@ who-iris/ is a staged instance that will move to its own CONTENT repository (lit
 ## Owner ruling 2026-10-01 — a QA WARNING, not a failure (S0, bean hx65, #1770)
 Owner, verbatim (relayed by the lead session): "QA warning. not failure.. ok b/c small # tools". The five IRIS-specific files STAY in who-iris/; no who-iris-tools repo.
 Applied in PR #1774: content-instance-holds-code severity major -> minor (cat-harness/schemas/kg-qa.ts, with the ruling as its warrant); the detection is kept and still names every file — content-holds-code.test.ts now asserts severity minor AND the exact five files. kg-separation.md updated. Also restored who-iris.json separation: content, which a take-main merge on the #1728 branch (473805a37) had dropped, so the criterion had silently gone n/a on main.
+
+## Completed on landed evidence
+Landed on main in PR #1774 (S0 main green: owner rulings — widen detangle scan, who-iris finding as warning).
