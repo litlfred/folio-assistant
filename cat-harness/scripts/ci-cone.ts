@@ -69,7 +69,7 @@
  *   written by the recording machinery, never read by a check.
  */
 import { createHash } from "node:crypto";
-import { appendFileSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, lstatSync, statSync, mkdirSync, readdirSync, readFileSync, readlinkSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, normalize, resolve } from "node:path";
 import {
@@ -96,6 +96,14 @@ export const RECORD_FILE = join(CONE_DIR, "records.json");
 
 /** A read set larger than this is not enumerated: the check is recorded as undetermined. */
 export const MAX_PATHS = 20000;
+
+/**
+ * A trace file larger than this is not parsed: the check is recorded as
+ * undetermined. Measured 2026-10-07: `kg:audit:all:check` spawns a process
+ * per instance, and parsing its whole trace in memory aborted the recorder
+ * (exit 134) after the check itself had passed.
+ */
+export const MAX_TRACE_BYTES = 256 * 1024 * 1024;
 
 /** What `strace` traces: every path-taking syscall, `getcwd`, and process creation for the cwd of each child. */
 export const STRACE_ARGS = ["-f", "-qq", "-y", "-s", "65536", "-e", "trace=%file,getcwd,clone,clone3,fork,vfork", "-e", "signal=none"] as const;
@@ -684,7 +692,15 @@ export function recordRun(o: ConeRunOpts): { code: number; note: string } {
     stderr: stdio,
     env: trace.env,
   });
-  const code = r.exitCode ?? 1;
+  let code = r.exitCode ?? 1;
+  if (code !== 0) {
+    // The verdict must be the check's, never the tracer's. A traced run that
+    // failed is asked again, untraced, and THAT exit status is the answer.
+    const again = Bun.spawnSync([...(o.runner ?? RUNNER), o.script], { cwd: o.root, stdin: stdio, stdout: stdio, stderr: stdio });
+    code = again.exitCode ?? 1;
+    rmSync(log, { force: true });
+    return { code, note: `not recorded — the traced run exited ${r.exitCode ?? r.signalCode}; re-run untraced, which exited ${code}` };
+  }
   let note: string;
   try {
     const digests = new FileDigests(o.root);
@@ -693,7 +709,11 @@ export function recordRun(o: ConeRunOpts): { code: number; note: string } {
       passed: code === 0,
       before,
       after: coneFingerprint(o.root, o.scripts, o.script, o.io, digests, o.baseline),
-      reads: existsSync(log) ? parseTrace(readFileSync(log, "utf-8"), o.root) : { undetermined: "no trace was written" },
+      reads: !existsSync(log)
+        ? { undetermined: "no trace was written" }
+        : statSync(log).size > MAX_TRACE_BYTES
+          ? { undetermined: `the trace is ${statSync(log).size} bytes, more than ${MAX_TRACE_BYTES}` }
+          : parseTrace(readFileSync(log, "utf-8"), o.root),
       reached: trace.reached(againstRefsOf(o.scripts, o.script)),
       root: o.root,
       digests,

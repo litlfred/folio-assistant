@@ -14,7 +14,8 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { decideRun, excluded, gitReplayable, loadRecords, parseTrace, recordRun, splitArgs, unquote } from "../ci-cone.ts";
-import { TRACKED, type BaselineResolver, type PairIO } from "../input-hash.ts";
+import { BUILD_OUTPUT_DIRS, TRACKED, type BaselineResolver, type PairIO } from "../input-hash.ts";
+import { NOT_INSTANCE_DIRS } from "../../schemas/instance-roots.ts";
 import { statementPin } from "../input-sites.ts";
 
 const ROOT = "/work/repo";
@@ -123,6 +124,10 @@ describe("parseTrace — what a traced run read, or why that cannot be enumerate
     expect(excluded("build/ci-cone/records.json", false)).toBe(true);
     expect(excluded("build/regen-cache/traces/1.log", false)).toBe(true);
     expect(excluded("build/other.json", false)).toBe(false);
+  });
+
+  test("instance discovery skips exactly the build-output directories the tree digest leaves out", () => {
+    expect([...NOT_INSTANCE_DIRS].sort()).toEqual([...BUILD_OUTPUT_DIRS].sort());
   });
 
   test("argument splitting respects quotes and brackets; escapes decode", () => {
@@ -267,7 +272,7 @@ describe.skipIf(!HAS_STRACE)("the falsifiers, under a real strace (skipped where
   test("a red run records nothing, keeps its own exit code, and forgets an earlier pass", () => {
     const r = record("red:check");
     expect(r.code).toBe(1);
-    expect(r.note).toContain("did not pass");
+    expect(r.note).toContain("re-run untraced, which exited 1");
     expect(decide("red:check").skip).toBe(false);
   });
 

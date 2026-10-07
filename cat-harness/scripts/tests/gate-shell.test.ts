@@ -170,7 +170,7 @@ describe("gate-shell.sh", () => {
  */
 describe("gate-shell.sh — the CI cone hook", () => {
   /** A wrapper beside a stub cone CLI; `decideExit` is what `decide` answers. */
-  function coneStep(body: string, mode: string | undefined, decideExit: number) {
+  function coneStep(body: string, mode: string | undefined, decideExit: number, runExit = 5) {
     const dir = mkdtempSync(join(tmpdir(), "gate-shell-cone-"));
     const shell = join(dir, "gate-shell.sh");
     writeFileSync(shell, readFileSync(SHELL, "utf-8"));
@@ -182,7 +182,7 @@ describe("gate-shell.sh — the CI cone hook", () => {
         `const [cmd, script] = process.argv.slice(2);\n` +
         `appendFileSync(${JSON.stringify(calls)}, cmd + " " + script + "\\n");\n` +
         `if (cmd === "decide") process.exit(${decideExit});\n` +
-        `console.log("recorded-run " + script);\nprocess.exit(5);\n`,
+        `console.log("recorded-run " + script);\nprocess.exit(${runExit});\n`,
     );
     const script = join(dir, "step.sh");
     writeFileSync(script, body);
@@ -224,6 +224,15 @@ describe("gate-shell.sh — the CI cone hook", () => {
     for (const body of ["bun run a:check\nbun run b:check\n", "bun run a:check -- --flag\n", "bun --version\n", "set -e\nbun run a:check\n"]) {
       expect(coneStep(body, "skip", 0).called).toBe("");
     }
+  });
+
+  test("record mode: a recorder killed by a signal (>= 128) runs the step again, untraced", () => {
+    const dir = coneStep("bun run some:check\n", "record", 0);
+    expect(dir.called).toBe("run some:check\n");
+    expect(dir.stdout).not.toContain("running the step untraced"); // exit 5: the check's own verdict
+    const killed = coneStep("bun run some:check\n", "record", 0, 134);
+    expect(killed.stdout).toContain("running the step untraced");
+    expect(killed.status).not.toBe(134); // the untraced run's own status: bun's, for a script that does not exist
   });
 
   test("record mode runs the step through `ci-cone.ts run`, passing ITS exit status through", () => {
