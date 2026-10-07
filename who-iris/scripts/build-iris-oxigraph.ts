@@ -291,7 +291,8 @@ export async function buildIrisDataset(outDir: string = DIST_DIR): Promise<Build
 
     // Solution A: Skolemize anonymous compound nodes before toRDF conversion
     const skolemized = skolemizeJsonLd(raw, handleClean);
-    const nquadsText = await jsonld.toRDF(skolemized, { format: 'application/n-quads' });
+    // With `format` set, toRDF returns the serialized N-Quads string.
+    const nquadsText = (await jsonld.toRDF(skolemized, { format: 'application/n-quads' })) as string;
     const lines = nquadsText.split('\n').filter(Boolean);
 
     for (let line of lines) {
