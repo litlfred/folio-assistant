@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/ui/ui-core/ui-accessibility.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/ui-accessibility.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/ui-accessibility.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/ui-accessibility.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/ui/ui-core/ui-accessibility.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # All UI must follow accessibility guidelines
@@ -20,7 +20,7 @@ tiles, anything future.
 ## Why it is load-bearing here, and not boilerplate
 
 **This instance's declared interaction profile is low-dexterity.**
-`interaction/interaction.json` records it, and it already shapes the form of every
+`cat-harness/memory/interaction.json` records it, and it already shapes the form of every
 question the harness asks — numbered options, four or fewer, a stated default.
 
 A UI that needs precise pointing, or that cannot be driven from the keyboard,

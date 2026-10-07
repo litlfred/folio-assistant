@@ -71,6 +71,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
+import { isFrozenSubtree } from "../../cat-harness/schemas/fsh-guts.js";
 import { KG_PART_RECORD_SCHEMA } from "../../cat-harness/schemas/substrate-snapshot.js";
 import { PART_RECORD_FILE, PART_TREE } from "../../cat-harness/scripts/kg-subscribe.js";
 
@@ -170,6 +171,14 @@ function jsonFilesUnder(dir: string, depth = 0): string[] {
     if (e.name.startsWith(".") || e.name === "node_modules") continue;
     if (skipTree && e.name === PART_TREE) continue;
     const p = join(dir, e.name);
+    // A FROZEN subtree is not read either, for the same reason one step
+    // removed (sub-kg-lifecycle stage 13, bean 61t6): it is a separated
+    // graph's copy, frozen at one commit, kept as ONE retired item described
+    // by its sibling note. Its records claim bytes in the repository it now
+    // lives in — whose materialized artefacts were deliberately not carried
+    // here — so judged as ours every one reads "bytes absent". Recognised by
+    // the note's declaration, never by the directory's path.
+    if (e.isDirectory() && isFrozenSubtree(p)) continue;
     if (e.isDirectory()) out.push(...jsonFilesUnder(p, depth + 1));
     else if (e.name.endsWith(".json")) out.push(p);
   }

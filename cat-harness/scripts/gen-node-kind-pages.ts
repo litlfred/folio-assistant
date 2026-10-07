@@ -42,7 +42,7 @@ import { join, relative, resolve, sep } from "node:path";
 
 import { defaultGraphTypologies, readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { nodeKindIndex, type NodeKindEntry, type NodeKindIndex } from "../schemas/node-kind-index.ts";
-import { nodesOfKind, type KindNode } from "../schemas/node-kind-nodes.ts";
+import { kindDirectories, nodesOfKind, type KindNode } from "../schemas/node-kind-nodes.ts";
 import { isNodeKind } from "../schemas/node-kind.ts";
 import { darkRules } from "./lib/scheme-css.ts";
 import type { VisualiserNavEntry } from "./lib/navbar.ts";
@@ -496,6 +496,21 @@ export function unresolvedPages(site: string, pages: readonly string[]): string[
     const file = join(site, rel, "index.html");
     return !existsSync(file) || !readFileSync(file, "utf-8").includes(PAGE_MARK);
   });
+}
+
+/**
+ * What this generator READS when it builds a folio's site (bean `ehh6`): the
+ * directories {@link kindDirectories} names under `--root`, repo-relative.
+ * The document predictor asks it so a changed file outside them (a folio's
+ * `beans/`) is not "may change any page"; `todos/` is read, since todo pages
+ * are rendered. `args` are the ones the build command passes.
+ */
+export async function siteReads(repoRoot: string, args: string[] = []): Promise<string[]> {
+  const i = args.indexOf("--root");
+  const siteRepo = i >= 0 && args[i + 1] ? resolve(repoRoot, args[i + 1]!) : repoRoot;
+  const instanceRoot = join(import.meta.dir, "..");
+  const index = await nodeKindIndex(defaultGraphTypologies, instanceRoot, repoRootFor(instanceRoot));
+  return kindDirectories(index, siteRepo).map((d) => relative(repoRoot, d).split(sep).join("/"));
 }
 
 if (import.meta.main) {

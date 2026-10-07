@@ -22,7 +22,12 @@ import { join, relative, resolve } from "node:path";
 import { siteDirFor, repoRootFor } from "../../schemas/cat-harness.ts";
 import { isWithheld, withheldFromCanonical } from "../compose-docs.ts";
 import { pageRelPath } from "../gen-fsh-guts-viz.ts";
-import { fshGutsDirectory } from "../../schemas/fsh-guts.ts";
+import {
+  FROZEN_SUBTREE_FIELDS,
+  frozenSubtreeNote,
+  fshGutsDirectory,
+  isFrozenSubtree,
+} from "../../schemas/fsh-guts.ts";
 import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -65,10 +70,32 @@ function fshGutsNodes(repoRoot: string): string[] {
     if (!existsSync(dir)) return;
     for (const e of readdirSync(dir, { withFileTypes: true })) {
       const abs = join(dir, e.name);
-      if (e.isDirectory()) walk(abs);
+      // A FROZEN subtree is one item and its sibling note is the node that
+      // answers for it (sub-kg-lifecycle stage 13): the files inside are
+      // another repository's, frozen at one commit, and are not asked to
+      // declare themselves here. The note is still walked — it is a sibling.
+      if (e.isDirectory()) {
+        if (!isFrozenSubtree(abs)) walk(abs);
+      }
       // A directory README is documentation about the directory, written by
       // `subgraph-readmes`, never one of the retired nodes this test audits.
       else if (e.name.endsWith(".md") && !isDirectoryReadme(abs)) out.push(abs);
+    }
+  };
+  walk(fshGutsDirectory(repoRoot));
+  return out;
+}
+
+/** Every frozen subtree under `fsh-guts/`, absolute — the directories {@link fshGutsNodes} does not enter. */
+function frozenSubtrees(repoRoot: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      const abs = join(dir, e.name);
+      if (isFrozenSubtree(abs)) out.push(abs);
+      else walk(abs);
     }
   };
   walk(fshGutsDirectory(repoRoot));
@@ -191,6 +218,21 @@ describe("fsh-guts stays out of the render pipeline", () => {
         return !moved && !born;
       });
     expect(orphans).toEqual([]);
+  });
+
+  test("a frozen subtree's note says what the copy is, so skipping its files hides nothing", () => {
+    // The price of not walking a frozen subtree is that its note must answer
+    // for all of it. A note missing the new repository or the commit the copy
+    // matches would leave thousands of files whose provenance nobody can
+    // check — so the four stage-13 fields are required of THIS kind, here,
+    // rather than of every node by the schema (whose `kind` is open).
+    const missing = frozenSubtrees(REPO_ROOT).flatMap((d) => {
+      const note = frozenSubtreeNote(d)! as Record<string, unknown>;
+      return FROZEN_SUBTREE_FIELDS.filter((k) => note[k] === undefined || note[k] === "").map(
+        (k) => `${relative(REPO_ROOT, d)}.md lacks ${k}`,
+      );
+    });
+    expect(missing).toEqual([]);
   });
 
   test("a node that says it moved says when", () => {

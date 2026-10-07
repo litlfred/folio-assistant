@@ -23,7 +23,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { BranchStore, MANIFEST_SCHEMA } from "../../../cat-harness/scripts/branch-store.ts";
-import { cutoverMain, exitCode, refreshSeed, rowFor } from "../state-seed.ts";
+import { archiveIds, archiveTreeId, cutoverMain, exitCode, refreshSeed, retireInstance, rowFor } from "../state-seed.ts";
+import { FROZEN_SUBTREE_FIELDS, FROZEN_SUBTREE_KIND, readFshGutsNode } from "../../../cat-harness/schemas/fsh-guts.ts";
 import { defaultRepoRoot, driftOf, observedRows } from "../../../cat-harness/scripts/state-drift.ts";
 
 const made: string[] = [];
@@ -234,8 +235,12 @@ describe("the key it takes", () => {
  * own declaration, its own remote — stands in for the folio.
  */
 describe("a folio's own repository (hp54)", () => {
-  /** A folio `x` declaring `beans/` on `cat/x/beans`, committed on main while main still tracks it. */
-  function folio(): ReturnType<typeof remote> {
+  /**
+   * A folio `x` declaring `beans/` on `cat/x/beans`, committed on main while
+   * main still tracks it — and, unless `guts` is false, its own `fsh-guts`
+   * graph on `cat/x/fsh-guts`, seeded empty, where the cutover deposits.
+   */
+  function folio(guts: false | "seeded" | "declared-only" = "seeded"): ReturnType<typeof remote> {
     const r = remote();
     // `cutoverMain` commits with plain `git commit`, so the clone needs an
     // identity of its own — CI's fresh HOME has none (the env `run` passes
@@ -246,12 +251,36 @@ describe("a folio's own repository (hp54)", () => {
       join(r.work, "x.json"),
       JSON.stringify({
         name: "x",
-        directories: [{ id: "beans", path: "beans/", graphTypologies: ["beans"], source: { kind: "branch", branch: "cat/x/beans", keyedBy: "tip" } }],
+        directories: [
+          { id: "beans", path: "beans/", graphTypologies: ["beans"], source: { kind: "branch", branch: "cat/x/beans", keyedBy: "tip" } },
+          ...(guts ? [{ id: "fsh-guts", path: "fsh-guts/", graphTypologies: ["fsh-guts"], source: { kind: "branch", branch: "cat/x/fsh-guts", keyedBy: "tip" } }] : []),
+        ],
       }, null, 2) + "\n",
     );
     run(r.work, "add", "-A");
     run(r.work, "commit", "-qm", "declare beans on its branch");
+    if (guts === "seeded") seedGuts(r);
     return r;
+  }
+  /** `cat/x/fsh-guts`: an orphan tip-keyed state branch holding only its manifest. */
+  function seedGuts(r: ReturnType<typeof remote>): void {
+    run(r.work, "checkout", "-q", "--orphan", "gutstmp");
+    run(r.work, "rm", "-rqf", "--cached", ".");
+    const tmp = mkdtempSync(join(tmpdir(), "guts-idx-"));
+    made.push(tmp);
+    const env = { ...process.env, GIT_INDEX_FILE: join(tmp, "index"), GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@t", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@t" };
+    const g = (args: string[], input?: string) => spawnSync("git", args, { cwd: r.work, env, input, encoding: "utf-8" }).stdout.trim();
+    const blob = g(["hash-object", "-w", "--stdin"], JSON.stringify({ $schema: MANIFEST_SCHEMA, authoritative: true, keyedBy: "tip", subgraph: "fsh-guts", graphs: [{ path: "fsh-guts" }] }) + "\n");
+    g(["update-index", "--add", "--cacheinfo", `100644,${blob},manifest.json`]);
+    const commit = g(["commit-tree", g(["write-tree"]), "-m", "seed cat/x/fsh-guts"]);
+    run(r.work, "push", "-q", "origin", `${commit}:refs/heads/cat/x/fsh-guts`);
+    run(r.work, "checkout", "-qf", "main");
+  }
+  /** What `cat/x/fsh-guts` holds under `fsh-guts/retired/`, read back off the remote. */
+  function gutsOn(r: ReturnType<typeof remote>): Map<string, Buffer> {
+    const store = BranchStore.open("cat/x/fsh-guts", { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, log: () => {} });
+    const t = store.readTreeEntries("fsh-guts/retired");
+    return t.state === "hit" ? new Map([...t.files].map(([p, f]) => [p, f.bytes])) : new Map();
   }
   const cut = (r: ReturnType<typeof remote>, commit = false) =>
     cutoverMain(row(), { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, commit });
@@ -329,5 +358,264 @@ describe("a folio's own repository (hp54)", () => {
     expect(run(r.work, "show", "--stat", "--format=%B", "HEAD")).toContain("cat/x/beans");
     expect(run(r.work, "ls-remote", "origin", "refs/heads/main")).toBe(remoteMain); // not pushed
     expect(cut(r).state).toBe("refused"); // already cut over
+  });
+
+  /**
+   * Owner, 2026-10-06: "cutover dirs should go to fsh-guts". The removal
+   * DEPOSITS a snapshot into the instance's own trashcan first, verifies it,
+   * and only then makes the removal commit.
+   */
+  describe("the deposit into fsh-guts", () => {
+    test("deposit THEN remove: the fsh-guts commit exists before main's, and main's names it", () => {
+      const r = folio();
+      seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+      const tree = run(r.work, "rev-parse", "HEAD:beans");
+      const done = cut(r, true);
+      expect(done.state).toBe("cut-over");
+      if (done.state !== "cut-over") return;
+      expect(done.deposits).toHaveLength(1);
+      const d = done.deposits[0]!;
+      expect(d.branch).toBe("cat/x/fsh-guts");
+      expect(d.archive).toBe(`fsh-guts/retired/cutover-x-beans-${tree.slice(0, 12)}.tar.gz`);
+      // Ordering, observed rather than assumed: the deposit commit is older
+      // than (or as old as) the removal commit, and the removal names it.
+      run(r.work, "fetch", "-q", "origin", "cat/x/fsh-guts");
+      expect(run(r.work, "rev-parse", "FETCH_HEAD")).toBe(d.commit!);
+      const depositAt = Number(run(r.work, "log", "-1", "--format=%ct", d.commit!));
+      const removalAt = Number(run(r.work, "log", "-1", "--format=%ct", "HEAD"));
+      expect(depositAt).toBeLessThanOrEqual(removalAt);
+      expect(run(r.work, "log", "-1", "--format=%B", "HEAD")).toContain(d.commit!.slice(0, 12));
+      expect(gutsOn(r).has(d.record)).toBe(true);
+    });
+
+    test("the deposited archive extracts to EXACTLY the removed tree, and the record carries the provenance", () => {
+      const r = folio();
+      // A second file, an executable bit and a .gitignore that would hide a
+      // tracked file from a naive re-add — each one a way a snapshot drifts.
+      writeFileSync(join(r.work, "beans", "run.sh"), "#!/bin/sh\n", { mode: 0o755 });
+      writeFileSync(join(r.work, "beans", ".gitignore"), "*.log\n");
+      writeFileSync(join(r.work, "beans", "kept.log"), "tracked despite the ignore\n");
+      run(r.work, "add", "-f", "-A");
+      run(r.work, "commit", "-qm", "more beans");
+      seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+      const tree = run(r.work, "rev-parse", "HEAD:beans");
+      const source = run(r.work, "rev-parse", "HEAD");
+      const done = cut(r, true);
+      expect(done.state).toBe("cut-over");
+      if (done.state !== "cut-over") return;
+      const d = done.deposits[0]!;
+      const files = gutsOn(r);
+      expect(archiveTreeId(files.get(d.archive)!, "beans")).toBe(tree);
+      const rec = readFshGutsNode(files.get(d.record)!.toString("utf-8"));
+      expect(rec.node).toBeDefined();
+      expect(rec.node).toMatchObject({
+        kind: "cutover-snapshot",
+        movedFrom: "beans/",
+        reason: "cutover",
+        instance: "x",
+        directory: "beans",
+        sourceCommit: source,
+        tree,
+        authoritativeBranch: "cat/x/beans",
+      });
+    });
+
+    test("REFUSES when the instance declares no fsh-guts graph, naming the fix — and removes nothing", () => {
+      const r = folio(false);
+      seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+      const before = run(r.work, "rev-parse", "HEAD");
+      for (const commit of [false, true]) {
+        const c = cut(r, commit);
+        expect(c.state).toBe("refused");
+        expect(c.reason).toContain("declares no `fsh-guts` graph");
+        expect(c.reason).toContain("cat/x/fsh-guts");
+      }
+      expect(run(r.work, "rev-parse", "HEAD")).toBe(before);
+      expect(run(r.work, "rev-parse", "HEAD:beans")).toBeTruthy();
+    });
+
+    test("REFUSES when the deposit cannot be made (declared, branch never seeded) — and removes nothing", () => {
+      const r = folio("declared-only");
+      seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+      const before = run(r.work, "rev-parse", "HEAD");
+      expect(cut(r).state).toBe("refused"); // the dry run says so before anybody says go
+      const c = cut(r, true);
+      expect(c.state).toBe("refused");
+      expect(c.reason).toContain("cat/x/fsh-guts");
+      expect(c.reason).toContain("nothing was removed");
+      expect(run(r.work, "rev-parse", "HEAD")).toBe(before);
+      expect(run(r.work, "status", "--porcelain")).toBe("");
+    });
+
+    test("REFUSES when an item of the same name with different content is already there — never overwrites", () => {
+      const r = folio();
+      seed(r, "cat/x/beans", { ...SEED, keyedBy: "tip", authoritative: true });
+      const tree = run(r.work, "rev-parse", "HEAD:beans");
+      const store = BranchStore.open("cat/x/fsh-guts", { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, log: () => {} });
+      const squatter = `fsh-guts/retired/cutover-x-beans-${tree.slice(0, 12)}.tar.gz`;
+      expect(store.write([{ path: squatter, content: "not the snapshot\n" }], "squat").state).toBe("pushed");
+      const before = run(r.work, "rev-parse", "HEAD");
+      const c = cut(r, true);
+      expect(c.state).toBe("refused");
+      expect(c.reason).toContain("different content");
+      expect(run(r.work, "rev-parse", "HEAD")).toBe(before);
+      expect(gutsOn(r).get(squatter)!.toString()).toBe("not the snapshot\n");
+    });
+  });
+});
+
+/**
+ * `--retire <path> --into <instance>`: separating a whole instance root into
+ * the HOST's trashcan (stage 13 of `sub-kg-lifecycle`), asked for by the
+ * session separating smart-trust, smart-base and smart-immunizations (#2320).
+ * The refusals are the point, as for `--cutover`: what leaves main must be
+ * on the host's fsh-guts tip, byte for byte, before the `git rm`.
+ */
+describe("separating an instance (--retire)", () => {
+  /** Host `h` (fsh-guts on `cat/h/fsh-guts`), an instance `leaf/` inside it, and a fork for the live copy. */
+  function hostWithLeaf(opts: { guts?: boolean } = {}) {
+    const r = remote();
+    run(r.work, "config", "user.name", "t");
+    run(r.work, "config", "user.email", "t@t");
+    writeFileSync(
+      join(r.work, "h.json"),
+      JSON.stringify({
+        name: "h",
+        directories: opts.guts === false ? [] : [{ id: "fsh-guts", path: "fsh-guts/", graphTypologies: ["fsh-guts"], source: { kind: "branch", branch: "cat/h/fsh-guts", keyedBy: "tip" } }],
+      }, null, 2) + "\n",
+    );
+    mkdirSync(join(r.work, "leaf", "docs"), { recursive: true });
+    writeFileSync(join(r.work, "leaf", "leaf.json"), JSON.stringify({ name: "leaf", directories: [] }) + "\n");
+    writeFileSync(join(r.work, "leaf", "docs", "a.md"), "leaf content\n");
+    writeFileSync(join(r.work, "leaf", "run.sh"), "#!/bin/sh\n", { mode: 0o755 });
+    writeFileSync(join(r.work, "leaf", ".gitignore"), "*.log\n");
+    writeFileSync(join(r.work, "leaf", "kept.log"), "tracked despite the ignore\n");
+    writeFileSync(join(r.work, "leaf.config.json"), "{}\n");
+    run(r.work, "add", "-A", "-f");
+    run(r.work, "commit", "-qm", "host with a leaf instance");
+    if (opts.guts !== false) {
+      run(r.work, "checkout", "-q", "--orphan", "gutstmp");
+      run(r.work, "rm", "-rqf", "--cached", ".");
+      const tmp = mkdtempSync(join(tmpdir(), "guts-idx-"));
+      made.push(tmp);
+      const env = { ...process.env, GIT_INDEX_FILE: join(tmp, "index"), GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@t", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@t" };
+      const g = (args: string[], input?: string) => spawnSync("git", args, { cwd: r.work, env, input, encoding: "utf-8" }).stdout.trim();
+      const blob = g(["hash-object", "-w", "--stdin"], JSON.stringify({ $schema: MANIFEST_SCHEMA, authoritative: true, keyedBy: "tip", subgraph: "fsh-guts", graphs: [{ path: "fsh-guts" }] }) + "\n");
+      g(["update-index", "--add", "--cacheinfo", `100644,${blob},manifest.json`]);
+      run(r.work, "push", "-q", "origin", `${g(["commit-tree", g(["write-tree"]), "-m", "seed cat/h/fsh-guts"])}:refs/heads/cat/h/fsh-guts`);
+      run(r.work, "checkout", "-qf", "main");
+    }
+    const fork = join(r.work, "..", "fork.git");
+    run(r.work, "init", "-q", "--bare", "-b", "main", fork);
+    run(r.work, "push", "-q", fork, "main");
+    return { ...r, fork };
+  }
+  const retire = (r: ReturnType<typeof hostWithLeaf>, o: Partial<Parameters<typeof retireInstance>[1]> = {}) =>
+    retireInstance("leaf", { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, into: "h", repository: r.fork, also: ["leaf.config.json"], ...o });
+  function gutsSeparated(r: ReturnType<typeof hostWithLeaf>): Map<string, Buffer> {
+    const store = BranchStore.open("cat/h/fsh-guts", { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, log: () => {} });
+    const t = store.readTreeEntries("fsh-guts/separated");
+    return t.state === "hit" ? new Map([...t.files].map(([p, f]) => [p, f.bytes])) : new Map();
+  }
+
+  test("dry run deposits nothing and removes nothing", () => {
+    const r = hostWithLeaf();
+    const before = run(r.work, "rev-parse", "HEAD");
+    const dry = retire(r);
+    expect(dry.state).toBe("would-retire");
+    expect(run(r.work, "rev-parse", "HEAD")).toBe(before);
+    expect(gutsSeparated(r).size).toBe(0);
+  });
+
+  test("--commit deposits into the HOST's fsh-guts, then removes the root and its --also files in ONE unpushed commit", () => {
+    const r = hostWithLeaf();
+    const head = run(r.work, "rev-parse", "HEAD");
+    const ids = { leaf: run(r.work, "rev-parse", "HEAD:leaf"), cfg: run(r.work, "rev-parse", "HEAD:leaf.config.json") };
+    const remoteMain = run(r.work, "ls-remote", "origin", "refs/heads/main");
+    const done = retire(r, { commit: true, bean: "x-1234" });
+    expect(done.state).toBe("retired");
+    if (done.state !== "retired") return;
+    expect(done.deposit.branch).toBe("cat/h/fsh-guts");
+    expect(done.deposit.archive).toBe("fsh-guts/separated/leaf.tar.gz");
+    expect(run(r.work, "rev-parse", "HEAD~1")).toBe(head);
+    for (const p of ["leaf", "leaf.config.json"]) {
+      expect(spawnSync("git", ["rev-parse", "--verify", "--quiet", `HEAD:${p}`], { cwd: r.work }).status).not.toBe(0);
+    }
+    expect(run(r.work, "ls-remote", "origin", "refs/heads/main")).toBe(remoteMain);
+
+    const files = gutsSeparated(r);
+    const got = archiveIds(files.get(done.deposit.archive)!, ["leaf", "leaf.config.json"])!;
+    expect(got.get("leaf")).toBe(ids.leaf);
+    expect(got.get("leaf.config.json")).toBe(ids.cfg);
+    const note = readFshGutsNode(files.get(done.deposit.record)!.toString("utf-8"));
+    expect(note.node).toMatchObject({
+      kind: FROZEN_SUBTREE_KIND,
+      movedFrom: "leaf/",
+      repository: r.fork,
+      matchesCommit: head,
+      repositoryCompared: "false", // the front-matter reader keeps scalars as strings
+      instance: "leaf",
+      into: "h",
+      bean: "x-1234",
+    });
+    for (const k of FROZEN_SUBTREE_FIELDS) expect((note.node as Record<string, unknown>)[k]).toBeTruthy();
+    expect((note.node as Record<string, unknown>).paths).toEqual([
+      `leaf = ${ids.leaf} (5 file(s), 89 bytes)`,
+      `leaf.config.json = ${ids.cfg} (1 file(s), 3 bytes)`,
+    ]);
+    expect(retire(r).state).toBe("refused"); // already separated
+  });
+
+  test("REFUSES a directory that is not an instance root — that is a cutover", () => {
+    const r = hostWithLeaf();
+    const c = retireInstance("leaf/docs", { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, into: "h", repository: r.fork });
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("not an instance root");
+  });
+
+  test("REFUSES --into the instance that is leaving, or one that does not exist", () => {
+    const r = hostWithLeaf();
+    for (const into of ["leaf", "nope"]) {
+      const c = retire(r, { into });
+      expect(c.state).toBe("refused");
+      expect(c.reason).toContain("no OTHER instance");
+    }
+  });
+
+  test("REFUSES when the host keeps no fsh-guts, naming the fix — and removes nothing", () => {
+    const r = hostWithLeaf({ guts: false });
+    const before = run(r.work, "rev-parse", "HEAD");
+    const c = retire(r, { commit: true });
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("declares no `fsh-guts` graph");
+    expect(run(r.work, "rev-parse", "HEAD")).toBe(before);
+  });
+
+  test("a repository that does not answer is `unknown`, never a guess — and removes nothing", () => {
+    const r = hostWithLeaf();
+    const before = run(r.work, "rev-parse", "HEAD");
+    const c = retire(r, { commit: true, repository: join(r.work, "..", "no-such.git") });
+    expect(c.state).toBe("unknown");
+    expect(run(r.work, "rev-parse", "HEAD")).toBe(before);
+    expect(gutsSeparated(r).size).toBe(0);
+  });
+
+  test("REFUSES uncommitted changes under the root", () => {
+    const r = hostWithLeaf();
+    writeFileSync(join(r.work, "leaf", "docs", "a.md"), "edited, not committed\n");
+    const c = retire(r, { commit: true });
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("uncommitted");
+  });
+
+  test("REFUSES rather than overwrite an item of the same name already in the host's trashcan", () => {
+    const r = hostWithLeaf();
+    const store = BranchStore.open("cat/h/fsh-guts", { repoRoot: r.work, remote: r.url, storeDir: r.storeDir, log: () => {} });
+    expect(store.write([{ path: "fsh-guts/separated/leaf.tar.gz", content: "squat\n" }], "squat").state).toBe("pushed");
+    const before = run(r.work, "rev-parse", "HEAD");
+    const c = retire(r, { commit: true });
+    expect(c.state).toBe("refused");
+    expect(c.reason).toContain("different content");
+    expect(run(r.work, "rev-parse", "HEAD")).toBe(before);
   });
 });

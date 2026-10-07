@@ -115,6 +115,7 @@ import { isDirectoryReadme } from "../schemas/kg-node.ts";
 import { coneForCheckout, type ConeDecision } from "./staging-cone.ts";
 import { DOCS_SITE_BASE } from "../schemas/jsonld.js";
 import { foreignScopeFor, isHostProjection, scopeHarnessData, scopeSiteConfig } from "./lib/foreign-site-scope.ts";
+import { subscribedTrees } from "./subscribed-trees.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -255,9 +256,10 @@ export interface ComposedInstance {
  */
 export function composedInstances(repo = REPO): ComposedInstance[] {
   const out: ComposedInstance[] = [];
+  const subscribers: { dir: string; decl: Parameters<typeof subscribedTrees>[0][number]["decl"] }[] = [];
+  const staged = new Set<string>();
   for (const e of readdirSync(repo, { withFileTypes: true })) {
     if (!e.isDirectory() || e.name.startsWith(".") || e.name === "node_modules") continue;
-    if (e.name === "cat-harness") continue;
     const declPath = declarationPathIn(join(repo, e.name));
     if (!declPath || !existsSync(declPath)) continue;
     let d: { name?: string; directories?: (DeclEntry & { composed?: boolean })[] };
@@ -268,12 +270,28 @@ export function composedInstances(repo = REPO): ComposedInstance[] {
       // declaration, and reporting it here would be a second voice on it.
       continue;
     }
+    staged.add(d.name ?? e.name);
+    if (Array.isArray((d as { subscriptions?: unknown }).subscriptions)) {
+      subscribers.push({ dir: join(repo, e.name), decl: { ...d, name: d.name ?? e.name } as (typeof subscribers)[number]["decl"] });
+    }
+    // The base layer's own directories are never composed under its name (see
+    // above) — but its SUBSCRIPTIONS are read, so it was not skipped earlier.
+    if (e.name === "cat-harness") continue;
     for (const entry of d.directories ?? []) {
       if (!entry.path || entry.composed !== true) continue;
       const abs = join(repo, e.name, entry.path);
       if (!existsSync(abs)) continue;
       out.push({ instance: d.name ?? e.name, dir: abs, under: d.name ?? e.name, root: e.name });
     }
+  }
+  // A SUBSCRIBED instance's composed directories, from the tree this checkout
+  // holds (bean `g8jp`). Only `held` ones: a chosen directory that is not held
+  // is `mount-instance-docs`' finding, which fails the build, and reporting it
+  // here too would be a second voice on it. A subscribed instance also staged
+  // in the tree is composed from the staged copy alone.
+  for (const t of subscribedTrees(subscribers)) {
+    if (t.state !== "held" || !t.instance || !t.tree || t.entry?.["composed"] !== true || staged.has(t.instance)) continue;
+    out.push({ instance: t.instance, dir: t.tree, under: t.instance, root: relative(repo, t.tree).split(sep).join("/") });
   }
   return out.sort((a, b) => a.under.localeCompare(b.under));
 }

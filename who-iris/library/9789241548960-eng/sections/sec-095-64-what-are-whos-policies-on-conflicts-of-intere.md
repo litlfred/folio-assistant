@@ -7,6 +7,7 @@ section_number: 6.4
 pages: 71-72
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Guideline developers at WHO must be familiar with WHO’s policies on 
 obtaining declarations of interests and assessing and managing conflicts of 

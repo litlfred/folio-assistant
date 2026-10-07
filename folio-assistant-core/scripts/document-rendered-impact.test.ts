@@ -15,6 +15,7 @@ import {
   documentRenderedImpact,
   DOCUMENT_RENDERER,
   PUBLIC_COMMENT_RENDERER,
+  buildSteps,
   siteMayRead,
   siteReadsOf,
   type SiteReads,
@@ -67,7 +68,7 @@ describe("documentRenderedImpact — files the ChangeSet does not name", () => {
   test("the comment store is the public-comment renderer's: the dashboard and every document page", () => {
     const out = run(["review/public-comment/comments/PC-0001.json"]);
     expect(out.map((i) => i.renderer)).toEqual([DOCUMENT_RENDERER, PUBLIC_COMMENT_RENDERER]);
-    expect(out[1].files.map(line)).toEqual(["content:doc/index.html", "content:other/index.html", "content:public-comments/index.html"]);
+    expect(out[1].files.map(line)).toEqual(["content:doc/index.html", "content:folio-assistant-core/public-comments/folio/doc/index.html", "content:folio-assistant-core/public-comments/folio/other/index.html", "content:other/index.html"]);
   });
 
   test("anything else is undetermined with scope all, never no change", () => {
@@ -80,7 +81,7 @@ describe("documentRenderedImpact — files the ChangeSet does not name", () => {
 describe("documentRenderedImpact — a file no builder of the site reads (bean ehh6)", () => {
   // smart-ra#26, the first real run: the branch's bean was "may change any
   // page", and an undetermined input holds the coverage gate shut.
-  const reads: SiteReads = { declared: ["folio/", "library/", "review/public-comment/"], submodules: ["folio-assistant"] };
+  const reads: SiteReads = { reads: ["folio/", "library/", "review/public-comment/"], submodules: ["folio-assistant"] };
   const changed = ["beans/dpi-h-ra-7ss8--verify.md", "README.md", "input/fsh/x.fsh", "folio-assistant", "dpi-h-ra.json", "library/a.pdf", ".github/workflows/staging.yml"];
 
   test("an undeclared directory or a root Markdown note is an input that reaches no page", () => {
@@ -100,22 +101,83 @@ describe("documentRenderedImpact — a file no builder of the site reads (bean e
     expect(documentRenderedImpact({ changed: ["beans/x.md"], changeset, outline })[0].undetermined.map((u) => u.input)).toEqual(["beans/x.md"]);
   });
 
-  describe("siteReadsOf, from the repository's own files", () => {
+  describe("siteReadsOf: what the build command's builders say they read", () => {
+    // smart-ra#26's second run: it DECLARED beans/ and todos/, so "declared"
+    // read as "read", yet the site renders todos and never beans.
     const T = mkdtempSync(join(tmpdir(), "site-reads-"));
     afterAll(() => rmSync(T, { recursive: true, force: true }));
-
-    test("reads the declaration's directories and the submodules", () => {
-      const r = join(T, "a");
-      mkdirSync(r);
-      writeFileSync(join(r, "x.json"), JSON.stringify({ name: "x", directories: [{ id: "folio", path: "folio/", graphTypologies: ["folio"] }] }));
+    const repo = (name: string, builders: Record<string, string> = {}) => {
+      const r = join(T, name);
+      mkdirSync(join(r, "b"), { recursive: true });
+      writeFileSync(join(r, "x.json"), JSON.stringify({ name: "x", directories: [{ id: "folio", path: "folio/", graphTypologies: ["folio"] }, { id: "beans", path: "beans/", graphTypologies: ["bean-defs"] }] }));
       writeFileSync(join(r, ".gitmodules"), '[submodule "folio-assistant"]\n\tpath = folio-assistant\n\turl = https://example.invalid/fa.git\n');
-      expect(siteReadsOf(r)).toEqual({ declared: ["folio/"], submodules: ["folio-assistant"] });
+      for (const [f, body] of Object.entries(builders)) writeFileSync(join(r, "b", f), body);
+      return r;
+    };
+
+    test("each step's script and its arguments; a step that runs no script is undefined", () => {
+      expect(buildSteps("bun run a/x.ts --out _site && bun run y.ts --root . ; jekyll build")).toEqual([
+        { script: "a/x.ts", args: ["--out", "_site"] },
+        { script: "y.ts", args: ["--root", "."] },
+        undefined,
+      ]);
     });
 
-    test("no declaration: undefined, so nothing is excluded", () => {
-      const r = join(T, "b");
-      mkdirSync(r);
-      expect(siteReadsOf(r)).toBeUndefined();
+    test("with a command: the union of its builders' reads, and a declared directory no builder reads is not read", async () => {
+      const r = repo("a", {
+        "doc.ts": "export const siteReads = () => ['folio'];",
+        "todo.ts": "export const siteReads = async (_r, args) => (args.includes('--todos') ? ['todos/items'] : []);",
+      });
+      const got = await siteReadsOf(r, "bun run b/doc.ts --out _site && bun run b/todo.ts --todos");
+      expect(got).toEqual({ reads: ["folio", "todos/items"], submodules: ["folio-assistant"] });
+      expect(siteMayRead("beans/x.md", got)).toBe(false);
+      expect(siteMayRead("todos/items/a.md", got)).toBe(true);
     });
+
+    test("a step that is not a builder exporting siteReads, or a missing script: nothing excluded", async () => {
+      const r = repo("b", { "dumb.ts": "export const x = 1;", "doc.ts": "export const siteReads = () => ['folio'];" });
+      expect(await siteReadsOf(r, "bun run b/doc.ts && bun run b/dumb.ts")).toBeUndefined();
+      expect(await siteReadsOf(r, "bun run b/doc.ts && jekyll build")).toBeUndefined();
+      expect(await siteReadsOf(r, "bun run b/gone.ts")).toBeUndefined();
+    });
+
+    test("no command: the declared directories stand in", async () => {
+      expect(await siteReadsOf(repo("c"))).toEqual({ reads: ["folio/", "beans/"], submodules: ["folio-assistant"] });
+    });
+
+    test("no declaration: undefined, so nothing is excluded", async () => {
+      const r = join(T, "none");
+      mkdirSync(r);
+      expect(await siteReadsOf(r, "bun run x.ts")).toBeUndefined();
+    });
+  });
+});
+
+describe("documentRenderedImpact — a lazy page (bean v433)", () => {
+  // `doc` is lazy: three chunks, the edited block in the first, the added one in the second.
+  const lazyOutline = { documents: [{ slug: "doc", lazy: { hydrated: "doc/index.hydrated.html", chunks: 3, of: { "prose:edited": 0, "prose:new": 1 } } }, { slug: "other" }] };
+  const runLazy = (changed: string[]) => documentRenderedImpact({ changed, changeset, outline: lazyOutline })[0];
+
+  test("a text edit is its chunk and the hydrated page, not the shell", () => {
+    expect(runLazy(["folio/doc/ch1/p-1.md"]).files.map(line)).toEqual(["data:doc/blocks/000.json", "content:doc/index.hydrated.html#prose:edited"]);
+  });
+
+  test("an added block reshapes the shell and shifts every chunk from its own on", () => {
+    expect(runLazy(["folio/doc/ch1/p-2.ts"]).files.map(line)).toEqual([
+      "data:doc/blocks/001.json",
+      "data:doc/blocks/002.json",
+      "content:doc/index.html",
+      "content:doc/index.hydrated.html#prose:new",
+    ]);
+  });
+
+  test("a page that is not lazy is unchanged by any of this", () => {
+    expect(runLazy(["folio/other/ch1/p-9.ts"]).files.map(line)).toEqual(["content:other/index.html#prose:gone"]);
+  });
+
+  test("the comment store also reaches the lazy page's notes and its hydrated page", () => {
+    const pc = documentRenderedImpact({ changed: ["review/public-comment/comments/PC-1.json"], changeset, outline: lazyOutline })[1];
+    expect(pc.files.map(line)).toContain("data:doc/pc-notes.json");
+    expect(pc.files.map(line)).toContain("content:doc/index.hydrated.html");
   });
 });

@@ -13,7 +13,6 @@ Part of [C@T Harness](../../../../../README.md) 0.1.0, declared as `index-docs`,
 | [`index.html`](index.html) | a file |  |
 | [`docs/`](docs/) | _nothing declares what this holds_ | |
 | [`folio-assistant-core-docs/`](folio-assistant-core-docs/) | _nothing declares what this holds_ | |
-| [`root-docs/`](root-docs/) | _nothing declares what this holds_ | |
 | [`smart-base-docs/`](smart-base-docs/) | _nothing declares what this holds_ | |
 | [`smart-base-findings/`](smart-base-findings/) | _nothing declares what this holds_ | |
 | [`smart-immunizations-docs/`](smart-immunizations-docs/) | _nothing declares what this holds_ | |

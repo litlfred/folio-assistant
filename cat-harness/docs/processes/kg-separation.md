@@ -37,7 +37,7 @@ VERSIONS: the pair starts at the content's version at the split, then each is ve
 | Platform authoring agent | `platform-authoring-agent` | The platform-side stages: the graph's identity (version, iriBase, nodeSchemas), moving harness output about it into the host, splitting the content from its tools, and making the parent consume the pair additively. |
 | Publication manager | `publication-manager` | Owns where things are published: every identifier the content mints must be a file some step publishes, at /<version>/ for programs and /v<major>/ for people; and the first release. |
 | Build pipeline | `build-pipeline` | Runs the checks that decide the gateways: the tools' import closure and the content's lack of code, node identifiers against file paths, the standalone rehearsal, and dereferencing after release. A gate that cannot tell stops the process; it never reads as clean. |
-| Administrator | `administrator` | The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that deletes the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package. |
+| Administrator | `administrator` | The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that retires the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package. |
 
 ## Steps
 
@@ -62,7 +62,7 @@ Every one of the 18 step(s) is documented.
 | **11 · Parent consumes, additively**<br>`Task_Consume` | Platform authoring agent | calls [Adopting an upstream version bump](upstream-version-adoption.html)<br>[`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html) | The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared. |
 | **12 · First release**<br>`Task_Release` | Publication manager | [`package-release`](../reference/skill-instructions/package-release.html) | Tag each repository, publish /<version>/ and /v<major>/. From here the two are versioned independently; a tools release lists the content majors it supports. |
 | **Every identifier dereferences**<br>`Task_Verify` | Build pipeline | calls [Verify the export before it is deployed](publish-verification.html)<br>[`publish-verification`](../reference/skill-instructions/publish-verification.html) | After the release is live, every published identifier resolves to the file it names. |
-| **13 · Cutover: delete the parent's copy**<br>`Task_Cutover` | Administrator | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. |
+| **13 · Cutover: retire the parent's copy**<br>`Task_Cutover` | Administrator | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it (owner, 2026-10-06). Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not. |
 
 ## Decisions
 

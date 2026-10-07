@@ -43,8 +43,9 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
 import { join, dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { documentContext } from "../../schemas/content-context.ts";
 import {
-  SITE_DOCUMENT_CONTEXT,
+  DOCS_SITE_BASE,
   siteNodeSitePath,
   SITE_PAGE_TYPES,
   SITE_NARRATIVE_TYPES,
@@ -130,7 +131,7 @@ function emitBoth(source: string, sitePath: string, doc: Record<string, unknown>
 
 function nodeDoc(page: WebPage, node: WebPageNode, flat: string): Record<string, unknown> {
   const doc: Record<string, unknown> = {
-    "@context": SITE_DOCUMENT_CONTEXT,
+    "@context": documentContext(node.asset ? SITE_ASSET_TYPES : SITE_NARRATIVE_TYPES, { base: DOCS_SITE_BASE }),
     "@id": siteIri(page.slug, node.id),
     "@type": [...(node.asset ? SITE_ASSET_TYPES : SITE_NARRATIVE_TYPES)],
     label: node.id,
@@ -194,7 +195,7 @@ for (const flat of flats) {
   const page = ((await import(manifest)) as { default: WebPage }).default;
 
   emitBoth(join(SRC_DIR, flat, `${flat}.jsonld`), siteNodeSitePath(page.slug), {
-    "@context": SITE_DOCUMENT_CONTEXT,
+    "@context": documentContext(SITE_PAGE_TYPES, { base: DOCS_SITE_BASE }),
     "@id": siteIri(page.slug),
     "@type": [...SITE_PAGE_TYPES],
     label: page.slug,

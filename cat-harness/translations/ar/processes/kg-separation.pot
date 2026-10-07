@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kg-separation\n"
-"POT-Creation-Date: 2026-10-04T06:13:05.662Z\n"
+"POT-Creation-Date: 2026-10-06T19:25:44.820Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: processes/kg/kg-separation.bpmn:285
 #. Diagram label
-msgid "13 · Cutover: delete the parent's copy"
+msgid "13 · Cutover: retire the parent's copy"
 msgstr ""
 
 #: processes/kg/kg-separation.bpmn:128
@@ -326,7 +326,7 @@ msgstr ""
 
 #: processes/kg/kg-separation.bpmn:286
 #. Diagram element documentation
-msgid "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences."
+msgid "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it (owner, 2026-10-06). Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not."
 msgstr ""
 
 #: processes/kg/kg-separation.bpmn:219
@@ -346,7 +346,7 @@ msgstr ""
 
 #: processes/kg/kg-separation.bpmn:71
 #. Diagram element documentation
-msgid "The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that deletes the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package."
+msgid "The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that retires the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package."
 msgstr ""
 
 #: processes/kg/kg-separation.bpmn:39

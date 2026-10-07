@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/ui/ui-core/kg-viewer.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/kg-viewer.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/kg-viewer.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/kg-viewer.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/ui/ui-core/kg-viewer.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # Rendering the knowledge graph
@@ -124,6 +124,10 @@ skills point here.
 Reference implementation: `gen-library-viz.ts` (`viewerHtml`, `VIEWER_JS`,
 `VIEWER_CSS`) and `scripts/lib/library-address.ts`; browser check
 `test/library-entry-iri.e2e.ts`.
+A library entry's DOCUMENT view — TOC, pages with printed labels, figures,
+sections, checks — is `scripts/lib/library-document.ts`: a projection read
+from the ingestion schema plus the browser code that renders it, kept in one
+module so a test runs the same text the page runs.
 
 ## Do not draw the whole graph
 

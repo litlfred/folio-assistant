@@ -7,6 +7,7 @@ section_number: 12.5.1
 pages: 175-175
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 WHO guidelines should be issued with a “review-by” date to indicate how long the 
 recommendations are expected to remain valid. There is no absolute rule about 

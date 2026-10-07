@@ -1,11 +1,11 @@
 ---
 # folio-assistant-12ws
 title: 'ONE NAME, TWO MEANINGS: check-l1-complete declares a local instanceRootFor that contradicts the exported one'
-status: todo
+status: in-progress
 type: task
 priority: low
 created_at: 2026-09-21T07:36:38Z
-updated_at: 2026-09-21T07:36:38Z
+updated_at: 2026-10-07T04:33:08Z
 parent: folio-assistant-1xhc
 ---
 
@@ -50,3 +50,5 @@ this". Five sites — the declaration plus the four call sites at :906, :931,
 
 Deliberately NOT done inside `a6kl`'s PR: that change ships a measurement and a
 corrected claim, and a rename is a separate reviewable surface.
+
+_2026-10-07T04:33:08Z_ — Claimed by claude/12ws-rename-library-root-for — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`cat-harness/skills/kg/graph-management/lsi-indexing.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/lsi-indexing.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/lsi-indexing.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/lsi-indexing.md){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/skills/kg/graph-management/lsi-indexing.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # LSI indexing — the platform's application of `methodologies/lsi.md`
@@ -69,6 +69,19 @@ reader labelled, and made ranking worse: real-vs-spurious AUC 0.96 with plain
 cosine, 0.75–0.79 with the penalty at K = 5, 10, 20. The page it demoted most
 (HQ p36, mark-up) is central because it is genuinely on-topic. The floor alone
 is what the data supports; it is a house number fitted to 15 examples.
+
+## Keywords — the per-unit view the index used to discard (issue #2302)
+
+The weighted matrix already says which terms characterise each unit; the index
+then reduces it to k dimensions and the per-unit view was gone.
+`keywordsOf(matrix, cols, texts, top, headings)` keeps it: a unit's (or a
+pooled set of units') top terms and two-word phrases, from the same weights.
+Its first consumer is `bun run library:keywords` (per library section and per
+document, written as `keywords.json` and shown in the library viewer). The
+scoring rules are documented with `keywordsOf` in `content/pipeline/lsi.ts`,
+and the ingestion skill that runs it says when (`skill_fetch
+l1-document-ingestion`, §"Keywords"). Reuse it for any unit set the index covers — beans, chapters —
+rather than writing a second term weighting.
 
 ## Correspondence analysis — the parallel track
 

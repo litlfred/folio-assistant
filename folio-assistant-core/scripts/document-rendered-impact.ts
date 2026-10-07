@@ -31,7 +31,15 @@
  * | renderer | writes | reached by |
  * |---|---|---|
  * | `document-site` | `<slug>/index.html`, `<slug>/media/*`, `outline.json`, `index.html` | a changed block, a document/chapter/section manifest, a media file |
- * | `public-comment-site` | `public-comments/index.html` and the comment notes on each `<slug>/index.html` | the public-comment store |
+ * | `public-comment-site` | each document's dashboard, `folio-assistant-core/public-comments/<folio>/<slug>/index.html`, and the comment notes on each `<slug>/index.html` | the public-comment store |
+ *
+ * A large document's page is LAZY (bean v433), and `outline.json` says so
+ * (`lazy`): `index.html` is then a shell of headings and placeholders, the
+ * text is in `<slug>/blocks/NNN.json`, and the whole document is in
+ * `<slug>/index.hydrated.html`. A block's text edit changes its chunk and the
+ * hydrated page, not the shell; a block added, removed, renamed or moved
+ * changes the shell and every chunk from its position on, since the chunks
+ * after it shift. Comment notes on a lazy page are in `<slug>/pc-notes.json`.
  *
  * Every file is pinned (`hash`) to the blobs of the changed inputs that
  * reach it, at head, so a page verdict counts only for the version reviewed.
@@ -47,23 +55,34 @@
  * Except a file the site's builders cannot read (bean `ehh6`). On the first
  * real run (smart-ra#26) the work-plan bean the branch carried was reported
  * "may change any page", and an undetermined input holds the coverage gate
- * shut, so every PR that touches a bean would wait on a false alarm. A
- * document site is built from the graphs its instance DECLARES, the platform
- * (a submodule), and the build's own definition (`.github/`, the root's
- * declaration, config and lockfiles). A file outside all of those — an
- * undeclared directory such as `beans/`, or a Markdown note at the root — is
- * an input that reaches no page ({@link siteMayRead}). With no declaration to
- * read, nothing is excluded: doubt carries. The claim is checked, not
- * trusted: the staging build's diff counts any page it changed that the list
- * did not name.
+ * shut, so every PR that touches a bean would wait on a false alarm.
+ *
+ * What a builder reads is the BUILDER's to say, not a list here and not the
+ * instance's declaration: the second run showed why. smart-ra declared
+ * `beans/` and `todos/`, so "declared" read as "read", yet the site renders
+ * todos and never beans. So each builder exports `siteReads(repoRoot, args)`
+ * (`build-document-site`: the folio; `public-comment-site`: the comment store
+ * and the folio; `gen-node-kind-pages`: every directory of a typology holding
+ * a kind it renders), and {@link siteReadsOf} asks every builder the folio's
+ * build command runs. A file outside all of their directories, the
+ * submodules (the platform builds every page), `.github/` and the root's
+ * non-Markdown files (declaration, config, lockfiles) is an input that
+ * reaches no page ({@link siteMayRead}).
+ *
+ * Any doubt carries: a step in the command that is not a builder exporting
+ * `siteReads` excludes nothing, and with no command the instance's declared
+ * directories stand in. The claim is checked, not trusted: the staging
+ * build's diff counts any page it changed that the list did not name.
  *
  * Usage:
  *   bun run folio-assistant-core/scripts/document-rendered-impact.ts --root <folio repo>
  *     (--changed a,b | --base <ref> [--head <ref>]) [--changeset changeset.json]
- *     [--outline outline.json] [--site <prefix>] [--out impact.json]
+ *     [--outline outline.json] [--site <prefix>] [--build-command "<the folio's build command>"]
+ *     [--out impact.json]
  *
  * @module folio-assistant-core/scripts/document-rendered-impact
  */
+import { HANDLER, KIND } from "./public-comment-route.js";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -87,8 +106,11 @@ const COMMENT_STORE = /^review\/public-comment\//;
 
 /** The part of `outline.json` this reads: the documents, by slug. */
 export interface OutlineLike {
-  documents: Array<{ slug: string }>;
+  documents: Array<{ slug: string; lazy?: { hydrated: string; chunks: number; of: Record<string, number> } }>;
 }
+
+/** A lazy page's chunk file, as `build-document-site` names it. */
+const chunkFile = (slug: string, n: number) => `${slug}/blocks/${String(n).padStart(3, "0")}.json`;
 
 interface Acc {
   files: Map<string, RenderedFile>;
@@ -125,10 +147,10 @@ function finish(renderer: string, inputs: string[], acc: Acc, opts: { base?: str
   });
 }
 
-/** What the document site's builders can read, from the instance's own declarations. */
+/** What the document site's builders can read. */
 export interface SiteReads {
-  /** Directories the instance declares (`<instance>.json` `directories[].path`), repo-relative. */
-  declared: string[];
+  /** Directories the builders read (their `siteReads`), or the instance's declared ones; repo-relative. */
+  reads: string[];
   /** Submodule paths (`.gitmodules`): the platform, whose code builds every page. */
   submodules: string[];
 }
@@ -139,14 +161,13 @@ const under = (f: string, dir: string) => {
 };
 
 /**
- * Whether a document site's builders can read `f`: under a declared
- * directory, a submodule, or `.github/`, or a root file that is not Markdown
- * (the declaration, config, lockfiles). `undefined` reads (no declaration)
- * means every file may be read.
+ * Whether a document site's builders can read `f`: under a directory they
+ * read, a submodule, or `.github/`, or a root file that is not Markdown (the
+ * declaration, config, lockfiles). `undefined` reads means every file may be.
  */
 export function siteMayRead(f: string, reads: SiteReads | undefined): boolean {
   if (!reads) return true;
-  if (reads.declared.some((d) => under(f, d)) || reads.submodules.some((d) => under(f, d))) return true;
+  if (reads.reads.some((d) => under(f, d)) || reads.submodules.some((d) => under(f, d))) return true;
   if (under(f, ".github")) return true;
   return !f.includes("/") && !/\.md$/i.test(f);
 }
@@ -190,6 +211,22 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
     }
   }
 
+  const lazy = new Map((opts.outline?.documents ?? []).flatMap((d) => (d.lazy ? [[d.slug, d.lazy] as const] : [])));
+  /** Where a block's text renders on its document's site: the page, or a lazy page's chunk and hydrated page. */
+  const blockFiles = (acc: Acc, slug: string, label: string, via: string[]) => {
+    const lz = lazy.get(slug);
+    if (!lz) return add(acc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via, anchors: [label] });
+    add(acc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via, anchors: [label] });
+    const n = lz.of[label];
+    if (n !== undefined) add(acc, { path: `${pre}${chunkFile(slug, n)}`, change: "changed", role: "data", via });
+  };
+  /** Every chunk of a lazy document from `from` on: what a structural change shifts. */
+  const chunksFrom = (acc: Acc, slug: string, from: number, via: string[]) => {
+    const lz = lazy.get(slug);
+    if (!lz) return;
+    for (let n = Math.max(0, from); n < lz.chunks; n++) add(acc, { path: `${pre}${chunkFile(slug, n)}`, change: "changed", role: "data", via });
+  };
+
   const doc: Acc = { files: new Map(), undetermined: [] };
   const pc: Acc = { files: new Map(), undetermined: [] };
   const docInputs: string[] = [];
@@ -198,11 +235,19 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
   for (const f of opts.changed) {
     if (COMMENT_STORE.test(f)) {
       pcInputs.push(f);
-      add(pc, { path: `${pre}public-comments/index.html`, change: "changed", role: "content", via: [f] });
       // A comment's note sits beside its block on its document's page; which
       // document a comment targets is in the comment, not the path, so every
       // document page is listed: safe, and with one document, exact.
-      for (const slug of [...slugs].sort()) add(pc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via: [f] });
+      for (const slug of [...slugs].sort()) {
+        // The document's dashboard, at the handler route (public-comment-route.ts).
+        add(pc, { path: `${pre}${HANDLER}/${KIND}/${folio || "folio"}/${slug}/index.html`, change: "changed", role: "content", via: [f] });
+        add(pc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via: [f] });
+        const lz = lazy.get(slug);
+        if (lz) {
+          add(pc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via: [f] });
+          add(pc, { path: `${pre}${slug}/pc-notes.json`, change: "changed", role: "data", via: [f] });
+        }
+      }
       continue;
     }
     docInputs.push(f);
@@ -210,7 +255,7 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
     // A block's `.md` is named in the ChangeSet by its manifest, `<stem>.ts`.
     const block = rel ? byFile.get(rel) ?? byFile.get(rel.replace(/\.md$/, ".ts")) : undefined;
     if (block) {
-      add(doc, { path: `${pre}${block.slug}/index.html`, change: "changed", role: "content", via: [f, block.label], anchors: [block.label] });
+      blockFiles(doc, block.slug, block.label, [f, block.label]);
       continue;
     }
     const slug = rel ? slugOf(rel) : undefined;
@@ -220,6 +265,10 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
       if (sub.startsWith("media/")) {
         add(doc, { path: `${pre}${rel}`, change: "changed", role: "data", via: [f] });
         add(doc, { path: page, change: "changed", role: "content", via: [f] });
+        // Which block shows the figure is in the block, not the path: every chunk.
+        const lz = lazy.get(slug);
+        if (lz) add(doc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via: [f] });
+        chunksFrom(doc, slug, 0, [f]);
         continue;
       }
       if (sub.endsWith(".ts")) {
@@ -227,6 +276,8 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
         // manifest. Titles and order live there, so the outline and the
         // document list move with the page.
         add(doc, { path: page, change: "changed", role: "content", via: [f] });
+        const lz = lazy.get(slug);
+        if (lz) add(doc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via: [f] });
         add(doc, { path: `${pre}outline.json`, change: "changed", role: "index", via: [f] });
         if (sub === `${slug}.ts`) add(doc, { path: `${pre}index.html`, change: "changed", role: "index", via: [f] });
         continue;
@@ -237,6 +288,26 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
     doc.undetermined.push({ input: f, reason: "not a block the ChangeSet names, a media file, a manifest of a known document, or the comment store: may change any page", scope: "all" });
   }
 
+  // A block added, removed, renamed or moved on a lazy page reshapes the shell
+  // and shifts every chunk from its position on, whichever file carried it.
+  // Only for the inputs given: the block's own file, or a manifest of its document.
+  for (const c of opts.changeset.changes) {
+    const structural = c.change !== "changed" || c.aspects.some((a) => a === "renamed" || a === "moved");
+    const at = c.change === "removed" ? c.base : c.head;
+    const slug = slugOf(at.file);
+    const lz = lazy.get(slug);
+    if (!structural || !lz) continue;
+    const input = opts.changed.find((f) => {
+      const r = inFolio(f);
+      return !!r && (r === at.file || r === at.file.replace(/\.ts$/, ".md") || (slugOf(r) === slug && r.endsWith(".ts") && !byFile.has(r)));
+    });
+    if (!input) continue;
+    const via = [input, c.label];
+    add(doc, { path: `${pre}${slug}/index.html`, change: "changed", role: "content", via });
+    add(doc, { path: `${pre}${lz.hydrated}`, change: "changed", role: "content", via, ...(c.change === "removed" ? {} : { anchors: [c.label] }) });
+    chunksFrom(doc, slug, c.change === "removed" ? 0 : lz.of[c.label] ?? 0, via);
+  }
+
   const out = [finish(DOCUMENT_RENDERER, docInputs, doc, opts)];
   if (pcInputs.length) out.push(finish(PUBLIC_COMMENT_RENDERER, pcInputs, pc, opts));
   return out;
@@ -244,18 +315,27 @@ export function documentRenderedImpact(opts: DocImpactOptions): RenderedImpact[]
 
 const readJson = (p: string) => JSON.parse(readFileSync(p, "utf-8"));
 
-/**
- * The repository's {@link SiteReads}, or `undefined` when it declares nothing
- * readable: then no file is excluded.
- */
-export function siteReadsOf(root: string): SiteReads | undefined {
+/** One step of a build command: the script it runs and the arguments after it; `undefined` when it runs no `.ts`. */
+export function buildSteps(command: string): Array<{ script: string; args: string[] } | undefined> {
+  return command
+    .split(/&&|\|\||;|\|/)
+    .map((seg) => seg.trim().split(/\s+/).filter(Boolean))
+    .filter((t) => t.length)
+    .map((t) => {
+      const i = t.findIndex((x) => x.endsWith(".ts"));
+      return i < 0 ? undefined : { script: t[i]!, args: t.slice(i + 1) };
+    });
+}
+
+/** The instance's declared directories and its submodules, or `undefined` when either cannot be read. */
+function declaredReads(root: string): SiteReads | undefined {
   const decl = declarationPathIn(root);
   if (!decl) return undefined;
-  let declared: string[];
+  let reads: string[];
   try {
     const dirs = (readJson(decl) as { directories?: Array<{ path?: unknown }> }).directories;
     if (!Array.isArray(dirs)) return undefined;
-    declared = dirs.map((d) => d.path).filter((p): p is string => typeof p === "string");
+    reads = dirs.map((d) => d.path).filter((p): p is string => typeof p === "string");
   } catch {
     return undefined;
   }
@@ -269,9 +349,29 @@ export function siteReadsOf(root: string): SiteReads | undefined {
       return undefined;
     }
   }
-  return { declared, submodules };
+  return { reads, submodules };
 }
 
+/**
+ * The repository's {@link SiteReads}: with a build command, what its builders
+ * say they read; without one, the declared directories. `undefined` (nothing
+ * excluded) when there is no declaration, or a step is not a builder that
+ * exports `siteReads`.
+ */
+export async function siteReadsOf(root: string, buildCommand?: string): Promise<SiteReads | undefined> {
+  const base = declaredReads(root);
+  if (!base || buildCommand === undefined) return base;
+  const reads = new Set<string>();
+  for (const step of buildSteps(buildCommand)) {
+    if (!step) return undefined;
+    const path = resolve(root, step.script);
+    if (!existsSync(path)) return undefined;
+    const fn = ((await import(path)) as { siteReads?: (r: string, a: string[]) => string[] | Promise<string[]> }).siteReads;
+    if (typeof fn !== "function") return undefined;
+    for (const d of await fn(root, step.args)) reads.add(d);
+  }
+  return { reads: [...reads].sort(), submodules: base.submodules };
+}
 
 if (import.meta.main) {
   const argv = process.argv.slice(2);
@@ -295,7 +395,7 @@ if (import.meta.main) {
   const olPath = arg("--outline");
   const outline = olPath && existsSync(olPath) ? (readJson(olPath) as OutlineLike) : undefined;
   // Pinned to the inputs' blobs at head, so a page verdict is about this version (see rendered-impact.ts, "A PIN").
-  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site"), reads: siteReadsOf(root) });
+  let impacts = documentRenderedImpact({ changed, changeset, outline, base, head, site: arg("--site"), reads: await siteReadsOf(root, arg("--build-command")) });
   try {
     const blobs = gitBlobs(root, head ?? "HEAD", changed);
     impacts = impacts.map((i) => pinImpact(i, (p) => blobs.get(p)));
