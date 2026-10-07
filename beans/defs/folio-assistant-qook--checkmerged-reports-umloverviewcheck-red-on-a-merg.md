@@ -1,12 +1,13 @@
 ---
 # folio-assistant-qook
 title: check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus
-status: completed
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T11:04:49Z
 updated_at: 2026-10-07T08:13:00Z
 parent: folio-assistant-1xhc
+tags: [ready-to-close]
 ---
 
 
@@ -259,7 +260,8 @@ so a branch must be verified with `bun run gates` on a merged working tree
 instead. That is what I did for the `groupDepthFor` change — and it is strictly
 weaker, because it measures MY checkout rather than a freshly built one.
 
-## Evidence: Closed on 2026-10-07
+## Evidence
+The `check:environment` change is shape 1 of "Not fixed here, and what the fix has to decide" above and lands with this bean's own PR (#2395); the owner ruling cited below is not quoted or linked, and the re-run of `check:merged` on the two recorded trees is not shown, so the bean is held at in-progress with the `ready-to-close` tag for the owner to confirm.
 - Original cause fixed in PR #1444 (`.gitignore` trailing slash removed, preventing phantom git corpus entries in worktrees).
 - Residual `proseMentions` discrepancy resolved on 2026-09-27 (recomputed `bun run kg:detangle` produces byte-identical sidecars).
 - Owner ruling 2026-10-07 applied: `check:environment` distinguishes internal worktree symlinks (created by `check-merged` pointing to the checkout's `node_modules`) from external symlinks, allowing `check:merged` throwaway worktrees to pass environment checks without refusal.
