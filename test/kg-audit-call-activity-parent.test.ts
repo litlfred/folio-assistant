@@ -2,14 +2,24 @@
  * A call activity whose target is hosted by another instance in the repository
  * resolves as a pass, not unknown.
  *
- * @module scripts/tests/kg-audit-call-activity-parent
+ * A test about the WHOLE CHECKOUT, so it lives in the root `test/` rather than
+ * `cat-harness/scripts/tests/` (bean `7zz1`, owner ruling 2026-10-06 "Top-level
+ * instance"): it audits `folio-assistant-core` and expects `cat-harness` to
+ * host the processes it calls, which only the checkout holds. Standing alone,
+ * cat-harness has neither, and `check:cat-harness-standalone` collects every
+ * test in that layer. Paths are composed from ORIGIN_DIR, the directory it was
+ * written in, so nothing it reads changed in the move.
+ *
+ * @module test/kg-audit-call-activity-parent
  * @covers folio-assistant-t5j5
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-const REPO = resolve(import.meta.dir, "../../..");
+/** The directory this test was written in (`cat-harness/scripts/tests/`). */
+const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
+const REPO = resolve(ORIGIN_DIR, "../../..");
 
 describe("kg-audit: call-activity-resolves across repository instances (bean `t5j5`)", () => {
   test("a call activity whose target resolves from the parent root is a PASS with hosting instance evidence", async () => {
