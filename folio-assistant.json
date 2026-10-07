@@ -117,6 +117,13 @@
       "role": "instance-readme",
       "title": "folio-assistant",
       "description": "The repository's reader-facing entry point, and the INDEX over every instance in it: its `cat-harness:instances` section is generated from the declarations themselves, giving each instance both an agent entry (AGENTS.md, memories) and a human one (README, docs). Generated sections are written by `readme:sync` only where the file already carries their markers, and `readme:audit` verifies every other link."
+    },
+    {
+      "id": "antigravity-agent-rules",
+      "src": ".agents/rules/agent-memory.md",
+      "role": "agent-rules",
+      "title": "Antigravity Workspace Rule — Agent Memory",
+      "description": "Always-on workspace rule for Antigravity: Live memory nodes across all agents assembled inside marked regions with budget enforcement (bean fkqa)."
     }
   ],
   "_needs_comment": "THE CHECKOUT AGGREGATES (bean cmsl option A, owner 2026-09-30 round 3; placement PR0, bean ejye): the root instance `needs` EVERY instance this checkout stages, so a corpus-wide tool resolves a kind over this instance's overlay (`checkoutDirectories` in schemas/harness-config.ts) instead of asking the platform, which until PR0 named 19 of its own dependents' directories with `scope: \"repository\"`. The arrow is now the right way round: the checkout depends on what it contains, nobody depends on the checkout, and the platform names no folio. Before PR0 this was `[\"folio-assistant-core\"]` and the layering was the owner's 2026-09-20 sentence, \"So bootsteap, cat harness, fa-core, f-a, from bottom to top\" — which still holds: every instance listed here sits on that stack through its own `needs`. `check:instance-graph` refuses an instance in this checkout that this list omits.",
