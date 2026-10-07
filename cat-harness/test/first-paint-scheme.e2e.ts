@@ -238,9 +238,10 @@ test.describe("the first paint is dark — \"it should deafult dark mode then tu
  *
  * `todos/` is NOT here since #1906: it is a themed page on the default
  * layout, so it paints through the theme and `head_custom.html` like every
- * other site page, and its unbuilt source is not a page a browser is served. */
+ * other site page, and its unbuilt source is not a page a browser is served.
+ * `beans/` left for the same reason in #2418, so it gets the site's top band. */
 const SHELLS = [
-  "beans/index.html", "issue-marks/index.html", "qa/index.html",
+  "issue-marks/index.html", "qa/index.html",
   "health/index.html", "uploads/index.html", "swimlane-glossary/index.html",
   "translation-status/index.html",
 ];

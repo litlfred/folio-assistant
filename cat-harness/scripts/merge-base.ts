@@ -494,13 +494,17 @@ if (import.meta.main) {
   if (p.refused.length) abort(`${p.refused.length} conflict(s) need a person (✗ above)`);
 
   // qa sidecars first: that command reads git's stages and stages what it resolves.
-  if (p.resolvable.some((c) => c.strategy === "qa-sidecar")) {
-    const qa = spawnSync("bun", ["run", "qa:resolve-conflicts"], { cwd: root, stdio: "inherit" });
+  const qaSidecars = p.resolvable.filter((c) => c.strategy === "qa-sidecar").map((c) => c.path);
+  if (qaSidecars.length > 0) {
+    const qa = spawnSync("bun", ["run", "qa:resolve-conflicts", "--", ...qaSidecars], { cwd: root, stdio: "inherit" });
     const still = git(root, "diff", "--name-only", "--diff-filter=U").split("\n").filter(Boolean);
-    const qaLeft = p.resolvable.filter((c) => c.strategy === "qa-sidecar" && still.includes(c.path));
+    const qaLeft = qaSidecars.filter((path) => still.includes(path));
     if (qa.status !== 0 || qaLeft.length) {
       // Report as refusals (see resolutionFailure), so the bot's comment names them.
-      for (const c of qaLeft) console.log(`  ✗ ${c.path}  [${c.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
+      for (const path of qaLeft) {
+        const c = p.resolvable.find((x) => x.path === path);
+        console.log(`  ✗ ${path}  [${c?.pattern?.id ?? "qa-sidecar"}: could not resolve] — left conflicted by qa:resolve-conflicts`);
+      }
       if (!qaLeft.length) console.log(`  ✗ qa:resolve-conflicts  [qa-sidecar: could not resolve] — exited ${qa.status} (see its output above)`);
       abort(`qa:resolve-conflicts left ${qaLeft.length} sidecar(s) conflicted`);
     }

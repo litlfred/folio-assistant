@@ -22,7 +22,7 @@ cd folio-assistant
 bun install
 bun test          # unit tests
 bun run lint      # eslint
-bunx playwright test   # e2e (test:e2e)
+bun run test:e2e      # e2e (test:e2e)
 ```
 
 ## Work-plan with `beans`

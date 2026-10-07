@@ -53,6 +53,8 @@ Part of [Folio Assistant Core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`intake-rows.py`](intake-rows.py) | a file |  |
 | [`kg-materialize.test.ts`](kg-materialize.test.ts) | a file |  |
 | [`kg-materialize.ts`](kg-materialize.ts) | a file |  |
+| [`l1-coverage.test.ts`](l1-coverage.test.ts) | a file |  |
+| [`l1-coverage.ts`](l1-coverage.ts) | a file |  |
 | [`local-path.test.ts`](local-path.test.ts) | a file |  |
 | [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`pdf-line-map.py`](pdf-line-map.py) | a file |  |
