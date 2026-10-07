@@ -78,6 +78,7 @@ export const PROPERTY_SKILLS = {
   // halves of one relation, and one skill walks both.
   mountDefaults: { skills: ["remote-mount"] },
   remoteMounts: { skills: ["remote-mount"] },
+  mountApprovers: { skills: ["remote-mount"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },

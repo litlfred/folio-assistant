@@ -721,6 +721,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   mountDefaults?: MountDefaults;
   /** Harnesses this instance remote-mounts at a pin, transitively — `schemas/remote-mount.ts`, bean `0mpw`. */
   remoteMounts?: RemoteMount[];
+  /** Who may consent to a remote mount here — `schemas/mount-trust.ts`, roast `1ygp` L4.2. */
+  mountApprovers?: string[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -3186,6 +3188,17 @@ export const CatHarnessDeclarationSchema = z.object({
    * locked by tree digest, and checked by `mount:remote:check`.
    */
   remoteMounts: RemoteMountsSchema.optional(),
+  /**
+   * The people whose consent may authorise a remote mount of this instance's
+   * `remoteMounts` (roast `1ygp` L4.2). Declared: a `trust.consent.by` not on
+   * the list is refused. Absent: consent still mounts, but every such mount
+   * is reported as `unverified-approver`, never as clean.
+   */
+  mountApprovers: z
+    .array(z.string().min(1))
+    .min(1)
+    .refine((xs) => new Set(xs).size === xs.length, { message: "mountApprovers: a name appears twice" })
+    .optional(),
   /** See {@link KnownSubstrate}. Names are unique. */
   knownSubstrates: z
     .array(KnownSubstrateSchema)
