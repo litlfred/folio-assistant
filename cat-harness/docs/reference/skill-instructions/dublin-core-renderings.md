@@ -105,7 +105,12 @@ the vocabulary, not from the value's shape.
   "value string" pattern, from *Expressing Dublin Core metadata using RDF*
   (2008).
 - Emitting the bare string would make the creator a literal. Minting an IRI
-  would invent an address. Both are worse.
+  would invent an address. Both are worse for a standalone metadata document.
+- **For multi-graph static edge search**, however, anonymous nodes become blank
+  nodes (`_:`), causing variable collisions when merging thousands of records.
+  In that pipeline, [`oxigraph-catalogue-search`](oxigraph-catalogue-search.md)
+  governs: compound resources must be deterministically skolemized into stable,
+  content-addressed URIs (`https://<domain>/entity/item/{handle}#{prop}_{idx}`).
 
 **Second fact: which encoding scheme, if any.**
 

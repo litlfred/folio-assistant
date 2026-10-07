@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 224 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 23 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 11 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 2 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 224 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 15 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 24 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 54 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 10 (<a href="{{ '/assets/glossary/smart-base--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 2 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 340 terms and is 262 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 342 terms and is 264 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>340</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>340</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>342</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>342</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">340</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">342</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1152,6 +1152,13 @@ iris-dspace <span class="fa-gloss-status">candidate, extracted</span>
 <p>How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.</p>
 <p class="fa-gloss-meta">Skills of who-iris · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md"><code>who-iris/skills/iris-dspace.md</code></a></p>
 </dd>
+<dt id="who-iris--kg-skills--iris-oxigraph" data-fa-state="extracted" data-fa-gloss="">
+iris-oxigraph <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. Enables combined complex queries, multi-dimensional faceted rollups, and lazy-loaded named subgraphs on the static edge.</p>
+<p class="fa-gloss-meta">Skills of who-iris · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-oxigraph.md"><code>who-iris/skills/iris-oxigraph.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--issue-working" data-fa-state="extracted" data-fa-gloss="">
 issue-working <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1528,6 +1535,13 @@ opening-brief <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Brief a bean or a topic BEFORE touching anything: what you are doing and why it is worth doing, what you already know and with what provenance, how you plan to do it and what would falsify the approach. Scales with irreversibility, not line count.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/opening-brief.md"><code>cat-harness/skills/sdlc/sdlc-core/opening-brief.md</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-skills--oxigraph-catalogue-search" data-fa-state="extracted" data-fa-gloss="">
+oxigraph-catalogue-search <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.</p>
+<p class="fa-gloss-meta">Skills of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md"><code>folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md</code></a></p>
 </dd>
 </dl>
 

@@ -349,6 +349,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/oxigraph-catalogue-search",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "oxigraph-catalogue-search"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes."
+        }
+      ],
+      "skos:notation": "oxigraph-catalogue-search",
+      "dcterms:source": "folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-skills/plan-request-gate",
       "@type": "skos:Concept",
       "skos:inScheme": {

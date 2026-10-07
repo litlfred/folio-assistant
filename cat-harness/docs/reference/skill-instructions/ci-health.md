@@ -233,6 +233,53 @@ A `cancelled` run on a PR's OLDER head is therefore expected and is not a
 finding. The merge guard judges the head, and the head's run is never the
 one cancelled.
 
+## A green step can be a SKIPPED one: the CI cone
+
+On a pull request, a `bun run <check>` step in a gate job can print
+`SKIPPED — inputs unchanged since <sha>` and exit 0 without running the check
+(bean `4rbc`, issue #2456). The job summary lists every such step under
+**CI cone**, with the main commit it relies on. **Read it as "not asked here",
+never as "passed here".** The verdict it relies on is main's, at that sha.
+
+**The rule it follows: an input set is declared or derived, never inferred.**
+Owner, 2026-10-07: *"derived is BEST"*, then *"DERIVED = no drift, no extra
+data fields"*.
+- **Declared** is a `task-io` row. It is checked by the input-site audit.
+- **Derived** is computed from the run itself and never stored as authored
+  data. A green run on main traces each candidate check under `strace` and
+  records what that run read: the files, the directory listings, the absent
+  paths it probed, and the git commands it ran. A PR skips the check only when
+  all of these hold:
+  - every recorded path is byte-for-byte the same;
+  - every git command answers the same;
+  - the script fingerprint is the same: its import closure, the audited
+    environment, the tool versions and the `--against` baseline.
+- **Inferred** is a guess about what a check reads. It is never used.
+
+**Why the derived set is enough.** The verdict and its read set come from the
+same run. Take a PR run whose code and recorded inputs are identical to main's.
+It takes the same path, so it reads the same files and gives the same answer.
+A data-dependent read is covered by the same argument: the file that chose the
+path is one of the recorded inputs.
+
+**What a trace cannot enumerate is never skipped.** Each of these is recorded
+as undetermined, so the check always runs:
+- a write inside the checkout;
+- a git command that is not read-only;
+- a traced input site the run reached;
+- a relative path with no known directory;
+- more than 20,000 paths.
+
+**There is still no `paths:` filter on the workflow.** A filter is how a gate
+stops covering the file that broke it. The cone skips a check only on evidence
+about that check's own inputs.
+
+**One step is still not checked, and it is listed for you.** A skipped step
+did not run on this tree. When a skip looks wrong:
+1. Open the PR's job summary and find the main sha named there.
+2. Run the check locally with `bun run <check>`. A local run never skips
+   against CI's records.
+
 ## Step names describe what the check does, not merely its passing invariant
 
 A CI step named solely after its passing invariant misdescribes any failure
