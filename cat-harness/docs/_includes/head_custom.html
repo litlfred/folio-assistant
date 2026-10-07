@@ -538,6 +538,9 @@
   #2194 excluded read as "4,189 pages offer a search box, 1,003 indexed".
 -->
 {% if page.search_exclude %}<meta name="fa-search-exclude" content="true">{% endif %}
+{% comment %} A themed RENDERING names the asset it renders: its JSON-LD,
+  relative to the page (gen-library-viz.ts libraryPageHtml, #1881). {% endcomment %}
+{% if page.alternate_jsonld %}<link rel="alternate" type="application/ld+json" href="{{ page.alternate_jsonld }}">{% endif %}
 
 <!--
   The bean index — the AGENT work plan, published by the same generator beside

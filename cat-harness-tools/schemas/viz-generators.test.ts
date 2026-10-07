@@ -93,48 +93,54 @@ describe("the schema viewer", () => {
   });
 });
 
-describe.each([
-  // What a browser assembles: the library page is a thin shell (#1881) that
-  // loads its shared stylesheet and script, so the questions below are asked
-  // of the shell WITH what it references, inlined where it references them.
-  [
-    "library",
-    (h: string) =>
-      libraryShell(h)
-        .replace("</head>", `<style>${VIEWER_CSS}</style>\n</head>`)
-        .replace("</body>", `<script>${VIEWER_JS}</script>\n</body>`),
-  ],
-])("the %s viewer", (_name, viewer) => {
-  const html = (): string => viewer(DATA);
-  const dataPath = DATA;
-  test("is a complete HTML document", () => {
-    const page = html();
-    expect(page.startsWith("<!doctype html>")).toBe(true);
-    expect(page.trimEnd().endsWith("</html>")).toBe(true);
-    expect(page).toContain("</script>");
-    expect(page).toContain("</style>");
+/**
+ * The library viewer is a THEMED page since 2026-10-07 — on the site's
+ * `default` layout, so it gets the top band (search, Folio, language) that
+ * `docs-ui.js` builds there. So the questions a standalone viewer answered
+ * with its own head are asked of the front matter, the scoped stylesheet and
+ * the shared script instead.
+ */
+describe("the library viewer", () => {
+  const page = libraryShell(DATA);
+
+  test("is a themed page on the default layout, with its body Liquid-raw", () => {
+    expect(page.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(page).toMatch(/^title: "[^"]+"$/m);
+    expect(page).toContain("\nnav_exclude: true\n");
+    expect(page).not.toMatch(/<!doctype|<html|<head|<body/i);
+    expect(page).toContain("{% raw %}");
+    expect(page.trimEnd().endsWith("{% endraw %}")).toBe(true);
+    expect(page).toContain('<h1 id="lib-title">');
   });
 
   test("fetches its projection RELATIVE to its own location, with no base URL", () => {
-    // `kg-viewer`'s rule: the same bytes must be correct at the canonical base
-    // and at a staging slug. A base URL in the page would break the second.
-    const page = html();
-    expect(page).toContain(dataPath);
+    expect(page).toContain(DATA);
     expect(page).not.toContain("https://litlfred.github.io");
   });
 
-  test("renders both colour schemes, and gives body an explicit background", () => {
-    const page = html();
-    expect(page).toContain("prefers-color-scheme: dark");
-    expect(page).toContain('data-theme="dark"');
-    expect(page).toMatch(/body\s*\{[^}]*background:\s*var\(--bg\)/);
+  test("its stylesheet styles only its own wrapper, in both colour schemes", () => {
+    // Every rule's selectors start .lib-page; a rule on body, :root or a
+    // would restyle the THEME on the page it sits in.
+    const css = VIEWER_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+    const selectors = [...css.matchAll(/([^{};]+)\{/g)]
+      .map((m) => m[1]!.trim())
+      .filter((p) => !p.startsWith("@"));
+    expect(selectors.length).toBeGreaterThan(50);
+    for (const sel of selectors.flatMap((p) => p.split(",")).map((x) => x.trim())) {
+      expect(sel, sel).toMatch(/^(html\[data-fa-scheme="light"\] )?\.lib-page\b/);
+    }
+    expect(css).not.toMatch(/(^|[\s,}])(body|:root|a)\s*[{,]/);
+    expect(css).toContain('html[data-fa-scheme="light"] .lib-page {');
+    // The ground a sticky header paints over is defined in both schemes.
+    expect(css).toMatch(/\.lib-page \{[^}]*--bg:#27262b/);
+    expect(css).toMatch(/data-fa-scheme="light"\] \.lib-page \{[^}]*--bg:#fff/);
   });
 
   test("says so when the projection cannot be read, rather than showing nothing", () => {
     // "could not load" and "there is nothing" are different answers, and this
     // repository's rule is that rendering them alike reports a clean run over
     // something never looked at.
-    expect(html()).toContain("could not");
+    expect(VIEWER_JS).toContain("could not");
   });
 });
 
