@@ -1,14 +1,14 @@
 ---
 # folio-assistant-0kbt
-title: 'gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run'
-status: in-progress
+title: gen-docs-pages publishes a QA count that includes the witness files it deletes in the same run
+status: completed
 type: bug
-parent: folio-assistant-1swy
 priority: normal
 created_at: 2026-10-04T09:39:59Z
-updated_at: 2026-10-06T21:53:00Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T11:50:39Z
+parent: folio-assistant-1swy
 ---
+
 The `qa` tile and `assets/qa/index.json` are projected BEFORE the orphan sweep removes witness files whose section no longer exists, so one run after a section is renamed or removed publishes a count that includes a file that run itself deleted.
 
 MEASURED on the #1898 branch, 2026-10-04, while bean `vqlp` was being fixed. A section `the-basic-flow` was added, generated (writing `witnesses/document-ingestion/the-basic-flow.kg.json`, `counts.fail: 1`), then withdrawn in favour of hanging the figure on an existing section. The next run reported:

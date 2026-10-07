@@ -1,12 +1,12 @@
 ---
 # folio-assistant-r3y6
 title: beans:rollover raises adjudicate where one side is a strict SUPERSET — a false positive a person must not be spent on
-status: in-progress
+status: completed
 type: bug
+priority: normal
 created_at: 2026-10-03T00:13:30Z
-updated_at: 2026-10-06T21:45:15Z
+updated_at: 2026-10-07T11:50:40Z
 parent: folio-assistant-fs43
-tags: [ready-to-close]
 ---
 
 `bun run beans:rollover` (issue #1850 step 2) classifies each authored bean path a PR
