@@ -937,3 +937,47 @@ describe("owned-tree: subgraph indexes and content-addressed payloads (#2176)", 
     } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 });
+
+describe("take-base on gitignored-tracked paths without stage-2 error (bean u4up)", () => {
+  test("resolves a gitignored-tracked conflict without throwing or stage-2 error", () => {
+    const { dir, g } = ignoredTrackedMerge();
+    try {
+      expect(unmergedStages(dir, "results/x.json")).toEqual(new Set([1, 2, 3]));
+      expect(() => takeBase(dir, "results/x.json")).not.toThrow();
+      expect(unmergedStages(dir, "results/x.json").size).toBe(0);
+      expect(JSON.parse(readFileSync(join(dir, "results/x.json"), "utf-8"))).toEqual({ main: 1 });
+      expect(g("diff", "--cached", "--name-only").split("\n")).toContain("results/x.json");
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("modify/delete on a gitignored-tracked path takes base without stage-2 error", () => {
+    const dir = mkdtempSync(join(tmpdir(), "merge-base-u4up-"));
+    const g = (...a: string[]) => execFileSync("git", a, { cwd: dir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+    try {
+      g("init", "-q", "-b", "branch");
+      g("config", "user.email", "t@example.invalid");
+      g("config", "user.name", "t");
+      mkdirSync(join(dir, "results"));
+      writeFileSync(join(dir, ".gitignore"), "results/\n");
+      writeFileSync(join(dir, "results/x.json"), "{\"base\":1}\n");
+      g("add", ".gitignore");
+      g("add", "-f", "results/x.json");
+      g("commit", "-qm", "init");
+
+      g("checkout", "-q", "-b", "main");
+      writeFileSync(join(dir, "results/x.json"), "{\"main\":2}\n");
+      g("add", "-f", "results/x.json");
+      g("commit", "-qm", "main update");
+
+      g("checkout", "-q", "branch");
+      g("rm", "-q", "--", "results/x.json");
+      g("commit", "-qm", "branch deleted");
+
+      try { g("merge", "--no-ff", "--no-commit", "main"); } catch { /* expected */ }
+      expect(unmergedStages(dir, "results/x.json")).toEqual(new Set([1, 3]));
+      expect(() => takeBase(dir, "results/x.json")).not.toThrow();
+      expect(unmergedStages(dir, "results/x.json").size).toBe(0);
+      expect(JSON.parse(readFileSync(join(dir, "results/x.json"), "utf-8"))).toEqual({ main: 2 });
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+});
