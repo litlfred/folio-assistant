@@ -23,7 +23,7 @@ Input schema for end-to-end content testing.
 | `regressionBaseline` | string | no | Git ref for regression baseline. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-test/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-test/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-test/input.schema.json){: data-fa-link="source" data-src="cat-harness/schemas/skills/content-test/input.schema.json" data-repo="litlfred/folio-assistant" } · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-test/input.schema.json){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/schemas/skills/content-test/input.schema.json" data-repo="litlfred/folio-assistant" }
 
 ## Output
 
@@ -54,4 +54,4 @@ Output schema for content testing results.
 | `skipped` | integer | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-test/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-test/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-test/output.schema.json){: data-fa-link="source" data-src="cat-harness/schemas/skills/content-test/output.schema.json" data-repo="litlfred/folio-assistant" } · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-test/output.schema.json){: .fa-edit-source data-fa-link="edit" data-src="cat-harness/schemas/skills/content-test/output.schema.json" data-repo="litlfred/folio-assistant" }
