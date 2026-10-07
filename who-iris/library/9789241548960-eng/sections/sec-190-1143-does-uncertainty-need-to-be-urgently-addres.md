@@ -7,6 +7,7 @@ section_number: 11.4.3
 pages: 148-148
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Guidelines are indicated when there is uncertainty about what to do in a specific situation. Rapid advice guidelines are no different. WHO staff may be 
 uncertain about what advice to provide, or there may be uncertainty in the 

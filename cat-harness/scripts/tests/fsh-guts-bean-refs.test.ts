@@ -10,7 +10,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { Glob } from "bun";
 
-import { fshGutsDirectory } from "../../schemas/fsh-guts.ts";
+import { fshGutsDirectory, withoutFrozenSubtrees } from "../../schemas/fsh-guts.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 /** The declared trashcan, never `fsh-guts/` spelled (bean 9c7h): it follows the move to its branch. */
@@ -27,7 +27,14 @@ function beanIds(): Set<string> {
 
 describe("fsh-guts bean references resolve", () => {
   const ids = beanIds();
-  const refs = [...new Glob("**/*.md").scanSync({ cwd: GUTS })].flatMap((rel) => {
+  // A frozen subtree's files are not records of THIS work plan: they are
+  // another repository's, frozen at one commit, and a `bean:` inside one names
+  // a bean of that history. Its NOTE is a record of ours and is checked like
+  // any other — against main's beans, with no "pending" escape: a cutover
+  // deposits the note in the same step that merges the PR carrying its bean
+  // (sub-kg-lifecycle stage 13, bean 61t6).
+  const { live } = withoutFrozenSubtrees(GUTS, [...new Glob("**/*.md").scanSync({ cwd: GUTS })]);
+  const refs = live.flatMap((rel) => {
     const m = /^bean:\s*(\S+)\s*$/m.exec(readFileSync(join(GUTS, rel), "utf-8").slice(0, 4000));
     return m ? [{ rel, bean: m[1]! }] : [];
   });

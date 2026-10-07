@@ -5,8 +5,8 @@
       "failed": 18,
       "failing": [
         "scripts/tests/check-environment.test.ts > this repository, right now > is not distorted — otherwise `bun run gates` refuses for everyone",
-        "scripts/tests/gen-slice-sqlite.test.ts > gen-slice-sqlite — kg > the whole-repo KG slices green, its pointers resolve to the COMMITTED payloads, and it stays under the budget",
-        "scripts/tests/kg-export-sidecars.test.ts > kg-export sidecar subjects are DERIVED from what is committed (bean `v556`) > the real tree: the host, plus every committed foreign sidecar, and no orphan"
+        "scripts/tests/kg-export-sidecars.test.ts > kg-export sidecar subjects are DERIVED from what is committed (bean `v556`) > the real tree: the host, plus every committed foreign sidecar, and no orphan",
+        "scripts/tests/memory-refs.test.ts > memory entries name roles and agents that exist > every agent reference is a declared subagent"
       ]
     }
   }

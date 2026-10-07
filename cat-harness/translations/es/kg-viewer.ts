@@ -16,7 +16,7 @@ const node: TranslationNode = {
   label: "trans:es/kg-viewer",
   locale: "es",
   sourceFile: "scripts/kg-viewer-strings.ts",
-  sourceHash: "42b5f89c8e77",
+  sourceHash: "b7f6485c92e2",
   potFile: "translations/es/kg-viewer.pot",
   poFile: "translations/es/kg-viewer.po",
   status: {

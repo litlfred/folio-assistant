@@ -1,10 +1,10 @@
 ---
 # folio-assistant-r3y6
 title: beans:rollover raises adjudicate where one side is a strict SUPERSET — a false positive a person must not be spent on
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-03T00:13:30Z
-updated_at: 2026-10-03T00:13:30Z
+updated_at: 2026-10-06T21:45:13Z
 parent: folio-assistant-fs43
 ---
 
@@ -67,3 +67,5 @@ narrower answer is sufficient. Reuse the shape, not a new classifier — a secon
 - [ ] a NEGATIVE control: two genuinely divergent bodies (the `dlqu` case) still report
       `adjudicate`, so the refinement cannot swallow a real one
 - [ ] the exit-code contract still distinguishes "needs a person" from "portable"
+
+_2026-10-06T21:45:13Z_ — Claimed by claude/r3y6-rollover-superset — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

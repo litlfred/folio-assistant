@@ -7,6 +7,7 @@ section_number: 6.7
 pages: 76-76
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Declarations of interests are collected using the standard WHO form for 
 experts. Such a form should be completed, signed by the expert or potential 

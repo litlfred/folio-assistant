@@ -118,6 +118,14 @@
       "status": "candidate"
     },
     {
+      "id": "blocked-build-dependencies",
+      "prefLabel": "blocked-build-dependencies",
+      "definition": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead.",
+      "notation": "blocked-build-dependencies",
+      "source": "cat-harness/skills/sdlc/sdlc-core/blocked-build-dependencies.md",
+      "status": "candidate"
+    },
+    {
       "id": "board-diagram-interchange",
       "prefLabel": "board-diagram-interchange",
       "definition": "A board is a DIAGRAM OF a folio, not a container of one. The OMG split between the semantic model and its layout, why the arrow runs one way, and what a note may never carry.",
@@ -1190,6 +1198,14 @@
       "definition": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
       "notation": "release-lifecycle",
       "source": "cat-harness/skills/process/workflow/release-lifecycle.md",
+      "status": "candidate"
+    },
+    {
+      "id": "remote-mount",
+      "prefLabel": "remote-mount",
+      "definition": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: `remoteMounts` on the downstream and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.",
+      "notation": "remote-mount",
+      "source": "cat-harness/skills/kg/kg-core/remote-mount.md",
       "status": "candidate"
     },
     {

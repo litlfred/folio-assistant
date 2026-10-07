@@ -7,6 +7,7 @@ section_number: 8.5
 pages: 116-116
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Many other types and sources of data may be relevant to WHO guidelines. 
 For example, for questions about substances that are potentially toxic to 

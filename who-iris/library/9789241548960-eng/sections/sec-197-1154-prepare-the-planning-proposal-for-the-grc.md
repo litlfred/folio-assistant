@@ -7,6 +7,7 @@ section_number: 11.5.4
 pages: 152-153
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Like standard guidelines, rapid advice guidelines require that a planning proposal be submitted to the GRC for review and disposition. The content, level 
 of detail and format are the same as those outlined in Chapter 4. Although 

@@ -525,8 +525,9 @@ describe("a contentless instance (mer2)", () => {
     expect(config.adapterModule).toBeUndefined();
     const decl = readDeclaration(d);
     expect(decl?.name).toBe(SLUG);
-    // No `folio` entry — only the two state graphs every instance holds (hp54).
-    expect(decl?.directories.map((e) => e.id)).toEqual(["beans", "todos"]);
+    // No `folio` entry — only the graphs every instance keeps off main (hp54),
+    // the trashcan among them so its first cutover has somewhere to deposit.
+    expect(decl?.directories.map((e) => e.id)).toEqual(["beans", "todos", "fsh-guts"]);
   });
 
   test("a folio's instance half is the instance's — the two cannot drift", () => {
@@ -633,7 +634,7 @@ describe("state graphs follow their resolved source (hp54)", () => {
     const d = tmp();
     const r = initFolio(opts(d));
     const decl = readDeclaration(d)!;
-    for (const id of ["beans", "todos"]) {
+    for (const id of ["beans", "todos", "fsh-guts"]) {
       const e = decl.directories.find((x) => x.id === id);
       expect(e?.source).toEqual({ kind: "branch", branch: `cat/${SLUG}/${id}`, keyedBy: "tip" });
       expect(existsSync(join(d, id))).toBe(false);
@@ -652,6 +653,9 @@ describe("state graphs follow their resolved source (hp54)", () => {
     const ignore = readFileSync(join(d, ".gitignore"), "utf-8");
     expect(ignore).toContain("/beans/**");
     expect(ignore).toContain("/todos/**");
+    // The trashcan a cutover deposits into, so the first cutover is not refused for want of one.
+    expect(ignore).toContain("/fsh-guts/**");
+    expect(r.stateGraphs.find((x) => x.id === "fsh-guts")!.seed).toContain("fsh-guts/retired/.gitkeep");
     expect(r.notes.join("\n")).toContain("NOT written into the checkout");
   });
 
@@ -686,7 +690,9 @@ describe("state graphs follow their resolved source (hp54)", () => {
     for (const kind of defaultGraphTypologies.names()) {
       const def = defaultGraphTypologies.get(kind)!;
       if (!def.newInstanceSource) continue;
-      expect(def.holds).toBe("state");
+      // Kept on its own tip from the first commit — `state` (beans, todos), or
+      // `context` for the trashcan, which only a confirmed act writes.
+      expect(["state", "context"]).toContain(def.holds);
       expect(listed.has(kind)).toBe(true);
     }
     for (const kind of listed) expect(defaultGraphTypologies.get(kind)?.newInstanceSource?.kind).toBe("branch");
