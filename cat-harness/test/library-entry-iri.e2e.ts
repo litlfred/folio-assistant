@@ -1,4 +1,10 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+import { AxeBuilder } from "@axe-core/playwright";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { siteDirFor } from "../schemas/cat-harness.ts";
+import { serveThemed, type Scheme } from "./support/themed-page.ts";
 
 /**
  * Every library entry has its own IRI, and the page there renders it.
@@ -17,10 +23,19 @@ import { test, expect } from "@playwright/test";
  *
  * Served from the repository root by `test-server.mjs`, like every e2e here;
  * the shell's paths are relative, so they resolve under this prefix exactly as
- * they do on the published site.
+ * they do on the published site. The shell is a THEMED page since 2026-10-07,
+ * so its body is served in a stand-in for the layout (`support/themed-page.ts`)
+ * at the same path; its assets and data still come off the server.
  */
 const SITE = process.env.FA_SITE_URL ?? "http://127.0.0.1:8080";
-const LIB = "/cat-harness/docs/cat-harness/library";
+const DOCS = "/cat-harness/docs";
+const LIB = `${DOCS}/cat-harness/library`;
+const HARNESS = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+/** Serve the committed themed pages under the docs prefix in the layout stand-in. */
+async function themed(page: Page, scheme: Scheme = "dark"): Promise<void> {
+  await serveThemed(page, { fsRoot: join(HARNESS, siteDirFor(HARNESS)), urlPrefix: `${DOCS}/`, scheme });
+}
 
 function listen(page: import("@playwright/test").Page): string[] {
   const errors: string[] = [];
@@ -31,6 +46,7 @@ function listen(page: import("@playwright/test").Page): string[] {
 
 test("the smart-trust entry's own IRI renders it from the published data", async ({ page }) => {
   const errors = listen(page);
+  await themed(page);
   const res = await page.goto(`${SITE}${LIB}/smart-base/smart-trust/`, { waitUntil: "networkidle" });
   expect(res?.status(), "the entry IRI must be a materialized page").toBe(200);
 
@@ -68,6 +84,7 @@ test("the smart-trust entry's own IRI renders it from the published data", async
 
 test("an old #key link is normalised ONCE to the path IRI", async ({ page }) => {
   const errors = listen(page);
+  await themed(page);
   await page.goto(`${SITE}${LIB}/smart-base/#${encodeURIComponent("smart-base/smart-trust")}`, { waitUntil: "networkidle" });
   expect(new URL(page.url()).pathname).toBe(`${LIB}/smart-base/smart-trust/`);
   expect(new URL(page.url()).hash).toBe("");
@@ -85,8 +102,28 @@ test("a shell whose entry the data does not hold says so, with a way back", asyn
     g.entries = g.entries.filter((e) => !(e.instance === "smart-base" && e.id === "smart-trust"));
     await route.fulfill({ response: r, json: g });
   });
+  await themed(page);
   await page.goto(`${SITE}${LIB}/smart-base/smart-trust/`, { waitUntil: "networkidle" });
   const status = page.locator('#status[data-fa-not-found="1"]');
   await expect(status).toContainText("No entry at this address");
   await expect(status.locator("a")).toHaveAttribute("href", `${LIB}/smart-base/`);
 });
+
+for (const scheme of ["dark", "light"] as const) {
+  test(`an entry page on the ${scheme} ground has no WCAG A/AA violations`, async ({ page }) => {
+    // The page's colours are its own (viewer.css, keyed on data-fa-scheme),
+    // so both grounds the theme paints are checked, with the entry selected
+    // and its document and blocks panels drawn.
+    await themed(page, scheme);
+    await page.goto(`${SITE}${LIB}/smart-base/smart-trust/`, { waitUntil: "networkidle" });
+    await expect(page.locator('[data-fa-library-item="smart-base/smart-trust"]')).toHaveAttribute("data-fa-anchored", "1");
+    const { violations } = await new AxeBuilder({ page })
+      .include(".lib-page")
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(
+      violations.map((v) => `${v.id} [${v.impact}] ×${v.nodes.length} — ${v.help}: ` +
+        v.nodes.slice(0, 5).map((n) => `${n.target.join(" ")} (${n.failureSummary ?? ""})`).join("; ")),
+    ).toEqual([]);
+  });
+}

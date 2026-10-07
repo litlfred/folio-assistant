@@ -2,9 +2,11 @@ import { existsSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+import { AxeBuilder } from "@axe-core/playwright";
 
-import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, readDeclaration, siteDirFor } from "../schemas/cat-harness.ts";
+import { serveThemed, type Scheme } from "./support/themed-page.ts";
 
 /**
  * A scoped library viewer renders ITS SUBJECT's entries.
@@ -57,6 +59,17 @@ const DOCS = "/cat-harness/docs";
 // what Playwright runs on — `action-tiles.e2e.ts` carries the same note, and
 // this file cost a run by not reading it first.
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const HARNESS = join(REPO, "cat-harness");
+
+/**
+ * The library pages are THEMED since 2026-10-07: the committed file is front
+ * matter and a Liquid-raw body, so it is served in a stand-in for the layout
+ * (`support/themed-page.ts`) at its own path. Its data and assets still come
+ * off the server, relative to that path, as on the published site.
+ */
+async function themed(page: Page, scheme: Scheme = "dark"): Promise<void> {
+  await serveThemed(page, { fsRoot: join(HARNESS, siteDirFor(HARNESS)), urlPrefix: `${DOCS}/`, scheme });
+}
 
 /**
  * Subjects that MUST appear, read from the declarations rather than the data.
@@ -93,6 +106,7 @@ test("a scoped library viewer renders its subject's entries", async ({ page }) =
   page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
   page.on("console", (m) => { if (m.type() === "error") errors.push(`console: ${m.text()}`); });
   page.on("requestfailed", (r) => errors.push(`requestfailed: ${r.url()}`));
+  await themed(page);
 
   const data = await page.request.get(`${SITE}${DOCS}/assets/library/index.json`);
   expect(data.status(), "the viewer's data file must be published").toBe(200);
@@ -133,3 +147,31 @@ test("a scoped library viewer renders its subject's entries", async ({ page }) =
 
   expect(errors, "the viewer must render without errors").toEqual([]);
 });
+
+/**
+ * WCAG A/AA over a whole subject listing, in both views and on both grounds.
+ * The listing is where the most colour is — every pill state, the badges, the
+ * sorted header — and its palette is the page's own (viewer.css, keyed on the
+ * scheme the site paints), so each scheme is a separate claim.
+ */
+for (const scheme of ["dark", "light"] as const) {
+  test(`a subject page on the ${scheme} ground has no WCAG A/AA violations, listing and desktop`, async ({ page }) => {
+    const subject = declaredLibrarySubjects()[0];
+    expect(subject, "no declared library subject to open").toBeDefined();
+    await themed(page, scheme);
+    await page.goto(`${SITE}${DOCS}/cat-harness/library/${subject!.name}/`, { waitUntil: "networkidle" });
+    await expect(page.locator("#listing [data-fa-library-item]").first()).toBeVisible();
+    const audit = async (): Promise<string[]> =>
+      (
+        await new AxeBuilder({ page })
+          .include(".lib-page")
+          .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+          .analyze()
+      ).violations.map((v) => `${v.id} [${v.impact}] ×${v.nodes.length} — ${v.help}: ` +
+        v.nodes.slice(0, 5).map((n) => `${n.target.join(" ")} (${n.failureSummary ?? ""})`).join("; "));
+    expect(await audit(), "listing").toEqual([]);
+    await page.locator("#vDesk").click();
+    await expect(page.locator("#desktop .card").first()).toBeVisible();
+    expect(await audit(), "desktop").toEqual([]);
+  });
+}

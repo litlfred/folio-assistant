@@ -16,6 +16,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { countCatalogue, otherInstances, share, statusPage } from "../gen-translation-status.ts";
+import { unscopedSelectors } from "../lib/themed-page.ts";
 
 /** A minimal catalogue header — every real `.po` opens with one. */
 const HEADER = `# Some translation
@@ -204,6 +205,16 @@ describe("the date on the page is when the numbers CHANGED", () => {
     expect(blank(statusPage({ locales, changedAt: "2026-01-05", scope: "x" }))).not.toBe(
       blank(statusPage({ locales: more, changedAt: "2026-01-05", scope: "x" })),
     );
+  });
+
+  test("the page is THEMED, so it carries the site's top band (2026-10-07)", () => {
+    const html = statusPage({ locales, changedAt: "2026-01-05", scope: "cat-harness/translations" });
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).not.toMatch(/<!doctype|<html|<head|<body|<main\b/i);
+    expect(html).toContain('<h1 id="ts-title">');
+    expect(unscopedSelectors(html, ".ts-page")).toEqual([]);
+    // Still no JavaScript: the numbers are known at generate time.
+    expect(html).not.toContain("<script");
   });
 
   test("the SCOPE is on the page, so a number cannot be read as covering everything", () => {
