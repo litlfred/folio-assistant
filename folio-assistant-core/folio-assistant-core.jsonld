@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T00:07:06.456Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b0130a1249766bfd721b3a29f54a617863d0b397",
-  "sourceCommitSha": "b0130a1249766bfd721b3a29f54a617863d0b397",
-  "sourceCommitAt": "2026-10-07T01:50:55+02:00",
+  "generatedAt": "2026-10-07T01:41:10.595Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0f35273df8d46632c9153e5762bef83f13ad2aa0",
+  "sourceCommitSha": "0f35273df8d46632c9153e5762bef83f13ad2aa0",
+  "sourceCommitAt": "2026-10-07T03:21:02+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -353,8 +353,8 @@
     "SequenceFlow": 275,
     "Lane": 62,
     "ProcessNode": 250,
-    "GraphTypology": 17,
-    "Subgraph": 17,
+    "GraphTypology": 18,
+    "Subgraph": 18,
     "Asset": 2
   },
   "@graph": [
@@ -9177,6 +9177,13 @@
       "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/memory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "memory",
+      "renderable": false,
+      "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/translation-sources",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "translation-sources",
@@ -9490,6 +9497,23 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/memory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "memory",
+      "path": "memory/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/memory"
+      ],
+      "description": "Agent memory about content authoring, review and publication: lessons (block kinds, the document render path, normative statements, locale directories) an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each. Read by cat-harness's `agent-memory` assembler alongside every other instance's declared `memory` directory. Split from the repository root's `memory/` on the owner's ruling of 2026-10-06 (bean `ar1s`).",
+      "readmePath": "memory/README.md",
+      "fileCount": 5,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/memory"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
       "name": "agent-instructions",
@@ -9510,8 +9534,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "b0130a1249766bfd721b3a29f54a617863d0b397",
+    "sha": "0f35273df8d46632c9153e5762bef83f13ad2aa0",
     "pr": "main",
-    "run": "37548794205"
+    "run": "37556652677"
   }
 }

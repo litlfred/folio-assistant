@@ -335,10 +335,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-07T00:07:34.511Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b0130a1249766bfd721b3a29f54a617863d0b397",
-  "sourceCommitSha": "b0130a1249766bfd721b3a29f54a617863d0b397",
-  "sourceCommitAt": "2026-10-07T01:50:55+02:00",
+  "generatedAt": "2026-10-07T01:41:39.030Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0f35273df8d46632c9153e5762bef83f13ad2aa0",
+  "sourceCommitSha": "0f35273df8d46632c9153e5762bef83f13ad2aa0",
+  "sourceCommitAt": "2026-10-07T03:21:02+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -351,12 +351,12 @@
     "SequenceFlow": 804,
     "Lane": 145,
     "ProcessNode": 776,
-    "Tool": 129,
+    "Tool": 130,
     "Schema": 155,
     "ExternalSchema": 22,
-    "GraphTypology": 31,
+    "GraphTypology": 34,
     "Role": 53,
-    "Subgraph": 29,
+    "Subgraph": 30,
     "Asset": 3
   },
   "@graph": [
@@ -33838,6 +33838,38 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/agent-memory",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "agent-memory",
+      "title": "Agent memory assembler",
+      "description": "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run agent-memory"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "memory",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Each agent's assembled memory file, per vendor."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/agent-memory"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/content-context",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "content-context",
@@ -40027,6 +40059,29 @@
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/voices"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/interaction",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "interaction",
+      "renderable": false,
+      "summary": "How a person wants to be asked — read at session start, never written by a process."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/memory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "memory",
+      "renderable": false,
+      "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one.",
+      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/memory"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/waiver",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
+      "name": "waiver",
+      "renderable": false,
+      "summary": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
+      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/waiver"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/substrate-snapshot",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphTypology",
       "name": "substrate-snapshot",
@@ -41170,7 +41225,7 @@
       ],
       "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph typology's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "readmePath": "uml/README.md",
-      "fileCount": 391,
+      "fileCount": 387,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
@@ -41393,7 +41448,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3298,
+      "fileCount": 3291,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -41532,6 +41587,25 @@
       "readmePath": "deploy/README.md",
       "fileCount": 7,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-deploy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/memory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "memory",
+      "path": "memory/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/memory",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/waiver",
+        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphTypology/interaction"
+      ],
+      "description": "Agent memory for the platform: durable lessons an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md` by `scripts/agent-memory.ts`, which reads EVERY instance's declared `memory` directory. `context`: read during a process, never written by one; it changes when a person directs an authoring agent. Also holds the `interaction` node (how each person wants to be asked, read at session start) and any `folio-waiver/v1` confirmation waivers, told apart by their `$schema` tag. Moved from the repository root on the owner's ruling of 2026-10-06 (bean `ar1s`): memory belongs to the harness its lesson is about, so lessons about content authoring live in the content harness's own `memory/`.",
+      "readmePath": "memory/README.md",
+      "fileCount": 38,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/memory"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#asset/agent-instructions",
