@@ -1,0 +1,81 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "User Scenario (DAK) API",
+    "description": "Logical Model for representing User Scenarios from a DAK. Narratives that describe how the different personas may interact with each other.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-UserScenario.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-UserScenario",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-UserScenario.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-UserScenario",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-UserScenario.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-UserScenario": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-UserScenario.schema.json",
+        "title": "User Scenario (DAK)",
+        "description": "Logical Model for representing User Scenarios from a DAK. Narratives that describe how the different personas may interact with each other.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "UserScenario",
+            "description": "Resource type identifier for UserScenario logical model"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the user scenario"
+          },
+          "id": {
+            "type": "string",
+            "description": "An identifier for the user scenario"
+          },
+          "description[x]": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "format": "uri"
+              }
+            ],
+            "description": "Description of the scenario - either Markdown content or a URI to a Markdown file (absolute or relative to repository root, like input/pagecontent/scenario-XYZ.md)"
+          },
+          "personas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "References to persona IDs that participate in this scenario"
+          }
+        },
+        "required": [
+          "resourceType",
+          "title",
+          "id",
+          "description[x]"
+        ],
+        "resourceDefinition": "http://smart.who.int/base/StructureDefinition/UserScenario",
+        "fhir:parent": "http://hl7.org/fhir/StructureDefinition/Base"
+      }
+    }
+  }
+}
