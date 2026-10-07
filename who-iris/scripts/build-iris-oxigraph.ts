@@ -78,6 +78,33 @@ export interface BuildResult {
 }
 
 /**
+ * Append-Only Streaming Partition Writer (Zero-Accumulation Architecture)
+ *
+ * Writes N-Quads directly to disk partition streams as records are processed,
+ * maintaining an O(1) memory footprint during corpus ingestion (300,000 items).
+ */
+export class StreamingPartitionWriter {
+  private outDir: string;
+  private openStreams: Map<string, fs.WriteStream> = new Map();
+
+  constructor(outDir: string) {
+    this.outDir = outDir;
+    fs.mkdirSync(outDir, { recursive: true });
+  }
+
+  public append(partitionFile: string, quads: string[]): void {
+    if (quads.length === 0) return;
+    const filePath = path.join(this.outDir, partitionFile);
+    fs.appendFileSync(filePath, quads.join('\n') + '\n', 'utf8');
+  }
+
+  public appendSingle(partitionFile: string, quad: string): void {
+    const filePath = path.join(this.outDir, partitionFile);
+    fs.appendFileSync(filePath, quad + '\n', 'utf8');
+  }
+}
+
+/**
  * Upstream Extractor Skolemization Helper (Zero-Pass Minting)
  *
  * Mints a stable, deterministic, content-addressed URI for a Dublin Core entity

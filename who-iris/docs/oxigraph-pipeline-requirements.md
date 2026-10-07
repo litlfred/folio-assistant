@@ -105,6 +105,7 @@ flowchart TD
 | **SR-6** | **Handle Authority**: All item primary subject URIs must resolve using the canonical Handle system: `https://hdl.handle.net/10665/{id}`. | Graph check: all `a dspace:Item` subjects must start with `https://hdl.handle.net/`. |
 | **SR-7** | **Compressed Transport Ceiling**: For the current 3-item library, the full gzipped multi-graph payload must not exceed 10 KB. For scale (300,000 items), regional community partitions must not exceed 25 MB compressed. | Measured build artifact size check in CI. |
 | **SR-8** | **Prepared Query Equivalence**: Every entry in `queries.json` must be syntactically valid SPARQL 1.1 and execute against the dataset with 0 errors. | Automated test parses and dry-runs all queries in `queries.json`. |
+| **SR-9** | **Append-Only Streaming Partitioning**: The build and extraction toolchains must support streaming append-only output to partition files (`who-iris-spine.nq`, `community_{id}.nq`). Ingestion memory consumption must remain bounded O(1) regardless of repository catalog size (300,000 items). | Memory benchmark: heap usage under 250 MB during compilation of entire corpus. |
 
 ---
 
