@@ -181,7 +181,7 @@ describe("invocations — what counts as running a gate", () => {
 
   test("a COMMENTED-OUT invocation does not count", () => {
     // Measured against the real file: it carries a commented-out
-    // `#     bun run agent-memory:check`, and counting it would make this check
+    // `#     bun run cat agent-memory:check`, and counting it would make this check
     // report a gate the job does not run — the mirror image of `ot9a`.
     expect(invocations("# bun run a:check\n          #  bun run b:check")).toEqual([]);
   });

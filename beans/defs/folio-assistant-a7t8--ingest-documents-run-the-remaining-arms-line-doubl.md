@@ -13,7 +13,7 @@ Hit while ingesting the SWOT paper, 2026-09-22.
 
 ## What happened
 
-`bun run ingest <pdf>` stages, then prints:
+`bun run cat ingest <pdf>` stages, then prints:
 
 > Next: run the remaining arms with `-o ingest-staging/<slug>`, then: ... --promote
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: Schema fields, F–L"
 parent: "Glossary: Schema fields"
 grand_parent: Glossary
@@ -329,7 +329,7 @@ FolioAssistantDependency.derivedFromNeeds <span class="fa-gloss-status">candidat
 FolioAssistantDependency.git <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Git clone URL for the dependency. Used when <code>path</code> is absent or the directory does not exist. Not cloned into <code>.deps/</code> (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — <code>remoteMounts</code> on the declaration, laid down by <code>bun run mount:remote</code> (bean <code>0mpw</code>).</p>
+<p>Git clone URL for the dependency. Used when <code>path</code> is absent or the directory does not exist. Not cloned into <code>.deps/</code> (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — <code>remoteMounts</code> on the declaration, laid down by <code>bun run cat mount:remote</code> (bean <code>0mpw</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#FolioAssistantDependency.git</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--harness-config.folioassistantdependency.id" data-fa-state="extracted" data-fa-gloss="">

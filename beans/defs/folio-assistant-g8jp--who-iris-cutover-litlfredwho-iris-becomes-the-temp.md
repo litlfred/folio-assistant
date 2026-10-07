@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g8jp
 title: 'who-iris cutover: litlfred/who-iris becomes the (temporary) authoritative source; folio-assistant reads it by remote subscription'
-status: completed
+status: todo
 type: feature
 priority: normal
 created_at: 2026-10-06T19:12:02Z
-updated_at: 2026-10-07T17:37:00Z
+updated_at: 2026-10-07T19:47:18Z
 parent: folio-assistant-7x5n
 ---
 
@@ -44,3 +44,8 @@ The cutover, in the same change that removes `who-iris/`, needs three steps:
 
 ## Completed on landed evidence
 Landed on main in PR #2324 (who-iris pre-cutover: who-iris reaches only folio-assistant by remote subscription).
+
+
+## 2026-10-07 — reopened, queued (owner chose option 1)
+Status was `completed` but plan items 2, 4, 5, 6 (rehearse, seed, subscribe/repoint, move to fsh-guts) are unchecked and the Done-when is unmet: `who-iris/` is still in tree and litlfred/who-iris is not seeded. Reopened to `todo`.
+Owner 2026-10-07: start right after #2448 (ar1s P4b script split) merges — rehearse first; if `0mpw` is not merged, seed CI starts on a sibling checkout of core. P4b put who-iris scripts under `checkoutScripts` (root-relative): converting them to layer-relative `scripts` is part of the seed step.

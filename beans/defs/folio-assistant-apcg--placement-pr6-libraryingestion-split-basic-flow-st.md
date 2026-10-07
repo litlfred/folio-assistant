@@ -20,7 +20,7 @@ Blocked by PR3 (the `ingest-*` diagrams move there) and PR5 (the basic flow refe
 
 ## Done when
 - [ ] `methodology-from-source.bpmn`'s `calledElement="Process_Ingestion"` resolves to the HARNESS file
-- [ ] `bun run ingest uploads/<fixture>.pdf --dry-run` picks the same rung before and after
+- [ ] `bun run cat ingest uploads/<fixture>.pdf --dry-run` picks the same rung before and after
 - [ ] `residual.py`: 0 edges from `document-ingestion` to a higher instance
 
 _2026-10-02T17:26Z_ — Claimed by claude/placement-pr6-apcg (session https://claude.ai/code/session_01CVVoavPoCHMLA7AASxG8cH), assigned by the merge steward. Blockers 63wl (#1875) and tlat (#1867, train 3) merged — blocked_by satisfied.

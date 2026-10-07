@@ -15,12 +15,11 @@ import { foldable, settleCovered } from "../pair-cover.ts";
 import { regenPass, type Pair, type Runner } from "../regen-after-merge.ts";
 import { CHECKS } from "../skill-register.ts";
 import { instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
+import { scriptsOf } from "../../schemas/script-table.ts";
 
 const INSTANCE = join(import.meta.dir, "..", "..");
 const REPO = repoRootFor(INSTANCE);
-const SCRIPTS = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as {
-  scripts: Record<string, string>;
-}).scripts;
+const SCRIPTS = scriptsOf(REPO);
 
 const ALL_SKILL_PAIRS = ["skill:register:check", ...CHECKS];
 

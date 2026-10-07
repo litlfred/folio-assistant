@@ -34,7 +34,7 @@ that.
 ## Run it
 
 ```sh
-bun run l1:coverage --text pages.json --captured captured.json \
+bun run cat l1:coverage --text pages.json --captured captured.json \
   [--exclusions exclusions.json] [--out report.json]
 ```
 

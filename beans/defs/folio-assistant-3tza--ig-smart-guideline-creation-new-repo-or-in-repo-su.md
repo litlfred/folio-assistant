@@ -52,7 +52,7 @@ Branch `agent/ig-create-subkg` (local, not pushed).
 
 skill:register (two passes to a fixed point) and skill:register:check: green. render:bpmn:check: green. kg:audit:check: OK, with no new gated finding. `activity-skill-has-tool` is minor and reported, not gated. `skill-voice-review-current` was not run. typecheck: green. check:process-bindings and check:fhir-harness-exclusions: green. check:reference-direction: no new higher instance named. The 196 nearest tests and bpmn-pot-current pass.
 
-`bun run gates` hit the 9-minute limit inside `bun test`. The one failure it showed is `navbar-assets.test.ts`: the navbar.js bundle differs from the generator, and this branch does not touch it. `regen` left audit:coverage:strict and fsh-guts:viz unrepaired, because the fsh-guts branch is not mounted in this worktree.
+`bun run cat gates` hit the 9-minute limit inside `bun test`. The one failure it showed is `navbar-assets.test.ts`: the navbar.js bundle differs from the generator, and this branch does not touch it. `regen` left audit:coverage:strict and fsh-guts:viz unrepaired, because the fsh-guts branch is not mounted in this worktree.
 
 ## Open decisions for the owner
 

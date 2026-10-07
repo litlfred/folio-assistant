@@ -128,6 +128,6 @@ are one sparse product plus a rank-one correction each. `ca.test.ts` checks
 it against the paper's Table 1: the first two principal inertias (0.475,
 93.2 %; 0.017, 3.4 %), their sum equal to χ²/N, jaguar between the cat and car
 terms, every dimension centred on the masses, and the transition formula
-returning each document to its own coordinates. `bun run lsi:epics --method ca`
+returning each document to its own coordinates. `bun run cat lsi:epics --method ca`
 runs it on the bean store; the skill is
 [`lsi-indexing`](../skills/kg/graph-management/lsi-indexing.md).

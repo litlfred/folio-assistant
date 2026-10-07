@@ -8,7 +8,7 @@
  *
  * `maintains` on a Tool node asserts the Tool is authoritative for a **published**
  * artefact. `kg:schema:check` reconciles those claims against produced files, but
- * only for artefacts whose declaring Tool invokes `bun run kg:schema` — it was
+ * only for artefacts whose declaring Tool invokes `bun run cat kg:schema` — it was
  * narrowed to that on 2026-09-20, because it had encoded a premise `maintains`
  * never carried (that a maintained artefact is produced by the schema exporter)
  * and reported the first counterexample as drift.
@@ -41,7 +41,7 @@
  *
  * Usage:
  *   bun run cat-harness/scripts/check-maintained-artefacts.ts ./_site
- *   bun run check:maintained-artefacts -- ./_site
+ *   bun run cat check:maintained-artefacts -- ./_site
  */
 import { existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";

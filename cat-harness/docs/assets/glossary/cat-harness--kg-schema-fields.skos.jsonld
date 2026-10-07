@@ -4,7 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
-  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields",
@@ -17620,7 +17620,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. Not cloned into `.deps/` (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on the declaration, laid down by `bun run mount:remote` (bean `0mpw`)."
+          "@value": "Git clone URL for the dependency. Used when `path` is absent or the directory does not exist. Not cloned into `.deps/` (owner, 2026-10-06): a remote dependency is a REMOTE MOUNT — `remoteMounts` on the declaration, laid down by `bun run cat mount:remote` (bean `0mpw`)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency.git",
@@ -25490,6 +25490,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/script-qa.ts#ScriptQaReport.updated_at",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.scriptentry.command",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScriptEntry.command"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The command, relative to the checkout root."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.command",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/script-table.scriptentry.manifest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScriptEntry.manifest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The manifest it is declared in, repository-relative (`package.json` for the root)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/script-table.ts#ScriptEntry.manifest",
       "skos:note": "candidate"
     },
     {

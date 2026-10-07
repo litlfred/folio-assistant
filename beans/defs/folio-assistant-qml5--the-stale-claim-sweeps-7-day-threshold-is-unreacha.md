@@ -40,7 +40,7 @@ of health — it is the `dh4f` shape, a consumer reporting a clean run over what
 it was not looking at.
 
 **And the repository already holds a second, tighter threshold for the same
-question.** `bun run health`'s `bean-quiet-claims` fires at **72 hours** and
+question.** `bun run cat health`'s `bean-quiet-claims` fires at **72 hours** and
 flagged 24 on `origin/main` the same day. Two thresholds for one question are
 free to disagree, and the looser one is the one that reports nothing.
 

@@ -26,7 +26,7 @@ issues #951 and #1340.`,
 
 /** Turns from the same session that did the right thing, or said nothing to answer. */
 const GOOD = {
-  "a report of finished work naming many ids": `**\`v625\` is closed and \`bun run skill:register\` is live on \`main\`.** One
+  "a report of finished work naming many ids": `**\`v625\` is closed and \`bun run cat skill:register\` is live on \`main\`.** One
 failure in CI — the drift test — verified by reading the failure list. Bean
 \`cjvs\` recorded 190 dangling refs and \`yx9p\` the five names; #1387 merged.`,
 

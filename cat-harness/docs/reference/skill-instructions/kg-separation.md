@@ -38,12 +38,12 @@ bean before deciding:
 | signal | how it is measured |
 |---|---|
 | files and bytes per instance | `git ls-files \| cut -d/ -f1 \| sort \| uniq -c` |
-| clone cost | `bun run health` → `repository-size` |
-| gate time a content change pays | `bun run gates` (the gate count and wall time) |
+| clone cost | `bun run cat health` → `repository-size` |
+| gate time a content change pays | `bun run cat gates` (the gate count and wall time) |
 | merge contention | commits per day on `main`; PRs re-conflicted before merge |
-| cohesion and cut of the candidate | `bun run kg:detangle` |
+| cohesion and cut of the candidate | `bun run cat kg:detangle` |
 | wrong-direction edges **within one instance** — modules bucketed into the proposed repos by path rule | `check:partition` (its root is ONE instance; read the scope it prints) |
-| wrong-direction edges **between instances** — checked against each one's declared `needs` | `bun run kg:detangle:direction`, blocking in CI (bean `p11x`) |
+| wrong-direction edges **between instances** — checked against each one's declared `needs` | `bun run cat kg:detangle:direction`, blocking in CI (bean `p11x`) |
 | wrong-direction **references** — the prose axis, not the import axis | `check:reference-direction` |
 | what the tools would drag along | the import cone of the would-be tools package (`check:tools-closure` once it exists) |
 
@@ -116,7 +116,7 @@ the work looks finished.
 
 | # | stage | lane | gate |
 |---|---|---|---|
-| 0 | Brief, measure the signals, claim | `authoring-agent` | signals in the bean; `bun run beans:claim <id>` |
+| 0 | Brief, measure the signals, claim | `authoring-agent` | signals in the bean; `bun run cat beans:claim <id>` |
 | 1–3 | Declare in place, detangle, isolate | `authoring-agent` | [`graph-detanglement`](graph-detanglement.md) — all its gates |
 | 4 | **Identity**: `name`, `version`, `iriBase`, `needs`, `nodeSchemas` in the declaration; move the base once | `platform-authoring-agent` | `iri:sync -- --from <old base>` then `iri:sync:check`; `check:node-iris` |
 | 5 | **Hosted outputs out** of the content | `platform-authoring-agent` | the content leak test's pending list is empty |
@@ -124,7 +124,7 @@ the work looks finished.
 | 7 | **Publication plan**: every identifier the content mints is a file some step publishes, at `/<version>/` and `/v<major>/` | `publication-manager` | `check:node-iris`; the site layout in [`instance-publication`](instance-publication.md) §"The release site" |
 | 8 | **Rehearse standalone**: copy content + tools alone into a temporary directory and run the tools' checks there | `build-pipeline` | green with nothing else on the path; an empty tree exits non-zero |
 | 9 | **Authorise** — report what moves, sizes, what breaks, and wait | `administrator` | the owner's answer ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)) |
-| 10 | **Seed**: the owner creates the repositories; once the source has settled, seed `main`, then the content and tools as reviewed PRs, with history | `administrator`, then `authoring-agent` | `bun run seed:ready --layer <name> --rehearse` answers `settled` for each layer, at seed time; then the seeding PRs reviewed and green |
+| 10 | **Seed**: the owner creates the repositories; once the source has settled, seed `main`, then the content and tools as reviewed PRs, with history | `administrator`, then `authoring-agent` | `bun run cat seed:ready --layer <name> --rehearse` answers `settled` for each layer, at seed time; then the seeding PRs reviewed and green |
 | 11 | **Parent consumes, additively**: pin (a SHA while staging, a version once released), repoint imports, keep the parent's copy | `platform-authoring-agent` | the parent green with the dependency declared; `check:published-refs` |
 | 12 | **First release**: tag, publish `/<version>/` and `/v<major>/` | `publication-manager` | `check:version-bump`; every identifier dereferences ([`publish-verification`](publish-verification.md)) |
 | 13 | **Cutover**: the one commit retiring the parent's copy into [`fsh-guts`](fsh-guts.md) as a verified archive (the deposit `state:seed --cutover` makes: it must extract to the exact tree removed, with a provenance note), deposited into the PARENT's fsh-guts before the removal, frozen, never refreshed or rendered: a relocation, not a deletion (owner, 2026-10-06; [`sub-kg-lifecycle`](sub-kg-lifecycle.md) stage 13 has the steps) | `administrator` | only after 11 and 12 are green |
@@ -144,7 +144,7 @@ stands alone, but the tree has moved since. So `GW_SeedReady` sits between
 creating the repositories and seeding them, and asks again:
 
 ```sh
-bun run seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 not yet, 2 unknown
+bun run cat seed:ready --layer cat-harness --rehearse --text   # exit 0 settled, 1 not yet, 2 unknown
 ```
 
 | criterion | `not yet` when |

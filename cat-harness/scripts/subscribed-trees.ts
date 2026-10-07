@@ -122,7 +122,7 @@ export function subscribedTrees(decls: readonly { dir: string; decl: DeclLike }[
             ...at,
             entry,
             state: "could-not-determine",
-            reason: `subgraph \`${g}\` of \`${s.id}\` is chosen but not materialised — run \`bun run kg:materialize ${s.id} ${g}\``,
+            reason: `subgraph \`${g}\` of \`${s.id}\` is chosen but not materialised — run \`bun run cat kg:materialize ${s.id} ${g}\``,
           });
           continue;
         }

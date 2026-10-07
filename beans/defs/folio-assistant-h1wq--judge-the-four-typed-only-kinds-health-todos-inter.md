@@ -40,13 +40,13 @@ whose previews are finished with"* — which bean `7umv` had **proved cannot rea
 an orphaned preview**. A person reading the committed health report was being
 told to do something this repository had established was impossible.
 
-Fixed by `bun run health`.
+Fixed by `bun run cat health`.
 
 ### Two defects in my own check, both caught by falsifying it
 
 - **It re-derived the hash.** The first version computed `sha256(run.ts)` and
   could never have passed: the field records `checkerHash`, which hashes THREE
-  modules because any can alter a verdict. Re-running `bun run health` moved the
+  modules because any can alter a verdict. Re-running `bun run cat health` moved the
   recorded hash and the check stayed red — that is how it surfaced. **A staleness
   check calls the producer's own hash function; it never re-derives one.** A check
   that cannot pass is indistinguishable from a corpus that cannot be fixed, and

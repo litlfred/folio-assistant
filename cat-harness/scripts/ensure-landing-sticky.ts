@@ -683,7 +683,7 @@ if (import.meta.main) {
       process.exit(0);
     }
     console.error(`landing sticky is not in order:\n${problems.map((p) => `  · ${p}`).join("\n")}`);
-    console.error(`run \`bun run landing:sticky\` and commit`);
+    console.error(`run \`bun run cat landing:sticky\` and commit`);
     process.exit(1);
   }
 

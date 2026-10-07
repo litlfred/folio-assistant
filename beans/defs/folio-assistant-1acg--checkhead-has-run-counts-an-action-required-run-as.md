@@ -35,7 +35,7 @@ gates fire**"*.
 
 ## Measured 2026-10-03, on the two heads the merge sweep flagged
 
-`bun run check:head-has-run c975c7da7b9b1ce32e3466abd1028e29e34dbb29` (#1819):
+`bun run cat check:head-has-run c975c7da7b9b1ce32e3466abd1028e29e34dbb29` (#1819):
 
 ```
   c975c7da7b — 5 run(s):
@@ -145,7 +145,7 @@ belongs on this bean rather than a new one is that both are the same sentence:
 ## CORRECTION — the sweep half does NOT catch #1819 or #1808
 
 Measured 2026-10-03 by running the thing rather than reasoning about it:
-`bun run check:prs-have-runs --min-age-minutes 0`
+`bun run cat check:prs-have-runs --min-age-minutes 0`
 
 ```
   ✓ #1819  has-run   Glass strip: pinned tiles first, "+N more", hidden until

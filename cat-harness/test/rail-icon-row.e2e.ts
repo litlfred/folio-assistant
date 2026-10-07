@@ -27,7 +27,7 @@ const CSS = readFileSync(join(ROOT, SITE, "assets/css/navbar-row.css"), "utf8") 
 // `navbar-row.js` FIRST — it draws the row, and `docs-ui.js` calls it — as `head_custom.html` loads them.
 const JS = readFileSync(join(ROOT, SITE, "assets/js/navbar-row.js"), "utf8") + "\n" + readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 const LIVE = (JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as { navbar: { icons: string[] } | null }).navbar;
-if (!LIVE) throw new Error("docs/_data/harness.json has navbar:null — run `bun run docs:harness`.");
+if (!LIVE) throw new Error("docs/_data/harness.json has navbar:null — run `bun run cat docs:harness`.");
 
 const SHELL =
   `<!doctype html><html lang="en"><head><meta charset="utf-8">` +

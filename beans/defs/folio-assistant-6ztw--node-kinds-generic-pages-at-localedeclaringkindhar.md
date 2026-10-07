@@ -16,4 +16,4 @@ Issue #2195 PR 2. Generic dashboard per kind (subclasses included, filters by ki
 
 Merged as #2242 (`3c54172` on main); PR 3 (#2243, `7a2ff7e`) and litlfred/smart-ra#15 built on it. Generic pages per kind, per harness and per node at `/<locale>/<declaring>/<kind>/[<harness>/[<path>]]`, `en` only.
 
-**Closed on evidence, 2026-10-06** (re-measured, not quoted): on main at `f0bd0c7`, `bun run node-kind:pages:check` exits 0 — *"10 node-kind page(s) current, and every one resolves"*. Status history: opened in-progress, never reopened. Deferred and not this bean: locales other than `en`.
+**Closed on evidence, 2026-10-06** (re-measured, not quoted): on main at `f0bd0c7`, `bun run cat node-kind:pages:check` exits 0 — *"10 node-kind page(s) current, and every one resolves"*. Status history: opened in-progress, never reopened. Deferred and not this bean: locales other than `en`.

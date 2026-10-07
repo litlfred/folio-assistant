@@ -11,8 +11,8 @@ parent: folio-assistant-7x5n
 
 ## Why
 
-Measured by the steward: `bun run regen` runs ~83 check/writer pairs serially
-via `spawnSync`, up to 3 passes, ~25 min locally. `bun run gates` takes >50 min
+Measured by the steward: `bun run cat regen` runs ~83 check/writer pairs serially
+via `spawnSync`, up to 3 passes, ~25 min locally. `bun run cat gates` takes >50 min
 locally. The box has 4 CPUs shared with other sessions.
 
 ## What (owner-approved, 2026-10-01)

@@ -11,7 +11,7 @@ parent: folio-assistant-vke6
 
 ## State — delivered, advisory, green. Not merged.
 
-Issue #1219, PR #1222, `bun run gates` 139/139, 34 tests in 194ms on synthetic trees.
+Issue #1219, PR #1222, `bun run cat gates` 139/139, 34 tests in 194ms on synthetic trees.
 
 ## The rule
 

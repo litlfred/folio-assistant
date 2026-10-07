@@ -18,8 +18,8 @@ Append one comment line to `scripts/kg-audit.ts`, then:
 
 | run | files changed |
 |---|---|
-| `bun run kg:audit` alone | **2** — the probe itself, and `skills/kg-qa.manifest.json` |
-| `bun run regen` (43 verify/write pairs) | **2** — same |
+| `bun run cat kg:audit` alone | **2** — the probe itself, and `skills/kg-qa.manifest.json` |
+| `bun run cat regen` (43 verify/write pairs) | **2** — same |
 | …then `bun run gen-docs-pages.ts` | **24** |
 
 So an auditor-only edit costs **21 files besides the edit**: the manifest plus
@@ -214,7 +214,7 @@ hash — otherwise a spec asserting "the panel shows it" would compare against
 **Mutation-checked rather than assumed.** Disabling the enrichment
 (`if (true) return doc`) turns the served-manifest spec **red** and leaves the
 404 spec green — so the pass is evidence, not coincidence. 9 of 9 with it
-restored; `bun run gates` 136 of 136.
+restored; `bun run cat gates` 136 of 136.
 
 ## Done when
 

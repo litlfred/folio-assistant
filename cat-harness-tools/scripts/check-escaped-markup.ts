@@ -75,7 +75,7 @@
  *
  * Usage:
  *   bun run cat-harness/scripts/check-escaped-markup.ts ./_site
- *   bun run check:escaped-markup -- ./_site
+ *   bun run cat check:escaped-markup -- ./_site
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";

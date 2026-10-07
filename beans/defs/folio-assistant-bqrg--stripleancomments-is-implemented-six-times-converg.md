@@ -307,4 +307,4 @@ way — it has always numbered the stripped text, which is also what
 - both projections agree on names across all 3,971 files — **0 disagreements**
 - 20 tests in `lean-decl-starts-are-shared.test.ts`, replacing the 12 that
   pinned the divergence
-- `bun test` and the full `bun run gates` set
+- `bun test` and the full `bun run cat gates` set

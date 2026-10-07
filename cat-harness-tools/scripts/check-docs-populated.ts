@@ -7,7 +7,7 @@
  *   folders of docs pages, and `pagesOfExt` walks every folder of the site, so
  *   their pages are read here exactly as the top-level ones are.
  *
- * Usage: `bun run check:docs-populated [--json] [--strict]`
+ * Usage: `bun run cat check:docs-populated [--json] [--strict]`
  * Exit:  0 every harness has one · 1 one is thin · 2 could not determine
  *        With `--strict`, a harness whose pages name none of its declared
  *        processes, roles and tasks is also exit 1.

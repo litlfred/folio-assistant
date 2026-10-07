@@ -177,7 +177,7 @@ Re-measured by running the repo's own gate rather than by counting files,
 because the gate is what decides the box:
 
 ```
-bun run check:instance-config
+bun run cat check:instance-config
   → 16 instance(s) declared; 6 configs written; 10 declared with no config
   → "(· = declared but no config written; a legitimate state.)"
   → ✓ every config is named after its instance, and no retired name survives

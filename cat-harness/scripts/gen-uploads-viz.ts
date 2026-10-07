@@ -80,8 +80,8 @@
  * `UploadItem.kind` exists to stop.
  *
  * Usage:
- *   bun run uploads:viz          # write
- *   bun run uploads:viz:check    # fail if either artefact is stale
+ *   bun run cat uploads:viz          # write
+ *   bun run cat uploads:viz:check    # fail if either artefact is stale
  */
 import { basename, join } from "node:path";
 
@@ -264,7 +264,7 @@ function render(){
       return '<p>Into <code>' + q.dir + '/</code>:</p>' +
         '<pre>cp YOUR-FILE.pdf ' + q.dir + '/\\n' +
         'git add ' + q.dir + '/YOUR-FILE.pdf &amp;&amp; git commit\\n' +
-        'bun run ingest ' + q.dir + '/YOUR-FILE.pdf --library &lt;destination&gt;</pre>';
+        'bun run cat ingest ' + q.dir + '/YOUR-FILE.pdf --library &lt;destination&gt;</pre>';
     }).join("") +
     '<p><code>--library</code> is <b>chosen, never derived</b>: files from one queue have been ingested into several libraries, so a queue does not determine a destination. <code>ingest</code> lists the declared ones and refuses to guess.</p>' +
     '</div>';
@@ -385,7 +385,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run uploads:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat uploads:viz\``);
     process.exit(1);
   }
 }

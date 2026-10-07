@@ -421,7 +421,7 @@ if (import.meta.main) {
   if (check) {
     const current = existsSync(out) ? readFileSync(out, "utf-8") : "";
     if (current !== rendered) {
-      console.error(`::error::gen-methodologies-viz: ${PAGE} is stale — run \`bun run methodologies:viz\``);
+      console.error(`::error::gen-methodologies-viz: ${PAGE} is stale — run \`bun run cat methodologies:viz\``);
       process.exit(1);
     }
     console.log(`✓ methodologies viewer is current — ${rows.length} methodolog(ies)`);
