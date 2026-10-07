@@ -1100,6 +1100,9 @@ function ignoredByCheckout(repoRoot: string, into: string, rels: string[]): Set<
  * reported as a miss, never as an empty mount.
  */
 export function mountTip(loc: TipLocation, opts: MountOptions = {}): MountResult {
+  if (loc.keyedBy !== "tip") {
+    return { state: "refused", reason: `directory ${loc.id} is keyed by ${loc.keyedBy}, not tip; mounting is a tip operation` };
+  }
   const repoRoot = opts.repoRoot ?? gitTopLevel();
   const into = resolve(repoRoot, opts.into ?? loc.path);
   const relInto = relative(repoRoot, into);
