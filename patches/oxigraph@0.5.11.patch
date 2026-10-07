@@ -1,0 +1,46 @@
+diff --git a/node.d.ts b/node.d.ts
+index a7e55840f8f0150f668e4de02e4914fbb74c37f8..42b97b962c845e5c5ecc6ef86bbcb86f876827ea 100644
+--- a/node.d.ts
++++ b/node.d.ts
+@@ -133,7 +133,7 @@ export class Store {
+     has(quad: Quad): boolean;
+ 
+     load(
+-    input: string | UInt8Array | Iterable<string | UInt8Array>,
++    input: string | Uint8Array | Iterable<string | Uint8Array>,
+     options: {
+         base_iri?: NamedNode | string;
+         format: string;
+@@ -167,8 +167,8 @@ export class Store {
+ 
+ 
+ 
+-function parse(
+-input: string | UInt8Array,
++export function parse(
++input: string | Uint8Array,
+ options: {
+     base_iri?: NamedNode | string;
+     format: string;
+@@ -176,8 +176,8 @@ options: {
+     lenient?: boolean;
+ }
+ ): Quad[];
+-function parse(
+-input: Iterable<string | UInt8Array>,
++export function parse(
++input: Iterable<string | Uint8Array>,
+ options: {
+     base_iri?: NamedNode | string;
+     format: string;
+@@ -185,8 +185,8 @@ options: {
+     lenient?: boolean;
+ }
+ ): IterableIterator<Quad>;
+-function parse(
+-input: AsyncIterable<string | UInt8Array>,
++export function parse(
++input: AsyncIterable<string | Uint8Array>,
+ options: {
+     base_iri?: NamedNode | string;
+     format: string;
