@@ -7,7 +7,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { ARTIFACT_MAX_FILES, artifactBundle, builtSomething, inPlatform, ownerRepoOf, readStagingInputs, slugOf } from "../stage-local.ts";
+import { ARTIFACT_MAX_FILES, artifactBundle, builtSomething, inPlatform, ownerRepoOf, platformAssetRefs, readStagingInputs, slugOf } from "../stage-local.ts";
 
 describe("stage-local", () => {
   test("reads the staging workflow's inputs from the folio's own file, with the workflow's defaults", () => {
@@ -78,5 +78,13 @@ describe("stage-local", () => {
     expect(b.files.length).toBeLessThanOrEqual(ARTIFACT_MAX_FILES);
 
     expect(() => artifactBundle(new Map([["doc/index.html", 1]]))).toThrow(/no index.html/);
+  });
+
+  test("the platform assets a page loads from the platform's published site are found, and its page links are not", () => {
+    const page = `<script type="application/json" id="fa-rail" data-fa-root="https://o.github.io/p" data-fa-to-root=".."></script>
+<link rel="stylesheet" href="https://o.github.io/p/assets/css/navbar.css"><script src="https://o.github.io/p/assets/js/navbar.js" defer></script>
+<a href="https://o.github.io/p/tools/">Tools</a><script src="https://cdn.example/x.js"></script>`;
+    expect(platformAssetRefs(new Map([["index.html", page]]))).toEqual({ roots: ["https://o.github.io/p"], assets: ["css/navbar.css", "js/navbar.js"] });
+    expect(platformAssetRefs(new Map([["a.html", "<p>no rail</p>"]]))).toEqual({ roots: [], assets: [] });
   });
 });
