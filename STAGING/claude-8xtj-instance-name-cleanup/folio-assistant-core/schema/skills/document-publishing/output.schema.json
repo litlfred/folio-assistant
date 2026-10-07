@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Publishing Output",
+  "type": "object",
+  "required": [
+    "outputPath",
+    "blockCount"
+  ],
+  "properties": {
+    "outputPath": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "string",
+      "description": "The engine actually used, or absent for md/html."
+    },
+    "blockCount": {
+      "type": "integer"
+    },
+    "chapterCount": {
+      "type": "integer"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-8xtj-instance-name-cleanup/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
+  "staging": {
+    "branch": "claude/8xtj-instance-name-cleanup",
+    "sha": "2ce69c67ba018cbaa091929d970648a0a9692ea0",
+    "pr": "2396/merge",
+    "run": "37580477743"
+  }
+}

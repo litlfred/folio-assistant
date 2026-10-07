@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/CompiledInputs",
+  "definitions": {
+    "CompiledInputs": {
+      "type": "object",
+      "properties": {
+        "toolchain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "toolchain",
+        "sourceRevision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-8xtj-instance-name-cleanup/folio-assistant-core/schema/zod/materialization/CompiledInputsSchema.schema.json",
+  "title": "CompiledInputsSchema",
+  "description": "Generated from `CompiledInputsSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/8xtj-instance-name-cleanup",
+    "sha": "2ce69c67ba018cbaa091929d970648a0a9692ea0",
+    "pr": "2396/merge",
+    "run": "37580477743"
+  }
+}
