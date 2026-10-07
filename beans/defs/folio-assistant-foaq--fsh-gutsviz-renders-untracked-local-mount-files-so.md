@@ -1,11 +1,11 @@
 ---
 # folio-assistant-foaq
 title: fsh-guts:viz renders untracked local mount files, so a regen from a dirty mount stales CI
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-04T18:00:42Z
-updated_at: 2026-10-04T18:00:42Z
+updated_at: 2026-10-06T19:05:07Z
 parent: folio-assistant-d33q
 ---
 
@@ -13,3 +13,5 @@ Measured 2026-10-04 on #2103 (e33c7280eb): `merge:main`'s regen ran `fsh-guts:vi
 
 ## Done when
 - `gen-fsh-guts-viz` lists only files the state branch tracks (ask git, not the disk — the same rule as `git-corpus.ts`), or the workflow engine stops writing untracked logs into the mount; and a test covers a stray untracked file in the mount not changing the page.
+
+_2026-10-06T19:05:07Z_ — Claimed by claude/foaq-fsh-guts-viz-tracked — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -843,8 +843,11 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
 - **Mounting dispatches on the kind**, and the process is
   `processes/kg/mount-subgraph.bpmn`: `directory` is the checkout path in place
   (a write is a commit); `branch` + `tip` is mounted from the tip and spliced
-  back without force (`branch-store mount`/`push`); a kind with no flow is
-  refused with its own exit code rather than read as an empty directory.
+  back without force (`branch-store mount`/`push`); `remote` is another
+  repository's tree at a full 40-character pin, laid down and locked by
+  `mount:remote` and never written back (the [`remote-mount`](remote-mount.md)
+  skill, bean `0mpw`); a kind with no flow is refused with its own exit code
+  rather than read as an empty directory.
 - **The KG export publishes the resolved source** on the Subgraph node, as
   `contentSource` — `dcterms:source`, with `kind` (`dcterms:type`), `branch`
   (`dcterms:identifier`), `keyedBy` and `declaredIn` scoped inside it. A
@@ -854,6 +857,118 @@ beside a directory concept. Bean `l4ay`; schema `schemas/subgraph-source.ts`.
 `state` on `main` and still `state` on `cat/cat-harness/todos`; a `context`
 graph could be mounted from a branch and stays read-only. See
 [`content-context-and-state-graphs`](content-context-and-state-graphs.md).
+
+### Where a NEW instance's state lives — on its own branch, by default (owner, 2026-10-06)
+
+**This subsection owns the rule.** The scaffold skills
+([`getting-started`](getting-started.md), `folio_init`)
+point here and do not restate it.
+
+Measured 2026-10-06: a folio scaffolded by `folio_init` carried `beans/` and
+`todos/` on `main` from its install commit, and its declaration named neither,
+so nothing could say where its work plan lived. The scaffold never asked the
+`source` resolver. The owner's ruling: *fix the process*. Bean `hp54`.
+
+- **The default is a property of the KIND, read once at scaffold time.** A
+  graph typology may carry `newInstanceSource: { kind: "branch", keyedBy:
+  "tip" }`, beside `perInstance`. `beans`, `todos` and `fsh-guts` carry it
+  (`fsh-guts` since 2026-10-06, so a new instance's first cutover has
+  somewhere to deposit — see the main half below). It is a storage fact and
+  says nothing about `holds`: `fsh-guts` stays `context`. It has no
+  `branch`, because a kind has no branch name to give. `folio_init` composes
+  the name and writes a **complete** `source` into the new instance's own
+  `<instance>.json`. After that the declaration is the one answer. The
+  resolver never reads `newInstanceSource`, so it is not a second place
+  answering where the content lives. It also cannot move an existing
+  instance whose entry declares no source. This repository's own `beans/`
+  and `todos/` stay where they are until their cutover (`fs43`).
+- **The branch name is `cat/<instance>/<directory-id>`**, built by
+  `instanceStateBranch` in `schemas/subgraph-source.ts`. For example, the
+  `dpi-h-ra` instance's branches are `cat/dpi-h-ra/beans` and
+  `cat/dpi-h-ra/todos`. This is the owner's
+  `cat/<harness>/<name>` ruling (2026-10-02) applied to a folio. One name does
+  three jobs:
+  - it names the declaration (`<instance>.json`);
+  - it prefixes the bean ids (`.beans.yml` → `<instance>-`);
+  - it names the state branches.
+
+  The last segment is the directory **id**, the key that `branch-store
+  mount --id` and `state:seed --id` use.
+- **`folio_init` resolves each state graph through the one resolver** (after
+  writing the declaration and config, so a `subgraphSources` override is
+  honoured), and acts on the resolved source:
+
+  | resolved | what `folio_init` does |
+  |---|---|
+  | `branch` | Declares the graph. Does **not** write it into the checkout. Adds `/<path>/**` to `.gitignore` so a mount is never committed. Prints the seed command. |
+  | `directory` | Writes the graph **and** declares it. Before `hp54` the scaffold wrote it and did not declare it. |
+
+- **Seeding is printed, not performed.** No platform command creates a new
+  state branch:
+  - `branch-store` refuses to ("seeding … is a steward act");
+  - `state:seed` only refreshes an existing seed.
+
+  So `folio_init` prints a self-contained shell block. Run it once from the
+  new repository. It pushes an orphan tip branch holding:
+  - a `state-manifest/v1` manifest marked `authoritative: true`, because a
+    new instance has no `main` copy;
+  - a README;
+  - the graph's starting files. For `beans`, those are `beans/beans.json`
+    and `beans/defs/`, and the seed must carry them: `beans:claim` reads
+    `beans.json` from the branch and refuses to guess where `defs` is.
+
+  Then `state:mount` puts each branch at its declared path. This was checked
+  end to end on a fresh repository with a bare remote: init, seed, mount,
+  `beans create`, `branch-store push --id beans`, `beans:claim`.
+- **Cutting an EXISTING instance over is two halves, and both have a command.**
+  Run both from the instance's own repository. Every default is the cwd's git
+  toplevel, and `--repo-root <dir>` overrides it. Until `hp54` the default
+  was the platform checkout, so a folio that links the platform refreshed
+  the platform's branch.
+
+  1. **The branch half:** `state:seed --id <id> --authoritative`. The branch
+     becomes the store.
+  2. **The main half:** `state:seed --id <id> --cutover`. It is a dry run
+     that reports files and bytes and the deposit it would make. Add
+     `--commit` to deposit, then stage `git rm -r <path>` and a
+     `/<path>/**` ignore line as **one** commit naming the branch, the tree
+     id and the deposit. It never pushes `main`. It refuses unless all of
+     these hold:
+     - the manifest says `authoritative: true`;
+     - the manifest says `keyedBy: "tip"`, or the mount would be `corrupt`;
+     - a declaration keeps the path on that branch;
+     - nothing under the path is uncommitted;
+     - `HEAD:<path>` and the branch's `<path>` are the same tree id, so the
+       two copies are byte-identical;
+     - the directory's **own** instance declares a `fsh-guts` graph kept at a
+       branch tip, and the deposit into it lands and re-reads verified.
+
+  **What a cutover removes goes to `fsh-guts` first — the one rule for it**
+  (owner, 2026-10-06: *"cutover dirs should go to fsh-guts"*). Before any
+  `git rm`, `--commit` packs `<path>/` at `HEAD` with `git archive`, checks
+  the pack extracts to **the same tree id** it is about to remove, and
+  splices the existing `retired/` pair onto the trashcan's tip through
+  `branch-store` (never a force push, `expect: null` so it never
+  overwrites): `retired/cutover-<instance>-<dir>-<tree12>.tar.gz` plus a
+  same-basename `.md` declaring `folio-fsh-guts/v1`, `kind:
+  cutover-snapshot`, `movedFrom`, `movedOn`, `reason: cutover`, the
+  instance, `sourceCommit`, `tree` and `authoritativeBranch`. It re-reads
+  the tip, and only if both blobs are there does it make the removal
+  commit. No trashcan declared, a trashcan not on a tip, a branch that is
+  not there, or a push that did not land: **refused, `main` untouched**,
+  with the fix named. This is not a second disposal of beans — the branch
+  is still the live store; the deposit is the copy `main` last held.
+  `deletion-requires-confirmation` still governs: the dry run is the
+  report, and `--commit` is only run on the owner's explicit go.
+
+  Then run `state:mount`. Both halves, and the refusals, were checked end
+  to end on a fresh repository.
+- **A state directory nobody declared is a finding**: `undeclared-state` in
+  `check:declared-dirs`. Every other check there compares declarations to
+  disk. This one runs the other way, for the conventional state paths only
+  (`DEFAULT_DIRECTORIES` entries whose kinds all `holds: "state"`). It
+  reports and never removes anything. Whether to move the content off `main`
+  is the owner's call ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
 
 ## What a derived subgraph is computed FROM — `derivedFrom` (owner, 2026-10-04)
 
@@ -1603,5 +1718,6 @@ up: [`cat-harness/docs/proposals/instance-versioning.md`](../../proposals/instan
 
 | process | step(s) that name it |
 |---|---|
+| [Remote-mount a dependency](../../processes/mount-dependency.html) | Mount each instance at its declared path |
 | [Mount a declared subgraph](../../processes/mount-subgraph.html) | Resolve the subgraph's content source; Use the checkout path in place; Mount the branch tip at the declared path; Refuse: no flow for this source kind |
 

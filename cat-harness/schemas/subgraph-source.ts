@@ -20,6 +20,8 @@
  * |---|---|---|
  * | `directory` (the default) | the checkout, at `path` | the content itself |
  * | `branch` | a declared repository branch, keyed by `commit` or `tip` | where a mount of it lands |
+ * | `family` | a family of branches, one per key | where a mount of ONE member lands |
+ * | `remote` | another repository's tree, at a pinned 40-character commit | where the remote mount lands |
  *
  * A third kind (a graph database) is a new MEMBER of the union — an additive
  * change every `switch` on `kind` is then forced by the compiler to answer —
@@ -221,16 +223,87 @@ export const FamilySourceSchema = z
   .strict();
 
 /**
+ * The content is ANOTHER REPOSITORY's tree at a pinned commit — a REMOTE MOUNT
+ * (bean `0mpw`). The entry's `path` is where the mount lands in this checkout;
+ * `upstreamPath` is where the bytes are in that repository (absent: the same
+ * path). Owner, 2026-10-06: *no git submodules ever*, and no `.deps/` — a
+ * remote mount is a DECLARED DIRECTORY with a remote source, pinned to a full
+ * SHA. A branch name moves under the reader and an abbreviated SHA is ambiguous
+ * by definition, so neither is admitted.
+ *
+ * A downstream rarely writes this by hand: `remoteMounts` on its declaration
+ * names a harness and its pin, and the harness's own `mountDefaults` say which
+ * directories arrive and where (`schemas/remote-mount.ts`). This member is the
+ * per-directory answer that expansion produces, and the spelling a declaration
+ * uses when it mounts one directory of somebody else's tree on its own.
+ */
+export const RemoteSourceSchema = z
+  .object({
+    kind: z.literal("remote"),
+    repository: z.string().regex(/^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/, "owner/repo").refine((r) => !r.includes(".."), "no `..`"),
+    ref: z.string().regex(/^[0-9a-f]{40}$/, "ref must be a full 40-character commit SHA — pin, never follow a branch"),
+    upstreamPath: z
+      .string()
+      .regex(/^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\/?$/, "a repository-relative path, no dot-prefixed segment")
+      .refine((p) => !p.split("/").includes(".."), "may not climb with `..`")
+      .optional(),
+  })
+  .strict();
+
+/**
  * A declared subgraph's content source. A discriminated union, so a new kind
  * is a new member here and a compile error at every consumer that has not
  * decided what to do with it.
  */
-export const SubgraphSourceSchema = z.discriminatedUnion("kind", [DirectorySourceSchema, BranchSourceSchema, FamilySourceSchema]);
+export const SubgraphSourceSchema = z.discriminatedUnion("kind", [DirectorySourceSchema, BranchSourceSchema, FamilySourceSchema, RemoteSourceSchema]);
 export type SubgraphSource = z.infer<typeof SubgraphSourceSchema>;
 export type SubgraphSourceKind = SubgraphSource["kind"];
 
+/**
+ * Where a NEW instance's graph of a kind lives — the scaffold default a graph
+ * typology may carry (`newInstanceSource` on the graph-typology registry). Bean `hp54`.
+ *
+ * It has NO `branch`, and that is the point. The objection recorded on
+ * `check-state-on-main.ts` still stands: a KIND has no branch name to give, so
+ * a kind-level default the RESOLVER applied would decide a directory's storage
+ * partly in its declaration and partly in a registry entry somebody else
+ * edits. This is not that. `folio_init` reads it once, composes the branch
+ * with {@link instanceStateBranch}, and writes an ordinary, complete
+ * `source: { kind: "branch", branch, keyedBy }` into the new instance's own
+ * declaration. After that the declaration is the one place that answers, and
+ * {@link resolveSubgraphSource} never consults this field — which is also why
+ * an existing instance's undeclared-source `beans/` (this repository's own)
+ * is not flipped by it.
+ *
+ * Only `tip`: it is for one-live-copy state, the keying beans and todos use.
+ */
+export const NewInstanceSourceSchema = z
+  .object({ kind: z.literal("branch"), keyedBy: KeyedBySchema.extract(["tip"]) })
+  .strict();
+export type NewInstanceSource = z.infer<typeof NewInstanceSourceSchema>;
+
+/**
+ * THE branch-name convention for an instance's own state subgraph:
+ * `cat/<instance>/<directory-id>`.
+ *
+ * The owner's 2026-10-02 ruling named special branches `cat/<harness>/<name>`
+ * (`cat/cat-harness/beans`, `cat/cat-harness/qa-reports`). A folio is an
+ * instance like any harness, so its own work plan is `cat/<instance>/beans` in
+ * ITS repository: keyed by the same instance name that already prefixes its
+ * bean ids (`.beans.yml` → `prefix: <instance>-`) and names its declaration
+ * (`<instance>.json`), so one name answers all three. The directory id, not
+ * the kind, is the last segment — the id is what `branch-store mount --id`
+ * and `state:seed --id` are keyed by.
+ *
+ * Validated, so an instance name that would make an invalid ref is refused
+ * here rather than by `git push` later.
+ */
+export function instanceStateBranch(instance: string, id: string): string {
+  return BranchNameSchema.parse(`cat/${instance}/${id}`);
+}
+
 /** Every kind the union knows — for a reader that must refuse the rest (`branch-store mount`'s exit code). */
-export const SUBGRAPH_SOURCE_KINDS: readonly SubgraphSourceKind[] = ["directory", "branch", "family"];
+export const SUBGRAPH_SOURCE_KINDS: readonly SubgraphSourceKind[] = ["directory", "branch", "family", "remote"];
 
 /** The config half: `<instance>.config.json` → `subgraphSources`, keyed by directory id. */
 export const SubgraphSourceOverridesSchema = z.record(z.string().min(1), SubgraphSourceSchema);
@@ -279,6 +352,18 @@ export type ResolvedSubgraphSource =
       keyFrom: string;
       /** The remote `owner/repo` the family is read from; absent when it is materialised on this repository. */
       repository?: string;
+      declaredIn: SourceDeclaredIn;
+    }
+  | {
+      kind: "remote";
+      id: string;
+      /** The entry's `path` — where the remote mount lands in this checkout. */
+      path: string;
+      repository: string;
+      /** The pinned 40-character commit. */
+      ref: string;
+      /** Where the bytes are in the remote repository. */
+      upstreamPath: string;
       declaredIn: SourceDeclaredIn;
     };
 
@@ -388,6 +473,22 @@ export function resolveSubgraphSource(
         declaredIn,
       };
     }
+    case "remote": {
+      // A `qa` subgraph is keyed by THIS repository's commits; somebody
+      // else's tree at somebody else's pin judges nothing here.
+      if ((entry.graphTypologies ?? []).includes("qa")) {
+        throw new Error(`directory "${entry.id}" is a \`qa\` subgraph: it is keyed by this repository's commits, and a remote mount is not.`);
+      }
+      return {
+        kind: "remote",
+        id: entry.id,
+        path: entry.path,
+        repository: src.repository,
+        ref: src.ref,
+        upstreamPath: src.upstreamPath ?? entry.path,
+        declaredIn,
+      };
+    }
   }
 }
 
@@ -424,6 +525,12 @@ export function contentSourceJsonLd(src: ResolvedSubgraphSource, repository?: st
         ...(src.repository ? { familyRepository: src.repository } : {}),
         declaredIn: src.declaredIn,
       };
+    case "remote": {
+      // The tree URL at the pin carries both the repository and the commit,
+      // so no new term is minted for either: the `@id` dereferences to them.
+      const web = forgeTreeUrl(src.repository, `${src.ref}/${src.upstreamPath.replace(/\/+$/, "")}`);
+      return { ...(web ? { "@id": web } : {}), kind: "remote", declaredIn: src.declaredIn };
+    }
   }
 }
 

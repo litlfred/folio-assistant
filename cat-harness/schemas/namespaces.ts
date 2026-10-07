@@ -328,6 +328,17 @@ export function termIri(name: string): string {
 }
 
 /**
+ * A term as a CURIE — `<prefix>:<name>`, the prefix its layer's — for the
+ * places that write compact IRIs against a context binding the prefix
+ * (`CONTENT_CONTEXT`). The same layer lookup as {@link termIri}, so the two
+ * cannot disagree, and the same scan in `ns-export.ts` counts it as minted:
+ * a term written through here with no gloss fails `ns:check`.
+ */
+export function termCurie(name: string): string {
+  return `${prefixForLayer(termLayer(name))}:${name}`;
+}
+
+/**
  * The standard property a retired term was replaced by, as an IRI — or
  * `undefined` for a term that was never replaced. Resolved here, not in the
  * vocabulary, because `processes:` is bootstrap's own namespace and moves with

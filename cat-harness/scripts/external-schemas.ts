@@ -282,6 +282,7 @@ export function namespaceMentions(iris: readonly string[], repoRoot = resolve(RO
   // the string "external-schemas" here would be a second spelling of a
   // directory the declaration already answers — `check:declared-paths` counts
   // exactly that, and it is right to: the two copies are free to diverge.
+  // input-site: inert #ca5b78a8 — names a build-output directory only to leave it out of a walk
   const SKIP = new Set(["node_modules", "_kg", "docs", ".git", "dist", "coverage"]);
   const EXT = [".ts", ".tsx", ".json", ".jsonld", ".md"];
   const walk = (dir: string): void => {

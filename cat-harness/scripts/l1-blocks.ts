@@ -49,10 +49,11 @@ import { basename, join, resolve } from "node:path";
 import { blockId, libraryInstanceOf, licenceProperties, sectionKey } from "../content/pipeline/gen-library-jsonld.ts";
 import { manifestLicence } from "../schemas/source-licence.ts";
 import { libraryAssetIri } from "../schemas/library-iri.ts";
+import { documentContext } from "../schemas/content-context.ts";
+import { typesForKind } from "../schemas/jsonld.ts";
+import { termCurie } from "../schemas/namespaces.ts";
 import { STRUCTURE_FILENAME, pagesOf, readStructure } from "../schemas/document-structure.ts";
 
-/** The `@context` every ingested node already carries. Read from a sibling, never retyped. */
-const CONTEXT = "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld";
 
 /**
  * The `library/<id>/…` stem every `@id` is written against.
@@ -117,9 +118,9 @@ export function buildL1(dir: string, write = true): BuildResult {
   for (const s of declared) {
     const bid = blockId("prose", sectionKey(s.id));
     const node = {
-      "@context": CONTEXT,
+      "@context": documentContext(typesForKind("prose")),
       "@id": `${base}/blocks/${bid}`,
-      "@type": ["folio-assistant-core:Prose", "doco:Section"],
+      "@type": typesForKind("prose"),
       kind: "prose",
       title: s.title ?? s.id,
       // Pages only where the format has them: a notebook section is located
@@ -149,9 +150,9 @@ export function buildL1(dir: string, write = true): BuildResult {
     }
   }
   const manifest = {
-    "@context": CONTEXT,
+    "@context": documentContext([termCurie("SourceDocument")]),
     "@id": manifestIri,
-    "@type": ["folio-assistant-core:SourceDocument"],
+    "@type": [termCurie("SourceDocument")],
     title: st.doc_id,
     // The section NODE is `sections/sec-NNN` — the generator's name for it. The
     // full section id names the `.md` file beside it, which is not a node.

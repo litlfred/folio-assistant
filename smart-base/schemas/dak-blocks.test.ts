@@ -198,17 +198,17 @@ describe("JSON-LD typing", () => {
     // The block is the authored manifest; the FHIR ValueSet is what its .fsh
     // compiles to. Typing the manifest as a FHIR resource would invite a
     // consumer to read FHIR fields off it.
-    expect(typesForKind("value-set", registry)).toEqual(["folio-assistant-core:ValueSet"]);
+    expect(typesForKind("value-set", registry)).toEqual(["smart-base:ValueSet"]);
   });
 
   test("DoCO co-typing stays sparing", () => {
-    expect(typesForKind("decision-table", registry)).toEqual(["folio-assistant-core:DecisionTable", "doco:Table"]);
-    expect(typesForKind("persona", registry)).toEqual(["folio-assistant-core:Persona"]);
+    expect(typesForKind("decision-table", registry)).toEqual(["smart-base:DecisionTable", "doco:Table"]);
+    expect(typesForKind("persona", registry)).toEqual(["smart-base:Persona"]);
   });
 
   test("paper typing is unchanged, with or without the registry", () => {
-    expect(typesForKind("theorem")).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
-    expect(typesForKind("theorem", registry)).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
+    expect(typesForKind("theorem")).toEqual(["folio-assistant-sci:Theorem", "doco:Section"]);
+    expect(typesForKind("theorem", registry)).toEqual(["folio-assistant-sci:Theorem", "doco:Section"]);
   });
 });
 

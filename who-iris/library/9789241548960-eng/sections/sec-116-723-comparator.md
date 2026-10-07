@@ -7,6 +7,7 @@ section_number: 7.2.3
 pages: 93-94
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 What courses of action or exposures stand as alternatives with which to 
 compare those recommended in the guideline?
