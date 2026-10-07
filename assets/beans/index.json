@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 525,
+      "count": 528,
       "unit": "open beans"
     }
   },
@@ -3178,14 +3178,14 @@
     {
       "id": "folio-assistant-7pp6",
       "title": "A column-0 pseudo-tag in a published markdown source is caught only AFTER merge — five hand-fixes and no gate",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:29:56Z",
-      "updatedAt": "2026-10-01T06:36:29Z",
+      "updatedAt": "2026-10-06T23:37:28Z",
       "preview": "## The class, and why a sixth hand-fix is the wrong answer\n\nA markdown source line whose first character is `<` followed by a non-HTML name\nmakes kramdown open a **raw HTML block**. With no closing tag the rest of the\npage stays raw, so headings, lists and tables after it render as literal text.\nThe usual cause is an inline code span **wrapped across a line break**, leaving\nits continuation at col",
       "file": "beans/defs/folio-assistant-7pp6--a-column-0-pseudo-tag-in-a-published-markdown-sour.md"
     },
@@ -5190,6 +5190,20 @@
       "updatedAt": "2026-10-05T14:40:27Z",
       "preview": "Owner 2026-10-05: 'alignment of harnesses is off'. Issue #2151. itemHtml infers fa-nav-kind from glyphPath, so #2122's glyph harness marks got the kind-row padding. Make kind a declared NavItem field.\n\n\n\n## Completed by PR #2152 (2026-10-05)\n\nLands with #2152 (owner: \"finish and merge\" #2152, 2026-10-05), rendered-verified with Playwright screenshots on the PR. Its parent p5wm was closed on main b",
       "file": "beans/defs/folio-assistant-cnhh--lhs-navbar-glyph-marked-harness-rows-lose-child-in.md"
+    },
+    {
+      "id": "folio-assistant-cp3v",
+      "title": "TOC extractor: benchmark methods against PDF outlines and add a font-metric (layout) method (#2302)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T17:14:06Z",
+      "updatedAt": "2026-10-06T17:42:45Z",
+      "preview": "Issue #2302. The outline-less fallback (infer_headings) is regex-on-text only. Build a benchmark that hides each PDF's embedded outline and scores candidate extractors against it, compare methods (current regex, PyMuPDF font-metric layout, contents-page parse, Grobid/Nougat evaluated), and land the best rule-based method.\n\n- [x] benchmark harness + metric\n- [x] font-metric method\n- [x] comparison ",
+      "file": "beans/defs/folio-assistant-cp3v--toc-extractor-benchmark-methods-against-pdf-outlin.md"
     },
     {
       "id": "folio-assistant-cpmo",
@@ -8223,14 +8237,14 @@
     {
       "id": "folio-assistant-lk2a",
       "title": "check:workflow-refs sends the reader to bean bvuk, which is COMPLETED and archived — the finding is live, the attribution is stale",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-0ipy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-02T23:32:19Z",
-      "updatedAt": "2026-10-02T23:32:19Z",
+      "updatedAt": "2026-10-06T23:45:15Z",
       "preview": "## Measured 2026-10-02, on a checkout of `main`\n\n`check:workflow-refs` reports two callers that run an adjudication without\nnaming the answers it may give, and sends the reader to bean `bvuk`:\n\n```\n? processes/library/sample-import.bpmn  · Call_Refresh → Process_RefreshMaterialized: does not say\n? processes/library/subscribe-kg.bpmn   · Call_Refresh → Process_RefreshMaterialized: does not say\n2 ca",
       "file": "beans/defs/folio-assistant-lk2a--checkworkflow-refs-sends-the-reader-to-bean-bvuk-w.md"
     },
@@ -11403,6 +11417,20 @@
       "file": "beans/defs/folio-assistant-tune--readmetoc-every-harness-readme-carries-its-own-tab.md"
     },
     {
+      "id": "folio-assistant-turh",
+      "title": "Library asset viewer: TOC, pages with labels, figures/tables, section extracts — for any ingested library/ entry (#2302)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T20:27:04Z",
+      "updatedAt": "2026-10-06T20:27:04Z",
+      "preview": "Owner, #2302 session 2026-10-06: re-ingest the who-iris library with the updated method, and give ingested documents a viewer — browse page by page (with printed labels), an overview of figures/tables, the TOC linking to sections, and extracted summaries of each section. Not who-iris-specific: the viewer belongs to the ingestion SCHEMA (pdf-structure/v1 structure.json + sections/), so every librar",
+      "file": "beans/defs/folio-assistant-turh--library-asset-viewer-toc-pages-with-labels-figures.md"
+    },
+    {
       "id": "folio-assistant-tuvg",
       "title": "MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field",
       "status": "in-progress",
@@ -11565,6 +11593,20 @@
       "updatedAt": "2026-10-04T06:10:07Z",
       "preview": "Child (e) of the merge-gate epic. These are merge-steward gaps measured 2026-10-02 while running merge trains. Each one lets a merge look proved when it is not.\n\n1. `regen-after-merge.ts` has no writer pair for `check:l1-complete`, nor for `smart-base:smart-kg-l1` (the `--entry` form). Both run in `code-quality-gates.yml`, so a train's single `regen` can report \"current\" while CI then goes red.\n2.",
       "file": "beans/defs/folio-assistant-u7be--merge-gate-e-four-merge-steward-gaps-regen-pairs-f.md"
+    },
+    {
+      "id": "folio-assistant-u9lb",
+      "title": "TOC benchmark: score Nougat on the 13 outline PDFs (needs huggingface.co) (#2302)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-06T18:05:01Z",
+      "updatedAt": "2026-10-06T18:05:01Z",
+      "preview": "Follow-up to bean cp3v / PR #2303 (issue #2302). Needs an agent with network access to huggingface.co (Nougat weights); the cp3v session's container is denied it.\n\nBranch from claude/compassionate-johnson-rzv00r and open a PR INTO that branch (or into main once #2303 has merged). Do not edit _pdf_headings.py.\n\n## Steps\n- [ ] pip install nougat-ocr (weights: facebook/nougat-small; nougat-base if a ",
+      "file": "beans/defs/folio-assistant-u9lb--toc-benchmark-score-nougat-on-the-13-outline-pdfs.md"
     },
     {
       "id": "folio-assistant-u9r9",
@@ -13656,14 +13698,14 @@
     {
       "id": "folio-assistant-z7n1",
       "title": "qa:resolve-conflicts staged with a plain git add, so a branch that gitignores its results directory aborted merge:main",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-d33q",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T17:55:24Z",
-      "updatedAt": "2026-10-03T17:55:24Z",
+      "updatedAt": "2026-10-06T23:36:18Z",
       "preview": "Found 2026-10-03 while measuring why `merge:main`'s last `push` run\n(37140844477) was red. Fixed in the same turn; recorded because the *shape* of\nthe failure is the reusable part.\n\n## What happened\n\nThe run's conclusion was `failure`, and 14 of its 15 matrix members had\nsucceeded. Reading a matrix run's conclusion as a claim about every member is\nthe same error as reading a filter's output as a c",
       "file": "beans/defs/folio-assistant-z7n1--qaresolve-conflicts-staged-with-a-plain-git-add-so.md"
     },
@@ -15208,14 +15250,14 @@
         "file": "beans/defs/folio-assistant-npuo--goal-5-content-the-content-model-and-the-ingest-pi.md",
         "status": "todo",
         "epics": 2,
-        "total": 65,
+        "total": 68,
         "closed": 29,
-        "open": 36,
-        "inProgress": 16,
-        "todo": 20,
+        "open": 39,
+        "inProgress": 18,
+        "todo": 21,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.4461538461538462
+        "share": 0.4264705882352941
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15241,8 +15283,8 @@
         "total": 576,
         "closed": 241,
         "open": 335,
-        "inProgress": 124,
-        "todo": 210,
+        "inProgress": 127,
+        "todo": 207,
         "draft": 1,
         "unclassified": 0,
         "share": 0.4184027777777778
@@ -15279,8 +15321,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 525,
-    "coveredOpen": 522,
+    "openTotal": 528,
+    "coveredOpen": 525,
     "duplicateIds": 0
   }
 }

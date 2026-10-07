@@ -335,14 +335,14 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-06T23:11:25.456Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
-  "sourceCommitSha": "4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
-  "sourceCommitAt": "2026-10-07T00:52:43+02:00",
+  "generatedAt": "2026-10-07T00:07:34.511Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b0130a1249766bfd721b3a29f54a617863d0b397",
+  "sourceCommitSha": "b0130a1249766bfd721b3a29f54a617863d0b397",
+  "sourceCommitAt": "2026-10-07T01:50:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 222,
+    "Skill": 223,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 18,
@@ -352,7 +352,7 @@
     "Lane": 145,
     "ProcessNode": 776,
     "Tool": 129,
-    "Schema": 154,
+    "Schema": 155,
     "ExternalSchema": 22,
     "GraphTypology": 31,
     "Role": 53,
@@ -1394,7 +1394,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 283,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2515,7 +2515,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/issue-working.md",
-      "instructionLines": 135,
+      "instructionLines": 160,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3174,6 +3174,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "blocked-build-dependencies",
+      "title": "Blocked build dependencies — read the refusal before you work around it",
+      "description": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/blocked-build-dependencies.md",
+      "instructionLines": 89,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/integration-watch",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "integration-watch",
@@ -3724,7 +3740,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
-      "instructionLines": 265,
+      "instructionLines": 269,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5313,6 +5329,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bean-coordination",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/blocked-build-dependencies",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-archaeology",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/continual-progress",
@@ -38939,6 +38956,15 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/library-keywords",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "library-keywords",
+      "title": "library-keywords",
+      "summary": "`library/<slug>/keywords.json` — an entry's keywords, read from the LSI",
+      "module": "schemas/library-keywords.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/log-entry",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "log-entry",
@@ -41311,7 +41337,7 @@
       ],
       "description": "The validators cat-harness's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit). Owner, 2026-10-04: validators are KG nodes, and the validator names the family.",
       "readmePath": "validators/README.md",
-      "fileCount": 81,
+      "fileCount": 83,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-validators"
     },
     {
@@ -41415,7 +41441,7 @@
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
-      "fileCount": 274,
+      "fileCount": 275,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -41449,7 +41475,7 @@
       ],
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "readmePath": "skills/README.md",
-      "fileCount": 281,
+      "fileCount": 282,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
@@ -41604,7 +41630,7 @@
       ],
       "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
       "readmePath": "library/README.md",
-      "fileCount": 6778,
+      "fileCount": 6818,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/library"
     },
     {
@@ -41655,7 +41681,7 @@
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
-      "fileCount": 3228,
+      "fileCount": 3298,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
     {
@@ -41707,7 +41733,7 @@
       ],
       "description": "The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.",
       "readmePath": "scripts/README.md",
-      "fileCount": 939,
+      "fileCount": 949,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-scripts"
     },
     {

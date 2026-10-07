@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-06T23:10:55.538Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
-  "sourceCommitSha": "4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
-  "sourceCommitAt": "2026-10-07T00:52:43+02:00",
+  "generatedAt": "2026-10-07T00:07:06.456Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b0130a1249766bfd721b3a29f54a617863d0b397",
+  "sourceCommitSha": "b0130a1249766bfd721b3a29f54a617863d0b397",
+  "sourceCommitAt": "2026-10-07T01:50:55+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -591,7 +591,7 @@
       "title": "L1 document ingestion",
       "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run ingest`.",
       "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
-      "instructionLines": 735,
+      "instructionLines": 796,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -604,7 +604,7 @@
       "title": "Document Intake",
       "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
       "instructionsPath": "skills/library/ingestion/document-intake.md",
-      "instructionLines": 460,
+      "instructionLines": 488,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -9416,7 +9416,7 @@
       ],
       "description": "L1 source content this LAYER owns — the publications core's own vocabulary is derived FROM, one `<bib-slug>/` per ingested document. Declared 2026-09-23 on the owner's ruling that Doc-Researcher (arXiv:2510.21603v1) is part of the f-a-c subgraph, and declared rather than borrowed for the reason `methodology-adoption` §4 gives: a method is placed by OWNERSHIP so that extraction is literal, and a paper core's methodology cites from another instance's library would not lift out with it. `ingest-document.ts` refuses to guess a destination when several are declared, which is what surfaced the absence. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own and reproducing these would hand it somebody else's corpus.",
       "readmePath": "library/README.md",
-      "fileCount": 169,
+      "fileCount": 170,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#directory/core-library"
     },
     {
@@ -9510,8 +9510,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "4158c50e478c8ef1a85268fd2158c7b16d7ed8aa",
+    "sha": "b0130a1249766bfd721b3a29f54a617863d0b397",
     "pr": "main",
-    "run": "37543324418"
+    "run": "37548794205"
   }
 }
