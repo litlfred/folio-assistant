@@ -18,8 +18,8 @@ archived: true
 bun install
 bun run src/index.ts --http      # the assistant (HTTP); --stdio for stdio MCP
 bun test                         # unit tests
-bunx playwright test             # e2e  (npm script: test:e2e)
-eslint .
+bun run test:e2e                 # e2e  (npm script: test:e2e)
+bun run lint
 bun run src/index.ts --check-deps   # probe environment capabilities
 bun run init-folio --help           # scaffold a new folio
 bun run readme:sync[:check] | readme:sections

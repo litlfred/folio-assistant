@@ -1,9 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import { navbarAssetPaths, navbarCssFile, navbarJsFile, runtimeNote } from "../gen-navbar-assets.ts";
+import { PIN_FILE } from "../check-bun-pin.ts";
 import { NAVBAR_JS, RAIL_DATA_DIR, expandRail, injectRail, railPageOf } from "../lib/harness-rail.ts";
 import { NAVBAR_CSS } from "../lib/navbar.ts";
 
@@ -37,7 +38,9 @@ describe("a stale navbar.js names a Bun that is not the pinned one", () => {
   // A pin of its own, so this does not depend on the monorepo's root file
   // (cat-harness also runs standalone, where that file is absent).
   const root = mkdtempSync(join(tmpdir(), "navbar-pin-"));
-  writeFileSync(join(root, ".bun-version"), "1.3.14\n");
+  // At PIN_FILE, wherever the pin lives (cat-harness/ since bean `ar1s` phase 4).
+  mkdirSync(dirname(join(root, PIN_FILE)), { recursive: true });
+  writeFileSync(join(root, PIN_FILE), "1.3.14\n");
 
   test("silent when the running Bun is the pin", () => {
     expect(runtimeNote("1.3.14", root)).toBeUndefined();
