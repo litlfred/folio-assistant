@@ -26,6 +26,7 @@ const PAGES: { name: string; path: string; wrapper: string; ready: string; ready
   { name: "voices", path: `${DOCS}/cat-harness/voices/index.html`, wrapper: ".vo-page", ready: "#foot", readyText: /voice\(s\)/ },
   { name: "uploads", path: `${DOCS}/cat-harness/uploads/index.html`, wrapper: ".up-page", ready: "#badges .badge" },
   { name: "document-kinds", path: `${DOCS}/cat-harness/document-kinds/index.html`, wrapper: ".dk-page", ready: "#dk-title" },
+  { name: "translation-status", path: `${DOCS}/translation-status/index.html`, wrapper: ".ts-page", ready: "#ts-title" },
   // Last, and with room: a ~1.9 MB projection and ~1700 list rows, so its
   // load and its axe pass are the slow ones.
   { name: "schemas", path: `${DOCS}/cat-harness/schemas/index.html`, wrapper: ".sc-page", ready: "#counts", readyText: /declarations/ },

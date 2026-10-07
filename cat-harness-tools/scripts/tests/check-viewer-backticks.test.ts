@@ -115,6 +115,7 @@ describe("the file set is derived, not listed", () => {
       "cat-harness/scripts/gen-voices-viz.ts",
       "cat-harness/scripts/gen-uploads-viz.ts",
       "cat-harness/scripts/gen-document-kinds-viz.ts",
+      "cat-harness/scripts/gen-translation-status.ts",
     ]) expect(sources).not.toContain(themed);
     // And the two the old array could not include, because the old detector
     // reported them falsely.
