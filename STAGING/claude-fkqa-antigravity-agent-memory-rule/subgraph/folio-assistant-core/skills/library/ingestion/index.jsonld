@@ -1,0 +1,45 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/ingestion/",
+  "@type": "bootstrap:Subgraph",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/document-intake",
+      "@type": "bootstrap:Skill",
+      "name": "document-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/674c0b5e37e6ce1a13a3b367b7467d7ce01ebe3d13aeeb80b6fb74a1cc2d5555",
+        "bytes": 23507,
+        "sha256": "674c0b5e37e6ce1a13a3b367b7467d7ce01ebe3d13aeeb80b6fb74a1cc2d5555"
+      },
+      "title": "Document Intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/l1-document-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "l1-document-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c6e18a6fd4be1bd1efb98776d20905af59556e94438cf09df146f11faba1b8e9",
+        "bytes": 48172,
+        "sha256": "c6e18a6fd4be1bd1efb98776d20905af59556e94438cf09df146f11faba1b8e9"
+      },
+      "title": "L1 document ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld#skill/tabular-metadata",
+      "@type": "bootstrap:Skill",
+      "name": "tabular-metadata",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e902f9f1910f15dd4c55ca066819f57553ad6e40f7bedba4de41b40756d9e4ab",
+        "bytes": 10720,
+        "sha256": "e902f9f1910f15dd4c55ca066819f57553ad6e40f7bedba4de41b40756d9e4ab"
+      },
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/ingestion",
+  "path": "skills/library/ingestion/"
+}

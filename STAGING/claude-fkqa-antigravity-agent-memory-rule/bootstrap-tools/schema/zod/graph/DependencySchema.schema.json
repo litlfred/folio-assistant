@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/Dependency",
+  "definitions": {
+    "Dependency": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fkqa-antigravity-agent-memory-rule/bootstrap-tools/schema/zod/graph/DependencySchema.schema.json",
+  "title": "DependencySchema",
+  "description": "Generated from `DependencySchema` in schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fkqa-antigravity-agent-memory-rule",
+    "sha": "36c194ea65eff16f330c469068e1ff6fb8c42ef8",
+    "pr": "2416/merge",
+    "run": "37618105330"
+  }
+}

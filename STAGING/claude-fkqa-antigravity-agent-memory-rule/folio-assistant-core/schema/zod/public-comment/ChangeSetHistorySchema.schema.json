@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/ChangeSetHistory",
+  "definitions": {
+    "ChangeSetHistory": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "what": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "at",
+        "by",
+        "what"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fkqa-antigravity-agent-memory-rule/folio-assistant-core/schema/zod/public-comment/ChangeSetHistorySchema.schema.json",
+  "title": "ChangeSetHistorySchema",
+  "description": "Generated from `ChangeSetHistorySchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fkqa-antigravity-agent-memory-rule",
+    "sha": "36c194ea65eff16f330c469068e1ff6fb8c42ef8",
+    "pr": "2416/merge",
+    "run": "37618105330"
+  }
+}

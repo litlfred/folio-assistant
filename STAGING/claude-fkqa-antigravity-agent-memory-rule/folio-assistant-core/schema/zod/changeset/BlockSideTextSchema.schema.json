@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/BlockSideText",
+  "definitions": {
+    "BlockSideText": {
+      "type": "object",
+      "properties": {
+        "prose": {
+          "type": "string"
+        },
+        "html": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prose",
+        "html"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fkqa-antigravity-agent-memory-rule/folio-assistant-core/schema/zod/changeset/BlockSideTextSchema.schema.json",
+  "title": "BlockSideTextSchema",
+  "description": "Generated from `BlockSideTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fkqa-antigravity-agent-memory-rule",
+    "sha": "36c194ea65eff16f330c469068e1ff6fb8c42ef8",
+    "pr": "2416/merge",
+    "run": "37618105330"
+  }
+}
