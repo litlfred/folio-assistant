@@ -181,6 +181,17 @@
       }
     },
     {
+      "id": "who-iris-oxigraph-dist",
+      "path": "dist/oxigraph/",
+      "description": "Generated W3C N-Quads distributions and subgraph manifest for WHO-IRIS catalogue, partitioned by community. Serves client-side Oxigraph WASM and SPARQL named query engine identically on CLI and Web.",
+      "graphTypologies": [
+        "code"
+      ],
+      "readOnly": true,
+      "readOnlyBasis": "Generated distribution payloads and manifests. Generated at deploy/build time and served statically to GitHub Pages.",
+      "served": true
+    },
+    {
       "id": "qa",
       "path": "test/results/",
       "storage": {

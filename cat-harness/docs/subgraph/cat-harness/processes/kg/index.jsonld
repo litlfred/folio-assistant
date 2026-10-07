@@ -969,6 +969,138 @@
       "name": "Use the checkout path in place"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution",
+      "@type": "bootstrap:Process",
+      "name": "Package and distribute partitioned W3C N-Quads and named queries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_BudgetFail",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Over budget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_BudgetPass",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Under budget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_CiFail",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Red"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_CiPass",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Green"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/flow/Flow_StopBudget",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/lane/Lane_Author",
+      "@type": "cat-harness:Lane",
+      "name": "Knowledge Graph Engineer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/lane/Lane_Ci",
+      "@type": "cat-harness:Lane",
+      "name": "CI/CD Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/A_DeclareManifest",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Declare Distribution Manifest & Named Queries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/A_DeployPages",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish Distribution via 'served: true' to Pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/A_ExtractSkolemize",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Extract & Skolemize RDF Dataset"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/A_GateCheck",
+      "@type": "bootstrap:ProcessNode",
+      "name": "CI Gate Verification: Audit Manifest & Schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/A_PartitionQuads",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Stream W3C N-Quads into Subgraph Partitions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/A_ReportBudgetExcess",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Report Budget Finding; Refine Subgraph Splitting"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/A_VerifyQueries",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Verify Queries via CLI & Test Graph Availability"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/End_BudgetStopped",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Stopped on partition budget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/End_CiFailed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "CI Gate Failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/End_Distributed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Dataset and queries served universally"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/GW_CiGreen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gate passes?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/GW_PartitionBudget",
+      "@type": "bootstrap:ProcessNode",
+      "name": "All partitions under 5 MB / 50k quads budget?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NQuadsDistribution/node/Start_Dataset",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Corpus or graph requires distribution"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SliceSqlitePublish",
       "@type": "bootstrap:Process",
       "name": "Build and publish a per-slice SQLite file"

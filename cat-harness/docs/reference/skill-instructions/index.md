@@ -109,6 +109,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Package: `graph-management` |
 | [Knowledge Graph separation](kg-separation.html) | `kg-separation` | — | > Skill id: `kg-separation` · Package: `graph-management` |
 | [LSI indexing](lsi-indexing.html) | `lsi-indexing` | — | **The method is the node, not this file.** [`lsi`](https://github.com/litlfred/folio-assistant/blob/ |
+| [Named Query Execution across CLI, MCP, and Web](named-query-execution.html) | `named-query-execution` | — | This skill governs the execution of audited SPARQL 1.1 named queries against partitioned W3C N-Quads |
+| [W3C N-Quads Dataset Packaging & Subgraph Distribution](nquads-distribution.html) | `nquads-distribution` | — | This skill governs the compilation, subgraph partitioning, packaging, and distribution of RDF datase |
 | [Sub-KG lifecycle](sub-kg-lifecycle.html) | `sub-kg-lifecycle` | — | > Skill id: `sub-kg-lifecycle` · Package: `graph-management` |
 
 ## Knowledge graph — declaration, placement, export, audit (kg-core)

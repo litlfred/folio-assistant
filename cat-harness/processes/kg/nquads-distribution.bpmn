@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
+                  id="Definitions_Process_NQuadsDistribution" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_NQuadsDistribution">
+    <bpmn:participant id="Participant_Process_NQuadsDistribution" name="Package and distribute partitioned W3C N-Quads and named queries" processRef="Process_NQuadsDistribution"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_NQuadsDistribution" name="Package and distribute partitioned W3C N-Quads and named queries" isExecutable="false">
+    <bpmn:documentation>Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries. Governed by skills `nquads-distribution` and `named-query-execution`, grounded in `schemas/nquads-distribution.ts`.
+
+CRITICAL INVARIANTS:
+1. 2-TIER SUBGRAPH ARCHITECTURE: A lightweight Spine backbone partition is loaded on startup, while bulky subgraphs (communities, workflow domains) are lazily fetched on demand.
+2. UPSTREAM SKOLEMIZATION: Zero blank nodes across all partitions. Every node must carry a deterministic minted IRI.
+3. PARTITION BUDGET CEILING: Partitions must strictly stay under 5 MB gzipped / 50k quads to protect browser heap and memory allocations.
+4. GRAPH AVAILABILITY GUARD: Queries declare requiredSubgraphs; execution fails fast with MissingPartitionError rather than silently returning partial query results.
+5. NO COMMITTED BINARY PAYLOADS: `.nq.gz` distribution payloads are gitignored, generated on demand or in CI, and served to Pages via 'served: true'.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_NQuadsDistribution">
+      <bpmn:lane id="Lane_Author" name="Knowledge Graph Engineer">
+        <bpmn:documentation>The agent or engineer authoring or packaging the knowledge graph dataset: extracts RDF triples, skolemizes blank nodes, splits by subgraph topology, checks partition budgets, and tests named queries.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="platform-authoring-agent"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Dataset</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_ExtractSkolemize</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_PartitionQuads</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_PartitionBudget</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_ReportBudgetExcess</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_BudgetStopped</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_DeclareManifest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_VerifyQueries</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
+        <bpmn:documentation>Automated CI validation and deployment pipeline: validates schema conformance, enforces graph availability guards, and publishes to GitHub Pages.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>A_GateCheck</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_CiGreen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_CiFailed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_DeployPages</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Distributed</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Dataset" name="Corpus or graph&#10;requires distribution">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:task id="A_ExtractSkolemize" name="Extract &amp; Skolemize&#10;RDF Dataset">
+      <bpmn:documentation>Extract the target RDF triples and ensure strict upstream skolemization: transform every blank node into a deterministic IRI under the dataset namespace. Zero blank nodes allowed in serialized N-Quads.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="nquads-distribution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_PartitionQuads" name="Stream W3C N-Quads&#10;into Subgraph Partitions">
+      <bpmn:documentation>Serialize lines conforming to W3C RDF 1.1 N-Quads (subject predicate object graphIri .). Split into Tier 1 Spine (routing backbone) and Tier 2 Subgraphs (communities, domains). Compress each into .nq.gz.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="nquads-distribution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_PartitionBudget" name="All partitions under&#10;5 MB / 50k quads budget?">
+      <bpmn:documentation>Enforce partition size ceiling: verify that no partition exceeds MAX_RECOMMENDED_PARTITION_BYTES (5 MB gzipped) or 50,000 quads. Protects browser V8 heap and mobile allocations.</bpmn:documentation>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_BudgetPass</bpmn:outgoing>
+      <bpmn:outgoing>Flow_BudgetFail</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="A_ReportBudgetExcess" name="Report Budget Finding;&#10;Refine Subgraph Splitting">
+      <bpmn:documentation>Record the oversized partition on the coordinating bean. Refine subgraph partitioning boundary or split into finer subgraphs. Do not ship oversized partition.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="nquads-distribution"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_BudgetFail</bpmn:incoming>
+      <bpmn:outgoing>Flow_StopBudget</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_BudgetStopped" name="Stopped on&#10;partition budget">
+      <bpmn:incoming>Flow_StopBudget</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:task id="A_DeclareManifest" name="Declare Distribution Manifest&#10;&amp; Named Queries">
+      <bpmn:documentation>Write subgraph-manifest.json conforming to folio-nquads-distribution/v1. Declare datasetIri, servedRoute, spine, subgraphs, and audited named SPARQL queries with explicit requiredSubgraphs and typed parameter definitions.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="nquads-distribution"/>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_BudgetPass</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_VerifyQueries" name="Verify Queries via CLI&#10;&amp; Test Graph Availability">
+      <bpmn:documentation>Execute named queries using scripts/nquads-query.ts and cat-harness-tools/src/tools/nquads-query.ts. Assert that missing partition triggers MissingPartitionError and typed parameters prevent injection.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:serviceTask id="A_GateCheck" name="CI Gate Verification:&#10;Audit Manifest &amp; Schemas">
+      <bpmn:documentation>Validate that subgraph-manifest.json conforms to NQuadsDistributionManifestSchema, all referenced partitions exist, and external schema w3c-n-quads is satisfied.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="GW_CiGreen" name="Gate passes?">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_CiPass</bpmn:outgoing>
+      <bpmn:outgoing>Flow_CiFail</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:endEvent id="End_CiFailed" name="CI Gate Failed">
+      <bpmn:incoming>Flow_CiFail</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:serviceTask id="A_DeployPages" name="Publish Distribution&#10;via 'served: true' to Pages">
+      <bpmn:documentation>Publish distribution directory to _site/ via mount-instance-docs.ts respecting 'served: true' declaration. Quads files become accessible identically to web clients and CLI/agent runners.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="nquads-distribution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_CiPass</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:endEvent id="End_Distributed" name="Dataset and queries&#10;served universally">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- Sequence Flows -->
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Dataset" targetRef="A_ExtractSkolemize"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="A_ExtractSkolemize" targetRef="A_PartitionQuads"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="A_PartitionQuads" targetRef="GW_PartitionBudget"/>
+    <bpmn:sequenceFlow id="Flow_BudgetPass" name="Under budget" sourceRef="GW_PartitionBudget" targetRef="A_DeclareManifest"/>
+    <bpmn:sequenceFlow id="Flow_BudgetFail" name="Over budget" sourceRef="GW_PartitionBudget" targetRef="A_ReportBudgetExcess"/>
+    <bpmn:sequenceFlow id="Flow_StopBudget" sourceRef="A_ReportBudgetExcess" targetRef="End_BudgetStopped"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="A_DeclareManifest" targetRef="A_VerifyQueries"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="A_VerifyQueries" targetRef="A_GateCheck"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="A_GateCheck" targetRef="GW_CiGreen"/>
+    <bpmn:sequenceFlow id="Flow_CiPass" name="Green" sourceRef="GW_CiGreen" targetRef="A_DeployPages"/>
+    <bpmn:sequenceFlow id="Flow_CiFail" name="Red" sourceRef="GW_CiGreen" targetRef="End_CiFailed"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="A_DeployPages" targetRef="End_Distributed"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_NQuadsDistribution">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_NQuadsDistribution" bpmnElement="Collaboration_Process_NQuadsDistribution">
+      <bpmndi:BPMNShape id="Participant_Process_NQuadsDistribution_di" bpmnElement="Participant_Process_NQuadsDistribution" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1340" height="480"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Author_di" bpmnElement="Lane_Author" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1310" height="280"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Ci_di" bpmnElement="Lane_Ci" isHorizontal="true">
+        <dc:Bounds x="190" y="360" width="1310" height="200"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Start_Dataset_di" bpmnElement="Start_Dataset">
+        <dc:Bounds x="232" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_ExtractSkolemize_di" bpmnElement="A_ExtractSkolemize">
+        <dc:Bounds x="300" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_PartitionQuads_di" bpmnElement="A_PartitionQuads">
+        <dc:Bounds x="450" y="140" width="130" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_PartitionBudget_di" bpmnElement="GW_PartitionBudget" isMarkerVisible="true">
+        <dc:Bounds x="615" y="155" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_ReportBudgetExcess_di" bpmnElement="A_ReportBudgetExcess">
+        <dc:Bounds x="580" y="250" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_BudgetStopped_di" bpmnElement="End_BudgetStopped">
+        <dc:Bounds x="732" y="272" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_DeclareManifest_di" bpmnElement="A_DeclareManifest">
+        <dc:Bounds x="710" y="140" width="130" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_VerifyQueries_di" bpmnElement="A_VerifyQueries">
+        <dc:Bounds x="870" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="A_GateCheck_di" bpmnElement="A_GateCheck">
+        <dc:Bounds x="870" y="410" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_CiGreen_di" bpmnElement="GW_CiGreen" isMarkerVisible="true">
+        <dc:Bounds x="1035" y="425" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_CiFailed_di" bpmnElement="End_CiFailed">
+        <dc:Bounds x="1042" y="502" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="A_DeployPages_di" bpmnElement="A_DeployPages">
+        <dc:Bounds x="1130" y="410" width="130" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Distributed_di" bpmnElement="End_Distributed">
+        <dc:Bounds x="1302" y="432" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+
+      <!-- Edges -->
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="268" y="180"/>
+        <di:waypoint x="300" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="420" y="180"/>
+        <di:waypoint x="450" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="580" y="180"/>
+        <di:waypoint x="615" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_BudgetPass_di" bpmnElement="Flow_BudgetPass">
+        <di:waypoint x="665" y="180"/>
+        <di:waypoint x="710" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_BudgetFail_di" bpmnElement="Flow_BudgetFail">
+        <di:waypoint x="640" y="205"/>
+        <di:waypoint x="640" y="250"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_StopBudget_di" bpmnElement="Flow_StopBudget">
+        <di:waypoint x="700" y="290"/>
+        <di:waypoint x="732" y="290"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="840" y="180"/>
+        <di:waypoint x="870" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="930" y="220"/>
+        <di:waypoint x="930" y="410"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="990" y="450"/>
+        <di:waypoint x="1035" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CiPass_di" bpmnElement="Flow_CiPass">
+        <di:waypoint x="1085" y="450"/>
+        <di:waypoint x="1130" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CiFail_di" bpmnElement="Flow_CiFail">
+        <di:waypoint x="1060" y="475"/>
+        <di:waypoint x="1060" y="502"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="1260" y="450"/>
+        <di:waypoint x="1302" y="450"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -571,5 +571,58 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       satisfies: ["process-state", "bean-coordination"],
       requires: { network: false },
     }),
+
+    defineTool({
+      id: "nquads-query",
+      title: "N-Quads Named Query Engine",
+      description:
+        "Execute an audited, named SPARQL 1.1 query over a partitioned W3C N-Quads dataset distribution (e.g. WHO-IRIS, Beans graph) with graph availability validation.",
+      install: bundled,
+      invoke: {
+        ...inProcess("src/tools/nquads-query.ts", "nquads_query"),
+        shell: "bun run cat nquads:query",
+      },
+      io: {
+        inputs: [
+          {
+            name: "dataset",
+            schema: t("RepoPath"),
+            required: true,
+            arg: { flag: "--dataset" },
+            description: "Path to dataset distribution directory or subgraph-manifest.json",
+          },
+          {
+            name: "query_name",
+            schema: t("Slug"),
+            required: true,
+            arg: { flag: "--named" },
+            description: "Identifier of the pre-compiled named query",
+          },
+          {
+            name: "format",
+            schema: t("Slug"),
+            required: false,
+            arg: { flag: "--format" },
+            description: "Output format: table, json, or ids",
+          },
+          {
+            name: "limit",
+            schema: t("Count"),
+            required: false,
+            arg: { flag: "--limit" },
+            description: "Maximum number of rows to return",
+          },
+        ],
+        outputs: [
+          {
+            name: "result",
+            schema: t("Markdown"),
+            description: "Formatted SPARQL query result table, JSON, or ID list",
+          },
+        ],
+      },
+      satisfies: ["named-query-execution"],
+      requires: { network: false },
+    }),
   ];
 }

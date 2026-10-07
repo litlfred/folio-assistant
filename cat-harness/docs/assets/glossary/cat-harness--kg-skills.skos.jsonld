@@ -2399,6 +2399,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/named-query-execution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "named-query-execution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How to execute audited SPARQL 1.1 named queries over partitioned W3C N-Quads dataset distributions across CLI, MCP tools, and WebAssembly browser clients. Enforces graph availability guards to prevent silent partial results, and typed parameter bindings to eliminate SPARQL injection."
+        }
+      ],
+      "skos:notation": "named-query-execution",
+      "dcterms:source": "cat-harness/skills/kg/graph-management/named-query-execution.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/narrative-asserts-code",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2416,6 +2436,26 @@
       ],
       "skos:notation": "narrative-asserts-code",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/nquads-distribution",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "nquads-distribution"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How to compile, partition by named subgraphs, and distribute W3C N-Quads datasets beside pre-compiled SPARQL 1.1 named queries for static edge and client-side querying. Enforces upstream skolemization for zero blank nodes, partition size budgets, and single-source-of-truth publishing via declared served directories."
+        }
+      ],
+      "skos:notation": "nquads-distribution",
+      "dcterms:source": "cat-harness/skills/kg/graph-management/nquads-distribution.md",
       "skos:note": "candidate"
     },
     {

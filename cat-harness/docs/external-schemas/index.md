@@ -27,10 +27,10 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>22</b><span>specifications</span></div>
-<div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>234</b><span>declared uses</span></div>
-<div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
+<div class="xs-stat"><b>23</b><span>specifications</span></div>
+<div class="xs-stat"><b>107</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>236</b><span>declared uses</span></div>
+<div class="xs-stat"><b>2</b><span>declarations naming no record</span></div>
 </div>
 
 ## The specifications
@@ -47,6 +47,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPDX License List](#spdx-license-list)**<br>`spdx-license-list` | other | [3.29.0](https://spdx.org/licenses/) | `reads` — this repository parses documents written in it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
+| **[RDF 1.1 N-Quads: A line-based syntax for RDF datasets](#w3c-n-quads)**<br>`w3c-n-quads` | W3C | [2014-02-25](https://www.w3.org/TR/n-quads/) | `conforms` — this repository's artefacts are valid against it |
 | **[ODRL Information Model 2.2](#w3c-odrl)**<br>`w3c-odrl` | W3C | [2018-02-15](https://www.w3.org/TR/odrl-model/) | `conforms` — this repository's artefacts are valid against it |
 | **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
 | **[The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model](#w3c-prov-jsonld)**<br>`w3c-prov-jsonld` | W3C | [2024-08-25](https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/) | `conforms` — this repository's artefacts are valid against it |
@@ -69,7 +70,12 @@ being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`
 front-matter list, an `xmlns` binding, and a graph typology whose typing module
 declares the spec (bean `u63y`).
 
-Every declaration names a record on this page.
+**2 declaration(s) name a specification no record has.**
+
+| user | names |
+|---|---|
+| `folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md` | `sparql-1.1-query` |
+| `who-iris/skills/iris-oxigraph.md` | `sparql-1.1-query` |
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -79,7 +85,7 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**25 declared and not in use.** Not a defect on its own: a
+**26 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -100,6 +106,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/2002/12/cal/ical#`
 - `http://www.w3.org/2004/02/skos/core#`
 - `http://www.w3.org/ns/csvw#`
+- `http://www.w3.org/ns/formats/N-Quads`
 - `http://www.w3.org/ns/oa#`
 - `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
@@ -435,6 +442,30 @@ a subset of the edition rather than a transcription of it.
 | term | what it means here |
 |---|---|
 | `csvw:TableGroup` | derived from the corpus; what this repository does with it is not yet described |
+
+### RDF 1.1 N-Quads: A line-based syntax for RDF datasets {#w3c-n-quads}
+
+`w3c-n-quads` — W3C, edition [2014-02-25](https://www.w3.org/TR/n-quads/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/formats/N-Quads`
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/catalogue/oxigraph-catalogue-search.md) | `conformsTo:` front matter |
+| [`who-iris/skills/iris-oxigraph.md`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-oxigraph.md) | `conformsTo:` front matter |
+
+**Operative terms (2).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `nquads:dataset` | line-based serialization of RDF datasets with named graph support |
+| `nquads:statement` | four-element quad: subject, predicate, object, graphLabel |
 
 ### ODRL Information Model 2.2 {#w3c-odrl}
 

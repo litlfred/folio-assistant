@@ -980,11 +980,27 @@
       "status": "candidate"
     },
     {
+      "id": "named-query-execution",
+      "prefLabel": "named-query-execution",
+      "definition": "How to execute audited SPARQL 1.1 named queries over partitioned W3C N-Quads dataset distributions across CLI, MCP tools, and WebAssembly browser clients. Enforces graph availability guards to prevent silent partial results, and typed parameter bindings to eliminate SPARQL injection.",
+      "notation": "named-query-execution",
+      "source": "cat-harness/skills/kg/graph-management/named-query-execution.md",
+      "status": "candidate"
+    },
+    {
       "id": "narrative-asserts-code",
       "prefLabel": "narrative-asserts-code",
       "definition": "Judge whether the prose side of a declared prose ↔ code pair still says what the code does, when the machine could not settle it. Reads the two mechanical signals first — staleness and resolvable claims — and settles what is left in one of three ways, sending a disagreement with a checker to adjudication. General: the Lean case is a specialisation with its own skill.",
       "notation": "narrative-asserts-code",
       "source": "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md",
+      "status": "candidate"
+    },
+    {
+      "id": "nquads-distribution",
+      "prefLabel": "nquads-distribution",
+      "definition": "How to compile, partition by named subgraphs, and distribute W3C N-Quads datasets beside pre-compiled SPARQL 1.1 named queries for static edge and client-side querying. Enforces upstream skolemization for zero blank nodes, partition size budgets, and single-source-of-truth publishing via declared served directories.",
+      "notation": "nquads-distribution",
+      "source": "cat-harness/skills/kg/graph-management/nquads-distribution.md",
       "status": "candidate"
     },
     {
