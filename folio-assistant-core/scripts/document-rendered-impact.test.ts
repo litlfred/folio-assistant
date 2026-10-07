@@ -15,6 +15,8 @@ import {
   documentRenderedImpact,
   DOCUMENT_RENDERER,
   PUBLIC_COMMENT_RENDERER,
+  LIBRARY_RENDERER,
+  libraryOf,
   buildSteps,
   siteMayRead,
   siteReadsOf,
@@ -68,7 +70,7 @@ describe("documentRenderedImpact — files the ChangeSet does not name", () => {
   test("the comment store is the public-comment renderer's: the dashboard and every document page", () => {
     const out = run(["review/public-comment/comments/PC-0001.json"]);
     expect(out.map((i) => i.renderer)).toEqual([DOCUMENT_RENDERER, PUBLIC_COMMENT_RENDERER]);
-    expect(out[1].files.map(line)).toEqual(["content:doc/index.html", "content:other/index.html", "content:public-comments/index.html"]);
+    expect(out[1].files.map(line)).toEqual(["content:doc/index.html", "content:folio-assistant-core/public-comments/folio/doc/index.html", "content:folio-assistant-core/public-comments/folio/other/index.html", "content:other/index.html"]);
   });
 
   test("anything else is undetermined with scope all, never no change", () => {
@@ -150,5 +152,67 @@ describe("documentRenderedImpact — a file no builder of the site reads (bean e
       mkdirSync(r);
       expect(await siteReadsOf(r, "bun run x.ts")).toBeUndefined();
     });
+  });
+});
+
+describe("documentRenderedImpact — a lazy page (bean v433)", () => {
+  // `doc` is lazy: three chunks, the edited block in the first, the added one in the second.
+  const lazyOutline = { documents: [{ slug: "doc", lazy: { hydrated: "doc/index.hydrated.html", chunks: 3, of: { "prose:edited": 0, "prose:new": 1 } } }, { slug: "other" }] };
+  const runLazy = (changed: string[]) => documentRenderedImpact({ changed, changeset, outline: lazyOutline })[0];
+
+  test("a text edit is its chunk and the hydrated page, not the shell", () => {
+    expect(runLazy(["folio/doc/ch1/p-1.md"]).files.map(line)).toEqual(["data:doc/blocks/000.json", "content:doc/index.hydrated.html#prose:edited"]);
+  });
+
+  test("an added block reshapes the shell and shifts every chunk from its own on", () => {
+    expect(runLazy(["folio/doc/ch1/p-2.ts"]).files.map(line)).toEqual([
+      "data:doc/blocks/001.json",
+      "data:doc/blocks/002.json",
+      "content:doc/index.html",
+      "content:doc/index.hydrated.html#prose:new",
+    ]);
+  });
+
+  test("a page that is not lazy is unchanged by any of this", () => {
+    expect(runLazy(["folio/other/ch1/p-9.ts"]).files.map(line)).toEqual(["content:other/index.html#prose:gone"]);
+  });
+
+  test("the comment store also reaches the lazy page's notes and its hydrated page", () => {
+    const pc = documentRenderedImpact({ changed: ["review/public-comment/comments/PC-1.json"], changeset, outline: lazyOutline })[1];
+    expect(pc.files.map(line)).toContain("data:doc/pc-notes.json");
+    expect(pc.files.map(line)).toContain("content:doc/index.hydrated.html");
+  });
+});
+
+describe("documentRenderedImpact — a folio's library (library-site)", () => {
+  const library = { dirs: ["library"], anchors: { "folio/doc/review-anchors.json": "library/v1" } };
+  const lib = (changed: string[]) => documentRenderedImpact({ changed, changeset, outline, library });
+
+  test("an entry's structure reaches its page, its data and the library index; another file only its data", () => {
+    const out = lib(["library/v1/structure.json", "library/v2/sections/s1.md"]);
+    expect(out.map((i) => i.renderer)).toEqual([DOCUMENT_RENDERER, LIBRARY_RENDERER]);
+    expect(out[0].undetermined).toEqual([]);
+    expect(out[1].files.map(line).sort()).toEqual([
+      "content:folio-assistant-core/library/v1/index.html",
+      "data:folio-assistant-core/library/v1/entries/v1.doc.json",
+      "data:folio-assistant-core/library/v2/entries/v2.doc.json",
+      "index:folio-assistant-core/library/index.html",
+    ]);
+  });
+
+  test("a folio's review anchors reach the entry they name (its edit links), not every page", () => {
+    const out = lib(["folio/doc/review-anchors.json"]);
+    expect(out[0].undetermined).toEqual([]);
+    expect(out[1].files.map(line)).toContain("data:folio-assistant-core/library/v1/entries/v1.doc.json");
+  });
+
+  test("libraryOf reads the declared library directories and the entry an anchors file names", () => {
+    const root = mkdtempSync(join(tmpdir(), "impact-lib-"));
+    writeFileSync(join(root, "f.json"), JSON.stringify({ name: "f", directories: [{ id: "library", path: "library/", graphTypologies: ["library"] }, { id: "folio", path: "folio/", graphTypologies: ["folio"] }] }));
+    mkdirSync(join(root, "library", "v1"), { recursive: true });
+    mkdirSync(join(root, "folio", "doc"), { recursive: true });
+    writeFileSync(join(root, "folio", "doc", "review-anchors.json"), JSON.stringify({ $schema: "folio-review-anchors/v1", library: "v1", sections: [], blocks: [] }));
+    expect(libraryOf(root, ["folio/doc/review-anchors.json"])).toEqual({ dirs: ["library"], anchors: { "folio/doc/review-anchors.json": "library/v1" } });
+    rmSync(root, { recursive: true, force: true });
   });
 });

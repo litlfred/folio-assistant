@@ -148,6 +148,7 @@ not yet refreshed?">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="materialize-remote" />
         <cat-harness.processes:bean />
+        <cat-harness.processes:adjudication accepts="remote local merge defer" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
