@@ -187,6 +187,25 @@
           "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'Yes, trust both pins' — the SHAs the submodules already pinned (#2462)"
         }
       }
+    },
+    {
+      "harness": "who-iris",
+      "repository": "litlfred/who-iris",
+      "ref": "53f0e5c7525de08f6a83addf92e01719dc7b2c98",
+      "overrides": {
+        "who-iris": {
+          "whole": true
+        }
+      },
+      "note": "The who-iris cutover (bean g8jp): litlfred/who-iris is the live graph; the in-tree copy is archived at fsh-guts/separated/who-iris.tar.gz. Its need folio-assistant-core is this checkout's own.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "53f0e5c7525de08f6a83addf92e01719dc7b2c98",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: who-iris push access + remove in-tree copy 'Yes to both'; retire 'Run the retire'"
+        }
+      }
     }
   ]
 }
