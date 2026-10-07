@@ -7,6 +7,7 @@ section_number: 11.13
 pages: 165-166
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Preparing the final guideline document for publication involves the same 
 steps as described for a standard guideline. Electronic means will usually be 

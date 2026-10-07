@@ -7,6 +7,7 @@ section_number: 8.7
 pages: 117-118
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A new systematic review is needed if a relevant, high-quality systematic 
 review is not identified. Or if a high-quality review is not up to date, it will 

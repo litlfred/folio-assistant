@@ -7,6 +7,7 @@ section_number: 4.6
 pages: 55-56
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 after the GRC has approved the planning proposal?
 It is not unusual for changes to occur after the planning proposal is developed and approved by the GRC. New or unanticipated evidence, or new ideas 

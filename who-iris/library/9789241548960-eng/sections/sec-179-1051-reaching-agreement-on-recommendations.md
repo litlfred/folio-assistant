@@ -7,6 +7,7 @@ section_number: 10.5.1
 pages: 142-142
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Draft recommendations can be prepared either by the steering group 
 before the GDG meets to formulate recommendations, or during the meeting by the GDG itself. Under the leadership of the chair, the GDG reviews 

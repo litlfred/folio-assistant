@@ -120,6 +120,7 @@ const THIS_GATE = "cat-harness-tools/scripts/check-declaration-filename.ts";
  */
 const OWNING_INSTANCE = DEFINITION_SITE.slice(0, DEFINITION_SITE.indexOf("/") + 1);
 
+// input-site: inert #ed52e1dd — names a build-output directory only to leave it out of a walk
 const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", ".next"]);
 
 export interface Bypass {

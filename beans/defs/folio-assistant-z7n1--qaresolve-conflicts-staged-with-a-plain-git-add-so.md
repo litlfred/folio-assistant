@@ -7,7 +7,7 @@ parent: folio-assistant-d33q
 tags:
   - ready-to-close
 created_at: 2026-10-03T17:55:24Z
-updated_at: 2026-10-06T23:36:21Z
+updated_at: 2026-10-07T05:50:00Z
 ---
 
 Found 2026-10-03 while measuring why `merge:main`'s last `push` run
@@ -88,7 +88,7 @@ _2026-10-06T23:36:18Z_ — Claimed by claude/z7n1-close-landed-resolver-staged-f
 ## Evidence
 
 1. Fix implemented in commit `ac829fb1a050218a17174de86a7a816370815e83`: both `git add` sites in `cat-harness/scripts/qa-resolve-conflicts.ts` pass `-f` (`takeProvisionalSide` and final resolution staging) so that a branch gitignoring its results directory can be staged without collapsing unmerged stages.
-2. The fix landed on `main` via PR #2079 (merged 2026-10-04T12:45:03Z).
+2. The fix landed on `main` via PR #1952 (merged 2026-10-04T07:03:50Z), the PR GitHub associates with that commit; `ac829fb` is an ancestor of `main`.
 3. #1801's next run passed and PR #1801 merged successfully on `main` at `2026-10-04T08:10:36Z`.
 4. Re-tested and verified clean execution of regression test suite:
    `bun test ./cat-harness/scripts/tests/qa-resolve-conflicts.test.ts`
