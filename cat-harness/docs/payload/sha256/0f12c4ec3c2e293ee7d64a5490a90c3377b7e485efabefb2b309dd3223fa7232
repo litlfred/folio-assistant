@@ -145,9 +145,9 @@ does. Owner, 2026-10-01: *"need to create gh-pages branch before can turn
 on"*; repeated 2026-10-07: *"need to create gh-pages before can deploy"*
 (issue #2417).
 
-The step is `Task_ProvisionGhPages` in
-[`getting-started.bpmn`](../../../../folio-assistant-core/processes/conduct/getting-started.bpmn),
-with the semantics of `A_Provision` in bootstrap-tools'
+The step is `Task_ProvisionGhPages` ("Provision gh-pages") in the
+getting-started process ([`getting-started`](../../conduct/conduct-core/getting-started.md)
+§5), with the semantics of `A_Provision` in bootstrap-tools'
 [`render-kg-to-github-pages.bpmn`](../../../../bootstrap-tools/processes/render-kg-to-github-pages.bpmn).
 Run `bun run cat-harness/scripts/pages-bootstrap.ts --provision` (idempotent,
 never forced; without the flag it only reports `unprovisioned` and the exact
