@@ -209,7 +209,11 @@ jobs:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
         if: steps.platform.outputs.present == 'false'
-        run: bun "${{ steps.platform.outputs.checkout }}/cat-harness/scripts/mount-from-lock.ts" --root "${{ steps.platform.outputs.checkout }}"
+        # Through env:, never interpolated into the script: the checkout path is
+        # a step output that carries free text (check:workflow-injection).
+        env:
+          PLATFORM_CHECKOUT: ${{ steps.platform.outputs.checkout }}
+        run: bun "$PLATFORM_CHECKOUT/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_CHECKOUT"
 
       - name: Link the platform where the folio names it
         if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
@@ -816,7 +820,11 @@ jobs:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
         if: steps.platform.outputs.present == 'false'
-        run: bun "${{ steps.platform.outputs.checkout }}/cat-harness/scripts/mount-from-lock.ts" --root "${{ steps.platform.outputs.checkout }}"
+        # Through env:, never interpolated into the script: the checkout path is
+        # a step output that carries free text (check:workflow-injection).
+        env:
+          PLATFORM_CHECKOUT: ${{ steps.platform.outputs.checkout }}
+        run: bun "$PLATFORM_CHECKOUT/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_CHECKOUT"
 
       - name: Link the platform where the folio names it
         if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
