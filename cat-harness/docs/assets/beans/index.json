@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 510,
+      "count": 507,
       "unit": "open beans"
     }
   },
@@ -924,15 +924,15 @@
     {
       "id": "folio-assistant-2as0",
       "title": "Agent-triggered staging: local build + push to gh-pages, then an Artifact preview (#2410)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T11:12:53Z",
-      "updatedAt": "2026-10-07T11:12:53Z",
-      "preview": "Issue #2410. PR 1: cat-harness/scripts/stage-local.ts builds the folio's preview in the agent's checkout and pushes STAGING/<slug>/ through the same gate and render log as the workflow. PR 2: --artifact publishes it as a claude.ai Artifact. Measured 2026-10-07: 33 min runner queue before the workflow ran 45 s; Pages deploy 47 min queued.",
+      "updatedAt": "2026-10-07T12:44:42Z",
+      "preview": "Issue #2410. PR 1: cat-harness/scripts/stage-local.ts builds the folio's preview in the agent's checkout and pushes STAGING/<slug>/ through the same gate and render log as the workflow. PR 2: --artifact publishes it as a claude.ai Artifact. Measured 2026-10-07: 33 min runner queue before the workflow ran 45 s; Pages deploy 47 min queued.\n\n*2026-10-07* — completed: PR 1 (stage-local, push to gh-pag",
       "file": "beans/defs/folio-assistant-2as0--agent-triggered-staging-local-build-push-to-gh-pag.md"
     },
     {
@@ -1951,7 +1951,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-21T14:46:51Z",
       "updatedAt": "2026-09-29T20:50:32Z",
-      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/730\n\nOwner request 2026-09-21: align folio-assistant with github/spec-kit; no development before a spec exists; all specs in one template; specs posted as GitHub issue comments; oversized changes split into multiple issues so human adjudication on the PR stays feasible; follow industry standards for the split.\n\n## Blocking decision\nmethodol",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/730\n\nOwner request 2026-09-21: align folio-assistant with github/spec-kit; no development before a spec exists; all specs in one template; specs posted as GitHub issue comments; oversized changes split into multiple issues so human adjudication on the PR stays feasible; follow industry standards for the split.\n\n## Blocking decision — RESOLV",
       "file": "beans/defs/folio-assistant-4kq7--adopt-githubspec-kit-spec-before-code-gate-one-spe.md"
     },
     {
@@ -2248,7 +2248,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T08:35:58Z",
-      "updatedAt": "2026-10-06T06:26:48Z",
+      "updatedAt": "2026-10-07T08:10:00Z",
       "preview": "## What was measured\n\n`main@12b916e9a5`, probe calling both schemas on one `storage` value:\n\n    A. DirectoryStorageSchema accepts keyedBy route? true\n    B. resolveSubgraphSource THREW: ZodError |\n       Invalid option: expected one of \"commit\"|\"tip\"\n\n`DirectoryStorageSchema.keyedBy` (`schemas/cat-harness.ts`) gained `\"route\"` with bean `1j3q`.\n`KeyedBySchema` (`schemas/subgraph-source.ts`), whic",
       "file": "beans/defs/folio-assistant-5akx--keyedbyschema-and-directorystorageschema-were-two.md"
     },
@@ -4079,6 +4079,20 @@
       "file": "beans/defs/folio-assistant-9hfi--smart-immunizations-codingshtml-codesystems-and-va.md"
     },
     {
+      "id": "folio-assistant-9hlq",
+      "title": "Provision gh-pages before Pages is switched on, in every publishing route (#2417)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-0mpw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T12:06:33Z",
+      "updatedAt": "2026-10-07T13:37:29Z",
+      "preview": "Issue #2417. FR-1..FR-4: pages-bootstrap unprovisioned state + --provision; getting-started.bpmn Provision gh-pages task; skills getting-started/repo-conversion/remote-mount name the step. Owner rulings 2026-10-01 and 2026-10-07.\n\nHolder: session https://claude.ai/code/session_01SohDE1SrrLGXAqW3LkZzod, branch claude/gh-pages-provisioning-2417.",
+      "file": "beans/defs/folio-assistant-9hlq--provision-gh-pages-before-pages-is-switched-on-in.md"
+    },
+    {
       "id": "folio-assistant-9io2",
       "title": "lake-cache family to cat/folio-assistant-sci/lake-cache/ (declaration, 8 mirrors, folio-repo renames)",
       "status": "todo",
@@ -5889,14 +5903,14 @@
     {
       "id": "folio-assistant-ei4q",
       "title": "LHS NAVBAR OVERLAPS CONTENT ON DESKTOP: opening the rail should shrink the content width, not cover it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:51:27Z",
-      "updatedAt": "2026-10-06T06:51:27Z",
+      "updatedAt": "2026-10-07T14:41:32Z",
       "preview": "Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), verbatim:\n\n> on desktop open up the LHS navbar will shrink content width so they dont overlap\n\n## Behaviour wanted\n- **Desktop (wide):** an open LHS navbar takes its own column, and the main content reflows narrower beside it. Nothing is hidden under the rail.\n- **Phone:** the rail stays an overlay drawer (no room to shri",
       "file": "beans/defs/folio-assistant-ei4q--lhs-navbar-overlaps-content-on-desktop-opening-the.md"
     },
@@ -7464,14 +7478,14 @@
     {
       "id": "folio-assistant-ivg9",
       "title": "PLAN REQUEST → requirements doc + work plan + sign-off gate; successCriteria on requirement statements (#2405)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T09:36:38Z",
-      "updatedAt": "2026-10-07T10:39:49Z",
+      "updatedAt": "2026-10-07T15:32:37Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/2405. Owner approved 2026-10-07 ('implement as recommended'): https://github.com/litlfred/folio-assistant/issues/2405#issuecomment-6035163987. Decisions: (1) operation in folio-assistant-core, method in cat-harness (0r7u); (2) a plan request ALWAYS triggers requirements doc + work plan, content requests included; (3) successCriteria optiona",
       "file": "beans/defs/folio-assistant-ivg9--plan-request-requirements-doc-work-plan-sign-off-g.md"
     },
@@ -9738,15 +9752,15 @@
     {
       "id": "folio-assistant-p3yl",
       "title": "IG repo onboarding asks two owner questions: disable automatic gh-pages builds? just-the-docs site (default yes)?",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T16:21:43Z",
-      "updatedAt": "2026-10-06T16:21:43Z",
-      "preview": "Owner, 2026-10-06: \"make this part of the process/skill. if gh-pages is being populated, ask use if disable. ask use if they want justthedocs rendering (default is yes)\". Follows #2291 (folio-site template manual-only) and #1901. Rule lives in fhir-harness ig-build-pipeline; fhir-ig-create and ig-render-jekyll point to it.\n\n## Done when\n- [ ] the rule is in one skill with detect / ask-disable / as",
+      "updatedAt": "2026-10-07T14:15:00Z",
+      "preview": "Owner, 2026-10-06: \"make this part of the process/skill. if gh-pages is being populated, ask use if disable. ask use if they want justthedocs rendering (default is yes)\". Follows #2291 (folio-site template manual-only) and #1901. Rule lives in fhir-harness ig-build-pipeline; fhir-ig-create and ig-render-jekyll point to it.\n\n## Done when\n- [x] the rule is in one skill with detect / ask-disable / as",
       "file": "beans/defs/folio-assistant-p3yl--ig-repo-onboarding-asks-two-owner-questions-disabl.md"
     },
     {
@@ -10278,7 +10292,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:04:49Z",
-      "updatedAt": "2026-09-27T10:30:21Z",
+      "updatedAt": "2026-10-07T08:13:00Z",
       "preview": "## CORRECTED 2026-09-26 — the cause is NOT `ymsu`, and the title understates it\n\nThis bean was opened saying *\"a sweep artefact\"* and pointing at `ymsu` — a\ngate that writes what a later gate reads. **That was wrong**, and it was a\nhypothesis stated in a bean's title as though it were the finding. The actual\ncause is a one-character `.gitignore` bug that distorts the CORPUS of every\nworktree `chec",
       "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
@@ -13499,14 +13513,14 @@
     {
       "id": "folio-assistant-y1w9",
       "title": "MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T18:34:19Z",
-      "updatedAt": "2026-09-29T21:43:12Z",
+      "updatedAt": "2026-10-07T14:25:44Z",
       "preview": "**Found by paying the cost, 2026-09-19.** Not a survey finding — a measured\nloss in one session, twice.\n\n## What happened\n\nWhile working `folio-assistant-n60j` I \"discovered\" that the gate list must\nbe derived from the CI workflow rather than from `package.json`, wrote a\nrunner and a skill around it, and reported it as a finding. It was already\nrecorded, that same day, in\n`skills/memory/derive-the",
       "file": "beans/defs/folio-assistant-y1w9--memory-reach-113-skills-are-bound-to-no-role-or-pr.md"
     },
@@ -13852,14 +13866,14 @@
     {
       "id": "folio-assistant-yqc4",
       "title": "CI observability: a failing e2e job is opaque to anyone who cannot reach the log host",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-03T13:56:51Z",
-      "updatedAt": "2026-10-03T14:14:54Z",
+      "updatedAt": "2026-10-07T14:15:00Z",
       "preview": "## Brief\n\nOwner, 2026-10-03: *\"Have the workflow upload the Playwright report on failure — right\nnow a red E2E job is opaque to any agent that can't reach the log host.\"*\n\n## The defect\n\nA red `End-to-end + accessibility` job carried its diagnosis in exactly one place: the\nrun log, on `productionresultssa14.blob.core.windows.net`. A cloud session whose network\npolicy denies that host sees only the",
       "file": "beans/defs/folio-assistant-yqc4--ci-observability-a-failing-e2e-job-is-opaque-to-an.md"
     },
@@ -15617,13 +15631,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 585,
-        "closed": 276,
-        "open": 309,
-        "inProgress": 125,
-        "todo": 183,
+        "closed": 279,
+        "open": 306,
+        "inProgress": 124,
+        "todo": 181,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4717948717948718
+        "share": 0.47692307692307695
       },
       {
         "id": "folio-assistant-vuip",
@@ -15631,14 +15645,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 275,
-        "closed": 117,
+        "total": 276,
+        "closed": 118,
         "open": 158,
         "inProgress": 91,
         "todo": 66,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4254545454545455
+        "share": 0.427536231884058
       },
       {
         "id": "folio-assistant-yg29",
@@ -15657,8 +15671,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 510,
-    "coveredOpen": 507,
+    "openTotal": 507,
+    "coveredOpen": 504,
     "duplicateIds": 0
   }
 }
