@@ -16,7 +16,7 @@ CI step 15 of the `gates` job — `glossary page and SKOS` — failed on `ba7af0
     ✗ stale: cat-harness/docs/glossary/skills/index.md
     ✗ stale: cat-harness/docs/assets/glossary/cat-harness--kg-skills.skos.jsonld
     ✗ stale: folio-assistant-core/glossary/generated/cat-harness/kg-skills.glossary.json
-    Run `bun run glossary:page` and commit the result.
+    Run `bun run cat glossary:page` and commit the result.
 
 **It is the `kg-skills` glossary, and I cannot reproduce it.**
 
@@ -24,7 +24,7 @@ CI step 15 of the `gates` job — `glossary page and SKOS` — failed on `ba7af0
 |---|---|
 | `check:glossary` in the working checkout at that exact commit, tree clean | **PASS** |
 | `glossary:pot:check` same | PASS |
-| `bun run glossary:page` then `git status` | **empty** — the generator reproduces what is committed |
+| `bun run cat glossary:page` then `git status` | **empty** — the generator reproduces what is committed |
 | `check:glossary` in a detached throwaway worktree at the same commit, **no `_kg/`**, no nested `block-qa-schema/node_modules` | **PASS** |
 | CI, step 15, same commit | **FAIL** |
 
@@ -77,7 +77,7 @@ environment difference to find.
 `cat-harness/skills/authoring/folio-paper-adapter/latex-build-cache.md`'s front-matter
 `description`, `scripts/install-tex.sh` -> `cat-harness/scripts/install-tex.sh`
 (twice), and that description is PROJECTED into the three artefacts named above.
-It did not regenerate them. Fixed by `bun run glossary:page` in `bc6c84a5166`.
+It did not regenerate them. Fixed by `bun run cat glossary:page` in `bc6c84a5166`.
 
 Measured after merging main into this branch: the three failures reproduced
 byte-for-byte on the first try, the regeneration touched exactly those three

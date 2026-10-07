@@ -237,7 +237,7 @@ build it, what one "position" is, and what you toggle.
 
 ### Docs site (Jekyll, just-the-docs)
 
-- **Build:** `bun run preview:site`. Its header explains how its output
+- **Build:** `bun run cat preview:site`. Its header explains how its output
   differs from CI's: the local theme gem, not the pinned `remote_theme`.
 - **Serve under the baseurl.** Symlink `<serve>/folio-assistant -> <build>`
   and serve the parent directory. Served at `/`, every stylesheet returns 404

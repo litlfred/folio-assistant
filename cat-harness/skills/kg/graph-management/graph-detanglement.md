@@ -42,7 +42,7 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-**At knowledge-graph scale** — [`kg-detangle.ts`](kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
+**At knowledge-graph scale** — [`kg-detangle.ts`](kg-detangle.ts), beside this skill (`bun run cat kg:detangle`), over the
 instance stack each `<instance>.json` declares in `needs`.
 
 The repository and knowledge-graph scales share ONE verdict function,
@@ -56,7 +56,7 @@ adjudicator's call, so those edges stay `unclassified` with the verdict as
 their basis.
 
 **The direction count is the one detangle number that is GRADED**, and it is
-graded in a gate of its own — `bun run kg:detangle:direction`, blocking in CI
+graded in a gate of its own — `bun run cat kg:detangle:direction`, blocking in CI
 since the owner's Option 2 ruling on bean `p11x` (2026-09-30). Everything else
 this tool measures stays **pinned**: `kg:detangle:check` fails on a stale or
 orphaned sidecar and never on a number, because the carve is an adjudication a

@@ -57,7 +57,7 @@ noticed, not what exists.
 
 ## What is measured today
 
-**Measured**, by `bun run check:workflow-refs` — ask it, not this page:
+**Measured**, by `bun run cat check:workflow-refs` — ask it, not this page:
 
 - Exclusive gateways split three ways: **computed** by a DMN table, **declared
   judgement** (`cat-harness.processes:judgement`, with a reason), and **undeclared**.

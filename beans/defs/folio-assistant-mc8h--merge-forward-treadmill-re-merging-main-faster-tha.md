@@ -17,7 +17,7 @@ and written down because the mistake is cheap to repeat.
 
 `main` absorbed **31, 13, 11 and 12** commits under one branch in about
 seventy minutes. Each time, the PR went `dirty`, and each time the response
-was: merge `origin/main`, resolve, `bun run gates`, push. Four rounds.
+was: merge `origin/main`, resolve, `bun run cat gates`, push. Four rounds.
 
 **`get_status` returned `total_count: 0` on every one of the four heads.** The
 PR merged without a Code-quality gates verdict ever arriving.
@@ -125,9 +125,9 @@ repository whose CI is Actions.
 
 Two beans carried the false claim onto `main` — this one and `0818`'s
 `## Summary of Changes`, both merged before the error was found. #1064 was
-merged on `bun run gates` rather than on CI, justified by a CI absence that
+merged on `bun run cat gates` rather than on CI, justified by a CI absence that
 was never established. That justification is withdrawn; the merge stands, and
-`bun run gates` at 135/135 across four merged trees remains real evidence —
+`bun run cat gates` at 135/135 across four merged trees remains real evidence —
 it is simply no longer propped up by a claim about what CI did not do.
 
 ## Done when
@@ -143,7 +143,7 @@ it is simply no longer propped up by a claim about what CI did not do.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 _2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Re-merging main faster than CI answers means no verdict at all — CI reliability, not QA verdict content.
 
 ## OWNER DECISION, 2026-09-30: no merge queue for now — keep merging forward by hand

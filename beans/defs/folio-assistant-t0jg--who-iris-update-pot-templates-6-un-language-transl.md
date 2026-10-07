@@ -13,7 +13,7 @@ Update who-iris .pot gettext templates, verify 6 UN official language translatio
 
 
 ## Tasks
-- [x] Ensure who-iris .pot templates are extracted and up-to-date (`bun run glossary:pot:check`)
+- [x] Ensure who-iris .pot templates are extracted and up-to-date (`bun run cat glossary:pot:check`)
 - [x] Verify 6 UN official language translations in who-iris/translations/ (en source + ar, es, fr, ru, zh)
 - [x] Execute untainted roundtrip Q/A (independent checker subagents with TOOLS_USED: none + double-blind adjudicator)
 - [x] Record roundtrip Q/A results, adjudications, and witnesses

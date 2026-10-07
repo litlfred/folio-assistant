@@ -29,9 +29,9 @@ Not ported: the bootstrap GRAPH target of the validator — its Zod (`BootstrapG
 Both pieces are ported and the last box re-measured on origin/main `b0ca040` with submodules `bootstrap@f70a56c`, `bootstrap-tools@920c772`:
 - `bootstrap-tools/scripts/{schema-semver,validate-bootstrap}.ts` + tests and `bootstrap-tools/skills/bootstrap-contract-semver.md` are present; root `package.json` carries `bootstrap:semver` and `bootstrap:validate`
 - `bun run check:tools-closure` → exit 0 ("bootstrap-tools imports only itself, zod, liquidjs, @playwright/test and the runtime (43 files)")
-- `bun run skill:register:check` → exit 0 (9 artefacts current)
-- `bun run readme:subgraphs:check` → exit 0
-- `bun run kg:audit:check` → exit 0
-- `bun run check:partition` → exit 0
+- `bun run cat skill:register:check` → exit 0 (9 artefacts current)
+- `bun run cat readme:subgraphs:check` → exit 0
+- `bun run cat kg:audit:check` → exit 0
+- `bun run cat check:partition` → exit 0
 
 Closed so that the parent `xsqm` (closed the same day) does not read as finished over an open child (`check:bean-rollup`).

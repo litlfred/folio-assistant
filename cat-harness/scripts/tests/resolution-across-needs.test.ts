@@ -70,7 +70,7 @@ const REPO = resolve(import.meta.dir, "../../..");
  * across sixteen instances left sixteen untracked manifests behind — including
  * one in a `skills/` directory it created at the REPOSITORY ROOT, which
  * `check:undeclared-files` then fails on. A test that dirties the tree it is
- * judging is the defect `bun run gates` warns about in its own failure
+ * judging is the defect `bun run cat gates` warns about in its own failure
  * summary, one level down.
  *
  * `--check --json` still emits the full report array, verified: 12 reports for

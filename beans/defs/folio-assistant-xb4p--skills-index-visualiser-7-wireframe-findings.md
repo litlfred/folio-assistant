@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/skills-index/` (i
 6. **The phone layout favours the path.** At 390 px the name and path column takes 147 px on `cat-harness` and the path breaks at any character (`cat-harness/skil / ls/authoring-mat / h/latex-authorin / g.md`). On the one-row siblings it is worse: the path column takes 260 px and the description column is 92 px, so "How a cold agent finds and loads the skill that governs its task." wraps to one or two words a line.
 7. **The small siblings get the same heavy page shell.** `kg-navigation` and `who-iris-skills` have one row each, but they repeat the full lede, note and four-row sibling list above it. At 390 px their only row starts at y ≈ 655.
 
-When fixed, re-draw `cat-harness/docs/wireframes/skills-index/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/skills-index/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

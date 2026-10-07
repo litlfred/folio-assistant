@@ -134,7 +134,7 @@ set — and **End-to-end + accessibility (hard)**, the browser job that reaches
 `first-paint-scheme.e2e.ts`.
 
 That is the evidence for the local attribution rather than a badge: my local
-`bun run gates` showed 6 failures in a tree holding three authors'
+`bun run cat gates` showed 6 failures in a tree holding three authors'
 UNCOMMITTED work; CI runs the committed branch, where the four I attributed to
 another author's files are absent, and the two that were mine were fixed
 before the push.
@@ -160,7 +160,7 @@ absent" in Repository gates, and "the registration chain is current, read
 unmasked" in its own job).
 
 Measured the way `skill-registration` itself prescribes — that ONE check
-against a clean tree, not through `bun run gates`:
+against a clean tree, not through `bun run cat gates`:
 
 | | at `20d029597fc` (parent, not mine) | at `025aa68106c` (with my 2 commits) |
 |---|---|---|
@@ -175,7 +175,7 @@ KG-audit, detangle and UML-overview artefacts a SKILL edit stales — this
 branch's `ui-accessibility.md` work plus the `main` merge. This change adds
 no skill and no KG node.
 
-**Not repaired here, deliberately:** `bun run skill:register` would
+**Not repaired here, deliberately:** `bun run cat skill:register` would
 regenerate artefacts embodying another author's in-flight skill edits, and
 sweeping those into my commit is what the shared-tree rule exists to prevent.
 Whoever ships this branch runs `skill:register` after the last skill edit

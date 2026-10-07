@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
  * Fetch one item from a DSpace 7 repository — WHO IRIS, PAHO IRIS — into an
- * `uploads/<doc_id>/` directory that `bun run ingest` takes as it stands.
+ * `uploads/<doc_id>/` directory that `bun run cat ingest` takes as it stands.
  *
  * Bean `5uyl`: building a DAK's library ingests the L1 sources its Component 1
  * cites, and most of those are IRIS handles. Acquisition was manual — download

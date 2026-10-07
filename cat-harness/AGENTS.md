@@ -15,7 +15,7 @@ this layer, so they are linked here rather than there:
 1. **Get the work-plan CLI** — `cat-harness/scripts/install-beans.sh &&
    export PATH="$HOME/.local/bin:$PATH" && beans prime`. A fresh container has
    no `beans`, and the hand-parse fallback cannot claim or create anything.
-2. **Claim before you work.** `bun run beans:claim <id>` — not
+2. **Claim before you work.** `bun run cat beans:claim <id>` — not
    `beans update --status in-progress`, which writes no holder note. A claim
    announces rather than reserves until your PR exists — see
    `bean-coordination`.

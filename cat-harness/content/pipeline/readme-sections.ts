@@ -564,7 +564,7 @@ const instancesSection: ReadmeSection = {
     if (mute > 0) {
       gaps.push(
         `**${mute} of ${rows.length}** declare no \`agent-instructions\` asset — readable by a person, ` +
-          "mute to an agent. `bun run check:subgraph-coverage` names them.",
+          "mute to an agent. `bun run cat check:subgraph-coverage` names them.",
       );
     }
     if (undocumented > 0) {
@@ -1032,7 +1032,7 @@ export async function runReadmeSync(opts: {
   if (opts.check) {
     return result.changed
       ? {
-          text: [`${readmePath} is out of date (${summary}). Run: bun run readme:sync`, ...result.notes].join("\n"),
+          text: [`${readmePath} is out of date (${summary}). Run: bun run cat readme:sync`, ...result.notes].join("\n"),
           exitCode: 1,
         }
       : { text: [`${readmePath} is up to date (${summary}).`, ...result.notes].join("\n"), exitCode: 0 };

@@ -180,8 +180,8 @@ this*, `AGENTS.md` answers *what do I do, in what order*. A session that
 establishes a durable fact about an instance updates the one whose question it
 answers — and if it answers neither, it is a memory entry.
 
-`bun run check:subgraph-coverage` reports any instance missing either asset,
-and `bun run check:asset-roles` keeps the declaration single: a required role
+`bun run cat check:subgraph-coverage` reports any instance missing either asset,
+and `bun run cat check:asset-roles` keeps the declaration single: a required role
 `ASSET_ROLES` does not govern, a role a running process would be allowed to
 write, or an asset restating `purpose`, `layer` or `delivery` on itself. That
 last one is asked of the RAW declaration on purpose — `KgAssetSchema` is a

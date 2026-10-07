@@ -85,7 +85,7 @@ Two mechanical facts worth knowing before choosing:
   not to a broken image — `resolveThemeBackdrop` reports that third state rather
   than serving art that is not there.
 - An incomplete backdrop is refused **wholesale**. Two of three layouts renders
-  as *no* art, not two thirds. Check `bun run check:theme-art` if you are about
+  as *no* art, not two thirds. Check `bun run cat check:theme-art` if you are about
   to rely on a role you have not seen render.
 
 ### 4. Decide where it goes — `todos/` is the default, not the only answer

@@ -109,7 +109,7 @@ work, not a design question, and does not block Phase I.
 
 ### 0.2 — Replace the filename heuristic with a real dependency scan · **done**
 
-`bun run check:partition` (`scripts/repo-partition.ts`) builds the import graph,
+`bun run cat check:partition` (`scripts/repo-partition.ts`) builds the import graph,
 partitions it across the five proposed repos, and reports the edges crossing a
 boundary in the wrong direction. Gate met: 341 modules, 670 edges, **46
 wrong-direction edges** named, **0 modules unassigned** (the 27 platform
@@ -171,11 +171,11 @@ archaeology.
 | # | work | gate |
 |---|---|---|
 | I.1 | Resolve each wrong-direction cross-edge from 0.2 — invert the dependency, move the module, or record why it is legitimate | **both** axes below are empty, or every survivor has a written reason |
-| I.1a | The **within-instance** axis: modules under this instance's root, bucketed into the five proposed repos by path rule — `bun run check:partition`, enforcing in CI | a new wrong-direction edge among this instance's own modules fails the PR that introduces it |
-| I.1b | The **cross-instance** axis: edges between instances that already exist side by side, checked against each one's declared `needs` — `bun run kg:detangle:direction`, blocking in CI | a new edge from an instance into one that declares a dependency on it fails the PR that introduces it |
+| I.1a | The **within-instance** axis: modules under this instance's root, bucketed into the five proposed repos by path rule — `bun run cat check:partition`, enforcing in CI | a new wrong-direction edge among this instance's own modules fails the PR that introduces it |
+| I.1b | The **cross-instance** axis: edges between instances that already exist side by side, checked against each one's declared `needs` — `bun run cat kg:detangle:direction`, blocking in CI | a new edge from an instance into one that declares a dependency on it fails the PR that introduces it |
 
 **I.1 takes two gates, and it took one until 2026-09-30.** The row above read
-*"Gate the result: `bun run check:partition --strict` in CI"*, which was the
+*"Gate the result: `bun run cat check:partition --strict` in CI"*, which was the
 whole gate — and `check:partition` resolves its `ROOT` to **one instance**, so
 every `0 wrong-direction edges` it prints is scoped to that instance's own
 modules and is silent about edges between the already-extracted siblings.
@@ -205,7 +205,7 @@ a survivor recorded against one says nothing about the other. Read
 | I.5 | Group modules into the five target trees | each tree builds with only its declared dependencies on the path |
 | I.6 | Split QA **infrastructure** (harness) from QA **criteria** (downstream) | the criterion registry loads zero criteria without erroring; criteria come from a dependency |
 | I.7 | Reconcile the three `todo-manager.md` copies (`AGENTS.md` records a 188-line divergence and one copy with **no CI guard**) | one canonical copy; every other is generated and checked |
-| I.8 | **Every repo declares `stub` + `canonicalUrl` and publishes `<stub>.jsonld` / `<stub>.schema.json`** | `bun run kg:export` in each repo emits artefacts named after that repo, with absolute `@id`s under its own `canonicalUrl` |
+| I.8 | **Every repo declares `stub` + `canonicalUrl` and publishes `<stub>.jsonld` / `<stub>.schema.json`** | `bun run cat kg:export` in each repo emits artefacts named after that repo, with absolute `@id`s under its own `canonicalUrl` |
 
 **I.8 is what keeps five repos from becoming five vocabularies.** Each split
 repo publishes its own knowledge graph, and the graphs are only mergeable if

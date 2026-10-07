@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: Writing a paper with folio-assistant
 parent: Authoring guides
 nav_order: 1
@@ -63,7 +63,7 @@ review and release that follow, as BPMN swimlane diagrams.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-paper/before-you-start.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-paper/before-you-start.md" data-fa-link="edit" data-src="content/docs/guides-writing-a-paper/before-you-start.md" data-repo="litlfred/folio-assistant" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" lang="en" dir="ltr" data-qa-family="block" data-qa-key="before-you-start.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/before-you-start.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-translation" lang="en" dir="ltr" data-qa-family="translation" data-qa-key="before-you-start.translation" data-qa-label="Translation QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-paper/before-you-start.translation.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-paper/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Translation QA: loading the verdict…" aria-label="Translation QA: loading the verdict…"><span class="fa-qa-tag">TR</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
-1. [Install folio-assistant](../start/installation.html) and run `bun run check-deps`.
+1. [Install folio-assistant](../start/installation.html) and run `bun run cat check-deps`.
    For papers you want `bun`, `latexmk`/`texlive`, and Lean (`elan`).
 2. [Connect your LLM harness](../start/installation.html#connecting-an-llm-harness)
    (Claude Code, Antigravity, …) so the agent has the MCP tools.

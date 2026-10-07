@@ -1,5 +1,5 @@
 /**
- * Input-hash staleness skipping for `bun run regen` and `bun run gates` —
+ * Input-hash staleness skipping for `bun run cat regen` and `bun run cat gates` —
  * beans `xpcu`, `f017`.
  *
  * @module scripts/input-hash

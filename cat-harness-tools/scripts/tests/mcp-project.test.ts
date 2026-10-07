@@ -151,7 +151,7 @@ describe("mcp projection", () => {
     const tool = tools(B).find((x) => x.id === "readme-sync")!;
     const { argv } = buildArgv(tool, { only: ["folio:toc", "folio:simulators"], check: true });
     expect(argv).toEqual([
-      "bun run readme:sync",
+      "bun run cat readme:sync",
       "--check",
       "--only",
       "folio:toc",
@@ -163,7 +163,7 @@ describe("mcp projection", () => {
   test("a repeated positional becomes trailing words", () => {
     const tool = tools(B).find((x) => x.id === "stakeholder-map")!;
     expect(buildArgv(tool, { paths: ["src/a.ts", "skills/folio-core/x.md"] }).argv).toEqual([
-      "bun run stakeholder-map",
+      "bun run cat stakeholder-map",
       "src/a.ts",
       "skills/folio-core/x.md",
     ]);
@@ -188,12 +188,12 @@ describe("mcp projection", () => {
     // the very thing it reads as disabling.
     const tool = tools(B).find((x) => x.id === "readme-audit")!;
     expect(buildArgv(tool, { file: "README.md", fetch: true }).argv).toEqual([
-      "bun run readme:audit",
+      "bun run cat readme:audit",
       "README.md",
       "--fetch",
     ]);
     expect(buildArgv(tool, { file: "README.md", fetch: false }).argv).toEqual([
-      "bun run readme:audit",
+      "bun run cat readme:audit",
       "README.md",
     ]);
   });

@@ -18,7 +18,7 @@ package.json + bun.lock (minimal workspace stub — bun needs both at the worksp
 - [ ] P1 (bean yywu): excise root tools/ and docs/; .beans/ bean into beans/defs.
 - [ ] P2: Docker — .dockerignore with the Dockerfiles to .github/docker/; remove the root Dockerfile no workflow builds (gen-python-deps drift check adjusts).
 - [ ] P3: requirements*.txt (gen-python-deps output; dependabot directory:), upstream-pins.json, test-server.mjs into cat-harness-tools/; harness.config.example.json becomes a KG asset under cat-harness docs.
-- [ ] P4: bunfig.toml, .bun-version (setup-bun bun-version-file), tsconfig.json, eslint.config.mjs, playwright.config.ts into cat-harness-tools/; scripts out of root package.json; workflows and docs updated; bun run gates green.
+- [ ] P4: bunfig.toml, .bun-version (setup-bun bun-version-file), tsconfig.json, eslint.config.mjs, playwright.config.ts into cat-harness-tools/; scripts out of root package.json; workflows and docs updated; bun run cat gates green.
 - [ ] P5: the root instance's future — folio-assistant.json declares the aggregate checkout (beans/ todos/ memory/ test/ uploads/), not a harness; after p3ny and 7zz1 decide what remains and where it goes.
 - [ ] bootstrap/ and bootstrap-tools submodules -> remote mount (bean 0mpw pilot).
 

@@ -183,7 +183,7 @@ built by hand, so `meta.source_file` + `meta.source_sha256` being present
 proved the relation EXISTS but not that anything still WRITES it.
 
 `skills-in-openai-api` was ingested and promoted today through
-`bun run ingest` (#1050), and `library-graph` reports it **`upload=match`** —
+`bun run cat ingest` (#1050), and `library-graph` reports it **`upload=match`** —
 so `l1-blocks.ts` writes both fields and the hash recomputes against the file
 in `uploads/`. The relation is maintained by the pipeline, not merely inherited
 from four hand-built entries.

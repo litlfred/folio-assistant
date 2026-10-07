@@ -76,7 +76,7 @@
  * ## The whole gate set by default — bean `i1q7`, item 3
  *
  * This command asked only the FAST set (the jobs that install no browser),
- * borrowing `bun run gates`' inner-loop boundary. That boundary is about the
+ * borrowing `bun run cat gates`' inner-loop boundary. That boundary is about the
  * cost of `playwright test`, which regen never runs: it asks only verify/write
  * PAIRS, and outside the fast set there were exactly two — `render:bpmn:check`
  * (3.7 s) and `bat:sync:check` (0.1 s, and it needs no browser at all; it sits
@@ -145,14 +145,14 @@
  * two cuts skip anything; each must be read first.
  *
  * Usage:
- *   bun run regen                # ask every gate; repair what is stale
- *   bun run regen --fast         # ...only the fast set (no browser-job pairs)
- *   bun run regen --dry-run      # report what is stale, change nothing
- *   bun run regen --jobs 3       # pool size (default: CPUs - 1)
- *   bun run regen --no-cache     # ask every pair; neither read nor update the hash cache
- *   bun run regen --explain      # say, per pair, why it ran or was skipped
- *   bun run regen --changed <base>  # ask only pairs whose inputs changed since <base>
- *   bun run regen --max-passes 8 # raise the fixpoint bound (default: DEFAULT_MAX_PASSES)
+ *   bun run cat regen                # ask every gate; repair what is stale
+ *   bun run cat regen --fast         # ...only the fast set (no browser-job pairs)
+ *   bun run cat regen --dry-run      # report what is stale, change nothing
+ *   bun run cat regen --jobs 3       # pool size (default: CPUs - 1)
+ *   bun run cat regen --no-cache     # ask every pair; neither read nor update the hash cache
+ *   bun run cat regen --explain      # say, per pair, why it ran or was skipped
+ *   bun run cat regen --changed <base>  # ask only pairs whose inputs changed since <base>
+ *   bun run cat regen --max-passes 8 # raise the fixpoint bound (default: DEFAULT_MAX_PASSES)
  *
  * `--all` is accepted and is the default.
  *
@@ -196,6 +196,7 @@ import { TASK_IO, pairIO } from "./task-io.ts";
 import { foldable, settleCovered } from "./pair-cover.ts";
 import { WorkingCopyFailed, ensureWorkingCopy, workingCopyState } from "./qa-working-copy.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
+import { scriptsOf as scriptTableOf } from "../schemas/script-table.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const dryRun = process.argv.includes("--dry-run");
@@ -205,7 +206,7 @@ const explain = process.argv.includes("--explain");
 
 /** The npm script a gate command runs, when it runs exactly one. */
 export function scriptOf(command: string): string | undefined {
-  const m = /^bun run ([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
+  const m = /^bun run (?:cat )?([A-Za-z0-9:_-]+)\s*$/.exec(command.trim());
   return m?.[1];
 }
 
@@ -331,7 +332,7 @@ export const UNGATED_INPUTS: readonly { check: string; writer: string }[] = [
   // merge that changes a rail label leaves /cat-harness/uploads/ stale, and
   // regen reports check:nav-names as "a real defect, not staleness".
   // Measured 2026-10-03: merge-main refused #1804 and #1958 on exactly that,
-  // and `bun run uploads:viz` alone turned the check green.
+  // and `bun run cat uploads:viz` alone turned the check green.
   { check: "uploads:viz:check", writer: "uploads:viz" },
 ];
 
@@ -1048,9 +1049,7 @@ export function hashesToRecord(
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
-  const scripts = (JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf-8")) as {
-    scripts?: Record<string, string>;
-  }).scripts ?? {};
+  const scripts = scriptTableOf(repoRoot);
   const jobs = jobsFromArgv(process.argv);
   const maxPasses = maxPassesFromArgv(process.argv);
   const useCache = cacheEnabled(process.argv, process.env);
@@ -1191,7 +1190,7 @@ if (import.meta.main) {
     if (st.state !== "current") {
       console.log(
         `  QA working copy is ${st.state.toUpperCase()} (${st.why}) — a dry run builds nothing, so the verdict of a ` +
-          "check that reads it may be wrong; `bun run qa:working-copy` first",
+          "check that reads it may be wrong; `bun run cat qa:working-copy` first",
       );
     }
     results = (
@@ -1254,16 +1253,16 @@ if (import.meta.main) {
     if (r.outcome === "regenerated") {
       console.log(
         dryRun
-          ? `  · ${r.check} is stale — would run \`bun run ${r.writer}\``
-          : `  ✓ ${r.check} was stale — regenerated with \`bun run ${r.writer}\``,
+          ? `  · ${r.check} is stale — would run \`bun run cat ${r.writer}\``
+          : `  ✓ ${r.check} was stale — regenerated with \`bun run cat ${r.writer}\``,
       );
     } else if (r.outcome === "unrepaired") {
-      console.log(`  ✗ ${r.check} STILL fails after \`bun run ${r.writer}\` — a real defect, not staleness`);
+      console.log(`  ✗ ${r.check} STILL fails after \`bun run cat ${r.writer}\` — a real defect, not staleness`);
     } else if (r.outcome === "no-writer") {
       console.error(`  ✗ ${r.check} fails and has NO writer counterpart — not staleness`);
     } else if (r.outcome === "writer-failed") {
       console.error(
-        `  ✗ ${r.check} still fails, and its writer \`bun run ${r.writer}\` EXITED NON-ZERO — ` +
+        `  ✗ ${r.check} still fails, and its writer \`bun run cat ${r.writer}\` EXITED NON-ZERO — ` +
           "the declared writer is not a writer; fix the pairing, not the artefact",
       );
     } else if (r.outcome === "no-browser") {
@@ -1302,7 +1301,7 @@ if (import.meta.main) {
     if (outside.length > 0) {
       console.log(
         `NOT covered: ${outside.length} verify/write pair(s) outside this --fast run (browser jobs, other workflows) — ` +
-          `\`bun run regen\` asks them too: ${outside.map((p) => p.check).join(", ")}`,
+          `\`bun run cat regen\` asks them too: ${outside.map((p) => p.check).join(", ")}`,
       );
     }
   }

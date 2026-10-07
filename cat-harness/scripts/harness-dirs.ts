@@ -15,8 +15,8 @@
  * `library/` and not `uploads/`, so a missing `library/` reads as "nobody has
  * ingested anything" rather than as a missing directory.
  *
- *     bun run harness:dirs            # create what is missing
- *     bun run harness:dirs --check    # report only; exit 1 if anything is missing
+ *     bun run cat harness:dirs            # create what is missing
+ *     bun run cat harness:dirs --check    # report only; exit 1 if anything is missing
  *
  * @module scripts/harness-dirs
  * @covers cat-harness

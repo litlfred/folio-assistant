@@ -26,7 +26,7 @@ Rules (from jcet and the PROV measurement, each to be cited verbatim to a held s
 - [x] regen fixed point; CI — green on 66eb33e28, merged as litlfred/folio-assistant#1791 (2026-10-02)
 
 
-Measured 2026-10-01 on #1791: editing cat-harness/scripts/check-l1-complete.ts changes its script_hash, so all 61 library-qa verdicts went stale. `bun run regen` does not run `check:l1-complete -- --write`, so CI caught it (Repository gates, step 'gates that were registered and never run'). This is one more writer in regen's coverage gap.
+Measured 2026-10-01 on #1791: editing cat-harness/scripts/check-l1-complete.ts changes its script_hash, so all 61 library-qa verdicts went stale. `bun run cat regen` does not run `check:l1-complete -- --write`, so CI caught it (Repository gates, step 'gates that were registered and never run'). This is one more writer in regen's coverage gap.
 
 
 ## Summary of Changes (closed 2026-10-02, session_01CVVoavPoCHMLA7AASxG8cH)

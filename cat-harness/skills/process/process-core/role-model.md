@@ -84,7 +84,7 @@ past. It is now absent, and this entry exists for one reason: **the corpus is
 what taught agents to write it.** Copy an adjacent skill's front matter and
 the field comes back — which is exactly how it reached 140 files, six from the
 qou migration and the rest copy-paste, never a decision.
-`bun run check:retired-front-matter` fails if it reappears.
+`bun run cat check:retired-front-matter` fails if it reappears.
 
 Three facts, in case the question comes up again:
 
@@ -503,7 +503,7 @@ said which role it means must not be second-guessed by a string table. A ref
 naming no declared role is a `critical` finding — it is *not* quietly
 name-matched instead.
 
-## The audit — `bun run kg:audit`
+## The audit — `bun run cat kg:audit`
 
 One criterion per join in the sentence at the top. The list below is the
 actor→role→skill→task core; **`KG_CRITERIA` in `schemas/kg-qa.ts` is the
@@ -533,9 +533,9 @@ actor    ──is not a─▶ role       actor-is-not-a-role            minor
 
 | command | does |
 |---|---|
-| `bun run kg:audit` | write the sidecars, print the summary |
-| `bun run kg:audit:check` | fail on a `critical` finding, or on a stale sidecar |
-| `bun run kg:audit:strict` | ...and on `major` too |
+| `bun run cat kg:audit` | write the sidecars, print the summary |
+| `bun run cat kg:audit:check` | fail on a `critical` finding, or on a stale sidecar |
+| `bun run cat kg:audit:strict` | ...and on `major` too |
 | `bun run scripts/kg-audit.ts --json` | the full report set, for a tool |
 
 ### Why sidecars rather than a console report
@@ -682,7 +682,7 @@ uniquely was had no picture.
    A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
    fails if an activity demands something its performer was never given.
-4. `bun run kg:audit`. The kg-qa sidecars it writes are derived results whose
+4. `bun run cat kg:audit`. The kg-qa sidecars it writes are derived results whose
    record the CI job `qa-publish` stores on the `qa-reports` branch; they are
    committed only until bean `5hox` takes them off `main`.
 

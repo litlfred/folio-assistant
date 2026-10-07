@@ -29,7 +29,7 @@ exists for: *which recommendation does this decision rule implement?*
    It writes the PDF, the item's Dublin Core record (`folio-dublin-core/v1`)
    and an `intake.json` whose licence is the record's `dc.rights` — stated only
    when the repository states it.
-2. **Ingest it**: `bun run ingest uploads/<doc_id>/<doc_id>.pdf`. A WHO PDF
+2. **Ingest it**: `bun run cat ingest uploads/<doc_id>/<doc_id>.pdf`. A WHO PDF
    with no outline is ingested by page; that is correct, and Component 1 is
    found by its headings, not by the outline.
 3. **Extract Component 1**:

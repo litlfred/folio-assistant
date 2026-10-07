@@ -3,7 +3,7 @@ layout: default
 title: "مسرد"
 lang: ar
 nav_exclude: true
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 translation_status: unverified
 translation_source: glossary/index.md
 available_locales: ["en", "ar", "es", "fr", "ru", "zh"]

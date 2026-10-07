@@ -56,7 +56,7 @@ run here is worse than the stale verdict you were trying to clear.
 
 `check:ci-health` reads workflows across history. When the question is **one
 commit** (may I merge this PR, must I fix it, or do I not yet know?), the
-tool is `bun run ci:watch <sha>` or `ci:watch --pr <n>`. It answers in three
+tool is `bun run cat ci:watch <sha>` or `ci:watch --pr <n>`. It answers in three
 states, and `undetermined` has its own exit code, never 0.
 
 The trap it exists for arrives as good news. **A conflicted pull request gets

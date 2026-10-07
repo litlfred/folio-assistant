@@ -31,7 +31,7 @@ and can read directly. Here you **cannot see the executor's checkout**. The
 only things you will ever see are what it pushes and what it posts.
 
 **Needs** the `beans` CLI on both sides (`cat-harness/scripts/install-beans.sh`)
-and `bun run beans:claim`. An executor without them reports that it is
+and `bun run cat beans:claim`. An executor without them reports that it is
 blocked; it does not edit bean files by hand.
 
 ## Why this exists: bean `mac1`, 2026-10-02
@@ -154,7 +154,7 @@ WHERE (you were sent here by one line naming this bean, branch and repo)
 START (every command after this runs in <checkout>; never `cd` elsewhere)
   cd <checkout> && git fetch && git switch <branch> && git pull
   test "$(git rev-parse --show-toplevel)" = "$(cd <checkout> && pwd -P)" || { echo "WRONG CHECKOUT"; exit 1; }
-  bun run beans:claim <id>
+  bun run cat beans:claim <id>
   beans show <id>
 If the checkout test fails, or `beans show` does not print a bean with the
 sections <…>, STOP: you are in the wrong checkout or branch. Report that on
@@ -292,7 +292,7 @@ break by re-handing with more emphasis.
 ## Checklist: the executor, before the first irreversible step
 
 - [ ] `beans show <id>` finds the handed bean on this branch; if not, stop
-- [ ] claimed with `bun run beans:claim <id>`, with no `beans create`
+- [ ] claimed with `bun run cat beans:claim <id>`, with no `beans create`
 - [ ] inputs printed and matched against `## Inputs`
 - [ ] report channel re-read for corrections
 - [ ] after the step: report in the channel's format, tag `ready-to-close`

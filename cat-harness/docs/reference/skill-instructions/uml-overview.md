@@ -119,8 +119,8 @@ views?".
 ## Regenerating
 
 ```sh
-bun run uml:overview           # write every overview diagram, page and SVG
-bun run uml:overview:check     # CI: fail if any is stale or orphaned
+bun run cat uml:overview           # write every overview diagram, page and SVG
+bun run cat uml:overview:check     # CI: fail if any is stale or orphaned
 bun run cat-harness/scripts/gen-object-model-uml.ts           # the object model
 bun run cat-harness/scripts/gen-object-model-uml.ts --check   # needs the beans CLI
 ```

@@ -10,7 +10,7 @@
  * five requirements a staged entry still fails, `images` names its arm
  * (`pdf-images.py`) and **`blocks`, `manifest` and `narrative-provenance`
  * named nothing at all** — there was no script to run. `mayPromote` requires
- * every requirement met, so `bun run ingest` could stage a document and
+ * every requirement met, so `bun run cat ingest` could stage a document and
  * nothing could ever promote one.
  *
  * That is not a missing feature, it is a pipeline that cannot terminate, and

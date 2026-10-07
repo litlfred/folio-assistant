@@ -160,7 +160,7 @@ FROM THE LITERATURE (requirements note `cat-harness/docs/proposals/merge-pipelin
       <bpmn:outgoing>t12</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_MergeMembers" name="Merge each member&#10;onto the base&#10;[merge-base]" calledElement="Process_MergeBase">
-      <bpmn:documentation>`merge-base.bpmn` once per member, in order, `--no-regen`; then ONE `bun run regen` over the result. Tool: `merge:train`. Always onto the current base, never a cached one (R5).</bpmn:documentation>
+      <bpmn:documentation>`merge-base.bpmn` once per member, in order, `--no-regen`; then ONE `bun run cat regen` over the result. Tool: `merge:train`. Always onto the current base, never a cached one (R5).</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="prepare-merge"/>
         <cat-harness.processes:bean op="note"/>

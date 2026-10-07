@@ -40,11 +40,11 @@ added:
 | | result |
 |---|---|
 | `bun test` | **9 fail, 1 error** (2166 pass) |
-| `bun run harness:dirs` | exit 1 |
-| `bun run kg:schema:check` | exit 1 |
-| `bun run docs:harness:check` | exit 1 |
-| `bun run check:harness-dirs` | exit 0 |
-| `bun run kg:export` | exit 0 |
+| `bun run cat harness:dirs` | exit 1 |
+| `bun run cat kg:schema:check` | exit 1 |
+| `bun run cat docs:harness:check` | exit 1 |
+| `bun run cat check:harness-dirs` | exit 0 |
+| `bun run cat kg:export` | exit 0 |
 
 The two that pass import core; the three that fail do not. So this is not a
 one-line declaration — it is "every reader of `cat-harness.json` must have

@@ -9,7 +9,7 @@ updated_at: 2026-10-02T22:27:27Z
 parent: folio-assistant-7x5n
 ---
 
-Owner approved 2026-10-02: 'seed:ready: check skills/process to harness / KG separation and align.' The steward applied stability criteria by hand before a seeding review (heavy-mover PRs landed; no open PR touches the next layer; at most 5 touch the layer; none moves files in it). This bean makes that a DMN-backed gateway in kg-separation.bpmn, evaluated by bun run seed:ready --layer <name>, reading the layer map from the instance declarations. Serves S7 mgxw and S3 ga6u.
+Owner approved 2026-10-02: 'seed:ready: check skills/process to harness / KG separation and align.' The steward applied stability criteria by hand before a seeding review (heavy-mover PRs landed; no open PR touches the next layer; at most 5 touch the layer; none moves files in it). This bean makes that a DMN-backed gateway in kg-separation.bpmn, evaluated by bun run cat seed:ready --layer <name>, reading the layer map from the instance declarations. Serves S7 mgxw and S3 ga6u.
 
 ## Done when
 - [ ] survey of existing readiness definitions recorded in the PR
@@ -32,7 +32,7 @@ Owner approved 2026-10-02: 'seed:ready: check skills/process to harness / KG sep
 | PR | #1896, draft, branch `claude/seed-ready`; body holds the full survey and today's measurements |
 | pushed | `078b7fa` script and criteria · `83aba38` tests · `b061195` BPMN gateway and skill text |
 | local, uncommitted | DMN comment fix (`--layer` inside `<!-- -->`), `seed-ready.ts` added to `scripts/partition/instance-rules.ts`, and the regen / `render:bpmn` / `skill:register` outputs |
-| script | `cat-harness/scripts/seed-ready.ts`; six criteria; `bun run seed:ready` |
+| script | `cat-harness/scripts/seed-ready.ts`; six criteria; `bun run cat seed:ready` |
 | tests | `cat-harness/scripts/tests/seed-ready.test.ts`, 15 pass, using the real DMN |
 | decision | `cat-harness/processes/kg/decisions/seed-readiness-gate.dmn` |
 | process | `kg-separation.bpmn`: `GW_SeedReady`, `Task_Drain` (loops back to the gateway), `End_SeedUnknown`; the diagram is shifted +500 from x=3400 |
@@ -46,7 +46,7 @@ Red on `b061195`, and fixed locally:
 - **Stale generated files.** These were the glossary outputs, `kg-separation.svg`, the BPMN translation templates and the LSI page. The regen has run and now reports 92 current.
 
 Next:
-1. Finish `skill:register`, `render:bpmn:check` and `bun run gates`; they are running now.
+1. Finish `skill:register`, `render:bpmn:check` and `bun run cat gates`; they are running now.
 2. Commit and push only when they are clean.
 3. Run `gates --all` if there is disk to spare.
 4. Once CI is green, mark the PR ready.
@@ -72,7 +72,7 @@ The note above (*"separate work needs to make discovery work without the aggrega
 
 ## 2026-10-06 — every staged layer measured "not yet"; open PRs are the blocker
 
-Measured on main `f0bd0c78c` by session https://claude.ai/code/session_01FrpbCpM7BWxGCPsu618MLr, `bun run seed:ready --layer <L>` (no `--rehearse`):
+Measured on main `f0bd0c78c` by session https://claude.ai/code/session_01FrpbCpM7BWxGCPsu618MLr, `bun run cat seed:ready --layer <L>` (no `--rehearse`):
 
 | layer | verdict | rule that fired | next-layer PRs | layer PRs (limit 5) | moving PRs | upward paths |
 |---|---|---|---|---|---|---|

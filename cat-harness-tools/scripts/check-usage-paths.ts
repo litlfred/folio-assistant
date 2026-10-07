@@ -139,6 +139,7 @@ import { join, resolve } from "node:path";
 
 import { repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { trackedPaths } from "../../cat-harness/scripts/check-portable-paths.js";
+import { scriptsOf } from "../../cat-harness/schemas/script-table.ts";
 
 const ROOT = repoRootFor(resolve(import.meta.dir, ".."));
 
@@ -268,10 +269,7 @@ export function scriptFor(rel: string, scripts: Record<string, string>): string 
 /** The `scripts` block of the repository root's `package.json`, or `{}`. */
 export function rootScripts(root: string): Record<string, string> {
   try {
-    const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8")) as {
-      scripts?: Record<string, string>;
-    };
-    return pkg.scripts ?? {};
+    return scriptsOf(root);
   } catch {
     return {};
   }
@@ -399,7 +397,7 @@ export function report(refs: SelfReference[], list: boolean): string[] {
       `✗ ${bad.length} usage string(s) in ${files.size} file(s) name a path that is not the file's own.`,
       "",
       "  A reader copying one of these gets a module-not-found error. Fix with:",
-      "    bun run check:usage-paths --fix",
+      "    bun run cat check:usage-paths --fix",
       "",
     );
     if (!list) {

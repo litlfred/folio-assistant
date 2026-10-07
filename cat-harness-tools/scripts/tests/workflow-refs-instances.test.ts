@@ -138,7 +138,7 @@ describe("render:bpmn covers bootstrap, whatever the walk's shape", () => {
     const assets = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets", "img", "workflows");
     for (const f of diagrams(BOOTSTRAP)) {
       const svg = join(assets, `${basename(f, ".bpmn")}.svg`);
-      expect(existsSync(svg), `${basename(svg)} is missing — run \`bun run render:bpmn\``).toBe(true);
+      expect(existsSync(svg), `${basename(svg)} is missing — run \`bun run cat render:bpmn\``).toBe(true);
     }
   });
 

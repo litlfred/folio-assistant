@@ -157,7 +157,7 @@ Recorded so the next reader does not mistake them for adoption decisions:
   each step is recorded (`InstanceState` history `prov`, `src/workflow/instance.ts`).
 - `cat-harness/scripts/prov-qaqc.ts` — the after-check: derives or reads each
   activity, re-runs `authorizeTask`, writes `docs/assets/prov/<instance>.prov.jsonld`
-  and the `/prov-qaqc/` page. `bun run check:prov-qaqc`, the CI step
+  and the `/prov-qaqc/` page. `bun run cat check:prov-qaqc`, the CI step
   **"PROV-O QA/QC report"** in `.github/workflows/code-quality-gates.yml`;
   advisory — it fails only on stale output, an invalid activity, or an internal
   error.

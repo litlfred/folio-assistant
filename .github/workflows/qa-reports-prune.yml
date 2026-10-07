@@ -85,4 +85,4 @@ jobs:
         run: |
           mode=""
           if [ "$APPLY" = "true" ]; then mode="--apply"; fi
-          bun run qa:prune $mode --pr-states "$RUNNER_TEMP/pr-states.json"
+          bun run cat qa:prune $mode --pr-states "$RUNNER_TEMP/pr-states.json"

@@ -76,7 +76,7 @@ when unsure.
 **Shipped:** `csvw:` in the published `@context` beside the other eight
 prefixes; `schemas/tabular-csvw.ts`; `skills/library/library-core/tabular-metadata.md`;
 `tabular-csv` and `tabular-xlsx` declared as stubs in `tools/index.ts`; and
-`bun run check:tabular-stubs`, wired into the gate set (52 fast / 55 all).
+`bun run cat check:tabular-stubs`, wired into the gate set (52 fast / 55 all).
 
 **No extractor ships.** That was the instruction, and the QA axis is what makes
 it safe: a stub is `not-derivable` naming its tool, a half-stub fails schema

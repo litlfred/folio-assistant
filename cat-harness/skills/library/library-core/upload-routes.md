@@ -55,7 +55,7 @@ other two a commit exists to go back to, and for a conversation nothing does.**
 `git add` the file under the queue, commit, push, open a PR.
 
 **What the route does for you: nothing automatically, and everything you run.**
-A working tree is where the pre-commit hook runs and where `bun run gates`
+A working tree is where the pre-commit hook runs and where `bun run cat gates`
 runs. That is the whole of route 1's advantage and it is entirely conditional
 on your running them.
 
@@ -64,7 +64,7 @@ on your running them.
 | | |
 |---|---|
 | put it in the **declared** queue of the instance that will own it | see §"Which queue" — there are two, and they are different instances' |
-| run the generators the file stales | `uploads/README.md` is generated and lists **every file**, so any addition stales it. `bun run readme:subgraphs`, then `bun run gates` for the rest |
+| run the generators the file stales | `uploads/README.md` is generated and lists **every file**, so any addition stales it. `bun run cat readme:subgraphs`, then `bun run cat gates` for the rest |
 | open a PR | so CI judges it, and so a sibling session can see the queue grew |
 | record where it came from | the commit message is the only place this route has for it |
 
@@ -122,7 +122,7 @@ checkout, because the web UI cannot discharge any of it:
    generators immediately;
 2. navigate to the **declared queue directory** before uploading, not to the
    repository root;
-3. pull, run `bun run readme:subgraphs` and `bun run gates`, and push the
+3. pull, run `bun run cat readme:subgraphs` and `bun run cat gates`, and push the
    result — or ask an agent to, which is the persona below.
 
 ## The persona — a file handed to an agent in a conversation

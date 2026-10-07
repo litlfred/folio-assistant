@@ -137,7 +137,7 @@ layout nor these gates exist there yet; they arrive when #773 merges.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 
 ## 2026-09-30 — the Gemini CLI voice
@@ -196,7 +196,7 @@ Refuse the literal `structure.json` in TypeScript outside a short allowlist, eac
 ## 2026-09-30 — the agentic review axis for skills (the last open item)
 - [x] `skill-voice-review-current` (kg-qa, `minor`, gated by nothing): does a CURRENT review exist of this skill against each ACTIVE voice whose rules are scoped `appliesTo: ["skill"]`. Rule-content verdicts are recorded in the sidecar's `voice_reviews` and are never a finding — the owner's "no formal gate on rule content".
 - [x] Reviews carried across `kg:audit` runs exactly like `pair_attestations`; each pins the skill's content hash and the hash of the voice's skill-scoped rules, so either moving makes it stale (the old review kept as evidence).
-- [x] `bun run voice:review` writes one (refuses a set missing a rule, judging one twice, or an unexplained fail/n/a); `--rules <voice>` prints what to judge, resolved through `extends`.
+- [x] `bun run cat voice:review` writes one (refuses a set missing a rule, judging one twice, or an unexplained fail/n/a); `--rules <voice>` prints what to judge, resolved through `extends`.
 - [x] Agent half: `skill-voice-review` skill (folio-core), bound to the `code-reviewer` lane beside `skills-and-tools`.
 - [x] The four skill-authoring voices now declare `appliesTo: ["skill"]` — until now they claimed every block kind.
 - Measured: 323 skill sidecars each gain only `n/a` (no voice is active in `folio-assistant.config.json`); nothing else moved.

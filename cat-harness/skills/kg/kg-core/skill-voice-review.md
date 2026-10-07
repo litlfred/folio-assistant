@@ -39,7 +39,7 @@ its own product is an assertion, not evidence. So:
 1. **Print the rules you are judging**, resolved through `extends`:
 
    ```sh
-   bun run voice:review -- --rules agent-skill-authoring-claude
+   bun run cat voice:review -- --rules agent-skill-authoring-claude
    ```
 
    A vendor voice lists its own rules and the base's, because an inherited rule
@@ -66,7 +66,7 @@ its own product is an assertion, not evidence. So:
    twice, or leaves a `fail`/`n/a` unexplained:
 
    ```sh
-   bun run voice:review -- --sidecar <instance>/test/results/kg-qa/<skill path>.json \
+   bun run cat voice:review -- --sidecar <instance>/test/results/kg-qa/<skill path>.json \
      --voice agent-skill-authoring-claude --by agent --verdicts verdicts.json
    ```
 
@@ -82,7 +82,7 @@ its own product is an assertion, not evidence. So:
    the attestation file. A store that cannot be read is UNKNOWN and the writer
    refuses rather than overwriting it.
 
-5. **Run `bun run kg:audit`** so the sidecar's criterion reads the new review
+5. **Run `bun run cat kg:audit`** so the sidecar's criterion reads the new review
    from the store.
 
 ## When the criterion reports stale

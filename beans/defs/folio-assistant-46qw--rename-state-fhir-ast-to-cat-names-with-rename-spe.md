@@ -22,7 +22,7 @@ WHERE (you were sent here by one line naming this bean, branch and repo)
 
 START
   cd ~/space_cats/folio-assistant && git fetch origin claude/blissful-ride-c2f26u-rename-script && git switch claude/blissful-ride-c2f26u-rename-script && git pull
-  bun run beans:claim folio-assistant-46qw
+  bun run cat beans:claim folio-assistant-46qw
   beans show folio-assistant-46qw
 If `beans show` does not print a bean with the sections `## Brief`, `## Pins` and `## Steps`, STOP: you are in the wrong checkout or branch. Report that on #1928. Never run `beans create` for this work.
 

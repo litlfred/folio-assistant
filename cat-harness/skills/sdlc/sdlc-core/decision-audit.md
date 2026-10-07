@@ -62,7 +62,7 @@ key, a workflow instance under `beans/workflows/`.
 a working copy: its record is the entry the CI job `qa-publish` stores on the
 orphan `qa-reports` branch, keyed `main/<sha>/` or `pr/<n>/<sha>/` (arc
 `3fva`), and the committed copy goes when bean `5hox` removes it. So cite it
-as `qa-reports:main/<sha>/<path>` — the same locator `bun run qa:fetch --ref`
+as `qa-reports:main/<sha>/<path>` — the same locator `bun run cat qa:fetch --ref`
 reads — or the citation dangles the day the file leaves `main`. A judgement in
 `test/attestations/` stays on `main` and is cited by path.
 

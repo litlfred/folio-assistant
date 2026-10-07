@@ -6,7 +6,7 @@ kinds, the adapters, and the `folio` graph typology itself.
 It sits between `bootstrap/` (what an agent reads before anything is installed)
 and the science layer, and it is composed **on top of** the agentic harness: it
 may import from the harness, and the harness may never import from it. That
-direction is checked — `bun run check:partition:edges` reports any edge running
+direction is checked — `bun run cat check:partition:edges` reports any edge running
 the wrong way.
 
 **Contents**

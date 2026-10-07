@@ -39,7 +39,7 @@ merge manager has to order against #1952 anyway.
 - [ ] `ci-health.md` names the merge-main comment as the second instance of the
       edited-in-place rule, with the three conditions that stay loud (new,
       changed cause, systemic) and the four records a quiet failure keeps
-- [ ] `bun run skill:register` run, every derived artefact current
+- [ ] `bun run cat skill:register` run, every derived artefact current
 - [ ] nothing restated that the workflow's own comments or
       `merge-main-comment.ts`'s docblock already carry — the skill wins, the
       code points at it

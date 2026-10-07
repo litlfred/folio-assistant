@@ -111,5 +111,5 @@ Closed on evidence per AGENTS.md bean discipline:
 1. Landed on `main` in PR #1844 (commit `c7cb4ab0913cb8b0e39dc170d526df47aff3e042`: *"Staging cleanup could not run, and retirement did not stick — fix both, and gate the first (#1844)"*).
 2. `feature-staging.yml` and `folio-staging.yml` updated with `submodules: true` on platform checkouts.
 3. Created `cat-harness-tools/scripts/check-workflow-submodules.ts` and 15 tests in `cat-harness-tools/scripts/tests/workflow-submodules.test.ts` (all 15 pass).
-4. `bun run check:workflow-submodules` passes cleanly across all 36 workflow files.
+4. `bun run cat check:workflow-submodules` passes cleanly across all 36 workflow files.
 5. Bean hygiene tests pass.

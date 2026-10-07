@@ -41,7 +41,7 @@ Split by FILE AREA so the lanes don't collide:
 - **G** (session_01PpkdTJt4sgLQ82hbnTb1sU): steps 1–3, skills and processes (`*/skills/**`, `*/processes/**`).
 - **H** (session_012dn4UVLnHDxP1qR9xmotSw): step 4 and the doc candidates of step 3 (`cat-harness/docs/**`, `content/docs/**`).
 - **Coordinator**: step 0 (hard-coded upward paths), step 5 (code), then S5 `txue`.
-Generated files conflict across lanes by design; each lane merges main and runs `bun run regen`.
+Generated files conflict across lanes by design; each lane merges main and runs `bun run cat regen`.
 
 ## Step 0 progress, 2026-10-06 07:25Z
 

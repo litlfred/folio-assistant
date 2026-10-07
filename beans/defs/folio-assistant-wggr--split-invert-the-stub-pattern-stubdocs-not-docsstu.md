@@ -535,7 +535,7 @@ boundary, and main is right), the `determine-intent` -> `confirm-harness` and
 already placed. Also relocated 11 files main added under `folio-assistant/`
 with no counterpart here, which the rename pass structurally could not see.
 
-Verified: 3078 tests 0 fail, `bun run gates --all` the whole set, tsc and
+Verified: 3078 tests 0 fail, `bun run cat gates --all` the whole set, tsc and
 eslint clean.
 
 

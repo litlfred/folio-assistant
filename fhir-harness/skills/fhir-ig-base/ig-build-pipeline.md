@@ -249,7 +249,7 @@ this layer; this layer may not reference the WHO package. A violation fails
 nothing on its own — the build stays green and the layer simply stops being
 usable for a non-WHO IG, which is the failure this list exists to make visible.
 
-**It is a gate now: `bun run check:fhir-harness-exclusions`** (bean `wm63`).
+**It is a gate now: `bun run cat check:fhir-harness-exclusions`** (bean `wm63`).
 The checker lives in the layer that owns the excluded names, not here, because
 a copy of this list inside `fhir-harness` would be its own first violation. A
 mention is not a dependency. Comments, markdown, and JSON `_comment` or

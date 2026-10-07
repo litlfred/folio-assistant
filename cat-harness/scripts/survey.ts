@@ -10,8 +10,8 @@
  * guessed.
  *
  * ```sh
- * bun run survey:owed                     # what is NOT covered, against origin/main
- * bun run survey:publish --from <sha> --axis beans="…" --axis ci="…"
+ * bun run cat survey:owed                     # what is NOT covered, against origin/main
+ * bun run cat survey:publish --from <sha> --axis beans="…" --axis ci="…"
  * ```
  *
  * ## `survey:owed` is the whole point, and it answers in three states

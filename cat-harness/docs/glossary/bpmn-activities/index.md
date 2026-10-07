@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`
 title: "Glossary: BPMN activities"
 parent: Glossary
 nav_order: 3
@@ -95,7 +95,7 @@ be a term this corpus is right to coin.</p>
 11 · Verify on a fresh clone <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>bun run sub-kg:verify-clone --repo &lt;owner&gt;/&lt;name&gt; --ref &lt;branch&gt;</code> (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with &quot;Cannot find module&quot; because nothing in a seed runs standalone until the seam is re-pointed.</p>
+<p><code>bun run cat sub-kg:verify-clone --repo &lt;owner&gt;/&lt;name&gt; --ref &lt;branch&gt;</code> (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with &quot;Cannot find module&quot; because nothing in a seed runs standalone until the seam is re-pointed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_FreshClone</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_release" data-fa-state="extracted" data-fa-gloss="">
@@ -151,7 +151,7 @@ be a term this corpus is right to coin.</p>
 2a · Measure — unassigned column FIRST <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>bun run check:partition</code>. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</p>
+<p><code>bun run cat check:partition</code>. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/graph-detanglement.bpmn"><code>cat-harness/processes/kg/graph-detanglement.bpmn#Task_Measure</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_move" data-fa-state="extracted" data-fa-gloss="">
@@ -186,7 +186,7 @@ be a term this corpus is right to coin.</p>
 3 · Scaffold the folio repo [content-plan] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Create the folio repository with <code>bun run init-folio</code> (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</p>
+<p>Create the folio repository with <code>bun run cat init-folio</code> (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/processes/content/authoring-a-paper.bpmn"><code>folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Task_Scaffold</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-bpmn-activities--process_paperauthoring.task_authorblocks" data-fa-state="extracted" data-fa-gloss="">
@@ -249,7 +249,7 @@ be a term this corpus is right to coin.</p>
 5 · Rehearse self-contained <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>bun run seed:ready --layer &lt;name&gt; --rehearse</code> copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page.</p>
+<p><code>bun run cat seed:ready --layer &lt;name&gt; --rehearse</code> copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/sub-kg-lifecycle.bpmn"><code>cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Rehearse</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_subkglifecycle.task_report" data-fa-state="extracted" data-fa-gloss="">
@@ -736,7 +736,7 @@ Attach the evidence to the recommendation [content-author] <span class="fa-gloss
 Attest the pair, with a reason <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The prose holds: record it with <code>bun run pairs:attest -- --sidecar … --by agent|human --reason &quot;…&quot;</code>, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.</p>
+<p>The prose holds: record it with <code>bun run cat pairs:attest -- --sidecar … --by agent|human --reason &quot;…&quot;</code>, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/narrative-code-review.bpmn"><code>cat-harness/processes/sdlc/narrative-code-review.bpmn#A_Attest</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_mergetrain.task_attribute" data-fa-state="extracted" data-fa-gloss="">
@@ -894,7 +894,7 @@ Build each slice into _site at deploy <span class="fa-gloss-status">candidate, e
 Build it locally and measure the file <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Run <code>bun run slice:sqlite -- --slice &lt;name&gt; --out &lt;scratch&gt;</code> and read the manifest: <code>bytes</code>, the row counts, the payload count and bytes, <code>overBudget</code>, <code>duplicateIds</code> and <code>findings</code>. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces.</p>
+<p>Run <code>bun run cat slice:sqlite -- --slice &lt;name&gt; --out &lt;scratch&gt;</code> and read the manifest: <code>bytes</code>, the row counts, the payload count and bytes, <code>overBudget</code>, <code>duplicateIds</code> and <code>findings</code>. Record the measurement on the bean with its provenance (the command and the date), beside the size of the source it replaces.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/slice-sqlite-publish.bpmn"><code>cat-harness/processes/kg/slice-sqlite-publish.bpmn#A_Measure</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_contentchangereview.task_buildstaging" data-fa-state="extracted" data-fa-gloss="">
@@ -2639,7 +2639,7 @@ Materialize remote content (the five gates) <span class="fa-gloss-status">candid
 Measure the signals <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Files and bytes per instance, clone cost (<code>bun run health</code>), gate time, merge contention, the candidate's cohesion and cut (<code>kg:detangle</code>), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger.</p>
+<p>Files and bytes per instance, clone cost (<code>bun run cat health</code>), gate time, merge contention, the candidate's cohesion and cut (<code>kg:detangle</code>), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/kg-separation.bpmn"><code>cat-harness/processes/kg/kg-separation.bpmn#Task_Measure</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_wireframedesignreview.d_check" data-fa-state="extracted" data-fa-gloss="">
@@ -2653,7 +2653,7 @@ Mechanical checks, both viewports <span class="fa-gloss-status">candidate, extra
 Merge each member onto the base [merge-base] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>merge-base.bpmn</code> once per member, in order, <code>--no-regen</code>; then ONE <code>bun run regen</code> over the result. Tool: <code>merge:train</code>. Always onto the current base, never a cached one (R5).</p>
+<p><code>merge-base.bpmn</code> once per member, in order, <code>--no-regen</code>; then ONE <code>bun run cat regen</code> over the result. Tool: <code>merge:train</code>. Always onto the current base, never a cached one (R5).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-train.bpmn"><code>cat-harness/processes/sdlc/merge-train.bpmn#Call_MergeMembers</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_mergerefusal.task_agentfix" data-fa-state="extracted" data-fa-gloss="">
@@ -2709,7 +2709,7 @@ Mount the branch tip at the declared path <span class="fa-gloss-status">candidat
 Mount the remote tree at its pin <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A <code>remote</code> source (bean <code>0mpw</code>): another repository's tree at a full 40-character commit. <code>bun run mount:remote</code> lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through <code>remoteMounts</code>, which expands a whole harness and its closure — <code>Process_MountDependency</code>.</p>
+<p>A <code>remote</code> source (bean <code>0mpw</code>): another repository's tree at a full 40-character commit. <code>bun run cat mount:remote</code> lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through <code>remoteMounts</code>, which expands a whole harness and its closure — <code>Process_MountDependency</code>.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg/mount-subgraph.bpmn"><code>cat-harness/processes/kg/mount-subgraph.bpmn#Task_MountRemotePin</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_l1documentingestion.task_promote" data-fa-state="extracted" data-fa-gloss="">
@@ -3141,7 +3141,7 @@ Prepare domain glossary <span class="fa-gloss-status">candidate, extracted</span
 Prepare the merge, and watch it through <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>prepare-merge</code> brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS <code>merge-base.bpmn</code> (<code>bun run merge:main</code>): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean <code>y7b3</code>, #1707). <code>watch</code> follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.</p>
+<p><code>prepare-merge</code> brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS <code>merge-base.bpmn</code> (<code>bun run cat merge:main</code>): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean <code>y7b3</code>, #1707). <code>watch</code> follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-change-review.bpmn"><code>cat-harness/processes/sdlc/code-change-review.bpmn#Task_PrepareMerge</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_prioritizebottlenecks" data-fa-state="extracted" data-fa-gloss="">
@@ -3190,7 +3190,7 @@ Prose and the code it describes <span class="fa-gloss-status">candidate, extract
 Prose blocks enter the summary queue [l1-document-ingestion] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Owner, 2026-09-24: &quot;Make as QA sidecar as part of general doc ingestion to slowly drain.&quot; Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: <code>bun run summaries:next -- --n K</code> hands it the next K blocks with their text, it writes a short summary of each in its own words, and <code>bun run summaries:record</code> writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and <code>ingested</code>. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (<code>block-summaries</code>) without failing on it. Confirming or rejecting a draft is a person's act, in <code>bun run narratives</code>.</p>
+<p>Owner, 2026-09-24: &quot;Make as QA sidecar as part of general doc ingestion to slowly drain.&quot; Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: <code>bun run cat summaries:next -- --n K</code> hands it the next K blocks with their text, it writes a short summary of each in its own words, and <code>bun run cat summaries:record</code> writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and <code>ingested</code>. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (<code>block-summaries</code>) without failing on it. Confirming or rejecting a draft is a person's act, in <code>bun run cat narratives</code>.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn"><code>folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_SummaryQueue</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_publication.callactivity_publiccomment" data-fa-state="extracted" data-fa-gloss="">
@@ -3204,7 +3204,7 @@ Public comment on the review version <span class="fa-gloss-status">candidate, ex
 Publish QA results to qa-reports (NOT A GATE) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Bean <code>16ei</code>, arc <code>3fva</code>. After Task_RepositoryGates, WHATEVER it concluded (<code>needs: gates</code> with <code>always()</code>), <code>qa:publish --github</code> writes this run's <code>test/results</code> trees to the orphan <code>qa-reports</code> branch: <code>main/&lt;sha&gt;/</code> on a push to main, <code>pr/&lt;n&gt;/&lt;head-sha&gt;/</code> on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a <code>::notice</code> naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding <code>contents: write</code>, which is also how <code>bun run gates</code> knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-<code>-f</code> retry loop are <code>qa-publish.bpmn</code>, which also draws the retention run that takes entries off the branch again.</p>
+<p>Bean <code>16ei</code>, arc <code>3fva</code>. After Task_RepositoryGates, WHATEVER it concluded (<code>needs: gates</code> with <code>always()</code>), <code>qa:publish --github</code> writes this run's <code>test/results</code> trees to the orphan <code>qa-reports</code> branch: <code>main/&lt;sha&gt;/</code> on a push to main, <code>pr/&lt;n&gt;/&lt;head-sha&gt;/</code> on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a <code>::notice</code> naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding <code>contents: write</code>, which is also how <code>bun run cat gates</code> knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-<code>-f</code> retry loop are <code>qa-publish.bpmn</code>, which also draws the retention run that takes entries off the branch again.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_QaPublish</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-bpmn-activities--process_l3fhir.task_publishig" data-fa-state="extracted" data-fa-gloss="">
@@ -3380,7 +3380,7 @@ Read the original — and write nothing <span class="fa-gloss-status">candidate,
 Read the pair checks' findings <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — <code>bun run pairs:claims</code> prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing.</p>
+<p>Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — <code>bun run cat pairs:claims</code> prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/narrative-code-review.bpmn"><code>cat-harness/processes/sdlc/narrative-code-review.bpmn#A_ReadPairFindings</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreampinwatch.task_readpins" data-fa-state="extracted" data-fa-gloss="">
@@ -3604,7 +3604,7 @@ Record the hold or the decline <span class="fa-gloss-status">candidate, extracte
 Record the L1 completeness verdict <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/.</p>
+<p>Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run cat check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn"><code>folio-assistant-core/processes/library/ingest-l1-completeness-gate.bpmn#Task_Verdict</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_optionsanalysis.a_record" data-fa-state="extracted" data-fa-gloss="">
@@ -3786,7 +3786,7 @@ Regenerate the context, block, library and site graphs — and diff <span class=
 Regenerate, asking every CI gate <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>bun run regen</code>: every check/writer pair the CI workflow runs, repeated until the tree settles.</p>
+<p><code>bun run cat regen</code>: every check/writer pair the CI workflow runs, repeated until the tree settles.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/merge-base.bpmn"><code>cat-harness/processes/sdlc/merge-base.bpmn#Task_Regen</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_unrungates" data-fa-state="extracted" data-fa-gloss="">
@@ -3947,7 +3947,7 @@ Report what would move — sizes, and what breaks <span class="fa-gloss-status">
 Repository gates (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 <code>bun run</code> invocations in all. A SEPARATE job from Task_TypeScript since bean <code>om30</code>: they were one job in which <code>bun test</code> came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on <code>main</code> meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is <code>xom7</code> at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. <code>bun run gates</code> derives its list from BOTH jobs, so the local set still cannot drift from CI's.</p>
+<p>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 <code>bun run</code> invocations in all. A SEPARATE job from Task_TypeScript since bean <code>om30</code>: they were one job in which <code>bun test</code> came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on <code>main</code> meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is <code>xom7</code> at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. <code>bun run cat gates</code> derives its list from BOTH jobs, so the local set still cannot drift from CI's.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_RepositoryGates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_testplanexecution.a_request" data-fa-state="extracted" data-fa-gloss="">
@@ -4304,7 +4304,7 @@ Run check:ci-health, WRITING the report file <span class="fa-gloss-status">candi
 Run every verifier over the export <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Run the verifier set (scripts/publish-verify.ts, <code>bun run publish:verify -- --dir &lt;site&gt;</code>) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block.</p>
+<p>Run the verifier set (scripts/publish-verify.ts, <code>bun run cat publish:verify -- --dir &lt;site&gt;</code>) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/publish-verification.bpmn"><code>cat-harness/processes/sdlc/publish-verification.bpmn#A_Verify</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_signoff.a_recordkg" data-fa-state="extracted" data-fa-gloss="">
@@ -4339,7 +4339,7 @@ Run the gates against the merge of head into base <span class="fa-gloss-status">
 Run the health checks, keeping the report either way <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.</p>
+<p>Run bun run cat health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/repository-health-watch.bpmn"><code>cat-harness/processes/sdlc/repository-health-watch.bpmn#Task_Check</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codereview.task_runnodeaudits" data-fa-state="extracted" data-fa-gloss="">
@@ -4658,7 +4658,7 @@ SIZE what fraction, and what the whole would cost <span class="fa-gloss-status">
 Skill-registration chain (UNMASKED) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Runs the five <code>--check</code> commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, auto:docs:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read &quot;the only place those five are read against the tree as checked out&quot;, because at the time all six lived in one job behind <code>bun test</code>, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean <code>ymsu</code>). Task_RepositoryGates is now a separate job that runs all six and never runs <code>bun test</code>, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (<code>bun run skill:register</code>) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean <code>v625</code>'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on <code>kg:detangle:check</code> and the cause was <code>kg-detangle.ts</code> counting 1214 files of a gitignored <code>node_modules/</code> as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of <code>bun test</code> either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans <code>v625</code>, <code>fjwi</code>.</p>
+<p>Runs the five <code>--check</code> commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, auto:docs:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read &quot;the only place those five are read against the tree as checked out&quot;, because at the time all six lived in one job behind <code>bun test</code>, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean <code>ymsu</code>). Task_RepositoryGates is now a separate job that runs all six and never runs <code>bun test</code>, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (<code>bun run cat skill:register</code>) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean <code>v625</code>'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on <code>kg:detangle:check</code> and the cause was <code>kg-detangle.ts</code> counting 1214 files of a gitignored <code>node_modules/</code> as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of <code>bun test</code> either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans <code>v625</code>, <code>fjwi</code>.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_SkillChain</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_contentchangereview.task_sliceandassign" data-fa-state="extracted" data-fa-gloss="">
@@ -4872,7 +4872,7 @@ Triage: confirm the anchor, type and priority <span class="fa-gloss-status">cand
 TypeScript: lint, types and tests (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Three checks: <code>bun run lint</code>, <code>tsc --noEmit</code> and <code>bun test</code>. The repository gates it used to carry are Task_RepositoryGates now (bean <code>om30</code>). Since bean <code>dlqu</code> it is three jobs: <code>typescript-static</code> (lint, then typecheck), <code>typescript-test</code> (<code>bun test</code> as four SEQUENTIAL shards on separate machines — Bun's in-process <code>--parallel</code> worker pool hung at both 4 and 2 workers, measured — the shard passed in <code>BUN_OPTIONS</code> so the command stays the one <code>bun run gates</code> runs locally) and <code>typescript</code>, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — <code>bun test</code> LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three <code>main</code> runs before the change: <code>bun test</code> alone was 7m30s-7m45s of an 8m14s-8m33s job.</p>
+<p>Three checks: <code>bun run cat lint</code>, <code>tsc --noEmit</code> and <code>bun test</code>. The repository gates it used to carry are Task_RepositoryGates now (bean <code>om30</code>). Since bean <code>dlqu</code> it is three jobs: <code>typescript-static</code> (lint, then typecheck), <code>typescript-test</code> (<code>bun test</code> as four SEQUENTIAL shards on separate machines — Bun's in-process <code>--parallel</code> worker pool hung at both 4 and 2 workers, measured — the shard passed in <code>BUN_OPTIONS</code> so the command stays the one <code>bun run cat gates</code> runs locally) and <code>typescript</code>, which carries the check name and is green only when the other two succeeded. The step-order rule the single job needed — <code>bun test</code> LAST, because Actions stops at the first failing step and a red-by-decision test would otherwise mask lint and typecheck — no longer has anything to order: separate jobs cannot mask each other. Measured on three <code>main</code> runs before the change: <code>bun test</code> alone was 7m30s-7m45s of an 8m14s-8m33s job.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sdlc/code-quality-gates.bpmn"><code>cat-harness/processes/sdlc/code-quality-gates.bpmn#Task_TypeScript</code></a></p>
 </dd>
 </dl>
@@ -4982,7 +4982,7 @@ Work, keeping the body current (this is 'edit') <span class="fa-gloss-status">ca
 WORKING what changed upstream <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Compare the recorded upstreamVersion against the source. <code>could not reach the source</code> is a THIRD answer and is never reported as <code>unchanged</code> — an unreachable source is the sourceLoss gate firing late. Reachability is asked by <code>bun run sources:liveness &lt;instance&gt;</code> against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4).</p>
+<p>Compare the recorded upstreamVersion against the source. <code>could not reach the source</code> is a THIRD answer and is never reported as <code>unchanged</code> — an unreachable source is the sourceLoss gate firing late. Reachability is asked by <code>bun run cat sources:liveness &lt;instance&gt;</code> against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/library/refresh-materialized.bpmn"><code>cat-harness/processes/library/refresh-materialized.bpmn#Task_Upstream</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_buildl1kg.task_dublin" data-fa-state="extracted" data-fa-gloss="">

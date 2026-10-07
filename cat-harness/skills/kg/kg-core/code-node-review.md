@@ -73,8 +73,8 @@ Reviewed as nodes, the recurring defect is a file that does not say what it is:
 ## The audits to run, and what they cannot tell you
 
 ```sh
-bun run check:tools        # Tool nodes: declared skills resolve
-bun run kg:audit           # the KG joins, per node, into kg-qa/ sidecars
+bun run cat check:tools        # Tool nodes: declared skills resolve
+bun run cat kg:audit           # the KG joins, per node, into kg-qa/ sidecars
 bun run typecheck          # a malformed node fails here by design
 ```
 

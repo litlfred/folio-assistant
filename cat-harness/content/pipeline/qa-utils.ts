@@ -1586,7 +1586,7 @@ export function saveQaScriptSidecar(
   // kept the churn alive: the committed sidecars carried CI's `bun-1.3.14`, a
   // local run is `bun-1.3.11`, so every sweep from a different bun rewrote all
   // 72. `init-folio-qa.test.ts` runs a real sweep, which made `bun test` dirty
-  // the tree and `bun run gates` report "NOT clean" on every branch. No reader
+  // the tree and `bun run cat gates` report "NOT clean" on every branch. No reader
   // uses a script sidecar's `engine_version` for freshness (`entryIsFresh`
   // compares hashes), so it is left as a record of the last CONTENT change's
   // engine rather than the last run's.

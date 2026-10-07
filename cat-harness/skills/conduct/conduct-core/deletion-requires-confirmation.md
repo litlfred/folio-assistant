@@ -247,7 +247,7 @@ say that in as many words, so the person can see they are being asked to act on
 a derivation rather than on a measurement.
 
 This is not bookkeeping. 2026-09-25, the same `STAGING/` previews as `plj1`
-above: `bun run health` reported **one** orphaned preview, named and sized. A
+above: `bun run cat health` reported **one** orphaned preview, named and sized. A
 review re-implemented the slug rule inline — `[^a-zA-Z0-9]+`, where
 `feature-staging.yml` preserves `.`, `_` and `-` — reported **three**, and put
 that number to the owner, who authorised deleting "the 3 orphans". Two of the

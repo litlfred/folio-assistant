@@ -54,7 +54,7 @@ layer rather than to the gate layer.
 - [ ] a new failure, a changed cause, a systemic failure and a `select` failure all still fail the run
 - [ ] every quiet failure is still recorded in the PR comment AND the job summary, and its member job is still red
 - [ ] `cat-harness/scripts/tests/merge-main-workflow.test.ts` covers the new behaviour
-- [ ] bun run gates green, PR CI green, PR marked ready-to-merge
+- [ ] bun run cat gates green, PR CI green, PR marked ready-to-merge
 
 ## Landed on `claude/merge-main-notification-hygiene` → PR #2046
 

@@ -17,7 +17,7 @@ description: What an ingested file may be CALLED. Read before adding anything to
 that name reaches a generated Markdown link.** So the name is an interface, not
 a label.
 
-`bun run check:upload-names` reports; `check:upload-names:check` gates;
+`bun run cat check:upload-names` reports; `check:upload-names:check` gates;
 `check:upload-names:fix` renames with `git mv`.
 
 ## The rule

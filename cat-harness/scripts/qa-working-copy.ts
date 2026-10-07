@@ -12,7 +12,7 @@
  * Since `5hox` the QA results tree (`*‍/test/results/`) is computed, not
  * committed. Generators read it from disk — `uml:overview`, `readme:subgraphs`
  * — and so does every gate that judges it. Measured 2026-10-06 on #2267: a
- * container held only the `kg-qa` part of the tree, `bun run regen` rewrote
+ * container held only the `kg-qa` part of the tree, `bun run cat regen` rewrote
  * the QA overview from that partial copy, every local check passed, and CI,
  * which builds the copy first, went red on `uml:overview:check` (10 files).
  *
@@ -45,9 +45,9 @@
  * resolve themselves (`--against`), not on what the writers wrote.
  *
  * Usage:
- *   bun run qa:working-copy              # build it (as CI does) and stamp it
- *   bun run qa:working-copy -- --if-stale  # build it only when the stamp is not current
- *   bun run qa:working-copy -- --status    # print the state, change nothing (exit 0 current, 1 stale, 2 undetermined)
+ *   bun run cat qa:working-copy              # build it (as CI does) and stamp it
+ *   bun run cat qa:working-copy -- --if-stale  # build it only when the stamp is not current
+ *   bun run cat qa:working-copy -- --status    # print the state, change nothing (exit 0 current, 1 stale, 2 undetermined)
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";

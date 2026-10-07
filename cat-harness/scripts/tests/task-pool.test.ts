@@ -48,6 +48,7 @@ import {
 } from "../regen-after-merge.ts";
 import { GateSkipper, gateSegments, type Gate } from "../gates.ts";
 import { TASK_IO, collectTaskIo, pairIO, gateReadsOnly } from "../task-io.ts";
+import { scriptsOf } from "../../schemas/script-table.ts";
 
 const tick = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -499,9 +500,7 @@ describe("task-io declarations", () => {
   test("every declared script exists in package.json", async () => {
     const { readFileSync } = await import("node:fs");
     const { repoRootFor } = await import("../../schemas/cat-harness.ts");
-    const pkg = JSON.parse(readFileSync(join(repoRootFor(join(import.meta.dir, "..", "..")), "package.json"), "utf-8")) as {
-      scripts: Record<string, string>;
-    };
+    const pkg = { scripts: scriptsOf(repoRootFor(join(import.meta.dir, "..", ".."))) };
     for (const name of Object.keys(TASK_IO)) expect(pkg.scripts[name], `${name} is not a script`).toBeDefined();
   });
 

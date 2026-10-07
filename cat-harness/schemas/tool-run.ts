@@ -136,7 +136,7 @@ export interface ListedToolRun {
  *
  * Bean `oq1j` (arc `3fva`, reader `R26`). Run records are derived QA, and
  * derived QA leaves `main` for the `qa-reports` branch (owner rulings D1/D4).
- * After that, a checkout that has not run `bun run qa:fetch` has no
+ * After that, a checkout that has not run `bun run cat qa:fetch` has no
  * `tool-runs/` directory at all. An empty list would then read as "examined,
  * and no record names an undeclared Tool". That is the `dh4f` defect: a miss
  * read as clean. Git stores no empty directory, so an absent one cannot be
@@ -155,7 +155,7 @@ export function listToolRuns(instanceRoot: string): ToolRunListing {
       state: "unknown",
       reason:
         `no ${TOOL_RUNS_DIR.split("\\").join("/")}/ in the checkout: never written here, or not fetched from the qa-reports ` +
-        "branch (`bun run qa:fetch`). An absent directory cannot be told from an empty one, so no record was examined",
+        "branch (`bun run cat qa:fetch`). An absent directory cannot be told from an empty one, so no record was examined",
     };
   }
   const out: ListedToolRun[] = [];

@@ -40,7 +40,7 @@ presenting it as identity. `workflow_gate` takes the same `actor` and `target`,
 so ask it before doing the work
 ([`task-authorization`](../process-core/task-authorization.md)).
 
-**The history is checked again afterwards.** `bun run prov:qaqc` turns every
+**The history is checked again afterwards.** `bun run cat prov:qaqc` turns every
 instance's history into a W3C PROV-O log and re-runs the same check on each
 step; `claude` or a login in `actor`, rather than a declared actor id, shows up
 there as `undeclared-actor`. It is advisory: the findings are listed on the

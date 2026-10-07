@@ -23,15 +23,14 @@ import { COVERED } from "../cat-harness/scripts/pair-cover.ts";
 import { repairableGates } from "../cat-harness/scripts/regen-after-merge.ts";
 import { loadGates } from "../cat-harness/scripts/gates.ts";
 import { repoRootFor } from "../cat-harness/schemas/cat-harness.ts";
+import { scriptsOf } from "../cat-harness/schemas/script-table.ts";
 
 /** The directory this test was written in (`cat-harness-tools/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
 const ORIGIN_DIR = join(import.meta.dir, "../cat-harness-tools/scripts/tests");
 
 
 const REPO = repoRootFor(join(ORIGIN_DIR, "..", "..", "..", "cat-harness"));
-const SCRIPTS = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as {
-  scripts: Record<string, string>;
-}).scripts;
+const SCRIPTS = scriptsOf(REPO);
 
 describe("the equivalences still hold in this tree", () => {
   test("every residual is a script, and every coverer a pair regen asks", () => {

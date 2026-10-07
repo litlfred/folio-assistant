@@ -12,7 +12,7 @@ parent: folio-assistant-7x5n
 Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 2 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.
 
 ## What
-`bun run regen` asks its ~82 verify/write pairs one at a time, and `bun run gates` runs its fast set serially. Run independent checks in parallel, bounded by the CPU count, keeping the output grouped per check and the exit status per check.
+`bun run cat regen` asks its ~82 verify/write pairs one at a time, and `bun run cat gates` runs its fast set serially. Run independent checks in parallel, bounded by the CPU count, keeping the output grouped per check and the exit status per check.
 
 ## Why
 d33q measured regen at ~20–46 min and gates at 29–32 min per round on a 4-core box. Most `--check` scripts read disjoint inputs and write nothing.

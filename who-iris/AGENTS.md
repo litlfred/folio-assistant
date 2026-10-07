@@ -14,7 +14,7 @@ misreading what this instance is for.
 
 **No exact count is given here on purpose.** This line said *"Twelve nodes"*
 and was wrong within a day of being written — a collection node landed and
-nothing made the sentence follow. `bun run check:catalogue` prints the census,
+nothing made the sentence follow. `bun run cat check:catalogue` prints the census,
 and the catalogue is the answer; a count in prose is a claim rather than
 evidence. The two upstream figures above ARE exact because they are
 transcribed from IRIS's own pages and recorded in `catalogue/catalogue.json`
@@ -30,7 +30,7 @@ Holding a thing has a cost that referencing it does not.
 **invalid**, and the check enforces it:
 
 ```sh
-bun run check:catalogue
+bun run cat check:catalogue
 ```
 
 The reason is a distinction worth keeping: **"the author did not say" and

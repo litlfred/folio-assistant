@@ -61,7 +61,7 @@ The order is the load-bearing part, not the individual steps.
 `folio-assistant` is **the platform, not the content**. A folio — a paper, a
 WHO SMART Guideline, an IG — lives in a *separate* repository that depends on
 this one. If you are initializing a repository meant to hold subject matter,
-you want a folio instance, and `bun run init-folio` is the tool for it.
+you want a folio instance, and `bun run cat init-folio` is the tool for it.
 
 Two consequences worth knowing before you write the declaration:
 

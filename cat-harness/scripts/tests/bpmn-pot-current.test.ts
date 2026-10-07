@@ -21,7 +21,7 @@
  *
  * ## Read a failure here as one of two things
  *
- * A diagram you added needs `bun run translate-bpmn --extract`, or a diagram
+ * A diagram you added needs `bun run cat translate-bpmn --extract`, or a diagram
  * you edited changed a label and the template must follow. Both are the same
  * one-line fix. What a failure is NEVER is a reason to drop the locale from
  * the gate.
@@ -64,7 +64,7 @@ describe("BPMN translation templates", () => {
       cwd: root,
       encoding: "utf-8",
     });
-    expect(r.stdout, "run `bun run translate-bpmn --extract`").toContain("never extracted");
+    expect(r.stdout, "run `bun run cat translate-bpmn --extract`").toContain("never extracted");
     expect(r.status).toBe(0);
   });
 });

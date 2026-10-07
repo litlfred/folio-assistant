@@ -79,7 +79,7 @@ as it did before. typescript-eslint gets TS 6 as well.
 | `bun install --frozen-lockfile` (bun 1.4.2, clean node_modules) | ok, 383 packages |
 | `bun run typecheck` (TS 7.0.2) | exit 0, 0 diagnostics, 8–12 s (TS 6.0.3: 33 s) |
 | `eslint .` | 0 errors, 5 warnings — identical to `main` |
-| `bun run gen:jsonld:check` | up to date |
+| `bun run cat gen:jsonld:check` | up to date |
 | `bun test` on 72 files touching the API importers, gates, workflow | 1382 pass / 3 fail; `workflow-yaml` fixed on the branch; the other 2 (`prov-qaqc` real-repo, `resolution-across-needs` "no `needs`") **fail identically on origin/main** |
 | e2e + a11y | not run locally (browsers); its only #910 failure was the frozen lockfile |
 

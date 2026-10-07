@@ -88,7 +88,7 @@ A test run's results are **derived**: re-running the plan over the same tree
 and data reproduces them. So they are kept where every derived QA result is
 kept since arc `3fva` — the orphan **`qa-reports`** branch, keyed by the
 commit they were computed on (`main/<sha>/`, `pr/<n>/<sha>/`), written by
-`bun run qa:publish` (the CI job `qa-publish`) and read back with `bun run
+`bun run cat qa:publish` (the CI job `qa-publish`) and read back with `bun run
 qa:fetch`. **Do not regenerate a results file in order to commit it**; the
 checkout's `test/results/` is a working copy, still on `main` only until bean
 `5hox` removes it.

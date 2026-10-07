@@ -7,7 +7,7 @@
  *          hand-edit: the next run overwrites it, and `docs:pages:check` fails
  *          on the difference. -->
  *
- * and `bun run docs:pages:check` exited `Script not found` — for about twenty
+ * and `bun run cat docs:pages:check` exited `Script not found` — for about twenty
  * pages, in the line a reader consults precisely when they are unsure whether
  * they are allowed to edit the file in front of them.
  *
@@ -76,6 +76,7 @@ import { describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { scriptsOf } from "../cat-harness/schemas/script-table.ts";
 
 /** The directory these tests were written in (`cat-harness/scripts/tests/`). */
 const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
@@ -105,7 +106,7 @@ function namedCommands(): Array<{ file: string; command: string }> {
 }
 
 function scripts(): Record<string, string> {
-  return JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")).scripts;
+  return scriptsOf(REPO);
 }
 
 describe("a command a generated page names is a command that exists", () => {

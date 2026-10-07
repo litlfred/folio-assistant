@@ -142,7 +142,7 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
 
 ## Re-checked 2026-09-25 — stays open, and the health sweep's reading of it is wrong
 
-This bean is reported by `bun run health` as *"`in-progress` with all 4 of its
+This bean is reported by `bun run cat health` as *"`in-progress` with all 4 of its
 Done-when boxes ticked"*. It is not.
 
 **One box is `[~]`, not `[x]`:**

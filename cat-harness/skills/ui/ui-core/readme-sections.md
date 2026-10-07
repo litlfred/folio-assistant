@@ -220,7 +220,7 @@ hand-kept table had said "step 2" and hidden that.
 
 A large instance cannot list every file on one page, but it declares its
 directories, and each declared directory gets its own README
-(`bun run readme:subgraphs`, the `subgraph-readmes` Tool). The instance
+(`bun run cat readme:subgraphs`, the `subgraph-readmes` Tool). The instance
 README's `kg:files` then links each directory to it, and above 200 files lists
 directories instead of files. The README is part of the graph: the exported
 Directory node carries `readmePath`.

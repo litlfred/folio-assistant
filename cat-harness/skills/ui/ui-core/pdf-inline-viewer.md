@@ -140,7 +140,7 @@ it for the existing two.
 
 About a 7 MB download per build, adding about 12 MB (404 files) to the built
 site. The size matters most for staging previews, each of which carries its own
-copy on `gh-pages`. `bun run health` reports the size of `gh-pages`. Nothing is
+copy on `gh-pages`. `bun run cat health` reports the size of `gh-pages`. Nothing is
 added to a clone.
 
 ## Verifying a change here

@@ -25,7 +25,7 @@ navbar-avatar specialisation, and they are below.
 | **sticky** | the container sizes to its CONTENT, so a text region would reimpose the geometry the sticky removes | `schemas/landing-sticky.ts`, `.fa-sticky` |
 | **landing board** | text is composited INTO the art, so it needs `textRegion` per layout and a crop chosen by content shape | `docs/_includes/landing.html` |
 | **docs background** | the page ground, not a card — a different CSS surface and probably a different crop set | not built; bean `yj32` |
-| **navbar avatar** | the art CLIPPED to the subject in a square frame — `avatarRegion` | `<name>.json`, `bun run avatar:crops` |
+| **navbar avatar** | the art CLIPPED to the subject in a square frame — `avatarRegion` | `<name>.json`, `bun run cat avatar:crops` |
 | **the mark** | ONE geometry, TWO inks — a scheme pair, because one ink cannot clear 3:1 on both grounds | `<name>.json` `mark` + `mark-dark`, `docs/assets/img/icons/` |
 
 ## Sticky: art backs it, text does not sit IN it
@@ -83,8 +83,8 @@ first pass put the library and analyst boxes on scenery. The operations box was
 square, in bounds, and clipped the crown off the hard hat; the owner saw it and
 said so. **The schema cannot see a hat.** So:
 
-    bun run avatar:crops     # every declared box, drawn on the card and clipped
-    bun run theme:sheet      # every theme: palette, contrast, art, both regions
+    bun run cat avatar:crops     # every declared box, drawn on the card and clipped
+    bun run cat theme:sheet      # every theme: palette, contrast, art, both regions
 
 ## The page ground: the first paint is DARK
 

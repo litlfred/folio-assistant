@@ -33,8 +33,8 @@ built on:
 |---|---|
 | the process | [`mount-dependency.bpmn`](../../../processes/kg/mount-dependency.bpmn); the per-subgraph view is the `remote` flow of [`mount-subgraph.bpmn`](../../../processes/kg/mount-subgraph.bpmn) |
 | the schema | `cat-harness/schemas/remote-mount.ts`, plus the `remote` member of `SubgraphSource` (`schemas/subgraph-source.ts`) |
-| the tool | `bun run mount:remote` (`--plan` to resolve without writing), and `bun run mount:remote:check` (offline) |
-| the entry point | `bun run state:mount`, which the session-start hook already runs |
+| the tool | `bun run cat mount:remote` (`--plan` to resolve without writing), and `bun run cat mount:remote:check` (offline) |
+| the entry point | `bun run cat state:mount`, which the session-start hook already runs |
 
 ## Mount, subscribe or associate: choose first
 

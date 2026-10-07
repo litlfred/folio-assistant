@@ -42,7 +42,7 @@ holding KG assets.
 ## Re-deriving an entry
 
 ```sh
-bun run ingest uploads/FILE.pdf --library smart-base
+bun run cat ingest uploads/FILE.pdf --library smart-base
 ```
 
 Nothing under `library/` is authored, so nothing under it is edited. A wrong

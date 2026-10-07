@@ -12,9 +12,9 @@
  *
  * Bean `0mpw`. Schema and the owner's rulings: `schemas/remote-mount.ts`.
  *
- *   bun run mount:remote              # plan, fetch, mount, write the lock
- *   bun run mount:remote --plan       # resolve the closure and print it; write nothing
- *   bun run mount:remote:check        # disk against lock against declaration — no network
+ *   bun run cat mount:remote              # plan, fetch, mount, write the lock
+ *   bun run cat mount:remote --plan       # resolve the closure and print it; write nothing
+ *   bun run cat mount:remote:check        # disk against lock against declaration — no network
  *
  * `state:mount` runs the mount after the branch mounts, so the session-start
  * hook needs no second entry point.
@@ -405,7 +405,7 @@ function ensureIgnored(base: string, rel: string): "ignored" | "excluded" | "not
   const prefix = gitIn(base, ["rev-parse", "--show-prefix"]).stdout.trim();
   const file = resolve(base, gitIn(base, ["rev-parse", "--git-path", "info/exclude"]).stdout.trim());
   mkdirSync(dirname(file), { recursive: true });
-  appendFileSync(file, `# remote mount (bean 0mpw) — bun run mount:remote\n/${prefix}${rel}/\n`);
+  appendFileSync(file, `# remote mount (bean 0mpw) — bun run cat mount:remote\n/${prefix}${rel}/\n`);
   return "excluded";
 }
 
@@ -559,13 +559,13 @@ export function checkRemote(opts: { instanceRoot?: string } = {}): CheckResult {
   const r = readMountLock(lockFile);
   if (!r.ok) {
     return r.absent
-      ? { state: "missing", reason: `\`remoteMounts\` declared and no lock at ${mountLockFilename(ds.name)} — run \`bun run mount:remote\``, outcomes: [] }
+      ? { state: "missing", reason: `\`remoteMounts\` declared and no lock at ${mountLockFilename(ds.name)} — run \`bun run cat mount:remote\``, outcomes: [] }
       : { state: "could-not-determine", reason: r.why, outcomes: [] };
   }
   const want = JSON.stringify(ds.mounts.map((m) => [m.harness, m.repository, m.ref]).sort());
   const have = JSON.stringify(r.lock.mounts.map((m) => [m.harness, m.repository, m.ref]).sort());
   if (want !== have) {
-    return { state: "missing", reason: "the lock was written for different pins than the declaration names — run `bun run mount:remote`", outcomes: [] };
+    return { state: "missing", reason: "the lock was written for different pins than the declaration names — run `bun run cat mount:remote`", outcomes: [] };
   }
   // What the mount reached and did not lay down is carried in the lock, so
   // "the lock lists nothing wrong" is never mistaken for "nothing was wrong".

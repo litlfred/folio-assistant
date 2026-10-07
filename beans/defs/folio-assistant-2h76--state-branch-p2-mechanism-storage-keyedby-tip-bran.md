@@ -16,7 +16,7 @@ Serial, one agent. Reuses the 3fva spike 3ds9 write path (hash-object, mktree, c
 - [x] branch-store.ts with retry over a moved tip
 - [x] state branch seeded with a hash-verified manifest (2026-10-02, see below)
 - [x] session-start hook mounts state/ and fails LOUDLY when it cannot
-- [x] bun run state:push
+- [x] bun run cat state:push
 - [x] measured: two sessions editing the SAME bean concurrently — no lost edit
 - [x] generic `branch-store mount --id <dir-id> [--into]` (replaces the single `state/` mount, owner ruling 2026-10-03): refuses loudly on corrupt or unknown, a miss is never an empty mount; wiring it into the session-start hook is left to each directory's cutover
 - [x] generic `branch-store push --id <dir-id>` (replaces `state:push`): splices the mount's edits with `expect` from the mounted tip, so a concurrent edit to the same file is a `conflict`

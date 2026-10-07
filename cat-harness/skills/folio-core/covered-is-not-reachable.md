@@ -26,8 +26,8 @@ careless: nobody was asking the second question.
 
 ## The two questions, kept apart
 
-> **"Does this skill have a Tool?"** — `bun run check:tools`, and
-> `bun run tools:coverage` for which of the uncovered ones warrant one.
+> **"Does this skill have a Tool?"** — `bun run cat check:tools`, and
+> `bun run cat tools:coverage` for which of the uncovered ones warrant one.
 >
 > **"Is this command reachable by asking the graph?"** — nothing yet. Bean
 > `d308` measured it by hand: of 868 code files, 229 are reachable from no node,
@@ -68,7 +68,7 @@ to prevent.
 
 `kg:schema:check` reconciles `maintains` both ways, but its `unproduced`
 direction runs **only over artefacts whose declaring Tool invokes
-`bun run kg:schema`**. It was narrowed on 2026-09-20 because it had encoded a
+`bun run cat kg:schema`**. It was narrowed on 2026-09-20 because it had encoded a
 premise `maintains` never carried — that a maintained artefact is produced by the
 schema exporter — and reported the first counterexample as drift.
 
@@ -261,7 +261,7 @@ get the case that cost the owner's time rather than an agent's: an agent counted
 
 That is this skill's opening sentence one level out — **coverage is a relation
 between an instrument and the question it was built for** — and it is
-[`audit-coverage`](../kg/kg-core/audit-coverage.md), with `bun run audit:coverage` as the
+[`audit-coverage`](../kg/kg-core/audit-coverage.md), with `bun run cat audit:coverage` as the
 second question.
 
 ## Why this is its own skill

@@ -135,7 +135,7 @@ recording the ruling and this reversal.
 - Falsified by deleting the declaration: six named orphans, exactly the pages it
   reaches. It then caught its own author -- reverting the bootstrap half made it
   name all seven pages at once.
-- Full `bun run gates`: 166 gates, 0 failed. The 72 provenance sidecars
+- Full `bun run cat gates`: 166 gates, 0 failed. The 72 provenance sidecars
   `bun test` rewrites reproduce identically on pristine `origin/main` (measured
   in a detached worktree), so that tree-guard note is base, not this branch --
   and committing them would downgrade the recorded `engine_version` from

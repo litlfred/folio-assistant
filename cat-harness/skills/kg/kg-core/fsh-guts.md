@@ -81,10 +81,10 @@ keyedBy: "tip" }`, and `main` ignores the directory (`/fsh-guts/**`).
 **To relocate something into it:**
 
 ```sh
-bun run state:mount                      # the session-start hook already runs this
+bun run cat state:mount                      # the session-start hook already runs this
 mv <file> fsh-guts/<where>/              # a plain mv, NOT git mv; then add the front matter below
 git rm --cached -q <file>                # stage the removal from main (a no-op if it was never tracked)
-bun run state:push -m "fsh-guts: <what moved, and what superseded it>"
+bun run cat state:push -m "fsh-guts: <what moved, and what superseded it>"
 ```
 
 A plain `mv`, because `git mv` would stage the NEW path, and that adds the

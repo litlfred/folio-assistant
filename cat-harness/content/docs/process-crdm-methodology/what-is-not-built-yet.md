@@ -48,7 +48,7 @@ there, or lets them assume something exists because nobody updated the list.
 **Built and now measured, with a known weakness.** The detection skill used
 to sit in a third state — "built but unverified", which is not a milder form
 of built. It has since been run against every issue in this repository (27,
-the whole population, not a sample) via `bun run eval:crdm-detect`:
+the whole population, not a sample) via `bun run cat eval:crdm-detect`:
 
 | | fired | did not |
 |---|---|---|

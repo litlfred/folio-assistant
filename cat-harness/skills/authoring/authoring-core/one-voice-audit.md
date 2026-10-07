@@ -35,8 +35,8 @@ judge against the *same* rule — otherwise a voice finding is one agent's taste
 against another's, which is unreviewable. The role names no voice and no story
 (#1168): each points at the role, so one is added without editing the role.
 
-`bun run kg:audit` reports a reader role with no persona (`role-has-persona`)
-or no story told as it (`role-has-story`); `bun run check:voices` lists the
+`bun run cat kg:audit` reports a reader role with no persona (`role-has-persona`)
+or no story told as it (`role-has-story`); `bun run cat check:voices` lists the
 roles with a persona that no voice addresses. System, external and acted-upon
 roles are `n/a`: nothing in them reads prose.
 # One-Voice Audit

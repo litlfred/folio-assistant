@@ -60,7 +60,7 @@ describe("artefactDeclarationDrift", () => {
 
   it("still reports this command's OWN artefact when it stops being produced", () => {
     // The guarantee the narrowing keeps. Every schema carrier invokes
-    // `bun run kg:schema`, so an empty produced-list must indict all of them —
+    // `bun run cat kg:schema`, so an empty produced-list must indict all of them —
     // otherwise the scoping has thrown away the rot detection it was meant to
     // preserve, which is the way this change could have gone quietly wrong.
     const { unproduced } = artefactDeclarationDrift([]);

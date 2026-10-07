@@ -120,7 +120,7 @@ and render order coincide only while nothing sorts above it.
 | | |
 |---|---|
 | projections (working copy) | `test/results/witnesses/**/*.{block,kg,translation}.json` |
-| projections (stored) | `qa-reports:main/<sha>/<instance>/test/results/witnesses/…` (or `pr/<n>/<sha>/…`); `bun run qa:fetch --ref …` reads them, and a miss is never read as clean |
+| projections (stored) | `qa-reports:main/<sha>/<instance>/test/results/witnesses/…` (or `pr/<n>/<sha>/…`); `bun run cat qa:fetch --ref …` reads them, and a miss is never read as clean |
 | projections (published) | `/assets/qa/…`, copied into `_site` by `docs-site.yml` and `feature-staging.yml` |
 | schema + builder | `content/pipeline/qa-witness.ts` |
 | written by | `scripts/gen-docs-pages.ts` |

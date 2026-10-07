@@ -44,7 +44,7 @@ Not applied here: this is not the work of whoever's PR happens to notice it, and
 
 - [ ] The three are listed in the crdm package manifest.
 - [ ] The retired `roles:` key is gone from all three.
-- [ ] `bun test -t 'every skill file is listed in its package manifest'` and `bun run check:retired-front-matter` are green on main.
+- [ ] `bun test -t 'every skill file is listed in its package manifest'` and `bun run cat check:retired-front-matter` are green on main.
 - [ ] A decision is recorded on whether authoring a skill without its manifest entry should be caught earlier, given two occurrences in two days.
 
 ## CORRECTED 2026-09-26 — this bean named ONE cause; there are THREE, across five failures
@@ -63,7 +63,7 @@ The full set, each established against `origin/main` rather than inferred:
 | 3 | `check:retired-front-matter` | **A** |
 | 4 | `skill package manifests cover the package` | **B** |
 | 5 | `the real corpus — and the gate can actually fail > no NEW drift` | **C** |
-| — | `this repository's own corpus > the committed index is up to date and valid` | **regeneration — fixed**, `bun run translation:index` |
+| — | `this repository's own corpus > the committed index is up to date and valid` | **regeneration — fixed**, `bun run cat translation:index` |
 
 ### Cause A — the retired `roles:` field, in FOUR files across TWO packages
 
@@ -123,7 +123,7 @@ in `UNCATALOGED` with a reason and a date.
 - [ ] Each published translated page has a `.po` catalogue, or an `UNCATALOGED`
       entry with a reason and a date.
 - [ ] `bun test` green on `main` for all four tests, and
-      `bun run check:retired-front-matter` green.
+      `bun run cat check:retired-front-matter` green.
 - [ ] A decision on catching an unlisted skill at authoring time — **third**
       occurrence of that shape in two days.
 
@@ -198,7 +198,7 @@ authoring-time gate below the whole answer rather than a nice-to-have.
 - [x] crdm skills listed (main), `release-epic-planning` listed (here)
 - [x] Every published translation has a catalogue or an `UNCATALOGED` record
 - [x] `translation:drift:check` green, falsified in both directions
-- [x] `bun run gates` 153/153 and `bunx playwright test` 700 passed
+- [x] `bun run cat gates` 153/153 and `bunx playwright test` 700 passed
 - [x] Looked for what keeps writing `roles:` onto new skill files — **no emitter
       exists in this checkout**, including in the generated reference. Recorded
       above as could-not-determine; the single-generator hypothesis is withdrawn.

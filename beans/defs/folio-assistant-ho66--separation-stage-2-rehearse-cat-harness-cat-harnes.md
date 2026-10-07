@@ -34,7 +34,7 @@ Started by the Parcel B session (https://claude.ai/code/session_01SmeBn6QZsDFaNQ
 
 
 ## 2026-10-03 — the check, as a ratchet (#1977)
-Owner's question on sequencing went unanswered; the stated default (option 3) was taken: build only the CI check now, leave the relocation for later. **#1977** (stacked on #1896): `check:cat-harness-standalone` judges `probeStandalone` against `cat-harness/scripts/standalone-baseline.json` — a new standalone failure is red, a fixed one is red until `bun run standalone:baseline` lowers the list. Probe now `git init`s each layer; failures keyed `<file> > <test>`. Both falsifiers are tests through the real probe. Baseline 459, identical across two runs. Boxes 1–2 tick when #1977 merges; box 3 (green on main) is the relocation program.
+Owner's question on sequencing went unanswered; the stated default (option 3) was taken: build only the CI check now, leave the relocation for later. **#1977** (stacked on #1896): `check:cat-harness-standalone` judges `probeStandalone` against `cat-harness/scripts/standalone-baseline.json` — a new standalone failure is red, a fixed one is red until `bun run cat standalone:baseline` lowers the list. Probe now `git init`s each layer; failures keyed `<file> > <test>`. Both falsifiers are tests through the real probe. Baseline 459, identical across two runs. Boxes 1–2 tick when #1977 merges; box 3 (green on main) is the relocation program.
 
 
 ## 2026-10-04 — submitted to the merge queue (PR #1977)

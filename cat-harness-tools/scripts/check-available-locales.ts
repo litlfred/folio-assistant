@@ -59,7 +59,7 @@
  * verdict.
  *
  * Usage:
- *   bun run check:available-locales
+ *   bun run cat check:available-locales
  *
  * Bean `9x01`.
  *

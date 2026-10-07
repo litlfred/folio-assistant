@@ -30,7 +30,7 @@ Holder: claude/zealous-gates-3o9ma2-io-decls (session https://claude.ai/code/ses
 **Landed on main (#2144, read in `pair-cover.ts` and `task-io.ts`, and seen in regen output):** item 1 for regen. `skill:register:check` and `kg:audit:check` are folded, so their verdicts are DERIVED from their residual plus coverers. Item 2: every gated regen pair now declares `outputs: []` ("115 have read-only checks and may share the pool"). Item 3: the five slow env-reading pairs deliberately declare no `inputs`.
 
 **Still open, measured (local branch `local/regen-speedup`, Bun 1.3.14):**
-- `bun run gates` still runs both folded checks whole, and runs `skill:register:check` TWICE, because two CI jobs list it. In a base gates run (d82b69e11, load 4-5) they took skill:register:check 88.1 s (x2), kg:audit:check 58.7 s and kg:audit:all:check 106.6 s.
+- `bun run cat gates` still runs both folded checks whole, and runs `skill:register:check` TWICE, because two CI jobs list it. In a base gates run (d82b69e11, load 4-5) they took skill:register:check 88.1 s (x2), kg:audit:check 58.7 s and kg:audit:all:check 106.6 s.
 - 8dd50a7a7 (bean f017) now SKIPS the second `skill:register:check` in gates when the first passed on the same inputs. That is measured: both instances were skipped in a second gates run on an unchanged tree.
 - regen records NO check-level entry for a derived (folded) verdict, so gates still runs `skill:register:check` once after a regen.
 

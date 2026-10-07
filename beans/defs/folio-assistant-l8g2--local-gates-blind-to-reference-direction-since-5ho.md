@@ -13,9 +13,9 @@ Measured 2026-10-06 by two sessions independently:
 - session F, #2262;
 - the coordinator, #2267, where a comment naming smart-base got through a local run and then failed CI.
 
-**What happens.** `bun run check:reference-direction:check --against main` is CI's gate. It compares against the `qa-reports` baseline (`main/<sha>`). Since #2080 (5hox) moved QA results off main, a container has no local baseline unless it has fetched `qa-reports`. The local result is then UNKNOWN, which `gates` does not treat as red. So a NEW wrong-direction pair passes locally and fails in CI. That is a false clean, the dh4f shape.
+**What happens.** `bun run cat check:reference-direction:check --against main` is CI's gate. It compares against the `qa-reports` baseline (`main/<sha>`). Since #2080 (5hox) moved QA results off main, a container has no local baseline unless it has fetched `qa-reports`. The local result is then UNKNOWN, which `gates` does not treat as red. So a NEW wrong-direction pair passes locally and fails in CI. That is a false clean, the dh4f shape.
 
 ## Done when
-- [ ] Local `bun run gates` fetches the qa-reports baseline for main's merge-base, or refuses with a named remedy. Either way it never passes on UNKNOWN for a ratchet gate.
+- [ ] Local `bun run cat gates` fetches the qa-reports baseline for main's merge-base, or refuses with a named remedy. Either way it never passes on UNKNOWN for a ratchet gate.
 - [ ] A test plants a new wrong-direction mention with no local baseline and asserts that gates is not clean.
 - [ ] prepare-merge names the step if one is still manual.

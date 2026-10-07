@@ -46,8 +46,8 @@ not restate it and declares only the other three:
 </bpmn:task>
 ```
 
-`bun run raci` prints the chart across every declared process;
-`bun run check:raci` enforces the rule and is a gate.
+`bun run cat raci` prints the chart across every declared process;
+`bun run cat check:raci` enforces the rule and is a gate.
 
 ## Why an overlay and not a registry
 

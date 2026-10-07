@@ -232,7 +232,7 @@ it is actually published.
 ## Running it
 
 ```sh
-bun run ingest:ig -- \
+bun run cat ingest:ig -- \
   --source /path/to/gh-pages --kind gh-pages \
   --id smart-trust \
   --base https://worldhealthorganization.github.io/smart-trust \
@@ -246,7 +246,7 @@ either from the other is how a link that resolves for nobody gets written down.
 `canonicalBase` is read from the IG's own `ImplementationGuide` canonical, not
 derived from `--base`.
 
-`bun run ingest:ig:check` re-runs the ingest and fails if the committed index
+`bun run cat ingest:ig:check` re-runs the ingest and fails if the committed index
 differs. That is what makes this graph regenerable rather than a snapshot
 nobody can re-derive; `readAt` is excluded from the comparison because it moves
 every run by design.

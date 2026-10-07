@@ -63,7 +63,7 @@
  * than inferred, per `3srh`.
  *
  * Usage:
- *   bun run check:red-gate-is-last
+ *   bun run cat check:red-gate-is-last
  *
  * @covers none — .github/workflows/ is not a declared graph typology
  * @graphNode tool

@@ -91,7 +91,7 @@ fallback). Later entries override earlier for the same msgid.
 
 The pipeline used to end at the rendered page: a `.po` was injected into a
 diagram and an SVG rendered per locale, while the graph a machine consumes was
-produced once, in the source language. `bun run kg:locale` closes that
+produced once, in the source language. `bun run cat kg:locale` closes that
 (`kg:locale:bootstrap` for the nested instance, `kg:locale:check` in the gate
 set). Bean `jmpb`.
 
@@ -231,8 +231,8 @@ translation nobody measured.
   `block-qa/v1` entry shape, which is what the per-block `TR` icon opens.
 
 ```sh
-bun run translation:block-qa          # write the sidecars
-bun run translation:block-qa:check    # fail if any is stale
+bun run cat translation:block-qa          # write the sidecars
+bun run cat translation:block-qa:check    # fail if any is stale
 ```
 
 ### What a script may claim, and what it may not
@@ -564,7 +564,7 @@ publishing it.
 1. Write the pages, each carrying `lang`, `nav_exclude: true` and
    `translation_source`. Where they sit is up to you — the convention here is
    `<dir>/<locale>/<page>.md`, and nothing depends on it.
-2. `bun run translation:index` and commit `docs/_data/translations.json`.
+2. `bun run cat translation:index` and commit `docs/_data/translations.json`.
 
 There is no third step and no declaration to remember. The thing that IS easy
 to forget is `nav_exclude`, which is why `translation:index:check` fails

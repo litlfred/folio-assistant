@@ -99,7 +99,7 @@ CLI 中存在 `beans delete` 命令。**请勿使用它。**
 
 这绝非凭空假设的区别。CRDM 图中的某个活动曾带有 `<cat-harness.processes:bean action="create"/>`——引擎读取的是 `op`，而它写的却是 `action`——因此被解析为根本没有任何操作。该步骤声称签发会生成 bean，实际上什么都没执行，并且在有人查阅解析器代码之前一直静默无声。
 
-**当你添加带有 bean 标记的步骤时**，请使用引擎实现的这三种操作之一，并在该步骤的文档中说明哪些部分是智能体自身的 CLI 调用。`bun run check:workflow-refs` 能够捕获无法解析的技能引用；但它无法捕获一个引擎从未读取、看似合理的属性。
+**当你添加带有 bean 标记的步骤时**，请使用引擎实现的这三种操作之一，并在该步骤的文档中说明哪些部分是智能体自身的 CLI 调用。`bun run cat check:workflow-refs` 能够捕获无法解析的技能引用；但它无法捕获一个引擎从未读取、看似合理的属性。
 
 ## 人类待办事项——尚未构建
 {: #human-todos data-fa-label="sec:beans-and-todos-human-todos" }

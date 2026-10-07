@@ -35,7 +35,7 @@ Every one of the 1 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Run every verifier over the export**<br>`A_Verify` | CI/CD Pipeline | [`publish-verification`](../reference/skill-instructions/publish-verification.html) | Run the verifier set (scripts/publish-verify.ts, `bun run publish:verify -- --dir <site>`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block. |
+| **Run every verifier over the export**<br>`A_Verify` | CI/CD Pipeline | [`publish-verification`](../reference/skill-instructions/publish-verification.html) | Run the verifier set (scripts/publish-verify.ts, `bun run cat publish:verify -- --dir <site>`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block. |
 
 ## Decisions
 

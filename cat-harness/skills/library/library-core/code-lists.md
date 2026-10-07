@@ -44,8 +44,8 @@ id in the instance overrides the inherited one.
 | an adjudication step | `<cat-harness.processes:adjudication codes="…" list="<id>"/>` | the engine, at load: the codes must equal the list's active codes |
 | `schemas/namespaces.ts` | `own-namespaces.json`, by code | `code-list.test.ts`; `external-schemas:check` treats every value as ours |
 
-`bun run code-lists:check` refuses a malformed list and an adjudication that
-declares codes with no `list`. `bun run glossary:export` publishes every list
+`bun run cat code-lists:check` refuses a malformed list and an adjudication that
+declares codes with no `list`. `bun run cat glossary:export` publishes every list
 as a `skos:ConceptScheme` in `<stub>-code-lists.jsonld`, beside the swimlane
 glossary: `notation`, `prefLabel`, `definition`, `dcterms:source`.
 

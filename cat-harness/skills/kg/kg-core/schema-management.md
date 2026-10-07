@@ -33,7 +33,7 @@ form, and keeping it readable.
 `scripts/schema-graph.ts` reads every **declared** `schemas` directory and
 returns declarations plus the edges between them.
 `scripts/gen-schema-viz.ts` publishes that as a projection and a viewer.
-`bun run schema:graph` prints the counts; `schema:viz` writes; `schema:viz:check`
+`bun run cat schema:graph` prints the counts; `schema:viz` writes; `schema:viz:check`
 is the gate.
 
 **It reads every declared directory, not one**, and that is not a convenience.
@@ -172,7 +172,7 @@ the reader *and* a stale relation in itself.
    with a reason. `check:schema-nodes` fails an untagged module, because an
    untagged one is silently absent from the published graph and absence is the
    one failure a consumer cannot tell apart from "this instance has none".
-4. `bun run schema:viz` and look at your declaration in the viewer. Its kind,
+4. `bun run cat schema:viz` and look at your declaration in the viewer. Its kind,
    its fields, its generalisation, and what it references — and the three
    answers above.
 5. Run `check:schema-nodes`, `typecheck` and `bun test`.

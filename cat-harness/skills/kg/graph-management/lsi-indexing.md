@@ -25,11 +25,11 @@ wins.
 | you are asking | use |
 |---|---|
 | "which nodes contain these words?" | `graph-search` — lexical, exact, no score |
-| **"has anyone worked this topic in *other* words?"** | `bun run lsi query "<text>" --instance <i> --graph <g>` |
+| **"has anyone worked this topic in *other* words?"** | `bun run cat lsi query "<text>" --instance <i> --graph <g>` |
 | "is this new bean / section a restatement of an existing one?" | the sidecar's `nearDuplicates` |
 | "what is this graph about, as a whole?" | the sidecar's `dimensions` (read both poles) |
 | "is there junk in this library — boilerplate, specimen text, a bad page?" | the sidecar's `narrowDimensions` |
-| "which epic does this bean / branch / PR belong under?" | `bun run lsi:epics` |
+| "which epic does this bean / branch / PR belong under?" | `bun run cat lsi:epics` |
 
 Run the lexical search FIRST. LSI supplements an empty or thin lexical result;
 it never replaces a lexical hit, and its hits are always reported under their
@@ -38,18 +38,18 @@ own label (`latent only` vs `lexical+latent`) — refusal 1.
 ## Commands
 
 ```sh
-bun run lsi index --instance who-iris --graph library      # build + write the sidecar
-bun run lsi index --instance who-iris --graph library --doc 9789241548960-eng   # one document
-bun run lsi query "certainty of the evidence" --instance who-iris --graph library
-bun run lsi:audit                                          # which graphs need one; is each fresh?
-bun run lsi:epics --out <file.md> [--prs <open-prs.json>]  # epic-filing proposal
-bun run lsi:near "<planned bean title>"                    # before `beans create`
+bun run cat lsi index --instance who-iris --graph library      # build + write the sidecar
+bun run cat lsi index --instance who-iris --graph library --doc 9789241548960-eng   # one document
+bun run cat lsi query "certainty of the evidence" --instance who-iris --graph library
+bun run cat lsi:audit                                          # which graphs need one; is each fresh?
+bun run cat lsi:epics --out <file.md> [--prs <open-prs.json>]  # epic-filing proposal
+bun run cat lsi:near "<planned bean title>"                    # before `beans create`
 bun run cat-harness/content/pipeline/graph-search.ts "<q>" --latent   # lexical + graph, THEN a separate latent list
 ```
 
 **From an MCP host**: the `lsi_query` tool (Tool node `lsi-query`), with the
 query as `text` and optional `instance` / `graph`. On a shell the query goes on
-STDIN (`echo "<q>" | bun run lsi query --instance who-iris --graph library`),
+STDIN (`echo "<q>" | bun run cat lsi query --instance who-iris --graph library`),
 because free text never goes on a command line.
 
 A **unit** is the graph's own chunk: a library **section** (what ingestion
@@ -58,7 +58,7 @@ skipped — too little vocabulary to place.
 
 ## Cross-document links — a floor, and hubs reported, not penalised
 
-`bun run lsi links --instance <i> --graph <g>` proposes links between units of
+`bun run cat lsi links --instance <i> --graph <g>` proposes links between units of
 DIFFERENT documents in one graph: each unit's best other-document match, only
 at cosine ≥ 0.5 (`LINK_FLOOR`), with the units that are "nearest" to many
 others listed as **hubs** to discount. On who-iris it proposes 12 links and
@@ -78,7 +78,7 @@ The weighted matrix already says which terms characterise each unit; the index
 then reduces it to k dimensions and the per-unit view was gone.
 `keywordsOf(matrix, cols, texts, top, headings)` keeps it: a unit's (or a
 pooled set of units') top terms and two-word phrases, from the same weights.
-Its first consumer is `bun run library:keywords` (per library section and per
+Its first consumer is `bun run cat library:keywords` (per library section and per
 document, written as `keywords.json` and shown in the library viewer). The
 scoring rules are documented with `keywordsOf` in `content/pipeline/lsi.ts`,
 and the ingestion skill that runs it says when (`skill_fetch
@@ -90,7 +90,7 @@ rather than writing a second term weighting.
 [`correspondence-analysis`](../../../methodologies/correspondence-analysis.md)
 is a separate method over the same term matrix (`content/pipeline/ca.ts`):
 the SVD of the χ² residuals, so no dimension carries document length or term
-frequency. `bun run lsi:epics --method ca` runs it on the bean store.
+frequency. `bun run cat lsi:epics --method ca` runs it on the bean store.
 **Measured 2026-09-29: not significantly better or worse than LSI at filing
 beans** (exact McNemar p = 0.17–0.71), so LSI stays the default. Reach for CA
 when an LSI dimension 1 has no negative pole, or when the question is which
@@ -99,7 +99,7 @@ profiles. Pick one per question; never average the two scores.
 
 ## On ingestion — the index refreshes itself
 
-`bun run ingest … --promote` ends by re-indexing the library it wrote into
+`bun run cat ingest … --promote` ends by re-indexing the library it wrote into
 and printing, for the promoted document only, its near-duplicate section
 pairs and any narrow dimension it carries. **Advisory**: an index is not part
 of L1, so a failure prints "not refreshed — this is not a pass" and the
@@ -109,7 +109,7 @@ mis-extracted page, and it is cheapest to mark now.
 
 ## Where to LOOK at an index
 
-`bun run lsi:viz` writes one page, `/lsi/` ("Latent semantic indexes"): every
+`bun run cat lsi:viz` writes one page, `/lsi/` ("Latent semantic indexes"): every
 stored index with its dimensions as two poles, its findings, and the
 need-an-index verdicts. The page names what it draws in its own front matter —
 `renders:` the `qa` directory, `rendered-by: lsi-viewer` — which since #1168
@@ -157,7 +157,7 @@ rather than on the tree. **That is bean `in5a`'s loop arriving over the
 network**, and it is the trap to avoid when taking any committed page off a
 store: the page stops being a function of the tree.
 
-`bun run lsi:viz -- --detail` adds the per-index sections and is run by the
+`bun run cat lsi:viz -- --detail` adds the per-index sections and is run by the
 docs-site build, after that workflow's `qa:fetch` pins the entry to the
 build's own sha. So the published page carries everything a reader wants and
 `main` carries nothing a one-sentence skill edit moves. `lsi:viz:check` keeps
@@ -221,7 +221,7 @@ verdict for the same reason, three days later.
 
 ## The need-an-index audit
 
-`bun run lsi:audit` walks every declared graph of a prose kind across every
+`bun run cat lsi:audit` walks every declared graph of a prose kind across every
 instance and writes `cat-harness/test/results/lsi-need-an-index.qa-results.json` (`qa-results/v1`).
 
 | result | means |
@@ -238,7 +238,7 @@ reports and does not gate (exit 0), like `check:methodology-evidence`;
 ### The same verdict in the audited record — `kg:audit`'s `tool-downstream-fresh`
 
 LSI is the first member of the **downstream-tool family** (bean `fq5u`). The
-`lsi-index` Tool node declares `downstream`, and every `bun run lsi index`
+`lsi-index` Tool node declares `downstream`, and every `bun run cat lsi index`
 writes a `folio-tool-run/v1` record — outcome and input fingerprint, on
 success AND on failure — under `test/results/tool-runs/lsi-index/`. The
 verdict reads three states:

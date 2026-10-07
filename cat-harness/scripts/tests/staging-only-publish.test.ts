@@ -55,7 +55,7 @@ const REPO = resolve(import.meta.dir, "..", "..", "..");
 // hook failing the whole file.
 beforeAll(() => {
   const r = spawnSync("bun", ["run", "derive:publish"], { cwd: REPO, encoding: "utf8" });
-  if (r.status !== 0) console.warn(`derive:publish did not build the page (is fsh-guts mounted? \`bun run state:mount\`):\n${r.stdout}${r.stderr}`);
+  if (r.status !== 0) console.warn(`derive:publish did not build the page (is fsh-guts mounted? \`bun run cat state:mount\`):\n${r.stdout}${r.stderr}`);
 });
 
 function composeTo(opts: { staging?: boolean }): { dir: string; report: ReturnType<typeof compose> } {

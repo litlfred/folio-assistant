@@ -49,7 +49,7 @@ on:
     # state it describes.
     - cron: '41 6 * * *'
   # A check reachable only from a cron is one nobody can reproduce when it
-  # fires. Also runnable locally: `bun run health`.
+  # fires. Also runnable locally: `bun run cat health`.
   workflow_dispatch:
 
 permissions:
@@ -97,7 +97,7 @@ jobs:
         id: check
         run: |
           set +e
-          bun run health --out "$RUNNER_TEMP/health.md"
+          bun run cat health --out "$RUNNER_TEMP/health.md"
           status=$?
           set -e
           echo "status=$status" >> "$GITHUB_OUTPUT"
@@ -172,7 +172,7 @@ jobs:
             echo "a person does; the sweep removes nothing on its own initiative. See"
             echo "\`skills/conduct/conduct-core/deletion-requires-confirmation.md\`."
             echo
-            echo "Reproduce locally: \`bun run health\`."
+            echo "Reproduce locally: \`bun run cat health\`."
           } > "$RUNNER_TEMP/issue-body.md"
 
           existing=$(gh issue list --label repo-health --state open \

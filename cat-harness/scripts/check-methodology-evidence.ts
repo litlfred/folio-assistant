@@ -42,10 +42,10 @@
  * defect, which is about exactly this.
  *
  * Usage:
- *   bun run check:methodology-evidence
- *   bun run check:methodology-evidence -- --strict    # any finding exits 1
- *   bun run check:methodology-evidence -- --json      # sidecar only, no prose
- *   bun run check:methodology-evidence:check          # JUDGE: compute and judge, write nothing (the gate)
+ *   bun run cat check:methodology-evidence
+ *   bun run cat check:methodology-evidence -- --strict    # any finding exits 1
+ *   bun run cat check:methodology-evidence -- --json      # sidecar only, no prose
+ *   bun run cat check:methodology-evidence:check          # JUDGE: compute and judge, write nothing (the gate)
  *
  * Exit: 0 reported, 1 a hard finding (or any finding under --strict),
  *       2 could not determine. Judge mode (`--check`, bean `bo44`) keeps the

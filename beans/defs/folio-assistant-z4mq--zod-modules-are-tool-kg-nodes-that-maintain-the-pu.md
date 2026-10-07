@@ -35,8 +35,8 @@ It restates, for the code, the split the author gave on 2026-09-18:
 
 2. **A zod module is a TOOL node, not only a schema node.** Its job — the thing
    it *does* — is maintain the authoritative JSON Schema / JSON-LD. Today that
-   relation is nowhere declared: `bun run kg:schema`
-   (`scripts/harness-schema-export.ts`) and `bun run kg:export`
+   relation is nowhere declared: `bun run cat kg:schema`
+   (`scripts/harness-schema-export.ts`) and `bun run cat kg:export`
    (`scripts/kg-export.ts`) know which zod module feeds which artefact, and the
    knowledge lives in those scripts rather than in the graph.
 
@@ -85,7 +85,7 @@ this repo happens to do.
 ## Item 3 shipped — `check:instance-render`, 2026-09-20
 
 `scripts/check-instance-render.ts` + `scripts/tests/instance-render.test.ts`,
-wired into `code-quality-gates.yml` and so into `bun run gates` (42 now, no
+wired into `code-quality-gates.yml` and so into `bun run cat gates` (42 now, no
 second edit — `n60j` deriving the list rather than restating it).
 
 **"Did it throw" is not the check, and that is the whole design.** An export of
@@ -164,4 +164,4 @@ detector that cannot tell them apart will report finished beans that are not.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.

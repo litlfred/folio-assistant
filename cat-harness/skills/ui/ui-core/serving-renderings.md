@@ -124,7 +124,7 @@ this rather than a prerequisite for it. So the contract moved into code and
 the server reads it, instead of the server becoming the contract.
 
 ```sh
-bun run serve:rendering --dir docs/_site --port 4000
+bun run cat serve:rendering --dir docs/_site --port 4000
 ```
 
 `RENDERING_MEDIA_TYPES` and `renderingMediaType()` in `schemas/cat-harness.ts`

@@ -453,9 +453,9 @@ probe_host() {
   local root
   root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
   if command -v bun >/dev/null 2>&1 && [ -f "$root/package.json" ]; then
-    (cd "$root" && bun run --silent tools:remedy "$host" 2>/dev/null) | sed 's/^/    → /' >&2 || true
+    (cd "$root" && bun run --silent cat tools:remedy "$host" 2>/dev/null) | sed 's/^/    → /' >&2 || true
   else
-    warn "  what to do instead: bun run tools:remedy $host"
+    warn "  what to do instead: bun run cat tools:remedy $host"
   fi
 }
 

@@ -85,7 +85,7 @@ Steps landed: #1736 (types.ts split, ContentSource), #1738 (DocumentContent / se
 - Move contentAdapters 'document' out of folio-assistant-core.json into cat-harness-tools.json, and update BUILTIN_ADAPTERS paths (src/builtin-adapters.ts stays: init-folio uses it).
 - Declare sci's server subgraph: re-describe sci-adapters (adapters/) as sci's server half (owner ruling). PaperContentAdapter extends DocumentContentAdapter, which then lives in tools.
 - Root package.json main/exports/start*/check-deps/mcp:capture, .mcp.json, tsconfig, partition rules, cat-harness-tools/package.json scripts.
-- Tools: scratchpad move-ts.py (git mv plus re-resolve imports and links). Beware HAND-BUILT paths (join(import.meta.dir, ...)) and paths filters: tests found them only in CI. Run bun run gates before merging.
+- Tools: scratchpad move-ts.py (git mv plus re-resolve imports and links). Beware HAND-BUILT paths (join(import.meta.dir, ...)) and paths filters: tests found them only in CI. Run bun run cat gates before merging.
 
 **Then:** the 9umr finale. Move the 5 tool skills left in folio-core (mcp-assembly, mcp-contract, mcp-projection, skills-and-tools, covered-is-not-reachable) to their home once the tools layer exists, then close 9umr.
 

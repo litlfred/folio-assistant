@@ -34,7 +34,7 @@
  * pinning the runtime, that field recorded whoever ran last: 86 committed
  * sidecars held two values (72 at `bun-1.3.14`, 14 at `bun-1.3.11`) and CI's
  * `bun-version: latest` would have rewritten all of them to `bun-1.4.2` on its
- * next sweep. `bun run gates`' tree-mutation detector therefore ended "NOT
+ * next sweep. `bun run cat gates`' tree-mutation detector therefore ended "NOT
  * clean" on every branch, pristine `main` included — and a signal that is always
  * red is one nobody reads, which is the `ymsu` failure class the detector exists
  * to catch.
@@ -44,7 +44,7 @@
  * inferred, per `3srh`.
  *
  * Usage:
- *   bun run check:bun-pin
+ *   bun run cat check:bun-pin
  *
  * @covers none — .github/workflows/ is not a declared graph typology
  * @graphNode tool

@@ -28,7 +28,7 @@
  *
  * - `manual` — the six steps PRs ran on 2026-10-06:
  *   `git merge`, `state:mount`, `regen`, `qa:working-copy`, `kg:detangle`, `regen`;
- * - `merge-main` — `bun run merge:main` against `--target` (it mounts,
+ * - `merge-main` — `bun run cat merge:main` against `--target` (it mounts,
  *   resolves declared conflicts and runs `regen --changed <fork point>`).
  *
  * Each line printed is `<step> rc=<exit> wall=<s> load=<1-min before>→<after>`,

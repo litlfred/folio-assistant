@@ -194,7 +194,7 @@ sources was in any declared library.** Every citation resolved against nothing
 on the one kind whose entire justification is being somebody else's named,
 external work.
 
-`bun run check:methodology-evidence` is the axis that makes this visible, and
+`bun run cat check:methodology-evidence` is the axis that makes this visible, and
 `test/results/methodology-evidence.qa-results.json` is where it is recorded. It
 **reports and does not gate**: whether a methodology whose source nobody can
 open may still be used is the owner's call, and a gate failing on the whole

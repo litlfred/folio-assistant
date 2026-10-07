@@ -23,7 +23,7 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/voices/` (intent.
 6. **Markdown shows through as raw text.** Descriptions show literal backticks ("an override under \`vendors/\`, declaring this voice in its \`extends\` field"). (→ `folio-assistant-mylx`)
 7. **The directory table breaks words at 390 px.** "agent- / skills", "folio- / assistant- / core", and the monospace directory paths wrap mid-segment ("folio-assistant- / core/skills/voices").
 
-When fixed, re-draw `cat-harness/docs/wireframes/voices/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/voices/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 

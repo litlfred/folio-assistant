@@ -140,7 +140,7 @@ jobs:
         id: check
         run: |
           set +e
-          bun run check:ci-health --out "$RUNNER_TEMP/ci-health.md"
+          bun run cat check:ci-health --out "$RUNNER_TEMP/ci-health.md"
           status=$?
           set -e
           echo "status=$status" >> "$GITHUB_OUTPUT"

@@ -134,7 +134,7 @@ Rule 5 above, applied to CONTENT (bean `yh6u`): in every document on the
 published content context, a plain key must be a declared term, or a JSON-LD
 processor drops it without a word. Measured before the check existed: 8
 undeclared keys across 392 committed figure blocks — every agent-drafted figure
-narrative was being dropped. `bun run check:context-emission` now fails on one.
+narrative was being dropped. `bun run cat check:context-emission` now fails on one.
 
 It does **not** descend into a value typed `@json`. Such a value is a JSON
 literal by declaration: its inner keys are data, not properties. That is the
@@ -234,7 +234,7 @@ remembering:
   The converse — is each *spoken* prefix bound? — is the direction that
   corrupts data, and nothing asked it.
 
-**The two rules, and what enforces them** — `bun run check:context-emission`,
+**The two rules, and what enforces them** — `bun run cat check:context-emission`,
 in CI (`code-quality-gates.yml`), over every committed `.jsonld`:
 
 1. **Spoken ⇒ bound.** A compact IRI used as a KEY or an `@type` value must
@@ -562,7 +562,7 @@ Rules for the pair:
 - **`@context` is never inlined.** Every file declares the one shared, cached
   context URL, the way content documents already use
   `ns/content/v1.jsonld`.
-- **Where it is built.** `bun run subgraph:jsonld`
+- **Where it is built.** `bun run cat subgraph:jsonld`
   (`scripts/gen-subgraph-jsonld.ts`) frames kg-export's in-memory graphs —
   one per framed instance, each from its OWN export, never a stacked
   instance's node under this document's tombstoned `@id` — and
@@ -600,7 +600,7 @@ Rules for the pair:
 ### Consumers
 
 - **Remote materialization reads these same files.**
-  `bun run kg:materialize --nodes <subscription> <subgraph-path>` fetches one
+  `bun run cat kg:materialize --nodes <subscription> <subgraph-path>` fetches one
   subgraph's `index.hydrated.jsonld` at the subscription's pin. It never does
   a sparse checkout of the subgraph's directory. The file is validated against
   `SubgraphHydratedSchema`, its root `@id` must be the subgraph asked for, and
@@ -686,7 +686,7 @@ there is the whole change to make a field heavy.
 
 ### Building and checking
 
-- `bun run subgraph:jsonld` writes the payloads to `docs/payload/sha256/` in
+- `bun run cat subgraph:jsonld` writes the payloads to `docs/payload/sha256/` in
   the same run as the subgraph files, from the same graph.
 - The docs workflows copy that directory into the site **verbatim**. It is
   excluded from Jekyll, which would render a body's front matter and Liquid,
@@ -722,7 +722,7 @@ copy of the builder**.
 
 ### The four pilots, measured
 
-Measured 2026-10-03 in this checkout (`bun run slice:sqlite -- --out <scratch>`;
+Measured 2026-10-03 in this checkout (`bun run cat slice:sqlite -- --out <scratch>`;
 browser figures from `slice-sqlite.e2e.ts` in Chromium on loopback, first open
 including download and sha256 verification):
 
@@ -889,7 +889,7 @@ Deploy payloads never go into the committed `docs/payload/`. Its orphan audit
 admits KG nodes only, and beans, todos and library entries are not KG nodes
 (§"Adding a node type").
 
-The gate (`bun run slice:sqlite:check`, or `--check --slice <name>` for one)
+The gate (`bun run cat slice:sqlite:check`, or `--check --slice <name>` for one)
 therefore checks, for every slice:
 
 - the builder runs, and a source it cannot read is could-not-determine, red;
@@ -929,7 +929,7 @@ parse either, but nothing is persisted. The mode actually used is reported,
 never assumed.
 
 The WASM build is **vendored** from the pinned `@sqlite.org/sqlite-wasm`
-devDependency, at 1.51 MB (`bun run slice:sqlite:vendor`, gated by
+devDependency, at 1.51 MB (`bun run cat slice:sqlite:vendor`, gated by
 `:vendor:check`). The reason: jsDelivr is unreachable from some builders, and
 a reader's search should depend on no host but the site's own.
 
@@ -997,9 +997,9 @@ Follow the `slice-sqlite-publish` process. In short:
 ## Running it
 
 ```sh
-bun run kg:export                        # → _kg/<stub>.jsonld   (gitignored)
-bun run kg:schema                        # → _kg/<stub>.schema.json
-bun run kg:export -- --base-url https://… --out path.jsonld
+bun run cat kg:export                        # → _kg/<stub>.jsonld   (gitignored)
+bun run cat kg:schema                        # → _kg/<stub>.schema.json
+bun run cat kg:export -- --base-url https://… --out path.jsonld
 ```
 
 `--base-url` (or `KG_BASE_URL`) overrides the declaration's `canonicalUrl`.

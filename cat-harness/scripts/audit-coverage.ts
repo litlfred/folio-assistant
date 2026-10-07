@@ -135,12 +135,12 @@
  * Move 3 asks a guard to have.
  *
  * Usage:
- *   bun run audit:coverage                 # print the report, write the sidecar
- *   bun run audit:coverage --check         # judge, write nothing; fail on a NEW finding
- *   bun run audit:coverage --check --against main   # ...new against the qa-reports branch
- *   bun run audit:coverage --strict        # ...and fail on a kind nothing JUDGES
+ *   bun run cat audit:coverage                 # print the report, write the sidecar
+ *   bun run cat audit:coverage --check         # judge, write nothing; fail on a NEW finding
+ *   bun run cat audit:coverage --check --against main   # ...new against the qa-reports branch
+ *   bun run cat audit:coverage --strict        # ...and fail on a kind nothing JUDGES
  *                                          #    (unaudited or typed-only alike)
- *   bun run audit:coverage --require-all   # ...and on any gate that has not declared
+ *   bun run cat audit:coverage --require-all   # ...and on any gate that has not declared
  *
  * @module scripts/audit-coverage
  * @covers none — it measures coverage rather than auditing a graph; a row about
@@ -173,6 +173,7 @@ import {
   qaResultPath,
   writeQaResult,
 } from "./qa-results.js";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 const ROOT = resolve(import.meta.dir, "..");
@@ -533,8 +534,7 @@ export function coversIn(text: string): string[] | undefined {
 export function gateCoverage(root: string, repo: string): GateCoverage[] {
   let scripts: Record<string, string> = {};
   try {
-    scripts = (JSON.parse(readFileSync(join(repo, "package.json"), "utf-8")) as { scripts?: Record<string, string> })
-      .scripts ?? {};
+    scripts = scriptsOf(repo);
   } catch {
     scripts = {};
   }
@@ -787,7 +787,7 @@ function main(): number {
     );
     for (const r of undet) console.log(`    · ${r.kind}: ${r.directories.join(", ")}`);
     console.log(
-      `    Run \`bun run check:declared-dirs\` — it says, per directory, whether the declaration is ` +
+      `    Run \`bun run cat check:declared-dirs\` — it says, per directory, whether the declaration is ` +
         `flipped ahead of the cutover or the mount is simply missing.`,
     );
   }

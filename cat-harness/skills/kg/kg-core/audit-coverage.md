@@ -15,7 +15,7 @@ user_invocable: true
 gates.** That sentence is the whole skill. Everything below is what it costs to
 learn it and how to keep from relearning it.
 
-Run `bun run audit:coverage` before saying a corpus is unaudited, before writing
+Run `bun run cat audit:coverage` before saying a corpus is unaudited, before writing
 a criterion for a kind, and before building any coverage report of your own.
 
 ---

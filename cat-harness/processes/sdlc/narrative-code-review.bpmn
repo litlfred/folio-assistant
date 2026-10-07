@@ -63,7 +63,7 @@ Three outcomes, each leaving a record: the prose holds (attested, with a reason)
     </bpmn:startEvent>
 
     <bpmn:task id="A_ReadPairFindings" name="Read the pair checks' findings">
-      <bpmn:documentation>Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing.</bpmn:documentation>
+      <bpmn:documentation>Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run cat pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
@@ -101,7 +101,7 @@ Three outcomes, each leaving a record: the prose holds (attested, with a reason)
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_Attest" name="Attest the pair, with a reason">
-      <bpmn:documentation>The prose holds: record it with `bun run pairs:attest -- --sidecar … --by agent|human --reason "…"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.</bpmn:documentation>
+      <bpmn:documentation>The prose holds: record it with `bun run cat pairs:attest -- --sidecar … --by agent|human --reason "…"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
       <bpmn:incoming>F_Holds</bpmn:incoming>
       <bpmn:outgoing>F_4</bpmn:outgoing>

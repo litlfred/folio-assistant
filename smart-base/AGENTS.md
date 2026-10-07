@@ -7,7 +7,7 @@ from it.
 > ## 🛑 Three rules, and each one has already been broken somewhere
 >
 > **1. Nothing under `library/` is authored, so nothing under it is edited.**
-> Every section was produced from an ingested PDF by `bun run ingest`. A
+> Every section was produced from an ingested PDF by `bun run cat ingest`. A
 > hand-edit is not a change — it is a defect that the next re-ingest
 > overwrites. If a section is wrong, the fix is in the rung that read it, or
 > in the upstream document. Never here.
@@ -55,8 +55,8 @@ written a house process and dressed it as an adoption, which is exactly what
 ## Ingesting a document
 
 ```sh
-bun run ingest uploads/FILE.pdf --library smart-base --dry-run   # which rung, and why
-bun run ingest uploads/FILE.pdf --library smart-base
+bun run cat ingest uploads/FILE.pdf --library smart-base --dry-run   # which rung, and why
+bun run cat ingest uploads/FILE.pdf --library smart-base
 ```
 
 `--library` is **required** here rather than defaulted: this repository

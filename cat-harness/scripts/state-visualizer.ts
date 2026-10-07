@@ -119,8 +119,8 @@
  * works with no configuration, because every path is relative to the page.
  *
  * Usage:
- *   bun run state:visualizer
- *   bun run state:visualizer -- --check    # fail if a page is stale or missing
+ *   bun run cat state:visualizer
+ *   bun run cat state:visualizer -- --check    # fail if a page is stale or missing
  *
  * Exit: 0 written or up to date, 1 stale under `--check`.
  */
@@ -1095,12 +1095,12 @@ if (check) {
   // "up to date" with a page sitting there that answers to no declaration.
   if (stale > 0 || taken.length > 0 || orphans.length > 0) {
     if (stale > 0) {
-      console.error(`\n${stale} dashboard(s) stale or missing — run \`bun run state:visualizer\`.`);
+      console.error(`\n${stale} dashboard(s) stale or missing — run \`bun run cat state:visualizer\`.`);
     }
     if (orphans.length > 0) {
       console.error(
         `\n${orphans.length} orphan dashboard(s) answer to no declared graph — ` +
-          "run `bun run state:visualizer` to remove them.",
+          "run `bun run cat state:visualizer` to remove them.",
       );
     }
     process.exit(1);

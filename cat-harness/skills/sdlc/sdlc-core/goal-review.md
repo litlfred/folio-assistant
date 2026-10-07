@@ -298,7 +298,7 @@ low-dexterity profile (`interaction/`) answers by choosing a number.
    has already computed. A check's finding was produced by code with a test behind it; your
    inline version of the same question has neither, and once you publish it the
    report's authority rests on whichever spelling you happened to write. So
-   **quote the finding and name the check that produced it** — `bun run health`,
+   **quote the finding and name the check that produced it** — `bun run cat health`,
    `check:anchor-names`, whatever it was — and re-derive only what no committed
    check answers.
 
@@ -307,7 +307,7 @@ low-dexterity profile (`interaction/`) answers by choosing a number.
    owner a larger permission than any instrument justified, and
    `deletion-requires-confirmation` assumes the list put to a person is true.
 
-   Bean `pesg`, and it is measured twice over. `bun run health` reported **one**
+   Bean `pesg`, and it is measured twice over. `bun run cat health` reported **one**
    orphaned staging preview; a review re-implemented the slug rule inline
    (`[^a-zA-Z0-9]+` where `feature-staging.yml` preserves `.`, `_` and `-`),
    reported **three**, and the owner authorised deleting "the 3 orphans". Two of
@@ -351,7 +351,7 @@ low-dexterity profile (`interaction/`) answers by choosing a number.
 
 ## Read the published survey before deriving one
 
-**`bun run survey:owed` first.** Bean `6ptx`: eight sessions ran in the same
+**`bun run cat survey:owed` first.** Bean `6ptx`: eight sessions ran in the same
 minute and seven were doing this same sweep, over the same ~2435-commit window.
 Authored commits on `main` that day: **one**. Throughput did not fall because
 the work ran out — 243 beans were open — it fell because everybody was reading,
@@ -369,7 +369,7 @@ The command answers in four states, and each says what you owe:
 When you finish a sweep, publish it:
 
 ```sh
-bun run survey:publish --from <sha> --by <session> --axis beans="…" --axis ci="!not looked at, and why"
+bun run cat survey:publish --from <sha> --by <session> --axis beans="…" --axis ci="!not looked at, and why"
 ```
 
 An axis written `name=!reason` records one you did **not** cover. That is a

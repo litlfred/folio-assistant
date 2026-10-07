@@ -3,7 +3,7 @@
  * Every catalogue node validates, and every reference it makes resolves.
  *
  * Usage: `bun run folio-assistant-core/scripts/check-catalogue.ts <instance-root>`
- * (e.g. `who-iris`; `bun run check:catalogue` passes it).
+ * (e.g. `who-iris`; `bun run cat check:catalogue` passes it).
  *
  * ## Generic, and so in core (bean `eayu`, 2026-09-30)
  *

@@ -21,7 +21,7 @@ gh-pages"*, and *"(and who-iris should link to json and xml renderings)"*.
 | the mapping (the code this skill governs) | `folio-assistant-core/schemas/dublin-core-render.ts` |
 | the script, with `--check` | `folio-assistant-core/scripts/dc-render.ts <instance-root>` |
 | the Tool node | `dublin-core-render` in `folio-assistant-core/tools/index.ts` |
-| the gate | `bun run dc:render:check` (a step in `code-quality-gates.yml`) |
+| the gate | `bun run cat dc:render:check` (a step in `code-quality-gates.yml`) |
 | the record model it reads | `folio-assistant-core/schemas/dublin-core.ts` (`folio-dublin-core/v1`) |
 
 ## Which records get a rendering
@@ -141,14 +141,14 @@ What happens to such a field depends on the form:
 
 ## The gate
 
-`bun run dc:render:check` fails on three things:
+`bun run cat dc:render:check` fails on three things:
 
 - a rendering that is **missing**;
 - a rendering that is **stale**, meaning its bytes differ from a fresh render;
 - an **orphan**, meaning a file in the directory that no record produces. The
   item it described is gone, but a reader would still find it.
 
-`bun run dc:render` regenerates. Renderings are generated files: never edit
+`bun run cat dc:render` regenerates. Renderings are generated files: never edit
 one by hand.
 
 ## Changing the mapping
@@ -156,7 +156,7 @@ one by hand.
 Add or change a row in `DCTERMS_MAP` only with the DCMI term's definition open.
 The row's `range` is a claim about that definition. Then:
 
-1. `bun run dc:render`.
+1. `bun run cat dc:render`.
 2. Commit the regenerated files.
 3. Run the tests in `dublin-core-render.test.ts`. They expand the JSON-LD with
    jsonld.js and assert that a resource-ranged term never expands to a bare

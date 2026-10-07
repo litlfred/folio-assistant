@@ -14,7 +14,7 @@
  *
  * This module is the one declaration:
  * - **Zod**, which `readAst` validates through;
- * - **JSON Schema** generated from it (`bun run ig-ast:schema`), committed
+ * - **JSON Schema** generated from it (`bun run cat ig-ast:schema`), committed
  *   beside this file, for the Java side and any other consumer;
  * - a **JSON-LD context**, which `ig-ast.ts jsonld` uses to export an AST as
  *   linked data: each resource identified by its canonical URL, each edge a

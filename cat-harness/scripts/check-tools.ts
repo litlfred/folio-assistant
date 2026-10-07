@@ -557,7 +557,7 @@ if (import.meta.main) {
     console.error(
       "    Declare one entry per host it reaches: `{ host, tool }` naming the Tool that works\n" +
         "    without that host, or `{ host, none }` saying there is none and why. An agent facing a\n" +
-        "    refused host looks the answer up with `bun run tools:remedy <host>`.",
+        "    refused host looks the answer up with `bun run cat tools:remedy <host>`.",
     );
   }
   const danglingRemedy = danglingRemedies(all);

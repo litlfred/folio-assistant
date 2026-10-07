@@ -34,7 +34,7 @@ said is invalid, because "the author did not say" and "the author said they
 could not tell" are different facts.
 
 ```sh
-bun run check:catalogue
+bun run cat check:catalogue
 ```
 
 ## The worked example closes a loop
@@ -95,5 +95,5 @@ They were the separate staged instance `who-style-guide/` until the owner's
 ruling of 2026-09-30: *"who voices style guide is derivative KG content from
 who-iris, merge content into subgraph. including docs."* They moved here by
 `git mv` (bean `qsx4`). Because a voice and its source are now in one instance,
-every citation is a same-instance one, and `bun run check:voices` resolves them
+every citation is a same-instance one, and `bun run cat check:voices` resolves them
 against this instance's own library.

@@ -445,7 +445,7 @@ assertion, not a gap.
   2026-09-24.** Every lane figure above this line is a *dated observation*,
   not a property of the corpus: this bean has now been behind twice (157, then
   159), and `swimlane-glossary` carried the original 157 with no correction at
-  all until the same date. **Re-derive it — `bun run check:lane-documentation`
+  all until the same date. **Re-derive it — `bun run cat check:lane-documentation`
   — rather than quoting any number from this bean.** None of the arguments
   here depends on the figure; they depend on there being far more lane names
   than roles, which holds at any scale. `log` and `session-record` remain correctly reported as declared
@@ -895,7 +895,7 @@ sub-instance, and scheme IRIs are unique across instances.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 
 

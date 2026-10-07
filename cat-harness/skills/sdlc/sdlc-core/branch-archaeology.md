@@ -168,7 +168,7 @@ size of the unique diff, last commit date, and the last author or
 the `undetermined` count stated beside the others, never dropped.
 
 Where it goes: summarised on the issue or in a bean note
-(`bun run beans:note`) for the owner, and the per-branch rows as a file
+(`bun run cat beans:note`) for the owner, and the per-branch rows as a file
 attached to that review. A committed, declared home for a recurring census
 (a `qa-reports` sidecar) is not built yet. Do not invent an undeclared
 directory for it. Name the gap instead.

@@ -40,9 +40,9 @@ worth more than a complete one that never lands.
 A bean note on the bean you are working, or on its epic if you hold several:
 
 ```sh
-bun run beans:note <bean-id> --title "handover: <role> <date>" \
+bun run cat beans:note <bean-id> --title "handover: <role> <date>" \
   --body-file <file> --branch <your-branch>
-bun run beans:notes          # rewrites the index; commit both files
+bun run cat beans:notes          # rewrites the index; commit both files
 git add -A && git commit && git push
 ```
 

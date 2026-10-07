@@ -20,8 +20,8 @@ subtly different and none tested.
 |---|---|
 | the rules + the flattener | `cat-harness/schemas/dependency-order.ts` |
 | the pipeline that uses it | `cat-harness/scripts/render-pipeline.ts` |
-| see the order without running it | `bun run render:order` |
-| run it | `bun run render` |
+| see the order without running it | `bun run cat render:order` |
+| run it | `bun run cat render` |
 | check an order someone WROTE, rather than compute one | `checkDeclaredOrder` in the same module |
 
 **Two questions, one module.** `flattenDependencies` answers a pipeline's

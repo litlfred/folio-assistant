@@ -1,7 +1,7 @@
 ---
 name: theme-generation
 description: >
-  Turning a declared theme into CSS — `bun run themes:css` — and the single
+  Turning a declared theme into CSS — `bun run cat themes:css` — and the single
   consumer-side failure this stage exists to stop: a theme with no CSS rule
   falls back to an opaque surface and paints over its own art. Four rounds of
   "still not image" had that one cause.
@@ -14,8 +14,8 @@ stylesheet gets told about it, and what happens to a reader when it is not told.
 
 ## One command, and forgetting it is the recurring defect
 
-    bun run themes:css          # regenerate docs/assets/css/themes.css
-    bun run themes:css:check    # fail the build when it is stale
+    bun run cat themes:css          # regenerate docs/assets/css/themes.css
+    bun run cat themes:css:check    # fail the build when it is stale
 
 `scripts/gen-themes-css.ts` reads `schemas/themes.ts` and writes
 `docs/assets/css/themes.css`. **Never hand-edit the output.**
@@ -63,8 +63,8 @@ than computed.
 
 ## Before you believe a rendering
 
-1. `bun run themes:css` — then look again.
-2. `bun run themes:css:check` — 0 means the committed file matches the source.
+1. `bun run cat themes:css` — then look again.
+2. `bun run cat themes:css:check` — 0 means the committed file matches the source.
 3. Only then is *"the art is not showing"* a real finding.
 
 ## Related

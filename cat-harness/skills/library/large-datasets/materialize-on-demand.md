@@ -21,8 +21,8 @@ This skill is that ask. The gates are not here; they are in
 ## 1. What is already here
 
 ```sh
-bun run cache:index          # summary and eviction candidates
-bun run cache:index --all    # every copy
+bun run cat cache:index          # summary and eviction candidates
+bun run cat cache:index --all    # every copy
 ```
 
 Read the columns for what they are:

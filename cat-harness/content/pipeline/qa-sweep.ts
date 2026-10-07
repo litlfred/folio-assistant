@@ -120,7 +120,7 @@ interface Args {
    * temp-directory folio still writes into the platform checkout, because
    * `INSTANCE_ROOT` is resolved from this module's location rather than from
    * anything the caller passed. `scripts/tests/init-folio-qa.test.ts` does
-   * exactly that, inside `bun test`, which is gate 1 of `bun run gates`.
+   * exactly that, inside `bun test`, which is gate 1 of `bun run cat gates`.
    *
    * `saveQaScriptSidecar`'s write-skip (bean `3ozg`) hides it on a clean tree
    * and stops hiding it the moment a checker's hash actually moves — which is

@@ -689,7 +689,7 @@ export function concludeJudgement(args: {
     if (state !== "current") {
       console.log(
         `  advisory: the committed ${stem}.qa-results.json is ${state.toUpperCase()} against this run. ` +
-          `Not gated (bean bo44: judge, never compare). \`bun run ${writer}\` rewrites it.`,
+          `Not gated (bean bo44: judge, never compare). \`bun run cat ${writer}\` rewrites it.`,
       );
     }
   }
@@ -814,7 +814,7 @@ export function judgeQaResult(args: {
     if (!fromBranch && key(read.result) !== key(args.fresh)) {
       console.log(
         `  advisory: the committed ${stem}.qa-results.json is STALE against this run. ` +
-          `Not gated (bean 0dav: judge, never compare). \`bun run ${writer}\` rewrites it.`,
+          `Not gated (bean 0dav: judge, never compare). \`bun run cat ${writer}\` rewrites it.`,
       );
     }
   } else {

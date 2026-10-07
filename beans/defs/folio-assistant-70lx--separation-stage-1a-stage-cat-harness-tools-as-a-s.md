@@ -24,7 +24,7 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 - [ ] falsifier 2: `bun test` pass count equal to the stage-0 baseline
 - [ ] falsifier 3: `mcp:capture` tool list identical; the server starts over stdio from `cat-harness-tools/src/index.ts`
 - [ ] falsifier 4: `check:import-direction --all` green, and the planted `cat-harness → cat-harness-tools` import red
-- [ ] `bun run gates --all` green, or each failure shown pre-existing on the base SHA
+- [ ] `bun run cat gates --all` green, or each failure shown pre-existing on the base SHA
 
 
 ## 2026-10-01 — absorbs w2gr step 3b (separation arc 7x5n, gap G2)
@@ -61,4 +61,4 @@ _2026-10-01T19:46:46Z_ — Claimed by claude/70lx-b0 — pushed to main so sibli
 - **Trap 1 — the server's loader did not resolve through `needs`.** `check-tools` already used `resolveImplementingPath`, but `registerDeclaredToolGroups` did a plain `join(root, module)`, so every `src/tools/*` Tool node would have gone `absent` the moment its module moved. Fixed: own copy first, then the one implementer; two implementers is `failed` naming both. Tested on a scratch checkout, and the two decisive tests fail against the old loader.
 - **`no-content-adapter.ts` joins the move set** rather than needing a type split: its only importers are `src/index.ts` and `src/tool-groups.test.ts`, both moving, and it is the only staying-side importer of `src/types.ts`.
 
-**For B1 (the move):** `server.ts` passes `PLATFORM_ROOT` (its own instance) as the tool groups' root. After the move that must be the **declaring** root, `cat-harness` (where `tools/` lives), not `cat-harness-tools` — routes keep `PLATFORM_ROOT`, since they move with the server. `capture-mcp-tools.ts`'s `TOOL_MODULES` moves with the server and stays relative to it. Baseline to compare against: `bun run split:baseline:check` (pyds, #2101).
+**For B1 (the move):** `server.ts` passes `PLATFORM_ROOT` (its own instance) as the tool groups' root. After the move that must be the **declaring** root, `cat-harness` (where `tools/` lives), not `cat-harness-tools` — routes keep `PLATFORM_ROOT`, since they move with the server. `capture-mcp-tools.ts`'s `TOOL_MODULES` moves with the server and stays relative to it. Baseline to compare against: `bun run cat split:baseline:check` (pyds, #2101).

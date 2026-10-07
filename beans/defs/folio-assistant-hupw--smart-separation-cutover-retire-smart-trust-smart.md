@@ -16,7 +16,7 @@ Stage 13 / F of n3ni. Owner 2026-10-06 (confirmed twice): 'cutover dirs should g
 - [ ] orphaned open PRs recorded here and in the PR
 - [ ] main repaired: needs, scripts, CI, site composition, tests, generated docs no longer depend on them
 - [ ] every removed gate named in the PR, with why
-- [ ] bun run gates green on the branch; draft PR CI green
+- [ ] bun run cat gates green on the branch; draft PR CI green
 
 
 
@@ -42,7 +42,7 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 
 
 
-## Gate inventory without the mount (bun run gates, 2026-10-06, head 649fd175b05)
+## Gate inventory without the mount (bun run cat gates, 2026-10-06, head 649fd175b05)
 `gates` refused to run (exit 2): `qa:working-copy` failed because three qa:refresh writers failed. Each one traces to the absent instances, and none is a defect to repair on main:
 - `p2:refusals`: 'smart-trust/fhir-artifact-index/index.json does not exist'.
 - `skill:register` → `skills:docs`: '10 page(s) in the output directory were produced by NO source'. These are smart-base skills' generated pages. Regenerating them away would remove pages from the site, which the owner forbade, so they are left until the mount restores their source.

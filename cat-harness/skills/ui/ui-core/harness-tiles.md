@@ -40,7 +40,7 @@ silence.
 
 **A harness a KG subscription chose is instantiated by the same file**, with
 no local declaration: its declaration is the substrate snapshot `kg:subscribe`
-cached at the pin. `bun run kg:instantiate <subscription> <harness>` writes the
+cached at the pin. `bun run cat kg:instantiate <subscription> <harness>` writes the
 config and the harness's state directories, and refuses a harness that was not
 chosen, not declared at the pin, or whose `needs` nothing here holds. The tile
 is drawn from the snapshot (`scripts/subscribed-harnesses.ts`): it links
@@ -613,6 +613,6 @@ the ruling, stickies read `bodyFrom: "description"`. The folio-assistant card
 then opened with "NAMED `folio-assistant-checkout`…", the reason the name was
 chosen, which is written for a maintainer. `bodyFrom: "description"` still
 parses, because the pinned `bootstrap/bootstrap.json` declares it.
-`bun run landing:sticky:check` fails when a card built from its declaration
+`bun run cat landing:sticky:check` fails when a card built from its declaration
 does not open with that text. A `bodyAppend` may follow the reader's text,
 and a card with a literal `body` is not compared.

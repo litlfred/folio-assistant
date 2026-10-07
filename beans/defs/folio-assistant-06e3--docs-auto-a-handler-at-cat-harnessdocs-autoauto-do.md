@@ -462,7 +462,7 @@ neither the check nor anything else could have known.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 
 ## Migration plan, 2026-10-03 — the owner re-ruled and chose THIS bean's layout
@@ -923,7 +923,7 @@ Measured truth, built from `gen-iris-pages.ts`'s own exported `OWNED_DOCS` /
 | written by `bootstrap-tools/scripts/subgraph-readmes.ts` | **2** |
 | **authored by a person** | **2** — `docs/style-guide.md`, `docs/style-guide-agents.md` |
 
-Corroborated independently: bare `bun run iris:pages:check` exits 0 with
+Corroborated independently: bare `bun run cat iris:pages:check` exits 0 with
 `12 page(s) up to date, no orphans.`
 
 So `0 generated` is wrong by twelve, and **the evidence page the check names is

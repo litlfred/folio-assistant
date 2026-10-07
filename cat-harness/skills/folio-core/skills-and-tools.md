@@ -261,7 +261,7 @@ not fine for the only statement of what to do to be `gh pr create`.
 ## Where this stands — the schema is real, the migration is half done
 
 **`schemas/tool.ts` exists**, `tools/` holds **24** nodes, and
-`bun run check:tools` fails when a `satisfies` names a skill that does not exist.
+`bun run cat check:tools` fails when a `satisfies` names a skill that does not exist.
 So a Tool is something you can reach for rather than a shape described in prose.
 
 Four of the 24 were authored by hand (`beans-cli`, `beans-manual`, `github`,
@@ -273,7 +273,7 @@ satisfies.
 ### How that migration was done, because the method matters more than the result
 
 **The contracts were read from the registrars, not from the source text.**
-`bun run mcp:capture` mounts each `register*` export against a capture object
+`bun run cat mcp:capture` mounts each `register*` export against a capture object
 and reads the real Zod shapes. The first attempt regex-scanned
 `server.tool("name", "description", {shape}, handler)` and produced parameter
 names lifted out of the *description prose* — `skill_fetch` appeared to take
@@ -313,7 +313,7 @@ still swallowed.
 ### A `satisfies` edge is checkable against the skill's own contract
 
 **`satisfies` is the one part of a Tool node a schema cannot check, and it was
-being written on judgement alone.** `bun run check:tools` compares a Tool's
+being written on judgement alone.** `bun run cat check:tools` compares a Tool's
 `io` against the input contract of every skill it claims — the contract the
 skill names in its own front matter (`input:`), never one found by directory
 name (#1168). Two rules: **every `required` property of the contract must
@@ -348,7 +348,7 @@ decision table, not to *answer* one. Both edges are dropped, which is why
 coverage reads 24 rather than 26: the earlier number counted two skills as
 covered by Tools that could not perform them.
 
-### Which uncovered skills actually need one — `bun run tools:coverage`
+### Which uncovered skills actually need one — `bun run cat tools:coverage`
 
 The count alone does not say which. A grep for shell blocks over-reports badly:
 52 of the 118 uncovered skills contain one, because a skill may legitimately

@@ -32,7 +32,7 @@ A comment on PR #2100, plus a message to the Merge Manager role.
 - [x] #2100 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [x] the owed `pull_request` CI is green on that head
 - [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [x] `bun run merge:guard 2100` passes all 7 checks, and it lands (or the owner closes it)
+- [x] `bun run cat merge:guard 2100` passes all 7 checks, and it lands (or the owner closes it)
 
 _2026-10-07T02:37:33Z_ — Claimed by claude/ns96-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
