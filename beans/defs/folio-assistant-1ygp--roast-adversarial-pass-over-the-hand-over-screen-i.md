@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1ygp
 title: 'ROAST: adversarial pass over the hand-over screen, its wiring and the zero-trust-handover methodology before adoption'
-status: completed
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-07T19:29:09Z
-updated_at: 2026-10-07T21:38:22Z
+updated_at: 2026-10-07T22:13:50Z
 parent: folio-assistant-ieum
 ---
 
@@ -102,3 +102,7 @@ New defects from the fixes, all **answered**: the silent JSON-leaf cap; the soft
 ## Summary of Changes
 
 Four lenses (bypass, wiring, adoption validity, threat model) and one adjudicator ran; every finding has a status above. Answered in #2454 and #2460/#2466; L4.1 settled by the owner ('pin write-token workflows', #2466). Still open, by name: L4.2 (mount consent provenance), L4.3 (partly), L4.4 (principal not enforced), L4.5 (gate can be emptied), L4.6 (pin provenance), L4.7 (missing sinks in the table).
+
+
+## Reopened 2026-10-07: dispatching the open findings
+Owner: 'dispatch agents to work on open bean 1ygp'. Three agents, each in its own worktree and branch: L4.2 (`claude/1ygp-l42-mount-trust`), L4.5+L4.6 (`claude/1ygp-l45-l46-gate-pins`), L4.3+L4.4+L4.7 (`claude/1ygp-l43-l44-l47-screen`).
