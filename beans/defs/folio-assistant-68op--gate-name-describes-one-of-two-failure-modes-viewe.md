@@ -76,6 +76,8 @@ has a "cannot see its subject" path.
 
 ## Evidence
 
+The step is renamed in `.github/workflows/code-quality-gates.yml` (`viewer pages keep the navbar they had, and audit is reachable`), the step-name rule is added to `ci-health.md`, and the sweep below found no other mis-named step; `check:workflows` and `check:viewer-nav` pass on this branch (PR #2348).
+
 ### Sweep results over `code-quality-gates.yml`
 Swept all 136 steps in `code-quality-gates.yml`:
 - Most steps running checks with could-not-determine or missing-baseline branches are named descriptively after the subject under test (e.g. `workflow skill refs`, `knowledge-graph audit`, `swimlane definitions`, `tool definitions`).
