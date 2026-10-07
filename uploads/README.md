@@ -27,7 +27,6 @@ It begins at the start **event** “A contributor has a file for the folio”. A
 | [`2403.07553v1.pdf`](2403.07553v1.pdf) | a file |  |
 | [`2403.09442v1.pdf`](2403.09442v1.pdf) | a file |  |
 | [`2409.00038v1.pdf`](2409.00038v1.pdf) | a file |  |
-| [`2503.18813v2.pdf`](2503.18813v2.pdf) | a file |  |
 | [`2505.07664v1.pdf`](2505.07664v1.pdf) | a file |  |
 | [`2506.20759v1.pdf`](2506.20759v1.pdf) | a file |  |
 | [`2603.10808v1.pdf`](2603.10808v1.pdf) | a file |  |
