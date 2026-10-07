@@ -95,6 +95,7 @@ import {
   type RenderedFile,
   type RenderedImpact,
 } from "../../cat-harness/schemas/rendered-impact.js";
+import { STRUCTURE_FILENAME } from "../../cat-harness/schemas/document-structure.js";
 import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 import { STRUCTURE_FILENAME } from "../../cat-harness/schemas/document-structure.js";
 import { gitBlobs } from "../../cat-harness/scripts/git-blobs.js";
