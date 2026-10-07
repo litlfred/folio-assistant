@@ -20,14 +20,14 @@ import {
   requirementsPath,
 } from "../../../cat-harness/schemas/python-deps.ts";
 import { checkPythonDeps, scanImports } from "../check-python-deps.ts";
-import { requirementsBody, staleTiers } from "../../../cat-harness/scripts/gen-python-deps.ts";
-import { repoRootFor } from "../../../cat-harness/schemas/cat-harness.js";
-import { HARNESS_ROOT } from "../lib/roots.ts";
+import { requirementsBody, staleTiers } from "../gen-python-deps.ts";
+import { HARNESS_ROOT, TOOLS_ROOT } from "../lib/roots.ts";
 
 // TWO ROOTS, because this file asks two questions of two different trees.
 //
-// `requirements.txt` is the REPOSITORY's — it sits beside `package.json` and
-// CI installs it as `pip install -r requirements.txt` from the checkout root.
+// `requirements.txt` is addressed from THIS LAYER's root — it lives at
+// `requirementsPath("lean")` (`python/`, bean `ar1s`), though CI installs it
+// from the checkout root.
 // The `.py` files that import those packages are the INSTANCE's, under
 // `cat-harness/scripts/`. One `ROOT` answered both when this arrived from
 // main, and pointing it at either alone breaks the other half: at the
@@ -35,7 +35,6 @@ import { HARNESS_ROOT } from "../lib/roots.ts";
 // `scripts/**/*.py` glob matches nothing and the scan reports 0 imports —
 // which the vacuity guard below is there to refuse.
 const INSTANCE = HARNESS_ROOT;
-const REPO_ROOT = repoRootFor(INSTANCE);
 
 describe("the declaration matches what the scripts actually import", () => {
   test("nothing imported is undeclared, and nothing declared is dead", () => {
@@ -101,15 +100,16 @@ describe("a transitive dependency is declared, not inferred", () => {
 });
 
 describe("the two tiers, and what each costs", () => {
-  test("camelot is the only extended entry, and it is the expensive one", () => {
-    expect(depsForTier("extended").map((d) => d.distribution)).toEqual(["camelot-py"]);
+  test("each extended entry carries its measured cost, and camelot is the expensive one", () => {
+    // camelot-py was the only one until vosk (meeting transcription, 2026-10-06).
+    expect(depsForTier("extended").map((d) => d.distribution)).toEqual(["camelot-py", "vosk"]);
     // The reason has to carry the measurement — a tier with no stated cost is
     // a judgement nobody can check.
-    expect(depsForTier("extended")[0].why).toMatch(/\d+ ?MB/);
+    for (const d of depsForTier("extended")) expect(d.why, d.distribution).toMatch(/\d+(\.\d+)? ?MB/);
   });
 
   test("every lean entry is installable by CI's own file", () => {
-    const body = readFileSync(join(REPO_ROOT, "requirements.txt"), "utf-8");
+    const body = readFileSync(join(TOOLS_ROOT, requirementsPath("lean")), "utf-8");
     for (const d of depsForTier("lean")) expect(body).toContain(`\n${d.distribution}\n`);
     // And the expensive one is NOT in it.
     expect(body).not.toContain("\ncamelot-py\n");
@@ -118,7 +118,7 @@ describe("the two tiers, and what each costs", () => {
 
 describe("the generated files cannot drift from the declaration", () => {
   test("both are current", () => {
-    expect(staleTiers(REPO_ROOT)).toEqual([]);
+    expect(staleTiers(TOOLS_ROOT)).toEqual([]);
   });
 
   test("generation is deterministic — byte-identical on a re-run", () => {
@@ -127,7 +127,7 @@ describe("the generated files cannot drift from the declaration", () => {
 
   test("each file says it is generated and names its source", () => {
     for (const tier of DEP_TIERS) {
-      const body = readFileSync(join(REPO_ROOT, requirementsPath(tier)), "utf-8");
+      const body = readFileSync(join(TOOLS_ROOT, requirementsPath(tier)), "utf-8");
       expect(body).toContain("GENERATED");
       expect(body).toContain("schemas/python-deps.ts");
     }
@@ -168,7 +168,7 @@ describe("the generated files cannot drift from the declaration", () => {
   test("every package's reason travels into the file with it", () => {
     // A requirements file is where somebody lands when an install fails, and
     // "what is this for" is the question they have.
-    const body = readFileSync(join(REPO_ROOT, "requirements.txt"), "utf-8");
+    const body = readFileSync(join(TOOLS_ROOT, requirementsPath("lean")), "utf-8");
     for (const d of depsForTier("lean")) expect(body).toContain(`# ${d.distribution}:`);
   });
 });
