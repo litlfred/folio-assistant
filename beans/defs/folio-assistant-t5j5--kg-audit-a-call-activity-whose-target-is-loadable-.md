@@ -1,15 +1,14 @@
 ---
 # folio-assistant-t5j5
 title: 'kg-audit: a call activity whose target is loadable from the PARENT root must resolve, not read unknown'
-status: in-progress
-tags:
-  - ready-to-close
+status: completed
 type: task
-parent: folio-assistant-zzmr
 priority: normal
 created_at: 2026-10-04T09:08:59Z
-updated_at: 2026-10-07T06:05:00Z
+updated_at: 2026-10-07T11:50:39Z
+parent: folio-assistant-zzmr
 ---
+
 Owner, 2026-10-04: the audit should resolve across instances.
 
 Today a `bpmn:callActivity` whose target process lives in a DIFFERENT declared instance reads `unknown`, with evidence that says in as many words that the audit cannot tell two different things apart:

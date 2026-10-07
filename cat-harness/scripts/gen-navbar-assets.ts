@@ -29,6 +29,7 @@ import { existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from "no
 import { join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { PIN_FILE, readPinFile } from "./check-bun-pin.ts";
 import { NAVBAR_JS, RAIL_DATA_DIR, railPageOf } from "./lib/harness-rail.ts";
 import { NAVBAR_CSS, navbarCss } from "./lib/navbar.ts";
 
@@ -52,6 +53,27 @@ export async function navbarJsFile(): Promise<string> {
   });
   if (!r.success) throw new Error(`navbar.js: bundle failed — ${r.logs.map(String).join("; ")}`);
   return HEADER("cat-harness/scripts/navbar-client.ts") + (await r.outputs[0]!.text());
+}
+
+/**
+ * Why a stale `navbar.js` may be the RUNTIME rather than the file: the bundle
+ * is minified, and the minifier's identifier choices change between Bun
+ * releases, so a Bun other than the pinned one writes different bytes from the
+ * same source. Measured 2026-10-07: Bun 1.4.2 against the 1.3.14 pin differs
+ * only in minified names. Returns the sentence to print beside a stale
+ * verdict, or `undefined` when the running Bun is the pinned one (or the pin
+ * cannot be read, in which case there is nothing to compare). It never turns a
+ * stale verdict into a pass: CI runs the pin, so the file it judges is the one
+ * the pin writes.
+ */
+export function runtimeNote(running: string = Bun.version, repoRoot: string = join(ROOT, "..")): string | undefined {
+  const pinPath = join(repoRoot, PIN_FILE);
+  const pinned = existsSync(pinPath) ? readPinFile(readFileSync(pinPath, "utf-8")) : undefined;
+  if (pinned === undefined || pinned === running) return undefined;
+  return (
+    `this is Bun ${running} but ${PIN_FILE} pins ${pinned}; the minified bundle differs between ` +
+    `Bun releases, so navbar.js can read stale here and current in CI. Install ${pinned} before regenerating.`
+  );
 }
 
 /** Where each is written in this checkout. */
@@ -98,6 +120,10 @@ if (import.meta.main) {
       }
     }
   }
-  if (check && stale) process.exit(1);
+  if (check && stale) {
+    const note = runtimeNote();
+    if (note) console.error(`  note: ${note}`);
+    process.exit(1);
+  }
   if (check) console.log("✓ navbar.css and navbar.js match their sources");
 }

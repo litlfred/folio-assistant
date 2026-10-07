@@ -6,7 +6,7 @@
 #           gh CLI, Python + requests
 #
 # Build:
-#   docker build -t paper-assistant -f scripts/mcp-server/Dockerfile .
+#   docker build -t paper-assistant -f cat-harness-tools/adapters/mcp-server/Dockerfile .
 #
 # Run (MCP server — stdio mode):
 #   docker run -i --rm paper-assistant --stdio
@@ -58,9 +58,13 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
     && apt-get update -qq && apt-get install -y -qq gh \
     && rm -rf /var/lib/apt/lists/*
 
-# ── Python packages (for CI scripts) ────────────────────────────
+# ── Python packages: the GENERATED set, never a retyped list ────
+# `cat-harness-tools/python/requirements.txt` is written from
+# `cat-harness/schemas/python-deps.ts`; `bun run deps:python:check` fails
+# if this image names a declared package itself (bean ar1s, phase 2).
+COPY cat-harness-tools/python/requirements.txt /tmp/requirements.txt
 RUN pip3 install --break-system-packages --no-cache-dir \
-    requests>=2.32
+    -r /tmp/requirements.txt
 
 # ── Bun ──────────────────────────────────────────────────────────
 
@@ -200,7 +204,6 @@ COPY content/fred2005-formal-groups/lean/lakefile.toml \
      content/fred2005-formal-groups/lean/
 COPY scripts/mcp-server/package.json scripts/mcp-server/
 COPY content/package.json content/
-COPY .github/scripts/requirements.txt .github/scripts/requirements.txt
 
 # Copy pre-built hecke-engine binaries from the Rust build stage
 COPY --from=hecke-build /hecke-bins/ /usr/local/bin/
@@ -256,10 +259,6 @@ RUN lake update \
     || echo "WARNING: 'lake exe cache get' failed; Mathlib oleans NOT pre-warmed — first lean_build inside the container will be slow" >&2
 RUN cd scripts/mcp-server && bun install
 RUN cd content && bun install
-
-# Install CI Python deps (for offline use)
-RUN pip3 install --break-system-packages --no-cache-dir \
-    -r .github/scripts/requirements.txt
 
 # Copy full repo
 COPY . .

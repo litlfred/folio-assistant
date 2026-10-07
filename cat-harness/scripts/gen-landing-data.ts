@@ -49,6 +49,7 @@ import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { themeByRef } from "../schemas/theme-by-ref.js";
 import { readLandingStickies } from "./ensure-landing-sticky.js";
 import { isExternalLink } from "../schemas/landing-sticky.js";
+import { publishedHref } from "./lib/jekyll-permalink.ts";
 
 const ROOT = instanceRootFor(import.meta.dir);
 
@@ -224,7 +225,10 @@ const stickies = readLandingStickies(ROOT).map((st) => {
     // cannot disagree with the value the way a hand-set flag can.
     links: st.links.map((l) => ({
       label: l.label,
-      href: l.href,
+      // A link authored as the page's SOURCE location, rewritten to where
+      // Jekyll publishes it (bean `kc7k`: docs-folder pages live under
+      // `/docs/cat-harness/`). Not a page here → unchanged.
+      href: isExternalLink(l) ? l.href : publishedHref(join(ROOT, siteDirFor(ROOT)), l.href),
       note: l.note ?? "",
       external: isExternalLink(l),
     })),

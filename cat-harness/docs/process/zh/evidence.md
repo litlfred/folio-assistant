@@ -60,11 +60,11 @@ _本页面生成自 [`content/docs/evidence/`](https://github.com/litlfred/folio
 第三个泳道特意设为外部。**权威性不是 folio 自身能够声称的属性**；它是在发布机构处解析确立的事实。如果将该泳道画在系统边界之内，就会使“权威性”沦为一种自我评估。
 
 <div class="bpmn-figure" id="figure-the-subprocess">
-  <img src="../../zh/assets/img/workflows/evidence-retrieval.svg"
+  <img src="{{ '/zh/assets/img/workflows/evidence-retrieval.svg' | relative_url }}"
        alt="跨越四个泳道的 BPMN 泳道图。作者审阅其内容中已有的指导，然后将问题构建为 PICO。一个并行网关扇出至由证据智能体运行的三项检索任务：library/ 下受信任的 L1 来源、受信任的 L2 DAK 和 L3 IG 内容，以及数据存储库和统计数据集。候选证据汇聚后，受信任的注册库泳道对照发布机构的 API 验证各自的权威性；一个排他网关在重新汇聚之前将未确认的引用路由为工作计划上的 bean。作者随后对证据体进行评价和分级，第二个排他网关询问其是否足以形成推荐意见：如果不足，则将此缺口记录为一个 bean，且流程在未形成推荐意见的情况下结束；如果充足，则将证据附加至推荐意见。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [full-size SVG](../../assets/img/workflows/evidence-retrieval.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [full-size SVG]({{ '/assets/img/workflows/evidence-retrieval.svg' | relative_url }})
 {: .bpmn-source }
 
 ## 第一步是向内审视
