@@ -1275,7 +1275,7 @@ export function checkEntry(dir: string): EntryReport {
  * folio invoking this from its own root still resolves its own library, and
  * falls back to the directory this module lives in.
  */
-export function instanceRootFor(cwd: string): string | undefined {
+export function libraryRootFor(cwd: string): string | undefined {
   // `.length > 0`, not `[0]`. The question here is PRESENCE — does this root
   // declare a library at all — and asking it by indexing reads as though the
   // first one mattered. It never did here, and after bean `a02m` a root may
@@ -1299,7 +1299,7 @@ export function checkAll(root: string): EntryReport[] | undefined {
   // EVERY declared library. This is the L1 COMPLETENESS gate, and the one
   // failure it must never have is reporting a complete pass over part of the
   // corpus — which is exactly what it did when it ran from the repository
-  // root and checked nothing (the comment on `instanceRootFor` above). Half
+  // root and checked nothing (the comment on `libraryRootFor` above). Half
   // is the same bug as none, with better camouflage: none at least yields the
   // `undefined` third state. `directoriesForGraph(...)[0]` until bean `a02m`.
   const libs = corpusDirectoriesForGraph(root, "library");
@@ -1471,7 +1471,7 @@ if (import.meta.main) {
     if (target) {
       reports = [checkEntry(target)];
     } else {
-      const root = instanceRootFor(resolve("."));
+      const root = libraryRootFor(resolve("."));
       if (root === undefined) {
         console.error("Could not find a declared `library` directory from " + resolve("."));
         console.error("This is NOT a pass. Treat it as unknown.");
@@ -1496,7 +1496,7 @@ if (import.meta.main) {
   // took somebody to notice, while all four entries carried a complete
   // `images.json`.
   if (!target) {
-    const libRoot = instanceRootFor(resolve("."));
+    const libRoot = libraryRootFor(resolve("."));
     // Across EVERY declared library: an exception that has expired in the
     // second one is a gate lying about its coverage just as much as one that
     // expired in the first. Bean `a02m`.
@@ -1533,7 +1533,7 @@ if (import.meta.main) {
     // `qa-reports` branch with `--against <ref>` — and never decide the exit.
     const { against, exit: badRef } = againstOrUsage("check:l1-complete", argv);
     if (badRef !== undefined) process.exit(badRef);
-    const root = instanceRootFor(resolve(".")) ?? resolve(".");
+    const root = libraryRootFor(resolve(".")) ?? resolve(".");
     const states = sidecarStates(root, reports, against);
     const off = staleSidecars(root, reports, against);
     if (off.length) {
@@ -1553,14 +1553,14 @@ if (import.meta.main) {
     // the repository root put them in a `test/` tree of their own while the
     // committed ones sat under the instance — two sets, neither checking the
     // other. Measured 2026-09-20.
-    const writeRoot = instanceRootFor(resolve(".")) ?? resolve(".");
+    const writeRoot = libraryRootFor(resolve(".")) ?? resolve(".");
     for (const r of reports) console.log(`wrote ${sidecarFor(writeRoot, r)}`);
   }
   console.log(argv.includes("--json") ? JSON.stringify(reports, null, 2) : format(reports));
   if (!target && !argv.includes("--json")) {
     // The drain's backlog, corpus-wide. Reported, never gated — see
     // `block-summaries` above and `scripts/summaries.ts`.
-    const root = instanceRootFor(resolve(".")) ?? resolve(".");
+    const root = libraryRootFor(resolve(".")) ?? resolve(".");
     const t = tally(entryDirs(root).flatMap((d) => {
       try {
         return entryItems(d);

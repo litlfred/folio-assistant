@@ -1,10 +1,11 @@
 ---
 # folio-assistant-9f05
 title: 'Merge refused: #2063 not signed (merge:guard checks 3 and 4)'
-status: completed
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T02:41:21Z
+updated_at: 2026-10-07T11:33:44Z
+tags: [ready-to-close]
 parent: folio-assistant-d33q
 blocking:
     - folio-assistant-0qjq

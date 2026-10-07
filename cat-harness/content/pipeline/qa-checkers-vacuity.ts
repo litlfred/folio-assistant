@@ -53,7 +53,7 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { stripLeanComments } from "./lean-lexer.js";
+import { declarationStarts, stripLeanComments } from "./lean-lexer.js";
 import type { CheckerResult, CheckerHit } from "./qa-checkers-voice";
 
 /** A field assignment inside a structure-instance body. */
@@ -1011,6 +1011,62 @@ function constantPropBody(
   return null;
 }
 
+/**
+ * Detect a bare placeholder stub in a block's `.lean` file.
+ *
+ * Bean `lfxa`. A placeholder stub exists only to satisfy `lean.ref` linking
+ * constraints before formalisation is complete. It carries a marker such as
+ * `placeholder stub` and no mathematical content.
+ *
+ * Passes when:
+ * - There is no `.lean` file (returns `n/a`).
+ * - The file does not contain a placeholder stub marker.
+ * - The file contains substantive Lean declarations, even if "placeholder stub"
+ *   is mentioned in comments.
+ *
+ * Fails when:
+ * - The file matches `/placeholder\s+stub/i` and contains no mathematical
+ *   declarations.
+ */
+export function checkProofNoPlaceholderStub(
+  leanPathOrPaths?: string | { lean?: string },
+): CheckerResult {
+  const leanPath =
+    typeof leanPathOrPaths === "string" ? leanPathOrPaths : leanPathOrPaths?.lean;
+  if (!leanPath || !existsSync(leanPath)) {
+    return { result: "n/a", hits: [] };
+  }
+  const raw = readFileSync(leanPath, "utf-8");
+  if (!raw.trim()) {
+    return { result: "n/a", hits: [] };
+  }
+
+  const stubMatch = /placeholder\s+stub/i.exec(raw);
+  if (!stubMatch) {
+    return { result: "pass", hits: [] };
+  }
+
+  const stripped = stripLeanComments(raw);
+  const decls = declarationStarts(stripped);
+  if (decls.length > 0) {
+    return { result: "pass", hits: [] };
+  }
+
+  const upToMatch = raw.slice(0, stubMatch.index);
+  const line = upToMatch.split("\n").length;
+
+  return {
+    result: "fail",
+    hits: [
+      {
+        file: leanPath,
+        line,
+        text: "bare placeholder stub: file contains placeholder stub marker and no mathematical content",
+      },
+    ],
+  };
+}
+
 export const VACUITY_AUTOMATED_CHECKERS: Record<
   string,
   (paths: { md?: string; ts?: string; lean?: string }) => CheckerResult
@@ -1018,4 +1074,5 @@ export const VACUITY_AUTOMATED_CHECKERS: Record<
   "lean-no-vacuous-instance-data": (p) => checkNoVacuousInstanceData(p.lean),
   "lean-no-definitional-laundering": (p) => checkNoDefinitionalLaundering(p.lean),
   "lean-docstring-honesty": (p) => checkDocstringHonesty(p.lean),
+  "proof-no-placeholder-stub": (p) => checkProofNoPlaceholderStub(p.lean),
 };

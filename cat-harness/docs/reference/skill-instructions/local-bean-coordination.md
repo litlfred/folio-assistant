@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`.claude/skills/local/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/.claude/skills/local/bean-coordination.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/.claude/skills/local/bean-coordination.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/.claude/skills/local/bean-coordination.md){: .fa-edit-source data-fa-link="edit" data-src=".claude/skills/local/bean-coordination.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 > **This is a stub, not the skill.** The skill is

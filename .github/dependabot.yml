@@ -34,7 +34,9 @@
 #
 # ## requirements-extended.txt
 #
-# `pip` at `/` covers `requirements.txt`. `requirements-extended.txt` may not be
+# `pip` at `/cat-harness-tools/python` covers `requirements.txt` (moved off the
+# repository root 2026-10-06, bean `ar1s`; the path is `requirementsPath` in
+# `cat-harness/schemas/python-deps.ts`). `requirements-extended.txt` may not be
 # matched by Dependabot's pip file discovery. Left declared once rather than
 # duplicated per filename: an entry that matches nothing is invisible, and an
 # unmatched file is better found by noticing it never gets a PR than by
@@ -69,7 +71,7 @@ updates:
   # ── pip ────────────────────────────────────────────────────────────────
   - package-ecosystem: pip
     directories:
-      - "/"
+      - "/cat-harness-tools/python"
       - "/.github/scripts"
     schedule:
       interval: weekly
