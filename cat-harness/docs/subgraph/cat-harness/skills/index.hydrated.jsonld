@@ -11,7 +11,7 @@
         "kind": "directory"
       },
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `auto-docs` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "fileCount": 283,
+      "fileCount": 284,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
@@ -1056,13 +1056,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 152,
+              "instructionLines": 180,
               "instructionsPath": "skills/conduct/conduct-core/untrusted-input.md",
               "name": "untrusted-input",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d10038736206461d84695e8df798deb2bf9281900a9f2af7e98ef5e2f7b280ad",
-                "bytes": 7211,
-                "sha256": "d10038736206461d84695e8df798deb2bf9281900a9f2af7e98ef5e2f7b280ad"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7e89790fb56ee143e0fb4d67e137a9f31915b495ba6bba39df7b5df882e614bb",
+                "bytes": 8852,
+                "sha256": "7e89790fb56ee143e0fb4d67e137a9f31915b495ba6bba39df7b5df882e614bb"
               },
               "title": "Untrusted input — the value must never become program text"
             },
@@ -1177,13 +1177,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 72,
+              "instructionLines": 75,
               "instructionsPath": "skills/conduct/security/security.md",
               "name": "security",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/021f0ad87d6822ae91502f267679cb0727b1509eed4f45482c540d461066959c",
-                "bytes": 4758,
-                "sha256": "021f0ad87d6822ae91502f267679cb0727b1509eed4f45482c540d461066959c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/12aa1bc5d134883aa8717ad5a618dbde283c2fbbc1385b2d75f8dcbc9a8dd425",
+                "bytes": 6113,
+                "sha256": "12aa1bc5d134883aa8717ad5a618dbde283c2fbbc1385b2d75f8dcbc9a8dd425"
               },
               "title": "Security — one question, asked at every boundary"
             }
@@ -3394,13 +3394,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 220,
+              "instructionLines": 244,
               "instructionsPath": "skills/sdlc/sdlc-core/ci-health.md",
               "name": "ci-health",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4e84b3e9a6fb95a9e555e8e8ac87ef464645204d4681b97bcc75d748f49b68e2",
-                "bytes": 11531,
-                "sha256": "4e84b3e9a6fb95a9e555e8e8ac87ef464645204d4681b97bcc75d748f49b68e2"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d912fc28db59bf1df62a7dfc9e98a74e1a1dca843cc33577a91d73ba3ca8318e",
+                "bytes": 12670,
+                "sha256": "d912fc28db59bf1df62a7dfc9e98a74e1a1dca843cc33577a91d73ba3ca8318e"
               },
               "title": "CI health — a red workflow looks exactly like a green one from in here"
             },
@@ -3944,13 +3944,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills",
-              "instructionLines": 611,
+              "instructionLines": 622,
               "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
               "name": "prepare-merge",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0f110cdd33bbb01459145572a8ded0a5d6fedb42a8a6fc842eb9c41c937bef60",
-                "bytes": 35656,
-                "sha256": "0f110cdd33bbb01459145572a8ded0a5d6fedb42a8a6fc842eb9c41c937bef60"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1c33b0d381ecaab5100139d4a084bf2ea0777a09fb3ec2014130a085762addfa",
+                "bytes": 36398,
+                "sha256": "1c33b0d381ecaab5100139d4a084bf2ea0777a09fb3ec2014130a085762addfa"
               },
               "title": "Prepare-merge — get a feature branch ready to land"
             },
@@ -5077,6 +5077,15 @@
           ],
           "name": "skills/voices/agent-skill-authoring",
           "path": "skills/voices/agent-skill-authoring/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/secure-code-authoring/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "skills/voices/secure-code-authoring",
+          "path": "skills/voices/secure-code-authoring/"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/voices/vendors/",

@@ -1,0 +1,36 @@
+{
+  "$schema": "folio-intake/v1",
+  "doc_id": "arxiv-2510.19207v2",
+  "title": "Defending Against Prompt Injection with DataFilter",
+  "_comment": "Supplied by the owner in chat on 2026-10-07 (session_01FWGdsHong3XHiU7CMRWmfo) with: 'ingest and review for relevance to increase guards, also as prior work evidence (we try to keep I/O skill schema tightly controlled)'. Title read from the PDF. arxiv.org is denied by this container's network policy (CONNECT 403, measured 2026-10-07), so the per-submission licence could not be asked.",
+  "source": {
+    "upstream": "https://arxiv.org/abs/2510.19207v2",
+    "capturedAt": "2026-10-07T08:30:00Z",
+    "capturedBy": "owner, supplied in chat 2026-10-07"
+  },
+  "files": [
+    {
+      "path": "arxiv-2510.19207v2.pdf",
+      "bytes": 515979,
+      "sha256": "cdfa941ee76d59d09c2aa99181b5436d0f738be063feafcc75045a47e062b865",
+      "type": "publication",
+      "role": "original-bitstream"
+    }
+  ],
+  "licence": {
+    "status": "unknown",
+    "searched": [
+      {
+        "where": "the PDF's own text (arxiv-2510.19207v2.pdf, pdftotext)",
+        "result": "no licence statement found; only the arXiv identifier stamp",
+        "on": "2026-10-07"
+      },
+      {
+        "where": "https://arxiv.org/abs/2510.19207v2",
+        "result": "could not ask: CONNECT tunnel failed, 403 from this container's network policy. An unasked question, not a missing licence.",
+        "on": "2026-10-07"
+      }
+    ],
+    "note": "OWNER INSTRUCTION 2026-10-07: 'ingest'. This is on top of the standing clearance of 2026-10-02, 'ok on arxiv sourced papers'. Cleared to ingest and hold; the licence id is still unestablished, so republishing the full text needs the abs page read."
+  }
+}

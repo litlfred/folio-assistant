@@ -15,6 +15,8 @@ import {
   checkCached,
   exact,
   fromMirror,
+  fromSite,
+  parseCliArgs,
   parseSushiConfigDeps,
   readPackageJsonFromTgz,
   seedFhirCache,
@@ -80,7 +82,7 @@ describe("fhir-cache-seed-npm", () => {
   describe("validPart", () => {
     test("accepts safe names and versions", () => {
       expect(validPart("hl7.fhir.r4.core")).toBe(true);
-      expect(validPart("smart.who.int.base")).toBe(true);
+      expect(validPart("org.example.base")).toBe(true);
       expect(validPart("1.0.0")).toBe(true);
       expect(validPart("2.0.0-ballot")).toBe(true);
       expect(validPart("current")).toBe(true);
@@ -225,6 +227,28 @@ dependencies:
 
       expect(existsSync(join(dest, "package", "package.json"))).toBe(true);
       expect(checkCached(dest, "my.pkg", "1.2.3")).toBeNull();
+    });
+  });
+
+  describe("site repositories (--site-repo)", () => {
+    test("parses PREFIX=OWNER/REPO[@BRANCH], repeatable", () => {
+      const p = parseCliArgs([
+        "--site-repo", "org.example.=example/site",
+        "--site-repo", "org.other.=other/pages@gh-pages",
+      ]);
+      expect(p.siteRepos).toEqual({
+        "org.example.": "example/site",
+        "org.other.": "other/pages@gh-pages",
+      });
+    });
+
+    test("no site repository unless the caller maps the prefix", async () => {
+      expect(await fromSite("org.example.base", "1.0.0")).toBeNull();
+      expect(await fromSite("org.example.base", "1.0.0", { "org.other.": "o/r" })).toBeNull();
+    });
+
+    test("refuses a malformed repository before any network call", async () => {
+      expect(await fromSite("org.example.base", "1.0.0", { "org.example.": "not a repo" })).toBeNull();
     });
   });
 

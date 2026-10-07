@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uj55
 title: Windows .bat wrappers for every .sh a user runs from the normal workflow
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-18T07:47:05Z
-updated_at: 2026-09-18T07:50:21Z
+updated_at: 2026-10-07T17:15:00Z
 parent: folio-assistant-5a3l
 ---
 
@@ -29,3 +29,6 @@ git-invoked hook (`git-hooks/auto-commit-feedback.sh`), CI-only helpers
 (`.github/scripts/generate-diff.sh`, `latexmk-compile.sh`), and the
 qou-specific leftovers (`docker-latex-build/build-pdf.sh`,
 `smoke-test-libraries.sh`).
+
+## Completed on landed evidence
+Landed on main in PR #231 (feat(windows): a .bat entry point beside every .sh a user runs) with bat:sync:check gate.

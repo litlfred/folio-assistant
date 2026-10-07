@@ -1,10 +1,10 @@
 ---
 # folio-assistant-y9r6
 title: 'Separation stage 1c: cat-harness content holds no code — block manifests, tool and skill definitions become JSON'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-01T06:58:01Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-8lcl
@@ -23,3 +23,6 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 - [ ] new gate `check:content-code-free` (no tracked `.ts/.js/.py/.sh` under `cat-harness/`) watched red first, then green, and wired in CI
 - [ ] every node and page `.jsonld` byte-identical (`jsonld-gen-check`)
 - [ ] `knownSkills` identical; `kg-export` node count identical; `check:tools` and `tool-coverage` green
+
+## Completed on landed evidence
+Landed on main in PR #1702 (rqao (#1168): the JSON skill definitions and conventions leave .claude/, split by theme).

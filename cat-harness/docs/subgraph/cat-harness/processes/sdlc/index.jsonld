@@ -970,6 +970,20 @@
       "name": "no"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/flow/Flow_S1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/flow/Flow_S2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "passed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/flow/Flow_S3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "refused, or could not check"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/flow/Flow_V1",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -1019,6 +1033,11 @@
       "name": "Did the deploy succeed?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/node/GW_Secure",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Security gate passed?"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/node/GW_Survived",
       "@type": "bootstrap:ProcessNode",
       "name": "Did the previews survive?"
@@ -1062,6 +1081,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/node/Task_Restore",
       "@type": "bootstrap:ProcessNode",
       "name": "Restore the OPEN PRs' staging previews"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite/node/Task_SecurityGate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run the release security gate [security:gate]"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_FeatureStaging",
