@@ -1,13 +1,13 @@
 ---
 # folio-assistant-pyds
 title: 'Separation stage 0: preconditions — PR0/PR1 landed, boundary gates watched red, baseline recorded'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - mvp
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-04T14:43:15Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-iirv
 ---
 
@@ -34,3 +34,5 @@ _2026-10-04T14:43:11Z_ — Claimed by claude/dazzling-sagan-xifirf — pushed to
 - **Box 2:** #1758/#1760 merged, and `cat-harness.json` has 0 `scope: repository` entries. `classify.py` was never committed, so "ABOVE = 0" cannot be re-run as written.
 - **Box 1 not touched:** `w2gr` is in-progress under its own claim.
 
+## Completed on landed evidence
+Landed on main in PR #2140 / commit ba17dbac5e58 (Separation stage 0: preconditions — PR0/PR1 landed, boundary test counts).

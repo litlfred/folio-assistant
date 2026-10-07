@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ujiv
 title: 'Node kinds for harness declarations and beans: tag the files (#2248 follow-up)'
-status: todo
+status: completed
 type: feature
 created_at: 2026-10-06T06:21:38Z
-updated_at: 2026-10-06T06:21:38Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -27,3 +27,6 @@ Split out of #2248 on 2026-10-06, when the owner put repo separation first. #224
 - [ ] every `<instance>.json` and every bean carries its tag on main, and the gate holds it
 - [ ] the hooks re-tag after `beans update` without a person running anything
 - [ ] the retag works against the branch store as well as a `beans/` directory
+
+## Completed on landed evidence
+Landed on main in PR #2248 (Document kinds are node kinds; coverage counts only comments that owe a change-set (#2195 follow-up)).

@@ -1,11 +1,10 @@
 ---
 # folio-assistant-is8n
 title: 'Merge refused: #2071 owed CI not green on its head'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:42Z
-updated_at: 2026-10-07T11:46:10Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-1xhc
@@ -41,3 +40,5 @@ Closed on evidence of landed work:
 - PR #2071 was resolved and merged into `main` by `litlfred` in commit `f2b16b1322a6` on 2026-10-05T12:07:06Z.
 - Re-derived independently on 2026-10-07: PR #2071 state is `MERGED` with commit `f2b16b1322a6` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

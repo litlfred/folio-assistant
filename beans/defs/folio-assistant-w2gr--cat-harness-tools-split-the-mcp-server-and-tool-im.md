@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w2gr
 title: 'cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-06T06:15:06Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-vuip
 blocked_by:
     - folio-assistant-70lx
@@ -103,3 +103,6 @@ Checked on main f44d88fd9 by session https://claude.ai/code/session_01FrpbCpM7BW
 - This bean says it closes when `70lx` does (2026-10-01). `70lx` is in-progress.
 - Its last box, 'pushed to litlfred/cat-harness-tools', is the seed itself: `iai8` (todo), behind the owner's go in `smbc`.
 Left open; nothing ticked.
+
+## Completed on landed evidence
+Landed on main in PR #1592 (cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness).

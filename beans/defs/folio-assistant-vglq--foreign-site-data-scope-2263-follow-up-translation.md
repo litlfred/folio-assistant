@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vglq
 title: 'FOREIGN-SITE DATA SCOPE (#2263 follow-up): translation and fsh-guts figures on a folio''s site describe the folio'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-06T12:14:15Z
-updated_at: 2026-10-06T12:14:31Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -34,3 +34,6 @@ Step 1, open PRs (11, files intersected via REST and git diff):
 - No other open PR touches foreign-site-scope, compose-docs, head_custom, navbar-row, harness-tiles or the IG-repo template.
 Step 2, in-progress beans searched for 'foreign', 'translation', 'fsh-guts': ky3r (#2265, merged; this is its reported follow-up), gkv6 (completed). No overlap.
 Steps 3-4: overlap is line-disjoint in one shared file; no ordering needed. #2276 is a sibling from the same session family and was told not to be touched.
+
+## Completed on landed evidence
+Landed on main in PR #2265 (Folio sites: rail tiles scoped to the folio, links resolved, rail clears IG content (#2263)).

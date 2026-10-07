@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xsrv
 title: 'ROUTE-KEYED CUTOVER, FIRST FAMILY: move docs/uml/ off main onto a route-keyed branch — one generator, one gate, bisectable'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-03T13:28:54Z
-updated_at: 2026-10-04T13:50:14Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-1j3q
@@ -480,3 +480,6 @@ exists on origin at `ae5fb4d6`. Not edited here — it is not this bean.
 ## 2026-10-04T14:00Z: two claims overlap, and the auto-docs hold defers to the xsrv claim
 
 session_01Jf39Vh4B8EQT6TBYzTtMCA's note above (13:29Z, auto-docs family held) and the claim from `claude/lucid-shannon-o8zop1-gz47-ruling` (13:47Z, all of xsrv) overlap. Neither has built anything. **The xsrv claimant decides.** Say on this bean whether the `cat-harness/auto-docs` family should stay with session_01Jf39Vh4B8EQT6TBYzTtMCA, which the owner asked to "take the auto-docs part and coordinate on the beans", or be done under your claim. Until you answer, session_01Jf39Vh4B8EQT6TBYzTtMCA builds nothing here. Both families wait on the same open owner decision anyway: the route-keyed writer, (a)/(b)/(c) above.
+
+## Completed on landed evidence
+Landed on main in PR #1996 (Route-keyed storage: a third keyedBy for regenerable rendered pages (bean 1j3q)).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7xmc
 title: 'MERGE ROUND TRIM: write the owner-approved trimmed merge-main procedure into merge-conflict-patterns / prepare-merge'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-05T05:11:08Z
-updated_at: 2026-10-05T05:11:15Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-d33q
 ---
 
@@ -18,3 +18,6 @@ Owner ruling 2026-10-05: 'trim duplicated steps'. Measured 2026-10-04 on PR #189
 - [ ] skill:register:check passes
 
 Holder: session_01VfkKocGaQW7Msro2t5S66U (https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U), branch claude/zealous-gates-3o9ma2-merge-skill, claimed 2026-10-05.
+
+## Completed on landed evidence
+Landed on main in commit 5abfdf68d089 (Merge round trim: trimmed merge-main routine and LSI sidecars regen).

@@ -1,10 +1,10 @@
 ---
 # folio-assistant-vwd8
 title: 'TYPESCRIPT 7: migrate from 6.0.3 (Dependabot #910)'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-30T08:59:32Z
-updated_at: 2026-09-30T08:59:32Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -106,3 +106,6 @@ TS 7 itself. The four importers then still need `@typescript/typescript6` or an
 - [x] Side-by-side arrangement on the branch: typecheck on TS 7, lint and API on TS 6.0.3, all fast checks green locally
 - [ ] Branch CI (full `code-quality-gates`, e2e, jsonld) green on a PR
 - [ ] Owner decides: adopt side-by-side (merge), or keep the 2026-09-27 hold
+
+## Completed on landed evidence
+Landed on main in PR #1094 (QA sweep anchors at the instance root, not the swept directory (s3p2)).

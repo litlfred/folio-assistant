@@ -1,12 +1,11 @@
 ---
 # folio-assistant-b8de
 title: 'Merge refused: #1898 owed CI not green on its head'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T14:30:43Z
-updated_at: 2026-10-07T11:50:25Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-iirv
 blocking:
     - folio-assistant-apcg
@@ -47,3 +46,5 @@ Closed on evidence of landed work:
 - PR #1898 was resolved and merged into `main` by `litlfred` in commit `f2c1880162e1` on 2026-10-05T11:05:31Z.
 - Re-derived independently on 2026-10-07: PR #1898 state is `MERGED` with commit `f2c1880162e1` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.
