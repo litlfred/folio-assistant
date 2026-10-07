@@ -1,10 +1,10 @@
 ---
 # folio-assistant-5gqn
 title: 'MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-09-27T06:16:21Z
-updated_at: 2026-10-07T04:36:10Z
+updated_at: 2026-10-07T04:37:00Z
 parent: folio-assistant-1swy
 ---
 
@@ -52,12 +52,19 @@ very substitution that bean was written to prevent.
 
 ## Done when
 
-- [ ] `.gitattributes` adds `cat-harness/docs/assets/beans/index.json` with
+- [x] `.gitattributes` adds `cat-harness/docs/assets/beans/index.json` with
   `linguist-generated=true -diff -merge`, and NOT `harness.json`
-- [ ] the test `oxka` added (asserting the marked files' gates are still in the
+- [x] the test `oxka` added (asserting the marked files' gates are still in the
   workflow) covers the new entry, so an unmarked-but-ungated file cannot be added
-- [ ] a comment at the `harness.json` entry's absence, or in that test, recording
+- [x] a comment at the `harness.json` entry's absence, or in that test, recording
   WHY it is excluded — otherwise the next author sees three generated JSON files
   with two marked and reads the third as an oversight
+
+## Evidence
+
+- Added `cat-harness/docs/assets/beans/index.json linguist-generated=true -diff -merge` to `.gitattributes` alongside comment explaining why `harness.json` is excluded.
+- Updated `test/gitattributes.test.ts` to assert `cat-harness/docs/assets/beans/index.json` is marked `-merge`, assert `docs:pages:check` is present in `.github/workflows/code-quality-gates.yml`, and assert `cat-harness/docs/_data/harness.json` is NOT marked `-merge` with comment explaining that `sync-docs-harness.ts` carries forward repo URL state when origin is unknown.
+- Ran `bun test test/gitattributes.test.ts` (7 pass, 0 fail).
+- Ran `bun test test/bean-store-hygiene.test.ts` (3 pass, 0 fail).
 
 _2026-10-07T04:36:10Z_ — Claimed by claude/5gqn-beans-index-gitattributes — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
