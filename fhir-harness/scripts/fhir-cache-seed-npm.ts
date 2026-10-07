@@ -6,12 +6,14 @@
  *   bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache DIR] [--sushi-config FILE]
  *                                                      [--mirror DIR|GIT-URL] [--mirror-commit SHA]
  *                                                      [--missing-out FILE] [--template-repo NAME=OWNER/REPO]
- *                                                      [--dry-run] [name#version ...]
+ *                                                      [--site PREFIX=OWNER/REPO[@BRANCH]] [--dry-run] [name#version ...]
  *
  * Sources, tried in order for each package:
  *   1. the cache itself (already present and verified);
  *   2. npm, account `grahamegrieve` (owner, 2026-09-30: trusted);
- *   3. the publisher's own published-site repository on GitHub (smart.who.int.*, ihe.*);
+ *   3. a publisher's own published-site repository on GitHub, for each package-name
+ *      prefix given with `--site` (none by default: this layer names no publisher,
+ *      check:fhir-harness-exclusions; a caller that knows its IGs' publisher passes it);
  *   4. a template's own repository (from FHIR/ig-registry or explicit --template-repo);
  *   5. `--mirror`: directory or git repository of `<name>#<version>.tgz` with SHA512SUMS.
  *
@@ -405,14 +407,22 @@ export function fromMirror(
   };
 }
 
+/**
+ * A publisher's published-site repository, keyed by package-name prefix:
+ * `{ "<prefix>": "<owner>/<repo>[@<branch>]" }` (`--site`). A package
+ * `<prefix><rest>` is looked for at `<rest>/<version>/package.tgz` there.
+ */
+export type SiteRepos = Record<string, string>;
+
 export async function fromSite(
   name: string,
   version: string,
+  sites: SiteRepos = {},
 ): Promise<{ data: Buffer; provenance: Record<string, unknown> } | null> {
-  if (name.startsWith("smart.who.int.")) {
-    const rel = `${name.slice("smart.who.int.".length)}/${version}/package.tgz`;
-    const repo = "WorldHealthOrganization/smart-html";
-    const branch = "main";
+  const prefix = Object.keys(sites).find((p) => name.startsWith(p));
+  if (prefix !== undefined) {
+    const rel = `${name.slice(prefix.length)}/${version}/package.tgz`;
+    const [repo, branch = "main"] = sites[prefix]!.split("@");
     const commit = remoteCommit(`https://github.com/${repo}`, branch);
     if (!commit) return null;
     const url = `https://raw.githubusercontent.com/${repo}/${commit}/${rel}`;
@@ -553,6 +563,8 @@ export interface SeedOptions {
   mirrorCommit?: string;
   missingOut?: string;
   templateRepos?: Record<string, string>;
+  /** `--site`: package-name prefix → published-site repository. */
+  sites?: SiteRepos;
   wanted?: string[];
   logger?: {
     log: (msg: string) => void;
@@ -737,7 +749,7 @@ export async function seedFhirCache(options: SeedOptions): Promise<SeedResult> {
 
       // 3. publisher site repo
       if (pj === null && exact(version)) {
-        const siteRes = await fromSite(name, version);
+        const siteRes = await fromSite(name, version, options.sites ?? {});
         if (siteRes) {
           if (dry) {
             installed.push({ spec, how: "would install from site" });
@@ -849,6 +861,7 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
   let mirrorCommit: string | undefined;
   let missingOut: string | undefined;
   const templateRepos: Record<string, string> = {};
+  const sites: SiteRepos = {};
   const wanted: string[] = [];
 
   const it = argv[Symbol.iterator]();
@@ -880,6 +893,12 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
         const [k, v] = next.value.split("=");
         if (k && v) templateRepos[k] = v;
       }
+    } else if (a === "--site") {
+      next = it.next();
+      if (!next.done) {
+        const i = next.value.indexOf("=");
+        if (i > 0) sites[next.value.slice(0, i)] = next.value.slice(i + 1);
+      }
     } else if (a.includes("#")) {
       wanted.push(a);
     }
@@ -894,6 +913,7 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
     mirrorCommit,
     missingOut,
     templateRepos,
+    sites,
     wanted,
   };
 }
@@ -907,7 +927,7 @@ Usage:
   bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache DIR] [--sushi-config FILE]
                                                      [--mirror DIR|GIT-URL] [--mirror-commit SHA]
                                                      [--missing-out FILE] [--template-repo NAME=OWNER/REPO]
-                                                     [--dry-run] [name#version ...]`);
+                                                     [--site PREFIX=OWNER/REPO[@BRANCH]] [--dry-run] [name#version ...]`);
     process.exit(0);
   }
   const res = await seedFhirCache(parsed);
