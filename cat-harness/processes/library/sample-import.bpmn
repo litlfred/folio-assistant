@@ -168,6 +168,7 @@ content">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="sample-import" />
         <bootstrap.processes:skill ref="materialize-remote" />
+        <cat-harness.processes:adjudication accepts="remote local merge defer" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_14</bpmn:incoming>
       <bpmn:outgoing>Flow_15</bpmn:outgoing>

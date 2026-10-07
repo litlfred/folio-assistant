@@ -84,6 +84,7 @@ classDiagram
       <<json: SubstrateSnapshotSchema>>
       $schema [1] 'folio-substrate-snapshot/v1'
       subscription [1] string
+      kind [0..1] substrate | content
       repository [1] string
       ref [1] string
       file [1] string

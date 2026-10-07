@@ -516,9 +516,81 @@ function withheldBanner(e, bs){
     "<b>" + n + "</b> of " + bs.length + " section" + (bs.length === 1 ? "" : "s") + " summarised.</p></div>";
 }
 
+/* The shared edit/feedback recipe (bean v433): the Document panel's [source],
+   [feedback] and [edit] links are built by it (bean zcak). */
+(() => {
+  if (window.faEditLinks) return;
+  function faBlockUrls(c, b) {
+  var enc = encodeURIComponent;
+  var path = b.source.split("/").map(enc).join("/");
+  var branch = c.branch || "main";
+  var repo = b.repo || c.repo;
+  var src = "https://github.com/" + repo + "/blob/" + branch + "/" + path + (b.line ? "#L" + b.line : "");
+  var url = c.siteUrl && b.page ? c.siteUrl.replace(/\/$/, "") + "/" + b.page + "#" + enc(b.label) : (b.pageUrl || "");
+  var values = { block: b.label, section: b.section || "", source: b.source, page: b.page || "", url: url, content: c.content || "" };
+  var q = new URLSearchParams();
+  q.set("title", "Feedback" + (c.content ? " [" + c.content + "]" : "") + ": " + (b.section ? b.section + " — " : "") + b.label);
+  if (c.labels && c.labels.length) q.set("labels", c.labels.join(","));
+  if (c.template) {
+    q.set("template", c.template);
+    (c.templateFields || []).forEach(function (f) { if (values[f]) q.set(f, values[f]); });
+  } else {
+    var facts = c.content ? ["**Content:** \u0060" + c.content + "\u0060"] : [];
+    facts.push("**Block:** \u0060" + b.label + "\u0060");
+    if (b.section) facts.push("**Section:** " + b.section);
+    facts.push("**Source:** " + src);
+    if (url) facts.push("**On the site:** " + url);
+    q.set("body", facts.concat(["", "**Type:** general | technical | editorial", "", "**Comment:**", "", "", "**Proposed change:**", ""]).join("\n"));
+  }
+  return { edit: "https://github.com/" + repo + "/edit/" + branch + "/" + path, source: src, feedback: "https://github.com/" + c.repo + "/issues/new?" + q };
+}
+  let cfg = null;
+  const config = () => {
+    if (cfg) return cfg;
+    const el = document.getElementById("fa-edit-cfg");
+    if (el) cfg = JSON.parse(el.textContent);
+    else {
+      const meta = (n) => { const m = document.querySelector('meta[name="' + n + '"]'); return m ? m.content : undefined; };
+      cfg = { repo: meta("fa-repo"), branch: meta("fa-branch") || "main" };
+    }
+    return cfg;
+  };
+  // A link that names a GitHub file but carries no facts (a generator wrote
+  // its href from data, e.g. sourceLinks) gives them up from its own URL.
+  const GH = /^https:\/\/github\.com\/([^/]+\/[^/]+)\/(?:blob|edit)\/([^/]+)\/([^#?]+)(?:#L(\d+))?$/;
+  const adopt = (a) => {
+    const m = GH.exec(a.getAttribute("href") || "");
+    if (!m) return false;
+    a.dataset.repo = m[1]; a.dataset.branch = m[2];
+    a.dataset.src = m[3].split("/").map(decodeURIComponent).join("/");
+    if (m[4]) a.dataset.line = m[4];
+    return true;
+  };
+  const ready = (host) => {
+    if (host.dataset.ready) return;
+    if (!host.dataset.src && !(host.matches("a[data-fa-link]") && adopt(host))) return;
+    const c0 = config();
+    const c = host.dataset.branch ? Object.assign({}, c0, { branch: host.dataset.branch }) : c0;
+    if (!c.repo && !host.dataset.repo) return;
+    host.dataset.ready = "1";
+    const label = host.dataset.block || host.dataset.src;
+    const u = faBlockUrls(c, { label: label, source: host.dataset.src, section: host.dataset.sec,
+      line: host.dataset.line ? Number(host.dataset.line) : undefined, repo: host.dataset.repo, page: host.dataset.page || c.page,
+      pageUrl: location.href.split("#")[0] + "#" + encodeURIComponent(label) });
+    const links = host.matches("a[data-fa-link]") ? [host] : host.querySelectorAll("a[data-fa-link]");
+    // Only this host's own links: a nested host (a Lean link inside a block's row) fills itself.
+    for (const a of links) if ((a === host || a.closest("[data-src]") === host) && u[a.dataset.faLink]) a.href = u[a.dataset.faLink];
+  };
+  const fill = (root) => { for (const h of (root || document).querySelectorAll("[data-src], a[data-fa-link]")) ready(h); };
+  // A page that learns its repository later (the folio site reads it from its outline) says so here.
+  const configure = (c) => { cfg = c; };
+  window.faEditLinks = { urls: faBlockUrls, fill: fill, configure: configure };
+  for (const ev of ["pointerover", "focusin", "touchstart"])
+    document.addEventListener(ev, (e) => { const h = e.target.closest && e.target.closest("[data-src], a[data-fa-link]"); if (h) ready(h); }, { passive: true });
+})();
 
 /* THE DOCUMENT PANEL -- issue #2302. See scripts/lib/library-document.ts. */
-var DOC = null, DOC_TAB = "contents";
+var DOC = null, DOC_ID = null, DOC_TAB = "contents";
 function docHref(id){
   var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
   return dir + "entries/" + encodeURIComponent(id) + ".doc.json";
@@ -545,10 +617,14 @@ function docContents(d){
      is visible at a glance (owner, 2026-10-06: "TOC collapsible and start
      collapsed - hard to see overview"). Native <details>: keyboard and
      screen-reader behaviour with no script. */
+  var bySec = {};
+  d.sections.forEach(function(s){ bySec[s.id] = s; });
   function line(e){
     var t = (e.number ? esc(e.number) + ' ' : '') + esc(e.title);
     var link = e.section ? '<a href="#sec-' + esc(e.section) + '" data-sec="' + esc(e.section) + '">' + t + '</a>' : t;
-    return link + ' <span class="note">' + pageText(e.page, e.pageLabel) + '</span> ' + confPill(e.confidence, e.evidence);
+    var s = e.section && bySec[e.section];
+    return link + ' <span class="note">' + pageText(e.page, e.pageLabel) + '</span> ' + confPill(e.confidence, e.evidence) +
+      (s && s.edit && d.links ? ' ' + editHost(s) : '');
   }
   /* Build a node list first, so a level can see how many siblings it has.
      A node that is the ONLY one at its level starts open: an outline whose
@@ -609,6 +685,23 @@ function chips(ks){
     return '<span class="pill' + (k.heading ? ' ok' : '') + '"' + (k.heading ? ' title="also named by a heading"' : '') + '>' + esc(k.term) + '</span>';
   }).join(" ") + '</p>';
 }
+/* LINKS -- bean zcak, from the shared recipe (edit-links, bean v433). The
+   library is frozen, so [source] and [feedback] are about the library's own
+   section file, and [edit] opens the folio block MATERIALISED from the
+   section, when there is one. Each is its own host, so the runtime builds
+   every href from that host's data-src and nothing else. */
+function editHost(s){
+  return '<span class="doc-actions" data-src="' + esc(s.edit.path) + '" data-block="' + esc(s.edit.label) + '">' +
+    '<a data-fa-link="edit" title="Edit the folio block made from this section (the library copy is frozen)">\u270E edit</a></span>';
+}
+function secActions(d, s){
+  if (!d.links) return '';
+  var t = (s.number ? s.number + ' ' : '') + s.title;
+  return ' <span class="doc-actions" data-src="' + esc(d.links.dir + '/sections/' + s.id + '.md') + '" data-block="' + esc(s.id) +
+    '" data-sec="' + esc(t) + '"><a data-fa-link="source" title="This section as extracted, on GitHub">source</a> ' +
+    '<a data-fa-link="feedback" title="Give feedback on this section (opens a GitHub issue)">\u{1f4e3} feedback</a></span>' +
+    (s.edit ? ' ' + editHost(s) : '');
+}
 function docSections(d){
   if (!d.sections.length) return '<p class="empty">No sections.</p>';
   return d.sections.map(function(s){
@@ -620,7 +713,7 @@ function docSections(d){
         ? '<div class="sum"><span class="pill">extract \u2014 the section\u2019s own opening text' + (s.extractCut ? ', cut' : '') + '</span><p>' + esc(s.extract) + (s.extractCut ? '\u2026' : '') + '</p></div>'
         : '<p class="note">' + (d.withheld ? 'Withheld \u2014 no text published; no summary yet.' : 'No text and no summary.') + '</p>';
     return '<article id="sec-' + esc(s.id) + '" class="docsec"><h3>' + esc((s.number ? s.number + ' ' : '') + s.title) +
-      ' <span class="note">' + range + ' \u00B7 ' + s.words + ' words</span></h3>' + chips(s.keywords) + body + '</article>';
+      ' <span class="note">' + range + ' \u00B7 ' + s.words + ' words</span>' + secActions(d, s) + '</h3>' + chips(s.keywords) + body + '</article>';
   }).join("");
 }
 function docChecks(d){
@@ -650,9 +743,12 @@ function renderDocument(id, d, err){
   if (!err && d && d.absent) { el.hidden = true; return; }
   el.hidden = false;
   if (err) { el.innerHTML = '<h2>Document</h2><p class="empty">Could not read the document view for ' + esc(id) + ' \u2014 ' + esc(err) + '. This is a failure to read, not an empty document.</p>'; return; }
-  DOC = d;
+  DOC = d; DOC_ID = id;
+  if (d.links && window.faEditLinks) window.faEditLinks.configure({ repo: d.links.repo, branch: d.links.branch, content: id });
   var tab = DOC_TABS.filter(function(t){ return t[0] === DOC_TAB; })[0] || DOC_TABS[0];
-  el.innerHTML = '<h2>Document \u2014 ' + esc(d.title || id) + ' <span class="note">(' + d.pages + ' pages)</span></h2>' +
+  var whole = d.links ? ' <span class="doc-actions" data-src="' + esc(d.links.dir) + '" data-block="' + esc(id) + '"><a data-fa-link="source">source</a> ' +
+    '<a data-fa-link="feedback" title="Give feedback on this document (opens a GitHub issue)">\u{1f4e3} feedback</a></span>' : '';
+  el.innerHTML = '<h2>Document \u2014 ' + esc(d.title || id) + ' <span class="note">(' + d.pages + ' pages)</span>' + whole + '</h2>' +
     '<div class="seg" role="tablist" aria-label="Document view">' + DOC_TABS.map(function(t){
       return '<button type="button" role="tab" aria-selected="' + (t[0] === tab[0]) + '" data-tab="' + t[0] + '">' + esc(t[1]) + '</button>';
     }).join("") + '</div>' + (d.keywords && d.keywords.length ? '<div class="dockw"><span class="note">Keywords (LSI):</span> ' + chips(d.keywords) + '</div>' : '') +
@@ -666,18 +762,31 @@ function renderDocument(id, d, err){
       Array.prototype.forEach.call(el.querySelectorAll("ul.toc details"), function(x){ x.open = open; });
     });
   });
-  /* A section link from any tab opens the Sections tab at that section. */
-  Array.prototype.forEach.call(el.querySelectorAll("[data-sec]"), function(a){
+  /* Hrefs now, not on first hover: a keyboard reader tabs to these links. */
+  if (d.links && window.faEditLinks) window.faEditLinks.fill(el);
+  /* A section link from any tab opens the Sections tab at that section. Only
+     <a>: a link HOST carries data-sec too (its section's name, for an issue). */
+  Array.prototype.forEach.call(el.querySelectorAll("a[data-sec]:not([data-fa-link])"), function(a){
     a.addEventListener("click", function(ev){
       ev.preventDefault(); DOC_TAB = "sections"; renderDocument(id, DOC, null);
       var t = document.getElementById("sec-" + a.getAttribute("data-sec")); if (t) t.scrollIntoView();
     });
   });
 }
+/* An address naming a section (#sec-<id>), from the rail's contents or a
+   link from anywhere, opens the Sections tab at it: the section exists only
+   on that tab, so a bare fragment would scroll to nothing. */
+function openSectionFromHash(){
+  var h = decodeURIComponent(location.hash || "");
+  if (h.indexOf("#sec-") !== 0 || !DOC) return;
+  if (DOC_TAB !== "sections") { DOC_TAB = "sections"; renderDocument(DOC_ID, DOC, null); }
+  var t = document.getElementById(h.slice(1)); if (t) t.scrollIntoView();
+}
+window.addEventListener("hashchange", openSectionFromHash);
 function loadDocument(id){
   fetch(docHref(id), {cache: "no-store"})
     .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function(d){ renderDocument(id, d, null); })
+    .then(function(d){ renderDocument(id, d, null); openSectionFromHash(); })
     .catch(function(e){ renderDocument(id, null, String(e && e.message || e)); });
 }
 

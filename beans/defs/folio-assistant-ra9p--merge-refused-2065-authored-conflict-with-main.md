@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ra9p
 title: 'Merge refused: #2065 authored conflict with main'
-status: completed
+status: in-progress
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T02:36:51Z
+updated_at: 2026-10-07T11:08:54Z
+tags: [ready-to-close]
 parent: folio-assistant-hfag
 blocking:
     - folio-assistant-30jr

@@ -50,6 +50,7 @@ import { dirname, join } from "node:path";
 import type { Subscription } from "../schemas/cat-harness.js";
 import { PART_RECORD_FILE, PART_TREE, partDirOf, viewOf } from "./kg-parts.js";
 import { readSnapshot, snapshotDirFor } from "./subscribed-harnesses.js";
+import { inputSiteReached } from "./input-trace.ts";
 
 /** A declared directory as the substrate's own declaration writes it — every field kept, so `instanceRoot`, `composed` and the rest read as they would in-tree. */
 export type SubscribedEntry = { id: string; path: string; graphTypologies: string[] } & Record<string, unknown>;
@@ -170,6 +171,8 @@ export function layoutSubscribedInstances(trees: readonly SubscribedTree[], into
   let base = into;
   for (const t of trees) {
     if (t.state !== "held" || !t.instance || !t.entry || !t.tree) continue;
+    // input-site: traced #18eba981 — subscribed trees are read from a store outside the checkout, laid out under a temp dir
+    inputSiteReached("subscribed-trees: lays out subscribed instances");
     base ??= mkdtempSync(join(tmpdir(), "subscribed-instances-"));
     const root = join(base, t.instance);
     roots.set(t.instance, root);
