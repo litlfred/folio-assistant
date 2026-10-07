@@ -50,7 +50,7 @@ The distribution package includes `subgraph-manifest.json`, which indexes the gl
 
 | # | Requirement | Why, in one line |
 |---|---|---|
-| **OX-1** | **Skolemize anonymous compound nodes into deterministic URIs** (`https://iris.who.int/entity/item/{handle}#{prop}_{idx}`) | Eliminates blank nodes entirely; prevents cross-document collisions and enables direct external URI addressability |
+| **OX-1** | **Upstream Skolemization at the extractor (Zero-Pass Minting)** (`https://iris.who.int/entity/item/{handle}#{prop}_{idx}`) | Eliminates blank nodes entirely at extraction; prevents multi-document collisions, enables external addressability, and avoids expensive downstream normalizer passes |
 | **OX-2** | **Store zero binary bytes in RDF** | Avoids WASM memory bloat; binaries are served as static files via CDN |
 | **OX-3** | **Join across named graphs via explicit `GRAPH` blocks** | Separates archival containment rights from bibliographic description |
 | **OX-4** | **Use canonical Handle URIs as primary subject** (`https://hdl.handle.net/...`) | Guarantees permanent identity resolution outside local server infrastructure |
