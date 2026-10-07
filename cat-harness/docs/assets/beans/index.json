@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 510,
+      "count": 509,
       "unit": "open beans"
     }
   },
@@ -924,15 +924,15 @@
     {
       "id": "folio-assistant-2as0",
       "title": "Agent-triggered staging: local build + push to gh-pages, then an Artifact preview (#2410)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T11:12:53Z",
-      "updatedAt": "2026-10-07T11:12:53Z",
-      "preview": "Issue #2410. PR 1: cat-harness/scripts/stage-local.ts builds the folio's preview in the agent's checkout and pushes STAGING/<slug>/ through the same gate and render log as the workflow. PR 2: --artifact publishes it as a claude.ai Artifact. Measured 2026-10-07: 33 min runner queue before the workflow ran 45 s; Pages deploy 47 min queued.",
+      "updatedAt": "2026-10-07T12:44:42Z",
+      "preview": "Issue #2410. PR 1: cat-harness/scripts/stage-local.ts builds the folio's preview in the agent's checkout and pushes STAGING/<slug>/ through the same gate and render log as the workflow. PR 2: --artifact publishes it as a claude.ai Artifact. Measured 2026-10-07: 33 min runner queue before the workflow ran 45 s; Pages deploy 47 min queued.\n\n*2026-10-07* — completed: PR 1 (stage-local, push to gh-pag",
       "file": "beans/defs/folio-assistant-2as0--agent-triggered-staging-local-build-push-to-gh-pag.md"
     },
     {
@@ -2248,7 +2248,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T08:35:58Z",
-      "updatedAt": "2026-10-06T06:26:48Z",
+      "updatedAt": "2026-10-07T08:10:00Z",
       "preview": "## What was measured\n\n`main@12b916e9a5`, probe calling both schemas on one `storage` value:\n\n    A. DirectoryStorageSchema accepts keyedBy route? true\n    B. resolveSubgraphSource THREW: ZodError |\n       Invalid option: expected one of \"commit\"|\"tip\"\n\n`DirectoryStorageSchema.keyedBy` (`schemas/cat-harness.ts`) gained `\"route\"` with bean `1j3q`.\n`KeyedBySchema` (`schemas/subgraph-source.ts`), whic",
       "file": "beans/defs/folio-assistant-5akx--keyedbyschema-and-directorystorageschema-were-two.md"
     },
@@ -5889,14 +5889,14 @@
     {
       "id": "folio-assistant-ei4q",
       "title": "LHS NAVBAR OVERLAPS CONTENT ON DESKTOP: opening the rail should shrink the content width, not cover it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-9rq1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T06:51:27Z",
-      "updatedAt": "2026-10-06T06:51:27Z",
+      "updatedAt": "2026-10-07T14:41:32Z",
       "preview": "Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), verbatim:\n\n> on desktop open up the LHS navbar will shrink content width so they dont overlap\n\n## Behaviour wanted\n- **Desktop (wide):** an open LHS navbar takes its own column, and the main content reflows narrower beside it. Nothing is hidden under the rail.\n- **Phone:** the rail stays an overlay drawer (no room to shri",
       "file": "beans/defs/folio-assistant-ei4q--lhs-navbar-overlaps-content-on-desktop-opening-the.md"
     },
@@ -10208,7 +10208,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:10:30Z",
-      "updatedAt": "2026-10-02T17:38:56Z",
+      "updatedAt": "2026-10-07T08:16:00Z",
       "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
@@ -10278,7 +10278,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:04:49Z",
-      "updatedAt": "2026-09-27T10:30:21Z",
+      "updatedAt": "2026-10-07T08:13:00Z",
       "preview": "## CORRECTED 2026-09-26 — the cause is NOT `ymsu`, and the title understates it\n\nThis bean was opened saying *\"a sweep artefact\"* and pointing at `ymsu` — a\ngate that writes what a later gate reads. **That was wrong**, and it was a\nhypothesis stated in a bean's title as though it were the finding. The actual\ncause is a one-character `.gitignore` bug that distorts the CORPUS of every\nworktree `chec",
       "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
@@ -13499,14 +13499,14 @@
     {
       "id": "folio-assistant-y1w9",
       "title": "MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T18:34:19Z",
-      "updatedAt": "2026-09-29T21:43:12Z",
+      "updatedAt": "2026-10-07T14:25:44Z",
       "preview": "**Found by paying the cost, 2026-09-19.** Not a survey finding — a measured\nloss in one session, twice.\n\n## What happened\n\nWhile working `folio-assistant-n60j` I \"discovered\" that the gate list must\nbe derived from the CI workflow rather than from `package.json`, wrote a\nrunner and a skill around it, and reported it as a finding. It was already\nrecorded, that same day, in\n`skills/memory/derive-the",
       "file": "beans/defs/folio-assistant-y1w9--memory-reach-113-skills-are-bound-to-no-role-or-pr.md"
     },
@@ -15617,13 +15617,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 585,
-        "closed": 276,
-        "open": 309,
-        "inProgress": 125,
-        "todo": 183,
+        "closed": 277,
+        "open": 308,
+        "inProgress": 126,
+        "todo": 181,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4717948717948718
+        "share": 0.4735042735042735
       },
       {
         "id": "folio-assistant-vuip",
@@ -15657,8 +15657,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 510,
-    "coveredOpen": 507,
+    "openTotal": 509,
+    "coveredOpen": 506,
     "duplicateIds": 0
   }
 }

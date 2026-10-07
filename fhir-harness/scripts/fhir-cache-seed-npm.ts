@@ -6,13 +6,15 @@
  *   bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache DIR] [--sushi-config FILE]
  *                                                      [--mirror DIR|GIT-URL] [--mirror-commit SHA]
  *                                                      [--missing-out FILE] [--template-repo NAME=OWNER/REPO]
- *                                                      [--site-repo PREFIX=OWNER/REPO]
+ *                                                      [--site-repo PREFIX=OWNER/REPO[@BRANCH]]
  *                                                      [--dry-run] [name#version ...]
  *
  * Sources, tried in order for each package:
  *   1. the cache itself (already present and verified);
  *   2. npm, account `grahamegrieve` (owner, 2026-09-30: trusted);
- *   3. the publisher's own published-site repository on GitHub (configured via --site-repo);
+ *   3. a publisher's published-site repository on GitHub, for package-name prefixes
+ *      the caller maps with --site-repo (none by default: which publisher owns which
+ *      prefix is the instance's to say, not this layer's);
  *   4. a template's own repository (from FHIR/ig-registry or explicit --template-repo);
  *   5. `--mirror`: directory or git repository of `<name>#<version>.tgz` with SHA512SUMS.
  *
@@ -406,34 +408,40 @@ export function fromMirror(
   };
 }
 
+/**
+ * Fetch `<name>#<version>` from a publisher's published-site repository, at
+ * `<rest-of-name>/<version>/package.tgz`, where `siteRepos` maps a package-name
+ * prefix (e.g. `"org.example."`) to `OWNER/REPO` or `OWNER/REPO@BRANCH`
+ * (default branch `main`). The longest matching prefix wins; no match is null.
+ */
 export async function fromSite(
   name: string,
   version: string,
   siteRepos: Record<string, string> = {},
 ): Promise<{ data: Buffer; provenance: Record<string, unknown> } | null> {
-  for (const [prefix, repo] of Object.entries(siteRepos)) {
-    if (name.startsWith(prefix)) {
-      const rel = `${name.slice(prefix.length)}/${version}/package.tgz`;
-      const branch = "main";
-      const commit = remoteCommit(`https://github.com/${repo}`, branch);
-      if (!commit) return null;
-      const url = `https://raw.githubusercontent.com/${repo}/${commit}/${rel}`;
-      try {
-        const resp = await fetch(url);
-        if (!resp.ok) return null;
-        const data = Buffer.from(await resp.arrayBuffer());
-        const pj = readPackageJsonFromTgz(data);
-        if (!pj || pj.name !== name || pj.version !== version) return null;
-        return {
-          provenance: { site: url, branch, commit, sha512: sha512Integrity(data) },
-          data,
-        };
-      } catch {
-        return null;
-      }
-    }
+  const prefix = Object.keys(siteRepos)
+    .filter((p) => p && name.startsWith(p) && name.length > p.length)
+    .sort((a, b) => b.length - a.length)[0];
+  if (!prefix) return null;
+  const [repo, branch = "main"] = siteRepos[prefix].split("@");
+  if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !/^[\w./-]+$/.test(branch)) return null;
+  const rel = `${name.slice(prefix.length)}/${version}/package.tgz`;
+  const commit = remoteCommit(`https://github.com/${repo}`, branch);
+  if (!commit) return null;
+  const url = `https://raw.githubusercontent.com/${repo}/${commit}/${rel}`;
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const data = Buffer.from(await resp.arrayBuffer());
+    const pj = readPackageJsonFromTgz(data);
+    if (!pj || pj.name !== name || pj.version !== version) return null;
+    return {
+      provenance: { site: url, branch, commit, sha512: sha512Integrity(data) },
+      data,
+    };
+  } catch {
+    return null;
   }
-  return null;
 }
 
 export function fromTemplateRepo(
@@ -556,6 +564,7 @@ export interface SeedOptions {
   mirrorCommit?: string;
   missingOut?: string;
   templateRepos?: Record<string, string>;
+  /** Package-name prefix → `OWNER/REPO[@BRANCH]` of the publisher's site repository. */
   siteRepos?: Record<string, string>;
   wanted?: string[];
   logger?: {
@@ -920,7 +929,7 @@ Usage:
   bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache DIR] [--sushi-config FILE]
                                                      [--mirror DIR|GIT-URL] [--mirror-commit SHA]
                                                      [--missing-out FILE] [--template-repo NAME=OWNER/REPO]
-                                                     [--site-repo PREFIX=OWNER/REPO]
+                                                     [--site-repo PREFIX=OWNER/REPO[@BRANCH]]
                                                      [--dry-run] [name#version ...]`);
     process.exit(0);
   }
