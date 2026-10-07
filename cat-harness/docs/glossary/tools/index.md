@@ -12,7 +12,7 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 132 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 4 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 131 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 25 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 7 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 5 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 6 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 174 terms and is 126 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -134,6 +134,13 @@ Build the Latent Semantic Indexing index of a prose graph <span class="fa-gloss-
 
 <h2 id="letter-C">C</h2>
 <dl class="fa-gloss">
+<dt id="folio-assistant-sci--kg-tools--latex-image" data-fa-state="extracted" data-fa-gloss="">
+Compile LaTeX in a container <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Compile a rendered paper's <code>main.tex</code> with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.</p>
+<p class="fa-gloss-meta">Tools of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/tools/index.ts"><code>folio-assistant-sci/tools/index.ts#latex-image</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--workflow-complete" data-fa-state="extracted" data-fa-gloss="">
 Complete a step <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -320,6 +327,13 @@ Folio ChangeSet <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>What changed in a folio between two git refs, block by block: each block added, removed, or changed — and for a changed block, every aspect that applies (renamed, prose, manifest, moved). Keyed on the block label, which the <code>id-unique</code> / <code>id-stable</code> QA criteria guard, not on file paths.</p>
 <p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#folio-changeset</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--mcp-server-image" data-fa-state="extracted" data-fa-gloss="">
+folio MCP server, as a container <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image <code>deploy/</code> serves behind the auth gateway. Run it with <code>docker run -i --rm paper-assistant --stdio</code>, or <code>--http</code> on port 8080.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#mcp-server-image</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-comments" data-fa-state="extracted" data-fa-gloss="">
 Folio review comments <span class="fa-gloss-status">candidate, extracted</span>
@@ -795,13 +809,6 @@ Per-slice SQLite builder <span class="fa-gloss-status">candidate, extracted</spa
 <p>Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. <code>--check</code> builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#slice-sqlite</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--pin-actions" data-fa-state="extracted" data-fa-gloss="">
-Pin third-party GitHub Actions to full commit SHAs <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Rewrite every third-party <code>uses: owner/repo@ref</code> outside the declared staging-only workflows to <code>@&lt;full commit SHA&gt; # &lt;ref&gt;</code>, so Dependabot keeps the pair current. A tag resolves to its PEELED commit (an annotated tag's object is never pinned), else a branch head, by <code>git ls-remote</code> with argv. A ref that resolves to nothing, or to more than one commit, is refused and reported, never guessed. This repository's own reusable workflows are first-party and left alone. Idempotent.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pin-actions</code></a></p>
-</dd>
 <dt id="fhir-harness--kg-tools--ig-ast-plan" data-fa-state="extracted" data-fa-gloss="">
 Plan an incremental IG build from a delta of changed files <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -935,13 +942,6 @@ Resolve a declared subgraph's content source <span class="fa-gloss-status">candi
 <dd>
 <p>Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's <code>subgraphSources</code> override by id, and which layer answered. The same <code>declaredSubgraph</code> resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#subgraph-resolve</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--security-gate" data-fa-state="extracted" data-fa-gloss="">
-Run every existing security check as one named release step <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Run the repository's security checks — workflow injection, secret leaks, lockfile pinning, the toolchain pin, QA reviewer permission, materialised-asset fixity — plus two advisories (dependency advisories, third-party action SHA pinning), each by name as argv. Every check is reported as pass, fail or unknown; a blocking check that fails OR could not be run refuses the release, because could-not-check is never clean. Advisories are reported and never block. Called by <code>prepare-merge</code> before a push that will merge, and by any publish process before it publishes.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#security-gate</code></a></p>
 </dd>
 </dl>
 

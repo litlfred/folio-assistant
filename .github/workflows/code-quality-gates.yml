@@ -239,14 +239,15 @@ jobs:
       # — which made every PDF path one CI could not exercise, the `5rfy`
       # defect (a gate that never fires).
       #
-      # `requirements.txt` is the LEAN set. `requirements-extended.txt` is
+      # `requirements.txt` (in `cat-harness-tools/python/`, where
+      # `requirementsPath` puts it — bean `ar1s`) is the LEAN set. `requirements-extended.txt` is
       # deliberately NOT installed: camelot-py is 912 KB but pulls numpy,
       # pandas and OpenCV — 323 MB, measured 2026-09-20, more than the whole
       # lean set — for one script. That is a cost statement, not a
       # deprecation; `pdf-tables.py` is live and its tests run outside CI.
       - name: Install Python dependencies
         if: ${{ !cancelled() }}
-        run: pip install -r requirements.txt
+        run: pip install -r cat-harness-tools/python/requirements.txt
 
 
       # HARD GATE, promoted from warn-only. Same rule as eslint: a check is an
@@ -2065,8 +2066,8 @@ jobs:
       # 2026-09-20. A page that WAS railed and is not any more is the author
       # of the diff, every time. Staleness and the still-unwired pages are
       # `bun run viewer:nav:strict`, which the author of a new generator runs.
-      # Bean `edx7`.
-      - name: viewer pages keep the navbar they had
+      # Bean `edx7`, renamed `68op` to cover both invariant and audit reachability.
+      - name: viewer pages keep the navbar they had, and audit is reachable
         run: bun run check:viewer-nav
 
       # The handler namespace's own index. Gated on the same ground as the

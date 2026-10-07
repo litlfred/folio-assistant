@@ -37,7 +37,7 @@
     "cat-harness-tools/src/",
     "folio-assistant-core/src/",
     "cat-harness/ui/",
-    "harness.config.example.json",
+    "cat-harness/docs/reference/harness.config.example.json",
     "README.md"
   ],
   "scripts": {
@@ -260,8 +260,8 @@
     "code-lists:check": "bun run cat-harness/scripts/code-lists.ts --check",
     "vocab-mappings:check": "bun run cat-harness-tools/scripts/vocab-mappings.ts --check",
     "content:graph:uml": "bun run cat-harness/scripts/gen-content-graph-uml.ts",
-    "deps:python": "bun run cat-harness/scripts/gen-python-deps.ts",
-    "deps:python:check": "bun run cat-harness/scripts/gen-python-deps.ts --check",
+    "deps:python": "bun run cat-harness-tools/scripts/gen-python-deps.ts",
+    "deps:python:check": "bun run cat-harness-tools/scripts/gen-python-deps.ts --check",
     "auto:docs": "bun run cat-harness-tools/scripts/gen-auto-docs.ts",
     "auto:docs:check": "bun run cat-harness-tools/scripts/gen-auto-docs.ts --check",
     "docs:harness": "bun run cat-harness/scripts/sync-docs-harness.ts",

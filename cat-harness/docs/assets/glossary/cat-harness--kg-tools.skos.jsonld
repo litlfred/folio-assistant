@@ -994,6 +994,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/mcp-server-image",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "folio MCP server, as a container"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image `deploy/` serves behind the auth gateway. Run it with `docker run -i --rm paper-assistant --stdio`, or `--http` on port 8080."
+        }
+      ],
+      "skos:notation": "mcp-server-image",
+      "dcterms:source": "cat-harness/tools/index.ts#mcp-server-image",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/merge-leftover",
       "@type": "skos:Concept",
       "skos:inScheme": {

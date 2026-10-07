@@ -34,6 +34,6 @@ a consumer asks for a kind rather than opening a path.
 This page says what the subgraphs are, which way the references between them
 run, how repositories divide the work, and how much of it is declared today. It
 does not restate the declaration mechanism: that is
-[`directory-conventions`](../reference/skill-instructions/directory-conventions.html),
+[`directory-conventions`]({{ '/reference/skill-instructions/directory-conventions.html' | relative_url }}),
 and the schema is
 [`schemas/cat-harness.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts).

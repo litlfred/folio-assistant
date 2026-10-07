@@ -73,8 +73,8 @@ Les compétences sont l'unité de travail ici. Avant de créer une procédure
 | `skills/folio-core/` | indépendant du contenu : coordination, watchers, QA, rendu, bibliographie |
 | `folio-assistant-sci/skills/content/folio-paper-adapter/` | articles : Lean, LaTeX, preuves, simulateurs |
 | `smart-base/skills/content/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
-| [Référence du schéma de compétences](../../reference/skills/) | contrat d'entrée/sortie typé par compétence |
-| [Instructions de compétences](../../reference/skill-instructions/) | corps d'instructions complets générés |
+| [Référence du schéma de compétences]({{ site.baseurl }}/reference/skills/) | contrat d'entrée/sortie typé par compétence |
+| [Instructions de compétences]({{ site.baseurl }}/reference/skill-instructions/) | corps d'instructions complets générés |
 | [Compétences & rôles](../../concepts/skills.html) | comment les compétences, rôles et capacités se composent |
 
 Les deux répertoires `reference/` sont **générés** — ne les modifiez jamais
@@ -151,7 +151,7 @@ bun run content/pipeline/qa-staleness.ts content/<paper>
 | Question | Réponse |
 |---|---|
 | Commandes du projet, conventions | `AGENTS.md` (source de vérité générique pour les agents) |
-| Ce que fait une compétence | `skills/**/`, ou les [corps d'instructions](../../reference/skill-instructions/) générés |
+| Ce que fait une compétence | `skills/**/`, ou les [corps d'instructions]({{ site.baseurl }}/reference/skill-instructions/) générés |
 | Le schéma des blocs | `schemas/types.ts` |
 
 ## 10. Habitudes pour éviter les ennuis
