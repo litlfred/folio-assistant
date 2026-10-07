@@ -1,10 +1,10 @@
 ---
 # folio-assistant-zdty
 title: 'CUTOVER DEPOSITS TO FSH-GUTS: state:seed --cutover deposits a verified snapshot + provenance into the instance''s fsh-guts before removing; folio_init declares fsh-guts by default'
-status: in-progress
+status: completed
 type: task
 created_at: 2026-10-06T19:11:46Z
-updated_at: 2026-10-06T19:11:46Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -18,3 +18,6 @@ Holder: session_013WbQekVypi9A6YQbLDXMmJ, branch claude/awesome-fermi-ua31th-cut
 - [ ] one rule in directory-conventions; fsh-guts skill points to it.
 - [ ] tests: order, no-fsh-guts refusal, failed-deposit refusal, archive extracts to the removed tree.
 - [ ] smart-ra backfill prepared (orphan branch + draft PR), not pushed to its main.
+
+## Completed on landed evidence
+Landed on main in PR #2320 / commit 0152ce384279 (Cutover deposits to fsh-guts: state:seed --cutover deposits verified snapshot).

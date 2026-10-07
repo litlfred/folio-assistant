@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4ak5
 title: 'PER-HARNESS KG EXPORT: every instance publishes its own JSON-LD + schema (split cat-harness.jsonld); root index.jsonld meta-skeleton at depth 1'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T21:36:29Z
-updated_at: 2026-10-05T18:24:50Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-whlc
 ---
 
@@ -122,3 +122,9 @@ The owner chose all four:
 2. Foreign skill nodes link their published I/O contracts (inputSchema/outputSchema).
 3. The host's cat-harness.jsonld gets conformsTo to its own schema.
 4. The Zod gate also sees re-exported *Schema consts.
+
+## Completed on landed evidence
+Landed on main in PR #2224 (Schema follow-ups: every export links its schema; per-harness KG export).
+
+## Completed on landed evidence
+Landed on main in PR #2224 (Schema follow-ups: every export links its schema; per-harness KG export).

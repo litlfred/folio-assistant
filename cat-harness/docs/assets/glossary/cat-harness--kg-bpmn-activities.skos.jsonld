@@ -946,7 +946,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard."
+          "@value": "`check:gates-registered`, split out of Task_RepositoryGates by bean `dlqu`: one step of that job measured 1m46s-2m28s across four runs, the longest step in it by a factor of four, and a sequential job is as slow as the sum of its steps. In its own job it runs beside the rest rather than after them. It still asks the same question — is every gate a script registers actually run somewhere — and is still hard. It also carries `bun run security:gate` (bean `ieum`, owner 2026-10-07: \"security check before release\"): the security checks by name, plus third-party action SHA pinning outside staging-only workflows, as one step that merge-train's gate call reaches. A blocking fail OR could-not-check fails the job."
         }
       ],
       "skos:notation": "Task_UnrunGates",
@@ -1454,6 +1454,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_close.a_recordsignoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the sign-off as a requirement-signoff attestation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+        }
+      ],
+      "skos:notation": "A_RecordSignoff",
+      "dcterms:source": "cat-harness/processes/process/crdm-close.bpmn#A_RecordSignoff",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_close.ba_confirm",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1466,7 +1486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so."
+          "@value": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so. Since issue #2405 (FR-013) it IS an adjudication with the requirement-set answers: an approval here moves the set to `accepted`, which `check:requirements` refuses unless it is a human's and every approved member is `in-force`."
         }
       ],
       "skos:notation": "BA_Confirm",
@@ -2114,6 +2134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_signoff.a_recordsignoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record the sign-off as a requirement-signoff attestation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+        }
+      ],
+      "skos:notation": "A_RecordSignoff",
+      "dcterms:source": "cat-harness/processes/process/crdm-signoff.bpmn#A_RecordSignoff",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_crdm_signoff.ba_choosekg",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2146,7 +2186,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf."
+          "@value": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf. Since issue #2405 (FR-013) it IS an adjudication: it calls Process_Adjudication with the requirement-set answers, and every answer goes through A_RecordSignoff before anything follows it."
         }
       ],
       "skos:notation": "BA_Signoff",
@@ -2391,6 +2431,26 @@
       ],
       "skos:notation": "Task_Restore",
       "dcterms:source": "cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_Restore",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_docssite.task_securitygate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run the release security gate [security:gate]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: \"security check before release\"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set."
+        }
+      ],
+      "skos:notation": "Task_SecurityGate",
+      "dcterms:source": "cat-harness/processes/sdlc/docs-site-publish.bpmn#Task_SecurityGate",
       "skos:note": "candidate"
     },
     {
@@ -4466,7 +4526,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land."
+          "@value": "Every gate CI runs, on the combination (R2): a member that passes alone can still break `main` with another. The merge-gate epic (`nok9`, #1887) adds its gates here when they land. The release security gate (`bun run security:gate`, bean `ieum`) is one of them: it runs inside the gate set, so no train merges past a blocking security finding or a security check that could not run."
         }
       ],
       "skos:notation": "Call_Gates",

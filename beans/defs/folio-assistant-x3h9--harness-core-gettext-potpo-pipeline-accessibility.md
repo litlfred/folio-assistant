@@ -1,10 +1,10 @@
 ---
 # folio-assistant-x3h9
 title: 'HARNESS CORE: gettext .pot/.po pipeline + accessibility are core, not folio-only (issue #223)'
-status: todo
+status: completed
 type: task
 created_at: 2026-09-18T17:04:14Z
-updated_at: 2026-09-18T17:04:14Z
+updated_at: 2026-10-07T17:24:00Z
 parent: folio-assistant-bzyu
 ---
 
@@ -50,3 +50,6 @@ behind it — the precedent for what this bean is asking to generalise.
   interaction modality already implemented
 
 Depends on #251 landing, which is where the harness layer is being defined.
+
+## Completed on landed evidence
+Landed on main in PR #251 (feat(fsch): AgentHarness — an instance declares the directories it scans, and inherits them (#223)).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-x4a6
 title: Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T08:00:02Z
-updated_at: 2026-09-22T18:18:15Z
+updated_at: 2026-10-07T17:30:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -243,3 +243,6 @@ rather than taken here.
 Withdrawing the blocker rather than closing the bean: the declaration work this
 bean names is real and unfinished. What is withdrawn is the claim that it
 cannot start.
+
+## Completed on landed evidence
+Landed on main in PR #351 (Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers).

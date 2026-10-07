@@ -1,11 +1,10 @@
 ---
 # folio-assistant-87mi
 title: 'Merge refused: #2043 owed CI not green on its head'
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-10-04T14:30:41Z
-updated_at: 2026-10-07T11:16:58Z
-tags: [ready-to-close]
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-1xhc
 blocking:
     - folio-assistant-1xhc
@@ -42,3 +41,5 @@ Closed on evidence of landed work:
 - PR #2043 was merged into `main` via train #2113 in commit `c858234ad5f8` on 2026-10-04T17:42:26Z.
 - Re-derived independently on 2026-10-07: PR #2043 state is `MERGED` with commit `c858234ad5f8` present in `main` history.
 
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

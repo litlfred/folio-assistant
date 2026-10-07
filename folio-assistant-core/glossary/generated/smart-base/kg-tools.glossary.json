@@ -47,6 +47,14 @@
       "status": "candidate"
     },
     {
+      "id": "smart-fhir-cache-seed",
+      "prefLabel": "Seed the FHIR package cache, with WHO's published site as a source",
+      "definition": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`): `smart.who.int.*` packages are also read from WHO's published-site repository, each fetch verified against the tarball's own package.json. Every other source and check is the seeder's own.",
+      "notation": "smart-fhir-cache-seed",
+      "source": "smart-base/tools/index.ts#smart-fhir-cache-seed",
+      "status": "candidate"
+    },
+    {
       "id": "smart-liquid-variables",
       "prefLabel": "IG metadata → Liquid variables",
       "definition": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource.",

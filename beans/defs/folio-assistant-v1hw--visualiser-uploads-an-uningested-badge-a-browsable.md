@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v1hw
 title: 'VISUALISER: uploads/ — an uningested badge, a browsable queue, and the first WRITABLE surface'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T15:00:40Z
-updated_at: 2026-09-20T18:50:25Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -246,3 +246,6 @@ dead. Fixed, with a regression test on the escape.
 Also hit, and it is written down twice elsewhere in this repository: a
 backtick in a comment inside the page template literal ends the string and
 turns the rest of the file into TypeScript.
+
+## Completed on landed evidence
+Landed on main in PR #1050 (apui: ingest is the whole path — the pipeline terminates).
