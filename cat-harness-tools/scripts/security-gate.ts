@@ -37,8 +37,8 @@
  * the `secure-code-authoring` voice's `scz-value-never-becomes-program-text`.
  *
  * Usage:
- *   bun run security:gate            # exit 1 on a blocking fail or unknown
- *   bun run security:gate --json     # machine-readable result on stdout
+ *   bun run cat security:gate            # exit 1 on a blocking fail or unknown
+ *   bun run cat security:gate --json     # machine-readable result on stdout
  *
  * @graphNode tool
  * @covers none — it re-runs other gates by name and reads .github/workflows/, which is not a declared graph typology; the kinds belong to the gates it calls
@@ -120,7 +120,7 @@ export function actionPinning(root = ROOT): GateResult[] {
   const published: GateResult =
     r.unpinned.length === 0
       ? { check: "action-sha-pinning", blocking: true, state: "pass", detail: `every third-party uses: outside exempt staging workflows (no write token, no pull_request_target) is SHA-pinned (${r.total} in all)` }
-      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside exempt staging workflows — run \`bun run actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
+      : { check: "action-sha-pinning", blocking: true, state: "fail", detail: `${r.unpinned.length} unpinned outside exempt staging workflows — run \`bun run cat actions:pin\`: ${r.unpinned.slice(0, 3).join("; ")}` };
   const staging: GateResult = {
     check: "action-sha-pinning (exempt staging)",
     blocking: false,
