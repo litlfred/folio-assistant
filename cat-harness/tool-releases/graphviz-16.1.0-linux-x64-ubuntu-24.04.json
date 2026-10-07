@@ -1,0 +1,25 @@
+{
+  "$schema": "folio-tool-release/v1",
+  "name": "graphviz",
+  "version": "16.1.0",
+  "role": "tool",
+  "kind": "archive",
+  "digest": {
+    "algorithm": "sha256",
+    "digest": "fe344258d6171d4679bd6ed02fb8f41b3cb9a59ec35fef5f77684dd09512a7c8",
+    "verifiedAt": "2026-10-07"
+  },
+  "source": {
+    "type": "url",
+    "url": "https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/16.1.0/ubuntu_24.04_graphviz-16.1.0-cmake.deb"
+  },
+  "licence": "EPL-2.0",
+  "licenceSource": "the repository's `LICENSE` at tag 16.1.0: Eclipse Public License v2.0",
+  "platform": { "os": "linux", "arch": "x64", "distribution": "ubuntu-24.04" },
+  "runtimes": [],
+  "entry": {
+    "template": "{home}/bin/dot",
+    "home": "usr"
+  },
+  "note": "The graphviz project's own Ubuntu 24.04 build, from its 16.1.0 release on GitLab. The project publishes `.sha256` files for its source tarballs and Windows/macOS builds but not for the Linux packages, so this digest was computed over the downloaded `.deb` (7,804,818 bytes) on 2026-10-07. Unpacked with `dpkg-deb -x`, `usr/bin/dot` finds its own libraries through a relative RPATH and runs from any directory; it still needs the host's libc, libm, libltdl, libz and libexpat, which Ubuntu 24.04 has."
+}

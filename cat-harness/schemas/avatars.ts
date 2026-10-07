@@ -441,6 +441,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 24,
     reads: "a sealed carton with its strap — what shipped under a version, recorded by digest and size, never by its bytes",
   },
+  "tool-release": {
+    // A wrench with a tag tied to it: one tool, labelled with the version and
+    // digest it is pinned at. Deliberately NOT `binary-release`'s carton —
+    // that is something this repository SHIPPED; this is something it RUNS.
+    glyph: "M14.5 4a4.5 4.5 0 0 0-4.2 6.1L4 16.4 7.6 20l6.3-6.3A4.5 4.5 0 0 0 20 9.5l-2.7 2.7-2.8-.7-.7-2.8L16.5 6A4.5 4.5 0 0 0 14.5 4zM4 4h4v4H4zM6 8v3",
+    tone: 60,
+    reads: "a wrench with a tag tied on — a tool pinned at one version and digest, with the runtime it needs",
+  },
   "test-plan": {
     // A checklist of empty boxes: what must be shown, before anybody has run
     // it. Deliberately empty — a plan carries no verdicts, and a ticked box

@@ -2172,6 +2172,66 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
       "schema is strict throughout, and a file a deploy phase deleted must still say where " +
       "to get it back and why it went.",
   },
+  // Tool releases and tool profiles -- the external tools this platform RUNS,
+  // each at one version with the sha256 of its bytes and the runtime THAT
+  // release needs, and the named sets a run selects. Never the bytes.
+  //
+  // Step 1 of `docs/proposals/tool-releases-2026-10-07.md` (issue #2481, bean
+  // `3sbm`), signed off by the owner 2026-10-07. T1 = (a): *"cat-harness, as a
+  // declared graph that every layer inherits"* -- so the directory is
+  // declared here, and a dependent reads it through the dependency overlay
+  // rather than declaring its own (not `perInstance`). The case it exists
+  // for: a render in PR #2454 produced no PlantUML SVGs because the container
+  // had no `java`, said "rendered 0", and nothing noticed.
+  //
+  // ONE kind for TWO families, on `external-schema`'s precedent: a release
+  // and a profile are read by the same resolver for the same purpose, live in
+  // one directory, and each file says which it is by its `$schema` tag.
+  //
+  // A SIBLING of `binary-release`, not a reuse of it. That kind records
+  // releases this repository PUBLISHES -- an event upstream, written by the
+  // release pipeline, hence `state`. This records releases it CONSUMES, and
+  // the subject is a DECISION: which upstream version, at which digest, on
+  // which runtime. The two share the one claim that is the same -- a sha256
+  // over an artefact's bytes -- so `ReleaseDigestSchema` is imported, not
+  // restated.
+  //
+  // `content`, by `external-schema`'s argument: pinning an edition of
+  // something upstream is a decision a person makes, and a process READS it
+  // (the resolver, step 2) and never writes it. Both supporting questions
+  // agree -- detached from every run, "plantuml 1.2024.7 is these bytes and
+  // runs on this JRE" still says something; and you would re-author a pin,
+  // not regenerate it. NOT `context`: that is a record ABOUT content read at
+  // session start, and a pin is itself the subject matter of a provisioning.
+  // NOT `state`: what a run actually resolved is a different record, the
+  // `folio-run-context/v1` that cites these by `name@version`
+  // (`schemas/run-context.ts`), produced per run and kept with the run.
+  //
+  // NOT renderable: the site build does not read it, which is what
+  // `renderable` asks.
+  "tool-release": {
+    description:
+      "external tool releases and the profiles that select them (`tool-releases/`) — one `folio-tool-release/v1` document per tool at one version, carrying its sha256 (reusing `binary-release`'s `ReleaseDigestSchema`), where it is fetched from (an OCI image only by digest, never by tag), its SPDX licence expression, what kind of artefact it is, how to run it, and the runtimes THIS release needs, each injected as `JAVA_HOME` or `PATH` rather than inherited from the host; and one `folio-tool-profile/v1` document per named set of releases a run selects. A profile never names a runtime: runtimes come in through the release that needs them, because different tools need different JREs. Signed off 2026-10-07 (issue #2481, bean `3sbm`, T1 = a: in cat-harness, inherited by every layer). `content`, by `external-schema`'s argument: which upstream version to run, at which digest, is a decision, and the resolver reads it and never writes it. A sibling of `binary-release` rather than a reuse: that records what this repository PUBLISHES, this what it CONSUMES. What a run actually resolved is a `folio-run-context/v1`, produced per run. Shapes in `schemas/tool-release.ts` and `schemas/tool-profile.ts`.",
+    title: "Tool releases",
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `binary-release`.
+    schema: "schemas/tool-release.ts",
+    // Both families listed: declaring `nodeSchemas` claims the map is
+    // complete, and `check:kind-validators` routes each file by its tag. The
+    // validators are `validators/tool-release.json` and
+    // `validators/tool-profile.json` (bean riit: no authored kind carries
+    // validator code).
+    nodeSchemas: {
+      "folio-tool-release/v1": {},
+      "folio-tool-profile/v1": {},
+    },
+    summary:
+      "External tool releases -- one `folio-tool-release/v1` document per tool at one version, " +
+      "with its sha256, its source (an OCI image only by digest), its SPDX licence, how to run " +
+      "it, and the runtimes that release needs, injected rather than inherited -- and the named " +
+      "`folio-tool-profile/v1` sets a run selects. A profile never names a runtime.",
+  },
   // A published static site, as a graph (bean `lehh`, owner 2026-10-05). Two
   // capability tiers, both declared now so a real CDN has a kind to land in:
   // `basic-cdn-site` serves files by path and nothing more (GitHub Pages);
