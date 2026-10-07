@@ -19,10 +19,11 @@
  * @covers none — it places scripts by the paths their commands name; it judges no graph
  */
 import { existsSync, readFileSync } from "node:fs";
-import { basename, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { instanceRootsIn } from "../../cat-harness/schemas/instance-roots.ts";
 import { scriptTable } from "../../cat-harness/schemas/script-table.ts";
+import { mountScopeFor } from "../../cat-harness/schemas/remote-mount.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -32,6 +33,7 @@ export function layersOf(repo: string): Map<string, string[]> {
   for (const inst of instanceRootsIn(repo)) {
     if (resolve(inst) === resolve(repo)) continue;
     if (existsSync(join(inst, ".git"))) continue; // a submodule: another repository
+    if (mountScopeFor(inst) !== undefined) continue; // a remote mount, the submodule's successor (bean nn8e): another repository too
     const name = basename(inst);
     const decl = join(inst, `${name}.json`);
     const needs = existsSync(decl)
@@ -69,6 +71,9 @@ if (import.meta.main) {
   const wrong: string[] = [];
   for (const e of table.values()) {
     if (e.name === "cat" && e.manifest === "package.json") continue; // the runner itself
+    // A mounted instance's manifest is its own repository's to keep (bean `nn8e`):
+    // its scripts sit where that repository put them, and this checkout cannot move them.
+    if (e.manifest !== "package.json" && mountScopeFor(dirname(join(REPO, e.manifest))) !== undefined) continue;
     const want = ownerOf(e.command, layers);
     if (want !== e.manifest) wrong.push(`  ${e.name}: in ${e.manifest}, belongs in ${want}\n      ${e.command}`);
   }
