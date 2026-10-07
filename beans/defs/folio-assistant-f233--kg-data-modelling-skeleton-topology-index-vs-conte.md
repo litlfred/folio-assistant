@@ -1,10 +1,10 @@
 ---
 # folio-assistant-f233
 title: 'KG DATA MODELLING: skeleton (topology index) vs content-addressed payloads; no monolithic JSON-LD'
-status: in-progress
+status: completed
 type: feature
 created_at: 2026-10-02T20:42:54Z
-updated_at: 2026-10-03T11:17:21Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-whlc
 ---
 
@@ -17,3 +17,6 @@ Owner, 2026-10-02 ("bean up #1: add to data modeling/schema design for the KG sk
 - [ ] consistent with the named-subgraph contract (sibling bean)
 
 _2026-10-03T11:17:21Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Completed on landed evidence
+Landed on main in PR #2150 / commit 5d94f641e87a (kg: content-addressed payloads at <BASE_URL>/payload/sha256/<hex>).

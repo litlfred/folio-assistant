@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 474,
+      "count": 475,
       "unit": "open beans"
     }
   },
@@ -4079,6 +4079,20 @@
       "file": "beans/defs/folio-assistant-9hfi--smart-immunizations-codingshtml-codesystems-and-va.md"
     },
     {
+      "id": "folio-assistant-9hlq",
+      "title": "Provision gh-pages before Pages is switched on, in every publishing route (#2417)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-0mpw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-07T12:06:33Z",
+      "updatedAt": "2026-10-07T13:37:29Z",
+      "preview": "Issue #2417. FR-1..FR-4: pages-bootstrap unprovisioned state + --provision; getting-started.bpmn Provision gh-pages task; skills getting-started/repo-conversion/remote-mount name the step. Owner rulings 2026-10-01 and 2026-10-07.\n\nHolder: session https://claude.ai/code/session_01SohDE1SrrLGXAqW3LkZzod, branch claude/gh-pages-provisioning-2417.",
+      "file": "beans/defs/folio-assistant-9hlq--provision-gh-pages-before-pages-is-switched-on-in.md"
+    },
+    {
       "id": "folio-assistant-9io2",
       "title": "lake-cache family to cat/folio-assistant-sci/lake-cache/ (declaration, 8 mirrors, folio-repo renames)",
       "status": "todo",
@@ -6336,14 +6350,14 @@
     {
       "id": "folio-assistant-fkqa",
       "title": "Agent memory target: Antigravity (agy) — implement now",
-      "status": "completed",
+      "status": "in-progress",
       "type": "task",
-      "priority": "normal",
+      "priority": "",
       "parent": "folio-assistant-31ni",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T18:35:25Z",
-      "updatedAt": "2026-10-07T12:00:21Z",
+      "updatedAt": "2026-10-06T18:35:25Z",
       "preview": "Owner 2026-10-06: implement the Antigravity target now (other vendors beaned, not implemented). Antigravity reads AGENTS.md / GEMINI.md and workspace rules under .agents/rules/*.md (older .agent/rules), with activation modes (always-on, model-decided, @-mention, glob) and a size cap reported as ~12,000 chars — format UNVERIFIED (vendor docs blocked from the build container; research in 31ni). No p",
       "file": "beans/defs/folio-assistant-fkqa--agent-memory-target-antigravity-agy-implement-now.md"
     },
@@ -7464,14 +7478,14 @@
     {
       "id": "folio-assistant-ivg9",
       "title": "PLAN REQUEST → requirements doc + work plan + sign-off gate; successCriteria on requirement statements (#2405)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T09:36:38Z",
-      "updatedAt": "2026-10-07T10:39:49Z",
+      "updatedAt": "2026-10-07T15:32:37Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/2405. Owner approved 2026-10-07 ('implement as recommended'): https://github.com/litlfred/folio-assistant/issues/2405#issuecomment-6035163987. Decisions: (1) operation in folio-assistant-core, method in cat-harness (0r7u); (2) a plan request ALWAYS triggers requirements doc + work plan, content requests included; (3) successCriteria optiona",
       "file": "beans/defs/folio-assistant-ivg9--plan-request-requirements-doc-work-plan-sign-off-g.md"
     },
@@ -15617,13 +15631,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 585,
-        "closed": 295,
-        "open": 290,
-        "inProgress": 114,
+        "closed": 296,
+        "open": 289,
+        "inProgress": 113,
         "todo": 175,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.5042735042735043
+        "share": 0.505982905982906
       },
       {
         "id": "folio-assistant-vuip",
@@ -15631,14 +15645,14 @@
         "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md",
         "status": "in-progress",
         "epics": 10,
-        "total": 275,
-        "closed": 131,
-        "open": 144,
-        "inProgress": 79,
+        "total": 276,
+        "closed": 130,
+        "open": 146,
+        "inProgress": 81,
         "todo": 64,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.4763636363636364
+        "share": 0.47101449275362317
       },
       {
         "id": "folio-assistant-yg29",
@@ -15657,8 +15671,8 @@
       }
     ],
     "orphanOpen": 0,
-    "openTotal": 474,
-    "coveredOpen": 471,
+    "openTotal": 475,
+    "coveredOpen": 472,
     "duplicateIds": 0
   }
 }

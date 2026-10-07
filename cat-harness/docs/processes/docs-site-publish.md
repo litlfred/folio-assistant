@@ -9,7 +9,7 @@ nav_exclude: true
 {% raw %}
 # Publishing the docs site, and keeping the previews alive
 
-`Process_DocsSite` · strict · 8 step(s)
+`Process_DocsSite` · strict · 9 step(s)
 
 Publish the docs site to `gh-pages`, verify the export before the deploy, and keep the open pull requests' previews alive across a deploy that replaces the whole branch. PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back.
 
@@ -37,10 +37,11 @@ Mechanical throughout. There is no human lane, which is what makes `build-pipeli
 
 ## Steps
 
-Every one of the 8 step(s) is documented.
+Every one of the 9 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
+| **Run the release security gate [security:gate]**<br>`Task_SecurityGate` | CI/CD Pipeline | [`security`](../reference/skill-instructions/security.html) | `bun run security:gate`, before anything is built (bean `ieum`, owner 2026-10-07: "security check before release"). It runs every security check this repository has by name: workflow injection, secret leaks, lockfile and toolchain pins, QA reviewer permission, materialised fixity, and third-party action SHA pinning outside staging-only workflows. Each is reported as pass, fail or unknown. A blocking fail OR unknown refuses the publish, because could-not-check is never clean. Until this step existed, no publish or merge process named any security check; they ran only inside the CI gate set. |
 | **Regenerate every derived reference from its source**<br>`Task_Regenerate` | CI/CD Pipeline | — | Regenerate every derived reference from its source before building: skill schema and instruction pages, content-backed docs pages, the graph projections and viewers, the handler and translation indexes, and the rendered BPMN diagrams. The published site is built from sources, never from committed copies that may be stale. |
 | **Build the Jekyll site and the API reference**<br>`Task_Build` | CI/CD Pipeline | — | Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc. |
 | **Export the knowledge graph and its schema**<br>`Task_Export` | CI/CD Pipeline | — | Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph typologies are stripped on export. |
@@ -52,10 +53,11 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-Every one of the 4 decision(s) is documented.
+Every one of the 5 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
+| **Security gate passed?**<br>`GW_Secure` | `passed` only on exit 0, meaning no blocking check failed or could not be run. Advisory findings (dependency advisories, staging-only pinning) never block, and they are not cleared either. | **passed** → Regenerate every derived reference from its source<br>**refused, or could not check** → Alert the publication manager |
 | **Is every maintained artefact present?**<br>`GW_Complete` | Answered by the export: is every maintained artefact present? `something is missing` goes to the alert and publishes nothing, because a full replace would ship the gap; `complete` goes on to verify the export. | **something is missing** → Alert the publication manager<br>**complete** → Verify the export |
 | **Verified?**<br>`GW_Verified` | Answered by the verification sub-process's end: `yes` only when every in-scope document passed. `no, or could not tell` blocks the deploy and alerts — an unverified release is not a verified one. | **yes** → Restore the OPEN PRs' staging previews<br>**no, or could not tell** → Alert the publication manager |
 | **Did the deploy succeed?**<br>`GW_Deployed` | Answered by the deploy step itself. `no` goes to the alert: a failed deploy after the publish button is exactly the failure the owner asked to be told about. `yes` checks the previews survived. | **yes** → Did the previews survive?<br>**no** → Alert the publication manager |
