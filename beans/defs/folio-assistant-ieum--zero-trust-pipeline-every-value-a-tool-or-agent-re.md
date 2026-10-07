@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-07T05:56:11Z
-updated_at: 2026-10-07T12:50:04Z
+updated_at: 2026-10-07T14:02:40Z
 ---
 
 ## The ask, owner 2026-10-07 — verbatim
@@ -105,3 +105,6 @@ Read as follows. Recorded so a misreading can be corrected in one place:
 
 - [x] **4 done:** `security:gate` is a named step in `docs-site.yml` (after the mount, before the build) and in the CI gate set that merge-train calls; `docs-site-publish.bpmn` has Task_SecurityGate + GW_Secure (refusal → publication manager alert), re-laid so the alert path no longer overlaps (owner reported the overlap).
 - [x] **1 done:** `bun run handover:screen` (Tool `handover-screen`, `cat-harness/src/core/handover-screen.ts`): field-by-field screen over a declared schema; control and undeclared fields refused, data fields quarantined (never stripped); `fenceUntrusted` shared, and the chat prompt's `fenced()` now uses it. Guidance in `untrusted-input` and `security`. Guarded, not yet gated: callers must invoke it.
+
+
+- [x] **2 done:** `schemas/mount-trust.ts` + a `trust` field on `remoteMounts`. `mount:remote` refuses a mount that is neither consented for its EXACT pin nor signed; a signature alone is could-not-determine because no verifier (e.g. GDHCN) exists yet; `--staging` needs neither, per the ruling. Checked before anything is checked out, so a refused mount writes nothing. `mount:remote` got its first Tool node (`remote-mount`). Open: the signature verifier itself.

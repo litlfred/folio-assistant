@@ -242,6 +242,31 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["security"],
       requires: { runtime: ["bun"], network: false },
     }),
+    // Bean `ieum`, owner 2026-10-07: "mounting remote KG needs trusted
+    // provenance sources (digitally signed e.g. verifiable via GDHCN), or
+    // explicit user consent", and "staging doesnt need signature". This script
+    // had no Tool node until then, so no agent could find it as a tool.
+    defineTool({
+      id: "remote-mount",
+      title: "Mount remote harnesses at a pinned commit, only when trusted",
+      description:
+        "Lay down each `remoteMounts` harness, and its dependency closure, from another repository at a full commit SHA, and write the mount lock. Before anything is checked out, each mount must pass the trust gate (`schemas/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. `--check` compares the disk against the lock and never fetches.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/remote-mount.ts" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("RepoPath"), required: false, arg: { flag: "--instance" }, description: "The downstream instance root; omitted, every declaring instance in the checkout." },
+          { name: "staging", schema: t("Flag"), required: false, arg: { flag: "--staging" }, description: "Mount for a staging preview: no signature or consent required." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare the disk against the lock; fetch nothing." },
+        ],
+        outputs: [
+          { name: "outcomes", schema: t("Count"), description: "Per instance: mounted, local, skipped, missing (including refused by the trust gate) or could-not-determine." },
+        ],
+      },
+      satisfies: ["security"],
+      requires: { runtime: ["bun", "git"], network: true },
+      remedies: [{ host: "github.com", none: "A remote mount IS a fetch of another repository at a pin; offline there is nothing to mount. `--check` still reports the lock without the network." }],
+    }),
     defineTool({
       id: "rail-standalone-pages",
       title: "Give every page Jekyll did not lay out the folio-assistant navbar",
