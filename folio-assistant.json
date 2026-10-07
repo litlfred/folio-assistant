@@ -145,5 +145,48 @@
       "summary": "The repository, acting as an initialized instance",
       "bodyFrom": "summary"
     }
+  ],
+  "remoteMounts": [
+    {
+      "harness": "bootstrap",
+      "repository": "litlfred/bootstrap",
+      "ref": "12a5c9eadca337483d37ce8402b3cf9a63588d2a",
+      "overrides": {
+        "bootstrap": {
+          "whole": true
+        }
+      },
+      "note": "Replaces the git submodule (bean nn8e, #2462): the whole repository, at the pin the gitlink held.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "12a5c9eadca337483d37ce8402b3cf9a63588d2a",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'Yes, trust both pins' — the SHAs the submodules already pinned (#2462)"
+        }
+      }
+    },
+    {
+      "harness": "bootstrap-tools",
+      "repository": "litlfred/bootstrap-tools",
+      "ref": "1947e0536a97a9ca447b76edc39de1cf18b1f29e",
+      "overrides": {
+        "bootstrap-tools": {
+          "whole": true
+        },
+        "bootstrap": {
+          "skip": true
+        }
+      },
+      "note": "Replaces the git submodule (bean nn8e, #2462). Its need `bootstrap` is the mount above.",
+      "trust": {
+        "consent": {
+          "by": "litlfred",
+          "on": "2026-10-07",
+          "ref": "1947e0536a97a9ca447b76edc39de1cf18b1f29e",
+          "evidence": "owner, session_012qoycyCSGidZqW245vXhze 2026-10-07: 'Yes, trust both pins' — the SHAs the submodules already pinned (#2462)"
+        }
+      }
+    }
   ]
 }

@@ -66,9 +66,10 @@ import {
   type MountLock,
   type MountRefusal,
   type RemoteMount,
+  WHOLE_INSTANCE_ID,
 } from "../schemas/remote-mount.js";
 import { contentIsOffCheckout, type SubgraphSource } from "../schemas/subgraph-source.js";
-import { treeDigest, treeEntries } from "./kg-subscribe.ts";
+import { treeDigest, treeEntries } from "./kg-parts.ts";
 import { RemoteTree, type UrlFor } from "./remote-tree.ts";
 
 // ── Reading an upstream declaration STRUCTURALLY ─────────────────────────────
@@ -325,8 +326,10 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         continue;
       }
       const byId = new Map(decl.directories.map((d) => [d.id, d]));
-      const ids =
-        override?.directories ??
+      const whole = override?.whole ?? decl.mountDefaults?.whole === true;
+      const ids = whole
+        ? []
+        : override?.directories ??
         decl.mountDefaults?.directories ??
         decl.directories.filter((d) => !contentIsOffCheckout({ source: d.source as SubgraphSource | undefined, storage: d.storage })).map((d) => d.id);
       const unknown = ids.filter((id) => !byId.has(id));
@@ -339,7 +342,7 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         continue;
       }
       const directories: PlannedDirectory[] = [];
-      for (const id of ids) {
+      if (!whole) for (const id of ids) {
         const d = byId.get(id)!;
         if (strip(d.path).split("/").includes("..")) continue; // a path that climbs out is not this instance's to give
         directories.push({ id, path: joinRel(path, d.path), upstreamPath: joinRel(found.root, d.path) });
@@ -374,7 +377,7 @@ function resolveClosure(opts: RemoteMountOptions, trees: Map<string, RemoteTree>
         via: m.harness,
         pinnedBy: q.pinnedBy,
         declarationFile: found.file,
-        directories,
+        directories: whole ? [{ id: WHOLE_INSTANCE_ID, path, upstreamPath: found.root || "." }] : directories,
         assets,
       });
 
@@ -618,7 +621,7 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           continue;
         }
         const tree = trees.get(`${p.repository}@${p.sha}`)!;
-        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => `${d.upstreamPath}/`)]);
+        const work = tree.checkout([p.declarationFile, ...p.directories.map((d) => (d.upstreamPath === "." ? "*" : `${d.upstreamPath}/`))]);
 
         // Replace what THIS mount put there before — only that.
         if (before) {
@@ -638,7 +641,9 @@ export function mountRemote(opts: RemoteMountOptions = {}): MountReport {
           }
           const dst = join(plan.instanceRoot, d.path);
           mkdirSync(dirname(dst), { recursive: true });
-          cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true });
+          // A whole-instance mount at the upstream's root copies the fetch's
+          // own work tree: its `.git` is the temporary repository, never content.
+          cpSync(src, dst, { recursive: true, verbatimSymlinks: true, force: true, filter: (from) => !(d.upstreamPath === "." && from === join(src, ".git")) });
         }
         // Digest AFTER every copy, so a nested directory's digest covers what is on disk.
         for (const d of p.directories) {
