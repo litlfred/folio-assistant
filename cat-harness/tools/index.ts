@@ -3115,8 +3115,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "instance", schema: t("Slug"), required: false, arg: { flag: "--instance" }, description: "One mount, by its harness name. Absent: every mount with `track`." },
           { name: "root", schema: t("RepoPath"), required: false, arg: { flag: "--root" }, description: "The declaring (downstream) instance root. Absent: every declaring instance in the checkout." },
-          { name: "consentBy", schema: t("Text"), required: false, arg: { flag: "--yes-consent-by" }, description: "The PERSON who approved the tip just shown. An agent passes it only to record that person's answer." },
-          { name: "evidence", schema: t("Text"), required: false, arg: { flag: "--evidence" }, description: "Where the person approved (an issue comment, a chat message). Required with --yes-consent-by." },
+          // `--yes-consent-by` / `--evidence` are deliberately NOT ports: the
+          // contract an agent invokes never carries consent. A person types
+          // them, or an agent passes them only to record that person's
+          // answer (skill `pinned-remote-dependency`); free text on a command
+          // line is also the `tool-args-shell-safe` case.
         ],
         outputs: [
           { name: "report", schema: t("Text"), description: "Per mount: up to date, update available with the plan and the question, or could not determine. Exit 0 up to date or applied, 1 refused (drift), 2 could not determine, 4 awaiting consent." },
