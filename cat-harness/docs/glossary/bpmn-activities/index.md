@@ -12,14 +12,14 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 444 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 160 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 38 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 444 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 31 (<a href="{{ '/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 161 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 10 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 20 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 710 terms and is 580 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 711 terms and is 582 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>710</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>710</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>711</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>711</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -29,7 +29,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">710</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">711</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -3193,6 +3193,13 @@ Prose blocks enter the summary queue [l1-document-ingestion] <span class="fa-glo
 <p>Owner, 2026-09-24: &quot;Make as QA sidecar as part of general doc ingestion to slowly drain.&quot; Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: <code>bun run summaries:next -- --n K</code> hands it the next K blocks with their text, it writes a short summary of each in its own words, and <code>bun run summaries:record</code> writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and <code>ingested</code>. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (<code>block-summaries</code>) without failing on it. Confirming or rejecting a draft is a person's act, in <code>bun run narratives</code>.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/library/l1-document-ingestion.bpmn"><code>folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_SummaryQueue</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-bpmn-activities--process_gettingstarted.task_provisionghpages" data-fa-state="extracted" data-fa-gloss="">
+Provision gh-pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Before Pages is switched on, make sure the gh-pages branch exists — the semantics of A_Provision in bootstrap-tools' render-kg-to-github-pages.bpmn, first half. <code>git ls-remote --heads origin gh-pages</code>; if absent, <code>bun run cat-harness/scripts/pages-bootstrap.ts --provision</code> pushes an orphan gh-pages holding a placeholder index.html and .nojekyll (idempotent; never forced; the script creates no remote branch without the flag). Then Settings → Pages → &quot;Deploy from a branch: gh-pages, / (root)&quot; — not &quot;GitHub Actions&quot; when the publish workflow pushes gh-pages. Every publishing path reaches this step: new-repo, overlay and add-folio, and an overlay or new repo that remote-mounts its dependencies (litlfred/test, provisioned at 860f9c2). Owner, 2026-10-01: &quot;need to create gh-pages branch before can turn on&quot;; 2026-10-07: &quot;need to create gh-pages before can deploy&quot; (#2417).</p>
+<p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/conduct/getting-started.bpmn"><code>folio-assistant-core/processes/conduct/getting-started.bpmn#Task_ProvisionGhPages</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-bpmn-activities--process_publication.callactivity_publiccomment" data-fa-state="extracted" data-fa-gloss="">
 Public comment on the review version <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -4707,7 +4714,7 @@ Stage the rendering <span class="fa-gloss-status">candidate, extracted</span>
 Start the Pages build and derive the URL <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>scripts/pages-bootstrap.ts: derive the site URL from the git remote or &lt;name&gt;.config.json, report whether a publish workflow exists, and optionally probe until the site answers.</p>
+<p>scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is <code>unprovisioned</code>), derive the site URL from the git remote or &lt;name&gt;.config.json, report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/conduct/getting-started.bpmn"><code>folio-assistant-core/processes/conduct/getting-started.bpmn#Task_PagesBootstrap</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.d_constraints" data-fa-state="extracted" data-fa-gloss="">
