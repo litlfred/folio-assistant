@@ -1,10 +1,10 @@
 ---
 # folio-assistant-e0hw
 title: 'Merge refused: #2102 not signed; conflicts with main in generated paths'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-10-04T15:07:55Z
-updated_at: 2026-10-04T15:07:55Z
+updated_at: 2026-10-07T02:38:58Z
 parent: folio-assistant-whlc
 blocking:
     - folio-assistant-4ak5
@@ -28,3 +28,5 @@ A comment on PR #2102, plus a message to the Merge Manager role.
 - [ ] owed CI green on that head
 - [ ] `ready-to-merge` label and a signed `ready: <head sha>`
 - [ ] the owner approves, `merge:guard 2102` passes all 7 checks, and it lands
+
+_2026-10-07T02:38:58Z_ — Claimed by claude/e0hw-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -6925,8 +6925,15 @@
     {
       "id": "interaction.interactionnodeschema.users",
       "prefLabel": "InteractionNodeSchema.users",
-      "definition": "Keyed by the identity the agent can resolve — an email today.",
+      "definition": "Keyed by GitHub handle (owner 2026-10-06); other identities go in each entry's `aliases`. An email key from before still parses, and still matches when it is the session's login.",
       "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.users",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.aliases",
+      "prefLabel": "InteractionProfileSchema.aliases",
+      "definition": "Other identities this person CHOOSES to publish — a login email, a second handle. The entry's key is the GitHub handle (owner 2026-10-06: one person may hold more than one Claude account, so no login email is an identity).",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.aliases",
       "status": "candidate"
     },
     {
@@ -7333,6 +7340,13 @@
       "prefLabel": "LeanPackage.paperDir",
       "definition": "Paper directory under `folio/` (where the `.ts`/`.md` siblings live).",
       "source": "cat-harness/schemas/lean-packages.ts#LeanPackage.paperDir",
+      "status": "candidate"
+    },
+    {
+      "id": "library-keywords.scoredkeywordschema.score",
+      "prefLabel": "ScoredKeywordSchema.score",
+      "definition": "Comparable within one library's matrix only.",
+      "source": "cat-harness/schemas/library-keywords.ts#ScoredKeywordSchema.score",
       "status": "candidate"
     },
     {
@@ -7994,6 +8008,34 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfdiagnosticsschema.figure_sequence_gaps",
+      "prefLabel": "PdfDiagnosticsSchema.figure_sequence_gaps",
+      "definition": "Numbers missing from a caption run, e.g. \"table 2.1\" beside a Table 2.2.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.figure_sequence_gaps",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfdiagnosticsschema.page_label_conflicts",
+      "prefLabel": "PdfDiagnosticsSchema.page_label_conflicts",
+      "definition": "Pages where label sources disagree, e.g. /PageLabels \"3\" against a printed \"iii\".",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.page_label_conflicts",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfdiagnosticsschema.toc_alignment",
+      "prefLabel": "PdfDiagnosticsSchema.toc_alignment",
+      "definition": "Where a printed contents page and the body disagree (issue #2302) — drafts drift. Present only when the document has a contents page. Each list is capped; `count` is the full number.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_alignment",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfdiagnosticsschema.toc_inferred_method",
+      "prefLabel": "PdfDiagnosticsSchema.toc_inferred_method",
+      "definition": "Which inference produced an inferred TOC (issue #2302): a printed contents page, heading styles read from font metrics, or the text-pattern heuristic that OCR'd text falls back to.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema.toc_inferred_method",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfmetadataschema.title_correction",
       "prefLabel": "PdfMetadataSchema.title_correction",
       "definition": "An EDITORIAL correction, outranking every extracted title (bean `w6fu`, step b). Authored, never produced by a rung, and carried over by a re-ingest. `basis` says what the title was read from, so it can be checked rather than trusted.",
@@ -8029,10 +8071,31 @@
       "status": "candidate"
     },
     {
+      "id": "pdf-structure.pdfsectionschema.label_start",
+      "prefLabel": "PdfSectionSchema.label_start",
+      "definition": "Printed labels of page_start / page_end, where known (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema.label_start",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfstructureschema.figures",
+      "prefLabel": "PdfStructureSchema.figures",
+      "definition": "The list of figures and tables, cross-checked (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.figures",
+      "status": "candidate"
+    },
+    {
       "id": "pdf-structure.pdfstructureschema.granularity",
       "prefLabel": "PdfStructureSchema.granularity",
       "definition": "`page`: written by `pdf-pages.py`, one section per page. `slide`: written by `slides-structure.py`, one section per slide (bean `scfh`).",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdfstructureschema.pages",
+      "prefLabel": "PdfStructureSchema.pages",
+      "definition": "Every physical page with its printed label (issue #2302).",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.pages",
       "status": "candidate"
     },
     {
@@ -8047,6 +8110,20 @@
       "prefLabel": "PdfStructureSchema.toc_undetermined_reason",
       "definition": "Why an inferred TOC was not trusted, in a sentence a person can check.",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.toc_undetermined_reason",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdftocentryschema.confidence",
+      "prefLabel": "PdfTocEntrySchema.confidence",
+      "definition": "Inferred entries only (issue #2302): how sure the inference is, 0..1, and which independent evidence agreed — a printed contents page, the entry found in the body, a heading style, a section number, another extractor. Null on an outline entry, which is not scored.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.confidence",
+      "status": "candidate"
+    },
+    {
+      "id": "pdf-structure.pdftocentryschema.page_label",
+      "prefLabel": "PdfTocEntrySchema.page_label",
+      "definition": "The printed label of `page` (\"iv\", \"23\"), where known; `page` is physical.",
+      "source": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema.page_label",
       "status": "candidate"
     },
     {

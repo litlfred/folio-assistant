@@ -7,6 +7,7 @@ section_number: 7.6
 pages: 99-101
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The purpose of any recommendation is to achieve a net benefit. Thus, selecting the most important outcomes is critical to producing a useful guideline. 
 The value attached to a given outcome by different populations and subpopulations varies. For this reason, it is essential to ask members of the GDG 

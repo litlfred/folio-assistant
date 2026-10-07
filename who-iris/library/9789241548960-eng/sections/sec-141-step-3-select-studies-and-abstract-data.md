@@ -7,6 +7,7 @@ section_number: null
 pages: 113-113
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 As the first stage in selecting relevant studies, records retrieved from the 
 bibliographic databases and from other sources are recorded and assessed 

@@ -151,7 +151,7 @@ through it — and the flag is what stops it resting there.
 ### The two kinds that were genuinely untyped
 
 `interaction` and `issue-marks` declared no validator at all, and the cost was
-measured rather than supposed: `interaction/interaction.json` is read at the
+measured rather than supposed: `cat-harness/memory/interaction.json` is read at the
 start of **every** session by jq inside a shell script whose failure branch
 prints `(could not parse … — read it by hand)`. A malformed node does not fail;
 it degrades to a line nobody acts on, in the one file every sibling session

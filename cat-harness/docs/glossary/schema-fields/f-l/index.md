@@ -13,7 +13,7 @@ permalink: /glossary/schema-fields/f-l/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1909 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 31 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1919 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
@@ -22,7 +22,7 @@ One of 4 pages of this type, split by the first letter of the label: <a href="{{
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2202</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2202</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2212</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2212</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -1860,8 +1860,15 @@ InteractionNodeSchema.default <span class="fa-gloss-status">candidate, extracted
 InteractionNodeSchema.users <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Keyed by the identity the agent can resolve — an email today.</p>
+<p>Keyed by GitHub handle (owner 2026-10-06); other identities go in each entry's <code>aliases</code>. An email key from before still parses, and still matches when it is the session's login.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionNodeSchema.users</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.aliases" data-fa-state="extracted" data-fa-gloss="">
+InteractionProfileSchema.aliases <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Other identities this person CHOOSES to publish — a login email, a second handle. The entry's key is the GitHub handle (owner 2026-10-06: one person may hold more than one Claude account, so no login email is an identity).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionProfileSchema.aliases</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.note" data-fa-state="extracted" data-fa-gloss="">
 InteractionProfileSchema.note <span class="fa-gloss-status">candidate, extracted</span>
@@ -2861,13 +2868,6 @@ LockedInstanceSchema.pinnedBy <span class="fa-gloss-status">candidate, extracted
 <dd>
 <p>How the pin was found: the declared ref, the same tree, or a gitlink in a parent's tree.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.pinnedBy</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--remote-mount.lockedinstanceschema.undeclared" data-fa-state="extracted" data-fa-gloss="">
-LockedInstanceSchema.undeclared <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>With an <code>undeclared: true</code> override: what was laid down OUTSIDE every declared directory and the declaration file — one tree digest over it, and the declared paths (instance-relative, no trailing slash) the digest leaves out, so the check walks exactly what the mount wrote.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/remote-mount.ts"><code>cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.undeclared</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--remote-mount.lockedinstanceschema.upstreamroot" data-fa-state="extracted" data-fa-gloss="">
 LockedInstanceSchema.upstreamRoot <span class="fa-gloss-status">candidate, extracted</span>

@@ -33,9 +33,6 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     @context [1] : 'https://spdx.github.io/spdx-spec/v3.1-RC1/rdf/spdx-context.jsonld'
   }
 }
-package "folio-assistant/root-tools" as pkg_folio_assistant_root_tools <<code>> {
-  note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_root_tools_code
-}
 package "folio-assistant/folio-assistant-tests" as pkg_folio_assistant_folio_assistant_tests <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_folio_assistant_tests_code
 }
@@ -106,47 +103,6 @@ package "folio-assistant/todos" as pkg_folio_assistant_todos <<todos>> {
     filter [0..1] : object
   }
 }
-package "folio-assistant/memory" as pkg_folio_assistant_memory <<memory, waiver>> {
-  class "AlsoAbout" as folio_assistant_memory_AlsoAbout <<json: MemoryNodeSchema>> #f6eedf {
-    kind [1] : 'block'
-    label [1] : string
-  }
-  class "MemoryNode" as folio_assistant_memory_MemoryNode <<json: MemoryNodeSchema>> #f6eedf {
-    id [1] : string
-    summary [1] : string
-    comment [0..1] : string
-    createdAt [1] : string
-    updatedAt [0..1] : string
-    targetLabel [0..1] : string
-    anchor [0..1] : object
-    alsoAbout [0..*] : AlsoAbout[]
-    tags [0..1] : object
-    label [1] : stable | trap | baseline
-    measured [0..1] : object
-    archived [0..1] : boolean
-    detail [0..1] : string
-    $schema [1] : 'folio-memory/v1'
-  }
-  class "WaiverNode" as folio_assistant_memory_WaiverNode <<json: WaiverNodeSchema>> #f6eedf {
-    $schema [1] : 'folio-waiver/v1'
-    id [1] : string
-    grantedBy [1] : string
-    quote [1] : string
-    gate [1] : merge-to-main | bean-close | deletion | swarm-spawn | process-reentry | issue-close
-    scope [1] : string
-    grantedAt [1] : string
-    expires [1] : string
-    bounds [1] : string
-  }
-}
-package "folio-assistant/interaction" as pkg_folio_assistant_interaction <<interaction>> {
-  class "folio-interaction/v1" as folio_assistant_interaction_folio_interaction_v1_folio_interaction_v1 <<json: InteractionNodeSchema>> #f6eedf {
-    $schema [1] : 'folio-interaction/v1'
-    $comment [0..1] : string
-    users [1] : map<object>
-    default [0..1] : object
-  }
-}
 package "folio-assistant/issue-marks" as pkg_folio_assistant_issue_marks <<issue-marks>> {
   class "folio-issue-mark/v1" as folio_assistant_issue_marks_folio_issue_mark_v1_folio_issue_mark_v1 <<json: IssueMarkSchema>> #f6eedf {
     $schema [1] : 'folio-issue-mark/v1'
@@ -156,9 +112,6 @@ package "folio-assistant/issue-marks" as pkg_folio_assistant_issue_marks <<issue
     checkedAt [1] : string
     note [0..1] : string
   }
-}
-package "folio-assistant/root-docs" as pkg_folio_assistant_root_docs <<docs>> {
-  note "docs: no node schema declared\n(no node here carries a $schema family docs names (13 named): could not determine)" as n_folio_assistant_root_docs_docs
 }
 package "folio-assistant/defs" as pkg_folio_assistant_defs <<bean-defs>> {
   note "bean-defs: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_defs_bean_defs
@@ -282,24 +235,20 @@ package "folio-assistant/positions" as pkg_folio_assistant_positions <<board-pos
 
 folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files
 folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_beans_folio_session_survey_v1_Axe : axes
-folio_assistant_memory_MemoryNode *-- "0..*" folio_assistant_memory_AlsoAbout : alsoAbout
 folio_assistant_surveys_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_surveys_folio_session_survey_v1_Axe : axes
 folio_assistant_items_TodoNodeKind *-- "0..*" folio_assistant_items_AlsoAbout : alsoAbout
-' grid: portrait, 4 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools pkg_folio_assistant_folio_assistant_tests pkg_folio_assistant_fsh_guts pkg_folio_assistant_beans pkg_folio_assistant_todos pkg_folio_assistant_memory pkg_folio_assistant_interaction pkg_folio_assistant_issue_marks pkg_folio_assistant_root_docs pkg_folio_assistant_defs pkg_folio_assistant_archive pkg_folio_assistant_notes pkg_folio_assistant_workflows pkg_folio_assistant_queue pkg_folio_assistant_surveys pkg_folio_assistant_items pkg_folio_assistant_feedback pkg_folio_assistant_boards pkg_folio_assistant_positions
+' grid: portrait, 3 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_folio_assistant_tests pkg_folio_assistant_fsh_guts pkg_folio_assistant_beans pkg_folio_assistant_todos pkg_folio_assistant_issue_marks pkg_folio_assistant_defs pkg_folio_assistant_archive pkg_folio_assistant_notes pkg_folio_assistant_workflows pkg_folio_assistant_queue pkg_folio_assistant_surveys pkg_folio_assistant_items pkg_folio_assistant_feedback pkg_folio_assistant_boards pkg_folio_assistant_positions
 pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_beans
-pkg_folio_assistant_root_tools -[hidden]down- pkg_folio_assistant_todos
-pkg_folio_assistant_folio_assistant_tests -[hidden]down- pkg_folio_assistant_memory
-pkg_folio_assistant_fsh_guts -[hidden]down- pkg_folio_assistant_interaction
-pkg_folio_assistant_beans -[hidden]down- pkg_folio_assistant_issue_marks
-pkg_folio_assistant_todos -[hidden]down- pkg_folio_assistant_root_docs
-pkg_folio_assistant_memory -[hidden]down- pkg_folio_assistant_defs
-pkg_folio_assistant_interaction -[hidden]down- pkg_folio_assistant_archive
+pkg_folio_assistant_folio_assistant_tests -[hidden]down- pkg_folio_assistant_todos
+pkg_folio_assistant_fsh_guts -[hidden]down- pkg_folio_assistant_issue_marks
+pkg_folio_assistant_beans -[hidden]down- pkg_folio_assistant_defs
+pkg_folio_assistant_todos -[hidden]down- pkg_folio_assistant_archive
 pkg_folio_assistant_issue_marks -[hidden]down- pkg_folio_assistant_notes
-pkg_folio_assistant_root_docs -[hidden]down- pkg_folio_assistant_workflows
-pkg_folio_assistant_defs -[hidden]down- pkg_folio_assistant_queue
-pkg_folio_assistant_archive -[hidden]down- pkg_folio_assistant_surveys
-pkg_folio_assistant_notes -[hidden]down- pkg_folio_assistant_items
-pkg_folio_assistant_workflows -[hidden]down- pkg_folio_assistant_feedback
-pkg_folio_assistant_queue -[hidden]down- pkg_folio_assistant_boards
-pkg_folio_assistant_surveys -[hidden]down- pkg_folio_assistant_positions
+pkg_folio_assistant_defs -[hidden]down- pkg_folio_assistant_workflows
+pkg_folio_assistant_archive -[hidden]down- pkg_folio_assistant_queue
+pkg_folio_assistant_notes -[hidden]down- pkg_folio_assistant_surveys
+pkg_folio_assistant_workflows -[hidden]down- pkg_folio_assistant_items
+pkg_folio_assistant_queue -[hidden]down- pkg_folio_assistant_feedback
+pkg_folio_assistant_surveys -[hidden]down- pkg_folio_assistant_boards
+pkg_folio_assistant_items -[hidden]down- pkg_folio_assistant_positions
 @enduml

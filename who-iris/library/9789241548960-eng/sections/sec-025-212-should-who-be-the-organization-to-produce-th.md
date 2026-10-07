@@ -7,7 +7,7 @@ section_number: 2.1.2
 pages: 27-27
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Have WHO’s governing bodies requested the guideline? Is WHO in the best 
-position to issue guidance on this topic? Does the topic fall within the scope 
-of WHO’s remit? Is another organization better suited to produce this guide
+position to issue guidance on this topic? Does the topic fall within the scope

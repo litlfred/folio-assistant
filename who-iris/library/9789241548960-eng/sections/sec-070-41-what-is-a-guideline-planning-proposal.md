@@ -7,6 +7,7 @@ section_number: 4.1
 pages: 51-51
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 A guideline planning proposal is a document that outlines the rationale and 
 scope of a proposed guideline and the methods and resources involved in 
