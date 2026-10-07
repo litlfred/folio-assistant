@@ -63,6 +63,41 @@ export const IntakeFileSchema = ArchiveEntrySchema.pick({
   })
   .strict();
 
+/**
+ * Where a classification came from, in order of precedence (bean `mffs`):
+ * a person **declared** it; the process that acquired the item **decided** it
+ * from its context (a DAK's library step fetching a source Component 1 cites);
+ * a rule **inferred** it from the item's metadata. A consumer takes the
+ * highest-precedence one and reports any that disagree, never silently
+ * picking one.
+ */
+export const CLASSIFICATION_SOURCES = ["declared", "context", "inferred"] as const;
+
+/**
+ * One judgement that the captured item is, or is not, a member of a class in
+ * a named scheme — for example the SMART Guidelines knowledge-graph layer an
+ * item belongs to (scheme `https://smart.who.int/kg/layer`, code `l1`).
+ *
+ * The platform owns only the record's shape; the content type owns the scheme,
+ * its codes, and the rule that infers one. `member: false` is a finding, not
+ * an absence: "this is not L1" stops the next ingest re-asking.
+ */
+export const IntakeClassificationSchema = z
+  .object({
+    scheme: z.string().min(1),
+    code: z.string().min(1),
+    member: z.boolean(),
+    /** Qualifiers the scheme defines, e.g. `{ publicationType: "implementation-guidance" }`. */
+    properties: z.record(z.string(), z.string()).optional(),
+    source: z.enum(CLASSIFICATION_SOURCES),
+    /** Why — the rule, the person's words, or the process step. Required: an unexplained classification is a guess. */
+    basis: z.string().min(1),
+    by: z.string().min(1).optional(),
+    at: z.string().regex(/^\d{4}-\d{2}-\d{2}/, "an ISO 8601 date").optional(),
+  })
+  .strict();
+export type IntakeClassification = z.infer<typeof IntakeClassificationSchema>;
+
 export const IntakeSchema = z
   .object({
     $schema: z.literal(INTAKE_SCHEMA_TAG),
@@ -86,6 +121,8 @@ export const IntakeSchema = z
      * undetermined, never as cleared.
      */
     licence: SourceLicenceSchema.optional(),
+    /** Classifications of the captured item ({@link IntakeClassificationSchema}). */
+    classifications: z.array(IntakeClassificationSchema).optional(),
   })
   .strict()
   .refine((i) => i.item !== undefined || i.record !== undefined || i.title !== undefined, {
