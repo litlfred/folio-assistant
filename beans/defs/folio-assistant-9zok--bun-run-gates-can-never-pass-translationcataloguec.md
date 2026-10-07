@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9zok
 title: bun run gates can NEVER pass translation:catalogue:check — it scrapes a command whose $base is a shell variable defined on an earlier line of the workflow
-status: todo
+status: in-progress
 type: task
 parent: folio-assistant-1xhc
 created_at: 2026-10-02T18:56:04Z
-updated_at: 2026-10-02T18:56:04Z
+updated_at: 2026-10-07T04:51:03Z
 ---
 
 ## The defect
@@ -72,3 +72,5 @@ broken. That is the `1xhc` shape: a gate that cannot pass stops discriminating.
 
 Found while running `gates` for bean `bbv3`. NOT caused by that change: it
 reproduces with the gate's own no-argument variant green in the same run.
+
+_2026-10-07T04:51:03Z_ — Claimed by claude/9zok-gates-unresolved-variable — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

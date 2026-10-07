@@ -1,13 +1,13 @@
 ---
 # folio-assistant-oh78
 title: 'ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-29T20:50:33Z
+updated_at: 2026-10-07T04:58:18Z
 parent: folio-assistant-ahvw
 ---
 
@@ -120,3 +120,5 @@ baseline** — a baseline entry is a deferral, not a home.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+_2026-10-07T04:58:18Z_ — Claimed by claude/oh78-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
