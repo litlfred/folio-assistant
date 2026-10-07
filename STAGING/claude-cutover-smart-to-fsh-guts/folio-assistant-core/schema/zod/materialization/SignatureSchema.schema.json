@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/Signature",
+  "definitions": {
+    "Signature": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cutover-smart-to-fsh-guts/folio-assistant-core/schema/zod/materialization/SignatureSchema.schema.json",
+  "title": "SignatureSchema",
+  "description": "Generated from `SignatureSchema` in schemas/materialization.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/cutover-smart-to-fsh-guts",
+    "sha": "2112ad7a61d5360cf1cb42d03e9c23cb9818f440",
+    "pr": "claude/cutover-smart-to-fsh-guts",
+    "run": "37618378232"
+  }
+}
