@@ -26,6 +26,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`check-import-direction-checkout.test.ts`](check-import-direction-checkout.test.ts) | a file |  |
 | [`compose-docs-checkout.test.ts`](compose-docs-checkout.test.ts) | a file |  |
 | [`content-holds-code-checkout.test.ts`](content-holds-code-checkout.test.ts) | a file |  |
+| [`detect-live-corpus-checkout.test.ts`](detect-live-corpus-checkout.test.ts) | a file |  |
 | [`directory-storage-checkout.test.ts`](directory-storage-checkout.test.ts) | a file |  |
 | [`dispatch-gates-can-pass.test.ts`](dispatch-gates-can-pass.test.ts) | a file |  |
 | [`document-kinds-viz-checkout.test.ts`](document-kinds-viz-checkout.test.ts) | a file |  |
@@ -67,6 +68,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`library-entry-iri-checkout.test.ts`](library-entry-iri-checkout.test.ts) | a file |  |
 | [`library-links-checkout.test.ts`](library-links-checkout.test.ts) | a file |  |
 | [`library-withheld-checkout.test.ts`](library-withheld-checkout.test.ts) | a file |  |
+| [`memory-refs-checkout.test.ts`](memory-refs-checkout.test.ts) | a file |  |
 | [`merge-guard-workflows.test.ts`](merge-guard-workflows.test.ts) | a file |  |
 | [`methodologies-viz-checkout.test.ts`](methodologies-viz-checkout.test.ts) | a file |  |
 | [`methodology-evidence-checkout.test.ts`](methodology-evidence-checkout.test.ts) | a file |  |
@@ -104,6 +106,7 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `folio-assistant-test
 | [`subgraph-node-checkout.test.ts`](subgraph-node-checkout.test.ts) | a file |  |
 | [`subgraph-source-checkout.test.ts`](subgraph-source-checkout.test.ts) | a file |  |
 | [`subgraphs-checkout.test.ts`](subgraphs-checkout.test.ts) | a file |  |
+| [`task-pool-checkout.test.ts`](task-pool-checkout.test.ts) | a file |  |
 | [`tech-meta-checkout.test.ts`](tech-meta-checkout.test.ts) | a file |  |
 | [`term-mapping-checkout.test.ts`](term-mapping-checkout.test.ts) | a file |  |
 | [`theme-by-ref-checkout.test.ts`](theme-by-ref-checkout.test.ts) | a file |  |
