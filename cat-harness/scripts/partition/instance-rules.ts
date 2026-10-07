@@ -807,6 +807,9 @@ export const RULES: Rule[] = [
       // The raw-block wrapper both of those visualisers emit authored text through
       // (bean `kjbb`): a closing tag inside the text must not end the block early.
       "scripts/lib/liquid-raw.ts",
+      // The themed-page shape every viewer generator now writes through (#2418):
+      // front matter, then the body inside that raw block. Beside its one import.
+      "scripts/lib/themed-page.ts",
       // Its library twin (bean `qgjh`): where a library reference links — the
       // viewer, the item README, the upstream record — read, never composed.
       "scripts/lib/library-links.ts",

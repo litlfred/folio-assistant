@@ -208,3 +208,48 @@ describe("adjudication of 1ygp: regressions", () => {
     expect(guardUntrusted(many, "tool x")).toContain("QUARANTINED (oversize)");
   });
 });
+
+describe("roast 1ygp L4.3: a control field's VALUE can be constrained", () => {
+  const tools = { nextTool: { role: "control" as const, oneOf: ["workflow_next", "workflow_list"] }, summary: "data" as const };
+
+  test("without a constraint a well-formed tool name passes the patterns, which is the gap", () => {
+    expect(screenHandover({ nextTool: "merge_pull_request" }, { fields: { nextTool: "control" } }).state).toBe("clean");
+  });
+
+  test("oneOf refuses a value outside the list, and accepts one inside it", () => {
+    const bad = screenHandover({ nextTool: "merge_pull_request" }, { fields: tools });
+    expect(bad.state).toBe("refused");
+    expect(bad.findings[0]).toMatchObject({ path: "nextTool", role: "control", kind: "constraint-violation" });
+    expect(screenHandover({ nextTool: "workflow_next", summary: "ok" }, { fields: tools }).state).toBe("clean");
+  });
+
+  test("a pattern must match the whole value, whatever anchors or flags it was written with", () => {
+    const fields = { id: { role: "control" as const, pattern: /[a-z]+/g } };
+    expect(screenHandover({ id: "abc" }, { fields }).state).toBe("clean");
+    expect(screenHandover({ id: "abc/../x" }, { fields }).state).toBe("refused");
+    // A string pattern, as a JSON schema file carries it, is compiled too.
+    expect(screenHandover({ id: "Task_1" }, { fields: { id: { role: "control", pattern: "Task_[0-9]+" } } }).state).toBe("clean");
+    expect(screenHandover({ id: "xTask_1" }, { fields: { id: { role: "control", pattern: "Task_[0-9]+" } } }).state).toBe("refused");
+  });
+
+  test("a constrained field that is not a string is refused", () => {
+    const fields = { id: { role: "control" as const, pattern: /.*/ } };
+    expect(screenHandover({ id: ["a"] }, { fields }).state).toBe("refused");
+    expect(screenHandover({ id: 3 }, { fields }).state).toBe("refused");
+  });
+
+  test("a pattern that does not compile clears nothing", () => {
+    expect(screenHandover({ id: "a" }, { fields: { id: { role: "control", pattern: "(" } } }).state).toBe("refused");
+  });
+
+  test("a constraint on a DATA field quarantines rather than refuses", () => {
+    const v = screenHandover({ note: "x".repeat(20) }, { fields: { note: { role: "data", pattern: /.{0,10}/ } } });
+    expect(v.state).toBe("quarantined");
+    expect(v.quarantined).toEqual(["note"]);
+  });
+
+  test("an absent constrained field is not a violation, and the bare role still works", () => {
+    expect(screenHandover({ summary: "ok" }, { fields: tools }).state).toBe("clean");
+    expect(screenHandover({ a: "x" }, { fields: { a: "control" } }).state).toBe("clean");
+  });
+});
