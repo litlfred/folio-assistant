@@ -1,8 +1,10 @@
 import { test, expect, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { navbarHtml } from "../scripts/lib/navbar.ts";
+import { NAV_COLLAPSED_PX, NAV_OPEN_PX, NAV_OPEN_WIDE_PX } from "../scripts/lib/navbar-geometry.ts";
 
 /**
  * The theme sidebar wears the viewer rail's layout: ONE scroll region.
@@ -119,8 +121,7 @@ function page(scoped = false): string {
   .nav-list { margin: 0; padding: 0; list-style: none; }
   .site-nav a { display: block; padding: 4px 32px; font-size: 14px; line-height: 24px; color: #9ec5fe; }
   .d-none { display: none !important; }
-  @media (min-width: 50rem) { .d-md-block { display: block !important; } .d-md-none { display: none !important; } }
-  .main { margin-left: 16.5rem; }
+  @media (min-width: 50rem) { .d-md-block { display: block !important; } .d-md-none { display: none !important; } .main { margin-left: 16.5rem; } }
   /* The theme folds a row's children until it is active; the fixture keeps that rule. */
   .nav-list .nav-list-item > .nav-list { display: none; }
   .nav-list .nav-list-item.active > .nav-list { display: block; }
@@ -143,6 +144,39 @@ function page(scoped = false): string {
 }
 
 const fixturePage = (): string => page();
+
+const RAIL_CSS = readFileSync(join(ROOT, SITE, "assets/css/navbar.css"), "utf8");
+
+function railedPage(): string {
+  const navHtml = navbarHtml({
+    instance: "cat-harness",
+    hrefs: "resolved",
+    openControl: "input",
+    root: { label: "Home", href: "/" },
+    folders: HARNESS.navbar?.folders ?? [],
+  });
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8">
+  <style>
+  body { margin: 0; font-family: sans-serif; }
+  .page-main { background: #222; color: #fff; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+  ${RAIL_CSS}
+  </style></head><body>
+  ${navHtml}
+  <main class="page-main"><h1>Railed Page</h1><div class="content">${MAIN}</div></main>
+</body></html>`;
+}
+
+async function captureScreenshot(p: Page, name: string): Promise<void> {
+  const dir1 = join(ROOT, "test/results/ei4q");
+  mkdirSync(dir1, { recursive: true });
+  const file1 = join(dir1, name);
+  await p.screenshot({ path: file1 });
+
+  const artifactDir = "/Users/litlfred/.gemini/antigravity-cli/brain/436871eb-bb7e-4520-b04e-79e16c8ca6d7";
+  if (existsSync(artifactDir)) {
+    copyFileSync(file1, join(artifactDir, name));
+  }
+}
 
 async function load(p: Page, scoped = false): Promise<string[]> {
   const errors: string[] = [];
@@ -463,3 +497,170 @@ test.describe("every disclosure in the column wears the same caret and states (#
     }
   });
 });
+
+test.describe("on desktop opening the rail shrinks content width so they do not overlap (bean ei4q)", () => {
+  test("theme sidebar: opening the rail at 1280px shrinks content width and bounding client rectangles do not intersect", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.route("http://sidebar.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: fixturePage() }));
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("http://sidebar.fixture/page", { waitUntil: "load" });
+    await page.mouse.move(1270, 790);
+    // Hover test: opening via hover widens rail and pushes main content
+    await page.locator(".side-bar").hover();
+    await page.waitForTimeout(300);
+    const hoverSidebar = (await page.locator(".side-bar").boundingBox())!;
+    const hoverMain = (await page.locator(".main").boundingBox())!;
+    expect(hoverSidebar.width).toBe(NAV_OPEN_WIDE_PX);
+    expect(hoverSidebar.x + hoverSidebar.width).toBeLessThanOrEqual(hoverMain.x + 0.5);
+
+    // Mouse away: restores closed state
+    await page.mouse.move(1270, 790);
+    await page.waitForTimeout(300);
+
+    // Closed state: sidebar is collapsed strip, main content has full width
+    const closedSidebar = (await page.locator(".side-bar").boundingBox())!;
+    const closedMain = (await page.locator(".main").boundingBox())!;
+    expect(closedSidebar.width).toBe(NAV_COLLAPSED_PX);
+    expect(closedSidebar.x + closedSidebar.width).toBeLessThanOrEqual(closedMain.x + 0.5);
+    await captureScreenshot(page, "sidebar-1280-closed.png");
+
+    // Open via click (avatar / site-title pins #fa-nav-open)
+    await page.locator(".side-bar .site-title").click();
+    await expect(page.locator("#fa-nav-open")).toBeChecked();
+    await page.mouse.move(1270, 790);
+    await page.waitForTimeout(300);
+
+    const openSidebar = (await page.locator(".side-bar").boundingBox())!;
+    const openMain = (await page.locator(".main").boundingBox())!;
+    const openContent = (await page.locator(".main-content").boundingBox())!;
+
+    // 1. Sidebar widened to wide open width (16.5rem = 264px)
+    expect(openSidebar.width).toBe(NAV_OPEN_WIDE_PX);
+    // 2. Bounding rectangles DO NOT intersect: rail's right edge <= main's left edge
+    expect(openSidebar.x + openSidebar.width).toBeLessThanOrEqual(openMain.x + 0.5);
+    expect(openSidebar.x + openSidebar.width).toBeLessThanOrEqual(openContent.x + 0.5);
+    // 3. Main content width shrunk by the exact expansion of the sidebar
+    expect(openMain.width).toBeLessThan(closedMain.width);
+    expect(closedMain.width - openMain.width).toBeCloseTo(openSidebar.width - closedSidebar.width, 1);
+    await captureScreenshot(page, "sidebar-1280-open.png");
+
+    // Close: restores full width
+    await page.locator(".side-bar .site-title").click();
+    await expect(page.locator("#fa-nav-open")).not.toBeChecked();
+    await page.mouse.move(1270, 790);
+    await page.waitForTimeout(300);
+
+    const restoredMain = (await page.locator(".main").boundingBox())!;
+    expect(restoredMain.width).toBeCloseTo(closedMain.width, 1);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("theme sidebar: on phone (390px) the rail stays an overlay drawer", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.route("http://sidebar.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: fixturePage() }));
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("http://sidebar.fixture/page", { waitUntil: "load" });
+    await page.waitForTimeout(200);
+
+    await captureScreenshot(page, "sidebar-390-closed.png");
+
+    // On phone, checking #fa-nav-open opens drawer over page without shrinking content
+    await page.evaluate(() => {
+      const box = document.getElementById("fa-nav-open") as HTMLInputElement | null;
+      if (box) {
+        box.checked = true;
+        box.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    });
+    await page.waitForTimeout(300);
+    await captureScreenshot(page, "sidebar-390-open.png");
+
+    // Content width on phone is not shrunk to nothing
+    const mainBox = (await page.locator(".main").boundingBox())!;
+    expect(mainBox.width).toBe(390);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("fa-nav layout: opening the rail at 1280px shrinks content width and rectangles do not intersect", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.route("http://rail.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: railedPage() }));
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("http://rail.fixture/page", { waitUntil: "load" });
+    await page.mouse.move(1270, 790);
+    await page.waitForTimeout(200);
+
+    // Closed state
+    const closedRail = (await page.locator("nav.fa-nav").boundingBox())!;
+    const closedContent = (await page.locator(".page-main").boundingBox())!;
+    expect(closedRail.width).toBe(NAV_COLLAPSED_PX);
+    expect(closedRail.x + closedRail.width).toBeLessThanOrEqual(closedContent.x + 0.5);
+    await captureScreenshot(page, "rail-1280-closed.png");
+
+    // Open via click on head label (pins #fa-nav-open)
+    await page.locator(".fa-nav-head").click();
+    await expect(page.locator("#fa-nav-open")).toBeChecked();
+    await page.mouse.move(1270, 790);
+    await page.waitForTimeout(300);
+
+    const openRail = (await page.locator("nav.fa-nav").boundingBox())!;
+    const openContent = (await page.locator(".page-main").boundingBox())!;
+    expect(openRail.width).toBe(NAV_OPEN_WIDE_PX);
+    // Rectangles DO NOT intersect: rail right <= content left
+    expect(openRail.x + openRail.width).toBeLessThanOrEqual(openContent.x + 0.5);
+    // Content width shrunk
+    expect(openContent.width).toBeLessThan(closedContent.width);
+    expect(closedContent.width - openContent.width).toBeCloseTo(openRail.width - closedRail.width, 1);
+    await captureScreenshot(page, "rail-1280-open.png");
+
+    // Close restores width
+    await page.locator(".fa-nav-head").click();
+    await expect(page.locator("#fa-nav-open")).not.toBeChecked();
+    await page.mouse.move(1270, 790);
+    await page.waitForTimeout(300);
+    const restoredContent = (await page.locator(".page-main").boundingBox())!;
+    expect(restoredContent.width).toBeCloseTo(closedContent.width, 1);
+
+    // Open via hover
+    await page.locator("nav.fa-nav").hover();
+    await page.waitForTimeout(300);
+    const hoverRail = (await page.locator("nav.fa-nav").boundingBox())!;
+    const hoverContent = (await page.locator(".page-main").boundingBox())!;
+    expect(hoverRail.width).toBe(NAV_OPEN_WIDE_PX);
+    expect(hoverRail.x + hoverRail.width).toBeLessThanOrEqual(hoverContent.x + 0.5);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("fa-nav layout: on phone (390px) the rail stays an overlay drawer", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.route("http://rail.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: railedPage() }));
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("http://rail.fixture/page", { waitUntil: "load" });
+    await page.waitForTimeout(200);
+
+    await captureScreenshot(page, "rail-390-closed.png");
+
+    // Open rail
+    await page.locator(".fa-nav-head").click();
+    await expect(page.locator("#fa-nav-open")).toBeChecked();
+    await page.waitForTimeout(300);
+
+    await captureScreenshot(page, "rail-390-open.png");
+
+    // On phone, body padding-left stays collapsed so rail overlays page without shrinking content
+    const openRail = (await page.locator("nav.fa-nav").boundingBox())!;
+    const content = (await page.locator(".page-main").boundingBox())!;
+    expect(openRail.width).toBe(NAV_OPEN_PX);
+    // Content left stays at 56px, rail at 248px overlays it
+    expect(content.x).toBe(NAV_COLLAPSED_PX);
+
+    expect(errors).toEqual([]);
+  });
+});
+

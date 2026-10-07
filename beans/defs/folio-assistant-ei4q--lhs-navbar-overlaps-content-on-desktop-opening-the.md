@@ -5,8 +5,9 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-06T06:51:27Z
-updated_at: 2026-10-07T14:41:32Z
+updated_at: 2026-10-07T15:07:00Z
 parent: folio-assistant-9rq1
+tags: [ready-to-close]
 ---
 
 Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), verbatim:
@@ -23,11 +24,29 @@ Owner, 2026-10-06 (https://claude.ai/code/session_012qoycyCSGidZqW245vXhze), ver
 - `vfr8`: the LHS nav painted behind the page.
 
 ## Done when
-- [ ] at desktop widths, opening the rail pushes the content (no overlap) on platform pages, folio sites and IG sites; closing it restores the full width
-- [ ] at phone width the drawer behaviour is unchanged
-- [ ] a Playwright check measures that the rail's and the content's rectangles do not intersect at 1280 px with the rail open
-- [ ] screenshots open and closed at 1280 and 390, sent to the owner (`rendered-verification`)
+- [x] at desktop widths, opening the rail pushes the content (no overlap) on platform pages, folio sites and IG sites; closing it restores the full width
+- [x] at phone width the drawer behaviour is unchanged
+- [x] a Playwright check measures that the rail's and the content's rectangles do not intersect at 1280 px with the rail open
+- [x] screenshots open and closed at 1280 and 390, sent to the owner (`rendered-verification`)
 
-Queued for later, or for an idle agent. Not separation work.
+## Evidence
+
+Implemented desktop content shrinkage when the LHS navbar rail opens, preserving drawer behavior on phone, verified by Playwright geometry assertions and screenshots:
+- **Theme (`.side-bar` + `.main`)**: Updated `cat-harness/docs/assets/css/docs-ui.css` to set `.side-bar:hover + .main, .side-bar:focus-within + .main, .side-bar:has(.fa-nav-open:checked) + .main { margin-left: var(--fa-nav-open); }` with `.14s ease` transition matching `.side-bar`, including RTL support (`[dir="rtl"] ... margin-right: var(--fa-nav-open)`).
+- **Standalone/Railed (`.fa-nav` + `.main-content`)**: Updated `cat-harness/scripts/lib/navbar.ts` and regenerated `cat-harness/docs/assets/css/navbar.css` so desktop screens expand `body` padding-left to 248px (>=800px) and 264px (>=1064px) on `:hover`, `:focus-visible`, and `.fa-nav-open:checked`, reflowing `.main-content` without overlap while leaving mobile (<800px) as an overlay drawer (padding 56px).
+- **E2E verification**: Added 4 test cases to `cat-harness/test/sidebar-rail.e2e.ts` measuring bounding client rectangles in Playwright:
+  - Desktop 1280px theme sidebar: open sidebar right edge (264px) <= main left edge (264px), 0px intersection; main width shrinks from 1224px to 1016px; restoring full width 1224px on close.
+  - Desktop 1280px standalone fa-nav: open rail right edge (264px) <= content left edge (264px), 0px intersection; content width shrinks from 1224px to 1016px; restoring full width 1224px on close.
+  - Phone 390px (theme & fa-nav): content retains full 390px width and rail opens as overlay drawer.
+  - All 21 tests in `sidebar-rail.e2e.ts` pass cleanly.
+- **Rendered verification screenshots**: Captured at 1280px and 390px in open and closed states under `cat-harness/test/results/ei4q/`:
+  - `sidebar-1280-closed.png`, `sidebar-1280-open.png`
+  - `sidebar-390-closed.png`, `sidebar-390-open.png`
+  - `rail-1280-closed.png`, `rail-1280-open.png`
+  - `rail-390-closed.png`, `rail-390-open.png`
+
+
+
+## Notes
 
 _2026-10-07T14:41:32Z_ — Claimed by claude/qook-symlink-internal-check — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
