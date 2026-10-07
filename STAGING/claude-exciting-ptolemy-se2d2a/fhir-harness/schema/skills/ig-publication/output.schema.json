@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IG Publication Output",
+  "description": "Output schema for FHIR IG publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "publishedUrl"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    },
+    "releaseBranch": {
+      "type": "string"
+    },
+    "publicationRequestPath": {
+      "type": "string"
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
+  "staging": {
+    "branch": "claude/exciting-ptolemy-se2d2a",
+    "sha": "e053e56f53be999d323006761ebf5ae560096fe4",
+    "pr": "2282/merge",
+    "run": "37551879572"
+  }
+}
