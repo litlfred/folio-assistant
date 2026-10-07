@@ -27,6 +27,7 @@ import { readScriptTable } from "../../schemas/script-table.ts";
 import { unresolvedVerdict } from "../run-script.ts";
 import { mountHealth } from "../mount-update.ts";
 import { checkRemote, exitCode, mountRemote, planRemote, remoteFanOut, summarise } from "../remote-mount.ts";
+import { IGNORE_BLOCK_BEGIN, IGNORE_BLOCK_END, INDEX_CONFIG_SCHEMA, readDeclaredMounts } from "../../schemas/index-config.ts";
 import { run as replayLocks } from "../mount-from-lock.ts";
 import { gitCorpus } from "../../schemas/git-corpus.ts";
 
@@ -340,14 +341,16 @@ describe("whole-instance mounts and replaying the lock (bean `nn8e`, #2462)", ()
     expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
   });
 
-  test("20. a committed lock replays on a fresh clone with no declaration reader, and verifies digests", () => {
+  // From EITHER name (owner, 2026-10-07): `index.lock.json`, and the legacy
+  // `<name>.mount-lock.json` a downstream folio or an old branch still carries.
+  test.each(["index.lock.json", "down.mount-lock.json"])("20. a committed lock (%s) replays on a fresh clone with no declaration reader, and verifies digests", (lockName) => {
     const src = downstream({ overrides: { boot: { whole: true } } });
     mountRemote({ instanceRoot: src, urlFor });
     // A fresh checkout holding only the lock: what CI and session start see.
     const fresh = join(base, `fresh-${++n}`);
     mkdirSync(fresh, { recursive: true });
     git(fresh, "init", "-q", "-b", "main");
-    writeFileSync(join(fresh, "index.lock.json"), readFileSync(join(src, "index.lock.json")));
+    writeFileSync(join(fresh, lockName), readFileSync(join(src, "index.lock.json")));
     writeFileSync(join(fresh, "down.json"), readFileSync(join(src, "down.json")));
     // serve o/<name> under one prefix, as github.com would
     const srv = join(base, `srv-${n}`, "o");
@@ -544,5 +547,78 @@ describe("a mounted package.json, by reference (owner, 2026-10-07: Option A; #24
     const m = mountedManifests(root).find((x) => x.instance === "core")!;
     expect(m.state).toBe("unresolvable");
     expect(readScriptTable(root).table.has("core:run")).toBe(false);
+  });
+});
+
+describe("index.config.json as the mount declaration (owner, 2026-10-07)", () => {
+  /** A downstream whose mounts live in `index.config.json`, its declaration carrying none. */
+  function indexed(mount: object = {}): string {
+    const root = join(base, `idx-${++n}`);
+    mkdirSync(root, { recursive: true });
+    git(root, "init", "-q", "-b", "main");
+    write(root, {
+      "down.json": decl("down"),
+      "index.config.json": {
+        $schema: INDEX_CONFIG_SCHEMA,
+        instances: [
+          { name: "down", source: { local: { at: "." } } },
+          { name: "core", source: { remote: { repository: "o/up", ref: up.sha, ...consentFor(up.sha), ...mount } } },
+        ],
+      },
+    });
+    return root;
+  }
+  const exclude = (root: string): string => {
+    const f = join(root, ".git", "info", "exclude");
+    return existsSync(f) ? readFileSync(f, "utf-8") : "";
+  };
+
+  test("22. mounts declared only in the index are mounted, locked as index.lock.json, and ignored by the COMMITTED block — never info/exclude", () => {
+    const root = indexed();
+    const before = exclude(root);
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    expect(Object.fromEntries(r.plan.outcomes.map((o) => [o.instance, o.state]))).toEqual({ core: "mounted", base: "mounted", boot: "mounted" });
+    expect(r.lockFile).toBe(join(root, "index.lock.json"));
+    expect(existsSync(join(root, "down.mount-lock.json"))).toBe(false);
+    expect(r.excluded).toEqual([]);
+    expect(exclude(root)).toBe(before);
+    // the index names `core`; the closure brought `base` and `boot`, and the lock says where
+    expect(readFileSync(join(root, ".gitignore"), "utf-8")).toBe(`${IGNORE_BLOCK_BEGIN}\n/core/\n/base/\n/boot/\n${IGNORE_BLOCK_END}\n`);
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+  });
+
+  test("23. without an index the fallback is unchanged: remoteMounts on the declaration, info/exclude for an unignored path", () => {
+    const root = downstream({});
+    expect(readDeclaredMounts(root).from).toBe("declaration");
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    expect(r.excluded.sort()).toEqual(["base", "boot", "core"]);
+    expect(exclude(root)).toContain("/core/");
+    expect(existsSync(join(root, ".gitignore"))).toBe(false);
+  });
+
+  test("24. mounts in BOTH the index and the declaration: the check is could-not-determine and names both, the mount throws", () => {
+    const root = indexed();
+    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "core", repository: "o/up", ref: up.sha, ...consentFor(up.sha) }] }) });
+    const c = checkRemote({ instanceRoot: root });
+    expect(c.state).toBe("could-not-determine");
+    expect(c.reason).toContain("index.config.json");
+    expect(c.reason).toContain("down.json");
+    expect(() => mountRemote({ instanceRoot: root, urlFor })).toThrow(/BOTH/);
+  });
+
+  test("25. a legacy lock is RENAMED onto index.lock.json when the mount rewrites it, never left beside it", () => {
+    const root = indexed();
+    mountRemote({ instanceRoot: root, urlFor });
+    // an old branch's state: the lock under the legacy name only
+    writeFileSync(join(root, "down.mount-lock.json"), readFileSync(join(root, "index.lock.json")));
+    rmSync(join(root, "index.lock.json"));
+    expect(checkRemote({ instanceRoot: root }).state).toBe("mounted");
+    mountRemote({ instanceRoot: root, urlFor });
+    expect(existsSync(join(root, "index.lock.json"))).toBe(true);
+    expect(existsSync(join(root, "down.mount-lock.json"))).toBe(false);
+    // both at once is refused by every reader
+    writeFileSync(join(root, "down.mount-lock.json"), readFileSync(join(root, "index.lock.json")));
+    expect(checkRemote({ instanceRoot: root }).state).toBe("could-not-determine");
+    expect(mountedInstanceRoots(root).size).toBe(0);
   });
 });

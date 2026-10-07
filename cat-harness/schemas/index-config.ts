@@ -66,6 +66,7 @@ import {
   RESERVED_INSTANCE_NAMES,
   findDeclarationFile,
   instanceRootsIn,
+  lockFilesIn,
   rootConfigStems,
 } from "./instance-roots";
 import { RemoteMountSchema, RemoteMountsSchema, type RemoteMount } from "./remote-mount";
@@ -315,6 +316,21 @@ export function writeDeclaredMounts(instanceRoot: string, mounts: readonly Remot
   return { file, config: next };
 }
 
+/**
+ * Add `entry` to `root/index.config.json` when the index exists and does not
+ * list it yet — how `kg:instantiate` records a newly instantiated harness.
+ * Returns whether the file changed. No index: nothing to add to (the root
+ * config the caller wrote is then the instantiation, as before).
+ */
+export function addIndexInstance(root: string, entry: IndexInstance): boolean {
+  const idx = readIndexConfig(root);
+  if (idx.state === "unreadable") throw new Error(`${idx.file} is ${idx.why}`);
+  if (idx.state === "absent" || idx.config.instances.some((e) => e.name === entry.name)) return false;
+  const next = IndexConfigSchema.parse({ ...idx.config, instances: [...idx.config.instances, entry] });
+  writeFileSync(idx.file, formatIndexConfig(next));
+  return true;
+}
+
 /** The canonical text of an index: two-space JSON, `$schema` first, a trailing newline. */
 export function formatIndexConfig(config: IndexConfig): string {
   const { $schema, _comment, instances, site } = config;
@@ -493,10 +509,36 @@ export function remoteMountPathOf(entry: IndexInstance): string | undefined {
   return p.replace(/\/+$/, "");
 }
 
-/** The block's lines, markers included: one `/<path>/` per remote instance, in index order. */
-export function ignoreBlockLines(config: IndexConfig): string[] {
+/**
+ * Every instance root the lock(s) in `root` say a mount laid down — the
+ * CLOSURE, which reaches instances the index never names (a remote harness's
+ * own `needs`). Read structurally, like `mountedUnder` in `git-corpus.ts`; an
+ * unreadable or conflicting lock contributes nothing here (`mount:lock:check`
+ * reports it).
+ */
+export function lockedMountPaths(root: string): string[] {
+  const out = new Set<string>();
+  for (const n of lockFilesIn(root).files) {
+    try {
+      const lock = JSON.parse(readFileSync(join(root, n), "utf-8")) as { instances?: { path?: unknown }[] };
+      for (const i of lock.instances ?? []) if (typeof i.path === "string") out.add(i.path.replace(/\/+$/, ""));
+    } catch {
+      // see above
+    }
+  }
+  return [...out].sort();
+}
+
+/**
+ * The block's lines, markers included: one `/<path>/` per remote instance in
+ * index order, then every further path in `extra` (the locked closure,
+ * {@link lockedMountPaths}) sorted — so an instance a mount brought in
+ * transitively is ignored as surely as one the index names.
+ */
+export function ignoreBlockLines(config: IndexConfig, extra: readonly string[] = []): string[] {
   const paths = config.instances.map(remoteMountPathOf).filter((p): p is string => p !== undefined);
-  return [IGNORE_BLOCK_BEGIN, ...paths.map((p) => `/${p}/`), IGNORE_BLOCK_END];
+  const more = [...new Set(extra.map((p) => p.replace(/\/+$/, "")))].filter((p) => !paths.includes(p)).sort();
+  return [IGNORE_BLOCK_BEGIN, ...[...paths, ...more].map((p) => `/${p}/`), IGNORE_BLOCK_END];
 }
 
 export type IgnoreBlockState =
@@ -512,10 +554,10 @@ function blockRange(lines: string[]): { begin: number; end: number } | undefined
   return { begin, end };
 }
 
-/** Does `root/.gitignore` carry the block `config` implies? Reads only. */
-export function checkIgnoreBlock(root: string, config: IndexConfig): IgnoreBlockState {
+/** Does `root/.gitignore` carry the block `config` (and the lock beside it) implies? Reads only. */
+export function checkIgnoreBlock(root: string, config: IndexConfig, extra: readonly string[] = lockedMountPaths(root)): IgnoreBlockState {
   const file = join(root, ".gitignore");
-  const want = ignoreBlockLines(config);
+  const want = ignoreBlockLines(config, extra);
   if (!existsSync(file)) return { state: "missing", detail: `${file} does not exist — run \`bun run cat index-config:migrate --write\`` };
   const lines = readFileSync(file, "utf-8").split("\n");
   const r = blockRange(lines);
@@ -527,9 +569,9 @@ export function checkIgnoreBlock(root: string, config: IndexConfig): IgnoreBlock
 }
 
 /** The `.gitignore` text with the block in place: replaced between its markers, else appended. A malformed pair throws. */
-export function withIgnoreBlock(text: string, config: IndexConfig, file = ".gitignore"): string {
+export function withIgnoreBlock(text: string, config: IndexConfig, file = ".gitignore", extra: readonly string[] = []): string {
   const lines = text.split("\n");
-  const want = ignoreBlockLines(config);
+  const want = ignoreBlockLines(config, extra);
   const r = blockRange(lines);
   if (r === "malformed") throw new Error(`${file}: the index-mounts markers are unpaired or repeated — fix by hand`);
   if (r !== undefined) return [...lines.slice(0, r.begin), ...want, ...lines.slice(r.end + 1)].join("\n");
@@ -538,10 +580,10 @@ export function withIgnoreBlock(text: string, config: IndexConfig, file = ".giti
 }
 
 /** Write the block into `root/.gitignore` ({@link withIgnoreBlock}). Returns whether the file changed. */
-export function syncIgnoreBlock(root: string, config: IndexConfig): boolean {
+export function syncIgnoreBlock(root: string, config: IndexConfig, extra: readonly string[] = lockedMountPaths(root)): boolean {
   const file = join(root, ".gitignore");
   const text = existsSync(file) ? readFileSync(file, "utf-8") : "";
-  const next = withIgnoreBlock(text, config, file);
+  const next = withIgnoreBlock(text, config, file, extra);
   if (next === text) return false;
   writeFileSync(file, next);
   return true;
