@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/ChangeSetRef",
+  "definitions": {
+    "ChangeSetRef": {
+      "type": "object",
+      "properties": {
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "stagingUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "before": {
+          "type": "string",
+          "format": "uri"
+        },
+        "after": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "branch"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-rail-spacing-mounted-instance/folio-assistant-core/schema/zod/public-comment/ChangeSetRefSchema.schema.json",
+  "title": "ChangeSetRefSchema",
+  "description": "Generated from `ChangeSetRefSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/rail-spacing-mounted-instance",
+    "sha": "711c8ab0cfe3312bb00a18f3da9e828c32851190",
+    "pr": "2402/merge",
+    "run": "37597540767"
+  }
+}

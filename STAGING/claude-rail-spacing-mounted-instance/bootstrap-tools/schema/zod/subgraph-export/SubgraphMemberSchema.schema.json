@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/SubgraphMember",
+  "definitions": {
+    "SubgraphMember": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "@type": {
+          "type": "string",
+          "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+        }
+      },
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-rail-spacing-mounted-instance/bootstrap-tools/schema/zod/subgraph-export/SubgraphMemberSchema.schema.json",
+  "title": "SubgraphMemberSchema",
+  "description": "Generated from `SubgraphMemberSchema` in schemas/subgraph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/rail-spacing-mounted-instance",
+    "sha": "711c8ab0cfe3312bb00a18f3da9e828c32851190",
+    "pr": "2402/merge",
+    "run": "37597540767"
+  }
+}
