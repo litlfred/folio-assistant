@@ -8,8 +8,8 @@
  * @covers openapi
  *
  * Usage:
- *   bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance smart-trust --source <checkout>
- *   bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance smart-trust --check
+ *   bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance <instance-dir> --source <checkout>
+ *   bun run cat-harness/openapi/scripts/ingest-openapi.ts --instance <instance-dir> --check
  *
  * `--source` is a local checkout of the document's repository (one config may
  * name several documents from one repository; documents from different
@@ -84,8 +84,8 @@ export function readConfig(instanceRoot: string): OpenApiConfig {
  */
 export function openapiDir(instanceRoot: string, config: OpenApiConfig): string {
   // The declaration is FOUND, never composed from the directory name: in an IG
-  // fork the instance lives at `smart-base/` and declares itself `smart-trust`
-  // (n3ni stage E), so `<dirname>.json` names a file that is not there.
+  // fork the instance lives under the base IG's checkout name and declares
+  // itself by its own (n3ni stage E), so `<dirname>.json` names a file that is not there.
   const found = findDeclarationFile(instanceRoot);
   if (found === undefined) throw new Error(`no instance declaration in ${resolve(instanceRoot)}`);
   const decl = join(instanceRoot, found);

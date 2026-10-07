@@ -8,7 +8,7 @@
  * @covers openapi
  *
  * Usage:
- *   bun run cat-harness/openapi/scripts/gen-openapi-pages.ts --instance smart-trust [--check]
+ *   bun run cat-harness/openapi/scripts/gen-openapi-pages.ts --instance <instance-dir> [--check]
  *
  * ## What is written, INSIDE the instance's `openapi` graph
  *
@@ -90,8 +90,8 @@ export function pagesFor(instanceRoot: string): Written[] {
   const config = readConfig(instanceRoot);
   const dir = openapiDir(instanceRoot, config);
   // The declaration is FOUND, and the instance is its DECLARED name, never the
-  // directory's: in an IG fork the directory is `smart-base/` and the instance
-  // is `smart-trust` (n3ni stage E), and the name is what every IRI below
+  // directory's: in an IG fork the directory is the base IG's checkout name and the
+  // instance the fork's own (n3ni stage E), and the name is what every IRI below
   // extends, so the published IRIs stay the same wherever the instance lives.
   const declFile = findDeclarationFile(instanceRoot);
   if (declFile === undefined) throw new Error(`no instance declaration in ${resolve(instanceRoot)}`);
@@ -200,7 +200,7 @@ export function pagesFor(instanceRoot: string): Written[] {
   // THE GRAPH'S OWN INDEX — `openapi/index.html`. An IG's pages link it the
   // way the Publisher's vendored Swagger UI is linked, often deep:
   // `openapi/index.html#/<tag>/<operationId>`. Nothing wrote it, so 43 links
-  // on smart-trust's pages led nowhere (#2235). It lists the documents held,
+  // on the first instance's pages led nowhere (#2235). It lists the documents held,
   // and sends a Swagger-style deep link to that operation's own page.
   out.push({
     path: "index.html",
