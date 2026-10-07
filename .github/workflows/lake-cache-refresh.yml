@@ -43,7 +43,7 @@ jobs:
       matrix: ${{ steps.read.outputs.matrix }}
       packages: ${{ steps.read.outputs.packages }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
       - id: read
@@ -85,7 +85,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
           fetch-depth: 0  # need full history to push orphan branches
@@ -167,7 +167,7 @@ jobs:
     if: always() && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
           fetch-depth: 0

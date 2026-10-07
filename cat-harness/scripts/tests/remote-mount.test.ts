@@ -108,12 +108,14 @@ beforeAll(() => {
 afterAll(() => rmSync(base, { recursive: true, force: true }));
 
 let n = 0;
+/** A person's consent for one pin (H8, bean `ieum`): without it a real mount is refused. */
+const consentFor = (ref: string) => ({ trust: { consent: { by: "test", on: "2026-10-07", ref, evidence: "remote-mount.test.ts" } } });
 /** A fresh downstream checkout declaring `remoteMounts`. */
 function downstream(mount: object, extra: object = {}): string {
   const root = join(base, `down-${++n}`);
   mkdirSync(root, { recursive: true });
   git(root, "init", "-q", "-b", "main");
-  write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "core", repository: "o/up", ref: up.sha, ...mount }], ...extra }) });
+  write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "core", repository: "o/up", ref: up.sha, ...consentFor(up.sha), ...mount }], ...extra }) });
   return root;
 }
 
@@ -253,7 +255,7 @@ describe("mount:remote over fixture repositories", () => {
     const root = downstream({});
     const ghost = bareRepo(base, "ghost", { "g/g.json": decl("g", { needs: ["nobody"], directories: [{ id: "g-x", path: "x/", graphTypologies: ["code"] }] }), "g/x/a.txt": "a\n" });
     const local = (r: string): string => (r === "o/ghost" ? `file://${ghost.bare}` : urlFor(r));
-    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "g", repository: "o/ghost", ref: ghost.sha }] }) });
+    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "g", repository: "o/ghost", ref: ghost.sha, ...consentFor(ghost.sha) }] }) });
     mountRemote({ instanceRoot: root, urlFor: local });
     const c = checkRemote({ instanceRoot: root });
     expect(c.state).toBe("missing");
@@ -282,10 +284,32 @@ describe("mount:remote over fixture repositories", () => {
     });
     const local = (r: string): string => (r === "o/odd" ? `file://${odd.bare}` : urlFor(r));
     const root = downstream({});
-    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "trust", repository: "o/odd", ref: odd.sha }] }) });
+    write(root, { "down.json": decl("down", { remoteMounts: [{ harness: "trust", repository: "o/odd", ref: odd.sha, ...consentFor(odd.sha) }] }) });
     const r = mountRemote({ instanceRoot: root, urlFor: local });
     expect(summarise(r.plan.outcomes).state).toBe("mounted");
     expect(readFileSync(join(root, "trust/x/a.txt"), "utf-8")).toBe("a\n");
     expect(r.plan.instances[0]).toMatchObject({ upstreamRoot: "shared", path: "trust" });
+  });
+});
+
+describe("mount trust (H8, bean `ieum`)", () => {
+  test("16. unsigned and unconsented is refused, and nothing is written", () => {
+    const root = downstream({ trust: undefined });
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    expect(r.plan.outcomes.every((o) => o.state === "missing")).toBe(true);
+    expect(r.plan.outcomes[0]!.detail).toContain("unsigned and unconsented");
+    expect(existsSync(join(root, "core"))).toBe(false);
+  });
+
+  test("17. a staging mount needs neither signature nor consent", () => {
+    const root = downstream({ trust: undefined });
+    const r = mountRemote({ instanceRoot: root, urlFor, purpose: "staging" });
+    expect(summarise(r.plan.outcomes).state).toBe("mounted");
+  });
+
+  test("18. consent for another pin is refused: a moved pin asks again", () => {
+    const root = downstream(consentFor("2".repeat(40)));
+    const r = mountRemote({ instanceRoot: root, urlFor });
+    expect(r.plan.outcomes[0]!.detail).toContain("a moved pin asks again");
   });
 });

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hxi9
 title: regen input-hash cache must see the --against baseline
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T05:59:45Z
-updated_at: 2026-10-05T06:00:06Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-xpcu
 ---
 
@@ -17,3 +17,6 @@ Eight gates run `--check --against main` and judge against the latest main entry
 - tests in scripts/tests/task-pool.test.ts cover moved / unresolved / unaffected
 
 Issue: https://github.com/litlfred/folio-assistant/issues/2156 — holder: session_01VfkKocGaQW7Msro2t5S66U, branch claude/zealous-gates-3o9ma2-against-cache
+
+## Completed on landed evidence
+Landed on main in commit 3dc436cb4b0f / PR #2156 (regen input-hash cache baseline visibility).
