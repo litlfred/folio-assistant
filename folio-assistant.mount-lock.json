@@ -10,6 +10,21 @@
       "harness": "bootstrap-tools",
       "repository": "litlfred/bootstrap-tools",
       "ref": "1947e0536a97a9ca447b76edc39de1cf18b1f29e"
+    },
+    {
+      "harness": "who-iris",
+      "repository": "litlfred/who-iris",
+      "ref": "386617f40c26eeb87cab69645661f95b8383d7f6"
+    },
+    {
+      "harness": "fhir-harness",
+      "repository": "litlfred/fhir-harness",
+      "ref": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0"
+    },
+    {
+      "harness": "folio-assistant-sci",
+      "repository": "litlfred/folio-assistant-sci",
+      "ref": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490"
     }
   ],
   "instances": [
@@ -56,7 +71,79 @@
           "files": 88
         }
       ]
+    },
+    {
+      "instance": "fhir-harness",
+      "repository": "litlfred/fhir-harness",
+      "sha": "46a3ac2e2318d05da8f96c18efb7fbb8d296a6e0",
+      "upstreamRoot": "",
+      "path": "fhir-harness",
+      "via": "fhir-harness",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "fhir-harness.json",
+        "sha256": "91183f582323b4fff40688261f2d61941aa91bf2cadab25554e53069679aa609"
+      },
+      "directories": [
+        {
+          "id": "*",
+          "path": "fhir-harness",
+          "upstreamPath": ".",
+          "treeDigest": "17925bdb54558fd580d80938441286bd9c16e85dc165c1ac04dc3a74b4c0954a",
+          "files": 358
+        }
+      ]
+    },
+    {
+      "instance": "folio-assistant-sci",
+      "repository": "litlfred/folio-assistant-sci",
+      "sha": "a5a44f1f4fbe175ca3dcb2dbacddb085a3bcf490",
+      "upstreamRoot": "",
+      "path": "folio-assistant-sci",
+      "via": "folio-assistant-sci",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "folio-assistant-sci.json",
+        "sha256": "a6a831b3af784160fa42ac4eb81abe8603389e5e67ba9bd066b182683117386a"
+      },
+      "directories": [
+        {
+          "id": "*",
+          "path": "folio-assistant-sci",
+          "upstreamPath": ".",
+          "treeDigest": "1f32349d6619cef4a4d79b47bdc900795b6e3a95ceb76f0f45074dda7bd850e4",
+          "files": 624
+        }
+      ]
+    },
+    {
+      "instance": "who-iris",
+      "repository": "litlfred/who-iris",
+      "sha": "386617f40c26eeb87cab69645661f95b8383d7f6",
+      "upstreamRoot": "",
+      "path": "who-iris",
+      "via": "who-iris",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "who-iris.json",
+        "sha256": "3891e8183b8765fa375714ffc44dc5f4c8b1ee89ae65a2ed2300a6e65762f400"
+      },
+      "directories": [
+        {
+          "id": "*",
+          "path": "who-iris",
+          "upstreamPath": ".",
+          "treeDigest": "505accc9e1d8f93dc054ed805c29d0a22931ba9e27796d05a79e35af7f693b0b",
+          "files": 1531
+        }
+      ]
     }
   ],
-  "unmounted": []
+  "unmounted": [
+    {
+      "instance": "folio-assistant-core",
+      "state": "local",
+      "detail": "held by this checkout; not mounted over"
+    }
+  ]
 }

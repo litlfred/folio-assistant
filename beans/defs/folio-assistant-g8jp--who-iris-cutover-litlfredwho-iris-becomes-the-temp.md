@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g8jp
 title: 'who-iris cutover: litlfred/who-iris becomes the (temporary) authoritative source; folio-assistant reads it by remote subscription'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-06T19:12:02Z
-updated_at: 2026-10-07T19:47:18Z
+updated_at: 2026-10-07T21:06:27Z
 parent: folio-assistant-7x5n
 ---
 
@@ -49,3 +49,9 @@ Landed on main in PR #2324 (who-iris pre-cutover: who-iris reaches only folio-as
 ## 2026-10-07 — reopened, queued (owner chose option 1)
 Status was `completed` but plan items 2, 4, 5, 6 (rehearse, seed, subscribe/repoint, move to fsh-guts) are unchecked and the Done-when is unmet: `who-iris/` is still in tree and litlfred/who-iris is not seeded. Reopened to `todo`.
 Owner 2026-10-07: start right after #2448 (ar1s P4b script split) merges — rehearse first; if `0mpw` is not merged, seed CI starts on a sibling checkout of core. P4b put who-iris scripts under `checkoutScripts` (root-relative): converting them to layer-relative `scripts` is part of the seed step.
+
+
+## 2026-10-07 — cut over (session_012qoycyCSGidZqW245vXhze)
+- litlfred/who-iris synced: #2 (#2448 rewrite), #3 (READMEs), #4 (#2465 oxigraph fixes) → 386617f.
+- folio-assistant#2472 (f23ea3b): in-tree who-iris/ retired to fsh-guts/separated/who-iris.tar.gz (cat/cat-harness/fsh-guts@01bf02b, verified), remote-mounted whole at 386617f (byte-identical to the last in-tree copy + #2465). Writers (readme:subgraphs, kg:audit:all) skip mounts.
+- Not done here: the who-iris bean store (bean distribution comes after the whole split, owner).

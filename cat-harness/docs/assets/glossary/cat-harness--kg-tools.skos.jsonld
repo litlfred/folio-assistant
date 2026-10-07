@@ -814,6 +814,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/latexmk-compile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaTeX compilation (latexmk)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events."
+        }
+      ],
+      "skos:notation": "latexmk-compile",
+      "dcterms:source": "cat-harness/tools/index.ts#latexmk-compile",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-tools/lean-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
