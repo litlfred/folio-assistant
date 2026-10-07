@@ -152,7 +152,10 @@ export const PUBLIC_COMMENT_TRANSITIONS: readonly PublicCommentTransition[] = [
   { name: "assign", from: ["triaged", "assigned", "recommended"], to: "assigned", by: { ...P, task: "Task_Assign" } },
   { name: "recommend", from: ["assigned", "recommended"], to: "recommended", by: { ...P, task: "Task_CommitteeRecommends" } },
   { name: "decide", from: [...OPEN], to: "decided", by: { ...P, task: "Task_EditorDecides" } },
-  { name: "reopen", from: ["decided"], to: "triaged", by: { ...P, task: "Task_EditorDecides" } },
+  // From editing and incorporated too: a decision that was never an
+  // editor's (the master log's status, imported as one until 2026-10-07)
+  // is taken back wherever it got to. The history keeps every step.
+  { name: "reopen", from: ["decided", "editing", "incorporated"], to: "triaged", by: { ...P, task: "Task_EditorDecides" } },
   { name: "edit", from: ["decided", "editing"], to: "editing", by: { ...P, task: "Task_AuthorEdits" } },
   { name: "incorporate", from: ["decided", "editing"], to: "incorporated", by: { ...P, task: "Task_Incorporate" } },
   { name: "duplicate", from: [...OPEN], to: "duplicate", by: { ...P, task: "Task_Triage" } },
