@@ -10,6 +10,8 @@ Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-scripts`, holding 
 
 | file | what it is | used by |
 |---|---|---|
+| [`build-iris-oxigraph.ts`](build-iris-oxigraph.ts) | a file |  |
 | [`gen-iris-pages.ts`](gen-iris-pages.ts) | a file |  |
+| [`iris-oxigraph-search.ts`](iris-oxigraph-search.ts) | a file |  |
 | [`tests/`](tests/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

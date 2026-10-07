@@ -164,7 +164,7 @@ jobs:
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
       - name: Locate the platform
         # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
@@ -775,7 +775,7 @@ jobs:
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
       - name: Locate the platform
         # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
