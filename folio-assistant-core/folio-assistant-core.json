@@ -340,10 +340,10 @@
     "packages",
     "tools"
   ],
-  "generatedAt": "2026-10-07T09:39:25.584Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6e9682abfee71005b5e0a4da4e260c8acd233b1f",
-  "sourceCommitSha": "6e9682abfee71005b5e0a4da4e260c8acd233b1f",
-  "sourceCommitAt": "2026-10-07T11:19:40+02:00",
+  "generatedAt": "2026-10-07T11:09:47.554Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c7bde619cf6d5ca111d6156d250a8fcbf9838113",
+  "sourceCommitSha": "c7bde619cf6d5ca111d6156d250a8fcbf9838113",
+  "sourceCommitAt": "2026-10-07T12:51:46+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -432,7 +432,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 344,
+      "instructionLines": 345,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -604,7 +604,7 @@
       "title": "L1 document ingestion",
       "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run ingest`.",
       "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
-      "instructionLines": 796,
+      "instructionLines": 839,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -617,7 +617,7 @@
       "title": "Document Intake",
       "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
       "instructionsPath": "skills/library/ingestion/document-intake.md",
-      "instructionLines": 488,
+      "instructionLines": 493,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -9577,8 +9577,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6e9682abfee71005b5e0a4da4e260c8acd233b1f",
+    "sha": "c7bde619cf6d5ca111d6156d250a8fcbf9838113",
     "pr": "main",
-    "run": "37599848788"
+    "run": "37610190561"
   }
 }
