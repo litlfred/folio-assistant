@@ -1,7 +1,7 @@
 ---
 # folio-assistant-f017
 title: 'SPEED-UP 1: input-hash skip — a check whose declared inputs are unchanged since its last green run is skipped and says so'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:23Z
@@ -96,3 +96,22 @@ All runs used Bun 1.3.14 on 4 shared CPUs. Load is noted per run.
   - The attestation-history test fails because this clone is shallow.
   - `workflow-overlay` "OUTSIDE the root" timed out at 5660 ms under full-suite load. It passes alone on both the branch and main, and the whole file takes 4.4–5.1 s alone on either.
 - CI is green on every job on `244608c`.
+
+## Summary of Changes
+
+PR #2327 merged on 2026-10-07. It covers both halves of the skip.
+
+**Soundness**
+- Every input-hash fingerprint now audits its check's import closure (`input-sites.ts`).
+  - A line that reads what the hash cannot see must carry a pinned, reviewed `// input-site:` annotation, or the check runs.
+  - The verdicts hash what they name.
+- A runtime trace (`input-trace.ts`) covers library sites no check is known to reach, and qa-store reads by ref.
+- Also hashed: tool versions and runtime env, and ignored files by content. Build-output dirs are left out, and naming one in source is a site.
+
+**Coverage:** 164 of 222 declared tasks may skip (15 before). Two earlier skips were unsound and are now refused: `skill:register:check` and `lsi:viz:check`.
+
+**Measured:**
+- regen warm: 179 s with 62 of 121 pairs skipped (231 s and 13 before).
+- gates on the same tree: 136 of 251 skipped (10 before).
+
+The remaining ~56 blocked checks are follow-up bean `r3ei`.

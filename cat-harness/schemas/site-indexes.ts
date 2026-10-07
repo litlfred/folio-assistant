@@ -427,6 +427,8 @@ export const LibraryDocumentViewSchema = z
           keywords: z.array(DocKeyword),
           extract: z.string().nullable(),
           extractCut: z.boolean(),
+          /** The folio block this section was materialised as, for [edit] (bean zcak). */
+          edit: z.object({ path: z.string().min(1), label: z.string().min(1) }).strict().optional(),
         })
         .strict(),
     ),
@@ -457,6 +459,8 @@ export const LibraryDocumentViewSchema = z
       })
       .strict(),
     withheld: z.boolean(),
+    /** Where [source] and [feedback] point: the repository and the entry's directory (bean zcak). */
+    links: z.object({ repo: z.string().min(1), branch: z.string().min(1), dir: z.string().min(1) }).strict().optional(),
   })
   .strict();
 
