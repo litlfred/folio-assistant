@@ -1,11 +1,11 @@
 ---
 # folio-assistant-u4up
 title: merge:train drops gitignored-but-tracked test/results files
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-10-04T16:44:20Z
-updated_at: 2026-10-04T16:44:20Z
+updated_at: 2026-10-07T03:09:48Z
 parent: folio-assistant-d33q
 ---
 
@@ -20,3 +20,5 @@ Measured 2026-10-04 building merge-train-2026-10-04a (#2113):
 
 ## Also in merge:main (2026-10-04 ~17:55Z)
 Not train-only. `merge:main` on `claude/gracious-mendel-du6nn8` (9e9ce3ea7f) dropped the same pair (`skills.lsi.json` + its tool-run sidecar) after take-base logged "is in the index, but not at stage 3". The takeover session (01BccmnV) hit it on #2105 independently. Restored by hand with `git add -f` in both cases. #2090's fix for 8j9e does not cover this path.
+
+_2026-10-07T03:09:48Z_ — Claimed by claude/u4up-mergetrain-tracked-ignored — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

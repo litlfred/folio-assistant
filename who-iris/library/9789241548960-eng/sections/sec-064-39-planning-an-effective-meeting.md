@@ -7,6 +7,7 @@ section_number: 3.9
 pages: 48-48
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Most guidelines involve at least one face-to-face meeting of the GDG to formulate recommendations. Some groups hold an initial meeting to finalize a 
 guideline’s scope and key questions (see Chapter 7). GDG meetings generally 

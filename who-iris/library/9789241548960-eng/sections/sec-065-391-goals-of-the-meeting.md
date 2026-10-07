@@ -7,6 +7,7 @@ section_number: 3.9.1
 pages: 48-48
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 The steering group should consider the following questions when planning 
 a meeting of the GDG:

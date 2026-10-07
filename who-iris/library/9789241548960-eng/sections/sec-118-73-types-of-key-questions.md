@@ -7,6 +7,7 @@ section_number: 7.3
 pages: 95-98
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Although the PICO framework was originally devised to address the efficacy, 
 effectiveness and potential harms of an intervention, it can be applied to 

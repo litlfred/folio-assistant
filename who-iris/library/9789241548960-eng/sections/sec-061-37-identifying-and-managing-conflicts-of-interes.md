@@ -7,6 +7,7 @@ section_number: 3.7
 pages: 46-47
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Chapter 6 and the website of the Office of Compliance, Risk Management and 
 Ethics (8) explain the steps followed to identify, manage and report conflicts 

@@ -58,6 +58,7 @@ import { repoRootFor } from "../schemas/cat-harness.js";
 export const ENTRY_NAMES = ["AGENTS.md", "CLAUDE.md", "GEMINI.md"] as const;
 
 /** Directories never worth walking into for this. */
+// input-site: inert #2a2b3453 — names a build-output directory only to leave it out of a walk
 const SKIP = new Set(["node_modules", ".git", "_site", "dist", "build", ".lake", "docs"]);
 
 /**

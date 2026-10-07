@@ -1,10 +1,12 @@
 ---
 # folio-assistant-lk2a
 title: check:workflow-refs sends the reader to bean bvuk, which is COMPLETED and archived — the finding is live, the attribution is stale
-status: ready-to-close
+status: in-progress
 type: bug
+tags:
+  - ready-to-close
 created_at: 2026-10-02T23:32:19Z
-updated_at: 2026-10-06T23:45:18Z
+updated_at: 2026-10-07T06:00:00Z
 parent: folio-assistant-0ipy
 ---
 

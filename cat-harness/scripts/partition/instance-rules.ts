@@ -773,6 +773,8 @@ export const RULES: Rule[] = [
       "scripts/gen-library-viz.ts",          // that corpus → projection + viewer
       "scripts/lib/library-withheld-view.ts", // that viewer's withheld rows + banner (#1794), embedded verbatim
       "scripts/lib/library-address.ts",    // that viewer's entry-IRI path parser (#1881), embedded verbatim
+      "scripts/lib/library-document.ts",   // that viewer's Document panel: structure.json → doc.json (#2302)
+      "scripts/library-keywords.ts",        // the library's LSI keywords per section and document (#2302)
       "scripts/gen-uploads-viz.ts",         // the QUEUE half → a viewer only; the dataset stays library's (bean `flh4`)
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
@@ -1361,6 +1363,9 @@ export const RULES: Rule[] = [
       "scripts/task-io.ts",                 // ...what each check script reads and writes, declared in one place, which the pool and the skip read
       "scripts/pair-cover.ts",              // ...and which regen pairs FOLD into one another's check (bean `8qyc`): a gate whose chain the pool already asks is replaced by its residual. Scheduling only, beside the pool for the same reason
       "scripts/input-hash.ts",              // ...and `regen`'s input-hash skip: a local cache over the declared inputs, harness for the same reason `regen` is
+      "scripts/input-sites.ts",             // ...the audit that makes that skip sound: every line of a check's closure that reads what the hash cannot see is annotated or refused (bean `f017`)
+      "scripts/input-trace.ts",             // ...its runtime half: a traced site a recorded run reaches records nothing
+      "scripts/input-hash-coverage.ts",     // ...and the report of which checks may skip and what blocks the rest
       "scripts/changed-paths.ts",           // ...and `regen --changed` / the narrowed fixpoint (bean `94zs`): which pairs a set of changed paths can reach, over the same declarations
       "scripts/qa-working-copy.ts",         // ...and the QA working copy's stamp (bean `7how`): which tree the computed QA tree was built from, rebuilt by `regen`/`gates` when stale
       "scripts/measure-merge-round.ts",     // ...and the merge-round yardstick (bean `xpcu`): times the recipe in a scratch worktree, judges nothing
@@ -1771,6 +1776,7 @@ export const ROOT = resolve(import.meta.dir, "..", "..");
 // seeing none of the e2e specs or the health sweep.
 export const SCAN_ROOTS = ["src", "schemas", "adapters", "content", "scripts", "test", "types"];
 
+// input-site: inert #08aab37b — names a build-output directory only to leave it out of a walk
 export const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", "beans", "docs"]);
 
 /** This instance's spec, ready to hand to the engine. */

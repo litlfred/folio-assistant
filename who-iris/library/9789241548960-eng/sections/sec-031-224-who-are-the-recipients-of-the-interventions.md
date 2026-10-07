@@ -7,6 +7,7 @@ section_number: 2.2.4
 pages: 29-29
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 Who are the service users and other individuals whose health and well-being will 
 be affected by the recommended interventions? Attention to their perspectives and 

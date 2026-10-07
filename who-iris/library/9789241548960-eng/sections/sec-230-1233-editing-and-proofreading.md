@@ -7,6 +7,7 @@ section_number: 12.3.3
 pages: 172-172
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 You will also need an editor and a proofreader. WHO press maintains lists of 
 approved freelance technical editors, copy-editors and proofreaders and provides 

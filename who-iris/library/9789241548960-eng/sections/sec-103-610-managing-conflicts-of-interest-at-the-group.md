@@ -7,6 +7,7 @@ section_number: 6.10
 pages: 82-82
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
+toc_source: outline
 ---
 While financial conflicts of interest are usually managed at the individual 
 level, nonfinancial conflicts of interest (including intellectual ones) may be 

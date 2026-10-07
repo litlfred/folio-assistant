@@ -1,11 +1,11 @@
 ---
 # folio-assistant-68op
 title: 'GATE NAME DESCRIBES ONE OF TWO FAILURE MODES: ''viewer pages keep the navbar they had'' goes red when the sidecar is ABSENT, and the same run says 0 pages regressed'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T01:08:12Z
-updated_at: 2026-10-05T04:57:14Z
+updated_at: 2026-10-07T01:30:16Z
 parent: folio-assistant-rwmf
 ---
 
@@ -79,3 +79,5 @@ branches held recoverable conflict resolutions (they did not - all three
 were already strict ancestors of their PR branches). The sidecar deletion
 itself is recorded against `d33q`; this bean is only about the gate name.
 Raised at the merge manager's request.
+
+_2026-10-07T01:30:16Z_ — Claimed by claude/68op-gate-name-viewer-nav — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
