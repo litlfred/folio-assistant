@@ -1,11 +1,11 @@
 ---
 # folio-assistant-24fa
 title: beans:claim pushes to main, which GUARANTEES a refuse-class conflict on the claiming branch's own completion
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-03T00:43:10Z
-updated_at: 2026-10-03T09:24:35Z
+updated_at: 2026-10-07T05:10:06Z
 parent: folio-assistant-d33q
 ---
 
@@ -112,3 +112,5 @@ question, and not an argument for any particular answer: a claim that
 announces on `main` is exactly what makes it visible to a sibling session, which
 is the thing `bean-coordination` wants. The cost is now measured, so the
 trade-off can be decided rather than estimated.
+
+_2026-10-07T05:10:06Z_ — Claimed by claude/laughing-ramanujan-uripip — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
