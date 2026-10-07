@@ -150,20 +150,20 @@ Cuando una solicitud se clasifica como trabajo de contenido (autoría, revisión
 el agente sigue el flujo de trabajo BPMN correspondiente. Las páginas de documentación existentes
 los describen en detalle:
 
-- **[Flujo de trabajo de publicación](https://litlfred.github.io/folio-assistant/publication-workflow.html)** —
+- **[Flujo de trabajo de publicación](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/publication-workflow.html)** —
   el ciclo de vida del contenido desde el borrador hasta la validación, renderizado y
   publicación. Cubre los roles (autor, revisor, editor), los procesos base,
   las actividades y las habilidades.
 
-- **[Ingesta de documentos](https://litlfred.github.io/folio-assistant/document-ingestion.html)** —
+- **[Ingesta de documentos](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/document-ingestion.html)** —
   cómo un archivo depositado se convierte en una fuente L1: extraer estructura, derivar contenido,
   construir el grafo de conocimiento L1, control de completitud (*completeness gate*).
 
 - **Guías de redacción:**
-  - [Redacción de un paper](https://litlfred.github.io/folio-assistant/guides-writing-a-paper.html)
-  - [Redacción de un documento](https://litlfred.github.io/folio-assistant/guides-writing-a-document.html)
-  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/guides-who-smart-dak.html)
-  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/guides-who-smart-ig.html)
+  - [Redacción de un paper](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-paper.html)
+  - [Redacción de un documento](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/writing-a-document.html)
+  - [WHO SMART DAK](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-dak.html)
+  - [WHO SMART IG](https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/who-smart-ig.html)
 
 El arnés no redefine estos flujos de trabajo. Proporciona el **punto de entrada** —
 clasificar la solicitud y enrutar a la adecuada — y el **punto de salida** —
@@ -202,7 +202,7 @@ son riesgos de seguridad, cuánto debe ser determinista y cómo se comparan los 
 subflujos de trabajo bajo una superposición controlada de contexto y recuerdos son tres
 preguntas que este repositorio ahora puede plantear y aún no ha respondido. La agenda, con
 cada afirmación marcada como medida, decidida o hipótesis, es
-[`deterministic-and-agentic`](../../reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`]({{ '/reference/skill-instructions/deterministic-and-agentic.html' | relative_url }}).
 Léela como una agenda: contiene más hipótesis que mediciones, y así lo declara.
 
 ## Ejecución de BPMN: una habilidad, dos motores
@@ -215,7 +215,7 @@ El responsable (*owner*), 2026-09-23, nombrando la habilidad sobre la que trata 
 > **Habilidad de ejecución de BPMN:** dados un Proceso, Contexto, Estado y Rol, utilizar
 > una o más Habilidades para ejecutar una Tarea.
 
-![Ejecución de BPMN, de determinista a agéntica. Una barra de color va de "determinista" (azul, izquierda: ejecución gestionada por agente de una sola tarea) a "agéntica" (verde, derecha: agentes en la mayoría o todas las tareas). A la izquierda, bajo un icono de engranaje y motor: "Herramienta de ejecución de BPMN: cualquiera de los motores BPMN de código abierto, estado y carriles estrictamente aplicados", sobre un diagrama plano de carriles del ciclo de vida del folio con una nota adhesiva, un grupo de beans, una persona y un gato-robot junto a los carriles. A la derecha, bajo un icono de gato-robot: "Herramienta de ejecución de BPMN: enjambre agéntico con estado no gobernado. Los agentes 'relajan' los carriles, mitigado por informes de QA/QC mecánicos + agénticos", sobre el mismo diagrama inclinado en perspectiva, beans dispersos por cada carril y muchos gatos-robot debajo.](../../assets/img/bpmn-execution-spectrum.webp)
+![Ejecución de BPMN, de determinista a agéntica. Una barra de color va de "determinista" (azul, izquierda: ejecución gestionada por agente de una sola tarea) a "agéntica" (verde, derecha: agentes en la mayoría o todas las tareas). A la izquierda, bajo un icono de engranaje y motor: "Herramienta de ejecución de BPMN: cualquiera de los motores BPMN de código abierto, estado y carriles estrictamente aplicados", sobre un diagrama plano de carriles del ciclo de vida del folio con una nota adhesiva, un grupo de beans, una persona y un gato-robot junto a los carriles. A la derecha, bajo un icono de gato-robot: "Herramienta de ejecución de BPMN: enjambre agéntico con estado no gobernado. Los agentes 'relajan' los carriles, mitigado por informes de QA/QC mecánicos + agénticos", sobre el mismo diagrama inclinado en perspectiva, beans dispersos por cada carril y muchos gatos-robot debajo.]({{ '/assets/img/bpmn-execution-spectrum.webp' | relative_url }})
 
 **Una habilidad, dos tipos de Herramienta.** La habilidad es la misma en ambos extremos: tomar el
 proceso, el contexto, el estado actual y el rol, elegir las habilidades y realizar
@@ -238,7 +238,7 @@ si las reglas y el registro son datos legibles por un informe, lo cual se cumple
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) como lenguaje de permisos
 y [W3C PROV-O](https://www.w3.org/TR/prov-o/) como registro de ejecución (responsable,
 2026-09-23; el esquema que esto implica es la
-[propuesta de actores, ODRL y PROV-O](../../proposals/odrl-prov-actor-model.html)).
+[propuesta de actores, ODRL y PROV-O]({{ '/proposals/odrl-prov-actor-model.html' | relative_url }})).
 
 **La mayoría de las ejecuciones reales se sitúan entre ambos extremos**, y por tarea más que por proceso:
 la [sección anterior](#deterministic-and-agentic) ya contabiliza qué
@@ -260,7 +260,7 @@ propuesta tenga algo con qué contrastarse.
 
 Cuando una solicitud se clasifica como solicitud de funcionalidad (*feature request*), el agente ingresa al
 **flujo de trabajo de requisitos CRDM**
-([documentación completa](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
+([documentación completa](https://litlfred.github.io/folio-assistant/docs/cat-harness/process/crdm-methodology.html),
 [BPMN](../../../processes/process/crdm-requirements.bpmn)).
 
 El flujo de trabajo de solicitudes de funcionalidad es donde este documento de arnés aporta el mayor

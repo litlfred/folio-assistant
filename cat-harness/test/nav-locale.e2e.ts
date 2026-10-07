@@ -3,6 +3,8 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
+import { publishedPagePath } from "../scripts/lib/jekyll-permalink.ts";
+import { pageKey } from "../content/pipeline/translation-index.ts";
 
 /**
  * The left-hand navbar shows the SELECTED locale, and nothing else.
@@ -69,10 +71,21 @@ const INDEX = JSON.parse(
   >;
 };
 
+/**
+ * A source page (site-relative, no extension) as the index keys it: by where
+ * Jekyll PUBLISHES it, which since bean `kc7k` is not where its source sits
+ * for the docs-folder pages (`guides/x` → `docs/cat-harness/guides/x`). The
+ * same rule the generator reads, so this cannot key a page differently.
+ */
+function publishedKey(source: string): { key: string; url: string } {
+  const url = `/${publishedPagePath(join(ROOT, SITE), source)}`;
+  return { key: pageKey(url), url };
+}
+
 /** The home page's entry, by the key the generator computes for `/`. */
 const HOME = INDEX.pages[""];
 /** A page nested under a parent, so the swap is exercised below a `has_children`. */
-const GUIDE = INDEX.pages["guides/agent-onboarding"];
+const GUIDE = INDEX.pages[publishedKey("guides/agent-onboarding").key];
 
 /**
  * A nav item with no translation in ANY locale — the fallback case.
@@ -154,7 +167,7 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
   ].sort();
   for (const f of candidates) {
     if (!f.endsWith(".md") || f === "index.md" || f.endsWith("/index.md")) continue;
-    const key = f.slice(0, -3);
+    const { key, url } = publishedKey(f.slice(0, -3));
     if (key in INDEX.pages) continue;
     const head = readFileSync(join(dir, f), "utf8").slice(0, 2000);
     if (/^nav_exclude:\s*true\s*$/m.test(head)) continue;
@@ -182,7 +195,7 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
     // box 68.
     const title = /^title:\s*(.+)$/m.exec(head)?.[1].trim().replace(/^["']|["']$/g, "");
     if (title === undefined || title === "") continue;
-    return { key, url: `/${key}.html`, title };
+    return { key, url, title };
   }
   throw new Error(
     "no untranslated page left in the corpus: every indexed page has translations AND every " +

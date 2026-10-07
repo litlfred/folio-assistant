@@ -749,7 +749,7 @@ export function processPage(
     `- **Presented on:** ${
       presentedOn.length
         ? presentedOn
-            .map((p) => `[${esc(p.pageTitle)}${p.title ? ` — ${esc(p.title)}` : ""}](../${p.page}.html#${p.node})`)
+            .map((p) => `[${esc(p.pageTitle)}${p.title ? ` — ${esc(p.title)}` : ""}](../${p.href}#${p.node})`)
             .join(", ")
         : "no docs page section shows this diagram"
     }`,

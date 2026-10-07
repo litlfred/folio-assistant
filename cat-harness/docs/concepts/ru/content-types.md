@@ -40,11 +40,11 @@ folio-assistant **не зависит от контента**: платформ�
 Каждый тип контента проходит через один и тот же жизненный цикл, предоставляемый сквозным пакетом навыков **`content-lifecycle`**:
 
 <div class="bpmn-figure" id="figure-the-content-lifecycle">
-  <img src="../../ru/assets/img/workflows/content-lifecycle.svg"
+  <img src="{{ '/ru/assets/img/workflows/content-lifecycle.svg' | relative_url }}"
        alt="BPMN-диаграмма с дорожками одного цикла фолио: руководитель программы планирует работу, план заносится в виде beans, редактирование и валидация HCI выполняются для каждого предлагаемого изменения, затем следуют интеграционное тестирование и прогон QA, после чего — черновик, рецензирование и публикация; обратная связь проходит триаж и регистрируется в виде beans, и цикл либо повторяется, либо фолио выводится из эксплуатации.">
 </div>
 
-[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [полноразмерный SVG](../../assets/img/workflows/content-lifecycle.svg)
+[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [полноразмерный SVG]({{ '/assets/img/workflows/content-lifecycle.svg' | relative_url }})
 {: .bpmn-source }
 
 | Этап | Навык | Что происходит |
@@ -80,17 +80,17 @@ folio-assistant **не зависит от контента**: платформ�
 - **Контроль соблюдения** — `content_profile_check` отклоняет математический вид, поле `lean` или соседний файл `.lean`, и выполняется при каждой проверке `content_validate`.
 
 Соответствующие схемы навыков:
-[`document-authoring`](../../reference/skills/document-authoring.html),
-[`document-structure`](../../reference/skills/document-structure.html),
-[`normative-statements`](../../reference/skills/normative-statements.html),
-[`document-publishing`](../../reference/skills/document-publishing.html).
+[`document-authoring`]({{ '/reference/skills/document-authoring.html' | relative_url }}),
+[`document-structure`]({{ '/reference/skills/document-structure.html' | relative_url }}),
+[`normative-statements`]({{ '/reference/skills/normative-statements.html' | relative_url }}),
+[`document-publishing`]({{ '/reference/skills/document-publishing.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
-  <img src="../../ru/assets/img/workflows/authoring-a-document.svg"
+  <img src="{{ '/ru/assets/img/workflows/authoring-a-document.svg' | relative_url }}"
        alt="BPMN-диаграмма с дорожками процесса написания документа: автор планирует работу, план заносится в виде beans, агент формирует каркас фолио и создает блоки, конвейер сборки проверяет объявленный профиль перед валидацией и рендерингом в Markdown, HTML и PDF, а рецензент открывает доступ к публикации.">
 </div>
 
-[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [полноразмерный SVG](../../assets/img/workflows/authoring-a-document.svg)
+[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [полноразмерный SVG]({{ '/assets/img/workflows/authoring-a-document.svg' | relative_url }})
 {: .bpmn-source }
 
 ### Передача нормативного утверждения
@@ -100,7 +100,7 @@ folio-assistant **не зависит от контента**: платформ�
 
 Рекомендация, требование или правило — это блок, на который ссылаются читатели и к которому обращаются разработчики реализации. Ему необходимы метка, стабильный идентификатор и место в графе зависимостей — всё то же самое, что есть у `theorem` — но это категорически не теорема, поскольку ее ничто не доказывает.
 
-Отдельного **первоклассного вида блока `recommendation` не существует**. Сегодня его носителем выступает блок `prose` с меткой и заголовком; соглашение и его ограничения описаны в навыке [`normative-statements`](../../reference/skill-instructions/normative-statements.html). Более ранние указания в `document-intake` сопоставляли рекомендации руководств с видом `definition` — это предшествовало появлению данного типа контента и неверно для фолио документа, где `definition` является математическим видом, у которого поле `lean` обязательно.
+Отдельного **первоклассного вида блока `recommendation` не существует**. Сегодня его носителем выступает блок `prose` с меткой и заголовком; соглашение и его ограничения описаны в навыке [`normative-statements`]({{ '/reference/skill-instructions/normative-statements.html' | relative_url }}). Более ранние указания в `document-intake` сопоставляли рекомендации руководств с видом `definition` — это предшествовало появлению данного типа контента и неверно для фолио документа, где `definition` является математическим видом, у которого поле `lean` обязательно.
 
 ---
 
@@ -125,7 +125,7 @@ folio-assistant **не зависит от контента**: платформ�
 
 - **Исходная модель** — контент представляет собой дерево типизированных *блоков* (`definition`,
   `theorem`, `lemma`, `proof`, `equation`, `prose`, …). См.
-  [справочник по API TypeScript](../../ru/api/) для `Block`, `Chapter` и `Paper`.
+  [справочник по API TypeScript]({{ '/ru/api/' | relative_url }}) для `Block`, `Chapter` и `Paper`.
 - **Формализация** — навыки `lean-formalization` и `proof-verification` управляют
   Lean; каждый блок типа теоремы можно сопоставить с его аналогом в Lean, при этом
   каждый `sorry` подлежит аудиту.
@@ -157,9 +157,9 @@ folio-assistant **не зависит от контента**: платформ�
 есть второе правило помимо «разрешен ли этот вид».
 
 Соответствующие схемы навыков:
-[`latex-authoring`](../../reference/skills/latex-authoring.html),
-[`lean-formalization`](../../reference/skills/lean-formalization.html),
-[`proof-verification`](../../reference/skills/proof-verification.html).
+[`latex-authoring`]({{ '/reference/skills/latex-authoring.html' | relative_url }}),
+[`lean-formalization`]({{ '/reference/skills/lean-formalization.html' | relative_url }}),
+[`proof-verification`]({{ '/reference/skills/proof-verification.html' | relative_url }}).
 
 ---
 
@@ -180,17 +180,17 @@ folio-assistant **не зависит от контента**: платформ�
 - **Персоны, сценарии, индикаторы, требования**
 
 Соответствующие схемы навыков:
-[`l2-dak-authoring`](../../reference/skills/l2-dak-authoring.html),
-[`bpmn-authoring`](../../reference/skills/bpmn-authoring.html),
-[`dmn-authoring`](../../reference/skills/dmn-authoring.html),
-[`terminology-management`](../../reference/skills/terminology-management.html).
+[`l2-dak-authoring`]({{ '/reference/skills/l2-dak-authoring.html' | relative_url }}),
+[`bpmn-authoring`]({{ '/reference/skills/bpmn-authoring.html' | relative_url }}),
+[`dmn-authoring`]({{ '/reference/skills/dmn-authoring.html' | relative_url }}),
+[`terminology-management`]({{ '/reference/skills/terminology-management.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
-  <img src="../../ru/assets/img/workflows/l2-dak-authoring.svg"
+  <img src="{{ '/ru/assets/img/workflows/l2-dak-authoring.svg' | relative_url }}"
        alt="BPMN-диаграмма с дорожками процесса создания L2 DAK: параллельный шлюз распределяет персоны, процессы BPMN, логику решений DMN, словарь данных и индикаторы по дорожке бизнес-аналитика параллельно с привязками терминолога, затем валидация медицинскими экспертами (SME) открывает шлюз сборки DAK.">
 </div>
 
-[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [полноразмерный SVG](../../assets/img/workflows/l2-dak-authoring.svg)
+[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [полноразмерный SVG]({{ '/assets/img/workflows/l2-dak-authoring.svg' | relative_url }})
 {: .bpmn-source }
 
 ---
@@ -211,17 +211,17 @@ folio-assistant **не зависит от контента**: платформ�
 - Шлюзы **контроля качества** (`quality-control`)
 
 Соответствующие схемы навыков:
-[`l3-fhir-authoring`](../../reference/skills/l3-fhir-authoring.html),
-[`fhir-validation`](../../reference/skills/fhir-validation.html),
-[`ig-publication`](../../reference/skills/ig-publication.html),
-[`quality-control`](../../reference/skills/quality-control.html).
+[`l3-fhir-authoring`]({{ '/reference/skills/l3-fhir-authoring.html' | relative_url }}),
+[`fhir-validation`]({{ '/reference/skills/fhir-validation.html' | relative_url }}),
+[`ig-publication`]({{ '/reference/skills/ig-publication.html' | relative_url }}),
+[`quality-control`]({{ '/reference/skills/quality-control.html' | relative_url }}).
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
-  <img src="../../ru/assets/img/workflows/l3-fhir-pipeline.svg"
+  <img src="{{ '/ru/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }}"
        alt="BPMN-диаграмма с дорожками конвейера L3: сопоставление L2 с L3, написание FSH, компиляция в SUSHI, валидация по профилям с циклом возврата к FSH в случае ошибок, шлюзы контроля качества, регистрирующие замечания в виде beans, сборка в IG Publisher и публикация сайта IG.">
 </div>
 
-[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [полноразмерный SVG](../../assets/img/workflows/l3-fhir-pipeline.svg)
+[Исходный код BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [полноразмерный SVG]({{ '/assets/img/workflows/l3-fhir-pipeline.svg' | relative_url }})
 {: .bpmn-source }
 
 ---
