@@ -6,12 +6,15 @@
  *   bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache DIR] [--sushi-config FILE]
  *                                                      [--mirror DIR|GIT-URL] [--mirror-commit SHA]
  *                                                      [--missing-out FILE] [--template-repo NAME=OWNER/REPO]
+ *                                                      [--site-repo PREFIX=OWNER/REPO[@BRANCH]]
  *                                                      [--dry-run] [name#version ...]
  *
  * Sources, tried in order for each package:
  *   1. the cache itself (already present and verified);
  *   2. npm, account `grahamegrieve` (owner, 2026-09-30: trusted);
- *   3. the publisher's own published-site repository on GitHub (smart.who.int.*, ihe.*);
+ *   3. a publisher's own published-site repository on GitHub, for package names
+ *      under a prefix given with `--site-repo` (none built in: this layer names
+ *      no publisher, so the layer that knows one passes it in);
  *   4. a template's own repository (from FHIR/ig-registry or explicit --template-repo);
  *   5. `--mirror`: directory or git repository of `<name>#<version>.tgz` with SHA512SUMS.
  *
@@ -405,32 +408,51 @@ export function fromMirror(
   };
 }
 
+/**
+ * A publisher's published-site repository: packages named `<prefix><path>` are
+ * at `<path>/<version>/package.tgz` on `branch` of `repo`.
+ *
+ * Passed in, never built in — fhir-harness names no publisher
+ * (`check:fhir-harness-exclusions`), so the layer that knows one supplies it.
+ */
+export interface SiteRepo {
+  prefix: string;
+  repo: string;
+  branch: string;
+}
+
+/** `PREFIX=OWNER/REPO[@BRANCH]`, branch defaulting to `main`; `null` if malformed. */
+export function parseSiteRepo(spec: string): SiteRepo | null {
+  const m = /^([A-Za-z0-9._-]+\.)=([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)(?:@([A-Za-z0-9._\/-]+))?$/.exec(spec);
+  if (!m) return null;
+  return { prefix: m[1], repo: m[2], branch: m[3] ?? "main" };
+}
+
 export async function fromSite(
   name: string,
   version: string,
+  sites: readonly SiteRepo[] = [],
 ): Promise<{ data: Buffer; provenance: Record<string, unknown> } | null> {
-  if (name.startsWith("smart.who.int.")) {
-    const rel = `${name.slice("smart.who.int.".length)}/${version}/package.tgz`;
-    const repo = "WorldHealthOrganization/smart-html";
-    const branch = "main";
-    const commit = remoteCommit(`https://github.com/${repo}`, branch);
-    if (!commit) return null;
-    const url = `https://raw.githubusercontent.com/${repo}/${commit}/${rel}`;
-    try {
-      const resp = await fetch(url);
-      if (!resp.ok) return null;
-      const data = Buffer.from(await resp.arrayBuffer());
-      const pj = readPackageJsonFromTgz(data);
-      if (!pj || pj.name !== name || pj.version !== version) return null;
-      return {
-        provenance: { site: url, branch, commit, sha512: sha512Integrity(data) },
-        data,
-      };
-    } catch {
-      return null;
-    }
+  const site = sites.find((s) => name.startsWith(s.prefix));
+  if (!site) return null;
+  const rel = `${name.slice(site.prefix.length)}/${version}/package.tgz`;
+  const { repo, branch } = site;
+  const commit = remoteCommit(`https://github.com/${repo}`, branch);
+  if (!commit) return null;
+  const url = `https://raw.githubusercontent.com/${repo}/${commit}/${rel}`;
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const data = Buffer.from(await resp.arrayBuffer());
+    const pj = readPackageJsonFromTgz(data);
+    if (!pj || pj.name !== name || pj.version !== version) return null;
+    return {
+      provenance: { site: url, branch, commit, sha512: sha512Integrity(data) },
+      data,
+    };
+  } catch {
+    return null;
   }
-  return null;
 }
 
 export function fromTemplateRepo(
@@ -553,6 +575,7 @@ export interface SeedOptions {
   mirrorCommit?: string;
   missingOut?: string;
   templateRepos?: Record<string, string>;
+  siteRepos?: SiteRepo[];
   wanted?: string[];
   logger?: {
     log: (msg: string) => void;
@@ -737,7 +760,7 @@ export async function seedFhirCache(options: SeedOptions): Promise<SeedResult> {
 
       // 3. publisher site repo
       if (pj === null && exact(version)) {
-        const siteRes = await fromSite(name, version);
+        const siteRes = await fromSite(name, version, options.siteRepos ?? []);
         if (siteRes) {
           if (dry) {
             installed.push({ spec, how: "would install from site" });
@@ -849,6 +872,7 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
   let mirrorCommit: string | undefined;
   let missingOut: string | undefined;
   const templateRepos: Record<string, string> = {};
+  const siteRepos: SiteRepo[] = [];
   const wanted: string[] = [];
 
   const it = argv[Symbol.iterator]();
@@ -880,6 +904,13 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
         const [k, v] = next.value.split("=");
         if (k && v) templateRepos[k] = v;
       }
+    } else if (a === "--site-repo") {
+      next = it.next();
+      if (!next.done) {
+        const site = parseSiteRepo(next.value);
+        if (site) siteRepos.push(site);
+        else console.error(`--site-repo: expected PREFIX=OWNER/REPO[@BRANCH], got '${next.value}'`);
+      }
     } else if (a.includes("#")) {
       wanted.push(a);
     }
@@ -894,6 +925,7 @@ export function parseCliArgs(argv: string[]): SeedOptions & { help?: boolean } {
     mirrorCommit,
     missingOut,
     templateRepos,
+    siteRepos,
     wanted,
   };
 }
@@ -907,6 +939,7 @@ Usage:
   bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache DIR] [--sushi-config FILE]
                                                      [--mirror DIR|GIT-URL] [--mirror-commit SHA]
                                                      [--missing-out FILE] [--template-repo NAME=OWNER/REPO]
+                                                     [--site-repo PREFIX=OWNER/REPO[@BRANCH]]
                                                      [--dry-run] [name#version ...]`);
     process.exit(0);
   }

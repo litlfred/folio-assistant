@@ -15,6 +15,9 @@ import {
   checkCached,
   exact,
   fromMirror,
+  fromSite,
+  parseCliArgs,
+  parseSiteRepo,
   parseSushiConfigDeps,
   readPackageJsonFromTgz,
   seedFhirCache,
@@ -80,7 +83,7 @@ describe("fhir-cache-seed-npm", () => {
   describe("validPart", () => {
     test("accepts safe names and versions", () => {
       expect(validPart("hl7.fhir.r4.core")).toBe(true);
-      expect(validPart("smart.who.int.base")).toBe(true);
+      expect(validPart("example.org.base")).toBe(true);
       expect(validPart("1.0.0")).toBe(true);
       expect(validPart("2.0.0-ballot")).toBe(true);
       expect(validPart("current")).toBe(true);
@@ -437,6 +440,28 @@ dependencies:
       expect(fileLines).toContain("hl7.fhir.uv.cql#2.0.0");
       expect(fileLines).toContain("hl7.fhir.uv.crmi#2.0.0");
       expect(fileLines).toContain("hl7.fhir.uv.sdc#4.0.0");
+    });
+  });
+  describe("site repositories are passed in, never built in", () => {
+    test("parseSiteRepo reads PREFIX=OWNER/REPO with an optional @BRANCH", () => {
+      expect(parseSiteRepo("example.org.=Owner/site-html")).toEqual({ prefix: "example.org.", repo: "Owner/site-html", branch: "main" });
+      expect(parseSiteRepo("example.org.=Owner/site-html@gh-pages")).toEqual({ prefix: "example.org.", repo: "Owner/site-html", branch: "gh-pages" });
+      expect(parseSiteRepo("example.org=Owner/site-html")).toBeNull(); // a prefix ends in "."
+      expect(parseSiteRepo("example.org.=not-a-repo")).toBeNull();
+      expect(parseSiteRepo("example.org.=Owner/../x")).toBeNull(); // OWNER/REPO is exactly two segments
+    });
+
+    test("with no site repository given, no package is fetched from a site", async () => {
+      expect(await fromSite("example.org.base", "1.0.0")).toBeNull();
+      expect(await fromSite("example.org.base", "1.0.0", [])).toBeNull();
+    });
+
+    test("--site-repo is repeatable on the command line", () => {
+      const o = parseCliArgs(["--site-repo", "a.b.=O/r", "--site-repo", "c.=P/s@dev", "x#1.0.0"]);
+      expect(o.siteRepos).toEqual([
+        { prefix: "a.b.", repo: "O/r", branch: "main" },
+        { prefix: "c.", repo: "P/s", branch: "dev" },
+      ]);
     });
   });
 });
