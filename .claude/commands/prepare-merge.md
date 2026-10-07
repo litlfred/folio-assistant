@@ -29,7 +29,7 @@ Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
    `bun run cat check:merged`, which runs the full gates on the merged tree (bean
    `nytj`; exit 2 = could not determine, never clean).
 5. **Green check** — run the gates below; do not declare green while sitting on
-   pre-existing failures. Then `bun run security:gate`: a blocking fail OR
+   pre-existing failures. Then `bun run cat security:gate`: a blocking fail OR
    unknown refuses the merge, and its advisories go in the PR body
    (`skills/sdlc/sdlc-core/prepare-merge.md` step 5, bean `ieum`).
 6. **Push** the feature branch: `git push -u origin <branch>` (with lease after a

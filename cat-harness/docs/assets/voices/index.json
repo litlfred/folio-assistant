@@ -2484,7 +2484,7 @@
     {
       "id": "secure-code-authoring",
       "title": "Secure code authoring: the voice for agents that write tools, workflows and pipeline code",
-      "description": "For writing and reviewing code that an agent pipeline runs: tools, MCP handlers, workflows, generators, installers. The premise is the owner's, 2026-10-07: 'ALL DATA IN PIPELINE MUST BE TREATED AS SUSPECT. ALL TOOLS ARE RESPONSIBLE TO GUARD AGAINST CODE INJECTION, PROMPT ENGINEERING, VARIABLE TAMPERING.' It is a HOUSE standard: the first three rules restate this instance's security sub-KG, the workflow rules are read from GitHub's Secure use reference (an ASSERTION source, a publisher describing its own product), and the handover and outbound-request rules come from the zero-trust-handover methodology, which cites the reference-only reporting on MCP protocol pivoting and BadHost. Rules are judged by an agent rather than pattern-matched, because security best practice drifts (owner, 2026-09-20).",
+      "description": "For writing and reviewing code that an agent pipeline runs: tools, MCP handlers, workflows, generators, installers. The premise is the owner's, 2026-10-07: 'ALL DATA IN PIPELINE MUST BE TREATED AS SUSPECT. ALL TOOLS ARE RESPONSIBLE TO GUARD AGAINST CODE INJECTION, PROMPT ENGINEERING, VARIABLE TAMPERING.' It is a HOUSE standard: the first three rules restate this instance's security sub-KG, the workflow rules are read from GitHub's Secure use reference (an ASSERTION source, a publisher describing its own product), and the handover and outbound-request rules come from the zero-trust-handover skill (this platform's application of the adopted zero-trust-architecture methodology, NIST SP 800-207), which cites the reference-only reporting on MCP protocol pivoting and BadHost. Rules are judged by an agent rather than pattern-matched, because security best practice drifts (owner, 2026-09-20).",
       "instance": "cat-harness",
       "path": "cat-harness/skills/voices/secure-code-authoring",
       "provenance": "house",
@@ -2502,7 +2502,11 @@
           "title": "Untrusted input: the value must never become program text"
         },
         {
-          "title": "Zero-trust handover (methodology)"
+          "title": "Zero Trust Architecture (NIST SP 800-207), via the adopted methodology zero-trust-architecture",
+          "year": 2020
+        },
+        {
+          "title": "Zero-trust handover (skill: the platform's application of NIST SP 800-207)"
         },
         {
           "title": "Defeating Prompt Injections by Design (CaMeL)",
@@ -2770,7 +2774,7 @@
           "terminology": 0,
           "judgementOnly": true,
           "citation": "kg-node",
-          "cites": "methodologies/zero-trust-handover.md",
+          "cites": "skills/conduct/security/zero-trust-handover.md",
           "quote": "A tool that reaches the network checks the destination of every hop, not the URL it was handed."
         },
         {
