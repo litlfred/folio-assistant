@@ -182,7 +182,8 @@ export function checkoutsOf(job: Job): CheckoutStep[] {
       // the same step, which sits just above its `run:`.
       const v = /^\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?$/.exec(m[1]);
       if (v?.[1] !== undefined) {
-        const stepStart = after.slice(0, k + 1).findLastIndex((x) => /^\s{0,8}- /.test(x));
+        let stepStart = k;
+        while (stepStart > 0 && !/^\s{0,8}- /.test(after[stepStart]!)) stepStart--;
         const env = after.slice(Math.max(stepStart, 0), k + 1).map((x) => new RegExp(`^\\s*${v[1]}:\\s*(.+?)\\s*$`).exec(x)?.[1]).find(Boolean);
         return env !== undefined && norm(env.replace(/^["']|["']$/g, "")) === root;
       }
