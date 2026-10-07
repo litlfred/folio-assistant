@@ -12,7 +12,7 @@ import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { siteDirFor } from "../cat-harness/schemas/cat-harness.ts";
+import { forgeLocation, siteDirFor } from "../cat-harness/schemas/cat-harness.ts";
 import { libraryResolver } from "../cat-harness/scripts/lib/library-links.ts";
 
 /** The directory these tests were written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move, so nothing they read changed. */
@@ -35,7 +35,9 @@ describe("a library reference resolves only where its target exists", () => {
       const l = r.links(e.id, e.instance);
       // The key the viewer's honourAnchor matches: `<instance>/<id>`.
       expect(l?.viewer, e.id).toBe(`cat-harness/library/${e.instance}/#${encodeURIComponent(`${e.instance}/${e.id}`)}`);
-      if (existsSync(join(REPO, e.dir, "README.md"))) expect(l?.readme, e.id).toContain(`/${e.dir}/README.md`);
+      // A remote-mounted layer's README is in ITS repository (bean `nn8e`), so
+      // the path to expect is the one inside the repository that holds it.
+      if (existsSync(join(REPO, e.dir, "README.md"))) expect(l?.readme, e.id).toContain(`/${forgeLocation(e.dir, "", REPO).path}/README.md`);
     }
   });
 });

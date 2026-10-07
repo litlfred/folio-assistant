@@ -65,9 +65,23 @@
  *
  * ## What counts as a page
  *
- * A file ending `.html` that contains a doctype. A fragment included into
- * another document is not a page and cannot carry a mount, so counting it
- * would make the gate fail on files that are correct.
+ * A file ending `.html` that contains a doctype, or that opens with Jekyll
+ * front matter naming a layout. A fragment included into another document is
+ * not a page and cannot carry a mount, so counting it would make the gate fail
+ * on files that are correct.
+ *
+ * ## A page on the theme's layout is mounted BY the layout
+ *
+ * The site's layout loads `docs-ui.js` and `docs-ui.css` on every page
+ * (`_includes/head_custom.html`), which is everything the fragment loads. So a
+ * themed page carries the folio without the fragment, and the fragment there
+ * would load both a second time. The library viewer's pages moved onto the
+ * layout on 2026-10-07 (`gen-library-viz.ts`), and they are counted here as
+ * mounted BY THE LAYOUT — reported apart, so a reader can see which pages
+ * carry the mount themselves. Counting them as no pages at all would have
+ * turned this gate into a clean run over an empty root. A themed page that
+ * names no layout (`layout: none` or `null`) gets no head at all, and is
+ * missing the mount like any other.
  *
  * Usage:
  *   bun run cat check:folio-mount
@@ -111,6 +125,8 @@ export interface InstanceReport {
   /** `null` when the instance declares no `folioMount` block — NOT a pass. */
   decl: FolioMountDecl | null;
   mounted: string[];
+  /** Pages on the theme's layout, which loads the folio itself — a subset of `mounted`. */
+  byLayout: string[];
   missing: string[];
   exemptUsed: MountExemption[];
   staleExemptions: MountExemption[];
@@ -127,9 +143,26 @@ function htmlUnder(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-/** A standalone document, as opposed to an include. */
+/**
+ * The layout a themed page names in its front matter, or `undefined` when the
+ * file opens with no front matter or names none.
+ */
+export function themedLayout(html: string): string | undefined {
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---\r?\n/.exec(html)?.[1];
+  const m = fm ? /^layout:\s*["']?([^"'\s#]+)/m.exec(fm) : null;
+  return m ? m[1] : undefined;
+}
+
+/** Does the layout this page names deliver the folio? Any layout but none does. */
+export function layoutMounts(html: string): boolean {
+  const l = themedLayout(html);
+  return l !== undefined && l !== "none" && l !== "null";
+}
+
+/** A standalone document or a themed page, as opposed to an include. */
 function isPage(file: string): boolean {
-  return /<!doctype\s+html/i.test(readFileSync(file, "utf-8"));
+  const html = readFileSync(file, "utf-8");
+  return /<!doctype\s+html/i.test(html) || themedLayout(html) !== undefined;
 }
 
 /**
@@ -157,6 +190,7 @@ export function reportFor(repo: string, instance: string): InstanceReport {
     instance,
     decl,
     mounted: [],
+    byLayout: [],
     missing: [],
     exemptUsed: [],
     staleExemptions: [],
@@ -167,7 +201,11 @@ export function reportFor(repo: string, instance: string): InstanceReport {
     for (const file of htmlUnder(join(repo, instance, root))) {
       if (!isPage(file)) continue;
       const rel = relative(repo, file);
-      if (hasMount(readFileSync(file, "utf-8"))) base.mounted.push(rel);
+      const html = readFileSync(file, "utf-8");
+      if (layoutMounts(html)) {
+        base.mounted.push(rel);
+        base.byLayout.push(rel);
+      } else if (hasMount(html)) base.mounted.push(rel);
       else base.missing.push(rel);
     }
   }
@@ -179,6 +217,7 @@ export function reportFor(repo: string, instance: string): InstanceReport {
   }
 
   base.mounted.sort();
+  base.byLayout.sort();
   base.missing.sort();
   return base;
 }
@@ -212,7 +251,8 @@ function main(): void {
 
     for (const r of configured) {
       if (r.missing.length === 0) {
-        console.log(`  ✓ ${r.instance}: ${r.mounted.length} page(s) carry the folio mount`);
+        const via = r.byLayout.length > 0 ? ` (${r.byLayout.length} by the theme's layout)` : "";
+        console.log(`  ✓ ${r.instance}: ${r.mounted.length} page(s) carry the folio mount${via}`);
       } else {
         console.log(`  ✗ ${r.instance}: ${r.missing.length} of ${r.mounted.length + r.missing.length} page(s) carry NO folio mount`);
         for (const p of r.missing) console.log(`      ${p}`);

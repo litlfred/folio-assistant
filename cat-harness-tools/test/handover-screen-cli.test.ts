@@ -28,4 +28,18 @@ describe("handover:screen", () => {
     const [s, p] = files({ nofields: true }, { a: 1 });
     expect(run(["--schema", s, p]).code).toBe(SCREEN_EXIT.undetermined);
   });
+
+  test("clean is printed as no pattern fired, never as a clearance (roast 1ygp L4.3)", () => {
+    const [s, p] = files(schema, { status: "done", summary: "ok" });
+    const r = run(["--schema", s, p]);
+    expect(r.code).toBe(SCREEN_EXIT.clean);
+    expect(JSON.parse(r.out)).toMatchObject({ state: "clean", meaning: "no pattern fired (not a clearance)" });
+  });
+
+  test("a value constraint from a JSON schema file is enforced; a malformed spec is undetermined", () => {
+    let [s, p] = files({ fields: { nextTool: { role: "control", oneOf: ["workflow_next"] } } }, { nextTool: "merge_pull_request" });
+    expect(run(["--schema", s, p]).code).toBe(SCREEN_EXIT.refused);
+    [s, p] = files({ fields: { nextTool: { role: "boss" } } }, { nextTool: "x" });
+    expect(run(["--schema", s, p]).code).toBe(SCREEN_EXIT.undetermined);
+  });
 });

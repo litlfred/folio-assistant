@@ -1,0 +1,3755 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "nist-sp-800-207",
+  "title": "Zero Trust Architecture",
+  "pages": 59,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "NIST SP 800-207, Zero Trust Architecture",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 10,
+      "pageLabel": "1",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-1-introduction"
+    },
+    {
+      "level": 2,
+      "title": "History of Zero Trust Efforts Related to Federal Agencies",
+      "number": "1.1",
+      "page": 11,
+      "pageLabel": "2",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-11-history-of-zero-trust-efforts-related-to-fede"
+    },
+    {
+      "level": 2,
+      "title": "Structure of This Document",
+      "number": "1.2",
+      "page": 11,
+      "pageLabel": "2",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-12-structure-of-this-document"
+    },
+    {
+      "level": 1,
+      "title": "Zero Trust Basics",
+      "number": "2",
+      "page": 13,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-2-zero-trust-basics"
+    },
+    {
+      "level": 2,
+      "title": "Tenets of Zero Trust",
+      "number": "2.1",
+      "page": 15,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-21-tenets-of-zero-trust"
+    },
+    {
+      "level": 2,
+      "title": "A Zero Trust View of a Network",
+      "number": "2.2",
+      "page": 17,
+      "pageLabel": "8",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-22-a-zero-trust-view-of-a-network"
+    },
+    {
+      "level": 1,
+      "title": "Logical Components of Zero Trust Architecture",
+      "number": "3",
+      "page": 18,
+      "pageLabel": "9",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-3-logical-components-of-zero-trust-architecture"
+    },
+    {
+      "level": 2,
+      "title": "Variations of Zero Trust Architecture Approaches",
+      "number": "3.1",
+      "page": 20,
+      "pageLabel": "11",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-31-variations-of-zero-trust-architecture-approac"
+    },
+    {
+      "level": 3,
+      "title": "ZTA Using Enhanced Identity Governance",
+      "number": "3.1.1",
+      "page": 20,
+      "pageLabel": "11",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-311-zta-using-enhanced-identity-governance"
+    },
+    {
+      "level": 3,
+      "title": "ZTA Using Micro-Segmentation",
+      "number": "3.1.2",
+      "page": 21,
+      "pageLabel": "12",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-312-zta-using-micro-segmentation"
+    },
+    {
+      "level": 3,
+      "title": "ZTA Using Network Infrastructure and Software Defined Perimeters",
+      "number": "3.1.3",
+      "page": 21,
+      "pageLabel": "12",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-313-zta-using-network-infrastructure-and-softwar"
+    },
+    {
+      "level": 2,
+      "title": "Deployed Variations of the Abstract Architecture",
+      "number": "3.2",
+      "page": 22,
+      "pageLabel": "13",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-32-deployed-variations-of-the-abstract-architect"
+    },
+    {
+      "level": 3,
+      "title": "Device Agent/Gateway-Based Deployment",
+      "number": "3.2.1",
+      "page": 22,
+      "pageLabel": "13",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-321-device-agentgateway-based-deployment"
+    },
+    {
+      "level": 3,
+      "title": "Enclave-Based Deployment",
+      "number": "3.2.2",
+      "page": 23,
+      "pageLabel": "14",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-322-enclave-based-deployment"
+    },
+    {
+      "level": 3,
+      "title": "Resource Portal-Based Deployment",
+      "number": "3.2.3",
+      "page": 24,
+      "pageLabel": "15",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-323-resource-portal-based-deployment"
+    },
+    {
+      "level": 3,
+      "title": "Device Application Sandboxing",
+      "number": "3.2.4",
+      "page": 25,
+      "pageLabel": "16",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-324-device-application-sandboxing"
+    },
+    {
+      "level": 2,
+      "title": "Trust Algorithm",
+      "number": "3.3",
+      "page": 26,
+      "pageLabel": "17",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-33-trust-algorithm"
+    },
+    {
+      "level": 3,
+      "title": "Trust Algorithm Variations",
+      "number": "3.3.1",
+      "page": 28,
+      "pageLabel": "19",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-331-trust-algorithm-variations"
+    },
+    {
+      "level": 2,
+      "title": "Network/Environment Components",
+      "number": "3.4",
+      "page": 30,
+      "pageLabel": "21",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-34-networkenvironment-components"
+    },
+    {
+      "level": 3,
+      "title": "Network Requirements to Support ZTA",
+      "number": "3.4.1",
+      "page": 30,
+      "pageLabel": "21",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-341-network-requirements-to-support-zta"
+    },
+    {
+      "level": 1,
+      "title": "Deployment Scenarios/Use Cases",
+      "number": "4",
+      "page": 32,
+      "pageLabel": "23",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-4-deployment-scenariosuse-cases"
+    },
+    {
+      "level": 2,
+      "title": "Enterprise with Satellite Facilities",
+      "number": "4.1",
+      "page": 32,
+      "pageLabel": "23",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-41-enterprise-with-satellite-facilities"
+    },
+    {
+      "level": 2,
+      "title": "Multi-cloud/Cloud-to-Cloud Enterprise",
+      "number": "4.2",
+      "page": 33,
+      "pageLabel": "24",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-022-42-multi-cloudcloud-to-cloud-enterprise"
+    },
+    {
+      "level": 2,
+      "title": "Enterprise with Contracted Services and/or Nonemployee Access",
+      "number": "4.3",
+      "page": 34,
+      "pageLabel": "25",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-023-43-enterprise-with-contracted-services-andor-non"
+    },
+    {
+      "level": 2,
+      "title": "Collaboration Across Enterprise Boundaries",
+      "number": "4.4",
+      "page": 35,
+      "pageLabel": "26",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-024-44-collaboration-across-enterprise-boundaries"
+    },
+    {
+      "level": 2,
+      "title": "Enterprise with Public- or Customer-Facing Services",
+      "number": "4.5",
+      "page": 36,
+      "pageLabel": "27",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-025-45-enterprise-with-public--or-customer-facing-se"
+    },
+    {
+      "level": 1,
+      "title": "Threats Associated with Zero Trust Architecture",
+      "number": "5",
+      "page": 37,
+      "pageLabel": "28",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-026-5-threats-associated-with-zero-trust-architectur"
+    },
+    {
+      "level": 2,
+      "title": "Subversion of ZTA Decision Process",
+      "number": "5.1",
+      "page": 37,
+      "pageLabel": "28",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-027-51-subversion-of-zta-decision-process"
+    },
+    {
+      "level": 2,
+      "title": "Denial-of-Service or Network Disruption",
+      "number": "5.2",
+      "page": 37,
+      "pageLabel": "28",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-028-52-denial-of-service-or-network-disruption"
+    },
+    {
+      "level": 2,
+      "title": "Stolen Credentials/Insider Threat",
+      "number": "5.3",
+      "page": 38,
+      "pageLabel": "29",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-029-53-stolen-credentialsinsider-threat"
+    },
+    {
+      "level": 2,
+      "title": "Visibility on the Network",
+      "number": "5.4",
+      "page": 38,
+      "pageLabel": "29",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-030-54-visibility-on-the-network"
+    },
+    {
+      "level": 2,
+      "title": "Storage of System and Network Information",
+      "number": "5.5",
+      "page": 39,
+      "pageLabel": "30",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-031-55-storage-of-system-and-network-information"
+    },
+    {
+      "level": 2,
+      "title": "Reliance on Proprietary Data Formats or Solutions",
+      "number": "5.6",
+      "page": 39,
+      "pageLabel": "30",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-032-56-reliance-on-proprietary-data-formats-or-solut"
+    },
+    {
+      "level": 2,
+      "title": "Use of Non-person Entities (NPE) in ZTA Administration",
+      "number": "5.7",
+      "page": 39,
+      "pageLabel": "30",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-033-57-use-of-non-person-entities-npe-in-zta-adminis"
+    },
+    {
+      "level": 1,
+      "title": "Zero Trust Architecture and Possible Interactions with Existing Federal Guidance",
+      "number": "6",
+      "page": 41,
+      "pageLabel": "32",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-034-6-zero-trust-architecture-and-possible-interacti"
+    },
+    {
+      "level": 2,
+      "title": "ZTA and NIST Risk Management Framework",
+      "number": "6.1",
+      "page": 41,
+      "pageLabel": "32",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-035-61-zta-and-nist-risk-management-framework"
+    },
+    {
+      "level": 2,
+      "title": "Zero Trust and NIST Privacy Framework",
+      "number": "6.2",
+      "page": 41,
+      "pageLabel": "32",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-036-62-zero-trust-and-nist-privacy-framework"
+    },
+    {
+      "level": 2,
+      "title": "ZTA and Federal Identity, Credential, and Access Management Architecture",
+      "number": "6.3",
+      "page": 42,
+      "pageLabel": "33",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-037-63-zta-and-federal-identity-credential-and-acces"
+    },
+    {
+      "level": 2,
+      "title": "ZTA and Trusted Internet Connections 3.0",
+      "number": "6.4",
+      "page": 42,
+      "pageLabel": "33",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-038-64-zta-and-trusted-internet-connections-30"
+    },
+    {
+      "level": 2,
+      "title": "ZTA and EINSTEIN (NCPS – National Cybersecurity Protection System)",
+      "number": "6.5",
+      "page": 43,
+      "pageLabel": "34",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-039-65-zta-and-einstein-ncps-national-cybersecurity"
+    },
+    {
+      "level": 2,
+      "title": "ZTA and DHS Continuous Diagnostics and Mitigations (CDM) Program",
+      "number": "6.6",
+      "page": 43,
+      "pageLabel": "34",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-040-66-zta-and-dhs-continuous-diagnostics-and-mitiga"
+    },
+    {
+      "level": 2,
+      "title": "ZTA, Cloud Smart, and the Federal Data Strategy",
+      "number": "6.7",
+      "page": 44,
+      "pageLabel": "35",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-041-67-zta-cloud-smart-and-the-federal-data-strategy"
+    },
+    {
+      "level": 1,
+      "title": "Migrating to a Zero Trust Architecture",
+      "number": "7",
+      "page": 45,
+      "pageLabel": "36",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-042-7-migrating-to-a-zero-trust-architecture"
+    },
+    {
+      "level": 2,
+      "title": "Pure Zero Trust Architecture",
+      "number": "7.1",
+      "page": 45,
+      "pageLabel": "36",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-043-71-pure-zero-trust-architecture"
+    },
+    {
+      "level": 2,
+      "title": "Hybrid ZTA and Perimeter-Based Architecture",
+      "number": "7.2",
+      "page": 45,
+      "pageLabel": "36",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-044-72-hybrid-zta-and-perimeter-based-architecture"
+    },
+    {
+      "level": 2,
+      "title": "Steps to Introducing ZTA to a Perimeter-Based Architected Network",
+      "number": "7.3",
+      "page": 46,
+      "pageLabel": "37",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-045-73-steps-to-introducing-zta-to-a-perimeter-based"
+    },
+    {
+      "level": 3,
+      "title": "Identify Actors on the Enterprise",
+      "number": "7.3.1",
+      "page": 47,
+      "pageLabel": "38",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-046-731-identify-actors-on-the-enterprise"
+    },
+    {
+      "level": 3,
+      "title": "Identify Assets Owned by the Enterprise",
+      "number": "7.3.2",
+      "page": 47,
+      "pageLabel": "38",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-047-732-identify-assets-owned-by-the-enterprise"
+    },
+    {
+      "level": 3,
+      "title": "Identify Key Processes and Evaluate Risks Associated with Executing Process",
+      "number": "7.3.3",
+      "page": 48,
+      "pageLabel": "39",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-048-733-identify-key-processes-and-evaluate-risks-as"
+    },
+    {
+      "level": 3,
+      "title": "Formulating Policies for the ZTA Candidate",
+      "number": "7.3.4",
+      "page": 48,
+      "pageLabel": "39",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-049-734-formulating-policies-for-the-zta-candidate"
+    },
+    {
+      "level": 3,
+      "title": "Identifying Candidate Solutions",
+      "number": "7.3.5",
+      "page": 49,
+      "pageLabel": "40",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-050-735-identifying-candidate-solutions"
+    },
+    {
+      "level": 3,
+      "title": "Initial Deployment and Monitoring",
+      "number": "7.3.6",
+      "page": 49,
+      "pageLabel": "40",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-051-736-initial-deployment-and-monitoring"
+    },
+    {
+      "level": 3,
+      "title": "Expanding the ZTA",
+      "number": "7.3.7",
+      "page": 50,
+      "pageLabel": "41",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-052-737-expanding-the-zta"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 51,
+      "pageLabel": "42",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-053-references"
+    },
+    {
+      "level": 1,
+      "title": "Appendix A— Acronyms",
+      "number": null,
+      "page": 54,
+      "pageLabel": "45",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "Appendix B— Identified Gaps in the Current State-of-the-Art in ZTA",
+      "number": null,
+      "page": 55,
+      "pageLabel": "46",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "B.1 Technology Survey",
+      "number": null,
+      "page": 55,
+      "pageLabel": "46",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "B.2 Gaps that Prevent an Immediate Move to ZTA",
+      "number": null,
+      "page": 56,
+      "pageLabel": "47",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "B.2.1 Lack of Common Terms for ZTA Design, Planning, and Procurement",
+      "number": null,
+      "page": 56,
+      "pageLabel": "47",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "B.2.2 Perception that ZTA Conflicts with Existing Federal Cybersecurity Policies",
+      "number": null,
+      "page": 56,
+      "pageLabel": "47",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "B.3 Systemic Gaps that Impact ZTA",
+      "number": null,
+      "page": 56,
+      "pageLabel": "47",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "B.3.3 Standardization of Interfaces Between Components",
+      "number": null,
+      "page": 56,
+      "pageLabel": "47",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "B.3.4 Emerging Standards that Address Overreliance on Proprietary APIs",
+      "number": null,
+      "page": 57,
+      "pageLabel": "48",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "B.4 Knowledge Gaps in ZTA and Future Areas of Research",
+      "number": null,
+      "page": 57,
+      "pageLabel": "48",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "B.4.5 Attacker Response to ZTA",
+      "number": null,
+      "page": 58,
+      "pageLabel": "49",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "B.4.6 User Experience in a ZTA Environment",
+      "number": null,
+      "page": 58,
+      "pageLabel": "49",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 3,
+      "title": "B.4.7 Resilience of ZTA to Enterprise and Network Disruption",
+      "number": null,
+      "page": 58,
+      "pageLabel": "49",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "B.5 References",
+      "number": null,
+      "page": 59,
+      "pageLabel": "50",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": "1",
+      "words": 2060,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "patent claims",
+          "heading": false
+        },
+        {
+          "term": "federal agencies",
+          "heading": false
+        },
+        {
+          "term": "federal cio",
+          "heading": false
+        },
+        {
+          "term": "nist special",
+          "heading": false
+        },
+        {
+          "term": "technology laboratory",
+          "heading": false
+        },
+        {
+          "term": "national cybersecurity",
+          "heading": false
+        }
+      ],
+      "extract": "NIST Special Publication 800-207 Zero Trust Architecture Scott Rose Oliver Borchert Stu Mitchell Sean Connelly This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207 C O M P U T E R S E C U R I T Y NIST Special Publication 800-207 Zero Trust Architecture Scott Rose Oliver Borchert Advanced Network Technologies Division Information Technology Laboratory Stu Mitchell Stu2Labs",
+      "extractCut": true
+    },
+    {
+      "id": "sec-000-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 11,
+      "labelStart": "1",
+      "labelEnd": "2",
+      "words": 535,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "trust principles",
+          "heading": false
+        },
+        {
+          "term": "enterprise infrastructure",
+          "heading": false
+        },
+        {
+          "term": "lateral movement",
+          "heading": false
+        },
+        {
+          "term": "security posture",
+          "heading": false
+        },
+        {
+          "term": "perimeter-based network",
+          "heading": false
+        },
+        {
+          "term": "business functions",
+          "heading": false
+        }
+      ],
+      "extract": "A typical enterprise’s infrastructure has grown increasingly complex. A single enterprise may operate several internal networks, remote offices with their own local infrastructure, remote and/or mobile individuals, and cloud services. This complexity has outstripped legacy methods of perimeter-based network security as there is no single, easily identified perimeter for the enterprise. Perimeter-based network",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-11-history-of-zero-trust-efforts-related-to-fede",
+      "number": "1.1",
+      "title": "History of Zero Trust Efforts Related to Federal Agencies",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": "2",
+      "labelEnd": "2",
+      "words": 330,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zero trust",
+          "heading": true
+        },
+        {
+          "term": "federal",
+          "heading": true
+        },
+        {
+          "term": "trust principles",
+          "heading": false
+        },
+        {
+          "term": "trust based",
+          "heading": false
+        },
+        {
+          "term": "perimeter-based security",
+          "heading": false
+        },
+        {
+          "term": "network location",
+          "heading": false
+        },
+        {
+          "term": "black core",
+          "heading": false
+        },
+        {
+          "term": "jericho",
+          "heading": false
+        }
+      ],
+      "extract": "The concept of zero trust has been present in cybersecurity since before the term “zero trust” was coined. The Defense Information Systems Agency (DISA) and the Department of Defense published their work on a more secure enterprise strategy dubbed “black core” [BCORE]. Black core involved moving from a perimeter-based security model to one that focused on the security of individual transactions. The work of the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-12-structure-of-this-document",
+      "number": "1.2",
+      "title": "Structure of This Document",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 13,
+      "labelStart": "2",
+      "labelEnd": "4",
+      "words": 246,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "section discusses",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        },
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "tenets",
+          "heading": false
+        },
+        {
+          "term": "nist",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        }
+      ],
+      "extract": "The rest of the document is organized as follows: • Section 2 defines ZT and ZTA and lists some assumptions when designing a ZTA for an enterprise. This section also includes a list of the tenets of ZT design. • Section 3 documents the logical components, or building blocks, of ZT. It is possible that unique implementations compose ZTA components differently yet serve the same logical functionality. 1",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-2-zero-trust-basics",
+      "number": "2",
+      "title": "Zero Trust Basics",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 15,
+      "labelStart": "4",
+      "labelEnd": "6",
+      "words": 908,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zero trust",
+          "heading": true
+        },
+        {
+          "term": "pdp pep",
+          "heading": false
+        },
+        {
+          "term": "trust zone",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "implicit trust",
+          "heading": false
+        },
+        {
+          "term": "enterprise resource",
+          "heading": false
+        },
+        {
+          "term": "perimeter firewalls",
+          "heading": false
+        },
+        {
+          "term": "resource access",
+          "heading": false
+        }
+      ],
+      "extract": "Zero trust is a cybersecurity paradigm focused on resource protection and the premise that trust is never granted implicitly but must be continually evaluated. Zero trust architecture is an end-to- end approach to enterprise resource and data security that encompasses identity (person and non- person entities), credentials, access management, operations, endpoints, hosting environments, and the interconnecting",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-21-tenets-of-zero-trust",
+      "number": "2.1",
+      "title": "Tenets of Zero Trust",
+      "level": 2,
+      "pageStart": 15,
+      "pageEnd": 17,
+      "labelStart": "6",
+      "labelEnd": "8",
+      "words": 1027,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zero trust",
+          "heading": true
+        },
+        {
+          "term": "tenets",
+          "heading": true
+        },
+        {
+          "term": "owned devices",
+          "heading": false
+        },
+        {
+          "term": "enterprise resources",
+          "heading": false
+        },
+        {
+          "term": "enterprise implementing",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "network infrastructure",
+          "heading": false
+        },
+        {
+          "term": "basic tenets",
+          "heading": false
+        }
+      ],
+      "extract": "Many definitions and discussions of ZT stress the concept of removing wide-area perimeter defenses (e.g., enterprise firewalls) as a factor. However, most of these definitions continue to define themselves in relation to perimeters in some way (such as micro-segmentation or micro- perimeters; see Section 3.1) as part of the functional capabilities of a ZTA. The following is an attempt to define ZT and ZTA in terms",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-22-a-zero-trust-view-of-a-network",
+      "number": "2.2",
+      "title": "A Zero Trust View of a Network",
+      "level": 2,
+      "pageStart": 17,
+      "pageEnd": 18,
+      "labelStart": "8",
+      "labelEnd": "9",
+      "words": 454,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise-owned infrastructure",
+          "heading": false
+        },
+        {
+          "term": "network",
+          "heading": true
+        },
+        {
+          "term": "remote enterprise",
+          "heading": false
+        },
+        {
+          "term": "enterprise subjects",
+          "heading": false
+        },
+        {
+          "term": "enterprise resources",
+          "heading": false
+        },
+        {
+          "term": "trust",
+          "heading": true
+        },
+        {
+          "term": "security posture",
+          "heading": false
+        },
+        {
+          "term": "nonenterprise",
+          "heading": false
+        }
+      ],
+      "extract": "There are some basic assumptions for network connectivity for any organization that utilizes ZTA in network planning and deployment. Some of these assumptions apply to enterprise-owned network infrastructure, and some apply to enterprise-owned resources operating on nonenterprise-owned network infrastructure (e.g., public Wi-Fi or public cloud providers). These assumptions are used to direct the formation of a ZTA.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-3-logical-components-of-zero-trust-architecture",
+      "number": "3",
+      "title": "Logical Components of Zero Trust Architecture",
+      "level": 1,
+      "pageStart": 18,
+      "pageEnd": 20,
+      "labelStart": "9",
+      "labelEnd": "11",
+      "words": 1034,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "logical components",
+          "heading": true
+        },
+        {
+          "term": "zero trust",
+          "heading": true
+        },
+        {
+          "term": "trust architecture",
+          "heading": true
+        },
+        {
+          "term": "policy engine",
+          "heading": false
+        },
+        {
+          "term": "enterprise assets",
+          "heading": false
+        },
+        {
+          "term": "enterprise resource",
+          "heading": false
+        },
+        {
+          "term": "policy administrator",
+          "heading": false
+        },
+        {
+          "term": "cdm systems",
+          "heading": false
+        }
+      ],
+      "extract": "There are numerous logical components that make up a ZTA deployment in an enterprise. These components may be operated as an on-premises service or through a cloud-based service. The conceptual framework model in Figure 2 shows the basic relationship between the components and their interactions. Note that this is an ideal model showing logical components and their interactions. From Figure 1, the policy decision",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-31-variations-of-zero-trust-architecture-approac",
+      "number": "3.1",
+      "title": "Variations of Zero Trust Architecture Approaches",
+      "level": 2,
+      "pageStart": 20,
+      "pageEnd": 20,
+      "labelStart": "11",
+      "labelEnd": "11",
+      "words": 152,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "approaches",
+          "heading": true
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        },
+        {
+          "term": "driver",
+          "heading": false
+        }
+      ],
+      "extract": "There are several ways that an enterprise can enact a ZTA for workflows. These approaches vary in the components used and in the main source of policy rules for an organization. Each approach implements all the tenets of ZT (see Section 2.1) but may use one or two (or one component) as the main driver of policies. A full ZT solution will include elements of all three approaches. The approaches include enhanced",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-311-zta-using-enhanced-identity-governance",
+      "number": "3.1.1",
+      "title": "ZTA Using Enhanced Identity Governance",
+      "level": 3,
+      "pageStart": 20,
+      "pageEnd": 21,
+      "labelStart": "11",
+      "labelEnd": "12",
+      "words": 354,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enhanced identity",
+          "heading": true
+        },
+        {
+          "term": "access privileges",
+          "heading": false
+        },
+        {
+          "term": "resource access",
+          "heading": false
+        },
+        {
+          "term": "enterprise resources",
+          "heading": false
+        },
+        {
+          "term": "granting",
+          "heading": false
+        },
+        {
+          "term": "network",
+          "heading": false
+        },
+        {
+          "term": "governance",
+          "heading": true
+        },
+        {
+          "term": "zta",
+          "heading": true
+        }
+      ],
+      "extract": "The enhanced identity governance approach to developing a ZTA uses the identity of actors as the key component of policy creation. If it were not for subjects requesting access to enterprise resources, there would be no need to create access polices. For this approach, enterprise resource access policies are based on identity and assigned attributes. The primary requirement for resource access is based on the access",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-312-zta-using-micro-segmentation",
+      "number": "3.1.2",
+      "title": "ZTA Using Micro-Segmentation",
+      "level": 3,
+      "pageStart": 21,
+      "pageEnd": 21,
+      "labelStart": "12",
+      "labelEnd": "12",
+      "words": 260,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "gateway devices",
+          "heading": false
+        },
+        {
+          "term": "pep",
+          "heading": false
+        },
+        {
+          "term": "micro-segmentation",
+          "heading": true
+        },
+        {
+          "term": "firewalls",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "protecting",
+          "heading": false
+        },
+        {
+          "term": "component",
+          "heading": false
+        }
+      ],
+      "extract": "An enterprise may choose to implement a ZTA based on placing individual or groups of resources on a unique network segment protected by a gateway security component. In this approach, the enterprise places infrastructure devices such as intelligent switches (or routers) or next generation firewalls (NGFWs) or special purpose gateway devices to act as PEPs protecting each resource or small group of related resources.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-313-zta-using-network-infrastructure-and-softwar",
+      "number": "3.1.3",
+      "title": "ZTA Using Network Infrastructure and Software Defined Perimeters",
+      "level": 3,
+      "pageStart": 21,
+      "pageEnd": 22,
+      "labelStart": "12",
+      "labelEnd": "13",
+      "words": 193,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "network",
+          "heading": true
+        },
+        {
+          "term": "software defined",
+          "heading": true
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "layer",
+          "heading": false
+        },
+        {
+          "term": "infrastructure",
+          "heading": true
+        }
+      ],
+      "extract": "The last approach uses the network infrastructure to implement a ZTA. The ZTA implementation could be achieved by using an overlay network (i.e., layer 7 but also could be set up lower of the NIST SP 800-207 ZERO TRUST ARCHITECTURE 13 This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207 OSI network stack). These approaches are sometimes referred to as software defined perimeter",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-32-deployed-variations-of-the-abstract-architect",
+      "number": "3.2",
+      "title": "Deployed Variations of the Abstract Architecture",
+      "level": 2,
+      "pageStart": 22,
+      "pageEnd": 22,
+      "labelStart": "13",
+      "labelEnd": "13",
+      "words": 147,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "issuing certificates",
+          "heading": false
+        },
+        {
+          "term": "logical components",
+          "heading": false
+        },
+        {
+          "term": "variations",
+          "heading": true
+        },
+        {
+          "term": "consist",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        }
+      ],
+      "extract": "All of the above components are logical components. They do not necessarily need to be unique systems. A single asset may perform the duties of multiple logical components, and likewise, a logical component may consist of multiple hardware or software elements to perform the tasks. For example, an enterprise-managed PKI may consist of one component responsible for issuing certificates for devices and another used",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-321-device-agentgateway-based-deployment",
+      "number": "3.2.1",
+      "title": "Device Agent/Gateway-Based Deployment",
+      "level": 3,
+      "pageStart": 22,
+      "pageEnd": 23,
+      "labelStart": "13",
+      "labelEnd": "14",
+      "words": 377,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "device agent",
+          "heading": true
+        },
+        {
+          "term": "policy administrator",
+          "heading": false
+        },
+        {
+          "term": "resource gateway",
+          "heading": false
+        },
+        {
+          "term": "policy engine",
+          "heading": false
+        },
+        {
+          "term": "enterprise-issued",
+          "heading": false
+        },
+        {
+          "term": "enterprises",
+          "heading": false
+        },
+        {
+          "term": "front",
+          "heading": false
+        },
+        {
+          "term": "pep",
+          "heading": false
+        }
+      ],
+      "extract": "In this deployment model, the PEP is divided into two components that reside on the resource or as a component directly in front of a resource. For example, each enterprise-issued asset has an installed device agent that coordinates connections, and each resource has a component (i.e., gateway) that is placed directly in front so that the resource communicates only with the gateway, essentially serving as a proxy",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-322-enclave-based-deployment",
+      "number": "3.2.2",
+      "title": "Enclave-Based Deployment",
+      "level": 3,
+      "pageStart": 23,
+      "pageEnd": 24,
+      "labelStart": "14",
+      "labelEnd": "15",
+      "words": 270,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "gateway model",
+          "heading": false
+        },
+        {
+          "term": "agent gateway",
+          "heading": false
+        },
+        {
+          "term": "device agent",
+          "heading": false
+        },
+        {
+          "term": "enclave",
+          "heading": false
+        },
+        {
+          "term": "deployment model",
+          "heading": false
+        },
+        {
+          "term": "reside",
+          "heading": false
+        },
+        {
+          "term": "single business",
+          "heading": false
+        },
+        {
+          "term": "enterprises",
+          "heading": false
+        }
+      ],
+      "extract": "This deployment model is a variation of the device agent/gateway model above. In this model, the gateway components may not reside on assets or in front of individual resources but instead reside at the boundary of a resource enclave (e.g., on-location data center) as shown in Figure 4. Usually, these resources serve a single business function or may not be able to communicate directly to a gateway (e.g., legacy",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-323-resource-portal-based-deployment",
+      "number": "3.2.3",
+      "title": "Resource Portal-Based Deployment",
+      "level": 3,
+      "pageStart": 24,
+      "pageEnd": 25,
+      "labelStart": "15",
+      "labelEnd": "16",
+      "words": 290,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "gateway portal",
+          "heading": false
+        },
+        {
+          "term": "devices",
+          "heading": false
+        },
+        {
+          "term": "dos",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "scan",
+          "heading": false
+        },
+        {
+          "term": "pep",
+          "heading": false
+        },
+        {
+          "term": "resource",
+          "heading": true
+        },
+        {
+          "term": "assets",
+          "heading": false
+        }
+      ],
+      "extract": "In this deployment model, the PEP is a single component that acts as a gateway for subject requests. The gateway portal can be for an individual resource or a secure enclave for a collection of resources used for a single business function. One example would be a gateway portal into a private cloud or data center containing legacy applications as shown in Figure 5. NIST SP 800-207 ZERO TRUST ARCHITECTURE 16 This",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-324-device-application-sandboxing",
+      "number": "3.2.4",
+      "title": "Device Application Sandboxing",
+      "level": 3,
+      "pageStart": 25,
+      "pageEnd": 26,
+      "labelStart": "16",
+      "labelEnd": "17",
+      "words": 218,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "vetted applications",
+          "heading": false
+        },
+        {
+          "term": "pep",
+          "heading": false
+        },
+        {
+          "term": "asset",
+          "heading": false
+        },
+        {
+          "term": "device",
+          "heading": true
+        },
+        {
+          "term": "host",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        }
+      ],
+      "extract": "Another variation of the agent/gateway deployment model is having vetted applications or processes run compartmentalized on assets. These compartments could be virtual machines, containers, or some other implementation, but the goal is the same: to protect the application or instances of applications from a possibly compromised host or other applications running on the asset. NIST SP 800-207 ZERO TRUST ARCHITECTURE",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-33-trust-algorithm",
+      "number": "3.3",
+      "title": "Trust Algorithm",
+      "level": 2,
+      "pageStart": 26,
+      "pageEnd": 28,
+      "labelStart": "17",
+      "labelEnd": "19",
+      "words": 760,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "trust algorithm",
+          "heading": true
+        },
+        {
+          "term": "policy database",
+          "heading": false
+        },
+        {
+          "term": "subject attributes",
+          "heading": false
+        },
+        {
+          "term": "observable status",
+          "heading": false
+        },
+        {
+          "term": "policy engine",
+          "heading": false
+        },
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "deny access",
+          "heading": false
+        }
+      ],
+      "extract": "For an enterprise with a ZTA deployment, the policy engine can be thought of as the brain and the PE’s trust algorithm as its primary thought process. The trust algorithm (TA) is the process used by the policy engine to ultimately grant or deny access to a resource. The policy engine takes input from multiple sources (see Section 3): the policy database with observable information about subjects, subject attributes",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-331-trust-algorithm-variations",
+      "number": "3.3.1",
+      "title": "Trust Algorithm Variations",
+      "level": 3,
+      "pageStart": 28,
+      "pageEnd": 30,
+      "labelStart": "19",
+      "labelEnd": "21",
+      "words": 821,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "access requests",
+          "heading": false
+        },
+        {
+          "term": "confidence level",
+          "heading": false
+        },
+        {
+          "term": "trust",
+          "heading": true
+        },
+        {
+          "term": "normal business",
+          "heading": false
+        },
+        {
+          "term": "business hours",
+          "heading": false
+        },
+        {
+          "term": "contextual",
+          "heading": false
+        },
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        }
+      ],
+      "extract": "There are different ways to implement a TA. Different implementers may wish to weigh the above factors differently according to the factors’ perceived importance. There are two other major characteristics that can be used to differentiate TAs. The first is how the factors are evaluated, whether as binary decisions or weighted parts of a whole “score” or confidence level. The second is how requests are evaluated in",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-34-networkenvironment-components",
+      "number": "3.4",
+      "title": "Network/Environment Components",
+      "level": 2,
+      "pageStart": 30,
+      "pageEnd": 30,
+      "labelStart": "21",
+      "labelEnd": "21",
+      "words": 165,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "control plane",
+          "heading": false
+        },
+        {
+          "term": "communication flows",
+          "heading": false
+        },
+        {
+          "term": "service communication",
+          "heading": false
+        },
+        {
+          "term": "data plane",
+          "heading": false
+        },
+        {
+          "term": "application service",
+          "heading": false
+        }
+      ],
+      "extract": "In a ZT environment, there should be a separation (logical or possibly physical) of the communication flows used to control and configure the network and application/service communication flows used to perform the actual work of the organization. This is often broken down to a control plane for network control communication and a data plane for application/service communication flows [Gilman]. The control plane is",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-341-network-requirements-to-support-zta",
+      "number": "3.4.1",
+      "title": "Network Requirements to Support ZTA",
+      "level": 3,
+      "pageStart": 30,
+      "pageEnd": 32,
+      "labelStart": "21",
+      "labelEnd": "23",
+      "words": 655,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise network",
+          "heading": false
+        },
+        {
+          "term": "enterprise assets",
+          "heading": false
+        },
+        {
+          "term": "enterprise resources",
+          "heading": false
+        },
+        {
+          "term": "remote enterprise",
+          "heading": false
+        },
+        {
+          "term": "network infrastructure",
+          "heading": false
+        },
+        {
+          "term": "accessing pep",
+          "heading": false
+        },
+        {
+          "term": "pep component",
+          "heading": false
+        },
+        {
+          "term": "policy administrator",
+          "heading": false
+        }
+      ],
+      "extract": "1. Enterprise assets have basic network connectivity. The local area network (LAN), enterprise controlled or not, provides basic routing and infrastructure (e.g., DNS). The remote enterprise asset may not necessarily use all infrastructure services. 2. The enterprise must be able to distinguish between what assets are owned or managed by the enterprise and the devices’ current security posture. This is determined by",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-4-deployment-scenariosuse-cases",
+      "number": "4",
+      "title": "Deployment Scenarios/Use Cases",
+      "level": 1,
+      "pageStart": 32,
+      "pageEnd": 32,
+      "labelStart": "23",
+      "labelEnd": "23",
+      "words": 131,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        }
+      ],
+      "extract": "Any enterprise environment can be designed with zero trust tenets in mind. Most organizations already have some elements of zero trust in their enterprise infrastructure or are on their way through implementation of information security and resiliency policies and best practices. Several deployment scenarios and use cases lend themselves readily to a zero trust architecture. For instance, ZTA has its roots in",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-41-enterprise-with-satellite-facilities",
+      "number": "4.1",
+      "title": "Enterprise with Satellite Facilities",
+      "level": 2,
+      "pageStart": 32,
+      "pageEnd": 33,
+      "labelStart": "23",
+      "labelEnd": "24",
+      "words": 255,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise",
+          "heading": true
+        },
+        {
+          "term": "remote location",
+          "heading": false
+        },
+        {
+          "term": "local network",
+          "heading": false
+        },
+        {
+          "term": "applications services",
+          "heading": false
+        },
+        {
+          "term": "employees",
+          "heading": false
+        },
+        {
+          "term": "cloud",
+          "heading": false
+        },
+        {
+          "term": "hosted",
+          "heading": false
+        }
+      ],
+      "extract": "The most common scenario involves an enterprise with a single headquarters and one or more geographically dispersed locations that are not joined by an enterprise-owned physical network connection (see Figure 8). Employees at the remote location may not have a full enterprise- owned local network but still need to access enterprise resources to perform their tasks. The enterprise may have a Multiprotocol Label",
+      "extractCut": true
+    },
+    {
+      "id": "sec-022-42-multi-cloudcloud-to-cloud-enterprise",
+      "number": "4.2",
+      "title": "Multi-cloud/Cloud-to-Cloud Enterprise",
+      "level": 2,
+      "pageStart": 33,
+      "pageEnd": 34,
+      "labelStart": "24",
+      "labelEnd": "25",
+      "words": 295,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "cloud provider",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": true
+        },
+        {
+          "term": "cloud service",
+          "heading": false
+        },
+        {
+          "term": "multi-cloud",
+          "heading": true
+        },
+        {
+          "term": "application service",
+          "heading": false
+        },
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "hosted",
+          "heading": false
+        },
+        {
+          "term": "operated",
+          "heading": false
+        }
+      ],
+      "extract": "One increasingly common use case for deploying a ZTA is an enterprise utilizing multiple cloud providers (see Figure 9). In this use case, the enterprise has a local network but uses two or more cloud service providers to host applications/services and data. Sometimes, the application/service is hosted on a cloud service that is separate from the data source. For performance and ease of management, the application",
+      "extractCut": true
+    },
+    {
+      "id": "sec-023-43-enterprise-with-contracted-services-andor-non",
+      "number": "4.3",
+      "title": "Enterprise with Contracted Services and/or Nonemployee Access",
+      "level": 2,
+      "pageStart": 34,
+      "pageEnd": 35,
+      "labelStart": "25",
+      "labelEnd": "26",
+      "words": 275,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise",
+          "heading": true
+        },
+        {
+          "term": "enterprise resources",
+          "heading": false
+        },
+        {
+          "term": "service providers",
+          "heading": false
+        },
+        {
+          "term": "contracted",
+          "heading": true
+        },
+        {
+          "term": "access",
+          "heading": true
+        },
+        {
+          "term": "visitors",
+          "heading": false
+        },
+        {
+          "term": "cannot access",
+          "heading": false
+        },
+        {
+          "term": "nonemployee",
+          "heading": true
+        }
+      ],
+      "extract": "Another common scenario is an enterprise that includes on-site visitors and/or contracted service providers that require limited access to enterprise resources to do their work (see Figure 10). For example, an enterprise has its own internal applications/services, databases, and assets. These include services contracted out to providers who may occasionally be on-site to provide maintenance (e.g., smart heating and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-024-44-collaboration-across-enterprise-boundaries",
+      "number": "4.4",
+      "title": "Collaboration Across Enterprise Boundaries",
+      "level": 2,
+      "pageStart": 35,
+      "pageEnd": 36,
+      "labelStart": "26",
+      "labelEnd": "27",
+      "words": 298,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise",
+          "heading": true
+        },
+        {
+          "term": "cross-enterprise collaboration",
+          "heading": false
+        },
+        {
+          "term": "employees",
+          "heading": false
+        },
+        {
+          "term": "both organizations",
+          "heading": false
+        },
+        {
+          "term": "federated",
+          "heading": false
+        },
+        {
+          "term": "access",
+          "heading": false
+        },
+        {
+          "term": "federal",
+          "heading": false
+        },
+        {
+          "term": "hosted",
+          "heading": false
+        }
+      ],
+      "extract": "A fourth use case is cross-enterprise collaboration. For example, there is a project involving employees from Enterprise A and Enterprise B (see Figure 11). The two enterprises may be separate federal agencies (G2G) or even a federal agency and a private enterprise (G2B). Enterprise A operates the database used for the project but must allow access to the data for certain members of Enterprise B. Enterprise A can",
+      "extractCut": true
+    },
+    {
+      "id": "sec-025-45-enterprise-with-public--or-customer-facing-se",
+      "number": "4.5",
+      "title": "Enterprise with Public- or Customer-Facing Services",
+      "level": 2,
+      "pageStart": 36,
+      "pageEnd": 37,
+      "labelStart": "27",
+      "labelEnd": "28",
+      "words": 332,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise",
+          "heading": true
+        },
+        {
+          "term": "employee dependents",
+          "heading": false
+        },
+        {
+          "term": "public",
+          "heading": true
+        },
+        {
+          "term": "login credentials",
+          "heading": false
+        },
+        {
+          "term": "requesting assets",
+          "heading": false
+        },
+        {
+          "term": "public web",
+          "heading": false
+        },
+        {
+          "term": "web page",
+          "heading": false
+        },
+        {
+          "term": "business relationship",
+          "heading": false
+        }
+      ],
+      "extract": "A common feature in many enterprises is a public-facing service that may or may not include user registration (i.e., users must create or have been issued a set of login credentials). Such services could be for the general public, a set of customers with an existing business relationship, or a special set of nonenterprise users such as employee dependents. In all cases, it is likely that requesting assets are not",
+      "extractCut": true
+    },
+    {
+      "id": "sec-026-5-threats-associated-with-zero-trust-architectur",
+      "number": "5",
+      "title": "Threats Associated with Zero Trust Architecture",
+      "level": 1,
+      "pageStart": 37,
+      "pageEnd": 37,
+      "labelStart": "28",
+      "labelEnd": "28",
+      "words": 50,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "threats",
+          "heading": true
+        },
+        {
+          "term": "cybersecurity",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        }
+      ],
+      "extract": "No enterprise can eliminate cybersecurity risk. When complemented with existing cybersecurity policies and guidance, identity and access management, continuous monitoring, and general cyber hygiene, a properly implemented and maintained ZTA can reduce overall risk and protect against common threats. However, some threats have unique features when implementing a ZTA. 5.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-027-51-subversion-of-zta-decision-process",
+      "number": "5.1",
+      "title": "Subversion of ZTA Decision Process",
+      "level": 2,
+      "pageStart": 37,
+      "pageEnd": 37,
+      "labelStart": "28",
+      "labelEnd": "28",
+      "words": 118,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "configured",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        }
+      ],
+      "extract": "In ZTA, the policy engine and policy administrator are the key components of the entire enterprise. No communication between enterprise resources occurs unless it is approved and possibly configured by the PE and PA. This means that these components must be properly configured and maintained. Any enterprise administrator with configuration access to the PE’s rules may be able to perform unapproved changes or make",
+      "extractCut": true
+    },
+    {
+      "id": "sec-028-52-denial-of-service-or-network-disruption",
+      "number": "5.2",
+      "title": "Denial-of-Service or Network Disruption",
+      "level": 2,
+      "pageStart": 37,
+      "pageEnd": 38,
+      "labelStart": "28",
+      "labelEnd": "29",
+      "words": 328,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise subjects",
+          "heading": false
+        },
+        {
+          "term": "enterprise resources",
+          "heading": false
+        },
+        {
+          "term": "network",
+          "heading": true
+        },
+        {
+          "term": "disruption",
+          "heading": true
+        },
+        {
+          "term": "dos",
+          "heading": false
+        },
+        {
+          "term": "pep",
+          "heading": false
+        },
+        {
+          "term": "internet",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        }
+      ],
+      "extract": "In ZTA, the PA is the key component for resource access. Enterprise resources cannot connect to each other without the PA’s permission and, possibly, configuration action. If an attacker disrupts or denies access to the PEP(s) or PE/PA (i.e., DoS attack or route hijack), it can adversely impact enterprise operations. Enterprises can mitigate this threat by having the policy enforcement reside in a properly secured",
+      "extractCut": true
+    },
+    {
+      "id": "sec-029-53-stolen-credentialsinsider-threat",
+      "number": "5.3",
+      "title": "Stolen Credentials/Insider Threat",
+      "level": 2,
+      "pageStart": 38,
+      "pageEnd": 38,
+      "labelStart": "29",
+      "labelEnd": "29",
+      "words": 317,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "compromised account",
+          "heading": false
+        },
+        {
+          "term": "insider",
+          "heading": true
+        },
+        {
+          "term": "credentials",
+          "heading": true
+        },
+        {
+          "term": "access patterns",
+          "heading": false
+        },
+        {
+          "term": "stolen",
+          "heading": true
+        },
+        {
+          "term": "attackers",
+          "heading": false
+        },
+        {
+          "term": "employee",
+          "heading": false
+        },
+        {
+          "term": "valuable",
+          "heading": false
+        }
+      ],
+      "extract": "Properly implemented ZT, information security and resiliency policies, and best practices reduce the risk of an attacker gaining broad access via stolen credentials or insider attack. The ZT principle of no implicit trust based on network location means attackers need to compromise an existing account or device to gain a foothold in an enterprise. A properly developed and implemented ZTA should prevent a compromised",
+      "extractCut": true
+    },
+    {
+      "id": "sec-030-54-visibility-on-the-network",
+      "number": "5.4",
+      "title": "Visibility on the Network",
+      "level": 2,
+      "pageStart": 38,
+      "pageEnd": 39,
+      "labelStart": "29",
+      "labelEnd": "30",
+      "words": 207,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "encrypted traffic",
+          "heading": false
+        },
+        {
+          "term": "network",
+          "heading": true
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "machine learning",
+          "heading": false
+        },
+        {
+          "term": "mentioned",
+          "heading": false
+        },
+        {
+          "term": "attacker",
+          "heading": false
+        }
+      ],
+      "extract": "As mentioned in Section 3.4.1, all traffic is inspected and logged on the network and analyzed to identify and react to potential attacks against the enterprise. However, as also mentioned, some (possibly the majority) of the traffic on the enterprise network may be opaque to layer 3 network analysis tools. This traffic may originate from nonenterprise-owned assets (e.g., contracted services that use the enterprise",
+      "extractCut": true
+    },
+    {
+      "id": "sec-031-55-storage-of-system-and-network-information",
+      "number": "5.5",
+      "title": "Storage of System and Network Information",
+      "level": 2,
+      "pageStart": 39,
+      "pageEnd": 39,
+      "labelStart": "30",
+      "labelEnd": "30",
+      "words": 188,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "network traffic",
+          "heading": false
+        },
+        {
+          "term": "access policies",
+          "heading": false
+        },
+        {
+          "term": "reconnaissance",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "attacker",
+          "heading": false
+        },
+        {
+          "term": "information",
+          "heading": true
+        }
+      ],
+      "extract": "A related threat to enterprise monitoring and analysis of network traffic is the analysis component itself. If monitor scans, network traffic, and metadata are being stored for building contextual policies, forensics, or later analysis, that data becomes a target for attackers. Just like network diagrams, configuration files, and other assorted network architecture documents, these resources should be protected. If",
+      "extractCut": true
+    },
+    {
+      "id": "sec-032-56-reliance-on-proprietary-data-formats-or-solut",
+      "number": "5.6",
+      "title": "Reliance on Proprietary Data Formats or Solutions",
+      "level": 2,
+      "pageStart": 39,
+      "pageEnd": 39,
+      "labelStart": "30",
+      "labelEnd": "30",
+      "words": 192,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "service providers",
+          "heading": false
+        },
+        {
+          "term": "proprietary",
+          "heading": true
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "disruption",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        },
+        {
+          "term": "assets",
+          "heading": false
+        }
+      ],
+      "extract": "ZTA relies on several different data sources to make access decisions, including information about the requesting subject, asset used, enterprise and external intelligence, and threat analysis. Often, the assets used to store and process this information do not have a common, open standard on how to interact and exchange information. This can lead to instances where an enterprise is locked into a subset of providers",
+      "extractCut": true
+    },
+    {
+      "id": "sec-033-57-use-of-non-person-entities-npe-in-zta-adminis",
+      "number": "5.7",
+      "title": "Use of Non-person Entities (NPE) in ZTA Administration",
+      "level": 2,
+      "pageStart": 39,
+      "pageEnd": 41,
+      "labelStart": "30",
+      "labelEnd": "32",
+      "words": 270,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "mistaken",
+          "heading": false
+        },
+        {
+          "term": "npe",
+          "heading": true
+        },
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "automated technology",
+          "heading": false
+        },
+        {
+          "term": "attacker",
+          "heading": false
+        },
+        {
+          "term": "software agent",
+          "heading": false
+        }
+      ],
+      "extract": "Artificial intelligence and other software-based agents are being deployed to manage security issues on enterprise networks. These components need to interact with the management components of ZTA (e.g., policy engine, policy administrator), sometimes in lieu of a human administrator. How these components authenticate themselves in an enterprise implementing a NIST SP 800-207 ZERO TRUST ARCHITECTURE 31 This",
+      "extractCut": true
+    },
+    {
+      "id": "sec-034-6-zero-trust-architecture-and-possible-interacti",
+      "number": "6",
+      "title": "Zero Trust Architecture and Possible Interactions with Existing Federal Guidance",
+      "level": 1,
+      "pageStart": 41,
+      "pageEnd": 41,
+      "labelStart": "32",
+      "labelEnd": "32",
+      "words": 72,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "guidance",
+          "heading": true
+        },
+        {
+          "term": "zero",
+          "heading": true
+        },
+        {
+          "term": "federal",
+          "heading": true
+        }
+      ],
+      "extract": "Guidance Several existing federal policies and guidance intersect with the planning, deployment, and operation of a ZTA. These policies do not prohibit an enterprise from moving to a more zero trust-oriented architecture but can influence development of a zero trust strategy for an agency. When complemented with existing cybersecurity policies and guidance, ICAM, continuous monitoring, and general cyber hygiene, ZTA",
+      "extractCut": true
+    },
+    {
+      "id": "sec-035-61-zta-and-nist-risk-management-framework",
+      "number": "6.1",
+      "title": "ZTA and NIST Risk Management Framework",
+      "level": 2,
+      "pageStart": 41,
+      "pageEnd": 41,
+      "labelStart": "32",
+      "labelEnd": "32",
+      "words": 154,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "risk",
+          "heading": true
+        },
+        {
+          "term": "mission",
+          "heading": false
+        },
+        {
+          "term": "rmf",
+          "heading": false
+        },
+        {
+          "term": "nist",
+          "heading": true
+        }
+      ],
+      "extract": "A ZTA deployment involves developing access polices around acceptable risk to the designated mission or business process (see Section 7.3.3). It is possible to deny all network access to a resource and allow access only via a connected terminal, but this is disproportionately restrictive in the majority of cases and could inhibit work from being accomplished. For a federal agency to perform its mission, there is an",
+      "extractCut": true
+    },
+    {
+      "id": "sec-036-62-zero-trust-and-nist-privacy-framework",
+      "number": "6.2",
+      "title": "Zero Trust and NIST Privacy Framework",
+      "level": 2,
+      "pageStart": 41,
+      "pageEnd": 42,
+      "labelStart": "32",
+      "labelEnd": "33",
+      "words": 243,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "privacy framework",
+          "heading": true
+        },
+        {
+          "term": "privacy risks",
+          "heading": false
+        },
+        {
+          "term": "zero trust",
+          "heading": true
+        },
+        {
+          "term": "nist",
+          "heading": true
+        },
+        {
+          "term": "private information",
+          "heading": false
+        },
+        {
+          "term": "trust architecture",
+          "heading": false
+        },
+        {
+          "term": "nistpriv",
+          "heading": false
+        },
+        {
+          "term": "traffic",
+          "heading": false
+        }
+      ],
+      "extract": "Protecting the privacy of users and private information (e.g., personally identifiable information) is a prime concern for organizations. Privacy and data protections are included in compliance programs such as FISMA and the Heath Insurance Portability and Accountability Act (HIPAA). In response, NIST produced a Privacy Framework for use by organizations [NISTPRIV]. This document provides a framework to describe",
+      "extractCut": true
+    },
+    {
+      "id": "sec-037-63-zta-and-federal-identity-credential-and-acces",
+      "number": "6.3",
+      "title": "ZTA and Federal Identity, Credential, and Access Management Architecture",
+      "level": 2,
+      "pageStart": 42,
+      "pageEnd": 42,
+      "labelStart": "33",
+      "labelEnd": "33",
+      "words": 177,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "identity management",
+          "heading": true
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "federal",
+          "heading": true
+        },
+        {
+          "term": "icam",
+          "heading": false
+        },
+        {
+          "term": "office",
+          "heading": false
+        }
+      ],
+      "extract": "Subject provisioning is a key component of ZTA. The policy engine cannot determine if attempted connections are authorized to connect to a resource if the PE has insufficient information to identify associated subjects and resources. Strong subject provision and authentication policies need to be in place before moving to a more zero trust–aligned deployment. Enterprises need a clear set of subject attributes and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-038-64-zta-and-trusted-internet-connections-30",
+      "number": "6.4",
+      "title": "ZTA and Trusted Internet Connections 3.0",
+      "level": 2,
+      "pageStart": 42,
+      "pageEnd": 43,
+      "labelStart": "33",
+      "labelEnd": "34",
+      "words": 356,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "tic",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "trust zones",
+          "heading": false
+        },
+        {
+          "term": "pep security",
+          "heading": false
+        },
+        {
+          "term": "security capabilities",
+          "heading": false
+        },
+        {
+          "term": "agency perimeter",
+          "heading": false
+        },
+        {
+          "term": "whereas zta",
+          "heading": false
+        },
+        {
+          "term": "network-based security",
+          "heading": false
+        }
+      ],
+      "extract": "TIC is a federal cybersecurity initiative jointly managed by OMB, DHS, and the General Services Administration (GSA), and is intended to establish a network security baseline across the Federal Government. Historically, TIC was a perimeter-based cybersecurity strategy which required agencies to consolidate and monitor their external network connections. Inherent in TIC 1.0 and TIC 2.0 is the assumption that the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-039-65-zta-and-einstein-ncps-national-cybersecurity",
+      "number": "6.5",
+      "title": "ZTA and EINSTEIN (NCPS – National Cybersecurity Protection System)",
+      "level": 2,
+      "pageStart": 43,
+      "pageEnd": 43,
+      "labelStart": "34",
+      "labelEnd": "34",
+      "words": 264,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ncps",
+          "heading": true
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "federal government",
+          "heading": false
+        },
+        {
+          "term": "situational awareness",
+          "heading": false
+        },
+        {
+          "term": "einstein",
+          "heading": true
+        },
+        {
+          "term": "federal agencies",
+          "heading": false
+        },
+        {
+          "term": "zta systems",
+          "heading": false
+        },
+        {
+          "term": "cyber",
+          "heading": false
+        }
+      ],
+      "extract": "NCPS (operationally known as EINSTEIN) is an integrated system-of-systems that delivers intrusion detection, advanced analytics, information sharing, and intrusion prevention capabilities to defend the Federal Government from cyber threats. The goals of NCPS, which align with the overarching goals of zero trust, are to manage cyber risk, improve cyber protection, and empower partners to secure cyber space. EINSTEIN",
+      "extractCut": true
+    },
+    {
+      "id": "sec-040-66-zta-and-dhs-continuous-diagnostics-and-mitiga",
+      "number": "6.6",
+      "title": "ZTA and DHS Continuous Diagnostics and Mitigations (CDM) Program",
+      "level": 2,
+      "pageStart": 43,
+      "pageEnd": 44,
+      "labelStart": "34",
+      "labelEnd": "35",
+      "words": 296,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "dhs cdm",
+          "heading": true
+        },
+        {
+          "term": "cdm program",
+          "heading": true
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "agencies",
+          "heading": false
+        },
+        {
+          "term": "hwam",
+          "heading": false
+        },
+        {
+          "term": "network",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "posture",
+          "heading": false
+        }
+      ],
+      "extract": "The DHS CDM program is an effort to improve federal agency information technology (IT). Vital to that posture is an agency’s insight into the assets, configuration, and subjects within itself. To protect a system, agencies need to set up processes to discover and understand the basic components and actors in their infrastructure: • What is connected? What devices, applications, and services are used by the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-041-67-zta-cloud-smart-and-the-federal-data-strategy",
+      "number": "6.7",
+      "title": "ZTA, Cloud Smart, and the Federal Data Strategy",
+      "level": 2,
+      "pageStart": 44,
+      "pageEnd": 45,
+      "labelStart": "35",
+      "labelEnd": "36",
+      "words": 199,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "federal data",
+          "heading": true
+        },
+        {
+          "term": "data strategy",
+          "heading": true
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "cloud",
+          "heading": true
+        },
+        {
+          "term": "agencies",
+          "heading": false
+        },
+        {
+          "term": "smart",
+          "heading": true
+        }
+      ],
+      "extract": "The Cloud Smart8 strategy, updated Data Center Optimization Initiative [M-19-19] policy, and Federal Data Strategy9 all influence some requirements for agencies planning a ZTA. These policies require agencies to inventory and assess how they collect, store, and access data, both on premises and in the cloud. This inventory is critical to determining what business processes and resources would benefit from",
+      "extractCut": true
+    },
+    {
+      "id": "sec-042-7-migrating-to-a-zero-trust-architecture",
+      "number": "7",
+      "title": "Migrating to a Zero Trust Architecture",
+      "level": 1,
+      "pageStart": 45,
+      "pageEnd": 45,
+      "labelStart": "36",
+      "labelEnd": "36",
+      "words": 163,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "business processes",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "modernization",
+          "heading": false
+        },
+        {
+          "term": "trust",
+          "heading": true
+        },
+        {
+          "term": "assets",
+          "heading": false
+        }
+      ],
+      "extract": "Implementing a ZTA is a journey rather than a wholesale replacement of infrastructure or processes. An organization should seek to incrementally implement zero trust principles, process changes, and technology solutions that protect its highest value data assets. Most enterprises will continue to operate in a hybrid zero-trust/perimeter-based mode for an indefinite period while continuing to invest in ongoing IT",
+      "extractCut": true
+    },
+    {
+      "id": "sec-043-71-pure-zero-trust-architecture",
+      "number": "7.1",
+      "title": "Pure Zero Trust Architecture",
+      "level": 2,
+      "pageStart": 45,
+      "pageEnd": 45,
+      "labelStart": "36",
+      "labelEnd": "36",
+      "words": 227,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zero trust",
+          "heading": true
+        },
+        {
+          "term": "architecture",
+          "heading": true
+        },
+        {
+          "term": "infrastructure",
+          "heading": false
+        },
+        {
+          "term": "building",
+          "heading": false
+        },
+        {
+          "term": "responsibility",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "organizational",
+          "heading": false
+        }
+      ],
+      "extract": "In a greenfield approach, it would be possible to build a zero trust architecture from the ground up. Assuming the enterprise knows the applications/services and workflows that it wants to use for its operations, it can produce an architecture based on zero trust tenets for those workflows. Once the workflows are identified, the enterprise can narrow down the components needed and begin to map how the individual",
+      "extractCut": true
+    },
+    {
+      "id": "sec-044-72-hybrid-zta-and-perimeter-based-architecture",
+      "number": "7.2",
+      "title": "Hybrid ZTA and Perimeter-Based Architecture",
+      "level": 2,
+      "pageStart": 45,
+      "pageEnd": 46,
+      "labelStart": "36",
+      "labelEnd": "37",
+      "words": 152,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "architecture",
+          "heading": true
+        },
+        {
+          "term": "perimeter-based",
+          "heading": true
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        }
+      ],
+      "extract": "It is unlikely that any significant enterprise can migrate to zero trust in a single technology refresh cycle. There may be an indefinite period when ZTA workflows coexist with non-ZTA workflows in an enterprise. Migration to a ZTA approach to the enterprise may take place one business process at a time. The enterprise needs to make sure that the common elements (e.g., ID management, device management, event",
+      "extractCut": true
+    },
+    {
+      "id": "sec-045-73-steps-to-introducing-zta-to-a-perimeter-based",
+      "number": "7.3",
+      "title": "Steps to Introducing ZTA to a Perimeter-Based Architected Network",
+      "level": 2,
+      "pageStart": 46,
+      "pageEnd": 47,
+      "labelStart": "37",
+      "labelEnd": "38",
+      "words": 287,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "zta deployment",
+          "heading": false
+        },
+        {
+          "term": "business processes",
+          "heading": false
+        },
+        {
+          "term": "certificate",
+          "heading": false
+        },
+        {
+          "term": "steps",
+          "heading": true
+        },
+        {
+          "term": "cycle",
+          "heading": false
+        },
+        {
+          "term": "updating",
+          "heading": false
+        },
+        {
+          "term": "conducted",
+          "heading": false
+        }
+      ],
+      "extract": "Migrating to ZTA requires an organization to have detailed knowledge of its assets (physical and virtual), subjects (including user privileges), and business processes. This knowledge is accessed by the PE when evaluating resource requests. Incomplete knowledge will most often lead to a business process failure where the PE denies requests due to insufficient information. This is especially an issue if there are",
+      "extractCut": true
+    },
+    {
+      "id": "sec-046-731-identify-actors-on-the-enterprise",
+      "number": "7.3.1",
+      "title": "Identify Actors on the Enterprise",
+      "level": 3,
+      "pageStart": 47,
+      "pageEnd": 47,
+      "labelStart": "38",
+      "labelEnd": "38",
+      "words": 115,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise",
+          "heading": true
+        },
+        {
+          "term": "administrators",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        },
+        {
+          "term": "blanket",
+          "heading": false
+        }
+      ],
+      "extract": "For a zero trust enterprise to operate, the PE must have knowledge of enterprise subjects. Subjects could encompass both human and possible NPEs, such as service accounts that interact with resources. Users with special privileges, such as developers or system administrators, require additional scrutiny when being assigned attributes or roles. In many legacy security architectures, these accounts may have blanket",
+      "extractCut": true
+    },
+    {
+      "id": "sec-047-732-identify-assets-owned-by-the-enterprise",
+      "number": "7.3.2",
+      "title": "Identify Assets Owned by the Enterprise",
+      "level": 3,
+      "pageStart": 47,
+      "pageEnd": 48,
+      "labelStart": "38",
+      "labelEnd": "39",
+      "words": 442,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "enterprise assets",
+          "heading": true
+        },
+        {
+          "term": "zta",
+          "heading": false
+        },
+        {
+          "term": "shadow",
+          "heading": false
+        },
+        {
+          "term": "enterprise-owned",
+          "heading": false
+        },
+        {
+          "term": "network location",
+          "heading": false
+        },
+        {
+          "term": "access decisions",
+          "heading": false
+        },
+        {
+          "term": "identify",
+          "heading": true
+        },
+        {
+          "term": "swam",
+          "heading": false
+        }
+      ],
+      "extract": "As mentioned in Section 2.1, one of the key requirements of ZTA is the ability to identify and manage devices. ZTA also requires the ability to identify and monitor nonenterprise-owned devices that may be on enterprise-owned network infrastructure or that access enterprise resources. The ability to manage enterprise assets is key to the successful deployment of ZTA. This includes hardware components (e.g., laptops,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-048-733-identify-key-processes-and-evaluate-risks-as",
+      "number": "7.3.3",
+      "title": "Identify Key Processes and Evaluate Risks Associated with Executing Process",
+      "level": 3,
+      "pageStart": 48,
+      "pageEnd": 48,
+      "labelStart": "39",
+      "labelEnd": "39",
+      "words": 177,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "business processes",
+          "heading": false
+        },
+        {
+          "term": "business process",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": false
+        },
+        {
+          "term": "resource access",
+          "heading": false
+        },
+        {
+          "term": "candidates",
+          "heading": false
+        }
+      ],
+      "extract": "The third inventory that an agency should undertake is to identify and rank the business processes, data flows, and their relation in the missions of the agency. Business processes should inform the circumstances under which resource access requests are granted and denied. An enterprise may wish to start with a low-risk business process for the first transition to ZTA as disruptions will likely not negatively impact",
+      "extractCut": true
+    },
+    {
+      "id": "sec-049-734-formulating-policies-for-the-zta-candidate",
+      "number": "7.3.4",
+      "title": "Formulating Policies for the ZTA Candidate",
+      "level": 3,
+      "pageStart": 48,
+      "pageEnd": 49,
+      "labelStart": "39",
+      "labelEnd": "40",
+      "words": 226,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "candidate",
+          "heading": true
+        },
+        {
+          "term": "workflow",
+          "heading": false
+        },
+        {
+          "term": "zta",
+          "heading": true
+        },
+        {
+          "term": "administrators",
+          "heading": false
+        },
+        {
+          "term": "asset",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        }
+      ],
+      "extract": "The process of identifying a candidate service or business workflow depends on several factors: the importance of the process to the organization, the group of subjects affected, and the current state of resources used for the workflow. The value of the asset or workflow based on risk to the asset or workflow can be evaluated using the NIST Risk Management Framework [SP800-37]. After the asset or workflow is",
+      "extractCut": true
+    },
+    {
+      "id": "sec-050-735-identifying-candidate-solutions",
+      "number": "7.3.5",
+      "title": "Identifying Candidate Solutions",
+      "level": 3,
+      "pageStart": 49,
+      "pageEnd": 49,
+      "labelStart": "40",
+      "labelEnd": "40",
+      "words": 319,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "candidate solutions",
+          "heading": true
+        },
+        {
+          "term": "candidate business",
+          "heading": false
+        },
+        {
+          "term": "pilot program",
+          "heading": false
+        },
+        {
+          "term": "some solutions",
+          "heading": false
+        },
+        {
+          "term": "business processes",
+          "heading": false
+        },
+        {
+          "term": "business process",
+          "heading": false
+        },
+        {
+          "term": "solution require",
+          "heading": false
+        },
+        {
+          "term": "process resources",
+          "heading": false
+        }
+      ],
+      "extract": "Once a list of candidate business processes has been developed, enterprise architects can compose a list of candidate solutions. Some deployment models (see Section 3.1) are better suited to particular workflows and current enterprise ecosystems. Likewise, some vendor solutions are better suited to some use cases than others. These are some factors to consider: • Does the solution require that components be",
+      "extractCut": true
+    },
+    {
+      "id": "sec-051-736-initial-deployment-and-monitoring",
+      "number": "7.3.6",
+      "title": "Initial Deployment and Monitoring",
+      "level": 3,
+      "pageStart": 49,
+      "pageEnd": 50,
+      "labelStart": "40",
+      "labelEnd": "41",
+      "words": 250,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "initial deployment",
+          "heading": true
+        },
+        {
+          "term": "lenient",
+          "heading": false
+        },
+        {
+          "term": "monitoring",
+          "heading": true
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "logs",
+          "heading": false
+        },
+        {
+          "term": "workflow",
+          "heading": false
+        },
+        {
+          "term": "policies",
+          "heading": false
+        }
+      ],
+      "extract": "Once the candidate workflow and ZTA components are chosen, the initial deployment can start. Enterprise administrators must implement the developed policies by using the selected components but may wish to operate in an observation and monitoring mode at first. Few enterprise policy sets are complete in their first iterations: important user accounts (e.g., administrator accounts) may be denied access to resources",
+      "extractCut": true
+    },
+    {
+      "id": "sec-052-737-expanding-the-zta",
+      "number": "7.3.7",
+      "title": "Expanding the ZTA",
+      "level": 3,
+      "pageStart": 50,
+      "pageEnd": 51,
+      "labelStart": "41",
+      "labelEnd": "42",
+      "words": 205,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "workflow",
+          "heading": false
+        },
+        {
+          "term": "devices",
+          "heading": false
+        },
+        {
+          "term": "phase",
+          "heading": false
+        },
+        {
+          "term": "done",
+          "heading": false
+        },
+        {
+          "term": "enterprise",
+          "heading": false
+        },
+        {
+          "term": "architecture",
+          "heading": false
+        }
+      ],
+      "extract": "When enough confidence is gained and the workflow policy set is refined, the enterprise enters the steady operational phase. The network and assets are still monitored, and traffic is logged (see Section 2.1), but responses and policy modifications are done at a lower tempo as they should not be severe. The subjects and stakeholders of the resources and processes involved should also provide feedback to improve",
+      "extractCut": true
+    },
+    {
+      "id": "sec-053-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 51,
+      "pageEnd": 59,
+      "labelStart": "42",
+      "labelEnd": "50",
+      "words": 3104,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "zta components",
+          "heading": false
+        },
+        {
+          "term": "zta tenets",
+          "heading": false
+        },
+        {
+          "term": "trust enterprise",
+          "heading": false
+        },
+        {
+          "term": "zta ecosystem",
+          "heading": false
+        },
+        {
+          "term": "adopting zta",
+          "heading": false
+        },
+        {
+          "term": "zero trust",
+          "heading": false
+        },
+        {
+          "term": "zta environments",
+          "heading": false
+        },
+        {
+          "term": "zta conflicts",
+          "heading": false
+        }
+      ],
+      "extract": "[ACT-IAC] American Council for Technology and Industry Advisory Council (2019) Zero Trust Cybersecurity Current Trends. Available at https://www.actiac.org/zero-trust-cybersecurity-current-trends [Anderson] Anderson B, McGrew D (2017) Machine Learning for Encrypted Malware Traffic Classification: Accounting for Noisy Labels and Non- Stationarity. Proceedings of the 23rd ACM SIGKDD International Conference on",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "tocAlignment": {
+      "listed_not_found": {
+        "count": 5,
+        "items": [
+          "A Zero Trust View of a Network",
+          "List of Appendices Appendix A— Acronyms",
+          "Policies",
+          "List of Figures Figure 1: Zero Trust Access",
+          "List of Tables Table B-1: Summary of Identified Deployment Gaps"
+        ]
+      },
+      "found_not_listed": {
+        "count": 6,
+        "items": [
+          "3 Access to individual enterprise resources is granted on a per-session basis. Trust in",
+          "4 Access to resources is determined by dynamic policy—including the observable state",
+          "1 The entire enterprise private network is not considered an implicit trust zone. Assets",
+          "8 Remote enterprise assets should be able to access enterprise resources without",
+          "9 The infrastructure used to support the ZTA access decision process should be made",
+          "10 Enterprise assets may not be able to reach certain PEPs due to policy or observable"
+        ]
+      },
+      "page_mismatch": {
+        "count": 0,
+        "items": []
+      }
+    },
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "trust enterprise",
+      "heading": false
+    },
+    {
+      "term": "enterprise network",
+      "heading": true
+    },
+    {
+      "term": "access enterprise",
+      "heading": true
+    },
+    {
+      "term": "enterprise assets",
+      "heading": true
+    },
+    {
+      "term": "enterprise resources",
+      "heading": false
+    },
+    {
+      "term": "enterprise infrastructure",
+      "heading": false
+    },
+    {
+      "term": "enterprise business",
+      "heading": false
+    },
+    {
+      "term": "enterprise policy",
+      "heading": false
+    },
+    {
+      "term": "enterprise subjects",
+      "heading": false
+    },
+    {
+      "term": "enterprise administrator",
+      "heading": false
+    },
+    {
+      "term": "enterprise perimeter",
+      "heading": false
+    },
+    {
+      "term": "enterprise cybersecurity",
+      "heading": false
+    }
+  ],
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": "ii",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 5,
+      "label": "iii",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 6,
+      "label": "iv",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 7,
+      "label": "v",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 8,
+      "label": "vi",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 9,
+      "label": "vii",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 10,
+      "label": "1",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 11,
+      "label": "2",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 12,
+      "label": "3",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 13,
+      "label": "4",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 14,
+      "label": "5",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 15,
+      "label": "6",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 16,
+      "label": "7",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 17,
+      "label": "8",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 18,
+      "label": "9",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 19,
+      "label": "10",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 20,
+      "label": "11",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 21,
+      "label": "12",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 22,
+      "label": "13",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 23,
+      "label": "14",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 24,
+      "label": "15",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 25,
+      "label": "16",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 26,
+      "label": "17",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 27,
+      "label": "18",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 28,
+      "label": "19",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 29,
+      "label": "20",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 30,
+      "label": "21",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 31,
+      "label": "22",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 32,
+      "label": "23",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 33,
+      "label": "24",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 34,
+      "label": "25",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 35,
+      "label": "26",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 36,
+      "label": "27",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 37,
+      "label": "28",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 38,
+      "label": "29",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 39,
+      "label": "30",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 40,
+      "label": "31",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 41,
+      "label": "32",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 42,
+      "label": "33",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 43,
+      "label": "34",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 44,
+      "label": "35",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 45,
+      "label": "36",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 46,
+      "label": "37",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 47,
+      "label": "38",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 48,
+      "label": "39",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 49,
+      "label": "40",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 50,
+      "label": "41",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 51,
+      "label": "42",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 52,
+      "label": "43",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 53,
+      "label": "44",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 54,
+      "label": "45",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 55,
+      "label": "46",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 56,
+      "label": "47",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 57,
+      "label": "48",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 58,
+      "label": "49",
+      "source": "printed",
+      "confidence": 0.85
+    },
+    {
+      "physical": 59,
+      "label": "50",
+      "source": "printed",
+      "confidence": 0.85
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "Zero Trust Access",
+      "page": 14,
+      "pageLabel": "5",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Core Zero Trust Logical Components",
+      "page": 18,
+      "pageLabel": "9",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Device Agent/Gateway Model",
+      "page": 23,
+      "pageLabel": "14",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Enclave Gateway Model",
+      "page": 24,
+      "pageLabel": "15",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "5",
+      "title": "Resource Portal Model",
+      "page": 25,
+      "pageLabel": "16",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "6",
+      "title": "Application Sandboxes",
+      "page": 26,
+      "pageLabel": "17",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "7",
+      "title": "Trust Algorithm Input",
+      "page": 27,
+      "pageLabel": "18",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "8",
+      "title": "Enterprise with Remote Employees",
+      "page": 33,
+      "pageLabel": "24",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "9",
+      "title": "Multi-cloud Use Case",
+      "page": 33,
+      "pageLabel": "24",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "10",
+      "title": "Enterprise with Nonemployee Access",
+      "page": 34,
+      "pageLabel": "25",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "11",
+      "title": "Cross-Enterprise Collaboration",
+      "page": 35,
+      "pageLabel": "26",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "12",
+      "title": "ZTA Deployment Cycle",
+      "page": 46,
+      "pageLabel": "37",
+      "confidence": 1,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic",
+        "listed"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant",
+    "branch": "main",
+    "dir": "cat-harness/library/nist-sp-800-207"
+  }
+}

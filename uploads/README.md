@@ -60,6 +60,7 @@ It begins at the start **event** “A contributor has a file for the folio”. A
 | [`arxiv-licence-assumed-1991-2003/`](arxiv-licence-assumed-1991-2003/) | _nothing declares what this holds_ | |
 | [`arxiv-license-information/`](arxiv-license-information/) | _nothing declares what this holds_ | |
 | [`github-docs-actions-secure-use-reference/`](github-docs-actions-secure-use-reference/) | _nothing declares what this holds_ | |
+| [`nist-sp-800-207/`](nist-sp-800-207/) | _nothing declares what this holds_ | |
 | [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | _nothing declares what this holds_ | |
 | [`spdx-3-1-rc1-machine-readable/`](spdx-3-1-rc1-machine-readable/) | _nothing declares what this holds_ | |
 | [`who-dpi-h-reference-architecture-draft-v1/`](who-dpi-h-reference-architecture-draft-v1/) | _nothing declares what this holds_ | |
