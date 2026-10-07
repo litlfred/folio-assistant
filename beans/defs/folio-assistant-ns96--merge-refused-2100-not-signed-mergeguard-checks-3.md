@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ns96
 title: 'Merge refused: #2100 not signed (merge:guard checks 3 and 4)'
-status: todo
+status: completed
 type: bug
 created_at: 2026-10-04T14:42:21Z
-updated_at: 2026-10-04T14:42:21Z
+updated_at: 2026-10-07T02:37:36Z
 parent: folio-assistant-nok9
 blocking:
     - folio-assistant-uoob
@@ -28,7 +28,16 @@ No takeover plan was written; the PR comments carry its state.
 A comment on PR #2100, plus a message to the Merge Manager role.
 
 ## Done when
-- [ ] #2100 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
-- [ ] the owed `pull_request` CI is green on that head
-- [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [ ] `bun run merge:guard 2100` passes all 7 checks, and it lands (or the owner closes it)
+- [x] #2100 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
+- [x] the owed `pull_request` CI is green on that head
+- [x] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
+- [x] `bun run merge:guard 2100` passes all 7 checks, and it lands (or the owner closes it)
+
+_2026-10-07T02:37:33Z_ — Claimed by claude/ns96-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Evidence
+
+Closed on evidence of landed work:
+- PR #2100 was merged into `main` via train #2113 in commit `c858234ad5f8` on 2026-10-04T17:42:26Z.
+- Re-derived independently on 2026-10-07: PR #2100 state is `MERGED` with commit `c858234ad5f8` present in `main` history.
+
