@@ -80,7 +80,7 @@ describe("fhir-cache-seed-npm", () => {
   describe("validPart", () => {
     test("accepts safe names and versions", () => {
       expect(validPart("hl7.fhir.r4.core")).toBe(true);
-      expect(validPart("example.org.ig.base")).toBe(true);
+      expect(validPart("smart.who.int.base")).toBe(true);
       expect(validPart("1.0.0")).toBe(true);
       expect(validPart("2.0.0-ballot")).toBe(true);
       expect(validPart("current")).toBe(true);
