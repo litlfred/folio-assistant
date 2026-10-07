@@ -223,6 +223,7 @@ beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
 bun run beans:claim <id>                 # claim an item
+bun run beans:query --named <name>       # fast in-memory SPARQL analytics (Oxigraph)
 ```
 
 **Two things were wrong with the line this replaces**, and the second matters

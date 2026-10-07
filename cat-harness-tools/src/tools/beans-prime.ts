@@ -103,7 +103,10 @@ function workflowPositions(repoRoot: string): string {
   return lines.join("\n");
 }
 
+import { registerBeanQueryTool } from "./bean-query.ts";
+
 export function registerBeansTools(server: McpServer, repoRoot: string): void {
+  registerBeanQueryTool(server, repoRoot);
   server.tool(
     "work_plan_prime",
     "Prime yourself with the current beans work-plan (session + cross-session/" +

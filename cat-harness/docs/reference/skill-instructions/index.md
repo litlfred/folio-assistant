@@ -424,6 +424,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
+| [Oxigraph Multi-Graph Search & Discovery for WHO IRIS](iris-oxigraph.html) | `iris-oxigraph` | — | This skill defines how to use **Oxigraph** (in-memory WASM on the client, and native in Bun/Node on  |
 
 ## Mathematical authoring (authoring-math)
 
