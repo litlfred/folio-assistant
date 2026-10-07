@@ -21104,6 +21104,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountConsentSchema.by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who consented: a person, by the identity they act under here."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.evidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountConsentSchema.evidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the consent was given (an issue comment, a chat session), so it can be read."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.evidence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountconsentschema.ref",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountConsentSchema.ref"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The pin consented to. Must equal the mount's `ref`; a moved pin asks again."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountConsentSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountsignatureschema.network",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountSignatureSchema.network"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The trust network the key is listed in, e.g. `gdhcn`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.network",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/mount-trust.mountsignatureschema.signeddigest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountSignatureSchema.signedDigest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What was signed: the pinned declaration's sha256, as the lock records it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema.signedDigest",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/narrative.narrativeschema.confirmed_by",
       "@type": "skos:Concept",
       "skos:inScheme": {

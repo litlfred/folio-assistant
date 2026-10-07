@@ -132,6 +132,7 @@ Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-
 | [`gen-auto-docs.ts`](gen-auto-docs.ts) | a file |  |
 | [`gen-id-lookup.ts`](gen-id-lookup.ts) | a file |  |
 | [`gen-python-deps.ts`](gen-python-deps.ts) | a file |  |
+| [`handover-screen.ts`](handover-screen.ts) | a file |  |
 | [`kind-register.ts`](kind-register.ts) | a file |  |
 | [`merge-leftover.ts`](merge-leftover.ts) | a file |  |
 | [`merge-overlap.ts`](merge-overlap.ts) | a file |  |
