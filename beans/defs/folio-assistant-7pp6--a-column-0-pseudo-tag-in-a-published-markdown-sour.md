@@ -1,14 +1,12 @@
 ---
 # folio-assistant-7pp6
 title: A column-0 pseudo-tag in a published markdown source is caught only AFTER merge — five hand-fixes and no gate
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-01T06:29:56Z
-updated_at: 2026-10-07T05:55:00Z
+updated_at: 2026-10-07T11:50:39Z
 parent: folio-assistant-o3xy
-tags:
-  - ready-to-close
 ---
 
 ## The class, and why a sixth hand-fix is the wrong answer
