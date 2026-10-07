@@ -128,36 +128,58 @@ describe("a row's TITLE opens the entry's own page (owner, 2026-10-02)", () => {
   });
 });
 
+/**
+ * A page's `alternate` — the asset it renders. A THEMED page (2026-10-07) has
+ * no head of its own, so it declares it in front matter and
+ * `_includes/head_custom.html` writes the link from `alternate_jsonld`.
+ */
+function alternateOf(html: string): string | undefined {
+  const fm = /^---\n([\s\S]*?)\n---\n/.exec(html)?.[1];
+  const m = fm ? /^alternate_jsonld: "([^"]+)"$/m.exec(fm) : null;
+  return m?.[1];
+}
+
 describe("the shell template", () => {
-  const shell = entryPageHtml("../../../assets/library/index.json", "smart-base", "", "../../", {
+  const shell = entryPageHtml("../../../assets/library/index.json", "smart-base", "../../", {
     id: "smart-trust",
     jsonld: "../../../assets/library/jsonld/smart-base/smart-trust/manifest.jsonld",
   });
-  test("holds identity only — config, canonical, alternate — and loads the shared assets", () => {
+  test("holds identity only — config and alternate — and loads the shared assets", () => {
     expect(libraryConfigOf(shell)).toEqual({
       data: "../../../assets/library/index.json",
       scope: "smart-base",
       libRoot: "../../",
       entry: "smart-trust",
     });
-    expect(shell).toContain('<link rel="canonical" href="./">');
-    expect(shell).toContain('<link rel="alternate" type="application/ld+json" href="../../../assets/library/jsonld/smart-base/smart-trust/manifest.jsonld">');
+    expect(alternateOf(shell)).toBe("../../../assets/library/jsonld/smart-base/smart-trust/manifest.jsonld");
     expect(shell).toContain('<script src="../../../assets/library/viewer.js"></script>');
     expect(shell).toContain('<link rel="stylesheet" href="../../../assets/library/viewer.css">');
     expect(shell).not.toContain("<style>");
   });
-  test("is a thin page (#1941): rail LINKED (bean lnoy), both sources named, the mount after the script", () => {
-    const mounted = entryPageHtml("../../../assets/library/index.json", "smart-base", "<script data-fa-folio-mount></script>", "../../", {
-      id: "smart-trust",
-      jsonld: "../../../assets/library/jsonld/smart-base/smart-trust/manifest.jsonld",
-    });
-    expect(mounted).toContain('<meta name="folio-navbar" content="linked">');
-    expect(mounted).toContain('<a href="../../../assets/library/index.json">the library projection</a> and this entry from');
-    expect(mounted).toMatch(/<script src="[^"]*viewer\.js"><\/script>\n<script data-fa-folio-mount><\/script>\n<\/body>/);
+  test("is a THEMED page (2026-10-07): the layout's band, no rail, no folio mount, both sources named", () => {
+    // On the theme's default layout, which carries the top band and loads
+    // docs-ui.js itself — so neither the rail declaration nor the mount
+    // fragment belongs in it any more.
+    expect(shell.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(shell).toContain('\ntitle: "smart-trust — smart-base library"\n');
+    expect(shell).toContain("\nnav_exclude: true\n");
+    expect(shell).toContain("\nsearch_exclude: true\n");
+    expect(shell).not.toMatch(/<!doctype|<head|folio-navbar|data-fa-folio-mount/i);
+    expect(shell).toContain('<a href="../../../assets/library/index.json">the library projection</a> and this entry from');
+    // The body is Liquid-raw, so nothing in it is evaluated by Jekyll.
+    expect(shell.indexOf("{% raw %}")).toBeLessThan(shell.indexOf('<div class="lib-page"'));
+    expect(shell.trimEnd().endsWith("{% endraw %}")).toBe(true);
+  });
+  test("the layout writes the alternate it declares", () => {
+    const include = readFileSync(join(SITE, "_includes", "head_custom.html"), "utf-8");
+    expect(include).toContain(
+      '{% if page.alternate_jsonld %}<link rel="alternate" type="application/ld+json" href="{{ page.alternate_jsonld }}">{% endif %}',
+    );
   });
   test("an entry with no published JSON-LD gets no `alternate`, and its noscript names only the projection", () => {
-    const bare = entryPageHtml("../../../assets/library/index.json", "smart-base", "", "../../", { id: "x" });
-    expect(bare).not.toContain('rel="alternate"');
+    const bare = entryPageHtml("../../../assets/library/index.json", "smart-base", "../../", { id: "x" });
+    expect(alternateOf(bare)).toBeUndefined();
+    expect(bare).not.toContain("alternate");
     expect(bare).toContain("the library projection</a>; it needs JavaScript");
     expect(libraryConfigOf(bare)).toEqual({ data: "../../../assets/library/index.json", scope: "smart-base", libRoot: "../../", entry: "x" });
   });
@@ -192,7 +214,7 @@ describe("the committed tree: one materialized shell per entry", () => {
   test("each shell's alternate JSON-LD is published", () => {
     for (const e of index.entries) {
       const f = join(LIB, e.instance, e.id, "index.html");
-      const alt = /<link rel="alternate" type="application\/ld\+json" href="([^"]+)">/.exec(readFileSync(f, "utf-8"))?.[1];
+      const alt = alternateOf(readFileSync(f, "utf-8"));
       expect(alt, `${e.instance}/${e.id} names no JSON-LD`).toBeDefined();
       expect(existsSync(resolve(join(LIB, e.instance, e.id), alt!)), `${e.instance}/${e.id}: ${alt}`).toBe(true);
     }
@@ -213,9 +235,7 @@ describe("asset and rendering: two resources, two IRIs (owner, 2026-10-02)", () 
   test("the rendering points TO the asset: its alternate resolves to the asset's file", () => {
     for (const e of index.entries) {
       const shellDir = join(LIB, e.instance, e.id);
-      const alt = /<link rel="alternate" type="application\/ld\+json" href="([^"]+)">/.exec(
-        readFileSync(join(shellDir, "index.html"), "utf-8"),
-      )?.[1];
+      const alt = alternateOf(readFileSync(join(shellDir, "index.html"), "utf-8"));
       expect(resolve(shellDir, alt!)).toBe(join(SITE, libraryAssetSitePath(e.instance, e.id)));
     }
   });
