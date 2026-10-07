@@ -30,6 +30,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
+      - 'cat-harness/scripts/mount-from-lock.ts'  # replays the remote-mount lock (bean nn8e)
+      - 'folio-assistant.mount-lock.json'
       - 'cat-harness/docs/**'
       # An instance's own rendered pages are mounted into the site by
       # mount-instance-docs.ts, so a change to them must rebuild it. Without
@@ -263,7 +265,7 @@ jobs:
         with:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
-        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
       - uses: oven-sh/setup-bun@v2
         with:

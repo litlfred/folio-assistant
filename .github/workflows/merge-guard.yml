@@ -169,7 +169,7 @@ jobs:
           bun-version: 1.3.14
       - name: Mount bootstrap and bootstrap-tools from the lock
         if: steps.prs.outputs.list != ''
-        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
+        run: bun cat-harness/scripts/mount-from-lock.ts --root .
 
       - name: Bootstrap — main has no guard yet, so use the PR's copy
         if: steps.prs.outputs.list != '' && github.event_name == 'pull_request' && hashFiles('cat-harness/scripts/merge-guard.ts') == ''
