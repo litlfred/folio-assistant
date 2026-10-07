@@ -13,6 +13,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`a11y.e2e.ts`](a11y.e2e.ts) | a file |  |
 | [`action-tiles.e2e.ts`](action-tiles.e2e.ts) | a file |  |
 | [`beans-count-agrees.e2e.ts`](beans-count-agrees.e2e.ts) | a file |  |
+| [`beans-page-search.e2e.ts`](beans-page-search.e2e.ts) | a file |  |
 | [`block-screenshots.e2e.ts`](block-screenshots.e2e.ts) | a file |  |
 | [`board-move-filter.e2e.ts`](board-move-filter.e2e.ts) | a file |  |
 | [`board-windows.e2e.ts`](board-windows.e2e.ts) | a file |  |
