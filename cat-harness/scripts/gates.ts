@@ -80,6 +80,7 @@ import { jobsFromArgv, orderedEmitter, runCaptured, runPool } from "./task-pool.
 import { gateReadsOnly, pairIO } from "./task-io.ts";
 import {
   FileDigests,
+  againstRefsOf,
   cacheEnabled,
   checkFingerprint,
   decideCheck,
@@ -93,6 +94,8 @@ import {
   type PairIO,
   type SkipDecision,
 } from "./input-hash.ts";
+import { openTrace } from "./input-trace.ts";
+import { inputSiteReached } from "./input-trace.ts";
 
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
@@ -448,6 +451,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "check:maintained-artefacts",
     kind: "ci-only",
     reason:
+      // input-site: inert #6c47660d — prose naming the directory, in a message or a description
       "reads the ASSEMBLED `_site/`, which exists only after the site build has run — the " +
       "whole point of the check is that a `maintains` claim is verified against what actually " +
       "shipped, not against the source it was generated from, so there is nothing for a " +
@@ -459,6 +463,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "check:escaped-markup",
     kind: "ci-only",
     reason:
+      // input-site: inert #b4721469 — prose naming the directory, in a message or a description
       "reads the ASSEMBLED `_site/` for the same reason, and the reason is sharper here: what " +
       "it looks for exists ONLY after the markdown conversion. The template that shipped the " +
       "defect was valid HTML — a Liquid whitespace strip welded two attributes together, " +
@@ -685,6 +690,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--dir ./_site`: it cuts the BUILT (or, on a preview, borrowed) search index into per-scope " +
+      // input-site: inert #6918934e — prose naming the directory, in a message or a description
       "indices (bean `m7mn`); there is no `_site` in a checkout. Its scope rule, partition and determinism " +
       "are covered by search-split.test.ts, and its output on every deployed tree by publish-verify's " +
       "`search-scopes` verifier",
@@ -694,12 +700,14 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--site ./_site`: it copies the identifier-lookup client and each declared index into the BUILT " +
+      // input-site: inert #cd9d2ebf — prose naming the directory, in a message or a description
       "site (bean `1br0`); there is no `_site` in a checkout. Covered by publish-id-lookup.test.ts, and on " +
       "every deployed tree by publish-verify's `search-scopes`, which fails a linked lookup the tree lacks",
   },
   {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
+    // input-site: inert #f9c95b4f — prose naming the directory, in a message or a description
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
@@ -719,6 +727,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--site ./_site`: it minifies the BUILT tree as the last pass before a publish, and " +
+      // input-site: inert #50e65645 — prose naming the directory, in a message or a description
       "there is no `_site` in a checkout. Its equivalence rules and its idempotency are covered " +
       "by minify-site.test.ts in `bun test`, and its ORDERING — after every check and rewrite " +
       "that reads the built HTML, two of which decide whether a marker is inside a COMMENT " +
@@ -729,6 +738,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "takes `--site ./_site`: it rewrites the BUILT site's `<html>` tags before a deploy (bean " +
+      // input-site: inert #a37730dc — prose naming the directory, in a message or a description
       "`zru7`); there is no `_site` in a checkout, and its logic is covered here by " +
       "set-html-lang.test.ts, which builds pages as strings",
   },
@@ -829,7 +839,9 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:
+      // input-site: inert #87064adb — prose naming the directory, in a message or a description
       "injects the banner into the built `_site` and writes `staging.json` beside it; there is " +
+      // input-site: inert #1cd18d35 — prose naming the directory, in a message or a description
       "no `_site` in a checkout, and the facts it writes (run id, event payload, publish-ref " +
       "listing) exist only in CI. The property it exists for — that the injected bytes do NOT " +
       "depend on the build, which is what lets git deduplicate a preview against its own next " +
@@ -840,6 +852,7 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     match: "staging-record.ts",
     kind: "ci-only",
     reason:
+      // input-site: inert #4fabf72d — prose naming the directory, in a message or a description
       "writes the preview's `staging-preview` record into the built `_site` at deploy time (bean `6pfo`); " +
       "the PR, issue and the already-published record it updates exist only in CI and on `gh-pages`. " +
       "Its rules — builtAt kept, a retired record refused as live, a corrupt one refused — are in " +
@@ -875,13 +888,16 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     reason: "takes a deploy slug off the event payload; there is no event locally",
   },
   {
+    // input-site: inert #c5cae08f — prose naming the directory, in a message or a description
     match: "--out \"./_site",
     kind: "ci-only",
+    // input-site: inert #bac3cc4a — prose naming the directory, in a message or a description
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
   {
     match: "--out-dir ./_site",
     kind: "ci-only",
+    // input-site: inert #bac3cc4a — prose naming the directory, in a message or a description
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
   {
@@ -892,8 +908,10 @@ const OWN_STEP_EXEMPTIONS: StepExemption[] = [
     // export wrote into a foreign instance's subdirectory. Same reason, not a
     // new exemption — a step that got to green by being spelled differently
     // would be the thing this ratchet exists to stop.
+    // input-site: inert #4229d23b — prose naming the directory, in a message or a description
     match: '--out-dir "./_site',
     kind: "ci-only",
+    // input-site: inert #bac3cc4a — prose naming the directory, in a message or a description
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
   {
@@ -1656,8 +1674,10 @@ export function undeterminedReport(e: unknown, root: string): string[] {
  * which keeps the live output a reader already relies on, and accumulated so
  * the summary can quote the failing lines back at the end.
  */
-async function runTee(cmd: string, args: string[]): Promise<{ code: number; output: string }> {
-  const child = Bun.spawn([cmd, ...args], { cwd: ROOT, stdout: "pipe", stderr: "pipe" });
+async function runTee(cmd: string, args: string[], env?: Record<string, string | undefined>): Promise<{ code: number; output: string }> {
+  // input-site: traced #562a3d19 — the gate runner; a check that imports gates.ts to read the gate list runs nothing
+  inputSiteReached("gates: runTee spawns a gate");
+  const child = Bun.spawn([cmd, ...args], { cwd: ROOT, stdout: "pipe", stderr: "pipe", ...(env ? { env } : {}) });
   const chunks: string[] = [];
   const pump = async (stream: ReadableStream<Uint8Array>, to: NodeJS.WriteStream): Promise<void> => {
     const decoder = new TextDecoder();
@@ -2053,17 +2073,21 @@ if (import.meta.main) {
         process.stdout.write(`▸ ${g.command}\n`);
         const [cmd, ...args] = g.command.split(/\s+/);
         const started = performance.now();
-        const r = await runTee(cmd!, args);
+        const trace = t.script !== undefined ? openTrace(ROOT) : undefined;
+        const r = await runTee(cmd!, args, trace?.env);
         // Timed like the parallel lines, so a slow serial gate is visible in
         // the log rather than inferred from the total.
         process.stdout.write(`  ↳ ${((performance.now() - started) / 1000).toFixed(1)}s, exit ${r.code}: ${g.command}\n`);
         if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
-        if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, r.code === 0, t.fp, new FileDigests(ROOT));
+        if (t.script !== undefined && t.fp !== undefined) {
+          skipper.record(t.script, r.code === 0 && !tracedReport(t.script, trace?.reached(againstRefsOf(pkgScripts, t.script))), t.fp, new FileDigests(ROOT));
+        }
         seen = snapshot(seen, g.command);
       }
       continue;
     }
     const run = triage(seg.gates);
+    const traces = run.map((t) => (t.script !== undefined ? openTrace(ROOT) : undefined));
     const codes: number[] = [];
     const emitter = orderedEmitter<{ code: number; output: string; ms: number }>((i, r) => {
       const g = run[i]!.gate;
@@ -2073,10 +2097,10 @@ if (import.meta.main) {
       if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
     });
     await runPool(
-      run.map(({ gate: g }) => ({
+      run.map(({ gate: g }, i) => ({
         id: g.command,
         outputs: [],
-        run: () => runCaptured(g.command.split(/\s+/), ROOT),
+        run: () => runCaptured(g.command.split(/\s+/), ROOT, traces[i]?.env),
       })),
       jobs,
       (i, r) => emitter.push(i, r),
@@ -2085,12 +2109,21 @@ if (import.meta.main) {
     // it means its fingerprints disagree, and it records nothing.
     const after = new FileDigests(ROOT);
     run.forEach((t, i) => {
-      if (t.script !== undefined && t.fp !== undefined) skipper.record(t.script, codes[i] === 0, t.fp, after);
+      if (t.script !== undefined && t.fp !== undefined) {
+        skipper.record(t.script, codes[i] === 0 && !tracedReport(t.script, traces[i]?.reached(againstRefsOf(pkgScripts, t.script))), t.fp, after);
+      }
     });
     seen = snapshot(seen, `one of the parallel read-only gates: ${run.map((t) => t.gate.command).join(", ")}`);
   }
   skipper.save();
   console.log(`\n(${((performance.now() - t0) / 1000).toFixed(0)}s wall for the gate run)`);
+
+  /** A run that reached a `traced` input site records nothing (`input-trace.ts`); say so. */
+  function tracedReport(script: string, reached: string | undefined): boolean {
+    if (reached === undefined) return false;
+    process.stdout.write(`  (${script} reached a traced input site — ${reached} — so its pass is not recorded for skipping)\n`);
+    return true;
+  }
 
   /** Compare the tree with the last snapshot and attribute any change to `who`. */
   function snapshot(prev: ReadonlyMap<string, string> | undefined, who: string): ReadonlyMap<string, string> | undefined {
