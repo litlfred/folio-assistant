@@ -256,8 +256,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          submodules: true
           ref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun "./cat-harness/scripts/mount-from-lock.ts" --root "."
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1792,7 +1798,6 @@ jobs:
           # reports failure having changed nothing. Measured 2026-10-02 — six
           # consecutive `pull_request_target` runs failed this way and 80
           # previews had accumulated, 47 of them for PRs already closed.
-          submodules: true
           #
           # ONE key, from two independent fixes. `main` fixed this in parallel
           # with its own note — "the old previews piled up past Pages' 10 GB
@@ -1802,6 +1807,13 @@ jobs:
           # that gate parses this file to read every gate's `@covers`
           # declaration: invalid YAML here reads as a broken audit over there.
           path: source
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun "source/cat-harness/scripts/mount-from-lock.ts" --root "source"
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -2156,7 +2168,6 @@ jobs:
           # Same reason as the `cleanup` job above: the preflight and the
           # record writer both import through `cat-harness/schemas/`, which
           # reaches into the `bootstrap-tools` submodule.
-          submodules: true
           #
           # ONE key, from two independent fixes. `main` fixed this in parallel
           # with its own note — "the old previews piled up past Pages' 10 GB
@@ -2166,6 +2177,13 @@ jobs:
           # that gate parses this file to read every gate's `@covers`
           # declaration: invalid YAML here reads as a broken audit over there.
           path: source
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun "source/cat-harness/scripts/mount-from-lock.ts" --root "source"
 
       - uses: oven-sh/setup-bun@v2
         with:
