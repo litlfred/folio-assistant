@@ -8,7 +8,7 @@ parent: Skill instructions
 {: .note }
 > Generated from [`fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md) — do not edit here. Typed contract: [schema reference](../skills/ig-publication.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md){: .fa-edit-source data-fa-link="edit" data-src="fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md" data-repo="litlfred/folio-assistant" }
 
 {% raw %}
 # ig-publication

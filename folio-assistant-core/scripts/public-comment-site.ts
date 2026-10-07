@@ -6,7 +6,8 @@
  *
  * Run after `build-document-site.ts`, over the same `--out`:
  *
- *   <out>/public-comments/index.html   the dashboard
+ *   <out>/folio-assistant-core/public-comments/folio/<slug>/index.html   the dashboard
+ *                                    (`public-comment-route.ts`: <handler>/<kind>/<subject>)
  *   <out>/<slug>/index.html            gains a comment note at each anchored block
  *
  * ## Why the data is inlined, not fetched
@@ -34,6 +35,7 @@ import type { ReviewAnchors } from "./docx-to-folio.js";
 import { type ChangeSet, DECISION_LABELS, IN_EDIT_STATUSES, OPEN_STATUSES, type PublicComment } from "../schemas/public-comment.js";
 import { changeSets, discussUrl } from "./public-comment-changesets.js";
 import { Store } from "./public-comment.js";
+import { dashboardRoute, toSiteRoot } from "./public-comment-route.js";
 import { darkRules } from "../../cat-harness/scripts/lib/scheme-css.ts";
 
 /** `folio-staging.yml`'s slug rule, step `slug`. */
@@ -67,8 +69,9 @@ export interface SiteComment {
 export function siteComments(
   all: PublicComment[],
   anchors: ReviewAnchors,
-  opts: { slug: string; site?: string; repo?: string; storeDir?: string; changeSets?: ChangeSet[] },
+  opts: { slug: string; site?: string; repo?: string; storeDir?: string; changeSets?: ChangeSet[]; toRoot?: string },
 ): SiteComment[] {
+  const toRoot = opts.toRoot ?? "../";
   const inSets = new Map<string, SiteComment["changeSets"]>();
   for (const cs of opts.changeSets ?? [])
     if (cs.status !== "merged") for (const r of cs.refs) (inSets.get(r) ?? inSets.set(r, []).get(r)!).push({ id: cs.id, title: cs.title, status: cs.status, ...(cs.issue ? { issue: cs.issue } : {}) });
@@ -108,7 +111,7 @@ export function siteComments(
       ...(p.decision ? { decision: { code: p.decision.code, label: DECISION_LABELS[p.decision.code], reason: p.decision.reason, by: p.decision.by } } : {}),
       changeSets: inSets.get(p.ref) ?? [],
       links: {
-        ...(c.targetLabel ? { document: `../${opts.slug}/index.html${frag}` } : {}),
+        ...(c.targetLabel ? { document: `${toRoot}${opts.slug}/index.html${frag}` } : {}),
         ...(site && c.targetLabel && cs ? { before: `${site}/${opts.slug}/index.html${frag}` } : {}),
         ...(cs ? { after: cs.stagingUrl ? `${cs.stagingUrl.replace(/\/$/, "")}/${opts.slug}/index.html${frag}` : site ? `${site}/STAGING/${stagingSlug(cs.branch)}/${opts.slug}/index.html${frag}` : undefined } : {}),
         ...(cs?.pr && opts.repo ? { pr: `https://github.com/${opts.repo}/pull/${cs.pr}` } : {}),
@@ -121,6 +124,10 @@ export function siteComments(
 }
 
 const STYLE = `
+.cs-pcs > summary { cursor:pointer; }
+.cs-pc-list { margin:.3rem 0 .6rem; padding-left:1.1rem; }
+.cs-pc { margin:.5rem 0; padding-bottom:.4rem; border-bottom:1px solid #8883; }
+.cs-pc p { margin:.25rem 0; }
   :root { color-scheme: light dark; --fg:#1b1b1b; --bg:#fdfdfb; --muted:#5b5b5b; --line:#d6d6d0; --link:#0b5cad; --chip:#eef2f7;
     --open:#9a5b00; --editing:#0b5cad; --decided:#2e6b2e; --closed:#5b5b5b; }
   ${darkRules(`:root { --fg:#e8e8e6; --bg:#161616; --muted:#a8a8a4; --line:#3a3a38; --link:#7db4ff; --chip:#23272e;
@@ -156,7 +163,7 @@ const STYLE = `
 `;
 
 /** The dashboard. Filters run in the page; with scripts off the full table still renders. */
-export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string; repo?: string; changeSets?: ChangeSet[] }): string {
+export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: string; generated: string; repo?: string; changeSets?: ChangeSet[]; toRoot?: string }): string {
   const issueLink = (n: number) => (meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/issues/${n}">#${n}</a>` : `#${n}`);
   // A change-set with an issue links it; one without offers to open it, which
   // is the moment it gets one (issue #2183: "dont create issue until someone
@@ -168,7 +175,7 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
   const sets = (meta.changeSets ?? []).filter((c) => c.status !== "merged");
   const csRows = sets
     .map(
-      (c) => `<tr id="${esc(c.id)}" data-cs-status="${esc(c.status)}"><td>${esc(c.id)}</td><td>${esc(c.title)}<details><summary class="muted">requirements</summary><p>${esc(c.requirements).replace(/\n/g, "<br>")}</p></details></td><td>${esc(c.status)}</td><td>${c.refs.length}</td>` +
+      (c) => `<tr id="${esc(c.id)}" data-cs-status="${esc(c.status)}"><td>${esc(c.id)}</td><td>${esc(c.title)}<details><summary class="muted">requirements</summary><p>${esc(c.requirements).replace(/\n/g, "<br>")}</p></details><details class="cs-pcs" data-refs="${esc(c.refs.join(" "))}"><summary class="muted">its ${c.refs.length} comment${c.refs.length === 1 ? "" : "s"}, in full</summary></details></td><td>${esc(c.status)}</td><td class="cs-n">${c.refs.length}</td>` +
         `<td>${c.issue ? issueLink(c.issue) + (c.issues.length > 1 ? ` <span class="muted">+${c.issues.length - 1} more</span>` : "") : meta.repo ? `<a class="discuss" href="${esc(discussUrl(meta.repo, c))}">Discuss</a>` : "—"}</td>` +
         `<td>${c.pr && meta.repo ? `<a href="https://github.com/${esc(meta.repo)}/pull/${c.pr.number}">#${c.pr.number}</a>` : ""}</td>` +
         `<td><a href="#" class="show-cs" data-refs="${esc(c.refs.join(" "))}">show its comments</a></td></tr>`,
@@ -221,9 +228,9 @@ export function dashboardHtml(rows: SiteComment[], meta: { title: string; slug: 
 </head>
 <body>
 <main>
-<p><a href="../${esc(meta.slug)}/index.html">← ${esc(meta.title)}</a></p>
+<p><a href="${esc(meta.toRoot ?? "../")}${esc(meta.slug)}/index.html">← ${esc(meta.title)}</a></p>
 <h1>Public comments</h1>
-<p class="muted">Generated ${esc(meta.generated)} from the comment store. Open = not yet decided. Editing = decided, and the change is being made on a feature branch.</p>
+<p class="muted">Generated ${esc(meta.generated)} from the comment store. Open = not yet decided. Editing = decided, and the change is being made on a feature branch. Closed = incorporated, duplicate or withdrawn.</p>
 <div class="tiles" role="group" aria-label="Filter by count">
 ${[
   tile(rows.length, "comments", "all"),
@@ -244,7 +251,7 @@ ${[
 </form>
 ${
   sets.length
-    ? `<details id="change-sets"><summary><b>Change-sets (${sets.length})</b>: ${["proposed", "discussing", "editing", "incorporated", "closed"].map((st) => `${sets.filter((c) => c.status === st).length} ${st}`).join(", ")}. A change-set gets its GitHub issue the first time somebody discusses it, recommends on it or decides it.</summary>
+    ? `<details id="change-sets"><summary><b>Change-sets (${sets.length})</b>: ${["proposed", "discussing", "editing", "incorporated", "closed"].map((st) => `${sets.filter((c) => c.status === st).length} ${st}`).join(", ")}. A change-set gets its GitHub issue the first time somebody discusses it, recommends on it or decides it. <span id="cs-count" class="muted" aria-live="polite"></span></summary>
 <div class="table-wrap"><table><thead><tr><th>Id</th><th>Change</th><th>Status</th><th>Comments</th><th>Issue</th><th>PR</th><th></th></tr></thead><tbody>
 ${csRows}
 </tbody></table></div></details>`
@@ -265,6 +272,7 @@ ${body}
   const REPO = ${JSON.stringify(meta.repo ?? "")};
   const $ = (id) => document.getElementById(id);
   const rows = [...document.querySelectorAll("#comments tbody tr")];
+  const csTrs = [...document.querySelectorAll("#change-sets tbody tr")];
   const tiles = [...document.querySelectorAll(".tile[data-tile]")];
   // Tiles that ARE a Status value set the select; the other two are extra filters.
   const PHASE_TILES = ["open", "editing", "decided"];
@@ -285,25 +293,98 @@ ${body}
       r.hidden = !ok; if (ok) n++;
     }
     $("f-count").textContent = n + " of " + rows.length + " shown";
+    // The change-sets follow the same filters (smart-ra walkthrough
+    // 2026-10-06, bean uphx): a change-set shows when any of its comments
+    // does, and its count says how many of them match. Before this the
+    // filters moved only the comment table, thousands of pixels below.
+    const shown = new Set(rows.filter((r) => !r.hidden).map((r) => r.id));
+    let m = 0;
+    for (const tr of csTrs) {
+      const refs = tr.querySelector("a.show-cs").dataset.refs.split(" ");
+      const k = refs.filter((x) => shown.has(x)).length;
+      tr.hidden = k === 0; if (k) m++;
+      tr.querySelector(".cs-n").textContent = k === refs.length ? String(k) : k + " of " + refs.length;
+    }
+    if ($("cs-count")) $("cs-count").textContent = "Showing " + m + " of " + csTrs.length + ", by the filters below.";
     const on = active();
     for (const t of tiles) t.setAttribute("aria-pressed", String(t.dataset.tile === on));
   };
+  // BACK WORKS (D-3 of the 2026-10-06 walkthrough): every filter change is a
+  // history entry whose query string holds the filters, so Back restores the
+  // previous view instead of leaving the page. Typing in Search replaces the
+  // entry rather than adding one per keystroke.
+  const save = (push = true) => {
+    const q = new URLSearchParams();
+    const put = (k, v) => { if (v) q.set(k, v); };
+    q.set("status", $("f-phase").value);
+    put("type", $("f-type").value); put("section", $("f-section").value); put("q", $("f-text").value);
+    put("tile", extra); put("only", only ? [...only].join(" ") : "");
+    const url = "?" + q + location.hash;
+    if (url !== location.search + location.hash) history[push ? "pushState" : "replaceState"](null, "", url);
+  };
+  function load() {
+    const q = new URLSearchParams(location.search);
+    if (!q.has("status")) return;
+    $("f-phase").value = q.get("status"); $("f-type").value = q.get("type") ?? "";
+    $("f-section").value = q.get("section") ?? ""; $("f-text").value = q.get("q") ?? "";
+    extra = q.get("tile"); only = q.get("only") ? new Set(q.get("only").split(" ")) : null;
+    apply();
+  }
   for (const t of tiles) t.addEventListener("click", () => {
     const key = t.dataset.tile;
     // Pressing the tile that is on clears it: back to every comment.
     const clear = key === active() || key === "all";
     extra = !clear && !PHASE_TILES.includes(key) ? key : null;
     $("f-phase").value = !clear && PHASE_TILES.includes(key) ? key : "";
-    apply();
+    only = null;
+    apply(); save();
   });
-  $("f-phase").addEventListener("input", () => { extra = null; only = null; });
+  $("f-phase").addEventListener("input", () => { extra = null; });
   for (const a of document.querySelectorAll("a.show-cs")) a.addEventListener("click", (e) => {
     e.preventDefault();
     only = new Set(a.dataset.refs.split(" "));
-    extra = null; $("f-phase").value = "";
-    apply();
+    // Every one of its comments, whatever was filtered before.
+    extra = null; for (const id of ["f-phase", "f-type", "f-section", "f-text"]) $(id).value = "";
+    apply(); save();
     document.getElementById("comments").scrollIntoView();
   });
+  // A CHANGE-SET'S COMMENTS IN FULL, IN PLACE (owner, 2026-10-06: "in addition
+  // to jumping to comment from CS you can expand panel to see original PC
+  // details (who, what..)", and "that can be dynamic JS load of KG"). The
+  // records are LOADED when a panel is first opened, from "comments.json"
+  // beside this page (the comment store as published). Opened from file://,
+  // where fetch fails, it falls back to the comment rows already on the page.
+  let records = null;
+  const loadRecords = () => (records ??= fetch("comments.json")
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((list) => new Map(list.map((x) => [x.ref, x])))
+    .catch(() => null));
+  const h = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const fromRecord = (x) => "<li class=\\"cs-pc\\"><a href=\\"#" + h(x.ref) + "\\">" + h(x.ref) + "</a> · " + h(x.status) + (x.type ? " · " + h(x.type) : "") +
+    "<div class=\\"muted\\">" + (x.target ? h(x.section + " " + x.sectionTitle) : "<em>unplaced</em>") + (x.citation ? " — " + h(x.citation) : "") + "</div>" +
+    "<p>" + h(x.text) + "</p>" + (x.suggestion ? "<p><b>Suggested revision:</b> " + h(x.suggestion) + "</p>" : "") +
+    "<p class=\\"muted\\">" + h(x.reviewer) + "</p>" +
+    (x.recommendations && x.recommendations.length ? "<p>" + x.recommendations.map((r) => "<span class=\\"chip\\" title=\\"" + h(r.rationale) + "\\">" + h(r.by) + ": " + h(r.code) + "</span>").join("") + "</p>" : "") +
+    "<div class=\\"cs-pc-decision\\">" + (x.decision ? "<b>" + h(x.decision.label) + "</b>" + (x.decision.reason ? " — " + h(x.decision.reason) : "") : "<span class=\\"muted\\">not decided yet</span>") + "</div></li>";
+  const fromRow = (ref) => {
+    const tr = document.getElementById(ref);
+    if (!tr) return "<li>" + h(ref) + " <span class=\\"muted\\">(not on this page)</span></li>";
+    const c = tr.cells;
+    const body = [...(c[5].querySelector("details")?.children || [])].filter((x) => x.tagName !== "SUMMARY").map((x) => x.outerHTML).join("");
+    return "<li class=\\"cs-pc\\"><a href=\\"#" + h(ref) + "\\">" + h(ref) + "</a> · " + c[2].textContent + (c[3].textContent ? " · " + c[3].textContent : "") +
+      "<div class=\\"muted\\">" + c[4].innerHTML + "</div>" + body + "<div class=\\"cs-pc-decision\\">" + c[7].innerHTML + "</div></li>";
+  };
+  document.addEventListener("toggle", async (e) => {
+    const d = e.target;
+    if (!(d instanceof HTMLDetailsElement) || !d.classList.contains("cs-pcs") || !d.open || d.dataset.built) return;
+    d.dataset.built = "1";
+    const ul = document.createElement("ul");
+    ul.className = "cs-pc-list";
+    ul.innerHTML = "<li class=\\"muted\\">Loading…</li>";
+    d.append(ul);
+    const byRef = await loadRecords();
+    ul.innerHTML = d.dataset.refs.split(" ").map((ref) => (byRef && byRef.get(ref) ? fromRecord(byRef.get(ref)) : fromRow(ref))).join("");
+  }, true);
   // GROUPING (issue #2183): tick comments, open the "new change-set" issue
   // form prefilled with them. The repository's workflow records the change-set
   // from the form and adopts that issue as its own.
@@ -329,7 +410,14 @@ ${body}
   // #CS-012 opens the change-sets list there.
   if (location.hash.startsWith("#PC-")) $("f-phase").value = "";
   if (location.hash.startsWith("#CS-") && $("change-sets")) { $("change-sets").open = true; document.getElementById(location.hash.slice(1))?.scrollIntoView(); }
-  for (const id of ["f-phase", "f-type", "f-section", "f-text"]) $(id).addEventListener("input", apply);
+  // A select replaces "show its comments" (it used to stay on, hidden, and
+  // made every later filter look broken: D-2 of the 2026-10-06 walkthrough);
+  // the search box narrows within it.
+  for (const id of ["f-phase", "f-type", "f-section"]) $(id).addEventListener("input", () => { only = null; apply(); save(); });
+  $("f-text").addEventListener("input", () => { apply(); save(false); });
+  addEventListener("popstate", load);
+  addEventListener("hashchange", () => { if (location.hash.startsWith("#PC-")) { $("f-phase").value = ""; only = null; extra = null; apply(); } });
+  load();
   apply();
 })();
 </script>
@@ -343,13 +431,34 @@ ${body}
  * comments are inlined as JSON, and a small script places a collapsible note
  * after each block's anchor. With scripts off the document reads as before.
  */
-export function overlaySnippet(rows: SiteComment[]): string {
+/** Each anchored block's comments, as the document page's notes list them. */
+export function notesByTarget(rows: SiteComment[]) {
   const byTarget: Record<string, Array<Pick<SiteComment, "ref" | "status" | "phase" | "type" | "summary" | "decision"> & { sets?: string[] }>> = {};
   for (const r of rows) {
     if (!r.target) continue;
     (byTarget[r.target] ??= []).push({ ref: r.ref, status: r.status, phase: r.phase, type: r.type, summary: r.summary, ...(r.decision ? { decision: r.decision } : {}), ...(r.changeSets.length ? { sets: r.changeSets.map((c) => c.id) } : {}) });
   }
-  const json = JSON.stringify(byTarget).replace(/</g, "\\u003c");
+  return byTarget;
+}
+
+/**
+ * The document page's comment notes. Inline, the page carries every block's
+ * list. With `notesUrl` (a lazy page, bean v433) it carries only each block's
+ * counts and change-sets, and the list is fetched from that file the first
+ * time a note is opened: 545 KB less on the DPI-H document.
+ */
+export function overlaySnippet(rows: SiteComment[], opts: { repo?: string; issues?: Record<string, number>; notesUrl?: string; dashboard: string }): string {
+  const byTarget = notesByTarget(rows);
+  const head = Object.fromEntries(
+    Object.entries(byTarget).map(([label, list]) => [
+      label,
+      { n: list.length, o: list.filter((c) => c.phase === "open").length, s: [...new Set(list.flatMap((c) => c.sets ?? []))] },
+    ]),
+  );
+  const json = JSON.stringify({ head, lists: opts.notesUrl ? null : byTarget, url: opts.notesUrl ?? null }).replace(/</g, "\\u003c");
+  // The change-sets' issues, so a block's [feedback] can point at the
+  // discussion that already exists (REQ-17, bean uphx).
+  const meta = JSON.stringify({ repo: opts.repo ?? "", issues: opts.issues ?? {}, dashboard: opts.dashboard }).replace(/</g, "\\u003c");
   return `
 <style>
   .pc-note { border-left:4px solid var(--link,#0b5cad); margin:.4rem 0 .8rem; padding:.2rem .7rem; font-size:.9rem; background:color-mix(in srgb, currentColor 4%, transparent); }
@@ -358,27 +467,70 @@ export function overlaySnippet(rows: SiteComment[]): string {
   .pc-bar { position:sticky; top:0; z-index:1; padding:.4rem 0; background:var(--bg,#fdfdfb); border-bottom:1px solid #8884; margin-bottom:1rem; }
 </style>
 <script type="application/json" id="pc-data">${json}</script>
+<script type="application/json" id="pc-meta">${meta}</script>
 <script>
 (() => {
-  const data = JSON.parse(document.getElementById("pc-data").textContent);
+  const pc = JSON.parse(document.getElementById("pc-data").textContent);
+  const data = pc.head;
+  let notes = null;
+  const listOf = (label) => pc.lists ? Promise.resolve(pc.lists[label] || [])
+    : (notes ??= fetch(pc.url).then((r) => (r.ok ? r.json() : Promise.reject(r.status))).catch(() => ({})))
+      .then((all) => all[label] || []);
+  const meta = JSON.parse(document.getElementById("pc-meta").textContent);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-  let total = 0, open = 0;
-  for (const [label, list] of Object.entries(data)) {
+  // LIGHT ON LOAD (owner, 2026-10-06: ease "2,520 comment notes built all at
+  // once"). Each block gets its one-line summary only; the list inside is
+  // built the first time the note is opened. Blocks are done in small batches
+  // in idle time, so the page never freezes, and a #fragment target is
+  // re-scrolled to once at the end because the notes above it moved it.
+  const item = (c) => "<li><a href=\\"" + esc(meta.dashboard) + "#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
+    (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") +
+    (c.sets ? " · " + c.sets.map((id) => "<a href=\\"" + esc(meta.dashboard) + "#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") +
+    " — " + esc(c.summary) + "</li>";
+  const note = (label, h) => {
     const a = document.getElementById(label);
-    if (!a) continue;
-    total += list.length; open += list.filter((c) => c.phase === "open").length;
+    if (!a) return;
     const host = a.parentElement && a.parentElement.tagName === "P" && a.parentElement.textContent.trim() === "" ? a.parentElement : a;
     const d = document.createElement("details");
     d.className = "pc-note";
-    const n = list.filter((c) => c.phase === "open").length;
-    d.innerHTML = "<summary>" + list.length + " public comment" + (list.length > 1 ? "s" : "") + (n ? " (" + n + " open)" : "") + "</summary><ul>" +
-      list.map((c) => "<li><a href=\\"../public-comments/index.html#" + esc(c.ref) + "\\">" + esc(c.ref) + "</a> · " + esc(c.status) +
-        (c.type ? " · " + esc(c.type) : "") + (c.decision ? " · <b>" + esc(c.decision.label) + "</b>" : "") + (c.sets ? " · " + c.sets.map((id) => "<a href=\\"../public-comments/index.html#" + esc(id) + "\\">" + esc(id) + "</a>").join(" ") : "") + " — "+ esc(c.summary) + "</li>").join("") + "</ul>";
+    const n = h.o;
+    const sum = document.createElement("summary");
+    sum.textContent = h.n + " public comment" + (h.n > 1 ? "s" : "") + (n ? " (" + n + " open)" : "");
+    d.append(sum);
+    d.addEventListener("toggle", () => {
+      if (!d.open || d.dataset.built) return;
+      d.dataset.built = "1";
+      const ul = document.createElement("ul");
+      ul.innerHTML = "<li>Loading…</li>";
+      d.append(ul);
+      listOf(label).then((list) => { ul.innerHTML = list.map(item).join("") || "<li>Could not load the comments.</li>"; });
+    });
     host.after(d);
-  }
+    // Beside the block's [feedback]: the issues where its change-sets are
+    // already being discussed, so a reader joins rather than duplicates.
+    const acts = document.querySelector('.block-actions[data-block="' + CSS.escape(label) + '"]');
+    const nums = [...new Set(h.s.map((id) => meta.issues[id]).filter(Boolean))];
+    if (acts && meta.repo && nums.length) {
+      const s = document.createElement("span");
+      s.className = "ba-existing";
+      s.innerHTML = "discussed in " + nums.map((n) => "<a href=\\"https://github.com/" + esc(meta.repo) + "/issues/" + n + "\\">#" + n + "</a>").join(" ");
+      acts.append(s);
+    }
+  };
+  const entries = Object.entries(data);
+  let total = 0, open = 0;
+  for (const [, h] of entries) { total += h.n; open += h.o; }
+  const idle = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 1));
+  let i = 0;
+  const batch = (deadline) => {
+    do { if (i >= entries.length) break; note(entries[i][0], entries[i][1]); i++; } while (deadline.timeRemaining() > 2 || i % 40 !== 0);
+    if (i < entries.length) idle(batch);
+    else if (location.hash.length > 1) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+  };
+  idle(batch);
   const bar = document.createElement("div");
   bar.className = "pc-bar";
-  bar.innerHTML = '<a href="../public-comments/index.html">Public comments</a>: ' + total + " shown in this document, " + open + " open";
+  bar.innerHTML = '<a href="' + esc(meta.dashboard) + '">Public comments</a>: ' + total + " shown in this document, " + open + " open";
   const main = document.querySelector("main") || document.body;
   main.prepend(bar);
 })();
@@ -391,8 +543,11 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   const cfg = store.config() as ReturnType<Store["config"]> & { title?: string };
   const anchors = store.anchors();
   const sets = changeSets(store);
+  const route = dashboardRoute(repo, cfg.document);
+  const toRoot = toSiteRoot(route);
   const rows = siteComments(store.all(), anchors, {
     changeSets: sets,
+    toRoot,
     slug: cfg.document,
     site: cfg.site,
     repo: cfg.repo,
@@ -400,15 +555,26 @@ export function buildPublicCommentSite(repo: string, out: string, storeDir?: str
   });
   const docPage = join(out, cfg.document, "index.html");
   if (!existsSync(docPage)) throw new Error(`${docPage} is missing: run build-document-site.ts --out ${out} first`);
-  const html = readFileSync(docPage, "utf-8");
-  if (!html.includes('id="pc-data"')) writeFileSync(docPage, html.replace("</body>", `${overlaySnippet(rows)}</body>`));
-  mkdirSync(join(out, "public-comments"), { recursive: true });
+  const issues = Object.fromEntries(sets.filter((c) => c.issue).map((c) => [c.id, c.issue!]));
+  // A lazy document (bean v433) also publishes the whole text on one page,
+  // index.hydrated.html; its comment notes are the same.
+  for (const f of [docPage, join(out, cfg.document, "index.hydrated.html")]) {
+    if (!existsSync(f)) continue;
+    const html = readFileSync(f, "utf-8");
+    if (html.includes('id="pc-data"')) continue;
+    // A lazy page fetches its notes' lists; the one-page version carries them.
+    const lazy = html.includes('id="fa-blocks"');
+    if (lazy) writeFileSync(join(out, cfg.document, "pc-notes.json"), JSON.stringify(notesByTarget(rows)));
+    writeFileSync(f, html.replace("</body>", `${overlaySnippet(rows, { ...(cfg.repo ? { repo: cfg.repo } : {}), issues, dashboard: `../${route}/index.html`, ...(lazy ? { notesUrl: "pc-notes.json" } : {}) })}</body>`));
+  }
+  const dash = join(out, route);
+  mkdirSync(dash, { recursive: true });
   writeFileSync(
-    join(out, "public-comments", "index.html"),
-    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, ...(cfg.repo ? { repo: cfg.repo } : {}), changeSets: sets, generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
+    join(dash, "index.html"),
+    dashboardHtml(rows, { title: cfg.title ?? cfg.document, slug: cfg.document, toRoot, ...(cfg.repo ? { repo: cfg.repo } : {}), changeSets: sets, generated: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" }),
   );
-  writeFileSync(join(out, "public-comments", "comments.json"), JSON.stringify(rows, null, 1) + "\n");
-  return { comments: rows.length, open: rows.filter((r) => r.phase === "open").length };
+  writeFileSync(join(dash, "comments.json"), JSON.stringify(rows, null, 1) + "\n");
+  return { route, comments: rows.length, open: rows.filter((r) => r.phase === "open").length };
 }
 
 /**
@@ -439,7 +605,7 @@ if (import.meta.main) {
   const repo = resolve(opt("repo") ?? process.cwd());
   try {
     const r = buildPublicCommentSite(repo, resolve(repo, opt("out") ?? "_site"), opt("store"));
-    console.error(`✓ public comments: ${r.comments} (${r.open} open) → public-comments/index.html`);
+    console.error(`✓ public comments: ${r.comments} (${r.open} open) → ${r.route}/index.html`);
   } catch (e) {
     console.error(`✗ ${(e as Error).message}`);
     process.exit(1);
