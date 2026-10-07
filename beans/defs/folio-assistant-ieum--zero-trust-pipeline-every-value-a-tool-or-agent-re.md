@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-07T05:56:11Z
-updated_at: 2026-10-07T11:04:08Z
+updated_at: 2026-10-07T12:50:04Z
 ---
 
 ## The ask, owner 2026-10-07 — verbatim
@@ -101,3 +101,7 @@ Read as follows. Recorded so a misreading can be corrected in one place:
 
 
 - [x] **3 done:** `bun run actions:pin` (Tool `pin-actions`) pinned 216 third-party `uses:` to full commit SHAs (an annotated tag pins to its peeled commit), leaving `feature-staging.yml` and `folio-staging.yml` unpinned per the ruling. `security:gate` now BLOCKS on an unpinned action outside staging-only workflows; the 24 in staging are advisory.
+
+
+- [x] **4 done:** `security:gate` is a named step in `docs-site.yml` (after the mount, before the build) and in the CI gate set that merge-train calls; `docs-site-publish.bpmn` has Task_SecurityGate + GW_Secure (refusal → publication manager alert), re-laid so the alert path no longer overlaps (owner reported the overlap).
+- [x] **1 done:** `bun run handover:screen` (Tool `handover-screen`, `cat-harness/src/core/handover-screen.ts`): field-by-field screen over a declared schema; control and undeclared fields refused, data fields quarantined (never stripped); `fenceUntrusted` shared, and the chat prompt's `fenced()` now uses it. Guidance in `untrusted-input` and `security`. Guarded, not yet gated: callers must invoke it.
