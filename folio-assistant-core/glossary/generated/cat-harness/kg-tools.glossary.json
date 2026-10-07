@@ -319,6 +319,14 @@
       "status": "candidate"
     },
     {
+      "id": "latexmk-compile",
+      "prefLabel": "LaTeX compilation (latexmk)",
+      "definition": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
+      "notation": "latexmk-compile",
+      "source": "cat-harness/tools/index.ts#latexmk-compile",
+      "status": "candidate"
+    },
+    {
       "id": "lean-audit",
       "prefLabel": "Lean vacuity audit",
       "definition": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
