@@ -14,7 +14,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { chmodSync, mkdtempSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -160,6 +160,86 @@ describe("gate-shell.sh", () => {
   test("refuses a missing step script rather than passing vacuously", () => {
     const r = spawnSync(SHELL, [join(tmpdir(), "definitely-not-here.sh")], { encoding: "utf-8" });
     expect(r.status).toBe(2);
+  });
+});
+
+/**
+ * The CI cone hook (bean `4rbc`). The wrapper is copied beside a STUB
+ * `ci-cone.ts`, so these tests pin the shell's half alone: what it does with
+ * the stub's answer. `ci-cone.test.ts` pins the decision itself.
+ */
+describe("gate-shell.sh — the CI cone hook", () => {
+  /** A wrapper beside a stub cone CLI; `decideExit` is what `decide` answers. */
+  function coneStep(body: string, mode: string | undefined, decideExit: number, runExit = 5) {
+    const dir = mkdtempSync(join(tmpdir(), "gate-shell-cone-"));
+    const shell = join(dir, "gate-shell.sh");
+    writeFileSync(shell, readFileSync(SHELL, "utf-8"));
+    chmodSync(shell, 0o755);
+    const calls = join(dir, "calls.txt");
+    writeFileSync(
+      join(dir, "ci-cone.ts"),
+      `import { appendFileSync } from "node:fs";\n` +
+        `const [cmd, script] = process.argv.slice(2);\n` +
+        `appendFileSync(${JSON.stringify(calls)}, cmd + " " + script + "\\n");\n` +
+        `if (cmd === "decide") process.exit(${decideExit});\n` +
+        `console.log("recorded-run " + script);\nprocess.exit(${runExit});\n`,
+    );
+    const script = join(dir, "step.sh");
+    writeFileSync(script, body);
+    const env: Record<string, string> = { ...(process.env as Record<string, string>), GITHUB_JOB: "gates" };
+    delete env.GITHUB_STEP_SUMMARY;
+    if (mode === undefined) delete env.CI_CONE_MODE;
+    else env.CI_CONE_MODE = mode;
+    const r = spawnSync(shell, [script], { encoding: "utf-8", env });
+    const called = existsSync(calls) ? readFileSync(calls, "utf-8") : "";
+    return { status: r.status, stdout: r.stdout ?? "", called };
+  }
+
+  test("off (no CI_CONE_MODE): the cone CLI is never asked, and the step runs as written", () => {
+    const r = coneStep("bun run some:check\n", undefined, 0);
+    expect(r.called).toBe("");
+  });
+
+  test("skip mode, and the cone says skip: the step does NOT run and exits 0", () => {
+    const r = coneStep("# a comment\nbun run some:check\n", "skip", 0);
+    expect(r.called).toBe("decide some:check\n");
+    expect(r.status).toBe(0);
+  });
+
+  test("skip mode, and the cone says run (or fails): the step RUNS, and its own exit status is the verdict", () => {
+    const r = coneStep("bun run some:check\n", "skip", 1);
+    expect(r.called).toBe("decide some:check\n");
+    // `bun run some:check` does not exist in this repo's package.json, so bun exits non-zero: the step ran.
+    expect(r.status).not.toBe(0);
+    const crashed = coneStep("exit 7\n", "skip", 0);
+    expect(crashed.called).toBe(""); // not a `bun run` step: never asked
+    expect(crashed.status).toBe(7);
+  });
+
+  test("`bun run cat <script>` (bean ar1s P4) is the same step, by the script's name", () => {
+    expect(coneStep("bun run cat some:check\n", "skip", 0).called).toBe("decide some:check\n");
+  });
+
+  test("only a step that is EXACTLY one `bun run <script>` is touched", () => {
+    for (const body of ["bun run a:check\nbun run b:check\n", "bun run a:check -- --flag\n", "bun --version\n", "set -e\nbun run a:check\n"]) {
+      expect(coneStep(body, "skip", 0).called).toBe("");
+    }
+  });
+
+  test("record mode: a recorder killed by a signal (>= 128) runs the step again, untraced", () => {
+    const dir = coneStep("bun run some:check\n", "record", 0);
+    expect(dir.called).toBe("run some:check\n");
+    expect(dir.stdout).not.toContain("running the step untraced"); // exit 5: the check's own verdict
+    const killed = coneStep("bun run some:check\n", "record", 0, 134);
+    expect(killed.stdout).toContain("running the step untraced");
+    expect(killed.status).not.toBe(134); // the untraced run's own status: bun's, for a script that does not exist
+  });
+
+  test("record mode runs the step through `ci-cone.ts run`, passing ITS exit status through", () => {
+    const r = coneStep("bun run some:check\n", "record", 0);
+    expect(r.called).toBe("run some:check\n");
+    expect(r.stdout).toContain("recorded-run some:check");
+    expect(r.status).toBe(5);
   });
 });
 
