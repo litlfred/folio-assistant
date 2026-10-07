@@ -185,10 +185,10 @@ jobs:
         # Without them it fails, and the gate refused every publish from
         # 91d6a0b on (issue #2459). The same step code-quality-gates runs
         # before its gates (bean `72a8`).
-        run: bun run qa:working-copy
+        run: bun run cat qa:working-copy
 
       - name: Release security gate
-        run: bun run security:gate
+        run: bun run cat security:gate
 
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         # A page derived from a branch-kept graph (the fsh-guts viewer) cannot
