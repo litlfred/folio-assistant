@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 375,
+      "count": 369,
       "unit": "open beans"
     }
   },
@@ -1739,14 +1739,14 @@
     {
       "id": "folio-assistant-42u5",
       "title": "#1955 hand-off to the merge manager: kept merged with main by its session, by hand",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-whlc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T12:31:39Z",
-      "updatedAt": "2026-10-04T12:31:39Z",
+      "updatedAt": "2026-10-08T01:07:00Z",
       "preview": "**For the merge manager — #1955 is kept merged with `main` by its owning session, by hand.**\n\nThe `merge-main` bot cannot land `main` into this branch:\n- it refuses two **authored** conflicts, which have no declared pattern, correctly so (`merge-conflict-patterns`):\n  - `cat-harness/scripts/check-retired-front-matter.ts` — both sides added an import; both are kept (this branch's `checkoutRootFor`,",
       "file": "beans/defs/folio-assistant-42u5--1955-hand-off-to-the-merge-manager-kept-merged-wit.md"
     },
@@ -8345,15 +8345,15 @@
     {
       "id": "folio-assistant-ky3r",
       "title": "FOREIGN-SITE RAIL SCOPE (#2263): an IG repo's site shows the platform's tile counts, 404 tile links, and the pinned rail covers IG content",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-06T08:12:11Z",
-      "updatedAt": "2026-10-06T08:32:30Z",
-      "preview": "Owner, 2026-10-06, verbatim (issue #2263): *\"https://litlfred.github.io/smart-trust/ the beans and todos badges seems to be countts from folio-assistant and not litlfred/smart-trust as expected. links to beans and todos dont work. why not? fix process and skills.\"*\n\n## Done when\n- [ ] root cause named with file:line\n- [ ] a foreign site's tiles, icon row and rail scope describe the FOLIO's instanc",
+      "updatedAt": "2026-10-08T01:10:00Z",
+      "preview": "Owner, 2026-10-06, verbatim (issue #2263): *\"https://litlfred.github.io/smart-trust/ the beans and todos badges seems to be countts from folio-assistant and not litlfred/smart-trust as expected. links to beans and todos dont work. why not? fix process and skills.\"*\n\n## Done when\n- [x] root cause named with file:line\n- [x] a foreign site's tiles, icon row and rail scope describe the FOLIO's instanc",
       "file": "beans/defs/folio-assistant-ky3r--foreign-site-rail-scope-2263-an-ig-repos-site-show.md"
     },
     {
@@ -8401,15 +8401,15 @@
     {
       "id": "folio-assistant-l4c5",
       "title": "GLASS CARDS (#1900, PR #1918): open the visualiser, corner resize, confirmed close naming where the card goes back to",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-04T14:13:18Z",
-      "updatedAt": "2026-10-05T04:57:14Z",
-      "preview": "Finish PR #1918 for issue #1900: library cards on the folio glass open their declared view (else the entry page), resize by a corner grip (keys + move-bar buttons as the non-drag path), and x asks first, naming where the card goes back to (library / Todos / the landing sticky's page) via the page's one confirm dialog shared with fsh-guts. Caption uses the index title.\n\n## Done when\n- PR #1918 gree",
+      "updatedAt": "2026-10-08T01:07:00Z",
+      "preview": "Finish PR #1918 for issue #1900: library cards on the folio glass open their declared view (else the entry page), resize by a corner grip (keys + move-bar buttons as the non-drag path), and x asks first, naming where the card goes back to (library / Todos / the landing sticky's page) via the page's one confirm dialog shared with fsh-guts. Caption uses the index title.\n\n## Done when\n- [x] PR #1918 ",
       "file": "beans/defs/folio-assistant-l4c5--glass-cards-1900-pr-1918-open-the-visualiser-corne.md"
     },
     {
@@ -9673,14 +9673,14 @@
     {
       "id": "folio-assistant-om30",
       "title": "MAIN'S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner's choice",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:42:57Z",
-      "updatedAt": "2026-09-27T10:35:39Z",
+      "updatedAt": "2026-10-08T01:10:00Z",
       "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
       "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
     },
@@ -10297,14 +10297,14 @@
     {
       "id": "folio-assistant-qbco",
       "title": "CI: reuse verdicts on main — skip expensive jobs when the tree was already verified green; cancel superseded main runs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T19:39:27Z",
-      "updatedAt": "2026-10-07T21:21:17Z",
+      "updatedAt": "2026-10-08T01:10:00Z",
       "preview": "Issue #2456. Owner approved 2026-10-07 ~19:40Z (\"1y, 2y, 3y, 4y\"). Measurements in the issue body.\n\n_2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).\n\n## Done on claude/ci-runner-budget (PR #2457), 2026-10-07 (commit 86ad61f3976)\n\n- (a) concurrency: push events share one group per ref and cancel-in-progress. The comment c",
       "file": "beans/defs/folio-assistant-qbco--ci-reuse-verdicts-on-main-skip-expensive-jobs-when.md"
     },
@@ -10383,14 +10383,14 @@
     {
       "id": "folio-assistant-qj9a",
       "title": "STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:10:30Z",
-      "updatedAt": "2026-10-07T08:16:00Z",
+      "updatedAt": "2026-10-08T01:07:00Z",
       "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
@@ -15719,13 +15719,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 589,
-        "closed": 366,
-        "open": 223,
-        "inProgress": 74,
+        "closed": 370,
+        "open": 219,
+        "inProgress": 70,
         "todo": 148,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.6213921901528013
+        "share": 0.6281833616298812
       },
       {
         "id": "folio-assistant-vuip",
@@ -15734,13 +15734,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 279,
-        "closed": 165,
-        "open": 114,
-        "inProgress": 55,
-        "todo": 58,
+        "closed": 167,
+        "open": 112,
+        "inProgress": 54,
+        "todo": 57,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.5913978494623656
+        "share": 0.5985663082437276
       },
       {
         "id": "folio-assistant-yg29",
@@ -15759,8 +15759,8 @@
       }
     ],
     "orphanOpen": 4,
-    "openTotal": 375,
-    "coveredOpen": 368,
+    "openTotal": 369,
+    "coveredOpen": 362,
     "duplicateIds": 0
   }
 }

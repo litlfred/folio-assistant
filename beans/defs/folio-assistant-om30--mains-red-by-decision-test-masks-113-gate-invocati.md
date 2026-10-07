@@ -1,11 +1,11 @@
 ---
 # folio-assistant-om30
 title: 'MAIN''S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner''s choice'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-27T10:35:39Z
+updated_at: 2026-10-08T01:10:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -483,3 +483,7 @@ Recorded as a fact about 2026-09-27 and not as a property, per the caveat above.
 - [x] The residual **6** steps behind step 42 — **0 steps behind either
       deliberate-red step**, enforced by `check:red-gate-is-last` rather than
       observed in a green run. No third job.
+
+## Completed, 2026-10-08
+Closed on landed evidence from PR #1364 (`1b962ab310`), PR #1384 (`e9f30a78c1`), PR #1425 (`34af74d5bb9`), sibling beans `cpss` and `dvcx`. The job split and ordering rules are implemented and enforced structurally by `check:red-gate-is-last`. The final queue requirement is moot per bean `1hjm` (GitHub merge queues unavailable on personal account repos).
+

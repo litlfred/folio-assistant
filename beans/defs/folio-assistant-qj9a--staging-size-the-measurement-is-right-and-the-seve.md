@@ -1,13 +1,12 @@
 ---
 # folio-assistant-qj9a
 title: 'STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T18:10:30Z
-updated_at: 2026-10-07T08:16:00Z
+updated_at: 2026-10-08T01:07:00Z
 parent: folio-assistant-1xhc
-tags: [ready-to-close]
 ---
 
 

@@ -1,22 +1,22 @@
 ---
 # folio-assistant-ky3r
 title: 'FOREIGN-SITE RAIL SCOPE (#2263): an IG repo''s site shows the platform''s tile counts, 404 tile links, and the pinned rail covers IG content'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T08:12:11Z
-updated_at: 2026-10-06T08:32:30Z
+updated_at: 2026-10-08T01:10:00Z
 parent: folio-assistant-uhkv
 ---
 
 Owner, 2026-10-06, verbatim (issue #2263): *"https://litlfred.github.io/smart-trust/ the beans and todos badges seems to be countts from folio-assistant and not litlfred/smart-trust as expected. links to beans and todos dont work. why not? fix process and skills."*
 
 ## Done when
-- [ ] root cause named with file:line
-- [ ] a foreign site's tiles, icon row and rail scope describe the FOLIO's instance; a state kind it does not declare shows no other instance's count or link
-- [ ] no root-relative href in the scoped data reaches a foreign site: own paths resolve on the folio's baseurl, platform paths are absolute on DOCS_SITE_BASE and labelled
-- [ ] the pinned-open rail reserves its width instead of covering IG content (Playwright before/after on smart-trust gh-pages 5b46623d)
-- [ ] a test asserts (a) and (b) over a fixture shell; harness-tiles + the rail skill state the rule
+- [x] root cause named with file:line
+- [x] a foreign site's tiles, icon row and rail scope describe the FOLIO's instance; a state kind it does not declare shows no other instance's count or link
+- [x] no root-relative href in the scoped data reaches a foreign site: own paths resolve on the folio's baseurl, platform paths are absolute on DOCS_SITE_BASE and labelled
+- [x] the pinned-open rail reserves its width instead of covering IG content (Playwright before/after on smart-trust gh-pages 5b46623d)
+- [x] a test asserts (a) and (b) over a fixture shell; harness-tiles + the rail skill state the rule
 
 
 ## Collision review, 2026-10-06 (coordinate §"Starting new work"), before any edit
@@ -43,3 +43,6 @@ Context: smart-trust declares no beans or todos graph, and the icon row has slot
 | B: hide the icon | nothing | absence, silently | "where are the beans" goes unanswered |
 | C: link it to the platform's work plan, labelled "Folio Assistant", no count | the platform's beans | whose they are, only if the label is read | the owner's complaint, softened |
 If nobody answers, A stays.
+
+## Completed, 2026-10-08
+Closed on landed evidence of PR #2265 (`ba37a0bd9d178253b1dcb4bc45095d1cd9f48730` on `main`). All done criteria satisfied, option A implemented, layout and scoping tests passing.

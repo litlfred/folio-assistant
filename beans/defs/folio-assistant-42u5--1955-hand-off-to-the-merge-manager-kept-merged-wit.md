@@ -1,10 +1,10 @@
 ---
 # folio-assistant-42u5
 title: '#1955 hand-off to the merge manager: kept merged with main by its session, by hand'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-04T12:31:39Z
-updated_at: 2026-10-04T12:31:39Z
+updated_at: 2026-10-08T01:07:00Z
 parent: folio-assistant-whlc
 ---
 
@@ -37,3 +37,8 @@ So each `main` merge here is done locally with the post-merge checklist:
 - two test timeouts fixed: `harness-state`, and `claim-branch-store`, which came in from `main`.
 
 This bean is the work-plan record; the PR comment carries the same text.
+
+## Evidence
+Closed on evidence of landed work:
+- PR #1955 was resolved, approved, and merged into `main` by `litlfred` in commit `e49c086207bbb144efe37b32eedb249973a2953f` on 2026-10-05T04:51:09Z.
+- Re-derived and verified on 2026-10-08: commit `e49c086207bb` is present in `origin/main` history.
