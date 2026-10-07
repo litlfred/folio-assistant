@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7how
 title: 'REGEN READS A STALE QA TREE: generators that read gitignored */test/results write wrong pages unless qa:working-copy ran first'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-06T09:15:31Z
-updated_at: 2026-10-07T14:54:46Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -47,3 +47,6 @@ Dispatched for SPEED of the merge loop. The 6-step PR recipe (state:mount → re
 _2026-10-06T20:40Z_ — OPEN FINDING, cause not identified: an uncommitted one-line edit to package.json, made in fa-work at 20:22:1x while `regen --changed` (QA build, then pass 1) was running, was gone when the run ended. The file's mtime was 20:22:19, so it was written right after the edit. It is NOT in qa:refresh's restored list (that list names 8 paths, all docs:pages / qa-sweep side effects). It looks like a lost update (something read package.json before the edit and wrote it after), but grep finds no writer of package.json outside tests. Rule until explained: commit before running regen, exactly as before.
 
 *2026-10-07* — the restore-window hazard this bean narrowed was reproduced and fixed in litlfred/folio-assistant#2431: a sentinel edit to a clean cat-harness/scripts/agent-memory.ts was checked out from HEAD mid-run (git wrapper log, 14:13:56); four real uncommitted edits had been lost the same way that day. qa:refresh now restores only paths a writer declares in `rewrites` (measured from restore logs), leaves and names anything else, and backs up every restore under build/qa-refresh-restored/.
+
+## Completed on landed evidence
+Landed on main in commit e3ef4e916b9b / PR #2431 (Stale QA tree regen fix and restore hazard prevention).
