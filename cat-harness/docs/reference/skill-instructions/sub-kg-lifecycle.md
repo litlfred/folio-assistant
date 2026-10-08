@@ -320,5 +320,6 @@ This skill has its own process: **[A sub-KG is staged in place, then leaves for 
 
 | process | step(s) that name it |
 |---|---|
+| [Mount a declared subgraph](../../processes/mount-subgraph.html) | Resolve the subgraph's content source; Use the checkout path in place; Mount the branch tip at the declared path; Refuse: no flow for this source kind |
 | [A sub-KG is staged in place, then leaves for its own repository](../../processes/sub-kg-lifecycle.html) | 1 · Declare it in place, with its seam; 2 · Grow it in place; Should it leave now?; 4 · Route every climb through platform.ts; 5 · Rehearse self-contained; 8 · Create the repository; 9 · Copy the staged contents in, with history; 10 · Re-point: livesAt, seam, submodule or subscription; 11 · Verify on a fresh clone |
 

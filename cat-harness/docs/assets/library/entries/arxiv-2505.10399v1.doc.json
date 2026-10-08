@@ -1,0 +1,643 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2505.10399v1",
+  "title": "Evaluating Model Explanations without Ground Truth",
+  "pages": 12,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Evaluating Model Explanations",
+      "number": "2",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-2-evaluating-model-explanations"
+    },
+    {
+      "level": 2,
+      "title": "Our Notation",
+      "number": "2.1",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-21-our-notation"
+    },
+    {
+      "level": 2,
+      "title": "Three Principles for Evaluating Model Explanation Quality",
+      "number": "2.2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "Prior Approaches",
+      "number": "2.3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-23-prior-approaches"
+    },
+    {
+      "level": 2,
+      "title": "Invariance of ground-truth Metrics to Changing Data and Models",
+      "number": "2.4",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "Inherent biases in sensitivity Metrics",
+      "number": "2.5",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-25-inherent-biases-in-sensitivity-metrics"
+    },
+    {
+      "level": 1,
+      "title": "Methodology",
+      "number": "3",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-3-methodology"
+    },
+    {
+      "level": 2,
+      "title": "The AXE Framework",
+      "number": "3.1",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-31-the-axe-framework"
+    },
+    {
+      "level": 2,
+      "title": "Illustrative Example",
+      "number": "3.2",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-32-illustrative-example"
+    },
+    {
+      "level": 1,
+      "title": "Experiments",
+      "number": "4",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-4-experiments"
+    },
+    {
+      "level": 2,
+      "title": "Detecting Explanation Fairwashing",
+      "number": "4.1",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-41-detecting-explanation-fairwashing"
+    },
+    {
+      "level": 2,
+      "title": "Comparing AXE with Baselines",
+      "number": "4.2",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-42-comparing-axe-with-baselines"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "5",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-5-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "Acknowledgments",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-acknowledgments"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 5,
+      "summary": null,
+      "keywords": [],
+      "extract": "arXiv:2505.10399v1 [cs.AI] 15 May 2025",
+      "extractCut": false
+    },
+    {
+      "id": "sec-000-2-evaluating-model-explanations",
+      "number": "2",
+      "title": "Evaluating Model Explanations",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 35,
+      "summary": null,
+      "keywords": [],
+      "extract": "Kaivalya Rawal kaivalyarawal45@gmail.com Oxford Internet Institute Oxford, Oxfordshire, UK Zihao Fu zihao.fu@oii.ox.ac.uk Oxford Internet Institute Oxford, Oxfordshire, UK Eoin Delaney eoin.delaney@tcd.ie Trinity College Dublin Dublin, Ireland Chris Russell chris.russell@oii.ox.ac.uk Oxford Internet Institute Oxford, Oxfordshire, UK",
+      "extractCut": false
+    },
+    {
+      "id": "sec-001-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 205,
+      "summary": null,
+      "keywords": [],
+      "extract": "There can be many competing and contradictory explanations for a single model prediction, making it difficult to select which one to use. Current explanation evaluation frameworks measure qual- ity by comparing against ideal “ground-truth” explanations, or by verifying model sensitivity to important inputs. We outline the limitations of these approaches, and propose three desirable princi- ples to ground the future",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1175,
+      "summary": null,
+      "keywords": [],
+      "extract": "As artificial intelligence (AI) systems are increasingly used in critical decision-making processes, knowing which model explanation to trust has emerged as a fundamental challenge. Model explanations often disagree with each other (see figure 1), and the selection This work is licensed under a Creative Commons Attribution 4.0 International License. FAccT ’25, Athens, Greece © 2025 Copyright held by the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-21-our-notation",
+      "number": "2.1",
+      "title": "Our Notation",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1073,
+      "summary": null,
+      "keywords": [],
+      "extract": "We specify our notation from figure 2: input vector x, model 𝑚, and explanation e. We use these to define an explanation “quality” metric 𝑞and an evaluation framework 𝑄here, and in algorithm 1 we implement such a framework using AXE. (1) Input Vector: The input feature vector for any arbitrary dat- apoint is defined as: x = [𝑥1,𝑥2, . . . ,𝑥𝑁] ∈R𝑁, where 𝑁is the number of features, and each 𝑥𝑖is a",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-23-prior-approaches",
+      "number": "2.3",
+      "title": "Prior Approaches",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1025,
+      "summary": null,
+      "keywords": [],
+      "extract": "Explanations can be evaluated using any of the evaluation metrics defined in table 1. Broadly, these fall into two categories: (1) ground-truth based metrics compare the generated explana- tions e with ground-truth annotations e∗, either collected by humans or inferred using a different proxy [20, 21, 44, 51]. These include Feature Agreement (FA), Sign Agreement (SA), Rank Agreement (RA), Signed Rank Agreement",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-25-inherent-biases-in-sensitivity-metrics",
+      "number": "2.5",
+      "title": "Inherent biases in sensitivity Metrics",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 369,
+      "summary": null,
+      "keywords": [],
+      "extract": "Sensitivity based explainers E like LIME are highly sensitive to hyperparameters. This facilitates adversarial fairwashing attacks (section 4.1) [54] and can cause feature importances to switch arbi- trarily from highly positive to highly negative [40, 49]. Sensitivity analysis based evaluation metrics 𝑞suffer similar problems. Metrics like PGI and PGU may simply encode a preference for particular explainers. We",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-3-methodology",
+      "number": "3",
+      "title": "Methodology",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 169,
+      "summary": null,
+      "keywords": [],
+      "extract": "Inspired by previous work (section 2.3) and desiderata from user studies [4, 7, 9, 12, 25, 45], we consider a simple alternative to sensitivity-driven methods of XAI evaluation: the important fea- tures in any explanation should be more predictive of the model output than the unimportant features. AXE adopts classifier ac- curacy [28] to measure the predictiveness of the top-n important features. This “top-n” style",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-31-the-axe-framework",
+      "number": "3.1",
+      "title": "The AXE Framework",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 626,
+      "summary": null,
+      "keywords": [],
+      "extract": "Algorithm 1 Evaluating Explanation Quality with AXE𝒌𝒏 Require: Number of Features 𝑛, Number of Neighbors 𝑘 Dataset X = {x𝑖}𝜈 𝑖=1, Predictions 𝑌preds = {𝑦𝑖}𝜈 𝑖=1, and Expla- nations 𝐸= {e𝑖}𝜈 𝑖=1 1: Initialize an empty list: ˆ𝑌←[] 2: for each datapoint x𝑖and explanation e𝑖in (X, 𝐸) do 3: Find 𝑛most important features: 𝑓imp ←ImpFeatures(e𝑖,𝑛) 4: Create X𝑓with subset of features 𝑓𝑖𝑚𝑝from X",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-32-illustrative-example",
+      "number": "3.2",
+      "title": "Illustrative Example",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 984,
+      "summary": null,
+      "keywords": [],
+      "extract": "Intuitively, AXE uses k-NN models because we want important features to be those that separate model predictions in feature space. Conversely, unimportant inputs should be unable to separate the model predictions from each other. To illustrate the intuition behind the choice of k-NN models in AXE , we present a motivating example. Consider a dataset consisting of input features 𝑋1 and 𝑋2, sampled from 4 Normal",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-4-experiments",
+      "number": "4",
+      "title": "Experiments",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 30,
+      "summary": null,
+      "keywords": [],
+      "extract": "In sections 2.4, 2.5, and 3.2 we used synthetic examples demonstrat- ing the ineffectiveness of prior explanation evaluation metrics. We now compare AXE with existing baselines on real-world datasets. 4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-010-41-detecting-explanation-fairwashing",
+      "number": "4.1",
+      "title": "Detecting Explanation Fairwashing",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 906,
+      "summary": null,
+      "keywords": [],
+      "extract": "We simulate a state-of-the-art adversarial attack [54] on explana- tions in a real-world setting where ground-truths remain unknown. The attack modifies a model 𝑚, known to be discriminatory, creat- ing new models 𝑚𝑆or 𝑚𝐿that respectively fool SHAP and LIME into generating explanations e that show the discriminatory feature as unimportant. A good explanation evaluation metric 𝑞should identify manipulated",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-42-comparing-axe-with-baselines",
+      "number": "4.2",
+      "title": "Comparing AXE with Baselines",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 994,
+      "summary": null,
+      "keywords": [],
+      "extract": "We performed computational experiments comparing AXE with prior baselines across four datasets, two models, seven explain- ers, and all eight prior evaluation metrics from table 1, adopting the standard OpenXAI benchmark [2], with results presented in figures 6 and 7. Like OpenXAI, we use the German Credit [27], COMPAS [32], Adult Income [6], and Home Equity Line of Credit (HELOC) [18] datasets (X), and run",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-5-conclusion",
+      "number": "5",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 315,
+      "summary": null,
+      "keywords": [],
+      "extract": "The ability to measure explanation quality is integral to developing better explanations, and to engender trust in existing XAI methods. In section 2.2 we introduced three principles to guide the evalua- tion of explainers and local feature-importance model explanations: local contextualization, model relativism, and on-manifold evaluation, reflecting that explanations should be dependent on input datapoints,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-acknowledgments",
+      "number": null,
+      "title": "Acknowledgments",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 76,
+      "summary": null,
+      "keywords": [],
+      "extract": "This work has been supported through research funding provided by the Wellcome Trust (grant no. 223765/Z/21/Z), Sloan Foundation (grant no. G-2021-16779), Department of Health and Social Care, EPSRC (grant no. EP/Y019393/1), and Luminate Group. Their fund- ing supports the Trustworthiness Auditing for AI project and the Governance of Emerging Technologies research programme at the Oxford Internet Institute,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 12,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2166,
+      "summary": null,
+      "keywords": [],
+      "extract": "[1] Julius Adebayo, Justin Gilmer, Michael Muelly, Ian Goodfellow, Moritz Hardt, and Been Kim. 2018. Sanity checks for saliency maps. In Proceedings of the 32nd International Conference on Neural Information Processing Systems (Montréal, Canada) (NIPS’18). Curran Associates Inc., Red Hook, NY, USA, 9525–9536. [2] Chirag Agarwal, Satyapriya Krishna, Eshika Saxena, Martin Pawelczyk, Nari Johnson, Isha Puri, Marinka",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 11,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 12,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "Different Explainers Yield Different Explanations: A neural network predicts diabetes on the “Pima Indians” dataset [10]. A single positive (diabetic) prediction is explained using four explainers. These feature-importance explanations, visualized here as “force-plots”, consist of a signed vector in",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Explanation Generation (a) and Evaluation (b): AXE measures how well a given explanation can help emulate model behavior. See section 3.1 for full algorithm",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "Explanation Evaluation Metrics: Definitions for ground-truth based explanation evaluation metrics: FA, RA, SA, SRA,",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Violations of local contextualization and model relativism: Plots showing explanation quality 𝑞(color) across 𝑖1 and 𝑖2",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Synthetic Data and Model for AXE and PGI evaluations: 4 Normal distributions representing the data distribution, and neighborhoods Δ and 𝜂for PGI and AXE respectively. The model is defined as 𝑚(x) = 1𝑋1>0, and we compare",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "5",
+      "title": "Comparing explanations using AXE and PGI: By definition 𝑞(e𝑎) > 𝑞(e𝑏), but PGI does not clearly show this. AXE correctly determines that explanation e𝑎is better than e𝑏, across hyperparameter values. (Both X axes on symlog scale)",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "Detecting explanation fairwashing: We replicate an adversarial fairwashing attack [54] and generate spurious explanations, which we try to then detect using quality metrics 𝑞that do not need ground-truths: AXE , PGI, and PGU. Complete details are in section 4.1: 𝐸𝜌is a set of explanations that corre",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "6",
+      "title": "Evaluating the Quality of Explanations for Neural Networks: For a fair comparison across evaluation metrics, we",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "7",
+      "title": "Evaluating the Quality of Explanations for Logistic Regression: For a fair comparison across evaluation metrics, we average over the entire dataset and plot their Z-score standardized values. We compare AXE with all prior metrics from table 1: FA, RA, SA, SRA, RC, PRA, PGI, and -PGU (PGU inverted so",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant",
+    "branch": "main",
+    "dir": "cat-harness/library/arxiv-2505.10399v1"
+  }
+}

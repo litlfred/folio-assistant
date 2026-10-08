@@ -21,6 +21,7 @@ Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Names the `sub-kg-lifecycle` skill without calling this process:** [Mount a declared subgraph](mount-subgraph.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram
 - **Skill:** [`sub-kg-lifecycle`](../reference/skill-instructions/sub-kg-lifecycle.html)
 

@@ -200,7 +200,7 @@ const INSTANCE_ROOT = HARNESS_ROOT;
 // same prose in other languages, so a name there is the ORIGINAL's reference
 // counted again, once per locale.
 // declared-path-literal: checkout machinery and per-locale copies of prose already counted at its source; none is a declared graph directory
-const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
+const SKIP_DIRS = new Set([".git", "node_modules", "translations", ".claude"]);
 /**
  * Kinds of graph whose contents a PROCESS writes.
  *

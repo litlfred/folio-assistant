@@ -1,0 +1,1554 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2606.21008v3",
+ "source": {
+  "file": "arxiv-2606.21008v4.pdf",
+  "sha256": "2a2900edc6101f3f5ee564a2ae85550439fd2012f4fd439e29699e15b7faef8e",
+  "bytes": 2218590,
+  "pages": 33,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-08T08:52:10Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2606.21008",
+   "version": "3",
+   "primary_class": null,
+   "stamp_date": null
+  },
+  "doi": null,
+  "title": "The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures",
+  "authors_raw": "IT MEASURES",
+  "title_lines": [
+   "THE METANYM GAME: AN LLM BENCHMARK WITH-",
+   "OUT GROUND TRUTH THAT RISES WITH THE MODELS"
+  ],
+  "abstract": "We introduce a benchmark that is fully self-contained, needs no ground truth, and rises with the models it measures. Language models compete at making analo- gies and subjectively grade one another; nothing enters from outside. The bench- mark reproduces GPQA Diamond, a keyed benchmark of expert-written ques- tions, at r = 0.98, audited for a leak and found clean. We hypothesize that both benchmarks measure the same thing in different ways: a language model holds its knowledge as archetypal contexts, relationship patterns valid across many topic domains. GPQA instantiates the required knowledge in one domain; the Metanym Game instantiates one archetype into several domains, generating analogies, no reasoning required. The reasoning feature of an LLM hardly changes the game\u2019s ratings, while it lifts GPQA, which requires derivations. In the game, a player writes a context template whose slots, filled with a set of keywords from a topic domain, instantiate a factually true description of that domain; the instantiations are each other\u2019s metaphors, and keywords filling the same slot are metanyms, metaphorically synonymous. Correctness is settled sentence by sentence. Ground truth is replaced by the SVD of the factual rating matrix: its left and right singular vectors rate the players as judges and as generators, two ratings from one factori- sation, to our knowledge a first for an LLM council of peers. On the subjective criteria, judges are weighted by their rating consistency under a swept calibration anchor. Generating and judging are different skills: on this roster the strongest generators were middling judges. A council of the five best issues the official ratings; its contestable seats keep it current, a candidate steering signal for self- improving AI. The paper is accompanied by a validating package that recomputes every number.",
+  "docinfo": {
+   "Title": "The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures",
+   "Author": "David Nordfors",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:0d14211)"
+  },
+  "title_raw": "THE METANYM GAME: AN LLM BENCHMARK WITH- OUT GROUND TRUTH THAT RISES WITH THE MODELS",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures",
+   "heading": "T HE M ETANYM G AME : A N LLM B ENCHMARK W ITH - OUT G ROUND T RUTH T HAT R ISES W ITH THE M ODELS I T M EASURES",
+   "outline": "Introduction",
+   "text": "THE METANYM GAME: AN LLM BENCHMARK WITH- OUT GROUND TRUTH THAT RISES WITH THE MODELS",
+   "corroborated_by": [
+    "heading",
+    "text",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "1"
+  },
+  {
+   "level": 1,
+   "title": "The metanym game",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 1,
+   "title": "The metanym game as a benchmark",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 2,
+   "title": "Participants and protocol",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 2,
+   "title": "The rubric and the anchor",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 2,
+   "title": "Two key-free estimators",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "5"
+  },
+  {
+   "level": 2,
+   "title": "Council, total rating, and scaling by addition",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "Anchoring doubles resolution",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "Evaluator factual competence",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "Rating consistency and the council",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "The official leaderboard: judgement is the bottleneck",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "7"
+  },
+  {
+   "level": 2,
+   "title": "A key-free benchmark replicates a keyed one",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "7"
+  },
+  {
+   "level": 2,
+   "title": "Robustness to regeneration",
+   "page": 8,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "8"
+  },
+  {
+   "level": 1,
+   "title": "Related work",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 1,
+   "title": "Limitations",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "11"
+  },
+  {
+   "level": 1,
+   "title": "Rating estimators",
+   "page": 14,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "14"
+  },
+  {
+   "level": 2,
+   "title": "Generation rating",
+   "page": 14,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "14"
+  },
+  {
+   "level": 2,
+   "title": "Factual competence and generation factuality (SVD)",
+   "page": 14,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "14"
+  },
+  {
+   "level": 2,
+   "title": "Rating consistency",
+   "page": 15,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "15"
+  },
+  {
+   "level": 2,
+   "title": "The council and the total",
+   "page": 16,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "16"
+  },
+  {
+   "level": 2,
+   "title": "Per-criterion generator quality versus evaluator consistency",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "17"
+  },
+  {
+   "level": 2,
+   "title": "The contest, the ballast, and the guards",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "17"
+  },
+  {
+   "level": 2,
+   "title": "Authority versus consistency on the subjective axes",
+   "page": 18,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "18"
+  },
+  {
+   "level": 2,
+   "title": "The two estimators compared",
+   "page": 19,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "19"
+  },
+  {
+   "level": 1,
+   "title": "Generation and evaluation prompts",
+   "page": 19,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "19"
+  },
+  {
+   "level": 2,
+   "title": "\u2014 Generation prompt",
+   "page": 19,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "19"
+  },
+  {
+   "level": 2,
+   "title": "\u2014 Evaluation prompt (calibrated/anchored)",
+   "page": 22,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "22"
+  },
+  {
+   "level": 2,
+   "title": "Bootstrap note \u2014 the un-anchored form (\u00a74.1 initial selection)",
+   "page": 24,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "24"
+  },
+  {
+   "level": 1,
+   "title": "A council evaluation, worked",
+   "page": 24,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "24"
+  },
+  {
+   "level": 2,
+   "title": "A plain error, and the council converges",
+   "page": 25,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "25"
+  },
+  {
+   "level": 2,
+   "title": "Judges disagreeing on a countable quantity",
+   "page": 25,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "25"
+  },
+  {
+   "level": 2,
+   "title": "The dissent that is better reasoned than the majority",
+   "page": 26,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "26"
+  },
+  {
+   "level": 1,
+   "title": "Auditing the metanym\u2013GPQA correlation",
+   "page": 26,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "26"
+  },
+  {
+   "level": 2,
+   "title": "The correlation, decomposed",
+   "page": 26,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "26"
+  },
+  {
+   "level": 2,
+   "title": "The administration, disclosed",
+   "page": 28,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "28"
+  },
+  {
+   "level": 2,
+   "title": "The audit: no leak found",
+   "page": 29,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "29"
+  },
+  {
+   "level": 1,
+   "title": "The constructs of intelligence the Metanym Game demands",
+   "page": 29,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "29"
+  },
+  {
+   "level": 1,
+   "title": "The three runs apart, and pooled",
+   "page": 31,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "31"
+  },
+  {
+   "level": 1,
+   "title": "What anchoring does to resolution",
+   "page": 33,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "33"
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "The Metanym Game, generation: the archetypal context \u2018Gradient-Guided Navigation\u2019 from the anchor submission; its context template, metanym table (one metanym set excluded to make space in the figure) and one instantiation with its idiomatic rewrite",
+   "page": 3,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "3"
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "The Metanym Game, evaluation: the council on one parallel context of the Gemini 2.5 Flash submission; the instantiation, its idiomatic rewrite, the administrator\u2019s summary, and the five judges\u2019 ratings with their justifications",
+   "page": 4,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "4"
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "The six-axis rubric, in the words the evaluator sees (Appendix B). No definition of beauty or intelligence is supplied; each judge rates on its own understanding",
+   "page": 5,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "5"
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Final leaderboard \u2014 total T with its joint-bootstrap 95% CI, the evaluator half E, the generator half G, and the four anchored components; all council-issued against the fixed anchor, which reads 7.00 by construction. Adjacent ranks are resolved (non-overlapping intervals) only at",
+   "page": 7,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "7"
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "The official total T against self-administered GPQA Diamond accuracy, twelve models, three runs pooled: r = 0.98 [0.95, 0.99], \u03c1 = 0.96. Filled markers are council seats, open markers non-council, bars 95% intervals; the star is the anchor, T = 7 by calibration, and excluding it leaves r at 0.98",
+   "page": 8,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "8"
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "A hypothesis for the 0.98 (\u00a76): an archetype (\u03b1, \u03b2) is held once; each domain adds only its metanym set (the slices). GPQA: archetype and domain are given, the model derives the instantiation and selects the matching candidate. The game: nothing is given, the model selects the archetype and domains",
+   "page": 8,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "8"
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Factual rating with the reasoning channel off and on, six judges each, anchor at 7; bootstrap over judges and archetypes, percentile 95% intervals. One portfolio per cell; the vendors return summaries of the thinking, not the trace",
+   "page": 10,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "10"
+  },
+  {
+   "kind": "table",
+   "number": "4",
+   "title": "Evaluator factual competence EF (left singular vector; \u201canchored\u201d = 7f/fa) and generator",
+   "page": 15,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "15"
+  },
+  {
+   "kind": "table",
+   "number": "5",
+   "title": "Anchor-sweep consistency per evaluator and axis (A10): mean pairwise Pearson correlation of scores across anchor values 5/6/7/8. It measures self-consistency, not accuracy; the factual column is distinct from the factual-competence loading. gpt-4o-mini\u2019s factual entry is undefined (near-zero varianc",
+   "page": 16,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "16"
+  },
+  {
+   "kind": "table",
+   "number": "6",
+   "title": "Per-criterion generator quality G versus evaluator consistency E, both anchored to claudeopus-4.5 (\u22c6) = 7; last row the anchored cosine with its joint-bootstrap 95% CI",
+   "page": 17,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "17"
+  },
+  {
+   "kind": "table",
+   "number": "7",
+   "title": "Each seat\u2019s anchored EF by contest composition \u2014 0\u20133 ballast blocks (mean over the seven possible contestants) beside the twelve-participant reference, three runs pooled. Council alone, the column is scrambled; from two ballast on, the contest reproduces the reference (mean |\u2206| 0.60 over the seven c",
+   "page": 18,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "18"
+  },
+  {
+   "kind": "table",
+   "number": "8",
+   "title": "The two estimators and their division of labour (source \u00a74.2)",
+   "page": 19,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "19"
+  },
+  {
+   "kind": "table",
+   "number": "9",
+   "title": "The aggregation ladder. Two interval constructions are reported because each covers the other\u2019s weakness at n = 12: Fisher-z assumes bivariate normality but unbends the skew of a bounded statistic; the BCa bootstrap is assumption-lighter and corrects the bias that makes the naive percentile bootstra",
+   "page": 27,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "27"
+  },
+  {
+   "kind": "table",
+   "number": "10",
+   "title": "The T\u2013GPQA fit with measurement uncertainty propagated. The last row is conservative (the observed scatter already contains one realisation of each point\u2019s noise); the correlation does not fall below 0.86. Measurement error in x attenuates a correlation rather than inflating it, so the point estimat",
+   "page": 27,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "27"
+  },
+  {
+   "kind": "table",
+   "number": "11",
+   "title": "Pearson r against GPQA on the full roster and on the leading eight (point estimates on eight points)",
+   "page": 28,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "28"
+  },
+  {
+   "kind": "table",
+   "number": "12",
+   "title": "The two instruments side by side \u2014 the key-free total T (three runs pooled) and selfadministered GPQA Diamond accuracy (voids counted as wrong), sorted by T",
+   "page": 29,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "29"
+  },
+  {
+   "kind": "table",
+   "number": "13",
+   "title": "The eight constructs mapped to the Metanym Game\u2019s two tasks (\u2022 marks a primary demand)",
+   "page": 30,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "30"
+  },
+  {
+   "kind": "table",
+   "number": "14",
+   "title": "Total rating T across three full re-runs (run 1 = the bootstrap generation, re-analysed on the council basis; runs 2\u20133 the same day, two hours apart), all on the council basis. \u22c6marks a council seat, fixed from run 1. SD is the per-model run-to-run standard deviation (mean 0.43, max 0.72)",
+   "page": 31,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "31"
+  },
+  {
+   "kind": "table",
+   "number": "15",
+   "title": "Factual competence EF per run and pooled (twelve-evaluator basis). Spectral gap \u03c31/\u03c32:",
+   "page": 31,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "31"
+  },
+  {
+   "kind": "figure",
+   "number": "5",
+   "title": "The three runs apart and pooled, against GPQA Diamond. Top row: council-basis T per run, with each run\u2019s twelve-evaluator spectral gap. Bottom row: runs 1 and 2 pooled (left), all three pooled (right). Run 3, with the smallest gap, is the odd one out; pooling restores an identified factual axis and",
+   "page": 32,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "32"
+  },
+  {
+   "kind": "figure",
+   "number": "6",
+   "title": "Each model\u2019s leave-self-out overall mean with its 95% bootstrap CI, un-anchored (left) and anchored (right); models are unlabelled deliberately \u2014 the message is structural, not a ranking",
+   "page": 33,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "33"
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": "1",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 2,
+   "label": "2",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 3,
+   "label": "3",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 4,
+   "label": "4",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 5,
+   "label": "5",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 6,
+   "label": "6",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 7,
+   "label": "7",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 8,
+   "label": "8",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 9,
+   "label": "9",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 10,
+   "label": "10",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 11,
+   "label": "11",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 12,
+   "label": "12",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 13,
+   "label": "13",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 14,
+   "label": "14",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 15,
+   "label": "15",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 16,
+   "label": "16",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 17,
+   "label": "17",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 18,
+   "label": "18",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 19,
+   "label": "19",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 20,
+   "label": "20",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 21,
+   "label": "21",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 22,
+   "label": "22",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 23,
+   "label": "23",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 24,
+   "label": "24",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 25,
+   "label": "25",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 26,
+   "label": "26",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 27,
+   "label": "27",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 28,
+   "label": "28",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 29,
+   "label": "29",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 30,
+   "label": "30",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 31,
+   "label": "31",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 32,
+   "label": "32",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 33,
+   "label": "33",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 46,
+   "n_words": 5,
+   "label_start": "1",
+   "label_end": "1"
+  },
+  {
+   "id": "sec-000-the-metanym-game",
+   "number": null,
+   "title": "The metanym game",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1974,
+   "n_words": 303,
+   "label_start": "1",
+   "label_end": "1"
+  },
+  {
+   "id": "sec-001-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 4349,
+   "n_words": 691,
+   "label_start": "1",
+   "label_end": "2"
+  },
+  {
+   "id": "sec-002-the-metanym-game-as-a-benchmark",
+   "number": null,
+   "title": "The metanym game as a benchmark",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": "2",
+   "label_end": "2"
+  },
+  {
+   "id": "sec-003-participants-and-protocol",
+   "number": null,
+   "title": "Participants and protocol",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 972,
+   "n_words": 153,
+   "label_start": "2",
+   "label_end": "2"
+  },
+  {
+   "id": "sec-004-the-rubric-and-the-anchor",
+   "number": null,
+   "title": "The rubric and the anchor",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 5,
+   "n_chars": 2024,
+   "n_words": 284,
+   "label_start": "2",
+   "label_end": "5"
+  },
+  {
+   "id": "sec-005-two-key-free-estimators",
+   "number": null,
+   "title": "Two key-free estimators",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 2735,
+   "n_words": 428,
+   "label_start": "5",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-006-council-total-rating-and-scaling-by-addition",
+   "number": null,
+   "title": "Council, total rating, and scaling by addition",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 2089,
+   "n_words": 366,
+   "label_start": "6",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-007-results",
+   "number": null,
+   "title": "Results",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": "6",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-008-anchoring-doubles-resolution",
+   "number": null,
+   "title": "Anchoring doubles resolution",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 540,
+   "n_words": 85,
+   "label_start": "6",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-009-evaluator-factual-competence",
+   "number": null,
+   "title": "Evaluator factual competence",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 622,
+   "n_words": 93,
+   "label_start": "6",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-010-rating-consistency-and-the-council",
+   "number": null,
+   "title": "Rating consistency and the council",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 746,
+   "n_words": 115,
+   "label_start": "6",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-011-the-official-leaderboard-judgement-is-the-bottle",
+   "number": null,
+   "title": "The official leaderboard: judgement is the bottleneck",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 2299,
+   "n_words": 391,
+   "label_start": "7",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-012-a-key-free-benchmark-replicates-a-keyed-one",
+   "number": null,
+   "title": "A key-free benchmark replicates a keyed one",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 2414,
+   "n_words": 401,
+   "label_start": "7",
+   "label_end": "8"
+  },
+  {
+   "id": "sec-013-robustness-to-regeneration",
+   "number": null,
+   "title": "Robustness to regeneration",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 795,
+   "n_words": 142,
+   "label_start": "8",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-014-related-work",
+   "number": null,
+   "title": "Related work",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 2519,
+   "n_words": 402,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-015-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 5784,
+   "n_words": 938,
+   "label_start": "9",
+   "label_end": "10"
+  },
+  {
+   "id": "sec-016-limitations",
+   "number": null,
+   "title": "Limitations",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 1048,
+   "n_words": 162,
+   "label_start": "10",
+   "label_end": "11"
+  },
+  {
+   "id": "sec-017-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 14,
+   "n_chars": 9093,
+   "n_words": 1320,
+   "label_start": "11",
+   "label_end": "14"
+  },
+  {
+   "id": "sec-018-rating-estimators",
+   "number": null,
+   "title": "Rating estimators",
+   "level": 1,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 1169,
+   "n_words": 195,
+   "label_start": "14",
+   "label_end": "14"
+  },
+  {
+   "id": "sec-019-generation-rating",
+   "number": null,
+   "title": "Generation rating",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 541,
+   "n_words": 97,
+   "label_start": "14",
+   "label_end": "14"
+  },
+  {
+   "id": "sec-020-factual-competence-and-generation-factuality-svd",
+   "number": null,
+   "title": "Factual competence and generation factuality (SVD)",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 15,
+   "n_chars": 3087,
+   "n_words": 526,
+   "label_start": "14",
+   "label_end": "15"
+  },
+  {
+   "id": "sec-021-rating-consistency",
+   "number": null,
+   "title": "Rating consistency",
+   "level": 2,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 2370,
+   "n_words": 357,
+   "label_start": "15",
+   "label_end": "16"
+  },
+  {
+   "id": "sec-022-the-council-and-the-total",
+   "number": null,
+   "title": "The council and the total",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 2409,
+   "n_words": 432,
+   "label_start": "16",
+   "label_end": "17"
+  },
+  {
+   "id": "sec-023-per-criterion-generator-quality-versus-evaluator",
+   "number": null,
+   "title": "Per-criterion generator quality versus evaluator consistency",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 17,
+   "n_chars": 1413,
+   "n_words": 264,
+   "label_start": "17",
+   "label_end": "17"
+  },
+  {
+   "id": "sec-024-the-contest-the-ballast-and-the-guards",
+   "number": null,
+   "title": "The contest, the ballast, and the guards",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 3102,
+   "n_words": 512,
+   "label_start": "17",
+   "label_end": "18"
+  },
+  {
+   "id": "sec-025-authority-versus-consistency-on-the-subjective-a",
+   "number": null,
+   "title": "Authority versus consistency on the subjective axes",
+   "level": 2,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 1759,
+   "n_words": 271,
+   "label_start": "18",
+   "label_end": "19"
+  },
+  {
+   "id": "sec-026-the-two-estimators-compared",
+   "number": null,
+   "title": "The two estimators compared",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 844,
+   "n_words": 135,
+   "label_start": "19",
+   "label_end": "19"
+  },
+  {
+   "id": "sec-027-generation-and-evaluation-prompts",
+   "number": null,
+   "title": "Generation and evaluation prompts",
+   "level": 1,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 1102,
+   "n_words": 168,
+   "label_start": "19",
+   "label_end": "19"
+  },
+  {
+   "id": "sec-028-generation-prompt",
+   "number": null,
+   "title": "\u2014 Generation prompt",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 22,
+   "n_chars": 8992,
+   "n_words": 1317,
+   "label_start": "19",
+   "label_end": "22"
+  },
+  {
+   "id": "sec-029-evaluation-prompt-calibratedanchored",
+   "number": null,
+   "title": "\u2014 Evaluation prompt (calibrated/anchored)",
+   "level": 2,
+   "page_start": 22,
+   "page_end": 24,
+   "n_chars": 5419,
+   "n_words": 805,
+   "label_start": "22",
+   "label_end": "24"
+  },
+  {
+   "id": "sec-030-bootstrap-note-the-un-anchored-form-41-initial-s",
+   "number": null,
+   "title": "Bootstrap note \u2014 the un-anchored form (\u00a74.1 initial selection)",
+   "level": 2,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 2265,
+   "n_words": 328,
+   "label_start": "24",
+   "label_end": "24"
+  },
+  {
+   "id": "sec-031-a-council-evaluation-worked",
+   "number": null,
+   "title": "A council evaluation, worked",
+   "level": 1,
+   "page_start": 24,
+   "page_end": 25,
+   "n_chars": 1422,
+   "n_words": 218,
+   "label_start": "24",
+   "label_end": "25"
+  },
+  {
+   "id": "sec-032-a-plain-error-and-the-council-converges",
+   "number": null,
+   "title": "A plain error, and the council converges",
+   "level": 2,
+   "page_start": 25,
+   "page_end": 25,
+   "n_chars": 3619,
+   "n_words": 494,
+   "label_start": "25",
+   "label_end": "25"
+  },
+  {
+   "id": "sec-033-judges-disagreeing-on-a-countable-quantity",
+   "number": null,
+   "title": "Judges disagreeing on a countable quantity",
+   "level": 2,
+   "page_start": 25,
+   "page_end": 26,
+   "n_chars": 1142,
+   "n_words": 173,
+   "label_start": "25",
+   "label_end": "26"
+  },
+  {
+   "id": "sec-034-the-dissent-that-is-better-reasoned-than-the-maj",
+   "number": null,
+   "title": "The dissent that is better reasoned than the majority",
+   "level": 2,
+   "page_start": 26,
+   "page_end": 26,
+   "n_chars": 2340,
+   "n_words": 318,
+   "label_start": "26",
+   "label_end": "26"
+  },
+  {
+   "id": "sec-035-auditing-the-metanymgpqa-correlation",
+   "number": null,
+   "title": "Auditing the metanym\u2013GPQA correlation",
+   "level": 1,
+   "page_start": 26,
+   "page_end": 26,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": "26",
+   "label_end": "26"
+  },
+  {
+   "id": "sec-036-the-correlation-decomposed",
+   "number": null,
+   "title": "The correlation, decomposed",
+   "level": 2,
+   "page_start": 26,
+   "page_end": 28,
+   "n_chars": 5443,
+   "n_words": 900,
+   "label_start": "26",
+   "label_end": "28"
+  },
+  {
+   "id": "sec-037-the-administration-disclosed",
+   "number": null,
+   "title": "The administration, disclosed",
+   "level": 2,
+   "page_start": 28,
+   "page_end": 29,
+   "n_chars": 1817,
+   "n_words": 283,
+   "label_start": "28",
+   "label_end": "29"
+  },
+  {
+   "id": "sec-038-the-audit-no-leak-found",
+   "number": null,
+   "title": "The audit: no leak found",
+   "level": 2,
+   "page_start": 29,
+   "page_end": 29,
+   "n_chars": 2551,
+   "n_words": 374,
+   "label_start": "29",
+   "label_end": "29"
+  },
+  {
+   "id": "sec-039-the-constructs-of-intelligence-the-metanym-game",
+   "number": null,
+   "title": "The constructs of intelligence the Metanym Game demands",
+   "level": 1,
+   "page_start": 29,
+   "page_end": 31,
+   "n_chars": 3692,
+   "n_words": 551,
+   "label_start": "29",
+   "label_end": "31"
+  },
+  {
+   "id": "sec-040-the-three-runs-apart-and-pooled",
+   "number": null,
+   "title": "The three runs apart, and pooled",
+   "level": 1,
+   "page_start": 31,
+   "page_end": 33,
+   "n_chars": 3290,
+   "n_words": 531,
+   "label_start": "31",
+   "label_end": "33"
+  },
+  {
+   "id": "sec-041-what-anchoring-does-to-resolution",
+   "number": null,
+   "title": "What anchoring does to resolution",
+   "level": 1,
+   "page_start": 33,
+   "page_end": 33,
+   "n_chars": 761,
+   "n_words": 123,
+   "label_start": "33",
+   "label_end": "33"
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 42,
+  "toc_inferred_entries": 0,
+  "figure_entries": 21,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 43,
+  "chars_total": 100607
+ }
+}

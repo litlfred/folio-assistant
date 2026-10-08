@@ -3514,6 +3514,41 @@
       "status": "candidate"
     },
     {
+      "id": "change-size.changesizethresholdschema.basis",
+      "prefLabel": "ChangeSizeThresholdSchema.basis",
+      "definition": "Source and rationale behind the limit.",
+      "source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.basis",
+      "status": "candidate"
+    },
+    {
+      "id": "change-size.changesizethresholdschema.exemptions",
+      "prefLabel": "ChangeSizeThresholdSchema.exemptions",
+      "definition": "Patterns or categories treated as exempt.",
+      "source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.exemptions",
+      "status": "candidate"
+    },
+    {
+      "id": "change-size.changesizethresholdschema.limit",
+      "prefLabel": "ChangeSizeThresholdSchema.limit",
+      "definition": "Numerical limit in effective lines.",
+      "source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.limit",
+      "status": "candidate"
+    },
+    {
+      "id": "change-size.changesizethresholdschema.mode",
+      "prefLabel": "ChangeSizeThresholdSchema.mode",
+      "definition": "Current enforcement mode: advisory reporting vs blocking gate.",
+      "source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.mode",
+      "status": "candidate"
+    },
+    {
+      "id": "change-size.changesizethresholdschema.weights",
+      "prefLabel": "ChangeSizeThresholdSchema.weights",
+      "definition": "Weights per file category.",
+      "source": "cat-harness/schemas/change-size.ts#ChangeSizeThresholdSchema.weights",
+      "status": "candidate"
+    },
+    {
       "id": "code-list.codelistschema.description",
       "prefLabel": "CodeListSchema.description",
       "definition": "What question the list answers, or what set it enumerates.",
@@ -8129,7 +8164,7 @@
     {
       "id": "openapi.openapiprovenanceschema.materialization",
       "prefLabel": "OpenApiProvenanceSchema.materialization",
-      "definition": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`folio-assistant-core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`.",
+      "definition": "The document IS a held copy of upstream bytes, so it says so in the shared `folio-materialization/v1` shape (`core`'s `MaterializationSchema`): where from, where it landed, why it was taken, its fixity and the five gates. Checked here only as far as this harness relies on it — the state, the path and the digest; the full record is that schema's to judge, and `check:read-only-graphs` reads `state` to agree with the directory's `readOnly`.",
       "source": "cat-harness/openapi/schemas/openapi.ts#OpenApiProvenanceSchema.materialization",
       "status": "candidate"
     },
@@ -10112,6 +10147,62 @@
       "prefLabel": "ExpressionCheck.recased",
       "definition": "Ids written in a case other than the list's, as `[written, canonical]`. Valid; reported.",
       "source": "cat-harness/schemas/spdx-license-expression.ts#ExpressionCheck.recased",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.featurename",
+      "prefLabel": "SpecValidationResult.featureName",
+      "definition": "Extracted feature title/name if found.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.featureName",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.findings",
+      "prefLabel": "SpecValidationResult.findings",
+      "definition": "Descriptive findings for any rule breach.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.findings",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.hasactionrequired",
+      "prefLabel": "SpecValidationResult.hasActionRequired",
+      "definition": "Whether the spec carries an ACTION REQUIRED marker.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.hasActionRequired",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.isadjudicated",
+      "prefLabel": "SpecValidationResult.isAdjudicated",
+      "definition": "Whether the status is considered adjudicated.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.isAdjudicated",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.missingsections",
+      "prefLabel": "SpecValidationResult.missingSections",
+      "definition": "Any mandatory sections that were not found in the spec.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.missingSections",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.state",
+      "prefLabel": "SpecValidationResult.state",
+      "definition": "\"pass\" if compliant, \"fail\" if mandatory section missing or invalid adjudication.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.state",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.status",
+      "prefLabel": "SpecValidationResult.status",
+      "definition": "Extracted status string from header, if found.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.status",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template.specvalidationresult.unresolvedclarifications",
+      "prefLabel": "SpecValidationResult.unresolvedClarifications",
+      "definition": "Any unresolved [NEEDS CLARIFICATION: ...] markers.",
+      "source": "cat-harness/schemas/spec-template.ts#SpecValidationResult.unresolvedClarifications",
       "status": "candidate"
     },
     {

@@ -13,6 +13,7 @@ Part of [C@T Harness](../../../../../README.md) 0.1.0, declared as `index-schema
 | [`index.html`](index.html) | a file |  |
 | [`core-schemas/`](core-schemas/) | _nothing declares what this holds_ | |
 | [`fhir-harness-schemas/`](fhir-harness-schemas/) | _nothing declares what this holds_ | |
+| [`openapi-schemas/`](openapi-schemas/) | _nothing declares what this holds_ | |
 | [`schemas/`](schemas/) | _nothing declares what this holds_ | |
 | [`smart-base-schemas/`](smart-base-schemas/) | _nothing declares what this holds_ | |
 <!-- kg:subgraph:end -->

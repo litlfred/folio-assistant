@@ -100,6 +100,7 @@ are good.
 
 | process | step(s) that name it |
 |---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | Record the decision as still open |
 | [Options analysis](../../processes/options-analysis.html) | Record the recommendation AND the rejected options |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Adopt, hold or decline |
 | [Content Change and Review](../../processes/content-change-review.html) | Approve |

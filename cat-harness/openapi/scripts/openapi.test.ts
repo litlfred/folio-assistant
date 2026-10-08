@@ -46,7 +46,7 @@ describe("cat-openapi.config.json", () => {
   });
 });
 
-describe("the committed smart-trust gateway API", () => {
+describe("the committed gateway API", () => {
   it("is held and matches its provenance", () => {
     expect(checkCommitted(join(ROOT, "smart-trust"))).toEqual([]);
   });

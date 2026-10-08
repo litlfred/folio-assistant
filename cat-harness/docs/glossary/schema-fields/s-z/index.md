@@ -13,16 +13,16 @@ permalink: /glossary/schema-fields/s-z/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1955 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-openapi 13 (<a href="{{ '/assets/glossary/cat-openapi--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 44 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1981 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 75 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 165 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 One of 4 pages of this type, split by the first letter of the label: <a href="{{ '/glossary/schema-fields/' | relative_url }}">all parts</a>.
 
-**Size:** this page holds 635 terms and is 353 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 643 terms and is 357 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2261</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2261</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2274</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2274</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -32,7 +32,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">635</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">643</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -912,6 +912,62 @@ SourceSchema.url <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>For a GitHub comment: its URL.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/public-comment.ts"><code>folio-assistant-core/schemas/public-comment.ts#SourceSchema.url</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.featurename" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.featureName <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Extracted feature title/name if found.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.featureName</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.findings" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.findings <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Descriptive findings for any rule breach.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.findings</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.hasactionrequired" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.hasActionRequired <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether the spec carries an ACTION REQUIRED marker.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.hasActionRequired</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.isadjudicated" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.isAdjudicated <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether the status is considered adjudicated.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.isAdjudicated</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.missingsections" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.missingSections <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Any mandatory sections that were not found in the spec.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.missingSections</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.state" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.state <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>&quot;pass&quot; if compliant, &quot;fail&quot; if mandatory section missing or invalid adjudication.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.state</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.status" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.status <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Extracted status string from header, if found.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.status</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--spec-template.specvalidationresult.unresolvedclarifications" data-fa-state="extracted" data-fa-gloss="">
+SpecValidationResult.unresolvedClarifications <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Any unresolved [NEEDS CLARIFICATION: ...] markers.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/spec-template.ts"><code>cat-harness/schemas/spec-template.ts#SpecValidationResult.unresolvedClarifications</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.stageskillbinding.skills" data-fa-state="extracted" data-fa-gloss="">
 StageSkillBinding.skills <span class="fa-gloss-status">candidate, extracted</span>
