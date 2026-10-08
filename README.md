@@ -23,12 +23,6 @@ workflow that auto-triggers on `main`, badge it here; if you add one that does
 not, do not.
 -->
 
-> **Platform, not content.** folio-assistant contains no content. It provides
-> the skills, schemas, and MCP server an LLM uses to plan, author, validate,
-> review, test, and publish a *folio* that lives in a **separate** repository.
-> The **formalism of authoring is kept separate from any content** — examples in
-> the docs are illustrative only.
-
 **Contents**
 
 <!-- readme:toc:begin -->
