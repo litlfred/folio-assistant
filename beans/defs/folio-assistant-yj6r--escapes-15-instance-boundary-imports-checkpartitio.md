@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yj6r
 title: 'ESCAPES: 15 instance-boundary imports check:partition cannot see, and the gate that sees them but never fails'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-10-04T15:52:25Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -643,3 +643,6 @@ The owner answered the open question on #2089 with *"Move box, drop clause"* (as
 **The bean stays `in-progress`.** Its second Done-when, under §"Themed sub-graphs", has 4 open boxes (carving `cat-harness/schemas`, `cat-harness/processes`, `folio-core` and `folio-paper-adapter`, and the per-directory manifests), and this ruling does not cover them. Nobody holds them now: the recorded holder branches have all merged.
 
 `r0tm` is deliberately left `draft`: bean `3432` uses it as its worked example.
+
+## Completed on landed evidence
+Landed on main in PR #1687 (Adapters closure step 2/2: adapters/document → core, escape axis 2 → 0 (#1558)).
