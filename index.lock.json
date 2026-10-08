@@ -4,12 +4,12 @@
     {
       "harness": "cat-harness",
       "repository": "litlfred/cat-harness",
-      "ref": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1"
+      "ref": "f7efa39c9731b5f26bcec147cf7a49b9193dba0b"
     },
     {
       "harness": "cat-harness-tools",
       "repository": "litlfred/cat-harness-tools",
-      "ref": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5"
+      "ref": "64cc1c62541dca55e779091e9881d03d8166cd39"
     },
     {
       "harness": "smart-base",
@@ -114,7 +114,7 @@
     {
       "instance": "cat-harness",
       "repository": "litlfred/cat-harness",
-      "sha": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1",
+      "sha": "f7efa39c9731b5f26bcec147cf7a49b9193dba0b",
       "upstreamRoot": "",
       "path": "cat-harness",
       "via": "cat-harness",
@@ -128,7 +128,7 @@
           "id": "*",
           "path": "cat-harness",
           "upstreamPath": ".",
-          "treeDigest": "c7536fb7b34c55f021c28d88fe63899656773d478dec441d7645b981af4ce50a",
+          "treeDigest": "0235dcd1b470974bc11c9a8cf3a3eda2d27894ada346f9211202ac0c944691d6",
           "files": 19431
         }
       ],
@@ -136,14 +136,14 @@
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-08",
-        "ref": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1",
+        "ref": "f7efa39c9731b5f26bcec147cf7a49b9193dba0b",
         "approver": "declared"
       }
     },
     {
       "instance": "cat-harness-tools",
       "repository": "litlfred/cat-harness-tools",
-      "sha": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5",
+      "sha": "64cc1c62541dca55e779091e9881d03d8166cd39",
       "upstreamRoot": "",
       "path": "cat-harness-tools",
       "via": "cat-harness-tools",
@@ -157,15 +157,15 @@
           "id": "*",
           "path": "cat-harness-tools",
           "upstreamPath": ".",
-          "treeDigest": "0a205be6cac5cd65af44cbfb72ce7b38da338d5f1ab8dbe7c12bbe9b7206b9ba",
-          "files": 403
+          "treeDigest": "02ddf57d3f73e9b40e22abc163c7538c962eef833b8f15a5ba21f75e3b206d8c",
+          "files": 404
         }
       ],
       "trust": {
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-10-08",
-        "ref": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5",
+        "ref": "64cc1c62541dca55e779091e9881d03d8166cd39",
         "approver": "declared"
       }
     },
@@ -530,7 +530,22 @@
   ],
   "unmounted": [
     {
+      "instance": "bootstrap",
+      "state": "skipped",
+      "detail": "the downstream's override says `skip`"
+    },
+    {
+      "instance": "bootstrap-tools",
+      "state": "skipped",
+      "detail": "the downstream's override says `skip`"
+    },
+    {
       "instance": "cat-openapi",
+      "state": "skipped",
+      "detail": "the downstream's override says `skip`"
+    },
+    {
+      "instance": "fhir-harness",
       "state": "skipped",
       "detail": "the downstream's override says `skip`"
     },
@@ -541,8 +556,8 @@
     },
     {
       "instance": "smart-ig",
-      "state": "local",
-      "detail": "held by this checkout; not mounted over"
+      "state": "skipped",
+      "detail": "the downstream's override says `skip`"
     }
   ]
 }

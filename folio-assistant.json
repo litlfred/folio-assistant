@@ -77,30 +77,7 @@
       ],
       "tile": {
         "icon": "beans"
-      },
-      "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."
-    },
-    {
-      "id": "todos",
-      "path": "todos/",
-      "coverage": {
-        "serialisations": "cat-harness/docs/todos.jsonld"
-      },
-      "_coverage_comment": "Issue #1908: the todo graph is published as ONE JSON-LD graph at <base>/todos.jsonld (+ .json), and every todo at <base>/todos/<id>.jsonld (+ .json), whose @id is that address, with a page at <base>/todos/<id>/. All written by gen-docs-pages.ts from the same items as assets/todos/index.json; scripts/todo-graph.ts is the builder.",
-      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
-      "graphTypologies": [
-        "todos"
-      ],
-      "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."
-    },
-    {
-      "id": "issue-marks",
-      "path": "issue-marks/",
-      "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code.",
-      "graphTypologies": [
-        "issue-marks"
-      ],
-      "_declarer_comment": "MOVED HERE from cat-harness/cat-harness.json by placement PR0 (bean ejye; cmsl option A, step 2, owner 2026-09-30 round 3): this directory sits at the checkout's root and belongs to the CHECKOUT, so the root instance declares it. The id is unchanged; only the declarer is. Until then the platform declared it with `scope: \"repository\"`, which is why it needed a scope at all — here the instance root IS the repository root, so the path needs none."
+      }
     }
   ],
   "_assets_comment": "THE REPOSITORY'S OWN TWO FILES, declared here as of 2026-09-20 (issue #592). Before that the root instance declared NO assets at all, and `cat-harness` declared both of these with `scope: \"repository\"` — so the file an agent reads first was simultaneously \"what this repository is\" and \"what the cat-harness layer is\", and no instance owned it. `check:subgraph-coverage` reported nothing, because the asset DID resolve; it resolved to the wrong file's job, which is a distinction that check could not make until this split gave it two files to tell apart. The owner settled the fork on 2026-09-20: split them, so every instance owns exactly one README and one AGENTS.md, the root's being the INDEX over the others.",
@@ -148,7 +125,6 @@
     "folio-assistant-core",
     "folio-assistant-sci",
     "smart-base",
-    "smart-ig",
     "smart-immunizations",
     "smart-trust",
     "who-iris"

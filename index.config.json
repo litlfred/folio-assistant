@@ -14,7 +14,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1",
+          "ref": "f7efa39c9731b5f26bcec147cf7a49b9193dba0b",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -31,7 +31,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-08",
-              "ref": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1",
+              "ref": "f7efa39c9731b5f26bcec147cf7a49b9193dba0b",
               "evidence": "owner, session 2026-10-08: 'can we get cat-harness(-tools) fully sperated please. make recommended updates.'"
             }
           }
@@ -46,7 +46,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5",
+          "ref": "64cc1c62541dca55e779091e9881d03d8166cd39",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -60,7 +60,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-10-08",
-              "ref": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5",
+              "ref": "64cc1c62541dca55e779091e9881d03d8166cd39",
               "evidence": "owner, session 2026-10-08: 'can we get cat-harness(-tools) fully sperated please. make recommended updates.'"
             }
           }
@@ -69,6 +69,32 @@
     },
     {
       "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "be963404b62261c71665ab2328de886ef618a938",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "note": "The folio-assistant-core cutover: litlfred/folio-assistant-core is the live content-model layer; the in-tree copy is archived at fsh-guts/separated/folio-assistant-core.tar.gz.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-08",
+              "ref": "be963404b62261c71665ab2328de886ef618a938",
+              "evidence": "owner, session 2026-10-08: 'once last layer is seperated, dispatch agent (max 3 at a time) for each repo to run CI and render the json(ld), justthedocs, glosaary, auto-docs.'"
+            }
+          }
+        }
+      },
       "contentType": "document"
     },
     {
@@ -136,6 +162,9 @@
               ]
             },
             "cat-openapi": {
+              "skip": true
+            },
+            "smart-ig": {
               "skip": true
             }
           },
