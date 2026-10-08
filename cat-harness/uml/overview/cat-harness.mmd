@@ -1354,6 +1354,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace cat_harness__openapi {
+    class n_cat_harness_openapi_cat_harness["cat-harness: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace cat_harness__memory {
     class cat_harness_memory_AlsoAbout["AlsoAbout"] {
       <<json: MemoryNodeSchema>>
@@ -1743,6 +1748,58 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace cat_harness__openapi_validators {
+    class cat_harness_openapi_validators_folio_validator_v1_folio_validator_v1["folio-validator/v1"] {
+      <<json: ValidatorNodeSchema>>
+      $schema [1] 'folio-validator/v1'
+      id [1] string
+      validates [1] object
+      schema [1] string
+      pages [0..1] string
+      rationale [0..1] string
+    }
+  }
+  namespace cat_harness__openapi_typologies {
+    class cat_harness_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1["folio-graph-typology/v1"] {
+      <<json: GraphTypologyNodeSchema>>
+      $schema [1] 'folio-graph-typology/v1'
+      kind [1] string
+      title [0..1] string
+      layer [0..1] 'core'
+      perInstance [0..1] true
+      newInstanceSource [0..1] object
+      renderable [1] boolean
+      recordsWork [0..1] boolean
+      holds [1] content | context | state | derived
+      summary [1] string
+      schema [0..1] string
+      validator [0..1] string
+      validatorNotApplicable [0..1] string
+      nodeSchemas [0..1] map~object~
+      declarationFile [0..1] string
+      concernGroups [0..1] true
+      within [0..1] string
+      avatar [0..1] object
+      tileIcon [0..1] string
+      published [0..1] false
+      skillBearing [0..1] true
+      kgContent [0..1] true
+      description [0..1] string
+      renderableNote [0..1] string
+      anyLayer [0..1] true
+      rationale [0..1] string
+    }
+  }
+  namespace cat_harness__openapi_schemas {
+    class n_cat_harness_openapi_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__openapi_scripts {
+    class n_cat_harness_openapi_scripts_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   cssClass "cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Remedy : remedies
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
@@ -1978,6 +2035,8 @@ classDiagram
   cssClass "n_cat_harness_cat_harness_deploy_code" fa_uml_undetermined
   cssClass "n_cat_harness_cat_harness_upstream_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_upstream_code" fa_uml_undetermined
+  cssClass "n_cat_harness_openapi_cat_harness" fa_uml_kind_cat_harness
+  cssClass "n_cat_harness_openapi_cat_harness" fa_uml_undetermined
   cat_harness_memory_MemoryNode *-- "0..*" cat_harness_memory_AlsoAbout : alsoAbout
   cssClass "cat_harness_memory_AlsoAbout" fa_uml_kind_memory
   cssClass "cat_harness_memory_MemoryNode" fa_uml_kind_memory
@@ -2065,3 +2124,9 @@ classDiagram
   cssClass "n_cat_harness_uml_overview_pages_auto_docs" fa_uml_undetermined
   cssClass "n_cat_harness_uml_overview_svgs_auto_docs" fa_uml_kind_auto_docs
   cssClass "n_cat_harness_uml_overview_svgs_auto_docs" fa_uml_undetermined
+  cssClass "cat_harness_openapi_validators_folio_validator_v1_folio_validator_v1" fa_uml_kind_validators
+  cssClass "cat_harness_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1" fa_uml_kind_typologies
+  cssClass "n_cat_harness_openapi_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_cat_harness_openapi_schemas_schemas" fa_uml_undetermined
+  cssClass "n_cat_harness_openapi_scripts_code" fa_uml_kind_code
+  cssClass "n_cat_harness_openapi_scripts_code" fa_uml_undetermined

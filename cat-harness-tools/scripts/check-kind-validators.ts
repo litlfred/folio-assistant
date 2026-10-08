@@ -32,7 +32,7 @@
 
 // The REGISTRY, not BASE_GRAPH_TYPOLOGIES: since bean dmx1 a harness DECLARES its
 // kinds in a typologies/ graph, and a sweep over the code list alone stopped checking
-// every kind that moved (fhir-harness's, cat-openapi's, core's). Measured
+// every kind that moved (fhir-harness's, cat-openapi's — now cat-harness/openapi/ — core's). Measured
 // 2026-10-04 while building riit; core's code-registered kinds are imported too.
 import { BASE_GRAPH_TYPOLOGIES, declaredKindNodes, defaultGraphTypologies } from "../../cat-harness/schemas/graph-typology-registry.js";
 import { FOLIO_GRAPH_TYPOLOGY } from "../../cat-harness/schemas/folio-graph-typology.js";

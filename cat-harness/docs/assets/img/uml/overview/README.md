@@ -18,8 +18,6 @@ Part of [C@T Harness](../../../../../README.md) 0.1.0, declared as `uml-overview
 | [`cat-harness-tools.svg`](cat-harness-tools.svg) | a picture |  |
 | [`cat-harness.landscape.svg`](cat-harness.landscape.svg) | a picture |  |
 | [`cat-harness.svg`](cat-harness.svg) | a picture |  |
-| [`cat-openapi.landscape.svg`](cat-openapi.landscape.svg) | a picture |  |
-| [`cat-openapi.svg`](cat-openapi.svg) | a picture |  |
 | [`fhir-harness.landscape.svg`](fhir-harness.landscape.svg) | a picture |  |
 | [`fhir-harness.svg`](fhir-harness.svg) | a picture |  |
 | [`folio-assistant-core.landscape.svg`](folio-assistant-core.landscape.svg) | a picture |  |
@@ -42,7 +40,6 @@ Part of [C@T Harness](../../../../../README.md) 0.1.0, declared as `uml-overview
 | [`bootstrap-tools/`](bootstrap-tools/) | _nothing declares what this holds_ | |
 | [`cat-harness/`](cat-harness/) | _nothing declares what this holds_ | |
 | [`cat-harness-tools/`](cat-harness-tools/) | _nothing declares what this holds_ | |
-| [`cat-openapi/`](cat-openapi/) | _nothing declares what this holds_ | |
 | [`fhir-harness/`](fhir-harness/) | _nothing declares what this holds_ | |
 | [`folio-assistant/`](folio-assistant/) | _nothing declares what this holds_ | |
 | [`folio-assistant-core/`](folio-assistant-core/) | _nothing declares what this holds_ | |

@@ -47,7 +47,7 @@
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { declaredNodeFiles } from "./declared-nodes";
+import { HARNESS_SUBGRAPH_DECLARATION_FILE, declaredNodeFiles } from "./declared-nodes";
 import { GraphTypologyNodeSchema, kindDefOf } from "./graph-typology-node";
 import { ValidatorNodeSchema, type ValidatorNode } from "./validator-node";
 import { namespaceForLayer } from "./namespaces";
@@ -734,6 +734,12 @@ export const BASE_GRAPH_TYPOLOGIES: Readonly<Record<string, GraphTypologyDef>> =
     description:
       "the harness layer's own knowledge graph, where a directory holds MORE THAN ONE of its parts — in practice the `[\"schemas\", \"cat-harness\"]` entries, where it means \"a schema IS a knowledge-graph node\". Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. **Not itself deprecated** by the 2026-09-21 split: an alias maps one name to one name, and this would have to become three. A downstream declaration still saying `[\"cat-harness\"]` keeps parsing and keeps being scanned for skills; what it loses is the finer query, which it never had.",
     title: "Harness graph",
+    // A NAMED SUBGRAPH of the harness — `openapi/`, owner 2026-10-07: *"put
+    // cat-openapi under cat-harness as named subgraph \"openapi\", not separate
+    // repo"* — names the graphs inside it from within (#980), `subgraph: true`
+    // entries in this file. The constant lives in the leaf `declared-nodes.ts`
+    // because the typology and validator scans read it before this registry exists.
+    declarationFile: HARNESS_SUBGRAPH_DECLARATION_FILE,
     // Its identity is its individual, `…/cat-harness/ns#graphTypology/cat-harness`
     // (`graphTypologyIri`). It was also a class, `KGraph`, from 2026-09-21 until
     // the per-kind classes went (bean `3r47`, 2026-09-30); the concept that

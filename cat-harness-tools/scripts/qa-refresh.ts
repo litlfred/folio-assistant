@@ -162,10 +162,9 @@ export const QA_WRITERS: readonly QaWriter[] = [
       // `test/results/<instance>/`. Named, not globbed: `*/kg-qa/**` would
       // also claim the folded `agent-skills/` and `large-datasets/` trees,
       // which no writer produces, and the record must lose those visibly.
-      `${R}/cat-openapi/**`,
       `${R}/folio-assistant/**`,
     ],
-    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, cat-openapi, folio-assistant)",
+    because: "every declared instance's KG verdicts, hosted homes included (bootstrap, bootstrap-tools, cat-harness-tools, folio-assistant)",
   },
   { id: "kg:detangle", run: ["kg:detangle"], writes: [`${R}/detangle/**`], because: "detangle measurements per instance graph" },
   { id: "translation:block-qa", run: ["translation:block-qa"], writes: [`${R}/translation-qa/**`], because: "translation verdicts; read by the witnesses below" },

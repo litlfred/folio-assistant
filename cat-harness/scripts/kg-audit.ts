@@ -1820,7 +1820,7 @@ function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> 
   // declared-path-literal: the conventional fallback when no declaration names the directory
   const r = checkTestRuns(root, ownDirectoryById(root, "qa", "test/results"), skills);
   // Only a DECLARED `qa` directory that is absent is unknown. An instance that
-  // declares none (bootstrap, cat-openapi, …) has no results to read, and its
+  // declares none (bootstrap, …) has no results to read, and its
   // missing conventional directory is a determined "no runs": `n/a`.
   const qaDeclared = resolveDirectories([{ name: "(local)", root, own: true }]).some(
     (d) => d.id === "qa" && d.own && d.scope !== "repository" && d.declaredBy !== "(default)",

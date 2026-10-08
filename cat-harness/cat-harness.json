@@ -856,6 +856,14 @@
       }
     },
     {
+      "id": "openapi",
+      "path": "openapi/",
+      "description": "The OpenAPI subgraph — a NAMED SUBGRAPH of the harness, and until 2026-10-07 an instance of its own, `cat-openapi` (repository never created). Owner, 2026-10-07: *\"put cat-openapi under cat-harness as named subgraph 'openapi', not separate repo.\"* It holds the machinery for OpenAPI 3 documents rather than documents: the graph typology `openapi` an instance declares to hold one, the validator for that kind's provenance node, the shapes (`cat-openapi.config.json`, provenance, the subset of OpenAPI 3 the pages read) and the rendering sub-pipeline that gives every operation a page and an IRI. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the four graphs inside it — `openapi-validators`, `openapi-typologies`, `openapi-schemas`, `openapi-scripts` — are declared FROM WITHIN, in `openapi/graph.json` (#980), never reached down to from here. Bean `s4ta`.",
+      "graphTypologies": [
+        "cat-harness"
+      ]
+    },
+    {
       "id": "memory",
       "path": "memory/",
       "description": "Agent memory for the platform: durable lessons an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md` by `scripts/agent-memory.ts`, which reads EVERY instance's declared `memory` directory. `context`: read during a process, never written by one; it changes when a person directs an authoring agent. Also holds the `interaction` node (how each person wants to be asked, read at session start) and any `folio-waiver/v1` confirmation waivers, told apart by their `$schema` tag. Moved from the repository root on the owner's ruling of 2026-10-06 (bean `ar1s`): memory belongs to the harness its lesson is about, so lessons about content authoring live in the content harness's own `memory/`.",
