@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pw9j
 title: Bump bootstrap/bootstrap-tools pins to the fixed upstream (f75a216 / 3046412); re-extract translation templates
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T15:09:20Z
-updated_at: 2026-10-01T15:57:57Z
+updated_at: 2026-10-08T00:10:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -20,3 +20,9 @@ _2026-10-01T15:57:53Z_ — Claimed by claude/blissful-ride-c2f26u-pin-bump — p
 `readme:sync:bootstrap:check` (CI step "bootstrap's README generated sections are current", code-quality-gates.yml) goes RED at the new pins and cannot be regenerated here. bootstrap-tools 3046412 emits a generated-by notice inside each `kg:*` region of bootstrap/README.md; folio-assistant's own `readme-sections.ts --dir bootstrap` renders without it, so the two generators disagree. `regen` "repairs" it by writing bootstrap/README.md inside the submodule (strips 9 lines) — a change this repo cannot commit. `--all` already skips submodule roots (isSubmoduleRoot, bean kye5) but `--dir` does not. Needs a code change: retire the `readme:sync:bootstrap(:check)` scripts + CI step (consistent with owner D3 "each repo owns its README"), or apply the isSubmoduleRoot skip to `--dir`. Not guessed; reported to the lead.
 
 **Resolved (lead, option 1):** `readme:sync:bootstrap(:check)` and its CI step are retired — the owner's ruling "each repo owns its README" (2026-10-01); bootstrap's own CI now checks its README (litlfred/bootstrap#1, check.yml), so the check moved to its owner rather than being dropped.
+
+## Landed evidence (PR #1790)
+- Completed and merged to main in PR #1790 (commit e35d214).
+- Bootstrap and bootstrap-tools pins bumped to fixed upstream; readme:sync:bootstrap retired per owner ruling.
+- Verified on main.
+

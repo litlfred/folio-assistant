@@ -1,11 +1,11 @@
 ---
 # folio-assistant-doxj
 title: 'CI wall time: split Repository gates off the critical path, cache Chromium'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-05T05:46:34Z
-updated_at: 2026-10-05T06:02:20Z
+updated_at: 2026-10-08T00:10:00Z
 parent: folio-assistant-hfag
 ---
 
@@ -29,3 +29,9 @@ Issue: #2153
 
 ## Measured after (PR #2154, run 37269610652, attempt 1)
 Wall 4m52s (05:51:13 to 05:56:05) against 9m24s on main run 37253911158. Parts: gates-standalone 234s, gates-docs 176s, gates-kg 160s, roll-up 3s, qa-publish 39s (starts after gates-docs instead of after all 85 steps). Reds: the standalone ratchet, the same 17 new failures main's tip run 37268420795 shows (tools/voices/viewer tests, not this change). On main those also SKIP the 22 steps after it; here those steps run in gates-docs and pass. Shard 4/4 had one 5.46 s timeout in check-tools and passed on rerun (attempt 2).
+
+## Landed evidence (PR #2154)
+- Completed and merged to main in PR #2154 (commit 365f80f0d740).
+- CI wall time split: repository gates parallelized, chromium cached, wall time dropped from ~9m20s to ~4m52s.
+- Verified on main.
+

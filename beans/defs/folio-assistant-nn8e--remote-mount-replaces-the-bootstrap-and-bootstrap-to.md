@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nn8e
 title: Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-07T20:07:21Z
-updated_at: 2026-10-07T20:27:18Z
+updated_at: 2026-10-08T00:10:00Z
 parent: folio-assistant-0mpw
 ---
 
@@ -28,3 +28,9 @@ Claimed 2026-10-07 by session_012qoycyCSGidZqW245vXhze on branch claude/dazzling
 - [x] Cutover: remoteMounts + lock, gitlinks and .gitmodules removed, .gitignore, 32 workflows repointed (29 mount steps; publish.yml replays the platform lock inside a folio), merge-guard/merge-main handle either side, check:workflow-submodules requires the replay, session start replays first.
 - [x] Proven: replay from GitHub into an empty dir is byte-identical to the submodule checkout; mount:remote:check OK.
 - [ ] Aftermath: 32 code references to .gitmodules/git submodule (verify-clone, init-folio, instance-roots...); init-folio --link remote; REFERENCE_PACKAGES.
+
+## Landed evidence (PR #2463 / PR #2470)
+- Completed and merged to main in PR #2463 (commit da897f8) and PR #2470 (commit ecf8af69e03d).
+- Remote mounts implemented and cut over; submodules removed; 33 workflows updated.
+- Verified on main.
+

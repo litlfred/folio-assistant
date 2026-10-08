@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 360,
+      "count": 355,
       "unit": "open beans"
     }
   },
@@ -5220,14 +5220,14 @@
     {
       "id": "folio-assistant-c5fm",
       "title": "Instantiate folio-assistant-core: config at root so the navbar lists it; declare its docs/",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T14:53:55Z",
-      "updatedAt": "2026-10-05T16:21:39Z",
+      "updatedAt": "2026-10-08T00:10:00Z",
       "preview": "Issue #2196. Owner 2026-10-05 asked whether folio-assistant-core/ is staged and why it is missing from the navbar Harnesses list between WHO IRIS and C@T Harness. Rule: gen-navbar-include.ts lists harnesses with instantiated===true; harness-tiles.ts sets instantiated from <name>.config.json at the root. Core has a declaration but no config.\n\n\n## 2026-10-05 progress (PR #2197)\n- Added folio-assista",
       "file": "beans/defs/folio-assistant-c5fm--instantiate-folio-assistant-core-config-at-root-so.md"
     },
@@ -5747,14 +5747,14 @@
     {
       "id": "folio-assistant-doxj",
       "title": "CI wall time: split Repository gates off the critical path, cache Chromium",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-05T05:46:34Z",
-      "updatedAt": "2026-10-05T06:02:20Z",
+      "updatedAt": "2026-10-08T00:10:00Z",
       "preview": "Owner goal 2026-10-05 \"CI build speedup\" (session_01VfkKocGaQW7Msro2t5S66U): make code-quality-gates.yml wall time as short as possible without dropping or weakening any gate. Follows `dlqu` (SPEED-UP 4).\n\n## Measured before\nmain run 37253911158 (98ab8cd, green): ~9m20s wall. Critical path = `Repository gates (hard)` 8m33s, of which `check:cat-harness-standalone` alone is 4m09s (added by #1977). N",
       "file": "beans/defs/folio-assistant-doxj--ci-wall-time-split-repository-gates-off-the-critic.md"
     },
@@ -7946,14 +7946,14 @@
     {
       "id": "folio-assistant-jtfk",
       "title": "CI: build the QA working copy once per run, restore it in the 8 consumer jobs (48% of runner-seconds)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-hfag",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T19:39:27Z",
-      "updatedAt": "2026-10-07T21:21:17Z",
+      "updatedAt": "2026-10-08T00:10:00Z",
       "preview": "Issue #2456. Owner approved 2026-10-07 ~19:40Z (\"1y, 2y, 3y, 4y\"). Measurements in the issue body.\n\n_2026-10-07T19:39:38Z_ — Claimed by claude/ci-runner-budget (session https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ).\n\n## Done on claude/ci-runner-budget (PR #2457), 2026-10-07\n\n- New job `qa-working-copy` runs `bun run cat qa:working-copy` once. `cat-harness/scripts/qa-working-copy-bundle.",
       "file": "beans/defs/folio-assistant-jtfk--ci-build-the-qa-working-copy-once-per-run-restore.md"
     },
@@ -9363,14 +9363,14 @@
     {
       "id": "folio-assistant-nn8e",
       "title": "Remote mount replaces the bootstrap and bootstrap-tools submodules (MVP), issue 2462",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-0mpw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-07T20:07:21Z",
-      "updatedAt": "2026-10-07T20:27:18Z",
+      "updatedAt": "2026-10-08T00:10:00Z",
       "preview": "Issue #2462. Owner 2026-10-07: URGENT, MVP, fix the mount tool first; pins trusted at bootstrap@12a5c9eadca3 and bootstrap-tools@1947e0536a97. Plan and blockers B1-B3 in the issue.\n\n## Done when\n- [ ] Tool PR: whole-instance mount, mounter free of bootstrap-tools imports, lock mounts treated like submodules by git-corpus / instance-repositories / readme-sections, closure follows an upstream lock\n-",
       "file": "beans/defs/folio-assistant-nn8e--remote-mount-replaces-the-bootstrap-and-bootstrap-to.md"
     },
@@ -10151,14 +10151,14 @@
     {
       "id": "folio-assistant-pw9j",
       "title": "Bump bootstrap/bootstrap-tools pins to the fixed upstream (f75a216 / 3046412); re-extract translation templates",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T15:09:20Z",
-      "updatedAt": "2026-10-01T15:57:57Z",
+      "updatedAt": "2026-10-08T00:10:00Z",
       "preview": "Upstream fixed 2026-10-01: bootstrap#1 (f75a2167d226) and bootstrap-tools#4 (30464126ed93) — READMEs reproducible via published-IRI term links, each repo checks its own README in CI. Main pins PR0's 7a91356 / c5e5e25. Bump both gitlinks, re-extract bootstrap translation templates (translate-bpmn --extract), regenerate bootstrap kg-qa sidecars and SVGs, gates green.\n## Done when\n- [ ] pins at f75a2",
       "file": "beans/defs/folio-assistant-pw9j--bump-bootstrapbootstrap-tools-pins-to-the-fixed-up.md"
     },
@@ -15703,13 +15703,13 @@
         "status": "todo",
         "epics": 2,
         "total": 71,
-        "closed": 42,
-        "open": 29,
-        "inProgress": 12,
+        "closed": 43,
+        "open": 28,
+        "inProgress": 11,
         "todo": 17,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.5915492957746479
+        "share": 0.6056338028169014
       },
       {
         "id": "folio-assistant-p5wm",
@@ -15733,13 +15733,13 @@
         "status": "in-progress",
         "epics": 17,
         "total": 589,
-        "closed": 378,
-        "open": 211,
-        "inProgress": 62,
+        "closed": 380,
+        "open": 209,
+        "inProgress": 60,
         "todo": 148,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.6417657045840407
+        "share": 0.6451612903225806
       },
       {
         "id": "folio-assistant-vuip",
@@ -15748,13 +15748,13 @@
         "status": "in-progress",
         "epics": 10,
         "total": 280,
-        "closed": 168,
-        "open": 112,
-        "inProgress": 54,
+        "closed": 170,
+        "open": 110,
+        "inProgress": 52,
         "todo": 57,
         "draft": 1,
         "unclassified": 0,
-        "share": 0.6
+        "share": 0.6071428571428571
       },
       {
         "id": "folio-assistant-yg29",
@@ -15773,8 +15773,8 @@
       }
     ],
     "orphanOpen": 5,
-    "openTotal": 360,
-    "coveredOpen": 352,
+    "openTotal": 355,
+    "coveredOpen": 347,
     "duplicateIds": 0
   }
 }
