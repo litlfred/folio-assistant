@@ -10,7 +10,6 @@ description: >
   Bean 0mpw.
 adapters: [document, paper, dak]
 profiles: [document, paper]
-consulted: true
 ---
 
 # Remote-mount a harness
@@ -130,11 +129,31 @@ Every instance ends in exactly one state:
 | state | means | exit |
 |---|---|---|
 | mounted | on disk, hashing to the lock | 0 |
+| unverified-approver | mounted, on consent no `mountApprovers` list checked | 0, reported apart |
 | missing | not on disk, edited since mounting, not in the tree, refused, or the lock is for other pins | 1 |
 | could-not-determine | the fetch failed, a declaration or lock is unreadable, or an instance is reached at two pins | 2 |
 
 Could-not-determine outranks missing, and missing outranks mounted. **A fetch
 that failed is never an empty layer.**
+
+## Trust: what lets a mount proceed (H8)
+
+A real mount needs a person's consent for that pin (`trust.consent`); a
+`--staging` mount needs none. `schemas/mount-trust.ts` has the rules. Four
+things to know (roast `1ygp` L4.2):
+
+- **The lock records the basis** for each instance: `staging`, or `consent`
+  with who and when. `mount:remote:check` re-runs the trust check against the
+  current declaration, so consent withdrawn later reads `refused`.
+- **A gitlink needs consent of its own.** An instance reached through a
+  gitlink is another repository at another commit. Give its consent on
+  `overrides.<name>.trust`, for the gitlink's SHA.
+- **Who may consent.** Declare `mountApprovers` and a `consent.by` not on the
+  list is refused. Without the list, mounts report `unverified-approver`: exit
+  0, but never shown as clean.
+- **A refused mount is not current.** Its old bytes stay on disk (an agent
+  does not delete them). The lock records them under `unmounted` as
+  `leftOnDisk`, and the check reports them as not mounted.
 
 ## Publishing a remote-mounted downstream — provision `gh-pages` first
 

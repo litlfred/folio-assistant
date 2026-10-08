@@ -1,0 +1,26 @@
+{
+  "$schema": "folio-tool-release/v1",
+  "name": "plantuml",
+  "version": "1.2024.7",
+  "role": "tool",
+  "kind": "jar",
+  "digest": {
+    "algorithm": "sha256",
+    "digest": "cb42e3272fedecc0ed20ee0c9cef31873d1c42a489043971038631d357f467e6",
+    "verifiedAt": "2026-10-07"
+  },
+  "source": {
+    "type": "url",
+    "url": "https://repo1.maven.org/maven2/net/sourceforge/plantuml/plantuml/1.2024.7/plantuml-1.2024.7.jar"
+  },
+  "licence": "GPL-3.0-or-later",
+  "licenceSource": "the jar's own `java -jar plantuml-1.2024.7.jar -license`: GNU GPL version 3, or (at your option) any later version",
+  "runtimes": [
+    { "release": "temurin-jre@21.0.4+7", "inject": "JAVA_HOME" },
+    { "release": "graphviz@16.1.0", "inject": "PATH" }
+  ],
+  "entry": {
+    "template": "java -jar {path}"
+  },
+  "note": "The pin `scripts/plantuml-render.ts` already carries (`PLANTUML`); the digest was re-computed over the downloaded jar on 2026-10-07 and matches it. Graphviz is a runtime because PlantUML lays out class, component and state diagrams with `dot`, which it finds on PATH: with only the JRE and graphviz releases below on PATH, `plantuml -testdot` reports graphviz 16.1.0 and 'Installation seems OK'."
+}

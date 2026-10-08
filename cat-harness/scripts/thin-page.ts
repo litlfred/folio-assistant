@@ -25,12 +25,11 @@
  *
  * The library's per-entry pages (#1899) were the first instance of this, and
  * the todo pages (#1908) the second, so the generic part lives HERE rather
- * than in either generator. `todoPageHtml` in `todo-page.ts` renders through
- * {@link thinPageHtml}, supplying only its skeleton, its config and — where a
- * page loads more than its asset — its own `<noscript>`. The library's entry
- * pages left it on 2026-10-07 for the theme's layout (`gen-library-viz.ts`
- * `libraryPageHtml`); they keep the same rules — one IRI, content loaded at
- * runtime, the asset named as `alternate` — and still name themselves through
+ * than in either generator. Both families left {@link thinPageHtml} on
+ * 2026-10-07 for the theme's layout (`gen-library-viz.ts` `libraryPageHtml`,
+ * `todo-page.ts` `todoPageHtml`), so it has no generator calling it today;
+ * they keep the same rules — one IRI, content loaded at runtime, the asset
+ * named as `alternate` — and still name themselves through
  * {@link thinPageConfigOf}.
  *
  * ## The rail is LINKED, and that is a declaration

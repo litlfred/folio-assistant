@@ -4,6 +4,7 @@ description: >
   Where a value becomes program rather than data — workflow expressions, shell
   strings, and archive members. What the gate covers, why a step output carries
   a severity rather than having one, and the argv rule.
+consulted: true
 ---
 
 # Injection — the value became program

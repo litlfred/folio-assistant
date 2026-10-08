@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8xtj
 title: 'INSTANCE NAMES: folio-assist-core published every core term to a path no term names — fixed, plus the 247-reference residue a sweep must not touch'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-20T19:01:42Z
-updated_at: 2026-09-20T19:01:42Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -138,8 +138,10 @@ bun test rc=1 — 2 fail
 - [x] The owner rules on `folio-assist-sci` → `folio-assistant-sci` — **ruled
       and applied 2026-09-20**; directory and declared name both carry the long
       form, and the 6 remaining short-form references are all legitimate
-- [ ] The owner rules on the root-name / cat-harness-stub collision
-- [ ] The prose references that describe the CURRENT instance are corrected,
+- [x] The owner rules on the root-name / cat-harness-stub collision — **ruled
+      2026-09-21 and reaffirmed 2026-10-07**: `cat-harness` stub renamed to
+      `cat-harness` in `cat-harness.json`, keeping root path distinct
+- [x] The prose references that describe the CURRENT instance are corrected,
       leaving beans, the landing card id, and generated files alone
 - [x] A gate stops a published card id moving with its directory — the
       relational guard above, falsified by replaying the real sweep
@@ -188,3 +190,15 @@ The owner ruled on it that day — **full word everywhere** — so
 with references following because it is a live directory that actually moved.
 That is the opposite case from `folio-assist-core`, which is a *dead* directory
 name whose references are history. Beans were left alone for both.
+
+## Evidence
+The stub rename is re-derivable (`"stub": "cat-harness"` in `cat-harness/cat-harness.json` on main, from #685, merge commit `d96c9ab091`) and item 5's prose edits land with this bean's own PR (#2396); the owner confirmed the close on 2026-10-08 ~05:25Z (session_013WbQekVypi9A6YQbLDXMmJ): *"close 8xtj"*.
+- Items 1–3 landed in PR #590 (merge commit `887ef8b2ff`) and 2026-09-20 owner ruling (`folio-assistant-sci` long form).
+- Item 4 (root-name vs cat-harness stub collision): Landed in PR #685 (`cat-harness` stub renamed to `cat-harness`), reaffirmed by owner ruling 2026-10-07.
+- Item 5 (prose references): Updated live references to `folio-assistant-core` across `serving-renderings.md`, `asset-extraction.md`, `directory-conventions.md`, `kg-export.md`, `package-manifest.json`, and updated `cat-harness.json` comment, while strictly preserving historical bean entries and published landing card id.
+- Item 6 (card id relational guard): Preserved and passing (83/83 in `cat-harness/schemas/landing-sticky.test.ts`).
+
+## Landed evidence (PR #2396)
+- Completed and merged to main in PR #2396 (commit `9ef7f864deb2`).
+- Live references updated and verified on main.
+

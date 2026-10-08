@@ -103,6 +103,7 @@
     "substrate-snapshot",
     "swimlane-glossary",
     "todos",
+    "tool-release",
     "tools",
     "translation-sources",
     "uml",
@@ -142,7 +143,11 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 373,
+<<<<<<< HEAD
+      "count": 316,
+=======
+      "count": 369,
+>>>>>>> origin/main
       "unit": "open beans"
     },
     {
@@ -220,7 +225,7 @@
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
       "icon": "library",
-      "count": 46,
+      "count": 47,
       "unit": "entries"
     },
     {
@@ -268,7 +273,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 1121,
+      "count": 1123,
       "unit": "documents"
     },
     {
@@ -285,7 +290,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 243,
+      "count": 250,
       "unit": "modules"
     },
     {
@@ -2591,12 +2596,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 65
+          "value": 66
         },
         {
           "id": "kinds",
           "label": "declared graph typologies",
-          "value": 34
+          "value": 35
         },
         {
           "id": "views",
@@ -2737,6 +2742,11 @@
           "label": "Swimlane glossary"
         },
         {
+          "kind": "tool-release",
+          "note": "no viewer yet",
+          "label": "Tool releases"
+        },
+        {
           "kind": "tools",
           "path": "/tools/",
           "label": "Tools"
@@ -2831,6 +2841,14 @@
           ],
           "where": "local",
           "path": "cat-harness/vocab-mappings/"
+        },
+        {
+          "id": "tool-releases",
+          "kinds": [
+            "tool-release"
+          ],
+          "where": "local",
+          "path": "cat-harness/tool-releases/"
         },
         {
           "id": "schemas",
@@ -3309,7 +3327,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 15 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, interaction, memory, policies, scenarios, substrate-snapshot, uml, validators, vocab-mapping, voice-vendors, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 16 graph(s) with no published viewer — auto-docs, basic-cdn-site, code, code-list, doc-group, interaction, memory, policies, scenarios, substrate-snapshot, tool-release, uml, validators, vocab-mapping, voice-vendors, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -3722,6 +3740,11 @@
         "kind": "swimlane-glossary",
         "label": "Swimlane glossary",
         "path": "/swimlane-glossary/"
+      },
+      {
+        "kind": "tool-release",
+        "label": "Tool releases",
+        "note": "no viewer yet"
       },
       {
         "kind": "tools",
@@ -4299,6 +4322,15 @@
         ]
       },
       {
+        "key": "source",
+        "skills": [
+          {
+            "name": "feature-staging",
+            "path": "/reference/skill-instructions/feature-staging.html"
+          }
+        ]
+      },
+      {
         "key": "separation",
         "skills": [
           {
@@ -4455,6 +4487,15 @@
         ]
       },
       {
+        "key": "mountApprovers",
+        "skills": [
+          {
+            "name": "remote-mount",
+            "path": "/reference/skill-instructions/remote-mount.html"
+          }
+        ]
+      },
+      {
         "key": "stickies",
         "skills": [
           {
@@ -4587,7 +4628,7 @@
           },
           {
             "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
+            "summary": "3: agent-instructions, instance-readme, antigravity-agent-rules"
           },
           {
             "key": "repository",
@@ -4648,6 +4689,10 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "source",
+            "summary": "{ kind, repository, ref }"
+          },
+          {
             "key": "directories",
             "summary": "6: smart-trust-ast, smart-trust-artifact-index, smart-trust-openapi, smart-trust-docs, smart…"
           },
@@ -4696,6 +4741,10 @@
           {
             "key": "livesAt",
             "summary": "{ repository, path }"
+          },
+          {
+            "key": "source",
+            "summary": "{ kind, repository, ref }"
           },
           {
             "key": "directories",
@@ -5281,7 +5330,7 @@
           },
           {
             "key": "directories",
-            "summary": "31: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
+            "summary": "32: cat-harness-validators, tools, external-schemas, subscriptions, code-lists, vocab-mapping…"
           },
           {
             "key": "associatedHarnesses",

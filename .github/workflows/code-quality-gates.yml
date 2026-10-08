@@ -2010,7 +2010,7 @@ jobs:
       # proves no IMPORT reaches up; this proves no script or test READS
       # anything only the monorepo has. Its first run found two such reads.
       - name: bootstrap-tools passes standing alone beside bootstrap
-        run: bun run check:bootstrap-standalone
+        run: bun run cat check:bootstrap-standalone
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
@@ -3321,6 +3321,10 @@ jobs:
           # target copies an authoritative one, each system resolves, and each
           # can be produced as a FHIR ConceptMap. Owner, 2026-10-02.
           bun run cat vocab-mappings:check
+          # Tool releases and profiles (issue #2481, bean 3sbm): each parses,
+          # each licence is on the pinned SPDX list, every runtime and profile
+          # ref resolves, and no profile names a runtime. Owner, 2026-10-07.
+          bun run cat tool-releases:check
           bun run cat docs:harness:check
           # Every instantiated harness ABOVE THE FLOOR owes a board, and the
           # board it owes shows the whole folio. Owner, 2026-09-21: "Any

@@ -69,4 +69,11 @@ describe("public-comment-site", () => {
     }
     expect(html).toMatch(/<tr id="PC-0001" data-phase="\w+" data-status="\w+" data-placed="[01]"/);
   });
+
+  test("the dashboard script pre-indexes comments and debounces search input for fast filtering", () => {
+    const html = dashboardHtml(siteComments([comment({})], anchors, { slug: "doc" }), { title: "T", slug: "doc", generated: "g" });
+    expect(html).toContain("const commentItems = rows.map((r) =>");
+    expect(html).toContain("searchDebounceTimer = setTimeout(() => { apply(); save(false); }, 75)");
+    expect(html).toContain("if (it.el.hidden !== !ok) it.el.hidden = !ok");
+  });
 });

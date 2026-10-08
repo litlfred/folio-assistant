@@ -125,6 +125,18 @@ test.describe("/beans/ — themed, beans only, and searchable (#2418)", () => {
     await expect(p.locator(".fa-workplan-results .fa-workplan-bean-row")).toHaveCount(0);
   });
 
+  test("multi-term search narrows results using logical AND", async ({ page: p }) => {
+    const candidate = ITEMS.find((b) => b.title.split(/\s+/).filter((w) => w.length >= 4).length >= 2);
+    expect(candidate).toBeDefined();
+    const words = candidate!.title.split(/\s+/).filter((w) => w.length >= 4);
+    const query = `${words[0]} ${words[1]}`;
+    await open(p, query);
+    const results = p.locator(".fa-workplan-results");
+    await expect(results).toHaveCount(1);
+    const shortId = candidate!.id.replace(/^folio-assistant-/, "");
+    await expect(results.locator(".fa-workplan-bean-row")).toContainText([shortId]);
+  });
+
   test("the searched page has no WCAG A/AA violations", async ({ page: p }) => {
     const { term } = probe();
     await open(p, term);

@@ -9,6 +9,7 @@ description: >
 governs:
   - fhir-harness/fhir-ig-skills
   - smart-base/tools
+consulted: true
 ---
 
 # smart-stack-layering

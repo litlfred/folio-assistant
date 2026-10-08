@@ -8,6 +8,7 @@ description: >
 allowed-tools: Read Grep Glob
 graph-typologies:
   - code
+consulted: true
 ---
 
 # Where does this go? — the question, then the skill that answers it

@@ -6398,6 +6398,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.mountapprovers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.mountApprovers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who may consent to a remote mount here — `schemas/mount-trust.ts`, roast `1ygp` L4.2."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.mountApprovers",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.mountdefaults",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6946,6 +6965,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.mountapprovers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.mountApprovers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The people whose consent may authorise a remote mount of this instance's `remoteMounts` (roast `1ygp` L4.2). Declared: a `trust.consent.by` not on the list is refused. Absent: consent still mounts, but every such mount is reported as `unverified-approver`, never as clean."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.mountApprovers",
       "skos:note": "candidate"
     },
     {
@@ -24220,6 +24258,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.trust",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedInstanceSchema.trust"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The basis the mount was allowed on — `staging` (the `--staging` flag) or `consent` with who and when — so a reviewer reads it in the lock and the check can re-judge it (roast `1ygp` L4.2). Optional only so a lock written before it was recorded still parses; the check re-derives it and says so."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#LockedInstanceSchema.trust",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.lockedinstanceschema.upstreamroot",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -24331,6 +24388,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountLockSchema.unmounted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/remote-mount.mountoverrideschema.trust",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MountOverrideSchema.trust"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Consent for THIS instance at its own pin. Required for an instance reached through a GITLINK: that is another repository at another commit, and the parent mount's consent does not cover it (roast `1ygp` L4.2). Ignored for the declared harness and same-tree instances, which the mount's own `trust` covers."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema.trust",
       "skos:note": "candidate"
     },
     {
@@ -25642,6 +25718,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#SkillProvenance.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runcontextschema.profile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunContextSchema.profile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The tool profile selected. Absent: the run selected none, and `releases[]` lists what it resolved anyway."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunContextSchema.profile",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runcontextschema.prov",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunContextSchema.prov"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PROV activity that records this context as `prov:used`. Absent until the run records one (step 3)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunContextSchema.prov",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runinvokerschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunInvokerSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The script path, the model id, the person's handle."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/run-context.runinvokerschema.script_hash",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RunInvokerSchema.script_hash"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Hash of the script's bytes, or `unknown`. Required for a `system` invoker."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.script_hash",
       "skos:note": "candidate"
     },
     {
@@ -30886,6 +31038,158 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema.tool",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-profile.toolprofileschema.description",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolProfileSchema.description"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the profile is for, for a reader choosing one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.description",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-profile.toolprofileschema.tools",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolProfileSchema.tools"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tool name → the release of it this profile selects. At least one: an empty profile provisions nothing and says so by not existing."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.tools",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolentryschema.home",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolEntrySchema.home"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The tool's root inside an unpacked archive, relative and POSIX."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolEntrySchema.home",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.digest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.digest"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Required: the resolver's one refusal is a mismatch against this."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.digest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.licence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.licence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An SPDX licence expression, one line. Checked against the pinned list by {@link toolReleaseLicenceProblem}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.licencesource",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.licenceSource"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the licence was read from — the jar's own `-license`, the archive's `legal/`, the repository's `LICENSE`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licenceSource",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Anything a resolver or a reader must know that the fields cannot say."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-release.toolreleaseschema.runtimes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolReleaseSchema.runtimes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every runtime this release needs. Required, so \"needs none\" is stated rather than omitted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.runtimes",
       "skos:note": "candidate"
     },
     {

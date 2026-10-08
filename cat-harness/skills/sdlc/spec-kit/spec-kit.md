@@ -76,9 +76,55 @@ marks it so:
 | **Success Criteria** *(mandatory)* | measurable, **technology-agnostic** outcomes `SC-001…` |
 | Assumptions | the defaults taken where the request was silent |
 
+**The declared template artefact.** The canonical template is declared in the
+knowledge graph at `cat-harness/skills/sdlc/spec-kit/spec-template.md`, carrying
+`$schema: folio-spec-template/v1` with machine-readable `mandatory_sections` and
+`metadata_fields` front matter. Automated validation (`bun run check:spec`) fails any
+spec missing a mandatory section and names the section.
+
 **Markers.** `[NEEDS CLARIFICATION: …]` flags an ambiguity that must be resolved
 rather than guessed. `ACTION REQUIRED` marks a section that must be substantively
-completed before approval.
+completed before approval. An unresolved clarification marker **blocks** a spec
+from reaching Adjudicated status (SC-004).
+
+## Spec discovery & deduplication (FR-012)
+
+Before drafting a new specification, the agent **MUST** scan the governing issue
+and any parent or related issues for an existing spec. If a spec already exists,
+the agent works from that spec rather than creating a duplicate.
+
+## Spec lifecycle & graduation — the durable trace (FR-013)
+
+Owner ruling, 2026-10-07:
+> *"Specs live in GitHub issue comments; upon completion, accepted requirements
+> graduate directly into governing skills (as req:* statements) and automated
+> tests, keeping SDLC churn off the knowledge graph."*
+
+1. **Drafting & Discussion**: Specs exist strictly as comments on their governing
+   GitHub issue. They are NOT committed to the repository, preserving the rule
+   in `where-a-proposal-goes` that design arguments are transient SDLC churn.
+2. **Adjudication**: When all `[NEEDS CLARIFICATION]` markers are settled by
+   human decision (never by agent judgement), the status moves from `Draft` to
+   `Adjudicated`.
+3. **Graduation**: Upon feature completion, the accepted functional requirements
+   (`FR-NNN`) graduate into permanent, standing obligations in the knowledge
+   graph — as `req:*` statements under `cat-harness/skills/requirements/` or in the
+   governing skill — backed by automated tests.
+
+## The change-size rule (FR-009)
+
+Owner ruling, 2026-10-07:
+> *"The change-size rule should be a report-only advisory limit initially at
+> ~400 lines of non-generated/non-lockfile code, weighting prose and KG
+> documentation lower, transitioning to a blocking CI gate once calibrated
+> against PR history."*
+
+Detailed in [`change-size.md`](change-size.md):
+- **Limit**: 400 effective lines (`(code_lines * 1.0) + (prose_lines * 0.25)`).
+- **Basis**: Cohen et al. (2006) Cisco review study and Google Modern Code Review (2018).
+- **Exemptions**: Lockfiles, generated artifacts, uniform mechanical refactors with justification.
+- **Mode**: Report-only advisory limit initially; transitions to blocking CI gate after calibration.
+- **Reporting**: Reported as a count with its denominator (SC-005).
 
 ## What this platform adds, and why it is an addition rather than a reading
 
