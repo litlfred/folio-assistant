@@ -9387,6 +9387,34 @@
       "status": "candidate"
     },
     {
+      "id": "run-context.runcontextschema.profile",
+      "prefLabel": "RunContextSchema.profile",
+      "definition": "The tool profile selected. Absent: the run selected none, and `releases[]` lists what it resolved anyway.",
+      "source": "cat-harness/schemas/run-context.ts#RunContextSchema.profile",
+      "status": "candidate"
+    },
+    {
+      "id": "run-context.runcontextschema.prov",
+      "prefLabel": "RunContextSchema.prov",
+      "definition": "The PROV activity that records this context as `prov:used`. Absent until the run records one (step 3).",
+      "source": "cat-harness/schemas/run-context.ts#RunContextSchema.prov",
+      "status": "candidate"
+    },
+    {
+      "id": "run-context.runinvokerschema.id",
+      "prefLabel": "RunInvokerSchema.id",
+      "definition": "The script path, the model id, the person's handle.",
+      "source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "run-context.runinvokerschema.script_hash",
+      "prefLabel": "RunInvokerSchema.script_hash",
+      "definition": "Hash of the script's bytes, or `unknown`. Required for a `system` invoker.",
+      "source": "cat-harness/schemas/run-context.ts#RunInvokerSchema.script_hash",
+      "status": "candidate"
+    },
+    {
       "id": "scenario-overlay.scenariolayer.dir",
       "prefLabel": "ScenarioLayer.dir",
       "definition": "Absolute path of its `scenarios` directory.",
@@ -11316,6 +11344,62 @@
       "prefLabel": "ToolInvocationSchema.tool",
       "definition": "`ToolDefinition.id`.",
       "source": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema.tool",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-profile.toolprofileschema.description",
+      "prefLabel": "ToolProfileSchema.description",
+      "definition": "What the profile is for, for a reader choosing one.",
+      "source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.description",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-profile.toolprofileschema.tools",
+      "prefLabel": "ToolProfileSchema.tools",
+      "definition": "Tool name → the release of it this profile selects. At least one: an empty profile provisions nothing and says so by not existing.",
+      "source": "cat-harness/schemas/tool-profile.ts#ToolProfileSchema.tools",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolentryschema.home",
+      "prefLabel": "ToolEntrySchema.home",
+      "definition": "The tool's root inside an unpacked archive, relative and POSIX.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolEntrySchema.home",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.digest",
+      "prefLabel": "ToolReleaseSchema.digest",
+      "definition": "Required: the resolver's one refusal is a mismatch against this.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.digest",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.licence",
+      "prefLabel": "ToolReleaseSchema.licence",
+      "definition": "An SPDX licence expression, one line. Checked against the pinned list by {@link toolReleaseLicenceProblem}.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licence",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.licencesource",
+      "prefLabel": "ToolReleaseSchema.licenceSource",
+      "definition": "Where the licence was read from — the jar's own `-license`, the archive's `legal/`, the repository's `LICENSE`.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.licenceSource",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.note",
+      "prefLabel": "ToolReleaseSchema.note",
+      "definition": "Anything a resolver or a reader must know that the fields cannot say.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-release.toolreleaseschema.runtimes",
+      "prefLabel": "ToolReleaseSchema.runtimes",
+      "definition": "Every runtime this release needs. Required, so \"needs none\" is stated rather than omitted.",
+      "source": "cat-harness/schemas/tool-release.ts#ToolReleaseSchema.runtimes",
       "status": "candidate"
     },
     {
