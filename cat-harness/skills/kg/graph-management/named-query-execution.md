@@ -7,7 +7,6 @@ description: >
   and typed parameter bindings to eliminate SPARQL injection.
 conformsTo:
   - w3c-n-quads
-  - sparql-1.1-query
 graph-typologies:
   - skills
 ---

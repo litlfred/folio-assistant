@@ -7,8 +7,8 @@ description: >
   skolemization for zero blank nodes, append-only streaming partition writes, and
   SPARQL 1.1 cross-graph query recipes.
 conformsTo:
-  - sparql-1.1-query
-  - w3c-n-quads
+  - dcmi-terms
+  - w3c-rdf
 graph-typologies:
   - catalogue
   - skills
