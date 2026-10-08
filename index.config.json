@@ -10,7 +10,59 @@
       }
     },
     {
-      "name": "cat-harness"
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "note": "The cat-harness cutover: litlfred/cat-harness is the live graph; the in-tree copy is archived at fsh-guts/separated/cat-harness.tar.gz.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-08",
+              "ref": "6e8a3f85b7dc562a64a8732ecbb5d4ae09e8fae1",
+              "evidence": "owner, session 2026-10-08: 'can we get cat-harness(-tools) fully sperated please. make recommended updates.'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "note": "The cat-harness-tools cutover: litlfred/cat-harness-tools is the live code layer; the in-tree copy is archived at fsh-guts/separated/cat-harness-tools.tar.gz.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-10-08",
+              "ref": "cf670c6a1ebb826aa299cc2f092d51c99a13f7f5",
+              "evidence": "owner, session 2026-10-08: 'can we get cat-harness(-tools) fully sperated please. make recommended updates.'"
+            }
+          }
+        }
+      }
     },
     {
       "name": "folio-assistant-core"
@@ -46,6 +98,9 @@
                 "smart-base-skills",
                 "smart-base-scenarios"
               ]
+            },
+            "fhir-harness": {
+              "skip": true
             }
           },
           "trust": {
