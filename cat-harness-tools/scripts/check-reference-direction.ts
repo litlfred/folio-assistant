@@ -1213,7 +1213,7 @@ function main(): number {
     if (states.pendingStale.length > 0 || states.multiDestinationUnlisted.length > 0) {
       console.log(
         `\n  (the ${states.pendingStale.length + states.multiDestinationUnlisted.length} state(s) above are RECORDED, not graded here —` +
-          ` \`bun run check:reference-direction\` is the form that exits 1 on them)`,
+          ` \`bun run cat check:reference-direction\` is the form that exits 1 on them)`,
       );
     }
     console.log("");

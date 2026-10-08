@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xtpc
 title: 'DOC INGEST: .docx and PDF handbooks to document blocks with content-derived ids — and document-intake out of the paper adapter'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-10-04T20:03:46Z
+updated_at: 2026-10-07T17:38:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -65,3 +65,6 @@ _2026-10-04T19:17:28Z_ — Claimed by claude/confident-bardeen-inaarx — pushed
 - [ ] a .docx upload becomes document blocks through the apui entry point (the CLI works; apui not wired)
 - [ ] document-intake reachable from the document adapter
 - [x] re-ingesting an unchanged document keeps every label (test; `id-reingest-stable` not yet registered)
+
+## Completed on landed evidence
+Landed on main in PR #1912 / commit f28c22babd06 (public comment: .docx + line-numbered PDF to editable document blocks).

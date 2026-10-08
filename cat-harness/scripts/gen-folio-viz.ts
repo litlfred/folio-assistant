@@ -59,8 +59,8 @@
  * author of this file on 2026-09-22 in `gen-library-viz.ts`.
  *
  * Usage:
- *   bun run folio:viz
- *   bun run folio:viz -- --check
+ *   bun run cat folio:viz
+ *   bun run cat folio:viz -- --check
  *
  * Exit: 0 written or up to date · 1 stale under `--check`.
  */
@@ -375,7 +375,7 @@ if (import.meta.main) {
       (absent ? `, ${absent} declared but absent` : ""),
   );
   if (check && stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run folio:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat folio:viz\``);
     process.exit(1);
   }
 }

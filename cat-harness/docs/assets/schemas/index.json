@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 240,
+      "count": 243,
       "unit": "modules"
     }
   },
@@ -858,6 +858,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/mount-trust.test.ts",
+      "instance": "cat-harness",
+      "name": "mount-trust.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "instance": "cat-harness",
+      "name": "mount-trust",
+      "graphNode": "schema",
+      "summary": "MOUNT TRUST — what must be true before a remote knowledge graph is mounted.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/namespaces.ts",
       "instance": "cat-harness",
       "name": "namespaces",
@@ -1326,6 +1341,15 @@
       "name": "script-qa",
       "graphNode": "schema",
       "summary": "Per-script QA report schema.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/script-table.ts",
+      "instance": "cat-harness",
+      "name": "script-table",
+      "graphNode": "none",
+      "reason": "functions that read the script table; no schema",
+      "summary": "The checkout's script table, read from where each script now lives.",
       "isTest": false
     },
     {
@@ -24154,6 +24178,204 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
+      "name": "CommitShaSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-scalar",
+      "doc": "A full commit SHA. Restated rather than imported: `remote-mount.ts` imports THIS module, and a cycle would be the price.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#IsoDate",
+      "name": "IsoDate",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountConsent",
+      "name": "MountConsent",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
+      "name": "MountConsentSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-object",
+      "doc": "A person's explicit consent to mount one harness at one pin.",
+      "fields": [
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Who consented: a person, by the identity they act under here."
+        },
+        {
+          "name": "on",
+          "type": "IsoDate",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "CommitShaSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The pin consented to. Must equal the mount's `ref`; a moved pin asks again."
+        },
+        {
+          "name": "evidence",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Where the consent was given (an issue comment, a chat session), so it can be read."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
+        "cat-harness/schemas/mount-trust.ts#IsoDate"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountSignature",
+      "name": "MountSignature",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema",
+      "name": "MountSignatureSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-object",
+      "doc": "A signature over the mounted declaration, by a key in a declared trust network.",
+      "fields": [
+        {
+          "name": "network",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The trust network the key is listed in, e.g. `gdhcn`."
+        },
+        {
+          "name": "keyId",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "signedDigest",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "What was signed: the pinned declaration's sha256, as the lock records it."
+        },
+        {
+          "name": "value",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountTrust",
+      "name": "MountTrust",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
+      "name": "MountTrustSchema",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "consent",
+          "type": "MountConsentSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "signature",
+          "type": "MountSignatureSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
+        "cat-harness/schemas/mount-trust.ts#MountSignatureSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/mount-trust.ts#TrustVerdict",
+      "name": "TrustVerdict",
+      "module": "cat-harness/schemas/mount-trust.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/namespaces.ts#NsPrefix",
       "name": "NsPrefix",
       "module": "cat-harness/schemas/namespaces.ts",
@@ -29798,6 +30020,13 @@
           "optional": true,
           "array": true,
           "doc": "Directory ids, in this instance's own declaration."
+        },
+        {
+          "name": "whole",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Mount the WHOLE instance root — every tracked file at the pin, root"
         }
       ],
       "extendsNames": [],
@@ -29908,6 +30137,13 @@
           "type": "z.literal(true).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "whole",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored."
         }
       ],
       "extendsNames": [],
@@ -29986,11 +30222,19 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "trust",
+          "type": "MountTrustSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What makes this mount trusted: a person's consent for THIS pin, or a"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
         "cat-harness/schemas/remote-mount.ts#CommitShaSchema",
         "cat-harness/schemas/remote-mount.ts#InstanceNameSchema",
         "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
@@ -31652,6 +31896,40 @@
         "cat-harness/schemas/block-qa.ts#QaCriterionEntry",
         "cat-harness/schemas/script-qa.ts#ScriptLanguage"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/script-table.ts#ScriptEntry",
+      "name": "ScriptEntry",
+      "module": "cat-harness/schemas/script-table.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The command, relative to the checkout root."
+        },
+        {
+          "name": "manifest",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The manifest it is declared in, repository-relative (`package.json` for the root)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -61588,6 +61866,38 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#CommitShaSchema",
+      "via": "ref",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#IsoDate",
+      "via": "on",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#MountConsentSchema",
+      "via": "consent",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#MountSignatureSchema",
+      "via": "signature",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/narrative.ts#NarrativeSchema",
       "to": "cat-harness/schemas/attribution.ts#AttributionSchema",
       "via": "confirmed_by",
@@ -62423,6 +62733,14 @@
       "from": "cat-harness/schemas/remote-mount.ts#MountOverrideSchema",
       "to": "cat-harness/schemas/remote-mount.ts#MountPathSchema",
       "via": "path",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/remote-mount.ts#RemoteMountSchema",
+      "to": "cat-harness/schemas/mount-trust.ts#MountTrustSchema",
+      "via": "trust",
       "kind": "field",
       "optional": true,
       "array": false

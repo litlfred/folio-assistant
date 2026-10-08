@@ -60,6 +60,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`qa-panel.e2e.ts`](qa-panel.e2e.ts) | a file |  |
 | [`rail-icon-row.e2e.ts`](rail-icon-row.e2e.ts) | a file |  |
 | [`rail-tips.e2e.ts`](rail-tips.e2e.ts) | a file |  |
+| [`railed-fixture.build.ts`](railed-fixture.build.ts) | a file |  |
+| [`railed-fixture.ts`](railed-fixture.ts) | a file |  |
 | [`render-wait.e2e.ts`](render-wait.e2e.ts) | a file |  |
 | [`review-diff.e2e.ts`](review-diff.e2e.ts) | a file |  |
 | [`review-heat.e2e.ts`](review-heat.e2e.ts) | a file |  |
@@ -89,9 +91,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, hold
 | [`test-server.e2e.ts`](test-server.e2e.ts) | a file |  |
 | [`test-server.mjs`](test-server.mjs) | a file |  |
 | [`test_pypdf_compat.py`](test_pypdf_compat.py) | a file |  |
+| [`themed-viewers.e2e.ts`](themed-viewers.e2e.ts) | a file |  |
 | [`todo-page.e2e.ts`](todo-page.e2e.ts) | a file |  |
 | [`todos-page-board.e2e.ts`](todos-page-board.e2e.ts) | a file |  |
 | [`translation-badges.e2e.ts`](translation-badges.e2e.ts) | a file |  |
+| [`who-iris-search.e2e.ts`](who-iris-search.e2e.ts) | a file |  |
 | [`attestations/`](attestations/README.md) | described in its own README | |
 | [`fixtures/`](fixtures/) | _nothing declares what this holds_ | |
 | [`health/`](health/) | _nothing declares what this holds_ | |

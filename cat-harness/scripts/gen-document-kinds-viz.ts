@@ -26,8 +26,8 @@
  * and the card says so rather than leaving it blank.
  *
  * Usage:
- *   bun run document-kinds:viz          # write
- *   bun run document-kinds:viz:check    # fail if a page is stale or orphaned
+ *   bun run cat document-kinds:viz          # write
+ *   bun run cat document-kinds:viz:check    # fail if a page is stale or orphaned
  */
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
@@ -41,8 +41,9 @@ import {
 } from "../schemas/document-kind.ts";
 import { directoriesForGraph, instanceRootsIn, readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
-import { makeEmit, type ViewerNav } from "./viewer-page.ts";
-import { withRenders } from "./viewer-declarations.js";
+import { makeEmit } from "./viewer-page.ts";
+import { withRendersFrontMatter } from "./viewer-declarations.js";
+import { subjectNav, subjectNavCss, themedPage } from "./lib/themed-page.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "document-kinds-viewer";
@@ -162,61 +163,64 @@ ${rows}
 </tbody></table></div>`;
 }
 
-export function pageHtml(entries: readonly KindEntry[], scope?: string): string {
+/**
+ * The page, as a THEMED Jekyll page (2026-10-07): on the site's `default`
+ * layout, so it carries the top band (search, Folio, language) that
+ * `docs-ui.js` builds and only that layout delivers. Until then it was a
+ * standalone document with its own palette and an injected harness rail.
+ *
+ * Every rule is scoped under `.dk-page`: on the layout a rule on `body`,
+ * `:root` or `a` would restyle the theme. Ink comes from the theme, edges are
+ * neutral and translucent, and the one muted hue is keyed on the site's own
+ * scheme switch (`data-fa-scheme`) — a colour rather than an opacity, because
+ * muted lines here carry LINKS, and an opacity on the line would dim the
+ * theme's link colour below 4.5:1 with it.
+ */
+export function pageHtml(entries: readonly KindEntry[], scope?: string, subjects: readonly string[] = []): string {
   const title = scope ? `Document kinds — ${scope}` : "Document kinds";
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(title)}</title>
-<style>
-:root { --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24; }
-}
-:root[data-theme="dark"] { --bg:#14171a; --fg:#e8eaed; --muted:#9aa2ab; --line:#2e343b; --panel:#1b1f24; }
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.55 ui-sans-serif, system-ui, sans-serif; }
-main { max-width:72rem; margin:0 auto; padding:16px; }
-h1 { font-size:1.2rem; margin:8px 0; } h2 { font-size:1.05rem; margin:24px 0 6px; }
-.m { color:var(--muted); font-size:.88rem; }
-.kind { border-top:1px solid var(--line); padding-top:4px; }
-.clip { width:100%; overflow-x:auto; }
-table { width:100%; border-collapse:collapse; font-size:.9rem; }
-th, td { text-align:left; vertical-align:top; padding:6px 8px; border-bottom:1px solid var(--line); }
-th { background:var(--panel); }
-code { font-size:.85em; overflow-wrap:anywhere; }
-main { min-width:0; overflow-wrap:anywhere; }
+  return themedPage({
+    title,
+    generator: "cat-harness/scripts/gen-document-kinds-viz.ts",
+    command: "bun run document-kinds:viz",
+    body: `<style>
+.dk-page { min-width:0; overflow-wrap:anywhere; --muted:#bcbab3; }
+:root[data-fa-scheme="light"] .dk-page { --muted:#5b6168; }
+.dk-page h1 { margin:0 0 .4rem; }
+.dk-page h2 { margin:1.5rem 0 .4rem; }
+.dk-page h3 { margin:1.1rem 0 .25rem; }
+.dk-page .m { color:var(--muted); font-size:.88rem; }
+.dk-page .kind { border-top:1px solid rgba(127,127,127,.4); padding-top:4px; }
+.dk-page .clip { width:100%; overflow-x:auto; }
+.dk-page table { display:table; width:100%; border-collapse:collapse; font-size:.9rem; }
+.dk-page th, .dk-page td { text-align:left; vertical-align:top; padding:6px 8px; border:0; border-bottom:1px solid rgba(127,127,127,.4); background:transparent; }
+.dk-page th { background:rgba(127,127,127,.12); }
+.dk-page code { font-size:.85em; overflow-wrap:anywhere; }
 /* "overflow-wrap:anywhere" above is for long codes and paths; it also broke the
    narrow number and required/optional cells mid-word ("1 0", "o pt io n al")
    once a kind's source column grew long — dth's does. Those cells never wrap,
    and the section title keeps a width it can be read at. */
-.sec td:nth-child(1), .sec td:nth-child(3) { white-space:nowrap; overflow-wrap:normal; }
-.sec td:nth-child(2) { min-width:11rem; overflow-wrap:normal; }
-/* On a phone a five-column table cannot fit beside the rail: each section
-   becomes a stacked card instead, header row hidden, nothing scrolls sideways. */
+.dk-page .sec td:nth-child(1), .dk-page .sec td:nth-child(3) { white-space:nowrap; overflow-wrap:normal; }
+.dk-page .sec td:nth-child(2) { min-width:11rem; overflow-wrap:normal; }
+/* On a phone a five-column table cannot fit: each section becomes a stacked
+   card instead, header row hidden, nothing scrolls sideways. */
 @media (max-width: 640px) {
-  .sec thead { display:none; }
-  .sec, .sec tbody, .sec tr, .sec td { display:block; width:100%; }
-  .sec tr { border-bottom:1px solid var(--line); padding:6px 0; }
-  .sec td { border:0; padding:2px 0; }
+  .dk-page .sec thead { display:none; }
+  .dk-page .sec, .dk-page .sec tbody, .dk-page .sec tr, .dk-page .sec td { display:block; width:100%; min-width:0; }
+  .dk-page .sec tr { border-bottom:1px solid rgba(127,127,127,.4); padding:6px 0; }
+  .dk-page .sec td { border:0; padding:2px 0; }
 }
-.cov td, .cov th { white-space:normal; overflow-wrap:normal; }
-.cov td:first-child { min-width:9rem; width:30%; }
-.cov ul { margin:4px 0 0 1em; padding:0; font-size:.85rem; }
-h3 { font-size:.95rem; margin:18px 0 4px; }
+.dk-page .cov td, .dk-page .cov th { white-space:normal; overflow-wrap:normal; }
+.dk-page .cov td:first-child { min-width:9rem; width:30%; }
+.dk-page .cov ul { margin:4px 0 0 1em; padding:0; font-size:.85rem; }
+${subjectNavCss("dk-page")}
 </style>
-</head>
-<body>
-<main>
-<h1>${esc(title)}</h1>
+<div class="dk-page">
+<h1 id="dk-title">${esc(title)}</h1>
+${subjectNav({ subjects, current: scope, cls: "dk-page" })}
 <p class="m">A document kind is a named structure of sections that a document authored with a harness follows: <b>fixed</b> (exactly these sections) or <b>semi-fixed</b> (these required, others allowed). Every kind and section names its sources.</p>
 ${entries.length === 0 ? '<p class="m">No document kinds are declared.</p>' : entries.map(kindCard).join("\n")}
-</main>
-</body>
-</html>
-`;
+</div>`,
+  });
 }
 
 let stale = 0;
@@ -231,8 +235,9 @@ if (import.meta.main) {
   }
   const site = join(ROOT, siteDirFor(ROOT));
   const { pageDir } = viewerPlacement(site, `${handler}/${GRAPH}`, GRAPH);
-  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  const emitPage = (n: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav: n });
+  // No `nav`: these pages are themed, so the theme's sidebar is their
+  // navigation and there is no rail to inject.
+  const emitPage = makeEmit({ check, onStale: () => { stale++; } });
   const present = (subject?: string): string[] =>
     // Repo-relative, as every viewer's `renders` is: an absolute path names this
     // machine's checkout, and no page or test can match it anywhere else.
@@ -240,13 +245,13 @@ if (import.meta.main) {
       .filter((d) => existsSync(d.dir) && (subject === undefined || d.instance === subject))
       .map((d) => relative(repoRoot, d.dir).split(sep).join("/"));
 
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(pageHtml(kinds), present(), VIEWER_TOOL));
   const subjects = [...new Set(kinds.map((k) => k.instance))].sort();
+  emitPage(join(pageDir, "index.html"), withRendersFrontMatter(pageHtml(kinds, undefined, subjects), present(), VIEWER_TOOL));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${GRAPH}/${subject}`, GRAPH);
-    emitPage({ ...nav, instance: subject })(
+    emitPage(
       join(sub.pageDir, "index.html"),
-      withRenders(pageHtml(kinds.filter((k) => k.instance === subject), subject), present(subject), VIEWER_TOOL),
+      withRendersFrontMatter(pageHtml(kinds.filter((k) => k.instance === subject), subject, subjects), present(subject), VIEWER_TOOL),
     );
   }
   const { owned, foreign } = orphanSubjectPages(pageDir, subjects);
@@ -263,7 +268,7 @@ if (import.meta.main) {
   }
   if (!check) console.log(`  ${kinds.length} document kind(s) across ${subjects.length} instance(s)`);
   if (stale > 0) {
-    console.error(`\n${stale} page(s) stale — run \`bun run document-kinds:viz\``);
+    console.error(`\n${stale} page(s) stale — run \`bun run cat document-kinds:viz\``);
     process.exit(1);
   }
 }

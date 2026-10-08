@@ -94,7 +94,7 @@ Falsified: removing the root pin fails exactly the one test that asserts it.
       declaration
 - [ ] Every contributed checker is freshness-hashed like a built-in one, pinned
       by a test that fails if it is not
-- [ ] `bun run check:partition` still 0, and the five runtime edges `zlmp`
+- [ ] `bun run cat check:partition` still 0, and the five runtime edges `zlmp`
       measured are gone rather than relocated
 
 ## Where the next step actually stands — checked, not assumed
@@ -217,8 +217,8 @@ The `core → sci` runtime edge is **gone** — `qa-checker-discovery` no longer
 resolves any sci path, because a contributed checker arrives as a function and
 the contributor imported its own module. Four of the five remain
 (`qa-checkers-dak.ts` at 5 criteria, `render-latex.ts`, and the server's route
-and tool groups). `bun run check:partition` still 0 wrong-direction, 0
-unassigned; `bun run gates` 87 of 87.
+and tool groups). `bun run cat check:partition` still 0 wrong-direction, 0
+unassigned; `bun run cat gates` 87 of 87.
 
 ### Falsified, in both directions
 

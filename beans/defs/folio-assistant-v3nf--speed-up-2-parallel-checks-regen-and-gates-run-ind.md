@@ -1,18 +1,18 @@
 ---
 # folio-assistant-v3nf
 title: 'SPEED-UP 2: parallel checks — regen and gates run independent --check scripts concurrently, writers stay ordered'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-01T17:42:24Z
-updated_at: 2026-10-06T19:00:41Z
+updated_at: 2026-10-07T17:32:00Z
 parent: folio-assistant-7x5n
 ---
 
 Owner approved 2026-10-01 late (~17:30, session_01ToWZR4RgTRCWeSsgxsSQfT) as speed-up 2 of 4 for the merge treadmill (S2 `0mf0`, epic `7x5n`). Siblings: input-hash skip, CI merge:main (`d33q` part B), CI sharding + BPMN cache + shallow checkout.
 
 ## What
-`bun run regen` asks its ~82 verify/write pairs one at a time, and `bun run gates` runs its fast set serially. Run independent checks in parallel, bounded by the CPU count, keeping the output grouped per check and the exit status per check.
+`bun run cat regen` asks its ~82 verify/write pairs one at a time, and `bun run cat gates` runs its fast set serially. Run independent checks in parallel, bounded by the CPU count, keeping the output grouped per check and the exit status per check.
 
 ## Why
 d33q measured regen at ~20–46 min and gates at 29–32 min per round on a 4-core box. Most `--check` scripts read disjoint inputs and write nothing.
@@ -39,3 +39,6 @@ Two writers that touch the same output (or a writer whose output is another chec
   - gates' serial vs parallel share was NOT measured separately: a gate run is about 40 minutes here. a2a8e6c63 now prints each serial gate's time. In the last run `bun test` (1525 s) and `check:cat-harness-standalone` (496 s) were 2021 of 2765 s, and the pool cannot shorten either.
 
 _2026-10-06T19:00:41Z_ — Claimed by claude/v3nf-parallel-gates-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Completed on landed evidence
+Landed on main in PR #2112 (70lx B1: the server half moves to cat-harness-tools; content routes up to core (stacked on #2111)).

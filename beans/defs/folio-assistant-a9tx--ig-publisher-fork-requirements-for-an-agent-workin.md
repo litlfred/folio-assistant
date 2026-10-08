@@ -68,7 +68,7 @@ this environment.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 
 ## Read of the fork, 2026-09-30 — and a correction to §"Which repositories"
@@ -182,7 +182,7 @@ policy"), re-checked three times through 2026-09-30T15:00Z. The next step is a f
 ## Who picks this up, 2026-09-30
 
 Owner's call: an agent with network access **claims this bean whole**
-(`bun run beans:claim folio-assistant-a9tx`), W3 and W4 included, rather than a
+(`bun run cat beans:claim folio-assistant-a9tx`), W3 and W4 included, rather than a
 child bean. W1 was un-ticked the same day. It had been ticked with the
 byte-identical check never run, which was a false tick.
 
@@ -279,7 +279,7 @@ registry would remove that.
 
 ## HANDOVER — start here (2026-10-01)
 
-**Claim it whole** (owner's ruling): `bun run beans:claim folio-assistant-a9tx`.
+**Claim it whole** (owner's ruling): `bun run cat beans:claim folio-assistant-a9tx`.
 Everything is built and unit-tested, and **nothing has been measured on a real IG.**
 Tick a box here only on a measurement, with its provenance.
 

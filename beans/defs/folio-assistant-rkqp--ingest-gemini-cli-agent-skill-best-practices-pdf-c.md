@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rkqp
 title: Ingest Gemini-CLI agent-skill best-practices PDF + commit 4677175 as MODEL-SPECIFIC voices for skills
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T22:09:25Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -137,7 +137,7 @@ layout nor these gates exist there yet; they arrive when #773 merges.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 
 ## 2026-09-30 — the Gemini CLI voice
@@ -196,7 +196,7 @@ Refuse the literal `structure.json` in TypeScript outside a short allowlist, eac
 ## 2026-09-30 — the agentic review axis for skills (the last open item)
 - [x] `skill-voice-review-current` (kg-qa, `minor`, gated by nothing): does a CURRENT review exist of this skill against each ACTIVE voice whose rules are scoped `appliesTo: ["skill"]`. Rule-content verdicts are recorded in the sidecar's `voice_reviews` and are never a finding — the owner's "no formal gate on rule content".
 - [x] Reviews carried across `kg:audit` runs exactly like `pair_attestations`; each pins the skill's content hash and the hash of the voice's skill-scoped rules, so either moving makes it stale (the old review kept as evidence).
-- [x] `bun run voice:review` writes one (refuses a set missing a rule, judging one twice, or an unexplained fail/n/a); `--rules <voice>` prints what to judge, resolved through `extends`.
+- [x] `bun run cat voice:review` writes one (refuses a set missing a rule, judging one twice, or an unexplained fail/n/a); `--rules <voice>` prints what to judge, resolved through `extends`.
 - [x] Agent half: `skill-voice-review` skill (folio-core), bound to the `code-reviewer` lane beside `skills-and-tools`.
 - [x] The four skill-authoring voices now declare `appliesTo: ["skill"]` — until now they claimed every block kind.
 - Measured: 323 skill sidecars each gain only `n/a` (no voice is active in `folio-assistant.config.json`); nothing else moved.
@@ -207,3 +207,6 @@ Refuse the literal `structure.json` in TypeScript outside a short allowlist, eac
 `folio-assistant.config.json` → `voices.active: ["agent-skill-authoring"]`. The vendor overrides stay inactive (our skills are agent-agnostic; a vendor voice describes that vendor's own platform).
 - Measured: all 325 skill sidecars go `n/a` → `fail` (minor, ungated) "never reviewed against agent-skill-authoring (12 skill rules)" — that is the review backlog, and nothing else in any sidecar moved.
 - Closed a hole the activation exposed: `voiceOverlayCriteria` made a BLOCK-prose criterion for every shipped voice, ignoring `appliesTo`, so an active skill voice would have asked agents to hold folio prose to rules written for a SKILL.md. `judgesBlocks()` now drops voices scoped only to artefact kinds; the four skill-authoring voices make no block overlay (test pinned).
+
+## Completed on landed evidence
+Landed on main in PR #1461 / commit a3722a508c8c (Ingest Gemini-CLI agent-skill best-practices PDF; fix rendered impact).

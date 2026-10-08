@@ -18,7 +18,7 @@ Stacked on `claude/magical-archimedes-4qkfxp-who-iris-code` (draft PR #1728, bea
 ## Done when
 - who-style-guide's content lives under `who-iris/` by `git mv` (history preserved), declared in `who-iris/who-iris.json` with graph kinds.
 - The `who-style-guide` instance declaration is retired; no live reference to it remains outside history and beans.
-- `check:voices`, `check:voice-skills`, `check:glossary`, `kg:audit:check` and `bun run gates` green.
+- `check:voices`, `check:voice-skills`, `check:glossary`, `kg:audit:check` and `bun run cat gates` green.
 
 _2026-10-01_ — ## Done on branch `claude/magical-archimedes-4qkfxp-who-style-into-iris` (stacked on #1728)
 

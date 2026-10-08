@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sod4
 title: 'AUDIT: TypeScript tables that are really KG facts owned by one harness — ranked, with where each belongs (owner asked 2026-10-04)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T17:33:33Z
-updated_at: 2026-10-06T06:26:49Z
+updated_at: 2026-10-07T17:47:00Z
 parent: folio-assistant-fs43
 ---
 
@@ -73,3 +73,6 @@ dmx1 closed (#2180), and check:bean-rollup refuses a completed container with an
 
 ## Re-measured 2026-10-06 on main at 2fdbb5109a — not closable yet
 Umbrella the owner chose to keep open. Spot-checks: `merge-train.ts` still runs `smart-base:smart-kg-l1:check` (last row open); `cat-harness/scripts/special-branches.json` still exists here (#12 open; #2192 retires it). `PUBLISHED_ELSEWHERE` no longer greps and `check-avatar-instances.ts` has `EXEMPT = {}`: rows #8 and #9 may be done but are unticked — verify and tick on the next pass.
+
+## Completed on landed evidence
+Landed on main in commits 68e9d2b59151, 620d942e8b73 (Audit TypeScript tables against KG facts).

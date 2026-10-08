@@ -22,7 +22,7 @@
  * it leaves the repository, which for a reviewing tool is worse than nothing:
  * it looks like the crops are broken rather than like the page is.
  *
- * Usage:  bun run avatar:crops [--out <file>]
+ * Usage:  bun run cat avatar:crops [--out <file>]
  *
  * @module scripts/render-avatar-crops
  */

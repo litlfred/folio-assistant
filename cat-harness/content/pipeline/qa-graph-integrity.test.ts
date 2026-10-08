@@ -124,7 +124,7 @@ describe("the qa directories declared in this checkout", () => {
   // Only the judgement half is swept HERE: it is authored content on `main`.
   // The derived `qa` half is the committed corpus that is leaving `main`, and
   // a test must not assert on it (bean `cxcn`, reader audit F7) —
-  // `bun run check:qa-corpus` judges it over the fetched tree instead.
+  // `bun run cat check:qa-corpus` judges it over the fetched tree instead.
   const attestations = declaredQaDirs(REPO, ["attestations"]);
   const report = checkQaDirs(attestations);
 

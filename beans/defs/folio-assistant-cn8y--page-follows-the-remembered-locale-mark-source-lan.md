@@ -14,4 +14,4 @@ Owner 2026-09-27: an English page sat inside a French navbar. 'user selects loca
 
 - `docs-ui.js` `followRememberedLocale`: with a STORED `fa-locale`, a page that has a version in that locale (by its own `availableLocales`) is replaced by it. `?lang=` wins. Nothing stored means no jump.
 - `mountNavLocale`: a fallback item gets `lang` and `data-fa-source-locale`; the CSS prints ` (EN)` after it. An English navbar shows no tag.
-- `nav-locale.e2e.ts`: five redirect cases plus the tag and its absence. 160 pass across the related e2e files; `bun run gates` passes every gate.
+- `nav-locale.e2e.ts`: five redirect cases plus the tag and its absence. 160 pass across the related e2e files; `bun run cat gates` passes every gate.

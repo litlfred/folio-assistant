@@ -34,9 +34,9 @@
  * catalogue no longer references.
  *
  * Usage:
- *   bun run id-lookup                    # write every hosted index (who-iris/id-lookup/ today)
- *   bun run id-lookup:check              # fail if any is stale
- *   bun run id-lookup -- --source <name> # one instance's only
+ *   bun run cat id-lookup                    # write every hosted index (who-iris/id-lookup/ today)
+ *   bun run cat id-lookup:check              # fail if any is stale
+ *   bun run cat id-lookup -- --source <name> # one instance's only
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -177,7 +177,7 @@ if (import.meta.main) {
     if (check) {
       const problems = staleness(files, dir);
       if (problems.length) {
-        console.error(`id-lookup: ${rel} is stale (${problems.length}):\n  ${problems.join("\n  ")}\nRun \`bun run id-lookup\`.`);
+        console.error(`id-lookup: ${rel} is stale (${problems.length}):\n  ${problems.join("\n  ")}\nRun \`bun run cat id-lookup\`.`);
         failed = true;
         continue;
       }

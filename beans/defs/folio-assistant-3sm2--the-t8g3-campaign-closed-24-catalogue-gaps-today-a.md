@@ -320,7 +320,7 @@ the change working as intended.
 
 ## The falsification command in #1422 is wrong and is being corrected
 
-    bun run translation:catalogue:check -- --since 6ec97bd64ab^
+    bun run cat translation:catalogue:check -- --since 6ec97bd64ab^
 
 is offered there with *"it should report 35"*. **It reports 5.** And its output
 DECAYS as catalogues are authored, because `uncatalogued` tests `existsSync` in

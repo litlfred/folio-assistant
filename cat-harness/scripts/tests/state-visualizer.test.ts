@@ -143,12 +143,22 @@ describe("what a page may claim", () => {
     expect(read("beans")).toContain('<span class="sv-here">beans</span>');
   });
 
-  test("the renderer and its styles are inlined on a standalone page, so no asset is fetched", () => {
-    const html = read("qa");
-    expect(html).toContain("mountWorkPlan");
-    expect(html).toContain("--fa-wp-surface");
-    expect(html).not.toContain("<script src=");
-    expect(html).not.toContain("cdn.");
+  test("EVERY dashboard is a themed page, so every one carries the top band (#2418)", () => {
+    // Owner, 2026-10-07: "(and other pages)". The band is docs-ui.js's, and
+    // only a layout page loads it — a doctype shell with its own head has none.
+    const IDS = ["beans", "todos", "qa", "health", "issue-marks", "uploads", "attestations", "swimlane-glossary"]
+      .filter(has);
+    expect(IDS.length).toBeGreaterThan(0);
+    for (const id of IDS) {
+      const html = read(id);
+      expect(html.startsWith("---\nlayout: default\n"), id).toBe(true);
+      expect(html, id).not.toMatch(/<!doctype html>/i);
+      // Nothing inlined: the layout's head carries the renderer and its styles.
+      expect(html, id).not.toContain("mountWorkPlan");
+      expect(html, id).not.toContain("<script");
+      // An explicit id on the one h1, so the theme cannot mint a shared anchor (gjli).
+      expect(html, id).toMatch(/<h1 id="[^"]+">/);
+    }
   });
 
   test("the beans page is THEMED, so it carries the site's top band (#2418)", () => {

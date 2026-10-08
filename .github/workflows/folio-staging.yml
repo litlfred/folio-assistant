@@ -154,11 +154,13 @@ jobs:
       && !(github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # Full history: the ChangeSet reads the base ref with `git archive`.
           fetch-depth: 0
-          submodules: recursive
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
 
       - name: Locate the platform
         # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
@@ -183,9 +185,19 @@ jobs:
             echo "The folio does not carry the platform at $PLATFORM_DIR; checking it out."
           fi
 
+      - name: Mount the platform's layers from its lock (a platform the folio carries)
+        # The folio's own checkout is not the platform: its bootstrap/ and
+        # bootstrap-tools/ are remote mounts of the PLATFORM, replayed where
+        # the folio keeps it (bean nn8e). The step below does the same for a
+        # platform this job checks out.
+        if: steps.platform.outputs.present == 'true'
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_DIR"
+
       - name: Check out the platform
         if: steps.platform.outputs.present == 'false'
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: litlfred/folio-assistant
           # `cat-harness/schemas/` imports from the `bootstrap-tools`
@@ -193,9 +205,17 @@ jobs:
           # 2026-10-02 with `check:workflow-submodules`, after the same gap
           # broke `feature-staging.yml`'s cleanup for six consecutive runs and
           # let 80 staging previews accumulate.
-          submodules: true
           ref: ${{ inputs.platform_ref }}
           path: ${{ steps.platform.outputs.checkout }}
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        if: steps.platform.outputs.present == 'false'
+        # Through env:, never interpolated into the script: the checkout path is
+        # a step output that carries free text (check:workflow-injection).
+        env:
+          PLATFORM_CHECKOUT: ${{ steps.platform.outputs.checkout }}
+        run: bun "$PLATFORM_CHECKOUT/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_CHECKOUT"
 
       - name: Link the platform where the folio names it
         if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
@@ -211,7 +231,15 @@ jobs:
           ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
           echo "linked $ABS -> the platform checked out in the workspace"
 
-      - uses: oven-sh/setup-bun@v2
+      - name: Mount the folio's own layers from its lock
+        # A folio may itself remote-mount layers (bean nn8e). The replay is the
+        # platform's, run over the folio's root; with no lock it reports
+        # `not-enabled` and exits 0.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root .
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -649,7 +677,7 @@ jobs:
 
       - name: Comment staging URL on PR
         if: steps.pr.outputs.number != ''
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           SLUG: ${{ steps.slug.outputs.slug }}
@@ -750,9 +778,10 @@ jobs:
       group: folio-publish-main-${{ github.repository }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          submodules: recursive
+          bun-version: 1.3.14
 
       - name: Locate the platform
         # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
@@ -777,9 +806,19 @@ jobs:
             echo "The folio does not carry the platform at $PLATFORM_DIR; checking it out."
           fi
 
+      - name: Mount the platform's layers from its lock (a platform the folio carries)
+        # The folio's own checkout is not the platform: its bootstrap/ and
+        # bootstrap-tools/ are remote mounts of the PLATFORM, replayed where
+        # the folio keeps it (bean nn8e). The step below does the same for a
+        # platform this job checks out.
+        if: steps.platform.outputs.present == 'true'
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_DIR"
+
       - name: Check out the platform
         if: steps.platform.outputs.present == 'false'
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: litlfred/folio-assistant
           # `cat-harness/schemas/` imports from the `bootstrap-tools`
@@ -787,9 +826,17 @@ jobs:
           # 2026-10-02 with `check:workflow-submodules`, after the same gap
           # broke `feature-staging.yml`'s cleanup for six consecutive runs and
           # let 80 staging previews accumulate.
-          submodules: true
           ref: ${{ inputs.platform_ref }}
           path: ${{ steps.platform.outputs.checkout }}
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        if: steps.platform.outputs.present == 'false'
+        # Through env:, never interpolated into the script: the checkout path is
+        # a step output that carries free text (check:workflow-injection).
+        env:
+          PLATFORM_CHECKOUT: ${{ steps.platform.outputs.checkout }}
+        run: bun "$PLATFORM_CHECKOUT/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_CHECKOUT"
 
       - name: Link the platform where the folio names it
         if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
@@ -805,7 +852,15 @@ jobs:
           ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
           echo "linked $ABS -> the platform checked out in the workspace"
 
-      - uses: oven-sh/setup-bun@v2
+      - name: Mount the folio's own layers from its lock
+        # A folio may itself remote-mount layers (bean nn8e). The replay is the
+        # platform's, run over the folio's root; with no lock it reports
+        # `not-enabled` and exits 0.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: bun "$PLATFORM_DIR/cat-harness/scripts/mount-from-lock.ts" --root .
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -911,7 +966,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Check out the platform (never the pull request's copy)
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: litlfred/folio-assistant
           # `cat-harness/schemas/` imports from the `bootstrap-tools`
@@ -919,12 +974,18 @@ jobs:
           # 2026-10-02 with `check:workflow-submodules`, after the same gap
           # broke `feature-staging.yml`'s cleanup for six consecutive runs and
           # let 80 staging previews accumulate.
-          submodules: true
           ref: ${{ inputs.platform_ref }}
           path: platform
           persist-credentials: false
+      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
+      # the committed lock pins each to a SHA, and mount-from-lock.ts replays it with node:* only.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Mount bootstrap and bootstrap-tools from the lock
+        run: bun "platform/cat-harness/scripts/mount-from-lock.ts" --root "platform"
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.3.14
 
@@ -942,14 +1003,14 @@ jobs:
         id: slug
         # The head branch is ATTACKER-CONTROLLED on a fork PR: read from the
         # API into env, never interpolated, and checked by VALUE (bean `fuzm`).
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const { data } = await github.rest.pulls.get({ ...context.repo, pull_number: context.issue.number });
             core.setOutput("branch", data.head.ref);
 
       - name: Check out the publish branch
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ inputs.publish_branch }}
           path: pages

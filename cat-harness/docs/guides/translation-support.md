@@ -558,9 +558,9 @@ So the strings are lifted into a declared table in the source,
 `scripts/kg-viewer-strings.ts`, and extracted from **there**:
 
 ```sh
-bun run translate-kg-viewer --extract [--locale fr]  # table → translations/<loc>/kg-viewer.pot
-bun run translate-kg-viewer:check                    # drift between table, .pot and .po
-bun run kg:viewer                                    # reads every .po, embeds the catalogues
+bun run cat translate-kg-viewer --extract [--locale fr]  # table → translations/<loc>/kg-viewer.pot
+bun run cat translate-kg-viewer:check                    # drift between table, .pot and .po
+bun run cat kg:viewer                                    # reads every .po, embeds the catalogues
 ```
 
 It is the same pipeline as everything else — `formatPot` from
@@ -600,7 +600,7 @@ fills them.
 
 Until one does, the viewer offers English alone — an empty catalogue is not a
 language the page can show, so it is not listed. Fill a `.po`, run
-`bun run kg:viewer`, and that language appears in the switcher.
+`bun run cat kg:viewer`, and that language appears in the switcher.
 
 The language switcher is a UI control and carries the obligations in
 [`ui-accessibility`](https://litlfred.github.io/folio-assistant/reference/skill-instructions/ui-accessibility.html):

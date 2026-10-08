@@ -1,6 +1,6 @@
 ---
 layout: default
-generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run cat docs:pages`
 title: Beans and todos
 nav_order: 6
 documents:
@@ -149,7 +149,7 @@ parser.
 
 **When you add a bean-marked step,** use one of the three operations the
 engine implements, and say in the step's documentation which parts are the
-agent's own CLI calls. `bun run check:workflow-refs` will catch a skill
+agent's own CLI calls. `bun run cat check:workflow-refs` will catch a skill
 reference that does not resolve; it cannot catch a plausible attribute the
 engine never reads.
 

@@ -250,7 +250,7 @@ export function formatSkillAvailability(rows: readonly SkillAvailability[]): str
  * EXECUTED the detangler, which writes 28 committed sidecars under
  * `test/results/detangle/`.
  *
- * Measured 2026-09-30 on `origin/main` `e718627f198`: inside `bun run gates`,
+ * Measured 2026-09-30 on `origin/main` `e718627f198`: inside `bun run cat gates`,
  * `bun test` reached `src/tools/degradation.test.ts`, that file called this
  * function over the real corpus, and the runner's tree guard attributed the
  * repair of `folio-core.detangle.json` to `bun test` — 1140 lines before

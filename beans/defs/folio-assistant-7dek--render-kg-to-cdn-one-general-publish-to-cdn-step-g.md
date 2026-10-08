@@ -32,5 +32,5 @@ Merged (#1758 / #1760). Remaining boxes need green gates ON MAIN, which is red a
 ## Summary of Changes
 
 Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n S1, a4of).
-- Box 2, re-measured on main at 24b221415 (2026-10-06): `render:bpmn:check`, `check:tools` and `skill:register:check` all exit 0. The last of these was run inside `bun run gates` on the bookkeeping branch.
+- Box 2, re-measured on main at 24b221415 (2026-10-06): `render:bpmn:check`, `check:tools` and `skill:register:check` all exit 0. The last of these was run inside `bun run cat gates` on the bookkeeping branch.
 - Box 3: `xies` now carries a note naming `Process_RenderKgToCdn` (cat-harness/processes/process/render-kg-to-cdn.bpmn) as the step that executes its fourth gate ("publish to CDN"). The note was added in the same commit as this close.

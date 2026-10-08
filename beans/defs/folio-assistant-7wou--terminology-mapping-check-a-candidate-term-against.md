@@ -55,7 +55,7 @@ as a pair rather than as a boolean somebody widens later.
 - [x] exact and concept both reported, neither graded
 - [x] the result is a sidecar, not a field inside a term — projected to
       `cat-harness/test/results/term-mapping.qa-results.json`
-- [x] registered as a gate: `bun run check:term-mapping`, in package.json and
+- [x] registered as a gate: `bun run cat check:term-mapping`, in package.json and
       the gate workflow, verifying rather than writing
 - [x] the glossary page shows the three states (2026-09-30) — a table per
       page, all three counts per target, and the REASON whenever a target is

@@ -66,12 +66,12 @@
  * reports a clean run over it).
  *
  * Usage:
- *   bun run translate-bpmn --extract [--locale fr]
- *   bun run translate-bpmn --check   [--locale fr]
- *   bun run translate-bpmn --inject --locale fr
+ *   bun run cat translate-bpmn --extract [--locale fr]
+ *   bun run cat translate-bpmn --check   [--locale fr]
+ *   bun run cat translate-bpmn --inject --locale fr
  *
  * Injection writes `translations/<locale>/processes/<name>.bpmn`. Rendering it
- * is `bun run render:bpmn` territory and is deliberately a separate step: the
+ * is `bun run cat render:bpmn` territory and is deliberately a separate step: the
  * renderer drives headless Chromium, and an extract/inject run should not.
  *
  * @covers processes, translation-sources
@@ -281,7 +281,7 @@ if (wantCheck) {
     console.log(
       `  gating on: (none) — ${targets.join(", ")} carry no ${DIAGRAM_SUBDIR}/ tree, so no template was examined.\n` +
         `\nNothing was checked. Opt a locale in with --locale <code>, or extract one with\n` +
-        `  bun run translate-bpmn --extract --locale <code>`,
+        `  bun run cat translate-bpmn --extract --locale <code>`,
     );
     process.exit(2);
   }
@@ -477,6 +477,6 @@ if (wantInject) {
   }
   console.log(
     `\n${injected} diagram(s) written to translations/${loc}/${DIAGRAM_SUBDIR}/.` +
-      (injected ? "\nRender them with `bun run render:bpmn` once the output path is wired." : ""),
+      (injected ? "\nRender them with `bun run cat render:bpmn` once the output path is wired." : ""),
   );
 }

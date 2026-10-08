@@ -19,7 +19,7 @@
  * That the rendered page looks like the IG. A theme is colour and geometry, the
  * top navbar is deliberately not reproduced (owner: *"navbar on LHS not top"*),
  * and a green test here is not a rendered page — which is the whole argument
- * for `bun run preview:site` existing.
+ * for `bun run cat preview:site` existing.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";

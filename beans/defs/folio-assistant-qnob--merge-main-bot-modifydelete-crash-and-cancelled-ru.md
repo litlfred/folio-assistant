@@ -14,4 +14,4 @@ Issue #1854. (1) modify/delete conflicts on generated-pattern paths: take main's
 ## Done when
 
 - [ ] tests fail on origin/main and pass with the fix
-- [ ] bun run gates green, PR CI green, PR marked ready
+- [ ] bun run cat gates green, PR CI green, PR marked ready

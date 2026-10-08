@@ -66,7 +66,7 @@ and `--check` reports drift; the generator reads each `.po` through the shared
 site's own `fa-locale` key → browser → English), `lang`/`dir` on the document,
 live-region announcement, and an on-page statement of the boundary in the
 reader's language. Skill `kg-viewer` and `docs/translation-support.md` carry
-the discipline; `bun run translate-kg-viewer[:check]` are registered.
+the discipline; `bun run cat translate-kg-viewer[:check]` are registered.
 
 **Owner's call, mid-flight: "english only, let translators fill them".** Five
 agent-produced catalogues had been written and are removed. Each
@@ -79,7 +79,7 @@ reader sees.
 **Consequence a later session must not misread.** With every catalogue empty,
 the switcher is NOT DRAWN and the page is English. That is correct behaviour,
 not a regression: an empty catalogue is not a language the page can show.
-Filling any `.po` and running `bun run kg:viewer` makes it appear.
+Filling any `.po` and running `bun run cat kg:viewer` makes it appear.
 
 **What the drift test caught immediately** (`scripts/tests/kg-viewer-strings.test.ts`,
 which ties every `T()` call to the table in both directions): a msgid built

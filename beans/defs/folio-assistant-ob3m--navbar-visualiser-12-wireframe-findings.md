@@ -30,9 +30,9 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/navbar/` (intent.
 
 Related: `folio-assistant-603s`, `folio-assistant-1le7`, `folio-assistant-z1ug`
 
-When fixed, re-draw `cat-harness/docs/wireframes/navbar/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+When fixed, re-draw `cat-harness/docs/wireframes/navbar/` and re-run `bun run cat wireframe:check` and `bun run cat check:wireframes`.
 
-**New notes on this bean go in [`beans/notes/`](../notes/README.md), not here** (bean `m61r`, issue #1853): `bun run beans:note folio-assistant-ob3m --title "…"` writes one file per pull request, so sibling pull requests stop conflicting on this file. The dated sections below were appended before that convention and stay where they are.
+**New notes on this bean go in [`beans/notes/`](../notes/README.md), not here** (bean `m61r`, issue #1853): `bun run cat beans:note folio-assistant-ob3m --title "…"` writes one file per pull request, so sibling pull requests stop conflicting on this file. The dated sections below were appended before that convention and stay where they are.
 
 ## Re-verified 2026-09-29 on `main` 35402147f
 
@@ -82,7 +82,7 @@ The render's 20 includes tiles derived from pages rather than from
 cannot see the rendered panel, so the rendered count still needs an e2e
 assertion — NOT done here, and named as outstanding below.
 
-### What is gated now — `bun run check:navbar-consistency`
+### What is gated now — `bun run cat check:navbar-consistency`
 
 New: `cat-harness/scripts/check-navbar-consistency.ts`, wired into
 `code-quality-gates.yml` as `check:navbar-consistency:check` (`:check` and not
@@ -156,7 +156,7 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — 12. Two unrelated 'Settings': The glass ⚙ Settings panel ('Folio settings — theme, avatars, opacity') holds Theme/Avatars/Opacity/Blur/Harnesses/Tidy, and no text matches /discard|fish/ or points to the page settings. ▦ More actions → 'Settings' is still a separate panel. (nav9.mjs, nav8.mjs)
 
 
-_2026-09-30T23:0Xz_ — **Holder recorded, retroactively, by the session that already held it.** `bun run beans:claim folio-assistant-ob3m` REFUSED this bean: *"already in-progress on the default branch, and NOBODY RECORDED A HOLDER — so this cannot tell a sibling working it right now from a claim somebody abandoned."* That is bean `c3d7`, and the unrecorded holder was **this session**: the declaration half of finding 11 and `check:navbar-consistency` landed from `claude/cool-fermi-htir5p` in PR #1687, which set the status without writing a holder note.
+_2026-09-30T23:0Xz_ — **Holder recorded, retroactively, by the session that already held it.** `bun run cat beans:claim folio-assistant-ob3m` REFUSED this bean: *"already in-progress on the default branch, and NOBODY RECORDED A HOLDER — so this cannot tell a sibling working it right now from a claim somebody abandoned."* That is bean `c3d7`, and the unrecorded holder was **this session**: the declaration half of finding 11 and `check:navbar-consistency` landed from `claude/cool-fermi-htir5p` in PR #1687, which set the status without writing a holder note.
 
 Checked before writing, as the refusal instructs: 14 open PRs, none claims this bean. #1709 matches on "navbar" but is about the Folio handle's scroll band, and #1633 matches "glyph" incidentally. So it was free, and it was free because *I* left it looking taken.
 

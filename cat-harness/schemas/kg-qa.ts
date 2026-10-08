@@ -1031,7 +1031,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "An ACTIVE voice with rules scoped to skills (`appliesTo: [\"skill\"]`) has no review of this skill, or the " +
       "review predates a change to the skill or to the voice's skill rules. Review it rule by rule with each citation " +
-      "open, then `bun run voice:review`. `n/a` when no such voice is active; `unknown` when the harness config is unreadable.",
+      "open, then `bun run cat voice:review`. `n/a` when no such voice is active; `unknown` when the harness config is unreadable.",
   },
   {
     id: "prose-claims-resolve",

@@ -708,7 +708,7 @@ function formatReport(r: CommandPathReport): string {
     // doc or a hook stands — and is NOT where a workflow step stands.
     out.push("  ✓ every repository-relative path resolves — FROM THE REPOSITORY ROOT,");
     out.push("    in prose, printed commands and hooks. A workflow step runs somewhere");
-    out.push("    else; that frame is `bun run check:workflow-paths` (bean `7iog`).");
+    out.push("    else; that frame is `bun run cat check:workflow-paths` (bean `7iog`).");
     return out.join("\n");
   }
   for (const d of r.dead) {

@@ -82,28 +82,38 @@ describe("pages-live-gate.dmn — 'could not check' is not 'not yet'", () => {
 
   test("a measured 404 is `not-yet`; a failed request is `unknown`", async () => {
     const t = await load();
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "not-found" }).outcome).toBe("not-yet");
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "error" }).outcome).toBe("unknown");
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "unchecked" }).outcome).toBe("unknown");
-    expect(evaluate(t, { pagesUrlKnown: true, probe: "ok" }).outcome).toBe("live");
+    expect(evaluate(t, { pagesUrlKnown: true, probe: "not-found", ghPagesBranch: "present" }).outcome).toBe("not-yet");
+    expect(evaluate(t, { pagesUrlKnown: true, probe: "error", ghPagesBranch: "present" }).outcome).toBe("unknown");
+    expect(evaluate(t, { pagesUrlKnown: true, probe: "unchecked", ghPagesBranch: "present" }).outcome).toBe("unknown");
+    expect(evaluate(t, { pagesUrlKnown: true, probe: "ok", ghPagesBranch: "present" }).outcome).toBe("live");
+  });
+
+  test("no gh-pages branch is `unprovisioned`, before the address is considered (#2417)", async () => {
+    const t = await load();
+    expect(evaluate(t, { pagesUrlKnown: true, probe: "ok", ghPagesBranch: "absent" }).outcome).toBe("unprovisioned");
+    expect(evaluate(t, { pagesUrlKnown: false, probe: "unchecked", ghPagesBranch: "absent" }).outcome).toBe("unprovisioned");
+    // A branch ls-remote could not see is not an absent one.
+    expect(evaluate(t, { pagesUrlKnown: true, probe: "ok", ghPagesBranch: "unknown" }).outcome).toBe("live");
   });
 
   test("no URL means unknown whatever a probe claims to have found", async () => {
     const t = await load();
-    expect(evaluate(t, { pagesUrlKnown: false, probe: "ok" }).outcome).toBe("unknown");
+    expect(evaluate(t, { pagesUrlKnown: false, probe: "ok", ghPagesBranch: "present" }).outcome).toBe("unknown");
   });
 
   test("the script's own decision agrees with the table it documents", async () => {
     const t = await load();
     for (const pagesUrlKnown of [true, false]) {
       for (const probe of ["ok", "not-found", "error", "unchecked"] as const) {
-        // The table's outcome is typed `unknown` by the evaluator, which knows
-        // nothing about this particular table's range. Narrowing it to
-        // PagesOutcome is the assertion: if the DMN ever returns a fourth
-        // value, this line is where it surfaces.
-        expect(outcomeFor({ pagesUrlKnown, probe })).toBe(
-          evaluate(t, { pagesUrlKnown, probe }).outcome as PagesOutcome,
-        );
+        for (const ghPagesBranch of ["present", "absent", "unknown", "not-required"] as const) {
+          // The table's outcome is typed `unknown` by the evaluator, which knows
+          // nothing about this particular table's range. Narrowing it to
+          // PagesOutcome is the assertion: if the DMN ever returns a fifth
+          // value, this line is where it surfaces.
+          expect(outcomeFor({ pagesUrlKnown, probe, ghPagesBranch })).toBe(
+            evaluate(t, { pagesUrlKnown, probe, ghPagesBranch }).outcome as PagesOutcome,
+          );
+        }
       }
     }
   });

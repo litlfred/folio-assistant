@@ -44,7 +44,7 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 2. **Done (22:05 UTC): bean `zlq9`.** The owner changed the scheme to `cat/<harness>/<name>` (note on `fs43`, bean `tlk2`), so `qa-store.ts` resolves THREE names, in this order: `cat/cat-harness/qa-reports`, then `cat-qa-reports`, then `qa-reports`. A declaration naming any of them looks for all three; writers create the new path only when none exists. The 10 declarations name the new path, and the raw-push guard in `check-workflows.ts` matches all three. #1801 is green at `0f26313a7`.
 3. **Done (22:06 UTC):** "zlq9: dual-name pushed and green" posted on #1928, the rename handoff; the merge steward was stood down by the owner. No pushes to #1764/#1801 until 22:36 UTC. #1801 is marked ready, labelled `ready-to-merge`, and has `ready: 0f26313a7`.
 4. **Watch:** #1764's own `qa-store.ts` knows only `qa-reports`. If #1764 runs CI after the rename and before #1801 merges, its publish job (not a gate) can recreate a stray `qa-reports` branch. If that happens, report it to the owner; deleting the branch needs their confirmation.
-5. After #1764 merges: wait for `main/<sha>` on the QA branch (whichever name exists), then run `bun run qa:verify-moved --key main/<sha>`. If IDENTICAL, re-measure the inventory (10 instances) and show the owner the numbers. Only then push the 5hox deletion.
+5. After #1764 merges: wait for `main/<sha>` on the QA branch (whichever name exists), then run `bun run cat qa:verify-moved --key main/<sha>`. If IDENTICAL, re-measure the inventory (10 instances) and show the owner the numbers. Only then push the 5hox deletion.
 
 ### In flight
 | item | kind | state | next action | owner |
@@ -66,7 +66,7 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 - None open. Before the 5hox deletion is pushed, the owner sees the re-measured inventory (count, bytes, oldest age).
 
 ### Unpushed or at-risk state
-- **`420ab8180`**, the 5hox deletion. It exists only on local branches `qa-5hox` and `qa-5hox-deletion`, and is not pushed by design. This session may push only to its two designated branches, and the commit must not reach #1801 before verification. It can be rebuilt: `git rm -r --cached` over the paths from `bun run qa:verify-moved --inventory`, plus the `.gitignore` already on #1801. Rebuild it, rather than reuse it, after `main/<sha>` verifies.
+- **`420ab8180`**, the 5hox deletion. It exists only on local branches `qa-5hox` and `qa-5hox-deletion`, and is not pushed by design. This session may push only to its two designated branches, and the commit must not reach #1801 before verification. It can be rebuilt: `git rm -r --cached` over the paths from `bun run cat qa:verify-moved --inventory`, plus the `.gitignore` already on #1801. Rebuild it, rather than reuse it, after `main/<sha>` verifies.
 - Scratch measurement branches, local only and rebuildable: `qa-4l4d-f3bh-scratch` `613805edd`, `scratch-3hk4-absent` `b04865e45`, `gurh-probe-1769` `0eaecdeca`.
 - Superseded, safe to drop:
   - `worktree-agent-a8ba4c80e273d619d`, the first 8wj1 attempt (redone and merged);
@@ -74,6 +74,6 @@ Derived QA verdicts move off `main` onto `qa-reports`, keyed by commit; judgemen
 - Nothing else is unpushed. The scratchpad was lost in a container restart; nothing in it was needed.
 
 ### How to resume
-1. Read #1801's CI on its current head; it was green at `edf28c4c3`. Before any push, run `bun run gates`. A subset is not the gate set: two pushes here went red that way.
+1. Read #1801's CI on its current head; it was green at `edf28c4c3`. Before any push, run `bun run cat gates`. A subset is not the gate set: two pushes here went red that way.
 2. zlq9 is done. The rename handoff and its reports live on #1928; the steward `01ToWZR4…` was stood down.
 3. On every merge of #1764 into #1801, take `ours` only for generated paths matched by folder or extension, never by substring. A "glossary" substring once swallowed `glossary-page.ts`. Run regen, then check every staged deletion is absent on MERGE_HEAD.

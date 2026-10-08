@@ -16,7 +16,7 @@ Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for
 
 ## Built
 - cat-harness/scripts/merge-conflict-patterns.ts: ordered registry, each with globs, strategy (take-base / generated-regions / qa-sidecar / refuse) and why. Undeclared paths refuse.
-- cat-harness/scripts/merge-base.ts + 'bun run merge:main': classify all first; any refusal aborts and restores the tree; resolve; 'regen' (workflow-derived gate set) must report nothing unrepaired; commit.
+- cat-harness/scripts/merge-base.ts + 'bun run cat merge:main': classify all first; any refusal aborts and restores the tree; resolve; 'regen' (workflow-derived gate set) must report nothing unrepaired; commit.
 - processes/merge-base.bpmn, called from Task_PrepareMerge in code-change-review.bpmn.
 - skill merge-conflict-patterns: one section per pattern.
 
@@ -32,14 +32,14 @@ Issue #1707 (bean y7b3 measured it). Owner 2026-10-01: '1 + new skills/tools for
 
 ## Handover (owner away a week)
 - Merged without waiting for CI on the owner's instruction; check CI on the merge commit first.
-- Next: PR B, a workflow that runs `bun run merge:main` on conflicted open PRs when main moves (bot push; same diagram).
+- Next: PR B, a workflow that runs `bun run cat merge:main` on conflicted open PRs when main moves (bot push; same diagram).
 
 ## Part B — design (written 2026-10-01, S2 of epic 7x5n; NOT implemented)
 
 **What.** When `main` moves, CI regenerates on each open PR's merge result and
 pushes a fix-up commit, so an agent does not spend a round on a merge that is
 mechanical by declaration. Same diagram: `merge-base.bpmn`, executed by the same
-`bun run merge:main`; the workflow is a second caller, never a second resolver.
+`bun run cat merge:main`; the workflow is a second caller, never a second resolver.
 
 **Why it is worth building — measured on #1754 today (4-core container, load 6–8
 from sibling sessions):**
@@ -53,7 +53,7 @@ from sibling sessions):**
 | 6 | 48e9f383 | 4 | merged, 7 regenerated | 19 min |
 | 7 | after #1774 | 12 | merged, 80 current / 3 regenerated | 20 min |
 
-Plus `bun run gates` on the result: 29–32 min, red only on 5 s test timeouts
+Plus `bun run cat gates` on the result: 29–32 min, red only on 5 s test timeouts
 under load (all pass at `--timeout 60000`) and, the first time, three
 merged-tree gates the branch alone could not see. Round 7 merge start (15:11)
 → local gates done (16:01) → push (16:03): **52 min**. So merge → proved is
@@ -68,7 +68,7 @@ shared with sibling sessions.
 2. Select: open PRs whose `mergeable_state` is `dirty` (conflicted) or whose
    base is more than N commits behind, AND which opt in by label
    (`auto-merge-main`). Never a fork; never a PR whose head moved during the run.
-3. Run `bun run merge:main` on a checkout of the PR head with submodules.
+3. Run `bun run cat merge:main` on a checkout of the PR head with submodules.
    - exit 0 → push the merge commit to the PR branch (bot identity), comment
      once with the per-pattern counts, and let the PR's own CI judge it.
    - exit 1 (refused) → push nothing; comment the ✗ list once (edit in place
@@ -109,8 +109,8 @@ claude/quirky-hypatia-k3aoh4-strip-pinned", 2026-10-03T00:03:36Z):
 - parent2 `5187a4df361` (main side)   HAS the same path
 - merge result `c975c7da7b9`          does NOT (`git ls-tree` empty)
 
-Consequence: `bun run check:viewer-nav` exits 1 with
-`viewer-nav.qa.json is missing - run bun run viewer:nav:audit`, failing the
+Consequence: `bun run cat check:viewer-nav` exits 1 with
+`viewer-nav.qa.json is missing - run bun run cat viewer:nav:audit`, failing the
 hard job "Repository gates (hard)" / step "viewer pages keep the navbar they
 had" (run 37080417880). The same run reports `0 railed page(s) fail a layout
 flag` - so the gate name reads like a navbar regression while the actual cause

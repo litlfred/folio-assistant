@@ -136,7 +136,7 @@
  * ## Wired, and the wiring arrived with the name
  *
  * `audit:reachability:check` is a step in `code-quality-gates.yml`, so
- * `gates.ts` derives it and `bun run gates` runs it. The step, the
+ * `gates.ts` derives it and `bun run cat gates` runs it. The step, the
  * `package.json` alias and this paragraph landed in ONE change, separately from
  * the script, which came first with no step at all — `merge-main`'s resolution
  * push carries no `workflows` scope, so a pull request touching that file needs
@@ -150,10 +150,10 @@
  * `main` while CI reported green, because nothing ran it.
  *
  * Usage:
- *   bun run audit:reachability                      # report, write the working copy
- *   bun run audit:reachability:check                # judge, write nothing
- *   bun run audit:reachability:check -- --against main   # ...against the qa-reports branch
- *   bun run audit:reachability:strict               # ...and fail on an unrun entry point
+ *   bun run cat audit:reachability                      # report, write the working copy
+ *   bun run cat audit:reachability:check                # judge, write nothing
+ *   bun run cat audit:reachability:check -- --against main   # ...against the qa-reports branch
+ *   bun run cat audit:reachability:strict               # ...and fail on an unrun entry point
  *
  * @module scripts/audit-reachability
  * @covers processes, code
@@ -180,6 +180,7 @@ import {
   qaResultPath,
   writeQaResult,
 } from "./qa-results.js";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 const ROOT = join(import.meta.dir, "..");
@@ -633,7 +634,7 @@ export function moduleReach(repo: string): {
 
   let scripts: Record<string, string> = {};
   try {
-    scripts = (JSON.parse(readFileSync(join(repo, "package.json"), "utf-8")) as { scripts?: Record<string, string> }).scripts ?? {};
+    scripts = scriptsOf(repo);
   } catch {
     scripts = {};
   }

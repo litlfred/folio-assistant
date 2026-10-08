@@ -1,11 +1,11 @@
 ---
 # folio-assistant-073f
 title: 'KG-JSONLD STAGING: each <stub> stages its JSON-LD on cat/<harness>/kg-jsonld; CI gates it; the gated branch publishes to the CDN (bootstrap-first walk, failed subgraph skips its cone)'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-10-02T21:42:43Z
-updated_at: 2026-10-04T13:29:38Z
+updated_at: 2026-10-07T17:37:00Z
 parent: folio-assistant-whlc
 ---
 
@@ -63,3 +63,9 @@ The owner's reading is **confirmed**: bootstrap-tools writes bootstrap's `gh-pag
 **Two consequences for the design:**
 1. **The staging branches need a WRITER on the branch store.** That is the same open question as `xsrv`'s route-keyed writer, options (a) mount/push, (b) a `publish` verb, (c) generators write directly. The owner was asked on 2026-10-04; one answer should serve both beans.
 2. **Writers are spread over three repositories**, so "no writer pushes KG JSON-LD to a CDN except through a gated branch" needs the bootstrap-tools workflows changed in bootstrap-tools too.
+
+## Completed on landed evidence
+Landed on main in PR #2088 (KG-JSONLD staging: each <stub> stages its JSON-LD on cat/<harness>/kg-jsonld).
+
+## Completed on landed evidence
+Landed on main in PR #2088 (KG-JSONLD staging: each <stub> stages its JSON-LD on cat/<harness>/kg-jsonld).

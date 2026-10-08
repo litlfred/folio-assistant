@@ -150,7 +150,7 @@ about 77 min of this repository's merge cadence.
 - [ ] `unbackedClaims` covers `workflow_run`, with a test in both directions —
       a bare noun use is not a claim, a real claim is
 - [ ] the tracking issue names the suspect merge, or says it cannot determine one
-- [ ] `bun run gates` green, and a test pins the new trigger so it cannot be
+- [ ] `bun run cat gates` green, and a test pins the new trigger so it cannot be
       quietly neutered
 
 ## Not established

@@ -214,8 +214,8 @@ only by putting the two files side by side.
 
 **Fixed by deriving both from one record**, not by copying one into the other:
 `scripts/lib/navbar-geometry.ts`, rendered to `assets/css/navbar-geometry.css`
-by `bun run navbar:geometry` and gated by `navbar:geometry:check` (in
-`code-quality-gates.yml`, so `bun run gates` carries it).
+by `bun run cat navbar:geometry` and gated by `navbar:geometry:check` (in
+`code-quality-gates.yml`, so `bun run cat gates` carries it).
 
 **The sidebar's numbers won, and not by seniority.** Both sides derived their
 strip — the rail from a 20px glyph and two 10px gutters, the sidebar from the

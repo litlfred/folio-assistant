@@ -74,8 +74,8 @@
 import { Glob } from "bun";
 
 import { spawnSync } from "node:child_process";
-import { existsSync, readdirSync } from "node:fs";
-import { join, relative, resolve, sep } from "node:path";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { basename, join, relative, resolve, sep } from "node:path";
 
 /**
  * Room for a whole-checkout `ls-files -z`; node's 1 MiB default is not.
@@ -154,7 +154,50 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
     if (inner === undefined) return undefined;
     own.push(...inner);
   }
-  return own;
+  // A REMOTE MOUNT is the submodule's successor (bean `nn8e`, #2462): its
+  // bytes are on disk but ignored, so `ls-files` never lists them. The lock
+  // says which paths a mount laid down; they count exactly as a submodule's
+  // files did — part of the corpus a scan reads.
+  for (const m of mountedUnder(dir)) {
+    const spec = submodulePathspec(m, pathspec);
+    if (spec === undefined) continue;
+    const abs = join(dir, m);
+    if (!existsSync(abs)) continue;
+    if (statSync(abs).isDirectory()) own.push(...diskCorpus(abs, spec));
+    else if (spec.length === 0 || spec.some((g) => g === "." || new Glob(g).match(basename(abs)))) own.push(abs);
+  }
+  return [...new Set(own)];
+}
+
+/**
+ * The paths the remote-mount locks beside `dir` laid down, relative to it —
+ * each locked directory and each instance's declaration file. Read
+ * structurally: this module sits below the lock's schema.
+ */
+function mountedUnder(dir: string): string[] {
+  let names: string[];
+  try {
+    names = readdirSync(dir).filter((n) => n.endsWith(".mount-lock.json"));
+  } catch {
+    return [];
+  }
+  const out = new Set<string>();
+  for (const n of names) {
+    try {
+      const lock = JSON.parse(readFileSync(join(dir, n), "utf-8")) as {
+        instances?: { path?: unknown; declaration?: { file?: unknown }; directories?: { path?: unknown }[] }[];
+      };
+      for (const i of lock.instances ?? []) {
+        for (const d of i.directories ?? []) if (typeof d.path === "string") out.add(d.path);
+        if (typeof i.path === "string" && typeof i.declaration?.file === "string") out.add(`${i.path}/${i.declaration.file}`);
+      }
+    } catch {
+      // An unreadable lock adds nothing here; `mount:lock:check` reports it.
+    }
+  }
+  // A whole-instance mount covers its declaration; drop paths under another.
+  const all = [...out].sort();
+  return all.filter((p) => !all.some((q) => q !== p && p.startsWith(`${q}/`)));
 }
 
 /** Is `dir` itself ignored by git — the directory, not some file inside it? */

@@ -358,9 +358,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fd3aca229c9042229b49a8f039b8d8289cc67d117b8fde9e23e49502cf5f8b1e",
-        "bytes": 3984,
-        "sha256": "fd3aca229c9042229b49a8f039b8d8289cc67d117b8fde9e23e49502cf5f8b1e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f692235c5099b29910455c8d684a1f89aa91748c8002e3a32f59b0b07f12ef82",
+        "bytes": 3988,
+        "sha256": "f692235c5099b29910455c8d684a1f89aa91748c8002e3a32f59b0b07f12ef82"
       },
       "title": "AGENTS.md — cat-harness"
     },
@@ -369,9 +369,9 @@
       "@type": "bootstrap:Asset",
       "name": "bootstrap-initialization",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f7a84391ed78721ca315bd627c7a85410d923ff4108625d809345eede9fb3495",
-        "bytes": 5166,
-        "sha256": "f7a84391ed78721ca315bd627c7a85410d923ff4108625d809345eede9fb3495"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/51a57363d2b31882bbf2925aee8650a2863fe57eeb9ae3baf9453a99df2d6d93",
+        "bytes": 5170,
+        "sha256": "51a57363d2b31882bbf2925aee8650a2863fe57eeb9ae3baf9453a99df2d6d93"
       },
       "title": "Initializing into folio-assistant"
     },
@@ -1479,6 +1479,12 @@
       "title": "methodology"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/mount-trust",
+      "@type": "cat-harness:Schema",
+      "name": "mount-trust",
+      "title": "mount-trust"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/narrative",
       "@type": "cat-harness:Schema",
       "name": "narrative",
@@ -2175,6 +2181,12 @@
       "title": "GitHub"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/handover-screen",
+      "@type": "cat-harness:Tool",
+      "name": "handover-screen",
+      "title": "Screen a hand-over for injected instructions, field by field"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/headless-render-qc",
       "@type": "cat-harness:Tool",
       "name": "headless-render-qc",
@@ -2227,6 +2239,12 @@
       "@type": "cat-harness:Tool",
       "name": "latex-preflight",
       "title": "LaTeX preflight"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/latexmk-compile",
+      "@type": "cat-harness:Tool",
+      "name": "latexmk-compile",
+      "title": "LaTeX compilation (latexmk)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/lean-audit",
@@ -2397,6 +2415,12 @@
       "title": "Install the inline PDF viewer into a built site"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-actions",
+      "@type": "cat-harness:Tool",
+      "name": "pin-actions",
+      "title": "Pin third-party GitHub Actions to full commit SHAs"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-spdx-license-list",
       "@type": "cat-harness:Tool",
       "name": "pin-spdx-license-list",
@@ -2457,6 +2481,12 @@
       "title": "release-please (declared, not configured here)"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/remote-mount",
+      "@type": "cat-harness:Tool",
+      "name": "remote-mount",
+      "title": "Mount remote harnesses at a pinned commit, only when trusted"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/render-log",
       "@type": "cat-harness:Tool",
       "name": "render-log",
@@ -2479,6 +2509,12 @@
       "@type": "cat-harness:Tool",
       "name": "schemas-viewer",
       "title": "Schemas viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/security-gate",
+      "@type": "cat-harness:Tool",
+      "name": "security-gate",
+      "title": "Run every existing security check as one named release step"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/serve-rendering",

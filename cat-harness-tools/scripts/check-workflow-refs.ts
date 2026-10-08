@@ -26,7 +26,7 @@
  *     is worse than the gap. `--strict` turns it into an error for a caller
  *     that wants the stronger gate.
  *
- * Usage:  bun run check:workflow-refs  [--strict]
+ * Usage:  bun run cat check:workflow-refs  [--strict]
  * Exit:   0 clean · 1 dangling ref (or, with --strict, any uncovered activity)
  *
  * @covers processes, skills

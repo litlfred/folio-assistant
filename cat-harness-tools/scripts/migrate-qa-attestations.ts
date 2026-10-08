@@ -39,7 +39,7 @@
  * writes nothing; `--check` measures and exits 1 if any judgement is still
  * only in a derived file.
  *
- *   bun run qa:attestations:migrate [--dry-run] [--check] [--json] [--family kg-qa|block-qa|translation-qa]
+ *   bun run cat qa:attestations:migrate [--dry-run] [--check] [--json] [--family kg-qa|block-qa|translation-qa]
  *
  * Exit: 0 done / nothing waiting; 1 `--check` found a judgement not in the
  * store, or a kg-qa conflict; 3 a file could not be read (nothing is guessed).

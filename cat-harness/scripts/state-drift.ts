@@ -405,7 +405,7 @@ export function brief(rows: readonly DriftRow[]): string {
     "These are SEEDS: `main` is still the store, so drift here breaks nothing today.",
     "It breaks the cutover: a cutover from a stale seed resurrects what the seed holds",
     "and loses what landed since, in one subtree replacement with no diff to read.",
-    "Full list: `bun run state:drift`. Refresh one: `bun run state:seed --id <graph>`.",
+    "Full list: `bun run cat state:drift`. Refresh one: `bun run cat state:seed --id <graph>`.",
   );
   return lines.join("\n");
 }
@@ -447,7 +447,7 @@ if (import.meta.main) {
     );
     if (drifted.length) {
       console.log(
-        `\n✗ Refresh the seed before any cutover — \`bun run state:seed --id <graph>\`, one per drifted\n` +
+        `\n✗ Refresh the seed before any cutover — \`bun run cat state:seed --id <graph>\`, one per drifted\n` +
           `  row above. A cutover from a stale seed does NOT fail: it resurrects what the seed still\n` +
           `  holds and loses what landed on the source ref since, and the cutover commit replaces the\n` +
           `  whole subtree at once so there is no diff to read.`,

@@ -30,6 +30,15 @@ export function escapeForRaw(text: string): string {
   return text.replace(CLOSING_TAG_OPENER, ESCAPED_OPENER);
 }
 
+/**
+ * What Liquid renders for text escaped by {@link escapeForRaw}: the inverse,
+ * for a reader of a committed page (a test's stand-in for the layout) that
+ * does not run Liquid.
+ */
+export function unescapeRaw(text: string): string {
+  return text.split(ESCAPED_OPENER).join("{%");
+}
+
 /** `text` inside a raw block, one tag per line, safe whatever `text` holds. */
 export function wrapRaw(text: string): string[] {
   return ["{% raw %}", escapeForRaw(text), "{% endraw %}"];

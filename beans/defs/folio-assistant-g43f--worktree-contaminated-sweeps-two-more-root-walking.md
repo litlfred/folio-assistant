@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g43f
 title: 'WORKTREE-CONTAMINATED SWEEPS: two more root-walking checks descend into .claude/worktrees and redden bun test for every concurrent session — vpek''s general question, answered yes'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-10-03T18:00:00Z
+updated_at: 2026-10-07T17:48:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -219,7 +219,7 @@ That residue is why the box below stays open rather than being ticked.
 
 
 ## Seen again 2026-10-03 (session_01AxhsSvodhTgaioG1nUBWkh)
-A `bun run gates` run in worktree `agent-a4f48d5f4b9b6cf79` failed 5 of 220: part of the run picked up the SIBLING worktree `.claude/worktrees/agent-a632837f47a89d903` as an instance, and the failing tests and flagged files (`gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`) existed only there. Re-run alone, `check:declared-paths`, `check:artefact-verification`, `check:partition` and the three test files all passed. So at least one of those sweeps (or the instance discovery behind them) still descends into `.claude/worktrees/`.
+A `bun run cat gates` run in worktree `agent-a4f48d5f4b9b6cf79` failed 5 of 220: part of the run picked up the SIBLING worktree `.claude/worktrees/agent-a632837f47a89d903` as an instance, and the failing tests and flagged files (`gen-slice-sqlite.ts`, `vendor-sqlite-wasm.ts`) existed only there. Re-run alone, `check:declared-paths`, `check:artefact-verification`, `check:partition` and the three test files all passed. So at least one of those sweeps (or the instance discovery behind them) still descends into `.claude/worktrees/`.
 
 _2026-10-03T14:06:30Z_ — Claimed by claude/nifty-faraday-8ql41p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -235,7 +235,7 @@ sibling worktrees beside this one, **before any fix**:
 ```
 check:declared-paths, check:artefact-verification, check:partition   exit 0, 0 mentions of the probe
 bun test                                                            14726 pass, 0 fail (724 files); probe test not collected
-bun run gates                                                       220 of 220 pass
+bun run cat gates                                                       220 of 220 pass
 ```
 
 So the 5-of-220 failure of 2026-10-03 is **NOT reproduced** by a nested worktree,
@@ -366,3 +366,6 @@ asserting `checkoutRootFor`, `rootForScope`, `findPublishWorkflows`,
 assertion on the checkout the test runs in.
 
 - [x] Whether the root instance should read the checkout's `.claude/skills` (0 → 4, including a bogus `SKILL`). Owner, 2026-10-04: "do g43f". It does, and a `.claude/skills/<group>/` holding only Claude Code's `SKILL.md` loader stub is not a group of skills: **0 → 3** (`bean-coordination`, `todo-manager`, both stubs of corpus skills, and `language-trap-agent-audit`). The stub rule is scoped to `.claude/skills` only — elsewhere `SKILL.md` is a skill's own file (who-iris's voices), and excluding it globally dropped three of them from `kg:audit` (measured, then reverted). Regression in `instance-roots-worktrees.test.ts`; `kg:audit:all:check` 14/14 clean.
+
+## Completed on landed evidence
+Landed on main in commit 25b66768c08e (known-skills: root instance reads its own .claude/skills; SKILL.md-only group is a loader stub).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bo44
 title: 'WRITER-ONLY GATES: nine check scripts always write their sidecar and cannot fail on its content — the general form of uju6/i2kp'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T13:00:00Z
+updated_at: 2026-10-07T14:55:47Z
 parent: folio-assistant-3fva
 ---
 
@@ -326,7 +326,7 @@ Each of the ten producers gained a pure `<x>Document(report)` (the sidecar both 
 - `i2kp` defect 2 (`kg:audit:all:check` and `regen`).
 - The real findings the judge forms now report on this tree: wireframes (6 gaps), layout-norms (1 pair), harness-state (stale health report) — all red at the base too.
 
-## `bun run gates`, before and after
+## `bun run cat gates`, before and after
 
 Both runs in a fresh clone (base `5a3f3dbe` = `1541e368` + the claim; after `1ac56949`), on a shared machine.
 
@@ -341,3 +341,5 @@ Both runs in a fresh clone (base `5a3f3dbe` = `1541e368` + the claim; after `1ac
 - Gone: `audit:coverage:require-all` and `:strict`, where this branch regenerated the sidecar. `check:subgraphs` was red at the base on "1 file could not be read" and is green after. That looks like contention, because it is green when run alone at the base too.
 - `main` is red for unrelated reasons, which this branch leaves alone: `bun test`, `check:glossary`, `check:term-mapping`, `check:tools`, `check:workflow-refs`, `docs:auto:check`, `docs:harness:check`, `kg:audit:check`, `kg:audit:all:check`, `kg:detangle:check`, `lsi:*`, `readme:subgraphs:check`, `skills:docs:check`, `translate-bpmn:bootstrap:check`, `translation:catalogue:check`, `check:instance-graph`, `check:l1-complete -- --check`, `check:harness-state:check` and `skill:register:check`.
 - `eslint` on every changed file is clean. `tsc --noEmit -p tsconfig.json` passes with 0 errors.
+
+_2026-10-07T16:55:00Z_ — Closed on owner confirmation and verified evidence of landed work on `main`.

@@ -15,7 +15,7 @@ lang: en
 > [`graph-detanglement`](../../skills/kg/graph-management/graph-detanglement.md) skill
 > it implements (owner, 2026-09-24); the criterion `schemas/detangle.ts`; the
 > pinned measurements `test/results/detangle/`, under the declared `qa`
-> directory. Run it with `bun run kg:detangle`.
+> directory. Run it with `bun run cat kg:detangle`.
 
 
 **Is this candidate subgraph really a subgraph?**
@@ -51,9 +51,9 @@ somebody can disagree with later, and *"it felt right"* is not.
 ## Running it
 
 ```sh
-bun run kg:detangle
-bun run kg:detangle --group cat-harness/processes
-bun run kg:detangle --json
+bun run cat kg:detangle
+bun run cat kg:detangle --group cat-harness/processes
+bun run cat kg:detangle --json
 ```
 
 ## Four roles, because "one way" does not mean "inward"

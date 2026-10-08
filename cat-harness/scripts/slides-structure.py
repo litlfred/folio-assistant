@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Slide decks — PPTX and ODP — into `library/<slug>/`. Bean `scfh`, issue #1614.
 
-A deck arrived twice, as `.pptx` and as `.odp`, and `bun run ingest` had no
+A deck arrived twice, as `.pptx` and as `.odp`, and `bun run cat ingest` had no
 rung for either: both sniff correctly (`_tech_meta.sniff_zip_package` reads
 `[Content_Types].xml` and ODF's `mimetype` member) and then fell through to the
 PDF probe, which opened a zip as a PDF.

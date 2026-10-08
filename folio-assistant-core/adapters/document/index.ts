@@ -40,7 +40,6 @@
 
 import { existsSync, readFileSync } from "fs";
 import { extname } from "path";
-import { randomBytes } from "crypto";
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { registerDocumentRenderTools } from "./tools/render.js";
@@ -51,6 +50,7 @@ import { registerTransformTools } from "./tools/transform.js";
 import { registerDocumentAuditTools } from "./tools/audit.js";
 import type { ContentAdapter, UserRole } from "../../../cat-harness-tools/src/types.js";
 import { allows, forbidden } from "../../../cat-harness-tools/src/core/rbac.js";
+import { guardUntrusted, oneLineLabel } from "../../../cat-harness/src/core/handover-screen.ts";
 import { DocumentContent, type ContentResult, type IncomingFile } from "./content.js";
 
 export { DocumentContent } from "./content.js";
@@ -89,11 +89,7 @@ function serveFile(path: string): Response | null {
  * Bean `1wef`, surface 3.
  */
 function oneLine(value: string, max: number): string {
-  return String(value ?? "")
-    .replace(/[\u0000-\u001f\u007f]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, max);
+  return oneLineLabel(value, max);
 }
 
 /**
@@ -122,12 +118,8 @@ function oneLine(value: string, max: number): string {
  * impossible, and the strip costs one pass.
  */
 function fenced(content: string, max: number): string {
-  const nonce = randomBytes(9).toString("base64url");
-  const body = String(content ?? "")
-    .slice(0, max)
-    .split(nonce)
-    .join("");
-  return `<untrusted-content ${nonce}>\n${body}\n</untrusted-content ${nonce}>`;
+  // Screened and fenced since bean `cztn`: a finding quarantines (notice above the fence), never strips.
+  return guardUntrusted(content, "the folio document being discussed", max);
 }
 
 

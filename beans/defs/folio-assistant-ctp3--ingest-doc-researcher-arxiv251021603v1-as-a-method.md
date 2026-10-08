@@ -63,7 +63,7 @@ and building either is a separate decision with the owner.
 
 ## The primary is HELD but NOT PROMOTED
 
-`bun run ingest` staged it as `arxiv-2510.21603v1` — 22 blocks and a manifest. Its
+`bun run cat ingest` staged it as `arxiv-2510.21603v1` — 22 blocks and a manifest. Its
 `image-descriptions` requirement is unmet and cannot be honestly met: the extractor
 placed **383** images against 7 captioned figures, 335 of them from page 3 alone.
 Writing 383 descriptions would be the fabrication `document-image.ts`'s inspection
@@ -79,6 +79,6 @@ others in that state. Split to bean `j820` rather than worked around.
 - [x] both declarations, layout-norms clean (the BPMN is at a TOP-LEVEL
       `folio-assistant-core/processes/`, not `methodologies/processes/`, which
       `check:layout-norms` refuses as a double declaration)
-- [x] `bun run gates` — 136/136
+- [x] `bun run cat gates` — 136/136
 - [ ] issue + PR
 - [ ] owner merges

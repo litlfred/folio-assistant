@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-06T19:10:49Z
-updated_at: 2026-10-06T19:30:28Z
+updated_at: 2026-10-07T19:48:41Z
 parent: folio-assistant-n3ni
 ---
 
@@ -16,7 +16,7 @@ Stage 13 / F of n3ni. Owner 2026-10-06 (confirmed twice): 'cutover dirs should g
 - [ ] orphaned open PRs recorded here and in the PR
 - [ ] main repaired: needs, scripts, CI, site composition, tests, generated docs no longer depend on them
 - [ ] every removed gate named in the PR, with why
-- [ ] bun run gates green on the branch; draft PR CI green
+- [ ] bun run cat gates green on the branch; draft PR CI green
 
 
 
@@ -42,7 +42,7 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 
 
 
-## Gate inventory without the mount (bun run gates, 2026-10-06, head 649fd175b05)
+## Gate inventory without the mount (bun run cat gates, 2026-10-06, head 649fd175b05)
 `gates` refused to run (exit 2): `qa:working-copy` failed because three qa:refresh writers failed. Each one traces to the absent instances, and none is a defect to repair on main:
 - `p2:refusals`: 'smart-trust/fhir-artifact-index/index.json does not exist'.
 - `skill:register` → `skills:docs`: '10 page(s) in the output directory were produced by NO source'. These are smart-base skills' generated pages. Regenerating them away would remove pages from the site, which the owner forbade, so they are left until the mount restores their source.
@@ -50,3 +50,7 @@ Claimed 2026-10-06 by session_01EcBv3uwKYcnNbCC6BcPG92 on branch claude/cutover-
 - Every overlay warns: needs smart-base / smart-trust / smart-immunizations (root) and smart-base (smart-ig) match no instance.
 - audit:coverage: check:fhir-harness-exclusions 'none of its 1 script path(s) could be read'.
 All of these are expected to clear unchanged once a remote mount lands each fork's smart-base/ at the old local path.
+
+
+## 2026-10-07 — owner sequencing (relayed by session_012qoycyCSGidZqW245vXhze)
+Owner: 'once who-iris done, do smart-* to litlfred/smart-*'. So: g8jp (who-iris cutover) first, then this bean, using the same pattern — seed / remote subscription, site composition repointed, in-tree copy to fsh-guts. smart-ig stays in tree as the 2026-10-06 scope note says, unless the owner says otherwise. Claim is still held by session_01EcBv3uwKYcnNbCC6BcPG92 (branch claude/cutover-smart-to-fsh-guts); check that session and #2320 before taking it over.

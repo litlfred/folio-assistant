@@ -81,7 +81,7 @@ describe("the declaration and the directory agree", () => {
     // ...EXCEPT a node whose content is not in the checkout at all. Bean
     // `najo` cut `queue` over to `cat/cat-harness/merge-queue`, so its
     // directory is a MOUNT POINT: present in a session that ran
-    // `bun run state:mount`, absent in a fresh clone, and neither is a defect.
+    // `bun run cat state:mount`, absent in a fresh clone, and neither is a defect.
     // Asserting presence there is the inverse of the error this test is for —
     // it would demand a second copy of a graph that lives on a branch, which
     // is the state `check:declared-dirs` reports as `not-cut-over`. That gate
