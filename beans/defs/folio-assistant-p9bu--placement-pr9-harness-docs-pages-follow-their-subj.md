@@ -3,8 +3,9 @@
 title: 'Placement PR9: harness docs pages follow their subject to the owning instance'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-01T06:58:01Z
-updated_at: 2026-10-06T06:56:20Z
+updated_at: 2026-10-06T06:58:08Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-63wl
@@ -22,3 +23,9 @@ Blocked by PR3 and PR6 (the processes these pages document must have moved).
 - [ ] the published site's page count is unchanged
 
 _2026-10-06T06:56:20Z_ — Claimed by claude/docs-follow-subject-p9bu — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-10-06 — design finding (session H, https://claude.ai/code/session_012dn4UVLnHDxP1qR9xmotSw)
+The premise above ("a dependent's `docs/` is a named member of `docs`, so nothing leaves the site") does NOT hold for these pages as measured on `main` `ebc7ee4`: `mount-instance-docs.ts` mounts an instance's `docs/` only as FINISHED HTML after Jekyll, and only when it carries an `index.html`; a Markdown page in `folio-assistant-core/docs/` would never be built. The path that does exist is `compose-docs.ts` `composedInstances()`: a directory declared `composed: true` is copied into the Jekyll source under `/<instance>/` BEFORE the build, with full chrome. So a moved page's URL changes to `/<instance>/<slug>.html`; the page count is unchanged.
+Missing piece: `gen-docs-pages.ts` hard-wires its root to cat-harness, so it cannot render a manifest that lives in core or sci. Requested from the coordinator (code lane) 2026-10-06.
+Open owner question: redirects from the old URLs, or a clean break (as ruled for smart-trust under `mftp`).
