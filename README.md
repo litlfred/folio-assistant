@@ -1,14 +1,10 @@
 # folio-assistant
 
-🤖 **Agent cold start — run this before any durable work:**
-`cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH" && beans prime`,
-then [`AGENTS.md` §"At session start"](AGENTS.md#at-session-start) for the rest.
 
 **A content-agnostic agent skills framework.** Author rigorous content with an
 LLM — documents and policy guidance, scientific papers & books, WHO SMART
-Guidelines, and FHIR Implementation Guides — backed by an MCP server,
-role-based access control, a typed content-object model, and a
-per-content-type skill system.
+Guidelines, and FHIR Implementation Guides — backed by an optional MCP server,
+typed content-object model, and a per-content-type skill system.
 
 [![Code-quality gates](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/code-quality-gates.yml?query=branch%3Amain)
 [![Docs site](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml/badge.svg?branch=main)](https://github.com/litlfred/folio-assistant/actions/workflows/docs-site.yml?query=branch%3Amain)
