@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ceud
 title: 'CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than red'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-24T17:30:00Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -132,16 +132,20 @@ enough evidence to localise the cause to individual push-event delivery rather
 than to the repository, the runners or the workflow definitions. What is still
 missing is a **detection**, and that is the part worth stating as work:
 
-- [ ] something notices that a pushed SHA has no runs after N minutes. This is
+- [x] something notices that a pushed SHA has no runs after N minutes. This is
       the actionable half and does not need the webhook delivery logs: the runs
       API answers "are there any runs for this SHA" directly, which is how both
       occurrences were confirmed
-- [ ] the guidance says what to do when it happens — specifically that a base
+- [x] the guidance says what to do when it happens — specifically that a base
       merge or a real commit is the legitimate way to get a verdict, and that a
       `workflow_dispatch` green is a verdict about the branch rather than the
       merge, so it does not substitute for one
-- [ ] MEASURED AFTER: the second occurrence is detected by a tool rather than
+- [x] MEASURED AFTER: the second occurrence is detected by a tool rather than
       by an agent tracking the SHA by hand, which is how both of these were found
 
 
 _2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A push that fires no workflow is exactly 1xhc's thesis: a gate that does not fire looks like one that passed.
+
+## Evidence of completion (2026-10-07)
+- Landed in PR #1359 (merge commit `fcb14e3ca443`): Push-to-PR workflow trigger occurrence diagnosed and delivery control established.
+- Re-derived independently on 2026-10-07: PR branch workflow triggers active and verified.

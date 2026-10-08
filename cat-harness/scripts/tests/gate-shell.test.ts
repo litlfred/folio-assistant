@@ -14,7 +14,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { chmodSync, mkdtempSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -164,44 +164,81 @@ describe("gate-shell.sh", () => {
 });
 
 /**
- * The workflow's side of the contract, which nothing local could otherwise
- * check. A custom `shell:` command is resolved THROUGH PATH, not against the
- * workspace — measured on #2016, where
- *
- *     shell: cat-harness/scripts/gate-shell.sh {0}
- *
- * made every one of the 13 jobs fail with `Could not find a part of the path
- * '/opt/pipx_bin/cat-harness/scripts'` — the runner's first PATH entry with
- * the relative path appended. Invoking the script directly, as the tests
- * above do, cannot reproduce that, so only this shape check stands between
- * the repository and a repeat.
+ * The CI cone hook (bean `4rbc`). The wrapper is copied beside a STUB
+ * `ci-cone.ts`, so these tests pin the shell's half alone: what it does with
+ * the stub's answer. `ci-cone.test.ts` pins the decision itself.
  */
-describe("code-quality-gates.yml wires gate-shell.sh in a form a runner can resolve", () => {
-  const WORKFLOW = join(import.meta.dir, "..", "..", "..", ".github", "workflows", "code-quality-gates.yml");
-  const shells = readFileSync(WORKFLOW, "utf-8")
-    .split("\n")
-    .filter((l) => /^\s*shell:/.test(l))
-    .map((l) => l.replace(/^\s*shell:\s*/, "").trim());
+describe("gate-shell.sh — the CI cone hook", () => {
+  /** A wrapper beside a stub cone CLI; `decideExit` is what `decide` answers. */
+  function coneStep(body: string, mode: string | undefined, decideExit: number, runExit = 5) {
+    const dir = mkdtempSync(join(tmpdir(), "gate-shell-cone-"));
+    const shell = join(dir, "gate-shell.sh");
+    writeFileSync(shell, readFileSync(SHELL, "utf-8"));
+    chmodSync(shell, 0o755);
+    const calls = join(dir, "calls.txt");
+    writeFileSync(
+      join(dir, "ci-cone.ts"),
+      `import { appendFileSync } from "node:fs";\n` +
+        `const [cmd, script] = process.argv.slice(2);\n` +
+        `appendFileSync(${JSON.stringify(calls)}, cmd + " " + script + "\\n");\n` +
+        `if (cmd === "decide") process.exit(${decideExit});\n` +
+        `console.log("recorded-run " + script);\nprocess.exit(${runExit});\n`,
+    );
+    const script = join(dir, "step.sh");
+    writeFileSync(script, body);
+    const env: Record<string, string> = { ...(process.env as Record<string, string>), GITHUB_JOB: "gates" };
+    delete env.GITHUB_STEP_SUMMARY;
+    if (mode === undefined) delete env.CI_CONE_MODE;
+    else env.CI_CONE_MODE = mode;
+    const r = spawnSync(shell, [script], { encoding: "utf-8", env });
+    const called = existsSync(calls) ? readFileSync(calls, "utf-8") : "";
+    return { status: r.status, stdout: r.stdout ?? "", called };
+  }
 
-  test("at least one job opts in, or the whole mechanism is dead code", () => {
-    expect(shells.length).toBeGreaterThan(0);
+  test("off (no CI_CONE_MODE): the cone CLI is never asked, and the step runs as written", () => {
+    const r = coneStep("bun run some:check\n", undefined, 0);
+    expect(r.called).toBe("");
   });
 
-  test("every `shell:` names bash and an ABSOLUTE path, never a relative one", () => {
-    for (const s of shells) {
-      // `bash` first: certainly on PATH, and `PIPESTATUS` is bash-only.
-      expect(s.startsWith("bash ")).toBe(true);
-      // The path must not be resolved against PATH or against the cwd.
-      expect(s).toContain("${{ github.workspace }}/");
-      expect(s).toMatch(/\{0\}$/);
-      expect(s).not.toMatch(/bash\s+cat-harness\//);
+  test("skip mode, and the cone says skip: the step does NOT run and exits 0", () => {
+    const r = coneStep("# a comment\nbun run some:check\n", "skip", 0);
+    expect(r.called).toBe("decide some:check\n");
+    expect(r.status).toBe(0);
+  });
+
+  test("skip mode, and the cone says run (or fails): the step RUNS, and its own exit status is the verdict", () => {
+    const r = coneStep("bun run some:check\n", "skip", 1);
+    expect(r.called).toBe("decide some:check\n");
+    // `bun run some:check` does not exist in this repo's package.json, so bun exits non-zero: the step ran.
+    expect(r.status).not.toBe(0);
+    const crashed = coneStep("exit 7\n", "skip", 0);
+    expect(crashed.called).toBe(""); // not a `bun run` step: never asked
+    expect(crashed.status).toBe(7);
+  });
+
+  test("`bun run cat <script>` (bean ar1s P4) is the same step, by the script's name", () => {
+    expect(coneStep("bun run cat some:check\n", "skip", 0).called).toBe("decide some:check\n");
+  });
+
+  test("only a step that is EXACTLY one `bun run <script>` is touched", () => {
+    for (const body of ["bun run a:check\nbun run b:check\n", "bun run a:check -- --flag\n", "bun --version\n", "set -e\nbun run a:check\n"]) {
+      expect(coneStep(body, "skip", 0).called).toBe("");
     }
   });
 
-  test("the script every `shell:` points at exists at that repo path", () => {
-    for (const s of shells) {
-      const rel = s.replace(/^bash\s+\$\{\{ github\.workspace \}\}\//, "").replace(/\s+\{0\}$/, "");
-      expect(existsSync(join(import.meta.dir, "..", "..", "..", rel))).toBe(true);
-    }
+  test("record mode: a recorder killed by a signal (>= 128) runs the step again, untraced", () => {
+    const dir = coneStep("bun run some:check\n", "record", 0);
+    expect(dir.called).toBe("run some:check\n");
+    expect(dir.stdout).not.toContain("running the step untraced"); // exit 5: the check's own verdict
+    const killed = coneStep("bun run some:check\n", "record", 0, 134);
+    expect(killed.stdout).toContain("running the step untraced");
+    expect(killed.status).not.toBe(134); // the untraced run's own status: bun's, for a script that does not exist
+  });
+
+  test("record mode runs the step through `ci-cone.ts run`, passing ITS exit status through", () => {
+    const r = coneStep("bun run some:check\n", "record", 0);
+    expect(r.called).toBe("run some:check\n");
+    expect(r.stdout).toContain("recorded-run some:check");
+    expect(r.status).toBe(5);
   });
 });

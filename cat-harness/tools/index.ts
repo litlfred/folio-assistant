@@ -170,7 +170,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         cost: "Free for a public repository: Pages and the Actions minutes its workflow uses. A deploy takes a minute or two to be served.",
       },
       requires: { runtime: ["bun"], network: true },
-      remedies: [{ host: "github.com", none: "Publishing IS a push to the gh-pages branch; there is no offline arm. To look at a page, build it locally with `bun run preview:site`." }],
+      remedies: [{ host: "github.com", none: "Publishing IS a push to the gh-pages branch; there is no offline arm. To look at a page, build it locally with `bun run cat preview:site`." }],
     }),
     // Bean `l4ay`, owner 2026-10-03: "A sub graph declares where it's getting
     // its content". The ONE resolver, from a shell — `branch-store
@@ -221,7 +221,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     }),
     // Bean `ieum`, owner 2026-10-07: "filter inter-agent communication (e.g.
     // handover reports/prompts) for prompt injection as well as any human
-    // input". Rules H3, H5, H9 of methodologies/zero-trust-handover.md.
+    // input". Rules H3, H5, H9 of skills/conduct/security/zero-trust-handover.md.
     defineTool({
       id: "handover-screen",
       title: "Screen a hand-over for injected instructions, field by field",
@@ -337,7 +337,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
       install: { none: true },
-      invoke: { shell: "bun run subgraph:resolve" },
+      invoke: { shell: "bun run cat subgraph:resolve" },
       io: {
         inputs: [
           { name: "id", schema: t("Slug"), required: false, description: "A declared directory id. Repeatable; absent with `--all`." },
@@ -359,7 +359,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory.",
       install: { none: true },
-      invoke: { shell: "bun run sub-kg:verify-clone" },
+      invoke: { shell: "bun run cat sub-kg:verify-clone" },
       io: {
         inputs: [
           { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo" }, description: "The separated repository, `owner/name`. (The script also takes a git URL or a local path, for tests.)" },
@@ -390,7 +390,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Check every `*.witness.json` in the folio's declared `computation-witness` directories against the two schemas in `schemas/computation-witness.ts`: the envelope every witness should meet (a failure is a malformed file) and the producer contract (a failure is a finding against the producer, grouped by the fields at fault). Also lists files that are not strict JSON, which Python's reader accepts and every other consumer rejects. Report-only: it never edits a witness, which is generator output.",
       install: { none: true },
-      invoke: { shell: "bun run witness:conformance" },
+      invoke: { shell: "bun run cat witness:conformance" },
       io: {
         inputs: [
           { name: "dir", schema: t("RepoPath"), required: false, arg: { flag: "--dir" }, description: "Check this directory instead of the declared ones, e.g. before a folio declares the kind." },
@@ -413,7 +413,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
       install: { none: true },
-      invoke: { shell: "bun run witness:parity" },
+      invoke: { shell: "bun run cat witness:parity" },
       io: {
         inputs: [
           { name: "witness", schema: t("RepoPath"), required: true, description: "One or more `*.witness.json` paths, committed at HEAD." },
@@ -434,7 +434,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       install: { none: true },
-      invoke: { shell: "bun run readme:subgraphs" },
+      invoke: { shell: "bun run cat readme:subgraphs" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any directory README or the QA record is stale; write nothing." },
@@ -545,7 +545,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // explicitly so "no install step" is distinguishable from "unfinished
       // record" — the distinction the `none` flag exists for.
       install: { none: true },
-      invoke: { shell: "bun run beans:fallback", manual: true },
+      invoke: { shell: "bun run cat beans:fallback", manual: true },
       io: {
         inputs: [
           { name: "id", schema: t("BeanId"), required: false, arg: { positional: 0 } },
@@ -778,7 +778,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["library-ingestion"],
       selection: {
         when:
-          "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
+          "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run cat check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
         limits:
           "It adds nothing for archives, spreadsheets or metadata — `ingest-stdlib` already does those, and does them where this cannot run. Its PDF rungs ARE testable in CI as of `68dt`, which installs the lean set; the table rung (`pdf-tables.py`, camelot) is the one part that still is not, and anything gated on THAT remains a path CI cannot exercise — the `5rfy` defect.",
         cost:
@@ -887,7 +887,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       satisfies: ["feature-staging"],
       requires: { network: true },
-      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; to look at a branch's pages locally, use `bun run preview:site`." }],
+      remedies: [{ host: "github.com", none: "It is a GitHub Actions workflow; to look at a branch's pages locally, use `bun run cat preview:site`." }],
       selection: {
         when:
           "On a pull request touching the docs, schemas, content or skills it fires on its own — reach for the dispatch arm only to stage a branch that has no open pull request, or to remove a preview the close event could not reach.",
@@ -920,7 +920,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
       install: { none: true },
-      invoke: { shell: "bun run serve:rendering" },
+      invoke: { shell: "bun run cat serve:rendering" },
       io: {
         inputs: [
           { name: "directory", schema: t("RepoPath"), required: false, arg: { flag: "--dir" }, description: "Tree to serve; defaults to the built site when present." },
@@ -942,7 +942,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // and not one of them runs an export. `pages-publish` publishes a built
     // directory; `serve-rendering` serves one; the carriers regenerate JSON
     // Schemas through `kg:schema`. The command that builds the graph rendering
-    // in the first place, `bun run kg:export`, was reachable from no node.
+    // in the first place, `bun run cat kg:export`, was reachable from no node.
     //
     // That is worth a comment rather than a silent addition, because
     // `check:tools` reported this skill as covered throughout and was right to:
@@ -957,7 +957,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it.",
       install: { none: true },
-      invoke: { shell: "bun run kg:export" },
+      invoke: { shell: "bun run cat kg:export" },
       io: {
         inputs: [
           // The script reads `KG_BASE_URL` when the flag is absent, and falls
@@ -1119,12 +1119,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //                           `yean` shape — a mechanism with no skill —
     //                           which is the owner's call to author.
     //
-    // **All three nodes below exit 1 where the house rule wants 2**, and that is
-    // documented rather than silently fixed. `latex-preflight` and
-    // `latex-overfull` above DO exit 2, so the divergence is inside one family.
-    // Changing five scripts' exit codes is a behaviour change the owner should
-    // take deliberately; a node that lies about the exit it will get is worse
-    // than one that records the inconsistency.
+    // **The exit-2 contract across the family** (owner ruling on jh2j):
+    // `validate-tex`, `audit-tex-source`, and `headless-render-qc` (along with
+    // `latexmk-compile.sh` and `generate-main-tex.ts`) exit 2 on
+    // could-not-determine when run in the platform without content or when
+    // inputs are missing, matching `latex-preflight` and `latex-overfull`.
     //
     // None of the skills these satisfy carries an input contract, so
     // `check-tools` cannot verify these edges against one. A clean run does not
@@ -1146,7 +1145,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "warningsLog", schema: t("RepoPath"), required: false, arg: { flag: "--warnings-log" }, description: "Write a QA-compatible log to this path." },
         ],
         outputs: [
-          { name: "report", schema: t("Text"), description: "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 1 — measured. That is a could-not-determine wearing a finding's exit code: this repository carries no folio, so there was nothing to scan. Read the scanned count before reading the verdict." },
+          { name: "report", schema: t("Text"), description: "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 2 — could-not-determine (this repository carries no folio, so there was nothing to scan). Read the scanned count before reading the verdict." },
         ],
       },
       satisfies: ["latex-validation"],
@@ -1170,7 +1169,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Exit 1 on any finding, for use as a gate." },
         ],
         outputs: [
-          { name: "report", schema: t("Text"), description: "Hazards with file and line, plus a committed sidecar. Its refusal is the model of the pair: run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` — then exits 1, where 2 is the house value for could-not-determine. The MESSAGE is right and the exit code is not." },
+          { name: "report", schema: t("Text"), description: "Hazards with file and line, plus a committed sidecar. Run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` and exits 2 (could-not-determine)." },
         ],
       },
       satisfies: ["latex-validation"],
@@ -1190,7 +1189,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
         outputs: [
           // input-site: inert #5e83c8da — prose naming the directory, in a message or a description
-          { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2." },
+          { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 2 with `No paper.json found` in the platform (could-not-determine)." },
         ],
       },
       // `rendered-verification`, NOT `html-rendering-qc`. Established by reading
@@ -1205,6 +1204,26 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // downstream where the tree exists. Same posture and same reason as
       // `l1-complete-check`.
       requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
+    defineTool({
+      id: "latexmk-compile",
+      title: "LaTeX compilation (latexmk)",
+      description:
+        "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
+      install: { none: true },
+      invoke: { shell: "cat-harness/scripts/latexmk-compile.sh" },
+      io: {
+        inputs: [
+          { name: "tex", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The TeX source file to compile (e.g. main.tex)." },
+          { name: "args", schema: t("Text"), required: false, description: "Additional arguments to forward to latexmk." },
+        ],
+        outputs: [
+          { name: "pdf", schema: t("RepoPath"), description: "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine)." },
+        ],
+      },
+      satisfies: ["latex-compilation"],
+      requires: { runtime: ["bash", "latexmk", "pdflatex"], network: false },
     }),
 
     // ── The Lean family, which is a FAMILY and not one command ────────────
@@ -1372,7 +1391,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes \"unbound since it was drawn\" distinguishable from \"broken in the commit under review\".",
       install: { none: true },
-      invoke: { shell: "bun run kg:audit" },
+      invoke: { shell: "bun run cat kg:audit" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed sidecars and fail on a critical finding or a stale one, instead of writing." },
@@ -1397,7 +1416,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree.",
       install: { none: true },
-      invoke: { shell: "bun run render:bpmn" },
+      invoke: { shell: "bun run cat render:bpmn" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any committed SVG is stale, instead of writing." },
@@ -1433,7 +1452,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
       install: { none: true },
-      invoke: { shell: "bun run wireframe:check" },
+      invoke: { shell: "bun run cat wireframe:check" },
       io: {
         inputs: [
           { name: "candidates", schema: t("RepoPath"), required: true, repeated: true, arg: { positional: 0 }, description: "Wireframe HTML files. Each must carry both a web and a mobile layout (responsive CSS or two layouts)." },
@@ -1474,7 +1493,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph typology's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       install: { none: true },
-      invoke: { shell: "bun run uml:overview" },
+      invoke: { shell: "bun run cat uml:overview" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any diagram, SVG or page is stale or orphaned, instead of writing." },
@@ -1508,7 +1527,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper.",
       install: { none: true },
-      invoke: { shell: "bun run content:graph:uml" },
+      invoke: { shell: "bun run cat content:graph:uml" },
       io: {
         inputs: [
           { name: "root", schema: t("RepoPath"), required: true, arg: { flag: "--root" }, description: "The folio's content directory, where the block manifests are." },
@@ -1528,7 +1547,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render the declared theme nodes into the stylesheet the site serves. The nodes are the source: a colour has one home, and light and dark are two valuations of one token set rather than two hand-kept blocks.",
       install: { none: true },
-      invoke: { shell: "bun run themes:css" },
+      invoke: { shell: "bun run cat themes:css" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed copy and fail if stale, instead of writing." },
@@ -1548,7 +1567,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Render the declared avatar nodes — an actor's glyph and colours, including the overlay states — into the stylesheet the site serves.",
       install: { none: true },
-      invoke: { shell: "bun run avatars:css" },
+      invoke: { shell: "bun run cat avatars:css" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed copy and fail if stale, instead of writing." },
@@ -1665,7 +1684,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
       install: { none: true },
-      invoke: { shell: "bun run ns:export" },
+      invoke: { shell: "bun run cat ns:export" },
       io: {
         inputs: [
           { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
@@ -1694,7 +1713,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated.",
       install: { none: true },
-      invoke: { shell: "bun run agent-memory" },
+      invoke: { shell: "bun run cat agent-memory" },
       io: {
         inputs: [],
         outputs: [{ name: "memory", schema: t("RepoPath"), description: "Each agent's assembled memory file, per vendor." }],
@@ -1745,7 +1764,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean.",
       install: { none: true },
-      invoke: { shell: "bun run check:context-emission" },
+      invoke: { shell: "bun run cat check:context-emission" },
       io: {
         inputs: [
           { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit both reports as JSON instead of the console summary." },
@@ -1767,7 +1786,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces.",
       install: { none: true },
-      invoke: { shell: "bun run gates" },
+      invoke: { shell: "bun run cat gates" },
       io: {
         inputs: [
           { name: "all", schema: t("Flag"), required: false, arg: { flag: "--all" }, description: "Add the jobs that need a browser; the default is the fast set." },
@@ -1816,9 +1835,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "gates-merged",
       title: "Gates on the merged tree",
       description:
-        "Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.",
+        "Build this branch merged with the current base in a throwaway worktree and run the full `bun run cat gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.",
       install: { none: true },
-      invoke: { shell: "bun run check:merged" },
+      invoke: { shell: "bun run cat check:merged" },
       io: {
         inputs: [
           { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base branch to merge with; `main` when omitted. Fetched first." },
@@ -1833,7 +1852,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           "Immediately before asking for a merge, and again if the base has moved since. Not on every push: it is the full gate set, on a second tree.",
         limits:
           "It tests the base as fetched NOW; the base can still move before the merge lands. The merge queue (`merge_group:` on the gating workflows, switched on by the owner) is what closes that last gap.",
-        cost: "One full `bun run gates`, plus a worktree; a `bun install` only when the merge changes the lockfile.",
+        cost: "One full `bun run cat gates`, plus a worktree; a `bun install` only when the merge changes the lockfile.",
       },
     }),
 
@@ -1848,9 +1867,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "merge-train",
       title: "Merge train",
       description:
-        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
+        "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run cat regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
       install: { none: true },
-      invoke: { shell: "bun run merge:train" },
+      invoke: { shell: "bun run cat merge:train" },
       io: {
         inputs: [
           { name: "base", schema: t("CommitSha"), required: true, arg: { flag: "--base" }, description: "The commit the train branch starts from." },
@@ -1876,7 +1895,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch `cat-harness/` or `cat-harness-tools/`. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains.",
       install: { none: true },
-      invoke: { shell: "bun run merge:overlap" },
+      invoke: { shell: "bun run cat merge:overlap" },
       io: {
         inputs: [
           { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base each PR is diffed against from its fork point; default `origin/main`." },
@@ -1899,7 +1918,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "After a train merged, compare a PR's head with the base path by path and say whether what it still changes is ONLY generated files, generated README regions, or changes the base already carries (its patch applies in reverse to the base): `landed`, `not-landed` with the authored paths still different, or `could-not-determine`, which is never shown as clean. Only reports; closing the PR stays a steward action.",
       install: { none: true },
-      invoke: { shell: "bun run merge:leftover" },
+      invoke: { shell: "bun run cat merge:leftover" },
       io: {
         inputs: [
           { name: "member", schema: t("Branch"), required: true, arg: { positional: 0 }, description: "The PR number or branch. On the command line a PR may be pinned as `N:<sha>`." },
@@ -1928,7 +1947,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // That was wrong for the THIRD time in one session, and always the same way:
     // I searched skill NAMES instead of reading skill BODIES.
-    // `library-ingestion` §"Reviewing: `bun run narratives`" named these exact
+    // `library-ingestion` §"Reviewing: `bun run cat narratives`" named these exact
     // commands in a fenced block (the section moved up a layer with the rest of
     // the L1 method in placement PR6, bean `apcg`), and states the rule this
     // node exists to make reachable:
@@ -1959,7 +1978,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it.",
       install: { none: true },
-      invoke: { shell: "bun run narratives" },
+      invoke: { shell: "bun run cat narratives" },
       io: {
         inputs: [],
         outputs: [
@@ -1972,7 +1991,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         when:
           "To find out what is waiting on a person, or to discover that this queue exists at all — which was the actual gap. Before this node, `grep narrative tools/*.ts` returned nothing, so an agent asking the graph how a person confirms a narrative got no answer, and that is exactly the population the command is for.",
         limits:
-          "IT ONLY LISTS. Acting on a number is `bun run narratives:confirm <n>` or `bun run narratives:reject <n> --why <r>`, and both REFUSE outside a terminal: `reviewer()` throws with \"Confirming is a PERSON's act; an agent running this would be recorded as one\". That refusal is load-bearing rather than defensive — driving the CLI in an agent container once wrote `\"rejected_by\": {\"kind\": \"human\", \"id\": \"Claude\"}`, because `git config user.name` is the agent's and the schema could not tell. So this node deliberately does not offer the confirming arms: an agent may read the queue and must not answer it. A rejection with no reason is refused too, not defaulted, because one lets the next agent redraft the identical thing.",
+          "IT ONLY LISTS. Acting on a number is `bun run cat narratives:confirm <n>` or `bun run cat narratives:reject <n> --why <r>`, and both REFUSE outside a terminal: `reviewer()` throws with \"Confirming is a PERSON's act; an agent running this would be recorded as one\". That refusal is load-bearing rather than defensive — driving the CLI in an agent container once wrote `\"rejected_by\": {\"kind\": \"human\", \"id\": \"Claude\"}`, because `git config user.name` is the agent's and the schema could not tell. So this node deliberately does not offer the confirming arms: an agent may read the queue and must not answer it. A rejection with no reason is refused too, not defaulted, because one lets the next agent redraft the identical thing.",
         cost: "Reads the narrative-bearing files under the declared graph. No network.",
       },
     }),
@@ -1991,7 +2010,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //    names resolves, and that the mechanism it describes is the one that
     //    actually runs."
     //
-    // — and its §"The audits to run" NAMES `bun run check:tools` in a fenced
+    // — and its §"The audits to run" NAMES `bun run cat check:tools` in a fenced
     // block. So this is case 1 of `covered-is-not-reachable` in its plainest
     // form: a mechanism inlined in its skill's prose, and giving it a node is
     // exactly the remedy.
@@ -2001,7 +2020,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Check every Tool node's joins: that each `satisfies` resolves to a real skill and agrees with that skill's declared contract, that every io port names a declared type, and that no argv input has a type able to express a shell payload.",
       install: { none: true },
-      invoke: { shell: "bun run check:tools" },
+      invoke: { shell: "bun run cat check:tools" },
       io: {
         inputs: [],
         outputs: [{ name: "report", schema: t("Text"), description: "The satisfies map, the count of skills with and without a Tool, then the verdict. Exit 0 every join holds, 1 at least one does not. A skill with NO Tool is reported and is deliberately NOT a failure — many are pure judgement, and failing on them would make the report unusable." }],
@@ -2023,7 +2042,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Triage the skills that have no Tool by EVIDENCE rather than by grep: a serviceTask naming it or an I/O contract puts it in tier A, a userTask only in B, a shell block or a declared script in C, and nothing in D. The answer to \"which of these still have their mechanism inlined in their prose\".",
       install: { none: true },
-      invoke: { shell: "bun run tools:coverage" },
+      invoke: { shell: "bun run cat tools:coverage" },
       io: {
         inputs: [],
         outputs: [{ name: "triage", schema: t("Text"), description: "Four tiers with A, B and C listed by name and their evidence, D as a count. Always exit 0: this REPORTS a judgement queue and never gates — an uncovered skill is not a defect, and failing on one would make stubbing a gap turn CI red." }],
@@ -2058,7 +2077,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source.",
       install: { none: true },
-      invoke: { shell: "bun run mcp:capture" },
+      invoke: { shell: "bun run cat mcp:capture" },
       io: {
         inputs: [
           { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit `{tools, problems}` as JSON for a consumer, instead of the table for a reader." },
@@ -2138,7 +2157,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.",
       install: { none: true },
-      invoke: { shell: "bun run check:ci-health" },
+      invoke: { shell: "bun run cat check:ci-health" },
       io: {
         inputs: [
           { name: "markdown", schema: t("Flag"), required: false, arg: { flag: "--markdown" }, description: "Emit the block the session-start sweep prints. ALWAYS exits 0, deliberately: the sweep runs it as `if ! …; then` and would otherwise print the report AND declare it unchecked every time CI is red." },
@@ -2188,7 +2207,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Build a named slice of a graph (beans, todos, library, or the whole-repo kg) as one SQLite file a browser mounts without parsing it, beside a manifest carrying its sha256, a row-content digest, its row counts and the search block the one search page reads. Heavy text is indexed by a contentless FTS5 and not stored; each row points at a content-addressed payload. `--check` builds every slice twice, requires one sha256, and requires the row digest read back from the file to equal the one computed from the source.",
       install: { none: true },
-      invoke: { shell: "bun run slice:sqlite" },
+      invoke: { shell: "bun run cat slice:sqlite" },
       io: {
         inputs: [
           { name: "slice", schema: t("Slug"), required: false, arg: { flag: "--slice" }, description: "A slice to build; repeatable. Absent: every slice in the builder's table." },
@@ -2219,7 +2238,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
       install: { none: true },
-      invoke: { shell: "bun run kg:validate" },
+      invoke: { shell: "bun run cat kg:validate" },
       io: {
         inputs: [
           { name: "path", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The node to check. Its graph typology is resolved from the declared directory that contains it." },
@@ -2239,7 +2258,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         when:
           "Whenever a node's shape matters and you are not in this repository's CI. That is the case the tool exists for: `tools/` is an INHERITED declaration and `.github/workflows/` is not, so a downstream instance gets this and gets none of the 41 gates. #363's self-sovereign topology has no CI to inherit from at all.",
         limits:
-          "It can only check a kind that declares a validator — 2 of 16 today, so most nodes come back UNDETERMINED and it exits non-zero saying so. That is the honest state rather than a gap to paper over: `qa`, the largest generated graph here, has no Zod schema anywhere. `bun run check:kind-validators` reports the coverage.",
+          "It can only check a kind that declares a validator — 2 of 16 today, so most nodes come back UNDETERMINED and it exits non-zero saying so. That is the honest state rather than a gap to paper over: `qa`, the largest generated graph here, has no Zod schema anywhere. `bun run cat check:kind-validators` reports the coverage.",
         cost: "One module import per kind. Nothing to install, no network.",
       },
     }),
@@ -2250,7 +2269,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "The zod definition of `<name>.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
       install: { none: true },
-      invoke: { shell: "bun run kg:schema" },
+      invoke: { shell: "bun run cat kg:schema" },
       io: {
         inputs: [
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" }, description: "Publication base; a preview passes its own." },
@@ -2269,7 +2288,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it.",
       install: { none: true },
-      invoke: { shell: "bun run kg:schema" },
+      invoke: { shell: "bun run cat kg:schema" },
       io: {
         inputs: [
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" } },
@@ -2286,7 +2305,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "The zod definitions of the shared types a Tool's inputs and outputs reference by IRI, and the published JSON Schema whose `$defs` those IRIs point into.",
       install: { none: true },
-      invoke: { shell: "bun run kg:schema" },
+      invoke: { shell: "bun run cat kg:schema" },
       io: {
         inputs: [
           { name: "baseUrl", schema: t("Url"), required: false, arg: { flag: "--base-url" } },
@@ -2311,7 +2330,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Build the per-graph LSI index sidecar for every declared prose graph (or the one named): input fingerprint, parameters, dimension summaries, nearest neighbours and near-duplicate findings, never the vectors. Records each run's outcome and input fingerprint, success or failure, as a `folio-tool-run/v1` record.",
       install: { none: true },
-      invoke: { shell: "bun run lsi index" },
+      invoke: { shell: "bun run cat lsi index" },
       io: {
         inputs: [
           { name: "instance", schema: t("Slug"), required: false, arg: { flag: "--instance" }, description: "Instance declaring the graph, e.g. `cat-harness`." },
@@ -2336,7 +2355,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.",
       install: { none: true },
-      invoke: { shell: "bun run preview:site" },
+      invoke: { shell: "bun run cat preview:site" },
       io: {
         inputs: [],
         outputs: [
@@ -2892,7 +2911,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // `install: { none: true }` is not a placeholder here, it is the honest
     // value: there is nothing to install because there is nothing to run.
-    // `bun run check:tabular-stubs` is what stops that reading as "works".
+    // `bun run cat check:tabular-stubs` is what stops that reading as "works".
     defineTool({
       id: "tabular-csv",
       title: "CSV tabular metadata (STUB)",
@@ -2932,7 +2951,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
 
     // The twenty tools this instance already serves over MCP. Kept in a sibling
     // module because they are a MIGRATION of an existing surface rather than
-    // hand-authored nodes: they are regenerable from `bun run mcp:capture`, and
+    // hand-authored nodes: they are regenerable from `bun run cat mcp:capture`, and
     // mixing them in here would blur which of the two a reader is looking at.
     // Reading who else is working this repository. Hand-authored and not
     // served over MCP, so it is a sibling module rather than a row in

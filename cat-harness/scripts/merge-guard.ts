@@ -29,8 +29,8 @@
  * ## Usage
  *
  * ```
- * bun run merge:guard <pr>                         # evaluate only
- * bun run merge:guard <pr> --merge --session <id>  # land it, only if every check passes
+ * bun run cat merge:guard <pr>                         # evaluate only
+ * bun run cat merge:guard <pr> --merge --session <id>  # land it, only if every check passes
  * ```
  *
  * `--session` is the MERGING session (an id `session_…` or its URL). It is
@@ -1127,7 +1127,7 @@ export function render(v: GuardVerdict): string {
   return lines.join("\n");
 }
 
-const USAGE = "usage: bun run merge:guard <pr> [--merge --session <id> [--no-merge-manager]] [--actor <login>] [--repo owner/repo] [--status] [--json]";
+const USAGE = "usage: bun run cat merge:guard <pr> [--merge --session <id> [--no-merge-manager]] [--actor <login>] [--repo owner/repo] [--status] [--json]";
 
 async function main(argv: string[]): Promise<number> {
   const args = [...argv];

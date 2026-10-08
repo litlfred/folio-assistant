@@ -38,7 +38,7 @@
  * empty and print `✓ no orphaned block verdicts`. Bean `c8uq` (reader audit
  * `qa-readers-audit-2026-10-01.md`, defect **C6**): once derived QA leaves
  * `main` for the `qa-reports` branch, EVERY checkout lacks the tree until
- * `bun run qa:fetch` materialises it, so that `✓` would be printed on every run
+ * `bun run cat qa:fetch` materialises it, so that `✓` would be printed on every run
  * over zero verdicts — measured, it was. {@link sweepOrphanVerdicts} therefore
  * reports how many verdicts it EXAMINED, and the CLI refuses through
  * `vacuityRefusal` (exit 2, "could not determine") when that is zero. A folio
@@ -147,7 +147,7 @@ if (import.meta.main) {
     console.error(refusal);
     console.error(
       `\nThe derived QA corpus is published to the \`qa-reports\` branch. Materialise it\n` +
-        `first — \`bun run qa:fetch --ref main\` (or \`--ref pr/<n>\`) — then re-run this sweep.`,
+        `first — \`bun run cat qa:fetch --ref main\` (or \`--ref pr/<n>\`) — then re-run this sweep.`,
     );
     process.exit(2);
   }

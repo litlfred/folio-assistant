@@ -180,7 +180,7 @@ made it convincing.
 **So before reading a clean check set as green, ask whether it is the whole
 set.** `check:head-has-run` (bean `3pqn`) already answers it — `coverageFor`
 reconciles the runs against the workflows the tree itself declares, and
-`mergeStateForHead` returns `conflicted` for the case below. `bun run ci:watch`
+`mergeStateForHead` returns `conflicted` for the case below. `bun run cat ci:watch`
 composes both since #1664. **Do not build a second reconciliation**; two
 answers to one question are free to disagree.
 

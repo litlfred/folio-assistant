@@ -25,7 +25,7 @@
  * `footer_custom.html` includes on every page — rendered from the real
  * `_includes/footer_custom.html`, so the floor under test is the one that
  * ships. A defect that lives only in the theme's layout is
- * not caught here; `bun run preview:site` is the check for that.
+ * not caught here; `bun run cat preview:site` is the check for that.
  */
 import { test, expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";

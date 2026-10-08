@@ -24,7 +24,7 @@ Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-ha
 - `checks/`: screenshots and the checker's report
 - `reviews/`: one file per reviewer
 
-`cat-harness/docs/wireframes/index.json` maps every declared visualiser ref to the wireframe that covers it. `bun run check:wireframes` writes the QA sidecar from it (`test/results/wireframes.qa-results.json`) and fails on any gap.
+`cat-harness/docs/wireframes/index.json` maps every declared visualiser ref to the wireframe that covers it. `bun run cat check:wireframes` writes the QA sidecar from it (`test/results/wireframes.qa-results.json`) and fails on any gap.
 
 ## Two uses
 
@@ -45,7 +45,7 @@ A few sentences: **who** the screen is for, **what they need to do**, and **what
 ## 3. Mechanical checks (Tool `wireframe-check`)
 
 ```sh
-bun run wireframe:check cat-harness/docs/wireframes/<topic>/*.html --out cat-harness/docs/wireframes/<topic>/checks
+bun run cat wireframe:check cat-harness/docs/wireframes/<topic>/*.html --out cat-harness/docs/wireframes/<topic>/checks
 ```
 
 This renders each candidate at web (1280×800) and mobile (390×844) sizes. It records `script` entries for *renders*, *no-overflow* and *no-placeholder*, each `pass` or `fail` with a note, and writes a screenshot per viewport. Any `fail` sends the candidate back to step 2.

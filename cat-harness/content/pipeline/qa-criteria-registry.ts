@@ -2120,13 +2120,9 @@ const DEVILS_ADVOCATE: QaCriterionDefinition[] = [
   // the rest (overclaim, citation misuse, reproducibility, non sequitur, …)
   // are objections a reviewer can raise against any prose and stay unscoped.
   //
-  // INERT TODAY, and deliberately declared anyway. `qa-sweep` short-circuits
-  // `automated: false` criteria to `needs-agent` BEFORE either scoping gate,
-  // so neither `adapters` nor `profiles` can scope an agent-adjudicated
-  // criterion at present — this one will still be queued against document
-  // prose. The declaration is the correct metadata and takes effect the day a
-  // checker lands or the gates move ahead of the `needs-agent` branch; what
-  // it must not do is leave a reader believing the scoping is already live.
+  // Scoped to the paper profile (folio-assistant-nba0): `qa-sweep` runs
+  // adapter, profile, and companion gates before reporting `needs-agent`,
+  // so this criterion is correctly excluded (n/a) on document folios.
   { id: "da-lean-narrative-divergence", domain: "devils-advocate", description: "Lean proves something weaker/different/vacuously-implied vs the .md claim (proof-statement-integrity).", default_severity: "major", profiles: ["paper"], depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-citation-misuse", domain: "devils-advocate", description: "Cited reference (cites[] or -- Ref:) does not contain / is mis-attributed for the invoked result.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },
   { id: "da-definitional-ambiguity", domain: "devils-advocate", description: "Key term undefined / multiple incompatible readings / 'the unique X' without uniqueness / implicit regime or base ring.", default_severity: "minor", depends_on: ["md", "ts", "lean"], automated: false },

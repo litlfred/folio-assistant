@@ -26,7 +26,7 @@ Requested by the owner 2026-10-04 (session https://claude.ai/code/session_01Ga3H
 ## Done when
 
 - [ ] A — `release` on the queue entry: verdict, decidedBy (human), decidedAt, authority (explicit | standing-ruling, verbatim + source), releasedSha, capturedBy.
-- [ ] B — `bun run merge:queue:decide` writes it onto the entry on `cat/cat-harness/merge-queue`, linking `--beans`.
+- [ ] B — `bun run cat merge:queue:decide` writes it onto the entry on `cat/cat-harness/merge-queue`, linking `--beans`.
 - [ ] C — read back: `merge:steward` shows release state per PR; `releaseCovers(entry, head)` is what `merge:guard` (#2000, `uoob`) calls before landing.
 - [ ] D — `Task_Release` and `merge-queue.md` name the record and the command.
 - [ ] E — `TrainMemberEvidence` links the release it executed (with `30jr`).

@@ -1,0 +1,1255 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "nist-sp-800-207",
+  "blocks": [
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 10,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "NIST Special Publication 800-207 \n \nZero Trust Architecture \n \n \nScott Rose \nOliver Borchert \nStu Mitchell \nSean Connelly \n \n \n \n \nThis publication is available free of charge from: \nhttps://doi.org/10.6028/NIST.SP.800-207 \n \n \n \nC  O  M  P  U  T  E  R      S  E  C  U  R  I  T  Y\n \n \nNIST Special Publication 800-207 \n \n \nZero Trust Architecture \n \nScott Rose \nOliver Borchert \nAdvanced Network Technologies Division \nInformation Technology Laboratory \n \nStu Mitchell \nStu2Labs \nStafford, VA \n \nSean Connelly \nCybersecurity & Infrastructure Security Agency \nDepartment of Homeland Security \n \n \nThis",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-000-1-introduction.md",
+      "narrative": null,
+      "content": "A typical enterprise’s infrastructure has grown increasingly complex. A single enterprise may \noperate several internal networks, remote offices with their own local infrastructure, remote \nand/or mobile individuals, and cloud services. This complexity has outstripped legacy methods \nof perimeter-based network security as there is no single, easily identified perimeter for the \nenterprise. Perimeter-based network security has also been shown to be insufficient since once \nattackers breach the perimeter, further lateral movement is unhindered. \nThis complex enterprise has led to the development",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "History of Zero Trust Efforts Related to Federal Agencies",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-001-11-history-of-zero-trust-efforts-related-to-fede.md",
+      "narrative": null,
+      "content": "The concept of zero trust has been present in cybersecurity since before the term “zero trust” was \ncoined. The Defense Information Systems Agency (DISA) and the Department of Defense \npublished their work on a more secure enterprise strategy dubbed “black core” [BCORE]. Black \ncore involved moving from a perimeter-based security model to one that focused on the security \nof individual transactions. The work of the Jericho Forum in 2004 publicized the idea of de-\nperimeterization—limiting implicit trust based on network location and the limitations of relying \non single, static defenses over a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Structure of This Document",
+      "pageStart": 11,
+      "pageEnd": 13,
+      "target": "../sections/sec-002-12-structure-of-this-document.md",
+      "narrative": null,
+      "content": "The rest of the document is organized as follows: \n• Section 2 defines ZT and ZTA and lists some assumptions when designing a ZTA for an \nenterprise. This section also includes a list of the tenets of ZT design. \n• Section 3 documents the logical components, or building blocks, of ZT. It is possible that \nunique implementations compose ZTA components differently yet serve the same logical \nfunctionality. \n \n1 https://go.forrester.com/blogs/next-generation-access-and-zero-trust/  \n2 Any mention of commercial products or services within NIST documents is for information only; it does not imply a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Zero Trust Basics",
+      "pageStart": 13,
+      "pageEnd": 15,
+      "target": "../sections/sec-003-2-zero-trust-basics.md",
+      "narrative": null,
+      "content": "Zero trust is a cybersecurity paradigm focused on resource protection and the premise that trust \nis never granted implicitly but must be continually evaluated. Zero trust architecture is an end-to-\nend approach to enterprise resource and data security that encompasses identity (person and non-\nperson entities), credentials, access management, operations, endpoints, hosting environments, \nand the interconnecting infrastructure. The initial focus should be on restricting resources to \nthose with a need to access and grant only the minimum privileges (e.g., read, write, delete) \nneeded to perfor",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p014-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../images/img-p014-1.png",
+      "narrative": "draft",
+      "content": "A workstation on the left joins by a two-headed arrow, across a span labelled 'Untrusted Zone', to a rounded box 'Policy Decision/Enforcement Point (PDP/PEP)'. That box joins, across a span labelled 'Implicit Trust Zone', to a cylinder 'Resource (System, Data or Application)'. The figure's point is that the implicit trust zone behind the PDP/PEP should be as small as possible: everything before it is untrusted, and access is decided at that one point.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Tenets of Zero Trust",
+      "pageStart": 15,
+      "pageEnd": 17,
+      "target": "../sections/sec-004-21-tenets-of-zero-trust.md",
+      "narrative": null,
+      "content": "Many definitions and discussions of ZT stress the concept of removing wide-area perimeter \ndefenses (e.g., enterprise firewalls) as a factor. However, most of these definitions continue to \ndefine themselves in relation to perimeters in some way (such as micro-segmentation or micro-\nperimeters; see Section 3.1) as part of the functional capabilities of a ZTA. The following is an \nattempt to define ZT and ZTA in terms of basic tenets that should be involved rather than what is \nexcluded. These tenets are the ideal goal, though it must be acknowledged that not all tenets may \nbe fully implemente",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "A Zero Trust View of a Network",
+      "pageStart": 17,
+      "pageEnd": 18,
+      "target": "../sections/sec-005-22-a-zero-trust-view-of-a-network.md",
+      "narrative": null,
+      "content": "There are some basic assumptions for network connectivity for any organization that utilizes \nZTA in network planning and deployment. Some of these assumptions apply to enterprise-owned \nnetwork infrastructure, and some apply to enterprise-owned resources operating on \nnonenterprise-owned network infrastructure (e.g., public Wi-Fi or public cloud providers). These \nassumptions are used to direct the formation of a ZTA. The network in an enterprise \nimplementing a ZTA should be developed with the ZTA tenets outlined above and with the \nfollowing assumptions.    \n1. The entire enterprise private",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p018-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../images/img-p018-1.png",
+      "narrative": "draft",
+      "content": "A rounded frame split by a dashed line into a Control Plane above and a Data Plane below. In the control plane a 'Policy Decision Point' groups a Policy Engine over a Policy Administrator. In the data plane, Subject goes to System, then an 'Untrusted' arrow goes to the Policy Enforcement Point, then a 'Trusted' arrow goes to an Enterprise Resource cylinder; dashed arrows link the PEP and the Policy Administrator. Grey arrows from the left feed in a CDM System, Industry Compliance, Threat Intelligence and Activity Logs; from the right they feed in Data Access Policy, PKI, ID Management and a SIEM System.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Logical Components of Zero Trust Architecture",
+      "pageStart": 18,
+      "pageEnd": 20,
+      "target": "../sections/sec-006-3-logical-components-of-zero-trust-architecture.md",
+      "narrative": null,
+      "content": "There are numerous logical components that make up a ZTA deployment in an enterprise. These \ncomponents may be operated as an on-premises service or through a cloud-based service. The \nconceptual framework model in Figure 2 shows the basic relationship between the components \nand their interactions. Note that this is an ideal model showing logical components and their \ninteractions. From Figure 1, the policy decision point (PDP) is broken down into two logical \ncomponents: the policy engine and policy administrator (defined below). The ZTA logical \ncomponents use a separate control plane to co",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Variations of Zero Trust Architecture Approaches",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/sec-007-31-variations-of-zero-trust-architecture-approac.md",
+      "narrative": null,
+      "content": "There are several ways that an enterprise can enact a ZTA for workflows. These approaches vary \nin the components used and in the main source of policy rules for an organization. Each \napproach implements all the tenets of ZT (see Section 2.1) but may use one or two (or one \ncomponent) as the main driver of policies. A full ZT solution will include elements of all three \napproaches. The approaches include enhanced identity governance–driven, logical micro-\nsegmentation, and network-based segmentation. \nCertain approaches lend themselves to some use cases more than others. An organization looki",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA Using Enhanced Identity Governance",
+      "pageStart": 20,
+      "pageEnd": 21,
+      "target": "../sections/sec-008-311-zta-using-enhanced-identity-governance.md",
+      "narrative": null,
+      "content": "The enhanced identity governance approach to developing a ZTA uses the identity of actors as \nthe key component of policy creation. If it were not for subjects requesting access to enterprise \nresources, there would be no need to create access polices. For this approach, enterprise resource \naccess policies are based on identity and assigned attributes. The primary requirement for \nresource access is based on the access privileges granted to the given subject. Other factors such \nas device used, asset status, and environmental factors may alter the final confidence level \ncalculation (and ulti",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA Using Micro-Segmentation",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/sec-009-312-zta-using-micro-segmentation.md",
+      "narrative": null,
+      "content": "An enterprise may choose to implement a ZTA based on placing individual or groups of \nresources on a unique network segment protected by a gateway security component. In this \napproach, the enterprise places infrastructure devices such as intelligent switches (or routers) or \nnext generation firewalls (NGFWs) or special purpose gateway devices to act as PEPs protecting \neach resource or small group of related resources. Alternatively (or additionally), the enterprise \nmay choose to implement host-based micro-segmentation using software agents (see Section \n3.2.1) or firewalls on the endpoint a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA Using Network Infrastructure and Software Defined Perimeters",
+      "pageStart": 21,
+      "pageEnd": 22,
+      "target": "../sections/sec-010-313-zta-using-network-infrastructure-and-softwar.md",
+      "narrative": null,
+      "content": "The last approach uses the network infrastructure to implement a ZTA. The ZTA implementation \ncould be achieved by using an overlay network (i.e., layer 7 but also could be set up lower of the \nNIST SP 800-207 \n \nZERO TRUST ARCHITECTURE \n \n \n \n13 \nThis publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207 \nOSI network stack). These approaches are sometimes referred to as software defined perimeter \n(SDP) approaches and frequently include concepts from Software Defined Networks (SDN) \n[SDNBOOK] and intent-based networking (IBN) [IBNVN]. In this approach, the PA a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Deployed Variations of the Abstract Architecture",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/sec-011-32-deployed-variations-of-the-abstract-architect.md",
+      "narrative": null,
+      "content": "All of the above components are logical components. They do not necessarily need to be unique \nsystems. A single asset may perform the duties of multiple logical components, and likewise, a \nlogical component may consist of multiple hardware or software elements to perform the tasks. \nFor example, an enterprise-managed PKI may consist of one component responsible for issuing \ncertificates for devices and another used for issuing certificates to end users, but both use \nintermediate certificates issued from the same enterprise root certificate authority. In some ZT \nproduct offerings currently",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Device Agent/Gateway-Based Deployment",
+      "pageStart": 22,
+      "pageEnd": 23,
+      "target": "../sections/sec-012-321-device-agentgateway-based-deployment.md",
+      "narrative": null,
+      "content": "In this deployment model, the PEP is divided into two components that reside on the resource or \nas a component directly in front of a resource. For example, each enterprise-issued asset has an \ninstalled device agent that coordinates connections, and each resource has a component (i.e., \ngateway) that is placed directly in front so that the resource communicates only with the \ngateway, essentially serving as a proxy for the resource. The agent is a software component that \ndirects some (or all) traffic to the appropriate PEP in order for requests to be evaluated. The \ngateway is responsible f",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p023-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../images/img-p023-1.png",
+      "narrative": "draft",
+      "content": "Control plane: a Policy Engine linked both ways to a Policy Administrator. Data plane: a Subject goes to an Enterprise System holding an 'Agent', which talks both ways to a 'Gateway' fronting a 'Data Resource'. The Agent and the Gateway each link up to the Policy Administrator. The agent on the device and the gateway at the resource are the two PEP halves.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Enclave-Based Deployment",
+      "pageStart": 23,
+      "pageEnd": 24,
+      "target": "../sections/sec-013-322-enclave-based-deployment.md",
+      "narrative": null,
+      "content": "This deployment model is a variation of the device agent/gateway model above. In this model, \nthe gateway components may not reside on assets or in front of individual resources but instead \nreside at the boundary of a resource enclave (e.g., on-location data center) as shown in Figure 4. \nUsually, these resources serve a single business function or may not be able to communicate \ndirectly to a gateway (e.g., legacy database system that does not have an application \nprogramming interface [API] that can be used to communicate with a gateway). This deployment \nmodel may also be useful for enterp",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p024-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../images/img-p024-1.png",
+      "narrative": "draft",
+      "content": "The same planes as Figure 3, but the Gateway sits at the edge of a cloud-shaped 'Resource Enclave' holding a stack of several 'Resource' boxes. The Subject's Enterprise System, with its Agent, reaches them through that one gateway, and both the agent and the gateway link to the Policy Administrator. One gateway protects a group of resources rather than one.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Resource Portal-Based Deployment",
+      "pageStart": 24,
+      "pageEnd": 25,
+      "target": "../sections/sec-014-323-resource-portal-based-deployment.md",
+      "narrative": null,
+      "content": "In this deployment model, the PEP is a single component that acts as a gateway for subject \nrequests. The gateway portal can be for an individual resource or a secure enclave for a \ncollection of resources used for a single business function. One example would be a gateway \nportal into a private cloud or data center containing legacy applications as shown in Figure 5. \nNIST SP 800-207 \n \nZERO TRUST ARCHITECTURE \n \n \n \n16 \nThis publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207 \n \nFigure 5: Resource Portal Model \nThe primary benefit of this model over the othe",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p025-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 25,
+      "pageEnd": 25,
+      "target": "../images/img-p025-1.png",
+      "narrative": "draft",
+      "content": "Control plane: Policy Engine over Policy Administrator. Data plane: Subject, then System, then a 'Gateway Portal', then a 'Data Resource', with two-headed arrows between them. Only the Gateway Portal links up to the Policy Administrator. There is no agent on the subject's system: the portal is the single PEP.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Device Application Sandboxing",
+      "pageStart": 25,
+      "pageEnd": 26,
+      "target": "../sections/sec-015-324-device-application-sandboxing.md",
+      "narrative": null,
+      "content": "Another variation of the agent/gateway deployment model is having vetted applications or \nprocesses run compartmentalized on assets. These compartments could be virtual machines, \ncontainers, or some other implementation, but the goal is the same: to protect the application or \ninstances of applications from a possibly compromised host or other applications running on the \nasset.  \n \nNIST SP 800-207 \n \nZERO TRUST ARCHITECTURE \n \n \n \n17 \nThis publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207 \n \nFigure 6: Application Sandboxes \nIn Figure 6, the subject device",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p026-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 26,
+      "pageEnd": 26,
+      "target": "../images/img-p026-1.png",
+      "narrative": "draft",
+      "content": "An 'Asset/Device' with an OS layer at the bottom and two 'Sandbox' compartments above it, each holding a 'Trusted App'. An arrow runs from a separate 'PEP' box at the top down into each trusted app. The trusted applications run compartmentalised on a possibly compromised asset and talk only to their PEPs.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Trust Algorithm",
+      "pageStart": 26,
+      "pageEnd": 28,
+      "target": "../sections/sec-016-33-trust-algorithm.md",
+      "narrative": null,
+      "content": "For an enterprise with a ZTA deployment, the policy engine can be thought of as the brain and \nthe PE’s trust algorithm as its primary thought process. The trust algorithm (TA) is the process \nused by the policy engine to ultimately grant or deny access to a resource. The policy engine \ntakes input from multiple sources (see Section 3): the policy database with observable \ninformation about subjects, subject attributes and roles, historical subject behavior patterns, \nthreat intelligence sources, and other metadata sources. The process can be grouped into broad \ncategories and visualized in Fi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p027-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 27,
+      "pageEnd": 27,
+      "target": "../images/img-p027-1.png",
+      "narrative": "draft",
+      "content": "Five grey arrows feed one large downward arrow labelled 'Trust Algorithm'. From top to bottom they are: 'Access Request'; 'Subject Database and History'; 'Asset Database'; 'Resource Policy Requirements', each of the last three drawn beside a database cylinder; and 'Threat Intelligence and Logs', beside a cloud. These are the inputs the trust algorithm weighs for each access decision.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Trust Algorithm Variations",
+      "pageStart": 28,
+      "pageEnd": 30,
+      "target": "../sections/sec-017-331-trust-algorithm-variations.md",
+      "narrative": null,
+      "content": "There are different ways to implement a TA. Different implementers may wish to weigh the \nabove factors differently according to the factors’ perceived importance. There are two other \nmajor characteristics that can be used to differentiate TAs. The first is how the factors are \nevaluated, whether as binary decisions or weighted parts of a whole “score” or confidence level. \nThe second is how requests are evaluated in relation to other requests by the same subject, \napplication/service, or device.  \n• Criteria- versus score-based: A criteria-based TA assumes a set of qualified attributes \nthat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Network/Environment Components",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/sec-018-34-networkenvironment-components.md",
+      "narrative": null,
+      "content": "In a ZT environment, there should be a separation (logical or possibly physical) of the \ncommunication flows used to control and configure the network and application/service \ncommunication flows used to perform the actual work of the organization. This is often broken \ndown to a control plane for network control communication and a data plane for \napplication/service communication flows [Gilman]. \nThe control plane is used by various infrastructure components (both enterprise-owned and from \nservice providers) to maintain and configure assets; judge, grant, or deny access to resources; and \np",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Network Requirements to Support ZTA",
+      "pageStart": 30,
+      "pageEnd": 32,
+      "target": "../sections/sec-019-341-network-requirements-to-support-zta.md",
+      "narrative": null,
+      "content": "1. Enterprise assets have basic network connectivity. The local area network (LAN), \nenterprise controlled or not, provides basic routing and infrastructure (e.g., DNS). The \nremote enterprise asset may not necessarily use all infrastructure services. \n2. The enterprise must be able to distinguish between what assets are owned or \nmanaged by the enterprise and the devices’ current security posture. This is \ndetermined by enterprise-issued credentials and not using information that cannot be \nauthenticated information (e.g., network MAC addresses that can be spoofed).  \n3. The enterprise can ob",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Deployment Scenarios/Use Cases",
+      "pageStart": 32,
+      "pageEnd": 32,
+      "target": "../sections/sec-020-4-deployment-scenariosuse-cases.md",
+      "narrative": null,
+      "content": "Any enterprise environment can be designed with zero trust tenets in mind. Most organizations \nalready have some elements of zero trust in their enterprise infrastructure or are on their way \nthrough implementation of information security and resiliency policies and best practices. \nSeveral deployment scenarios and use cases lend themselves readily to a zero trust architecture. \nFor instance, ZTA has its roots in organizations that are geographically distributed and/or have a \nhighly mobile workforce. That said, any organization can benefit from a zero trust architecture. \nIn the use cases bel",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Enterprise with Satellite Facilities",
+      "pageStart": 32,
+      "pageEnd": 33,
+      "target": "../sections/sec-021-41-enterprise-with-satellite-facilities.md",
+      "narrative": null,
+      "content": "The most common scenario involves an enterprise with a single headquarters and one or more \ngeographically dispersed locations that are not joined by an enterprise-owned physical network \nconnection (see Figure 8). Employees at the remote location may not have a full enterprise-\nowned local network but still need to access enterprise resources to perform their tasks. The \nenterprise may have a Multiprotocol Label Switch (MPLS) link to the enterprise HQ network but \nmay not have adequate bandwidth for all traffic or may not wish for traffic destined for cloud-\nbased applications/services to tra",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p033-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "target": "../images/img-p033-1.png",
+      "narrative": "draft",
+      "content": "A network sketch: a central 'Internet' cloud linked to a 'Branch Site' with two users, a 'Teleworker' user with a home wireless router, 'Cloud Services' (a server and database in a cloud), and an 'Enterprise HQ' oval with three users. Users and resources are spread across locations, none of which can be assumed trusted.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p033-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 33,
+      "pageEnd": 33,
+      "target": "../images/img-p033-2.png",
+      "narrative": "draft",
+      "content": "'Cloud Provider A' holds a Database, linked by a two-headed arrow to a 'Web Front End' in 'Cloud Provider B'. A workstation in an 'Enterprise Network' box connects to the web front end. Two clouds host the parts of one service, and access between them is mediated without going back through the enterprise network.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multi-cloud/Cloud-to-Cloud Enterprise",
+      "pageStart": 33,
+      "pageEnd": 34,
+      "target": "../sections/sec-022-42-multi-cloudcloud-to-cloud-enterprise.md",
+      "narrative": null,
+      "content": "One increasingly common use case for deploying a ZTA is an enterprise utilizing multiple cloud \nproviders (see Figure 9). In this use case, the enterprise has a local network but uses two or more \ncloud service providers to host applications/services and data. Sometimes, the application/service \nis hosted on a cloud service that is separate from the data source. For performance and ease of \nmanagement, the application hosted in Cloud Provider A should be able to connect directly to the \ndata source hosted in Cloud Provider B rather than force the application to tunnel back through \nthe enterpr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p034-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 34,
+      "pageEnd": 34,
+      "target": "../images/img-p034-1.png",
+      "narrative": "draft",
+      "content": "An 'Enterprise Campus Network' holds an Internal App Server, a Database, several Employees, a 'Contracted HVAC' system with a 'Contractor Service Tech', and a dark 'Conference Center' with Visitors and one Employee. Solid arrows run from the employees, including the one in the conference center, to the database. Dashed arrows run from the contractor and from the visitors out to the Internet. Non-employees share the campus but reach only the internet or their contracted asset.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Enterprise with Contracted Services and/or Nonemployee Access",
+      "pageStart": 34,
+      "pageEnd": 35,
+      "target": "../sections/sec-023-43-enterprise-with-contracted-services-andor-non.md",
+      "narrative": null,
+      "content": "Another common scenario is an enterprise that includes on-site visitors and/or contracted service \nproviders that require limited access to enterprise resources to do their work (see Figure 10). For \nexample, an enterprise has its own internal applications/services, databases, and assets. These \ninclude services contracted out to providers who may occasionally be on-site to provide \nmaintenance (e.g., smart heating and lighting systems that are owned and managed by external \nproviders). These visitors and service providers will need network connectivity to perform their \ntasks. A zero trust en",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p035-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 35,
+      "pageEnd": 35,
+      "target": "../images/img-p035-1.png",
+      "narrative": "draft",
+      "content": "'Enterprise A' holds databases DB1 and DB2 and a local user who reaches both. Two users in 'Enterprise B' reach across to DB1 in Enterprise A; one of them also points at DB2, and that arrow ends at a bold X. Access is granted per resource to the outside partner: DB1 yes, DB2 refused.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Collaboration Across Enterprise Boundaries",
+      "pageStart": 35,
+      "pageEnd": 36,
+      "target": "../sections/sec-024-44-collaboration-across-enterprise-boundaries.md",
+      "narrative": null,
+      "content": "A fourth use case is cross-enterprise collaboration. For example, there is a project involving \nemployees from Enterprise A and Enterprise B (see Figure 11). The two enterprises may be \nseparate federal agencies (G2G) or even a federal agency and a private enterprise (G2B). \nEnterprise A operates the database used for the project but must allow access to the data for \ncertain members of Enterprise B. Enterprise A can set up specialized accounts for the employees \nof Enterprise B to access the required data and deny access to all other resources, but this can \nquickly become difficult to manage",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Enterprise with Public- or Customer-Facing Services",
+      "pageStart": 36,
+      "pageEnd": 37,
+      "target": "../sections/sec-025-45-enterprise-with-public--or-customer-facing-se.md",
+      "narrative": null,
+      "content": "A common feature in many enterprises is a public-facing service that may or may not include \nuser registration (i.e., users must create or have been issued a set of login credentials). Such \nservices could be for the general public, a set of customers with an existing business relationship, \nor a special set of nonenterprise users such as employee dependents. In all cases, it is likely that \nrequesting assets are not enterprise-owned, and the enterprise is constrained as to what internal \ncybersecurity polices can be enforced. \nFor a general, public-facing resource that does not require login",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Threats Associated with Zero Trust Architecture",
+      "pageStart": 37,
+      "pageEnd": 37,
+      "target": "../sections/sec-026-5-threats-associated-with-zero-trust-architectur.md",
+      "narrative": null,
+      "content": "No enterprise can eliminate cybersecurity risk. When complemented with existing cybersecurity \npolicies and guidance, identity and access management, continuous monitoring, and general \ncyber hygiene, a properly implemented and maintained ZTA can reduce overall risk and protect \nagainst common threats. However, some threats have unique features when implementing a \nZTA. \n5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Subversion of ZTA Decision Process",
+      "pageStart": 37,
+      "pageEnd": 37,
+      "target": "../sections/sec-027-51-subversion-of-zta-decision-process.md",
+      "narrative": null,
+      "content": "In ZTA, the policy engine and policy administrator are the key components of the entire \nenterprise. No communication between enterprise resources occurs unless it is approved and \npossibly configured by the PE and PA. This means that these components must be properly \nconfigured and maintained. Any enterprise administrator with configuration access to the PE’s \nrules may be able to perform unapproved changes or make mistakes that can disrupt enterprise \noperations. Likewise, a compromised PA could allow access to resources that would otherwise \nnot be approved (e.g., to a subverted, personall",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Denial-of-Service or Network Disruption",
+      "pageStart": 37,
+      "pageEnd": 38,
+      "target": "../sections/sec-028-52-denial-of-service-or-network-disruption.md",
+      "narrative": null,
+      "content": "In ZTA, the PA is the key component for resource access. Enterprise resources cannot connect to \neach other without the PA’s permission and, possibly, configuration action. If an attacker \ndisrupts or denies access to the PEP(s) or PE/PA (i.e., DoS attack or route hijack), it can \nadversely impact enterprise operations. Enterprises can mitigate this threat by having the policy \nenforcement reside in a properly secured cloud environment or be replicated in several locations \nfollowing guidance on cyber resiliency [SP 800-160v2]. \nThis mitigates the risk but does not eliminate it. Botnets such a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Stolen Credentials/Insider Threat",
+      "pageStart": 38,
+      "pageEnd": 38,
+      "target": "../sections/sec-029-53-stolen-credentialsinsider-threat.md",
+      "narrative": null,
+      "content": "Properly implemented ZT, information security and resiliency policies, and best practices reduce \nthe risk of an attacker gaining broad access via stolen credentials or insider attack. The ZT \nprinciple of no implicit trust based on network location means attackers need to compromise an \nexisting account or device to gain a foothold in an enterprise. A properly developed and \nimplemented ZTA should prevent a compromised account or asset from accessing resources \noutside its normal purview or access patterns. This means that accounts with access policies \naround resources that an attacker is in",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Visibility on the Network",
+      "pageStart": 38,
+      "pageEnd": 39,
+      "target": "../sections/sec-030-54-visibility-on-the-network.md",
+      "narrative": null,
+      "content": "As mentioned in Section 3.4.1, all traffic is inspected and logged on the network and analyzed to \nidentify and react to potential attacks against the enterprise. However, as also mentioned, some \n(possibly the majority) of the traffic on the enterprise network may be opaque to layer 3 network \nanalysis tools. This traffic may originate from nonenterprise-owned assets (e.g., contracted \nservices that use the enterprise infrastructure to access the internet) or applications/services that \nare resistant to passive monitoring. The enterprise that cannot perform deep packet inspection or \nexamine",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Storage of System and Network Information",
+      "pageStart": 39,
+      "pageEnd": 39,
+      "target": "../sections/sec-031-55-storage-of-system-and-network-information.md",
+      "narrative": null,
+      "content": "A related threat to enterprise monitoring and analysis of network traffic is the analysis \ncomponent itself. If monitor scans, network traffic, and metadata are being stored for building \ncontextual policies, forensics, or later analysis, that data becomes a target for attackers. Just like \nnetwork diagrams, configuration files, and other assorted network architecture documents, these \nresources should be protected. If an attacker can successfully gain access to this information, \nthey may be able to gain insight into the enterprise architecture and identify assets for further \nreconnaissance",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Reliance on Proprietary Data Formats or Solutions",
+      "pageStart": 39,
+      "pageEnd": 39,
+      "target": "../sections/sec-032-56-reliance-on-proprietary-data-formats-or-solut.md",
+      "narrative": null,
+      "content": "ZTA relies on several different data sources to make access decisions, including information \nabout the requesting subject, asset used, enterprise and external intelligence, and threat analysis. \nOften, the assets used to store and process this information do not have a common, open standard \non how to interact and exchange information. This can lead to instances where an enterprise is \nlocked into a subset of providers due to interoperability issues. If one provider has a security \nissue or disruption, an enterprise may not be able to migrate to a new provider without extreme \ncost (e.g., rep",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Use of Non-person Entities (NPE) in ZTA Administration",
+      "pageStart": 39,
+      "pageEnd": 41,
+      "target": "../sections/sec-033-57-use-of-non-person-entities-npe-in-zta-adminis.md",
+      "narrative": null,
+      "content": "Artificial intelligence and other software-based agents are being deployed to manage security \nissues on enterprise networks. These components need to interact with the management \ncomponents of ZTA (e.g., policy engine, policy administrator), sometimes in lieu of a human \nadministrator. How these components authenticate themselves in an enterprise implementing a \nNIST SP 800-207 \n \nZERO TRUST ARCHITECTURE \n \n \n \n31 \nThis publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207 \nZTA is an open issue. It is assumed that most automated technology systems will use som",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Zero Trust Architecture and Possible Interactions with Existing Federal Guidance",
+      "pageStart": 41,
+      "pageEnd": 41,
+      "target": "../sections/sec-034-6-zero-trust-architecture-and-possible-interacti.md",
+      "narrative": null,
+      "content": "Guidance \nSeveral existing federal policies and guidance intersect with the planning, deployment, and \noperation of a ZTA. These policies do not prohibit an enterprise from moving to a more zero \ntrust-oriented architecture but can influence development of a zero trust strategy for an agency. \nWhen complemented with existing cybersecurity policies and guidance, ICAM, continuous \nmonitoring, and general cyber hygiene, ZTA may reinforce an organization’s security posture \nand protect against common threats. \n6.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-035",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA and NIST Risk Management Framework",
+      "pageStart": 41,
+      "pageEnd": 41,
+      "target": "../sections/sec-035-61-zta-and-nist-risk-management-framework.md",
+      "narrative": null,
+      "content": "A ZTA deployment involves developing access polices around acceptable risk to the designated \nmission or business process (see Section 7.3.3). It is possible to deny all network access to a \nresource and allow access only via a connected terminal, but this is disproportionately restrictive \nin the majority of cases and could inhibit work from being accomplished. For a federal agency to \nperform its mission, there is an acceptable level of risk. The risks associated with performing the \ngiven mission must be identified and evaluated, and either accepted or mitigated. To assist in \nthis, the NIS",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-036",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Zero Trust and NIST Privacy Framework",
+      "pageStart": 41,
+      "pageEnd": 42,
+      "target": "../sections/sec-036-62-zero-trust-and-nist-privacy-framework.md",
+      "narrative": null,
+      "content": "Protecting the privacy of users and private information (e.g., personally identifiable information) \nis a prime concern for organizations. Privacy and data protections are included in compliance \nprograms such as FISMA and the Heath Insurance Portability and Accountability Act (HIPAA). \nIn response, NIST produced a Privacy Framework for use by organizations [NISTPRIV]. This \ndocument provides a framework to describe privacy risks and mitigation strategies, as well as a \nprocess for an enterprise to identify, measure, and mitigate risks to user privacy and private \ninformation stored and proces",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-037",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA and Federal Identity, Credential, and Access Management Architecture",
+      "pageStart": 42,
+      "pageEnd": 42,
+      "target": "../sections/sec-037-63-zta-and-federal-identity-credential-and-acces.md",
+      "narrative": null,
+      "content": "Subject provisioning is a key component of ZTA. The policy engine cannot determine if \nattempted connections are authorized to connect to a resource if the PE has insufficient \ninformation to identify associated subjects and resources. Strong subject provision and \nauthentication policies need to be in place before moving to a more zero trust–aligned \ndeployment. Enterprises need a clear set of subject attributes and policies that can be used by a \nPE to evaluate access requests. \nThe Office of Management and Budget (OMB) issued M-19-17 on improving identity \nmanagement for the Federal Governm",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-038",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA and Trusted Internet Connections 3.0",
+      "pageStart": 42,
+      "pageEnd": 43,
+      "target": "../sections/sec-038-64-zta-and-trusted-internet-connections-30.md",
+      "narrative": null,
+      "content": "TIC is a federal cybersecurity initiative jointly managed by OMB, DHS, and the General \nServices Administration (GSA), and is intended to establish a network security baseline across \nthe Federal Government. Historically, TIC was a perimeter-based cybersecurity strategy which \nrequired agencies to consolidate and monitor their external network connections. Inherent in TIC \n1.0 and TIC 2.0 is the assumption that the inside of the perimeter is “trusted,” whereas ZTA \nassumes that network location does not infer “trust” (i.e., there is no “trust” on an agency’s \ninternal network). TIC 2.0 provide",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-039",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA and EINSTEIN (NCPS – National Cybersecurity Protection System)",
+      "pageStart": 43,
+      "pageEnd": 43,
+      "target": "../sections/sec-039-65-zta-and-einstein-ncps-national-cybersecurity.md",
+      "narrative": null,
+      "content": "NCPS (operationally known as EINSTEIN) is an integrated system-of-systems that delivers \nintrusion detection, advanced analytics, information sharing, and intrusion prevention \ncapabilities to defend the Federal Government from cyber threats. The goals of NCPS, which \nalign with the overarching goals of zero trust, are to manage cyber risk, improve cyber \nprotection, and empower partners to secure cyber space. EINSTEIN sensors enable CISA’s \nNational Cybersecurity and Communications Integration Center (NCCIC) to defend federal \nnetworks and respond to significant incidents at federal agencies.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-040",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA and DHS Continuous Diagnostics and Mitigations (CDM) Program",
+      "pageStart": 43,
+      "pageEnd": 44,
+      "target": "../sections/sec-040-66-zta-and-dhs-continuous-diagnostics-and-mitiga.md",
+      "narrative": null,
+      "content": "The DHS CDM program is an effort to improve federal agency information technology (IT). \nVital to that posture is an agency’s insight into the assets, configuration, and subjects within \nitself. To protect a system, agencies need to set up processes to discover and understand the basic \ncomponents and actors in their infrastructure: \n• What is connected? What devices, applications, and services are used by the \norganization? This includes observing and improving the security posture of these \nartifacts as vulnerabilities and threats are discovered.  \n• Who is using the network? What users are",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-041",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ZTA, Cloud Smart, and the Federal Data Strategy",
+      "pageStart": 44,
+      "pageEnd": 45,
+      "target": "../sections/sec-041-67-zta-cloud-smart-and-the-federal-data-strategy.md",
+      "narrative": null,
+      "content": "The Cloud Smart8 strategy, updated Data Center Optimization Initiative [M-19-19] policy, and \nFederal Data Strategy9 all influence some requirements for agencies planning a ZTA. These \npolicies require agencies to inventory and assess how they collect, store, and access data, both on \npremises and in the cloud.  \nThis inventory is critical to determining what business processes and resources would benefit \nfrom implementing a ZTA. Data resources and applications and services that are primarily cloud-\nbased or primarily used by remote workers are good candidates for a ZTA approach (see Section",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-042",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Migrating to a Zero Trust Architecture",
+      "pageStart": 45,
+      "pageEnd": 45,
+      "target": "../sections/sec-042-7-migrating-to-a-zero-trust-architecture.md",
+      "narrative": null,
+      "content": "Implementing a ZTA is a journey rather than a wholesale replacement of infrastructure or \nprocesses. An organization should seek to incrementally implement zero trust principles, process \nchanges, and technology solutions that protect its highest value data assets. Most enterprises will \ncontinue to operate in a hybrid zero-trust/perimeter-based mode for an indefinite period while \ncontinuing to invest in ongoing IT modernization initiatives. Having an IT modernization plan \nthat includes moving to an architecture based on ZT principles may help an enterprise form \nroadmaps for small scale wor",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-043",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Pure Zero Trust Architecture",
+      "pageStart": 45,
+      "pageEnd": 45,
+      "target": "../sections/sec-043-71-pure-zero-trust-architecture.md",
+      "narrative": null,
+      "content": "In a greenfield approach, it would be possible to build a zero trust architecture from the ground \nup. Assuming the enterprise knows the applications/services and workflows that it wants to use \nfor its operations, it can produce an architecture based on zero trust tenets for those workflows. \nOnce the workflows are identified, the enterprise can narrow down the components needed and \nbegin to map how the individual components interact. From that point, it is an engineering and \norganizational exercise in building the infrastructure and configuring the components. This may \ninclude additional",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-044",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Hybrid ZTA and Perimeter-Based Architecture",
+      "pageStart": 45,
+      "pageEnd": 46,
+      "target": "../sections/sec-044-72-hybrid-zta-and-perimeter-based-architecture.md",
+      "narrative": null,
+      "content": "It is unlikely that any significant enterprise can migrate to zero trust in a single technology \nrefresh cycle. There may be an indefinite period when ZTA workflows coexist with non-ZTA \nworkflows in an enterprise. Migration to a ZTA approach to the enterprise may take place one \nbusiness process at a time. The enterprise needs to make sure that the common elements (e.g., ID \nmanagement, device management, event logging) are flexible enough to operate in a ZTA and \nperimeter-based hybrid security architecture. Enterprise architects may also want to restrict ZTA \ncandidate solutions to those th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/figure-img-p046-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 46,
+      "pageEnd": 46,
+      "target": "../images/img-p046-1.png",
+      "narrative": "draft",
+      "content": "Top band 'RMF Steps': Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor, with an 'Expansion of Strategy' arrow from Monitor back to Prepare. Bottom band: 'Assessment' (System Inventory, User Inventory, Business Process Review), then 'Risk Assessment & Policy Development', then 'Deployment', then 'Operations', with a 'Change/Upgrade/Migration Feedback' arrow from Operations back to Assessment. A zero-trust migration is shown as a cycle laid against the NIST Risk Management Framework.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-045",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Steps to Introducing ZTA to a Perimeter-Based Architected Network",
+      "pageStart": 46,
+      "pageEnd": 47,
+      "target": "../sections/sec-045-73-steps-to-introducing-zta-to-a-perimeter-based.md",
+      "narrative": null,
+      "content": "Migrating to ZTA requires an organization to have detailed knowledge of its assets (physical and \nvirtual), subjects (including user privileges), and business processes. This knowledge is accessed \nby the PE when evaluating resource requests. Incomplete knowledge will most often lead to a \nbusiness process failure where the PE denies requests due to insufficient information. This is \nespecially an issue if there are unknown “shadow IT” deployments operating within an \norganization. \nBefore undertaking an effort to bring ZTA to an enterprise, there should be a survey of assets, \nsubjects, data",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-046",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Identify Actors on the Enterprise",
+      "pageStart": 47,
+      "pageEnd": 47,
+      "target": "../sections/sec-046-731-identify-actors-on-the-enterprise.md",
+      "narrative": null,
+      "content": "For a zero trust enterprise to operate, the PE must have knowledge of enterprise subjects. \nSubjects could encompass both human and possible NPEs, such as service accounts that interact \nwith resources. \nUsers with special privileges, such as developers or system administrators, require additional \nscrutiny when being assigned attributes or roles. In many legacy security architectures, these \naccounts may have blanket permission to access all enterprise resources. ZTA should allow \ndevelopers and administrators to have sufficient flexibility to satisfy their business requirements \nwhile using",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-047",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Identify Assets Owned by the Enterprise",
+      "pageStart": 47,
+      "pageEnd": 48,
+      "target": "../sections/sec-047-732-identify-assets-owned-by-the-enterprise.md",
+      "narrative": null,
+      "content": "As mentioned in Section 2.1, one of the key requirements of ZTA is the ability to identify and \nmanage devices. ZTA also requires the ability to identify and monitor nonenterprise-owned \ndevices that may be on enterprise-owned network infrastructure or that access enterprise \nresources. The ability to manage enterprise assets is key to the successful deployment of ZTA. \nThis includes hardware components (e.g., laptops, phones, IoT devices) and digital artifacts (e.g., \nuser accounts, applications, digital certificates). It may not be possible to conduct a complete \ncensus on all enterprise-own",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-048",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Identify Key Processes and Evaluate Risks Associated with Executing Process",
+      "pageStart": 48,
+      "pageEnd": 48,
+      "target": "../sections/sec-048-733-identify-key-processes-and-evaluate-risks-as.md",
+      "narrative": null,
+      "content": "The third inventory that an agency should undertake is to identify and rank the business \nprocesses, data flows, and their relation in the missions of the agency. Business processes should \ninform the circumstances under which resource access requests are granted and denied. An \nenterprise may wish to start with a low-risk business process for the first transition to ZTA as \ndisruptions will likely not negatively impact the entire organization. Once enough experience is \ngained, more critical business processes can become candidates. \nBusiness processes that utilize cloud-based resources or ar",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-049",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Formulating Policies for the ZTA Candidate",
+      "pageStart": 48,
+      "pageEnd": 49,
+      "target": "../sections/sec-049-734-formulating-policies-for-the-zta-candidate.md",
+      "narrative": null,
+      "content": "The process of identifying a candidate service or business workflow depends on several factors: \nthe importance of the process to the organization, the group of subjects affected, and the current \nstate of resources used for the workflow. The value of the asset or workflow based on risk to the \nasset or workflow can be evaluated using the NIST Risk Management Framework [SP800-37].  \nAfter the asset or workflow is identified, identify all upstream resources (e.g., ID management \nsystems, databases, micro-services), downstream resources (e.g., logging, security monitoring), \nand entities (e.g.,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-050",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Identifying Candidate Solutions",
+      "pageStart": 49,
+      "pageEnd": 49,
+      "target": "../sections/sec-050-735-identifying-candidate-solutions.md",
+      "narrative": null,
+      "content": "Once a list of candidate business processes has been developed, enterprise architects can \ncompose a list of candidate solutions. Some deployment models (see Section 3.1) are better \nsuited to particular workflows and current enterprise ecosystems. Likewise, some vendor \nsolutions are better suited to some use cases than others. These are some factors to consider: \n• Does the solution require that components be installed on the client asset? This may \nlimit business processes where nonenterprise-owned assets are used or desired, such as \nBYOD or cross-agency collaborations.  \n• Does the soluti",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-051",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Initial Deployment and Monitoring",
+      "pageStart": 49,
+      "pageEnd": 50,
+      "target": "../sections/sec-051-736-initial-deployment-and-monitoring.md",
+      "narrative": null,
+      "content": "Once the candidate workflow and ZTA components are chosen, the initial deployment can start. \nEnterprise administrators must implement the developed policies by using the selected \ncomponents but may wish to operate in an observation and monitoring mode at first. Few \nenterprise policy sets are complete in their first iterations: important user accounts (e.g., \nadministrator accounts) may be denied access to resources they need or may not need all the \naccess privileges they have been assigned. \nThe new ZT business workflow could be operated in reporting-only mode for some time to make \nsure t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-052",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Expanding the ZTA",
+      "pageStart": 50,
+      "pageEnd": 51,
+      "target": "../sections/sec-052-737-expanding-the-zta.md",
+      "narrative": null,
+      "content": "When enough confidence is gained and the workflow policy set is refined, the enterprise enters \nthe steady operational phase. The network and assets are still monitored, and traffic is logged \n(see Section 2.1), but responses and policy modifications are done at a lower tempo as they \nshould not be severe. The subjects and stakeholders of the resources and processes involved \nshould also provide feedback to improve operations. At this stage, the enterprise administrators \ncan begin planning the next phase of ZT deployment. Like the previous rollout, a candidate \nworkflow and solution set need",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/nist-sp-800-207/blocks/prose-sec-053",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 51,
+      "pageEnd": 59,
+      "target": "../sections/sec-053-references.md",
+      "narrative": null,
+      "content": "[ACT-IAC] \nAmerican Council for Technology and Industry Advisory Council (2019) \nZero Trust Cybersecurity Current Trends. Available at \nhttps://www.actiac.org/zero-trust-cybersecurity-current-trends  \n[Anderson] \nAnderson B, McGrew D (2017) Machine Learning for Encrypted \nMalware Traffic Classification: Accounting for Noisy Labels and Non-\nStationarity. Proceedings of the 23rd ACM SIGKDD International \nConference on Knowledge Discovery and Data Mining (ACM, Halifax, \nNova Scotia, Canada), pp 1723-1732. \nhttps://doi.org/10.1145/3097983.3098163 \n[BCORE] \nDepartment of Defense CIO (2007). Departm",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

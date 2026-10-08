@@ -61,10 +61,10 @@
  * as a duplicate of it — one rule, two consumers, different gating.
  *
  * Usage:
- *   bun run raci                     # the chart, every process
- *   bun run raci -- --process <id>   # one process
- *   bun run check:raci               # the rule only, exit non-zero on a breach
- *   bun run kg:audit                 # the same rule, written to sidecars
+ *   bun run cat raci                     # the chart, every process
+ *   bun run cat raci -- --process <id>   # one process
+ *   bun run cat check:raci               # the rule only, exit non-zero on a breach
+ *   bun run cat kg:audit                 # the same rule, written to sidecars
  *
  * @module scripts/raci-chart
  * @covers processes, scenarios

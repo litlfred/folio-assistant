@@ -161,7 +161,7 @@ should be DRAWN in BPMN under <code>processes/</code>. The likely homes are
 <code>draft-to-publication</code> for the merge-to-main gate and a feature-branch process
 that may not exist yet — that needs checking rather than assuming.</p>
         <p>## If nothing is decided</p>
-        <p>Nothing fires. <code>bun run check:ci-health</code> still runs in the session-start sweep
+        <p>Nothing fires. <code>bun run cat check:ci-health</code> still runs in the session-start sweep
 and <code>ci-health.yml</code> still runs weekly, so the watcher is not silent — it is
 just not tied to the two moments named above.</p>
       </div>

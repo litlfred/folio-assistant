@@ -155,7 +155,7 @@ describe("loading the graph must not RUN it (bean `ymsu`)", () => {
    * committed sidecars under `test/results/detangle/`.
    *
    * That made `bun test` repair an artefact 1140 lines before
-   * `kg:detangle:check` read it inside the same `bun run gates` run, which is
+   * `kg:detangle:check` read it inside the same `bun run cat gates` run, which is
    * the whole of bean `ymsu`.
    *
    * The first two tests are a PAIR and neither is worth much alone: one says a

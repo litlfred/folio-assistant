@@ -165,7 +165,7 @@
       console.warn("docs-ui: could not read the site index at " + SITE_INDEX_SRC +
                    " (" + (failure || "no reason reported") + "); the navbar is left " +
                    "exactly as built. This is NOT a claim that the folio has no " +
-                   "translations. Run: bun run translation:index");
+                   "translations. Run: bun run cat translation:index");
     } else {
       // Read, or never asked. A document with `translations: null` lands here
       // too and belongs here: the build DETERMINED that there is no
@@ -5604,7 +5604,19 @@
         if (sb.left <= 0 && sb.right < window.innerWidth / 2) {
           var main = side.nextElementSibling;
           var content = main && main.classList.contains("main") ? main.getBoundingClientRect().left : sb.right;
-          left = Math.max(0, Math.min(sb.right, content));
+          var collapsedRaw = getComputedStyle(document.documentElement).getPropertyValue("--fa-nav-collapsed");
+          var collapsedPx = 0;
+          if (collapsedRaw) {
+            var val = parseFloat(collapsedRaw);
+            if (collapsedRaw.indexOf("rem") !== -1) {
+              var rootFs = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+              collapsedPx = val * rootFs;
+            } else if (collapsedRaw.indexOf("px") !== -1) {
+              collapsedPx = val;
+            }
+          }
+          var resting = collapsedPx > 0 ? collapsedPx : Math.min(sb.right, content);
+          left = Math.max(0, Math.min(sb.right, content, resting));
         }
       }
       band.style.top = hb.top + "px";
@@ -10441,7 +10453,7 @@
           "docs-ui: no readable translation index (#fa-translation-index, or " +
           "assets/harness/site.json). " +
           "The navbar is left exactly as built -- this is NOT a claim that " +
-          "the folio has no translations. Run: bun run translation:index"
+          "the folio has no translations. Run: bun run cat translation:index"
         );
       }
       return;

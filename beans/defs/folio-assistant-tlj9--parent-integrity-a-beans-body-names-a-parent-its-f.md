@@ -193,7 +193,7 @@ others. The figure moves with main; 49 is what it is on this head.
 
 ## 2026-09-30 — Done-when #2 and #3 delivered, and the check found a defect I had just created
 
-`bun run check:bean-parent-prose`, wired as `check:bean-parent-prose:check`.
+`bun run cat check:bean-parent-prose`, wired as `check:bean-parent-prose:check`.
 
 ### The scope is a MEASUREMENT, not a preference
 
@@ -276,5 +276,5 @@ about the domain and not about the store.
 
 Closed 2026-10-06 by claude/sep-bookkeeping-s1-s3 (7x5n sweep of in-progress beans whose work has landed). Every Done-when box was already ticked by its holder. That was NOT taken as the evidence: the measurement below was re-run on main at 24b221415 (2026-10-06), and no open PR names this bean.
 
-- `bun run check:bean-parent-prose` → exit 0 (the check that box 2 names).
+- `bun run cat check:bean-parent-prose` → exit 0 (the check that box 2 names).
 - Box 1's parent ruling merged as #1623 (2026-09-30T15:06:27Z).

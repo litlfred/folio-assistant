@@ -19,4 +19,4 @@ board, a row of agents hangs *beneath* it, and beans lie in every lane.
 [`specification-compiled-agents`]({{ '/methodologies/index.html' | relative_url }}) (which now cites this deck).
 
 > **Partly built:** no BPMN engine is wired in, and the agentic QA/QC report
-> does not exist yet. The mechanical one does: `bun run prov:qaqc`.
+> does not exist yet. The mechanical one does: `bun run cat prov:qaqc`.

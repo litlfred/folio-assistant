@@ -162,7 +162,7 @@ narrowed the remaining open item from "the check is green over empty pages" to
 
 **Status back to `todo`, unclaimed.** It sat `in-progress` under my claim while
 I was not working it, which is an unhonoured claim — it tells a sibling session
-this is taken when it is not, and `bun run health` counts exactly that.
+this is taken when it is not, and `bun run cat health` counts exactly that.
 
 **The title asserted a measurement I disproved.** "4 of 7 render a shell" was
 a FALSE FINDING, already retracted in this bean's body, and leaving it in the

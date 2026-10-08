@@ -59,10 +59,10 @@
  *
  * ## Modes
  *
- * - `bun run check:nav-names` writes the sidecar
+ * - `bun run cat check:nav-names` writes the sidecar
  *   (`test/results/nav-names.qa-results.json`) and prints the report. It
  *   exits 1 on a destination with two names.
- * - `bun run check:nav-names:check` writes nothing. It exits 1 on a
+ * - `bun run cat check:nav-names:check` writes nothing. It exits 1 on a
  *   destination with two names, on a template that prints a kind word, or on
  *   a committed sidecar that is stale or absent. This is the gate CI runs.
  */

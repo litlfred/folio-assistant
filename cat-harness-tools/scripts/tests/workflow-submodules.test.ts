@@ -25,7 +25,9 @@ jobs:
           bun run source/cat-harness/scripts/staging-record.ts retire --out x.json
 `;
 
-const FIXED = BROKEN.replace("          path: source", "          submodules: true\n          path: source");
+/** Since bean `nn8e` (#2462) the cure is a lock replay into the checkout's path. */
+const REPLAY = "      - run: bun \"source/cat-harness/scripts/mount-from-lock.ts\" --root \"source\"\n";
+const FIXED = BROKEN.replace("      - run: |\n", `${REPLAY}      - run: |\n`);
 
 describe("the rule", () => {
   test("a job running a platform script from a submodule-less checkout is a finding", () => {
@@ -35,13 +37,35 @@ describe("the rule", () => {
     expect(findings[0]?.detail).toContain("staging-record.ts");
   });
 
-  test("`submodules: true` clears it", () => {
+  test("a lock replay into the checkout's path clears it", () => {
     expect(auditWorkflow("staging.yml", FIXED).findings).toHaveLength(0);
   });
 
-  test("`submodules: recursive` also clears it", () => {
-    const rec = BROKEN.replace("          path: source", "          submodules: recursive\n          path: source");
-    expect(auditWorkflow("staging.yml", rec).findings).toHaveLength(0);
+  test("`submodules: true` alone no longer clears it — there is no `.gitmodules` to read", () => {
+    const sub = BROKEN.replace("          path: source", "          submodules: true\n          path: source");
+    expect(auditWorkflow("staging.yml", sub).findings).toHaveLength(1);
+  });
+
+  test("a replay into a DIFFERENT path does not clear it", () => {
+    const other = BROKEN.replace("      - run: |\n", `${REPLAY.replaceAll("source", "elsewhere")}      - run: |\n`);
+    expect(auditWorkflow("staging.yml", other).findings).toHaveLength(1);
+  });
+
+  test("a step-output path reached through `env:` is followed to its value (folio-staging.yml)", () => {
+    const out = `jobs:
+  stage:
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: \${{ steps.platform.outputs.checkout }}
+      - name: Mount
+        env:
+          PLATFORM_CHECKOUT: \${{ steps.platform.outputs.checkout }}
+        run: bun "$PLATFORM_CHECKOUT/cat-harness/scripts/mount-from-lock.ts" --root "$PLATFORM_CHECKOUT"
+      - run: bun run "$PLATFORM_CHECKOUT/cat-harness/scripts/x.ts"
+`;
+    expect(auditWorkflow("w.yml", out).findings).toHaveLength(0);
+    expect(auditWorkflow("w.yml", out.replace("          PLATFORM_CHECKOUT: ${{ steps.platform.outputs.checkout }}", "          PLATFORM_CHECKOUT: ${{ inputs.other }}")).findings).toHaveLength(1);
   });
 
   test("a job that runs NO platform script is not a finding, however it checked out", () => {
@@ -80,7 +104,7 @@ describe("what it must NOT flag", () => {
   test("a `package.json` script name is not a platform script path", () => {
     const named = BROKEN.replace(
       "          bun run source/cat-harness/scripts/staging-record.ts retire --out x.json",
-      "          bun run gates",
+      "          bun run cat gates",
     );
     expect(auditWorkflow("staging.yml", named).findings).toHaveLength(0);
   });
@@ -123,12 +147,12 @@ describe("the readers", () => {
           path: source
       - uses: actions/checkout@v7
         with:
-          submodules: true
           path: other
+      - run: bun other/cat-harness/scripts/mount-from-lock.ts --root other
 `;
     const c = checkoutsOf(jobsOf(two)[0]!);
     expect(c).toHaveLength(2);
-    // The crux: the FIRST must not inherit the second's `submodules`.
+    // The crux: the FIRST must not inherit the second's replay.
     expect(c[0]?.submodules).toBe(false);
     expect(c[1]?.submodules).toBe(true);
   });

@@ -2,10 +2,10 @@
  * Watch ONE commit's checks to a verdict, in three states.
  *
  * ```sh
- * bun run ci:watch <sha>                    # poll until decided
- * bun run ci:watch <sha> --branch main      # which branch explains a cancellation
- * bun run ci:watch <sha> --once             # one look, no polling
- * bun run ci:watch --pr <n>                 # follow a PR's head, re-read every poll
+ * bun run cat ci:watch <sha>                    # poll until decided
+ * bun run cat ci:watch <sha> --branch main      # which branch explains a cancellation
+ * bun run cat ci:watch <sha> --once             # one look, no polling
+ * bun run cat ci:watch --pr <n>                 # follow a PR's head, re-read every poll
  * ```
  *
  * Exit codes carry the third state, because a caller that reads "not 1" as

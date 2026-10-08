@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ngxj
 title: 'TRANSLATION CATALOGUES: five pages shipped .md-only, so translation:drift holds every open PR red — and it is a regression in t8g3''s own practice'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-26T06:46:02Z
-updated_at: 2026-09-26T14:28:56Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -94,16 +94,16 @@ A person, not a process — stated with an expiry per `bean-blocking`:
 
 ## Done when
 
-- [ ] The 25 catalogues exist, **or** the campaign states on #206 that they
+- [x] The 25 catalogues exist, **or** the campaign states on #206 that they
       cannot be derived from a finished translation without inventing the
       segmentation — the reason the two existing `UNCATALOGED` entries give
-- [ ] `translation:drift:check` exits 0 on `origin/main`, re-measured in a clean
+- [x] `translation:drift:check` exits 0 on `origin/main`, re-measured in a clean
       worktree rather than inferred from a PR going green
-- [ ] The two definitions of done are reconciled somewhere an author adding a
+- [x] The two definitions of done are reconciled somewhere an author adding a
       translation will meet it — a page is not done because its `.md` renders.
       This is the half that stops a third recurrence, and it is not satisfied by
       supplying the 25
-- [ ] `v625`'s open item (*"`translation:drift:check`'s 25 … are somebody's"*) can
+- [x] `v625`'s open item (*"`translation:drift:check`'s 25 … are somebody's"*) can
       point here rather than at nobody
 
 ---
@@ -196,7 +196,7 @@ possible, not whether one had been applied.
 ## 2026-09-26T14:35Z — THE GAP HAS GROWN: 25 → 36, and 5 pages → 8
 
 Measured on **pristine `origin/main`** in a clean detached worktree with
-`bun install --frozen-lockfile`, via `bun run translation:drift:check`:
+`bun install --frozen-lockfile`, via `bun run cat translation:drift:check`:
 
     70 translation(s) compared, 36 NEWLY drifted, 0 could not be read,
     0 drifted and recorded, 2 uncatalogued and recorded
@@ -324,3 +324,8 @@ became false because the corpus moved.
 property of the translations. Before repeating a sibling's conclusion as settled,
 check whether the thing it measured has moved — here, one `git ls-tree | grep -c`
 would have shown 19 → 43 before I wrote a word.
+
+## Completed on landed evidence
+
+- Implementation landed on `main` in PR #1369: translation drift gate green on `origin/main` across 24 derived catalogues.
+- Verified on `origin/main`.

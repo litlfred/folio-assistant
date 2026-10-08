@@ -75,7 +75,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
-| **[Zero-trust handover — every boundary between agents, skills, tools and graphs is a trust boundary](#zero-trust-handover)**<br>`zero-trust-handover` | **A value crosses from one participant to another and the receiver is about to act on it.** That covers an agent handing work to a sub-agent or a sib… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Zero trust architecture (NIST SP 800-207) — trust is never granted implicitly, it is evaluated per request at a decision point](#zero-trust-architecture)**<br>`zero-trust-architecture` | **A participant is about to act on something another participant gave it, and the question is whether to trust it.** That covers an access decision a… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
 ## Where each one came from
 
@@ -114,7 +114,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
+- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
 
 ### Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work
 
@@ -128,7 +128,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
+- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
 
 ### Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score
 
@@ -329,7 +329,7 @@ these.
 
 **Ingested sources:**
 
-- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
+- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant-sci/blob/main/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
 
 ### PROV-O — the record of who did what, in which role, under which plan
 
@@ -450,22 +450,19 @@ these.
 
 - [`library/arxiv-2312.07755v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2312.07755v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2312.07755v1/README.md) · [source](https://arxiv.org/abs/2312.07755v1)
 
-### Zero-trust handover — every boundary between agents, skills, tools and graphs is a trust boundary
+### Zero trust architecture (NIST SP 800-207) — trust is never granted implicitly, it is evaluated per request at a decision point
 
-<a id="zero-trust-handover"></a>
+<a id="zero-trust-architecture"></a>
 
-`zero-trust-handover` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+`zero-trust-architecture` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
 
-**Applies when.** **A value crosses from one participant to another and the receiver is about to act on it.** That covers an agent handing work to a sub-agent or a sibling session, an agent reading a skill's instructions at runtime, an agent reading a tool's output or a corpus file, an MCP request reaching a tool handler, a tool reaching the network, a workflow job consuming another job's output, and an instance resolving a dependency's knowledge graph. It answers *what the receiver must check before acting*, and *which tool owes which guard*. It does NOT decide what an actor is permitted to do (`odrl-policies` and the actor's permissions), describe what a release is made of (`spdx-3`), record who did what (`prov-o-provenance`), or produce a model output safely (`hybrid-llm-deterministic`). It composes with all four.
+**Applies when.** **A participant is about to act on something another participant gave it, and the question is whether to trust it.** That covers an access decision at a boundary, a hand-over between agents, a tool or a dependency graph reaching this platform, and the design of a check that decides any of these. It answers *how trust is decided*: never by location, per request, by policy, at a named decision and enforcement point. It is NOT a method for choosing among options (`kepner-tregoe`), for recording a decision (`madr`), for a recurring business rule (`dmn`), or for who is involved (`raci`). It is also not a threat-modelling or risk-scoring method: it says where trust is decided, not how likely an attack is.
 
-**Origin.** Zero trust as an architecture is NIST SP 800-207, S. Rose, O. Borchert, S. Mitchell and S. Connelly, "Zero Trust Architecture", August 2020: no implicit trust is granted to a subject because of where it sits on the network, and each access is authorised on its own. That primary is NOT held here yet (it is a US-government work, so it can be ingested in full, which this node recommends). What is held is GitHub's "Secure use reference" for Actions, which applies the same idea to workflows and jobs. Two reports supplied by the owner on 2026-10-07 apply it to agents. They are held as REFERENCE ONLY (all rights reserved; no bytes and no text): Dan Goodin, "MCP for agent-to-agent comms may be the riskiest protocol you've never heard of", Ars Technica, 2026-10-06, on "protocol pivoting" (CVE-2026-97228 at Rapid7, and an SSRF in googleapis/mcp-toolbox); and Dan Goodin, "Millions of AI agents imperiled by critical vulnerability in open source package", Ars Technica, 2026-05-26, on BadHost (CVE-2026-48710, Starlette before 1.0.1).
+**Origin.** NIST Special Publication 800-207, *Zero Trust Architecture*, by Scott Rose, Oliver Borchert, Stu Mitchell and Sean Connelly, August 2020, doi:10.6028/NIST.SP.800-207. **The primary is held, in full**, at `library/nist-sp-800-207`: 59 pages, 55 sections and all 12 figures described. The owner supplied it on 2026-10-07 after this container's network policy denied both NIST hosts. It is a US-government work: the PDF states it *"is not subject to copyright in the United States"* (p. i). Every quotation below is from that copy, cited by section id.
 
 **Ingested sources:**
 
-- [`library/github-docs-actions-secure-use-reference`](../cat-harness/library/cat-harness/#cat-harness%2Fgithub-docs-actions-secure-use-reference) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/github-docs-actions-secure-use-reference/README.md)
-- [`library/arxiv-2510.19207v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2510.19207v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2510.19207v2/README.md) · [source](https://arxiv.org/abs/2510.19207v2)
-- [`library/arxiv-2507.07974v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2507.07974v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2507.07974v2/README.md) · [source](https://arxiv.org/abs/2507.07974v2)
-- [`library/arxiv-2503.18813v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2503.18813v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2503.18813v2/README.md) · [source](https://arxiv.org/abs/2503.18813v2)
+- [`library/nist-sp-800-207`](../cat-harness/library/cat-harness/#cat-harness%2Fnist-sp-800-207) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/nist-sp-800-207/README.md) · [source](https://doi.org/10.6028/NIST.SP.800-207)
 
 ## Files in the graph that are not methodology nodes
 

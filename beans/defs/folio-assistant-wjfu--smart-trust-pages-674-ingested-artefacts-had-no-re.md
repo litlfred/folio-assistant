@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wjfu
 title: 'SMART-TRUST PAGES: 674 ingested artefacts had no reader-facing surface — a docs graph, generated from index.json'
-status: todo
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-21T13:18:01Z
-updated_at: 2026-09-29T18:14:47Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -35,4 +35,11 @@ Precedent: `who-iris/scripts/gen-iris-pages.ts` — instance-local generator, st
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in commit `99e12ba5f473` and PR #1767:
+- `smart-trust/docs/` declared as kind `docs` with `instanceRoot: true` in `smart-trust/smart-trust.json`.
+- `fhir-harness/scripts/gen-ig-pages.ts` generates reader-facing pages from `fhir-artifact-index/index.json`.
+- Gated by `smart-trust:pages:check`. All 7 done-when items satisfied.

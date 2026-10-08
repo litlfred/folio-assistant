@@ -245,7 +245,7 @@ defaulted: a default would let a caller that forgot it resolve to a plausible
 wrong tree, which is the same false pass by another route. The three families
 that do not need it pay one argument, which is the cheaper mistake.
 
-**Proof the writer agrees with the move:** after `git mv`, `bun run kg:audit`
+**Proof the writer agrees with the move:** after `git mv`, `bun run cat kg:audit`
 produced **zero untracked files**. Had the auditor's computed path differed
 from where I put them by even one segment, 227 new files would have appeared
 beside 227 orphans.
@@ -374,7 +374,7 @@ discharged item by item.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 ## Completed on landed evidence
 Landed on main in PR #263 (Declare the work-plan directories in agent-harness.json, not harness.config.json).

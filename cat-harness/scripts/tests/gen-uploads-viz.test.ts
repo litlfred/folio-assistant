@@ -17,6 +17,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { itemState, viewerHtml } from "../gen-uploads-viz.ts";
+import { unscopedSelectors } from "../lib/themed-page.ts";
 import { readLibraryGraph } from "../library-graph.ts";
 import { instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
 import type { UploadItem } from "../library-graph.ts";
@@ -108,6 +109,28 @@ describe("the viewer is a queue view", () => {
     // One template, two renderings — the rule gen-library-viz states for its
     // own two views.
     expect(scoped.replace(/folio-assistant/g, "").length).toBeGreaterThan(0);
+  });
+});
+
+describe("the viewer is THEMED, so it carries the site's top band (2026-10-07)", () => {
+  const html = viewerHtml("../../../assets/library/index.json", "who-iris", ["cat-harness", "who-iris"]);
+
+  test("it is on the default layout, not a standalone document", () => {
+    expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+    expect(html).not.toMatch(/<!doctype|<html|<head|<body/i);
+    expect(html).toContain('<h1 id="up-title">');
+    // The orphan pruner reads this line to establish ownership.
+    expect(html).toMatch(/^var SCOPE = "who-iris";$/m);
+  });
+
+  test("it styles nothing outside its own wrapper", () => {
+    expect(unscopedSelectors(html, ".up-page")).toEqual([]);
+  });
+
+  test("the subject pages are listed in the page, relative to it", () => {
+    expect(html).toContain('<a href="../">All instances</a>');
+    expect(html).toContain('<a href="../cat-harness/">cat-harness</a>');
+    expect(html).toContain('<span aria-current="page">who-iris</span>');
   });
 });
 

@@ -34,7 +34,7 @@ created: "2026-10-02"
 | item | kind | state (pushed SHA) | next action | owner |
 |---|---|---|---|---|
 | #1804 one-name | PR, paused | head `3ad2870f3`, **conflicts** with main (`document-kinds/index.html`, generated; the bot refuses it) | see the handover-1804 row | needs a driver; **owner said stop** |
-| `claude/quirky-hypatia-k3aoh4-handover-1804` | branch (no PR) | `ef5fbc5f9cc`: #1804 head + main `cea2925` merged, conflicts resolved, **regen and gates not run** | verify nothing from main is lost, `bun run regen` + `docs:harness` + `viewer:nav:audit`, gates; then fast-forward the PR branch to it | same |
+| `claude/quirky-hypatia-k3aoh4-handover-1804` | branch (no PR) | `ef5fbc5f9cc`: #1804 head + main `cea2925` merged, conflicts resolved, **regen and gates not run** | verify nothing from main is lost, `bun run cat regen` + `docs:harness` + `viewer:nav:audit`, gates; then fast-forward the PR branch to it | same |
 | #1808 sidebar-rail | PR, paused | head `96d11ed6e`, conflicts: ob3m bean + `docs-ui.js` (#1805 tooltips vs `mountSidebarRail`) | see the handover-1808 row | same |
 | `claude/quirky-hypatia-k3aoh4-handover-1808` | branch (no PR) | `7b0e9c7e3`: 128 commits ahead of the PR head; "Merge origin/main (#1873) into sidebar-rail", **regen and gates not verified** | merge the current main again, union the ob3m bean, regen, gates; push to the PR branch | same |
 | #1819 strip-pinned | PR, paused | head `3ece4fd5d`, conflict: ob3m bean | see the handover-1819 row | same |
@@ -81,7 +81,7 @@ created: "2026-10-02"
    - merge the current `origin/main`;
    - union the ob3m bean (keep every line, one valid `updated_at`);
    - regen (writers → `readme:subgraphs` → `state:visualizer` → `docs:harness` last), then `viewer:nav:audit`;
-   - run the `comm` check, then `bun run gates`;
+   - run the `comm` check, then `bun run cat gates`;
    - push to the PR branch, then apply the ready protocol.
 3. #1907 and #1909: when CI is green on every job, apply the ready protocol. #1908 starts on the #1899 ping.
 
@@ -115,14 +115,14 @@ created: "2026-10-02"
 | item | kind | state (pushed SHA) | next action | owner |
 |---|---|---|---|---|
 | #1804 one-name | PR, paused | head `3ad2870f3`, **conflicts** with main (`document-kinds/index.html`, generated; the bot refuses it) | see the handover-1804 row | needs a driver; **owner said stop** |
-| `claude/quirky-hypatia-k3aoh4-handover-1804` | branch (no PR) | `ef5fbc5f9cc`: #1804 head + main `cea2925` merged, conflicts resolved, **regen and gates not run** | verify nothing from main is lost, `bun run regen` + `docs:harness` + `viewer:nav:audit`, gates; then fast-forward the PR branch to it | same |
+| `claude/quirky-hypatia-k3aoh4-handover-1804` | branch (no PR) | `ef5fbc5f9cc`: #1804 head + main `cea2925` merged, conflicts resolved, **regen and gates not run** | verify nothing from main is lost, `bun run cat regen` + `docs:harness` + `viewer:nav:audit`, gates; then fast-forward the PR branch to it | same |
 | #1808 sidebar-rail | PR, paused | head `96d11ed6e`, conflicts: ob3m bean + `docs-ui.js` (#1805 tooltips vs `mountSidebarRail`) | see the handover-1808 row | same |
 | `claude/quirky-hypatia-k3aoh4-handover-1808` | branch (no PR) | `7b0e9c7e3`: 128 commits ahead of the PR head; "Merge origin/main (#1873) into sidebar-rail", **regen and gates not verified** | merge the current main again, union the ob3m bean, regen, gates; push to the PR branch | same |
 | #1819 strip-pinned | PR, paused | head `3ece4fd5d`, conflict: ob3m bean | see the handover-1819 row | same |
 | `claude/quirky-hypatia-k3aoh4-handover-1819` | branch (no PR) | `26d23ef1a12`: two merges of main (train 4, then `cea2925`), conflicts resolved, **regen and gates not run** | regen, gates; push to the PR branch | same |
 | #1907 stickies: no tile strip | PR, issue #1905, bean `t6ht` | **READY** at `6ceea3c76`: green, `ready-to-merge`, `ready:` posted | steward merges | steward |
 | #1909 `/todos/` page | PR, issue #1906, bean `72gk` | **READY** at `d2d5d951b`: green, clean, `ready-to-merge`, `ready:` posted | steward merges | steward |
-| #1926 one sticky component | draft PR, issue #1925 | head `e2a1d921a`, red on "Every declared directory's README is current" (`beans/README.md` stale; fix: `bun run readme:subgraphs` last). WIP: compact icon row 👁 ✎ pin discard, confirmed "Send to fsh-guts", fsh-guts icon in the LHS navbar top (`gen-navbar-include.ts`, `fa-nav-top`). Staging preview at `da2205f` | finish, green, before/after screenshots to the owner, then ready protocol | agent `ae7955474b2581bae`, told to hand over (budget about 3%) |
+| #1926 one sticky component | draft PR, issue #1925 | head `e2a1d921a`, red on "Every declared directory's README is current" (`beans/README.md` stale; fix: `bun run cat readme:subgraphs` last). WIP: compact icon row 👁 ✎ pin discard, confirmed "Send to fsh-guts", fsh-guts icon in the LHS navbar top (`gen-navbar-include.ts`, `fa-nav-top`). Staging preview at `da2205f` | finish, green, before/after screenshots to the owner, then ready protocol | agent `ae7955474b2581bae`, told to hand over (budget about 3%) |
 | #1922 this handover's first version | PR | merged | — | — |
 | #1908 todos in the KG | issue | not started | starts when #1899 merges (session 013Wb will ping) | me |
 | #1902 sidebar scoping | issue | not started | starts after #1808 lands | me |
@@ -166,7 +166,7 @@ created: "2026-10-02"
    - merge the current `origin/main`;
    - union the ob3m bean (keep every line, one valid `updated_at`);
    - regen (writers → `readme:subgraphs` → `state:visualizer` → `docs:harness` last), then `viewer:nav:audit`;
-   - run the `comm` check, then `bun run gates`;
+   - run the `comm` check, then `bun run cat gates`;
    - push to the PR branch, then apply the ready protocol.
 3. #1907 and #1909: when CI is green on every job, apply the ready protocol. #1908 starts on the #1899 ping.
 
@@ -204,7 +204,7 @@ Handover for issue #1925, draft PR #1926, branch `claude/stickies-one-component`
   - Confirm/Cancel, then restore;
   - the navbar icon and its count.
 - Skills not updated: `board-windows` (semantic zoom is now glass-only; pin toggle; the confirm) and `harness-tiles`/`fsh-guts`. The 2026-10-02 ruling should be quoted in each.
-- The full `bun run gates` has not been run. CI was red on readme:subgraphs (regenerated in this commit) and on href-safety (fixed in this commit).
+- The full `bun run cat gates` has not been run. CI was red on readme:subgraphs (regenerated in this commit) and on href-safety (fixed in this commit).
 
 ## Screenshots
 The before/after PNGs are in the session scratchpad, at `stickies-shots/{before,after}-{panel,window}-{1280,390}.png`, `after-confirm-*.png` and `after-navbar-*.png`. They are local to that session.| #1926 one sticky component | draft PR, issue #1925, bean `dxje` | head `d55651b`: the sticky unification is pushed; the fsh-guts icon is now in the top icon row (cap raised to 7, owner: *"i wanted fsh guts icon here with the others"*); the navbar-row e2e passes. **Not done:** the sticky e2e specs (about 10 files), the new specs, the `board-windows` skill, the window bar's text buttons, full gates. Owner on the screenshots: *"looking good. dont need visualization tiels"*; the strip goes away when #1907 merges | merge main after #1907, finish the specs and the skill, gates, then the ready protocol | open; see the `dxje` handover note on that branch |
@@ -243,7 +243,7 @@ Handover for issue #1925, draft PR #1926, branch `claude/stickies-one-component`
   - Confirm/Cancel, then restore;
   - the navbar icon and its count.
 - Skills not updated: `board-windows` (semantic zoom is now glass-only; pin toggle; the confirm) and `harness-tiles`/`fsh-guts`. The 2026-10-02 ruling should be quoted in each.
-- The full `bun run gates` has not been run. CI was red on readme:subgraphs (regenerated in this commit) and on href-safety (fixed in this commit).
+- The full `bun run cat gates` has not been run. CI was red on readme:subgraphs (regenerated in this commit) and on href-safety (fixed in this commit).
 
 ## Screenshots
 The before/after PNGs are in the session scratchpad, at `stickies-shots/{before,after}-{panel,window}-{1280,390}.png`, `after-confirm-*.png` and `after-navbar-*.png`. They are local to that session.| #1926 one sticky component | draft PR, issue #1925, bean `dxje` | head `d55651b`: the sticky unification is pushed; the fsh-guts icon is now in the top icon row (cap raised to 7, owner: *"i wanted fsh guts icon here with the others"*); the navbar-row e2e passes. **Not done:** the sticky e2e specs (about 10 files), the new specs, the `board-windows` skill, the window bar's text buttons, full gates. Owner on the screenshots: *"looking good. dont need visualization tiels"*; the strip goes away when #1907 merges | merge main after #1907, finish the specs and the skill, gates, then the ready protocol | open; see the `dxje` handover note on that branch |

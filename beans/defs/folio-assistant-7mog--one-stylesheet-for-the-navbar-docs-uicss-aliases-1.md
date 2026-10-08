@@ -60,7 +60,7 @@ Kept as plain bullets, not boxes, so there is one checklist in this bean
 - the sidebar-scoped stylesheet is generated and gated by a `--check`
 - the 12 aliases and the 185 hand-written sidebar lines are gone
 - before/after RENDERS match on the staging preview, not only locally
-- `bun run gates` green
+- `bun run cat gates` green
 
 ## MEASURED 2026-09-24, and it refutes the scope above — issue #1294
 
@@ -129,7 +129,7 @@ grows is a test failure and a decision — not something somebody notices.
 - [x] a gate fails if any selector is declared in both stylesheets with differing declarations
 - [x] the guard names the shared set, so its size is observable rather than remembered
 - [x] this bean carries the measurement and the corrected scope
-- [x] `bun run gates` green
+- [x] `bun run cat gates` green
 
 
 _2026-09-29_ — **Re-parented `p5wm` → `o3xy`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Navbar stylesheet guard: a UI/accessibility subject; o3xy already sits under GOAL 2.

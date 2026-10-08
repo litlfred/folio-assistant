@@ -43,7 +43,7 @@
  * |---|---|---|
  * | `absent` | no declaration names a `merge-queue` directory | none — legitimate |
  * | `declared-but-absent` | a declaration names one in the checkout and it is not there | create it, or fix the declaration (`dh4f`) |
- * | `unreachable` | it is on the branch and nothing is mounted here | `bun run state:mount` (`9ofm` row D) |
+ * | `unreachable` | it is on the branch and nothing is mounted here | `bun run cat state:mount` (`9ofm` row D) |
  * | `read` | the entries, with what was skipped and how many files were seen | — |
  *
  * **`unreachable` is not a spelling of `declared-but-absent`**, and the whole
@@ -247,7 +247,7 @@ export function recordDecision(
       reason:
         `\`${store.id}\` resolves to ${relative(opts.root, store.dir) || "."} in this checkout rather than to a ` +
         `mount of its branch, so a write here would be a commit on this branch — which is the pull request this ` +
-        `module exists to avoid. Cut the graph over, or mount it (\`bun run state:mount\`).`,
+        `module exists to avoid. Cut the graph over, or mount it (\`bun run cat state:mount\`).`,
     };
   }
   const file = entryFileName(e.repository, e.pr);

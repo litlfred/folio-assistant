@@ -118,10 +118,10 @@
  * snapshot declares.
  *
  * Usage:
- *   bun run kg:materialize <subscription> <subgraph> [--decisions <file.json>] [--instance <dir>] [--dry-run]
- *   bun run kg:materialize <subscription> --asset <path> [--decisions <file.json>] [--instance <dir>] [--dry-run]
- *   bun run kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]
- *   bun run kg:materialize:check
+ *   bun run cat kg:materialize <subscription> <subgraph> [--decisions <file.json>] [--instance <dir>] [--dry-run]
+ *   bun run cat kg:materialize <subscription> --asset <path> [--decisions <file.json>] [--instance <dir>] [--dry-run]
+ *   bun run cat kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]
+ *   bun run cat kg:materialize:check
  */
 import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
@@ -190,7 +190,7 @@ export function declaredDirectories(snap: SubstrateSnapshot): { id: string; path
 
 function readSnapshot(snapshotDir: string, sub: Subscription): { ok: true; snap: SubstrateSnapshot } | { ok: false; reason: string } {
   const file = join(snapshotDir, `${sub.id}${SNAPSHOT_SUFFIX}`);
-  if (!existsSync(file)) return { ok: false, reason: `subscription \`${sub.id}\` has no cached snapshot — run \`bun run kg:subscribe ${sub.repository}@${sub.ref}\`` };
+  if (!existsSync(file)) return { ok: false, reason: `subscription \`${sub.id}\` has no cached snapshot — run \`bun run cat kg:subscribe ${sub.repository}@${sub.ref}\`` };
   const parsed = SubstrateSnapshotSchema.safeParse(JSON.parse(readFileSync(file, "utf8")));
   if (!parsed.success) return { ok: false, reason: `the snapshot of \`${sub.id}\` does not parse: ${parsed.error.issues[0]?.message}` };
   if (parsed.data.ref !== sub.ref || parsed.data.repository !== sub.repository) {
@@ -210,7 +210,7 @@ function resolveSubscription(opts: { instance?: string; subscription: string }):
   if (!declName) return { ok: false, reason: `${instanceRoot} carries no instance declaration` };
   const raw = JSON.parse(readFileSync(join(instanceRoot, declName), "utf8")) as Record<string, unknown>;
   const sub = ((raw["subscriptions"] ?? []) as Subscription[]).find((s) => s.id === opts.subscription);
-  if (!sub) return { ok: false, reason: `${declName} has no subscription \`${opts.subscription}\` — subscribe first (\`bun run kg:subscribe\`)` };
+  if (!sub) return { ok: false, reason: `${declName} has no subscription \`${opts.subscription}\` — subscribe first (\`bun run cat kg:subscribe\`)` };
   const snapshotDir = snapshotDirOf(instanceRoot, raw);
   if (!snapshotDir) return { ok: false, reason: `${declName} declares no \`substrate-snapshot\` directory to hold materialised parts in` };
   const s = readSnapshot(snapshotDir, sub);
@@ -462,7 +462,7 @@ export async function materialize(opts: MaterializeOptions): Promise<Materialize
       ...(part.kind === "subgraph" ? { files: fileRecords } : {}),
       ...(licence ? { licence } : {}),
       note:
-        "Somebody else's bytes, pinned. Do not edit in place: re-run `bun run kg:materialize` at the pin, or move the pin with `refresh-materialized`." +
+        "Somebody else's bytes, pinned. Do not edit in place: re-run `bun run cat kg:materialize` at the pin, or move the pin with `refresh-materialized`." +
         (licence || part.kind === "asset" || files.some((f) => /^(LICEN[CS]E|COPYING)/.test(f)) ? "" : " No licence file was found in the part or at the upstream root."),
     });
 
@@ -625,7 +625,7 @@ export async function materializeNodes(opts: NodesOptions): Promise<NodesResult>
       state: "refused",
       reason:
         `${sub.repository} at ${sub.ref.slice(0, 12)} publishes no \`${loc.upstreamPath}\`: either \`${loc.path}\` is not a subgraph there, ` +
-        `or the substrate did not publish its subgraph files at that commit (\`bun run subgraph:jsonld\`)`,
+        `or the substrate did not publish its subgraph files at that commit (\`bun run cat subgraph:jsonld\`)`,
     };
   }
   try {
@@ -677,7 +677,7 @@ export async function materializeNodes(opts: NodesOptions): Promise<NodesResult>
       file: { name: SUBGRAPH_HYDRATED_FILE, upstream, localPath: local, bytes: bytes.length, fetchedAt: at, fixity: { algorithm: "sha256", digest } },
       members,
       subgraphs,
-      note: "Graph metadata only, somebody else's, pinned. Do not edit in place: re-run `bun run kg:materialize --nodes` at the pin.",
+      note: "Graph metadata only, somebody else's, pinned. Do not edit in place: re-run `bun run cat kg:materialize --nodes` at the pin.",
     });
     if (existing?.state === "materialized" && existing.file?.fixity.digest === digest && existsSync(heldFile) && sha256File(heldFile) === digest) {
       return { state: "materialized", record: existing, recordFile, file: heldFile, changed: false };
@@ -899,7 +899,7 @@ if (import.meta.main) {
     const maxRaw = flag(argv, "--max-bytes");
     const maxBytes = maxRaw === undefined ? undefined : Number(maxRaw);
     if (!subscription || path === undefined || positional.length > 2 || (maxBytes !== undefined && !(Number.isInteger(maxBytes) && maxBytes > 0))) {
-      console.error("usage: bun run kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]");
+      console.error("usage: bun run cat kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]");
       process.exit(2);
     }
     const dryRun = argv.includes("--dry-run");
@@ -928,9 +928,9 @@ if (import.meta.main) {
   const asset = flag(argv, "--asset");
   if (!subscription || (subgraph === undefined) === (asset === undefined)) {
     console.error(
-      "usage: bun run kg:materialize <subscription> <subgraph> [--decisions <file.json>] [--instance <dir>] [--dry-run]\n" +
-        "       bun run kg:materialize <subscription> --asset <path> [--decisions <file.json>] [--instance <dir>] [--dry-run]\n" +
-        "       bun run kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]",
+      "usage: bun run cat kg:materialize <subscription> <subgraph> [--decisions <file.json>] [--instance <dir>] [--dry-run]\n" +
+        "       bun run cat kg:materialize <subscription> --asset <path> [--decisions <file.json>] [--instance <dir>] [--dry-run]\n" +
+        "       bun run cat kg:materialize --nodes <subscription> <subgraph-path> [--max-bytes <n>] [--instance <dir>] [--dry-run]",
     );
     process.exit(2);
   }

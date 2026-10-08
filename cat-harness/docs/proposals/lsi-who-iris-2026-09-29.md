@@ -127,7 +127,7 @@ an ingestion defect → bean `3spu`.
 | `ftu0` | GLOSSARY | *quality/certainty of the evidence* as altLabels; decide who owns the glossary |
 | `9udd` | this work | a floor and a hub penalty on cross-document link proposals |
 
-Each was checked with `bun run lsi:near` first; none had an existing bean at
+Each was checked with `bun run cat lsi:near` first; none had an existing bean at
 ≥ 0.7.
 
 ## Limits

@@ -327,7 +327,7 @@ the #956 consolidation nearly lost a baseline:
 |---|---|
 | `scripts/stale-paths-baseline.json` | **two lines long.** Every milestone repair removes its own entry. Two repairs in flight = a conflict whose wrong resolution silently empties a file whose stated property is that it *shrinks rather than fossilises* — and an empty baseline fails every finding, "which is the safe direction" only if somebody notices. |
 | a shared bean like `k59d` | every stream appends its own outcome. **"An append cannot collide" is false when two sessions append**, because both land at EOF. That precedent is recorded in `k59d` itself and is wrong as stated. |
-| generated dirs (`auto-docs/`, `skill-instructions/`, kg-qa sidecars) | nobody edits them, everybody regenerates them. Take `main`'s copy and re-run the generator — never hand-merge. For `test/results/**`, `bun run qa:resolve-conflicts`: those are derived QA results whose record is on the `qa-reports` branch. |
+| generated dirs (`auto-docs/`, `skill-instructions/`, kg-qa sidecars) | nobody edits them, everybody regenerates them. Take `main`'s copy and re-run the generator — never hand-merge. For `test/results/**`, `bun run cat qa:resolve-conflicts`: those are derived QA results whose record is on the `qa-reports` branch. |
 | `test/attestations/**` | judgements, not generated — no generator can reproduce one. Read both sides and keep both unless they are the same judgement; see [`prepare-merge`](prepare-merge.md) §"Conflicts in `test/results/` and `test/attestations/`". |
 
 **Name the files you will touch, not just the beans**, when you post intent.
@@ -424,7 +424,7 @@ is why it gets the full review and does not rely on either trigger.
    when the overlapping work has no bean of its own; see
    [`bean-coordination`](bean-coordination.md) §"The trigger is STARTING WORK".
 3. **Name the owning sessions.** Use `list_sessions`, the `Claude-Session:`
-   trailers on each PR's commits, and `bun run sessions --since <window>`.
+   trailers on each PR's commits, and `bun run cat sessions --since <window>`.
    [`bean-coordination`](bean-coordination.md) §"Where a sibling session is
    visible from" says how far that inference goes.
 4. **Message each owner with your intent and your asks.** State what you will

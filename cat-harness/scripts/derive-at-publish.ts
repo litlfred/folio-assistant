@@ -33,8 +33,8 @@
  * `state:mount` fails here rather than publishing an empty page.
  *
  * ```
- * bun run derive:publish            # run every writer
- * bun run derive:publish --list     # print what would run, run nothing
+ * bun run cat derive:publish            # run every writer
+ * bun run cat derive:publish --list     # print what would run, run nothing
  * ```
  */
 import { spawnSync } from "node:child_process";

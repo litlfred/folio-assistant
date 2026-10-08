@@ -103,7 +103,7 @@ describe("saveQaScriptSidecar", () => {
     // different RUN, not a different checker, and treating it as a change
     // meant every sweep from a machine whose bun differed from CI's rewrote
     // all 72 committed sidecars. That included the one `bun test` performs,
-    // which kept `bun run gates` reporting "NOT clean" everywhere.
+    // which kept `bun run cat gates` reporting "NOT clean" everywhere.
     saveQaScriptSidecar(base(), root);
     const p = scriptSidecarPath("test-criterion", root);
     const before = readFileSync(p, "utf-8");

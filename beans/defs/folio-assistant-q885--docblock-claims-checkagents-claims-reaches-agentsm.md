@@ -16,7 +16,7 @@ updated_at: 2026-09-30T11:33:55Z
 
 `.github/workflows/code-quality-gates.yml`, line 1384:
 
->           bun run check:theme-art:check
+>           bun run cat check:theme-art:check
 
 and `package.json:169` binds that script to `check-theme-art.ts --check`. So CI
 has run it since the gate landed, and the file that says otherwise is the file
@@ -67,7 +67,7 @@ mobile crop; the owner supplied it, so a refusal here is now a regression."*
 
 **A SECOND stale claim in the same docblock.** It also said *"Running it today
 refuses `landing-architecture`, which is declared with laptop and card and no
-mobile."* `bun run check:theme-art:check` now exits 0 with *"landing-architecture:
+mobile."* `bun run cat check:theme-art:check` now exits 0 with *"landing-architecture:
 3 layouts accepted"* — laptop, mobile and card all present. Both sentences are
 corrected, and the section heading with them (*"Why this REPORTS and does not yet
 gate"* -> *"Why this reported before it gated"*).

@@ -400,7 +400,7 @@ the `SchemaRef` type instead. A dangling link in a retirement note is the
 about to reinstate the field. The test now **asserts every record it names
 dereferences**, so this cannot recur in the registry itself.
 
-Verification: `bun run gates` **56/56**; `bun test` **3801 pass, 0 fail**;
+Verification: `bun run cat gates` **56/56**; `bun test` **3801 pass, 0 fail**;
 `tsc` and `eslint` clean.
 
 ### Still open on this bean
@@ -585,7 +585,7 @@ already carries four WHO-guideline skills); and
 `edge-kinds-and-blast-radius` declared `consulted: true` — zero imperative
 markers and every heading a claim.
 
-Verification: `bun run gates` **58/58**; `bun test` **4033 pass, 0 fail**;
+Verification: `bun run cat gates` **58/58**; `bun test` **4033 pass, 0 fail**;
 `consulted-skill-not-performed` pass, 0 findings.
 
 ---
@@ -646,13 +646,13 @@ would pass the first two while stripping the corpus.
 bootstrap skills and the five `remote-stubs`, both deliberate.
 
 Verification: export still contains **zero** occurrences of `fsh-guts`;
-`bun run gates` **58/58**; `bun test` **4051 pass, 0 fail**.
+`bun run cat gates` **58/58**; `bun test` **4051 pass, 0 fail**.
 
 
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 _2026-10-07T14:25:44Z_ — Claimed by claude/qook-symlink-internal-check — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 

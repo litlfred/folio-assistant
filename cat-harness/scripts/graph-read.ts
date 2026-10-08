@@ -213,7 +213,7 @@ export function graphReadPath(id: string, repoRoot: string): GraphRead {
         path: declaredPath,
         reason:
           `"${id}" is on ${resolved.branch} and is not mounted in ${repoRoot}, so there is no directory to read. ` +
-          `Mount it (\`bun run state:mount\`). Reading ${relative(repoRoot, absPath).split(sep).join("/")} instead ` +
+          `Mount it (\`bun run cat state:mount\`). Reading ${relative(repoRoot, absPath).split(sep).join("/")} instead ` +
           `would report an EMPTY graph, and "nothing here" is not "could not reach it" — ${t.detail}`,
       };
   }
