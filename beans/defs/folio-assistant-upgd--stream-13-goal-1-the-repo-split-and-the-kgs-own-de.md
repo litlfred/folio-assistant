@@ -83,7 +83,7 @@ of a three-stream split, not overlooked.
 ## Step 1 done — critical paths re-verified on `main` at `b7f8945b`, 2026-09-22
 
 Every number below was produced by running the repo's own gates in this
-checkout, not by reading a bean. `bun run gates`: **123 of 123, exit 0**,
+checkout, not by reading a bean. `bun run cat gates`: **123 of 123, exit 0**,
 10,270 tests across 398 files.
 
 ### The path this claim states is wrong in its ordering
@@ -274,7 +274,7 @@ bean `u2ol`, which establishes what my entry left open: TS 7 *does* ship an
 AST API at `typescript/unstable/`, with all 10 type guards these files need
 present, but no `createSourceFile` and no `forEachChild`. So it is a
 re-architecture, not a port, and the open question is whether two scripts on
-the `bun run gates` path should depend on a subpath named `unstable`.
+the `bun run cat gates` path should depend on a subpath named `unstable`.
 
 **Two beans I created for this work were duplicates and were not committed** —
 one for the zod migration (landed as `e3303e58`) and one for the TS 7

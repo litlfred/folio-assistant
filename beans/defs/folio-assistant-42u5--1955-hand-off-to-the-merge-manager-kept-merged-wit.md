@@ -1,10 +1,10 @@
 ---
 # folio-assistant-42u5
 title: '#1955 hand-off to the merge manager: kept merged with main by its session, by hand'
-status: todo
+status: completed
 type: task
 created_at: 2026-10-04T12:31:39Z
-updated_at: 2026-10-04T12:31:39Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-whlc
 ---
 
@@ -17,7 +17,7 @@ The `merge-main` bot cannot land `main` into this branch:
 - the merge carries workflow-file changes, which its token cannot push (#1829).
 
 So each `main` merge here is done locally with the post-merge checklist:
-- `bun run regen`, run until it settles, with the `fsh-guts` branch store mounted (`state:mount`);
+- `bun run cat regen`, run until it settles, with the `fsh-guts` branch store mounted (`state:mount`);
 - `docs:pages`, then `check:l1-complete --write`;
 - `kg:export:check`, `check:kind-validators:require-all`, `check:partition`, `check:process-index` (89 of 89);
 - the lost-file guard (bean `vsv7`).
@@ -37,3 +37,8 @@ So each `main` merge here is done locally with the post-merge checklist:
 - two test timeouts fixed: `harness-state`, and `claim-branch-store`, which came in from `main`.
 
 This bean is the work-plan record; the PR comment carries the same text.
+
+## Completed on landed evidence
+
+- Implementation landed on `main` in PR #1955 (commit `e49c086207bb`): PR #1955 handed off to Merge Manager and merged cleanly.
+- Verified on `origin/main`.

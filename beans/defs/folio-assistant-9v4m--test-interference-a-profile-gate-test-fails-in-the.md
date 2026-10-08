@@ -13,7 +13,7 @@ Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff =
 
 ## What happened
 
-`bun run gates` failed with ONE test failure:
+`bun run cat gates` failed with ONE test failure:
 
     (fail) the sweep's profile gate, end to end > a paper-only criterion is n/a'd in a document folio, under its OWN outcome [5769.02ms]
 
@@ -146,7 +146,7 @@ shared-path mechanism is not available as the explanation.
 
 ### The instrument note that matters for the next attempt
 
-Both runs were `bun run gates`, which runs `bun test` as one step among 162. So
+Both runs were `bun run cat gates`, which runs `bun test` as one step among 162. So
 each observation costs a full gate run, and the failing one gives no isolation.
 Whoever picks this up should run the single test file in a loop instead — that is
 cheap, and it is the measurement that can distinguish "races against a sibling in
@@ -166,7 +166,7 @@ the same process" from "races against something in the environment".
 ## ISOLATION MEASURED, same day — 12 of 12 pass alone, so the title's hypothesis now has evidence
 
 `cat-harness/scripts/tests/profile-scoping.test.ts`, run on its own, twelve
-consecutive times on the tree where `bun run gates` had just produced the
+consecutive times on the tree where `bun run cat gates` had just produced the
 failure: **12 pass, 0 fail.**
 
 That is the second clause above answered, and it answers it in the direction the
@@ -214,7 +214,7 @@ And this **corrects the conclusion I wrote earlier the same day**, two entries
 above. The isolation measurement was right and my reading of it named the wrong
 variable.
 
-| `bun run gates` | tree at start | failures beyond the accepted `ngxj` red |
+| `bun run cat gates` | tree at start | failures beyond the accepted `ngxj` red |
 |---|---|---|
 | 1 | **dirty** — a regenerated detangle sidecar, uncommitted | `profile-scoping` |
 | 2 | clean | **none** |

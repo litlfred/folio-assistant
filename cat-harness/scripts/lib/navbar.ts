@@ -58,6 +58,7 @@ import {
   NAV_OPEN_PX,
   NAV_OPEN_WIDE_PX,
   NAV_PAD_PX,
+  NAV_STRIP_MQ_PX,
   NAV_WIDE_MQ_PX,
 } from "./navbar-geometry.js";
 
@@ -411,29 +412,22 @@ export { NAV_MARK_PX as NAV_GLYPH_PX } from "./navbar-geometry.js";
  */
 export function navbarCss(): string {
   return [
-    // The page sits beside the strip; opening OVERLAYS rather than reflowing,
-    // or every line the reader was looking at moves.
+    // The page sits beside the strip; on desktop (>= NAV_STRIP_MQ_PX), opening
+    // shrinks/pushes content beside it so they do not overlap (bean `ei4q`).
+    // Phone stays an overlay drawer.
     `body{padding-left:${NAV_COLLAPSED_PX}px}`,
     `.fa-nav{position:fixed;top:0;left:0;bottom:0;width:${NAV_COLLAPSED_PX}px;z-index:2147483000;`,
     `background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;`,
     `font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}`,
-    // KEYBOARD focus opens it, not any focus. `:focus-within` matched the
-    // checkbox a CLICK on the header focuses, so the click that unpinned the
-    // rail left it held open by its own focus — measured 264px wide after the
-    // second click, pointer away (#1757). `:focus-visible` is the keyboard's
-    // focus and not the pointer's, which is exactly the split needed.
     `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
-    // The folio handle, placed IN this rail by docs-ui.js (owner, 2026-09-24:
-    // "folio handle on LHS on navbar"). At rest the strip shows marks only, so
-    // its label waits for the rail to open, as every other label here does.
     `.fa-nav:not(:hover):not(:has(:focus-visible)):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}`,
-    // The theme widens its own sidebar at `mq(lg)` with a `min-width` FLOOR.
-    // The rail has no such floor and would simply stay narrower -- which is
-    // the same navbar at two widths on one screen size, the defect this
-    // whole module exists to have ended.
+    `@media(min-width:${NAV_STRIP_MQ_PX}px){`,
+    `body:has(.fa-nav:hover),body:has(.fa-nav :focus-visible),body:has(.fa-nav-open:checked){padding-left:${NAV_OPEN_PX}px}}`,
     `@media(min-width:${NAV_WIDE_MQ_PX}px){`,
     `.fa-nav:hover,.fa-nav:has(:focus-visible),.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
-    `.fa-nav-in{width:${NAV_OPEN_WIDE_PX}px}}`,
+    `.fa-nav-in{width:${NAV_OPEN_WIDE_PX}px}`,
+    `body:has(.fa-nav:hover),body:has(.fa-nav :focus-visible),body:has(.fa-nav-open:checked){padding-left:${NAV_OPEN_WIDE_PX}px}}`,
+    `@media(prefers-reduced-motion:no-preference){body{transition:padding-left .14s ease}}`,
     // Clipped in place, never parked at `left:-9999px`: on a right-to-left
     // page that is the scrollable side, and it widened the page ~10,000px
     // (bean `2r2n`). Same rule as `.fa-nav-open` in docs-ui.css.

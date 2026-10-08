@@ -15,7 +15,7 @@
  * Running every one of the ~90 writers over a staled fixture is a full regen
  * (5–6 minutes), and most writers have no single artefact a test can stale
  * without knowing the generator. These are the pairs MEASURED broken under
- * regen on 2026-10-01 — each one a merge where `bun run regen` left a gate red
+ * regen on 2026-10-01 — each one a merge where `bun run cat regen` left a gate red
  * and a person ran the writer by hand — plus the root `translate-bpmn` pair as
  * the control the bootstrap one should have matched. The class-wide guard is
  * the runtime one: a writer that exits non-zero is reported `writer-failed` by
@@ -39,17 +39,16 @@ import { dirname, join } from "node:path";
 import { regenPass, writerFor, type Runner } from "../cat-harness/scripts/regen-after-merge.ts";
 import { chromiumExecutable } from "../cat-harness/scripts/bpmn-render.ts";
 import { repoRootFor } from "../cat-harness/schemas/cat-harness.ts";
+import { scriptsOf } from "../cat-harness/schemas/script-table.ts";
 
 /** The directory this test was written in (`cat-harness/scripts/tests/`): every path below is composed from it exactly as it was before the move to the checkout's test home (bean `7zz1`). */
 const ORIGIN_DIR = join(import.meta.dir, "../cat-harness/scripts/tests");
 
 
 const REPO = repoRootFor(join(ORIGIN_DIR, "..", ".."));
-const SCRIPTS = (JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as {
-  scripts: Record<string, string>;
-}).scripts;
+const SCRIPTS = scriptsOf(REPO);
 
-const runner: Runner = (script) => spawnSync("bun", ["run", script], { cwd: REPO, encoding: "utf-8" }).status === 0;
+const runner: Runner = (script) => spawnSync("bun", ["run", "cat", script], { cwd: REPO, encoding: "utf-8" }).status === 0;
 
 /** The first file in a directory with this suffix, so a rename does not silently skip the case. */
 function firstIn(dir: string, suffix: string): string {

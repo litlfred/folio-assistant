@@ -77,7 +77,7 @@ drift (none).
 
 ## Two defects CI caught that my local run did not
 
-`bun run gates` was interrupted three times by container churn, so it never
+`bun run cat gates` was interrupted three times by container churn, so it never
 produced a verdict, and I pushed on a hand-picked subset — the exact failure
 `AGENTS.md` names. Both CI failures were mine:
 

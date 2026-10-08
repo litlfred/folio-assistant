@@ -100,6 +100,13 @@ export const ROOT_INFRASTRUCTURE: Readonly<Record<string, string>> = {
   "package.json": "bun/npm reads it from the repository root",
   "bun.lock": "the lockfile beside package.json",
   "bunfig.toml": "bun's own config, root-only",
+  // `patchedDependencies` in package.json names files here, and bun resolves
+  // them from the root (the oxigraph patch, #2465).
+  patches: "bun's patchedDependencies, resolved from the root package.json",
+  // The root instance's remote-mount lock (bean `nn8e`, #2462): CI's replay
+  // (`mount-from-lock.ts`, node:* only) reads it from the root before anything
+  // else is present, so it cannot live inside a layer.
+  "folio-assistant.mount-lock.json": "the root instance's remote-mount lock, replayed by CI before any layer exists",
   "tsconfig.json": "tsc's project root — the whole checkout's program, which names every instance, so no one layer may hold it",
   "AGENTS.md": "the agent-generic instructions every tool looks for at the root",
   "CLAUDE.md": "the tool-specific stub pointing at AGENTS.md",

@@ -56,8 +56,8 @@
  * party.
  *
  * Usage:
- *   bun run schema:viz          # write
- *   bun run schema:viz:check    # fail if either artefact is stale
+ *   bun run cat schema:viz          # write
+ *   bun run cat schema:viz:check    # fail if either artefact is stale
  */
 import { rmSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
@@ -241,8 +241,9 @@ export function viewerPlacement(
  * and for the same reason: a consumer should not have to load a page builder
  * to ask an ownership question. */
 import { orphanSubjectPages } from "./orphan-pages.ts";
-import { makeEmit, type ViewerNav, subjectNames, subjectSection } from "./viewer-page.ts";
-import { withRenders, withViewers } from "./viewer-declarations.js";
+import { makeEmit } from "./viewer-page.ts";
+import { withRendersFrontMatter, withViewers } from "./viewer-declarations.js";
+import { subjectNav, subjectNavCss, themedPage } from "./lib/themed-page.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "schemas-viewer";
@@ -250,7 +251,13 @@ const VIEWER_TOOL = "schemas-viewer";
 export { orphanSubjectPages, declaresItsOwnDirectory, carriesMarker } from "./orphan-pages.ts";
 export type { OwnershipTest } from "./orphan-pages.ts";
 
-export function viewerHtml(dataHref: string, scope = ""): string {
+/**
+ * The viewer, as a THEMED Jekyll page since 2026-10-07 (`lib/themed-page.ts`):
+ * on the site's `default` layout, so it carries the top band (search, Folio,
+ * language) that only that layout delivers. `subjects` lists the family's
+ * subject pages in the page, because the theme's sidebar does not.
+ */
+export function viewerHtml(dataHref: string, scope = "", subjects: readonly string[] = []): string {
   // NO BACKTICKS BELOW THIS LINE — not in strings, not in comments.
   //
   // The whole page is one template literal, so a backtick anywhere inside it
@@ -259,131 +266,123 @@ export function viewerHtml(dataHref: string, scope = ""): string {
   // reading "the intake's own files[]", once in one quoting a field
   // declaration. `viz-generators.test.ts` imports this module, so a stray one
   // reddens the suite rather than only the generator.
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Schema graph</title>
-<!-- Inline, so the page fetches nothing but its own projection. A missing
-     favicon is a 404 on every load, which puts a red line in the console of a
-     page whose console is where a reader would look for a real failure. -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231a5fb4'/%3E%3Crect x='3' y='4' width='10' height='3' fill='white'/%3E%3Crect x='3' y='9' width='7' height='3' fill='white'/%3E%3C/svg%3E">
-<style>
-:root {
-  --bg: #ffffff; --fg: #17191c; --muted: #5b6168; --line: #d9dde2;
-  --panel: #f6f7f9; --accent: #1a5fb4; --accent-soft: #e7eefb;
+  return themedPage({
+    title: scope ? "Schema graph — " + scope : "Schema graph",
+    generator: "cat-harness/scripts/gen-schema-viz.ts",
+    command: "bun run schema:viz",
+    body: `<style>
+/* THEMED since 2026-10-07: every rule is under .sc-page, because on the
+   theme's layout a rule on body, :root or a would restyle the site. The
+   palette is keyed on the site's own scheme switch (data-fa-scheme, which
+   head_custom.html always sets), dark first because the site's ground is.
+   The page keeps its two panes: the theme's content column is wide enough
+   on a desktop, and below 900px they stack, as they always did. */
+.sc-page {
+  color-scheme: dark;
+  --bg: #27262b; --fg: currentColor; --muted: #bcbab3; --line: rgba(127,127,127,.4);
+  --panel: rgba(127,127,127,.12); --accent: #8db4ec; --accent-soft: rgba(122,167,232,.18);
+  --warn: #e0b25e; --warn-soft: rgba(224,178,94,.14); --box: #302f35;
+}
+:root[data-fa-scheme="light"] .sc-page {
+  color-scheme: light;
+  --bg: #ffffff; --muted: #5b6168; --accent: #1a5fb4; --accent-soft: #e7eefb;
   --warn: #8a5300; --warn-soft: #fdf3e0; --box: #ffffff;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #14171a; --fg: #e8eaed; --muted: #9aa2ab; --line: #2e343b;
-    --panel: #1b1f24; --accent: #7aa7e8; --accent-soft: #1d2937;
-    --warn: #e0b25e; --warn-soft: #2a2213; --box: #1b1f24;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #14171a; --fg: #e8eaed; --muted: #9aa2ab; --line: #2e343b;
-  --panel: #1b1f24; --accent: #7aa7e8; --accent-soft: #1d2937;
-  --warn: #e0b25e; --warn-soft: #2a2213; --box: #1b1f24;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0; background: var(--bg); color: var(--fg);
-  font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-}
-header { padding: 16px; border-bottom: 1px solid var(--line); }
-h1 { font-size: 1.15rem; margin: 0 0 4px; }
-.counts { color: var(--muted); font-size: .85rem; }
-.counts b { color: var(--fg); font-variant-numeric: tabular-nums; }
-main { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); gap: 0; }
-@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
-#list { border-right: 1px solid var(--line); min-height: 60vh; }
-@media (max-width: 900px) { #list { border-right: none; border-bottom: 1px solid var(--line); } }
-.controls { padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; }
-input, select, button {
+.sc-page * { box-sizing: border-box; }
+.sc-page .sc-head { padding: 16px; border-bottom: 1px solid var(--line); }
+.sc-page h1 { margin: 0 0 4px; }
+.sc-page .counts { color: var(--muted); font-size: .85rem; }
+.sc-page .counts b { color: var(--fg); font-variant-numeric: tabular-nums; }
+.sc-page .sc-main { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); gap: 0; }
+@media (max-width: 900px) { .sc-page .sc-main { grid-template-columns: 1fr; } }
+.sc-page #list { border-right: 1px solid var(--line); min-height: 60vh; }
+@media (max-width: 900px) { .sc-page #list { border-right: none; border-bottom: 1px solid var(--line); } }
+.sc-page .controls { padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+.sc-page input, .sc-page select, .sc-page button {
   font: inherit; color: var(--fg); background: var(--box);
   border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px;
 }
-input { flex: 1 1 180px; min-width: 0; }
-ul { list-style: none; margin: 0; padding: 0 0 24px; max-height: 70vh; overflow: auto; }
-li > button {
+.sc-page input { flex: 1 1 180px; min-width: 0; }
+.sc-page ul#items { list-style: none; margin: 0; padding: 0 0 24px; max-height: 70vh; overflow: auto; }
+.sc-page #items > li { margin: 0; padding: 0; }
+.sc-page #items > li::before { content: none; }
+.sc-page li > button {
   display: block; width: 100%; text-align: left; border: 0; border-radius: 0;
   border-bottom: 1px solid var(--line); background: transparent; padding: 9px 16px; cursor: pointer;
 }
-li > button:hover, li > button:focus-visible { background: var(--panel); }
-li > button[aria-current="true"] { background: var(--accent-soft); }
-.nm { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
-.sub { color: var(--muted); font-size: .78rem; }
-.tag {
+.sc-page li > button:hover, .sc-page li > button:focus-visible { background: var(--panel); }
+.sc-page li > button[aria-current="true"] { background: var(--accent-soft); }
+.sc-page .nm { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
+.sc-page .sub { color: var(--muted); font-size: .78rem; }
+.sc-page .tag {
   display: inline-block; font-size: .7rem; padding: 1px 6px; border-radius: 999px;
   border: 1px solid var(--line); color: var(--muted); margin-left: 6px; vertical-align: 1px;
 }
-.tag.warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
-#detail { padding: 16px; min-width: 0; }
-#detail h2 { font-size: 1rem; margin: 0 0 2px; font-family: ui-monospace, Menlo, monospace; }
-table { border-collapse: collapse; width: 100%; font-size: .86rem; margin: 8px 0 16px; }
-th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { color: var(--muted); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; }
-td code { font-family: ui-monospace, Menlo, monospace; font-size: .82rem; word-break: break-word; }
-.opt { color: var(--muted); }
-a { color: var(--accent); }
-svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
-.uml-box { fill: var(--box); stroke: var(--line); }
-.uml-box.sel { stroke: var(--accent); stroke-width: 2; }
-.uml-t { fill: var(--fg); font: 600 12px ui-monospace, Menlo, monospace; }
-.uml-f { fill: var(--muted); font: 11px ui-monospace, Menlo, monospace; }
-.uml-e { stroke: var(--muted); fill: none; }
-.uml-head { fill: var(--box); stroke: var(--muted); }
-.uml-tip { fill: none; stroke: var(--muted); stroke-width: 1.4; }
-.uml-l { fill: var(--muted); font: 10px ui-sans-serif, system-ui, sans-serif; }
-.empty { color: var(--muted); padding: 24px 16px; }
-.note { background: var(--warn-soft); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: .85rem; margin: 8px 0; }
-.note code { word-break: break-all; }
+.sc-page .tag.warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+.sc-page #detail { padding: 16px; min-width: 0; }
+.sc-page #detail h2 { font-size: 1rem; margin: 0 0 2px; font-family: ui-monospace, Menlo, monospace; }
+.sc-page table { display: table; border-collapse: collapse; width: 100%; font-size: .86rem; margin: 8px 0 16px; }
+.sc-page th, .sc-page td { border: 0; background: transparent; text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.sc-page th { color: var(--muted); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; }
+.sc-page td code { font-family: ui-monospace, Menlo, monospace; font-size: .82rem; word-break: break-word; }
+.sc-page .opt { color: var(--muted); }
+.sc-page svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
+.sc-page .uml-box { fill: var(--box); stroke: var(--line); }
+.sc-page .uml-box.sel { stroke: var(--accent); stroke-width: 2; }
+.sc-page .uml-t { fill: var(--fg); font: 600 12px ui-monospace, Menlo, monospace; }
+.sc-page .uml-f { fill: var(--muted); font: 11px ui-monospace, Menlo, monospace; }
+.sc-page .uml-e { stroke: var(--muted); fill: none; }
+.sc-page .uml-head { fill: var(--box); stroke: var(--muted); }
+.sc-page .uml-tip { fill: none; stroke: var(--muted); stroke-width: 1.4; }
+.sc-page .uml-l { fill: var(--muted); font: 10px ui-sans-serif, system-ui, sans-serif; }
+.sc-page .empty { color: var(--muted); padding: 24px 16px; }
+.sc-page .note { background: var(--warn-soft); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: .85rem; margin: 8px 0; }
+.sc-page .note code { word-break: break-all; }
 /* The overview panel. Collapsible and CLOSED by default: the questions people
    arrive with are local, so the list is what should meet them. The overview
    answers a different one — how connected is this, and where are the hubs —
    and that is worth a deliberate click rather than a scroll past. */
-#overview { border-bottom: 1px solid var(--line); background: var(--panel); }
-#overview > summary { cursor: pointer; padding: 10px 16px; font-weight: 600; font-size: .9rem; list-style: revert; }
-#overview > summary:hover { color: var(--accent); }
-#overview > summary::marker { color: var(--muted); }
-.ov-body { padding: 0 16px 14px; }
-.ov-cap { color: var(--muted); font-size: .8rem; margin: 0 0 8px; }
-#ov-svg { width: 100%; height: auto; display: block; max-height: 78vh; }
-.dia-e { fill: none; stroke-width: 1.6; }
-.dia-field { stroke: var(--accent); }
-.dia-gen { stroke: var(--fg); }
+.sc-page #overview { border-bottom: 1px solid var(--line); background: var(--panel); }
+.sc-page #overview > summary { cursor: pointer; padding: 10px 16px; font-weight: 600; font-size: .9rem; list-style: revert; }
+.sc-page #overview > summary:hover { color: var(--accent); }
+.sc-page #overview > summary::marker { color: var(--muted); }
+.sc-page .ov-body { padding: 0 16px 14px; }
+.sc-page .ov-cap { color: var(--muted); font-size: .8rem; margin: 0 0 8px; }
+.sc-page #ov-svg { width: 100%; height: auto; display: block; max-height: 78vh; }
+.sc-page .dia-e { fill: none; stroke-width: 1.6; }
+.sc-page .dia-field { stroke: var(--accent); }
+.sc-page .dia-gen { stroke: var(--fg); }
 /* Dashed, and a different colour, because an id-ref is DECLARED rather than
    found in the source. Drawing it like a field reference would claim the
    reader saw something it structurally cannot see. */
-.dia-idref { stroke: var(--warn); }
-.dia-genhead { fill: var(--bg); stroke: var(--fg); stroke-width: 1.4; }
-.dia-refhead { fill: none; stroke: var(--accent); stroke-width: 1.5; }
-.dia-l { fill: var(--fg); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
-.dia-lb { fill: var(--panel); stroke: var(--line); stroke-width: .8; }
-.dia-n { cursor: pointer; }
-.dia-n:hover .uml-box { stroke: var(--accent); stroke-width: 2; }
+.sc-page .dia-idref { stroke: var(--warn); }
+.sc-page .dia-genhead { fill: var(--bg); stroke: var(--fg); stroke-width: 1.4; }
+.sc-page .dia-refhead { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+.sc-page .dia-l { fill: var(--fg); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.sc-page .dia-lb { fill: var(--panel); stroke: var(--line); stroke-width: .8; }
+.sc-page .dia-n { cursor: pointer; }
+.sc-page .dia-n:hover .uml-box { stroke: var(--accent); stroke-width: 2; }
 /* Context boxes are faded, never hidden: they are real declarations the page
    is not about, and a link into one is the edge a strict filter would cut. */
-.dia-ctx { opacity: .55; }
-.dia-ctx .uml-box { stroke-dasharray: 4 3; }
-.ov-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: .78rem; color: var(--muted); }
-.ov-key span { display: inline-flex; align-items: center; gap: 6px; }
-.ov-key i { display: inline-block; }
-.ov-key i.k-gen { width: 16px; height: 0; border-top: 2px solid var(--fg); border-radius: 0; }
-.ov-key i.k-field { width: 16px; height: 0; border-top: 2px solid var(--accent); border-radius: 0; }
-.ov-key i.k-idref { width: 16px; height: 0; border-top: 2px dashed var(--warn); border-radius: 0; }
+.sc-page .dia-ctx { opacity: .55; }
+.sc-page .dia-ctx .uml-box { stroke-dasharray: 4 3; }
+.sc-page .ov-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: .78rem; color: var(--muted); }
+.sc-page .ov-key span { display: inline-flex; align-items: center; gap: 6px; }
+.sc-page .ov-key i { display: inline-block; }
+.sc-page .ov-key i.k-gen { width: 16px; height: 0; border-top: 2px solid var(--fg); border-radius: 0; }
+.sc-page .ov-key i.k-field { width: 16px; height: 0; border-top: 2px solid var(--accent); border-radius: 0; }
+.sc-page .ov-key i.k-idref { width: 16px; height: 0; border-top: 2px dashed var(--warn); border-radius: 0; }
+${subjectNavCss("sc-page")}
 </style>
-</head>
-<body>
-<header>
-  <h1>Schema graph</h1>
+<div class="sc-page">
+<div class="sc-head">
+  <h1 id="sc-title">Schema graph</h1>
+  ${subjectNav({ subjects, current: scope || undefined, cls: "sc-page" })}
   <p class="counts" id="counts">loading…</p>
   <p class="counts" style="margin-top:4px">Diagrams show <strong>containment</strong> and
     <strong>generalisation</strong>. A reference carried as a string id is not drawn &mdash; it is
     invisible to a syntactic reader, not absent from the model.</p>
-</header>
+</div>
 <details id="overview">
   <summary>Relationship diagram &mdash; what is defined here, and how it is linked</summary>
   <div class="ov-body">
@@ -392,7 +391,7 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
     <div class="ov-key" id="ov-key"></div>
   </div>
 </details>
-<main>
+<div class="sc-main">
   <section id="list" aria-label="Declarations">
     <div class="controls">
       <input id="q" type="search" placeholder="Search declarations…" aria-label="Search declarations">
@@ -402,7 +401,8 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
     <ul id="items"></ul>
   </section>
   <section id="detail" aria-live="polite"><p class="empty">Select a declaration.</p></section>
-</main>
+</div>
+</div>
 <script>
 "use strict";
 var G = null, SEL = null;
@@ -1107,24 +1107,18 @@ fetch(DATA_HREF).then(function (r) {
   $("detail").innerHTML = '<p class="empty">The projection at <code>' + esc(DATA_HREF) + '</code> could not be read. ' +
     "That is not an empty graph \\u2014 it is a graph that could not be loaded, and the page says so rather than showing nothing.</p>";
 });
-</script>
-</body>
-</html>
-`;
+</script>`,
+  });
 }
 
 /** Write, or report staleness. Same contract as `gen-docs-pages.ts`. */
 let stale = 0;
 /**
- * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
- *
- * `emit` writes what it is given; `emitPage` is the same write with the rail,
- * and takes the nav per call because a SUBJECT page lists that subject's
- * graphs while the index lists this instance's. Both are facts this generator
- * already holds, and neither is parsed back out of a path it just composed.
+ * The shared viewer `emit`, for the projection and the pages alike. No `nav`
+ * since 2026-10-07: the pages are themed, so the theme's sidebar is their
+ * navigation and there is no rail to inject.
  */
 const emit = makeEmit({ check, onStale: () => { stale++; } });
-const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
   const g = readSchemaGraph(ROOT);
@@ -1267,7 +1261,6 @@ if (import.meta.main) {
   // instance's own site.
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), data);
-  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   // Each page says which directories it draws (#1168 B7a-2): the schema
   // directories read — every one here, those holding the subject's modules on
   // a subject page.
@@ -1275,17 +1268,11 @@ if (import.meta.main) {
     g.roots.filter((r) =>
       subject === undefined || g.modules.some((m) => m.instance === subject && m.module.startsWith(`${r}/`)),
     );
-  // The rail section (#1757): the static regions the script draws into.
-  const regions = [
-    { label: "Overview", id: "overview" },
-    { label: "Declarations", id: "list" },
-    { label: "Detail", id: "detail" },
-  ];
-  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions, subjectNames(nav.built, "schemas")) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
+  emit(join(pageDir, "index.html"), withRendersFrontMatter(viewerHtml(dataHref, "", subjects), drawn(), VIEWER_TOOL));
 
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions, subjectNames(nav.built, "schemas")) })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
+    emit(join(sub.pageDir, "index.html"), withRendersFrontMatter(viewerHtml(sub.dataHref, subject, subjects), drawn(subject), VIEWER_TOOL));
   }
 
 
@@ -1320,7 +1307,7 @@ if (import.meta.main) {
     );
   }
   if (stale > 0) {
-    console.error(`\n${stale} artefact(s) stale — run \`bun run schema:viz\``);
+    console.error(`\n${stale} artefact(s) stale — run \`bun run cat schema:viz\``);
     process.exit(1);
   }
 }

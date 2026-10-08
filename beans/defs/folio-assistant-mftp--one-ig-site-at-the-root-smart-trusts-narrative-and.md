@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mftp
 title: 'ONE IG SITE AT THE ROOT: smart-trust''s narrative and artefact pages build as one just-the-docs site at /smart-trust/, in production too'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-10-05T14:34:28Z
-updated_at: 2026-10-05T14:34:48Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -65,3 +65,10 @@ Owner: *"working except the chrome is not the standrad harness chrome. missing s
 - Artefact pages link their CSS relatively (`../assets/…`), right both in the host site and in a fork's standalone site.
 - Local full build (jekyll 4.4.1 + just-the-docs 0.12.0): 4,352 pages, 74 s, no duplicate ids, no escaped markup; language selector, search, LHS navbar and the IG's TOC in the site nav verified in a browser.
 - The standalone layout (`chrome: harness` path, rail-injected navbar) remains for an IG repository building its own site (litlfred/smart-immunizations' `folio-site.yml`).
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #2194 (commit `6c3c52a0a2df`):
+- `igSite: true` declared in `smart-trust.json`.
+- `composeIgSite` builds smart-trust narrative and artifact pages under `/smart-trust/` with shared harness chrome.
+- All 37 TOC pages and 678 artifact pages link cleanly with 0 broken links.

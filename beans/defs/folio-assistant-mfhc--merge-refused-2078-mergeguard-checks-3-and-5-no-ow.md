@@ -18,7 +18,7 @@ PR #2078 (`agy/wm63-non-who-ig-demo`, "feat(fhir-harness): demonstrate bare pipe
 - check 3 `ready-marker`: the PR body links no session, so no `ready:` comment can be attributed to the PR's own session. Its author is an Antigravity agent (branch prefix `agy/`), not a Claude session.
 - check 5 `ci`: no `pull_request` run names the head. The 2 green `workflow_dispatch` runs do not count. It gets no run because it conflicts with main:
   - `beans/defs/folio-assistant-wm63--…md`: AUTHORED (both sides appended to the bean body). Keep both additions; add new text as a NOTE (`beans/notes/`), not as another append.
-  - `beans/notes/README.md`: generated. Run `bun run beans:notes`.
+  - `beans/notes/README.md`: generated. Run `bun run cat beans:notes`.
 
 ## Roles
 - Owner of the fix: whoever holds #2078. That is the Antigravity author, or a takeover session that takes ownership in the PR body.
@@ -32,7 +32,7 @@ A comment on PR #2078, plus a message to the Merge Manager role.
 - [x] after the merge: `git submodule update --init` before staging; `git diff --diff-filter=D HEAD^1 HEAD -- '*/test/results/*'` is empty
 - [x] owed `Code-quality gates` run green on that head
 - [x] the PR body names the owning session; the `ready-to-merge` label is present; a signed `ready: <head sha>` is posted
-- [ ] `bun run merge:guard 2078` passes all 7 checks, and it lands (all 7 checks pass; awaiting Merge Manager merge)
+- [ ] `bun run cat merge:guard 2078` passes all 7 checks, and it lands (all 7 checks pass; awaiting Merge Manager merge)
 
 ## Fails if
 - the resolution drops either side's wm63 text

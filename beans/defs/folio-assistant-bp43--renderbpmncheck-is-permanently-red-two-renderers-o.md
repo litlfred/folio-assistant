@@ -51,7 +51,7 @@ its own.
 
 ## The two obvious fixes are both wrong, and that is the point
 
-**"Just run `bun run render:bpmn`"** — which is *what the failure message
+**"Just run `bun run cat render:bpmn`"** — which is *what the failure message
 itself advises* — regenerates through cat-harness' renderer and **deletes the
 note the owner added yesterday**. Measured: `3 files changed, 3 deletions(-)`,
 one line each, and the line removed is the attribution. The gate goes green by
@@ -204,7 +204,7 @@ Taken wholesale; `package.json` reverted to main's single-renderer form.
 The DIAGNOSIS, which `xsqm`'s commit does not carry:
 
 - the two obvious fixes are both wrong, with the measurement for each —
-  `bun run render:bpmn` deleting the owner's note (`3 files changed, 3
+  `bun run cat render:bpmn` deleting the owner's note (`3 files changed, 3
   deletions(-)`), and repointing `package.json` checking 3 files instead of 78
 - the failure message **advised the first of those**, so the trap was armed for
   whoever read it

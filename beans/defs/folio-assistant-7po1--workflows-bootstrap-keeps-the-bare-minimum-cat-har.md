@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7po1
 title: 'WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T13:18:23Z
-updated_at: 2026-09-20T16:14:51Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-yj32
 ---
 
@@ -173,3 +173,7 @@ blocked on: rename the code, let the pipeline follow.
 
 **Unblocked.** The BLOCKED section above is discharged — the question it named
 has an answer.
+
+## Evidence of completion (2026-10-07)
+- Landed in PR #1347 (merge commit `5891ada72908`): Workflows declaration hierarchy established under `cat-harness/workflows`.
+- Re-derived independently on 2026-10-07: Workflow declarations passing schema checks.

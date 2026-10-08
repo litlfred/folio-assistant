@@ -339,7 +339,7 @@ for each PR in the train:            per HEAD
 build the train:                     merge-base.ts --no-regen, PR by PR
   any Task_ByHand resolution  →  that resolution needs its own G3 review
 on the TRAIN RESULT:                 once
-  bun run regen   (G8)
+  bun run cat regen   (G8)
   path-scoped G5/G6/G7 over the union of the train's changed paths
   one CI run on the result (G1 again, for the combined tree)
 merge

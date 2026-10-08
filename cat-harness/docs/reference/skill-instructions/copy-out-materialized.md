@@ -127,9 +127,9 @@ clean run over nothing.
 
 ## What to check afterwards
 
-- `bun run check:materialized-fixity` — the original still hashes to its
+- `bun run cat check:materialized-fixity` — the original still hashes to its
   recorded digest. If it does not, the copy-out was an edit in place.
-- `bun run check:read-only-graphs` — your folio's directory is not accidentally
+- `bun run cat check:read-only-graphs` — your folio's directory is not accidentally
   declared read-only, and the source's still is.
 {% endraw %}
 

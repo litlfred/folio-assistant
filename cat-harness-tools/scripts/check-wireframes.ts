@@ -29,9 +29,9 @@
  * missing-viewport family enforces.
  *
  * Usage:
- *   bun run check:wireframes            # report, write the sidecar, exit 1 on any gap
- *   bun run check:wireframes -- --json  # print the sidecar document
- *   bun run check:wireframes:check      # JUDGE: compute and judge, write nothing (the gate)
+ *   bun run cat check:wireframes            # report, write the sidecar, exit 1 on any gap
+ *   bun run cat check:wireframes -- --json  # print the sidecar document
+ *   bun run cat check:wireframes:check      # JUDGE: compute and judge, write nothing (the gate)
  *
  * Judge mode (`--check`, bean `bo44`): 0 no gap · 1 any gap · 2 no visualiser
  * declared (could not determine), an unknown flag, or the run threw.
@@ -119,7 +119,7 @@ export function checkWireframes(repoRoot: string = REPO_ROOT, dir: string = WIRE
     }
     const reportFile = join(wdir, "checks", "report.json");
     if (!existsSync(reportFile)) {
-      r.incomplete.push({ wireframe: name, problem: "no checks/report.json: run `bun run wireframe:check`" });
+      r.incomplete.push({ wireframe: name, problem: "no checks/report.json: run `bun run cat wireframe:check`" });
       continue;
     }
     const report: Report = JSON.parse(readFileSync(reportFile, "utf-8"));

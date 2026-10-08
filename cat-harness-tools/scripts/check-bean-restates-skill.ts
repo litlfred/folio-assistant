@@ -149,7 +149,7 @@
  * reports a DISAGREEMENT and names both sides.
  *
  * **It does not repair anything.** Same rule as `check:bean-bodies` and
- * `bun run health`: the finding names something a *person* does, and the
+ * `bun run cat health`: the finding names something a *person* does, and the
  * person is the bean's owner. See
  * [`deletion-requires-confirmation.md`](../skills/conduct/conduct-core/deletion-requires-confirmation.md).
  *

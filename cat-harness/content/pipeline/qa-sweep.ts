@@ -120,7 +120,7 @@ interface Args {
    * temp-directory folio still writes into the platform checkout, because
    * `INSTANCE_ROOT` is resolved from this module's location rather than from
    * anything the caller passed. `scripts/tests/init-folio-qa.test.ts` does
-   * exactly that, inside `bun test`, which is gate 1 of `bun run gates`.
+   * exactly that, inside `bun test`, which is gate 1 of `bun run cat gates`.
    *
    * `saveQaScriptSidecar`'s write-skip (bean `3ozg`) hides it on a clean tree
    * and stops hiding it the moment a checker's hash actually moves — which is
@@ -547,21 +547,6 @@ async function run(): Promise<void> {
         continue;
       }
 
-      // If non-automated, mark as needing agent and continue.
-      const checker = checkers.get(criterionId);
-      if (!def.automated || !checker) {
-        sweepResult.criteria_needs_agent++;
-        totalNeedsAgent++;
-        sweepResult.details.push({
-          criterion: criterionId,
-          outcome: "needs-agent",
-        });
-        continue;
-      }
-
-      // If the criterion depends on a file the block doesn't have,
-      // write an explicit n/a entry so the staleness scanner knows
-      // the criterion was considered and judged not-applicable.
       // Reviewer-identity block shared by every script-kind entry
       // written below. `id` points at the source file containing
       // the checker function (NOT the dispatcher) so the recorded
@@ -696,6 +681,20 @@ async function run(): Promise<void> {
         sweepResult.details.push({
           criterion: criterionId,
           outcome: `n/a-no-${missingRole}`,
+        });
+        continue;
+      }
+
+      // Non-automated or un-implemented criteria mark as needing agent.
+      // Placed AFTER the adapter, profile, and companion gates (folio-assistant-nba0):
+      // an unapplicable criterion is n/a, never queued as a phantom agent task.
+      const checker = checkers.get(criterionId);
+      if (!def.automated || !checker) {
+        sweepResult.criteria_needs_agent++;
+        totalNeedsAgent++;
+        sweepResult.details.push({
+          criterion: criterionId,
+          outcome: "needs-agent",
         });
         continue;
       }

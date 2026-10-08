@@ -19,7 +19,7 @@ Proposal: cat-harness/docs/proposals/state-branch-2026-10-02.md
 
 ## Measured 2026-10-04 (PR #2052): what the mount covers, and the one message that misdirects
 
-The mount half of this bean's second clause is done: `code-quality-gates.yml` now runs `bun run state:mount` in `gates`, `gates-unrun` (where the nine bean gates actually live — `dlqu` moved them there) and the test shards, and `check:workflows`' new `bean-gate-unmounted` rule fails a job that judges the bean store without mounting it first, or with the mount on a later line.
+The mount half of this bean's second clause is done: `code-quality-gates.yml` now runs `bun run cat state:mount` in `gates`, `gates-unrun` (where the nine bean gates actually live — `dlqu` moved them there) and the test shards, and `check:workflows`' new `bean-gate-unmounted` rule fails a job that judges the bean store without mounting it first, or with the mount on a later line.
 
 Two things stay with this bean:
 

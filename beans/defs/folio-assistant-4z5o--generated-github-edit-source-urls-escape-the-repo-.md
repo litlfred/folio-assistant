@@ -42,5 +42,5 @@ _2026-10-06T19:49:01Z_ — Claimed by claude/4z5o-cross-instance-figure-urls —
   - Added `cat-harness/scripts/tests/cross-instance-figure-urls.test.ts` testing nested instance resolution without `..`, preserving local sources, and asserting 0 `edit/main/../` links across all markdown pages under `cat-harness/docs/`.
   - `bun test cat-harness/scripts/tests/cross-instance-figure-urls.test.ts` passes (3/3 pass).
 - Docs regeneration & verification:
-  - Ran `bun run cat-harness/scripts/gen-docs-pages.ts` and confirmed `bun run docs:pages:check` exits 0.
+  - Ran `bun run cat-harness/scripts/gen-docs-pages.ts` and confirmed `bun run cat docs:pages:check` exits 0.
   - `git grep -o "edit/main/\.\./[a-z-]*" cat-harness/docs/*.md` returns 0 matches.

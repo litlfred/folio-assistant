@@ -269,6 +269,6 @@ describe("the bootstrap kg-export sidecar has a WORKFLOW producer (bean 0utt)", 
     const job = text.slice(text.indexOf("\n  qa-publish:"));
     const produce = job.indexOf("kg-export.ts --instance ./bootstrap");
     expect(produce).toBeGreaterThan(-1);
-    expect(produce).toBeLessThan(job.indexOf("bun run qa:publish"));
+    expect(produce).toBeLessThan(job.indexOf("bun run cat qa:publish"));
   });
 });

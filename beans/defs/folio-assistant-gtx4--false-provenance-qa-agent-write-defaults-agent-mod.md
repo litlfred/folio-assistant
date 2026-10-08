@@ -127,6 +127,6 @@ separate bean's worth of work; recorded here so the connection is not lost.
   - `omits agent_model when --model is not supplied (bean gtx4)`
   - `records agent_model when --model is supplied (bean gtx4)`
 - Verified with `bun test cat-harness/src/qa-agent-write.test.ts` (all 6 tests pass).
-- Verified `bun run typecheck` and `bun run check:retired-front-matter` pass cleanly.
+- Verified `bun run typecheck` and `bun run cat check:retired-front-matter` pass cleanly.
 
 _2026-10-06T22:42:11Z_ — Claimed by claude/gtx4-qa-agent-write-model-default — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

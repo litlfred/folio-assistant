@@ -24,7 +24,7 @@ PR #2102 (two bean notes on 4ak5 and yj6r; no code), opened 15:01Z on 2026-10-04
 A comment on PR #2102, plus a message to the Merge Manager role.
 
 ## Done when
-- [x] main merged in (merge commit), `bun run beans:notes` regenerated, pushed by hand
+- [x] main merged in (merge commit), `bun run cat beans:notes` regenerated, pushed by hand
 - [x] owed CI green on that head
 - [x] `ready-to-merge` label and a signed `ready: <head sha>`
 - [x] the owner approves, `merge:guard 2102` passes all 7 checks, and it lands

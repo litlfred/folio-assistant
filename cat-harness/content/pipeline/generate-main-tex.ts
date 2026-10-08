@@ -21,7 +21,7 @@
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";
-import { readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 import type { Paper } from "../../schemas/types";
 import { escapeLatex } from "./render-latex";
@@ -328,13 +328,33 @@ if (import.meta.main) {
   // this file, so it pointed at `<platform>/content/quantum-observable-universe`
   // which exists in no checkout. Same fix as `build.ts`.
   const contentRoot = findContentRepoRoot();
-  const paperPath = resolve(
-    args[0] ||
-      (() => {
-        const p = requirePaper(undefined, contentRoot);
-        return join(folioDir(contentRoot),  p, `${p}.ts`);
-      })(),
-  );
+  let paperPath: string;
+  try {
+    paperPath = resolve(
+      args[0] ||
+        (() => {
+          const p = requirePaper(undefined, contentRoot);
+          return join(folioDir(contentRoot),  p, `${p}.ts`);
+        })(),
+    );
+  } catch (err) {
+    console.error(
+      `No paper manifest found under ${contentRoot} — refusing to report success.\n` +
+      "This generates main.tex for a FOLIO's content; folio-assistant is the platform.\n" +
+      "Run it from the content repo, or name a paper explicitly.\n" +
+      (err instanceof Error ? err.message : String(err)),
+    );
+    process.exit(2);
+  }
+
+  if (!existsSync(paperPath)) {
+    console.error(
+      `Paper manifest not found: ${paperPath} — refusing to report success.\n` +
+      "This generates main.tex for a FOLIO's content; folio-assistant is the platform.\n" +
+      "Run it from the content repo, or name a paper explicitly.",
+    );
+    process.exit(2);
+  }
 
   const preambleIdx = args.indexOf("--preamble");
   const preamblePath = resolve(

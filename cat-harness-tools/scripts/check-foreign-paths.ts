@@ -46,7 +46,7 @@
  * command that lowers the list, not red — the same one-way rule as
  * `check:standalone`, so a fix elsewhere never turns an unrelated PR red.
  *
- * Usage: bun run check:foreign-paths [--update]
+ * Usage: bun run cat check:foreign-paths [--update]
  * Exit:  0 at or under the baseline · 1 above it
  */
 import { execFileSync } from "node:child_process";
@@ -273,7 +273,7 @@ export function judge(current: Record<string, number>, baseline: Record<string, 
 }
 
 const COMMENT =
-  "Per-file counts of literals that spell a path into ANOTHER instance's declared directories (bean `gz47`), in non-test source. A RATCHET, one way: a file above its count is red; a file below it is reported with `bun run foreign-paths:baseline`, which lowers the list. WRITTEN by that command; a higher count is a diff somebody reviews. See the module header of cat-harness/scripts/check-foreign-paths.ts.";
+  "Per-file counts of literals that spell a path into ANOTHER instance's declared directories (bean `gz47`), in non-test source. A RATCHET, one way: a file above its count is red; a file below it is reported with `bun run cat foreign-paths:baseline`, which lowers the list. WRITTEN by that command; a higher count is a diff somebody reviews. See the module header of cat-harness/scripts/check-foreign-paths.ts.";
 
 if (import.meta.main) {
   const repo = repoRootFor(resolve(import.meta.dir, ".."));
@@ -299,7 +299,7 @@ if (import.meta.main) {
       console.log(`      ${s.file}:${s.line}  "${s.literal}"  → ${s.owner}'s ${s.target}/`);
   }
   if (j.under.length > 0) {
-    console.log(`  ${j.under.length} file(s) are below the baseline — \`bun run foreign-paths:baseline\` lowers the list (not a failure).`);
+    console.log(`  ${j.under.length} file(s) are below the baseline — \`bun run cat foreign-paths:baseline\` lowers the list (not a failure).`);
   }
   if (j.exit === 1) {
     console.log(

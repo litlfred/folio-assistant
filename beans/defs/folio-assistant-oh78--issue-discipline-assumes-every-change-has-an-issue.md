@@ -46,7 +46,7 @@ plan on `main`. It also states the both-ways link rule, with #558/`ivfw` and
 #464/`mggs` as the measured cases.
 
 **Done-when 2 is partly landed, and the part that is not is named rather than
-implied.** `bun run check:bean-issue-links` checks two directions and reports
+implied.** `bun run cat check:bean-issue-links` checks two directions and reports
 the third as undetermined every run:
 
 | direction | verdict |
@@ -119,7 +119,7 @@ baseline** — a baseline entry is a deferral, not a home.
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 _2026-10-07T04:58:18Z_ — Claimed by claude/oh78-close-on-evidence — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -129,4 +129,4 @@ Closed on evidence per AGENTS.md bean discipline:
 1. Done-when item 1: Landed in PR #589 (`issue-working` §"When the work has a BEAN and no issue (STRICT)").
 2. Done-when item 2: Landed in PR #657 (commit `e2fb843f6de8`), implementing the API query in `cat-harness-tools/scripts/check-bean-issue-links.ts` (originally `cat-harness/scripts/check-bean-issue-links.ts`).
 3. Unit tests in `cat-harness-tools/scripts/tests/check-bean-issue-links.test.ts` pass cleanly (4 pass, 0 fail).
-4. `bun run check:bean-issue-links --offline` exits 0 cleanly.
+4. `bun run cat check:bean-issue-links --offline` exits 0 cleanly.

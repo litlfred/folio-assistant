@@ -139,7 +139,7 @@ _2026-10-01T12:25:43Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — push
 
 
 ## 2026-10-01 (later) — two leftovers settled
-- **The cross-instance kg-qa sidecars are not orphans.** Under PR0 the auditor files a subject owned by another instance under its own `test/results/kg-qa/_external/<owner>/`; there are 7 (smart-base 1, folio-assistant-core 1, large-datasets 5). `bun run kg:audit` rewrites them byte-identically and reports no orphan, `kg:audit:check` is green with them, and kg-audit.ts cites the smart-base one as evidence. The step-3 premise ("cat-harness wrote them for subjects it no longer declares") predates PR0. Nothing deleted.
+- **The cross-instance kg-qa sidecars are not orphans.** Under PR0 the auditor files a subject owned by another instance under its own `test/results/kg-qa/_external/<owner>/`; there are 7 (smart-base 1, folio-assistant-core 1, large-datasets 5). `bun run cat kg:audit` rewrites them byte-identically and reports no orphan, `kg:audit:check` is green with them, and kg-audit.ts cites the smart-base one as evidence. The step-3 premise ("cat-harness wrote them for subjects it no longer declares") predates PR0. Nothing deleted.
 - **Duplicate checkoutDirectories removed.** schemas/cat-harness.ts held checkoutResolvedDirectories / checkoutDirectories / checkoutDirectoriesForGraph (cmsl step 2's parallel version); all nine importers use schemas/harness-config.ts's (PR0's), and the three only called each other. 79 lines out; tsc, eslint clean; cat-harness, placement-pr0-mechanisms, subgraphs, instance-graph-isolation: 130 pass.
 
 

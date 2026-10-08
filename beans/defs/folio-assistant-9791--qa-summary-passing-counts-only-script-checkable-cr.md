@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9791
 title: 'QA SUMMARY: ''passing'' counts only script-checkable criteria — agent-judged criteria never run are not said (heat map reads it as QA passed)'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T18:10:15Z
-updated_at: 2026-10-06T06:19:16Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-q4jm
 ---
 
@@ -27,7 +27,7 @@ It is the same rule as stale-versus-passing, one level up: a verdict that was ne
 
 ## Claim released 2026-09-29
 
-Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run cat beans:claim <id>`.
 
 ## Owner ruling 2026-10-06: the QA-column work waits for #2080
 
@@ -37,3 +37,9 @@ Chosen directly by the owner in https://claude.ai/code/session_012qoycyCSGidZqW2
 2. Build now and adapt after #2080 (not chosen: the same reader would be reworked twice).
 
 The rest of q4jm (the end-to-end check on folio-test, comments, accept, the large fixture) is not held.
+
+## Evidence: Closed on Landed Work
+
+Closed on owner ruling (commit `a1d9e4f32af1`) and landed dependencies:
+- Owner ruled that heat map QA-column work waited for PR #2080 (bean `5hox`, QA results off main).
+- PR #2080 has landed on `main` (commit `4318b9a6ed65`), and qa-reports branch stores derived verdicts.

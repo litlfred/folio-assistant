@@ -258,12 +258,12 @@ only where the terms resolve.
 
 | what you changed | run |
 |---|---|
-| added a graph typology | `bun run check:graph-typology-work`, `bun run check:harness-dirs` |
-| added or renamed an instance | `bun run check:instance-config`, `bun run check:subgraph-coverage` |
-| edited this or any skill | `bun run check:skills` |
-| anything | `bun run gates` |
+| added a graph typology | `bun run cat check:graph-typology-work`, `bun run cat check:harness-dirs` |
+| added or renamed an instance | `bun run cat check:instance-config`, `bun run cat check:subgraph-coverage` |
+| edited this or any skill | `bun run cat check:skills` |
+| anything | `bun run cat gates` |
 
-`bun run gates` is the one to run, and it is stronger than "a list someone
+`bun run cat gates` is the one to run, and it is stronger than "a list someone
 maintains" in two distinct ways worth knowing before you trust it (bean `j2w4`):
 
 1. **Its gate list is derived**, from `.github/workflows/code-quality-gates.yml`,

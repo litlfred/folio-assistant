@@ -71,7 +71,7 @@ would edit the record rather than correct it.
 ---
 
 _2026-09-20T19:30Z_ — **Done-when 1 landed** (PR #589, issue #588).
-`bun run check:command-paths` reads every fenced command in the entry documents
+`bun run cat check:command-paths` reads every fenced command in the entry documents
 and every skill, and fails when a repository-relative path in one does not
 resolve. Wired into `code-quality-gates.yml`.
 
@@ -144,7 +144,7 @@ token. Left as a distinct piece of work rather than guessed at.
 
 **And the reason it reached CI at all is worth more than the fix.** This session
 ran `bun test`, `eslint`, `typecheck` and a dozen named `check:*` scripts and
-called that green. `bun run gates` runs sixty-eight, and it was **not in
+called that green. `bun run cat gates` runs sixty-eight, and it was **not in
 AGENTS.md's Commands block** — so the subset was chosen from memory. Added
 there, with the measurement: a subset of the gate set is not the gate set.
 

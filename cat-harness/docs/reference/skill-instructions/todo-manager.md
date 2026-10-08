@@ -98,7 +98,7 @@ first minutes reading it.
    `Session: …` bean. What one sitting did is recorded in two places that
    already exist and are already read: the **PR body** (`## Intent` /
    `## Session results`, [`session-intent`](session-intent.md)) and a **bean
-   note** on each bean you worked — `bun run beans:note <id> --title "…"`,
+   note** on each bean you worked — `bun run cat beans:note <id> --title "…"`,
    written to the declared `notes` directory of `beans/beans.json` and keyed by
    branch, so it is one file per session per bean by construction
    ([`bean-coordination`](bean-coordination.md) §"Adding to a bean"). See
@@ -128,7 +128,7 @@ print(f"{len(m)} exact match(es)")
 ```
 
 - **≥ 1 match** → do **not** create. Claim the existing bean instead, with
-  **`bun run beans:claim <id>`** — which reads the default branch first, refuses
+  **`bun run cat beans:claim <id>`** — which reads the default branch first, refuses
   a bean a sibling holds or one already closed, and records a holder note so the
   next session's check can see you.
 
@@ -142,11 +142,11 @@ print(f"{len(m)} exact match(es)")
 
   Read the outcome — three of them are refusals, and `held-unknown` means it
   could not tell a live sibling from an abandoned claim:
-  [`bean-coordination.md` §"`bun run beans:claim`"](bean-coordination.md).
+  [`bean-coordination.md` §"`bun run cat beans:claim`"](bean-coordination.md).
 - **0 matches** → run the **semantic** check before creating:
 
   ```bash
-  bun run lsi:near "$T"          # add --body "<first paragraph>" when you have one
+  bun run cat lsi:near "$T"          # add --body "<first paragraph>" when you have one
   ```
 
   The exact-title check above catches the same WORDS; this catches the same
@@ -312,14 +312,14 @@ What that costs is not clutter alone:
 | what the session wants to keep | where |
 |---|---|
 | what it intended and what it got done | the PR body, `## Intent` / `## Session results` ([`session-intent`](session-intent.md)) |
-| what it found about a bean | a note: `bun run beans:note <id>` → `beans/notes/<bean>--<date>--<branch>.md` |
+| what it found about a bean | a note: `bun run cat beans:note <id>` → `beans/notes/<bean>--<date>--<branch>.md` |
 | a survey of a commit window it read | `beans/surveys/` (`session-survey`) — only if it surveyed one |
 | a handover to whoever comes next | a note on the bean being handed over, plus [`handover-report`](handover-report.md) |
 
 **A handover is the same case.** A `Handoff: …` or `Handover: …` bean typed
 `epic` or `milestone` is a session log with a different title.
 
-**`bun run health` reports it** — the `bean-store` check's
+**`bun run cat health` reports it** — the `bean-store` check's
 `bean-session-log-roots` finding names every OPEN bean whose title starts
 `Session`, `Handoff` or `Handover` and whose type is `epic` or `milestone`.
 Report-only: the remedy is a person's (or a reviewed
@@ -418,8 +418,8 @@ Repository gates (hard) · step 65: "Every declared directory's README is curren
 That is `readme:subgraphs:check`. Run its writer before you push:
 
 ```sh
-bun run readme:subgraphs          # then commit beans/README.md with the bean
-bun run readme:subgraphs:check    # must exit 0
+bun run cat readme:subgraphs          # then commit beans/README.md with the bean
+bun run cat readme:subgraphs:check    # must exit 0
 ```
 
 **Measured 2026-10-03: three separate PRs failed this gate on the same day** —
@@ -437,7 +437,7 @@ just created. Read the failing STEP, and remember that `beans/` is a declared
 directory like any other.
 
 The same shape applies one door along: **editing a skill owes
-`bun run skill:register`**, which `skill-registration` carries in full. Both are
+`bun run cat skill:register`**, which `skill-registration` carries in full. Both are
 instances of one rule — a declared artefact has generated neighbours, and the
 CLI that writes the artefact does not write them.
 
@@ -449,11 +449,11 @@ everything it writes once installed. There is no import step and no second
 store.
 
 ```sh
-bun run beans:fallback list --status todo
-bun run beans:fallback show <id>
-bun run beans:fallback claim <id>
-bun run beans:fallback create "<title>" --status in-progress
-bun run beans:fallback note <id> "<what you found>"
+bun run cat beans:fallback list --status todo
+bun run cat beans:fallback show <id>
+bun run cat beans:fallback claim <id>
+bun run cat beans:fallback create "<title>" --status in-progress
+bun run cat beans:fallback note <id> "<what you found>"
 ```
 
 A read-only fallback is not a fallback for an agent — it lets you see the plan
@@ -551,7 +551,7 @@ You can map out sequence blockers using:
 `beans update <id> --blocking <blocked-id>`
 
 **3. Updating Status & Adding Comments**
-- When starting work: `bun run beans:claim <id>` — a claim goes through the
+- When starting work: `bun run cat beans:claim <id>` — a claim goes through the
   claim tool, never through `beans update`, so it is visible to the next
   session's check (bean `c3d7`)
 - When completed: `beans update <id> --status completed`

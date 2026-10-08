@@ -12,7 +12,7 @@
  *
  * ## How the contracts here were obtained
  *
- * **Read from the registrars, not from the source text.** `bun run mcp:capture`
+ * **Read from the registrars, not from the source text.** `bun run cat mcp:capture`
  * mounts each `register*` export against a capture object and reads the real
  * Zod shapes, which is how the required/optional split and every enum's member
  * list below were established. The first attempt regex-scanned the source and
@@ -20,7 +20,7 @@
  * appeared to take `Examples` and `Local`. A contract that agrees with nothing
  * is worse than no contract, because the next check trusts it.
  *
- * Re-run `bun run mcp:capture` after changing a registrar, and bring this file
+ * Re-run `bun run cat mcp:capture` after changing a registrar, and bring this file
  * with it. `scripts/check-tools.ts` catches a type reference that does not
  * resolve; it cannot catch a port this file forgot, which is what that command
  * is for.
@@ -76,7 +76,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/check-deps.ts", "check_dependencies"), shell: "bun run check-deps" },
+      invoke: { ...inProcess("src/tools/check-deps.ts", "check_dependencies"), shell: "bun run cat check-deps" },
       io: {
         inputs: [
           {
@@ -99,7 +99,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/folio-init.ts", "folio_init"), shell: "bun run init-folio" },
+      invoke: { ...inProcess("src/tools/folio-init.ts", "folio_init"), shell: "bun run cat init-folio" },
       io: {
         inputs: [
           { name: "title", schema: t("Text"), required: true, description: "The folio's human title." },
@@ -179,7 +179,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/readme-audit.ts", "readme_audit"), shell: "bun run readme:audit" },
+      invoke: { ...inProcess("src/tools/readme-audit.ts", "readme_audit"), shell: "bun run cat readme:audit" },
       io: {
         inputs: [
           { name: "file", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "The file to audit; the README by default." },
@@ -204,7 +204,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/lsi-query.ts", "lsi_query"), shell: "bun run lsi query" },
+      invoke: { ...inProcess("src/tools/lsi-query.ts", "lsi_query"), shell: "bun run cat lsi query" },
       io: {
         inputs: [
           { name: "text", schema: t("Text"), required: true, arg: { stdin: true }, description: "The query, in any words, on STDIN — free text never goes on a command line." },
@@ -223,7 +223,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Flatten the repository's renders into the order their `needs` imply, and optionally run them. Two stages: the current declared state as json/jsonld and the README derived from it are FATAL; the dynamic renderers (viewers, visualisers, doc pages, diagrams) skip and log; the dynamic-state export closes it. A cycle or a missing dependency yields NO order rather than a partial one.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/render-order.ts", "render_order"), shell: "bun run render" },
+      invoke: { ...inProcess("src/tools/render-order.ts", "render_order"), shell: "bun run cat render" },
       io: {
         inputs: [
           {
@@ -253,7 +253,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/readme-sync.ts", "readme_sync"), shell: "bun run readme:sync" },
+      invoke: { ...inProcess("src/tools/readme-sync.ts", "readme_sync"), shell: "bun run cat readme:sync" },
       io: {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any section is stale; write nothing." },
@@ -335,7 +335,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
       description:
         "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
       install: bundled,
-      invoke: { ...inProcess("src/tools/stakeholder-map.ts", "stakeholder_map"), shell: "bun run stakeholder-map" },
+      invoke: { ...inProcess("src/tools/stakeholder-map.ts", "stakeholder_map"), shell: "bun run cat stakeholder-map" },
       io: {
         inputs: [
           {

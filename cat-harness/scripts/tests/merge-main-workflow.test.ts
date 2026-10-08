@@ -96,7 +96,7 @@ describe("the write token never meets a fork", () => {
 });
 
 describe("the merge runs main's tool, and fails loudly", () => {
-  // Measured 2026-10-02 on 7 real runs: `bun run merge:main` resolved the
+  // Measured 2026-10-02 on 7 real runs: `bun run cat merge:main` resolved the
   // script from the PR's OWN package.json, which an old branch lacks —
   // `Script not found` every time, and every job green.
   const steps = doc.jobs.merge!.steps;
@@ -112,7 +112,7 @@ describe("the merge runs main's tool, and fails loudly", () => {
   test("the merge step runs that copy against the PR with --root, never the PR's script", () => {
     const run = runOf(steps[merge]!);
     expect(run).toContain('bun run "$RUNNER_TEMP/tool/cat-harness/scripts/merge-base.ts" --root "$GITHUB_WORKSPACE"');
-    for (const s of steps) expect(runOf(s)).not.toMatch(/bun run merge:main\b/);
+    for (const s of steps) expect(runOf(s)).not.toMatch(/bun run cat merge:main\b/);
   });
 
   test("a non-zero exit that is not a refusal fails the job, after the comment", () => {
@@ -307,10 +307,10 @@ describe("one bad member no longer reds the whole run (bean `03nl`)", () => {
     expect(steps[record]!.run).toContain('grep -q -- "--verdict" "$tool"');
   });
 
-  test("the aggregator runs main's copy, with the submodules its checkout needs", () => {
+  test("the aggregator runs main's copy, with the remote mounts its checkout needs", () => {
     const steps = doc.jobs.notify!.steps;
-    const checkout = steps.find((s) => (s.uses ?? "").startsWith("actions/checkout")) as { with?: Record<string, unknown> };
-    expect(checkout.with?.submodules).toBe("recursive");
+    const mount = steps.find((s) => s.run?.includes("mount-from-lock.ts"));
+    expect(mount).toBeDefined();
     const bun = steps.find((s) => (s.uses ?? "").startsWith("oven-sh/setup-bun")) as { with?: Record<string, unknown> };
     expect(bun.with?.["bun-version"]).toBe("1.3.14");
     const decide = steps.find((s) => s.name?.startsWith("Decide whether this run"))!;

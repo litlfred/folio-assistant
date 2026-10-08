@@ -9,6 +9,7 @@ import {
   cell, columnsFor, dashboardHtml, dashboardSection, fieldsOf, isKindPages, kindDir, nodeHtml, nodeSection, PAGE_MARK, plannedPages,
   unresolvedPages, type FieldInfo,
 } from "../gen-node-kind-pages.ts";
+import { unscopedSelectors } from "../lib/themed-page.ts";
 import type { NodeKindEntry } from "../../schemas/node-kind-index.ts";
 import type { KindNode } from "../../schemas/node-kind-nodes.ts";
 
@@ -110,7 +111,7 @@ describe("the dashboard", () => {
 describe("the node page", () => {
   const html = nodeHtml(kind("todo"), node("todo", "alpha", "todos/items/x", { summary: "Fix it", refs: [{ kind: "bean", id: "b1" }] }), "en");
   test("titles itself from the node and links to the kind and the harness", () => {
-    expect(html).toContain("<h1>Fix it</h1>");
+    expect(html).toContain('<h1 id="nk-title">Fix it</h1>');
     expect(html).toContain('<a href="../../../../">todo</a>');
     expect(html).toContain('<a href="../../../">alpha</a>');
   });
@@ -194,5 +195,32 @@ describe("each page's own rail section (#1757)", () => {
       items: [{ label: "Comments", href: "#comments" }, { label: "Fields", href: "#fields" }],
     });
     expect(dashboardSection(k, nodes, fields, undefined, [{ id: "coverage", label: "Coverage" }])[0]!.items!.map((i) => i.href)).toContain("#coverage");
+  });
+});
+
+describe("the pages are THEMED, so they carry the site's top band (2026-10-07)", () => {
+  const k = kind("todo");
+  const fields = fieldsOf(z.object({ status: z.enum(["open", "done"]) }));
+  const nodes = [node("todo", "alpha", "t/a", { status: "open" })];
+  const pages = [dashboardHtml(k, nodes, fields, new Map([[k.id, k]]), "en"), nodeHtml(k, nodes[0]!, "en")];
+
+  test("each is on the default layout, not a standalone document, and still carries the mark", () => {
+    for (const html of pages) {
+      expect(html.startsWith("---\nlayout: default\n")).toBe(true);
+      expect(html).not.toMatch(/<!doctype|<html|<head|<body/i);
+      expect(html).toContain('<h1 id="nk-title">');
+      // Pruning and `unresolvedPages` recognise the generator's pages by it.
+      expect(html).toContain(`<div class="nk-page" ${PAGE_MARK}>`);
+    }
+  });
+
+  test("each styles nothing outside its own wrapper", () => {
+    for (const html of pages) expect(unscopedSelectors(html, ".nk-page")).toEqual([]);
+  });
+
+  test("a folio's built `_site` still gets a standalone page: nothing there reads front matter", () => {
+    const html = nodeHtml(k, nodes[0]!, "en", [], "standalone");
+    expect(html.startsWith("<!doctype html>")).toBe(true);
+    expect(html).toContain(`<body ${PAGE_MARK}>`);
   });
 });

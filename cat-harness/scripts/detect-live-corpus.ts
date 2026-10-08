@@ -75,6 +75,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { dirname, join, resolve } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.ts";
+import { scriptsOf } from "../schemas/script-table.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(INSTANCE_ROOT);
@@ -164,7 +165,7 @@ export interface Verdict {
 }
 
 function runWriter(cmd: string): boolean {
-  const r = spawnSync("bun", ["run", cmd], { cwd: REPO, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync("bun", ["run", "cat", cmd], { cwd: REPO, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
   return r.error === undefined && r.status === 0;
 }
 
@@ -191,9 +192,7 @@ export function probe(writer: string): Verdict {
 
 /** `package.json` scripts that write an artefact: `X` such that `X:check` exists. */
 export function derivedWriters(repo = REPO): string[] {
-  const s = JSON.parse(readFileSync(join(repo, "package.json"), "utf-8")) as {
-    scripts: Record<string, string>;
-  };
+  const s = { scripts: scriptsOf(repo) };
   return Object.keys(s.scripts)
     .filter((k) => k.endsWith(":check") && s.scripts[k.slice(0, -":check".length)] !== undefined)
     .map((k) => k.slice(0, -":check".length))

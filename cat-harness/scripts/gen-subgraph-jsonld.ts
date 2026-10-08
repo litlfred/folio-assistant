@@ -914,7 +914,7 @@ async function main(): Promise<number> {
     for (const p of stale) console.error(`  stale or missing: ${p}`);
     for (const p of strays) console.error(`  not generated:    ${relative(ROOT, p)}`);
     for (const p of audit) console.error(`  payload:          ${p}`);
-    console.error("Run: bun run subgraph:jsonld");
+    console.error("Run: bun run cat subgraph:jsonld");
     return 1;
   }
 

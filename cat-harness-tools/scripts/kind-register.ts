@@ -9,7 +9,7 @@
  * ## The measurement that made this a command rather than a list
  *
  * Adding the `auto-docs` kind (#2022, bean `06e3`) I ran **six hand-picked
- * `check:*` commands** and every one passed. `bun run gates` then found **5
+ * `check:*` commands** and every one passed. `bun run cat gates` then found **5
  * failures across 217**, and `bun test` found two more. Seven obligations, of
  * which a careful hand-picked subset found none:
  *
@@ -160,7 +160,7 @@ export function authoredGaps(root?: string): AuthoredGap[] {
       out.push({
         kind,
         owes: "kind-table-row",
-        detail: `no row in \`${KIND_TABLE_DOC}\`: the table is GENERATED from each kind's \`description\` (bean dmx1), so run \`bun run kind:table\`, and give the kind a \`description\` if it has none.`,
+        detail: `no row in \`${KIND_TABLE_DOC}\`: the table is GENERATED from each kind's \`description\` (bean dmx1), so run \`bun run cat kind:table\`, and give the kind a \`description\` if it has none.`,
       });
     }
   }
@@ -223,12 +223,12 @@ export function hueReport(): HueReport {
 }
 
 function run(args: readonly string[]): number {
-  const r = spawnSync("bun", ["run", ...args], { stdio: "inherit", cwd: process.cwd() });
+  const r = spawnSync("bun", ["run", "cat", ...args], { stdio: "inherit", cwd: process.cwd() });
   return r.status ?? (r.error ? 128 : 0);
 }
 
 function verifyQuietly(args: readonly string[]): { code: number; output: string } {
-  const r = spawnSync("bun", ["run", ...args], { encoding: "utf-8", cwd: process.cwd() });
+  const r = spawnSync("bun", ["run", "cat", ...args], { encoding: "utf-8", cwd: process.cwd() });
   return { code: r.status ?? (r.error ? 128 : 0), output: `${r.stdout ?? ""}${r.stderr ?? ""}` };
 }
 
@@ -241,7 +241,7 @@ export function main(argv: readonly string[]): number {
     for (const s of STEPS) {
       const rc = run(s.write);
       if (rc !== 0) {
-        console.error(`\n✗ \`bun run ${s.write.join(" ")}\` exited ${rc} — ${s.because}`);
+        console.error(`\n✗ \`bun run cat ${s.write.join(" ")}\` exited ${rc} — ${s.because}`);
         return 1;
       }
     }
@@ -289,7 +289,7 @@ export function main(argv: readonly string[]): number {
     console.error(
       `\n✗ ${red.length} stale artefact(s) and ${gaps.length} authored gap(s) across ` +
         `${kinds.length} registered kind(s).` +
-        (check ? `\n  Run \`bun run kind:register\` to perform the generated ones.` : ``),
+        (check ? `\n  Run \`bun run cat kind:register\` to perform the generated ones.` : ``),
     );
     return 1;
   }

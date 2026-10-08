@@ -62,12 +62,12 @@ when the work looks finished.
 
 | # | stage | lane | done when | learned from |
 |---|---|---|---|---|
-| 0 | Brief, claim the bean | `authoring-agent` | bean claimed with `bun run beans:claim` | [`opening-brief`](opening-brief.md) |
+| 0 | Brief, claim the bean | `authoring-agent` | bean claimed with `bun run cat beans:claim` | [`opening-brief`](opening-brief.md) |
 | 1 | **Declare it in place** | `authoring-agent` | the declaration parses; `instance-repositories.test.ts` green | bean `6rmv` (identity), `dh4f` (declare only what exists) |
 | 2 | **Grow it in place** | `authoring-agent` | the content type's own gates | the content type's skill |
 | 3 | **Push generic down** | `platform-authoring-agent` | `check:import-direction`, `check:reference-direction`, `check:process-bindings` add nothing | stages A–C of `n3ni` (#1768, #1782, #1783); stage D `kg83` (#1795) |
 | 4 | **One import seam** | `platform-authoring-agent` | every climb out of the directory goes through `<name>/platform.ts` | `6f19f9100` (#1767), `a93da7d41` (#1860) |
-| 5 | **Rehearse self-contained** | `build-pipeline` | `bun run seed:ready --layer <name> --rehearse` | `rbz3` (fork rehearsal), `hcpz` (#1896) |
+| 5 | **Rehearse self-contained** | `build-pipeline` | `bun run cat seed:ready --layer <name> --rehearse` | `rbz3` (fork rehearsal), `hcpz` (#1896) |
 | 6 | **Report what would move** | `authoring-agent` | the report is in the bean | `kg-separation` stage 9 |
 | 7 | **Owner confirms: create the repository** | `administrator` | an answer, recorded in the bean | separation arc G6 |
 | 8 | Create the repository | `administrator` | it exists, empty, and was read before writing | separation arc G6/G7 |
@@ -103,7 +103,7 @@ A directory `<name>/` at the host's root, with `<name>/<name>.json`:
   2026-10-06):
 
   ```sh
-  bun run init-folio --staged <path> --title "<title>" \
+  bun run cat init-folio --staged <path> --title "<title>" \
     --repository <owner>/<name> --needs <harness>   # --host-repository when origin cannot say
   ```
 
@@ -151,7 +151,7 @@ after one is the expected signal to reroute, not a regression.
 ### 5 · Rehearse self-contained — run the gates, do not scan
 
 ```sh
-bun run seed:ready --layer <name> --rehearse --text   # exit 0 settled, 1 not yet, 2 unknown
+bun run cat seed:ready --layer <name> --rehearse --text   # exit 0 settled, 1 not yet, 2 unknown
 ```
 
 It copies the layer and what it `needs` into a scratch workspace of sibling
@@ -232,7 +232,7 @@ The host keeps its own copy through this stage. The re-point is additive.
 ### 11 · Verify on a fresh clone
 
 ```sh
-bun run sub-kg:verify-clone --repo <owner>/<name> --ref <seeding branch> --text   # exit 0 green, 1 red, 2 unknown
+bun run cat sub-kg:verify-clone --repo <owner>/<name> --ref <seeding branch> --text   # exit 0 green, 1 red, 2 unknown
 ```
 
 The Tool `sub-kg-verify-clone` (owner ruling 2, 2026-10-06) clones the new

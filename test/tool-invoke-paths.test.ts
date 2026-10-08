@@ -126,11 +126,11 @@ describe("what the check deliberately does NOT rule on", () => {
   });
 
   test("a `package.json` script name is not treated as a path", () => {
-    // `bun run kg:audit` names a script, not a file. Treating it as a path would
+    // `bun run cat kg:audit` names a script, not a file. Treating it as a path would
     // report every script-backed node as broken.
     const scripted = tools().filter((t) => {
       const sh = t.invoke?.shell;
-      return typeof sh === "string" && /^bun run [a-z][\w-]*:/.test(sh);
+      return typeof sh === "string" && /^bun run (?:cat )?[a-z][\w-]*:/.test(sh);
     });
     expect(scripted.length).toBeGreaterThan(5);
     const flagged = unresolvedPaths().map((u) => u.tool);

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lbz8
 title: 'AUTO-DOCS FAMILY: generated FHIR IG pages (gen-ig-pages) move off main to cat/fhir-harness/ig-docs'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-04T12:55:24Z
-updated_at: 2026-10-04T13:49:53Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-fs43
 blocked_by:
     - folio-assistant-xsrv
@@ -75,3 +75,10 @@ Mapping the existing pipeline (docs-site, feature-staging, compose-docs's existi
 - **4j86**, STAGING CONE at file level (owner chose option 1): this bean's staging item is that one.
 
 QA results already come from qa-reports in both site builds (qa-site-assets.ts fetch and verify, in docs-site.yml and feature-staging.yml), so that half of the owner's site-build ask exists already.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in commits `de592dc521b9`, `e99a8c5f2d8c`, `1acae033226e`, `1d88b77a8bae`, and `6c913ff9c49c`:
+- Generated FHIR IG pages moved off main to `cat/fhir-harness/ig-docs`.
+- `gen-ig-pages --check` reads through route-authority.
+- Owner rulings recorded: dependency-cone staging, site build pulls ig-docs.

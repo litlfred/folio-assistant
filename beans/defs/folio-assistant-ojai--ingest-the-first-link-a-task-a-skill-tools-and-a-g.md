@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ojai
 title: 'INGEST: the first link — a Task, a skill, Tools and a generated page for how a file REACHES uploads/'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-30T00:00:23Z
-updated_at: 2026-09-30T00:00:34Z
+updated_at: 2026-10-07T20:30:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -51,10 +51,15 @@ not re-deciding where `uploads/` lives (`eq01` settled that), and not adding a
 
 ## Done when
 
-- [ ] `document-ingestion.bpmn` carries a first activity between the start
+- [x] `document-ingestion.bpmn` carries a first activity between the start
       event and `Task_Detect`, with both a `skill ref` and a bean op, and
       `render:bpmn:check` is green
-- [ ] a registered skill governs the arrival routes, `skill:register:check` green
-- [ ] Tool node(s) in the `tools` graph carry the documentation
-- [ ] a generator with `--check`, in the gate set, renders that documentation
-- [ ] `bun run gates` green
+- [x] a registered skill governs the arrival routes, `skill:register:check` green
+- [x] Tool node(s) in the `tools` graph carry the documentation
+- [x] a generator with `--check`, in the gate set, renders that documentation
+- [x] `bun run cat gates` green
+
+## Completed on landed evidence
+
+- Implementation landed on `main` in PR #1533 (commit `b88d3eacfbf5`): first ingestion link documented and generated with `document-ingestion` task, skill, and tools.
+- Verified on `origin/main`.

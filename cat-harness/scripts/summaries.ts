@@ -13,9 +13,9 @@
  * summary's `source_hash` no longer matches.
  *
  * ```sh
- * bun run summaries                                  # the backlog, per entry
- * bun run summaries:next -- --n 5 [--entry <slug>]   # the next K blocks, WITH their text, as JSON
- * bun run summaries:record -- drafts.json            # write an agent's drafts as sidecars
+ * bun run cat summaries                                  # the backlog, per entry
+ * bun run cat summaries:next -- --n 5 [--entry <slug>]   # the next K blocks, WITH their text, as JSON
+ * bun run cat summaries:record -- drafts.json            # write an agent's drafts as sidecars
  * ```
  *
  * ## Slowly, and never a gate
@@ -31,7 +31,7 @@
  * ## It writes drafts and nothing else
  *
  * `record` writes `state: "draft"` and refuses anything else. Confirming or
- * rejecting is a person's act and goes through `bun run narratives`, which
+ * rejecting is a person's act and goes through `bun run cat narratives`, which
  * reads these sidecars (`NARRATIVE_BEARING` includes `summaries.json`) and
  * refuses to run outside a terminal. A tool that could both draft and confirm
  * would be one flag away from the failure the state machine exists to stop.
@@ -479,11 +479,11 @@ function listing(root: string): void {
   console.log(
     `\n${all.backlog} of ${all.prose} prose block(s) await an agent summary ` +
       `(${all.notSummarised} never summarised, ${all.stale} stale, ${all.rejected} rejected); ` +
-      `${all.draft} draft(s) await a person (bun run narratives), ${all.confirmed} confirmed.` +
+      `${all.draft} draft(s) await a person (bun run cat narratives), ${all.confirmed} confirmed.` +
       (all.unreadable ? ` ${all.unreadable} block(s) have unreadable text.` : "") +
       (all.empty ? ` ${all.empty} block(s) have empty text and nothing to summarise.` : ""),
   );
-  console.log("Advisory: drained a few at a time — bun run summaries:next -- --n 5");
+  console.log("Advisory: drained a few at a time — bun run cat summaries:next -- --n 5");
 }
 
 function flag(argv: string[], name: string): string | undefined {
@@ -501,11 +501,11 @@ if (import.meta.main) {
       console.log(JSON.stringify(next(ROOT, { n, entry: flag(argv, "--entry") }), null, 2));
     } else if (mode === "record") {
       const f = argv[1];
-      if (!f) throw new Error("usage: bun run summaries:record -- <drafts.json>");
+      if (!f) throw new Error("usage: bun run cat summaries:record -- <drafts.json>");
       const file = JSON.parse(readFileSync(resolve(f), "utf-8")) as DraftFile;
       const r = record(file, ROOT);
       console.log(`recorded ${r.blocks} draft(s) in ${r.written.join(", ")}`);
-      console.log("They are DRAFTS. A person confirms or rejects them with `bun run narratives`.");
+      console.log("They are DRAFTS. A person confirms or rejects them with `bun run cat narratives`.");
     } else if (mode === undefined || mode === "list") {
       if (argv.includes("--json")) {
         console.log(JSON.stringify(tally(entryDirs(ROOT).flatMap((d) => entryItems(d))), null, 2));

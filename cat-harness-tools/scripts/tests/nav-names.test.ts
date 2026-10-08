@@ -49,22 +49,39 @@ function railedCount(): number {
   return qa.totals?.railed ?? -1;
 }
 
+/** Where {@link siteCopy} writes its synthetic railed page, under the copy's site. */
+const FIXTURE = "cat-harness/railed-fixture/index.html";
+
 /**
- * A copy of the parts of the site the check reads: the data, the include, the
- * landing templates and ONE railed page. A plant goes into the copy, so the
- * live tree is never edited (the restore-by-copy discipline in
+ * A copy of the parts of the site the check reads: the data, the include and
+ * the landing templates, plus ONE railed page. A plant goes into the copy, so
+ * the live tree is never edited (the restore-by-copy discipline in
  * `navbar-consistency.test.ts` exists because a restore once went wrong).
+ *
+ * The railed page is SYNTHETIC. Every viewer page moved onto the site layout
+ * (#2418), so no committed page carries a rail any more, but the check still
+ * reads one wherever a page draws it, and that path must still fail on a
+ * planted second name.
  */
-function siteCopy(railed = "cat-harness/schemas/cat-harness/index.html"): { root: string; site: string; files: string[] } {
+function siteCopy(): { root: string; site: string; files: string[] } {
   const root = mkdtempSync(join(tmpdir(), "nav-names-"));
   const site = join(root, "site");
-  for (const rel of ["_data/harness.json", "_data/stickies.json", "_includes/generated/navbar-footer.html", "_includes/harness_details.html", "_includes/landing.html", railed]) {
+  for (const rel of ["_data/harness.json", "_data/stickies.json", "_includes/generated/navbar-footer.html", "_includes/harness_details.html", "_includes/landing.html"]) {
     mkdirSync(join(site, rel, ".."), { recursive: true });
     cpSync(join(SITE, rel), join(site, rel));
   }
-  // The rail's shared data, which a railed page names (bean `lnoy`).
-  cpSync(join(SITE, "assets/navbar"), join(site, "assets/navbar"), { recursive: true });
-  return { root, site, files: [`site/${railed}`] };
+  writeRail(site, "Methodologies");
+  return { root, site, files: [`site/${FIXTURE}`] };
+}
+
+/** A minimal railed viewer page whose one row names `/methodologies/` as `label`. */
+function writeRail(site: string, label: string): void {
+  const page = join(site, FIXTURE);
+  mkdirSync(join(page, ".."), { recursive: true });
+  writeFileSync(
+    page,
+    `<!doctype html><html><body><nav class="fa-nav"><a href="../../methodologies/"><span class="fa-nav-label">${label}</span></a></nav></body></html>\n`,
+  );
 }
 
 describe("the live surfaces", () => {
@@ -81,9 +98,11 @@ describe("the live surfaces", () => {
     expect(r.read.include).toBe(true);
     expect(r.read.stickies).toBe(true);
     expect(r.read.templates).toBe(2);
-    // Every page `check:viewer-nav` counts as railed, no fewer.
+    // Every page `check:viewer-nav` counts as railed, no fewer. That count is
+    // ZERO since every viewer moved onto the site layout (#2418), so the
+    // sidebar include, asserted above, is what keeps this from reading nothing.
     const railed = railedCount();
-    expect(railed).toBeGreaterThan(0);
+    expect(railed).toBeGreaterThanOrEqual(0);
     expect(r.read.railPages).toBe(railed);
     expect(r.destinations).toBeGreaterThan(20);
   });
@@ -112,19 +131,14 @@ describe("a planted second name fails", () => {
 
   test("on the RAIL: one row's label changed in a viewer page", () => {
     const c = siteCopy();
-    // The row's label lives in the rail's SHARED data now (bean `lnoy`):
-    // plant it in the data file this viewer page names.
-    const page = join(c.site, "cat-harness/schemas/cat-harness/index.html");
-    const name = /"data":"(rail-[a-z0-9]+)"/.exec(readFileSync(page, "utf-8"))![1]!;
-    const data = join(c.site, "assets/navbar", `${name}.js`);
-    const body = readFileSync(data, "utf-8");
-    const planted = body.replace('\\"label\\":\\"Methodologies\\"', '\\"label\\":\\"methodology\\"');
-    expect(planted).not.toBe(body);
-    writeFileSync(data, planted);
+    // Unplanted, the synthetic rail agrees with the data.
+    expect(checkNavNames(c.root, c.site, c.files).conflicts.find((x) => x.href === "/methodologies/")).toBeUndefined();
+    writeRail(c.site, "methodology");
     const r = checkNavNames(c.root, c.site, c.files);
+    expect(r.read.railPages).toBe(1);
     const hit = r.conflicts.find((x) => x.href === "/methodologies/");
     expect(hit).toBeDefined();
-    expect(hit!.names.map((n) => n.label)).toEqual(["Methodologies", "methodology"]);
+    expect(hit!.names.map((n) => n.label).sort()).toEqual(["Methodologies", "methodology"]);
   });
 
   test("in the TEMPLATE: a landing anchor printing the kind word", () => {

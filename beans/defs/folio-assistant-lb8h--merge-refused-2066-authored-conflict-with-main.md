@@ -32,7 +32,7 @@ A comment on PR #2066, plus a message to the Merge Manager role.
 - [ ] #2066 merges main cleanly (merge commit; `git submodule update --init` before staging; no dropped `*/test/results/*` files)
 - [ ] the owed `pull_request` CI is green on that head
 - [ ] the body names the owning session; `ready-to-merge` label; signed `ready: <head sha>`
-- [ ] `bun run merge:guard 2066` passes all 7 checks, and it lands (or the owner closes it)
+- [ ] `bun run cat merge:guard 2066` passes all 7 checks, and it lands (or the owner closes it)
 
 
 
