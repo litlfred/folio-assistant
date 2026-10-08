@@ -51,7 +51,7 @@ import { dirname, join, resolve } from "node:path";
 import { z } from "zod";
 
 import { INDEX_LOCK_FILENAME, LEGACY_MOUNT_LOCK_SUFFIX, lockFilesIn } from "./instance-roots.js";
-import { MountTrustSchema } from "./mount-trust.js";
+import { MountTrustBasisSchema, MountTrustSchema } from "./mount-trust.js";
 import { RepoFullNameSchema } from "./repo-full-name.js";
 
 /** An instance name — the same rule `cat-harness.ts` applies to `needs` and subscriptions. */
@@ -122,6 +122,14 @@ export const MountOverrideSchema = z
     skip: z.literal(true).optional(),
     /** Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored. */
     whole: z.boolean().optional(),
+    /**
+     * Consent for THIS instance at its own pin. Required for an instance
+     * reached through a GITLINK: that is another repository at another
+     * commit, and the parent mount's consent does not cover it (roast `1ygp`
+     * L4.2). Ignored for the declared harness and same-tree instances, which
+     * the mount's own `trust` covers.
+     */
+    trust: MountTrustSchema.optional(),
   })
   .strict();
 export type MountOverride = z.infer<typeof MountOverrideSchema>;
@@ -228,6 +236,14 @@ export const LockedInstanceSchema = z
     pinnedBy: z.enum(["declared", "same-tree", "gitlink"]),
     declaration: z.object({ file: z.string().min(1), sha256: z.string().regex(/^[0-9a-f]{64}$/) }).strict(),
     directories: z.array(LockedDirectorySchema),
+    /**
+     * The basis the mount was allowed on — `staging` (the `--staging` flag)
+     * or `consent` with who and when — so a reviewer reads it in the lock and
+     * the check can re-judge it (roast `1ygp` L4.2). Optional only so a lock
+     * written before it was recorded still parses; the check re-derives it
+     * and says so.
+     */
+    trust: MountTrustBasisSchema.optional(),
   })
   .strict();
 export type LockedInstance = z.infer<typeof LockedInstanceSchema>;
@@ -249,8 +265,17 @@ export const MountLockSchema = z
         z
           .object({
             instance: InstanceNameSchema,
-            state: z.enum(["local", "skipped", "missing", "could-not-determine"]),
+            /** `refused`: the trust check said no (H8). */
+            state: z.enum(["local", "skipped", "missing", "refused", "could-not-determine"]),
             detail: z.string(),
+            /**
+             * A REFUSED instance's previous mount, still on disk because an
+             * agent does not delete it (`deletion-requires-confirmation`). It
+             * is recorded here, not in `instances`, so nothing presents it as
+             * current: the check reports it, and the next mount knows this
+             * mount put it there.
+             */
+            leftOnDisk: LockedInstanceSchema.optional(),
           })
           .strict(),
       )
