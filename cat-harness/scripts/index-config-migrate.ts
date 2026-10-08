@@ -4,6 +4,7 @@
  *
  * @module scripts/index-config-migrate
  * @graphNode none — a one-shot converter over a checkout's root files; the schema is `schemas/index-config.ts`
+ * @covers cat-harness — the instance axis: under --check, a converted checkout's index.config.json, its generated .gitignore block and its lock name are what the converter would write, and no `remoteMounts` is left on the declaration
  *
  *   bun run cat index-config:migrate                 # print the index it would write, and its findings
  *   bun run cat index-config:migrate --write         # write it, move `remoteMounts` off the declaration,
