@@ -36,10 +36,10 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>136</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>74</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>113</b><span>invoked as a shell command</span></div>
-<div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
+<div class="tg-stat"><b>137</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>75</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>114</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>25</b><span>reachable over MCP</span></div>
 </div>
 
 ## How they are invoked, and installed
@@ -48,20 +48,20 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 113 |
-| <span class="tg-tag tg-inproc">inProcess</span> | 25 |
-| <span class="tg-tag tg-mcp">mcp</span> | 24 |
+| <span class="tg-tag tg-shell">shell</span> | 114 |
+| <span class="tg-tag tg-inproc">inProcess</span> | 26 |
+| <span class="tg-tag tg-mcp">mcp</span> | 25 |
 | <span class="tg-tag tg-manual">manual</span> | 8 |
 
 | installation | tools |
 |---|---|
-| `none` | 126 |
+| `none` | 127 |
 | `cli` | 9 |
 | `container` | 1 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **74** skills named across **136** tools resolve to a
+Yes — all **75** skills named across **137** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -128,6 +128,7 @@ tool advertising a capability the graph cannot locate.
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 0 in / 1 out |
 | `navbar-include`<br>Write the site sidebar's harness navbar include | Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235). | <span class="tg-tag tg-shell">shell</span> | [`harness-tiles`](../reference/skill-instructions/harness-tiles.html) | 5 in / 1 out |
 | `node-kind-pages`<br>Node kind pages | Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195). | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
+| `nquads-query`<br>N-Quads Named Query Engine | Execute an audited, named SPARQL 1.1 query over a partitioned W3C N-Quads dataset distribution (e.g. WHO-IRIS, Beans graph) with graph availability validation. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`named-query-execution`](../reference/skill-instructions/named-query-execution.html) | 4 in / 1 out |
 | `ns-vocabulary`<br>Namespace vocabulary | Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets. | <span class="tg-tag tg-shell">shell</span> | [`kg-export`](../reference/skill-instructions/kg-export.html) | 2 in / 1 out |
 | `package-release-manual`<br>Package release by hand | A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure. | <span class="tg-tag tg-manual">manual</span> | [`package-release`](../reference/skill-instructions/package-release.html) | 2 in / 1 out |
 | `pages-index`<br>Published-paper index page | Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 8 in / 1 out |

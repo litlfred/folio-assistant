@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 243,
+      "count": 244,
       "unit": "modules"
     }
   },
@@ -962,6 +962,14 @@
       "name": "note-anchor",
       "graphNode": "schema",
       "summary": "Where a note is attached, as a three-state answer.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "instance": "cat-harness",
+      "name": "nquads-distribution",
+      "graphNode": "schema",
+      "summary": "Partitioned RDF N-Quads Dataset Distribution & Named Query Manifest Schema.",
       "isTest": false
     },
     {
@@ -25130,6 +25138,444 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NamedQueryDef",
+      "name": "NamedQueryDef",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NamedQueryDefSchema",
+      "name": "NamedQueryDefSchema",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "zod-object",
+      "doc": "Pre-compiled, audited named SPARQL 1.1 query.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9_-]+$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sparql",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "requiredSubgraphs",
+          "type": "z.array(z.string()).default([]).describe( \"List of subgraph partition IDs that must be resident in the store before exe…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "parameters",
+          "type": "z.array(QueryParameterDefSchema).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "outputVariables",
+          "type": "z.array(z.string()).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/nquads-distribution.ts#QueryParameterDefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NamedQueryRequest",
+      "name": "NamedQueryRequest",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NamedQueryRequestSchema",
+      "name": "NamedQueryRequestSchema",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "zod-object",
+      "doc": "Standard I/O Contract: Request to execute a named query",
+      "fields": [
+        {
+          "name": "dataset",
+          "type": "z.string().describe(\"Dataset manifest file path, distribution directory, or HTTP URL\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "queryName",
+          "type": "z.string().min(1).describe(\"Identifier of the pre-compiled named query to execute\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bindings",
+          "type": "z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).default({})",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "format",
+          "type": "z.enum([\"table\", \"json\", \"ids\"]).default(\"table\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "limit",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NamedQueryResponse",
+      "name": "NamedQueryResponse",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NamedQueryResponseSchema",
+      "name": "NamedQueryResponseSchema",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "zod-object",
+      "doc": "Standard I/O Contract: Result of executing a named query",
+      "fields": [
+        {
+          "name": "queryName",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "datasetIri",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "quadsLoaded",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "loadTimeMs",
+          "type": "z.number().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "executionTimeMs",
+          "type": "z.number().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "totalRows",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rows",
+          "type": "z.array(z.record(z.string(), z.string()))",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NQuadsDistributionManifest",
+      "name": "NQuadsDistributionManifest",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NQuadsDistributionManifestSchema",
+      "name": "NQuadsDistributionManifestSchema",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "zod-object",
+      "doc": "Top-level Topology Manifest (`subgraph-manifest.json`).",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(NQUADS_DISTRIBUTION_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string().datetime()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "datasetIri",
+          "type": "z.string().url().describe(\"Root dataset IRI identifier\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "servedRoute",
+          "type": "z.string().min(1).describe(\"Base relative route where files are served, e.g. 'who-iris/dist/oxigraph'\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tiers",
+          "type": "z.object({ spine: NQuadsPartitionSchema.describe(\"Primary routing backbone graph loaded on bootstrap\"), subgraphs: z.re…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "queriesFile",
+          "type": "z.string().endsWith(\".json\").default(\"queries.json\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "namedQueries",
+          "type": "z.record(z.string(), NamedQueryDefSchema).default({})",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/nquads-distribution.ts#NQuadsPartitionSchema",
+        "cat-harness/schemas/nquads-distribution.ts#NamedQueryDefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "NQUADS_DISTRIBUTION_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NQuadsPartition",
+      "name": "NQuadsPartition",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#NQuadsPartitionSchema",
+      "name": "NQuadsPartitionSchema",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "zod-object",
+      "doc": "Individual N-Quads graph partition.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1).describe(\"Partition identifier, e.g. 'spine' or community/subgraph id\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1).describe(\"Human-readable title for the partition\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphIri",
+          "type": "z.string().url().describe(\"Target named graph IRI serialized in the N-Quads\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fileNq",
+          "type": "z.string().endsWith(\".nq\").describe(\"Relative filename of uncompressed W3C N-Quads\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "fileGz",
+          "type": "z.string().endsWith(\".nq.gz\").describe(\"Relative filename of gzipped W3C N-Quads\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mediaType",
+          "type": "z.literal(\"application/n-quads\").default(\"application/n-quads\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "compressFormat",
+          "type": "z.literal(\"application/gzip\").default(\"application/gzip\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "quadCount",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "itemCount",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "byteSize",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sha256",
+          "type": "z.string().length(64).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#QueryParameterDef",
+      "name": "QueryParameterDef",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/nquads-distribution.ts#QueryParameterDefSchema",
+      "name": "QueryParameterDefSchema",
+      "module": "cat-harness/schemas/nquads-distribution.ts",
+      "kind": "zod-object",
+      "doc": "Parameter definition for safe, injection-proof SPARQL queries",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().regex(/^[a-zA-Z0-9_]+$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.enum([\"string\", \"iri\", \"integer\", \"boolean\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "required",
+          "type": "z.boolean().default(false)",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "z.union([z.string(), z.number(), z.boolean()]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/odrl.ts#ActionGraph",
       "name": "ActionGraph",
       "module": "cat-harness/schemas/odrl.ts",
@@ -30020,6 +30466,13 @@
           "optional": true,
           "array": true,
           "doc": "Directory ids, in this instance's own declaration."
+        },
+        {
+          "name": "whole",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Mount the WHOLE instance root — every tracked file at the pin, root"
         }
       ],
       "extendsNames": [],
@@ -30130,6 +30583,13 @@
           "type": "z.literal(true).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "whole",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Overrides the harness's `mountDefaults.whole` either way; `directories` is then ignored."
         }
       ],
       "extendsNames": [],
@@ -61929,6 +62389,30 @@
       "via": "anchor",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/nquads-distribution.ts#NamedQueryDefSchema",
+      "to": "cat-harness/schemas/nquads-distribution.ts#QueryParameterDefSchema",
+      "via": "parameters",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/nquads-distribution.ts#NQuadsDistributionManifestSchema",
+      "to": "cat-harness/schemas/nquads-distribution.ts#NamedQueryDefSchema",
+      "via": "namedQueries",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/nquads-distribution.ts#NQuadsDistributionManifestSchema",
+      "to": "cat-harness/schemas/nquads-distribution.ts#NQuadsPartitionSchema",
+      "via": "tiers",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

@@ -21,6 +21,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 | [`spdx-license-list.json`](spdx-license-list.json) | SPDX License List |  |
 | [`spdx-license-list.terminology.json`](spdx-license-list.terminology.json) | data |  |
 | [`w3c-csvw.json`](w3c-csvw.json) | Metadata Vocabulary for Tabular Data |  |
+| [`w3c-n-quads.json`](w3c-n-quads.json) | RDF 1.1 N-Quads: A line-based syntax for RDF datasets |  |
 | [`w3c-odrl.json`](w3c-odrl.json) | ODRL Information Model 2.2 |  |
 | [`w3c-owl2.json`](w3c-owl2.json) | OWL 2 Web Ontology Language Document Overview (Second Edition) |  |
 | [`w3c-prov-jsonld.json`](w3c-prov-jsonld.json) | The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model |  |

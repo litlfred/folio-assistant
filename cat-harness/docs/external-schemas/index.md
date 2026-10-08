@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>23</b><span>specifications</span></div>
 <div class="xs-stat"><b>107</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>228</b><span>declared uses</span></div>
+<div class="xs-stat"><b>230</b><span>declared uses</span></div>
 <div class="xs-stat"><b>2</b><span>declarations naming no record</span></div>
 </div>
 
@@ -234,7 +234,7 @@ graph. That is a determined zero, not an unfilled field.
 | user | declared by |
 |---|---|
 | `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
-| `cat-harness/processes/kg/*.bpmn (9)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
@@ -293,7 +293,7 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | `cat-harness/processes/content/*.bpmn (3)` | `xmlns` binding |
-| `cat-harness/processes/kg/*.bpmn (9)` | `xmlns` binding |
+| `cat-harness/processes/kg/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/library/*.bpmn (10)` | `xmlns` binding |
 | `cat-harness/processes/process/*.bpmn (12)` | `xmlns` binding |
 | `cat-harness/processes/sdlc/*.bpmn (26)` | `xmlns` binding |
