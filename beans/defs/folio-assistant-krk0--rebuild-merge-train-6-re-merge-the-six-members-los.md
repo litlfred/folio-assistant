@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-02T22:16:12Z
-updated_at: 2026-10-08T00:50:00Z
+updated_at: 2026-10-08T01:15:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -60,8 +60,6 @@ merged generated file must be re-generated, never diff-read.
 - [x] CI check runs COUNTED at the final head (names and total), not read as a green page
 - [x] `ready: <sha>` posted; the Merge Manager merges, never this session
 
-## Evidence
-- Merge train 6 was completely rebuilt with all members and landed on `main` in PR #1924 (merge commit `225b7cfd1dbf` on 2026-10-03).
-- Commit `a61b2cd09508` ("beans(krk0): the train-6 rebuild, and refresh the bean index") is present in `main` history.
-- All 8 member PRs and jsonld branch were merged, regenerated clean, extra checks passed, and verified.
-
+## Landed evidence (PR #1924)
+- Completed and merged to main in PR #1924 (commit `225b7cfd1dbf`).
+- Rebuild merge train 6 successfully merged. Verified on main.
