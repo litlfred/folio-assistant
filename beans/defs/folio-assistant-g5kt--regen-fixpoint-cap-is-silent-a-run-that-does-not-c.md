@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g5kt
 title: 'REGEN FIXPOINT CAP IS SILENT: a run that does not converge prints CAP REACHED and exits 0, and the 3-pass default is below the measured need'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-10-04T07:15:24Z
-updated_at: 2026-10-04T07:22:48Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -46,3 +46,6 @@ One correction the suite forced, worth keeping: `not settled` means UNVERIFIED, 
 ## NOT a defect after all
 
 The 17 `check:X:check` -> `check:X` pairs looked like judges run as writers. bo44 establishes those bare forms DO write their sidecars and the `:check` form is the judge mode bo44 added, so the convention pairs them correctly. Measuring stopped a wrong change.
+
+## Completed on landed evidence
+Landed on main in PR #2060 (regen: a run that did not reach a fixed point exits non-zero (bean g5kt)).

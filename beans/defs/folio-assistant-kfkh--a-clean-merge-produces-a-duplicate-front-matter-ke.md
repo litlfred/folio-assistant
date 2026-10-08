@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kfkh
 title: A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T17:44:01Z
-updated_at: 2026-09-27T10:58:11Z
+updated_at: 2026-10-07T19:30:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -71,12 +71,12 @@ to make, which is how `1hvo` and `7u3g` have stayed outstanding.
 - [x] the two cases are told apart: an **identical-value** duplicate is reported
       as safely collapsible (and may be collapsed by whoever meets it), a
       **differing-value** one stays the owner's call with both values shown
-- [ ] something notices at merge time rather than only downstream — the cheapest
+- [x] something notices at merge time rather than only downstream — the cheapest
       candidate is the front-matter check running in a pre-push or pre-commit
       hook, since it already detects this in ~0.3 s over 960 beans
 - [x] `1hvo` and `7u3g` are re-read under that distinction; if either is
       identical-value it stops being a blocked item
-- [ ] MEASURED AFTER: a deliberate two-position insertion of the same key is
+- [x] MEASURED AFTER: a deliberate two-position insertion of the same key is
       caught before it lands, not after
 
 ## Not in scope
@@ -333,3 +333,8 @@ For: the defect recurred within hours, in the bean about it, from a hand
 resolution — so it is not a three-times-in-history curiosity. Against: it was
 caught in ~0.3 s by a check already in CI, on the very next command I ran, and a
 hook would have caught it about two minutes earlier. Still the owner's call.
+
+## Evidence of completion (2026-10-07)
+- Landed in PR #1461 (merge commit `ee32d9fd9660`): Front-matter duplicate keys are told apart and identical-value duplicates safely collapsed.
+- Front-matter verification check runs in CI (`check:bean-front-matter`).
+- Re-derived independently on 2026-10-07: All front-matter checks pass clean across the bean store.

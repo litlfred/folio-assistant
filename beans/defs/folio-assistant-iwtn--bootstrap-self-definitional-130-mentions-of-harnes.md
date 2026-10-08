@@ -1,11 +1,11 @@
 ---
 # folio-assistant-iwtn
 title: 'BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T19:19:45Z
-updated_at: 2026-09-27T05:53:39Z
+updated_at: 2026-10-07T18:03:00Z
 parent: folio-assistant-88mg
 ---
 
@@ -132,3 +132,9 @@ whoever owns that wording. Widening the leak test to cover `translations/` is
 also left: it would pass today, so it is a guard-strengthening change rather
 than a fix, and it belongs with the owner's view on whether derived files are in
 scope for the claim.
+
+## Evidence: Closed on Landed Work
+
+Delivered and landed in PR #1446 (commit `74856a4664be`):
+- All 4 owner rulings applied: qualified `bootstrap.skills` naming, self-contained `README.md`, and Zod moved to `cat-harness/schemas/model-registry.ts`.
+- `PENDING` outward-mentions list in `graph.test.ts` reduced to empty array (25 pass, 0 fail).

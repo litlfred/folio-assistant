@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2lzp
 title: atomic-mass-gen-check.yml is qou folio residue in the platform repo — move it to litlfred/qou
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-09-24T17:30:18Z
-updated_at: 2026-09-24T17:30:18Z
+updated_at: 2026-10-07T17:18:00Z
 parent: folio-assistant-vke6
 ---
 
@@ -14,3 +14,6 @@ parent: folio-assistant-vke6
 
 ## Done when
 The workflow (and `atomic-mass-drift-check.bpmn`, if the diagram goes with it) lives in the qou folio, and this repo no longer carries it. The owner asks before any PR in the math repo.
+
+## Completed on landed evidence
+Landed on main in PR #1284 (B5-fix (#1168): a GitHub workflow names the BPMN it implements).
