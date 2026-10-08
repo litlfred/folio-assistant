@@ -293,7 +293,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
+| [Change Size Rule](change-size.html) | `change-size` | — |  |
 | [Spec Kit](spec-kit.html) | `spec-kit` | — |  |
+| [Feature Specification: [Feature Name]](spec-template.html) | `spec-template` | — | **Feature Branch**: `claude/[branch-name]` |
 
 ## Theming (theming)
 

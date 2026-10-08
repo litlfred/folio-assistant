@@ -181,6 +181,14 @@
       "status": "candidate"
     },
     {
+      "id": "change-size",
+      "prefLabel": "change-size",
+      "definition": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity.",
+      "notation": "change-size",
+      "source": "cat-harness/skills/sdlc/spec-kit/change-size.md",
+      "status": "candidate"
+    },
+    {
       "id": "chapter-complexity-review",
       "prefLabel": "chapter-complexity-review",
       "definition": "Analyse a chapter's internal dependency graph to find backward edges (blocks that reference something defined later), compute graph energy, and suggest section/block reorderings that minimise complexity. Uses Graphviz for visualisation and brute-force permutation search for optimal section ordering.",
@@ -1395,6 +1403,14 @@
       "definition": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
       "notation": "spec-kit",
       "source": "cat-harness/skills/sdlc/spec-kit/spec-kit.md",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-template",
+      "prefLabel": "spec-template",
+      "definition": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation.",
+      "notation": "spec-template",
+      "source": "cat-harness/skills/sdlc/spec-kit/spec-template.md",
       "status": "candidate"
     },
     {
